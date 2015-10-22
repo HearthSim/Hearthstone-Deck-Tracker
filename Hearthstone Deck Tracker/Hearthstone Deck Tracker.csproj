@@ -152,6 +152,7 @@
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
     <Compile Include="Enums\IconStyle.cs" />
     <Compile Include="Enums\LoginType.cs" />
+    <Compile Include="Enums\Rarity.cs" />
     <Compile Include="Errors\ErrorItem.xaml.cs">
       <DependentUpon>ErrorItem.xaml</DependentUpon>
     </Compile>

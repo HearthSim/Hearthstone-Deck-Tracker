@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.API;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
@@ -84,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					                && card.AlternativeNames.All((x) => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
 					                && card.AlternativeTexts.All((x) => x == null || !x.ToLowerInvariant().Contains(formattedInput))
 					                && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
-					                && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
+					                && (w != card.Rarity.ToString().ToLowerInvariant())))
 						continue;
 
 					// mana filter
@@ -280,7 +281,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var cardInDeck = _newDeck.Cards.FirstOrDefault(c => c.Name == card.Name);
 			if(cardInDeck != null)
 			{
-				if(!_newDeck.IsArenaDeck && (cardInDeck.Count >= 2 || cardInDeck.Rarity == "Legendary" && cardInDeck.Count >= 1))
+				if(!_newDeck.IsArenaDeck && (cardInDeck.Count >= 2 || cardInDeck.Rarity == Rarity.Legendary && cardInDeck.Count >= 1))
 					return;
 				cardInDeck.Count++;
 			}
