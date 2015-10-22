@@ -1,17 +1,16 @@
 ﻿#region
 
+using Hearthstone_Deck_Tracker.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
-using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -35,6 +34,61 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool _wasDiscarded;
 		public string Id;
 
+		public const String RARITY_LEGENDARY = "Legendary";
+		public const String RARITY_EPIC      = "Epic";
+		public const String RARITY_RARE      = "Rare";
+		public const String RARITY_COMMON    = "Common";
+		public const String RARITY_FREE      = "Free";
+
+		public enum eTypeRarity
+		{
+			Free,
+			Common,
+			Epic,
+			Rare,
+			Legendary
+		}
+
+		public eTypeRarity TypeRarity
+		{
+			get
+			{
+				eTypeRarity typeRarity = eTypeRarity.Free;
+				switch (Rarity)
+				{
+					case RARITY_COMMON: typeRarity = eTypeRarity.Common; break;
+					case RARITY_RARE: typeRarity = eTypeRarity.Rare; break;
+					case RARITY_EPIC: typeRarity = eTypeRarity.Epic; break;
+					case RARITY_LEGENDARY: typeRarity = eTypeRarity.Legendary; break;
+				}
+				return typeRarity;
+			}
+		}
+
+		public int DustValue
+		{
+			get
+			{
+				int value = 0;
+				switch (TypeRarity)
+				{
+					case Card.eTypeRarity.Common:
+						value = 40;
+						break;
+					case Card.eTypeRarity.Rare:
+						value = 100;
+						break;
+					case eTypeRarity.Epic:
+						value = 400;
+						break;
+					case eTypeRarity.Legendary:
+						value = 1600;
+						break;
+				}
+				return value;
+			}
+		}
+
 		/// The mechanics attribute, such as windfury or taunt, comes from the cardDB json file
 		[XmlIgnore]
 		public string[] Mechanics;
@@ -51,8 +105,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName, int inHandCount,
-		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability, string artist,
-		            string set, List<string> alternativeNames = null, List<string> alternativeTexts = null)
+					int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability, string artist,
+					string set, List<string> alternativeNames = null, List<string> alternativeTexts = null)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -212,9 +266,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private readonly Regex _overloadRegex = new Regex(@"Overload:.+?\((?<value>(\d+))\)");
 		private int? _overload;
-	    
+		
 
-	    [XmlIgnore]
+		[XmlIgnore]
 		public int Overload
 		{
 			get
@@ -342,12 +396,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				return Name.ToLowerInvariant()
-				           .Replace(' ', '-')
-				           .Replace(":", "")
-				           .Replace("'", "-")
-				           .Replace(".", "")
-				           .Replace("!", "")
-				           .Replace(",", "");
+						   .Replace(' ', '-')
+						   .Replace(":", "")
+						   .Replace("'", "-")
+						   .Replace(".", "")
+						   .Replace("!", "")
+						   .Replace(",", "");
 			}
 		}
 
@@ -373,26 +427,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					if(File.Exists("Images/" + cardFileName))
 					{
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
-						                                           new Rect(104, 1, 110, 34)));
+																   new Rect(104, 1, 110, 34)));
 					}
 
 					//frame
 					var frame = "Images/frame.png";
 					if(Config.Instance.RarityCardFrames)
 					{
-						switch(Rarity)
+						switch(TypeRarity)
 						{
-							case "Free":
-							case "Common":
+							case eTypeRarity.Free:
+							case eTypeRarity.Common:
 								frame = "Images/frame_rarity_common.png";
 								break;
-							case "Rare":
+							case eTypeRarity.Rare:
 								frame = "Images/frame_rarity_rare.png";
 								break;
-							case "Epic":
+							case eTypeRarity.Epic:
 								frame = "Images/frame_rarity_epic.png";
 								break;
-							case "Legendary":
+							case eTypeRarity.Legendary:
 								frame = "Images/frame_rarity_legendary.png";
 								break;
 						}
@@ -402,47 +456,47 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					if(Config.Instance.RarityCardGems)
 					{
 						var gem = "Images/gem_rarity_common.png";
-						switch(Rarity)
+						switch(TypeRarity)
 						{
-							case "Rare":
+							case eTypeRarity.Rare:
 								gem = "Images/gem_rarity_rare.png";
 								break;
-							case "Epic":
+							case eTypeRarity.Epic:
 								gem = "Images/gem_rarity_epic.png";
 								break;
-							case "Legendary":
+							case eTypeRarity.Legendary:
 								gem = "Images/gem_rarity_legendary.png";
 								break;
 						}
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(gem, UriKind.Relative)), new Rect(3, 3, 28, 28)));
 					}
 
-					if(Math.Abs(Count) > 1 || Rarity == "Legendary")
+					if(Math.Abs(Count) > 1 || TypeRarity == eTypeRarity.Legendary)
 					{
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
-						                                           new Rect(189, 6, 25, 24)));
+																   new Rect(189, 6, 25, 24)));
 
 						if(Math.Abs(Count) > 1 && Math.Abs(Count) <= 9)
 						{
 							drawingGroup.Children.Add(
-							                          new ImageDrawing(
-								                          new BitmapImage(new Uri("Images/frame_" + Math.Abs(Count) + ".png", UriKind.Relative)),
-								                          new Rect(194, 8, 18, 21)));
+													  new ImageDrawing(
+														  new BitmapImage(new Uri("Images/frame_" + Math.Abs(Count) + ".png", UriKind.Relative)),
+														  new Rect(194, 8, 18, 21)));
 						}
 						else
 						{
 							drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_legendary.png", UriKind.Relative)),
-							                                           new Rect(194, 8, 18, 21)));
+																	   new Rect(194, 8, 18, 21)));
 						}
 					}
 
 					if(IsCreated)
 					{
-						var xOffset = Math.Abs(Count) > 1 || Rarity == "Legendary" ? 23 : 3;
-                        drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-marker.png", "Images"),
+						var xOffset = Math.Abs(Count) > 1 || TypeRarity == eTypeRarity.Legendary ? 23 : 3;
+						drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-marker.png", "Images"),
 																   new Rect(192 - xOffset, 8, 21, 21)));
 						drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-icon-created.png", "Images"),
-							                                           new Rect(194 - xOffset, 9, 16, 16)));
+																	   new Rect(194 - xOffset, 9, 16, 16)));
 					}
 
 					//dark overlay
@@ -468,7 +522,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object Clone()
 		{
 			var newcard = new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, EnglishText, Attack, Health, Race,
-			                       Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts);
+								   Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts);
 			return newcard;
 		}
 

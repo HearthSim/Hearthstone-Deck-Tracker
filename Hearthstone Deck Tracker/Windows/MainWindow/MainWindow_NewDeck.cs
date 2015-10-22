@@ -1,5 +1,10 @@
 ﻿#region
 
+using Hearthstone_Deck_Tracker.API;
+using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,11 +14,6 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.API;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HearthStats.API;
-using Hearthstone_Deck_Tracker.Stats;
-using MahApps.Metro.Controls.Dialogs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using RadioButton = System.Windows.Controls.RadioButton;
@@ -79,12 +79,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 						continue;
 					if(Config.Instance.UseFullTextSearch
 					   && words.Any(
-					                w =>
-					                !cardName.Contains(w) && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
-					                && card.AlternativeNames.All((x) => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
-					                && card.AlternativeTexts.All((x) => x == null || !x.ToLowerInvariant().Contains(formattedInput))
-					                && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
-					                && (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
+									w =>
+									!cardName.Contains(w) && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
+									&& card.AlternativeNames.All((x) => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
+									&& card.AlternativeTexts.All((x) => x == null || !x.ToLowerInvariant().Contains(formattedInput))
+									&& (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
+									&& (!string.IsNullOrEmpty(card.Rarity) && w != card.Rarity.ToLowerInvariant())))
 						continue;
 
 					// mana filter
@@ -137,8 +137,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var result =
 					await
 					this.ShowMessageAsync("Not 30 cards",
-					                      string.Format("Deck contains {0} cards. Is this what you want to save anyway?",
-					                                    _newDeck.Cards.Sum(c => c.Count)), MessageDialogStyle.AffirmativeAndNegative, settings);
+										  string.Format("Deck contains {0} cards. Is this what you want to save anyway?",
+														_newDeck.Cards.Sum(c => c.Count)), MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
@@ -280,7 +280,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var cardInDeck = _newDeck.Cards.FirstOrDefault(c => c.Name == card.Name);
 			if(cardInDeck != null)
 			{
-				if(!_newDeck.IsArenaDeck && (cardInDeck.Count >= 2 || cardInDeck.Rarity == "Legendary" && cardInDeck.Count >= 1))
+				if(!_newDeck.IsArenaDeck && (cardInDeck.Count >= 2 || cardInDeck.TypeRarity == Card.eTypeRarity.Legendary && cardInDeck.Count >= 1))
 					return;
 				cardInDeck.Count++;
 			}
@@ -427,8 +427,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ClearNewDeckSection();
 			DeckPickerListCover.Visibility = Visibility.Hidden;
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
-            PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions
-				                                  ? Visibility.Visible : Visibility.Collapsed;
+			PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions
+												  ? Visibility.Visible : Visibility.Collapsed;
 			PanelCardCount.Visibility = Visibility.Collapsed;
 
 			if(_movedLeft.HasValue)
@@ -519,7 +519,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var result =
 				await
 				this.ShowMessageAsync("Deck type?", "Please select a deck type.", MessageDialogStyle.AffirmativeAndNegative,
-				                      new MessageDialogs.Settings {AffirmativeButtonText = "constructed", NegativeButtonText = "arena run"});
+									  new MessageDialogs.Settings {AffirmativeButtonText = "constructed", NegativeButtonText = "arena run"});
 			if(result == MessageDialogResult.Negative)
 				_newDeck.IsArenaDeck = true;
 
@@ -556,8 +556,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var result =
 					await
 					this.ShowMessageAsync(EditingDeck ? "Cancel editing" : "Cancel deck creation",
-					                      EditingDeck ? "All changes made to the deck will be lost." : "The new deck will be lost.",
-					                      MessageDialogStyle.AffirmativeAndNegative);
+										  EditingDeck ? "All changes made to the deck will be lost." : "The new deck will be lost.",
+										  MessageDialogStyle.AffirmativeAndNegative);
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
@@ -574,7 +574,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SaveDeckWithOverwriteCheck(_newDeck.Version);
 		}
 
-        internal void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
+		internal void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
 		{
 			if(saveAsNew)
 			{
