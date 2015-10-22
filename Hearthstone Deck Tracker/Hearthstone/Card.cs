@@ -247,7 +247,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					case Rarity.Epic:
 						return 400;
 					case Rarity.Legendary:
-						return 1000;
+						return 1600;
 				}
 				return 0;
 			}
