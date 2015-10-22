@@ -217,15 +217,13 @@ namespace Hearthstone_Deck_Tracker
 
 			await ClickOnPoint(hsHandle, searchBoxPos);
 
-			var addArtist = new[] {"zhCN", "zhTW", "ruRU", "koKR"}.All(x => Config.Instance.SelectedLanguage != x);
-			var fixedName = addArtist ? (card.LocalizedName + " " + card.Artist).ToLowerInvariant() : card.LocalizedName.ToLowerInvariant();
 			if(Config.Instance.ExportPasteClipboard)
 			{
-				Clipboard.SetText(fixedName);
+				Clipboard.SetText(GetSearchString(card));
 				SendKeys.SendWait("^v");
 			}
 			else
-				SendKeys.SendWait(fixedName);
+				SendKeys.SendWait(GetSearchString(card));
 			SendKeys.SendWait("{ENTER}");
 
 			Logger.WriteLine("try to export card: " + card.Name, "DeckExporter", 1);
@@ -237,12 +235,6 @@ namespace Hearthstone_Deck_Tracker
 			//Check if Card exist in collection
 			if(CardExists(hsHandle, (int)cardPosX, (int)cardPosY, width, height))
 			{
-				//move mouse over card if card is new  TODO: currently does nothing
-				/*var newCard = new Point((int)cardPosX, (int)cardPosY);
-				User32.ClientToScreen(hsHandle, ref newCard);
-				for(var i = 0; i < 3; i++)
-					Cursor.Position = new Point(newCard.X + i + 50, newCard.Y - i + 50);*/
-
 				//Check if a golden exist
 				if(Config.Instance.PrioritizeGolden && CardExists(hsHandle, (int)card2PosX, (int)cardPosY, width, height))
 				{
@@ -283,6 +275,29 @@ namespace Hearthstone_Deck_Tracker
 			else
 				return card.Count;
 			return 0;
+		}
+
+		private static bool AddArtist
+		{
+			get { return new[] {"zhCN", "zhTW", "ruRU", "koKR"}.All(x => Config.Instance.SelectedLanguage != x); }
+		}
+
+		private static string GetSearchString(Card card)
+		{
+			var searchString = card.LocalizedName.ToLowerInvariant();
+			if(AddArtist)
+				searchString += " " + card.Artist.ToLowerInvariant();
+			searchString += GetSpecialSearchCases(card.Name);
+			return searchString;
+		}
+
+		private static string GetSpecialSearchCases(string cardName)
+		{
+			//Charge and Kor'kron Elite have the same artist, while Kor'kron Elite also has the effect "Charge". 
+			//"2" seems to be the only consistent distinction across languages.
+			if(cardName == "Charge")
+				return " 2";
+			return string.Empty;
 		}
 
 		private static async Task<bool> CheckForSpecialCases(Card card, double cardPosX, double card2PosX, double cardPosY, IntPtr hsHandle)
