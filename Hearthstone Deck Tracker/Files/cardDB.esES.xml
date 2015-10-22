@@ -2365,8 +2365,10 @@ Inflige $2 p. de daño al héroe enemigo.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Cada vez que invocas a un esbirro con 3 p. de ataque o menos, este recibe &lt;b&gt;Cargar&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Text>Tus esbirros con &lt;b&gt;Cargar&lt;/b&gt; tienen +1 p. de ataque.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2379,7 +2381,7 @@ Inflige $2 p. de daño al héroe enemigo.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Este esbirro tiene &lt;b&gt;Cargar&lt;/b&gt;.</Text>
+    <Text>La comandante Grito de Guerra otorga +1 p. de ataque a este esbirro.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10443,6 +10445,18 @@ Invoca dos ensamblajes osarios 2/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>HRW02_1e</CardId>
+    <Name>¡Hora de equiparse!</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Ataque aumentado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NAX11_02H_2_TB</CardId>
     <Name>Nube de veneno</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10453,6 +10467,18 @@ Invoca dos ensamblajes osarios 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
 Inflige 1 p. de daño a todos los esbirros enemigos. Si alguno muere, invoca una babosa.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2c_TB</CardId>
+    <Name>Diezmar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Cambia la salud de los esbirros enemigos a 1 p.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10797,6 +10823,95 @@ Cuando el pícaro JcJ mata a un esbirro, vuelve a obtener &lt;b&gt;Sigilo&lt;/b&
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_CoOpBossSpell_1</CardId>
+    <Name>Priorizar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige daño de ataque al esbirro más poderoso.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_2</CardId>
+    <Name>Bombardeo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige daño de ataque hasta a 3 objetivos aleatorios.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_3</CardId>
+    <Name>Emplear refrigerante</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Congela e inflige daño de ataque a todos los esbirros.
+Obtiene +2 p. de ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_4</CardId>
+    <Name>Revolucionar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Obtiene +2 p. de ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_5</CardId>
+    <Name>Disparo doble</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige daño de ataque a ambos jugadores.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_6</CardId>
+    <Name>Muerte al eremita</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Destruye al eremita Cho.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod</CardId>
+    <Name>Maestro de palancas Mecazod</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>95</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Jefe&lt;/b&gt;
+¡Mecazod gana si derrota a cualquiera de los jugadores!</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>Encantamiento eterno</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10806,6 +10921,39 @@ Cuando el pícaro JcJ mata a un esbirro, vuelve a obtener &lt;b&gt;Sigilo&lt;/b&
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot</CardId>
+    <Name>TBFactionWarBoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot_Spell</CardId>
+    <Name>TBFactionWarBoomBotSpell</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_Boss_BoomBot</CardId>
+    <Name>FactionWar_BoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>

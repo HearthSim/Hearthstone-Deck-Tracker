@@ -2362,8 +2362,10 @@ Fügt dem feindlichen Helden $2 Schaden zu.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Jedes Mal, wenn Ihr einen Diener mit max. 3 Angriff herbeiruft, erhält dieser &lt;b&gt;Ansturm&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Text>Eure Diener mit &lt;b&gt;Ansturm&lt;/b&gt; haben +1 Angriff.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2376,7 +2378,7 @@ Fügt dem feindlichen Helden $2 Schaden zu.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Dieser Diener hat &lt;b&gt;Ansturm&lt;/b&gt;.</Text>
+    <Text>Die Kriegshymnenanführerin verleiht diesem Diener +1 Angriff.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10435,6 +10437,18 @@ Ruft zwei Knochenkonstrukte (2/1) herbei.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>HRW02_1e</CardId>
+    <Name>Ritzelpower</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Erhöhter Angriff.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NAX11_02H_2_TB</CardId>
     <Name>Giftwolke</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10445,6 +10459,18 @@ Ruft zwei Knochenkonstrukte (2/1) herbei.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Heldenfähigkeit&lt;/b&gt;
 Fügt allen feindlichen Dienern 1 Schaden zu. Pro getötetem Diener erscheint ein Schleim.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2c_TB</CardId>
+    <Name>Dezimieren</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Setzt das Leben aller feindlichen Diener auf 1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10788,6 +10814,94 @@ Ruft einen Magmawüter (5/1) herbei.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_CoOpBossSpell_1</CardId>
+    <Name>Prioritäten setzen</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Fügt dem Diener mit dem höchsten Angriff Mechazods Schaden zu.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_2</CardId>
+    <Name>Bombensalve</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Fügt bis zu 3 zufälligen Zielen Mechazods Schaden zu.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_3</CardId>
+    <Name>Kühlmittel freisetzen</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Friert alle Diener ein und fügt ihnen Mechazods Schaden zu. Erhält +2 Angriff.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_4</CardId>
+    <Name>Übertakten</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Erhält +2 Angriff.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_5</CardId>
+    <Name>Doppelblitz</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Fügt beiden Spielern Mechazods Schaden zu.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_6</CardId>
+    <Name>Tötet den Lehrensucher</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vernichtet Lehrensucher Cho.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod</CardId>
+    <Name>Ritzelmeister Mechazod</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>95</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Boss&lt;/b&gt;
+Mechazod gewinnt, sobald er dich oder deinen Mitspieler besiegt!</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>Endlose Verzauberung</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10797,6 +10911,39 @@ Ruft einen Magmawüter (5/1) herbei.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot</CardId>
+    <Name>TBFactionWarBoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot_Spell</CardId>
+    <Name>TBFactionWarBoomBotSpell</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_Boss_BoomBot</CardId>
+    <Name>FactionWar_BoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>

@@ -2367,8 +2367,10 @@ Inflige $2 points de dégâts au héros adverse.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Chaque fois que vous invoquez un serviteur avec 3 ATQ ou moins, lui confère &lt;b&gt;Charge&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Text>Vos serviteurs avec &lt;b&gt;Charge&lt;/b&gt; ont +1 ATQ.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2381,7 +2383,7 @@ Inflige $2 points de dégâts au héros adverse.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Ce serviteur a &lt;b&gt;Charge&lt;/b&gt;.</Text>
+    <Text>Officier chanteguerre confère +1 ATQ à ce serviteur.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10464,6 +10466,18 @@ Invoque deux assemblages d’os 2/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>HRW02_1e</CardId>
+    <Name>Puissance des rouages</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Attaque augmentée.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NAX11_02H_2_TB</CardId>
     <Name>Nuage empoisonné</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10475,6 +10489,18 @@ Invoque deux assemblages d’os 2/1.</Text>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
 Inflige 1 point de dégâts à
  tous les serviteurs adverses. Invoque une gelée si l’un d’eux meurt.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2c_TB</CardId>
+    <Name>Décimer</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Fait passer les points de vie des serviteurs adverses à 1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10500,7 +10526,7 @@ Fait passer les points de vie des serviteurs adverses à 1.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Renvoie un serviteur ennemi aléatoire dans la main de votre adversaire.</Text>
+Renvoie un serviteur adverse aléatoire dans la main de votre adversaire.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10819,6 +10845,95 @@ Récupère &lt;b&gt;Camouflage&lt;/b&gt; quand le voleur JcJ détruit un servite
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_CoOpBossSpell_1</CardId>
+    <Name>Fixer des priorités</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige les dégâts de l’attaque au serviteur le plus puissant.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_2</CardId>
+    <Name>Salve de bombes</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige les dégâts de l’attaque à 3 cibles aléatoires au maximum.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_3</CardId>
+    <Name>Liquide de refroidissement</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Gèle et inflige les dégâts de l’attaque à tous les serviteurs.
+Gagne 2 ATQ.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_4</CardId>
+    <Name>Suralimenter</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Gagne 2 ATQ.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_5</CardId>
+    <Name>Double zap</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige les dégâts de l’attaque aux deux joueurs.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_6</CardId>
+    <Name>Détruire le chroniqueur</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Détruit le chroniqueur Cho.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod</CardId>
+    <Name>Maître des rouages Mécazod</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>95</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Boss&lt;/b&gt;
+Mécazod gagne s’il bat l’un de vous deux !</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>Enchantement sans fin</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10828,6 +10943,39 @@ Récupère &lt;b&gt;Camouflage&lt;/b&gt; quand le voleur JcJ détruit un servite
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot</CardId>
+    <Name>TBFactionWarBoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot_Spell</CardId>
+    <Name>TBFactionWarBoomBotSpell</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_Boss_BoomBot</CardId>
+    <Name>FactionWar_BoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -13589,7 +13737,7 @@ Détruit tous les serviteurs
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 2 points de dégâts au héros ennemi et le &lt;b&gt;gèle&lt;/b&gt;.</Text>
+Inflige 2 points de dégâts au héros adverse et le &lt;b&gt;gèle&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -13604,7 +13752,7 @@ Inflige 2 points de dégâts au héros ennemi et le &lt;b&gt;gèle&lt;/b&gt;.</T
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Inflige 3 points de dégâts au héros ennemi et le &lt;b&gt;gèle&lt;/b&gt;.</Text>
+Inflige 3 points de dégâts au héros adverse et le &lt;b&gt;gèle&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -13768,7 +13916,7 @@ Invoque un nérubien 3/1.</Text>
     <Health>0</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>Inflige $3 |4(point,points) de dégâts à tous les serviteurs ennemis. Rend #3 |4(point,points) de vie à votre héros.</Text>
+    <Text>Inflige $3 |4(point,points) de dégâts à tous les serviteurs adverses. Rend #3 |4(point,points) de vie à votre héros.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13885,7 +14033,7 @@ Tire un missile pour chaque
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Renvoie un serviteur ennemi aléatoire dans la main de votre adversaire.</Text>
+Renvoie un serviteur adverse aléatoire dans la main de votre adversaire.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13898,7 +14046,7 @@ Renvoie un serviteur ennemi aléatoire dans la main de votre adversaire.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
-Renvoie 2 serviteurs ennemis aléatoires dans la main de votre adversaire.</Text>
+Renvoie 2 serviteurs adverses aléatoires dans la main de votre adversaire.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13969,7 +14117,7 @@ Renvoie 2 serviteurs ennemis aléatoires dans la main de votre adversaire.</Text
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt;
-Chaque fois qu’un ennemi meurt, un squelette 1/1 se lève.</Text>
+Chaque fois qu’un adversaire meurt, un squelette 1/1 se lève.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -13982,7 +14130,7 @@ Chaque fois qu’un ennemi meurt, un squelette 1/1 se lève.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt;
-Chaque fois qu’un ennemi meurt, un squelette 5/5 se lève.</Text>
+Chaque fois qu’un adversaire meurt, un squelette 5/5 se lève.</Text>
     <Mechanics />
   </Card>
   <Card>

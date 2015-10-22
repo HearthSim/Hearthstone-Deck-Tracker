@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public TrackerStats OptionsTrackerStats;
 		public TrackerAppearance OptionsTrackerAppearance;
 		public TrackerBackups OptionsTrackerBackups;
+		public TrackerHotKeys OptionsTrackerHotKeys;
 
 		public OptionsMain()
 		{
@@ -51,6 +52,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsTrackerPlugins = new TrackerPlugins();
 			OptionsTrackerAppearance = new TrackerAppearance();
 			OptionsTrackerBackups = new TrackerBackups();
+			OptionsTrackerHotKeys = new TrackerHotKeys();
 			try
 			{
 				foreach(var treeItem in TreeViewOptions.Items.Cast<TreeViewItem>())
@@ -151,6 +153,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private void TreeViewItemTrackerBackups_OnSelected(object sender, RoutedEventArgs e)
 		{
 			ContentControlOptions.Content = OptionsTrackerBackups;
+		}
+
+		private void TreeViewItemTrackerHotKeys_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentControlOptions.Content = OptionsTrackerHotKeys;
 		}
 	}
 }

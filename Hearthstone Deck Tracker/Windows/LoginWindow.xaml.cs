@@ -9,8 +9,10 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Utility;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -26,19 +28,17 @@ namespace Hearthstone_Deck_Tracker
 	    private readonly bool _initialized;
 		private ProgressDialogController _controller;
 		private Visibility _loginRegisterVisibility;
-        public bool LoginResult { get; private set; }
+		private LoginType _loginResult = LoginType.None;
+
+		public LoginType LoginResult
+		{
+			get { return _loginResult; }
+			private set { _loginResult = value; }
+		}
 
 		public LoginWindow()
 		{
-			//Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-			//Config.Load();
-			//Logger.Initialzie();
-			//_game = new GameV2();
-            //Card.SetGame(_game);
-			//API.Core.Game = _game;
 		    InitializeComponent();
-			//if(HearthStatsAPI.LoadCredentials() || !Config.Instance.ShowLoginDialog)
-			//	StartMainApp();
 			CheckBoxRememberLogin.IsChecked = Config.Instance.RememberHearthStatsLogin;
 			_initialized = true;
 		}
@@ -71,21 +71,6 @@ namespace Hearthstone_Deck_Tracker
 			Process.Start(e.Uri.AbsoluteUri);
 		}
 
-		/*private void StartMainApp()
-		{
-			IsEnabled = false;
-			var mainWindow = new MainWindow(_game);
-			try
-			{
-				mainWindow.Show();
-			}
-			catch(Exception ex)
-			{
-				Logger.WriteLine("Error showing main window: " + ex, "LoginWindow");
-			}
-			Close();
-		}*/
-
 		private async void BtnLogin_Click(object sender, RoutedEventArgs e)
 		{
 			var email = TextBoxEmail.Text;
@@ -105,7 +90,7 @@ namespace Hearthstone_Deck_Tracker
 			TextBoxPassword.Clear();
 		    if (result.Success)
 		    {
-		        LoginResult = true;
+		        LoginResult = LoginType.Login;
                 Close();
 		    }
 			else if(result.Message.Contains("401"))
@@ -201,7 +186,7 @@ namespace Hearthstone_Deck_Tracker
 			TextBoxRegisterPasswordConfirm.Clear();
 			if(result.Success)
 			{
-			    LoginResult = true;
+			    LoginResult = LoginType.Register;
                 Close();
 			}
 		}
@@ -231,7 +216,7 @@ namespace Hearthstone_Deck_Tracker
 		private void Button_ContinueAnyway(object sender, RoutedEventArgs e)
 		{
 			Logger.WriteLine("Continuing as guest...");
-		    LoginResult = true;
+		    LoginResult = LoginType.Guest;
 		    Close();
 		}
 

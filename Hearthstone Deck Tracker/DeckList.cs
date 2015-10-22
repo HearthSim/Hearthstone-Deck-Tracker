@@ -149,7 +149,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if(Config.Instance.SaveDataInAppData == null)
                 return;
-            var appDataPath = Config.Instance.AppDataPath + @"\PlayerDecks.xml";
+            var appDataPath = Config.AppDataPath + @"\PlayerDecks.xml";
             var dataDirPath = Config.Instance.DataDirPath + @"\PlayerDecks.xml";
             if(Config.Instance.SaveDataInAppData.Value)
             {

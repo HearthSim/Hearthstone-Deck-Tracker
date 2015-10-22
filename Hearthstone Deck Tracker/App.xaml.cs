@@ -8,7 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
+using Garlic;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -36,6 +38,8 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 			}
+
+			Analytics.Analytics.TrackEvent("UnhandledException", e.Exception.GetType().ToString().Split('.').Last(), e.Exception.TargetSite.ToString());
 #if (!DEBUG)
 			var date = DateTime.Now;
 			var fileName = "Crash Reports\\"
@@ -64,6 +68,6 @@ namespace Hearthstone_Deck_Tracker
         {
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
             Core.Initialize();
-	    }
+        }
 	}
 }

@@ -261,9 +261,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	                                }
                                     else if(controller == game.Opponent.Id)
 									{
-										gameState.GameHandler.HandleOpponentPlayToGraveyard(game.Entities[id], cardId,
-																						   gameState.GetTurnNumber());
-										if(game.Entities[id].HasTag(GAME_TAG.HEALTH))
+                                        gameState.GameHandler.HandleOpponentPlayToGraveyard(game.Entities[id], cardId,
+                                                                                           gameState.GetTurnNumber(), gameState.PlayersTurn());
+                                        if (game.Entities[id].HasTag(GAME_TAG.HEALTH))
 											gameState.ProposeKeyPoint(KeyPointType.Death, id, ActivePlayer.Opponent);
                                     }
 		                        break;
@@ -386,6 +386,45 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                     gameState.PlayerUsedHeroPower = false;
                 else
                     gameState.OpponentUsedHeroPower = false;
+            }
+            else if (tag == GAME_TAG.DEFENDING)
+            {
+                if (player == "OPPOSING")
+                    gameState.GameHandler.HandleDefendingEntity(value == 1 ? game.Entities[id] : null);
+            }
+            else if (tag == GAME_TAG.ATTACKING)
+            {
+                if (player == "FRIENDLY")
+                    gameState.GameHandler.HandleAttackingEntity(value == 1 ? game.Entities[id] : null);
+            }
+            else if (tag == GAME_TAG.PROPOSED_DEFENDER)
+            {
+                game.OpponentSecrets.proposedDefenderEntityId = value;
+            }
+            else if (tag == GAME_TAG.PROPOSED_ATTACKER)
+            {
+                game.OpponentSecrets.proposedAttackerEntityId = value;
+            }
+            else if (tag == GAME_TAG.NUM_MINIONS_PLAYED_THIS_TURN && value > 0)
+            {
+                if (gameState.PlayersTurn())
+                {
+                    gameState.GameHandler.HandlePlayerMinionPlayed();
+                }
+            }
+            else if (tag == GAME_TAG.PREDAMAGE && value > 0)
+            {
+                if (gameState.PlayersTurn())
+                {
+                    gameState.GameHandler.HandleOpponentDamage(game.Entities[id]);
+                }
+            }
+            else if (tag == GAME_TAG.NUM_TURNS_IN_PLAY && value > 0)
+            {
+                if (!gameState.PlayersTurn())
+                {
+                    gameState.GameHandler.HandleOpponentTurnStart(game.Entities[id]);
+                }
             }
             else if (tag == GAME_TAG.NUM_ATTACKS_THIS_TURN && value > 0)
             {

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
         <GroupBox Header="Exporting to Hearthstone">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -38,6 +38,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxExportName_Checked"
                                               Unchecked="CheckboxExportName_Unchecked" />
+                    <CheckBox x:Name="CheckboxExportAddVersion" Content="Include version number in name"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxExportAddVersion_Checked"
+                                              Unchecked="CheckboxExportAddVersion_Unchecked" />
                     <CheckBox x:Name="CheckboxAutoClear" Content="Auto clear cards"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxAutoClear_Checked"

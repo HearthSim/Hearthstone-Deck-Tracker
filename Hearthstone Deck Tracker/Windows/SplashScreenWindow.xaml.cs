@@ -13,5 +13,11 @@
             VersionString = string.Format("v{0}.{1}.{2}", version.Major, version.Minor, version.Build);
             InitializeComponent();
         }
+
+        public void ShowConditional()
+        {
+            if (Config.Instance.ShowSplashScreen)
+                this.Show();
+        }
     }
 }

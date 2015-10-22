@@ -901,6 +901,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BtnDeckStats_Click(object sender, RoutedEventArgs e)
 		{
+			ShowStats();
+		}
+
+		public void ShowStats()
+		{
+
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
 			if(Config.Instance.StatsInWindow)
 			{

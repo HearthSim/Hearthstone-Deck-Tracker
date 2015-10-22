@@ -59,6 +59,9 @@
   <PropertyGroup />
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Garlic">
+      <HintPath>..\packages\Garlic.2.1.0.0\lib\net35\Garlic.dll</HintPath>
+    </Reference>
     <Reference Include="De.TorstenMandelkow.MetroChart, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\De.TorstenMandelkow.MetroChart.dll</HintPath>
@@ -198,6 +201,7 @@
     <Compile Include="Enums\DeckLayout.cs" />
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
     <Compile Include="Enums\IconStyle.cs" />
+    <Compile Include="Enums\LoginType.cs" />
     <Compile Include="Errors\ErrorItem.xaml.cs">
       <DependentUpon>ErrorItem.xaml</DependentUpon>
     </Compile>
@@ -232,6 +236,11 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="Exporting\ExportingActions.cs" />
+    <Compile Include="Exporting\ExportingHelper.cs" />
+    <Compile Include="Exporting\ExportingInfo.cs" />
+    <Compile Include="Exporting\HueAndBrightness.cs" />
+    <Compile Include="Utility\MouseActions.cs" />
     <Compile Include="FlyoutControls\GameDetailItem.cs" />
     <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
       <DependentUpon>OpponentDeck.xaml</DependentUpon>
@@ -247,6 +256,9 @@
     </Compile>
     <Compile Include="FlyoutControls\Options\Tracker\TrackerGeneral.xaml.cs">
       <DependentUpon>TrackerGeneral.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerHotKeys.xaml.cs">
+      <DependentUpon>TrackerHotKeys.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\Tracker\TrackerImporting.xaml.cs">
       <DependentUpon>TrackerImporting.xaml</DependentUpon>
@@ -324,6 +336,15 @@
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
       <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility\Analytics.cs" />
+    <Compile Include="Utility\HotKeys\HotKey.cs" />
+    <Compile Include="Utility\HotKeys\PredefinedHotKeyActionAttribute.cs" />
+    <Compile Include="Utility\HotKeys\HotKeyConfig.cs" />
+    <Compile Include="Utility\HotKeys\HotKeyManager.cs" />
+    <Compile Include="Utility\HotKeys\KeyboardHook.cs" />
+    <Compile Include="Utility\HotKeys\KeyPressedEventArgs.cs" />
+    <Compile Include="Utility\HotKeys\ModifierKeys.cs" />
+    <Compile Include="Utility\HotKeys\PredefinedHotKeyActions.cs" />
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -399,7 +420,7 @@
     <Compile Include="Hearthstone\CardIds.cs" />
     <Compile Include="Enums\CardMark.cs" />
     <Compile Include="Hearthstone\Deck.cs" />
-    <Compile Include="DeckExporter.cs" />
+    <Compile Include="Exporting\DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="Enums\GameMode.cs" />
     <Compile Include="Hearthstone\Entities\Entity.cs" />
@@ -627,6 +648,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\Options\Tracker\TrackerHotKeys.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FlyoutControls\Options\Tracker\TrackerImporting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -847,6 +872,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\cardDB.itIT.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\cardDB.jaJP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\cardDB.koKR.xml">
@@ -3859,6 +3887,7 @@
     xcopy /Y "HDTHelper.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HDTUpdate.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HDTUninstaller.exe" "..\Hearthstone Deck Tracker"
+    xcopy /Y "Garlic.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "De.TorstenMandelkow.MetroChart.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "HtmlAgilityPack.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "MahApps.Metro.dll" "..\Hearthstone Deck Tracker"

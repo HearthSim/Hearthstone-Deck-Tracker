@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			public Settings() : base()
 			{
-				AnimateHide = AnimateShow = Config.Instance.UseDialogAnimations;
+				AnimateHide = AnimateShow = Config.Instance.UseAnimations;
 			}
 		}
 
