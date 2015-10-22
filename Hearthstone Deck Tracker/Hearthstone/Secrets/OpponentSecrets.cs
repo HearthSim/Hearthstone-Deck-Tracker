@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Markup;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -67,9 +68,17 @@ namespace Hearthstone_Deck_Tracker
 				SetMax(cardId);
 		}
 
-		public void NewSecretPlayed(HeroClass heroClass, int id, int turn)
+		public void NewSecretPlayed(HeroClass heroClass, int id, int turn, string knownCardId = null)
 		{
-			Secrets.Add(new SecretHelper(heroClass, id, turn));
+			var helper = new SecretHelper(heroClass, id, turn);
+			if(knownCardId != null)
+			{
+				foreach(var cardId in SecretHelper.GetSecretIds(heroClass))
+				{
+					helper.PossibleSecrets[cardId] = cardId == knownCardId;
+				}
+			}
+			Secrets.Add(helper);
 			Logger.WriteLine("Added secret with id:" + id, "OpponentSecrets");
 		}
 

@@ -897,15 +897,55 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 	    public void HandlePlayerStolen(Entity entity, string cardId, int turn)
-	    {
-		    _game.Player.StolenByOpponent(entity, turn);
+		{
+			LogEvent("PlayerStolen");
+			_game.Player.StolenByOpponent(entity, turn);
 			_game.Opponent.StolenFromOpponent(entity, turn);
+			if(entity.IsSecret)
+			{
+				HeroClass heroClass;
+				var className = ((TAG_CLASS)entity.GetTag(GAME_TAG.CLASS)).ToString();
+				if(!string.IsNullOrEmpty(className))
+				{
+					className = className.Substring(0, 1).ToUpper() + className.Substring(1, className.Length - 1).ToLower();
+					if(!Enum.TryParse(className, out heroClass))
+					{
+						if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+							return;
+					}
+				}
+				else
+				{
+					if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+						return;
+				}
+				_game.OpponentSecretCount++;
+				_game.OpponentSecrets.NewSecretPlayed(heroClass, entity.Id, turn, cardId);
+				Core.Overlay.ShowSecrets();
+			}
 	    }
 
 	    public void HandleOpponentStolen(Entity entity, string cardId, int turn)
 		{
+			LogEvent("OpponentStolen");
 			_game.Opponent.StolenByOpponent(entity, turn);
 			_game.Player.StolenFromOpponent(entity, turn);
+			if(entity.IsSecret)
+			{
+				_game.OpponentSecretCount--;
+				_game.OpponentSecrets.SecretRemoved(entity.Id, cardId);
+				if(_game.OpponentSecretCount <= 0)
+					Core.Overlay.HideSecrets();
+				else
+				{
+					if(Config.Instance.AutoGrayoutSecrets)
+						_game.OpponentSecrets.SetZero(cardId);
+					Core.Overlay.ShowSecrets();
+				}
+				Helper.UpdateOpponentCards();
+				_game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);
+				GameEvents.OnOpponentSecretTriggered.Execute(Database.GetCardFromId(cardId));
+			}
 		}
 
 	    public void HandleDustReward(int amount)

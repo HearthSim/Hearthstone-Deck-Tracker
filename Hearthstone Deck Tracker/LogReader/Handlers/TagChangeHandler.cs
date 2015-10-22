@@ -492,17 +492,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	            if (value == game.Player.Id)
 	            {
 		            if (game.Entities[id].IsInZone(TAG_ZONE.SECRET))
-		            {
-			            gameState.GameHandler.HandleOpponentSecretTrigger(game.Entities[id], cardId, gameState.GetTurnNumber(), id);
-			            gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
+					{
+						gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+						gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
 		            }
 		            else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY))
 						gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
 				}
 	            else if (value == game.Opponent.Id)
 	            {
-		            if (game.Entities[id].IsInZone(TAG_ZONE.SECRET))
-			            gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
+		            if(game.Entities[id].IsInZone(TAG_ZONE.SECRET))
+					{
+						gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+						gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
+		            }
 					else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY))
 						gameState.GameHandler.HandlePlayerStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
 	            }
