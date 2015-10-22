@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			UpdateStats();
 		}
 
-		private void UpdateStats()
+		public void UpdateStats()
 		{
 			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
 				CompiledStats.Instance.UpdateArenaStats();
@@ -134,6 +134,34 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			ExpandChildExpanders(StackPanelFilters, false);
+		}
+
+		private void TreeViewItemArenaRunsSummary_OnSelected(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			UpdateStats();
+		}
+
+		private void TreeViewItemArenaRunsOverview_OnSelected(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			UpdateStats();
+		}
+
+		private void TreeViewItemArenaRunsAdvanced_OnSelected(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			UpdateStats();
+		}
+
+		private void TreeViewItemArenaRuns_OnSelected(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			UpdateStats();
 		}
 	}
 

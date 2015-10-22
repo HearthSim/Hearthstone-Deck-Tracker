@@ -19,6 +19,6 @@
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     <Grid>
-        <stats:Overview x:Name="ArenaStats"/>
+        <stats:Overview x:Name="Overview"/>
     </Grid>
 </controls:MetroWindow>

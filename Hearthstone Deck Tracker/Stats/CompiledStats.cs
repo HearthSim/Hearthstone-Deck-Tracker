@@ -27,7 +27,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		private IEnumerable<Deck> ArenaDecks
 		{
-			get { return DeckList.Instance.Decks.Where(x => x != null && x.IsArenaDeck); }
+			get
+			{
+				if(!Core.Initialized)
+					return new List<Deck>();
+				return DeckList.Instance.Decks.Where(x => x != null && x.IsArenaDeck);
+			}
 		}
 
 		public IEnumerable<ArenaRun> ArenaRuns

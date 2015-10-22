@@ -929,9 +929,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
 				Core.Windows.NewStatsWindow.Show();
 				Core.Windows.NewStatsWindow.Activate();
+				Core.Windows.NewStatsWindow.Overview.UpdateStats();
 			}
 			else
+			{
 				FlyoutNewStats.IsOpen = true;
+				NewStatsFlyout.UpdateStats();
+			}
 		}
 
 		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)

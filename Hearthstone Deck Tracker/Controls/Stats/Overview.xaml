@@ -6,7 +6,7 @@
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
-             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility" 
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="800">
     <UserControl.Resources>
@@ -18,10 +18,10 @@
         <DockPanel>
             <GroupBox Header="MENU" DockPanel.Dock="Top">
                 <TreeView Name="TreeViewStats" Width="150" Height="150" >
-                    <TreeViewItem Name="TreeViewItemArenaRuns" IsExpanded="True" Header="Arena Runs" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                        <TreeViewItem Name="TreeViewItemArenaRunsSummary" Header="Summary" IsSelected="True" DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                        <TreeViewItem Name="TreeViewItemArenaRunsOverview" Header="Overview" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                        <TreeViewItem Name="TreeViewItemArenaRunsAdvanced" Header="Advanced (slow)" DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    <TreeViewItem Name="TreeViewItemArenaRuns" IsExpanded="True" Selected="TreeViewItemArenaRuns_OnSelected" Header="Arena Runs" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <TreeViewItem Name="TreeViewItemArenaRunsSummary" Selected="TreeViewItemArenaRunsSummary_OnSelected" Header="Summary" IsSelected="True" DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <TreeViewItem Name="TreeViewItemArenaRunsOverview" Selected="TreeViewItemArenaRunsOverview_OnSelected" Header="Overview" DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <TreeViewItem Name="TreeViewItemArenaRunsAdvanced" Selected="TreeViewItemArenaRunsAdvanced_OnSelected" Header="Advanced (slow)" DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                     </TreeViewItem>
                     <TreeViewItem Header="Constructed" IsExpanded="True" IsEnabled="False">
                         <TreeViewItem Header="[coming soon]"/>
