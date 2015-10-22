@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Exporting;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
 

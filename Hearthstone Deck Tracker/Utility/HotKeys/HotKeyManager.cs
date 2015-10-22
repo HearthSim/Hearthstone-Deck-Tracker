@@ -98,11 +98,9 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			var action = typeof(PredefinedHotKeyActions).GetMethods().FirstOrDefault(x => x.Name == actionName);
 			if(action != null)
 				return RegisterHotkey(hotKey, () => action.Invoke(null, null), actionName);
-			else
-			{
-				Logger.WriteLine(string.Format("Could not find predefined action \"{0}\"", actionName), "HotKeyManager");
-				return false;
-			}
+			Logger.WriteLine(string.Format("Could not find predefined action \"{0}\"", actionName), "HotKeyManager");
+			HotKeyConfig.Instance.RemoveHotKey(hotKey);
+			return false;
 		}
 	}
 }

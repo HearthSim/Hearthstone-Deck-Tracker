@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Exporting;
 using MahApps.Metro.Controls.Dialogs;
 using Clipboard = System.Windows.Clipboard;
 

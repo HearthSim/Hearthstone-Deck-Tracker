@@ -246,6 +246,110 @@ namespace Hearthstone_Deck_Tracker
             GameEvents.OnTurnStart.Execute(player);
         }
 
+        private Entity _attackingEntity;
+        private Entity _defendingEntity;
+        public void HandleAttackingEntity(Entity entity)
+        {
+            _attackingEntity = entity;
+            if(_attackingEntity != null && _defendingEntity != null)
+                _game.OpponentSecrets.ZeroFromAttack(_attackingEntity, _defendingEntity);
+        }
+
+        public void HandleDefendingEntity(Entity entity)
+        {
+            _defendingEntity = entity;
+            if(_attackingEntity != null && _defendingEntity != null)
+                _game.OpponentSecrets.ZeroFromAttack(_attackingEntity, _defendingEntity);
+        }
+
+        public void HandlePlayerMinionPlayed()
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            _game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.Snipe);
+            _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.MirrorEntity);
+            _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Repentance);
+
+            if (Helper.MainWindow != null)
+                Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        public void HandlePlayerSpellPlayed(bool isMinionTargeted)
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Counterspell);
+
+            if (isMinionTargeted)
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Spellbender);
+
+            if(Helper.MainWindow != null)
+                Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        public void HandleOpponentMinionDeath(Entity entity, int turn)
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Duplicate);
+
+            if (_game.OpponentMinionCount > 0)
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
+
+            int numDeathrattleMinions = 0;
+
+            if (entity.IsActiveDeathrattle)
+                CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId, out numDeathrattleMinions);
+
+            // redemption never triggers if a deathrattle effect fills up the board
+            // effigy can trigger ahead of the deathrattle effect, but only if effigy was played before the deathrattle minion
+            if (_game.OpponentMinionCount < 7 - numDeathrattleMinions)
+            {
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Redemption);
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Effigy);
+            }
+            else
+            {
+                // todo: need to properly break ties when effigy + deathrattle played in same turn
+                int minionTurnPlayed = turn - entity.GetTag(GAME_TAG.NUM_TURNS_IN_PLAY);
+                SecretHelper secret = _game.OpponentSecrets.Secrets.FirstOrDefault(x => x.TurnPlayed >= minionTurnPlayed);
+                int secretOffset = secret != null ? _game.OpponentSecrets.Secrets.IndexOf(secret) : 0;
+                _game.OpponentSecrets.SetZeroOlder(CardIds.Secrets.Mage.Effigy, secretOffset);
+            }
+
+            if (Helper.MainWindow != null)
+                Helper.MainWindow.Overlay.ShowSecrets();
+        }
+
+        public void HandleOpponentDamage(Entity entity)
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            if (entity.IsOpponent)
+            {
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.EyeForAnEye);
+                if(Helper.MainWindow != null)
+                    Helper.MainWindow.Overlay.ShowSecrets();
+            }
+        }
+
+        public void HandleOpponentTurnStart(Entity entity)
+        {
+            if (!Config.Instance.AutoGrayoutSecrets)
+                return;
+
+            if (entity.IsMinion)
+            {
+                _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.CompetitiveSpirit);
+                if(Helper.MainWindow != null)
+                    Helper.MainWindow.Overlay.ShowSecrets();
+            }
+        }
+
         public void HandleGameStart()
         {
             if (DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started
@@ -731,10 +835,13 @@ namespace Hearthstone_Deck_Tracker
 			_game.Player.PlayToGraveyard(entity, cardId, turn);
 	    }
 
-	    public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn)
-		{
-			_game.Opponent.PlayToGraveyard(entity, cardId, turn);
-		}
+        public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)
+        {
+            _game.Opponent.PlayToGraveyard(entity, cardId, turn);
+
+            if (playersTurn && entity.IsMinion)
+                HandleOpponentMinionDeath(entity, turn);
+        }
 
 	    public void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn)
 	    {
@@ -790,15 +897,55 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 	    public void HandlePlayerStolen(Entity entity, string cardId, int turn)
-	    {
-		    _game.Player.StolenByOpponent(entity, turn);
+		{
+			LogEvent("PlayerStolen");
+			_game.Player.StolenByOpponent(entity, turn);
 			_game.Opponent.StolenFromOpponent(entity, turn);
+			if(entity.IsSecret)
+			{
+				HeroClass heroClass;
+				var className = ((TAG_CLASS)entity.GetTag(GAME_TAG.CLASS)).ToString();
+				if(!string.IsNullOrEmpty(className))
+				{
+					className = className.Substring(0, 1).ToUpper() + className.Substring(1, className.Length - 1).ToLower();
+					if(!Enum.TryParse(className, out heroClass))
+					{
+						if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+							return;
+					}
+				}
+				else
+				{
+					if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+						return;
+				}
+				_game.OpponentSecretCount++;
+				_game.OpponentSecrets.NewSecretPlayed(heroClass, entity.Id, turn, cardId);
+				Core.Overlay.ShowSecrets();
+			}
 	    }
 
 	    public void HandleOpponentStolen(Entity entity, string cardId, int turn)
 		{
+			LogEvent("OpponentStolen");
 			_game.Opponent.StolenByOpponent(entity, turn);
 			_game.Player.StolenFromOpponent(entity, turn);
+			if(entity.IsSecret)
+			{
+				_game.OpponentSecretCount--;
+				_game.OpponentSecrets.SecretRemoved(entity.Id, cardId);
+				if(_game.OpponentSecretCount <= 0)
+					Core.Overlay.HideSecrets();
+				else
+				{
+					if(Config.Instance.AutoGrayoutSecrets)
+						_game.OpponentSecrets.SetZero(cardId);
+					Core.Overlay.ShowSecrets();
+				}
+				Helper.UpdateOpponentCards();
+				_game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);
+				GameEvents.OnOpponentSecretTriggered.Execute(Database.GetCardFromId(cardId));
+			}
 		}
 
 	    public void HandleDustReward(int amount)
@@ -942,9 +1089,9 @@ namespace Hearthstone_Deck_Tracker
 		        if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
 			        return;
 	        }
-			_game.OpponentSecrets.NewSecretPlayed(heroClass, otherId, false);
-			
+			_game.OpponentSecrets.NewSecretPlayed(heroClass, otherId, turn);
 
+            if (Core.MainWindow != null)
 			Core.Overlay.ShowSecrets();
             GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
         }
@@ -971,15 +1118,16 @@ namespace Hearthstone_Deck_Tracker
         public void HandleOpponentSecretTrigger(Entity entity, string cardId, int turn, int otherId)
         {
             LogEvent("OpponentSecretTrigger", cardId);
-			_game.Opponent.SecretTriggered(entity, turn);
+            _game.Opponent.SecretTriggered(entity, turn);
             _game.OpponentSecretCount--;
-            _game.OpponentSecrets.SecretRemoved(otherId);
+            _game.OpponentSecrets.SecretRemoved(otherId, cardId);
+
             if (_game.OpponentSecretCount <= 0)
                 Core.Overlay.HideSecrets();
             else
             {
                 if (Config.Instance.AutoGrayoutSecrets)
-                    _game.OpponentSecrets.SetZero(cardId, null);
+                    _game.OpponentSecrets.SetZero(cardId);
                 Core.Overlay.ShowSecrets();
 			}
 			Helper.UpdateOpponentCards();

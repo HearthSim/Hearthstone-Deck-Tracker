@@ -2365,8 +2365,10 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Каждый раз, когда вы призываете существо с атакой 3 или меньше, оно получает способность &lt;b&gt;«Рывок»&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Text>Ваши существа со способностью &lt;b&gt;«Рывок»&lt;/b&gt; получают +1 к атаке.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2379,7 +2381,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Это существо имеет способность «Рывок».</Text>
+    <Text>+1 к атаке от Командира Песни Войны.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8731,7 +8733,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше существо получает &lt;b&gt;«Маскировку»&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; ваше выбранное существо получает &lt;b&gt;«Маскировку»&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -10444,6 +10446,18 @@
     </Mechanics>
   </Card>
   <Card>
+    <CardId>HRW02_1e</CardId>
+    <Name>Вооружен до зубов</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Атака увеличена.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NAX11_02H_2_TB</CardId>
     <Name>Отравленное облако</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10454,6 +10468,18 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
  Наносит 1 ед. урона всем существам противника. Если какое-либо существо умирает, призывается слизь.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2c_TB</CardId>
+    <Name>Истребление</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Здоровье всех существ противника становится равно 1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10798,6 +10824,95 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_CoOpBossSpell_1</CardId>
+    <Name>Приоритет</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит урон, равный своей атаке, самому большому существу.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_2</CardId>
+    <Name>Бомбардировка</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит урон, равный своей атаке, 3 случайным целям.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_3</CardId>
+    <Name>Выброс охладителя</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит урон, равный своей атаке, всем существам и замораживает их.
+Получает +2 к атаке.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_4</CardId>
+    <Name>Разгон</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Получает +2 к атаке.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_5</CardId>
+    <Name>Двойной разряд</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит урон, равный своей атаке, обоим игрокам.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_6</CardId>
+    <Name>Убить хранителя истории</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Уничтожает хранителя истории Чо.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod</CardId>
+    <Name>Механизатор Механозод</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>95</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Босс&lt;/b&gt;
+Механозод победит, если справится с одним из вас!</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>Бесконечные чары</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10807,6 +10922,39 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot</CardId>
+    <Name>TBFactionWarBoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot_Spell</CardId>
+    <Name>TBFactionWarBoomBotSpell</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_Boss_BoomBot</CardId>
+    <Name>FactionWar_BoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -16444,7 +16592,7 @@
     <Health>4</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Если в конце хода у вас на поле боя остался &lt;b&gt;Секрет&lt;/b&gt;, ваш герой восстанавливает 4 ед. здоровья.</Text>
+    <Text>Если в конце вашего хода у вас на поле боя остался &lt;b&gt;Секрет&lt;/b&gt;, ваш герой восстанавливает 4 ед. здоровья.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>

@@ -2390,8 +2390,10 @@ Zadaj $2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Za każdym razem gdy przyzywasz stronnika z atakiem 3 lub mniejszym, daj mu &lt;b&gt;Szarżę&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Text>Twoi stronnicy z &lt;b&gt;Szarżą&lt;/b&gt; otrzymują +1 do ataku.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2404,7 +2406,7 @@ Zadaj $2 pkt. obrażeń wrogiemu bohaterowi.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Ten stronnik otrzymuje &lt;b&gt;Szarżę&lt;/b&gt;.</Text>
+    <Text>Dowódca Wojennej Pieśni daje temu stronnikowi +1 do ataku.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10547,6 +10549,18 @@ Przyzwij dwa Kościane konstrukty 2/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>HRW02_1e</CardId>
+    <Name>Przetaktowanie</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Zwiększony atak.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NAX11_02H_2_TB</CardId>
     <Name>Trujący obłok</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10557,6 +10571,18 @@ Przyzwij dwa Kościane konstrukty 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
 Zadaj 1 pkt. obrażeń wszystkim wrogim stronnikom. Jeśli któryś zginie, przyzwij śluz.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2c_TB</CardId>
+    <Name>Dziesiątkowanie</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Zmień zdrowie wrogich stronników na 1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10901,6 +10927,97 @@ Odzyskuje &lt;b&gt;Ukrycie&lt;/b&gt;, gdy zabije stronnika.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_CoOpBossSpell_1</CardId>
+    <Name>Priorytet</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zadaj obrażenia od ataku największemu stronnikowi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_2</CardId>
+    <Name>Salwa bomb</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zadaj obrażenia od ataku maksymalnie
+3 losowym celom.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_3</CardId>
+    <Name>Wypuszczenie chłodziwa</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zamroź wszystkich stronników i zadaj im obrażenia od ataku.
+Otrzymuje 2 do ataku.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_4</CardId>
+    <Name>Przetaktowanie</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Otrzymujesz
++2 do ataku.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_5</CardId>
+    <Name>Podwójne porażenie</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zadaj obrażenia od ataku obu graczom.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_6</CardId>
+    <Name>Zabić Wiedziciela</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Zniszcz Wiedziciela Czo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod</CardId>
+    <Name>Trybomistrz Mechazod</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>95</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Boss&lt;/b&gt;
+Mechazod wygrywa, jeśli pokona jedno z was!</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>Ciągły urok</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10910,6 +11027,39 @@ Odzyskuje &lt;b&gt;Ukrycie&lt;/b&gt;, gdy zabije stronnika.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot</CardId>
+    <Name>TBFactionWarBoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot_Spell</CardId>
+    <Name>TBFactionWarBoomBotSpell</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_Boss_BoomBot</CardId>
+    <Name>FactionWar_BoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -17516,7 +17666,8 @@ Umieść na polu bitwy dwóch stronników z twojej talii i jednego z talii przec
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Przyzwij Kibica 1/1 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+Przyzwij Kibica 1/1
+z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17529,7 +17680,8 @@ Przyzwij Kibica 1/1 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Moc specjalna&lt;/b&gt;
-Przyzwij Kibica 1/1 z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
+Przyzwij Kibica 1/1
+z &lt;b&gt;Prowokacją&lt;/b&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -22061,7 +22213,7 @@ oraz &lt;b&gt;Boską tarczę&lt;/b&gt;.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>Trener rumaków daje temu stronnikowi +1 do ataku.</Text>
+    <Text>Treser rumaków daje temu stronnikowi +1 do ataku.</Text>
     <Mechanics />
   </Card>
   <Card>

@@ -59,6 +59,9 @@
   <PropertyGroup />
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Garlic">
+      <HintPath>..\packages\Garlic.2.1.0.0\lib\net35\Garlic.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -148,6 +151,7 @@
     <Compile Include="Enums\DeckLayout.cs" />
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
     <Compile Include="Enums\IconStyle.cs" />
+    <Compile Include="Enums\LoginType.cs" />
     <Compile Include="Errors\ErrorItem.xaml.cs">
       <DependentUpon>ErrorItem.xaml</DependentUpon>
     </Compile>
@@ -182,6 +186,11 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="Exporting\ExportingActions.cs" />
+    <Compile Include="Exporting\ExportingHelper.cs" />
+    <Compile Include="Exporting\ExportingInfo.cs" />
+    <Compile Include="Exporting\HueAndBrightness.cs" />
+    <Compile Include="Utility\MouseActions.cs" />
     <Compile Include="FlyoutControls\GameDetailItem.cs" />
     <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
       <DependentUpon>OpponentDeck.xaml</DependentUpon>
@@ -272,6 +281,7 @@
     <Compile Include="Protocol\JsonDeck.cs" />
     <Compile Include="Protocol\JsonDecksWrapper.cs" />
     <Compile Include="Replay\TurnViewItem.cs" />
+    <Compile Include="Utility\Analytics.cs" />
     <Compile Include="Utility\HotKeys\HotKey.cs" />
     <Compile Include="Utility\HotKeys\PredefinedHotKeyActionAttribute.cs" />
     <Compile Include="Utility\HotKeys\HotKeyConfig.cs" />
@@ -355,7 +365,7 @@
     <Compile Include="Hearthstone\CardIds.cs" />
     <Compile Include="Enums\CardMark.cs" />
     <Compile Include="Hearthstone\Deck.cs" />
-    <Compile Include="DeckExporter.cs" />
+    <Compile Include="Exporting\DeckExporter.cs" />
     <Compile Include="DeckImporter.cs" />
     <Compile Include="Enums\GameMode.cs" />
     <Compile Include="Hearthstone\Entities\Entity.cs" />
@@ -740,6 +750,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\cardDB.itIT.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\cardDB.jaJP.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Files\cardDB.koKR.xml">
@@ -3752,6 +3765,7 @@
     xcopy /Y "HDTHelper.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HDTUpdate.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HDTUninstaller.exe" "..\Hearthstone Deck Tracker"
+    xcopy /Y "Garlic.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "HtmlAgilityPack.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "MahApps.Metro.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "Newtonsoft.Json.dll" "..\Hearthstone Deck Tracker"

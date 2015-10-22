@@ -52,6 +52,7 @@ namespace Hearthstone_Deck_Tracker
 			{"French", "frFR"},
 			{"German", "deDE"},
 			{"Italian", "itIT"},
+			{"Japanese", "jaJP"},
 			{"Korean", "koKR"},
 			{"Polish", "plPL"},
 			{"Portuguese (Brazil)", "ptBR"},
@@ -678,7 +679,7 @@ namespace Hearthstone_Deck_Tracker
         {
             if(Config.Instance.SaveDataInAppData == null)
                 return;
-            var appDataReplayDirPath = Config.Instance.AppDataPath + @"\Replays";
+            var appDataReplayDirPath = Config.AppDataPath + @"\Replays";
             var dataReplayDirPath = Config.Instance.DataDirPath + @"\Replays";
             if(Config.Instance.SaveDataInAppData.Value)
             {

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.LogReader;
@@ -41,26 +42,32 @@ namespace Hearthstone_Deck_Tracker
         public static void Initialize()
         {
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+	        var newUser = !Directory.Exists(Config.AppDataPath);
             Config.Load();
             ConfigManager.Run();
             Logger.Initialzie();
             Helper.UpdateAppTheme();
             var splashScreenWindow = new SplashScreenWindow();
-            splashScreenWindow.Show();
-            Game = new GameV2();
-            if (!HearthStatsAPI.LoadCredentials() && Config.Instance.ShowLoginDialog)
+            splashScreenWindow.ShowConditional();
+	        Game = new GameV2();
+	        LoginType loginType;
+	        var loggedIn = HearthStatsAPI.LoadCredentials();
+            if (!loggedIn && Config.Instance.ShowLoginDialog)
             {
                 var loginWindow = new LoginWindow();
                 splashScreenWindow.Close();
                 loginWindow.ShowDialog();
-                if (!loginWindow.LoginResult)
+                if (loginWindow.LoginResult == LoginType.None)
                 {
                     Application.Current.Shutdown();
                     return;
                 }
+	            loginType = loginWindow.LoginResult;
                 splashScreenWindow = new SplashScreenWindow();
-                splashScreenWindow.Show();
+                splashScreenWindow.ShowConditional();
             }
+            else
+	            loginType = loggedIn ? LoginType.AutoLogin : LoginType.AutoGuest;
             MainWindow = new MainWindow();
             MainWindow.LoadConfigSettings();
             MainWindow.Show();
@@ -109,6 +116,9 @@ namespace Hearthstone_Deck_Tracker
 			HotKeyManager.Load();
 			Initialized = true;
 
+	        Analytics.Analytics.TrackPageView(
+	                                          string.Format("/app/v{0}/{1}{2}", Helper.GetCurrentVersion().ToVersionString(),
+	                                                        loginType.ToString().ToLower(), newUser ? "/new" : ""), "");
 		}
 
         private static async void UpdateOverlayAsync()

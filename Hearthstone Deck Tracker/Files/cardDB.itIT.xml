@@ -894,7 +894,7 @@ Pesca una carta e subisce $2 danni.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>+2 Attacco alla tua arma.</Text>
+    <Text>+2 Attacco alla tua Arma.</Text>
     <Mechanics />
     <Artist>Trevor Jacobs</Artist>
   </Card>
@@ -2344,7 +2344,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge l'arma dell'avversario.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge l'Arma dell'avversario.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -2362,8 +2362,10 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Quando evochi un servitore con Attacco pari a 3 o inferiore, gli fornisce &lt;b&gt;Carica&lt;/b&gt;.</Text>
-    <Mechanics />
+    <Text>I tuoi servitori con &lt;b&gt;Carica&lt;/b&gt; hanno +1 Attacco.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2376,7 +2378,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>&lt;b&gt;Carica&lt;/b&gt; dal Capitano Cantaguerra.</Text>
+    <Text>+1 Attacco dal Capitano Cantaguerra.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -3181,7 +3183,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>Evoca una Bestia casuale.</Text>
+    <Text>Evoca una Bestia casuale fra Misha, Leokk e Huffer.</Text>
     <Mechanics />
     <Artist>Wei Wang</Artist>
   </Card>
@@ -3535,7 +3537,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
-    <Text>Ha &lt;b&gt;Carica&lt;/b&gt; fintanto che hai un'arma equipaggiata.</Text>
+    <Text>Ha &lt;b&gt;Carica&lt;/b&gt; fintanto che hai un'Arma equipaggiata.</Text>
     <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -3693,7 +3695,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
-    <Text>&lt;b&gt;Rabbia:&lt;/b&gt; la tua arma ha +2 Attacco.</Text>
+    <Text>&lt;b&gt;Rabbia:&lt;/b&gt; la tua Arma ha +2 Attacco.</Text>
     <Mechanics>
       <string>Enrage</string>
     </Mechanics>
@@ -3754,7 +3756,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Distrugge la tua arma e infligge danni pari al suo attacco ai nemici.</Text>
+    <Text>Distrugge la tua Arma e infligge danni pari al suo attacco ai nemici.</Text>
     <Mechanics>
       <string>AffectedBySpellPower</string>
     </Mechanics>
@@ -6858,7 +6860,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; equipaggia un'arma 2/2.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; equipaggia un'Arma 2/2.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -6953,7 +6955,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Se possiedi un'arma, le fornisce +1/+1. Altrimenti, equipaggia un'arma 1/3.</Text>
+    <Text>Se possiedi un'Arma, le fornisce +1/+1. Altrimenti, equipaggia un'Arma 1/3.</Text>
     <Mechanics />
     <Artist>Matt Cavotta</Artist>
   </Card>
@@ -7453,7 +7455,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge l'arma dell'avversario e pesca un numero di carte pari alla sua Integrità.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; distrugge l'Arma dell'avversario e pesca un numero di carte pari alla sua Integrità.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -8768,7 +8770,7 @@ Evoca un Infernale 6/6.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene un incremento all'Attacco pari all'Attacco della tua arma.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene un incremento all'Attacco pari all'Attacco della tua Arma.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -8839,7 +8841,7 @@ Evoca un Infernale 6/6.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
-    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Costa (1) Mana in meno per ogni punto Attacco della tua arma.</Text>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Costa (1) Mana in meno per ogni punto Attacco della tua Arma.</Text>
     <Mechanics>
       <string>Taunt</string>
     </Mechanics>
@@ -8871,7 +8873,7 @@ Evoca un Infernale 6/6.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1/+1 alla tua arma.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1/+1 alla tua Arma.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -8900,7 +8902,7 @@ Evoca un Infernale 6/6.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rimuove 1 Integrità dall'arma dell'avversario.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; rimuove 1 Integrità dall'Arma dell'avversario.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -10109,7 +10111,7 @@ Evoca due Costrutti d'Ossa 2/1.</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo prossimo turno, infligge 5 danni ai nemici.</Text>
+    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo turno successivo, infligge 5 danni ai nemici.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10434,6 +10436,18 @@ Evoca due Costrutti d'Ossa 2/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>HRW02_1e</CardId>
+    <Name>Potenziamento</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Attacco aumentato.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NAX11_02H_2_TB</CardId>
     <Name>Nube di Veleno</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10444,6 +10458,18 @@ Evoca due Costrutti d'Ossa 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
 Infligge 1 danno a tutti i servitori nemici ed evoca una Fanghiglia per ogni servitore morto.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2c_TB</CardId>
+    <Name>Decimazione</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>La Salute dei servitori nemici diventa pari a 1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10788,6 +10814,94 @@ Ottiene nuovamente &lt;b&gt;Furtività&lt;/b&gt; quando uccide un servitore.</Te
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_CoOpBossSpell_1</CardId>
+    <Name>Priorizzazione</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge danni pari all'Attacco al servitore con più Salute.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_2</CardId>
+    <Name>Raffica di Bombe</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge danni pari all'Attacco a un massimo di tre bersagli casuali.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_3</CardId>
+    <Name>Rilascio Refrigerante</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Congela&lt;/b&gt; e infligge danni pari all'Attacco a TUTTI i servitori. Ottiene +2 Attacco.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_4</CardId>
+    <Name>Sovralimentazione</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ottiene +2 Attacco.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_5</CardId>
+    <Name>Doppia Folgore</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge danni pari all'Attacco a entrambi gli eroi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_6</CardId>
+    <Name>Distruzione Ramingo</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Distrugge il Ramingo della Sapienza Cho.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod</CardId>
+    <Name>Mastro Meccanico Mecazod</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>95</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Boss&lt;/b&gt;
+Mecazod vince se sconfigge uno dei due eroi!</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>Incantamento Eterno</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10797,6 +10911,39 @@ Ottiene nuovamente &lt;b&gt;Furtività&lt;/b&gt; quando uccide un servitore.</Te
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot</CardId>
+    <Name>TBFactionWarBoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot_Spell</CardId>
+    <Name>TBFactionWarBoomBotSpell</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_Boss_BoomBot</CardId>
+    <Name>FactionWar_BoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -14481,7 +14628,7 @@ Pesca 2 carte.</Text>
     <Health>0</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>+1/+1 ai tuoi servitori e alla tua arma.</Text>
+    <Text>+1/+1 ai tuoi servitori e alla tua Arma.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -14519,7 +14666,7 @@ Pesca 2 carte.</Text>
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; distrugge l'arma dell'avversario.</Text>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; distrugge l'Arma dell'avversario.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -14937,7 +15084,7 @@ Pesca 2 carte.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>+3 Attacco alla tua arma. &lt;b&gt;Combo:&lt;/b&gt; inoltre, +3 Attacco a un tuo servitore casuale.</Text>
+    <Text>+3 Attacco alla tua Arma. &lt;b&gt;Combo:&lt;/b&gt; inoltre, +3 Attacco a un tuo servitore casuale.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -14979,7 +15126,7 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1 Attacco alla tua arma.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; +1 Attacco alla tua Arma.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -15573,7 +15720,7 @@ Pesca 2 carte.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Distrugge un servitore nemico casuale. &lt;b&gt;Combo:&lt;/b&gt; inoltre, distrugge l'arma dell'avversario.</Text>
+    <Text>Distrugge un servitore nemico casuale. &lt;b&gt;Combo:&lt;/b&gt; inoltre, distrugge l'Arma dell'avversario.</Text>
     <Mechanics>
       <string>Combo</string>
     </Mechanics>
@@ -15891,7 +16038,7 @@ Pesca 2 carte.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>Evoca tre Reclute Mano d'Argento 1/1. Equipaggia un'arma 1/4.</Text>
+    <Text>Evoca tre Reclute Mano d'Argento 1/1. Equipaggia un'Arma 1/4.</Text>
     <Mechanics />
     <Artist>Mike Hayes</Artist>
   </Card>
@@ -17007,7 +17154,7 @@ Pesca 2 carte.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ogni giocatore equipaggia un'arma casuale.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ogni giocatore equipaggia un'Arma casuale.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -17592,7 +17739,7 @@ Infligge 10 danni all'eroe nemico se non ha utilizzato tutto il Mana.</Text>
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo prossimo turno, infligge $5 danni ai nemici.</Text>
+    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo turno successivo, infligge $5 danni ai nemici.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17616,7 +17763,7 @@ Infligge 10 danni all'eroe nemico se non ha utilizzato tutto il Mana.</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo prossimo turno, infligge $10 danni agli alleati.</Text>
+    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo turno successivo, infligge $10 danni ai nemici.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19050,7 +19197,7 @@ Scambia Attacco e Salute dei servitori.
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
-Equipaggia un'arma che diventa più potente quando l'avversario gioca una carta.</Text>
+Equipaggia un'Arma che diventa più potente quando l'avversario gioca una carta.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19063,7 +19210,7 @@ Equipaggia un'arma che diventa più potente quando l'avversario gioca una carta.
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
-Equipaggia un'arma che diventa più potente quando l'avversario gioca una carta.</Text>
+Equipaggia un'Arma che diventa più potente quando l'avversario gioca una carta.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19075,7 +19222,7 @@ Equipaggia un'arma che diventa più potente quando l'avversario gioca una carta.
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Infligge $3 danni a un servitore. +3 Attacco alla tua arma.</Text>
+    <Text>Infligge $3 danni a un servitore. +3 Attacco alla tua Arma.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19099,7 +19246,7 @@ Equipaggia un'arma che diventa più potente quando l'avversario gioca una carta.
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Distrugge l'arma dell'avversario.</Text>
+    <Text>Distrugge l'Arma dell'avversario.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19759,7 +19906,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>Il prossimo Drago costa (2) Mana in meno.</Text>
+    <Text>Il tuo prossimo Drago costa (2) Mana in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -20680,7 +20827,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Race>Pirate</Race>
-    <Text>Fornisce +1 Attacco alle armi che equipaggi.</Text>
+    <Text>Fornisce +1 Attacco alle Armi che equipaggi.</Text>
     <Mechanics />
     <Artist>Matt Dixon</Artist>
   </Card>
@@ -20784,7 +20931,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>4</Cost>
     <Durability>3</Durability>
     <Class>Rogue</Class>
-    <Text>Il tuo Potere Eroe fornisce +1 Attacco a quest'arma invece di sostituirla.</Text>
+    <Text>Il tuo Potere Eroe fornisce +1 Attacco a quest'Arma invece di sostituirla.</Text>
     <Mechanics />
     <Artist>Nutthapon Petchthai</Artist>
   </Card>
@@ -21595,7 +21742,7 @@ Infligge $2 danni.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>&lt;b&gt;Ispirazione:&lt;/b&gt; +1 Attacco alla tua arma.</Text>
+    <Text>&lt;b&gt;Ispirazione:&lt;/b&gt; +1 Attacco alla tua Arma.</Text>
     <Mechanics>
       <string>Inspire</string>
     </Mechanics>
@@ -22888,7 +23035,7 @@ Infligge $2 danni.</Text>
     <Health>4</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Infligge 3 danni a un nemico casuale quando è il bersaglio di una tua Magia.</Text>
+    <Text>Quando è il bersaglio di una tua Magia, infligge 3 danni a un nemico casuale.</Text>
     <Mechanics />
     <Artist>Ben Thompson</Artist>
   </Card>
@@ -22902,7 +23049,7 @@ Infligge $2 danni.</Text>
     <Health>3</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; sostituisce il tuo Potere Eroe con uno più potente.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; sostituisce il tuo Potere Eroe originale con uno più potente.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
