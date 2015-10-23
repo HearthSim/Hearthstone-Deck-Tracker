@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
 	/// <summary>
-	/// Interaction logic for ArenaStatsSummaryTotal.xaml
+	/// Interaction logic for ArenaRewardsSummary.xaml
 	/// </summary>
-	public partial class ArenaStatsSummaryTotal : UserControl
+	public partial class ArenaRewardsSummary : UserControl
 	{
-		public ArenaStatsSummaryTotal()
+		public ArenaRewardsSummary()
 		{
 			InitializeComponent();
 		}

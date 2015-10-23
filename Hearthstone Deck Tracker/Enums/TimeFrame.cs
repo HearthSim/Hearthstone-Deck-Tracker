@@ -47,10 +47,10 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[Description("Today")]
 		Today,
 
-		[Description("This Week")]
+		[Description("Week")]
 		ThisWeek,
 
-		[Description("Current Season")]
+		[Description("Season")]
 		CurrentSeason,
 
 		[Description("All Time")]

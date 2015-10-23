@@ -6,71 +6,46 @@
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
              xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
-        <Expander IsExpanded="True">
-            <Expander.Header>
-                <DockPanel>
-                    <TextBlock Foreground="White" Text="BEST" DockPanel.Dock="Left"/>
-                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} | {1}% win rate" FallbackValue="None">
-                                <Binding Path="ArenaClassStatsBest.Class" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
-                                <Binding Path="ArenaClassStatsBest.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </DockPanel>
-            </Expander.Header>
+             d:DesignHeight="300" d:DesignWidth="600">
+    <StackPanel Orientation="Horizontal">
+        <DockPanel>
+            <Label DockPanel.Dock="Top" Content="Total" FontSize="16" Margin="10,0,0,0"/>
+            <DockPanel>
+                <Grid Margin="5,0,10,0" VerticalAlignment="Center">
+                    <Rectangle Width="48" Height="48">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource hdticon}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <Ellipse Width="22" Height="22" Fill="White"/>
+                    <Rectangle Width="44" Height="44">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource hdticon_black}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+                <arena:ArenaClassStats ImageVisiblity="Collapsed" DataContext="{Binding Path=ArenaAllClasses, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}" Margin="0,0,-48,0"/>
+            </DockPanel>
+        </DockPanel>
+        <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
+        <DockPanel>
+            <Label DockPanel.Dock="Top" Content="Best" FontSize="16" Margin="10,0,0,0"/>
             <arena:ArenaClassStats DataContext="{Binding Path=ArenaClassStatsBest, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
-        </Expander>
-        <Expander>
-            <Expander.Header>
-                <DockPanel>
-                    <TextBlock Foreground="White" Text="WORST" DockPanel.Dock="Left"/>
-                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} | {1}% win rate" FallbackValue="None">
-                                <Binding Path="ArenaClassStatsWorst.Class" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
-                                <Binding Path="ArenaClassStatsWorst.WinRatePercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </DockPanel>
-            </Expander.Header>
+        </DockPanel>
+        <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
+        <DockPanel>
+            <Label DockPanel.Dock="Top" Content="Worst" FontSize="16" Margin="10,0,0,0"/>
             <arena:ArenaClassStats DataContext="{Binding Path=ArenaClassStatsWorst, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
-        </Expander>
-        <Expander>
-            <Expander.Header>
-                <DockPanel>
-                    <TextBlock Foreground="White" Text="MOST PICKED" DockPanel.Dock="Left"/>
-                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} | {1}% picked" FallbackValue="None">
-                                <Binding Path="ArenaClassStatsMostPicked.Class" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
-                                <Binding Path="ArenaClassStatsMostPicked.PickedPercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </DockPanel>
-            </Expander.Header>
+        </DockPanel>
+        <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
+        <DockPanel>
+            <Label DockPanel.Dock="Top" Content="Most picked" FontSize="16" Margin="10,0,0,0"/>
             <arena:ArenaClassStats DataContext="{Binding Path=ArenaClassStatsMostPicked, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
-        </Expander>
-        <Expander>
-            <Expander.Header>
-                <DockPanel>
-                    <TextBlock Foreground="White" Text="LEAST PICKED" DockPanel.Dock="Left"/>
-                    <TextBlock Foreground="White" Margin="0,0,10,0" HorizontalAlignment="Right">
-                        <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0} | {1}% picked" FallbackValue="None">
-                                <Binding Path="ArenaClassStatsLeastPicked.Class" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
-                                <Binding Path="ArenaClassStatsLeastPicked.PickedPercent" Source="{x:Static stats:CompiledStats.Instance}" IsAsync="True"/>
-                            </MultiBinding>
-                        </TextBlock.Text>
-                    </TextBlock>
-                </DockPanel>
-            </Expander.Header>
+        </DockPanel>
+        <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
+        <DockPanel>
+            <Label DockPanel.Dock="Top" Content="Least picked" FontSize="16" Margin="10,0,0,0"/>
             <arena:ArenaClassStats DataContext="{Binding Path=ArenaClassStatsLeastPicked, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
-        </Expander>
+        </DockPanel>
     </StackPanel>
 </UserControl>
