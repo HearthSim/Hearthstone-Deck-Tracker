@@ -4,13 +4,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Importing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HDTTests.Hearthstone
 {
 	[TestClass]
 	public class WebImportTest
-	{		
+	{
+
+		[TestMethod]
+		public void InvalidUrlTest()
+		{
+			var found = DeckImporter.Import(@"http://hsdecktracker.net").Result;
+			Assert.IsNull(found);
+		}
+
 		[TestMethod]
 		public void Hearthstats()
 		{
