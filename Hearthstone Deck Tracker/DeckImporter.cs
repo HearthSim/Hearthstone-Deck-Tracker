@@ -531,7 +531,7 @@ namespace Hearthstone_Deck_Tracker
 				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
 				foreach(var info in cardInfo)
 				{
-					var card = Database.GetCardFromName(info.Name);
+					var card = Database.GetCardFromName(info.Name.Trim());
 					card.Count = info.Count;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
