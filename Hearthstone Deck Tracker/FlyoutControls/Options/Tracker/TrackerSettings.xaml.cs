@@ -48,7 +48,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
 			CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
 			CheckBoxShowLoginDialog.IsChecked = Config.Instance.ShowLoginDialog;
+			CheckBoxShowSplashScreen.IsChecked = Config.Instance.ShowSplashScreen;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
+			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;
 
 			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 				Config.Instance.KeyPressOnGameStart = "None";
@@ -276,7 +278,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonOpenAppData_OnClick(object sender, RoutedEventArgs e)
 		{
-			Process.Start(Config.Instance.AppDataPath);
+			Process.Start(Config.AppDataPath);
 		}
 
 		private void CheckboxStartWithWindows_Checked(object sender, RoutedEventArgs e)
@@ -333,10 +335,41 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
+		private void CheckboxShowSplashScreen_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSplashScreen = true;
+			Config.Save();
+		}
+
+		private void CheckboxShowSplashScreen_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSplashScreen = false;
+			Config.Save();
+		}
+
 		private void ButtonRestart_OnClick(object sender, RoutedEventArgs e)
 		{
 			Core.MainWindow.Restart();
 		}
 
+		private void CheckBoxAnalytics_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.GoogleAnalytics = true;
+			Config.Save();
+		}
+
+		private void CheckBoxAnalytics_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.GoogleAnalytics = false;
+			Config.Save();
+		}
 	}
 }

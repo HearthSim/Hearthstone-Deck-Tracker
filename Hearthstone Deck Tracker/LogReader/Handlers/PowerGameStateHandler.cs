@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
@@ -180,6 +181,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
             }
             else if (HsLogReaderConstants.PowerTaskList.ActionStartRegex.IsMatch(logLine))
             {
+                Entity actionEntity;
                 var playerEntity =
                     game.Entities.FirstOrDefault(
                         e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == game.Player.Id);
@@ -193,9 +195,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
                 if (string.IsNullOrEmpty(actionStartingCardId))
                 {
-                    Entity tmpEntity;
-                    if (game.Entities.TryGetValue(actionStartingEntityId, out tmpEntity))
-                        actionStartingCardId = tmpEntity.CardId;
+                    if (game.Entities.TryGetValue(actionStartingEntityId, out actionEntity))
+                        actionStartingCardId = actionEntity.CardId;
+                }
+                if (game.Entities.TryGetValue(actionStartingEntityId, out actionEntity))
+                {
+                    // spell owned by the player
+                    if (actionEntity.HasTag(GAME_TAG.CONTROLLER) && 
+                        actionEntity.GetTag(GAME_TAG.CONTROLLER) == game.Player.Id &&
+                        actionEntity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ABILITY)
+                    {
+                        int targetEntityId = actionEntity.GetTag(GAME_TAG.CARD_TARGET);
+                        Entity targetEntity;
+
+                        bool targetsMinion = false;
+
+                        if (game.Entities.TryGetValue(targetEntityId, out targetEntity))
+                            targetsMinion = true;
+
+                        gameState.GameHandler.HandlePlayerSpellPlayed(targetsMinion);
+                    }
                 }
                 if (!string.IsNullOrEmpty(actionStartingCardId))
                 {

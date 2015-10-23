@@ -414,7 +414,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var result =
 				await
 				this.ShowMessageAsync("Full sync", "This may take a while, are you sure?", MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "start full sync", NegativeButtonText = "cancel"});
+				                      new MessageDialogs.Settings {AffirmativeButtonText = "start full sync", NegativeButtonText = "cancel"});
 			if(result == MessageDialogResult.Affirmative)
 				HearthStatsManager.SyncAsync(true);
 		}
@@ -424,7 +424,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var result =
 				await
 				this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
+				                      new MessageDialogs.Settings {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
 			if(result == MessageDialogResult.Affirmative)
 			{
 				var deletedFile = HearthStatsAPI.Logout();
@@ -452,7 +452,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				this.ShowMessageAsync("Delete " + decks.Count + " deck(s) on HearthStats?",
 				                      "This will delete the deck(s) and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The decks or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
 				                      MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
+				                      new MessageDialogs.Settings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
 
 			if(dialogResult == MessageDialogResult.Affirmative)
 			{
@@ -489,7 +489,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await
 				this.ShowMessageAsync("Delete deck on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
 				                      MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
+				                      new MessageDialogs.Settings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
 			Config.Instance.HearthStatsAutoDeleteDecks = dialogResult == MessageDialogResult.Affirmative;
 			MenuItemCheckBoxAutoDeleteDecks.IsChecked = Config.Instance.HearthStatsAutoDeleteDecks;
 			Config.Save();
@@ -504,7 +504,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await
 				this.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
 				                      MessageDialogStyle.AffirmativeAndNegative,
-				                      new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
+				                      new MessageDialogs.Settings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
 			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
 			MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
 			Config.Save();
@@ -670,7 +670,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		                    this.ShowMessageAsync("WARNING! Sync with HearthStats in progress!",
 		                        "Closing Hearthstone Deck Tracker now can cause data inconsistencies. Are you sure?",
 		                        MessageDialogStyle.AffirmativeAndNegative,
-		                        new MetroDialogSettings
+		                        new MessageDialogs.Settings
 		                        {
 		                            AffirmativeButtonText = "close anyway",
 		                            NegativeButtonText = "wait"
@@ -915,6 +915,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BtnDeckStats_Click(object sender, RoutedEventArgs e)
 		{
+			ShowStats();
+		}
+
+		public void ShowStats()
+		{
+
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
 			if(Config.Instance.StatsInWindow)
 			{

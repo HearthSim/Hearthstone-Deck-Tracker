@@ -603,7 +603,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		/// The mechanic attribute, such as windfury or taunt, comes from the cardDB json file
 		public int GetMechanicCount(string newmechanic)
 		{
-			return Cards.Where(card => card.Mechanics != null).Sum(card => card.Mechanics.Count(mechanic => mechanic.Equals(newmechanic)));
+			return Cards.Where(card => card.Mechanics != null).Sum(card => card.Mechanics.Count(mechanic => mechanic.Equals(newmechanic)) * card.Count);
 		}
 
 		private readonly string[] _relevantMechanics =

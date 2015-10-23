@@ -2365,8 +2365,10 @@ Cause $2 de dano ao herói inimigo.</Text>
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Sempre que você evocar um lacaio com 3 ou menos de Ataque, conceda &lt;b&gt;Investida&lt;/b&gt; a ele.</Text>
-    <Mechanics />
+    <Text>Seus lacaios com &lt;b&gt;Investida&lt;/b&gt; têm +1 de Ataque.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2379,7 +2381,7 @@ Cause $2 de dano ao herói inimigo.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Este lacaio ganha &lt;b&gt;Investida&lt;/b&gt;.</Text>
+    <Text>Capitã do Brado Guerreiro está concedendo +1 de Ataque a este lacaio.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10444,6 +10446,18 @@ Evoque dois Constructos Ósseos 2/1.</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>HRW02_1e</CardId>
+    <Name>Equipar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>+1 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NAX11_02H_2_TB</CardId>
     <Name>Nuvem de Veneno</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10454,6 +10468,18 @@ Evoque dois Constructos Ósseos 2/1.</Text>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Poder Heroico:&lt;/b&gt;
 Cause 1 de dano a todos os lacaios inimigos. Se algum morrer, evoque um visgo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2c_TB</CardId>
+    <Name>Dizimar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Mude a Vida dos lacaios inimigos para 1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10798,6 +10824,95 @@ Recupere &lt;b&gt;Furtividade&lt;/b&gt; quando Ladino JxJ abater um lacaio.</Tex
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_CoOpBossSpell_1</CardId>
+    <Name>Priorizar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cause dano de Ataque ao maior lacaio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_2</CardId>
+    <Name>Salva de Bombas</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cause dano de Ataque a até 3 alvos aleatórios.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_3</CardId>
+    <Name>Liberar Resfriador</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Congele e cause dano de Ataque a todos os lacaios.
+Receba 2 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_4</CardId>
+    <Name>Turbinar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Receba 2 de Ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_5</CardId>
+    <Name>Fulminação em Dobro</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cause dano de Ataque aos dois jogadores.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_6</CardId>
+    <Name>Matar o Andarilho das Lendas</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Destrua o Andarilho das Lendas Cho.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod</CardId>
+    <Name>Engrenochefe Mecanozod</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>95</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Chefe&lt;/b&gt;
+No início de cada turno, o Mecanozod ataca!</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>Encantamento Infinito</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10807,6 +10922,39 @@ Recupere &lt;b&gt;Furtividade&lt;/b&gt; quando Ladino JxJ abater um lacaio.</Tex
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot</CardId>
+    <Name>TBFactionWarBoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot_Spell</CardId>
+    <Name>TBFactionWarBoomBotSpell</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_Boss_BoomBot</CardId>
+    <Name>FactionWar_BoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -17106,7 +17254,7 @@ Não pode ser alvo de feitiços nem de Poderes Heroicos.</Text>
   </Card>
   <Card>
     <CardId>GVG_123e</CardId>
-    <Name>Sobrecarregado</Name>
+    <Name>Turbinado</Name>
     <CardSet>Goblins vs Gnomes</CardSet>
     <Type>Enchantment</Type>
     <Attack>0</Attack>

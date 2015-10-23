@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
@@ -34,10 +35,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public string CardId { get; set; }
 		public bool IsPlayer { get; set; }
 
-		[JsonIgnore]
+        [JsonIgnore]
+        public bool IsHero
+        {
+            get { return CardId != null && CardIds.HeroIdDict.Keys.Contains(CardId); }
+        }
+
+        [JsonIgnore]
+        public bool IsActiveDeathrattle
+        {
+            get { return HasTag(GAME_TAG.DEATHRATTLE) && GetTag(GAME_TAG.DEATHRATTLE) == 1; }
+        }
+
+        [JsonIgnore]
 		public bool IsOpponent
 		{
-			get { return !IsPlayer && HasTag(GAME_TAG.PLAYER_ID); }
+			get { return !IsPlayer && HasTag(GAME_TAG.CARDTYPE) && (GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO); }
 		}
 
 		[JsonIgnore]
@@ -78,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				return _cachedCard
 				       ?? (_cachedCard =
 				           (Database.GetCardFromId(CardId)
-				            ?? new Card(string.Empty, null, "unknown", "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "",
+				            ?? new Card(string.Empty, null, Rarity.Free, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "",
 				                        "")));
 			}
 		}

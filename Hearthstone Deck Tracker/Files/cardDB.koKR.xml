@@ -2365,8 +2365,10 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>내가 공격력이 3 이하인 하수인을 소환할 때마다 그 하수인에게 &lt;b&gt;돌진&lt;/b&gt;을 부여합니다.</Text>
-    <Mechanics />
+    <Text>&lt;b&gt;돌진&lt;/b&gt; 능력이 있는 내 하수인들이 공격력을 +1 얻습니다.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Wei Wang</Artist>
   </Card>
   <Card>
@@ -2379,7 +2381,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>&lt;b&gt;돌진&lt;/b&gt;</Text>
+    <Text>전쟁노래 사령관이 공격력 +1 부여</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10451,6 +10453,18 @@
     </Mechanics>
   </Card>
   <Card>
+    <CardId>HRW02_1e</CardId>
+    <Name>부릉부릉</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>공격력 증가</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NAX11_02H_2_TB</CardId>
     <Name>독구름</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10461,6 +10475,18 @@
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
 모든 적 하수인에게 피해를 1 줍니다. 하나라도 죽으면, 독액괴물을 소환합니다. </Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>NAX12_02H_2c_TB</CardId>
+    <Name>척살</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>적 하수인들의 생명력을 1로 바꿉니다.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10805,6 +10831,95 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_CoOpBossSpell_1</CardId>
+    <Name>목표 포착</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>가장 공격력이 높은 하수인에게 내 공격력만큼 피해를 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_2</CardId>
+    <Name>폭탄 난사</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>최대 3개의 대상에게 내 공격력만큼 피해를 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_3</CardId>
+    <Name>냉각수 방출</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>다른 &lt;b&gt;모든&lt;/b&gt; 하수인들을 &lt;b&gt;빙결&lt;/b&gt; 상태로 만들고, 내 공격력만큼 피해를 줍니다.
+공격력을 +2 얻습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_4</CardId>
+    <Name>과조작</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>공격력을 +2 얻습니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_5</CardId>
+    <Name>메카조드 갈래 번개</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>각 플레이어에게 내 공격력만큼 피해를 줍니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOpBossSpell_6</CardId>
+    <Name>전승지기 처치</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>전승지기 초를 처치합니다.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod</CardId>
+    <Name>톱니반장 메카조드</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>95</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;우두머리&lt;/b&gt;
+두 플레이어 중 한 명이라도 죽으면 메카조드가 승리합니다!</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>무한 강화</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10814,6 +10929,39 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>+2/+2</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot</CardId>
+    <Name>TBFactionWarBoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_BoomBot_Spell</CardId>
+    <Name>TBFactionWarBoomBotSpell</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_FactionWar_Boss_BoomBot</CardId>
+    <Name>FactionWar_BoomBot</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
     <Mechanics />
   </Card>
   <Card>
@@ -12676,7 +12824,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;도발.
-죽음의 메아리:&lt;/b&gt; &lt;b&gt;도발&lt;/b&gt; 능력을 가진 1/2 수액괴물을 1마리 소환합니다.</Text>
+죽음의 메아리:&lt;/b&gt; &lt;b&gt;도발&lt;/b&gt; 능력이 있는 1/2 수액괴물을 1마리 소환합니다.</Text>
     <Mechanics>
       <string>Deathrattle</string>
       <string>Taunt</string>
@@ -13511,7 +13659,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Health>0</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>적 영웅에게 피해를 $8 주고 &lt;b&gt;빙결&lt;/b&gt;시킵니다.</Text>
+    <Text>적 영웅에게 피해를 $8 주고 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -13570,7 +13718,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-적 영웅에게 피해를 2 주고 &lt;b&gt;빙결&lt;/b&gt;시킵니다.</Text>
+적 영웅에게 피해를 2 주고 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -13585,7 +13733,7 @@ PvP 도적이 하수인을 처치하면, &lt;b&gt;은신&lt;/b&gt;을 다시 얻
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;영웅 능력&lt;/b&gt;
-적 영웅에게 피해를 3 주고 &lt;b&gt;빙결&lt;/b&gt;시킵니다.</Text>
+적 영웅에게 피해를 3 주고 &lt;b&gt;빙결&lt;/b&gt; 상태로 만듭니다.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>

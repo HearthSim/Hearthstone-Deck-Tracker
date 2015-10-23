@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Exporting;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -30,8 +32,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var message =
 					string.Format(
-					              "1) create a new, empty {0}-Deck {1}.\n\n2) leave the deck creation screen open.\n\n3)do not move your mouse or type after clicking \"export\"",
-					              deck.Class, (Config.Instance.AutoClearDeck ? "(or open an existing one to be cleared automatically)" : ""));
+					              "1) create a new {0} deck{1}.\n\n2) leave the deck creation screen open.\n\n3) do not move your mouse or type after clicking \"export\".",
+					              deck.Class, (Config.Instance.AutoClearDeck ? " (or open an existing one to be cleared automatically)" : ""));
 
 				if(deck.GetSelectedDeckVersion().Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
 				{
@@ -39,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						"\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
 				}
 
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "export"};
+				var settings = new MessageDialogs.Settings {AffirmativeButtonText = "Export"};
 				var result =
 					await
 					this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone", message, MessageDialogStyle.AffirmativeAndNegative, settings);
@@ -80,25 +82,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = selectedDeck.GetSelectedDeckVersion();
 			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, 96, 96, deck.Name);
 			screenShotWindow.Shutdown();
+			SaveOrUploadScreenshot(pngEncoder, deck.Name);
+		}
 
+		public async Task SaveOrUploadScreenshot(PngBitmapEncoder pngEncoder, string proposedFileName)
+		{
 			if(pngEncoder != null)
 			{
 				var saveOperation = await this.ShowScreenshotUploadSelectionDialog();
 				var tmpFile = new FileInfo(Path.Combine(Config.Instance.DataDir, string.Format("tmp{0}.png", DateTime.Now.ToFileTime())));
 				var fileName = saveOperation.SaveLocal
-					               ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "png") : tmpFile.FullName;
+								   ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(proposedFileName), "png") : tmpFile.FullName;
 				if(fileName != null)
 				{
 					string imgurUrl = null;
-					using(var ms = new MemoryStream())
-					using(var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+					using (var ms = new MemoryStream())
+					using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
 					{
 						pngEncoder.Save(ms);
 						ms.WriteTo(fs);
 						if(saveOperation.Upload)
 						{
 							var controller = await this.ShowProgressAsync("Uploading...", "");
-							imgurUrl = await Imgur.Upload(Config.Instance.ImgurClientId, ms, deck.Name);
+							imgurUrl = await Imgur.Upload(Config.Instance.ImgurClientId, ms, proposedFileName);
 							await controller.CloseAsync();
 						}
 					}
@@ -110,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					}
 					else
 						await this.ShowSavedFileMessage(fileName);
-					Logger.WriteLine("Saved screenshot of " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
+					Logger.WriteLine("Saved screenshot to: " + fileName, "Export");
 				}
 				if(tmpFile.Exists)
 				{
@@ -118,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					{
 						tmpFile.Delete();
 					}
-					catch(Exception ex)
+					catch (Exception ex)
 					{
 						Logger.WriteLine(ex.ToString(), "ExportScreenshot");
 					}
@@ -166,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					english =
 						await
 						this.ShowMessageAsync("Select language", "", MessageDialogStyle.AffirmativeAndNegative,
-						                      new MetroDialogSettings
+						                      new MessageDialogs.Settings
 						                      {
 							                      AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
 							                      NegativeButtonText = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key

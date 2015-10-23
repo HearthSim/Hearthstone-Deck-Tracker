@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -32,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsInMenu = true;
 			PossibleArenaCards = new List<Card>();
 			PossibleConstructedCards = new List<Card>();
-			OpponentSecrets = new OpponentSecrets();
+			OpponentSecrets = new OpponentSecrets(this);
             Reset();
 		}
 
@@ -71,7 +72,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public GameMode CurrentGameMode
+        public bool IsMinionInPlay
+        {
+            get { return Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion)).Value != null; }
+        }
+
+        public bool IsOpponentMinionInPlay
+        {
+            get { return Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))).Value != null; }
+        }
+
+        public int OpponentMinionCount
+        {
+            get { return Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))); }
+        }
+
+        public GameMode CurrentGameMode
 		{
 			get { return _currentGameMode; }
 			set
@@ -201,7 +217,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						Core.MainWindow.ShowMessageAsync("New arena deck detected!",
 						                                   "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]",
 						                                   MessageDialogStyle.AffirmativeAndNegative,
-						                                   new MetroDialogSettings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
+						                                   new MessageDialogs.Settings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
 
 					if(result == MessageDialogResult.Affirmative)
 					{

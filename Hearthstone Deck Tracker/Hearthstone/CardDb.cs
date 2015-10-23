@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
 
@@ -19,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string CardId { get; set; }
 		public string Name { get; set; }
 		public string CardSet { get; set; }
-		public string Rarity { get; set; }
+		public Rarity Rarity { get; set; }
 		public string Type { get; set; }
 		public int Attack { get; set; }
 		public int Health { get; set; }
