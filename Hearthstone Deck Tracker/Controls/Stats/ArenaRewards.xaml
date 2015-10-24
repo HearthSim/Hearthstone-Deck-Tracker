@@ -7,14 +7,20 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
              mc:Ignorable="d" 
-             d:DesignHeight="320" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="300">
     <StackPanel>
+        <GroupBox Header="Payment method">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <RadioButton Name="RadioButtonPaymentGold" Content="Gold" IsChecked="True" Checked="RadioButtonPaymentGold_OnChecked"/>
+                <RadioButton Name="RadioButtonPaymentMoney" Content="Money" Margin="20,0,0,0" Checked="RadioButtonPaymentMoney_OnChecked"/>
+            </StackPanel>
+        </GroupBox>
         <UniformGrid Rows="1">
             <GroupBox Header="Gold">
-                <TextBox Name="TextBoxGold" controls:TextBoxHelper.Watermark="50+125" TextChanged="TextBoxGold_OnTextChanged"/>
+                <TextBox Name="TextBoxGold" ToolTip="You can enter values as e.g. 50+125" TextChanged="TextBoxGold_OnTextChanged"/>
             </GroupBox>
             <GroupBox Header="Dust">
-                <TextBox Name="TextBoxDust" controls:TextBoxHelper.Watermark="0" TextChanged="TextBoxDust_OnTextChanged"/>
+                <TextBox Name="TextBoxDust" ToolTip="You can enter values as e.g. 50+125" TextChanged="TextBoxDust_OnTextChanged"/>
             </GroupBox>
         </UniformGrid>
         <GroupBox Header="Packs">

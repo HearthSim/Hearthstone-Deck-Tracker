@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
-        Title="Arena Rewards" Height="390" Width="300" Topmost="True" WindowStyle="ToolWindow" ResizeMode="NoResize"
+        Title="Arena Rewards" Height="459" Width="300" Topmost="True" WindowStyle="ToolWindow" ResizeMode="NoResize"
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <StackPanel>
         <stats:ArenaRewards x:Name="ArenaRewards"/>

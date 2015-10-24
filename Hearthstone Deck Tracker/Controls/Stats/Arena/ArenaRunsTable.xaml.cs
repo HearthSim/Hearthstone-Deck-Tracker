@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
@@ -92,12 +93,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		private void ButtonShowReplay_OnClick(object sender, RoutedEventArgs e)
 		{
-
+			if(SelectedGame == null)
+				return;
+			if(SelectedGame.HasReplayFile)
+				ReplayReader.LaunchReplayViewer(SelectedGame.ReplayFile);
 		}
 
 		private void ButtonShowDeck_OnClick(object sender, RoutedEventArgs e)
 		{
-
+			if(SelectedGame == null)
+				return;
+			Core.MainWindow.OpponentDeckFlyout.SetDeck(SelectedGame.GetOpponentDeck());
+			Core.MainWindow.FlyoutOpponentDeck.IsOpen = true;
 		}
 	}
 }

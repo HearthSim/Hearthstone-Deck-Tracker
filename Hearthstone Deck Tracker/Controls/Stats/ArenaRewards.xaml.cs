@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
@@ -250,6 +251,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				CheckBoxGolden2.IsChecked = reward.Cards[1].Golden;
 			if(reward.Cards[2] != null)
 				CheckBoxGolden3.IsChecked = reward.Cards[2].Golden;
+			if(reward.PaymentMethod == ArenaPaymentMethod.Gold)
+				RadioButtonPaymentGold.IsChecked = true;
+			else if(reward.PaymentMethod == ArenaPaymentMethod.Money)
+				RadioButtonPaymentMoney.IsChecked = true;
+		}
+
+		private void RadioButtonPaymentGold_OnChecked(object sender, RoutedEventArgs e)
+		{
+			Reward.PaymentMethod = ArenaPaymentMethod.Gold;;
+		}
+
+		private void RadioButtonPaymentMoney_OnChecked(object sender, RoutedEventArgs e)
+		{
+			Reward.PaymentMethod = ArenaPaymentMethod.Money;
 		}
 	}
 
@@ -259,6 +274,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		private string[] _packs = new string[2];
 		public int Gold { get; set; }
 		public int Dust { get; set; }
+		public ArenaPaymentMethod PaymentMethod { get; set; }
 
 		public CardReward[] Cards
 		{
