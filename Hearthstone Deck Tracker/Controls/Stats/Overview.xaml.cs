@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	/// </summary>
 	public partial class Overview : UserControl
 	{
-		private readonly ArenaOverview _arenaOverview = new ArenaOverview();
+		private readonly ArenaRuns _arenaRuns = new ArenaRuns();
 		private readonly ArenaAdvancedCharts _arenaAdvancedCharts = new ArenaAdvancedCharts();
 		private readonly ArenaStatsSummary _arenaStatsSummary = new ArenaStatsSummary();
 		private readonly bool _initialized;
@@ -46,9 +46,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			get { return _arenaStatsSummary; }
 		}
 
-		public ArenaOverview ArenaOverview
+		public ArenaRuns ArenaRuns
 		{
-			get { return _arenaOverview; }
+			get { return _arenaRuns; }
 		}
 
 		public object ArenaAdvancedCharts
@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
 			Config.Save();
-			UpdateStats();
+			CompiledStats.Instance.UpdateArenaStats();
 		}
 
 		private void DatePickerCustomTimeFrame_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)

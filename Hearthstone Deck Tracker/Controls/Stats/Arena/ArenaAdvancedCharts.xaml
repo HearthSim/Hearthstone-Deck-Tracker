@@ -9,7 +9,7 @@
     <DockPanel>
         <ScrollViewer>
             <StackPanel>
-                <GroupBox Header="Note" MaxWidth="600">
+                <GroupBox Header="Note" MaxWidth="700">
                     <StackPanel Orientation="Horizontal">
                         <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="36" Height="36" Margin="-5" Click="Button_Click">
                             <Rectangle Width="14" Height="16">
@@ -21,10 +21,10 @@
                         <Label Content="These charts render a bit slow. Press refresh to update them."/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="Class distribution by wins" Height="400" MaxWidth="600">
+                <GroupBox Header="Class distribution by wins" Height="400" MaxWidth="700">
                     <charts:ChartWinsByClass/>
                 </GroupBox>
-                <GroupBox Header="Win/Loss by class" Height="400" MaxWidth="600">
+                <GroupBox Header="Win/Loss by class" Height="400" MaxWidth="700">
                     <charts:ChartWinsLossByClass/>
                 </GroupBox>
             </StackPanel>

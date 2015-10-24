@@ -17,20 +17,21 @@
     <DockPanel>
         <DockPanel>
             <GroupBox Header="MENU" DockPanel.Dock="Top">
-                <TreeView Name="TreeViewStats" Width="150" Height="150">
+                <TreeView Name="TreeViewStats" Height="175">
                     <TreeViewItem Name="TreeViewItemArenaRuns" IsExpanded="True"
                                   Selected="TreeViewItemArenaRuns_OnSelected" Header="Arena Runs"
-                                  DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                                  DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}">
                         <TreeViewItem Name="TreeViewItemArenaRunsSummary"
                                       Selected="TreeViewItemArenaRunsSummary_OnSelected" Header="Summary"
                                       IsSelected="True"
                                       DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         <TreeViewItem Name="TreeViewItemArenaRunsOverview"
-                                      Selected="TreeViewItemArenaRunsOverview_OnSelected" Header="Overview"
-                                      DataContext="{Binding ArenaOverview, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                      Selected="TreeViewItemArenaRunsOverview_OnSelected" Header="Runs &amp; matches"
+                                      DataContext="{Binding ArenaRuns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         <TreeViewItem Name="TreeViewItemArenaRunsAdvanced"
-                                      Selected="TreeViewItemArenaRunsAdvanced_OnSelected" Header="Advanced (slow)"
+                                      Selected="TreeViewItemArenaRunsAdvanced_OnSelected" Header="Advanced charts"
                                       DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                        <TreeViewItem Header="[more coming soon]" IsEnabled="False"/>
                     </TreeViewItem>
                     <TreeViewItem Header="Constructed" IsExpanded="True" IsEnabled="False">
                         <TreeViewItem Header="[coming soon]" />
@@ -45,7 +46,7 @@
                     </TreeViewItem>
                 </TreeView>
             </GroupBox>
-            <GroupBox Header="Filters">
+            <GroupBox Header="Filters" Width="180">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                     <Grid>
                         <Grid.ColumnDefinitions>

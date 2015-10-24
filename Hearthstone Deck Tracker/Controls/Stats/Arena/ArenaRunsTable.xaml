@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <converters:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter"/>
     </UserControl.Resources>
-    <DataGrid Name="DataGridArenaRuns" ItemsSource="{Binding Path=FilteredArenaRuns, Source={x:Static stats:CompiledStats.Instance}}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
+    <DataGrid Name="DataGridArenaRuns" SelectedIndex="0" ItemsSource="{Binding Path=FilteredArenaRuns, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="Class" SortMemberPath="Class">
                 <DataGridTemplateColumn.CellTemplate>
@@ -101,6 +101,10 @@
                         <ColumnDefinition Width="{Binding ElementName=DataGridArenaRuns, Path=Columns[1].ActualWidth}"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="16"/>
+                    </Grid.RowDefinitions>
                     <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
                         <Button Margin="4,0" Content="Edit rewards" Click="ButtonEditRewards_OnClick"/>
                         <Button Margin="4,4,4,0" Content="Show deck" Click="ButtonShowDeck_OnClick" IsEnabled="{Binding Path=SelectedItem.CanGetOpponentDeck, ElementName=DataGridGames}"/>
@@ -111,7 +115,7 @@
                         <Button Margin="4,4,4,0" Content="Edit game" Click="ButtonEditGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
                         <Button Margin="4,4,4,4" Content="Delete game" Click="ButtonDeleteGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
                     </StackPanel>
-                    <DataGrid Name="DataGridGames" SelectedIndex="-1" SelectedItem="{Binding SelectedGame, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource}" ItemsSource="{Binding Source={StaticResource ArenaGamesViewSource}}" AutoGenerateColumns="False" Grid.Column="2"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
+                    <DataGrid Name="DataGridGames" SelectedIndex="-1" SelectedItem="{Binding SelectedGame, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource}" ItemsSource="{Binding Source={StaticResource ArenaGamesViewSource}}" AutoGenerateColumns="False" Grid.Column="2"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True" PreviewMouseWheel="ForwardScrollEvent">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
                                 <DataGridTemplateColumn.CellTemplate>

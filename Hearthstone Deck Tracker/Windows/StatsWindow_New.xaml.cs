@@ -25,27 +25,34 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public StatsWindow_New()
 		{
 			InitializeComponent();
-		}
-
-		private bool _shutdown = true;
-		private void TestWindow_OnClosed(object sender, EventArgs e)
-		{
-			if(_shutdown)
-				Application.Current.Shutdown();
+			Height = Config.Instance.StatsWindowHeight;
+			Width = Config.Instance.StatsWindowWidth;
+			if(Config.Instance.StatsWindowLeft.HasValue)
+				Left = Config.Instance.StatsWindowLeft.Value;
+			if(Config.Instance.StatsWindowTop.HasValue)
+				Top = Config.Instance.StatsWindowTop.Value;
 		}
 
 		private void BtnSwitchToMainWindow_OnClick(object sender, RoutedEventArgs e)
 		{
+			Config.Instance.StatsInWindow = false;
+			Config.Save();
 			Core.MainWindow.WindowState = WindowState.Normal;
 			Core.MainWindow.Show();
 			Core.MainWindow.Activate();
 			Core.MainWindow.FlyoutNewStats.IsOpen = true;
-			_shutdown = false;
 			Close();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
+			if(!double.IsNaN(Left))
+				Config.Instance.StatsWindowLeft = (int)Left;
+			if(!double.IsNaN(Top))
+				Config.Instance.StatsWindowTop = (int)Top;
+			Config.Instance.StatsWindowHeight = (int)Height;
+			Config.Instance.StatsWindowWidth = (int)Width;
+			Config.Save();
 			e.Cancel = true;
 			Hide();
 		}

@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
         BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
         SaveWindowPosition="True"
-        Title="STATS" Height="500" Width="800" Closed="TestWindow_OnClosed">
+        Title="STATS" Height="820" Width="1150">
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Button Click="BtnSwitchToMainWindow_OnClick">

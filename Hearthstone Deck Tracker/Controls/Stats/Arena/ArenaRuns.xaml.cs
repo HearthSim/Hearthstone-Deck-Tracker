@@ -15,14 +15,14 @@ using MahApps.Metro.Controls.Dialogs;
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
 	/// <summary>
-	/// Interaction logic for ArenaOverview.xaml
+	/// Interaction logic for ArenaRuns.xaml
 	/// </summary>
-	public partial class ArenaOverview : INotifyPropertyChanged
+	public partial class ArenaRuns : INotifyPropertyChanged
 	{
 		private readonly bool _initialized;
 		private object _chartWinsControl = new ChartWins();
 
-		public ArenaOverview()
+		public ArenaRuns()
 		{
 			InitializeComponent();
 			_initialized = true;

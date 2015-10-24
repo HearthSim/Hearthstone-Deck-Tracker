@@ -33,6 +33,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AlwaysOverwriteLogConfig = true;
 
+		[DefaultValue(true)]
+		public bool ArenaRewardDialog = true;
+
 		[DefaultValue(false)]
 		public bool AlwaysShowGoldProgress = false;
 

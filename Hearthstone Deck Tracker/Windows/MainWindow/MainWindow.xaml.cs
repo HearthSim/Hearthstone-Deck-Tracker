@@ -716,13 +716,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		        Config.Instance.TimerWindowHeight = (int) Core.Windows.TimerWindow.Height;
 		        Config.Instance.TimerWindowWidth = (int) Core.Windows.TimerWindow.Width;
 
-		        if (!double.IsNaN(Core.Windows.StatsWindow.Left))
-		            Config.Instance.StatsWindowLeft = (int) Core.Windows.StatsWindow.Left;
-		        if (!double.IsNaN(Core.Windows.StatsWindow.Top))
-		            Config.Instance.StatsWindowTop = (int) Core.Windows.StatsWindow.Top;
-		        Config.Instance.StatsWindowHeight = (int) Core.Windows.StatsWindow.Height;
-		        Config.Instance.StatsWindowWidth = (int) Core.Windows.StatsWindow.Width;
-
                 Core.TrayIcon.NotifyIcon.Visible = false;
 		        Core.Overlay.Close();
 		        await LogReaderManager.Stop();

@@ -266,6 +266,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			Reward.PaymentMethod = ArenaPaymentMethod.Money;
 		}
+
+		public static RoutedEvent SaveEvent = EventManager.RegisterRoutedEvent("Save", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Button));
+
+		public event RoutedEventHandler Save
+		{
+			add { AddHandler(SaveEvent, value); }
+			remove { RemoveHandler(SaveEvent, value); }
+		}
+
+		private void ButtonSave_OnClick(object sender, RoutedEventArgs e)
+		{
+			RaiseEvent(new RoutedEventArgs(SaveEvent, this));
+		}
 	}
 
 	public class ArenaReward

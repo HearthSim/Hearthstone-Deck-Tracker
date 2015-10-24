@@ -16,7 +16,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			InitializeComponent();
 			ArenaRewards.LoadArenaReward(deck.ArenaReward);
 		}
-		private async void ButtonSave_OnClick(object sender, RoutedEventArgs e)
+
+		private async void ArenaRewards_OnSave(object sender, RoutedEventArgs e)
 		{
 			string warning;
 			if(!ArenaRewards.Validate(out warning))

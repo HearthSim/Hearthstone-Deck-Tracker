@@ -6,15 +6,13 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300">
+    <UserControl.Resources>
+        <utility:ConfigWrapper x:Key="ConfigWrapper"/>
+    </UserControl.Resources>
     <StackPanel>
-        <GroupBox Header="Payment method">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <RadioButton Name="RadioButtonPaymentGold" Content="Gold" IsChecked="True" Checked="RadioButtonPaymentGold_OnChecked"/>
-                <RadioButton Name="RadioButtonPaymentMoney" Content="Money" Margin="20,0,0,0" Checked="RadioButtonPaymentMoney_OnChecked"/>
-            </StackPanel>
-        </GroupBox>
         <UniformGrid Rows="1">
             <GroupBox Header="Gold">
                 <TextBox Name="TextBoxGold" ToolTip="You can enter values as e.g. 50+125" TextChanged="TextBoxGold_OnTextChanged"/>
@@ -67,5 +65,18 @@
                 </DockPanel>
             </StackPanel>
         </GroupBox>
+        <UniformGrid>
+            <GroupBox Header="Payment method">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <RadioButton Name="RadioButtonPaymentGold" Content="Gold" IsChecked="True" Checked="RadioButtonPaymentGold_OnChecked"/>
+                    <RadioButton Name="RadioButtonPaymentMoney" Content="Money" Margin="10,0,0,0" Checked="RadioButtonPaymentMoney_OnChecked"/>
+                </StackPanel>
+            </GroupBox>
+            <StackPanel VerticalAlignment="Center">
+                <CheckBox Name="CheckBoxShowAutomatically" Content="Show automatically" HorizontalAlignment="Center" IsChecked="{Binding Path=ArenaRewardDialog, Source={StaticResource ConfigWrapper}}"/>
+                <Button Style="{DynamicResource AccentedSquareButtonStyle}" Margin="5,5,5,0" Content="Save" Click="ButtonSave_OnClick"/>
+            </StackPanel>
+            <Grid/>
+        </UniformGrid>
     </StackPanel>
 </UserControl>

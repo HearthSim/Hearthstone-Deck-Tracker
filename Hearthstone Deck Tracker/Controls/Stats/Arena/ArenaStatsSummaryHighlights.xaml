@@ -24,7 +24,7 @@
                         </Rectangle.Fill>
                     </Rectangle>
                 </Grid>
-                <arena:ArenaClassStats ImageVisiblity="Collapsed" DataContext="{Binding Path=ArenaAllClasses, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}" Margin="0,0,-48,0"/>
+                <arena:ArenaClassStats ImageVisiblity="Collapsed" DataContext="{Binding Path=ArenaAllClasses, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}" Margin="0,0,-63,0"/>
             </DockPanel>
         </DockPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>

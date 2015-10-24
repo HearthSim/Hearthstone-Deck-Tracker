@@ -48,5 +48,35 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Save();
 			}
 		}
+
+		public static bool ArenaRewardDialog
+		{
+			get { return Config.Instance.ArenaRewardDialog; }
+			set
+			{
+				Config.Instance.ArenaRewardDialog = value;
+				Config.Save();
+			}
+		}
+
+		public static int StatsWindowHeight
+		{
+			get { return Config.Instance.StatsWindowHeight; }
+			set
+			{
+				Config.Instance.StatsWindowHeight = value;
+				Config.Save();
+			}
+		}
+
+		public static int StatsWindowWidth
+		{
+			get { return Config.Instance.StatsWindowWidth; }
+			set
+			{
+				Config.Instance.StatsWindowWidth = value;
+				Config.Save();
+			}
+		}
 	}
 }

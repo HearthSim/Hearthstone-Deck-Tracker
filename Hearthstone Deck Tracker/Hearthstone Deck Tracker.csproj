@@ -162,8 +162,8 @@
     <Compile Include="Controls\Stats\Arena\ArenaClassStats.xaml.cs">
       <DependentUpon>ArenaClassStats.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stats\Arena\ArenaOverview.xaml.cs">
-      <DependentUpon>ArenaOverview.xaml</DependentUpon>
+    <Compile Include="Controls\Stats\Arena\ArenaRuns.xaml.cs">
+      <DependentUpon>ArenaRuns.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Stats\Arena\ArenaRewardsSummary.xaml.cs">
       <DependentUpon>ArenaRewardsSummary.xaml</DependentUpon>
@@ -569,7 +569,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Stats\Arena\ArenaOverview.xaml">
+    <Page Include="Controls\Stats\Arena\ArenaRuns.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

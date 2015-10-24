@@ -1,28 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
 	/// <summary>
 	/// Interaction logic for ArenaStatsSummary.xaml
 	/// </summary>
-	public partial class ArenaStatsSummary : UserControl
+	public partial class ArenaStatsSummary
 	{
 		public ArenaStatsSummary()
 		{
 			InitializeComponent();
+		}
+
+		//http://stackoverflow.com/questions/3498686/wpf-remove-scrollviewer-from-treeview
+		private void ForwardScrollEvent(object sender, MouseWheelEventArgs e)
+		{
+			if(!e.Handled)
+			{
+				e.Handled = true;
+				var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) {RoutedEvent = MouseWheelEvent, Source = sender};
+				var parent = ((Control)sender).Parent as UIElement;
+				if(parent != null)
+					parent.RaiseEvent(eventArg);
+			}
 		}
 	}
 }

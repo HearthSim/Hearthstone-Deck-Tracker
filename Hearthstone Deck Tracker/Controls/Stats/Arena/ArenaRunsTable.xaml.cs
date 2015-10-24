@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			{
 				SelectedGame.DeleteGameFile();
 				run.Deck.DeckStats.Games.Remove(SelectedGame);
-				Logger.WriteLine("Deleted game " + SelectedGame, "ArenaOverview.ButtonDeleteGame");
+				Logger.WriteLine("Deleted game " + SelectedGame, "ArenaRuns.ButtonDeleteGame");
 			}
 			if(HearthStatsAPI.IsLoggedIn && SelectedGame.HasHearthStatsId && await window.ShowCheckHearthStatsMatchDeletionDialog())
 				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> { SelectedGame });
@@ -105,6 +105,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 				return;
 			Core.MainWindow.OpponentDeckFlyout.SetDeck(SelectedGame.GetOpponentDeck());
 			Core.MainWindow.FlyoutOpponentDeck.IsOpen = true;
+		}
+
+		//http://stackoverflow.com/questions/3498686/wpf-remove-scrollviewer-from-treeview
+		private void ForwardScrollEvent(object sender, MouseWheelEventArgs e)
+		{
+			if(!e.Handled)
+			{
+				e.Handled = true;
+				var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) { RoutedEvent = MouseWheelEvent, Source = sender };
+				var parent = ((Control)sender).Parent as UIElement;
+				if(parent != null)
+					parent.RaiseEvent(eventArg);
+			}
 		}
 	}
 }
