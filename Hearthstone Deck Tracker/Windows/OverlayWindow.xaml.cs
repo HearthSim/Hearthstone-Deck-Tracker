@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 #endregion
@@ -626,6 +627,15 @@ namespace Hearthstone_Deck_Tracker
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ratio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ratio));
+			//Scale attack icons, with height
+			var atkWidth = (int)Math.Round(Height * 0.0695, 0);
+			var atkFont = (int)Math.Round(Height * 0.0223, 0);
+			IconBoardAttackPlayer.Width = atkWidth;
+			IconBoardAttackPlayer.Height = atkWidth;
+			TextBlockPlayerAttack.FontSize = atkFont;
+			IconBoardAttackOpponent.Width = atkWidth;
+			IconBoardAttackOpponent.Height = atkWidth;
+			TextBlockOpponentAttack.FontSize = atkFont;
 		}
 
         private void Window_SourceInitialized_1(object sender, EventArgs e)
@@ -769,9 +779,23 @@ namespace Hearthstone_Deck_Tracker
 		{
 			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu ? Visibility.Collapsed : Visibility.Visible;
 			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu ? Visibility.Collapsed : Visibility.Visible;
-			var board = new BoardState();
-			TextBlockPlayerAttack.Text = board.Player.Damage.ToString();
-			TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
+
+			// do the calculation if at least one of the icons is visible
+			if(IconBoardAttackPlayer.Visibility == Visibility.Visible || IconBoardAttackOpponent.Visibility == Visibility.Visible)
+			{
+				var board = new BoardState();
+				var highlight = (SolidColorBrush)new BrushConverter().ConvertFrom("#50FF35");
+
+				TextBlockPlayerAttack.Text = board.Player.Damage.ToString();
+				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
+				TextBlockPlayerAttack.Fill = Brushes.White;
+				TextBlockOpponentAttack.Fill = Brushes.White;
+
+				if(board.IsPlayerDeadToBoard())
+					TextBlockOpponentAttack.Fill = highlight;
+				if(board.IsOpponentDeadToBoard())
+					TextBlockPlayerAttack.Fill = highlight;
+			}			
 		}
 
 	    private void UpdateGoldProgress()

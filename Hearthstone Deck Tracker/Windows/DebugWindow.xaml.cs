@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 
 #endregion
 
@@ -103,6 +104,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var board = new BoardState();
 			PlayerDataGrid.ItemsSource = board.Player.Cards;
 			OpponentDataGrid.ItemsSource = board.Opponent.Cards;
+			PlayerHeader.Text = "Player " + board.Player.ToString();
+			OpponentHeader.Text = "Opponent " + board.Opponent.ToString();
 			DamageView.UpdateLayout();
 		}
 

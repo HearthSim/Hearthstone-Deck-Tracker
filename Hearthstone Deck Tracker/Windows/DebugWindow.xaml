@@ -28,11 +28,11 @@
             <TabItem Header="Damage">
                 <StackPanel Name="DamageView">
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Top" Text="Opponent" FontSize="18" Margin="0,4"/>
+                        <TextBlock Name="OpponentHeader" DockPanel.Dock="Top" Text="Opponent" FontSize="18" Margin="0,4"/>
                         <DataGrid Name="OpponentDataGrid" AutoGenerateColumns="True"/>
                     </DockPanel>
                     <DockPanel>
-                        <TextBlock DockPanel.Dock="Top" Text="Player" FontSize="18" Margin="0,4"/>
+                        <TextBlock Name="PlayerHeader" DockPanel.Dock="Top" Text="Player" FontSize="18" Margin="0,4"/>
                         <DataGrid Name="PlayerDataGrid" AutoGenerateColumns="True"/>
                     </DockPanel>
                 </StackPanel>
