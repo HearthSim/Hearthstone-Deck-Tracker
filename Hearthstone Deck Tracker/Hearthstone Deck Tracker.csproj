@@ -3846,10 +3846,11 @@
     <Resource Include="Utility\Markdown.Xaml\License.txt" />
     <Resource Include="Resources\cards.png" />
     <Resource Include="Resources\lightforgekey.png" />
-    <Resource Include="Resources\pack.png" />
     <Resource Include="Resources\dust.png" />
     <Resource Include="Resources\gold.png" />
+    <Resource Include="Resources\pack_stack.png" />
     <Resource Include="Resources\gold_2.png" />
+    <Resource Include="Resources\cards_2.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

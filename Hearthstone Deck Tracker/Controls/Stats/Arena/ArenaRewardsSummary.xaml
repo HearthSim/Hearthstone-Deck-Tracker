@@ -8,11 +8,11 @@
              d:DesignHeight="300" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal">
         <StackPanel Margin="10" Width="120">
-            <StackPanel Orientation="Horizontal">
-                <Image Width="32" Height="32" Source="/HearthstoneDeckTracker;component/Resources/gold_2.png" RenderOptions.BitmapScalingMode="Fant"/>
-                <Label Content="Gold" FontSize="16"/>
+            <StackPanel Orientation="Horizontal" Height="48">
+                <Image Width="46" Height="46" Source="/HearthstoneDeckTracker;component/Resources/gold_2.png" RenderOptions.BitmapScalingMode="Fant"/>
+                <Label Content="Gold" FontSize="16" VerticalAlignment="Center"/>
             </StackPanel>
-            <StackPanel Margin="32,0,0,0">
+            <StackPanel Margin="32,10,0,0">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="Total: "/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=GoldTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
@@ -30,10 +30,10 @@
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <StackPanel Margin="10" Width="120">
             <StackPanel Orientation="Horizontal">
-                <Image Width="32" Height="32" Source="/HearthstoneDeckTracker;component/Resources/dust.png" RenderOptions.BitmapScalingMode="Fant"/>
-                <Label Content="Dust" FontSize="16"/>
+                <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/dust.png" RenderOptions.BitmapScalingMode="Fant"/>
+                <Label Content="Dust" FontSize="16" VerticalAlignment="Center"/>
             </StackPanel>
-            <StackPanel Margin="32,0,0,0">
+            <StackPanel Margin="32,10,0,0">
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="Total: "/>
                 <TextBlock VerticalAlignment="Center" Text="{Binding Path=DustTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
@@ -47,10 +47,10 @@
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <StackPanel Margin="10" Width="260">
             <StackPanel Orientation="Horizontal">
-                <Image Width="32" Height="32" Source="/HearthstoneDeckTracker;component/Resources/pack.png" RenderOptions.BitmapScalingMode="Fant"/>
-                <Label Content="Packs" FontSize="16"/>
+                <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/pack_stack.png" RenderOptions.BitmapScalingMode="Fant"/>
+                <Label Content="Packs" FontSize="16" VerticalAlignment="Center"/>
             </StackPanel>
-            <StackPanel Margin="32,0,0,0">
+            <StackPanel Margin="32,10,0,0">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="Total: "/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
@@ -76,10 +76,10 @@
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <StackPanel Margin="10" Width="120">
             <StackPanel Orientation="Horizontal">
-                <Image Width="32" Height="32" Source="/HearthstoneDeckTracker;component/Resources/cards.png" RenderOptions.BitmapScalingMode="Fant"/>
-                <Label Content="Cards" FontSize="16"/>
+                <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/cards_2.png" RenderOptions.BitmapScalingMode="Fant"/>
+                <Label Content="Cards" FontSize="16" VerticalAlignment="Center"/>
             </StackPanel>
-            <StackPanel Margin="32,0,0,0">
+            <StackPanel Margin="32,10,0,0">
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="Total: "/>
                 <TextBlock VerticalAlignment="Center" Text="{Binding Path=CardCountTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>

@@ -53,6 +53,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ArenaStatsShowLegends = true;
+		
+		[DefaultValue(true)]
+		public bool ArenaStatsTextColoring = true;
 
 		[DefaultValue(true)]
 		public bool AskBeforeDiscardingGame = true;
