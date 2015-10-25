@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxCardFrameRarity.IsChecked = Config.Instance.RarityCardFrames;
 			CheckboxCardGemRarity.IsChecked = Config.Instance.RarityCardGems;
+			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 			_initialized = true;
 		}
 
@@ -273,6 +274,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 
+		}
+
+		private void CheckboxArenaRewardDialog_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ArenaRewardDialog = true;
+			Config.Save();
+		}
+
+		private void CheckboxArenaRewardDialog_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ArenaRewardDialog = false;
+			Config.Save();
 		}
 	}
 }

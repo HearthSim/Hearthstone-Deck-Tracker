@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -28,6 +29,7 @@ namespace Hearthstone_Deck_Tracker
         private Deck _assignedDeck;
         private GameStats _lastGame;
         private bool _showedNoteDialog;
+	    private ArenaRewardDialog _arenaRewardDialog;
         private bool _doneImportingConstructed;
         private List<string> _ignoreCachedIds;
         private DateTime _lastArenaReward = DateTime.MinValue;
@@ -131,7 +133,21 @@ namespace Hearthstone_Deck_Tracker
                 _game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk();
 
             SaveAndUpdateStats();
-            if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
+			
+	        if(_arenaRewardDialog != null)
+	        {
+		        _arenaRewardDialog.Show();
+		        _arenaRewardDialog.Activate();
+	        }
+
+	        if(_game.CurrentGameStats != null && _game.CurrentGameStats.GameMode == GameMode.Arena)
+			{
+				ArenaStats.Instance.UpdateArenaRuns();
+				ArenaStats.Instance.UpdateArenaStats();
+				ArenaStats.Instance.UpdateArenaStatsHighlights();
+			}
+
+			if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
             {
                 SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
                 Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd, "GameEventHandler");
@@ -367,8 +383,9 @@ namespace Hearthstone_Deck_Tracker
             {
                 SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
                 Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart, "GameEventHandler");
-            }
-            _showedNoteDialog = false;
+			}
+			_arenaRewardDialog = null;
+			_showedNoteDialog = false;
             _game.IsInMenu = false;
             _game.Reset();
 
@@ -474,6 +491,10 @@ namespace Hearthstone_Deck_Tracker
                 _lastGame = _game.CurrentGameStats;
                 selectedDeck.DeckStats.AddGameResult(_lastGame);
                 selectedDeck.StatsUpdated();
+	            if(Config.Instance.ArenaRewardDialog && selectedDeck.IsArenaRunCompleted.HasValue
+	               && selectedDeck.IsArenaRunCompleted.Value)
+		            _arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
+
                 if (Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
                 {
                     _showedNoteDialog = true;
@@ -950,7 +971,7 @@ namespace Hearthstone_Deck_Tracker
 
 	    public void HandleDustReward(int amount)
         {
-            if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
+            /*if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
             {
                 if (!DeckList.Instance.ActiveDeck.DustReward.HasValue)
                 {
@@ -964,12 +985,12 @@ namespace Hearthstone_Deck_Tracker
                     DeckList.Instance.ActiveDeck.DustReward += amount;
                     _lastArenaReward = DateTime.Now;
                 }
-            }
+            }*/
         }
 
         public void HandleGoldReward(int amount)
         {
-            if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
+            /*if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
             {
                 if (!DeckList.Instance.ActiveDeck.GoldReward.HasValue)
                 {
@@ -983,7 +1004,7 @@ namespace Hearthstone_Deck_Tracker
                     DeckList.Instance.ActiveDeck.GoldReward += amount;
                     _lastArenaReward = DateTime.Now;
                 }
-            }
+            }*/
         }
 
         public void SetRank(int rank)

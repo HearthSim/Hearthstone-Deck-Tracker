@@ -28,6 +28,14 @@ namespace Hearthstone_Deck_Tracker
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
+			if(!double.IsNaN(Left))
+				Config.Instance.StatsWindowLeft = (int)Left;
+			if(!double.IsNaN(Top))
+				Config.Instance.StatsWindowTop = (int)Top;
+			Config.Instance.StatsWindowHeight = (int)Height;
+			Config.Instance.StatsWindowWidth = (int)Width;
+			Config.Save();
+
 			if(_appIsClosing)
 				return;
 			e.Cancel = true;

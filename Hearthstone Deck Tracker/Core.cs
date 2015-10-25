@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker
             MainWindow.Show();
             splashScreenWindow.Close();
 
-            if (ConfigManager.UpdatedVersion != null)
+			if (ConfigManager.UpdatedVersion != null)
             {
                 Updater.Cleanup();
                 MainWindow.FlyoutUpdateNotes.IsOpen = true;
@@ -218,6 +218,7 @@ namespace Hearthstone_Deck_Tracker
             private static OpponentWindow _opponentWindow;
             private static TimerWindow _timerWindow;
             private static StatsWindow _statsWindow;
+	        private static StatsWindow_New _newStatsWindow;
 
             public static PlayerWindow PlayerWindow
             {
@@ -234,10 +235,14 @@ namespace Hearthstone_Deck_Tracker
                 get { return _timerWindow ?? (_timerWindow = new TimerWindow(Config.Instance)); }
             }
 
-            public static StatsWindow StatsWindow
-            {
-                get { return _statsWindow ?? (_statsWindow = new StatsWindow()); }
-            }
-        }
+			public static StatsWindow StatsWindow
+			{
+				get { return _statsWindow ?? (_statsWindow = new StatsWindow()); }
+			}
+			public static StatsWindow_New NewStatsWindow
+			{
+				get { return _newStatsWindow ?? (_newStatsWindow = new StatsWindow_New()); }
+			}
+		}
     }
 }

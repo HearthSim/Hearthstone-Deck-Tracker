@@ -91,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				return _cachedCard
 				       ?? (_cachedCard =
 				           (Database.GetCardFromId(CardId)
-				            ?? new Card(string.Empty, null, "unknown", "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "",
+				            ?? new Card(string.Empty, null, Rarity.Free, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "",
 				                        "")));
 			}
 		}
