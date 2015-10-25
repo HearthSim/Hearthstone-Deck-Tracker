@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
@@ -29,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			CompiledStats.Instance.UpdateExpensiveArenaStats();
+			ArenaStats.Instance.UpdateExpensiveArenaStats();
 		}
 	}
 }

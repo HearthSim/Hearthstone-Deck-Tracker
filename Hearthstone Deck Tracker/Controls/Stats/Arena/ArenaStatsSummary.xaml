@@ -7,6 +7,7 @@
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1800">
     <UserControl.Resources>
@@ -34,7 +35,7 @@
                             <TextBlock Text="Played" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
                             <metroChart:DoughnutChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <metroChart:DoughnutChart.Series>
-                                    <metroChart:ChartSeries SeriesTitle="Played(%)" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=ArenaPlayedClassesPercent, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+                                    <metroChart:ChartSeries SeriesTitle="Played(%)" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=PlayedClassesPercent, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                                 </metroChart:DoughnutChart.Series>
                             </metroChart:DoughnutChart>
                         </DockPanel>
@@ -42,7 +43,7 @@
                             <TextBlock Text="Opponents" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
                             <metroChart:DoughnutChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <metroChart:DoughnutChart.Series>
-                                    <metroChart:ChartSeries SeriesTitle="Opponents" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=ArenaOpponentClassesPercent, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+                                    <metroChart:ChartSeries SeriesTitle="Opponents" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=OpponentClassesPercent, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                                 </metroChart:DoughnutChart.Series>
                             </metroChart:DoughnutChart>
                         </DockPanel>
@@ -50,7 +51,7 @@
                             <TextBlock Text="Average wins per class" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
                             <metroChart:ClusteredColumnChart Background="Transparent" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
                                 <metroChart:ClusteredColumnChart.Series>
-                                    <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=AvgWinsPerClass, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+                                    <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=AvgWinsPerClass, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                                 </metroChart:ClusteredColumnChart.Series>
                             </metroChart:ClusteredColumnChart>
                         </DockPanel>
@@ -59,7 +60,7 @@
                             <Grid>
                                 <metroChart:ClusteredColumnChart Name="ClusteredColumnChartWins" Background="Transparent" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" >
                                     <metroChart:ClusteredColumnChart.Series>
-                                        <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=ArenaWins, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+                                        <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=Wins, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                                     </metroChart:ClusteredColumnChart.Series>
                                 </metroChart:ClusteredColumnChart>
                                 <metroChart:EvenlyDistributedColumnsGrid Margin="45,255,25,0" Height="24">

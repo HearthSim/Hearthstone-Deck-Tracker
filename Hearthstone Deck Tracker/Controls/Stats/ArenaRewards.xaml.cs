@@ -206,13 +206,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		private void ComboBoxPack1_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			Reward.Packs[0] = ComboBoxPack1.SelectedValue.ToString();
+			Reward.Packs[0] = (ArenaRewardPacks)ComboBoxPack1.SelectedValue;
 		}
 
 		private void ComboBoxPack2_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			var value = ComboBoxPack2.SelectedValue.ToString();
-			Reward.Packs[1] = value != "None" ? value : null;
+			Reward.Packs[1] = (ArenaRewardPacks)ComboBoxPack2.SelectedValue;
 		}
 
 		private void CheckBoxGolden_OnChecked(object sender, RoutedEventArgs e)
@@ -235,10 +234,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			TextBoxGold.Text = reward.Gold.ToString();
 			TextBoxDust.Text = reward.Dust.ToString();
-			if(reward.Packs[0] != null)
-				ComboBoxPack1.SelectedItem = reward.Packs[0];
-			if(reward.Packs[1] != null)
-				ComboBoxPack2.SelectedItem = reward.Packs[1];
+			ComboBoxPack1.SelectedItem = reward.Packs[0];
+			ComboBoxPack2.SelectedItem = reward.Packs[1];
 			if(reward.Cards[0] != null && !string.IsNullOrEmpty(reward.Cards[0].CardId))
 				TextBoxCard1.Text = Database.GetCardFromId(reward.Cards[0].CardId).LocalizedName;
 			if(reward.Cards[1] != null && !string.IsNullOrEmpty(reward.Cards[1].CardId))
@@ -267,7 +264,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			Reward.PaymentMethod = ArenaPaymentMethod.Money;
 		}
 
-		public static RoutedEvent SaveEvent = EventManager.RegisterRoutedEvent("Save", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Button));
+		public static RoutedEvent SaveEvent = EventManager.RegisterRoutedEvent("Save", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ArenaRewards));
 
 		public event RoutedEventHandler Save
 		{
@@ -284,7 +281,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	public class ArenaReward
 	{
 		private CardReward[] _cards = new CardReward[3];
-		private string[] _packs = new string[2];
+		private ArenaRewardPacks[] _packs = new ArenaRewardPacks[2];
 		public int Gold { get; set; }
 		public int Dust { get; set; }
 		public ArenaPaymentMethod PaymentMethod { get; set; }
@@ -295,7 +292,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			set { _cards = value; }
 		}
 
-		public string[] Packs
+		public ArenaRewardPacks[] Packs
 		{
 			get { return _packs; }
 			set { _packs = value; }

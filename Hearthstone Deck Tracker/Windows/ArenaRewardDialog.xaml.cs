@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			string warning;
 			if(!ArenaRewards.Validate(out warning))
 			{
-				await this.ShowMessage("Error saving Arena Rewards", warning);
+				await this.ShowMessage("Error", warning);
 				return;
 			}
 			_deck.ArenaReward = ArenaRewards.Reward;

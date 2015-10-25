@@ -6,12 +6,13 @@
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
              mc:Ignorable="d" 
              d:DesignHeight="300" Width="356">
     <Grid>
         <metroChart:ClusteredColumnChart Name="ClusteredColumnChartWins" Background="Transparent" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="Collapsed" >
             <metroChart:ClusteredColumnChart.Series>
-                <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=ArenaWins, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+                <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=Wins, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
             </metroChart:ClusteredColumnChart.Series>
         </metroChart:ClusteredColumnChart>
         <metroChart:EvenlyDistributedColumnsGrid Margin="53,220,20,0" Height="24">

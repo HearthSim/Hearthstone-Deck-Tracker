@@ -199,7 +199,9 @@
     <Compile Include="Core.cs" />
     <Compile Include="Enums\ArenaImportingBehaviour.cs" />
     <Compile Include="Enums\ArenaPaymentMethod.cs" />
+    <Compile Include="Enums\ArenaRewardPacks.cs" />
     <Compile Include="Enums\DeckLayout.cs" />
+    <Compile Include="Enums\EnumValuesExtension.cs" />
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
     <Compile Include="Enums\IconStyle.cs" />
     <Compile Include="Enums\LoginType.cs" />
@@ -241,6 +243,10 @@
     <Compile Include="Exporting\ExportingHelper.cs" />
     <Compile Include="Exporting\ExportingInfo.cs" />
     <Compile Include="Exporting\HueAndBrightness.cs" />
+    <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
+    <Compile Include="Stats\CompiledStats\ChartStats.cs" />
+    <Compile Include="Stats\CompiledStats\ClassStats.cs" />
+    <Compile Include="Stats\CompiledStats\MatchupStats.cs" />
     <Compile Include="Utility\MouseActions.cs" />
     <Compile Include="FlyoutControls\GameDetailItem.cs" />
     <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
@@ -332,7 +338,7 @@
     <Compile Include="Protocol\JsonDeck.cs" />
     <Compile Include="Protocol\JsonDecksWrapper.cs" />
     <Compile Include="Replay\TurnViewItem.cs" />
-    <Compile Include="Stats\CompiledStats.cs" />
+    <Compile Include="Stats\CompiledStats\ArenaStats.cs" />
     <Compile Include="Utility\ConfigWrapper.cs" />
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
       <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>

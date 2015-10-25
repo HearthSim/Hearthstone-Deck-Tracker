@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats
@@ -35,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ComboBoxTimeframe.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));
 			ComboBoxTimeframe.SelectedItem = Config.Instance.ArenaStatsTimeFrameFilter;
 			ComboBoxClass.ItemsSource = Enum.GetValues(typeof(HeroClassStatsFilter)).Cast<HeroClassStatsFilter>().Select(x => new HeroClassStatsFilterWrapper(x));
-			ComboBoxClass.SelectedItem = Config.Instance.ArenaStatsClassFilter;
+			ComboBoxClass.SelectedItem = new HeroClassStatsFilterWrapper(Config.Instance.ArenaStatsClassFilter);
 			ComboBoxRegion.ItemsSource = Enum.GetValues(typeof(RegionAll));
 			ComboBoxRegion.SelectedItem = Config.Instance.ArenaStatsRegionFilter;
 			_initialized = true;
@@ -71,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
 			Config.Save();
-			CompiledStats.Instance.UpdateArenaStats();
+			ArenaStats.Instance.UpdateArenaStats();
 		}
 
 		private void DatePickerCustomTimeFrame_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -106,13 +107,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public void UpdateStats()
 		{
-			if(TreeViewItemArenaRunsSummary.IsSelected)
-			{
-				CompiledStats.Instance.UpdateArenaStatsHighlights();
-				CompiledStats.Instance.UpdateArenaStats();
-			}
-			if(TreeViewItemArenaRuns.IsSelected || TreeViewItemArenaRunsOverview.IsSelected)
-				CompiledStats.Instance.UpdateArenaStats();
+			ArenaStats.Instance.UpdateArenaStats();
+			if(TreeViewItemArenaRunsSummary.IsSelected || TreeViewItemArenaRuns.IsSelected)
+				ArenaStats.Instance.UpdateArenaStatsHighlights();
 		}
 
 		private void TreeViewItemArenaRunsSummary_OnSelected(object sender, RoutedEventArgs e)
@@ -162,5 +159,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			get { return HeroClass == HeroClassStatsFilter.All ? Visibility.Collapsed : Visibility.Visible; }
 		}
-    }
+
+		public override bool Equals(object obj)
+		{
+			var wrapper = obj as HeroClassStatsFilterWrapper;
+			return wrapper != null && HeroClass.Equals(wrapper.HeroClass);
+		}
+
+		public override int GetHashCode()
+		{
+			return HeroClass.GetHashCode();
+		}
+	}
 }

@@ -10,7 +10,7 @@
     <DockPanel>
         <DockPanel>
             <GroupBox Header="ARENA RUNS">
-                <arena:ArenaRunsTable/>
+                <arena:ArenaRunsTable x:Name="ArenaRunsTable"/>
             </GroupBox>
         </DockPanel>
     </DockPanel>

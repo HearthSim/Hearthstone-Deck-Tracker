@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 {
@@ -15,9 +16,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 		public ChartWinsByClass()
 		{
 			InitializeComponent();
-			CompiledStats.Instance.PropertyChanged += (sender, args) =>
+			ArenaStats.Instance.PropertyChanged += (sender, args) =>
 			{
-				if(args.PropertyName == "ArenaWinsByClass")
+				if(args.PropertyName == "WinsByClass")
 					OnPropertyChanged("SeriesSourceWins");
 			};
 		}
@@ -33,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 									  new WinChartData
 				{
 					Index = n.ToString(),
-					ItemsSource = CompiledStats.Instance.ArenaWinsByClass[n]
+					ItemsSource = ArenaStats.Instance.WinsByClass[n]
 				});
 			}
 		}

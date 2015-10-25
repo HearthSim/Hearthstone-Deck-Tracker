@@ -1083,14 +1083,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlyoutNewStats.IsOpen = false;
 		}
 
-		private void ButtonSwitchStatsToNewWindow_OnClick(object sender, RoutedEventArgs e)
+		private async void ButtonSwitchStatsToNewWindow_OnClick(object sender, RoutedEventArgs e)
 		{
 			Config.Instance.StatsInWindow = true;
 			Config.Save();
 			Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
 			Core.Windows.NewStatsWindow.Show();
-			Core.Windows.NewStatsWindow.Activate();
 			FlyoutNewStats.IsOpen = false;
+			await Task.Delay(100);
+			Core.Windows.NewStatsWindow.Activate();
 		}
 	}
 }

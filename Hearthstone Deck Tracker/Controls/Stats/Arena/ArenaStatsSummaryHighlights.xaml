@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
              xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena"
+             xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
     <StackPanel Orientation="Horizontal">
@@ -24,28 +25,28 @@
                         </Rectangle.Fill>
                     </Rectangle>
                 </Grid>
-                <arena:ArenaClassStats ImageVisiblity="Collapsed" DataContext="{Binding Path=ArenaAllClasses, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}" Margin="0,0,-63,0"/>
+                <arena:ArenaClassStats ImageVisiblity="Collapsed" DataContext="{Binding Path=ClassStatsAll, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}" Margin="0,0,-63,0"/>
             </DockPanel>
         </DockPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <DockPanel>
             <Label DockPanel.Dock="Top" Content="Best" FontSize="16" Margin="10,0,0,0"/>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaClassStatsBest, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ClassStatsBest, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         </DockPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <DockPanel>
             <Label DockPanel.Dock="Top" Content="Worst" FontSize="16" Margin="10,0,0,0"/>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaClassStatsWorst, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ClassStatsWorst, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         </DockPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <DockPanel>
             <Label DockPanel.Dock="Top" Content="Most picked" FontSize="16" Margin="10,0,0,0"/>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaClassStatsMostPicked, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ClassStatsMostPicked, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         </DockPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <DockPanel>
             <Label DockPanel.Dock="Top" Content="Least picked" FontSize="16" Margin="10,0,0,0"/>
-            <arena:ArenaClassStats DataContext="{Binding Path=ArenaClassStatsLeastPicked, Source={x:Static stats:CompiledStats.Instance}, IsAsync=True}"/>
+            <arena:ArenaClassStats DataContext="{Binding Path=ClassStatsLeastPicked, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         </DockPanel>
     </StackPanel>
 </UserControl>

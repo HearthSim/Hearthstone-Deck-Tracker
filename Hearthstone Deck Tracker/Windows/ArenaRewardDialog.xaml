@@ -4,6 +4,7 @@
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
         Title="Arena Rewards" Height="416" Width="300" Topmost="True" WindowStyle="ToolWindow"
+        SaveWindowPosition="True"
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <StackPanel HorizontalAlignment="Center">
         <stats:ArenaRewards x:Name="ArenaRewards" Save="ArenaRewards_OnSave"/>

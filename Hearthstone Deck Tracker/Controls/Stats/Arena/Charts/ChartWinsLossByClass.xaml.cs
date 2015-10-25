@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 {
@@ -17,9 +18,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 		public ChartWinsLossByClass()
 		{
 			InitializeComponent();
-			CompiledStats.Instance.PropertyChanged += (sender, args) =>
+			ArenaStats.Instance.PropertyChanged += (sender, args) =>
 			{
-				if(args.PropertyName == "ArenaWinLossByClass")
+				if(args.PropertyName == "WinLossByClass")
 					OnPropertyChanged("SeriesSourceWins");
 			};
 		}
@@ -35,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 									  new WinChartData
 				{
 					Index = Enum.GetNames(typeof(HeroClass))[n],
-					ItemsSource = CompiledStats.Instance.ArenaWinLossByClass[n]
+					ItemsSource = ArenaStats.Instance.WinLossByClass[n]
 				});
 			}
 		}

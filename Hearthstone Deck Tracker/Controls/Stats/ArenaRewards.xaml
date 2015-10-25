@@ -7,10 +7,11 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300">
     <UserControl.Resources>
-        <utility:ConfigWrapper x:Key="ConfigWrapper"/>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </UserControl.Resources>
     <StackPanel>
         <UniformGrid Rows="1">
@@ -25,24 +26,23 @@
             <StackPanel>
             <DockPanel>
                 <Label Content="#1:"/>
-                <ComboBox Name="ComboBoxPack1" SelectedIndex="0" Margin="3,0,0,0" DockPanel.Dock="Top" SelectionChanged="ComboBoxPack1_OnSelectionChanged">
-                    <ComboBox.Items>
-                            <system:String>Classic</system:String>
-                            <system:String>Goblins vs Gnomes</system:String>
-                            <system:String>The Grand Tournament</system:String>
-                    </ComboBox.Items>
-                </ComboBox>
+                    <ComboBox Name="ComboBoxPack1" SelectedIndex="1" Margin="3,0,0,0" DockPanel.Dock="Top" SelectionChanged="ComboBoxPack1_OnSelectionChanged" ItemsSource="{Binding Source={enums:EnumValues {x:Type enums:ArenaRewardPacks}}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
             </DockPanel>
             <DockPanel Margin="0,2,0,0">
                 <Label Content="#2:"/>
-                    <ComboBox Name="ComboBoxPack2" SelectedIndex="0" Margin="3,0,0,0" SelectionChanged="ComboBoxPack2_OnSelectionChanged">
-                    <ComboBox.Items>
-                            <system:String>None</system:String>
-                            <system:String>Classic</system:String>
-                            <system:String>Goblins vs Gnomes</system:String>
-                            <system:String>The Grand Tournament</system:String>
-                    </ComboBox.Items>
-                </ComboBox>
+                    <ComboBox Name="ComboBoxPack2" SelectedIndex="0" Margin="3,0,0,0" SelectionChanged="ComboBoxPack2_OnSelectionChanged" ItemsSource="{Binding Source={enums:EnumValues {x:Type enums:ArenaRewardPacks}}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </DockPanel>
             </StackPanel>
         </GroupBox>

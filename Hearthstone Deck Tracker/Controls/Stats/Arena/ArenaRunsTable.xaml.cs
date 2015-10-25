@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -15,8 +15,11 @@ using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
+using Control = System.Windows.Controls.Control;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
@@ -25,12 +28,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 	/// </summary>
 	public partial class ArenaRunsTable : UserControl
 	{
+		private ArenaRun _selectedRun;
+
+		public ArenaRun SelectedRun
+		{
+			get { return _selectedRun ?? (DataGridArenaRuns.Items.IsEmpty ? null : (ArenaRun)DataGridArenaRuns.Items.GetItemAt(0)); }
+			set
+			{
+				if(value != null)
+					_selectedRun = value;
+			}
+		}
+
 		public GameStats SelectedGame { get; set; }
 
 		public ArenaRunsTable()
 		{
 			InitializeComponent();
-		}
+        }
 
 		private void ButtonEditRewards_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -40,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			var rewardDialog = new ArenaRewardDialog(run.Deck) { WindowStartupLocation = WindowStartupLocation.CenterOwner };
 			rewardDialog.ShowDialog();
 			if(rewardDialog.SaveButtonWasClicked)
-				CompiledStats.Instance.UpdateArenaRuns();
+				ArenaStats.Instance.UpdateArenaRuns();
 		}
 
 		private async void ButtonAddGame_OnClick(object sender, RoutedEventArgs e)
@@ -53,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 				return;
 			var addedGame = await window.ShowAddGameDialog(run.Deck);
 			if(addedGame)
-				CompiledStats.Instance.UpdateArenaStats();
+				ArenaStats.Instance.UpdateArenaStats();
 		}
 
 		private async void ButtonEditGame_OnClick(object sender, RoutedEventArgs e)
@@ -65,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 				return;
 			var edited = await window.ShowEditGameDialog(SelectedGame);
 			if(edited)
-				CompiledStats.Instance.UpdateArenaStats();
+				ArenaStats.Instance.UpdateArenaStats();
 		}
 
 		private async void ButtonDeleteGame_OnClick(object sender, RoutedEventArgs e)
@@ -82,13 +97,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			{
 				SelectedGame.DeleteGameFile();
 				run.Deck.DeckStats.Games.Remove(SelectedGame);
-				Logger.WriteLine("Deleted game " + SelectedGame, "ArenaRuns.ButtonDeleteGame");
+				Logger.WriteLine("Deleted game " + SelectedGame, "Runs.ButtonDeleteGame");
 			}
 			if(HearthStatsAPI.IsLoggedIn && SelectedGame.HasHearthStatsId && await window.ShowCheckHearthStatsMatchDeletionDialog())
 				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> { SelectedGame });
 			DeckStatsList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks();
-			CompiledStats.Instance.UpdateArenaStats();
+			ArenaStats.Instance.UpdateArenaStats();
 		}
 
 		private void ButtonShowReplay_OnClick(object sender, RoutedEventArgs e)

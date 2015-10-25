@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
+             xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
              mc:Ignorable="d" Width="280" Name="UserControlArenaClassStats"
-             d:DataContext="{Binding Path=ArenaClassStatsBest, Source={x:Static stats:CompiledStats.Instance}}"
+             d:DataContext="{Binding Path=ClassStatsBest, Source={x:Static compiledStats:ArenaStats.Instance}}"
              DataContextChanged="ArenaClassStats_OnDataContextChanged"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
