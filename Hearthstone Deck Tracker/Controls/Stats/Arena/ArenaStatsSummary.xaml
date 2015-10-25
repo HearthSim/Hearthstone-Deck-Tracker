@@ -9,7 +9,7 @@
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="1800">
+             d:DesignHeight="1600" d:DesignWidth="1800">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <utility:ConfigWrapper x:Key="ConfigWrapper"/>
@@ -101,7 +101,7 @@
                 <Grid/>
             </DockPanel>
             <DockPanel DockPanel.Dock="Top">
-                <GroupBox Header="Rewards" DockPanel.Dock="Top">
+                <GroupBox Header="Rewards">
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
                         <arena:ArenaRewardsSummary/>
                     </ScrollViewer>

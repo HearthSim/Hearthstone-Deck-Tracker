@@ -108,6 +108,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool CheckForUpdates = true;
 
+		[DefaultValue(ClassColorScheme.Classic)]
+		public ClassColorScheme ClassColorScheme = ClassColorScheme.Classic;
+
 		[DefaultValue(IconStyle.Round)]
 		public IconStyle ClassIconStyle = IconStyle.Round;
 

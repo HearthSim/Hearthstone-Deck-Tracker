@@ -34,6 +34,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
 			ComboBoxDeckLayout.ItemsSource = Enum.GetValues(typeof(DeckLayout));
 			ComboBoxIconSet.ItemsSource = Enum.GetValues(typeof(IconStyle));
+			ComboBoxClassColors.ItemsSource = Enum.GetValues(typeof(ClassColorScheme));
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
 			CheckboxUseAnimations.IsChecked = Config.Instance.UseAnimations;
 
@@ -49,6 +50,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			ComboBoxIconSet.SelectedItem = Config.Instance.ClassIconStyle;
 			ComboBoxDeckLayout.SelectedItem = Config.Instance.DeckPickerItemLayout;
+			ComboBoxClassColors.SelectedItem = Config.Instance.ClassColorScheme;
 
 			_initialized = true;
 		}
@@ -198,6 +200,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.UseAnimations = true;
 			Core.MainWindow.UpdateFlyoutAnimationsEnabled();
+			Config.Save();
+		}
+
+		private void ComboBoxClassColors_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ClassColorScheme = (ClassColorScheme)ComboBoxClassColors.SelectedItem;
 			Config.Save();
 		}
 	}

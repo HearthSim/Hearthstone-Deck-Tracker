@@ -171,34 +171,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					_arenaReward = value;
 			}
 		}
-		public int? GoldReward
-		{
-			get { return IsArenaDeck ? (int?)ArenaReward.Gold : null; }
-			set
-			{
-				if(IsArenaDeck)
-				{
-					if(value.HasValue)
-						ArenaReward.Gold = value.Value;
-					//_goldReward = value;
-				}
-			}
-		}
-
-		public int? DustReward
-		{
-			get { return IsArenaDeck ? (int?)ArenaReward.Gold : null; }
-			set
-			{
-				if(IsArenaDeck)
-				{
-					if(value.HasValue)
-						ArenaReward.Gold = value.Value;
-					//_dustReward = value;
-				}
-			}
-		}
-
 		public bool? IsArenaRunCompleted
 		{
 			get

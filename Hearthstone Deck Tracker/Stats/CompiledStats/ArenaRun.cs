@@ -98,6 +98,11 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			get { return _deck.ArenaReward.Cards.Count(x => x != null && !string.IsNullOrEmpty(x.CardId)); }
 		}
 
+		public int CardCountGolden
+		{
+			get { return _deck.ArenaReward.Cards.Count(x => x != null && !string.IsNullOrEmpty(x.CardId) && x.Golden); }
+		}
+
 		public string CardString
 		{
 			get

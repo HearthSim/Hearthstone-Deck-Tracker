@@ -326,7 +326,7 @@
                         </Rectangle>
                     </MenuItem.Icon>
                     <MenuItem Header="[OLD] GAMES &amp; _STATISTICS"  Click="BtnDeckStats_Click"/>
-                    <MenuItem Header="[NEW] GAMES &amp; _STATISTICS"  Click="BtnDeckNewStats_Click"/>
+                    <MenuItem Header="ARENA RUNS &amp; _STATISTICS"  Click="BtnDeckNewStats_Click"/>
                     <Separator/>
                     <MenuItem Header="_LATEST REPLAY" Click="MenuItemReplayLastGame_OnClick"/>
                     <MenuItem Header="_SELECT REPLAY" Click="MenuItemReplaySelectGame_OnClick" />

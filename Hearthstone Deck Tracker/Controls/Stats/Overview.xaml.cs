@@ -109,7 +109,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			ArenaStats.Instance.UpdateArenaStats();
 			if(TreeViewItemArenaRunsSummary.IsSelected || TreeViewItemArenaRuns.IsSelected)
+			{
 				ArenaStats.Instance.UpdateArenaStatsHighlights();
+				ArenaStats.Instance.UpdateArenaRewards();
+			}
 		}
 
 		private void TreeViewItemArenaRunsSummary_OnSelected(object sender, RoutedEventArgs e)

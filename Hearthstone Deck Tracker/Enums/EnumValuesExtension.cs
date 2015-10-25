@@ -7,6 +7,7 @@ using System.Windows.Markup;
 
 namespace Hearthstone_Deck_Tracker.Enums
 {
+	//https://summergoat.wordpress.com/2008/07/08/enum-getvalues-markup-extension/
 	public class EnumValuesExtension : MarkupExtension
 	{
 		private readonly Type _enumType;

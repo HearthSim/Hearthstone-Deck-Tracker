@@ -12,19 +12,7 @@
         <DockPanel>
             <Label DockPanel.Dock="Top" Content="Total" FontSize="16" Margin="10,0,0,0"/>
             <DockPanel>
-                <Grid Margin="5,0,10,0" VerticalAlignment="Center">
-                    <Rectangle Width="48" Height="48">
-                        <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource hdticon}"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <Ellipse Width="22" Height="22" Fill="White"/>
-                    <Rectangle Width="44" Height="44">
-                        <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource hdticon_black}"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                </Grid>
+                <Image Width="68" Height="68" Source="/HearthstoneDeckTracker;component/Resources/lightforgekey.png" RenderOptions.BitmapScalingMode="Fant" Margin="-5,0,0,0"/>
                 <arena:ArenaClassStats ImageVisiblity="Collapsed" DataContext="{Binding Path=ClassStatsAll, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}" Margin="0,0,-63,0"/>
             </DockPanel>
         </DockPanel>

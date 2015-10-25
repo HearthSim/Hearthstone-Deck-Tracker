@@ -739,8 +739,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			return (width * ratio * left) + (width * (1 - ratio) / 2);
 		}
-		
-		public static Dictionary<string, string> ClassColors = new Dictionary<string, string>
+
+		public static Dictionary<string, string> ClassicClassColors = new Dictionary<string, string>
 		{
 			{"Druid", "#FF7D0A"},
 			{"Death Knight", "#C41F3B"},
@@ -755,14 +755,34 @@ namespace Hearthstone_Deck_Tracker
 			{"Warrior", "#C79C6E"}
 		};
 
+		public static Dictionary<string, string> HearthStatsClassColors = new Dictionary<string, string>
+		{
+			{"Druid", "#623113"},
+			{"Death Knight", "#C41F3B"},
+			{"Hunter", "#208D43"},
+			{"Mage", "#2581BC"},
+			{"Monk", "#00FF96"},
+			{"Paladin", "#FBD707"},
+			{"Priest", "#A3B2B2"},
+			{"Rogue", "#2F2C27"},
+			{"Shaman", "#283273"},
+			{"Warlock", "#4F2669"},
+			{"Warrior", "#B32025"}
+		};
+
 		public static System.Windows.Media.Color GetClassColor(string className, bool priestAsGray)
 		{
 			string color;
-			if(className == "Priest" && priestAsGray)
-				color = "#D2D2D2";
+			if(Config.Instance.ClassColorScheme == ClassColorScheme.HearthStats)
+				HearthStatsClassColors.TryGetValue(className, out color);
 			else
-			if(!ClassColors.TryGetValue(className, out color))
-				color = "#808080";
+			{
+				if(className == "Priest" && priestAsGray)
+					color = "#D2D2D2";
+				else
+				if(!ClassicClassColors.TryGetValue(className, out color))
+					color = "#808080";
+			}
 			return (System.Windows.Media.Color)ColorConverter.ConvertFromString(color);
 		}
 		public static MetroWindow GetParentWindow(DependencyObject current)

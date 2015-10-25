@@ -200,6 +200,7 @@
     <Compile Include="Enums\ArenaImportingBehaviour.cs" />
     <Compile Include="Enums\ArenaPaymentMethod.cs" />
     <Compile Include="Enums\ArenaRewardPacks.cs" />
+    <Compile Include="Enums\ClassColorScheme.cs" />
     <Compile Include="Enums\DeckLayout.cs" />
     <Compile Include="Enums\EnumValuesExtension.cs" />
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
@@ -3826,6 +3827,12 @@
     <Resource Include="Resources\ClassIcons\General\BaseDark\archived.png" />
     <None Include="Resources\card-mark-coin.png" />
     <Resource Include="Utility\Markdown.Xaml\License.txt" />
+    <Resource Include="Resources\cards.png" />
+    <Resource Include="Resources\lightforgekey.png" />
+    <Resource Include="Resources\pack.png" />
+    <Resource Include="Resources\dust.png" />
+    <Resource Include="Resources\gold.png" />
+    <Resource Include="Resources\gold_2.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

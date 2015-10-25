@@ -46,6 +46,91 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 		}
 
+		public int PacksCountClassic
+		{
+			get { return GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.Classic)); }
+		}
+
+		public int PacksCountGvg
+		{
+			get { return GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.GoblingVsGnomes)); }
+		}
+
+		public int PacksCountTgt
+		{
+			get { return GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.TheGrandTournament)); }
+		}
+
+		public int PacksCountTotal
+		{
+			get { return GetFilteredRuns().Sum(x => x.PackCount); }
+		}
+
+		public double PacksCountAveragePerRun
+		{
+			get
+			{
+				var count = GetFilteredRuns().Count();
+				return count == 0 ? 0 : Math.Round(1.0 * PacksCountTotal / GetFilteredRuns().Count(), 2);
+			}
+		}
+
+		public int GoldTotal
+		{
+			get { return GetFilteredRuns().Sum(x => x.Gold); }
+		}
+
+		public double GoldAveragePerRun
+		{
+			get
+			{
+				var count = GetFilteredRuns().Count();
+				return count == 0 ? 0 : Math.Round(1.0 * GoldTotal / GetFilteredRuns().Count(), 2);
+			}
+		}
+
+		public int DustTotal
+		{
+			get { return GetFilteredRuns().Sum(x => x.Dust); }
+		}
+
+		public double DustAveragePerRun
+		{
+			get
+			{
+				var count = GetFilteredRuns().Count();
+				return count == 0 ? 0 : Math.Round(1.0 * DustTotal / count, 2);
+			}
+		}
+
+		public int CardCountTotal
+		{
+			get { return GetFilteredRuns().Sum(x => x.CardCount); }
+		}
+
+		public double CardCountAveragePerRun
+		{
+			get
+			{
+				var count = GetFilteredRuns().Count();
+				return count == 0 ? 0 : Math.Round(1.0 * CardCountTotal / GetFilteredRuns().Count(), 2);
+			}
+		}
+
+		public int CardCountGolden
+		{
+			get { return GetFilteredRuns().Sum(x => x.CardCountGolden); }
+		}
+
+		public double CardCountGoldenAveragePerRun
+		{
+			get
+			{
+				var count = GetFilteredRuns().Count();
+				return count == 0 ? 0 : Math.Round(1.0 * CardCountGolden / GetFilteredRuns().Count(), 2);
+			}
+		}
+
 		public ClassStats ClassStatsBest
 		{
 			get { return !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.WinRate).First(); }
@@ -283,7 +368,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		}
 
 		public IEnumerable<ArenaRun> GetFilteredRuns(bool archivedFilter = true, bool classFilter = true, bool regionFilter = true,
-		                                                  bool timeframeFilter = true)
+		                                             bool timeframeFilter = true)
 		{
 			var filtered = Runs;
 			if(archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
@@ -361,6 +446,23 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			OnPropertyChanged("ClassStatsWorst");
 			OnPropertyChanged("ClassStatsMostPicked");
 			OnPropertyChanged("ClassStatsLeastPicked");
+		}
+
+		public void UpdateArenaRewards()
+		{
+			OnPropertyChanged("GoldTotal");
+			OnPropertyChanged("GoldAveragePerRun");
+			OnPropertyChanged("DustTotal");
+			OnPropertyChanged("DustAveragePerRun");
+			OnPropertyChanged("PacksCountClassic");
+			OnPropertyChanged("PacksCountGvg");
+			OnPropertyChanged("PacksCountTgt");
+			OnPropertyChanged("PacksCountTotal");
+			OnPropertyChanged("PacksCountAveragePerRun");
+			OnPropertyChanged("CardCountTotal");
+			OnPropertyChanged("CardCountGolden");
+			OnPropertyChanged("CardCountAveragePerRun");
+			OnPropertyChanged("CardCountGoldenAveragePerRun");
 		}
 
 		public void UpdateArenaRuns()

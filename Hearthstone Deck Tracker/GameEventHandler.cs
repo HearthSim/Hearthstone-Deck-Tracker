@@ -923,7 +923,7 @@ namespace Hearthstone_Deck_Tracker
 
 	    public void HandleDustReward(int amount)
         {
-            if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
+            /*if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
             {
                 if (!DeckList.Instance.ActiveDeck.DustReward.HasValue)
                 {
@@ -937,12 +937,12 @@ namespace Hearthstone_Deck_Tracker
                     DeckList.Instance.ActiveDeck.DustReward += amount;
                     _lastArenaReward = DateTime.Now;
                 }
-            }
+            }*/
         }
 
         public void HandleGoldReward(int amount)
         {
-            if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
+            /*if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
             {
                 if (!DeckList.Instance.ActiveDeck.GoldReward.HasValue)
                 {
@@ -956,7 +956,7 @@ namespace Hearthstone_Deck_Tracker
                     DeckList.Instance.ActiveDeck.GoldReward += amount;
                     _lastArenaReward = DateTime.Now;
                 }
-            }
+            }*/
         }
 
         public void SetRank(int rank)
