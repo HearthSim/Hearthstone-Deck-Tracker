@@ -45,6 +45,13 @@
                                                   SelectionChanged="ComboboxIconSet_SelectionChanged" />
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0">
+                        <Label Content="Class colors:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="150"
+                                                  SelectionChanged="ComboBoxClassColors_SelectionChanged" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
                         <Label Content="Deck layout:" HorizontalAlignment="Left"
                                                VerticalAlignment="Top" />
                         <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"

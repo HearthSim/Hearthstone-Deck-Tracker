@@ -9,6 +9,7 @@
                       xmlns:error="clr-namespace:Hearthstone_Deck_Tracker.Controls.Error"
                       xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
+                      xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
                       Title="Hearthstone Deck Tracker" Height="603" Width="700"
                       MinHeight="584" MinWidth="700"
                       Closing="Window_Closing"
@@ -122,6 +123,33 @@
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutUpdateNotes" Header="Update Notes" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <flyoutControls:UpdateNotes x:Name="UpdateNotesControl"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutNewStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <controls:Flyout.HeaderTemplate>
+                    <DataTemplate>
+                        <DockPanel Margin="10,13,10,8">
+                            <Button Click="ButtonCloseStatsFlyout_OnClick" DockPanel.Dock="Right" Width="40" Height="40" VerticalAlignment="Center" Style="{DynamicResource MetroCircleButtonStyle}">
+                                <Rectangle Width="20" Height="15">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource appbar_arrow_left_white}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Button>
+                            <Button Click="ButtonSwitchStatsToNewWindow_OnClick" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" Opacity="0.8" DockPanel.Dock="Left">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="16" Height="16" Margin="0,0,10,0">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{StaticResource appbar_arrow_right_left_white}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Move to new window" FontWeight="Normal" />
+                                </StackPanel>
+                            </Button>
+                            <TextBlock Text="Stats" Foreground="White" Margin="15,0" FontSize="{StaticResource FlyoutHeaderFontSize}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                        </DockPanel>
+                    </DataTemplate>
+                </controls:Flyout.HeaderTemplate>
+                <stats:Overview x:Name="NewStatsFlyout" />
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
@@ -297,7 +325,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="GAMES &amp; _STATISTICS"  Click="BtnDeckStats_Click"/>
+                    <MenuItem Header="[OLD] GAMES &amp; _STATISTICS"  Click="BtnDeckStats_Click"/>
+                    <MenuItem Header="ARENA RUNS &amp; _STATISTICS"  Click="BtnDeckNewStats_Click"/>
                     <Separator/>
                     <MenuItem Header="_LATEST REPLAY" Click="MenuItemReplayLastGame_OnClick"/>
                     <MenuItem Header="_SELECT REPLAY" Click="MenuItemReplaySelectGame_OnClick" />

@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.Arena.ArenaStatsSummary"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena"
+             xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
+             mc:Ignorable="d"
+             d:DesignHeight="1600" d:DesignWidth="1800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <utility:ConfigWrapper x:Key="ConfigWrapper"/>
+    </UserControl.Resources>
+    <ScrollViewer Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <DockPanel>
+            <Expander IsExpanded="True" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+                <Expander.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="CHARTS" Foreground="White"/>
+                        <CheckBox Name="CheckBoxShowLegends" Content="show legends" Margin="20,0,0,0" Foreground="White" IsChecked="{Binding Path=ArenaStatsShowLegends, Source={StaticResource ConfigWrapper}}"/>
+                    </StackPanel>
+                </Expander.Header>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="1.6667*"/>
+                        </Grid.ColumnDefinitions>
+                        <DockPanel Height="300" MinWidth="300" Grid.Column="0">
+                            <TextBlock Text="Played" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <metroChart:DoughnutChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <metroChart:DoughnutChart.Series>
+                                    <metroChart:ChartSeries SeriesTitle="Played(%)" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=PlayedClassesPercent, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                                </metroChart:DoughnutChart.Series>
+                            </metroChart:DoughnutChart>
+                        </DockPanel>
+                        <DockPanel Height="300" MinWidth="300" Grid.Column="1">
+                            <TextBlock Text="Opponents" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <metroChart:DoughnutChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <metroChart:DoughnutChart.Series>
+                                    <metroChart:ChartSeries SeriesTitle="Opponents" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=OpponentClassesPercent, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                                </metroChart:DoughnutChart.Series>
+                            </metroChart:DoughnutChart>
+                        </DockPanel>
+                        <DockPanel Height="300" MinWidth="300" Grid.Column="2">
+                            <TextBlock Text="Average wins per class" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <metroChart:ClusteredColumnChart Background="Transparent" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
+                                <metroChart:ClusteredColumnChart.Series>
+                                    <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=AvgWinsPerClass, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                                </metroChart:ClusteredColumnChart.Series>
+                            </metroChart:ClusteredColumnChart>
+                        </DockPanel>
+                        <DockPanel Height="300" MinWidth="500" Grid.Column="3">
+                            <TextBlock Text="Wins" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <Grid>
+                                <metroChart:ClusteredColumnChart Name="ClusteredColumnChartWins" Background="Transparent" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" >
+                                    <metroChart:ClusteredColumnChart.Series>
+                                        <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=Wins, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                                    </metroChart:ClusteredColumnChart.Series>
+                                </metroChart:ClusteredColumnChart>
+                                <metroChart:EvenlyDistributedColumnsGrid Margin="45,255,25,0" Height="24">
+                                    <TextBlock Text="0" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="1" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="2" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="3" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="4" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="5" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="6" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="7" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="8" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="9" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="10" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="11" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                    <TextBlock Text="12" HorizontalAlignment="Center" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+                                </metroChart:EvenlyDistributedColumnsGrid>
+
+                            </Grid>
+                        </DockPanel>
+                    </Grid>
+                </ScrollViewer>
+            </Expander>
+            <DockPanel DockPanel.Dock="Top">
+                <GroupBox Header="Highlights">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                        <arena:ArenaStatsSummaryHighlights Margin="0,0,0,5"/>
+                    </ScrollViewer>
+                </GroupBox>
+                <Grid/>
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Top">
+                <GroupBox Header="Classes" DockPanel.Dock="Top">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                        <arena:ArensStatsSummaryClasses  Margin="0,0,0,5"/>
+                    </ScrollViewer>
+                </GroupBox>
+                <Grid/>
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Top">
+                <GroupBox Header="Rewards">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                        <arena:ArenaRewardsSummary/>
+                    </ScrollViewer>
+                </GroupBox>
+                <Grid/>
+            </DockPanel>
+            <Grid/>
+        </DockPanel>
+    </ScrollViewer>
+</UserControl>
