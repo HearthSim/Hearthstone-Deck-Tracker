@@ -1,15 +1,15 @@
 ﻿#region
 
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
-using MahApps.Metro.Controls.Dialogs;
-using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
+using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
 
 #endregion
 
@@ -75,9 +75,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var result =
 					await
 					this.ShowMessageAsync("NetDeck",
-										  "For easier (one-click!) web importing check out the NetDeck Chrome Extension!\n\n(This message will not be displayed again, no worries.)",
-										  MessageDialogStyle.AffirmativeAndNegative,
-										  new MessageDialogs.Settings {AffirmativeButtonText = "Show me!", NegativeButtonText = "No thanks"});
+					                      "For easier (one-click!) web importing check out the NetDeck Chrome Extension!\n\n(This message will not be displayed again, no worries.)",
+					                      MessageDialogStyle.AffirmativeAndNegative,
+					                      new MessageDialogs.Settings {AffirmativeButtonText = "Show me!", NegativeButtonText = "No thanks"});
 
 				if(result == MessageDialogResult.Affirmative)
 				{
@@ -85,9 +85,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					var enableOptionResult =
 						await
 						this.ShowMessageAsync("Enable one-click importing?",
-											  "Would you like to enable one-click importing via NetDeck?\n(options > other > importing)",
-											  MessageDialogStyle.AffirmativeAndNegative,
-											  new MessageDialogs.Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
+						                      "Would you like to enable one-click importing via NetDeck?\n(options > other > importing)",
+						                      MessageDialogStyle.AffirmativeAndNegative,
+						                      new MessageDialogs.Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
 					if(enableOptionResult == MessageDialogResult.Affirmative)
 					{
 						Options.OptionsTrackerImporting.CheckboxImportNetDeck.IsChecked = true;
@@ -134,8 +134,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var idString =
 					await
 					this.ShowInputAsync("Import deck",
-										"id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD",
-										settings);
+					                    "id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD",
+					                    settings);
 				if(string.IsNullOrEmpty(idString))
 					return;
 				var deck = new Deck();
@@ -259,7 +259,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					await
 						this.ShowMessageAsync("How this works:",
-											  "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.\n\nYou can see this information again in 'options > tracker > importing'");
+						                      "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.\n\nYou can see this information again in 'options > tracker > importing'");
 
 					if(Config.Instance.ShowArenaImportMessage)
 					{
@@ -281,7 +281,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					await
 						this.ShowMessageAsync("Arena cards found!",
-											  "[WORK IN PROGRESS] Please enter the arena screen, then click ok. Wait until HDT has loaded the deck.\n\nPlease don't move your mouse.\n\nNote: For right now, this can currently only detect if a card has 1 or more than 1 copy (sets count to 2). Cards with more than 2 copies still have to be manually adjusted.");
+						                      "[WORK IN PROGRESS] Please enter the arena screen, then click ok. Wait until HDT has loaded the deck.\n\nPlease don't move your mouse.\n\nNote: For right now, this can currently only detect if a card has 1 or more than 1 copy (sets count to 2). Cards with more than 2 copies still have to be manually adjusted.");
 					var controller = await this.ShowProgressAsync("Please wait...", "Detecting card counts...");
 					await GetCardCounts(deck);
 					await controller.CloseAsync();
@@ -376,7 +376,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				var remainingCards = deck.Cards.Count - numVisibleCards;
 				startY = 76.0 / 768.0 * hsRect.Height + (numVisibleCards - remainingCards) * strideY;
-				for(int i = 0; i < remainingCards ; i++)
+                for(int i = 0; i < remainingCards ; i++)
 				{
 					var posY = (int)(startY + strideY * i);
 					var capture = Helper.CaptureHearthstone(new System.Drawing.Point(posX, posY), width, height, hsHandle);
@@ -395,7 +395,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						//Console.WriteLine(yellowPixels + " of " + width * height + " - " + yellowPixels / (double)(width * height));
 						//capture.Save("arenadeckimages/" + i + 21 + ".png");
 						var yellowPixelRatio = yellowPixels / (double)(width * height);
-						if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
+                        if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
 							deck.Cards[numVisibleCards + i].Count = 2;
 					}
 				}
@@ -454,18 +454,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			deck.Class = lastNonNeutralCard.PlayerClass;
 
-			var legendary = Core.Game.PossibleConstructedCards.Where(c => c.TypeRarity == Card.eTypeRarity.Legendary).ToList();
+			var legendary = Core.Game.PossibleConstructedCards.Where(c => c.Rarity == "Legendary").ToList();
 			var remaining =
 				Core.Game.PossibleConstructedCards.Where(
 													c =>
-													c.TypeRarity != Card.eTypeRarity.Legendary && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class))
+													c.Rarity != "Legendary" && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class))
 					.ToList();
 			var count = Math.Abs(30 - (2 * remaining.Count + legendary.Count)) < Math.Abs(30 - (remaining.Count + legendary.Count)) ? 2 : 1;
 			foreach(var card in Core.Game.PossibleConstructedCards)
 			{
 				if(!string.IsNullOrEmpty(card.PlayerClass) && card.PlayerClass != deck.Class)
 					continue;
-				card.Count = card.TypeRarity == Card.eTypeRarity.Legendary ? 1 : count;
+				card.Count = card.Rarity == "Legendary" ? 1 : count;
 				deck.Cards.Add(card);
 				if(deck.Class == null && card.GetPlayerClass != "Neutral")
 					deck.Class = card.GetPlayerClass;

@@ -1,10 +1,5 @@
 ﻿#region
 
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Stats;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -12,6 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
 
 #endregion
 
@@ -33,8 +33,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return
 				await
 				window.ShowMessageAsync("Delete Game",
-										stats.Result + " vs " + stats.OpponentHero + "\nfrom " + stats.StartTime + "\n\nAre you sure?",
-										MessageDialogStyle.AffirmativeAndNegative, settings);
+				                        stats.Result + " vs " + stats.OpponentHero + "\nfrom " + stats.StartTime + "\n\nAre you sure?",
+				                        MessageDialogStyle.AffirmativeAndNegative, settings);
 		}
 
 		public static async Task<MessageDialogResult> ShowDeleteMultipleGameStatsMessage(this MetroWindow window, int count)
@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return
 				await
 				window.ShowMessageAsync("Delete Games", "This will delete the selected games (" + count + ").\n\nAre you sure?",
-										MessageDialogStyle.AffirmativeAndNegative, settings);
+				                        MessageDialogStyle.AffirmativeAndNegative, settings);
 		}
 
 		public static async Task ShowUpdateNotesMessage(this MetroWindow window)
@@ -113,7 +113,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var result =
 				await
 				window.ShowMessageAsync("Select Operation", "\"upload\" will automatically upload the image to imgur.com",
-										MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+				                        MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
 			return new SaveScreenshotOperation
 			{
 				SaveLocal = result != MessageDialogResult.FirstAuxiliary,
@@ -127,8 +127,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var result =
 				await
 				window.ShowMessageAsync("Hearthstone install directory not found",
-										"Hearthstone Deck Tracker will not work properly if Hearthstone is not installed on your machine (obviously).",
-										MessageDialogStyle.AffirmativeAndNegative, settings);
+				                        "Hearthstone Deck Tracker will not work properly if Hearthstone is not installed on your machine (obviously).",
+				                        MessageDialogStyle.AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Negative)
 			{
 				var dialog = new OpenFileDialog
@@ -154,8 +154,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				await
 					window.ShowMessageAsync("No missing cards",
-											"No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
-											MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
+					                        "No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
+					                        MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
 				return;
 			}
 			var message = "The following cards were not found:\n";
@@ -166,7 +166,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				message += "\n• " + card.LocalizedName;
 
-				int dust = card.DustValue;
+				int dust;
+				switch(card.Rarity)
+				{
+					case "Common":
+						dust = 40;
+						break;
+					case "Rare":
+						dust = 100;
+						break;
+					case "Epic":
+						dust = 400;
+						break;
+					case "Legendary":
+						dust = 1600;
+						break;
+					default:
+						dust = 0;
+						break;
+				}
 
 				if(card.Count == 2)
 					message += " x2";
@@ -181,7 +199,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			message += string.Format("\n\nYou need {0} dust {1}{2}to craft the missing cards.", totalDust, nax, promo);
 			await
 				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative,
-										new Settings {AffirmativeButtonText = "OK"});
+				                        new Settings {AffirmativeButtonText = "OK"});
 		}
 	}
 
