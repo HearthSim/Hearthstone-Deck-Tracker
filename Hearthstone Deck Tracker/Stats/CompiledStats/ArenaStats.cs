@@ -89,6 +89,11 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 		}
 
+		public int GoldSpent
+		{
+			get {return GetFilteredRuns().Count(x => x.Deck.ArenaReward.PaymentMethod == ArenaPaymentMethod.Gold) * 150; }
+		}
+
 		public int DustTotal
 		{
 			get { return GetFilteredRuns().Sum(x => x.Dust); }
@@ -452,6 +457,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			OnPropertyChanged("GoldTotal");
 			OnPropertyChanged("GoldAveragePerRun");
+			OnPropertyChanged("GoldSpent");
 			OnPropertyChanged("DustTotal");
 			OnPropertyChanged("DustAveragePerRun");
 			OnPropertyChanged("PacksCountClassic");
