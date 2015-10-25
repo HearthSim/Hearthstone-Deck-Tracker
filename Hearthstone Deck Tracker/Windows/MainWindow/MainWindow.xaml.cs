@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.API;
@@ -757,7 +758,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BtnDonate_OnClick(object sender, RoutedEventArgs e)
 		{
-			Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
+			BtnDonateContextMenu.Placement = PlacementMode.Bottom;
+			BtnDonateContextMenu.PlacementTarget = BtnDonate;
+			BtnDonateContextMenu.IsOpen = true;
+		}
+
+		private void BtnPaypal_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
+			}
+			catch
+			{
+			}
+		}
+
+		private void BtnPatreon_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				Process.Start("https://www.patreon.com/HearthstoneDeckTracker");
+			}
+			catch
+			{
+			}
 		}
 
 		#endregion
