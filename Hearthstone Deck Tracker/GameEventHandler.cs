@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -132,14 +133,21 @@ namespace Hearthstone_Deck_Tracker
                 _game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk();
 
             SaveAndUpdateStats();
-
+			
 	        if(_arenaRewardDialog != null)
 	        {
 		        _arenaRewardDialog.Show();
 		        _arenaRewardDialog.Activate();
 	        }
 
-            if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
+	        if(_game.CurrentGameStats != null && _game.CurrentGameStats.GameMode == GameMode.Arena)
+			{
+				ArenaStats.Instance.UpdateArenaRuns();
+				ArenaStats.Instance.UpdateArenaStats();
+				ArenaStats.Instance.UpdateArenaStatsHighlights();
+			}
+
+			if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
             {
                 SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
                 Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd, "GameEventHandler");
