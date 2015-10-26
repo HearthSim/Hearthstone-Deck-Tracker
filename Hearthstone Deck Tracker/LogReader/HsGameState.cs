@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
         public bool FoundSpectatorStart { get; set; }
         public int JoustReveals { get; set; }
 	    public Dictionary<int, string> KnownCardIds { get; set; }
+	    public bool RankedDetectionComplete { get; set; }
 
 	    public HsGameState(GameV2 game)
         {

@@ -116,6 +116,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(CurrentGameMode != GameMode.Spectator)
 					CurrentGameMode = GameMode.None;
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
+				_gameModeDetectionComplete = false;
 			}
 			_hsLogLines = new List<string>();
 
@@ -153,12 +154,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PossibleConstructedCards.Clear();
 		}
 
-		public async Task GameModeDetection(int timeoutInSeconds)
+		private bool _gameModeDetectionRunning;
+		private bool _gameModeDetectionComplete;
+		public async Task GameModeDetection(int timeoutInSeconds = 300)
 		{
+			if(_gameModeDetectionRunning || _gameModeDetectionComplete)
+			{
+				while(!_gameModeDetectionComplete)
+					await Task.Delay(100);
+				return;
+			}
+			_gameModeDetectionRunning = true;
 			var startTime = DateTime.Now;
 			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
 			while(CurrentGameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
 				await Task.Delay(100);
+			_gameModeDetectionComplete = true;
+			_gameModeDetectionRunning = false;
 		}
 
 		public void NewArenaDeck(string heroId)

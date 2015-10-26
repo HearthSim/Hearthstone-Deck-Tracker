@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker
                 _game.PossibleArenaCards.Add(card);
         }
 
-        public void HandleInMenu()
+        public async void HandleInMenu()
         {
             if (_game.IsInMenu)
                 return;
@@ -127,6 +127,19 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.Stop();
 			Core.Overlay.HideTimers();
 			Core.Overlay.HideSecrets();
+
+			if(_game.CurrentGameMode == GameMode.None)
+			{
+				Logger.WriteLine("Waiting for game mode detection...", "HandleInMenu");
+				await _game.GameModeDetection();
+				Logger.WriteLine("Detected game mode, continuing.", "HandleInMenu");
+			}
+			if(_game.CurrentGameMode == GameMode.Casual)
+			{
+				Logger.WriteLine("CurrentGameMode=Casual, Waiting for ranked detection...", "HandleInMenu");
+				await LogReaderManager.RankedDetection();
+				Logger.WriteLine("Done waiting for ranked detection, continuing.", "HandleInMenu");
+			}
 
 			if (Config.Instance.RecordReplays && _game.Entities.Count > 0 && !_game.SavedReplay && _game.CurrentGameStats != null
                && _game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
@@ -515,12 +528,12 @@ namespace Hearthstone_Deck_Tracker
                     if (_game.CurrentGameMode == GameMode.None)
 					{
 						Logger.WriteLine("Waiting for game mode detection...", "HandleGameEnd");
-						await _game.GameModeDetection(300);	//give the user 5 minutes to get out of the victory/defeat screen
+						await _game.GameModeDetection();
 						Logger.WriteLine("Detected game mode, continuing.", "HandleGameEnd");
 					}
 	                if(_game.CurrentGameMode == GameMode.Casual)
 					{
-						Logger.WriteLine("CurrentGameMode=None, Waiting for ranked detection...", "HandleGameEnd");
+						Logger.WriteLine("CurrentGameMode=Casual, Waiting for ranked detection...", "HandleGameEnd");
 						await LogReaderManager.RankedDetection();
 						Logger.WriteLine("Done waiting for ranked detection, continuing.", "HandleGameEnd");
 					}
@@ -535,9 +548,7 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Game mode was saved, continuing.", "HandleGameEnd");
 					if (_game.CurrentGameMode == GameMode.Arena)
                         HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
-                    else if (_game.CurrentGameMode == GameMode.Brawl)
-                    { /* do nothing */ }
-                    else
+                    else if (_game.CurrentGameMode != GameMode.Brawl)
                         HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
                 }
                 _lastGame = null;
