@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			if(run == null)
 				return;
 			var rewardDialog = new ArenaRewardDialog(run.Deck) { WindowStartupLocation = WindowStartupLocation.CenterOwner };
-			rewardDialog.Show();
+			rewardDialog.ShowDialog();
 		}
 
 		private async void ButtonAddGame_OnClick(object sender, RoutedEventArgs e)
