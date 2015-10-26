@@ -149,8 +149,8 @@ namespace Hearthstone_Deck_Tracker
                     SetZeroOlder(CardIds.Secrets.Hunter.FreezingTrap, stopIndex);
             }
 
-            if (Helper.MainWindow != null)
-                Helper.MainWindow.Overlay.ShowSecrets();
+            if (Core.MainWindow != null)
+                Core.Overlay.ShowSecrets();
         }
 
         public void ClearSecrets()

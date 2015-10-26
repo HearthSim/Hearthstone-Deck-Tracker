@@ -329,11 +329,11 @@ namespace Hearthstone_Deck_Tracker
                 Core.Windows.OpponentWindow.SetOpponentCardCount(game.Opponent.HandCount, game.Opponent.DeckCount, game.Opponent.HasCoin);
 
 
-			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage && game.CurrentGameMode != GameMode.Spectator
+			if(Core.MainWindow.NeedToIncorrectDeckMessage && !Core.MainWindow.IsShowingIncorrectDeckMessage && game.CurrentGameMode != GameMode.Spectator
 				&& game.IgnoreIncorrectDeck != DeckList.Instance.ActiveDeck)
 			{
-				MainWindow.IsShowingIncorrectDeckMessage = true;
-				MainWindow.ShowIncorrectDeckMessage();
+				Core.MainWindow.IsShowingIncorrectDeckMessage = true;
+				Core.MainWindow.ShowIncorrectDeckMessage();
 			}
 		}
 
@@ -421,11 +421,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var settings = new MessageDialogs.Settings {AffirmativeButtonText = "continue"};
 			if(!game.IsRunning)
-				await MainWindow.ShowMessageAsync("Step 0:", "Start Hearthstone", settings: settings);
-			await MainWindow.ShowMessageAsync("Step 1:", "Go to the main menu", settings: settings);
+				await Core.MainWindow.ShowMessageAsync("Step 0:", "Start Hearthstone", settings: settings);
+			await Core.MainWindow.ShowMessageAsync("Step 1:", "Go to the main menu", settings: settings);
 			SettingUpConstructedImporting = true;
 			await
-				MainWindow.ShowMessageAsync("Step 2:",
+				Core.MainWindow.ShowMessageAsync("Step 2:",
 				                            "Open \"My Collection\" and click each class icon at the top once.\n\n- Do not click on neutral\n- Do not open any decks\n- Do not flip the pages.",
 				                            settings: new MessageDialogs.Settings {AffirmativeButtonText = "done"});
 			Config.Instance.ConstructedImportingIgnoreCachedIds = game.PossibleConstructedCards.Select(c => c.Id).ToArray();

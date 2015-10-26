@@ -287,8 +287,8 @@ namespace Hearthstone_Deck_Tracker
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.MirrorEntity);
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Repentance);
 
-            if (Helper.MainWindow != null)
-                Helper.MainWindow.Overlay.ShowSecrets();
+            if (Core.MainWindow != null)
+				Core.Overlay.ShowSecrets();
         }
 
         public void HandlePlayerSpellPlayed(bool isMinionTargeted)
@@ -301,8 +301,8 @@ namespace Hearthstone_Deck_Tracker
             if (isMinionTargeted)
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Spellbender);
 
-            if(Helper.MainWindow != null)
-                Helper.MainWindow.Overlay.ShowSecrets();
+            if(Core.MainWindow != null)
+				Core.Overlay.ShowSecrets();
         }
 
         public void HandleOpponentMinionDeath(Entity entity, int turn)
@@ -336,8 +336,8 @@ namespace Hearthstone_Deck_Tracker
                 _game.OpponentSecrets.SetZeroOlder(CardIds.Secrets.Mage.Effigy, secretOffset);
             }
 
-            if (Helper.MainWindow != null)
-                Helper.MainWindow.Overlay.ShowSecrets();
+            if (Core.MainWindow != null)
+				Core.Overlay.ShowSecrets();
         }
 
         public void HandleOpponentDamage(Entity entity)
@@ -348,8 +348,8 @@ namespace Hearthstone_Deck_Tracker
             if (entity.IsOpponent)
             {
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.EyeForAnEye);
-                if(Helper.MainWindow != null)
-                    Helper.MainWindow.Overlay.ShowSecrets();
+                if(Core.MainWindow != null)
+					Core.Overlay.ShowSecrets();
             }
         }
 
@@ -361,8 +361,8 @@ namespace Hearthstone_Deck_Tracker
             if (entity.IsMinion)
             {
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.CompetitiveSpirit);
-                if(Helper.MainWindow != null)
-                    Helper.MainWindow.Overlay.ShowSecrets();
+                if(Core.MainWindow != null)
+					Core.Overlay.ShowSecrets();
             }
         }
 
@@ -728,7 +728,7 @@ namespace Hearthstone_Deck_Tracker
             GameEvents.OnPlayerPlayToHand.Execute(Database.GetCardFromId(cardId));
         }
 
-        public async void HandlePlayerDraw(Entity entity, string cardId, int turn)
+        public void HandlePlayerDraw(Entity entity, string cardId, int turn)
         {
             if (string.IsNullOrEmpty(cardId))
                 return;
