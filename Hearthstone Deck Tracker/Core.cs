@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -20,9 +21,11 @@ namespace Hearthstone_Deck_Tracker
     {
         private static TrayIcon _trayIcon;
         private static OverlayWindow _overlay;
+	    private static Overview _statsOverview;
         public static Version Version { get; set; }
         public static GameV2 Game { get; set; }
         public static MainWindow MainWindow { get; set; }
+		public static Overview StatsOverview { get { return _statsOverview ?? (_statsOverview = new Overview()); } }
         public static bool Initialized { get; private set; }
 
         public static TrayIcon TrayIcon

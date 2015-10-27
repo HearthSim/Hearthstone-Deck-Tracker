@@ -167,7 +167,7 @@
                         </DockPanel>
                     </DataTemplate>
                 </controls:Flyout.HeaderTemplate>
-                <stats:Overview x:Name="NewStatsFlyout" />
+                <ContentControl Name="StatsFlyoutContentControl"/>
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>

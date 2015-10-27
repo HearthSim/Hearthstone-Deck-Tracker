@@ -21,7 +21,5 @@
             </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
-    <Grid>
-        <stats:Overview x:Name="Overview"/>
-    </Grid>
+    <ContentControl Name="ContentControl"/>
 </controls:MetroWindow>

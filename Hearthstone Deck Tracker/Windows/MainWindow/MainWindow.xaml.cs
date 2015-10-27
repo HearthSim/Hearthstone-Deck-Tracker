@@ -944,15 +944,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(Config.Instance.StatsInWindow)
 			{
+				StatsFlyoutContentControl.Content = null;
+				Core.Windows.NewStatsWindow.ContentControl.Content = Core.StatsOverview;
 				Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
 				Core.Windows.NewStatsWindow.Show();
 				Core.Windows.NewStatsWindow.Activate();
-				Core.Windows.NewStatsWindow.Overview.UpdateStats();
+				Core.StatsOverview.UpdateStats();
 			}
 			else
 			{
+				Core.Windows.NewStatsWindow.ContentControl.Content = null;
+				StatsFlyoutContentControl.Content = Core.StatsOverview;
 				FlyoutNewStats.IsOpen = true;
-				NewStatsFlyout.UpdateStats();
+				Core.StatsOverview.UpdateStats();
 			}
 		}
 
@@ -1112,8 +1116,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Config.Instance.StatsInWindow = true;
 			Config.Save();
+			StatsFlyoutContentControl.Content = null;
+			Core.Windows.NewStatsWindow.ContentControl.Content = Core.StatsOverview;
 			Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
 			Core.Windows.NewStatsWindow.Show();
+			Core.StatsOverview.UpdateStats();
 			FlyoutNewStats.IsOpen = false;
 			await Task.Delay(100);
 			Core.Windows.NewStatsWindow.Activate();
