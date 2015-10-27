@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
 			Config.Save();
-			ArenaStats.Instance.UpdateArenaStats();
+			UpdateStats();
 		}
 
 		private void DatePickerCustomTimeFrame_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -113,6 +113,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				ArenaStats.Instance.UpdateArenaStatsHighlights();
 				ArenaStats.Instance.UpdateArenaRewards();
 			}
+			if(TreeViewItemArenaRunsSummary.IsSelected)
+				ArenaStats.Instance.UpdateArenaRewards();
 		}
 
 		private void TreeViewItemArenaRunsSummary_OnSelected(object sender, RoutedEventArgs e)

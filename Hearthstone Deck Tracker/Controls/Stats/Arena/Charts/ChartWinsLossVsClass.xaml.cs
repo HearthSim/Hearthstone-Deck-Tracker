@@ -13,14 +13,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 	/// <summary>
 	/// Interaction logic for ChartWinsByClass.xaml
 	/// </summary>
-	public partial class ChartWinsLossByClass : INotifyPropertyChanged
+	public partial class ChartWinsLossVsClass : INotifyPropertyChanged
 	{
-		public ChartWinsLossByClass()
+		public ChartWinsLossVsClass()
 		{
 			InitializeComponent();
 			ArenaStats.Instance.PropertyChanged += (sender, args) =>
 			{
-				if(args.PropertyName == "WinLossByClass")
+				if(args.PropertyName == "WinLossVsClass")
 					OnPropertyChanged("SeriesSourceWins");
 			};
 		}
@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 									  new WinChartData
 				{
 					Index = Enum.GetNames(typeof(HeroClass))[n],
-					ItemsSource = ArenaStats.Instance.WinLossByClass[n]
+					ItemsSource = ArenaStats.Instance.WinLossVsClass[n]
 				});
 			}
 		}

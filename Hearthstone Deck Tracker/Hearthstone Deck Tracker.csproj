@@ -183,8 +183,8 @@
     <Compile Include="Controls\Stats\Arena\Charts\ChartWins.xaml.cs">
       <DependentUpon>ChartWins.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Stats\Arena\Charts\ChartWinsLossByClass.xaml.cs">
-      <DependentUpon>ChartWinsLossByClass.xaml</DependentUpon>
+    <Compile Include="Controls\Stats\Arena\Charts\ChartWinsLossVsClass.xaml.cs">
+      <DependentUpon>ChartWinsLossVsClass.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml.cs">
       <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
@@ -621,7 +621,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Stats\Arena\Charts\ChartWinsLossByClass.xaml">
+    <Page Include="Controls\Stats\Arena\Charts\ChartWinsLossVsClass.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

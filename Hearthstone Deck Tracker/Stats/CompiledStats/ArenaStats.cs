@@ -322,7 +322,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 		}
 
-		public IEnumerable<ChartStats>[] WinLossByClass
+		public IEnumerable<ChartStats>[] WinLossVsClass
 		{
 			get
 			{
@@ -479,7 +479,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public void UpdateExpensiveArenaStats()
 		{
-			OnPropertyChanged("WinLossByClass");
+			OnPropertyChanged("WinLossVsClass");
 			OnPropertyChanged("WinsByClass");
 		}
 	}
