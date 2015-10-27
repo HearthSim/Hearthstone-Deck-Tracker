@@ -9,6 +9,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
     {
         int AddToTurn { get; set; }
         bool AwaitingRankedDetection { get; set; }
+		bool RankedDetectionComplete { get; set; }
         bool CurrentEntityHasCardId { get; set; }
         int CurrentEntityId { get; set; }
         long CurrentOffset { get; set; }
@@ -35,5 +36,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
         void GameEnd();
         int GetTurnNumber();
         void GameEndKeyPoint(bool victory, int id);
+        bool PlayersTurn();
     }
 }

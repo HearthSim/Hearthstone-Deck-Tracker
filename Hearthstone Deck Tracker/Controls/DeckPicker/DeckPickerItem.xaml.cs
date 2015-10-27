@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			{
 				return Equals(Deck, DeckList.Instance.ActiveDeck)
 					       ? FontWeights.Bold
-					       : (Helper.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
+					       : (Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
 			}
 		}
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Enums;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
@@ -48,6 +49,37 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			catch (Exception e)
 			{
 				Logger.WriteLine("Error loading db: \n" + e, "Game");
+				if(_cards == null)
+					_cards = new Dictionary<string, Card>();
+			}
+
+			foreach (string altnativeLanguage in Config.Instance.AlternativeLanguages)
+			{
+				if (altnativeLanguage == language)
+					continue;
+				try
+				{
+					LoadAlternativeLanguage(altnativeLanguage);
+				}
+				catch (Exception e)
+				{
+					Logger.WriteLine("Error loading alternative language " + altnativeLanguage + ": \n" + e, "Game");
+				} 
+			}
+		}
+
+		private static void LoadAlternativeLanguage(string language)
+		{
+			var alternative = XmlManager<CardDb>.Load(string.Format("Files/cardDB.{0}.xml", language));
+			foreach(var card in alternative.Cards)
+			{
+				Card c;
+				if(_cards.TryGetValue(card.CardId, out c))
+				{
+					if (card.Name == null) continue;
+					c.AlternativeNames.Add(card.Name);
+					c.AlternativeTexts.Add(card.Text);
+				}
 			}
 		}
 
@@ -58,11 +90,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Card card;
 			if(_cards.TryGetValue(cardId, out card))
 				return (Card)card.Clone();
-			Logger.WriteLine("Could not find entry in db for cardId: " + cardId, "Game");
-			return new Card(cardId, null, "UNKNOWN", "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
+			Logger.WriteLine("Could not find entry in db for cardId: " + cardId, "Database");
+			return new Card(cardId, null, Rarity.Free, "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
-		public static Card GetCardFromName(string name, bool localized = false)
+		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true)
 		{
 			var card =
 				GetActualCards()
@@ -71,8 +103,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return (Card)card.Clone();
 
 			//not sure with all the values here
-			Logger.WriteLine("Could not get card from name: " + name, "Game");
-			return new Card("UNKNOWN", null, "UNKNOWN", "Minion", name, 0, name, 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
+			if(showErrorMessage)
+				Logger.WriteLine("Could not get card from name: " + name, "Database");
+			return new Card("UNKNOWN", null, Rarity.Free, "Minion", name, 0, name, 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
 		public static List<Card> GetActualCards()

@@ -28,11 +28,11 @@ namespace Hearthstone_Deck_Tracker
 	    private readonly bool _forScreenshot;
 		private bool _appIsClosing;
 
-		public PlayerWindow(GameV2 game, bool forScreenshot = false)
+		public PlayerWindow(GameV2 game, List<Card> forScreenshot = null)
 		{
 			InitializeComponent();
 		    _game = game;
-		    _forScreenshot = forScreenshot;
+		    _forScreenshot = forScreenshot != null;
 			//ListViewPlayer.ItemsSource = playerDeck;
 			//playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
 			Height = Config.Instance.PlayerWindowHeight;
@@ -56,12 +56,13 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 
-			if(forScreenshot)
+			if(forScreenshot != null)
 			{
 				CanvasPlayerChance.Visibility = Visibility.Collapsed;
 				CanvasPlayerCount.Visibility = Visibility.Collapsed;
 				LblWins.Visibility = Visibility.Collapsed;
 				LblDeckTitle.Visibility = Visibility.Collapsed;
+				ListViewPlayer.ItemsSource = forScreenshot;
 
 				Height = 34 * ListViewPlayer.Items.Count;
 				Scale();
@@ -163,7 +164,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Scale()
 		{
-			const int offsetToMakeSureGraphicsAreNotClipped = 15;
+			const int offsetToMakeSureGraphicsAreNotClipped = 35;
 			var allLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblWins.ActualHeight + LblDeckTitle.ActualHeight + LblPlayerFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
 			if(((Height - allLabelsHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
@@ -238,6 +239,7 @@ namespace Hearthstone_Deck_Tracker
 			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 100)
 				return;
 			OnPropertyChanged("PlayerDeck");
+			Scale();
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

@@ -71,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					var card = Database.GetCardFromId(x.Key);
 					card.Count = x.Count();
 					card.IsCreated = true;
+					card.HighlightInHand = Hand.Any(ce => ce.CardId == card.Id);
 					return card;
 				}).ToList() : new List<Card>();
 
@@ -493,7 +494,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				case TAG_ZONE.HAND:
 					Hand.Sort(ZonePosComparison);
-					if(turn == 0 && Hand.Count == 5 && Hand[4].Entity.Id > 67)
+					if(!IsLocalPlayer && turn == 0 && Hand.Count == 5 && Hand[4].Entity.Id > 67)
 					{
 						Hand[4].CardMark = CardMark.Coin;
 						Hand[4].Created = true;
@@ -505,6 +506,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Board.Sort(ZonePosComparison);
 					break;
 			}
+		}
+
+		public void StolenByOpponent(Entity entity, int turn)
+		{
+			var ce = MoveCardEntity(entity, Board, Removed, turn);
+			Log("StolenByOpponent", ce);
+		}
+
+		public void StolenFromOpponent(Entity entity, int turn)
+		{
+			var ce = MoveCardEntity(entity, Removed, Board, turn);
+			ce.Created = true;
+			Log("StolenFromOpponent", ce);
 		}
 	}
 

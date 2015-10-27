@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -16,19 +17,17 @@
                                   Checked="CheckboxSameScaling_Checked"
                                   Unchecked="CheckboxSameScaling_Unchecked" />
                     <DockPanel Margin="10,5,10,0">
-                        <Label Content="Scaling:" HorizontalAlignment="Left"
-                                           VerticalAlignment="Top" />
+                        <Label Content="Scaling:" />
+                        <TextBox Name="TextBoxScaling" PreviewTextInput="TextBoxScaling_OnPreviewTextInput" Text="{Binding PlayerScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayPlayer}}" DockPanel.Dock="Right" Margin="5,0,0,0" Width="50"/>
                         <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Right"
-                                            VerticalAlignment="Center" Width="150" Value="100"
-                                            ValueChanged="SliderOverlayPlayerScaling_ValueChanged"
-                                            Minimum="0.0001" />
+                                            VerticalAlignment="Center" Width="150" Value="{Binding PlayerScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayPlayer}}"
+                                            Minimum="1" SmallChange="1" LargeChange="10" Maximum="200" />
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0">
-                        <Label Content="Opacity:" HorizontalAlignment="Left"
-                                           VerticalAlignment="Top" />
+                        <Label Content="Opacity:" />
                         <Slider x:Name="SliderPlayerOpacity" HorizontalAlignment="Right"
-                                            VerticalAlignment="Center" Width="150" Value="100"
-                                            ValueChanged="SliderPlayerOpacity_ValueChanged" />
+                                            VerticalAlignment="Center" Width="205" Value="100"
+                                            ValueChanged="SliderPlayerOpacity_ValueChanged" SmallChange="1" LargeChange="10" />
 
                     </DockPanel>
                     <CheckBox x:Name="CheckboxHighlightCardsInHand"

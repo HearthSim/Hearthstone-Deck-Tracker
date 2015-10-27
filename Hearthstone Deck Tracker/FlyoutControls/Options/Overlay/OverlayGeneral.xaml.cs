@@ -44,6 +44,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
 			CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
 			CheckboxAlwaysShowGoldProgress.IsChecked = Config.Instance.AlwaysShowGoldProgress;
+		    CheckboxHidePlayerAttackIcon.IsChecked = Config.Instance.HidePlayerAttackIcon;
+		    CheckboxHideOpponentAttackIcon.IsChecked = Config.Instance.HideOpponentAttackIcon;
 			_initialized = true;
 		}
 
@@ -51,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			Config.Save();
 			if(updateOverlay)
-				Helper.MainWindow.Overlay.Update(true);
+				Core.Overlay.Update(true);
 		}
 
 		private void CheckboxOverlayAdditionalCardToolTips_Checked(object sender, RoutedEventArgs e)
@@ -74,14 +76,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(User32.GetHearthstoneWindow() == IntPtr.Zero)
 				return;
-			BtnUnlockOverlay.Content = await Helper.MainWindow.Overlay.UnlockUI() ? "Lock" : "Unlock";
+			BtnUnlockOverlay.Content = await Core.Overlay.UnlockUI() ? "Lock" : "Unlock";
 		}
 
 		private async void BtnResetOverlay_Click(object sender, RoutedEventArgs e)
 		{
 			var result =
 				await
-				Helper.MainWindow.ShowMessageAsync("Resetting overlay to default",
+				Core.MainWindow.ShowMessageAsync("Resetting overlay to default",
 				                                   "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
 				                                   MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
@@ -89,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 			if((string)BtnUnlockOverlay.Content == "Lock")
 			{
-				await Helper.MainWindow.Overlay.UnlockUI();
+				await Core.Overlay.UnlockUI();
 				BtnUnlockOverlay.Content = "Unlock";
 			}
 
@@ -142,7 +144,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.CardSortingClassFirst = true;
 			SaveConfig(false);
-			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, true);
+			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, true);
 			//Helper.SortCardCollection(ListViewNewDeck.Items, true);
 		}
 
@@ -152,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.CardSortingClassFirst = false;
 			SaveConfig(false);
-			Helper.SortCardCollection(Helper.MainWindow.ListViewDeck.ItemsSource, false);
+			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, false);
 			//Helper.SortCardCollection(ListViewNewDeck.Items, false);
 		}
 
@@ -178,7 +180,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.HideSecrets = true;
 			SaveConfig(false);
-			Helper.MainWindow.Overlay.HideSecrets();
+			Core.Overlay.HideSecrets();
 		}
 
 		private void CheckboxHideSecrets_Unchecked(object sender, RoutedEventArgs e)
@@ -188,7 +190,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.HideSecrets = false;
 			SaveConfig(false);
 			if(!_game.IsInMenu)
-				Helper.MainWindow.Overlay.ShowSecrets();
+				Core.Overlay.ShowSecrets();
 		}
 
 		private void CheckboxOverlaySecretToolTipsOnly_Checked(object sender, RoutedEventArgs e)
@@ -388,6 +390,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.AlwaysShowGoldProgress = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxHidePlayerAttackIcon_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerAttackIcon = true;
+			SaveConfig(true);
+		}
+
+		private void CheckboxHidePlayerAttackIcon_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerAttackIcon = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxHideOpponentAttackIcon_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentAttackIcon = true;
+			SaveConfig(true);
+		}
+
+		private void CheckboxHideOpponentAttackIcon_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentAttackIcon = false;
 			SaveConfig(true);
 		}
 	}

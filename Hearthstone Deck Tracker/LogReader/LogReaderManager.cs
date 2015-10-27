@@ -51,6 +51,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static async void StartLogReaders()
 		{
+			if(_running)
+				return;
 			foreach(var logReader in LogReaders)
 				logReader.Start(_startingPoint);
 			_running = true;
@@ -79,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static DateTime GetStartingPoint()
 		{
-			var powerEntry = _powerLogReader.FindEntryPoint("GameState.DebugPrintPower() - CREATE_GAME");
+			var powerEntry = _powerLogReader.FindEntryPoint(new [] {"GameState.DebugPrintPower() - CREATE_GAME", "tag=GOLD_REWARD_STATE" });
 			var bobEntry = _bobLogReader.FindEntryPoint("legend rank");
 			return powerEntry > bobEntry ? powerEntry : bobEntry;
 		}
@@ -89,9 +91,18 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			return _gameState.GetTurnNumber();
 		}
 
+		public static void ResetRankedDetection()
+		{
+			_gameState.RankedDetectionComplete = false;
+		}
 		public static async Task<bool> RankedDetection(int timeoutInSeconds = 3)
 		{
-			Logger.WriteLine("waiting for ranked detection", "LogReader");
+			if(_gameState.AwaitingRankedDetection || _gameState.RankedDetectionComplete)
+			{
+				while(!_gameState.RankedDetectionComplete)
+					await Task.Delay(100);
+				return _gameState.FoundRanked;
+			}
 			_gameState.AwaitingRankedDetection = true;
 			_gameState.WaitingForFirstAssetUnload = true;
 			_gameState.FoundRanked = false;
@@ -103,6 +114,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				if(_gameState.FoundRanked)
 					break;
 			}
+			_gameState.RankedDetectionComplete = true;
+			_gameState.AwaitingRankedDetection = false;
 			return _gameState.FoundRanked;
 		}
 
@@ -137,16 +150,15 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static void ProcessNewLines()
 		{
-			foreach(var item in ToProcess)
+			foreach(var item in ToProcess.Where(item => item.Value != null))
 			{
-				foreach(var line in item.Value)
+				foreach(var line in item.Value.Where(line => line != null))
 				{
 					switch(line.Namespace)
 					{
 						case "Power":
 							PowerGameStateLineHandler.Handle(line.Line, _gameState, _game);
 							API.LogEvents.OnPowerLogLine.Execute(line.Line);
-							GameV2.AddHSLogLine(line.Line);
 							break;
 						case "Zone":
 							ZoneHandler.Handle(line.Line, _gameState);

@@ -1,14 +1,30 @@
 Hearthstone-Deck-Tracker
 ========================
+HDT is an automatic deck tracker and manager for Hearthstone.
 
-###[Download](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases)
-###[FAQ](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ)
+Installation
+=========
+- Requirements:
+  - Windows Vista or higher
+  - .NET Framework 4.5 or higher
+- [__Download__](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) the `Hearthstone.Deck.Tracker-vx.xx.xx.zip` archive.
+- Extract the archive.
+- Run the "Hearthstone Deck Tracker.exe"
+ 
 
-[![Join the chat at https://gitter.im/Epix37/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Epix37/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+FAQ
+=========
+[Go to the FAQ.](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ)
 
-This is an automatic deck tracker for Hearthstone.
 
-The ingame overlay:
+Community
+=========
+- **Gitter**: [![Join the chat at https://gitter.im/Epix37/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Epix37/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+- **HearthSim**: Hearthstone Deck Tracker is a [HearthSim](http://hearthsim.info) project. Come join us in #hearthsim on chat.freenode.net.
+
+Features
+=========
+An in-game overlay:
 
 ![Overlay](http://i.imgur.com/EWd6Ung.jpg "The overlay")
 
@@ -16,9 +32,6 @@ The app:
 
 ![Tracker](http://i.imgur.com/FE7Xwxl.png "The tracker")
 
-
-Features:
-=========
 - **Tracks**:
   - Cards left in your deck or cards drawn from your deck.
   - Your handcount, deckcount and draw chances.
@@ -48,45 +61,6 @@ Features:
 
 - **Replays**:
 ![Stats](http://i.imgur.com/tuxOFmg.png "Deck stats")
-
-
-How to use: 
-===========
-1) Download latest release [here](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) (Hearthstone.Deck.Tracker-vx.xx.xx.zip)  
-2) Extract file  
-3) Run "Hearthstone Deck Tracker.exe"  
-4) Create your decks under "New" (or import from any of the supported websites), click save.  
-5) Play!
-
-[Video guide / feature overview by TheAdipose](https://www.youtube.com/watch?v=gNVlF83w-wY) (v0.5.6)
-
-FAQ:
-=============
-[Go to FAQ](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ)
-
-How it works:
-=============
-The automated tracking is done my reading out Hearthstone logfile.  
-More information on that here:  http://www.reddit.com/r/hearthstone/comments/268fkk/simple_hearthstone_logging_see_your_complete_play
-
-Is Blizzard okay with this?
-=============
-[Yes](https://twitter.com/bdbrode/status/511151446038179840)  
-[It's not against the TOS](https://twitter.com/CM_Zeriyah/status/589171381381672960)
-
-How to start Hearthstone-Deck-Tracker with the launcher?
-=============
-- Create a .bat file with this code inside:
-```
-@echo off
-start "" "C:\Program Files (x86)\Hearthstone\Hearthstone Beta Launcher.exe"
-start "" "C:\Program Files (x86)\Hearthstone Deck Tracker\Hearthstone Deck Tracker.exe"
-```
-  
-Requirements:
-=============
-- Windows Vista or higher
-- .NET Framework 4.5
 
 
 Donations are always appreciated

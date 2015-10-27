@@ -10,6 +10,14 @@
         <GroupBox Header="Settings">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
+                    <GroupBox Header="Google Analytics">
+                        <StackPanel>
+                            <CheckBox Name="CheckBoxAnalytics" Content="Submit anonymous data" Checked="CheckBoxAnalytics_OnChecked" Unchecked="CheckBoxAnalytics_OnUnchecked"/>
+                            <TextBlock
+                                Text="This only tracks two things: App starts, where the version number and login mode is submitted, as well as information about crashes."
+                                TextWrapping="Wrap" />
+                        </StackPanel>
+                    </GroupBox>
                     <DockPanel Margin="10,5,10,0">
                         <Label Content="Key on game start:" HorizontalAlignment="Right"
                                                VerticalAlignment="Top" />
@@ -48,6 +56,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxShowLoginDialog_Checked"
                                               Unchecked="CheckboxShowLoginDialog_Unchecked" />
+                    <CheckBox x:Name="CheckBoxShowSplashScreen" Content="Show the loading splash screen"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckboxShowSplashScreen_Checked"
+                                              Unchecked="CheckboxShowSplashScreen_Unchecked" />
                     <CheckBox x:Name="CheckboxCloseWithHearthstone"
                                               Content="Close with Hearthstone" HorizontalAlignment="Left"
                                               Margin="10,5,0,0" VerticalAlignment="Top"

@@ -35,6 +35,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
 			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxCardFrameRarity.IsChecked = Config.Instance.RarityCardFrames;
+			CheckboxCardGemRarity.IsChecked = Config.Instance.RarityCardGems;
+			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 			_initialized = true;
 		}
 
@@ -59,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ManaCurveMyDecks = true;
-			Helper.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Visible;
+			Core.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Visible;
 			Config.Save();
 		}
 
@@ -68,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ManaCurveMyDecks = false;
-			Helper.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
+			Core.MainWindow.ManaCurveMyDecks.Visibility = Visibility.Collapsed;
 			Config.Save();
 		}
 
@@ -79,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = true;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
 		private void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
@@ -89,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = false;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 		}
 
 		private void CheckboxFullTextSearch_Checked(object sender, RoutedEventArgs e)
@@ -238,13 +240,29 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
+		private void CheckboxCardGemRarity_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardGems = true;
+			Config.Save();
+		}
+
+		private void CheckboxCardGemRarity_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardGems = false;
+			Config.Save();
+		}
+
 		private void CheckBoxAutoUse_OnChecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			Config.Instance.AutoUseDeck = true;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 
 		}
 
@@ -254,8 +272,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AutoUseDeck = false;
 			Config.Save();
-			Helper.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
 
+		}
+
+		private void CheckboxArenaRewardDialog_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ArenaRewardDialog = true;
+			Config.Save();
+		}
+
+		private void CheckboxArenaRewardDialog_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ArenaRewardDialog = false;
+			Config.Save();
 		}
 	}
 }

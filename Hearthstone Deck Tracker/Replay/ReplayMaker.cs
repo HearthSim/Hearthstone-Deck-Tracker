@@ -41,18 +41,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 				var player = Points.Last().Data.First(x => x.IsPlayer);
 				var opponent = Points.Last().Data.First(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
-				var playerHero =
-					Points.Last()
-					      .Data.First(
-					                  x =>
-					                  !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO")
+				var playerHero = Points.Last().Data.First(x => x.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO
 					                  && x.IsControlledBy(player.GetTag(GAME_TAG.CONTROLLER)));
 				var opponentHero =
 					Points.Last()
 					      .Data.FirstOrDefault(
 					                           x =>
-					                           !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO")
-					                           && x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
+											   x.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO
+											   && x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
 				if(opponentHero == null)
 				{
 					//adventure bosses

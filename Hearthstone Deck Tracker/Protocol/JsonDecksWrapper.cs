@@ -37,17 +37,17 @@ namespace Hearthstone_Deck_Tracker.Protocol
 				if(reloadTags)
 				{
 					DeckList.Save();
-					Helper.MainWindow.ReloadTags();
+					Core.MainWindow.ReloadTags();
 				}
 			}
 
 			var decks = Decks.Select(x => x.ToDeck()).ToList();
 
-			Helper.MainWindow.ActivateWindow();
+			Core.MainWindow.ActivateWindow();
 			if(decks.Count > 1 || AutoSave)
 			{
 				var log = string.Format("Saving {0} decks", decks.Count);
-				var controller = await Helper.MainWindow.ShowProgressAsync(log, "Please wait...");
+				var controller = await Core.MainWindow.ShowProgressAsync(log, "Please wait...");
 				Logger.WriteLine(log);
 				foreach(var deck in decks)
 				{
@@ -66,11 +66,11 @@ namespace Hearthstone_Deck_Tracker.Protocol
 						Logger.WriteLine("Error saving deck: " + ex, "JsonDecksWrapper");
 					}
 				}
-				Helper.MainWindow.DeckPickerList.UpdateDecks();
+				Core.MainWindow.DeckPickerList.UpdateDecks();
 				await controller.CloseAsync();
 			}
 			else if(decks.Count == 1)
-				Helper.MainWindow.SetNewDeck(decks[0]);
+				Core.MainWindow.SetNewDeck(decks[0]);
 		}
 	}
 }

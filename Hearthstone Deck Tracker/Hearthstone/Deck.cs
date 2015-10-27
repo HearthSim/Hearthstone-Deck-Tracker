@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
@@ -160,26 +161,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _isArenaDeck = value; }
 		}
 
-		public int? GoldReward
+		private ArenaReward _arenaReward = new ArenaReward();
+		public ArenaReward ArenaReward
 		{
-			get { return IsArenaDeck ? _goldReward : null; }
+			get { return IsArenaDeck ? _arenaReward : null; }
 			set
 			{
 				if(IsArenaDeck)
-					_goldReward = value;
+					_arenaReward = value;
 			}
 		}
-
-		public int? DustReward
-		{
-			get { return IsArenaDeck ? _dustReward : null; }
-			set
-			{
-				if(IsArenaDeck)
-					_dustReward = value;
-			}
-		}
-
 		public bool? IsArenaRunCompleted
 		{
 			get
@@ -356,36 +347,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public Color ClassColor
 		{
-			get
-			{
-				switch(Class)
-				{
-					case "Druid":
-						return (Color)ColorConverter.ConvertFromString("#FF7D0A");
-					case "Death Knight":
-						return (Color)ColorConverter.ConvertFromString("#C41F3B");
-					case "Hunter":
-						return (Color)ColorConverter.ConvertFromString("#ABD473");
-					case "Mage":
-						return (Color)ColorConverter.ConvertFromString("#69CCF0");
-					case "Monk":
-						return (Color)ColorConverter.ConvertFromString("#00FF96");
-					case "Paladin":
-						return (Color)ColorConverter.ConvertFromString("#F58CBA");
-					case "Priest":
-						return (Color)ColorConverter.ConvertFromString("#FFFFFF");
-					case "Rogue":
-						return (Color)ColorConverter.ConvertFromString("#FFF569");
-					case "Shaman":
-						return (Color)ColorConverter.ConvertFromString("#0070DE");
-					case "Warlock":
-						return (Color)ColorConverter.ConvertFromString("#9482C9");
-					case "Warrior":
-						return (Color)ColorConverter.ConvertFromString("#C79C6E");
-					default:
-						return Colors.Gray;
-				}
-			}
+			get { return Helper.GetClassColor(Class, false); }
 		}
 
 		[XmlIgnore]
@@ -603,7 +565,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		/// The mechanic attribute, such as windfury or taunt, comes from the cardDB json file
 		public int GetMechanicCount(string newmechanic)
 		{
-			return Cards.Where(card => card.Mechanics != null).Sum(card => card.Mechanics.Count(mechanic => mechanic.Equals(newmechanic)));
+			return Cards.Where(card => card.Mechanics != null).Sum(card => card.Mechanics.Count(mechanic => mechanic.Equals(newmechanic)) * card.Count);
 		}
 
 		private readonly string[] _relevantMechanics =

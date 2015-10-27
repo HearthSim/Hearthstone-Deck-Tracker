@@ -3,11 +3,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -31,7 +33,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsInMenu = true;
 			PossibleArenaCards = new List<Card>();
 			PossibleConstructedCards = new List<Card>();
-			OpponentSecrets = new OpponentSecrets();
+			OpponentSecrets = new OpponentSecrets(this);
+            Reset();
 		}
 
 		public static List<string> HSLogLines
@@ -42,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Player Player { get; set; }
 		public Player Opponent { get; set; }
 		public bool NoMatchingDeck { get; set; }
+		public Deck IgnoreIncorrectDeck { get; set; }
 		public bool IsInMenu { get; set; }
 		public bool IsUsingPremade { get; set; }
 		public int OpponentSecretCount { get; set; }
@@ -68,13 +72,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public GameMode CurrentGameMode
+        public bool IsMinionInPlay
+        {
+            get { return Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion)).Value != null; }
+        }
+
+        public bool IsOpponentMinionInPlay
+        {
+            get { return Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))).Value != null; }
+        }
+
+        public int OpponentMinionCount
+        {
+            get { return Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))); }
+        }
+
+        public GameMode CurrentGameMode
 		{
 			get { return _currentGameMode; }
 			set
 			{
 				_currentGameMode = value;
-				Logger.WriteLine("set CurrentGameMode to " + value, "Game");
+				Logger.WriteLine("Set CurrentGameMode to " + value, "Game");
 			}
 		}
 
@@ -97,10 +116,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(CurrentGameMode != GameMode.Spectator)
 					CurrentGameMode = GameMode.None;
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
+				_gameModeDetectionComplete = false;
 			}
 			_hsLogLines = new List<string>();
 
-			if(Helper.MainWindow.Overlay != null)
+			if(Core.Game != null && Core.Overlay != null)
 			{
 				Helper.UpdatePlayerCards();
 				Helper.UpdateOpponentCards();
@@ -132,6 +152,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void ResetConstructedCards()
 		{
 			PossibleConstructedCards.Clear();
+		}
+
+		private bool _gameModeDetectionRunning;
+		private bool _gameModeDetectionComplete;
+		public async Task GameModeDetection(int timeoutInSeconds = 300)
+		{
+			if(_gameModeDetectionRunning || _gameModeDetectionComplete)
+			{
+				while(!_gameModeDetectionComplete)
+					await Task.Delay(100);
+				return;
+			}
+			_gameModeDetectionRunning = true;
+			var startTime = DateTime.Now;
+			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
+			while(CurrentGameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
+				await Task.Delay(100);
+			_gameModeDetectionComplete = true;
+			_gameModeDetectionRunning = false;
 		}
 
 		public void NewArenaDeck(string heroId)
@@ -179,24 +218,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoImportSave)
 				{
 					Logger.WriteLine("...auto saving new arena deck.");
-					Helper.MainWindow.SetNewDeck(TempArenaDeck);
-					Helper.MainWindow.SaveDeck(false, TempArenaDeck.Version);
+					Core.MainWindow.SetNewDeck(TempArenaDeck);
+					Core.MainWindow.SaveDeck(false, TempArenaDeck.Version);
 					TempArenaDeck = null;
 				}
 				else if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoAsk)
 				{
 					var result =
 						await
-						Helper.MainWindow.ShowMessageAsync("New arena deck detected!",
+						Core.MainWindow.ShowMessageAsync("New arena deck detected!",
 						                                   "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]",
 						                                   MessageDialogStyle.AffirmativeAndNegative,
-						                                   new MetroDialogSettings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
+						                                   new MessageDialogs.Settings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
 
 					if(result == MessageDialogResult.Affirmative)
 					{
 						Logger.WriteLine("...saving new arena deck.");
-						Helper.MainWindow.SetNewDeck(TempArenaDeck);
-						Helper.MainWindow.ActivateWindow();
+						Core.MainWindow.SetNewDeck(TempArenaDeck);
+						Core.MainWindow.ActivateWindow();
 						TempArenaDeck = null;
 					}
 					else
