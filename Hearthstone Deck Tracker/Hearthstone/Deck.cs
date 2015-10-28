@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, bool archived, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
 		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, string hearthStatsDeckVersionId,
-		            string hearthStatsIdClone = null, SerializableVersion selectedVersion = null, bool? isArenaDeck = null)
+		            string hearthStatsIdClone = null, SerializableVersion selectedVersion = null, bool? isArenaDeck = null, ArenaReward reward = null)
 
 		{
 			Name = name;
@@ -107,6 +107,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				foreach(var d in versions)
 					Versions.Add(d.CloneWithNewId(true) as Deck);
 			}
+			if(reward != null)
+				_arenaReward = reward;
 		}
 
 		public bool Archived
@@ -434,7 +436,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats,
-			                HearthStatsId, DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck);
+			                HearthStatsId, DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck, ArenaReward);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
