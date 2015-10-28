@@ -132,5 +132,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 					parent.RaiseEvent(eventArg);
 			}
 		}
+
+		private void DataGridArenaRuns_OnTargetUpdated(object sender, DataTransferEventArgs e)
+		{
+			DataGridArenaRuns.SelectedItem = SelectedRun;
+		}
 	}
 }
