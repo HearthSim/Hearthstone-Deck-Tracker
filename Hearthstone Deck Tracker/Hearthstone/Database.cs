@@ -90,11 +90,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Card card;
 			if(_cards.TryGetValue(cardId, out card))
 				return (Card)card.Clone();
-			Logger.WriteLine("Could not find entry in db for cardId: " + cardId, "Game");
+			Logger.WriteLine("Could not find entry in db for cardId: " + cardId, "Database");
 			return new Card(cardId, null, Rarity.Free, "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
-		public static Card GetCardFromName(string name, bool localized = false)
+		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true)
 		{
 			var card =
 				GetActualCards()
@@ -103,7 +103,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return (Card)card.Clone();
 
 			//not sure with all the values here
-			Logger.WriteLine("Could not get card from name: " + name, "Game");
+			if(showErrorMessage)
+				Logger.WriteLine("Could not get card from name: " + name, "Database");
 			return new Card("UNKNOWN", null, Rarity.Free, "Minion", name, 0, name, 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 

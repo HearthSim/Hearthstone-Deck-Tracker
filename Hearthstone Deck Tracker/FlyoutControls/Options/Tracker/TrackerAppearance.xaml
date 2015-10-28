@@ -45,12 +45,23 @@
                                                   SelectionChanged="ComboboxIconSet_SelectionChanged" />
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0">
+                        <Label Content="Class colors:" HorizontalAlignment="Left"
+                                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
+                                                  VerticalAlignment="Top" Width="150"
+                                                  SelectionChanged="ComboBoxClassColors_SelectionChanged" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
                         <Label Content="Deck layout:" HorizontalAlignment="Left"
                                                VerticalAlignment="Top" />
                         <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
                                                   VerticalAlignment="Top" Width="150"
                                                   SelectionChanged="ComboboxDeckLayout_SelectionChanged" />
                     </DockPanel>
+                    <CheckBox x:Name="CheckBoxArenaStatsTextColoring" Content="Red/green text color in stats summary"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckBoxArenaStatsTextColoring_Checked"
+                                              Unchecked="CheckBoxArenaStatsTextColoring_Unchecked"/>
                     <CheckBox x:Name="CheckboxDeckPickerCaps" Content="Use upper case deck names"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDeckPickerCaps_Checked"

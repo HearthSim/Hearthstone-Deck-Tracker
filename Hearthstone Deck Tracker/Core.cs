@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -20,9 +21,11 @@ namespace Hearthstone_Deck_Tracker
     {
         private static TrayIcon _trayIcon;
         private static OverlayWindow _overlay;
+	    private static Overview _statsOverview;
         public static Version Version { get; set; }
         public static GameV2 Game { get; set; }
         public static MainWindow MainWindow { get; set; }
+		public static Overview StatsOverview { get { return _statsOverview ?? (_statsOverview = new Overview()); } }
         public static bool Initialized { get; private set; }
 
         public static TrayIcon TrayIcon
@@ -73,7 +76,7 @@ namespace Hearthstone_Deck_Tracker
             MainWindow.Show();
             splashScreenWindow.Close();
 
-            if (ConfigManager.UpdatedVersion != null)
+			if (ConfigManager.UpdatedVersion != null)
             {
                 Updater.Cleanup();
                 MainWindow.FlyoutUpdateNotes.IsOpen = true;
@@ -218,6 +221,7 @@ namespace Hearthstone_Deck_Tracker
             private static OpponentWindow _opponentWindow;
             private static TimerWindow _timerWindow;
             private static StatsWindow _statsWindow;
+	        private static StatsWindow_New _newStatsWindow;
 
             public static PlayerWindow PlayerWindow
             {
@@ -234,10 +238,14 @@ namespace Hearthstone_Deck_Tracker
                 get { return _timerWindow ?? (_timerWindow = new TimerWindow(Config.Instance)); }
             }
 
-            public static StatsWindow StatsWindow
-            {
-                get { return _statsWindow ?? (_statsWindow = new StatsWindow()); }
-            }
-        }
+			public static StatsWindow StatsWindow
+			{
+				get { return _statsWindow ?? (_statsWindow = new StatsWindow()); }
+			}
+			public static StatsWindow_New NewStatsWindow
+			{
+				get { return _newStatsWindow ?? (_newStatsWindow = new StatsWindow_New()); }
+			}
+		}
     }
 }

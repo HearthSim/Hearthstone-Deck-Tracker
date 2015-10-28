@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.Arena.ArenaClassStats"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
+             xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
+             mc:Ignorable="d" Width="280" Name="UserControlArenaClassStats"
+             d:DataContext="{Binding Path=ClassStatsBest, Source={x:Static compiledStats:ArenaStats.Instance}}"
+             DataContextChanged="ArenaClassStats_OnDataContextChanged"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:IsNullConverter x:Key="IsNullConverter" />
+        <!-- Fallback values don't allow for properties to be bound to a DynamicResource.
+             In this case: Foreground. If the binding is null, the fallback needs to be Black or White,
+             depening on whether the control is on a window or flyout.
+             Solution: Have another textblock that has the fallback value and hides depending on the DataContext.. -->
+        <Style TargetType="TextBlock" x:Key="StyleVisibilityCollapsedIfDataContextNull">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=UserControlArenaClassStats, Path=DataContext, Converter={StaticResource IsNullConverter}}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="StyleVisibilityCollapsedIfDataContextNotNull">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=UserControlArenaClassStats, Path=DataContext, Converter={StaticResource IsNullConverter}}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Margin="5,0,10,0" VerticalAlignment="Center" Visibility="{Binding Path=ImageVisiblity, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Image Source="{Binding Path=ClassImage, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="48" Height="48" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding Path=ClassName, RelativeSource={RelativeSource AncestorType=UserControl}}" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Runs: "/>
+                <TextBlock VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} ({1}% of total)" FallbackValue="0">
+                            <Binding Path="Runs"/>
+                            <Binding Path="PickedPercent"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Total games: "/>
+                <TextBlock VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} ({1}-{2})" FallbackValue="0">
+                            <Binding Path="Games"/>
+                            <Binding Path="Wins"/>
+                            <Binding Path="Losses"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Hours played: "/>
+                <TextBlock VerticalAlignment="Center">
+                    <TextBlock.Text>
+                        <Binding StringFormat="{}{0:0}" Path="Duration.TotalHours" FallbackValue="0"/>
+                    </TextBlock.Text>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Average wins: "/>
+                <TextBlock VerticalAlignment="Center" Text="{Binding AverageWins}" Foreground="{Binding WinRateTextBrush}"
+                           Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}"/>
+                <TextBlock VerticalAlignment="Center" Text="-" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Win rate: "/>
+                <TextBlock VerticalAlignment="Center" Foreground="{Binding WinRateTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
+                    <TextBlock.Text>
+                        <Binding StringFormat="{}{0}%" Path="WinRatePercent"/>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock VerticalAlignment="Center" Text="-" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Best run: "/>
+                <TextBlock VerticalAlignment="Center" Foreground="{Binding BestRunTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} - {1}">
+                            <Binding Path="BestRun.Wins"/>
+                            <Binding Path="BestRun.Losses"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock VerticalAlignment="Center" Text="None" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Best matchup: "/>
+                <TextBlock VerticalAlignment="Center" Foreground="{Binding BestMatchup.WinRateTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} ({1}-{2}, {3}%)">
+                            <Binding Path="BestMatchup.Class"/>
+                            <Binding Path="BestMatchup.Wins"/>
+                            <Binding Path="BestMatchup.Losses"/>
+                            <Binding Path="BestMatchup.WinRatePercent"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock VerticalAlignment="Center" Text="None" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="Worst matchup: "/>
+                <TextBlock VerticalAlignment="Center" Foreground="{Binding WorstMatchup.WinRateTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{0} ({1}-{2}, {3}%)">
+                            <Binding Path="WorstMatchup.Class"/>
+                            <Binding Path="WorstMatchup.Wins"/>
+                            <Binding Path="WorstMatchup.Losses"/>
+                            <Binding Path="WorstMatchup.WinRatePercent"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+                <TextBlock VerticalAlignment="Center" Text="None" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

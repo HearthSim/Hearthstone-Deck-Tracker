@@ -33,11 +33,35 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool AlwaysOverwriteLogConfig = true;
 
+		[DefaultValue(true)]
+		public bool ArenaRewardDialog = true;
+
 		[DefaultValue(false)]
 		public bool AlwaysShowGoldProgress = false;
 
+		[DefaultValue(DisplayedTimeFrame.AllTime)]
+		public DisplayedTimeFrame ArenaStatsTimeFrameFilter = DisplayedTimeFrame.AllTime;
+
+		[DefaultValue(null)]
+		public DateTime? ArenaStatsTimeFrameCustomStart = null;
+
+		[DefaultValue(null)]
+		public DateTime? ArenaStatsTimeFrameCustomEnd = null;
+
+		[DefaultValue(RegionAll.ALL)]
+		public RegionAll ArenaStatsRegionFilter = RegionAll.ALL;
+
+		[DefaultValue(true)]
+		public bool ArenaStatsShowLegends = true;
+		
+		[DefaultValue(true)]
+		public bool ArenaStatsTextColoring = true;
+
 		[DefaultValue(true)]
 		public bool AskBeforeDiscardingGame = true;
+
+		[DefaultValue(true)]
+		public bool ArenaStatsIncludeArchived = true;
 
 		[DefaultValue(71.67)]
 		public double AttackIconPlayerVerticalPosition = 71.67;
@@ -86,6 +110,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool CheckForUpdates = true;
+
+		[DefaultValue(ClassColorScheme.Classic)]
+		public ClassColorScheme ClassColorScheme = ClassColorScheme.Classic;
 
 		[DefaultValue(IconStyle.Round)]
 		public IconStyle ClassIconStyle = IconStyle.Round;
@@ -288,6 +315,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue("Hearthstone")]
 		public string HearthstoneWindowName = "Hearthstone";
+
+		[DefaultValue(HeroClassStatsFilter.All)]
+		public HeroClassStatsFilter ArenaStatsClassFilter = HeroClassStatsFilter.All;
 
 		[DefaultValue(false)]
 		public bool HideDecksInOverlay = false;

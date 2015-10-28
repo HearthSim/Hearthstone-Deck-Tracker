@@ -46,6 +46,11 @@
                                           HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxNoteDialogDelay_Checked"
                                           Unchecked="CheckboxNoteDialogDelay_Unchecked" />
+                    <CheckBox x:Name="CheckboxArenaRewardDialog"
+                                          Content="Show arena reward dialog when run is over"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxArenaRewardDialog_Checked"
+                                          Unchecked="CheckboxArenaRewardDialog_Unchecked" />
                     <Separator Margin="0,5,0,0"/>
                     <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"

@@ -62,6 +62,10 @@
     <Reference Include="Garlic">
       <HintPath>..\packages\Garlic.2.1.0.0\lib\net35\Garlic.dll</HintPath>
     </Reference>
+    <Reference Include="De.TorstenMandelkow.MetroChart, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\De.TorstenMandelkow.MetroChart.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -121,7 +125,9 @@
     <Compile Include="Controls\CardToolTipControl.xaml.cs">
       <DependentUpon>CardToolTipControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DeckPicker\DateConverter.cs" />
+    <Compile Include="Controls\ChartWinsByClass.xaml.cs">
+      <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DeckPicker\DeckPickerClassItem.xaml.cs">
       <DependentUpon>DeckPickerClassItem.xaml</DependentUpon>
     </Compile>
@@ -147,9 +153,56 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Controls\Stats\ArenaRewards.xaml.cs">
+      <DependentUpon>ArenaRewards.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaAdvancedCharts.xaml.cs">
+      <DependentUpon>ArenaAdvancedCharts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaClassStats.xaml.cs">
+      <DependentUpon>ArenaClassStats.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaRuns.xaml.cs">
+      <DependentUpon>ArenaRuns.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaRewardsSummary.xaml.cs">
+      <DependentUpon>ArenaRewardsSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaRunsTable.xaml.cs">
+      <DependentUpon>ArenaRunsTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaStatsSummary.xaml.cs">
+      <DependentUpon>ArenaStatsSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaStatsSummaryHighlights.xaml.cs">
+      <DependentUpon>ArenaStatsSummaryHighlights.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\ArensStatsSummaryClasses.xaml.cs">
+      <DependentUpon>ArensStatsSummaryClasses.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\Charts\ChartWins.xaml.cs">
+      <DependentUpon>ChartWins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\Charts\ChartWinsLossVsClass.xaml.cs">
+      <DependentUpon>ChartWinsLossVsClass.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml.cs">
+      <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Converters\CustomTimeframeVisibilityConverter.cs" />
+    <Compile Include="Controls\Stats\Converters\IsNullConverter.cs" />
+    <Compile Include="Controls\Stats\Converters\NotNullToBooleanConverter.cs" />
+    <Compile Include="Controls\Stats\Converters\ToUpperValueConverter.cs" />
+    <Compile Include="Controls\Stats\Overview.xaml.cs">
+      <DependentUpon>Overview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core.cs" />
     <Compile Include="Enums\ArenaImportingBehaviour.cs" />
+    <Compile Include="Enums\ArenaPaymentMethod.cs" />
+    <Compile Include="Enums\ArenaRewardPacks.cs" />
+    <Compile Include="Enums\ClassColorScheme.cs" />
     <Compile Include="Enums\DeckLayout.cs" />
+    <Compile Include="Enums\EnumValuesExtension.cs" />
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
     <Compile Include="Enums\IconStyle.cs" />
     <Compile Include="Enums\LoginType.cs" />
@@ -192,6 +245,26 @@
     <Compile Include="Exporting\ExportingHelper.cs" />
     <Compile Include="Exporting\ExportingInfo.cs" />
     <Compile Include="Exporting\HueAndBrightness.cs" />
+    <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
+    <Compile Include="Stats\CompiledStats\ChartStats.cs" />
+    <Compile Include="Stats\CompiledStats\ClassStats.cs" />
+    <Compile Include="Stats\CompiledStats\MatchupStats.cs" />
+    <Compile Include="Importing\ImportingHelper.cs" />
+    <Compile Include="Importing\Websites\Arenavalue.cs" />
+    <Compile Include="Importing\Websites\Elitedecks.cs" />
+    <Compile Include="Importing\Websites\Heartharena.cs" />
+    <Compile Include="Importing\Websites\Hearthbuilder.cs" />
+    <Compile Include="Importing\Websites\Hearthhead.cs" />
+    <Compile Include="Importing\Websites\HearthnewsFr.cs" />
+    <Compile Include="Importing\Websites\Hearthpwn.cs" />
+    <Compile Include="Importing\Websites\Hearthstats.cs" />
+    <Compile Include="Importing\Websites\Hearthstonedecks.cs" />
+    <Compile Include="Importing\Websites\Hearthstoneheroes.cs" />
+    <Compile Include="Importing\Websites\Hearthstoneplayers.cs" />
+    <Compile Include="Importing\Websites\Hearthstonetopdeck.cs" />
+    <Compile Include="Importing\Websites\Hearthstonetopdecks.cs" />
+    <Compile Include="Importing\Websites\Icyveins.cs" />
+    <Compile Include="Importing\Websites\Tempostorm.cs" />
     <Compile Include="Utility\MouseActions.cs" />
     <Compile Include="FlyoutControls\GameDetailItem.cs" />
     <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
@@ -283,6 +356,11 @@
     <Compile Include="Protocol\JsonDeck.cs" />
     <Compile Include="Protocol\JsonDecksWrapper.cs" />
     <Compile Include="Replay\TurnViewItem.cs" />
+    <Compile Include="Stats\CompiledStats\ArenaStats.cs" />
+    <Compile Include="Utility\ConfigWrapper.cs" />
+    <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
+      <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Analytics.cs" />
     <Compile Include="Utility\HotKeys\HotKey.cs" />
     <Compile Include="Utility\HotKeys\PredefinedHotKeyActionAttribute.cs" />
@@ -368,7 +446,7 @@
     <Compile Include="Enums\CardMark.cs" />
     <Compile Include="Hearthstone\Deck.cs" />
     <Compile Include="Exporting\DeckExporter.cs" />
-    <Compile Include="DeckImporter.cs" />
+    <Compile Include="Importing\DeckImporter.cs" />
     <Compile Include="Enums\GameMode.cs" />
     <Compile Include="Hearthstone\Entities\Entity.cs" />
     <Compile Include="Hearthstone\Secrets\SecretHelper.cs" />
@@ -440,6 +518,9 @@
     <Compile Include="Windows\StatsWindow.xaml.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\StatsWindow_New.xaml.cs">
+      <DependentUpon>StatsWindow_New.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\TimerWindow.xaml.cs">
       <DependentUpon>TimerWindow.xaml</DependentUpon>
     </Compile>
@@ -459,6 +540,10 @@
     <Page Include="Controls\CardToolTipControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ChartWinsByClass.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DeckListView.xaml">
       <SubType>Designer</SubType>
@@ -493,6 +578,58 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ElementSorterItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\ArenaRewards.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaAdvancedCharts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaClassStats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaRuns.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaRewardsSummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaRunsTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaStatsSummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaStatsSummaryHighlights.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArensStatsSummaryClasses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\Charts\ChartWins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\Charts\ChartWinsLossVsClass.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Overview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -589,6 +726,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HearthStats\Controls\DuplicateMatchesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ArenaRewardDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -706,6 +847,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\StatsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\StatsWindow_New.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -3699,6 +3844,14 @@
     <Resource Include="Resources\ClassIcons\General\BaseDark\archived.png" />
     <None Include="Resources\card-mark-coin.png" />
     <Resource Include="Utility\Markdown.Xaml\License.txt" />
+    <Resource Include="Resources\cards.png" />
+    <Resource Include="Resources\lightforgekey.png" />
+    <Resource Include="Resources\dust.png" />
+    <Resource Include="Resources\gold.png" />
+    <Resource Include="Resources\patreon_logo.png" />
+    <Resource Include="Resources\pack_stack.png" />
+    <Resource Include="Resources\gold_2.png" />
+    <Resource Include="Resources\cards_2.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -3768,6 +3921,7 @@
     xcopy /Y "HDTUpdate.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HDTUninstaller.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "Garlic.dll" "..\Hearthstone Deck Tracker"
+    xcopy /Y "De.TorstenMandelkow.MetroChart.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "HtmlAgilityPack.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "MahApps.Metro.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "Newtonsoft.Json.dll" "..\Hearthstone Deck Tracker"

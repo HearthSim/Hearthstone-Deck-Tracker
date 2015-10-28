@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -28,6 +29,7 @@ namespace Hearthstone_Deck_Tracker
         private Deck _assignedDeck;
         private GameStats _lastGame;
         private bool _showedNoteDialog;
+	    private ArenaRewardDialog _arenaRewardDialog;
         private bool _doneImportingConstructed;
         private List<string> _ignoreCachedIds;
         private DateTime _lastArenaReward = DateTime.MinValue;
@@ -114,7 +116,7 @@ namespace Hearthstone_Deck_Tracker
                 _game.PossibleArenaCards.Add(card);
         }
 
-        public void HandleInMenu()
+        public async void HandleInMenu()
         {
             if (_game.IsInMenu)
                 return;
@@ -126,12 +128,39 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.HideTimers();
 			Core.Overlay.HideSecrets();
 
+			if(_game.CurrentGameMode == GameMode.None)
+			{
+				Logger.WriteLine("Waiting for game mode detection...", "HandleInMenu");
+				await _game.GameModeDetection();
+				Logger.WriteLine("Detected game mode, continuing.", "HandleInMenu");
+			}
+			if(_game.CurrentGameMode == GameMode.Casual)
+			{
+				Logger.WriteLine("CurrentGameMode=Casual, Waiting for ranked detection...", "HandleInMenu");
+				await LogReaderManager.RankedDetection();
+				Logger.WriteLine("Done waiting for ranked detection, continuing.", "HandleInMenu");
+			}
+
 			if (Config.Instance.RecordReplays && _game.Entities.Count > 0 && !_game.SavedReplay && _game.CurrentGameStats != null
                && _game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
                 _game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk();
 
             SaveAndUpdateStats();
-            if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
+			
+	        if(_arenaRewardDialog != null)
+	        {
+		        _arenaRewardDialog.Show();
+		        _arenaRewardDialog.Activate();
+	        }
+
+	        if(_game.CurrentGameStats != null && _game.CurrentGameStats.GameMode == GameMode.Arena)
+			{
+				ArenaStats.Instance.UpdateArenaRuns();
+				ArenaStats.Instance.UpdateArenaStats();
+				ArenaStats.Instance.UpdateArenaStatsHighlights();
+			}
+
+			if (Config.Instance.KeyPressOnGameEnd != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
             {
                 SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
                 Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameEnd, "GameEventHandler");
@@ -271,8 +300,8 @@ namespace Hearthstone_Deck_Tracker
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.MirrorEntity);
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Repentance);
 
-            if (Helper.MainWindow != null)
-                Helper.MainWindow.Overlay.ShowSecrets();
+            if (Core.MainWindow != null)
+				Core.Overlay.ShowSecrets();
         }
 
         public void HandlePlayerSpellPlayed(bool isMinionTargeted)
@@ -285,8 +314,8 @@ namespace Hearthstone_Deck_Tracker
             if (isMinionTargeted)
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Spellbender);
 
-            if(Helper.MainWindow != null)
-                Helper.MainWindow.Overlay.ShowSecrets();
+            if(Core.MainWindow != null)
+				Core.Overlay.ShowSecrets();
         }
 
         public void HandleOpponentMinionDeath(Entity entity, int turn)
@@ -320,8 +349,8 @@ namespace Hearthstone_Deck_Tracker
                 _game.OpponentSecrets.SetZeroOlder(CardIds.Secrets.Mage.Effigy, secretOffset);
             }
 
-            if (Helper.MainWindow != null)
-                Helper.MainWindow.Overlay.ShowSecrets();
+            if (Core.MainWindow != null)
+				Core.Overlay.ShowSecrets();
         }
 
         public void HandleOpponentDamage(Entity entity)
@@ -332,8 +361,8 @@ namespace Hearthstone_Deck_Tracker
             if (entity.IsOpponent)
             {
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.EyeForAnEye);
-                if(Helper.MainWindow != null)
-                    Helper.MainWindow.Overlay.ShowSecrets();
+                if(Core.MainWindow != null)
+					Core.Overlay.ShowSecrets();
             }
         }
 
@@ -345,8 +374,8 @@ namespace Hearthstone_Deck_Tracker
             if (entity.IsMinion)
             {
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.CompetitiveSpirit);
-                if(Helper.MainWindow != null)
-                    Helper.MainWindow.Overlay.ShowSecrets();
+                if(Core.MainWindow != null)
+					Core.Overlay.ShowSecrets();
             }
         }
 
@@ -367,8 +396,9 @@ namespace Hearthstone_Deck_Tracker
             {
                 SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
                 Logger.WriteLine("Sent keypress: " + Config.Instance.KeyPressOnGameStart, "GameEventHandler");
-            }
-            _showedNoteDialog = false;
+			}
+			_arenaRewardDialog = null;
+			_showedNoteDialog = false;
             _game.IsInMenu = false;
             _game.Reset();
 
@@ -474,6 +504,10 @@ namespace Hearthstone_Deck_Tracker
                 _lastGame = _game.CurrentGameStats;
                 selectedDeck.DeckStats.AddGameResult(_lastGame);
                 selectedDeck.StatsUpdated();
+	            if(Config.Instance.ArenaRewardDialog && selectedDeck.IsArenaRunCompleted.HasValue
+	               && selectedDeck.IsArenaRunCompleted.Value)
+		            _arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
+
                 if (Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
                 {
                     _showedNoteDialog = true;
@@ -494,12 +528,12 @@ namespace Hearthstone_Deck_Tracker
                     if (_game.CurrentGameMode == GameMode.None)
 					{
 						Logger.WriteLine("Waiting for game mode detection...", "HandleGameEnd");
-						await _game.GameModeDetection(300);	//give the user 5 minutes to get out of the victory/defeat screen
+						await _game.GameModeDetection();
 						Logger.WriteLine("Detected game mode, continuing.", "HandleGameEnd");
 					}
 	                if(_game.CurrentGameMode == GameMode.Casual)
 					{
-						Logger.WriteLine("CurrentGameMode=None, Waiting for ranked detection...", "HandleGameEnd");
+						Logger.WriteLine("CurrentGameMode=Casual, Waiting for ranked detection...", "HandleGameEnd");
 						await LogReaderManager.RankedDetection();
 						Logger.WriteLine("Done waiting for ranked detection, continuing.", "HandleGameEnd");
 					}
@@ -514,9 +548,7 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Game mode was saved, continuing.", "HandleGameEnd");
 					if (_game.CurrentGameMode == GameMode.Arena)
                         HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
-                    else if (_game.CurrentGameMode == GameMode.Brawl)
-                    { /* do nothing */ }
-                    else
+                    else if (_game.CurrentGameMode != GameMode.Brawl)
                         HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
                 }
                 _lastGame = null;
@@ -707,7 +739,7 @@ namespace Hearthstone_Deck_Tracker
             GameEvents.OnPlayerPlayToHand.Execute(Database.GetCardFromId(cardId));
         }
 
-        public async void HandlePlayerDraw(Entity entity, string cardId, int turn)
+        public void HandlePlayerDraw(Entity entity, string cardId, int turn)
         {
             if (string.IsNullOrEmpty(cardId))
                 return;
@@ -950,7 +982,7 @@ namespace Hearthstone_Deck_Tracker
 
 	    public void HandleDustReward(int amount)
         {
-            if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
+            /*if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
             {
                 if (!DeckList.Instance.ActiveDeck.DustReward.HasValue)
                 {
@@ -964,12 +996,12 @@ namespace Hearthstone_Deck_Tracker
                     DeckList.Instance.ActiveDeck.DustReward += amount;
                     _lastArenaReward = DateTime.Now;
                 }
-            }
+            }*/
         }
 
         public void HandleGoldReward(int amount)
         {
-            if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
+            /*if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
             {
                 if (!DeckList.Instance.ActiveDeck.GoldReward.HasValue)
                 {
@@ -983,7 +1015,7 @@ namespace Hearthstone_Deck_Tracker
                     DeckList.Instance.ActiveDeck.GoldReward += amount;
                     _lastArenaReward = DateTime.Now;
                 }
-            }
+            }*/
         }
 
         public void SetRank(int rank)

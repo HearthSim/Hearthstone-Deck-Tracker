@@ -25,10 +25,12 @@ using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Color = System.Drawing.Color;
+using ColorConverter = System.Windows.Media.ColorConverter;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
 using Region = Hearthstone_Deck_Tracker.Enums.Region;
@@ -327,11 +329,11 @@ namespace Hearthstone_Deck_Tracker
                 Core.Windows.OpponentWindow.SetOpponentCardCount(game.Opponent.HandCount, game.Opponent.DeckCount, game.Opponent.HasCoin);
 
 
-			if(MainWindow.NeedToIncorrectDeckMessage && !MainWindow.IsShowingIncorrectDeckMessage && game.CurrentGameMode != GameMode.Spectator
+			if(Core.MainWindow.NeedToIncorrectDeckMessage && !Core.MainWindow.IsShowingIncorrectDeckMessage && game.CurrentGameMode != GameMode.Spectator
 				&& game.IgnoreIncorrectDeck != DeckList.Instance.ActiveDeck)
 			{
-				MainWindow.IsShowingIncorrectDeckMessage = true;
-				MainWindow.ShowIncorrectDeckMessage();
+				Core.MainWindow.IsShowingIncorrectDeckMessage = true;
+				Core.MainWindow.ShowIncorrectDeckMessage();
 			}
 		}
 
@@ -419,11 +421,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var settings = new MessageDialogs.Settings {AffirmativeButtonText = "continue"};
 			if(!game.IsRunning)
-				await MainWindow.ShowMessageAsync("Step 0:", "Start Hearthstone", settings: settings);
-			await MainWindow.ShowMessageAsync("Step 1:", "Go to the main menu", settings: settings);
+				await Core.MainWindow.ShowMessageAsync("Step 0:", "Start Hearthstone", settings: settings);
+			await Core.MainWindow.ShowMessageAsync("Step 1:", "Go to the main menu", settings: settings);
 			SettingUpConstructedImporting = true;
 			await
-				MainWindow.ShowMessageAsync("Step 2:",
+				Core.MainWindow.ShowMessageAsync("Step 2:",
 				                            "Open \"My Collection\" and click each class icon at the top once.\n\n- Do not click on neutral\n- Do not open any decks\n- Do not flip the pages.",
 				                            settings: new MessageDialogs.Settings {AffirmativeButtonText = "done"});
 			Config.Instance.ConstructedImportingIgnoreCachedIds = game.PossibleConstructedCards.Select(c => c.Id).ToArray();
@@ -736,6 +738,59 @@ namespace Hearthstone_Deck_Tracker
 		public static double GetScaledXPos(double left, int width, double ratio)
 		{
 			return (width * ratio * left) + (width * (1 - ratio) / 2);
+		}
+
+		public static Dictionary<string, string> ClassicClassColors = new Dictionary<string, string>
+		{
+			{"Druid", "#FF7D0A"},
+			{"Death Knight", "#C41F3B"},
+			{"Hunter", "#ABD473"},
+			{"Mage", "#69CCF0"},
+			{"Monk", "#00FF96"},
+			{"Paladin", "#F58CBA"},
+			{"Priest", "#FFFFFF"},
+			{"Rogue", "#FFF569"},
+			{"Shaman", "#0070DE"},
+			{"Warlock", "#9482C9"},
+			{"Warrior", "#C79C6E"}
+		};
+
+		public static Dictionary<string, string> HearthStatsClassColors = new Dictionary<string, string>
+		{
+			{"Druid", "#623113"},
+			{"Death Knight", "#C41F3B"},
+			{"Hunter", "#208D43"},
+			{"Mage", "#2581BC"},
+			{"Monk", "#00FF96"},
+			{"Paladin", "#FBD707"},
+			{"Priest", "#A3B2B2"},
+			{"Rogue", "#2F2C27"},
+			{"Shaman", "#283273"},
+			{"Warlock", "#4F2669"},
+			{"Warrior", "#B32025"}
+		};
+
+		public static System.Windows.Media.Color GetClassColor(string className, bool priestAsGray)
+		{
+			string color;
+			if(Config.Instance.ClassColorScheme == ClassColorScheme.HearthStats)
+				HearthStatsClassColors.TryGetValue(className, out color);
+			else
+			{
+				if(className == "Priest" && priestAsGray)
+					color = "#D2D2D2";
+				else
+				if(!ClassicClassColors.TryGetValue(className, out color))
+					color = "#808080";
+			}
+			return (System.Windows.Media.Color)ColorConverter.ConvertFromString(color);
+		}
+		public static MetroWindow GetParentWindow(DependencyObject current)
+		{
+			var parent = VisualTreeHelper.GetParent(current);
+			while(parent != null && !(parent is MetroWindow))
+				parent = VisualTreeHelper.GetParent(parent);
+			return (MetroWindow)parent;
 		}
 	}
 }

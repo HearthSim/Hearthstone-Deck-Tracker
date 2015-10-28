@@ -91,8 +91,18 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			return _gameState.GetTurnNumber();
 		}
 
+		public static void ResetRankedDetection()
+		{
+			_gameState.RankedDetectionComplete = false;
+		}
 		public static async Task<bool> RankedDetection(int timeoutInSeconds = 3)
 		{
+			if(_gameState.AwaitingRankedDetection || _gameState.RankedDetectionComplete)
+			{
+				while(!_gameState.RankedDetectionComplete)
+					await Task.Delay(100);
+				return _gameState.FoundRanked;
+			}
 			_gameState.AwaitingRankedDetection = true;
 			_gameState.WaitingForFirstAssetUnload = true;
 			_gameState.FoundRanked = false;
@@ -104,6 +114,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				if(_gameState.FoundRanked)
 					break;
 			}
+			_gameState.RankedDetectionComplete = true;
+			_gameState.AwaitingRankedDetection = false;
 			return _gameState.FoundRanked;
 		}
 

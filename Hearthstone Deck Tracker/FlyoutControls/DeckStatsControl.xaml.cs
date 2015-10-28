@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 				}
-				if(HearthStatsAPI.IsLoggedIn && selectedGame.HasHearthStatsId && await Core.MainWindow.CheckHearthStatsMatchDeletion())
+				if(HearthStatsAPI.IsLoggedIn && selectedGame.HasHearthStatsId && await Core.MainWindow.ShowCheckHearthStatsMatchDeletionDialog())
 					HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {selectedGame});
 				//Core.MainWindow.DeckPickerList.Items.Refresh();
 				Core.MainWindow.DeckPickerList.UpdateDecks();
@@ -190,7 +190,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 
 				if(HearthStatsAPI.IsLoggedIn && selectedGames.Any(g => g.HasHearthStatsId)
-				   && await Core.MainWindow.CheckHearthStatsMatchDeletion())
+				   && await Core.MainWindow.ShowCheckHearthStatsMatchDeletionDialog())
 					HearthStatsManager.DeleteMatchesAsync(selectedGames);
 				DeckStatsList.Save();
 				DefaultDeckStats.Save();
@@ -821,28 +821,9 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void BtnAddNewGame_Click(object sender, RoutedEventArgs e)
 		{
-			if(_deck == null)
-				return;
-			var dialog = new AddGameDialog(_deck);
-			await
-				Core.MainWindow.ShowMetroDialogAsync(dialog,
-				                                       new MessageDialogs.Settings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
-			var game = await dialog.WaitForButtonPressAsync();
-			await Core.MainWindow.HideMetroDialogAsync(dialog);
-			if(game != null)
-			{
-				_deck.DeckStats.AddGameResult(game);
-				if(Config.Instance.HearthStatsAutoUploadNewGames)
-				{
-					if(game.GameMode == GameMode.Arena)
-						HearthStatsManager.UploadArenaMatchAsync(game, _deck, true, true);
-					else
-						HearthStatsManager.UploadMatchAsync(game, _deck.GetSelectedDeckVersion(), true, true);
-				}
+			var addedGame = await Core.MainWindow.ShowAddGameDialog(_deck);
+			if(addedGame)
 				Refresh();
-			}
-			DeckStatsList.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] {_deck});
 		}
 
 		private void BtnEditGame_Click(object sender, RoutedEventArgs e)
@@ -863,29 +844,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(game == null)
 				return;
-
-			var dialog = new AddGameDialog(game);
-			await
-				Core.MainWindow.ShowMetroDialogAsync(dialog,
-				                                       new MessageDialogs.Settings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
-			var result = await dialog.WaitForButtonPressAsync();
-			await Core.MainWindow.HideMetroDialogAsync(dialog);
-			if(result == null) //cancelled
-				return;
-			Refresh();
-			if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
-			{
-				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == game.DeckId);
-				if(deck != null)
-				{
-					if(game.GameMode == GameMode.Arena)
-						HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
-					else
-						HearthStatsManager.UpdateMatchAsync(game, deck.GetVersion(game.PlayerDeckVersion), true, true);
-				}
-			}
-			DeckStatsList.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			var edited = await Core.MainWindow.ShowEditGameDialog(game);
+			if(edited)
+				Refresh();
 		}
 
 		private void TabControlDeck_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

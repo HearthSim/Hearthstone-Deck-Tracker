@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
@@ -98,6 +99,20 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		[XmlIgnore]
+		public SolidColorBrush ResultTextColor
+		{
+			get
+			{
+				var c = Colors.Black;
+				if(Result == GameResult.Win)
+					c = Colors.Green;
+				else if(Result == GameResult.Loss)
+					c = Colors.Red;
+				return new SolidColorBrush(c);
+			}
+		}
+
+		[XmlIgnore]
 		public string RegionString
 		{
 			get { return Region == Region.UNKNOWN ? "-" : Region.ToString(); }
@@ -148,6 +163,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get { return ReplayFile != null && File.Exists(Path.Combine(Config.Instance.ReplayDir, ReplayFile)); }
 		}
+
+		[XmlIgnore]
+		public bool CanGetOpponentDeck { get { return TurnStats.Any(); } }
 
 		[XmlIgnore]
 		public BitmapImage OpponentHeroImage
