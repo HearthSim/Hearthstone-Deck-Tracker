@@ -784,17 +784,8 @@ namespace Hearthstone_Deck_Tracker
 			if(IconBoardAttackPlayer.Visibility == Visibility.Visible || IconBoardAttackOpponent.Visibility == Visibility.Visible)
 			{
 				var board = new BoardState();
-				var highlight = (SolidColorBrush)new BrushConverter().ConvertFrom("#50FF35");
-
 				TextBlockPlayerAttack.Text = board.Player.Damage.ToString();
 				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
-				TextBlockPlayerAttack.Fill = Brushes.White;
-				TextBlockOpponentAttack.Fill = Brushes.White;
-
-				if(board.IsPlayerDeadToBoard())
-					TextBlockOpponentAttack.Fill = highlight;
-				if(board.IsOpponentDeadToBoard())
-					TextBlockPlayerAttack.Fill = highlight;
 			}			
 		}
 

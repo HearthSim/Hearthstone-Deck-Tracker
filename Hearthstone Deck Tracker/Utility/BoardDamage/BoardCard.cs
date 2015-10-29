@@ -78,8 +78,13 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 
 		private int CalculateAttack(bool active, bool isWeapon)
 		{
+			// V-07-TR-0N is a special case Mega-Windfury
+			if(!string.IsNullOrEmpty(CardId) && CardId == "GVG_111t")
+			{
+				return V07TRONAttack(active);
+			}
 			// for weapons check for windfury and number of hits left
-			if(isWeapon)
+			else if(isWeapon)
 			{
 				if(_windfury && Health >= 2 && _attacksThisTurn == 0)
 				{
@@ -122,6 +127,27 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			else
 			{
 				return true;
+			}
+		}
+
+		private int V07TRONAttack(bool active)
+		{
+			if(!active)
+			{
+				return _stdAttack * 4;
+			}
+
+			switch(_attacksThisTurn)
+			{
+				case 0:
+					return _stdAttack * 4;
+				case 1:
+					return _stdAttack * 3;
+				case 2:
+					return _stdAttack * 2;
+				case 3:
+				default:
+					return _stdAttack;
 			}
 		}
 	}

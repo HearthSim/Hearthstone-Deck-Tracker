@@ -138,5 +138,29 @@ namespace HDTTests.BoardDamage
 			var card = _weapon.Windfury().Durability(2).Damage(1).ToBoardCard();
 			Assert.AreEqual(5, card.Attack);
 		}
+
+		[TestMethod]
+		public void Attack_MegaWindfury_V07TR0N()
+		{
+			var eb = new EntityBuilder("GVG_111t", 4, 8).Windfury().Charge().InPlay();
+
+			Assert.AreEqual(16, eb.ToBoardCard().Attack);
+			Assert.AreEqual(16, eb.Exhausted().ToBoardCard(false).Attack);
+			Assert.AreEqual(12, eb.AttacksThisTurn(1).ToBoardCard().Attack);
+			Assert.AreEqual(8, eb.AttacksThisTurn(2).ToBoardCard().Attack);
+			Assert.AreEqual(4, eb.AttacksThisTurn(3).ToBoardCard().Attack);
+			Assert.AreEqual(4, eb.AttacksThisTurn(4).ToBoardCard().Attack);
+		}
+
+		[TestMethod]
+		public void Include_MegaWindfury_V07TR0N()
+		{
+			var eb = new EntityBuilder("GVG_111t", 4, 8).Windfury().Charge().InPlay();
+
+			Assert.IsTrue(eb.ToBoardCard().Include);
+			Assert.IsTrue(eb.AttacksThisTurn(1).ToBoardCard().Include);
+			Assert.IsTrue(eb.AttacksThisTurn(3).ToBoardCard().Include);
+			Assert.IsFalse(eb.AttacksThisTurn(4).Exhausted().ToBoardCard().Include);
+		}
 	}
 }
