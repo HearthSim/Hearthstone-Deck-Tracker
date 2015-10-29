@@ -39,7 +39,8 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 
-			Analytics.Analytics.TrackEvent("UnhandledException", e.Exception.GetType().ToString().Split('.').Last(), e.Exception.TargetSite.ToString());
+			var stackTrace = e.Exception.StackTrace.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+			Analytics.Analytics.TrackEvent(e.Exception.GetType().ToString().Split('.').Last(), stackTrace.Length > 0 ? stackTrace[0] : "", stackTrace.Length > 1 ? stackTrace[1] : "");
 #if (!DEBUG)
 			var date = DateTime.Now;
 			var fileName = "Crash Reports\\"
