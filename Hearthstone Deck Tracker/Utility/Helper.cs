@@ -772,6 +772,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static System.Windows.Media.Color GetClassColor(string className, bool priestAsGray)
 		{
+			if(string.IsNullOrEmpty(className))
+				return Colors.DimGray;
 			string color;
 			if(Config.Instance.ClassColorScheme == ClassColorScheme.HearthStats)
 				HearthStatsClassColors.TryGetValue(className, out color);
@@ -783,6 +785,8 @@ namespace Hearthstone_Deck_Tracker
 				if(!ClassicClassColors.TryGetValue(className, out color))
 					color = "#808080";
 			}
+			if(string.IsNullOrEmpty(color))
+				return Colors.DimGray;
 			return (System.Windows.Media.Color)ColorConverter.ConvertFromString(color);
 		}
 		public static MetroWindow GetParentWindow(DependencyObject current)
