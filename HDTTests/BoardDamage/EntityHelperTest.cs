@@ -12,10 +12,19 @@ namespace HDTTests.BoardDamage
 	{
 		private Entity _heroA;
 		private Entity _heroB;
+		private Dictionary<int, Entity> _entities;
 
 		[TestInitialize]
 		public void Setup()
 		{
+			_entities = new Dictionary<int, Entity>();
+			_entities[0] = new Entity(0);
+			_entities[0].SetTag(GAME_TAG.FIRST_PLAYER, 1);
+			_entities[0].IsPlayer = true;
+			_entities[1] = new Entity(1);
+			_entities[1].Name = "GameEntity";
+			_entities[1].SetTag(GAME_TAG.TURN, 11);
+
 			_heroA = new Entity(4);
 			_heroA.CardId = "HERO_08";
 			_heroA.Name = null;
@@ -41,6 +50,12 @@ namespace HDTTests.BoardDamage
 			_heroB.SetTag(GAME_TAG.ARMOR, 0);
 			_heroB.SetTag(GAME_TAG.ATK, 1);
 			_heroB.SetTag(GAME_TAG.EXHAUSTED, 1);
+		}
+
+		[TestMethod]
+		public void ItIsPlayersTurn()
+		{
+			Assert.IsTrue(EntityHelper.IsPlayersTurn(_entities));
 		}
 
 		[TestMethod]

@@ -18,10 +18,10 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			Opponent = CreateOpponentBoard();
 		}
 
-		public BoardState(List<CardEntity> player, List<CardEntity> opponent)
+		public BoardState(List<CardEntity> player, List<CardEntity> opponent, Dictionary<int, Entity> entities, int playerId)
 		{
-			Player = CreateBoard(player, true);
-			Opponent = CreateBoard(opponent, false);
+			Player = CreateBoard(player, entities, true, playerId);
+			Opponent = CreateBoard(opponent, entities, false, playerId);
 		}
 
 		public bool IsPlayerDeadToBoard()
@@ -40,22 +40,22 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 
 		private PlayerBoard CreatePlayerBoard()
 		{
-			return CreateBoard(new List<CardEntity>(Core.Game.Player.Board), true);
+			return CreateBoard(new List<CardEntity>(Core.Game.Player.Board), Core.Game.Entities, true, Core.Game.Player.Id);
 		}
 
 		private PlayerBoard CreateOpponentBoard()
 		{
-			return CreateBoard(new List<CardEntity>(Core.Game.Opponent.Board), false);
+			return CreateBoard(new List<CardEntity>(Core.Game.Opponent.Board), Core.Game.Entities, false, Core.Game.Player.Id);
 		}
 
-		private PlayerBoard CreateBoard(List<CardEntity> list, bool isPlayer)
+		private PlayerBoard CreateBoard(List<CardEntity> list, Dictionary<int, Entity> entities, bool isPlayer, int playerId)
 		{
-			var activeTurn = !(EntityHelper.IsPlayersTurn() ^ isPlayer);
+			var activeTurn = !(EntityHelper.IsPlayersTurn(entities) ^ isPlayer);
 			// if there is no hero in the list, try to find it
 			var heroFound = list.Any(e => EntityHelper.IsHero(e.Entity));
 			if(!heroFound)
 			{
-				var hero = EntityHelper.GetHeroEntity(isPlayer);
+				var hero = EntityHelper.GetHeroEntity(isPlayer, entities, playerId);
 				if (hero != null)
 					list.Add(new CardEntity(hero));
 			}
