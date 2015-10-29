@@ -33,6 +33,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public string Name { get; set; }
 		public int Id { get; set; }
 		public string CardId { get; set; }
+
+		/// <Summary>
+		/// This is player entity, NOT the player hero.
+		/// </Summary>
 		public bool IsPlayer { get; set; }
 
         [JsonIgnore]
@@ -47,10 +51,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
             get { return HasTag(GAME_TAG.DEATHRATTLE) && GetTag(GAME_TAG.DEATHRATTLE) == 1; }
         }
 
-        [JsonIgnore]
+		/// <Summary>
+		/// This is opponent entity, NOT the opponent hero.
+		/// </Summary>
+		[JsonIgnore]
 		public bool IsOpponent
 		{
-			get { return !IsPlayer && HasTag(GAME_TAG.CARDTYPE) && (GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO); }
+			get { return !IsPlayer && HasTag(GAME_TAG.PLAYER_ID); }
 		}
 
 		[JsonIgnore]

@@ -358,7 +358,7 @@ namespace Hearthstone_Deck_Tracker
             if (!Config.Instance.AutoGrayoutSecrets)
                 return;
 
-            if (entity.IsOpponent)
+            if (entity.IsHero && entity.IsControlledBy(_game.Opponent.Id))
             {
                 _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.EyeForAnEye);
                 if(Core.MainWindow != null)
