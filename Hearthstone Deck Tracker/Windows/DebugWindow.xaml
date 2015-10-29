@@ -6,10 +6,15 @@
     <Grid>
         <TabControl Name="TabControlDebug">
             <TabItem Header="Cards">
-                <TreeView Name="TreeViewCards"/>
+                <DockPanel Margin="0,2">
+                    <WrapPanel DockPanel.Dock="Top">
+                        <Button Name="ExpandAllBtn" Click="ExpandAllBtn_Click" Margin="2,0">Expand All</Button>
+                        <Button Name="CollapseAllBtn" Click="CollapseAllBtn_Click" Margin="2,0">Collapse All</Button>
+                    </WrapPanel>
+                    <TreeView Name="TreeViewCards"/>
+                </DockPanel>
             </TabItem>
             <TabItem Header="Entites">
-
                 <DockPanel>
                     <ComboBox DockPanel.Dock="Top" SelectedIndex="0" Name="ComboBoxData">
                         <ComboBox.Items>
@@ -19,6 +24,18 @@
                     </ComboBox>
                     <DataGrid Name="DataGridProperties" AutoGenerateColumns="True"/>
                 </DockPanel>
+            </TabItem>
+            <TabItem Header="Damage">
+                <StackPanel Name="DamageView">
+                    <DockPanel>
+                        <TextBlock Name="OpponentHeader" DockPanel.Dock="Top" Text="Opponent" FontSize="18" Margin="0,4"/>
+                        <DataGrid Name="OpponentDataGrid" AutoGenerateColumns="True"/>
+                    </DockPanel>
+                    <DockPanel>
+                        <TextBlock Name="PlayerHeader" DockPanel.Dock="Top" Text="Player" FontSize="18" Margin="0,4"/>
+                        <DataGrid Name="PlayerDataGrid" AutoGenerateColumns="True"/>
+                    </DockPanel>
+                </StackPanel>
             </TabItem>
         </TabControl>
     </Grid>
