@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 				&& x.Entity.GetTag(GAME_TAG.CARDTYPE) != (int)TAG_CARDTYPE.ENCHANTMENT
 				&& x.Entity.GetTag(GAME_TAG.CARDTYPE) != (int)TAG_CARDTYPE.HERO_POWER
 				&& x.Entity.GetTag(GAME_TAG.ZONE) != (int)TAG_ZONE.SETASIDE
-				&& x.CardId != "AT_125" // Icehowl
+				&& x.Entity.GetTag(GAME_TAG.ZONE) != (int)TAG_ZONE.GRAVEYARD
 				).ToList<CardEntity>();
 		}
 	}

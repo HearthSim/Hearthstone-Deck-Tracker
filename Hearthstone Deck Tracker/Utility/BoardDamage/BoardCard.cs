@@ -124,6 +124,23 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 					return false;
 				}
 			}
+			// sometimes cards seem to be in wrong zone while in play,
+			// these cards don't become exhausted, so check attacks.
+			else if (Zone.ToLower() == "deck" || Zone.ToLower() == "hand")
+			{
+				if(_windfury && _attacksThisTurn >= 2)
+				{
+					return false;
+				}
+				else if(!_windfury && _attacksThisTurn >= 1)
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
 			else
 			{
 				return true;
