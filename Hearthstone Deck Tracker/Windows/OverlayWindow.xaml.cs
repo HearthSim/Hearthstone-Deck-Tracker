@@ -469,7 +469,7 @@ namespace Hearthstone_Deck_Tracker
 
             var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
             var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 1);
-            LblOpponentDrawChance2.Text = drawNextTurn2 + "%";
+            LblOpponentDrawChance2.Text = (cardsLeftInDeck == 1 ? 100 : drawNextTurn2) + "%";
             LblOpponentHandChance2.Text = holdingNextTurn2 + "%";
 
             var holdingNextTurn = Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
@@ -495,7 +495,8 @@ namespace Hearthstone_Deck_Tracker
             }
             LblPlayerFatigue.Text = "";
 
-            LblDrawChance2.Text = Math.Round(200.0f / cardsLeftInDeck, 1) + "%";
+            var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 1);
+            LblDrawChance2.Text = (cardsLeftInDeck == 1 ? 100 : drawNextTurn2) + "%";
             LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
         }
 
