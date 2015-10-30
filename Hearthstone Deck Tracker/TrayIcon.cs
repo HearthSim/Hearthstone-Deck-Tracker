@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace Hearthstone_Deck_Tracker
@@ -53,8 +54,9 @@ namespace Hearthstone_Deck_Tracker
                 if(args.Button == MouseButtons.Left)
                     Core.MainWindow.ActivateWindow();
             };
-        }
 
+	        _notifyIcon.BalloonTipClicked += (sender1, e) => { Core.MainWindow.ActivateWindow(); };
+        }
 
         private void AutoDeckDetectionContextMenu()
         {
@@ -95,5 +97,10 @@ namespace Hearthstone_Deck_Tracker
             var enable = (bool)GetContextMenuProperty("classCardsFirst", "Checked");
             Core.MainWindow.SortClassCardsFirst(!enable);
         }
+
+	    public void ShowMessage(string text, string title = "Hearthstone Deck Tracker", int duration = 5, ToolTipIcon icon = ToolTipIcon.Info)
+	    {
+		    _notifyIcon.ShowBalloonTip(duration, title, text, icon);
+	    }
     }
 }

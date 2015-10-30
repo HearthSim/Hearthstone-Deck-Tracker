@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -156,6 +157,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private bool _gameModeDetectionRunning;
 		private bool _gameModeDetectionComplete;
+		private bool _awaitingMainWindowOpen;
+
 		public async Task GameModeDetection(int timeoutInSeconds = 300)
 		{
 			if(_gameModeDetectionRunning || _gameModeDetectionComplete)
@@ -224,6 +227,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				}
 				else if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoAsk)
 				{
+					if(_awaitingMainWindowOpen)
+						return;
+					_awaitingMainWindowOpen = true;
+
+					if(Core.MainWindow.WindowState == WindowState.Minimized)
+						Core.TrayIcon.ShowMessage("New arena deck detected!");
+
+					while(Core.MainWindow.Visibility != Visibility.Visible
+						   || Core.MainWindow.WindowState == WindowState.Minimized)
+						await Task.Delay(100);
+
 					var result =
 						await
 						Core.MainWindow.ShowMessageAsync("New arena deck detected!",
@@ -244,6 +258,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						DiscardedArenaDecks.Add(TempArenaDeck);
 						TempArenaDeck = null;
 					}
+					_awaitingMainWindowOpen = false;
 				}
 			}
 		}
