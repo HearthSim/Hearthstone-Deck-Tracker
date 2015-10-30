@@ -63,6 +63,34 @@ namespace HDTTests.BoardDamage
 		}
 
 		[TestMethod]
+		public void DontInclude_IfInDeckZoneAndAttacked()
+		{
+			var card = _minion.Deck().AttacksThisTurn(1).ToBoardCard();
+			Assert.IsFalse(card.Include);	
+		}
+
+		[TestMethod]
+		public void DontInclude_IfInHandZoneAndWindfuryAttackedTwice()
+		{
+			var card = _minion.Hand().Windfury().AttacksThisTurn(2).ToBoardCard();
+			Assert.IsFalse(card.Include);
+		}
+
+		[TestMethod]
+		public void Include_IfInDeckHandAndNotAttacked()
+		{
+			var card = _minion.Hand().AttacksThisTurn(0).ToBoardCard();
+			Assert.IsTrue(card.Include);
+		}
+
+		[TestMethod]
+		public void Include_IfInDeckZoneAndWindfuryAttackedOnce()
+		{
+			var card = _minion.Deck().Windfury().AttacksThisTurn(1).ToBoardCard();
+			Assert.IsTrue(card.Include);
+		}
+
+		[TestMethod]
 		public void Include_IfExhaustedAndCharged()
 		{
 			var card = _minion.Exhausted().Charge().AttacksThisTurn(0).ToBoardCard();

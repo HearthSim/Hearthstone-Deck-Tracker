@@ -25,10 +25,6 @@ namespace HDTTests.BoardDamage
 			_cards.Add(new EntityBuilder("", 3, 1).InPlay().Charge().ToCardEntity());
 			_cards.Add(new EntityBuilder("", 3, 1).InPlay().Windfury().ToCardEntity());
 			_cards.Add(new EntityBuilder("", 2, 2).InPlay().Exhausted().ToCardEntity());
-
-			_exceptions = new List<CardEntity>();
-			var icehowl = new EntityBuilder("AT_125", 10, 10).InPlay().ToCardEntity();
-			_exceptions.Add(icehowl);
 		}
 
 		[TestMethod]
@@ -54,12 +50,11 @@ namespace HDTTests.BoardDamage
 		}
 
 		[TestMethod]
-		// TODO: ignore Icehowl for now, if taunts were to be included
-		//		could add back in with special attrib
-		public void IgnoreSpecialCases()
+		public void IgnoreGraveyard()
 		{
-			var board = new PlayerBoard(_exceptions, true);
-			Assert.AreEqual(0, board.Cards.Count);
+			_cards.Add(new EntityBuilder("", 3, 3).Graveyard().ToCardEntity());
+			var board = new PlayerBoard(_cards, true);
+			Assert.AreEqual(6, board.Cards.Count);
 		}
 
 		[TestMethod]

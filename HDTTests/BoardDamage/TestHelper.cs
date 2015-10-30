@@ -102,6 +102,24 @@ namespace HDTTests.BoardDamage
 			return this;
 		}
 
+		public EntityBuilder Graveyard()
+		{
+			_instance.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.GRAVEYARD);
+			return this;
+		}
+
+		public EntityBuilder Deck()
+		{
+			_instance.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.DECK);
+			return this;
+		}
+
+		public EntityBuilder Hand()
+		{
+			_instance.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.HAND);
+			return this;
+		}
+
 		public EntityBuilder Invalid()
 		{
 			_instance.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.INVALID);
