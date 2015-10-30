@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private static List<string> _hsLogLines = new List<string>();
 		public readonly List<Deck> DiscardedArenaDecks = new List<Deck>();
 		private GameMode _currentGameMode;
-		public Deck TempArenaDeck;
+		public Deck TempArenaDeck = new Deck();
 
 		public GameV2()
 		{
@@ -187,7 +187,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Logger.WriteLine("Created new arena deck: " + TempArenaDeck.Class);
 		}
 
-		public async void NewArenaCard(string cardId)
+		public void NewArenaCard(string cardId)
 		{
 			if(TempArenaDeck == null || string.IsNullOrEmpty(cardId))
 				return;
@@ -210,7 +210,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(recentArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
 				{
 					Logger.WriteLine("...but we already have that one. Discarding.");
-					TempArenaDeck = null;
+					TempArenaDeck.Cards.Clear();
 					return;
 				}
 				if(DiscardedArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
@@ -223,44 +223,47 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Logger.WriteLine("...auto saving new arena deck.");
 					Core.MainWindow.SetNewDeck(TempArenaDeck);
 					Core.MainWindow.SaveDeck(false, TempArenaDeck.Version);
-					TempArenaDeck = null;
+					TempArenaDeck.Cards.Clear();
 				}
 				else if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoAsk)
 				{
-					if(_awaitingMainWindowOpen)
-						return;
-					_awaitingMainWindowOpen = true;
-
-					if(Core.MainWindow.WindowState == WindowState.Minimized)
-						Core.TrayIcon.ShowMessage("New arena deck detected!");
-
-					while(Core.MainWindow.Visibility != Visibility.Visible
-						   || Core.MainWindow.WindowState == WindowState.Minimized)
-						await Task.Delay(100);
-
-					var result =
-						await
-						Core.MainWindow.ShowMessageAsync("New arena deck detected!",
-						                                   "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]",
-						                                   MessageDialogStyle.AffirmativeAndNegative,
-						                                   new MessageDialogs.Settings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
-
-					if(result == MessageDialogResult.Affirmative)
-					{
-						Logger.WriteLine("...saving new arena deck.");
-						Core.MainWindow.SetNewDeck(TempArenaDeck);
-						Core.MainWindow.ActivateWindow();
-						TempArenaDeck = null;
-					}
-					else
-					{
-						Logger.WriteLine("...discarded by user.");
-						DiscardedArenaDecks.Add(TempArenaDeck);
-						TempArenaDeck = null;
-					}
-					_awaitingMainWindowOpen = false;
+					ShowNewArenaDeckMessageAsync((Deck)TempArenaDeck.Clone());
+					TempArenaDeck.Cards.Clear();
 				}
 			}
+		}
+
+		private async void ShowNewArenaDeckMessageAsync(Deck deck)
+		{
+			if(_awaitingMainWindowOpen)
+				return;
+			_awaitingMainWindowOpen = true;
+
+			if(Core.MainWindow.WindowState == WindowState.Minimized)
+				Core.TrayIcon.ShowMessage("New arena deck detected!");
+
+			while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
+				await Task.Delay(100);
+
+			var result =
+				await
+				Core.MainWindow.ShowMessageAsync("New arena deck detected!",
+				                                 "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]",
+				                                 MessageDialogStyle.AffirmativeAndNegative,
+				                                 new MessageDialogs.Settings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
+
+			if(result == MessageDialogResult.Affirmative)
+			{
+				Logger.WriteLine("...saving new arena deck.");
+				Core.MainWindow.SetNewDeck(deck);
+				Core.MainWindow.ActivateWindow();
+			}
+			else
+			{
+				Logger.WriteLine("...discarded by user.");
+				DiscardedArenaDecks.Add(deck);
+			}
+			_awaitingMainWindowOpen = false;
 		}
 
 		public static void AddHSLogLine(string logLine)

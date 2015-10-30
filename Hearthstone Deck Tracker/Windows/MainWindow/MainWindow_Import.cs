@@ -292,7 +292,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			else
 			{
-				if(Core.Game.TempArenaDeck == null)
+				if(!Core.Game.TempArenaDeck.Cards.Any())
 				{
 					await this.ShowMessageAsync("No arena deck found", "Please enter the arena screen (and build your deck).");
 				}
