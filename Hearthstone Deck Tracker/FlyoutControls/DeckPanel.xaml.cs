@@ -9,13 +9,13 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 namespace Hearthstone_Deck_Tracker.FlyoutControls
 {
 	/// <summary>
-	/// Interaction logic for OpponentDeck.xaml
+	/// Interaction logic for DeckPanel.xaml
 	/// </summary>
-	public partial class OpponentDeck : UserControl
+	public partial class DeckPanel : UserControl
 	{
 		private Deck _deck;
 
-		public OpponentDeck()
+		public DeckPanel()
 		{
 			InitializeComponent();
 		}
@@ -24,16 +24,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			Core.MainWindow.SetNewDeck(_deck);
 			Core.MainWindow.FlyoutDeckStats.IsOpen = false;
-			Core.MainWindow.FlyoutOpponentDeck.IsOpen = false;
+			Core.MainWindow.FlyoutDeck.IsOpen = false;
 		}
 
-		public void SetDeck(Deck deck)
+		public void SetDeck(Deck deck, bool showImportButton = true)
 		{
 			_deck = deck;
 			ListViewDeck.Items.Clear();
 			foreach(var card in deck.Cards)
 				ListViewDeck.Items.Add(card);
 			Helper.SortCardCollection(ListViewDeck.Items, false);
+			ButtonImport.Visibility = showImportButton ? Visibility.Visible : Visibility.Collapsed;
 		}
 	}
 }

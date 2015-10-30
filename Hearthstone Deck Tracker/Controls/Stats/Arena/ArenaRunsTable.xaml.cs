@@ -112,12 +112,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 				ReplayReader.LaunchReplayViewer(SelectedGame.ReplayFile);
 		}
 
-		private void ButtonShowDeck_OnClick(object sender, RoutedEventArgs e)
+		private void ButtonShowOppDeck_OnClick(object sender, RoutedEventArgs e)
 		{
 			if(SelectedGame == null)
 				return;
-			Core.MainWindow.OpponentDeckFlyout.SetDeck(SelectedGame.GetOpponentDeck());
-			Core.MainWindow.FlyoutOpponentDeck.IsOpen = true;
+			Core.MainWindow.DeckFlyout.SetDeck(SelectedGame.GetOpponentDeck());
+			Core.MainWindow.FlyoutDeck.Header = "Opponent";
+			Core.MainWindow.FlyoutDeck.IsOpen = true;
 		}
 
 		//http://stackoverflow.com/questions/3498686/wpf-remove-scrollviewer-from-treeview
@@ -136,6 +137,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		private void DataGridArenaRuns_OnTargetUpdated(object sender, DataTransferEventArgs e)
 		{
 			DataGridArenaRuns.SelectedItem = SelectedRun;
+		}
+
+		private void ButtonShowDeck_OnClick(object sender, RoutedEventArgs e)
+		{
+			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
+			if(run == null)
+				return;
+			Core.MainWindow.DeckFlyout.SetDeck(run.Deck, false);
+			Core.MainWindow.FlyoutDeck.Header = run.Deck.Name;
+			Core.MainWindow.FlyoutDeck.IsOpen = true;
 		}
 	}
 }

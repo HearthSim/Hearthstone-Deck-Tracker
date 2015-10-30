@@ -273,8 +273,8 @@
     <Compile Include="Importing\Websites\Tempostorm.cs" />
     <Compile Include="Utility\MouseActions.cs" />
     <Compile Include="FlyoutControls\GameDetailItem.cs" />
-    <Compile Include="FlyoutControls\OpponentDeck.xaml.cs">
-      <DependentUpon>OpponentDeck.xaml</DependentUpon>
+    <Compile Include="FlyoutControls\DeckPanel.xaml.cs">
+      <DependentUpon>DeckPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\OptionsMain.xaml.cs">
       <DependentUpon>OptionsMain.xaml</DependentUpon>
@@ -659,7 +659,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\OpponentDeck.xaml">
+    <Page Include="FlyoutControls\DeckPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
