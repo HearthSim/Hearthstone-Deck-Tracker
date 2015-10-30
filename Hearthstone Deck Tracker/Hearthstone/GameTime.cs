@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set
 			{
 				_time = value;
-				foreach(var task in TimedTasks.Where(x => x.ExpirationTime <= value).ToList())
+				foreach(var task in TimedTasks.Where(x => x.ExpirationTime <= value).OrderBy(x => x.ExpirationTime).ToList())
 				{
 					task.TaskCompletionSource.SetResult(null);
 					TimedTasks.Remove(task);
