@@ -32,7 +32,6 @@ namespace Hearthstone_Deck_Tracker
 	    private ArenaRewardDialog _arenaRewardDialog;
         private bool _doneImportingConstructed;
         private List<string> _ignoreCachedIds;
-        private DateTime _lastArenaReward = DateTime.MinValue;
         private int _lastManaCost;
         private int _unloadedCardCount;
         private bool _handledGameEnd;
@@ -325,8 +324,7 @@ namespace Hearthstone_Deck_Tracker
 
             _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Duplicate);
 
-            if (_game.OpponentMinionCount > 0)
-                _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
+			HandleAvengeAsync();
 
             int numDeathrattleMinions = 0;
 
@@ -352,6 +350,19 @@ namespace Hearthstone_Deck_Tracker
             if (Core.MainWindow != null)
 				Core.Overlay.ShowSecrets();
         }
+
+	    private bool _awaitingAvenge;
+	    private const int AvengeDelay = 50;
+	    public async void HandleAvengeAsync()
+	    {
+		    if(_awaitingAvenge)
+			    return;
+		    _awaitingAvenge = true;
+		    await _game.GameTime.WaitForDuration(AvengeDelay);
+			if(_game.OpponentMinionCount > 0)
+				_game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
+		    _awaitingAvenge = false;
+	    }
 
         public void HandleOpponentDamage(Entity entity)
         {

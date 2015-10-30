@@ -20,6 +20,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class GameV2 : IGame
 	{
 		private static List<string> _hsLogLines = new List<string>();
+		private GameTime _gameTime = new GameTime();
 		public readonly List<Deck> DiscardedArenaDecks = new List<Deck>();
 		private GameMode _currentGameMode;
 		public Deck TempArenaDeck = new Deck();
@@ -59,6 +60,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Card> PossibleConstructedCards { get; set; }
 		public Dictionary<int, Entity> Entities { get; set; }
 		public bool SavedReplay { get; set; }
+		public GameTime GameTime { get { return _gameTime; } }
 
 		public bool IsMulliganDone
 		{

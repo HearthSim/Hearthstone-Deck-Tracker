@@ -154,6 +154,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			{
 				foreach(var line in item.Value.Where(line => line != null))
 				{
+					_game.GameTime.Time = line.Time;
 					switch(line.Namespace)
 					{
 						case "Power":
