@@ -3858,6 +3858,10 @@
     <Resource Include="Resources\pack_stack.png" />
     <Resource Include="Resources\gold_2.png" />
     <Resource Include="Resources\cards_2.png" />
+    <Resource Include="Resources\overlay_deck.png" />
+    <Resource Include="Resources\overlay_hand.png" />
+    <Resource Include="Resources\overlay_1.png" />
+    <Resource Include="Resources\overlay_2.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

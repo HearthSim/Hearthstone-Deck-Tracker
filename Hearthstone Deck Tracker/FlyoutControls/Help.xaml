@@ -1,127 +1,154 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Help"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="600">
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="800" d:DesignWidth="600">
     <DockPanel>
-        <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Margin="-1" DockPanel.Dock="Bottom">
+        <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Margin="-1"
+                DockPanel.Dock="Bottom">
             <DockPanel VerticalAlignment="Bottom">
-                <Button Name="ButtonUpdateNotes" Content="Show update notes" Click="ButtonUpdateNotes_OnClick" DockPanel.Dock="Right" Margin="2" Width="200" Style="{DynamicResource AccentedSquareButtonStyle}"/>
-                <TextBlock Name="TxtblockVersion" Text="Version:" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <Button Name="ButtonUpdateNotes" Content="Show update notes" Click="ButtonUpdateNotes_OnClick"
+                        DockPanel.Dock="Right" Margin="2" Width="200"
+                        Style="{DynamicResource AccentedSquareButtonStyle}" />
+                <TextBlock Name="TxtblockVersion" Text="Version:" VerticalAlignment="Center" Margin="10,0,0,0" />
             </DockPanel>
         </Border>
         <ScrollViewer>
             <StackPanel>
                 <GroupBox Header="FAQ">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                    <Hyperlink
-                                        NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ"
-                                        RequestNavigate="Hyperlink_RequestNavigate">
-                                        Go to the FAQ.
-                                    </Hyperlink>
+                        <Hyperlink
+                            NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ"
+                            RequestNavigate="Hyperlink_RequestNavigate">
+                            Go to the FAQ.
+                        </Hyperlink>
                     </TextBlock>
                 </GroupBox>
                 <GroupBox Header="The Overlay">
                     <StackPanel>
                         <GroupBox Header="Card marks">
-                            <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                    <Run Text="(C)oin, (R)eturned, (K)ept, (M)ulliganed, (S)tolen" />
-                            </TextBlock>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/HearthstoneDeckTracker;component/Images/card-icon-coin.png"
+                                       RenderOptions.BitmapScalingMode="Fant" Width="16" />
+                                <Label Content="The Coin" />
+                                <Image Source="/HearthstoneDeckTracker;component/Images/card-icon-mulligan.png"
+                                       RenderOptions.BitmapScalingMode="Fant"
+                                       Width="16" Margin="10,0,0,0" />
+                                <Label Content="Mulliganed" />
+                                <Image Source="/HearthstoneDeckTracker;component/Images/card-icon-returned.png"
+                                       RenderOptions.BitmapScalingMode="Fant"
+                                       Width="16" Margin="10,0,0,0" />
+                                <Label Content="Returned" />
+                                <Image Source="/HearthstoneDeckTracker;component/Images/card-icon-created.png"
+                                       RenderOptions.BitmapScalingMode="Fant"
+                                       Width="16" Margin="10,0,0,0" />
+                                <Label Content="Created" />
+                            </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="What are all these percentages?">
-                            <StackPanel Margin="10,0,10,0">
-                                <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                        <Bold>
-                                            <Run Text="Player: " />
-                                        </Bold>
-                                        <LineBreak />
-                                        <Run
-                                            Text="The chances of drawing a card with [2] or [1] copies left in the deck." />
+                        <GroupBox Header="Percentages">
+                            <StackPanel Margin="10,0">
+                                <TextBlock Text="General:" FontWeight="Bold" />
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/HearthstoneDeckTracker;component/Resources/overlay_1.png"
+                                           Height="13" Margin="5,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                                    <TextBlock Text=" /" VerticalAlignment="Center" />
+                                    <Image Source="/HearthstoneDeckTracker;component/Resources/overlay_2.png"
+                                           Height="13" Margin="5,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                                    <TextBlock Text=" The number of copies left in the deck for a specific card."
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock Text="Draw chance:" FontWeight="Bold" Margin="0,5,0,0"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <Image Source="/HearthstoneDeckTracker;component/Resources/overlay_deck.png"
+                                           Width="18" Margin="5,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                                    <TextBlock Text="The chance of drawing a card with X copies left in the deck."
+                                               Margin="5,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock Text="Holding chance:" FontWeight="Bold" />
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                    <Image Source="/HearthstoneDeckTracker;component/Resources/overlay_hand.png"
+                                           Width="18" Margin="5,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
+                                    <TextBlock Margin="5,0,0,0"
+                                               Text="The chance of your opponent holding a card at the start of the next turn with X copies left in play."
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <TextBlock Margin="28,0,0,0"
+                                           Text="This includes the next draw but nothing beyond that."
+                                           FontStyle="Italic" />
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Customization">
+                            <StackPanel Margin="10, 0">
+                                <TextBlock
+                                    Text="Almost everything in the overlay can be turn on or off, moved and resized." />
+                                <TextBlock Text="On/off: " FontWeight="Bold" Margin="0,5,0,0" />
+                                <TextBlock>
+                                    <Run>Options for this can be found under </Run>
+                                    <Italic>
+                                        <Run>options > overlay > general / player / opponent</Run>
+                                    </Italic>
+                                    <Run>.</Run>
                                 </TextBlock>
-                                <TextBlock VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                        <Bold>
-                                            <Run Text="Opponent: " />
-                                        </Bold>
-                                        <LineBreak />
-                                        <Run
-                                            Text="[2] and [1] stands for the number of copies left in deck+hand / deck." />
-                                        <LineBreak />
-                                        <Bold>
-                                            <Run Text="First number:" />
-                                        </Bold>
-                                        <Run Text="The chance of your opponent" />
-                            <Italic>
-                                            <Run Text="having" />
-                                        </Italic>
-                                        <Run Text="a card next turn. " />
-                            <LineBreak />
-                                        <Run
-                                            Text="(This number is interesting if you have no idea whether your opponent has a certain card in hand, but suspect him to have it in his deck. This does obviously not include additional draws during your opponent's turn or mulligan for specific cards, but should give you a rough idea.)" />
-                            <LineBreak />
-                                        <Bold>
-                                            <Run Text="Second number:" />
-                                        </Bold>
-                                        <Run Text="The chance of your opponent" />
-                            <Italic>
-                                            <Run Text="drawing" />
-                                        </Italic>
-                                        <Run Text="a card next turn." />
-                            <LineBreak />
-                                        <Run
-                                            Text="(This number gets interesting if you suspect your opponent to have a card in his deck but not in his hand. For example if your opponent (Mage) did not play Flamestrike on turn 7 while you had 6 minions with 4 or less health on the board.)" />
+                                <TextBlock Text="Moving/resizing: " FontWeight="Bold" Margin="0,5,0,0" />
+                                <TextBlock>
+                                    <Run>The overlay can be unlocked via </Run>
+                                    <Italic>
+                                        <Run>options > overlay > general > unlock </Run>
+                                    </Italic>
+                                    <Run>(button at the bottom).</Run>
                                 </TextBlock>
                             </StackPanel>
                         </GroupBox>
                         <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                    <Hyperlink
-                                        NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Overlay"
-                                        RequestNavigate="Hyperlink_RequestNavigate">
-                                        Additional information can be found here.
-                                    </Hyperlink>
+                            <Hyperlink
+                                NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Overlay"
+                                RequestNavigate="Hyperlink_RequestNavigate">
+                                Additional information can be found here.
+                            </Hyperlink>
                         </TextBlock>
                     </StackPanel>
-                    
+
                 </GroupBox>
                 <GroupBox Header="Reporting bugs / requesting features">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
-                                    <Run Text="Two options:" />
-                                    <LineBreak />
-                                    <Run Text="1) Check out the" />
-                                    <Hyperlink
-                                        NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open"
-                                        RequestNavigate="Hyperlink_RequestNavigate">
-                                        issues on GitHub.
-                                    </Hyperlink>
-                                    <Run
-                                        Text="If there's no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request. For some futher information on what you might want to include in the issue " />
-                                    <Hyperlink
-                                        NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Reporting-Issues"
-                                        RequestNavigate="Hyperlink_RequestNavigate">
-                                        click here.
-                                    </Hyperlink>
+                        <Run Text="Two options:" />
                         <LineBreak />
-                                    <Run Text="2) Send an email to support@hsdecktracker.net" />
+                        <Run Text="1) Check out the" />
+                        <Hyperlink
+                            NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open"
+                            RequestNavigate="Hyperlink_RequestNavigate">
+                            issues on GitHub.
+                        </Hyperlink>
+                        <Run
+                            Text="If there's no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request. For some futher information on what you might want to include in the issue " />
+                        <Hyperlink
+                            NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Reporting-Issues"
+                            RequestNavigate="Hyperlink_RequestNavigate">
+                            click here.
+                        </Hyperlink>
+                        <LineBreak />
+                        <Run Text="2) Send an email to support@hsdecktracker.net" />
                     </TextBlock>
                 </GroupBox>
                 <GroupBox Header="GitHub Project">
                     <StackPanel>
                         <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
-                                        <Run Text="The project can be found" />
-                                        <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/"
-                                                   RequestNavigate="Hyperlink_RequestNavigate">
-                                            here.
-                                        </Hyperlink>
-                                        <LineBreak />
-                                        <Run Text="The" />
-                                        <Hyperlink
-                                            NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/blob/master/README.md"
-                                            RequestNavigate="Hyperlink_RequestNavigate">
-                                            readme
-                                        </Hyperlink>
-                                        <Run
-                                            Text="contains a brief overview of all the features." />
+                            <Run Text="The project can be found" />
+                            <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/"
+                                       RequestNavigate="Hyperlink_RequestNavigate">
+                                here.
+                            </Hyperlink>
+                            <LineBreak />
+                            <Run Text="The" />
+                            <Hyperlink
+                                NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/blob/master/README.md"
+                                RequestNavigate="Hyperlink_RequestNavigate">
+                                readme
+                            </Hyperlink>
+                            <Run
+                                Text="contains a brief overview of all the features." />
                         </TextBlock>
                     </StackPanel>
                 </GroupBox>
