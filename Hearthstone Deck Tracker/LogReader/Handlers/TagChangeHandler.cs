@@ -399,11 +399,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
             }
             else if (tag == GAME_TAG.PROPOSED_DEFENDER)
             {
-                game.OpponentSecrets.proposedDefenderEntityId = value;
+                game.OpponentSecrets.ProposedDefenderEntityId = value;
             }
             else if (tag == GAME_TAG.PROPOSED_ATTACKER)
             {
-                game.OpponentSecrets.proposedAttackerEntityId = value;
+                game.OpponentSecrets.ProposedAttackerEntityId = value;
             }
             else if (tag == GAME_TAG.NUM_MINIONS_PLAYED_THIS_TURN && value > 0)
             {
