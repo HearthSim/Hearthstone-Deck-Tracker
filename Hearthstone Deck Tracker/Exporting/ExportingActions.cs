@@ -137,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		{
 			Logger.WriteLine("Creating deck...", "DeckExporter");
 			deck.MissingCards.Clear();
-			foreach(var card in deck.Cards)
+			foreach(var card in deck.Cards.ToSortedCardList())
 			{
 				var missingCardsCount = await AddCardToDeck(card, info);
 				if(missingCardsCount < 0)

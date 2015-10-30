@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			_deck = deck;
 			ListViewDeck.Items.Clear();
-			foreach(var card in deck.Cards)
+			foreach(var card in deck.Cards.ToSortedCardList())
 				ListViewDeck.Items.Add(card);
 			Helper.SortCardCollection(ListViewDeck.Items, false);
 			ButtonImport.Visibility = showImportButton ? Visibility.Visible : Visibility.Collapsed;

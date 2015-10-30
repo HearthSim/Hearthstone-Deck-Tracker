@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Class = className;
 			Cards = new ObservableCollection<Card>();
 			MissingCards = missingCards;
-			foreach(var card in cards)
+			foreach(var card in cards.ToSortedCardList())
 				Cards.Add((Card)card.Clone());
 			Tags = new List<string>(tags);
 			Note = note;
