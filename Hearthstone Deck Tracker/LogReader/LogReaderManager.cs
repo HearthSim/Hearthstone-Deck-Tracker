@@ -136,6 +136,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			await Stop();
 			_startingPoint = GetStartingPoint();
 			_gameState.Reset();
+			_game.GameTime.TimedTasks.Clear();
 			StartLogReaders();
 		}
 
