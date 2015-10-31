@@ -203,7 +203,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                     // spell owned by the player
                     if (actionEntity.HasTag(GAME_TAG.CONTROLLER) && 
                         actionEntity.GetTag(GAME_TAG.CONTROLLER) == game.Player.Id &&
-                        actionEntity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ABILITY)
+                        actionEntity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.SPELL)
                     {
                         int targetEntityId = actionEntity.GetTag(GAME_TAG.CARD_TARGET);
                         Entity targetEntity;
