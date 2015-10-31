@@ -14,13 +14,20 @@ namespace Hearthstone_Deck_Tracker.Exporting
 {
 	public class ExportingActions
 	{
+		private const int MaxLengthDeckName = 24;
+
 		public static async Task SetDeckName(Deck deck, ExportingInfo info)
 		{
 			if(Config.Instance.ExportSetDeckName && !deck.TagList.ToLower().Contains("brawl"))
 			{
 				var name = deck.Name;
 				if(Config.Instance.ExportAddDeckVersionToName)
-					name += " " + deck.SelectedVersion.ShortVersionString;
+				{
+					var version = " " + deck.SelectedVersion.ShortVersionString;
+					if(name.Length + version.Length > MaxLengthDeckName)
+						name = name.Substring(0, MaxLengthDeckName - version.Length);
+					name += version;
+				}
 
 				Logger.WriteLine("Setting deck name...", "DeckExporter");
 				var nameDeckPos = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportNameDeckX, info.HsRect.Width, info.Ratio),
