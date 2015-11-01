@@ -131,6 +131,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		[XmlIgnore]
+		public int SortableRank
+		{
+			get { return HasRank && GameMode == GameMode.Ranked ? Rank : -1; }
+		}
+
+		[XmlIgnore]
 		public string ResultString
 		{
 			get { return Result + (WasConceded ? "*" : ""); }

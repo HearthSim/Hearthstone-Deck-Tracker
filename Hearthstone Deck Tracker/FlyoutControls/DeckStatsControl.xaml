@@ -363,7 +363,7 @@
                                                         </Style>
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
-                                                <DataGridTextColumn Header="Rank" Binding="{Binding RankString}">
+                                                <DataGridTextColumn Header="Rank" Binding="{Binding RankString}" SortMemberPath="SortableRank">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -672,7 +672,7 @@
                                                   MouseDoubleClick="DGridOverall_MouseDoubleClick"
                                                   SelectionChanged="DGridOverall_SelectionChanged">
                                             <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Rank" Binding="{Binding RankString}">
+                                                <DataGridTextColumn Header="Rank" Binding="{Binding RankString}" SortMemberPath="SortableRank">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
