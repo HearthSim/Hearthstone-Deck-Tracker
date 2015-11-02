@@ -186,7 +186,7 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var possible in secret.PossibleSecrets)
 				{
 					if(possible.Value)
-						returnThis.Find(x => x.CardId == possible.Key).Count = 1;
+						returnThis.Find(x => x.CardId == possible.Key).Count++;
 				}
 			}
 
