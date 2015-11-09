@@ -183,11 +183,13 @@ namespace Hearthstone_Deck_Tracker
 			var returnThis = DisplayedClasses.SelectMany(SecretHelper.GetSecretIds).Select(cardId => new Secret(cardId, 0)).ToList();
 
 			foreach(var secret in Secrets)
+			{
 				foreach(var possible in secret.PossibleSecrets)
 				{
 					if(possible.Value)
 						returnThis.Find(x => x.CardId == possible.Key).Count++;
 				}
+			}
 
 			return returnThis;
 		}
