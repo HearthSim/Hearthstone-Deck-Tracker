@@ -114,7 +114,8 @@ namespace Hearthstone_Deck_Tracker
 			if(stopIndex == -1)
 				stopIndex = Secrets.Count;
 
-			SetZeroOlder(CardIds.Secrets.Paladin.NobleSacrifice, stopIndex);
+			if(Game.OpponentMinionCount < 7)
+				SetZeroOlder(CardIds.Secrets.Paladin.NobleSacrifice, stopIndex);
 
 			if(defender.IsHero)
 			{
