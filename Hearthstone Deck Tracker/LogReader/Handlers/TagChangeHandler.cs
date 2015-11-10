@@ -349,8 +349,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
             }
             else if (tag == GAME_TAG.PLAYSTATE)
             {
-                if (value == (int)TAG_PLAYSTATE.QUIT)
-                    gameState.GameHandler.HandleConcede();
+                if (value == (int)TAG_PLAYSTATE.CONCEDED)
+					gameState.GameHandler.HandleConcede();
                 if (!gameState.GameEnded)
                 {
                     if (game.Entities[id].IsPlayer)
