@@ -37,7 +37,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"BRMC",
 			"TBA",
 			"TB_",
-			"TBST_"
+			"TBST_",
+			"LOEA",
+			"LOE_008",
+			"LOE_030",
+
 		};
 
 	    public static class Secrets

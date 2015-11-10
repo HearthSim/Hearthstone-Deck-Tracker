@@ -113,8 +113,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return (from card in _cards.Values
 					where card.Type == "Minion" || card.Type == "Spell" || card.Type == "Weapon"
 					where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 1)) || card.Id == "AT_063t"
-					where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2))
-					where !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id))
+					where Helper.IsNumeric(card.Id.ElementAt(card.Id.Length - 2)) || card.Id == "LOEA10_3"
+					where !CardIds.InvalidCardIds.Any(id => card.Id.Contains(id)) || card.Id == "LOEA10_3"
 					select card).ToList();
 		}
 

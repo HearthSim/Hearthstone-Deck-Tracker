@@ -306,12 +306,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(_newDeck == null || !_newDeck.Cards.Any())
 			{
+				TextBlockIconLoe.Visibility = Visibility.Collapsed;
 				TextBlockIconTgt.Visibility = Visibility.Collapsed;
 				TextBlockIconBrm.Visibility = Visibility.Collapsed;
 				TextBlockIconGvg.Visibility = Visibility.Collapsed;
 				TextBlockIconNaxx.Visibility = Visibility.Collapsed;
 				return;
 			}
+			TextBlockIconTgt.Visibility = _newDeck.Cards.Any(card => card.Set == "League of Explorers") ? Visibility.Visible : Visibility.Collapsed;
 			TextBlockIconTgt.Visibility = _newDeck.Cards.Any(card => card.Set == "The Grand Tournament") ? Visibility.Visible : Visibility.Collapsed;
 			TextBlockIconBrm.Visibility = _newDeck.Cards.Any(card => card.Set == "Blackrock Mountain") ? Visibility.Visible : Visibility.Collapsed;
 			TextBlockIconGvg.Visibility = _newDeck.Cards.Any(card => card.Set == "Goblins vs Gnomes") ? Visibility.Visible : Visibility.Collapsed;
