@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker
 		private const int MaxLogFileAge = 2;
 		private const int KeepOldLogs = 25;
 
-		internal static void Initialzie()
+		internal static void Initialize()
 		{
 			Trace.AutoFlush = true;
 			var logDir = Path.Combine(Config.Instance.DataDir, "Logs");
