@@ -16,13 +16,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 		private const string noteArchived = "[HDT-archived]";
 		public int deck_version_id;
 		public int id;
-		public int klass_id;
+		public int? klass_id;
 		public string name;
 		public string notes;
 		public DateTime updated_at;
 
 		public Deck ToDeck(CardObject[] cards, string[] rawTags, DeckVersion[] versions, string version)
 		{
+			if(!klass_id.HasValue)
+				return null;
 			try
 			{
 				var url = "";
@@ -51,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 					               tag =>
 					               DeckList.Instance.AllTags.FirstOrDefault(t => string.Equals(t, tag, StringComparison.InvariantCultureIgnoreCase))
 					               ?? tag);
-				var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id],
+				var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id.Value],
 				                    cards == null
 					                    ? new List<Card>()
 					                    : cards.Where(x => x != null && x.count != null && x.id != null)
