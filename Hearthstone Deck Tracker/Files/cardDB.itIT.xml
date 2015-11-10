@@ -811,7 +811,7 @@ Pesca una carta e subisce $2 danni.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>Seleziona un servitore nemico: all'inizio del tuo turno, viene distrutto.</Text>
+    <Text>Seleziona un servitore nemico. All'inizio del tuo turno, viene distrutto.</Text>
     <Mechanics />
     <Artist>Wayne Reynolds</Artist>
   </Card>
@@ -1030,7 +1030,7 @@ Equipaggia un pugnale 1/2.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>La Salute di un servitore diventa pari a 1.</Text>
+    <Text>Imposta la Salute di un servitore a 1.</Text>
     <Mechanics />
     <Artist>Jimmy Lo</Artist>
   </Card>
@@ -2586,7 +2586,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>L'Attacco di un servitore diventa pari a 1.</Text>
+    <Text>Imposta l'Attacco di un servitore a 1.</Text>
     <Mechanics />
     <Artist>Daren Bader</Artist>
   </Card>
@@ -3136,7 +3136,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Fa tornare TUTTI i servitori nella mano di coloro che li controllano.</Text>
+    <Text>Fa tornare TUTTI i servitori nella mano di chi li controlla.</Text>
     <Mechanics />
     <Artist>Sean O’Daniels</Artist>
   </Card>
@@ -3386,7 +3386,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Pesca una carta: la carta pescata costa (3) Mana in meno.</Text>
+    <Text>Pesca una carta. La carta pescata costa (3) in meno.</Text>
     <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
@@ -3400,7 +3400,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>Una delle tue carte costa (3) Mana in meno.</Text>
+    <Text>Una delle tue carte costa (3) in meno.</Text>
     <Mechanics />
     <Artist>Lars Grant-West</Artist>
   </Card>
@@ -3537,7 +3537,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
     <Race>Pirate</Race>
-    <Text>Ha &lt;b&gt;Carica&lt;/b&gt; fintanto che hai un'Arma equipaggiata.</Text>
+    <Text>Ha &lt;b&gt;Carica&lt;/b&gt; finché hai un'Arma equipaggiata.</Text>
     <Mechanics />
     <Artist>Dan Brereton</Artist>
   </Card>
@@ -3724,7 +3724,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Horde</Faction>
-    <Text>I tuoi servitori costano (3) Mana in più.</Text>
+    <Text>I tuoi servitori costano (3) in più.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -3824,7 +3824,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Dream</Class>
-    <Text>+5/+5 a un servitore: all'inizio del tuo turno, viene distrutto.</Text>
+    <Text>+5/+5 a un servitore. All'inizio del tuo turno, viene distrutto.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -4522,7 +4522,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Alliance</Faction>
-    <Text>Il primo servitore che giochi ogni turno costa (1) Mana in meno.</Text>
+    <Text>Il primo servitore che giochi ogni turno costa (1) in meno.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -4793,7 +4793,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>12</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Costa (1) Mana in meno per ogni altra carta che hai in mano.</Text>
+    <Text>Costa (1) in meno per ogni altra carta che hai in mano.</Text>
     <Mechanics />
     <Artist>Samwise</Artist>
   </Card>
@@ -5085,7 +5085,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>Fa tornare un tuo servitore nella tua mano. Il suo costo si riduce di (2) Mana.</Text>
+    <Text>Fa tornare un tuo servitore nella tua mano. Costa (2) in meno.</Text>
     <Mechanics />
     <Artist>Graven Tung</Artist>
   </Card>
@@ -5101,7 +5101,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Rogue</Class>
     <Faction>Neutral</Faction>
-    <Text>La prossima Magia che lanci in questo turno costa (3) Mana in meno.</Text>
+    <Text>La prossima Magia che lanci in questo turno costa (3) in meno.</Text>
     <Mechanics />
     <Artist>Clint Langley</Artist>
   </Card>
@@ -5115,7 +5115,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>La prossima Magia che lanci in questo turno costa (3) Mana in meno.</Text>
+    <Text>La prossima Magia che lanci in questo turno costa (3) in meno.</Text>
     <Mechanics>
       <string>OneTurnEffect</string>
     </Mechanics>
@@ -6199,7 +6199,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Faction>Neutral</Faction>
-    <Text>I tuoi servitori costano (2) Mana in meno, ma non meno di (1) Mana.</Text>
+    <Text>I tuoi servitori costano (2) in meno, ma non meno di (1).</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -6453,7 +6453,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Priest</Class>
     <Faction>Neutral</Faction>
-    <Text>Mette sul campo di battaglia una copia di un servitore casuale dal mazzo dell'avversario.</Text>
+    <Text>Mette sul campo una copia di un servitore casuale dal mazzo dell'avversario.</Text>
     <Mechanics />
     <Artist>Zoltan &amp; Gabor</Artist>
   </Card>
@@ -6694,7 +6694,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; l'Attacco di un servitore nemico diventa pari a 1.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; imposta l'Attacco di un servitore nemico a 1.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -7292,7 +7292,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>Evoca un Segugio 1/1 con &lt;b&gt;Carica&lt;/b&gt; per ogni servitore nemico sul campo di battaglia.</Text>
+    <Text>Evoca un Segugio 1/1 con &lt;b&gt;Carica&lt;/b&gt; per ogni servitore nemico sul campo.</Text>
     <Mechanics />
     <Artist>Linggar Bramanty</Artist>
   </Card>
@@ -7473,7 +7473,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Quando lanci una Magia, mette nella tua mano una carta Palla di Fuoco.</Text>
+    <Text>Quando lanci una Magia, mette nella tua mano una Palla di Fuoco.</Text>
     <Mechanics />
     <Artist>Wayne Reynolds</Artist>
   </Card>
@@ -7505,7 +7505,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; la Salute restante di un eroe diventa pari a 15.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; imposta la Salute restante di un eroe a 15.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -7535,7 +7535,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca Draghetti 1/1 fino a riempire il tuo lato del campo di battaglia.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; evoca Draghetti 1/1 fino a riempire il tuo lato del campo.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -7570,7 +7570,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; scegli un altro servitore, il Senzavolto Mutante diventa una sua copia.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; seleziona un altro servitore. Il Senzavolto Mutante diventa una sua copia.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -7652,7 +7652,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Dragon</Race>
-    <Text>Alla fine del tuo turno, mette una carta Sogno nella tua mano.</Text>
+    <Text>Alla fine del tuo turno, mette un Sogno nella tua mano.</Text>
     <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
@@ -7810,7 +7810,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; fornisce &lt;b&gt;+1 Danni Magici&lt;/b&gt; ai servitori adiacenti.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia: +1 Danni Magici&lt;/b&gt; ai servitori adiacenti.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -7839,7 +7839,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>10</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>Costa (1) Mana in meno per ogni servitore sul campo di battaglia.</Text>
+    <Text>Costa (1) in meno per ogni servitore sul campo.</Text>
     <Mechanics />
     <Artist>Svetlin Velinov</Artist>
   </Card>
@@ -8085,7 +8085,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Le tue Magie costano (1) Mana in meno.</Text>
+    <Text>Le tue Magie costano (1) in meno.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -8139,7 +8139,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un servitore nemico attacca, ritorna nella mano di chi lo controlla e costa (2) Mana in più.</Text>
+    <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un servitore nemico attacca, ritorna nella mano di chi lo controlla e costa (2) in più.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -8170,7 +8170,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; il prossimo &lt;b&gt;Segreto&lt;/b&gt; che giochi in questo turno costa (0) Mana.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; il prossimo &lt;b&gt;Segreto&lt;/b&gt; che giochi in questo turno costa (0).</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -8186,7 +8186,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Il tuo prossimo Segreto costa (0) Mana.</Text>
+    <Text>Il tuo prossimo Segreto costa (0).</Text>
     <Mechanics>
       <string>OneTurnEffect</string>
     </Mechanics>
@@ -8260,7 +8260,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>TUTTI i servitori costano (1) Mana in più.</Text>
+    <Text>TUTTI i servitori costano (1) in più.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -8294,7 +8294,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>La Salute di TUTTI i servitori diventa pari a 1.</Text>
+    <Text>Imposta la Salute di TUTTI i servitori a 1.</Text>
     <Mechanics />
     <Artist>Michal Ivan</Artist>
   </Card>
@@ -8321,7 +8321,7 @@ Infligge $2 danni all'eroe nemico.</Text>
     <Health>8</Health>
     <Cost>20</Cost>
     <Durability>0</Durability>
-    <Text>Costa (1) Mana in meno per ogni danno subito dal tuo eroe.</Text>
+    <Text>Costa (1) in meno per ogni danno subito dal tuo eroe.</Text>
     <Mechanics />
     <Artist>Glenn Rane</Artist>
   </Card>
@@ -8731,6 +8731,19 @@ Evoca un Infernale 6/6.</Text>
     <Artist>Ron Spencer</Artist>
   </Card>
   <Card>
+    <CardId>NEW1_014e</CardId>
+    <Name>Camuffato</Name>
+    <CardSet>Classic</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Furtivo fino al tuo turno successivo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NEW1_017</CardId>
     <Name>Granchio Affamato</Name>
     <CardSet>Classic</CardSet>
@@ -8841,7 +8854,7 @@ Evoca un Infernale 6/6.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
-    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Costa (1) Mana in meno per ogni punto Attacco della tua Arma.</Text>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Costa (1) in meno per ogni punto Attacco della tua Arma.</Text>
     <Mechanics>
       <string>Taunt</string>
     </Mechanics>
@@ -8984,7 +8997,7 @@ Evoca un Infernale 6/6.</Text>
     <Health>4</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo, le Magie del nemico costano (0) Mana.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo, le Magie dell'avversario costano (0).</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -9000,7 +9013,7 @@ Evoca un Infernale 6/6.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Le Magie costano (0) Mana per questo turno!</Text>
+    <Text>Le Magie costano (0) per questo turno!</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9517,7 +9530,7 @@ Evoca un Infernale 6/6.</Text>
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, le carte Dorate costano (1) Mana in meno.</Text>
+    <Text>Finché resta nella tua mano, le carte Dorate costano (1) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9543,7 +9556,7 @@ Evoca un Infernale 6/6.</Text>
     <Health>5</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>Non puoi perdere Stelle fintanto che è nel tuo mazzo.</Text>
+    <Text>Non puoi perdere Stelle finché resta nel tuo mazzo.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9699,7 +9712,7 @@ Evoca un Infernale 6/6.</Text>
     <Health>8</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; sostituisce TUTTI i servitori sul campo di battaglia, nelle mani e nei mazzi con servitori casuali.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; trasforma TUTTI i servitori sul campo, nelle mani e nei mazzi con servitori casuali.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9725,7 +9738,7 @@ Evoca un Infernale 6/6.</Text>
     <Health>4</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se non possiedi un Eric sul campo di battaglia, rinomina questa carta "Eric".</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se non possiedi un Eric sul campo, rinomina questa carta "Eric".</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10111,7 +10124,7 @@ Evoca due Costrutti d'Ossa 2/1.</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo turno successivo, infligge 5 danni ai nemici.</Text>
+    <Text>Seleziona un servitore nemico. Se sopravvive fino al tuo turno successivo, infligge 5 danni ai nemici.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10135,7 +10148,7 @@ Evoca due Costrutti d'Ossa 2/1.</Text>
     <Health>0</Health>
     <Cost>8</Cost>
     <Durability>0</Durability>
-    <Text>Riempie il tuo lato del campo di battaglia con Draghetti 2/2.</Text>
+    <Text>Riempie il tuo lato del campo con Draghetti 2/2.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10274,7 +10287,7 @@ Evoca due Costrutti d'Ossa 2/1.</Text>
     <Health>8</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette nella tua mano una carta Rissa. Vince sempre ogni Rissa.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette nella tua mano una Rissa. Vince sempre ogni Rissa.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -10315,7 +10328,7 @@ Evoca due Costrutti d'Ossa 2/1.</Text>
     <Health>20</Health>
     <Cost>50</Cost>
     <Durability>0</Durability>
-    <Text>Costa (1) Mana in meno per ogni danno subito dal tuo eroe.</Text>
+    <Text>Costa (1) in meno per ogni danno subito dal tuo eroe.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10367,7 +10380,7 @@ Evoca due Costrutti d'Ossa 2/1.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Le tue carte costano (3) Mana in meno.</Text>
+    <Text>Le tue carte costano (3) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10379,7 +10392,7 @@ Evoca due Costrutti d'Ossa 2/1.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Costa (2) Mana in meno.</Text>
+    <Text>Costa (2) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10543,7 +10556,7 @@ Pesca una carta e ottiene 1 Cristallo di Mana.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
-Mette nella tua mano una Magia casuale di qualsiasi classe. Costa (0) Mana.</Text>
+Mette nella tua mano una Magia casuale di qualsiasi classe. Costa (0).</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10790,6 +10803,28 @@ Ottiene nuovamente &lt;b&gt;Furtività&lt;/b&gt; quando uccide un servitore.</Te
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_013_PickOnCurve</CardId>
+    <Name>Player Choice Enchant On Curve</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_013_PickOnCurve2</CardId>
+    <Name>Player Choice Enchant On Curve2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_014</CardId>
     <Name>Scegli una nuova carta!</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10811,6 +10846,18 @@ Ottiene nuovamente &lt;b&gt;Furtività&lt;/b&gt; quando uccide un servitore.</Te
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_AllMinionsTauntCharge</CardId>
+    <Name>Provocazione e Carica</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Questo servitore ha &lt;b&gt;Provocazione&lt;/b&gt; e &lt;b&gt;Carica&lt;/b&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10902,6 +10949,42 @@ Mecazod vince se sconfigge uno dei due eroi!</Text>
     </Mechanics>
   </Card>
   <Card>
+    <CardId>TB_CoOp_Mechazod2</CardId>
+    <Name>Mecazod Sovraccarico</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>80</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Boss&lt;/b&gt;
+Mecazod colpisce all'inizio di ogni turno!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_DecreasingCardCost</CardId>
+    <Name>TB_DecreasingCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_DecreasingCardCostDebug</CardId>
+    <Name>TBDecreasingCardCostDebug</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>Incantamento Eterno</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10944,6 +11027,44 @@ Mecazod vince se sconfigge uno dei due eroi!</Text>
     <Health>30</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Enchantment</CardId>
+    <Name>Dono Economico</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Il costo di questa carta è ridotto di (4).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Treasure</CardId>
+    <Name>Dono Natalizio</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; fornisce un Tesoro al giocatore che attacca.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Treasure_Spell</CardId>
+    <Name>Dono Natalizio Rubato</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Rivela un Tesoro casuale.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11021,6 +11142,296 @@ Infligge 1 danno a due nemici casuali.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_MechWar_Minion1</CardId>
+    <Name>Robomaniaco</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate</CardId>
+    <Name>Scegli il Tuo Destino</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFateRandom</CardId>
+    <Name>Scegli un Destino Casuale</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_1</CardId>
+    <Name>Destino 1</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>TUTTI i servitori hanno &lt;b&gt;Provocazione&lt;/b&gt; e &lt;b&gt;Carica&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_10</CardId>
+    <Name>Destino 10</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>I servitori con Grido di Battaglia ottengono +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_10_Ench</CardId>
+    <Name>Potenziamento Destino 10</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_11</CardId>
+    <Name>Destino 11</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ottieni un Murloc 1/1 ogni turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_11_Ench</CardId>
+    <Name>Potenziamento Destino 11</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_1_Ench</CardId>
+    <Name>Potenziamento Destino 1</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_2</CardId>
+    <Name>Destino 2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quando un servitore muore, chi lo controlla ottiene una Banana da 1 Mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_2_Ench</CardId>
+    <Name>Potenziamento Destino 2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_3</CardId>
+    <Name>Destino 3</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>TUTTI i servitori hanno &lt;b&gt;Furia del Vento&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_3_Ench</CardId>
+    <Name>Potenziamento Destino 3</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_4</CardId>
+    <Name>Destino 4</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>TUTTI i servitori hanno +1 Attacco.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_4_Ench</CardId>
+    <Name>Potenziamento Destino 4</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_5</CardId>
+    <Name>Destino 5</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Le Magie costano (1) in meno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_5_Ench</CardId>
+    <Name>Potenziamento Destino 5</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_6</CardId>
+    <Name>Destino 6</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Mette 10 Portali Instabili nel tuo mazzo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_7</CardId>
+    <Name>Destino 7</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quando un servitore muore, chi lo controlla ottiene una Moneta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_7_Ench</CardId>
+    <Name>Potenziamento Destino 7</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_8</CardId>
+    <Name>Destino 8</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quando un giocatore lancia una Magia, il suo eroe ottiene 3 Armatura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_8_Ench</CardId>
+    <Name>Destino 8</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_9</CardId>
+    <Name>Destino 9</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>I servitori con Rantolo di Morte ottengono +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_9_Ench</CardId>
+    <Name>Potenziamento Destino 9</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_Windfury</CardId>
+    <Name>Furia del Vento</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Furia del Vento&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Pilota Misterioso</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -11066,6 +11477,3330 @@ Infligge 1 danno a due nemici casuali.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>LOEA01_01</CardId>
+    <Name>Sciacallo del Sole Phaerix</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_01h</CardId>
+    <Name>Phaerix Eroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_02</CardId>
+    <Name>Benedizione del Sole</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+Chi controlla la Verga del Sole è &lt;b&gt;Immune&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_02h</CardId>
+    <Name>Benedizione del Sole</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+Phaerix è &lt;b&gt;Immune&lt;/b&gt; finché controlla la Verga del Sole.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_11</CardId>
+    <Name>Verga del Sole</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; concedi la Verga del Sole all'avversario.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_11h</CardId>
+    <Name>Verga del Sole</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; concedi la Verga del Sole all'avversario.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_11he</CardId>
+    <Name>Modalità Eroica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3 se Phaerix controlla la Verga.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_12</CardId>
+    <Name>Oplita Tol'vir</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 5 danni a entrambi gli eroi.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_12h</CardId>
+    <Name>Oplita Tol'vir</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 5 danni a entrambi gli eroi.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA02_01</CardId>
+    <Name>Zinaar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_01h</CardId>
+    <Name>Zinaar Eroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_02</CardId>
+    <Name>Intuito del Djinn</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Pesca una carta. Fornisce un Desiderio all'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_02h</CardId>
+    <Name>Intuito del Djinn</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Pesca una carta. Ottieni 1 Cristallo di Mana. Fornisce un Desiderio all'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_03</CardId>
+    <Name>Desiderio di Potere</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rinvieni&lt;/b&gt; una Magia.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_04</CardId>
+    <Name>Desiderio di Valore</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rinvieni&lt;/b&gt; una carta da 4 Mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_05</CardId>
+    <Name>Desiderio di Gloria</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rinvieni&lt;/b&gt; un servitore.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_06</CardId>
+    <Name>Desiderio di Altri Desideri</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ottieni due Desideri.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10</CardId>
+    <Name>Desiderio di Compagnia</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rinvieni&lt;/b&gt; una Bestia fra Leokk, Huffer e Misha.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10a</CardId>
+    <Name>Leokk</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Gli altri tuoi servitori hanno +1 Attacco.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10c</CardId>
+    <Name>Misha</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01</CardId>
+    <Name>Fuga dal Tempio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>100</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01e</CardId>
+    <Name>Incantamento Fuga dal Tempio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01eh</CardId>
+    <Name>Incantamento Fuga dal Tempio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01h</CardId>
+    <Name>Fuga dal Tempio Eroica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>100</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_02</CardId>
+    <Name>Fuga!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Affronta nuovi ostacoli!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_02h</CardId>
+    <Name>Fuga!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Affronta nuovi ostacoli!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_06</CardId>
+    <Name>Fossa con Spuntoni</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Scegli il percorso!&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_06a</CardId>
+    <Name>Attraversa Saltando</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge casualmente 10 danni o nessun danno al tuo eroe.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_06b</CardId>
+    <Name>Attraversa Cautamente</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge 5 danni al tuo eroe.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_13bt</CardId>
+    <Name>Guardia di Orsis</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Scudo Divino&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_13bth</CardId>
+    <Name>Guardia di Orsis</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Scudo Divino&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_23</CardId>
+    <Name>Insetto Gigante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>3</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_23h</CardId>
+    <Name>Insetto Gigante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_24</CardId>
+    <Name>Guardia Anubisath</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>10</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_24h</CardId>
+    <Name>Guardia Anubisath</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>15</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_25</CardId>
+    <Name>Statua Adirata</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>9</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, infligge 2 danni ai nemici.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_25h</CardId>
+    <Name>Statua Adirata</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>9</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, infligge 5 danni ai nemici.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_27</CardId>
+    <Name>Statua Animata</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Hai disturbato l'antica statua...</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28</CardId>
+    <Name>Pozza Luminosa</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Vuoi bere?&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28a</CardId>
+    <Name>Bevi</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Pesca una carta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28b</CardId>
+    <Name>Immergiti</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ottieni 1 Cristallo di Mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29</CardId>
+    <Name>L'Occhio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Scegli il percorso!&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29a</CardId>
+    <Name>Toccalo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Rigenera 10 Salute al tuo eroe.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29b</CardId>
+    <Name>Studia le Rune</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Pesca 2 carte.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_30</CardId>
+    <Name>L'Oscurità</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Vuoi prendere la scorciatoia?&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_30a</CardId>
+    <Name>Prendi la Scorciatoia</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ti avvicini di un turno all'uscita! Affronta un Golem da Guerra 7/7.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_31b</CardId>
+    <Name>No Grazie!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Non succede nulla.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_01</CardId>
+    <Name>Capo Tribù Scarvash</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_01h</CardId>
+    <Name>Scarvash Eroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02</CardId>
+    <Name>Trogg Odia Servitori!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+I servitori nemici costano (2) in più. Cambia all'inizio del tuo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02a</CardId>
+    <Name>Trogg Odia Servitori!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+I servitori nemici costano (2) in più. Cambia all'inizio del tuo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02h</CardId>
+    <Name>Trogg Odia Servitori!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+I servitori nemici costano (11). Cambia all'inizio del tuo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02ha</CardId>
+    <Name>Trogg Odia Servitori!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+I servitori nemici costano (11). Cambia all'inizio del tuo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_03</CardId>
+    <Name>Trogg Odia Magie!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+Le Magie nemiche costano (2) in più. Cambia all'inizio del tuo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_03h</CardId>
+    <Name>Trogg Odia Magie!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+Le Magie nemiche costano (11). Cambia all'inizio del tuo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02</CardId>
+    <Name>Genesi della Pietra</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca una Statua 0/2 per entrambi i giocatori.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02h</CardId>
+    <Name>Genesi della Pietra</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca una Statua per entrambi i giocatori.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02t</CardId>
+    <Name>Statua di Terrigeno</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02th</CardId>
+    <Name>Statua di Terrigeno</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03</CardId>
+    <Name>Anima Terrigeni</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1 e &lt;b&gt;Provocazione&lt;/b&gt; ai tuoi servitori.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03e</CardId>
+    <Name>Animato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1 e &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03eh</CardId>
+    <Name>Animato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3 e &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03h</CardId>
+    <Name>Anima Terrigeni</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3 e &lt;b&gt;Provocazione&lt;/b&gt; ai tuoi servitori.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_04</CardId>
+    <Name>Furia Frantumante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Distrugge tutte le Statue. Per ogni Statua distrutta, infligge $1 |4(danno,danni).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_04h</CardId>
+    <Name>Furia Frantumante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Distrugge tutte le Statue. Per ogni Statua distrutta, infligge $3 danni.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_01</CardId>
+    <Name>Carrello Minerario</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_02</CardId>
+    <Name>Galleria Mineraria</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>80</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_02h</CardId>
+    <Name>Galleria Mineraria Eroica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>80</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_03</CardId>
+    <Name>Fuggi dalla Miniera!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Fuggi dai Trogg!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_03h</CardId>
+    <Name>Fuggi dalla Miniera!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Fuggi dai Trogg!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_09</CardId>
+    <Name>Trogg Inseguitore</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_11</CardId>
+    <Name>Detriti</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA07_12</CardId>
+    <Name>Terrigeno Inseguitore</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_14</CardId>
+    <Name>Golem Massiccio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_18</CardId>
+    <Name>Dinamite</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge $10 danni.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_20</CardId>
+    <Name>Boom!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge 3 danni ai servitori nemici.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_21</CardId>
+    <Name>Avanti Tutta</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Ti avvicini di un turno all'uscita!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_24</CardId>
+    <Name>Esca Appuntita</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Non può attaccare.</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA07_25</CardId>
+    <Name>Pappagallo Meccanico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_26</CardId>
+    <Name>Consulta Brann</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Pesca 3 carte.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_28</CardId>
+    <Name>Riparazioni</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Rigenera 10 Salute.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_29</CardId>
+    <Name>Lancia Rocce</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Infligge 3 danni a un servitore nemico casuale.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA08_01</CardId>
+    <Name>Archaedas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA08_01h</CardId>
+    <Name>Archaedas Eroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_1</CardId>
+    <Name>Sire Lanciaviscida</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_10</CardId>
+    <Name>Naga Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_11</CardId>
+    <Name>Naga Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_12</CardId>
+    <Name>Naga Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_13</CardId>
+    <Name>Naga Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>1</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_1H</CardId>
+    <Name>Lanciaviscida Eroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_2</CardId>
+    <Name>Infuriato!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>+2 Attacco al tuo eroe per questo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_2e</CardId>
+    <Name>Infuriato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2 Attacco.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_2eH</CardId>
+    <Name>Infuriato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+5 Attacco.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_2H</CardId>
+    <Name>Infuriato!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>+5 Attacco al tuo eroe per questo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3</CardId>
+    <Name>Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca un Naga Affamato.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3a</CardId>
+    <Name>Famelico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Abbastanza affamato.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3aH</CardId>
+    <Name>Famelico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Abbastanza affamato.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3b</CardId>
+    <Name>Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca un Naga Affamato 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3c</CardId>
+    <Name>Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca un Naga Affamato 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3d</CardId>
+    <Name>Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca un Naga Affamato 5/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3H</CardId>
+    <Name>Fame Infinita</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Evoca un Naga Affamato.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_4</CardId>
+    <Name>Lancia Rara</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Text>Ottiene +1/+1 quando l'avversario gioca una carta Rara.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_4H</CardId>
+    <Name>Lancia Rara</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Text>Ottiene +1/+1 quando l'avversario gioca una carta Rara.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_5</CardId>
+    <Name>Naga Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_5H</CardId>
+    <Name>Naga Affamato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_6</CardId>
+    <Name>Arciere Strisciante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 1 danno.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_6H</CardId>
+    <Name>Arciere Strisciante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; infligge 2 danni ai servitori nemici.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_7</CardId>
+    <Name>Calderone</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; salva Ser Pinnus e impedisce il massacro dei Naga!</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_7e</CardId>
+    <Name>Calderone</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_7H</CardId>
+    <Name>Calderone</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>10</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; salva Ser Pinnus!</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_8</CardId>
+    <Name>Guardia Strisciante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_8H</CardId>
+    <Name>Guardia Strisciante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>7</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_9</CardId>
+    <Name>Repellente per Naga</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Distrugge tutti i Naga Affamati.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_9H</CardId>
+    <Name>Repellente per Naga</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Imposta l'Attacco di tutti i Naga Affamati a 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_1</CardId>
+    <Name>Pinnagrossa</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_1H</CardId>
+    <Name>Pinnagrossa Eroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_2</CardId>
+    <Name>Mrglmrgl MRGL!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Pesca delle carte finché non ne hai lo stesso numero dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_2H</CardId>
+    <Name>Mrglmrgl MRGL!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Pesca 2 carte.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_3</CardId>
+    <Name>Murlocchino</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Mechanics />
+    <Artist>Oliver Chipping</Artist>
+  </Card>
+  <Card>
+    <CardId>LOEA10_5</CardId>
+    <Name>Mrgl Mrgl Gné Gné</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Evoca tre Murloc morti in questa partita.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_5H</CardId>
+    <Name>Mrgl Mrgl Gné Gné</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Evoca cinque Murloc morti in questa partita.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_1</CardId>
+    <Name>Dama Naz'jar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_1H</CardId>
+    <Name>Naz'jar Eroica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_2</CardId>
+    <Name>Perla delle Maree</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, trasforma TUTTI i servitori in altri che costano (1) in più.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_2H</CardId>
+    <Name>Perla delle Maree</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, trasforma TUTTI i servitori. I tuoi costano (1) in più.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_1</CardId>
+    <Name>Schelesauro</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_1h</CardId>
+    <Name>Schelesauro Eroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_2</CardId>
+    <Name>Potere Antico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe:&lt;/b&gt;
+Fornisce una carta casuale a ogni giocatore. Costa (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_2H</CardId>
+    <Name>Potere Antico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Mette nella tua mano una carta casuale. Costa (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_1</CardId>
+    <Name>Sentinella d'Acciaio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_1H</CardId>
+    <Name>Sentinella Eroica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_2</CardId>
+    <Name>Armatura a Piastre</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+L'eroe può subire al massimo 1 danno alla volta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_2H</CardId>
+    <Name>Armatura a Piastre</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+L'eroe e i suoi servitori possono subire al massimo 1 danno alla volta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_1</CardId>
+    <Name>Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_1H</CardId>
+    <Name>Rafaam Eroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_2</CardId>
+    <Name>Portale Instabile</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Mette nella tua mano un servitore casuale. Costa (3) in meno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_2H</CardId>
+    <Name>Portale Instabile</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
+Mette nella tua mano un servitore casuale. Costa (3) in meno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_3</CardId>
+    <Name>Raptor d'Ossa</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; prendi il controllo dell'Arma dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_3H</CardId>
+    <Name>Raptor d'Ossa</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; prendi il controllo dell'Arma dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_1</CardId>
+    <Name>Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_10</CardId>
+    <Name>Calice di Hakkari</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Trasforma un servitore in un Serpente della Fossa 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_11</CardId>
+    <Name>Corona di Kael'thas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge $10 danni suddivisi casualmente tra TUTTI i personaggi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_12</CardId>
+    <Name>Medaglione di Medivh</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Sostituisce le carte nella tua mano con dei Portali Instabili.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_13</CardId>
+    <Name>Occhio di Orsis</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rinvieni&lt;/b&gt; un servitore e ne ottieni tre copie.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_14</CardId>
+    <Name>Pipa di Khadgar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Mette nella mano di ogni giocatore una Magia casuale. La tua costa (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_15</CardId>
+    <Name>Lacrima di Ysera</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Fornisce 4 Cristalli di Mana solo per questo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_16</CardId>
+    <Name>Esplorazione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Trova un manufatto.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_16H</CardId>
+    <Name>Esplorazione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Trova un manufatto.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_17</CardId>
+    <Name>Statua Animata</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_18</CardId>
+    <Name>Zinaar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, ottieni un Desiderio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_18H</CardId>
+    <Name>Zinaar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, ottieni un Desiderio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_19</CardId>
+    <Name>Sciacallo del Sole Phaerix</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, mette una Benedizione del Sole nella tua mano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_19H</CardId>
+    <Name>Sciacallo del Sole Phaerix</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Gli altri tuoi servitori sono &lt;b&gt;Immuni&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_1H</CardId>
+    <Name>Rafaam Eroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_2</CardId>
+    <Name>Bastone della Creazione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+Il tuo eroe è &lt;b&gt;Immune&lt;/b&gt; mentre il Bastone si ricarica.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_20</CardId>
+    <Name>Benedizione del Sole</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Rende &lt;b&gt;Immune&lt;/b&gt; un servitore per questo turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_20e</CardId>
+    <Name>Benedetto</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text> &lt;b&gt;Immune&lt;/b&gt; per questo turno.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_20H</CardId>
+    <Name>Benedizione del Sole</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Immune&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_21</CardId>
+    <Name>Capo Tribù Scarvash</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Le carte dell'avversario costano (1) in più.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_21H</CardId>
+    <Name>Capo Tribù Scarvash</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Le carte dell'avversario costano (2) in più.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_22</CardId>
+    <Name>Archaedas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, trasforma un servitore nemico casuale in una Statua 0/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_22H</CardId>
+    <Name>Archaedas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, trasforma un servitore nemico casuale in una Statua 0/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_23</CardId>
+    <Name>Sire Lanciaviscida</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, evoca un Naga Affamato 1/1 per ogni servitore nemico sul campo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_23H</CardId>
+    <Name>Sire Lanciaviscida</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, evoca un Naga Affamato 1/1 per ogni servitore nemico sul campo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_24</CardId>
+    <Name>Pinnagrossa</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>Alla fine del tuo turno, pesca delle carte finché non ne hai lo stesso numero dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_24H</CardId>
+    <Name>Pinnagrossa</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>Alla fine del tuo turno, pesca 2 carte.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_25</CardId>
+    <Name>Dama Naz'jar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, trasforma TUTTI gli altri servitori in altri con lo stesso costo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_25H</CardId>
+    <Name>Dama Naz'jar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, trasforma TUTTI gli altri servitori in altri con lo stesso costo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_26</CardId>
+    <Name>Schelesauro</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, fornisce una carta casuale a ogni giocatore. Costa (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_26H</CardId>
+    <Name>Schelesauro</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, mette nella tua mano una carta casuale. Costa (0).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_27</CardId>
+    <Name>Sentinella d'Acciaio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Può subire al massimo 1 danno alla volta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_27H</CardId>
+    <Name>Sentinella d'Acciaio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Può subire al massimo 1 danno alla volta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_2H</CardId>
+    <Name>Bastone della Creazione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
+Il tuo eroe è &lt;b&gt;Immune&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_3</CardId>
+    <Name>Lanterna del Potere</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>+10/+10 a un servitore.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_3e</CardId>
+    <Name>Lanterna del Potere</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+10/+10.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_4</CardId>
+    <Name>Orologio dell'Orrore</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge $10 danni suddivisi casualmente tra i nemici.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_5</CardId>
+    <Name>Specchio della Rovina</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Riempie il tuo lato del campo con Mummie 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_5t</CardId>
+    <Name>Mummia</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_6</CardId>
+    <Name>Frammento di Sulfuras</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge $5 danni a TUTTI i personaggi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_7</CardId>
+    <Name>Scheggia di Benedizione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Rigenera #10 Salute a TUTTI i personaggi.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_8</CardId>
+    <Name>Fiala di Putress</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Distrugge un servitore nemico casuale.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_8a</CardId>
+    <Name>Putressizzato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Attacco e Salute scambiati.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_9</CardId>
+    <Name>Schinieri di Lothar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Infligge 3 danni ai nemici.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA_01</CardId>
+    <Name>Presenza Incombente</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Pesca 2 carte. Fornisce 4 Armatura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA_01H</CardId>
+    <Name>Presenza Incombente</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Pesca 3 carte. Fornisce 6 Armatura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_002</CardId>
+    <Name>Torcia Abbandonata</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Infligge $3 danni. Mette una Torcia Divampante che infligge 6 danni nel tuo mazzo.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_002t</CardId>
+    <Name>Torcia Divampante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Infligge $6 danni.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_003</CardId>
+    <Name>Evocatore Etereo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Grido di Battaglia: Rinvieni&lt;/b&gt; una Magia.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_006</CardId>
+    <Name>Curatore del Museo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Grido di Battaglia: Rinvieni&lt;/b&gt; una carta con &lt;b&gt;Rantolo di Morte&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_007</CardId>
+    <Name>Maledizione di Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Mette nella mano dell'avversario una Maledizione. Finché resta nella sua mano, gli infligge 2 danni all'inizio del suo turno.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_007t</CardId>
+    <Name>Maledizione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Finché resta nella tua mano, subisci 2 danni all'inizio del tuo turno.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_008</CardId>
+    <Name>Occhio di Hakkar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Mette in gioco un &lt;b&gt;Segreto&lt;/b&gt; casuale dal mazzo dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_008H</CardId>
+    <Name>Occhio di Hakkar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Mette in gioco un &lt;b&gt;Segreto&lt;/b&gt; casuale dal mazzo dell'avversario.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_009</CardId>
+    <Name>Protettore d'Ossidiana</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Alla fine del tuo turno, evoca uno Scarabeo 1/1 con &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_009e</CardId>
+    <Name>Potere Sinistro</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>+4/+4.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_009t</CardId>
+    <Name>Scarabeo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Jaemin Kim</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_010</CardId>
+    <Name>Serpente della Fossa</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Race>Beast</Race>
+    <Text>Distrugge qualsiasi servitore danneggiato da questo servitore.</Text>
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
+    <Artist>Bernie Kang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_011</CardId>
+    <Name>Reno Jackson</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se il tuo mazzo ha una sola copia per carta, cura completamente il tuo eroe.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_012</CardId>
+    <Name>Predatore di Tombe</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette nella tua mano una Moneta.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Dave Allsop</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_012e</CardId>
+    <Name>Esploratore di Tombe</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Rantolo di Morte&lt;/b&gt; copiato dalla carta CARD_NAME.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_016</CardId>
+    <Name>Elementale Instabile</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Dopo che giochi un servitore con &lt;b&gt;Grido di Battaglia&lt;/b&gt;, infligge 2 danni a un nemico casuale.</Text>
+    <Mechanics />
+    <Artist>Cole Eastburn</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_016t</CardId>
+    <Name>Roccia</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOE_017</CardId>
+    <Name>Guardiana di Uldaman</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; imposta Attacco e Salute di un altro servitore a 3.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_017e</CardId>
+    <Name>Sorvegliato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Attacco e Salute pari a 3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_018</CardId>
+    <Name>Trogg delle Gallerie</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Quando attivi &lt;b&gt;Sovraccarico&lt;/b&gt;, ottiene +1 Attacco per ogni Cristallo di Mana bloccato.</Text>
+    <Mechanics />
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_018e</CardId>
+    <Name>Trogg No Stupido</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Attacco aumentato.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_019</CardId>
+    <Name>Raptor Riesumato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; seleziona un tuo servitore. Il Raptor Riesumato copia il suo &lt;b&gt;Rantolo di Morte&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_019e</CardId>
+    <Name>Raptor Riesumato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Rantolo di Morte&lt;/b&gt; copiato dalla carta CARD_NAME.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_019t</CardId>
+    <Name>Mappa per la Scimmia Dorata</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Mette la Scimmia Dorata nel tuo mazzo. Pesca una carta.</Text>
+    <Mechanics />
+    <Artist>Milivoj Ceran</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_019t2</CardId>
+    <Name>Scimmia Dorata</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; sostituisce le carte nella tua mano e nel tuo mazzo con servitori &lt;b&gt;Leggendari&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_020</CardId>
+    <Name>Dromedario Errante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette sul campo un servitore casuale da 1 Mana dal mazzo di ogni giocatore.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_021</CardId>
+    <Name>Trappola di Dardi</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Segreto:&lt;/b&gt; infligge 5 danni a un nemico casuale quando l'avversario usa il suo Potere Eroe.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_022</CardId>
+    <Name>Scimmia Feroce</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Peter Stapleton</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_023</CardId>
+    <Name>Losco Venditore</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Grido di Battaglia: Rinvieni&lt;/b&gt; una carta da 1 Mana.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>George Davis</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_024t</CardId>
+    <Name>Masso Rotolante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Alla fine del tuo turno, distrugge il servitore alla sua sinistra.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_026</CardId>
+    <Name>Alba dei Murloc Viventi</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Evoca sette Murloc morti in questa partita.</Text>
+    <Mechanics />
+    <Artist>Ryan Metcalf</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_027</CardId>
+    <Name>Sacra Prova</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Segreto:&lt;/b&gt; se il tuo avversario ha almeno tre servitori e ne gioca un altro, questo viene distrutto.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_029</CardId>
+    <Name>Scarabeo Ingioiellato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Grido di Battaglia: Rinvieni&lt;/b&gt; una carta da 3 Mana.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jaemin Kim</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_030</CardId>
+    <Name>Armatura Fantasma</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Grido di Battaglia:&lt;/b&gt; copia Attacco e Salute di un tuo servitore.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOE_030e</CardId>
+    <Name>Assimilazione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Statistiche copiate.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_038</CardId>
+    <Name>Strega di Mare Naga</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Le tue carte costano (5).</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_039</CardId>
+    <Name>Gorillabot A-3</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; se controlli un altro Robot, &lt;b&gt;Rinvieni&lt;/b&gt; un Robot.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_046</CardId>
+    <Name>Rospo Gigante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; infligge 1 danno a un nemico casuale.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_047</CardId>
+    <Name>Ragno delle Tombe</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Grido di Battaglia: Rinvieni&lt;/b&gt; una Bestia.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Turovec Konstantin</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_050</CardId>
+    <Name>Raptor Cavalcabile</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca un servitore casuale da 1 Mana.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_051</CardId>
+    <Name>Lunagufo Silvano</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;+2 Danni Magici&lt;/b&gt; a ogni giocatore.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_053</CardId>
+    <Name>Djinn degli Zefiri</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Quando lanci una Magia su un altro tuo servitore, viene lanciata anche sul Djinn degli Zefiri.</Text>
+    <Mechanics />
+    <Artist>Jakub Kasper</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_061</CardId>
+    <Name>Sentinella Anubisath</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; +3/+3 a un tuo servitore casuale.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Paul Mafayon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_061e</CardId>
+    <Name>Potere dei Titani</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_073</CardId>
+    <Name>Gigantosauro Fossile</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene &lt;b&gt;Provocazione&lt;/b&gt; se controlli una Bestia.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_073e</CardId>
+    <Name>Fossilizzato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ha &lt;b&gt;Provocazione&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_076</CardId>
+    <Name>Ser Pinnus Mrrgglton</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>&lt;b&gt;Grido di Battaglia: Rinvieni&lt;/b&gt; un nuovo Potere Eroe di base.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_077</CardId>
+    <Name>Brann Barbabronzea</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>I tuoi servitori attivano due volte il proprio &lt;b&gt;Grido di Battaglia&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Sam Nielson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_079</CardId>
+    <Name>Elise Cercastelle</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette la Mappa per la Scimmia Dorata nel tuo mazzo.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Luke Mancini</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_086</CardId>
+    <Name>Pietra d'Evocazione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Quando lanci una Magia, evoca un servitore casuale con lo stesso costo.</Text>
+    <Mechanics />
+    <Artist>Jason Kang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089</CardId>
+    <Name>Pigmei Barcollanti</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; evoca tre Pigmei 2/2.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Sam Nielson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t</CardId>
+    <Name>Pigmeo Scapestrato</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t2</CardId>
+    <Name>Pigmeo Selvaggio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t3</CardId>
+    <Name>Pigmeo Brontolone</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_092</CardId>
+    <Name>Arciladro Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>8</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia: Rinvieni&lt;/b&gt; un potente manufatto.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_104</CardId>
+    <Name>Tumulazione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Mette un servitore nemico nel tuo mazzo.</Text>
+    <Mechanics />
+    <Artist>Alex Konstad</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_105</CardId>
+    <Name>Cappello da Viaggio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>+1/+1 e "&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette un Cappello da Viaggio nella tua mano" a un servitore.</Text>
+    <Mechanics />
+    <Artist>Joe Wilson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_105e</CardId>
+    <Name>Cappello da Viaggio</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>+1/+1. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette un Cappello da Viaggio nella tua mano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_107</CardId>
+    <Name>Statua Misteriosa</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Non può attaccare se ci sono altri servitori sul campo.</Text>
+    <Mechanics />
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_110</CardId>
+    <Name>Ombra Antica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mette un'Antica Maledizione nel tuo mazzo. Quando viene pescata, infligge 7 danni al tuo eroe.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_110t</CardId>
+    <Name>Antica Maledizione</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quando peschi questa carta, infligge 7 danni al tuo eroe. Pesca una carta.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_111</CardId>
+    <Name>Male Dissepolto</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Infligge $3 danni a TUTTI i servitori. Metti questa carta nel mazzo dell'avversario.</Text>
+    <Mechanics />
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_113</CardId>
+    <Name>Alta Marea</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>+2/+2 ai tuoi servitori. Costa (1) in meno per ogni Murloc che controlli.</Text>
+    <Mechanics />
+    <Artist>Andrius Matijoshius</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_113e</CardId>
+    <Name>Mrglllraarrrglrur!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_115</CardId>
+    <Name>Idolo del Corvo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Scegli: Rinvieni&lt;/b&gt; un servitore &lt;b&gt;o Rinvieni&lt;/b&gt; una Magia.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_115a</CardId>
+    <Name>Idolo del Corvo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Rinvieni&lt;/b&gt; un servitore.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_115b</CardId>
+    <Name>Idolo del Corvo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Rinvieni&lt;/b&gt; una Magia.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_116</CardId>
+    <Name>Cacciatrice di Reliquie</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene +4/+4 se controlli altri sei servitori.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_118</CardId>
+    <Name>Lama Maledetta</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>3</Durability>
+    <Class>Warrior</Class>
+    <Text>Raddoppia tutti i danni subiti dal tuo eroe.</Text>
+    <Mechanics />
+    <Artist>Craig Mullins</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_118e</CardId>
+    <Name>Lama Maledetta</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Raddoppia tutti i danni subiti dal tuo eroe.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_119</CardId>
+    <Name>Armatura Fantasma</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Il tuo eroe può subire al massimo 1 danno alla volta.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
     <CardId>EX1_062</CardId>
     <Name>Vecchio Occhiobuio</Name>
     <CardSet>Reward</CardSet>
@@ -11077,7 +14812,7 @@ Infligge 1 danno a due nemici casuali.</Text>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
     <Race>Murloc</Race>
-    <Text>&lt;b&gt;Carica&lt;/b&gt;. Ha +1 Attacco per ogni altro Murloc sul campo di battaglia.</Text>
+    <Text>&lt;b&gt;Carica&lt;/b&gt;. Ha +1 Attacco per ogni altro Murloc sul campo.</Text>
     <Mechanics>
       <string>Charge</string>
     </Mechanics>
@@ -12331,6 +16066,19 @@ Evoca due servitori 2/1.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>XXX_065</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>XXX_094</CardId>
     <Name />
     <CardSet>Debug</CardSet>
@@ -12753,7 +16501,7 @@ Evoca due servitori 2/1.</Text>
     <Health>8</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; l'avversario mette sul campo di battaglia un servitore casuale dal suo mazzo.</Text>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. &lt;b&gt;Rantolo di Morte:&lt;/b&gt; l'avversario mette sul campo un servitore casuale dal suo mazzo.</Text>
     <Mechanics>
       <string>Deathrattle</string>
       <string>Taunt</string>
@@ -12910,7 +16658,7 @@ Evoca due servitori 2/1.</Text>
     <Health>4</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>I servitori con &lt;b&gt;Grido di Battaglia&lt;/b&gt; costano (2) Mana in più.</Text>
+    <Text>I servitori con &lt;b&gt;Grido di Battaglia&lt;/b&gt; costano (2) in più.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -13019,7 +16767,7 @@ Evoca due servitori 2/1.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette sul campo di battaglia un Demone casuale dalla tua mano.</Text>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette sul campo un Demone casuale dalla tua mano.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -13036,7 +16784,7 @@ Evoca due servitori 2/1.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; +3 Salute a un altro tuo servitore casuale.</Text>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; +3 Salute a un tuo servitore casuale.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -13098,7 +16846,7 @@ Evoca due servitori 2/1.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; fa tornare un altro tuo servitore casuale nella tua mano.</Text>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; fa tornare un tuo servitore casuale nella tua mano.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -13170,7 +16918,7 @@ Evoca due servitori 2/1.</Text>
     <Health>5</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo, le Magie del nemico costano (5) Mana in più.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo, le Magie dell'avversario costano (5) in più.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -13185,7 +16933,7 @@ Evoca due servitori 2/1.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Le tue Magie costano (5) Mana in più per questo turno.</Text>
+    <Text>Le tue Magie costano (5) in più per questo turno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -14715,7 +18463,7 @@ Pesca 2 carte.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Mette nella tua mano un servitore casuale. Il suo costo si riduce di (3) Mana.</Text>
+    <Text>Mette nella tua mano un servitore casuale. Costa (3) in meno.</Text>
     <Mechanics />
     <Artist>Sean O'Daniels</Artist>
   </Card>
@@ -14762,7 +18510,7 @@ Pesca 2 carte.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>I tuoi Robot costano (1) Mana in meno.</Text>
+    <Text>I tuoi Robot costano (1) in meno.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -14901,7 +18649,7 @@ Pesca 2 carte.</Text>
     <Health>2</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Ha +2 Attacco fintanto che controlli un Robot.</Text>
+    <Text>Ha +2 Attacco finché controlli un Robot.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -14978,7 +18726,7 @@ Pesca 2 carte.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>Pesca una carta. Se è una Bestia, costa (4) Mana in meno.</Text>
+    <Text>Pesca una carta. Se è una Bestia, costa (4) in meno.</Text>
     <Mechanics />
     <Artist>E.M. Gist</Artist>
   </Card>
@@ -15155,7 +18903,7 @@ Pesca 2 carte.</Text>
     <Cost>3</Cost>
     <Durability>3</Durability>
     <Class>Rogue</Class>
-    <Text>Ha +2 Attacco fintanto che controlli un Robot.</Text>
+    <Text>Ha +2 Attacco finché controlli un Robot.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -15260,7 +19008,7 @@ Pesca 2 carte.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Shaman</Class>
-    <Text>Mette sul campo di battaglia un servitore casuale dalla mano di ogni giocatore.</Text>
+    <Text>Mette sul campo un servitore casuale dalla mano di ogni giocatore.</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -15417,7 +19165,7 @@ Pesca 2 carte.</Text>
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Race>Mech</Race>
-    <Text>Quando subisce danni, mette nella tua mano una carta &lt;b&gt;Gadget&lt;/b&gt;.</Text>
+    <Text>Quando subisce danni, mette nella tua mano un &lt;b&gt;Gadget&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Trent Kaniuga</Artist>
   </Card>
@@ -15830,7 +19578,7 @@ Pesca 2 carte.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Distrugge un servitore. Se controlli un servitore danneggiato, costa (4) Mana in meno.</Text>
+    <Text>Distrugge un servitore. Se controlli un servitore danneggiato, costa (4) in meno.</Text>
     <Mechanics />
     <Artist>Michael Sutfin</Artist>
   </Card>
@@ -16069,7 +19817,7 @@ Pesca 2 carte.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>Fintanto che è nella tua mano, ottiene +1 Attacco quando un tuo servitore muore.</Text>
+    <Text>Finché resta nella tua mano, ottiene +1 Attacco quando un tuo servitore muore.</Text>
     <Mechanics />
     <Artist>Tooth</Artist>
   </Card>
@@ -16361,7 +20109,7 @@ Pesca 2 carte.</Text>
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; ogni giocatore ottiene una carta &lt;b&gt;Gadget&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; ogni giocatore ottiene un &lt;b&gt;Gadget&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -16442,7 +20190,7 @@ Pesca 2 carte.</Text>
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette nella tua mano una carta &lt;b&gt;Gadget&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette nella tua mano un &lt;b&gt;Gadget&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -16679,7 +20427,7 @@ Pesca 2 carte.</Text>
     <Health>4</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Ha +4 Attacco fintanto che l'avversario ha sei o più carte in mano.</Text>
+    <Text>Ha +4 Attacco finché l'avversario ha sei o più carte in mano.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -16821,7 +20569,7 @@ Pesca 2 carte.</Text>
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene +1/+1 e mette nella tua mano una carta &lt;b&gt;Gadget&lt;/b&gt; se controlli un Robot.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; ottiene +1/+1 e mette nella tua mano un &lt;b&gt;Gadget&lt;/b&gt; se controlli un Robot.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16951,7 +20699,7 @@ Pesca 2 carte.</Text>
     <Health>2</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; trasforma un tuo servitore in un altro servitore casuale con lo stesso costo in Mana.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; trasforma un tuo servitore in un altro servitore casuale con lo stesso costo.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -17093,7 +20841,7 @@ Pesca 2 carte.</Text>
     <Health>7</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia&lt;/b&gt; e &lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette nella tua mano una carta &lt;b&gt;Gadget&lt;/b&gt;.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia&lt;/b&gt; e &lt;b&gt;Rantolo di Morte:&lt;/b&gt; mette nella tua mano un &lt;b&gt;Gadget&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Battlecry</string>
       <string>Deathrattle</string>
@@ -17187,7 +20935,7 @@ Pesca 2 carte.</Text>
     <Cost>12</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Costa (1) Mana in meno per ogni carta nella mano dell'avversario.</Text>
+    <Text>Costa (1) in meno per ogni carta nella mano dell'avversario.</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -17739,7 +21487,7 @@ Infligge 10 danni all'eroe nemico se non ha utilizzato tutto il Mana.</Text>
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo turno successivo, infligge $5 danni ai nemici.</Text>
+    <Text>Seleziona un servitore nemico. Se sopravvive fino al tuo turno successivo, infligge $5 danni ai nemici.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17763,7 +21511,7 @@ Infligge 10 danni all'eroe nemico se non ha utilizzato tutto il Mana.</Text>
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Seleziona un servitore nemico: se sopravvive fino al tuo turno successivo, infligge $10 danni ai nemici.</Text>
+    <Text>Seleziona un servitore nemico. Se sopravvive fino al tuo turno successivo, infligge $10 danni ai nemici.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17962,7 +21710,7 @@ Distrugge un servitore nemico casuale.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
-Tutte le carte costano (1) Mana. I giocatori hanno al massimo 1 Cristallo di Mana.</Text>
+Tutte le carte costano (1). I giocatori hanno al massimo 1 Cristallo di Mana.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17975,7 +21723,7 @@ Tutte le carte costano (1) Mana. I giocatori hanno al massimo 1 Cristallo di Man
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe Passivo&lt;/b&gt;
-Tutte le carte costano (1) Mana. Hai al massimo 2 Cristalli di Mana e l'avversario 1.</Text>
+Tutte le carte costano (1). Hai al massimo 2 Cristalli di Mana e l'avversario 1.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18467,7 +22215,7 @@ Scarta una carta casuale.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
-Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.</Text>
+Alla fine del tuo turno, mette un'Afflizione nella mano dell'avversario.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18480,7 +22228,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Potere Eroe&lt;/b&gt;
-Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.</Text>
+Alla fine del tuo turno, mette un'Afflizione nella mano dell'avversario.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18492,7 +22240,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, subisci 1 danno all'inizio del tuo turno.</Text>
+    <Text>Finché resta nella tua mano, subisci 1 danno all'inizio del tuo turno.</Text>
     <Mechanics>
       <string>ImmuneToSpellpower</string>
     </Mechanics>
@@ -18506,7 +22254,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, subisci 3 danni all'inizio del tuo turno.</Text>
+    <Text>Finché resta nella tua mano, subisci 3 danni all'inizio del tuo turno.</Text>
     <Mechanics>
       <string>ImmuneToSpellpower</string>
     </Mechanics>
@@ -18520,7 +22268,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, rigenera 2 Salute all'avversario all'inizio del tuo turno.</Text>
+    <Text>Finché resta nella tua mano, rigenera 2 Salute all'avversario all'inizio del tuo turno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18532,7 +22280,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, rigenera 6 Salute all'avversario all'inizio del tuo turno.</Text>
+    <Text>Finché resta nella tua mano, rigenera 6 Salute all'avversario all'inizio del tuo turno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18544,7 +22292,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, le Magie di Cromaggus costano (1) Mana in meno.</Text>
+    <Text>Finché resta nella tua mano, le Magie di Cromaggus costano (1) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18556,7 +22304,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, le Magie di Cromaggus costano (3) Mana in meno.</Text>
+    <Text>Finché resta nella tua mano, le Magie di Cromaggus costano (3) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18568,7 +22316,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, ogni volta che Cromaggus pesca una carta ne ottiene anche una copia.</Text>
+    <Text>Finché resta nella tua mano, ogni volta che Cromaggus pesca una carta ne ottiene anche una copia.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18580,7 +22328,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, ogni volta che Cromaggus pesca una carta ne ottiene anche una copia.</Text>
+    <Text>Finché resta nella tua mano, ogni volta che Cromaggus pesca una carta ne ottiene anche una copia.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18592,7 +22340,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, i servitori di Cromaggus costano (1) Mana in meno.</Text>
+    <Text>Finché resta nella tua mano, i servitori di Cromaggus costano (1) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18604,7 +22352,7 @@ Alla fine del tuo turno, mette una carta Afflizione nella mano dell'avversario.<
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Fintanto che è nella tua mano, i servitori di Cromaggus costano (3) Mana in meno.</Text>
+    <Text>Finché resta nella tua mano, i servitori di Cromaggus costano (3) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18907,7 +22655,7 @@ Attiva Arcanotron!</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Fornisce &lt;b&gt;+2 Danni Magici&lt;/b&gt; a ogni giocatore.</Text>
+    <Text>&lt;b&gt;+2 Danni Magici&lt;/b&gt; a ogni giocatore.</Text>
     <Mechanics>
       <string>Spellpower</string>
     </Mechanics>
@@ -19003,7 +22751,7 @@ Attiva Electron!</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Tutte le Magie costano (3) Mana in meno.</Text>
+    <Text>Tutte le Magie costano (3) in meno.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -19019,7 +22767,7 @@ Attiva Electron!</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Tutte le Magie costano (3) Mana in meno.</Text>
+    <Text>Tutte le Magie costano (3) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19451,7 +23199,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>Pesca 2 carte. Costa (1) Mana in meno per ogni servitore morto in questo turno.</Text>
+    <Text>Pesca 2 carte. Costa (1) in meno per ogni servitore morto in questo turno.</Text>
     <Mechanics />
     <Artist>Jaime Jones</Artist>
   </Card>
@@ -19496,7 +23244,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Infligge $4 danni. Costa (1) Mana in meno per ogni servitore morto in questo turno.</Text>
+    <Text>Infligge $4 danni. Costa (1) in meno per ogni servitore morto in questo turno.</Text>
     <Mechanics />
     <Artist>Mauricio Herrera</Artist>
   </Card>
@@ -19510,7 +23258,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Costa (3) Mana in meno per questo turno.</Text>
+    <Text>Costa (3) in meno per questo turno.</Text>
     <Mechanics>
       <string>OneTurnEffect</string>
     </Mechanics>
@@ -19613,7 +23361,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Seleziona un servitore e mettine tre copie nel tuo mazzo.</Text>
+    <Text>Seleziona un servitore. Ne mette tre copie nel tuo mazzo.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -19645,7 +23393,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Costa (1) Mana in meno per ogni servitore morto in questo turno.</Text>
+    <Text>&lt;b&gt;Provocazione&lt;/b&gt;. Costa (1) in meno per ogni servitore morto in questo turno.</Text>
     <Mechanics>
       <string>Taunt</string>
     </Mechanics>
@@ -19890,7 +23638,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; il prossimo Drago che giochi costa (2) Mana in meno.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; il prossimo Drago che giochi costa (2) in meno.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -19906,7 +23654,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>Il tuo prossimo Drago costa (2) Mana in meno.</Text>
+    <Text>Il tuo prossimo Drago costa (2) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -20018,7 +23766,7 @@ Nefarian fa piovere fuoco dall'alto.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Costa (1) Mana in meno per ogni servitore morto in questo turno.</Text>
+    <Text>Costa (1) in meno per ogni servitore morto in questo turno.</Text>
     <Mechanics />
     <Artist>Lucas Graciano</Artist>
   </Card>
@@ -20102,7 +23850,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Health>5</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>Alla fine del tuo turno, riduce il costo delle carte nella tua mano di (1) Mana.</Text>
+    <Text>Alla fine del tuo turno, il costo delle carte nella tua mano si riduce di (1).</Text>
     <Mechanics />
     <Artist>Wayne Reynolds</Artist>
   </Card>
@@ -20115,7 +23863,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Costa (1) Mana in meno.</Text>
+    <Text>Costa (1) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -20250,7 +23998,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un tuo servitore muore, evoca un altro servitore casuale con lo stesso costo in Mana.</Text>
+    <Text>&lt;b&gt;Segreto:&lt;/b&gt; quando un tuo servitore muore, evoca un servitore casuale con lo stesso costo.</Text>
     <Mechanics>
       <string>Secret</string>
     </Mechanics>
@@ -20499,7 +24247,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>Quando peschi una carta, il suo costo si riduce di (1) Mana.</Text>
+    <Text>Quando peschi una carta, il suo costo si riduce di (1).</Text>
     <Mechanics />
     <Artist>Warren Mahy</Artist>
   </Card>
@@ -20513,7 +24261,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>Costa (1) Mana in meno.</Text>
+    <Text>Costa (1) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -20527,7 +24275,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>Mette una copia di un servitore nemico sul campo di battaglia nella tua mano.</Text>
+    <Text>Mette una copia di un servitore nemico sul campo nella tua mano.</Text>
     <Mechanics />
     <Artist>Dan Dos Santos</Artist>
   </Card>
@@ -20769,7 +24517,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>Le carte pescate con il tuo Potere Eroe costano (0) Mana.</Text>
+    <Text>Le carte pescate con il tuo Potere Eroe costano (0).</Text>
     <Mechanics />
     <Artist>Tooth</Artist>
   </Card>
@@ -20783,7 +24531,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>Costa (0) Mana.</Text>
+    <Text>Costa (0).</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -20987,7 +24735,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>&lt;b&gt;Rantolo di Morte&lt;/b&gt; torna nella tua mano ed evoca un Nerubiano 4/4.</Text>
+    <Text>&lt;b&gt;Rantolo di Morte:&lt;/b&gt; torna nella tua mano ed evoca un Nerubiano 4/4.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -21148,7 +24896,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>Quando evochi una Bestia, riduce il costo di questa carta di (1) Mana.</Text>
+    <Text>Quando evochi una Bestia, il costo di questa carta si riduce di (1).</Text>
     <Mechanics />
     <Artist>Ralph Horsley</Artist>
   </Card>
@@ -21282,7 +25030,7 @@ Infligge $8 danni a un nemico casuale. DUE VOLTE.</Text>
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>I tuoi servitori costano (1) Mana.</Text>
+    <Text>I tuoi servitori costano (1).</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -21571,7 +25319,7 @@ Infligge $2 danni.</Text>
     <Durability>0</Durability>
     <Class>Hunter</Class>
     <Race>Beast</Race>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mostra un servitore per mazzo: se il tuo costa di più, mettilo nella tua mano.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; mostra un servitore per mazzo. Se il tuo costa di più, lo mette nella tua mano.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -21846,7 +25594,7 @@ Infligge $2 danni.</Text>
     <Cost>7</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
-    <Text>&lt;b&gt;Carrrica&lt;/b&gt;. Costa (1) Mana in meno per ogni Pirata che controlli.</Text>
+    <Text>&lt;b&gt;Carrrica&lt;/b&gt;. Costa (1) in meno per ogni Pirata che controlli.</Text>
     <Mechanics>
       <string>Charge</string>
     </Mechanics>
@@ -21893,7 +25641,7 @@ Infligge $2 danni.</Text>
     <Cost>10</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; pesca 3 carte e mette sul campo di battaglia ogni servitore pescato.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; pesca 3 carte e mette sul campo ogni servitore pescato.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -22076,7 +25824,9 @@ Infligge $2 danni.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>Puoi usare il Potere Eroe due volte per turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -22205,7 +25955,7 @@ Infligge $2 danni.</Text>
     <Health>6</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Il tuo Potere Eroe costa (1) Mana.</Text>
+    <Text>Il tuo Potere Eroe costa (1).</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -22221,7 +25971,7 @@ Infligge $2 danni.</Text>
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo, il Potere Eroe dell'avversario costa (5) Mana in più.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; nel turno successivo, il Potere Eroe dell'avversario costa (5) in più.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -22236,7 +25986,7 @@ Infligge $2 danni.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Il tuo Potere Eroe costa (5) Mana in più per questo turno.</Text>
+    <Text>Il tuo Potere Eroe costa (5) in più per questo turno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -22740,7 +26490,7 @@ Infligge $2 danni.</Text>
     <Health>2</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; la prossima volta che usi il tuo Potere Eroe, costa (2) Mana in meno.</Text>
+    <Text>&lt;b&gt;Grido di Battaglia:&lt;/b&gt; la prossima volta che usi il tuo Potere Eroe, costa (2) in meno.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -22755,7 +26505,7 @@ Infligge $2 danni.</Text>
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Il tuo Potere Eroe costa (2) Mana in meno.</Text>
+    <Text>Il tuo Potere Eroe costa (2) in meno.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -22870,7 +26620,7 @@ Infligge $2 danni.</Text>
     <Health>8</Health>
     <Cost>10</Cost>
     <Durability>0</Durability>
-    <Text>Costa (1) Mana in meno per ogni uso del tuo Potere Eroe in questa partita.</Text>
+    <Text>Costa (1) in meno per ogni uso del tuo Potere Eroe in questa partita.</Text>
     <Mechanics />
     <Artist>Greg Staples</Artist>
   </Card>

@@ -217,7 +217,7 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Faction>Neutral</Faction>
-    <Text>Выбранное существо получает способность &lt;b&gt;«Провокация»&lt;/b&gt; и +2/+2.&lt;i&gt; (+2 к атаке и +2 к здоровью)&lt;/i&gt; </Text>
+    <Text>Выбранное существо получает способность &lt;b&gt;«Провокация»&lt;/b&gt; и +2/+2.&lt;i&gt; (+2 к атаке и +2 к здоровью)&lt;/i&gt;</Text>
     <Mechanics />
     <Artist>Brad Vancata</Artist>
   </Card>
@@ -324,7 +324,7 @@
     <Faction>Neutral</Faction>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
  +1 к атаке до конца хода.
-+1 к броне. </Text>
++1 к броне.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -487,7 +487,7 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text>Наносит $4 ед. урона всем существам противника. </Text>
+    <Text>Наносит $4 ед. урона всем существам противника.</Text>
     <Mechanics />
     <Artist>Romain De Santi</Artist>
   </Card>
@@ -503,7 +503,7 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Faction>Neutral</Faction>
-    <Text> &lt;b&gt;Замораживает&lt;/b&gt; любого персонажа, которому наносит урон.</Text>
+    <Text>&lt;b&gt;Замораживает&lt;/b&gt; любого персонажа, которому наносит урон.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -1099,7 +1099,7 @@
   </Card>
   <Card>
     <CardId>CS2_089</CardId>
-    <Name>Свет небес </Name>
+    <Name>Свет небес</Name>
     <CardSet>Basic</CardSet>
     <Rarity>Free</Rarity>
     <Type>Spell</Type>
@@ -1169,7 +1169,7 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Faction>Neutral</Faction>
-    <Text>Наносит $2 ед. урона всем персонажам противника. </Text>
+    <Text>Наносит $2 ед. урона всем персонажам противника.</Text>
     <Mechanics />
     <Artist>Vance Kovacs</Artist>
   </Card>
@@ -1461,7 +1461,7 @@
   </Card>
   <Card>
     <CardId>CS2_124</CardId>
-    <Name>Всадник на волке </Name>
+    <Name>Всадник на волке</Name>
     <CardSet>Basic</CardSet>
     <Rarity>Free</Rarity>
     <Type>Minion</Type>
@@ -2381,7 +2381,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>+1 к атаке от Командира Песни Войны.</Text>
+    <Text>+1 к атаке от &lt;i&gt;Командира Песни Войны&lt;/i&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -3264,7 +3264,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;&lt;/b&gt; </Text>
+    <Text>&lt;b&gt;&lt;/b&gt;</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -4479,7 +4479,7 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; меняет местами атаку и здоровье выбранного существа. </Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; меняет местами атаку и здоровье выбранного существа.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -4926,7 +4926,7 @@
   </Card>
   <Card>
     <CardId>EX1_130</CardId>
-    <Name>Самопожертвование </Name>
+    <Name>Самопожертвование</Name>
     <CardSet>Classic</CardSet>
     <Rarity>Common</Rarity>
     <Type>Spell</Type>
@@ -5721,7 +5721,7 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Накладывает на выбранное существо эффект &lt;b&gt;немоты&lt;/b&gt; и затем наносит ему $1 ед. урона. </Text>
+    <Text>Накладывает на выбранное существо эффект &lt;b&gt;немоты&lt;/b&gt; и затем наносит ему $1 ед. урона.</Text>
     <Mechanics>
       <string>Silence</string>
     </Mechanics>
@@ -5821,7 +5821,7 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Получает +1/+1 каждый раз, когда вы разыгрываете карту с &lt;b&gt;Перегрузкой&lt;/b&gt;. </Text>
+    <Text>Получает +1/+1 каждый раз, когда вы разыгрываете карту с &lt;b&gt;Перегрузкой&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Matt Gaser</Artist>
   </Card>
@@ -5850,7 +5850,7 @@
     <Durability>0</Durability>
     <Class>Shaman</Class>
     <Faction>Neutral</Faction>
-    <Text>Наносит $2-$3 ед. урона всем существам противника. &lt;b&gt;Перегрузка:&lt;/b&gt; (2) </Text>
+    <Text>Наносит $2-$3 ед. урона всем существам противника. &lt;b&gt;Перегрузка:&lt;/b&gt; (2)</Text>
     <Mechanics />
     <Artist>Christopher Moeller</Artist>
   </Card>
@@ -8005,7 +8005,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 1 ед. урона выбранному существу. При этом существо получает +2 к атаке. </Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 1 ед. урона выбранному существу. При этом существо получает +2 к атаке.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -8036,7 +8036,7 @@
     <Durability>0</Durability>
     <Class>Warrior</Class>
     <Faction>Neutral</Faction>
-    <Text>Получает +1 к атаке каждый раз, когда любое существо получает урон. </Text>
+    <Text>Получает +1 к атаке каждый раз, когда любое существо получает урон.</Text>
     <Mechanics />
     <Artist>Simon Bisley</Artist>
   </Card>
@@ -8617,7 +8617,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Druid</Class>
-    <Text>Наносит $2 ед. урона всем существам противника. </Text>
+    <Text>Наносит $2 ед. урона всем существам противника.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -8738,6 +8738,19 @@
       <string>Battlecry</string>
     </Mechanics>
     <Artist>Ron Spencer</Artist>
+  </Card>
+  <Card>
+    <CardId>NEW1_014e</CardId>
+    <Name>Камуфляж</Name>
+    <CardSet>Classic</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Маскировка до вашего следующего хода.</Text>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>NEW1_017</CardId>
@@ -9448,7 +9461,7 @@
     <Health>5</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>&lt;i&gt;Успешно избегает затруднений... большую часть времени.&lt;/i&gt; </Text>
+    <Text>&lt;i&gt;Успешно избегает затруднений... большую часть времени.&lt;/i&gt;</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -9656,7 +9669,7 @@
     <Health>2</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>В начале вашего хода наносит 1 ед. урона. Если эта карта золотая, вместо этого наносит 1 ед. урона в конце вашего хода. Такой вот джедайский трюк. </Text>
+    <Text>В начале вашего хода наносит 1 ед. урона. Если эта карта золотая, вместо этого наносит 1 ед. урона в конце вашего хода. Такой вот джедайский трюк.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10228,7 +10241,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>Также наносит урон существам по обе стороны от того существа, которое он атакует. </Text>
+    <Text>Также наносит урон существам по обе стороны от того существа, которое он атакует.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10800,6 +10813,28 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_013_PickOnCurve</CardId>
+    <Name>Player Choice Enchant On Curve</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_013_PickOnCurve2</CardId>
+    <Name>Player Choice Enchant On Curve2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_014</CardId>
     <Name>Выберите новую карту!</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10821,6 +10856,18 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_AllMinionsTauntCharge</CardId>
+    <Name>«Провокация, рывок».</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Это существо получило способности &lt;b&gt;«Провокация»&lt;/b&gt; и &lt;b&gt;«Рывок»&lt;/b&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10913,6 +10960,42 @@
     </Mechanics>
   </Card>
   <Card>
+    <CardId>TB_CoOp_Mechazod2</CardId>
+    <Name>Перегруженный Механозод</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>80</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Босс&lt;/b&gt;
+Механозод атакует в начале каждого хода!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_DecreasingCardCost</CardId>
+    <Name>TB_DecreasingCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_DecreasingCardCostDebug</CardId>
+    <Name>TBDecreasingCardCostDebug</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_EndlessMinions01</CardId>
     <Name>Бесконечные чары</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10955,6 +11038,44 @@
     <Health>30</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Enchantment</CardId>
+    <Name>Дешевый подарок</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Стоимость этой карты уменьшена на (4) маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Treasure</CardId>
+    <Name>Подарок</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; атакующий игрок получает сокровище.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Treasure_Spell</CardId>
+    <Name>Украденный подарок</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Найти случайное сокровище.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11032,6 +11153,296 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_MechWar_Minion1</CardId>
+    <Name>Фанат механизмов</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate</CardId>
+    <Name>Выбери свою судьбу</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFateRandom</CardId>
+    <Name>Случайная судьба</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_1</CardId>
+    <Name>Fate 1</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Все существа получают способности &lt;b&gt;«Провокация»&lt;/b&gt; и &lt;b&gt;«Рывок»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_10</CardId>
+    <Name>Fate 10</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Существа со способностью «Боевой клич» получают +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_10_Ench</CardId>
+    <Name>Fate 10 Ench. Battlecry bonus</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_11</CardId>
+    <Name>Fate 11</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>В начале каждого хода вы призываете на поле боя мурлока 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_11_Ench</CardId>
+    <Name>Fate 11 Ench. Murloc</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_1_Ench</CardId>
+    <Name>Pick Your Fate 1 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_2</CardId>
+    <Name>Fate 2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Каждый раз, когда умирает существо, его владелец получает карту банана стоимостью (1) мана.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_2_Ench</CardId>
+    <Name>Pick Your Fate 2 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_3</CardId>
+    <Name>Fate 3</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Все существа получают способность &lt;b&gt;«Неистовство ветра»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_3_Ench</CardId>
+    <Name>Pick Your Fate 3 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_4</CardId>
+    <Name>Fate 4</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Все существа получают +1 к атаке.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_4_Ench</CardId>
+    <Name>Pick Your Fate 4 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_5</CardId>
+    <Name>Fate 5</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Все заклинания стоят на (1) ману меньше.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_5_Ench</CardId>
+    <Name>Pick You rFate 5 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_6</CardId>
+    <Name>Fate 6</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы замешиваете 10 нестабильных порталов в вашу колоду.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_7</CardId>
+    <Name>Fate 7</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Каждый раз, когда умирает существо, его владелец получает карту «Монетка».</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_7_Ench</CardId>
+    <Name>Fate 7 Ench Get a Coin</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_8</CardId>
+    <Name>Fate 8</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Каждый раз, когда игрок разыгрывает карту заклинания, его герой получает +3 к броне.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_8_Ench</CardId>
+    <Name>Fate 8 Get Armor</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_9</CardId>
+    <Name>Fate 9</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Существа со способностью «Предсмертный хрип» получают +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_9_Ench</CardId>
+    <Name>Fate 9 Ench. Deathrattle bonus</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_Windfury</CardId>
+    <Name>Неистовство ветра</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Это существо имеет способность &lt;b&gt;«Неистовство ветра»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Таинственный пилот</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -11075,6 +11486,3342 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_01</CardId>
+    <Name>Расхититель Фаэрикс</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_01h</CardId>
+    <Name>Фаэрикс (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_02</CardId>
+    <Name>Благословение солнца</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Если под вашим контролем находится Жезл Солнца, ваш герой &lt;b&gt;неуязвим&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_02h</CardId>
+    <Name>Благословение солнца</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Фаэрикс &lt;b&gt;неуязвим&lt;/b&gt;, пока под его контролем находится Жезл Солнца.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_11</CardId>
+    <Name>Жезл Солнца</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; ваш противник получает контроль над этой картой.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_11h</CardId>
+    <Name>Жезл Солнца</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; ваш противник получает контроль над этой картой.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_11he</CardId>
+    <Name>Героический режим</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Получает +3/+3, если Жезл под контролем Фаэрикса.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_12</CardId>
+    <Name>Тол'вирский защитник</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 5 ед. урона обоим героям.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_12h</CardId>
+    <Name>Тол'вирский защитник</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 5 ед. урона обоим героям.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA02_01</CardId>
+    <Name>Зинаар</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_01h</CardId>
+    <Name>Зинаар (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_02</CardId>
+    <Name>Чутье джиннов</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы берете карту.
+Ваш противник получает карту Желания.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_02h</CardId>
+    <Name>Чутье джиннов</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы берете карту и получаете кристалл маны. Ваш противник получает карту Желания.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_03</CardId>
+    <Name>Желание: сила</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Вы раскапываете&lt;/b&gt; карту заклинания.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_04</CardId>
+    <Name>Желание: доблесть</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Вы раскапываете&lt;/b&gt; карту стоимостью (4) маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_05</CardId>
+    <Name>Желание: слава</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Вы раскапываете&lt;/b&gt; карту существа.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_06</CardId>
+    <Name>Желание: жажда желаний</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы получаете две карты Желания.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10</CardId>
+    <Name>Желание: питомец</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Вы раскапываете&lt;/b&gt; карту питомца.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10a</CardId>
+    <Name>Леокк</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Ваши существа получают +1 к атаке.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10c</CardId>
+    <Name>Миша</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01</CardId>
+    <Name>Побег из храма</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>100</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01e</CardId>
+    <Name>Temple Escape Enchant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01eh</CardId>
+    <Name>Temple Escape Enchant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01h</CardId>
+    <Name>Побег (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>100</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_02</CardId>
+    <Name>Опасность!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Новое препятствие!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_02h</CardId>
+    <Name>Опасность!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Новое препятствие!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_06</CardId>
+    <Name>Яма с кольями</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Выберите путь!&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_06a</CardId>
+    <Name>Перепрыгнуть</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы получаете 10 ед. урона или не получаете никакого урона.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_06b</CardId>
+    <Name>Осторожно обойти</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы получаете 5 ед. урона.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_13bt</CardId>
+    <Name>Страж Орсиса</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Божественный щит&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_13bth</CardId>
+    <Name>Страж Орсиса</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Божественный щит&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_23</CardId>
+    <Name>Гигантское насекомое</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>3</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_23h</CardId>
+    <Name>Гигантское насекомое</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_24</CardId>
+    <Name>Анубисат – страж храма</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>10</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_24h</CardId>
+    <Name>Анубисат – страж храма</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>15</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_25</CardId>
+    <Name>Пылающая статуя</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>9</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода наносит 2 ед. урона всем персонажам противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_25h</CardId>
+    <Name>Пылающая статуя</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>9</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода наносит 5 ед. урона всем персонажам противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_27</CardId>
+    <Name>Ожившая статуя</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Вы потревожили древнюю статую...</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28</CardId>
+    <Name>Сияющее озеро</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пить хотите?&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28a</CardId>
+    <Name>Сделать глоток</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы берете карту.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28b</CardId>
+    <Name>Перейти вброд</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы получаете кристалл маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29</CardId>
+    <Name>Око</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Выбирайте!&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29a</CardId>
+    <Name>Прикоснуться</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Восстанавливает 10 ед. здоровья вашему герою.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29b</CardId>
+    <Name>Изучить руны</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы берете 2 карты.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_30</CardId>
+    <Name>Тьма</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Срезать путь?&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_30a</CardId>
+    <Name>Срезать путь</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы на 1 ход ближе к выходу! Сразитесь с боевым големом 7/7.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_31b</CardId>
+    <Name>Ни за что!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы решаете держаться основного пути.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_01</CardId>
+    <Name>Вождь Скарваш</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_01h</CardId>
+    <Name>Скарваш (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02</CardId>
+    <Name>Трогг не любит существ!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Существа противника стоят на (2) маны больше. Эта сила героя меняется в начале вашего хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02a</CardId>
+    <Name>Трогг не любит существ!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Существа противника стоят на (2) маны больше. Эта сила героя меняется в начале вашего хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02h</CardId>
+    <Name>Трогг не любит существ!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Существа противника стоят (11) маны. Эта сила героя меняется в начале вашего хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02ha</CardId>
+    <Name>Трогг не любит существ!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Существа противника стоят (11) маны. Эта сила героя меняется в начале вашего хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_03</CardId>
+    <Name>Трогг не любит заклинания!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Заклинания противника стоят на (2) маны больше. Эта сила героя меняется в начале вашего хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_03h</CardId>
+    <Name>Трогг не любит заклинания!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Заклинания противника стоят (11) маны. Эта сила героя меняется в начале вашего хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02</CardId>
+    <Name>Резьба по камню</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Призывает на поле боя статую 0/2 для обоих игроков.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02h</CardId>
+    <Name>Резьба по камню</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Призывает на поле боя статую для обоих игроков.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02t</CardId>
+    <Name>Статуя земельника</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02th</CardId>
+    <Name>Статуя земельника</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03</CardId>
+    <Name>Оживить земельника</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Ваши существа получают +1/+1 и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03e</CardId>
+    <Name>Оживление</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1 и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03eh</CardId>
+    <Name>Оживление</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3 и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03h</CardId>
+    <Name>Оживить земельника</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Ваши существа получают +3/+3 и способность &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_04</CardId>
+    <Name>Разрушительный порыв</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Уничтожает все статуи. Наносит $1 ед. урона за каждую уничтоженную статую.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_04h</CardId>
+    <Name>Разрушительный порыв</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Уничтожает все статуи. Наносит $3 ед. урона за каждую уничтоженную статую.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_01</CardId>
+    <Name>Вагонетка</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_02</CardId>
+    <Name>Шахта</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>80</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_02h</CardId>
+    <Name>Шахта (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>80</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_03</CardId>
+    <Name>Сбежать из шахты!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Сбежать от троггов!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_03h</CardId>
+    <Name>Сбежать из шахты!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Сбежать от троггов!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_09</CardId>
+    <Name>Трогг-преследователь</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_11</CardId>
+    <Name>Завал</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA07_12</CardId>
+    <Name>Земельник-гонитель</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_14</CardId>
+    <Name>Голем-крушитель</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_18</CardId>
+    <Name>Динамит</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит $10 ед. урона.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_20</CardId>
+    <Name>Бум!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит 3 ед. урона всем существам противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_21</CardId>
+    <Name>Ускорение</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Вы становитесь на 1 ход ближе к выходу!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_24</CardId>
+    <Name>Шипастая ловушка</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;.
+Не может атаковать.</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA07_25</CardId>
+    <Name>Механический попугай</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_26</CardId>
+    <Name>Совет Бранна</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Вы берете 3 карты.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_28</CardId>
+    <Name>Ремонт</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Восстанавливает 10 ед. здоровья.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_29</CardId>
+    <Name>Бросок камня</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Наносит 3 ед. урона случайному существу противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA08_01</CardId>
+    <Name>Аркедас</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA08_01h</CardId>
+    <Name>Аркедас (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_1</CardId>
+    <Name>Лорд Скользкое Копье</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_10</CardId>
+    <Name>Голодный нага</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_11</CardId>
+    <Name>Голодный нага</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_12</CardId>
+    <Name>Голодный нага</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_13</CardId>
+    <Name>Голодный нага</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>1</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_1H</CardId>
+    <Name>Скользкое Копье (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_2</CardId>
+    <Name>Исступление!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Ваш герой получает +2 к атаке до конца хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_2e</CardId>
+    <Name>Исступление</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2 к атаке.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_2eH</CardId>
+    <Name>Исступление</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+5 к атаке.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_2H</CardId>
+    <Name>Исступление!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Ваш герой получает +5 к атаке до конца хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3</CardId>
+    <Name>Легкий голод</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Призывает на поле боя голодного нагу.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3a</CardId>
+    <Name>Муки голода</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Сильный голод.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3aH</CardId>
+    <Name>Муки голода</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Сильный голод.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3b</CardId>
+    <Name>Легкий голод</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Призывает на поле боя голодного нагу 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3c</CardId>
+    <Name>Легкий голод</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Призывает на поле боя голодного нагу 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3d</CardId>
+    <Name>Легкий голод</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Призывает на поле боя голодного нагу 5/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3H</CardId>
+    <Name>Бесконечный голод</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Призывает голодного нагу.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_4</CardId>
+    <Name>Редкое копье</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Text>Каждый раз, когда ваш противник разыгрывает редкую карту, это оружие получает +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_4H</CardId>
+    <Name>Редкое копье</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Text>Каждый раз, когда ваш противник разыгрывает редкую карту, это оружие получает +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_5</CardId>
+    <Name>Голодный нага</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_5H</CardId>
+    <Name>Голодный нага</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_6</CardId>
+    <Name>Ползучий лучник</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 1 ед. урона.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_6H</CardId>
+    <Name>Ползучий лучник</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 2 ед. урона всем существам противника.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_7</CardId>
+    <Name>Котел</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;
+&lt;b&gt;Предсмертный хрип:&lt;/b&gt; сэр Финли спасен, нашествие наг остановлено!</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_7e</CardId>
+    <Name>Котел</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_7H</CardId>
+    <Name>Котел</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>10</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;
+&lt;b&gt;Предсмертный хрип:&lt;/b&gt; сэр Финли спасен!</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_8</CardId>
+    <Name>Ползучий страж</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_8H</CardId>
+    <Name>Ползучий страж</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>7</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_9</CardId>
+    <Name>Отпугиватель наг</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Уничтожает всех голодных наг.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_9H</CardId>
+    <Name>Отпугиватель наг</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Атака всех голодных наг становится равна 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_1</CardId>
+    <Name>Великий Плавник</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_1H</CardId>
+    <Name>Великий Плавник (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_2</CardId>
+    <Name>Мрглмргл МРГЛ!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+ Вы берете карты до тех пор, пока у вас в руке не будет столько же карт, сколько у вашего противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_2H</CardId>
+    <Name>Мрглмргл МРГЛ!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Вы берете 2 карты.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_3</CardId>
+    <Name>Малый Плавник</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Mechanics />
+    <Artist>Oliver Chipping</Artist>
+  </Card>
+  <Card>
+    <CardId>LOEA10_5</CardId>
+    <Name>Мргл мргл ня ня</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Призывает на поле боя 3 мурлоков, которые умерли в течение этого матча.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_5H</CardId>
+    <Name>Мргл мргл ня ня</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Призывает на поле боя 5 мурлоков, которые умерли в течение этого матча.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_1</CardId>
+    <Name>Леди Наз'жар</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_1H</CardId>
+    <Name>Леди Наз'жар (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_2</CardId>
+    <Name>Жемчужина Приливов</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода заменяет всех существ на других со стоимостью на (1) ману больше.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_2H</CardId>
+    <Name>Жемчужина Приливов</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода заменяет всех существ на других. Ваши существа стоят на (1) ману больше.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_1</CardId>
+    <Name>Скелетозавр Анорекс</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_1h</CardId>
+    <Name>Анорекс (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_2</CardId>
+    <Name>Древнее могущество</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Каждый игрок получает случайную карту. Она стоит (0) маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_2H</CardId>
+    <Name>Древнее могущество</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Вы берете случайную карту. Она стоит (0) маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_1</CardId>
+    <Name>Стальной часовой</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_1H</CardId>
+    <Name>Часовой (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_2</CardId>
+    <Name>Латы</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Ваш герой получает только 1 ед. урона от любого источника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_2H</CardId>
+    <Name>Латы</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Ваш герой и ваши существа получают только 1 ед. урона от любого источника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_1</CardId>
+    <Name>Рафаам</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_1H</CardId>
+    <Name>Рафаам (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_2</CardId>
+    <Name>Нестабильный портал</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Вы кладете в руку случайную карту существа. Оно стоит на (3) маны меньше.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_2H</CardId>
+    <Name>Нестабильный портал</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Сила героя&lt;/b&gt;
+Вы кладете в руку случайную карту существа. Оно стоит на (3) маны меньше.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_3</CardId>
+    <Name>Костяной ящер</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы получаете контроль над оружием противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_3H</CardId>
+    <Name>Костяной ящер</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы получаете контроль над оружием противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_1</CardId>
+    <Name>Рафаам</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_10</CardId>
+    <Name>Кровавый кубок Хаккари</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Превращает выбранное существо в гадюку 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_11</CardId>
+    <Name>Корона Кель'таса</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит $10 ед. урона, случайно распределяемого между ВСЕМИ персонажами.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_12</CardId>
+    <Name>Медальон Медива</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Заменяет карты в вашей руке нестабильными порталами.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_13</CardId>
+    <Name>Глаз Орсиса</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Вы раскапываете&lt;/b&gt; карту существа и получаете три копии выбранной карты.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_14</CardId>
+    <Name>Трубка Кадгара</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Каждый игрок берет случайную карту заклинания. Ваше заклинание стоит (0) маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_15</CardId>
+    <Name>Слеза Изеры</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы получаете 4 дополнительных кристалла маны до конца хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_16</CardId>
+    <Name>Поиски</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Вы находите артефакт.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_16H</CardId>
+    <Name>Поиски</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Вы находите артефакт.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_17</CardId>
+    <Name>Оживленная статуя</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_18</CardId>
+    <Name>Зинаар</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода вы кладете в руку карту Желания.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_18H</CardId>
+    <Name>Зинаар</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода вы кладете в руку карту Желания.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_19</CardId>
+    <Name>Расхититель Фаэрикс</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода вы кладете в руку карту «Благословение солнца».</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_19H</CardId>
+    <Name>Расхититель Фаэрикс</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Другие ваши существа получают &lt;b&gt;неуязвимость&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_1H</CardId>
+    <Name>Рафаам (героич.)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_2</CardId>
+    <Name>Посох Созидания</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Ваш герой &lt;b&gt;неуязвим&lt;/b&gt;, пока посох не зарядится.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_20</CardId>
+    <Name>Благословение солнца</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Выбранное существо получает &lt;b&gt;неуязвимость&lt;/b&gt; до конца хода.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_20e</CardId>
+    <Name>Благословение</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Неуязвимость&lt;/b&gt; до конца хода.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_20H</CardId>
+    <Name>Благословение солнца</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Неуязвимость&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_21</CardId>
+    <Name>Вождь Скарваш</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Карты противника стоят на (1) ману больше.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_21H</CardId>
+    <Name>Вождь Скарваш</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Карты противника стоят на (2) маны больше.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_22</CardId>
+    <Name>Аркедас</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода превращает случайное существо противника в статую 0/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_22H</CardId>
+    <Name>Аркедас</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода превращает случайное существо противника в статую 0/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_23</CardId>
+    <Name>Лорд Скользкое Копье</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода призывает на поле боя голодного нагу 1/1 за каждое существо противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_23H</CardId>
+    <Name>Лорд Скользкое Копье</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода призывает на поле боя голодного нагу 1/1 за каждое существо противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_24</CardId>
+    <Name>Великий Плавник</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>В конце вашего хода вы берете карты до тех пор, пока у вас в руке не будет столько же карт, сколько у вашего противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_24H</CardId>
+    <Name>Великий Плавник</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>В конце вашего хода вы берете 2 карты.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_25</CardId>
+    <Name>Леди Наз'жар</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода заменяет всех прочих существ на других за ту же ману.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_25H</CardId>
+    <Name>Леди Наз'жар</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода заменяет всех прочих существ на других за ту же ману.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_26</CardId>
+    <Name>Скелетозавр Анорекс</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода каждый игрок берет случайную карту. Она стоит (0) маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_26H</CardId>
+    <Name>Скелетозавр Анорекс</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода вы берете случайную карту. Она стоит (0) маны.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_27</CardId>
+    <Name>Стальной часовой</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Это существо получает только 1 ед. урона от любого источника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_27H</CardId>
+    <Name>Стальной часовой</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Это существо получает только 1 ед. урона от любого источника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_2H</CardId>
+    <Name>Посох Созидания</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Пассивная сила героя&lt;/b&gt;
+Ваш герой &lt;b&gt;неуязвим&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_3</CardId>
+    <Name>Лампада силы</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Выбранное существо получает +10/+10.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_3e</CardId>
+    <Name>Лампада силы</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+10/+10.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_4</CardId>
+    <Name>Часы ужаса</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит $10 ед. урона, случайно распределяемого между всеми персонажами противника.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_5</CardId>
+    <Name>Зеркало рока</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Призывает на вашу сторону зомби-мумий 3/3, пока поле боя не заполнится.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_5t</CardId>
+    <Name>Зомби-мумия</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_6</CardId>
+    <Name>Осколок Сульфураса</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит $5 ед. урона ВСЕМ персонажам.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_7</CardId>
+    <Name>Частица благословения</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Восстанавливает #10 ед. здоровья ВСЕМ персонажам.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_8</CardId>
+    <Name>Сосуд Гнилесса</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Уничтожает случайное существо противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_8a</CardId>
+    <Name>Гниль Гнилесса</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Атака и здоровье поменялись местами.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_9</CardId>
+    <Name>Наголенник Лотара</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Наносит 3 ед. урона всем персонажам противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA_01</CardId>
+    <Name>Смутная тень</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Вы берете 2 карты. Ваш герой получает +4 к броне.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA_01H</CardId>
+    <Name>Смутная тень</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Вы берете 3 карты. Ваш герой получает +6 к броне.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_002</CardId>
+    <Name>Забытый факел</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Наносит $3 ед. урона. Замешивает в вашу колоду карту «Пылающий факел», которая наносит 6 ед. урона.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_002t</CardId>
+    <Name>Пылающий факел</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Наносит $6 ед. урона.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_003</CardId>
+    <Name>Кудесник-эфириал</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Боевой клич: вы раскапываете&lt;/b&gt; карту заклинания.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_006</CardId>
+    <Name>Смотритель музея</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Боевой клич: вы раскапываете&lt;/b&gt; карту со способностью &lt;b&gt;«Предсмертный хрип»&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_007</CardId>
+    <Name>Проклятие Рафаама</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Ваш противник получает карту «Проклятие!»
+Пока эта карта находится в руке противника, он получает 2 ед. урона в начале своего хода.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_007t</CardId>
+    <Name>Проклятие!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Пока у вас в руке находится эта карта, ваш герой получает 2 ед. урона в начале вашего хода.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_008</CardId>
+    <Name>Око Хаккара</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Вы кладете на поле боя секрет из колоды противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_008H</CardId>
+    <Name>Око Хаккара</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Вы кладете на поле боя секрет из колоды противника.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_009</CardId>
+    <Name>Обсидиановый крушитель</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>В конце вашего хода вы призываете на поле боя скарабея 1/1 со способностью &lt;b&gt;«Провокация»&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_009e</CardId>
+    <Name>Зловещая сила</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>+4/+4.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_009t</CardId>
+    <Name>Скарабей</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Jaemin Kim</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_010</CardId>
+    <Name>Гадюка</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Race>Beast</Race>
+    <Text>Уничтожает любое существо, которому нанесла урон.</Text>
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
+    <Artist>Bernie Kang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_011</CardId>
+    <Name>Рено Джексон</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; полностью восстанавливает здоровье вашему герою, если в вашей колоде нет двух и более одинаковых карт.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_012</CardId>
+    <Name>Расхититель гробниц</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы кладете в руку карту «Монетка».</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Dave Allsop</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_012e</CardId>
+    <Name>zzDELETE Tomb Explorer</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>«Предсмертный хрип» скопирован у карты «CARD_NAME».</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_016</CardId>
+    <Name>Гремящий элементаль</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Наносит 2 ед. урона случайному персонажу противника после того, как вы призвали на поле боя существо со способностью &lt;b&gt;«Боевой клич»&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Cole Eastburn</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_016t</CardId>
+    <Name>Камень</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOE_017</CardId>
+    <Name>Хранитель Ульдамана</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; атака и здоровье выбранного существа становятся равны 3.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_017e</CardId>
+    <Name>Охрана</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Характеристики стали равны 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_018</CardId>
+    <Name>Туннельный трогг</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Получает +1 к атаке за каждый заблокированный кристалл маны каждый раз, когда вы разыгрываете карту с &lt;b&gt;Перегрузкой&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_018e</CardId>
+    <Name>Трогг не болван</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Атака увеличена.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_019</CardId>
+    <Name>Ископаемый ящер</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; копирует эффект способности &lt;b&gt;«Предсмертный хрип»&lt;/b&gt; вашего выбранного существа.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_019e</CardId>
+    <Name>Ископаемый ящер</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;«Предсмертный хрип»&lt;/b&gt; скопирован у карты «CARD_NAME».</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_019t</CardId>
+    <Name>Путь к золотой обезьяне</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Замешивает карту «Золотая обезьяна» в вашу колоду. Вы берете карту.</Text>
+    <Mechanics />
+    <Artist>Milivoj Ceran</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_019t2</CardId>
+    <Name>Золотая обезьяна</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;
+&lt;b&gt;Боевой клич:&lt;/b&gt; заменяет карты в вашей руке и колоде &lt;b&gt;легендарными&lt;/b&gt; существами.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_020</CardId>
+    <Name>Пустынный верблюд</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы кладете на поле боя по одному существу стоимостью (1) мана из каждой колоды.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_021</CardId>
+    <Name>Ловушка с дротиками</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда противник использует силу героя, наносит 5 ед. урона случайному персонажу противника.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_022</CardId>
+    <Name>Яростная макака</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Peter Stapleton</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_023</CardId>
+    <Name>Черный археолог</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Боевой клич: вы раскапываете&lt;/b&gt; 
+карту стоимостью (1) мана.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>George Davis</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_024t</CardId>
+    <Name>Катящийся валун</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>В конце вашего хода уничтожает существо слева от себя.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_026</CardId>
+    <Name>Мурглвратности судьбы</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Призывает на поле боя 7 мурлоков, которые умерли в течение матча.</Text>
+    <Mechanics />
+    <Artist>Ryan Metcalf</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_027</CardId>
+    <Name>Священный суд</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Секрет:&lt;/b&gt; когда ваш противник разыгрывает карту существа, уничтожает это существо, если у противника уже есть как минимум 3 других существа на поле боя.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_029</CardId>
+    <Name>Драгоценный скарабей</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Боевой клич: вы раскапываете&lt;/b&gt; карту стоимостью (3) маны.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jaemin Kim</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_030</CardId>
+    <Name>zzDELETE? Animated Armor</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;
+&lt;b&gt;Боевой клич:&lt;/b&gt; копирует здоровье и атаку вашего выбранного существа.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOE_030e</CardId>
+    <Name>Пустота</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Характеристики скопированы.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_038</CardId>
+    <Name>Морская ведьма</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Ваши карты стоят (5) маны.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_039</CardId>
+    <Name>Гориллабот А-3</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; если у вас на поле боя есть механизм, &lt;b&gt;вы раскапываете&lt;/b&gt; карту механизма.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_046</CardId>
+    <Name>Огромная жаба</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; наносит 1 ед. урона случайному персонажу противника.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_047</CardId>
+    <Name>Могильный паук</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Боевой клич: вы раскапываете&lt;/b&gt; карту зверя.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Turovec Konstantin</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_050</CardId>
+    <Name>Ездовой ящер</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя случайное существо за 1 ману.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_051</CardId>
+    <Name>Тропический совух</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Урон от заклинаний +2&lt;/b&gt; для обоих игроков.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_053</CardId>
+    <Name>Джинн ветров</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Каждый раз, когда вы выбираете целью заклинания другое ваше существо, вы разыгрываете копию этого заклинания, выбрав целью это существо.</Text>
+    <Mechanics />
+    <Artist>Jakub Kasper</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_061</CardId>
+    <Name>Анубисат-часовой</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Предсмертный хрип&lt;/b&gt;: ваше случайное существо получает +3/+3.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Paul Mafayon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_061e</CardId>
+    <Name>Сила титанов</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_073</CardId>
+    <Name>Окаменелый дьявозавр</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает способность &lt;b&gt;«Провокация»&lt;/b&gt;, если у вас на поле боя есть зверь.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_073e</CardId>
+    <Name>Окаменелость</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Провокация&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_076</CardId>
+    <Name>Сэр Финли Мрргглтон</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>&lt;b&gt;Боевой клич: вы раскапываете&lt;/b&gt; новую базовую силу героя.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_077</CardId>
+    <Name>Бранн Бронзобород</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;«Боевой клич»&lt;/b&gt; ваших существ срабатывает дважды.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Sam Nielson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_079</CardId>
+    <Name>Элиза Звездочет</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; замешивает в вашу колоду карту «Путь к золотой обезьяне».</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Luke Mancini</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_086</CardId>
+    <Name>Камень призыва</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Каждый раз, когда вы разыгрываете карту заклинания, призывает на поле боя случайное существо за ту же ману.</Text>
+    <Mechanics />
+    <Artist>Jason Kang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089</CardId>
+    <Name>Башня из пигмеев</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; призывает на поле боя трех пигмеев 2/2.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Sam Nielson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t</CardId>
+    <Name>Жалкий пигмей</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t2</CardId>
+    <Name>Хитрый пигмей</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t3</CardId>
+    <Name>Ворчливый пигмей</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_092</CardId>
+    <Name>Великий вор Рафаам</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>8</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич: вы раскапываете&lt;/b&gt; могущественный артефакт.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_104</CardId>
+    <Name>Погребение</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Выберите существо противника.
+Вы замешиваете его в свою колоду.</Text>
+    <Mechanics />
+    <Artist>Alex Konstad</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_105</CardId>
+    <Name>Шляпа исследователя</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Выбранное существо получает +1/+1 и способность &lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы кладете в руку карту «Шляпа исследователя».</Text>
+    <Mechanics />
+    <Artist>Joe Wilson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_105e</CardId>
+    <Name>Шляпа исследователя</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>+1/+1. &lt;b&gt;Предсмертный хрип:&lt;/b&gt; вы кладете в руку карту «Шляпа исследователя».</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_107</CardId>
+    <Name>Зловещая статуя</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Не может атаковать, если на поле боя есть другие существа.</Text>
+    <Mechanics />
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_110</CardId>
+    <Name>Древняя тень</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы замешиваете в вашу колоду карту «Древнее проклятие», которая наносит вашему герою 7 ед. урона, когда вы берете эту карту.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_110t</CardId>
+    <Name>Древнее проклятие</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Когда вы берете эту карту из своей колоды, вы получаете 7 ед. урона и берете новую карту.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_111</CardId>
+    <Name>Раскопанное зло</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Наносит $3 ед. урона всем существам.
+Ваш противник замешивает эту карту в свою колоду.</Text>
+    <Mechanics />
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_113</CardId>
+    <Name>Все у нас мррглклассно!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Ваши существа получают +2/+2.
+Стоит на (1) ману меньше за каждого мурлока под вашим контролем.</Text>
+    <Mechanics />
+    <Artist>Andrius Matijoshius</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_113e</CardId>
+    <Name>Мргллраааврррглрур!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_115</CardId>
+    <Name>Статуя ворона</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Выберите эффект:&lt;/b&gt;
+&lt;b&gt;вы раскапываете&lt;/b&gt; карту существа; или &lt;b&gt;вы раскапываете&lt;/b&gt; карту заклинания.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_115a</CardId>
+    <Name>Статуя ворона</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Вы раскапываете&lt;/b&gt; карту существа.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_115b</CardId>
+    <Name>Статуя ворона</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Вы раскапываете&lt;/b&gt; карту заклинания.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_116</CardId>
+    <Name>Искательница Реликвария</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; получает +4/+4, если под вашим контролем есть 6 других существ.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_118</CardId>
+    <Name>Проклятый клинок</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>3</Durability>
+    <Class>Warrior</Class>
+    <Text>Удваивает урон, наносимый вашему герою.</Text>
+    <Mechanics />
+    <Artist>Craig Mullins</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_118e</CardId>
+    <Name>Проклятый клинок</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Удваивает урон, наносимый вашему герою.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_119</CardId>
+    <Name>Оживленные доспехи</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Ваш герой получает только 1 ед. урона от любого источника.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
   </Card>
   <Card>
     <CardId>EX1_062</CardId>
@@ -11421,7 +15168,7 @@
     <Health>1</Health>
     <Cost>1</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;&lt;/b&gt; </Text>
+    <Text>&lt;b&gt;&lt;/b&gt;</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -12342,6 +16089,19 @@
     <Mechanics />
   </Card>
   <Card>
+    <CardId>XXX_065</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>XXX_094</CardId>
     <Name />
     <CardSet>Debug</CardSet>
@@ -12862,7 +16622,7 @@
     <Health>4</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; если во время этого матча умер Фойген, призывает на поле боя Таддиуса.  </Text>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; если во время этого матча умер Фойген, призывает на поле боя Таддиуса.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -12890,7 +16650,7 @@
     <Health>7</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; если во время этого матча умер Сталагг, призывает на поле боя Таддиуса.  </Text>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; если во время этого матча умер Сталагг, призывает на поле боя Таддиуса.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -13048,7 +16808,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Priest</Class>
-    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; увеличивает здоровье вашего случайного существа на 3.</Text>
+    <Text>&lt;b&gt;Предсмертный хрип:&lt;/b&gt; ваше случайное существо получает +3 к здоровью.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -14711,7 +18471,7 @@
     <Durability>0</Durability>
     <Class>Mage</Class>
     <Race>Mech</Race>
-    <Text> &lt;b&gt;Замораживает&lt;/b&gt; любого персонажа, которому наносит урон.</Text>
+    <Text>&lt;b&gt;Замораживает&lt;/b&gt; любого персонажа, которому наносит урон.</Text>
     <Mechanics>
       <string>Freeze</string>
     </Mechanics>
@@ -15678,7 +19438,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>Наносит $2-$4 ед. урона выбранному существу.  Призывает на поле боя беса 1/1 за каждую единицу нанесенного урона. </Text>
+    <Text>Наносит $2-$4 ед. урона выбранному существу. Призывает на поле боя беса 1/1 за каждую единицу нанесенного урона.</Text>
     <Mechanics />
     <Artist>Jaemin Kim</Artist>
   </Card>
@@ -16072,7 +19832,7 @@
     <Durability>0</Durability>
     <Class>Paladin</Class>
     <Race>Mech</Race>
-    <Text>Получает способность &lt;b&gt;«Божественный щит»&lt;/b&gt; каждый раз, когда вы призываете механизм на поле боя. </Text>
+    <Text>Получает способность &lt;b&gt;«Божественный щит»&lt;/b&gt; каждый раз, когда вы призываете механизм на поле боя.</Text>
     <Mechanics />
     <Artist>Jim Nelson</Artist>
   </Card>
@@ -16769,7 +20529,7 @@
     <Health>3</Health>
     <Cost>5</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 4 ед. урона случайному существу противника. </Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; наносит 4 ед. урона случайному существу противника.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -16931,7 +20691,7 @@
     <Cost>5</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Получает +2/+2 каждый раз, когда умирает ваш механизм. </Text>
+    <Text>Получает +2/+2 каждый раз, когда умирает ваш механизм.</Text>
     <Mechanics />
     <Artist>Zoltan Boros</Artist>
   </Card>
@@ -16974,7 +20734,7 @@
     <Health>2</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; превращает ваше выбранное существо в случайное существо за ту же ману. </Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; превращает ваше выбранное существо в случайное существо за ту же ману.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -17088,7 +20848,7 @@
     <Cost>8</Cost>
     <Durability>0</Durability>
     <Race>Mech</Race>
-    <Text>Также наносит урон существам по обе стороны от того существа, которое он атакует. </Text>
+    <Text>Также наносит урон существам по обе стороны от того существа, которое он атакует.</Text>
     <Mechanics />
     <Artist>James Ryman</Artist>
   </Card>
@@ -17693,7 +21453,7 @@
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Призывает на поле боя 3 огнекамня. &lt;b&gt;Перегрузка:&lt;/b&gt; (2) </Text>
+    <Text>Призывает на поле боя 3 огнекамня. &lt;b&gt;Перегрузка:&lt;/b&gt; (2)</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -17705,7 +21465,7 @@
     <Health>0</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>Призывает на поле боя 3 огнекамня. &lt;b&gt;Перегрузка:&lt;/b&gt; (2) </Text>
+    <Text>Призывает на поле боя 3 огнекамня. &lt;b&gt;Перегрузка:&lt;/b&gt; (2)</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -18433,7 +22193,7 @@
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
-Получает кристалл маны. Каждый игрок берет 3 карты. </Text>
+Получает кристалл маны. Каждый игрок берет 3 карты.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19248,7 +23008,7 @@
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Наносит $3 ед. урона выбранному существу. Ваше оружие получает +3 к атаке. </Text>
+    <Text>Наносит $3 ед. урона выбранному существу. Ваше оружие получает +3 к атаке.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -19352,7 +23112,7 @@
     <Health>0</Health>
     <Cost>2</Cost>
     <Durability>0</Durability>
-    <Text>Наносит $2 ед. урона всем существам. </Text>
+    <Text>Наносит $2 ед. урона всем существам.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -20157,7 +23917,7 @@
     <Health>4</Health>
     <Cost>7</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает &lt;b&gt;легендарное&lt;/b&gt; существо, если у вас в руке есть дракон. </Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; уничтожает &lt;b&gt;легендарное&lt;/b&gt; существо, если у вас в руке есть дракон.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -20174,7 +23934,7 @@
     <Cost>9</Cost>
     <Durability>0</Durability>
     <Race>Dragon</Race>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы кладете в руку два случайных заклинания &lt;i&gt;(класса вашего противника)&lt;/i&gt;. </Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы кладете в руку два случайных заклинания &lt;i&gt;(класса вашего противника)&lt;/i&gt;.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -20189,7 +23949,7 @@
     <Health>0</Health>
     <Cost>4</Cost>
     <Durability>0</Durability>
-    <Text>Наносит $4 ед. урона. </Text>
+    <Text>Наносит $4 ед. урона.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -20311,7 +24071,7 @@
     <Cost>1</Cost>
     <Durability>0</Durability>
     <Class>Mage</Class>
-    <Text>Наносит $2 ед. урона выбранному существу.  Это заклинание получает удвоенный бонус от &lt;b&gt;силы заклинаний&lt;/b&gt;.</Text>
+    <Text>Наносит $2 ед. урона выбранному существу. Это заклинание получает удвоенный бонус от &lt;b&gt;силы заклинаний&lt;/b&gt;.</Text>
     <Mechanics />
     <Artist>Gabor Szikszai</Artist>
   </Card>
@@ -20767,7 +24527,7 @@
     <Cost>6</Cost>
     <Durability>0</Durability>
     <Class>Warlock</Class>
-    <Text>Уничтожает 2 случайных существа противника. Вы сбрасываете 2 случайных карты. </Text>
+    <Text>Уничтожает 2 случайных существа противника. Вы сбрасываете 2 случайных карты.</Text>
     <Mechanics />
     <Artist>Paul Mafayon</Artist>
   </Card>
@@ -20945,7 +24705,7 @@
     <Cost>3</Cost>
     <Durability>0</Durability>
     <Class>Rogue</Class>
-    <Text>Вы кладете в руку две случайных карты &lt;i&gt;(класса вашего противника)&lt;/i&gt;. </Text>
+    <Text>Вы кладете в руку две случайных карты &lt;i&gt;(класса вашего противника)&lt;/i&gt;.</Text>
     <Mechanics />
     <Artist>Matt Dixon</Artist>
   </Card>
@@ -21298,7 +25058,7 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>Уничтожает выбранное существо.
-Ваш противник кладет в руку случайное существо. </Text>
+Ваш противник кладет в руку случайное существо.</Text>
     <Mechanics />
     <Artist>Dan Scott</Artist>
   </Card>
@@ -21804,7 +25564,7 @@
     <Cost>4</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>Также наносит урон существам по обе стороны от того существа, которое он атакует. </Text>
+    <Text>Также наносит урон существам по обе стороны от того существа, которое он атакует.</Text>
     <Mechanics />
     <Artist>Alex Horley Orlandelli</Artist>
   </Card>
@@ -21927,7 +25687,7 @@
     <Cost>10</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы берете 3 карты и кладете на поле боя всех существ, полученных таким образом. </Text>
+    <Text>&lt;b&gt;Боевой клич:&lt;/b&gt; вы берете 3 карты и кладете на поле боя всех существ, полученных таким образом.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -22110,7 +25870,9 @@
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>Вы можете использовать силу героя дважды в течение хода.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -22270,7 +26032,7 @@
     <Health>0</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
-    <Text>Ваша сила героя стоит на (5) ман больше до конца хода.</Text>
+    <Text>Ваша сила героя стоит на (5) маны больше до конца хода.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -22813,7 +26575,7 @@
   </Card>
   <Card>
     <CardId>AT_116e</CardId>
-    <Name>Ну давай, я жду! </Name>
+    <Name>Ну давай, я жду!</Name>
     <CardSet>The Grand Tournament</CardSet>
     <Type>Enchantment</Type>
     <Attack>0</Attack>
@@ -23104,7 +26866,7 @@
     <Durability>0</Durability>
     <Class>Druid</Class>
     <Text>&lt;b&gt;Сила героя&lt;/b&gt;
- +2 к атаке до конца хода и +2 к броне. </Text>
+ +2 к атаке до конца хода и +2 к броне.</Text>
     <Mechanics />
   </Card>
   <Card>

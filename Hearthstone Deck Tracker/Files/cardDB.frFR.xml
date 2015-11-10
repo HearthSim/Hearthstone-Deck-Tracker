@@ -8759,6 +8759,19 @@ Invoque un infernal 6/6.</Text>
     <Artist>Ron Spencer</Artist>
   </Card>
   <Card>
+    <CardId>NEW1_014e</CardId>
+    <Name>Déguisé</Name>
+    <CardSet>Classic</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Camouflé jusqu’à votre prochain tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NEW1_017</CardId>
     <Name>Crabe affamé</Name>
     <CardSet>Classic</CardSet>
@@ -9520,7 +9533,7 @@ ont +1/+1.</Text>
     <Health>2</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; rend tous ses PV à un méca ou confère &lt;b&gt;Furie des vents&lt;/b&gt; à un concepteur.</Text>
+    <Text>&lt;b&gt;Choix des armes :&lt;/b&gt; rend tous ses PV à un Méca ou confère &lt;b&gt;Furie des vents&lt;/b&gt; à un concepteur.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10233,7 +10246,7 @@ Invoque deux assemblages d’os 2/1.</Text>
     <Health>3</Health>
     <Cost>3</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Râle d'agonie :&lt;/b&gt; invoque l’empereur Thaurissan.</Text>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque l’empereur Thaurissan.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -10821,6 +10834,28 @@ Récupère &lt;b&gt;Camouflage&lt;/b&gt; quand le voleur JcJ détruit un servite
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_013_PickOnCurve</CardId>
+    <Name>Player Choice Enchant On Curve</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_013_PickOnCurve2</CardId>
+    <Name>Player Choice Enchant On Curve2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_014</CardId>
     <Name>Choisir une nouvelle carte !</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10842,6 +10877,18 @@ Récupère &lt;b&gt;Camouflage&lt;/b&gt; quand le voleur JcJ détruit un servite
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_AllMinionsTauntCharge</CardId>
+    <Name>Confère Provocation et Charge</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ce serviteur a obtenu &lt;b&gt;Provocation&lt;/b&gt; et &lt;b&gt;Charge&lt;/b&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10928,10 +10975,46 @@ Gagne 2 ATQ.</Text>
     <Cost>10</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Boss&lt;/b&gt;
-Mécazod gagne s’il bat l’un de vous deux !</Text>
+Mécazod gagne s’il bat l’un de vous !</Text>
     <Mechanics>
       <string>Taunt</string>
     </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod2</CardId>
+    <Name>Mécazod surchargé</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>80</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Boss&lt;/b&gt;
+Au début de chaque tour, Mécazod frappe !</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_DecreasingCardCost</CardId>
+    <Name>TB_DecreasingCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_DecreasingCardCostDebug</CardId>
+    <Name>TBDecreasingCardCostDebug</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>TB_EndlessMinions01</CardId>
@@ -10976,6 +11059,44 @@ Mécazod gagne s’il bat l’un de vous deux !</Text>
     <Health>30</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Enchantment</CardId>
+    <Name>Cadeau nul</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Le coût de cette carte est diminué de (4) |4(cristal,cristaux).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Treasure</CardId>
+    <Name>Cadeau du Voile d’hiver</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; donne un trésor au joueur qui attaque.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Treasure_Spell</CardId>
+    <Name>Cadeau du Voile d’hiver volé</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Trouve un trésor aléatoire.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11053,6 +11174,296 @@ Inflige 1 point de dégâts à 2 adversaires aléatoires.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_MechWar_Minion1</CardId>
+    <Name>Fan de méca</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate</CardId>
+    <Name>Choisissez votre destin - Construction</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFateRandom</CardId>
+    <Name>Choisissez votre destin - Aléatoire</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_1</CardId>
+    <Name>Fate 1</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Tous les serviteurs ont &lt;b&gt;Provocation&lt;/b&gt; et &lt;b&gt;Charge&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_10</CardId>
+    <Name>Destin 10</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Les serviteurs avec Cri de guerre gagnent +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_10_Ench</CardId>
+    <Name>Fate 10 Ench. Battlecry bonus</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_11</CardId>
+    <Name>Fate 11</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>À chaque tour, vous obtenez un murloc 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_11_Ench</CardId>
+    <Name>Fate 11 Ench. Murloc</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_1_Ench</CardId>
+    <Name>Pick Your Fate 1 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_2</CardId>
+    <Name>Fate 2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quand un serviteur meurt, son propriétaire obtient une carte Banane à (1) |4(cristal,cristaux) de mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_2_Ench</CardId>
+    <Name>Pick Your Fate 2 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_3</CardId>
+    <Name>Fate 3</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Tous les serviteurs ont &lt;b&gt;Furie des vents&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_3_Ench</CardId>
+    <Name>Pick Your Fate 3 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_4</CardId>
+    <Name>Fate 4</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Tous les serviteurs ont +1 ATQ.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_4_Ench</CardId>
+    <Name>Pick Your Fate 4 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_5</CardId>
+    <Name>Fate 5</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Les sorts coûtent (1) |4(cristal,cristaux) de moins.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_5_Ench</CardId>
+    <Name>Pick You rFate 5 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_6</CardId>
+    <Name>Fate 6</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Place 10 cartes Portail instable dans votre deck.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_7</CardId>
+    <Name>Fate 7</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quand un serviteur meurt, son propriétaire obtient une carte La pièce.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_7_Ench</CardId>
+    <Name>Fate 7 Ench Get a Coin</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_8</CardId>
+    <Name>Fate 8</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quand un sort est joué, son lanceur gagne 3 points d’armure.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_8_Ench</CardId>
+    <Name>Fate 8 Get Armor</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_9</CardId>
+    <Name>Fate 9</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Les serviteurs avec Râle d’agonie obtiennent +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_9_Ench</CardId>
+    <Name>Fate 9 Ench. Deathrattle bonus</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_Windfury</CardId>
+    <Name>Furie des vents</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ce serviteur a &lt;b&gt;Furie des vents&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Pilote mystère</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -11096,6 +11507,3344 @@ Inflige 1 point de dégâts à 2 adversaires aléatoires.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_01</CardId>
+    <Name>Écumeur du soleil Phaerix</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_01h</CardId>
+    <Name>Phaerix (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_02</CardId>
+    <Name>Bénédictions du soleil</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt;
+La personne qui contrôle la baguette du Soleil est &lt;b&gt;Insensible&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_02h</CardId>
+    <Name>Bénédictions du soleil</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt;
+Phaerix est &lt;b&gt;Insensible&lt;/b&gt; tant qu’il contrôle la baguette du Soleil.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_11</CardId>
+    <Name>Baguette du Soleil</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; remet cette carte à votre adversaire.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_11h</CardId>
+    <Name>Baguette du Soleil</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; remet cette carte à votre adversaire.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_11he</CardId>
+    <Name>Mode héroïque</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3 si Phaerix contrôle la baguette !</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_12</CardId>
+    <Name>Hoplite tol’vir</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 5 points de dégâts aux deux héros.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_12h</CardId>
+    <Name>Hoplite tol’vir</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige 5 points de dégâts aux deux héros.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA02_01</CardId>
+    <Name>Zinaar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_01h</CardId>
+    <Name>Zinaar (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_02</CardId>
+    <Name>Intuition de djinn</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vous piochez une carte.
+Accorde un Vœu à votre adversaire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_02h</CardId>
+    <Name>Intuition de djinn</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vous piochez une carte. Gagne un cristal de mana. Accorde un Vœu à votre adversaire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_03</CardId>
+    <Name>Vœu : puissance</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Découvre&lt;/b&gt; un sort.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_04</CardId>
+    <Name>Vœu : vaillance</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Découvre&lt;/b&gt; une carte à (4) |4(cristal,cristaux) de mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_05</CardId>
+    <Name>Vœu : gloire</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Découvre&lt;/b&gt; un serviteur.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_06</CardId>
+    <Name>Vœu : plus de Vœux</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Gagne 2 Vœux.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10</CardId>
+    <Name>Vœu : compagnon</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Découvre&lt;/b&gt; un compagnon.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10a</CardId>
+    <Name>Leokk</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Vos serviteurs ont +1 ATQ.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10c</CardId>
+    <Name>Misha</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01</CardId>
+    <Name>Fuite du temple</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>100</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01e</CardId>
+    <Name>Enchantement de fuite du temple</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01eh</CardId>
+    <Name>Enchantement de fuite du temple</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01h</CardId>
+    <Name>Fuite (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>100</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_02</CardId>
+    <Name>Fuyez !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Affrontez de nouveaux obstacles !</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_02h</CardId>
+    <Name>Fuyez !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Affrontez de nouveaux obstacles !</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_06</CardId>
+    <Name>Fosse remplie de pointes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Choisissez un chemin !&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_06a</CardId>
+    <Name>Franchir d’un bond</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Subit aléatoirement 10 points de dégâts ou aucun.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_06b</CardId>
+    <Name>Traverser avec précaution</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Subit 5 points de dégâts.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_13bt</CardId>
+    <Name>Garde d’Orsis</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_13bth</CardId>
+    <Name>Garde d’Orsis</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Bouclier divin&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_23</CardId>
+    <Name>Insecte géant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>3</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_23h</CardId>
+    <Name>Insecte géant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_24</CardId>
+    <Name>Garde du temple anubisath</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>10</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_24h</CardId>
+    <Name>Garde du temple anubisath</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>15</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_25</CardId>
+    <Name>Statue vengeresse</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>9</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige 2 points de dégâts à tous les adversaires à la fin de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_25h</CardId>
+    <Name>Statue vengeresse</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>9</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige 5 points de dégâts à tous les adversaires à la fin de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_27</CardId>
+    <Name>Statue animée</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Vous avez dérangé cette ancienne statue…</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28</CardId>
+    <Name>Un bassin luminescent</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Boire ?&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28a</CardId>
+    <Name>Boire à grands traits</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vous piochez une carte.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28b</CardId>
+    <Name>Traverser à pied</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Gagne un cristal de mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29</CardId>
+    <Name>L’Œil</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Choisissez un chemin !&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29a</CardId>
+    <Name>Toucher</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Rend 10 PV à votre héros.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29b</CardId>
+    <Name>Examiner les runes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vous piochez 2 cartes.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_30</CardId>
+    <Name>Les ténèbres</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Prendre le raccourci ?&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_30a</CardId>
+    <Name>Prendre le raccourci</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vous vous rapprochez d’un tour de la sortie ! Vous rencontrez un golem de guerre 7/7.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_31b</CardId>
+    <Name>Pas question !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Vous ne faites rien.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_01</CardId>
+    <Name>Chef Scarvash</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_01h</CardId>
+    <Name>Scarvash (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02</CardId>
+    <Name>Trogg détester serviteurs !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt; Les serviteurs adverses coûtent (2) |4(cristal,cristaux) de plus. Le pouvoir change au début de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02a</CardId>
+    <Name>Trogg détester serviteurs !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt; Les serviteurs adverses coûtent (2) |4(cristal,cristaux) de plus. Le pouvoir change au début de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02h</CardId>
+    <Name>Trogg détester serviteurs !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt; Les serviteurs adverses coûtent (11) |4(cristal,cristaux) de mana. Le pouvoir change au début de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02ha</CardId>
+    <Name>Trogg détester serviteurs !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt; Les serviteurs adverses coûtent (11) |4(cristal,cristaux) de mana. Le pouvoir change au début de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_03</CardId>
+    <Name>Trogg détester sorts !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt; Les sorts adverses coûtent (2) |4(cristal,cristaux) de plus. Le pouvoir change au début de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_03h</CardId>
+    <Name>Trogg détester sorts !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt; Les sorts adverses coûtent (11) |4(cristal,cristaux) de mana. Le pouvoir change au début de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02</CardId>
+    <Name>Sculpture sur pierre</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque une statue 0/2 pour chaque joueur.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02h</CardId>
+    <Name>Sculpture sur pierre</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque une statue pour chaque joueur.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02t</CardId>
+    <Name>Statue de terrestre</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02th</CardId>
+    <Name>Statue de terrestre</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03</CardId>
+    <Name>Terrestre animé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Donne +1/+1 et &lt;b&gt;Provocation&lt;/b&gt; à vos serviteurs.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03e</CardId>
+    <Name>Animé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1 et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03eh</CardId>
+    <Name>Animé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3 et &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03h</CardId>
+    <Name>Terrestre animé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Donne +3/+3 et &lt;b&gt;Provocation&lt;/b&gt; à vos serviteurs.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_04</CardId>
+    <Name>Pulsion destructrice</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Détruit toutes les statues. Inflige $1 |4(point,points) de dégâts pour chaque statue détruite.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_04h</CardId>
+    <Name>Pulsion destructrice</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Détruit toutes les statues. Inflige $3 |4(point,points) de dégâts pour chaque statue détruite.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_01</CardId>
+    <Name>Chariot de mine</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_02</CardId>
+    <Name>Puits de mine</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>80</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_02h</CardId>
+    <Name>Puits de mine (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>80</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_03</CardId>
+    <Name>Fuir la mine !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Échappez aux troggs !</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_03h</CardId>
+    <Name>Fuir la mine !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Échappez aux troggs !</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_09</CardId>
+    <Name>Trogg en chasse</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_11</CardId>
+    <Name>Débris</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA07_12</CardId>
+    <Name>Poursuivant terrestre</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_14</CardId>
+    <Name>Golem chancelant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_18</CardId>
+    <Name>Dynamite</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $10 |4(point,points) de dégâts.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_20</CardId>
+    <Name>Boum !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige 3 points de dégâts à tous les serviteurs adverses.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_21</CardId>
+    <Name>Foncer en avant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Vous rapproche d’un tour de la sortie !</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_24</CardId>
+    <Name>Leurre à pointes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;
+Ne peut pas attaquer.</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA07_25</CardId>
+    <Name>Perroquet mécanique</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_26</CardId>
+    <Name>Consulter Brann</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Vous piochez 3 cartes.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_28</CardId>
+    <Name>Réparations</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Rend 10 PV.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_29</CardId>
+    <Name>Lancer des rochers</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Inflige 3 points de dégâts à un serviteur adverse aléatoire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA08_01</CardId>
+    <Name>Archaedas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA08_01h</CardId>
+    <Name>Archaedas (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_1</CardId>
+    <Name>Seigneur Ondulance</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_10</CardId>
+    <Name>Naga affamé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_11</CardId>
+    <Name>Naga affamé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_12</CardId>
+    <Name>Naga affamé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_13</CardId>
+    <Name>Naga affamé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>1</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_1H</CardId>
+    <Name>Ondulance (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_2</CardId>
+    <Name>Enragé !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Donne +2 ATQ à votre héros pendant ce tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_2e</CardId>
+    <Name>Enragé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2 ATQ.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_2eH</CardId>
+    <Name>Enragé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+5 ATQ.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_2H</CardId>
+    <Name>Enragé !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Donne +5 ATQ à votre héros pendant ce tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3</CardId>
+    <Name>Faim</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque un naga affamé.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3a</CardId>
+    <Name>Mort de faim</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>A vraiment faim.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3aH</CardId>
+    <Name>Mort de faim</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>A vraiment faim.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3b</CardId>
+    <Name>Faim</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque un naga affamé 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3c</CardId>
+    <Name>Faim</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque un naga affamé 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3d</CardId>
+    <Name>Faim</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque un naga affamé 5/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3H</CardId>
+    <Name>Faim sans fin</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Invoque un naga affamé.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_4</CardId>
+    <Name>Lance rare</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Text>Gagne +1/+1 chaque fois que votre adversaire joue une carte rare.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_4H</CardId>
+    <Name>Lance rare</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Text>Gagne +1/+1 chaque fois que votre adversaire joue une carte rare.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_5</CardId>
+    <Name>Naga affamé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_5H</CardId>
+    <Name>Naga affamé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_6</CardId>
+    <Name>Archer ondulant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 1 point de dégâts.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_6H</CardId>
+    <Name>Archer ondulant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; inflige 2 points de dégâts à tous les serviteurs adverses.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_7</CardId>
+    <Name>Chaudron</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;
+&lt;b&gt;Râle d’agonie :&lt;/b&gt; libère Sir Finley et arrête l’attaque naga !</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_7e</CardId>
+    <Name>Chaudron</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_7H</CardId>
+    <Name>Chaudron</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>10</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;
+&lt;b&gt;Râle d’agonie :&lt;/b&gt; libère Sir Finley !</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_8</CardId>
+    <Name>Garde ondulant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_8H</CardId>
+    <Name>Garde ondulant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>7</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_9</CardId>
+    <Name>Répulsif à nagas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Détruit tous les nagas affamés.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_9H</CardId>
+    <Name>Répulsif à nagas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Fait passer l’Attaque de tous les nagas affamés à 1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_1</CardId>
+    <Name>Aileron-Géant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_1H</CardId>
+    <Name>Aileron-Géant (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_2</CardId>
+    <Name>Mrglmrgl MRGL !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Vous piochez des cartes jusqu’à en avoir autant en main que votre adversaire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_2H</CardId>
+    <Name>Mrglmrgl MRGL !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Pioche deux cartes.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_3</CardId>
+    <Name>Murloc mini-aileron</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Mechanics />
+    <Artist>Oliver Chipping</Artist>
+  </Card>
+  <Card>
+    <CardId>LOEA10_5</CardId>
+    <Name>Mrgl mrgl niah niah !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Invoque 3 murlocs détruits pendant cette partie.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_5H</CardId>
+    <Name>Mrgl mrgl niah niah !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Invoque 5 murlocs détruits pendant cette partie.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_1</CardId>
+    <Name>Dame Naz’jar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_1H</CardId>
+    <Name>Naz’jar (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_2</CardId>
+    <Name>Perle des marées</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, remplace tous les serviteurs par de nouveaux coûtant (1) |4(cristal,cristaux) de plus.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_2H</CardId>
+    <Name>Perle des marées</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, remplace tous les serviteurs par de nouveaux. Les vôtres coûtent (1) |4(cristal,cristaux) de plus.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_1</CardId>
+    <Name>Squeletosaurus Hex</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_1h</CardId>
+    <Name>Squeletosaurus Hex (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_2</CardId>
+    <Name>Puissance des anciens</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Donne une carte aléatoire à chaque joueur. Elle coûte (0) |4(cristal,cristaux) de mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_2H</CardId>
+    <Name>Puissance des anciens</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Ajoute une carte aléatoire dans votre main. Elle coûte (0) |4(cristal,cristaux) de mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_1</CardId>
+    <Name>La sentinelle d’acier</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_1H</CardId>
+    <Name>Sentinelle (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_2</CardId>
+    <Name>Armure de plates</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt;
+Votre héros ne peut pas subir plus de 1 point de dégâts à la fois.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_2H</CardId>
+    <Name>Armure de plates</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt;
+Votre héros et vos serviteurs ne peuvent pas subir plus de 1 point de dégâts à la fois.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_1</CardId>
+    <Name>Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_1H</CardId>
+    <Name>Rafaam (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_2</CardId>
+    <Name>Portail instable</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Ajoute un serviteur aléatoire dans votre main. Il coûte (3) |4(cristal,cristaux) de moins.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_2H</CardId>
+    <Name>Portail instable</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque&lt;/b&gt;
+Ajoute un serviteur aléatoire dans votre main. Il coûte (3) |4(cristal,cristaux) de moins.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_3</CardId>
+    <Name>Raptor d’os</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; prend le contrôle de l’arme de votre adversaire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_3H</CardId>
+    <Name>Raptor d’os</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; prend le contrôle de l’arme de votre adversaire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_1</CardId>
+    <Name>Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_10</CardId>
+    <Name>Coupe de sang hakkari</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Transforme un serviteur en un serpent de la fosse 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_11</CardId>
+    <Name>Couronne de Kael’thas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $10 |4(point,points) de dégâts répartis de façon aléatoire entre TOUS les personnages.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_12</CardId>
+    <Name>Médaillon de Medivh</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Remplace votre main par des cartes Portail instable.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_13</CardId>
+    <Name>Œil d’Orsis</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Découvre&lt;/b&gt; un serviteur. Vous en gagnez 3 copies.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_14</CardId>
+    <Name>Pipe de Khadgar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Place un sort aléatoire dans la main de chaque joueur. Le vôtre coûte (0) |4(cristal,cristaux) de mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_15</CardId>
+    <Name>Larme d’Ysera</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Gagne 4 cristaux de mana pendant ce tour uniquement.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_16</CardId>
+    <Name>Fouilles</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Trouve un artéfact.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_16H</CardId>
+    <Name>Fouilles</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Trouve un artéfact.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_17</CardId>
+    <Name>Statue animée</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_18</CardId>
+    <Name>Zinaar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Gagne un Vœu à la fin de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_18H</CardId>
+    <Name>Zinaar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Gagne un Vœu à la fin de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_19</CardId>
+    <Name>Écumeur du soleil Phaerix</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Ajoute une carte Bénédiction du soleil dans votre main à la fin de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_19H</CardId>
+    <Name>Écumeur du soleil Phaerix</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Vos autres serviteurs sont &lt;b&gt;Insensibles&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_1H</CardId>
+    <Name>Rafaam (héroïque)</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_2</CardId>
+    <Name>Bâton de l’Origine</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt;
+Votre héros est &lt;b&gt;Insensible&lt;/b&gt; tant que le bâton se charge.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_20</CardId>
+    <Name>Bénédiction du soleil</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Confère &lt;b&gt;Insensible&lt;/b&gt; à un serviteur pendant ce tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_20e</CardId>
+    <Name>Béni</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Insensible&lt;/b&gt; pendant ce tour.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_20H</CardId>
+    <Name>Bénédiction du soleil</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Insensible&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_21</CardId>
+    <Name>Chef Scarvash</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Les cartes adverses coûtent (1) |4(cristal,cristaux) de plus.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_21H</CardId>
+    <Name>Chef Scarvash</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Les cartes adverses coûtent (2) |4(cristal,cristaux) de plus.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_22</CardId>
+    <Name>Archaedas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Transforme un serviteur adverse aléatoire en statue 0/2 à la fin de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_22H</CardId>
+    <Name>Archaedas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Transforme un serviteur adverse aléatoire en statue 0/2 à la fin de votre tour.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_23</CardId>
+    <Name>Seigneur Ondulance</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, invoque un Naga affamé 1/1 pour chaque serviteur adverse.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_23H</CardId>
+    <Name>Seigneur Ondulance</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, invoque un Naga affamé 1/1 pour chaque serviteur adverse.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_24</CardId>
+    <Name>Aileron-Géant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>À la fin de votre tour, vous piochez jusqu’à avoir autant de cartes que votre adversaire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_24H</CardId>
+    <Name>Aileron-Géant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>À la fin de votre tour, vous piochez 2 cartes.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_25</CardId>
+    <Name>Dame Naz’jar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, remplace tous les autres serviteurs par de nouveaux de même coût.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_25H</CardId>
+    <Name>Dame Naz’jar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, remplace tous les autres serviteurs par de nouveaux de même coût.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_26</CardId>
+    <Name>Squeletosaurus Hex</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Donne une carte aléatoire à chaque joueur à la fin de votre tour. Elle coûte (0) |4(cristal,cristaux) de mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_26H</CardId>
+    <Name>Squeletosaurus Hex</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>À la fin de votre tour, place une carte aléatoire dans votre main. Elle coûte (0) |4(cristal,cristaux) de mana.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_27</CardId>
+    <Name>La sentinelle d’acier</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Ce serviteur ne peut pas subir plus de 1 point de dégâts à la fois.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_27H</CardId>
+    <Name>La sentinelle d’acier</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Ce serviteur ne peut pas subir plus de 1 point de dégâts à la fois.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_2H</CardId>
+    <Name>Bâton de l’Origine</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Pouvoir héroïque passif&lt;/b&gt;
+Votre héros est &lt;b&gt;Insensible&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_3</CardId>
+    <Name>Lanterne de puissance</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Donne +10/+10 à un serviteur.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_3e</CardId>
+    <Name>Lanterne de puissance</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+10/+10.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_4</CardId>
+    <Name>Horloge de l’horreur</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $10 |4(point,points) de dégâts répartis de façon aléatoire entre tous les adversaires.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_5</CardId>
+    <Name>Miroir du destin</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Remplit votre plateau de momies zombies 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_5t</CardId>
+    <Name>Momie zombie</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_6</CardId>
+    <Name>Éclat de Sulfuras</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $5 |4(point,points) de dégâts à TOUS les personnages.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_7</CardId>
+    <Name>Esquille de bénédiction</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Rend #10 PV à TOUS les personnages.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_8</CardId>
+    <Name>Fiole de Putrescin</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Détruit un serviteur adverse aléatoire.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_8a</CardId>
+    <Name>Putréfié</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Attaque et vie inversées.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_9</CardId>
+    <Name>Grèves abandonnées de Lothar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige 3 points de dégâts à tous les adversaires.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA_01</CardId>
+    <Name>Présence menaçante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Vous piochez 2 cartes. Gagne +4 points d’armure.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA_01H</CardId>
+    <Name>Présence menaçante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Vous piochez 3 cartes. Gagne +6 points d’armure.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_002</CardId>
+    <Name>Torche oubliée</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Inflige $3 |4(point,points) de dégâts. Place une carte Torche enflammée dans votre deck qui inflige 6 points de dégâts.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_002t</CardId>
+    <Name>Torche enflammée</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Inflige $6 |4(point,points) de dégâts.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_003</CardId>
+    <Name>Adjurateur éthérien</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Cri de guerre : découvre&lt;/b&gt;
+un sort.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_006</CardId>
+    <Name>Conservateur du musée</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Cri de guerre : découvre&lt;/b&gt; une carte avec &lt;b&gt;Râle d’agonie&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_007</CardId>
+    <Name>Malédiction de Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Donne une carte Maudit ! à votre adversaire.
+Tant qu’elle est dans sa main, il subit 2 points de dégâts au début de son tour.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_007t</CardId>
+    <Name>Maudit !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Vous subissez 2 points de dégâts au début de votre tour tant que vous avez cette carte dans votre main.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_008</CardId>
+    <Name>Œil d’Hakkar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Pioche un secret dans le deck de votre adversaire et le place sur le champ de bataille.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_008H</CardId>
+    <Name>Œil d’Hakkar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Pioche un secret dans le deck de votre adversaire et le place sur le champ de bataille.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_009</CardId>
+    <Name>Destructeur d’obsidienne</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>À la fin de votre tour, invoque un scarabée 1/1 avec &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_009e</CardId>
+    <Name>Puissance sinistre</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>+4/+4.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_009t</CardId>
+    <Name>Scarabée</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Jaemin Kim</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_010</CardId>
+    <Name>Serpent de la fosse</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Race>Beast</Race>
+    <Text>Détruit tout serviteur blessé par ce serviteur.</Text>
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
+    <Artist>Bernie Kang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_011</CardId>
+    <Name>Reno Jackson</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; si votre deck ne contient pas de cartes en double, rend tous ses points de vie à votre héros.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_012</CardId>
+    <Name>Pilleur de tombes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; ajoute une carte La pièce dans votre main.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Dave Allsop</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_012e</CardId>
+    <Name>zzDELETE Explorateur de tombes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Râle d’agonie copié de CARD_NAME</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_016</CardId>
+    <Name>Élémentaire grondant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Après avoir joué un serviteur avec &lt;b&gt;Cri de guerre&lt;/b&gt;, inflige
+2 points de dégâts à un adversaire aléatoire.</Text>
+    <Mechanics />
+    <Artist>Cole Eastburn</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_016t</CardId>
+    <Name>Rocher</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOE_017</CardId>
+    <Name>Gardienne d’Uldaman</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; fait passer l’Attaque et la Vie d’un serviteur à 3.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_017e</CardId>
+    <Name>Observé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Caractéristiques changées en 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_018</CardId>
+    <Name>Trogg des tunnels</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Gagne +1 ATQ par cristal de mana verrouillé chaque fois que vous utilisez &lt;b&gt;Surcharge&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_018e</CardId>
+    <Name>Trogg pas stupide</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Attaque augmentée.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_019</CardId>
+    <Name>Raptor déterré</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; choisit un serviteur allié. Gagne une copie de son &lt;b&gt;Râle d’agonie&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_019e</CardId>
+    <Name>Raptor déterré</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Râle d’agonie&lt;/b&gt; copié de CARD_NAME.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_019t</CardId>
+    <Name>Carte du singe doré</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Place la carte Singe doré dans votre deck. Vous piochez une carte.</Text>
+    <Mechanics />
+    <Artist>Milivoj Ceran</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_019t2</CardId>
+    <Name>Singe doré</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;
+&lt;b&gt;Cri de guerre :&lt;/b&gt; remplace votre main et votre deck par des serviteurs &lt;b&gt;légendaires&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_020</CardId>
+    <Name>Dromadaire du désert</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; place un serviteur à 1 cristal de mana de chaque deck sur le champ de bataille.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_021</CardId>
+    <Name>Piège de fléchettes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Secret :&lt;/b&gt; inflige
+5 points de dégâts à un adversaire aléatoire quand un pouvoir héroïque adverse est utilisé.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_022</CardId>
+    <Name>Singe féroce</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Peter Stapleton</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_023</CardId>
+    <Name>Sinistre colporteur</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Cri de guerre : découvre&lt;/b&gt; une carte à 1 cristal de mana.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>George Davis</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_024t</CardId>
+    <Name>Rocher roulant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Détruit le serviteur à gauche à la fin de votre tour.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_026</CardId>
+    <Name>Tous les murlocs de ta vie</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Invoque 7 murlocs détruits pendant cette partie.</Text>
+    <Mechanics />
+    <Artist>Ryan Metcalf</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_027</CardId>
+    <Name>Épreuve sacrée</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Secret :&lt;/b&gt; quand votre adversaire a au moins 3 serviteurs et en joue un autre, le détruit.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_029</CardId>
+    <Name>Scarabée orné de joyaux</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Cri de guerre : découvre&lt;/b&gt;
+une carte à (3) |4(cristal,cristaux) de mana.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jaemin Kim</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_030</CardId>
+    <Name>zzDELETE? Armure animée</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocation&lt;/b&gt;
+&lt;b&gt;Cri de guerre :&lt;/b&gt; copie l’Attaque et la Vie d’un serviteur allié.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOE_030e</CardId>
+    <Name>Trompeur</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Caractéristiques copiées.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_038</CardId>
+    <Name>Sorcière des mers naga</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Vos cartes coûtent
+(5) |4(cristal,cristaux) de mana.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_039</CardId>
+    <Name>Gorillobot A-3</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; si vous contrôlez un autre Méca, &lt;b&gt;découvre&lt;/b&gt; un nouveau Méca.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_046</CardId>
+    <Name>Crapaud énorme</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; inflige
+1 point de dégâts à un adversaire aléatoire.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_047</CardId>
+    <Name>Araignée des tombes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Cri de guerre : découvre&lt;/b&gt; une Bête.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Turovec Konstantin</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_050</CardId>
+    <Name>Raptor de monte</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque un serviteur aléatoire coûtant 1 cristal.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_051</CardId>
+    <Name>Sélénien de la jungle</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>Chaque joueur a
+&lt;b&gt;+2 aux dégâts des sorts&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_053</CardId>
+    <Name>Djinn des zéphirs</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Chaque fois que vous lancez un sort sur un autre serviteur allié, en lance une copie sur le djinn.</Text>
+    <Mechanics />
+    <Artist>Jakub Kasper</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_061</CardId>
+    <Name>Sentinelle Anubisath</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; donne +3/+3 à un serviteur allié aléatoire.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Paul Mafayon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_061e</CardId>
+    <Name>Puissance des titans</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_073</CardId>
+    <Name>Diablosaure fossilisé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne &lt;b&gt;Provocation&lt;/b&gt; si vous contrôlez une Bête.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_073e</CardId>
+    <Name>Fossilisé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>A &lt;b&gt;Provocation&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_076</CardId>
+    <Name>Sir Finley Mrrgglton</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>&lt;b&gt;Cri de guerre : découvre&lt;/b&gt; un nouveau pouvoir héroïque de base.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_077</CardId>
+    <Name>Brann Barbe-de-Bronze</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Vos &lt;b&gt;Cris de guerre&lt;/b&gt; se déclenchent deux fois.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Sam Nielson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_079</CardId>
+    <Name>Élise Cherchétoile</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; place Carte du singe doré dans votre deck.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Luke Mancini</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_086</CardId>
+    <Name>Pierre d’invocation</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Chaque fois que vous lancez un sort, invoque un serviteur aléatoire de même coût.</Text>
+    <Mechanics />
+    <Artist>Jason Kang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089</CardId>
+    <Name>Avortons tremblants</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Râle d’agonie :&lt;/b&gt; invoque trois avortons 2/2.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Sam Nielson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t</CardId>
+    <Name>Avorton vaurien</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t2</CardId>
+    <Name>Avorton rusé</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t3</CardId>
+    <Name>Avorton grognon</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_092</CardId>
+    <Name>Prince voleur Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>8</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre : découvre&lt;/b&gt;
+un puissant artéfact.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_104</CardId>
+    <Name>Ensevelir</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Choisit un serviteur adverse.
+Le place dans votre deck.</Text>
+    <Mechanics />
+    <Artist>Alex Konstad</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_105</CardId>
+    <Name>Chapeau d’explorateur</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Donne à un serviteur +1/+1 et « &lt;b&gt;Râle d’agonie :&lt;/b&gt; ajoute une carte Chapeau d’explorateur dans votre main. »</Text>
+    <Mechanics />
+    <Artist>Joe Wilson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_105e</CardId>
+    <Name>Chapeau d’explorateur</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>+1/+1.&lt;b&gt;Râle d’agonie :&lt;/b&gt; ajoute une carte Chapeau d’explorateur dans votre main.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_107</CardId>
+    <Name>Statue sinistre</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Ne peut pas attaquer à moins d’être le seul serviteur sur le champ de bataille.</Text>
+    <Mechanics />
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_110</CardId>
+    <Name>Ombre ancienne</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; place une carte Malédiction ancestrale dans votre deck qui vous inflige 7 points de dégâts quand vous la piochez.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_110t</CardId>
+    <Name>Malédiction ancestrale</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Quand vous piochez cette carte, vous subissez 7 points de dégâts et vous piochez une carte.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_111</CardId>
+    <Name>Mal déterré</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Inflige $3 |4(point,points) de dégâts à tous les serviteurs.
+Place cette carte dans le deck de votre adversaire.</Text>
+    <Mechanics />
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_113</CardId>
+    <Name>Tout est vraiment génial</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Donne +2/+2 à vos serviteurs. Coûte
+ (1) |4(cristal,cristaux) de mana de moins pour chaque murloc contrôlé.</Text>
+    <Mechanics />
+    <Artist>Andrius Matijoshius</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_113e</CardId>
+    <Name>Mrglllroaarrrglrur !</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_115</CardId>
+    <Name>Idole corbeau</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Choix des armes :&lt;/b&gt;
+&lt;b&gt;découvre&lt;/b&gt; un serviteur ou un sort.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_115a</CardId>
+    <Name>Idole corbeau</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Découvre&lt;/b&gt; un serviteur.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_115b</CardId>
+    <Name>Idole corbeau</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Découvre&lt;/b&gt; un sort.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_116</CardId>
+    <Name>Chercheuse du Reliquaire</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Cri de guerre :&lt;/b&gt; gagne +4/+4 si vous avez
+6 autres serviteurs.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_118</CardId>
+    <Name>Lame maudite</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>3</Durability>
+    <Class>Warrior</Class>
+    <Text>Double tous les dégâts subis par votre héros.</Text>
+    <Mechanics />
+    <Artist>Craig Mullins</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_118e</CardId>
+    <Name>Lame maudite</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Double tous les dégâts subis par votre héros.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_119</CardId>
+    <Name>Armure animée</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Votre héros ne peut pas subir plus de 1 point de dégâts à la fois.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
   </Card>
   <Card>
     <CardId>EX1_062</CardId>
@@ -12354,6 +16103,19 @@ Invoque deux serviteurs 2/1.</Text>
     <CardId>XXX_063</CardId>
     <Name />
     <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_065</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Rarity>Common</Rarity>
     <Type>Spell</Type>
     <Attack>0</Attack>
     <Health>0</Health>
@@ -15019,7 +18781,7 @@ Pioche deux cartes.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Class>Hunter</Class>
-    <Text>Vous piochez une carte. Si c'est une Bête, elle coûte (4) cristaux de moins.</Text>
+    <Text>Vous piochez une carte. Si c’est une Bête, elle coûte (4) cristaux de moins.</Text>
     <Mechanics />
     <Artist>E.M. Gist</Artist>
   </Card>
@@ -15035,7 +18797,7 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>Chaque fois que ce serviteur inflige des dégâts, rend l'équivalent sous forme de PV à votre héros.</Text>
+    <Text>Chaque fois que ce serviteur inflige des dégâts, rend l’équivalent sous forme de PV à votre héros.</Text>
     <Mechanics />
     <Artist>Carl Critchlow</Artist>
   </Card>
@@ -15095,7 +18857,7 @@ Pioche deux cartes.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>Vos autres démons ont +2/+2. Votre héros est &lt;b&gt;insensible&lt;/b&gt;.</Text>
+    <Text>Vos autres démons ont +2/+2. Votre héros est &lt;b&gt;Insensible&lt;/b&gt;.</Text>
     <Mechanics>
       <string>Aura</string>
     </Mechanics>
@@ -22031,7 +25793,7 @@ Coûte (1) |4(cristal,cristaux) de moins pour chaque pirate allié.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Paladin</Class>
-    <Text>+3 ATQ et &lt;b&gt;Bouclier divin&lt;/b&gt;. </Text>
+    <Text>+3 ATQ et &lt;b&gt;Bouclier divin&lt;/b&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -22154,7 +25916,9 @@ Coûte (1) |4(cristal,cristaux) de moins pour chaque pirate allié.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>Vous pouvez utiliser votre pouvoir héroïque deux fois par tour.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>

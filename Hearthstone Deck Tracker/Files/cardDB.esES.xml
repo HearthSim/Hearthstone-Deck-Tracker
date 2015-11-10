@@ -2381,7 +2381,7 @@ Inflige $2 p. de daño al héroe enemigo.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Class>Warrior</Class>
-    <Text>La comandante Grito de Guerra otorga +1 p. de ataque a este esbirro.</Text>
+    <Text>La comandante Grito de Guerra otorga a este esbirro +1 p. de ataque.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -6320,7 +6320,7 @@ Roba una carta.</Text>
     <Durability>0</Durability>
     <Class>Warlock</Class>
     <Race>Demon</Race>
-    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a tu héroe y lo reemplaza con Lord Jaraxxus.</Text>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Destruye a tu héroe y lo reemplaza por Lord Jaraxxus.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
@@ -8739,6 +8739,19 @@ Invoca un infernal 6/6.</Text>
     <Artist>Ron Spencer</Artist>
   </Card>
   <Card>
+    <CardId>NEW1_014e</CardId>
+    <Name>Disfrazado</Name>
+    <CardSet>Classic</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>En sigilo hasta el siguiente turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>NEW1_017</CardId>
     <Name>Cangrejo hambriento</Name>
     <CardSet>Classic</CardSet>
@@ -9707,7 +9720,7 @@ Invoca un infernal 6/6.</Text>
     <Health>8</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Reemplaza a todos los esbirros en el campo de batalla, en ambas manos y en ambos mazos con esbirros aleatorios.</Text>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Reemplaza a todos los esbirros en el campo de batalla, en ambas manos y en ambos mazos por esbirros aleatorios.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10799,6 +10812,28 @@ Cuando el pícaro JcJ mata a un esbirro, vuelve a obtener &lt;b&gt;Sigilo&lt;/b&
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_013_PickOnCurve</CardId>
+    <Name>Player Choice Enchant On Curve</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_013_PickOnCurve2</CardId>
+    <Name>Player Choice Enchant On Curve2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_014</CardId>
     <Name>¡Elige una carta nueva!</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -10820,6 +10855,18 @@ Cuando el pícaro JcJ mata a un esbirro, vuelve a obtener &lt;b&gt;Sigilo&lt;/b&
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Race>Pirate</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_AllMinionsTauntCharge</CardId>
+    <Name>Otorgar Provocar y Cargar</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Otorga a este esbirro &lt;b&gt;Provocar&lt;/b&gt; y &lt;b&gt;Cargar&lt;/b&gt;.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -10906,10 +10953,46 @@ Obtiene +2 p. de ataque.</Text>
     <Cost>10</Cost>
     <Durability>0</Durability>
     <Text>&lt;b&gt;Jefe&lt;/b&gt;
-¡Mecazod gana si derrota a cualquiera de los jugadores!</Text>
+¡Mecazod gana si derrota a cualquiera de los dos!</Text>
     <Mechanics>
       <string>Taunt</string>
     </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_CoOp_Mechazod2</CardId>
+    <Name>Mecazod sobrecargado</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>9</Attack>
+    <Health>80</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Jefe&lt;/b&gt;
+¡Mecazod juega una carta al comienzo de cada turno!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_DecreasingCardCost</CardId>
+    <Name>TB_DecreasingCardCost</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_DecreasingCardCostDebug</CardId>
+    <Name>TBDecreasingCardCostDebug</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
   </Card>
   <Card>
     <CardId>TB_EndlessMinions01</CardId>
@@ -10954,6 +11037,44 @@ Obtiene +2 p. de ataque.</Text>
     <Health>30</Health>
     <Cost>0</Cost>
     <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Enchantment</CardId>
+    <Name>Obsequio barato</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Esta carta cuesta (4) cristales menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Treasure</CardId>
+    <Name>Obsequio de Invierno</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Otorga un tesoro al jugador atacante.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_GiftExchange_Treasure_Spell</CardId>
+    <Name>Obsequio de Invierno robado</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Encuentras un tesoro aleatorio.</Text>
     <Mechanics />
   </Card>
   <Card>
@@ -11031,6 +11152,296 @@ Inflige 1 p. de daño a 2 enemigos aleatorios.</Text>
     <Mechanics />
   </Card>
   <Card>
+    <CardId>TB_MechWar_Minion1</CardId>
+    <Name>Fan de los robots</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate</CardId>
+    <Name>Elige tu destino</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFateRandom</CardId>
+    <Name>Elige tu destino aleatorio</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_1</CardId>
+    <Name>Fate 1</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Todos los esbirros tienen &lt;b&gt;Provocar&lt;/b&gt; y &lt;b&gt;Cargar&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_10</CardId>
+    <Name>Destino 10</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Los esbirros con &lt;b&gt;Grito de batalla&lt;/b&gt; obtienen +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_10_Ench</CardId>
+    <Name>Encant. de destino 10: bonus de Grito de batalla</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_11</CardId>
+    <Name>Destino 11</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cada turno, obtienes un múrloc 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_11_Ench</CardId>
+    <Name>Encant. de nivel 11: múrloc</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_1_Ench</CardId>
+    <Name>Pick Your Fate 1 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_2</CardId>
+    <Name>Fate 2</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cuando muere un esbirro, su dueño obtiene un plátano de coste (1).</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_2_Ench</CardId>
+    <Name>Pick Your Fate 2 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_3</CardId>
+    <Name>Fate 3</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Todos los esbirros tienen &lt;b&gt;Viento Furioso&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_3_Ench</CardId>
+    <Name>Pick Your Fate 3 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_4</CardId>
+    <Name>Fate 4</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Todos los esbirros obtienen +1 p. de ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_4_Ench</CardId>
+    <Name>Pick Your Fate 4 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_5</CardId>
+    <Name>Fate 5</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Los hechizos cuestan (1) cristal menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_5_Ench</CardId>
+    <Name>Pick You rFate 5 Ench</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_6</CardId>
+    <Name>Fate 6</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Mete 10 portales inestables en tu mazo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_7</CardId>
+    <Name>Fate 7</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cuando muere un esbirro, su dueño obtiene una moneda.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_7_Ench</CardId>
+    <Name>Fate 7 Ench Get a Coin</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_8</CardId>
+    <Name>Fate 8</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cuando se lanza un hechizo, quien lo haya lanzado obtiene 3 p. de armadura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_8_Ench</CardId>
+    <Name>Fate 8 Get Armor</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_9</CardId>
+    <Name>Destino 9</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Los esbirros con &lt;b&gt;Último aliento&lt;/b&gt; obtienen +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_9_Ench</CardId>
+    <Name>Encant. de nivel 9: bonus de Último aliento</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>TB_PickYourFate_Windfury</CardId>
+    <Name>Viento Furioso</Name>
+    <CardSet>Tavern Brawl</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Este esbirro tiene &lt;b&gt;Viento Furioso&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
     <CardId>TB_Pilot1</CardId>
     <Name>Piloto misterioso</Name>
     <CardSet>Tavern Brawl</CardSet>
@@ -11074,6 +11485,3344 @@ Inflige 1 p. de daño a 2 enemigos aleatorios.</Text>
     <Cost>0</Cost>
     <Durability>0</Durability>
     <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_01</CardId>
+    <Name>Asaltante del sol Phaerix</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_01h</CardId>
+    <Name>Phaerix heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_02</CardId>
+    <Name>Bendición del sol</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+Quien controle la Vara del Sol será &lt;b&gt;inmune&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_02h</CardId>
+    <Name>Bendición del sol</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+Mientras controle la Vara del Sol, Phaerix será &lt;b&gt;inmune&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_11</CardId>
+    <Name>Vara del Sol</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Entrega la Vara del Sol a tu oponente.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_11h</CardId>
+    <Name>Vara del Sol</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Entrega la Vara del Sol a tu oponente.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_11he</CardId>
+    <Name>Modo heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3 si Phaerix controla la vara.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA01_12</CardId>
+    <Name>Hoplita Tol'vir</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Inflige 5 p. de daño a cada héroe.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA01_12h</CardId>
+    <Name>Hoplita Tol'vir</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Inflige 5 p. de daño a cada héroe.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA02_01</CardId>
+    <Name>Zinaar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_01h</CardId>
+    <Name>Zinaar heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_02</CardId>
+    <Name>Intuición de djinn</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Roba una carta.
+Otorga un deseo a tu oponente.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_02h</CardId>
+    <Name>Intuición de djinn</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Roba una carta y obtén un cristal de maná. Otorga un deseo a tu oponente.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_03</CardId>
+    <Name>Deseo de poder</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Descubre&lt;/b&gt; un hechizo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_04</CardId>
+    <Name>Deseo de valor</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Descubre&lt;/b&gt; una carta de coste 4.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_05</CardId>
+    <Name>Deseo de gloria</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Descubre&lt;/b&gt; un esbirro.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_06</CardId>
+    <Name>Deseo de más deseos</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Obtienes 2 deseos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10</CardId>
+    <Name>Deseo de compañía</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Descubre&lt;/b&gt; un compañero.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10a</CardId>
+    <Name>Leokk</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>Tus esbirros tienen +1 p. de ataque.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA02_10c</CardId>
+    <Name>Misha</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01</CardId>
+    <Name>Huida del templo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>100</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01e</CardId>
+    <Name>Temple Escape Enchant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01eh</CardId>
+    <Name>Temple Escape Enchant</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_01h</CardId>
+    <Name>Huida heroica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>100</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_02</CardId>
+    <Name>¡Huida!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Free</Rarity>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>¡Haz frente a nuevos obstáculos!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_02h</CardId>
+    <Name>¡Huida!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>¡Haz frente a nuevos obstáculos!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_06</CardId>
+    <Name>Fosa de pinchos</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;¡Elige tu camino!&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_06a</CardId>
+    <Name>Saltas por encima</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Recibes 10 p. de daño o ninguno, al azar.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_06b</CardId>
+    <Name>La atraviesas con cuidado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Recibes 5 p. de daño.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_13bt</CardId>
+    <Name>Guardia de Orsis</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Escudo divino&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_13bth</CardId>
+    <Name>Guardia de Orsis</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Escudo divino&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Divine Shield</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA04_23</CardId>
+    <Name>Insecto gigante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>3</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_23h</CardId>
+    <Name>Insecto gigante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>6</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_24</CardId>
+    <Name>Guardia del templo Anubisath</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>10</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_24h</CardId>
+    <Name>Guardia del templo Anubisath</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>15</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_25</CardId>
+    <Name>Estatua calcinante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>9</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, inflige 2 p. de daño a todos los enemigos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_25h</CardId>
+    <Name>Estatua calcinante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>9</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, inflige 5 p. de daño a todos los enemigos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_27</CardId>
+    <Name>Estatua animada</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Has perturbado esta antigua estatua...</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28</CardId>
+    <Name>Poza brillante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;¿Bebes?&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28a</CardId>
+    <Name>Bebes a grandes tragos</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Robas una carta.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_28b</CardId>
+    <Name>La vadeas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Obtienes un cristal de maná.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29</CardId>
+    <Name>El Ojo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;¡Elige tu camino!&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29a</CardId>
+    <Name>Lo tocas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Restaura 10 p. de salud a tu héroe.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_29b</CardId>
+    <Name>Investigas las runas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Roba 2 cartas.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_30</CardId>
+    <Name>La oscuridad</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;¿Coges el atajo?&lt;/b&gt;</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_30a</CardId>
+    <Name>Coges el atajo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>¡Te acercas 1 turno a la salida! Te enfrentas a un gólem de guerra 7/7.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA04_31b</CardId>
+    <Name>¡Ni hablar!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>No pasa nada.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_01</CardId>
+    <Name>Cabecilla Scarvash</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_01h</CardId>
+    <Name>Scarvash heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02</CardId>
+    <Name>¡Trogg odiar esbirros!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+ Los esbirros enemigos cuestan (2) cristales más. Cambia al comienzo de tu turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02a</CardId>
+    <Name>¡Trogg odiar esbirros!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+ Los esbirros enemigos cuestan (2) cristales más. Cambia al comienzo de tu turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02h</CardId>
+    <Name>¡Trogg odiar esbirros!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+ Los esbirros enemigos cuestan (11) cristales de maná. Cambia al principio de tu turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_02ha</CardId>
+    <Name>¡Trogg odiar esbirros!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+ Los esbirros enemigos cuestan (11) cristales de maná. Cambia al principio de tu turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_03</CardId>
+    <Name>¡Trogg odiar hechizos!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+ Los hechizos enemigos cuestan (2) cristales más. Cambia al principio de tu turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA05_03h</CardId>
+    <Name>¡Trogg odiar hechizos!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+ Los hechizos enemigos cuestan (11) cristales de maná. Cambia al principio de tu turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02</CardId>
+    <Name>Escultura</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+ Invoca una estatua 0/2 para cada jugador.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02h</CardId>
+    <Name>Escultura</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+ Invoca una estatua para cada jugador.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02t</CardId>
+    <Name>Estatua terránea</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>2</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_02th</CardId>
+    <Name>Estatua terránea</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03</CardId>
+    <Name>Animar terráneo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Otorga +1/+1 y &lt;b&gt;Provocar&lt;/b&gt; a tus esbirros.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03e</CardId>
+    <Name>Animado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+1/+1 y &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03eh</CardId>
+    <Name>Animado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3 y &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_03h</CardId>
+    <Name>Animar terráneo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Otorga +3/+3 y &lt;b&gt;Provocar&lt;/b&gt; a tus esbirros.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_04</CardId>
+    <Name>Ola de destrucción</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Destruye todas las estatuas. Por cada estatua destruida, inflige $1 p. de daño.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA06_04h</CardId>
+    <Name>Ola de destrucción</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Destruye todas las estatuas. Por cada estatua destruida, inflige $3 p. de daño.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_01</CardId>
+    <Name>Vagoneta</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_02</CardId>
+    <Name>Entrada de la mina</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>80</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_02h</CardId>
+    <Name>Entrada de la mina heroica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>80</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_03</CardId>
+    <Name>¡Sal de la mina!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>¡Huye de los troggs!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_03h</CardId>
+    <Name>¡Sal de la mina!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>¡Huye de los troggs!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_09</CardId>
+    <Name>Trogg persecutor</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_11</CardId>
+    <Name>Escombros</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA07_12</CardId>
+    <Name>Persecutor terráneo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_14</CardId>
+    <Name>Gólem torpe</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_18</CardId>
+    <Name>Dinamita</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $10 p. de daño.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_20</CardId>
+    <Name>¡Bum!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige 3 p. de daño a todos los esbirros enemigos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_21</CardId>
+    <Name>A todo trapo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>¡Te acercas 1 turno a la salida!</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_24</CardId>
+    <Name>Señuelo con pinchos</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;
+No puede atacar.</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA07_25</CardId>
+    <Name>Loro mecánico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_26</CardId>
+    <Name>Consultar a Brann</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Roba 3 cartas.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_28</CardId>
+    <Name>Reparaciones</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Restaura 10 p. de salud.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA07_29</CardId>
+    <Name>Lanzar rocas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+ Inflige 3 p. de daño a un esbirro enemigo aleatorio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA08_01</CardId>
+    <Name>Archaedas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA08_01h</CardId>
+    <Name>Archaedas heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_1</CardId>
+    <Name>Lord Reptalanza</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_10</CardId>
+    <Name>Naga hambriento</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_11</CardId>
+    <Name>Naga hambriento</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_12</CardId>
+    <Name>Naga hambriento</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_13</CardId>
+    <Name>Naga hambriento</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>1</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_1H</CardId>
+    <Name>Reptalanza heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_2</CardId>
+    <Name>¡Enfurecido!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Otorga +2 p. de ataque a tu héroe este turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_2e</CardId>
+    <Name>Enfurecido</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2 p. de ataque.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_2eH</CardId>
+    <Name>Enfurecido</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+5 p. de ataque.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_2H</CardId>
+    <Name>¡Enfurecido!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Otorga +5 p. de ataque a tu héroe este turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3</CardId>
+    <Name>Abriendo el apetito</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca a un naga hambriento.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3a</CardId>
+    <Name>Famélico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Muy hambriento.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3aH</CardId>
+    <Name>Famélico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Muy hambriento.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3b</CardId>
+    <Name>Abriendo el apetito</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca a un naga hambriento 1/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3c</CardId>
+    <Name>Abriendo el apetito</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca a un naga hambriento 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3d</CardId>
+    <Name>Abriendo el apetito</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca a un naga hambriento 5/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_3H</CardId>
+    <Name>Hambre insaciable</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Invoca a un naga hambriento.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_4</CardId>
+    <Name>Lanza poco común</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Text>Cada vez que tu oponente juega una carta poco común, obtiene +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_4H</CardId>
+    <Name>Lanza poco común</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Weapon</Type>
+    <Attack>1</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>2</Durability>
+    <Text>Cada vez que tu oponente juega una carta poco común, obtiene +1/+1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_5</CardId>
+    <Name>Naga hambriento</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_5H</CardId>
+    <Name>Naga hambriento</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_6</CardId>
+    <Name>Arquero reptante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 1 p. de daño.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_6H</CardId>
+    <Name>Arquero reptante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Inflige 2 p. de daño a todos los esbirros enemigos.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_7</CardId>
+    <Name>Caldero</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>5</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;
+&lt;b&gt;Último aliento:&lt;/b&gt; ¡Salva a Sir Finley y detén el ataque naga!</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_7e</CardId>
+    <Name>Caldero</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_7H</CardId>
+    <Name>Caldero</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>10</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;
+&lt;b&gt;Último aliento:&lt;/b&gt; ¡Salva a Sir Finley!</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_8</CardId>
+    <Name>Guardia reptante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_8H</CardId>
+    <Name>Guardia reptante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>7</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA09_9</CardId>
+    <Name>Repelente de nagas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Destruye a todos los nagas hambrientos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA09_9H</CardId>
+    <Name>Repelente de nagas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Cambia el ataque de todos los nagas hambrientos a 1 p.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_1</CardId>
+    <Name>Aletaza</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_1H</CardId>
+    <Name>Aletaza heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_2</CardId>
+    <Name>¡Mrglmrgl! ¡MRGL!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Roba cartas hasta que tengas tantas en tu mano como tu oponente.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_2H</CardId>
+    <Name>¡Mrglmrgl ¡MRGL!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Roba 2 cartas.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_3</CardId>
+    <Name>Múrloc Aletín</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Mechanics />
+    <Artist>Oliver Chipping</Artist>
+  </Card>
+  <Card>
+    <CardId>LOEA10_5</CardId>
+    <Name>Mrgl Mrgl Ña Ña</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Invoca a 3 múrlocs que hayan muerto durante esta partida.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA10_5H</CardId>
+    <Name>Mrgl Mrgl Ña Ña</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Invoca a 5 múrlocs que hayan muerto durante esta partida.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_1</CardId>
+    <Name>Lady Naz'jar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_1H</CardId>
+    <Name>Naz'jar heroica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_2</CardId>
+    <Name>Perla de las mareas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, reemplaza a todos los esbirros por esbirros nuevos que cuestan (1) cristal más.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA12_2H</CardId>
+    <Name>Perla de las mareas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, reemplaza a todos los esbirros por esbirros nuevos. Los tuyos cuestan (1) cristal más.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_1</CardId>
+    <Name>Esquelesaurus rex</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_1h</CardId>
+    <Name>Esquelesaurus heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_2</CardId>
+    <Name>Poder antiguo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Otorga una carta aleatoria a cada jugador. Cuesta (0) cristales.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA13_2H</CardId>
+    <Name>Poder antiguo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Añade una carta aleatoria a tu mano. Cuesta (0) cristales.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_1</CardId>
+    <Name>El centinela férreo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_1H</CardId>
+    <Name>Centinela heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_2</CardId>
+    <Name>Armadura de placas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+Tu héroe solo puede recibir 1 p. de daño a la vez.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA14_2H</CardId>
+    <Name>Armadura de placas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+Tu héroe y tus esbirros solo pueden recibir 1 p. de daño a la vez.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_1</CardId>
+    <Name>Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_1H</CardId>
+    <Name>Rafaam heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_2</CardId>
+    <Name>Portal inestable</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Añade un esbirro aleatorio a tu mano. Cuesta (3) cristales menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_2H</CardId>
+    <Name>Portal inestable</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe&lt;/b&gt;
+Añade un esbirro aleatorio a tu mano. Cuesta (3) cristales menos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_3</CardId>
+    <Name>Raptor óseo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Toma el control del arma de tu oponente.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA15_3H</CardId>
+    <Name>Raptor óseo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Toma el control del arma de tu oponente.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_1</CardId>
+    <Name>Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_10</CardId>
+    <Name>Cáliz de sangre Hakkari</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Transforma a un esbirro en una serpiente del foso 2/1.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_11</CardId>
+    <Name>Corona de Kael'thas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $10 p. de daño que se dividen aleatoriamente entre todos los personajes.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_12</CardId>
+    <Name>Guardapelo de Medivh</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Reemplaza tu mano por portales inestables.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_13</CardId>
+    <Name>Ojo de Orsis</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Descubre&lt;/b&gt; un esbirro y obtén 3 copias del mismo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_14</CardId>
+    <Name>Pipa de Khadgar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Coloca un hechizo aleatorio en la mano de cada jugador. El tuyo cuesta (0) cristales.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_15</CardId>
+    <Name>Lágrima de Ysera</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Obtienes 4 cristales de maná solo este turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_16</CardId>
+    <Name>Exploración</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Encuentra un artefacto.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_16H</CardId>
+    <Name>Exploración</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Encuentra un artefacto.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_17</CardId>
+    <Name>Estatua animada</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_18</CardId>
+    <Name>Zinaar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, obtienes un deseo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_18H</CardId>
+    <Name>Zinaar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, obtienes un deseo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_19</CardId>
+    <Name>Asaltante del sol Phaerix</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, añade una bendición del sol a tu mano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_19H</CardId>
+    <Name>Asaltante del sol Phaerix</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Tus demás esbirros son &lt;b&gt;inmunes&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_1H</CardId>
+    <Name>Rafaam heroico</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero</Type>
+    <Attack>0</Attack>
+    <Health>30</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_2</CardId>
+    <Name>Bastón de los Orígenes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+Tu héroe es &lt;b&gt;inmune&lt;/b&gt; mientras el bastón se carga.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_20</CardId>
+    <Name>Bendición del sol</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Vuelve &lt;b&gt;inmune&lt;/b&gt; a un esbirro este turno.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_20e</CardId>
+    <Name>Bendito</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inmune&lt;/b&gt; este turno.</Text>
+    <Mechanics>
+      <string>OneTurnEffect</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_20H</CardId>
+    <Name>Bendición del sol</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Inmune&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_21</CardId>
+    <Name>Cabecilla Scarvash</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Las cartas enemigas cuestan (1) cristal más.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_21H</CardId>
+    <Name>Cabecilla Scarvash</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Las cartas enemigas cuestan (2) cristales más.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_22</CardId>
+    <Name>Archaedas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, convierte a un esbirro enemigo aleatorio en una estatua 0/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_22H</CardId>
+    <Name>Archaedas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, convierte a un esbirro enemigo aleatorio en una estatua 0/2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_23</CardId>
+    <Name>Lord Reptalanza</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, invoca a un naga hambriento 1/1 por cada esbirro enemigo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_23H</CardId>
+    <Name>Lord Reptalanza</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, invoca a un naga hambriento 1/1 por cada esbirro enemigo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_24</CardId>
+    <Name>Aletaza</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>Al final de tu turno, roba cartas hasta que tengas tantas como tu oponente.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_24H</CardId>
+    <Name>Aletaza</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>Al final de tu turno, roba 2 cartas.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_25</CardId>
+    <Name>Lady Naz'jar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, reemplaza a todos los demás esbirros por esbirros nuevos que cuestan lo mismo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_25H</CardId>
+    <Name>Lady Naz'jar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, reemplaza a todos tus demás esbirros por esbirros nuevos que cuestan lo mismo.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_26</CardId>
+    <Name>Esquelesaurus rex</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, otorga una carta aleatoria a cada jugador. Cuesta (0) cristales.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_26H</CardId>
+    <Name>Esquelesaurus rex</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, pone una carta aleatoria en tu mano. Cuesta (0) cristales.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_27</CardId>
+    <Name>El centinela férreo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Este esbirro solo puede recibir 1 p. de daño a la vez.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_27H</CardId>
+    <Name>El centinela férreo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>10</Attack>
+    <Health>10</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Este esbirro solo puede recibir 1 p. de daño a la vez.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_2H</CardId>
+    <Name>Bastón de los Orígenes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Hero Power</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Poder de héroe pasivo&lt;/b&gt;
+Tu héroe es &lt;b&gt;inmune&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_3</CardId>
+    <Name>Farol de poder</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Otorga +10/+10 a un esbirro.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_3e</CardId>
+    <Name>Farol de poder</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+10/+10.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_4</CardId>
+    <Name>Reloj de terror</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $10 p. de daño que se dividen aleatoriamente entre todos los enemigos.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOEA16_5</CardId>
+    <Name>Espejo de fatalidad</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Text>Llena tu tablero de momias zombi 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_5t</CardId>
+    <Name>Momia zombi</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_6</CardId>
+    <Name>Fragmento de Sulfuras</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige $5 p. de daño a todos los personajes.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_7</CardId>
+    <Name>Trozo de oración</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Restaura #10 p. de salud a todos los personajes.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_8</CardId>
+    <Name>Vial de Putress</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Destruye un esbirro enemigo aleatorio.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_8a</CardId>
+    <Name>Víctima de Putress</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Ataque y salud intercambiados.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA16_9</CardId>
+    <Name>Greba izquierda de Lothar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Inflige 3 p. de daño a todos los enemigos.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA_01</CardId>
+    <Name>Presencia amenazante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Roba 2 cartas. Obtienes 4 p. de armadura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOEA_01H</CardId>
+    <Name>Presencia amenazante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Roba 3 cartas. Obtienes 6 p. de armadura.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_002</CardId>
+    <Name>Antorcha olvidada</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Inflige $3 p. de daño. Mete en tu mazo una antorcha crepitante que inflige 6 p. de daño.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_002t</CardId>
+    <Name>Antorcha crepitante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Inflige $6 p. de daño.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_003</CardId>
+    <Name>Conjurador etéreo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>3</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>&lt;b&gt;Grito de batalla: Descubre&lt;/b&gt; un hechizo.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_006</CardId>
+    <Name>Conservador del museo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>&lt;b&gt;Grito de batalla: Descubre&lt;/b&gt; una carta con &lt;b&gt;Último aliento&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Steve Prescott</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_007</CardId>
+    <Name>Maldición de Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Da a tu oponente una carta "¡Maldito!".
+Mientras la tenga en la mano, recibirá 2 p. de daño en su turno.</Text>
+    <Mechanics />
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_007t</CardId>
+    <Name>¡Maldito!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>Mientras esta carta está en tu mano, recibes 2 p. de daño al comienzo de tu turno.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_008</CardId>
+    <Name>Ojo de Hakkar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Coge un secreto del mazo de tu oponente y lo coloca en el campo de batalla.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_008H</CardId>
+    <Name>Ojo de Hakkar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>Coge un secreto del mazo de tu oponente y lo coloca en el campo de batalla.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_009</CardId>
+    <Name>Destructor obsidiano</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Al final de tu turno, invoca un escarabajo 1/1 con &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Anton Zemskov</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_009e</CardId>
+    <Name>Poder siniestro</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>+4/+4.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_009t</CardId>
+    <Name>Escarabajo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Jaemin Kim</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_010</CardId>
+    <Name>Serpiente del foso</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Race>Beast</Race>
+    <Text>Destruye a cualquier esbirro dañado por este esbirro.</Text>
+    <Mechanics>
+      <string>Poisonous</string>
+    </Mechanics>
+    <Artist>Bernie Kang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_011</CardId>
+    <Name>Reno Jackson</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si tu mazo no contiene cartas repetidas, sana por completo a tu héroe.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Tyson Murphy</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_012</CardId>
+    <Name>Saqueador de tumbas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Añade una moneda a tu mano.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Dave Allsop</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_012e</CardId>
+    <Name>zzDELETE Tomb Explorer</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>Último aliento copiado de CARD_NAME.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_016</CardId>
+    <Name>Elemental resonador</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Cuando juegas un esbirro con &lt;b&gt;Grito de batalla&lt;/b&gt;, inflige 2 p. de daño a un enemigo aleatorio.</Text>
+    <Mechanics />
+    <Artist>Cole Eastburn</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_016t</CardId>
+    <Name>Roca</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>6</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOE_017</CardId>
+    <Name>Guardiana de Uldaman</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Cambia a 3 el ataque y la salud de un esbirro.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>James Ryman</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_017e</CardId>
+    <Name>Vigilado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Estadísticas cambiadas a 3/3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_018</CardId>
+    <Name>Trogg de túnel</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Cada vez que tengas &lt;b&gt;Sobrecarga&lt;/b&gt;, obtiene +1 p. de ataque por cada cristal de maná bloqueado.</Text>
+    <Mechanics />
+    <Artist>Andrew Hou</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_018e</CardId>
+    <Name>Trogg no tonto</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Ataque aumentado.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_019</CardId>
+    <Name>Raptor desenterrado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Elige a un esbirro amistoso para copiar su &lt;b&gt;Último aliento&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_019e</CardId>
+    <Name>Raptor desenterrado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Rogue</Class>
+    <Text>&lt;b&gt;Último aliento&lt;/b&gt; copiado de CARD_NAME.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_019t</CardId>
+    <Name>Mapa del mono dorado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Text>Mete el mono dorado en tu mazo. Roba una carta.</Text>
+    <Mechanics />
+    <Artist>Milivoj Ceran</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_019t2</CardId>
+    <Name>Mono dorado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>6</Attack>
+    <Health>6</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;
+&lt;b&gt;Grito de batalla:&lt;/b&gt; Reemplaza tu mano y tu mazo por esbirros &lt;b&gt;legendarios&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_020</CardId>
+    <Name>Camello del desierto</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Coloca un esbirro de coste 1 de cada mazo en el campo de batalla.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_021</CardId>
+    <Name>Trampa de dardos</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando el enemigo usa su poder de héroe, inflige 5 p. de daño a un enemigo aleatorio.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_022</CardId>
+    <Name>Mono feroz</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;</Text>
+    <Mechanics>
+      <string>Taunt</string>
+    </Mechanics>
+    <Artist>Peter Stapleton</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_023</CardId>
+    <Name>Vendedor oscuro</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Grito de batalla: Descubre&lt;/b&gt;
+una carta de coste 1.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>George Davis</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_024t</CardId>
+    <Name>Roca rodante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>Al final de tu turno, destruye al esbirro de la izquierda.</Text>
+    <Mechanics />
+    <Artist>Richard Wright</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_026</CardId>
+    <Name>El día de los múrlocs</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>10</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>Invoca a 7 múrlocs que hayan muerto durante esta partida.</Text>
+    <Mechanics />
+    <Artist>Ryan Metcalf</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_027</CardId>
+    <Name>Prueba sagrada</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Paladin</Class>
+    <Text>&lt;b&gt;Secreto:&lt;/b&gt; Cuando tu oponente tiene al menos 3 esbirros, si juega otro más, lo destruye.</Text>
+    <Mechanics>
+      <string>Secret</string>
+    </Mechanics>
+    <Artist>Zoltan Boros</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_029</CardId>
+    <Name>Escarabajo con joyas</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Grito de batalla: Descubre&lt;/b&gt;
+una carta de coste 3.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Jaemin Kim</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_030</CardId>
+    <Name>zzDELETE? Animated Armor</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Provocar&lt;/b&gt;
+&lt;b&gt;Grito de batalla:&lt;/b&gt; Copia el ataque y la salud de un esbirro amistoso.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+      <string>Taunt</string>
+    </Mechanics>
+  </Card>
+  <Card>
+    <CardId>LOE_030e</CardId>
+    <Name>Hueca</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Estadísticas copiadas.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_038</CardId>
+    <Name>Bruja de mar naga</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>5</Attack>
+    <Health>5</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Tus cartas cuestan (5) cristales.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_039</CardId>
+    <Name>Gorilabot A-3</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Mech</Race>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si controlas un robot, &lt;b&gt;Descubre&lt;/b&gt; otro.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Skan Srisuwan</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_046</CardId>
+    <Name>Sapo gigante</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Inflige 1 p. de daño a un enemigo aleatorio.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_047</CardId>
+    <Name>Araña de la tumba</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>3</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Grito de batalla: Descubre&lt;/b&gt; una bestia.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Turovec Konstantin</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_050</CardId>
+    <Name>Raptor montado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>2</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca a un esbirro aleatorio de coste 1.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Ben Zhang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_051</CardId>
+    <Name>Lechúcico de la selva</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Race>Beast</Race>
+    <Text>Ambos jugadores tienen
+&lt;b&gt;+2 p. de daño con hechizos&lt;/b&gt;.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_053</CardId>
+    <Name>Djinn de los Céfiros</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Epic</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Cada vez que lanzas un hechizo sobre otro esbirro amistoso, este esbirro también recibe el efecto del mismo.</Text>
+    <Mechanics />
+    <Artist>Jakub Kasper</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_061</CardId>
+    <Name>Centinela Anubisath</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Otorga +3/+3 a un esbirro amistoso aleatorio.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Paul Mafayon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_061e</CardId>
+    <Name>Poder de los titanes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+3/+3.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_073</CardId>
+    <Name>Demosaurio fosilizado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Minion</Type>
+    <Attack>8</Attack>
+    <Health>8</Health>
+    <Cost>8</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si controlas unas bestia, obtiene &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Trent Kaniuga</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_073e</CardId>
+    <Name>Fosilizado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Tiene &lt;b&gt;Provocar&lt;/b&gt;.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_076</CardId>
+    <Name>Sir Finley Mrrgglton</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>3</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Race>Murloc</Race>
+    <Text>&lt;b&gt;Grito de batalla: Descubre&lt;/b&gt; un nuevo poder de héroe básico.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_077</CardId>
+    <Name>Brann Barbabronce</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>4</Health>
+    <Cost>3</Cost>
+    <Durability>0</Durability>
+    <Text>Tus &lt;b&gt;Gritos de batalla&lt;/b&gt; se activan dos veces.</Text>
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
+    <Artist>Sam Nielson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_079</CardId>
+    <Name>Elise Buscaestelar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>3</Attack>
+    <Health>5</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Mete el mapa del mono dorado en tu mazo.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Luke Mancini</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_086</CardId>
+    <Name>Roca de invocación</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>0</Attack>
+    <Health>6</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Text>Cada vez que lanzas un hechizo, invoca a un esbirro aleatorio del mismo coste.</Text>
+    <Mechanics />
+    <Artist>Jason Kang</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089</CardId>
+    <Name>Retacos tambaleantes</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>6</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Invoca a tres retacos 2/2.</Text>
+    <Mechanics>
+      <string>Deathrattle</string>
+    </Mechanics>
+    <Artist>Sam Nielson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t</CardId>
+    <Name>Retaco granuja</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t2</CardId>
+    <Name>Retaco taimado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_089t3</CardId>
+    <Name>Retaco quejica</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Minion</Type>
+    <Attack>2</Attack>
+    <Health>2</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Mechanics />
+    <Artist>Matt Dixon</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_092</CardId>
+    <Name>Archiladrón Rafaam</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Legendary</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>8</Health>
+    <Cost>9</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla: Descubre&lt;/b&gt; un poderoso artefacto.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Alex Horley Orlandelli</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_104</CardId>
+    <Name>Sepultar</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>6</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Elige a un esbirro enemigo.
+Mételo en tu mazo.</Text>
+    <Mechanics />
+    <Artist>Alex Konstad</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_105</CardId>
+    <Name>Sombrero de expedicionario</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>2</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>Otorga a un esbirro +1/+1 y "&lt;b&gt;Último aliento:&lt;/b&gt; Añade un Sombrero de expedicionario a tu mano".</Text>
+    <Mechanics />
+    <Artist>Joe Wilson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_105e</CardId>
+    <Name>Sombrero de expedicionario</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Hunter</Class>
+    <Text>+1/+1. &lt;b&gt;Último aliento:&lt;/b&gt; Añade un Sombrero de expedicionario a tu mano.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_107</CardId>
+    <Name>Estatua siniestra</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>7</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>No puede atacar a menos que sea el único esbirro en el campo de batalla.</Text>
+    <Mechanics />
+    <Artist>Jim Nelson</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_110</CardId>
+    <Name>Sombra ancestral</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>7</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Mete en tu mazo una maldición ancestral que te inflige 7 p. de daño al robarla.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_110t</CardId>
+    <Name>Maldición ancestral</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>Cuando robas esta carta, te inflige 7 p. de daño y robas otra carta.</Text>
+    <Mechanics>
+      <string>ImmuneToSpellpower</string>
+    </Mechanics>
+    <Artist>Slawomir Maniak</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_111</CardId>
+    <Name>Mal desenterrado</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>5</Cost>
+    <Durability>0</Durability>
+    <Class>Priest</Class>
+    <Text>Inflige $3 p. de daño a todos los esbirros.
+Mete esta carta en el mazo de tu oponente.</Text>
+    <Mechanics />
+    <Artist>Raymond Swanland</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_113</CardId>
+    <Name>Todo es fabumrgloso</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>7</Cost>
+    <Durability>0</Durability>
+    <Class>Shaman</Class>
+    <Text>Otorga +2/+2 a tus esbirros.
+Cuesta (1) cristal menos por cada múrloc que controles.</Text>
+    <Mechanics />
+    <Artist>Andrius Matijoshius</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_113e</CardId>
+    <Name>¡Mrglllraawrrrglrur!</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text>+2/+2.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_115</CardId>
+    <Name>Ídolo del cuervo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Elige una:&lt;/b&gt;
+&lt;b&gt;Descubre&lt;/b&gt; un esbirro, o bien &lt;b&gt;Descubre&lt;/b&gt; un hechizo.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_115a</CardId>
+    <Name>Ídolo del cuervo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Descubre&lt;/b&gt; un esbirro.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_115b</CardId>
+    <Name>Ídolo del cuervo</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Common</Rarity>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Druid</Class>
+    <Text>&lt;b&gt;Descubre&lt;/b&gt; un hechizo.</Text>
+    <Mechanics />
+    <Artist>A.J. Nazzaro</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_116</CardId>
+    <Name>Buscadora de reliquias</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>1</Attack>
+    <Health>1</Health>
+    <Cost>1</Cost>
+    <Durability>0</Durability>
+    <Class>Warlock</Class>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Si tienes otros 6 esbirros, obtiene +4/+4.</Text>
+    <Mechanics>
+      <string>Battlecry</string>
+    </Mechanics>
+    <Artist>Wayne Reynolds</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_118</CardId>
+    <Name>Espada maldita</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Weapon</Type>
+    <Attack>2</Attack>
+    <Health>0</Health>
+    <Cost>1</Cost>
+    <Durability>3</Durability>
+    <Class>Warrior</Class>
+    <Text>Duplica todo el daño infligido a tu héroe.</Text>
+    <Mechanics />
+    <Artist>Craig Mullins</Artist>
+  </Card>
+  <Card>
+    <CardId>LOE_118e</CardId>
+    <Name>Espada maldita</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Type>Enchantment</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Class>Warrior</Class>
+    <Text>Duplica todo el daño infligido a tu héroe.</Text>
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>LOE_119</CardId>
+    <Name>Armadura animada</Name>
+    <CardSet>League of Explorers</CardSet>
+    <Rarity>Rare</Rarity>
+    <Type>Minion</Type>
+    <Attack>4</Attack>
+    <Health>4</Health>
+    <Cost>4</Cost>
+    <Durability>0</Durability>
+    <Class>Mage</Class>
+    <Text>Tu héroe solo puede recibir 1 p. de daño a la vez.</Text>
+    <Mechanics />
+    <Artist>Mike Sass</Artist>
   </Card>
   <Card>
     <CardId>EX1_062</CardId>
@@ -12332,6 +16081,19 @@ Invoca a dos esbirros 2/1.</Text>
     <CardId>XXX_063</CardId>
     <Name />
     <CardSet>Debug</CardSet>
+    <Type>Spell</Type>
+    <Attack>0</Attack>
+    <Health>0</Health>
+    <Cost>0</Cost>
+    <Durability>0</Durability>
+    <Text />
+    <Mechanics />
+  </Card>
+  <Card>
+    <CardId>XXX_065</CardId>
+    <Name />
+    <CardSet>Debug</CardSet>
+    <Rarity>Common</Rarity>
     <Type>Spell</Type>
     <Attack>0</Attack>
     <Health>0</Health>
@@ -20077,7 +23839,7 @@ Si tu mano está vacía, roba una carta.</Text>
     <Health>7</Health>
     <Cost>9</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Reemplaza a tu héroe con Ragnaros, Señor del Fuego.</Text>
+    <Text>&lt;b&gt;Último aliento:&lt;/b&gt; Reemplaza a tu héroe por Ragnaros, Señor del Fuego.</Text>
     <Mechanics>
       <string>Deathrattle</string>
     </Mechanics>
@@ -22115,7 +25877,9 @@ Coloca los esbirros que has robado directamente en el campo de batalla.</Text>
     <Cost>2</Cost>
     <Durability>0</Durability>
     <Text>Puedes usar tu poder de héroe dos veces en un turno.</Text>
-    <Mechanics />
+    <Mechanics>
+      <string>Aura</string>
+    </Mechanics>
     <Artist>Jesper Ejsing</Artist>
   </Card>
   <Card>
@@ -23093,7 +26857,7 @@ No puede atacar a héroes.</Text>
     <Health>3</Health>
     <Cost>6</Cost>
     <Durability>0</Durability>
-    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Reemplaza tu poder de héroe inicial con uno mejor.</Text>
+    <Text>&lt;b&gt;Grito de batalla:&lt;/b&gt; Reemplaza tu poder de héroe inicial por uno mejor.</Text>
     <Mechanics>
       <string>Battlecry</string>
     </Mechanics>
