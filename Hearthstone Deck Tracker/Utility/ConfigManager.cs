@@ -200,8 +200,13 @@ namespace Hearthstone_Deck_Tracker.Utility
                         Config.Instance.Reset("GoldProgressTotal");
                         converted = true;
                     }
-                }
-            }
+				}
+				if(configVersion <= new Version(0, 13, 1, 0))   //button moved up with new expansion added to the list
+				{
+					Config.Instance.Reset("ExportAllSetsButtonY");
+					converted = true;
+				}
+			}
 
             if (converted)
             {
