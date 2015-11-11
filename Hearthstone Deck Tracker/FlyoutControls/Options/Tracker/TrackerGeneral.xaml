@@ -17,6 +17,11 @@
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxAutoSelectDeck_Checked"
                                           Unchecked="CheckboxAutoSelectDeck_Unchecked" />
+                    <CheckBox x:Name="CheckboxSpectatorUseNoDeck"
+                                          Content="Use no deck on Spectator mode" HorizontalAlignment="Left"
+                                          Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxSpectatorUseNoDeck_Checked"
+                                          Unchecked="CheckboxSpectatorUseNoDeck_Unchecked" />
                     <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxFlashHs_Checked"
