@@ -421,13 +421,14 @@ namespace Hearthstone_Deck_Tracker
 #pragma warning disable 4014
         public async void HandleGameEnd()
         {
-            Core.Overlay.HideTimers();
 	        if(_game.CurrentGameStats == null || _handledGameEnd)
 	        {
 				Logger.WriteLine("HandleGameEnd was already called.", "HandleGameEnd");
 		        return;
 			}
 			_handledGameEnd = true;
+			TurnTimer.Instance.Stop();
+			Core.Overlay.HideTimers();
 			Logger.WriteLine("Game ended...", "HandleGameEnd");
             if (_game.CurrentGameMode == GameMode.Spectator && !Config.Instance.RecordSpectator)
             {
