@@ -594,9 +594,9 @@ namespace Hearthstone_Deck_Tracker
                 await Task.Delay(100);
 		}
 
-        private void LogEvent(string type, string id = "", int turn = 0, int from = -1)
+        private void LogEvent(string type, string id = "", int turn = 0, int from = -1, int logLevel = 1)
         {
-            Logger.WriteLine(string.Format("{0} (id:{1} turn:{2} from:{3})", type, id, turn, from), "GameEventHandler", 1);
+            Logger.WriteLine(string.Format("{0} (id:{1} turn:{2} from:{3})", type, id, turn, from), "GameEventHandler", logLevel);
         }
 
         public void HandleWin()
@@ -679,28 +679,36 @@ namespace Hearthstone_Deck_Tracker
 
         public void HandlePlayerHeroPower(string cardId, int turn)
         {
-            LogEvent("PlayerHeroPower", cardId, turn);
+	        LogEvent("PlayerHeroPower", cardId, turn, logLevel: 0);
             _game.AddPlayToCurrentGame(PlayType.PlayerHeroPower, turn, cardId);
             GameEvents.OnPlayerHeroPower.Execute();
-        }
+
+			if(Config.Instance.AutoGrayoutSecrets)
+			{
+				_game.OpponentSecrets.SetZero(CardIds.Secrets.Hunter.DartTrap);
+
+				if(Core.MainWindow != null)
+					Core.Overlay.ShowSecrets();
+			}
+		}
 
         public void HandleOpponentHeroPower(string cardId, int turn)
         {
-            LogEvent("OpponentHeroPower", cardId, turn);
+            LogEvent("OpponentHeroPower", cardId, turn, logLevel: 0);
             _game.AddPlayToCurrentGame(PlayType.OpponentHeroPower, turn, cardId);
             GameEvents.OnOpponentHeroPower.Execute();
         }
 
         public void HandlePlayerFatigue(int currentDamage)
         {
-            LogEvent("PlayerFatigue", "", currentDamage);
+            LogEvent("PlayerFatigue", "", currentDamage, logLevel: 0);
             _game.Player.Fatigue = currentDamage;
             GameEvents.OnPlayerFatigue.Execute(currentDamage);
         }
 
         public void HandleOpponentFatigue(int currentDamage)
         {
-            LogEvent("OpponentFatigue", "", currentDamage);
+            LogEvent("OpponentFatigue", "", currentDamage, logLevel: 0);
             _game.Opponent.Fatigue = currentDamage;
             GameEvents.OnOpponentFatigue.Execute(currentDamage);
         }

@@ -176,6 +176,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			for(var index = 0; index < stopIndex; index++)
 				Secrets[index].PossibleSecrets[cardId] = false;
+			if(stopIndex > 0)
+				Logger.WriteLine("Set secret to zero: " + Database.GetCardFromId(cardId), "OpponentSecrets");
 		}
 
 		public List<Secret> GetSecrets()
