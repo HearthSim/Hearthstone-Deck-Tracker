@@ -413,6 +413,12 @@ namespace Hearthstone_Deck_Tracker
             _game.IsInMenu = false;
             _game.Reset();
 
+            if (Config.Instance.SpectatorUseNoDeck && _game.CurrentGameMode == GameMode.Spectator)
+            {
+                Logger.WriteLine("SpectatorUseNoDeck: " + Config.Instance.SpectatorUseNoDeck, "GameEventHandler");
+                DeckList.Instance.ActiveDeck = null;
+            }
+
             var selectedDeck = DeckList.Instance.ActiveDeckVersion;
             if (selectedDeck != null)
                 _game.SetPremadeDeck((Deck)selectedDeck.Clone());
