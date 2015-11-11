@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             {
                 public static List<string> All
                 {
-                    get { return new List<string> { Avenge, CompetitiveSpirit, EyeForAnEye, NobleSacrifice, Redemption, Repentance }; }
+                    get { return new List<string> { Avenge, CompetitiveSpirit, EyeForAnEye, NobleSacrifice, Redemption, Repentance, SacredTrial }; }
                 }
                 public static string Avenge { get { return "FP1_020"; } }
                 public static string CompetitiveSpirit { get { return "AT_073"; } }
@@ -87,6 +87,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
                 public static string NobleSacrifice { get { return "EX1_130"; } }
                 public static string Redemption { get { return "EX1_136"; } }
                 public static string Repentance { get { return "EX1_379"; } }
+				public static string SacredTrial { get { return "LOE_027"; } }
             }
 
             public static List<string> FastCombat = new List<string> {

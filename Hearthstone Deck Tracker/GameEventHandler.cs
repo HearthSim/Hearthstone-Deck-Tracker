@@ -825,6 +825,14 @@ namespace Hearthstone_Deck_Tracker
 
             _game.AddPlayToCurrentGame(PlayType.PlayerPlay, turn, cardId);
             GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
+
+	        if(Config.Instance.AutoGrayoutSecrets && entity.IsMinion && _game.PlayerMinionCount > 3)
+	        {
+		        _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.SacredTrial);
+
+				if(Core.MainWindow != null)
+					Core.Overlay.ShowSecrets();
+			}
         }
 
         public void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn)

@@ -90,6 +90,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
             get { return Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))); }
         }
 
+		public int PlayerMinionCount
+		{
+			get { return Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Player.Id))); }
+		}
+
         public GameMode CurrentGameMode
 		{
 			get { return _currentGameMode; }
