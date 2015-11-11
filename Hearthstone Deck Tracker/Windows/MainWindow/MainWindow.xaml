@@ -11,7 +11,7 @@
                       xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
                       xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
                       Title="Hearthstone Deck Tracker" Height="603" Width="700"
-                      MinHeight="584" MinWidth="700"
+                      MinHeight="584" MinWidth="700" SaveWindowPosition="True"
                       Closing="Window_Closing"
                       Icon="/HearthstoneDeckTracker;component/Images/HearthstoneDeckTracker.ico"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
