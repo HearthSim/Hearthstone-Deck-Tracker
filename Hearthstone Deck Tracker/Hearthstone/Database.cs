@@ -19,6 +19,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"System"
 		};
 
+		public static List<Card> AllCards
+		{
+			get { return _cards.Values.ToList(); }
+		} 
+
 		static Database()
 		{
 			Load();
