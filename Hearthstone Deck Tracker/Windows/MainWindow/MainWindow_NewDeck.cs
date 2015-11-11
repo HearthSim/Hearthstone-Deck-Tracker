@@ -451,15 +451,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			MenuItemExportXml.IsEnabled = enable;
 		}
 
-		private async void MenuItem_OnSubmenuOpened(object sender, RoutedEventArgs e)
+		private void MenuItem_OnSubmenuOpened(object sender, RoutedEventArgs e)
 		{
+			if(_newDeck == null)
+				return;
 			//a menuitems clickevent does not fire if it has subitems
 			//bit of a hacky workaround, but this does the trick (subitems are disabled when a new deck is created, enabled when one is edited)
 			if(_newDeck.IsArenaDeck
 			   || !MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
 			{
-				MenuItemSave.IsSubmenuOpen = false;
-				SaveDeckWithOverwriteCheck();
+				try
+				{
+					MenuItemSave.IsSubmenuOpen = false;
+					SaveDeckWithOverwriteCheck();
+				}
+				catch(Exception ex)
+				{
+					Logger.WriteLine("Error closing submenu:\r\n" + ex, "MainWindow");
+				}
 			}
 		}
 
