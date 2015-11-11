@@ -48,10 +48,15 @@ namespace Hearthstone_Deck_Tracker
 	    {
 	        get
 	        {
-	            if (_instance == null) Create(90);
+	            if (_instance == null) Create(Config.Instance.TimerTurnTime);
 	            return _instance;
 	        }
 	    }
+
+		public void SetTurnTime(int turnTime)
+		{
+			_turnTime = turnTime;
+		}
 
 	    /// <summary>
 		/// 

@@ -256,9 +256,13 @@ namespace Hearthstone_Deck_Tracker
             }
         }
 
-        public void TurnStart(ActivePlayer player, int turnNumber)
-        {
-            Logger.WriteLine(string.Format("--- {0} turn {1} ---", player, turnNumber + 1), "GameEventHandler");
+        public async void TurnStart(ActivePlayer player, int turnNumber)
+		{
+			if(!_game.IsMulliganDone)
+				Logger.WriteLine(string.Format("--- Mulligan ---"), "GameEventHandler");
+			while(!_game.IsMulliganDone)
+				await Task.Delay(100);
+			Logger.WriteLine(string.Format("--- {0} turn {1} ---", player, turnNumber + 1), "GameEventHandler");
             //doesn't really matter whose turn it is for now, just restart timer
             //maybe add timer to player/opponent windows
             TurnTimer.Instance.SetCurrentPlayer(player);

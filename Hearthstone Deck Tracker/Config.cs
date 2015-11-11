@@ -806,6 +806,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(50)]
 		public double TimersVerticalSpacing = 50;
 
+		[DefaultValue(90)]
+		public int TimerTurnTime = 90;
+
 		[DefaultValue(true)]
 		public bool TrackerCardToolTips = true;
 
