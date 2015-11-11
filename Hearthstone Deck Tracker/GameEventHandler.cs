@@ -413,13 +413,20 @@ namespace Hearthstone_Deck_Tracker
             _game.IsInMenu = false;
             _game.Reset();
 
+            var selectedDeck = DeckList.Instance.ActiveDeckVersion;
+
             if (Config.Instance.SpectatorUseNoDeck && _game.CurrentGameMode == GameMode.Spectator)
             {
-                Logger.WriteLine("SpectatorUseNoDeck: " + Config.Instance.SpectatorUseNoDeck, "GameEventHandler");
-                DeckList.Instance.ActiveDeck = null;
+                Logger.WriteLine("SpectatorUseNoDeck is " + Config.Instance.SpectatorUseNoDeck, "GameEventHandler");
+                if(selectedDeck != null)
+                {
+                    Config.Instance.ReselectLastDeckUsed = true;
+                    Logger.WriteLine("ReselectLastUsedDeck set to true", "GameEventHandler");
+                    Config.Save();
+                }
+                Core.MainWindow.SelectDeck(null, true);
             }
 
-            var selectedDeck = DeckList.Instance.ActiveDeckVersion;
             if (selectedDeck != null)
                 _game.SetPremadeDeck((Deck)selectedDeck.Clone());
             GameEvents.OnGameStart.Execute();
@@ -582,6 +589,14 @@ namespace Hearthstone_Deck_Tracker
 					Logger.WriteLine("Error saving to DefaultDeckStats: " + ex, "HandleGameEnd");
 	            }
                 _assignedDeck = null;
+            }
+
+            if(Config.Instance.ReselectLastDeckUsed && selectedDeck == null)
+            {
+                Core.MainWindow.SelectLastUsedDeck();
+                Config.Instance.ReselectLastDeckUsed = false;
+                Logger.WriteLine("ReselectLastUsedDeck set to false", "HandleGameEnd");
+                Config.Save();
             }
         }
 #pragma warning restore 4014
