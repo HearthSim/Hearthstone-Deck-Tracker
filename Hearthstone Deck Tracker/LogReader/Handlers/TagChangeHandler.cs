@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                     tag = (GAME_TAG)tmp;
             }
             var value = HsLogReaderV2.ParseTagValue(tag, rawValue);
-            var prevZone = game.Entities[id].GetTag(GAME_TAG.ZONE);
+            var prevValue = game.Entities[id].GetTag(tag);
             game.Entities[id].SetTag(tag, value);
 
             if (tag == GAME_TAG.CONTROLLER && gameState.WaitForController != null && game.Player.Id == -1)
@@ -70,16 +70,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 if (((TAG_ZONE)value == TAG_ZONE.HAND || ((TAG_ZONE)value == TAG_ZONE.PLAY || (TAG_ZONE)value == TAG_ZONE.DECK) && game.IsMulliganDone) && gameState.WaitForController == null)
                 {
                     if (!game.IsMulliganDone)
-                        prevZone = (int)TAG_ZONE.DECK;
+                        prevValue = (int)TAG_ZONE.DECK;
                     if (controller == 0)
                     {
-                        game.Entities[id].SetTag(GAME_TAG.ZONE, prevZone);
+                        game.Entities[id].SetTag(GAME_TAG.ZONE, prevValue);
                         gameState.WaitForController = new { Tag = rawTag, Id = id, Value = rawValue };
                         //Logger.WriteLine("CURRENTLY NO CONTROLLER SET FOR CARD, WAITING...");
                         return;
                     }
                 }
-                switch ((TAG_ZONE)prevZone)
+                switch ((TAG_ZONE)prevValue)
                 {
                     case TAG_ZONE.DECK:
                         switch ((TAG_ZONE)value)
@@ -161,7 +161,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                 }
                                 break;
 							default:
-								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevValue, (TAG_ZONE)value), "TagChange");
 		                        break;
 
 
@@ -220,7 +220,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                 }
                                 break;
 							default:
-								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevValue, (TAG_ZONE)value), "TagChange");
 								break;
 						}
                         break;
@@ -268,7 +268,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                     }
 		                        break;
 							default:
-								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevValue, (TAG_ZONE)value), "TagChange");
 								break;
 						}
                         break;
@@ -286,7 +286,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                 }
                                 break;
 							default:
-								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevValue, (TAG_ZONE)value), "TagChange");
 								break;
 						}
                         break;
@@ -338,12 +338,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                                 }
                                 break;
 							default:
-								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+								Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevValue, (TAG_ZONE)value), "TagChange");
 								break;
 						}
                         break;
 					default:
-						Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevZone, (TAG_ZONE)value), "TagChange");
+						Logger.WriteLine(string.Format("WARNING - unhandled zone change (id={0}): {1} -> {2}", id, (TAG_ZONE)prevValue, (TAG_ZONE)value), "TagChange");
 		                break;
                 }
             }
@@ -487,7 +487,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                         gameState.ProposeKeyPoint(KeyPointType.HeroPower, id, ActivePlayer.Opponent);
                 }
             }
-            else if (tag == GAME_TAG.CONTROLLER)
+            else if (tag == GAME_TAG.CONTROLLER && prevValue > 0)
             {
 	            if (value == game.Player.Id)
 	            {

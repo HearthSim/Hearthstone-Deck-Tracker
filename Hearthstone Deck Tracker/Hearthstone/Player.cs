@@ -511,6 +511,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void StolenByOpponent(Entity entity, int turn)
 		{
 			var ce = MoveCardEntity(entity, Board, Removed, turn);
+			UpdateRevealedEntity(ce, turn);
 			Log("StolenByOpponent", ce);
 		}
 
@@ -518,6 +519,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var ce = MoveCardEntity(entity, Removed, Board, turn);
 			ce.Created = true;
+			UpdateRevealedEntity(ce, turn);
 			Log("StolenFromOpponent", ce);
 		}
 	}
