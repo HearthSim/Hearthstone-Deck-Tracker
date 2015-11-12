@@ -652,7 +652,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 									                                           && d.HearthStatsDeckVersionId == match.game.HearthStatsDeckVersionId)
 									                      ?? match.deck.GetVersion(match.game.PlayerDeckVersion))
 									                   : (match.game.PlayerDeckVersion != null ? match.deck.GetVersion(match.game.PlayerDeckVersion) : match.deck))
-							                  }).GroupBy(x => x.deckVersion.HearthStatsDeckVersionId);
+							                  }).Where(x => x.deckVersion != null).GroupBy(x => x.deckVersion.HearthStatsDeckVersionId);
 
 						Parallel.ForEach(groupedMatchObs, matches =>
 						{
