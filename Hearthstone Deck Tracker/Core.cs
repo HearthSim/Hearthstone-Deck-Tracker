@@ -73,6 +73,12 @@ namespace Hearthstone_Deck_Tracker
 	            loginType = loggedIn ? LoginType.AutoLogin : LoginType.AutoGuest;
             MainWindow = new MainWindow();
             MainWindow.LoadConfigSettings();
+            if(Config.Instance.ReselectLastDeckUsed)
+            {
+                MainWindow.SelectLastUsedDeck();
+                Config.Instance.ReselectLastDeckUsed = false;
+                Config.Save();
+            }
             MainWindow.Show();
             splashScreenWindow.Close();
 
