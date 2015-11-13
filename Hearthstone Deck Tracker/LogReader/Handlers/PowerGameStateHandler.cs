@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -215,44 +216,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		            switch(actionStartingCardId)
 		            {
 			            case CardIds.Rogue.GangUp:
-			            {
-				            var target = match.Groups["target"].Value.Trim();
-				            if(target.StartsWith("[") && HsLogReaderConstants.PowerTaskList.EntityRegex.IsMatch(target))
-				            {
-					            var cardIdMatch = HsLogReaderConstants.PowerTaskList.CardIdRegex.Match(target);
-					            if(cardIdMatch.Success)
-					            {
-						            var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
-
-						            for(int i = 0; i < 3; i++)
-						            {
-							            var id = game.Entities.Count + i + 1;
-							            if(!gameState.KnownCardIds.ContainsKey(id))
-								            gameState.KnownCardIds.Add(id, targetCardId);
-						            }
-					            }
-				            }
-			            }
-				            break;
+							AddTargetAsKnownCardId(gameState, game, match, 3);
+							break;
 			            case CardIds.Warrior.IronJuggernaut:
 				            AddKnownCardId(gameState, game, CardIds.Warrior.BurrowingMine);
 				            break;
 			            case CardIds.Druid.Recycle:
-			            {
-				            var id = game.Entities.Count + 1;
-				            gameState.ProposeKeyPoint(KeyPointType.CreateToDeck, id, ActivePlayer.Player);
-				            var target = match.Groups["target"].Value.Trim();
-				            if(target.StartsWith("[") && HsLogReaderConstants.PowerTaskList.EntityRegex.IsMatch(target))
-				            {
-					            var cardIdMatch = HsLogReaderConstants.PowerTaskList.CardIdRegex.Match(target);
-					            if(cardIdMatch.Success)
-					            {
-						            var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
-						            if(!gameState.KnownCardIds.ContainsKey(id))
-							            gameState.KnownCardIds.Add(id, targetCardId);
-					            }
-				            }
-			            }
+							AddTargetAsKnownCardId(gameState, game, match, 1);
 				            break;
 			            case CardIds.Druid.Malorne:
 				            AddKnownCardId(gameState, game, CardIds.Druid.Malorne);
@@ -261,11 +231,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							AddKnownCardId(gameState, game, CardIds.Mage.RoaringTorch);
 							break;
 						case CardIds.Warlock.CurseOfRafaam:
-							AddKnownCardId(gameState, game, CardIds.Warlock.Curse);
+							AddKnownCardId(gameState, game, CardIds.Warlock.Cursed);
 							break;
 						case CardIds.Neutral.AncientShade:
 							AddKnownCardId(gameState, game, CardIds.Neutral.AncientCurse);
 				            break;
+						case CardIds.Priest.Entomb:
+							AddTargetAsKnownCardId(gameState, game, match, 1);
+				            break;
+						case CardIds.Priest.ExcavatedEvil:
+				            AddKnownCardId(gameState, game, CardIds.Priest.ExcavatedEvil);
+				            break;
+						case CardIds.Neutral.EliseStarseeker:
+							AddKnownCardId(gameState, game, CardIds.Neutral.MapToTheGoldenMonkey);
+							break;
+						case CardIds.Neutral.MapToTheGoldenMonkey:
+							AddKnownCardId(gameState, game, CardIds.Neutral.GoldenMonkey);
+							break;
 						default:
 				            if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1
 				               && !gameState.PlayerUsedHeroPower
@@ -296,6 +278,25 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 gameState.JoustReveals = 2;
             }
         }
+
+	    private static void AddTargetAsKnownCardId(IHsGameState gameState, IGame game, Match match, int count)
+	    {
+		    var target = match.Groups["target"].Value.Trim();
+		    if(target.StartsWith("[") && HsLogReaderConstants.PowerTaskList.EntityRegex.IsMatch(target))
+		    {
+			    var cardIdMatch = HsLogReaderConstants.PowerTaskList.CardIdRegex.Match(target);
+			    if(cardIdMatch.Success)
+			    {
+				    var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
+				    for(var i = 0; i < count; i++)
+					{
+						var id = game.Entities.Count + i + 1;
+						if(!gameState.KnownCardIds.ContainsKey(id))
+							gameState.KnownCardIds.Add(id, targetCardId);
+					}
+			    }
+		    }
+		}
 
 	    private static void AddKnownCardId(IHsGameState gameState, IGame game, string cardId)
 	    {

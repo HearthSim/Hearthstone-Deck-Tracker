@@ -191,7 +191,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		
 		public class Druid
 		{
-			public const string Malorne = "FP1_020";
+			public const string Malorne = "GVG_035";
 			public const string Recycle = "GVG_031";
 		}
 
@@ -201,6 +201,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public const string RoaringTorch = "LOE_002t";
 		}
 
+		public class Priest
+		{
+			public const string Entomb = "LOE_104";
+			public const string ExcavatedEvil = "LOE_111";
+		}
+
 		public class Rogue
 		{
 			public const string GangUp = "BRM_007";
@@ -208,7 +214,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public class Warlock
 		{
-			public const string Curse = "LOE_007t";
+			public const string Cursed = "LOE_007t";
 			public const string CurseOfRafaam = "LOE_007";
 		}
 
@@ -222,6 +228,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			public const string AncientCurse = "LOE_110t";
 			public const string AncientShade = "LOE_110";
+			public const string EliseStarseeker = "LOE_079";
+			public const string MapToTheGoldenMonkey = "LOE_019t";
+			public const string GoldenMonkey = "LOE_019t2";
 		}
 	}
 }
