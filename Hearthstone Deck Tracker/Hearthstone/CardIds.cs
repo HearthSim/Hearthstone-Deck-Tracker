@@ -188,5 +188,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{"EX1_323", "Jaraxxus"},
 			{"BRM_027", "Ragnaros the Firelord"}
 		};
+		
+		public class Druid
+		{
+			public const string Malorne = "FP1_020";
+			public const string Recycle = "GVG_031";
+		}
+
+		public class Mage
+		{
+			public const string ForgottenTorch = "LOE_002";
+			public const string RoaringTorch = "LOE_002t";
+		}
+
+		public class Rogue
+		{
+			public const string GangUp = "BRM_007";
+		}
+
+		public class Warrior
+		{
+			public const string IronJuggernaut = "GVG_056";
+			public const string BurrowingMine = "GVG_056t";
+		}
 	}
 }
