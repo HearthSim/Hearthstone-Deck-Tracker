@@ -206,6 +206,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public const string GangUp = "BRM_007";
 		}
 
+		public class Warlock
+		{
+			public const string Curse = "LOE_007t";
+			public const string CurseOfRafaam = "LOE_007";
+		}
+
 		public class Warrior
 		{
 			public const string IronJuggernaut = "GVG_056";

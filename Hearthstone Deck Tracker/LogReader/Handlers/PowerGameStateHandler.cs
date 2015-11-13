@@ -257,10 +257,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			            case CardIds.Druid.Malorne:
 				            AddKnownCardId(gameState, game, CardIds.Druid.Malorne);
 				            break;
-			            case CardIds.Mage.ForgottenTorch:
-				            AddKnownCardId(gameState, game, CardIds.Mage.RoaringTorch);
-				            break;
-			            default:
+						case CardIds.Mage.ForgottenTorch:
+							AddKnownCardId(gameState, game, CardIds.Mage.RoaringTorch);
+							break;
+						case CardIds.Warlock.CurseOfRafaam:
+							AddKnownCardId(gameState, game, CardIds.Warlock.Curse);
+							break;
+						default:
 				            if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1
 				               && !gameState.PlayerUsedHeroPower
 				               || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1
