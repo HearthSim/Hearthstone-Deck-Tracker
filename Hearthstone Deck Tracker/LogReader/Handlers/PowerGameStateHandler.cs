@@ -263,6 +263,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						case CardIds.Warlock.CurseOfRafaam:
 							AddKnownCardId(gameState, game, CardIds.Warlock.Curse);
 							break;
+						case CardIds.Neutral.AncientShade:
+							AddKnownCardId(gameState, game, CardIds.Neutral.AncientCurse);
+				            break;
 						default:
 				            if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1
 				               && !gameState.PlayerUsedHeroPower

@@ -217,5 +217,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			public const string IronJuggernaut = "GVG_056";
 			public const string BurrowingMine = "GVG_056t";
 		}
+
+		public class Neutral
+		{
+			public const string AncientCurse = "LOE_110t";
+			public const string AncientShade = "LOE_110";
+		}
 	}
 }
