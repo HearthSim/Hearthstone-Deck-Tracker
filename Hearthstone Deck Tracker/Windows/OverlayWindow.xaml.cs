@@ -1187,14 +1187,14 @@ namespace Hearthstone_Deck_Tracker
             var card = ToolTipCard.DataContext as Card;
             if (card == null)
                 return;
-            if (!CardIds.SubCardIds.Keys.Contains(card.Id))
+			if(card.EntourageCardIds.Length  == 0)
             {
                 HideAdditionalToolTips();
                 return;
             }
 
             StackPanelAdditionalTooltips.Children.Clear();
-            foreach (var id in CardIds.SubCardIds[card.Id])
+            foreach (var id in card.EntourageCardIds)
             {
                 var tooltip = new CardToolTip();
                 tooltip.SetValue(DataContextProperty, Database.GetCardFromId(id));

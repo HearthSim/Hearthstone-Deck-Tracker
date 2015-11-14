@@ -215,38 +215,38 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	            {
 		            switch(actionStartingCardId)
 		            {
-			            case CardIds.Rogue.GangUp:
+			            case HearthDb.CardIds.Collectible.Rogue.GangUp:
 							AddTargetAsKnownCardId(gameState, game, match, 3);
 							break;
-			            case CardIds.Warrior.IronJuggernaut:
-				            AddKnownCardId(gameState, game, CardIds.Warrior.BurrowingMine);
+			            case HearthDb.CardIds.Collectible.Warrior.IronJuggernaut:
+				            AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Warrior.BurrowingMineToken);
 				            break;
-			            case CardIds.Druid.Recycle:
+			            case HearthDb.CardIds.Collectible.Druid.Recycle:
 							AddTargetAsKnownCardId(gameState, game, match, 1);
 				            break;
-			            case CardIds.Druid.Malorne:
-				            AddKnownCardId(gameState, game, CardIds.Druid.Malorne);
+			            case HearthDb.CardIds.Collectible.Druid.Malorne:
+				            AddKnownCardId(gameState, game, HearthDb.CardIds.Collectible.Druid.Malorne);
 				            break;
-						case CardIds.Mage.ForgottenTorch:
-							AddKnownCardId(gameState, game, CardIds.Mage.RoaringTorch);
+						case HearthDb.CardIds.Collectible.Mage.ForgottenTorch:
+							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Mage.RoaringTorchToken);
 							break;
-						case CardIds.Warlock.CurseOfRafaam:
-							AddKnownCardId(gameState, game, CardIds.Warlock.Cursed);
+						case HearthDb.CardIds.Collectible.Warlock.CurseOfRafaam:
+							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Warlock.CursedToken);
 							break;
-						case CardIds.Neutral.AncientShade:
-							AddKnownCardId(gameState, game, CardIds.Neutral.AncientCurse);
+						case HearthDb.CardIds.Collectible.Neutral.AncientShade:
+							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Neutral.AncientCurseToken);
 				            break;
-						case CardIds.Priest.Entomb:
+						case HearthDb.CardIds.Collectible.Priest.Entomb:
 							AddTargetAsKnownCardId(gameState, game, match, 1);
 				            break;
-						case CardIds.Priest.ExcavatedEvil:
-				            AddKnownCardId(gameState, game, CardIds.Priest.ExcavatedEvil);
+						case HearthDb.CardIds.Collectible.Priest.ExcavatedEvil:
+				            AddKnownCardId(gameState, game, HearthDb.CardIds.Collectible.Priest.ExcavatedEvil);
 				            break;
-						case CardIds.Neutral.EliseStarseeker:
-							AddKnownCardId(gameState, game, CardIds.Neutral.MapToTheGoldenMonkey);
+						case HearthDb.CardIds.Collectible.Neutral.EliseStarseeker:
+							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Neutral.MapToTheGoldenMonkeyToken);
 							break;
-						case CardIds.Neutral.MapToTheGoldenMonkey:
-							AddKnownCardId(gameState, game, CardIds.Neutral.GoldenMonkey);
+						case HearthDb.CardIds.NonCollectible.Neutral.MapToTheGoldenMonkeyToken:
+							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Neutral.GoldenMonkeyToken);
 							break;
 						default:
 				            if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1

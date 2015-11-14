@@ -67,6 +67,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\De.TorstenMandelkow.MetroChart.dll</HintPath>
     </Reference>
+    <Reference Include="HearthDb">
+      <HintPath>..\lib\HearthDb.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -247,6 +250,7 @@
     <Compile Include="Exporting\ExportingInfo.cs" />
     <Compile Include="Exporting\HueAndBrightness.cs" />
     <Compile Include="Hearthstone\GameTime.cs" />
+    <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
     <Compile Include="Stats\CompiledStats\ChartStats.cs" />
     <Compile Include="Stats\CompiledStats\ClassStats.cs" />
@@ -886,48 +890,6 @@
     </Compile>
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
     <Resource Include="Resources\SplashScreen.png" />
-    <Content Include="Files\cardDB.deDE.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.enGB.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.enUS.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.esES.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.esMX.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.frFR.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.itIT.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.jaJP.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.koKR.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.plPL.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.ptBR.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.ruRU.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.zhCN.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\cardDB.zhTW.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="HDTHelper.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -4308,10 +4270,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Content Include="Files\log.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -4356,10 +4314,8 @@
     rmdir /S /Q "..\Hearthstone Deck Tracker"
     mkdir "..\Hearthstone Deck Tracker"
     mkdir "..\Hearthstone Deck Tracker/Images"
-    mkdir "..\Hearthstone Deck Tracker/Files"
     mkdir "..\Hearthstone Deck Tracker/Plugins"
     xcopy /E /Y "Images\*.*" "..\Hearthstone Deck Tracker\Images"
-    xcopy /E /Y "Files\*.*" "..\Hearthstone Deck Tracker\Files"
     xcopy /Y "HearthstoneDeckTracker.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Hearthstone Deck Tracker"
     ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe" "Hearthstone Deck Tracker.exe"
@@ -4368,6 +4324,7 @@
     xcopy /Y "HDTUpdate.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HDTUninstaller.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "Garlic.dll" "..\Hearthstone Deck Tracker"
+    xcopy /Y "HearthDb.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "De.TorstenMandelkow.MetroChart.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "HtmlAgilityPack.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "MahApps.Metro.dll" "..\Hearthstone Deck Tracker"

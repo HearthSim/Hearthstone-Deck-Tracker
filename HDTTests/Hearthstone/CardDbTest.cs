@@ -12,7 +12,7 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestTotalCollectableCards()
 		{
-			// 3.0.0.9786 - TGT
+			// 4.0.0.10833 - LOE
 			Assert.AreEqual(743, Database.GetActualCards().Count);
 		}
 
