@@ -218,11 +218,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			            case HearthDb.CardIds.Collectible.Rogue.GangUp:
 							AddTargetAsKnownCardId(gameState, game, match, 3);
 							break;
+						case HearthDb.CardIds.Collectible.Rogue.BeneathTheGrounds:
+							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Rogue.AmbushToken, 3);
+							break;
 			            case HearthDb.CardIds.Collectible.Warrior.IronJuggernaut:
 				            AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Warrior.BurrowingMineToken);
 				            break;
 			            case HearthDb.CardIds.Collectible.Druid.Recycle:
-							AddTargetAsKnownCardId(gameState, game, match, 1);
+							AddTargetAsKnownCardId(gameState, game, match);
 				            break;
 			            case HearthDb.CardIds.Collectible.Druid.Malorne:
 				            AddKnownCardId(gameState, game, HearthDb.CardIds.Collectible.Druid.Malorne);
@@ -237,7 +240,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Neutral.AncientCurseToken);
 				            break;
 						case HearthDb.CardIds.Collectible.Priest.Entomb:
-							AddTargetAsKnownCardId(gameState, game, match, 1);
+							AddTargetAsKnownCardId(gameState, game, match);
 				            break;
 						case HearthDb.CardIds.Collectible.Priest.ExcavatedEvil:
 				            AddKnownCardId(gameState, game, HearthDb.CardIds.Collectible.Priest.ExcavatedEvil);
@@ -279,7 +282,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
             }
         }
 
-	    private static void AddTargetAsKnownCardId(IHsGameState gameState, IGame game, Match match, int count)
+	    private static void AddTargetAsKnownCardId(IHsGameState gameState, IGame game, Match match, int count = 1)
 	    {
 		    var target = match.Groups["target"].Value.Trim();
 		    if(target.StartsWith("[") && HsLogReaderConstants.PowerTaskList.EntityRegex.IsMatch(target))
@@ -298,11 +301,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		    }
 		}
 
-	    private static void AddKnownCardId(IHsGameState gameState, IGame game, string cardId)
+	    private static void AddKnownCardId(IHsGameState gameState, IGame game, string cardId, int count = 1)
 	    {
-		    var id = game.Entities.Count + 1;
-		    if(!gameState.KnownCardIds.ContainsKey(id))
-			    gameState.KnownCardIds.Add(id, cardId);
+		    for(var i = 0; i < count; i++)
+			{
+				var id = game.Entities.Count + 1 + i;
+				if(!gameState.KnownCardIds.ContainsKey(id))
+					gameState.KnownCardIds.Add(id, cardId);
+			}
 	    }
     }
 }
