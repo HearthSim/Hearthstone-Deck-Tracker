@@ -8,6 +8,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Replay;
+using CardIds = HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
@@ -213,66 +214,79 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	            }
 	            if(!string.IsNullOrEmpty(actionStartingCardId))
 	            {
-		            switch(actionStartingCardId)
+		            if(match.Groups["type"].Value == "TRIGGER")
 		            {
-			            case HearthDb.CardIds.Collectible.Rogue.GangUp:
-							AddTargetAsKnownCardId(gameState, game, match, 3);
-							break;
-						case HearthDb.CardIds.Collectible.Rogue.BeneathTheGrounds:
-							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Rogue.AmbushToken, 3);
-							break;
-			            case HearthDb.CardIds.Collectible.Warrior.IronJuggernaut:
-				            AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Warrior.BurrowingMineToken);
-				            break;
-			            case HearthDb.CardIds.Collectible.Druid.Recycle:
-							AddTargetAsKnownCardId(gameState, game, match);
-				            break;
-			            case HearthDb.CardIds.Collectible.Druid.Malorne:
-				            AddKnownCardId(gameState, game, HearthDb.CardIds.Collectible.Druid.Malorne);
-				            break;
-						case HearthDb.CardIds.Collectible.Mage.ForgottenTorch:
-							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Mage.RoaringTorchToken);
-							break;
-						case HearthDb.CardIds.Collectible.Warlock.CurseOfRafaam:
-							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Warlock.CursedToken);
-							break;
-						case HearthDb.CardIds.Collectible.Neutral.AncientShade:
-							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Neutral.AncientCurseToken);
-				            break;
-						case HearthDb.CardIds.Collectible.Priest.Entomb:
-							AddTargetAsKnownCardId(gameState, game, match);
-				            break;
-						case HearthDb.CardIds.Collectible.Priest.ExcavatedEvil:
-				            AddKnownCardId(gameState, game, HearthDb.CardIds.Collectible.Priest.ExcavatedEvil);
-				            break;
-						case HearthDb.CardIds.Collectible.Neutral.EliseStarseeker:
-							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Neutral.MapToTheGoldenMonkeyToken);
-							break;
-						case HearthDb.CardIds.NonCollectible.Neutral.MapToTheGoldenMonkeyToken:
-							AddKnownCardId(gameState, game, HearthDb.CardIds.NonCollectible.Neutral.GoldenMonkeyToken);
-							break;
-						default:
-				            if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1
-				               && !gameState.PlayerUsedHeroPower
-				               || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1
-				               && !gameState.OpponentUsedHeroPower)
-				            {
-					            var card = Database.GetCardFromId(actionStartingCardId);
-					            if(card.Type == "Hero Power")
+			            switch(actionStartingCardId)
+			            {
+				            case CardIds.Collectible.Rogue.TradePrinceGallywix:
+					            AddKnownCardId(gameState, game, game.Entities[gameState.LastCardPlayed].CardId);
+					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Neutral.GallywixsCoinToken);
+					            break;
+				            case CardIds.Collectible.Druid.Malorne:
+					            AddKnownCardId(gameState, game, CardIds.Collectible.Druid.Malorne);
+					            break;
+			            }
+		            }
+		            else //POWER
+		            {
+			            switch(actionStartingCardId)
+			            {
+				            case CardIds.Collectible.Rogue.GangUp:
+					            AddTargetAsKnownCardId(gameState, game, match, 3);
+					            break;
+				            case CardIds.Collectible.Rogue.BeneathTheGrounds:
+					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Rogue.AmbushToken, 3);
+					            break;
+				            case CardIds.Collectible.Warrior.IronJuggernaut:
+					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Warrior.BurrowingMineToken);
+					            break;
+				            case CardIds.Collectible.Druid.Recycle:
+					            AddTargetAsKnownCardId(gameState, game, match);
+					            break;
+				            case CardIds.Collectible.Mage.ForgottenTorch:
+					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Mage.RoaringTorchToken);
+					            break;
+				            case CardIds.Collectible.Warlock.CurseOfRafaam:
+					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Warlock.CursedToken);
+					            break;
+				            case CardIds.Collectible.Neutral.AncientShade:
+					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Neutral.AncientCurseToken);
+					            break;
+				            case CardIds.Collectible.Priest.Entomb:
+					            AddTargetAsKnownCardId(gameState, game, match);
+					            break;
+				            case CardIds.Collectible.Priest.ExcavatedEvil:
+					            AddKnownCardId(gameState, game, CardIds.Collectible.Priest.ExcavatedEvil);
+					            break;
+				            case CardIds.Collectible.Neutral.EliseStarseeker:
+					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Neutral.MapToTheGoldenMonkeyToken);
+					            break;
+				            case CardIds.NonCollectible.Neutral.MapToTheGoldenMonkeyToken:
+					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Neutral.GoldenMonkeyToken);
+					            break;
+				            default:
+					            if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1
+					               && !gameState.PlayerUsedHeroPower
+					               || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1
+					               && !gameState.OpponentUsedHeroPower)
 					            {
-						            if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+						            var card = Database.GetCardFromId(actionStartingCardId);
+						            if(card.Type == "Hero Power")
 						            {
-							            gameState.GameHandler.HandlePlayerHeroPower(actionStartingCardId, gameState.GetTurnNumber());
-							            gameState.PlayerUsedHeroPower = true;
-						            }
-						            else if(opponentEntity.Value != null)
-						            {
-							            gameState.GameHandler.HandleOpponentHeroPower(actionStartingCardId, gameState.GetTurnNumber());
-							            gameState.OpponentUsedHeroPower = true;
+							            if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+							            {
+								            gameState.GameHandler.HandlePlayerHeroPower(actionStartingCardId, gameState.GetTurnNumber());
+								            gameState.PlayerUsedHeroPower = true;
+							            }
+							            else if(opponentEntity.Value != null)
+							            {
+								            gameState.GameHandler.HandleOpponentHeroPower(actionStartingCardId, gameState.GetTurnNumber());
+								            gameState.OpponentUsedHeroPower = true;
+							            }
 						            }
 					            }
-				            }
-				            break;
+					            break;
+			            }
 		            }
 	            }
             }

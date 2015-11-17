@@ -387,6 +387,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 else
                     gameState.OpponentUsedHeroPower = false;
             }
+			else if(tag == GAME_TAG.LAST_CARD_PLAYED)
+			{
+				gameState.LastCardPlayed = value;
+			}
             else if (tag == GAME_TAG.DEFENDING)
             {
                 if (player == "OPPOSING")

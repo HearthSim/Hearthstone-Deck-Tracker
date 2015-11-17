@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
         bool FoundSpectatorStart { get; set; }
 	    int JoustReveals { get; set; }
 	    Dictionary<int, string> KnownCardIds { get; set; }
+	    int LastCardPlayed { get; set; }
 	    void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player);
         void GameEnd();
         int GetTurnNumber();
