@@ -330,7 +330,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void CreateInHand(Entity entity, int turn)
 		{
 			var ce = new CardEntity(entity) {Turn = turn, CardMark = CardMark.Created, Created = true};
-            Hand.Add(ce);
+			if(entity != null
+			   && (entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin
+			       || entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.GallywixsCoinToken))
+				ce.CardMark = CardMark.Coin;
+			Hand.Add(ce);
 			if(IsLocalPlayer)
 				CreatedInHandCardIds.Add(entity.CardId);
 			Log("CreateInHand", ce);
