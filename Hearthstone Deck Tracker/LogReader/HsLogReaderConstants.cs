@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			public static readonly Regex CardIdRegex = new Regex(@"cardId=(?<cardId>(\w+))");
 			public static readonly Regex CreationRegex = new Regex(@"FULL_ENTITY - Updating.*id=(?<id>(\d+)).*CardID=(?<cardId>(\w*))");
 			public static readonly Regex CreationTagRegex = new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
-			public static readonly Regex EntityNameRegex = new Regex(@"TAG_CHANGE\ Entity=(?<name>(\w+))\ tag=PLAYER_ID\ value=(?<value>(\d))");
+			public static readonly Regex EntityNameRegex = new Regex(@"TAG_CHANGE\ Entity=(?<name>([\w\s]+\w))\ tag=PLAYER_ID\ value=(?<value>(\d))");
 			public static readonly Regex EntityRegex = new Regex(@"(?=id=(?<id>(\d+)))(?=name=(?<name>(\w+)))?(?=zone=(?<zone>(\w+)))?(?=zonePos=(?<zonePos>(\d+)))?(?=cardId=(?<cardId>(\w+)))?(?=player=(?<player>(\d+)))?(?=type=(?<type>(\w+)))?");
 			public static readonly Regex GameEntityRegex = new Regex(@"GameEntity\ EntityID=(?<id>(\d+))");
 			public static readonly Regex PlayerEntityRegex = new Regex(@"Player\ EntityID=(?<id>(\d+))\ PlayerID=(?<playerId>(\d+))\ GameAccountId=(?<gameAccountId>(.+))");

@@ -110,11 +110,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                     match = HsLogReaderConstants.PowerTaskList.EntityNameRegex.Match(logLine);
                     var name = match.Groups["name"].Value;
                     var player = int.Parse(match.Groups["value"].Value);
-                    if (player == 1)
-                        gameState.GameHandler.HandlePlayerName(name);
-                    else if (player == 2)
-                        gameState.GameHandler.HandleOpponentName(name);
-                }
+	                if(player == game.Player.Id)
+		                game.Player.Name = name;
+	                else if(player == game.Opponent.Id)
+		                game.Opponent.Name = name;
+				}
             }
             else if (HsLogReaderConstants.PowerTaskList.CreationRegex.IsMatch(logLine))
             {

@@ -720,11 +720,6 @@ namespace Hearthstone_Deck_Tracker
 
         #region Player
 
-        public void HandlePlayerName(string name)
-        {
-            _game.Player.Name = name;
-        }
-
         public void HandlePlayerGetToDeck(Entity entity, string cardId, int turn)
         {
             if (string.IsNullOrEmpty(cardId))
@@ -880,11 +875,6 @@ namespace Hearthstone_Deck_Tracker
         #endregion
 
         #region Opponent
-
-        public void HandleOpponentName(string name)
-        {
-            _game.Opponent.Name = name;
-        }
 
         public void HandleOpponentGetToDeck(Entity entity, int turn)
         {

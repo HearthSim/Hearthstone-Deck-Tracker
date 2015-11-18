@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                     if (p2 != null)
                         p2.IsPlayer = value != 1;
                     game.Player.Id = value;
-                    game.Opponent.Id = value == 1 ? 2 : 1;
+                    game.Opponent.Id = value % 2 + 1;
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                         p1.IsPlayer = value != 1;
                     if (p2 != null)
                         p2.IsPlayer = value == 1;
-                    game.Player.Id = value == 1 ? 2 : 1;
+                    game.Player.Id = value % 2 + 1;
                     game.Opponent.Id = value;
                 }
             }
@@ -64,8 +64,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
             var cardId = game.Entities[id].CardId;
             if (tag == GAME_TAG.ZONE)
             {
-                //Logger.WriteLine("--------" + player + " " + game.Entities[id].CardId + " " + (TAG_ZONE)prevZone + " -> " +
-                //                 (TAG_ZONE)value);
 
                 if (((TAG_ZONE)value == TAG_ZONE.HAND || ((TAG_ZONE)value == TAG_ZONE.PLAY || (TAG_ZONE)value == TAG_ZONE.DECK) && game.IsMulliganDone) && gameState.WaitForController == null)
                 {
@@ -75,7 +73,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                     {
                         game.Entities[id].SetTag(GAME_TAG.ZONE, prevValue);
                         gameState.WaitForController = new { Tag = rawTag, Id = id, Value = rawValue };
-                        //Logger.WriteLine("CURRENTLY NO CONTROLLER SET FOR CARD, WAITING...");
                         return;
                     }
                 }

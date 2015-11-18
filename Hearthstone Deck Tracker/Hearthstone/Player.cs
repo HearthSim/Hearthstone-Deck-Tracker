@@ -18,7 +18,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Player : INotifyPropertyChanged
 	{
-		public string Name { get;set; }
+		public string Name
+		{
+			get { return _name; }
+			set
+			{
+				_name = value;
+				Log(value, "Name");
+			}
+		}
+
 		public string Class { get; set; }
 		public int Id { get; set; }
 		public bool GoingFirst { get; set; }
@@ -60,6 +69,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public const int DeckSize = 30;
 
 		private readonly Queue<string> _hightlightedCards = new Queue<string>();
+		private string _name;
 
 		public List<Card> DisplayCards
 		{
@@ -270,8 +280,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private void Log(string action, CardEntity ce)
 		{
+			Log(ce.ToString(), action);
+		}
+
+		private void Log(string msg, string category)
+		{
 			var player = IsLocalPlayer ? "Player " : "Opponent ";
-			Logger.WriteLine(ce.ToString(), player + action);
+			Logger.WriteLine(msg, player + category);
 		}
 
 		private async void Highlight(string cardId)
