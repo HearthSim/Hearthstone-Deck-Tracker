@@ -48,9 +48,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		// todo: Baron Rivendare
 		public static readonly Dictionary<string, int> DeathrattleSummonCardIds = new Dictionary<string, int>
 		{
+			{HearthDb.CardIds.Collectible.Druid.MountedRaptor, 1},
 			{HearthDb.CardIds.Collectible.Hunter.SavannahHighmane, 2},
 			{HearthDb.CardIds.Collectible.Rogue.Anubarak, 1},
 			{HearthDb.CardIds.Collectible.Warlock.Dreadsteed, 1},
+			{HearthDb.CardIds.Collectible.Warlock.Voidcaller, 1}, //false negative better than false positive
 			{HearthDb.CardIds.Collectible.Neutral.CairneBloodhoof, 1},
 			{HearthDb.CardIds.Collectible.Neutral.HarvestGolem, 1},
 			{HearthDb.CardIds.Collectible.Neutral.PilotedShredder, 1},
@@ -58,7 +60,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{HearthDb.CardIds.Collectible.Neutral.SneedsOldShredder, 1},
 			{HearthDb.CardIds.Collectible.Neutral.HauntedCreeper, 2},
 			{HearthDb.CardIds.Collectible.Neutral.NerubianEgg, 1},
-			{HearthDb.CardIds.Collectible.Neutral.SludgeBelcher, 1}
+			{HearthDb.CardIds.Collectible.Neutral.SludgeBelcher, 1},
+			{HearthDb.CardIds.Collectible.Neutral.WobblingRunts, 3}
 		};
 
 		public static readonly Dictionary<string, string> HeroIdDict = new Dictionary<string, string>
