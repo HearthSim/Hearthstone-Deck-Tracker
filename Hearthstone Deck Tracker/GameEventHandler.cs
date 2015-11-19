@@ -362,7 +362,7 @@ namespace Hearthstone_Deck_Tracker
 
 	    public async void HandleAvengeAsync(int deathRattleCount)
 	    {
-		    _avengeDeathRattleCount += _avengeDeathRattleCount;
+		    _avengeDeathRattleCount += deathRattleCount;
 		    if(_awaitingAvenge)
 			    return;
 		    _awaitingAvenge = true;
