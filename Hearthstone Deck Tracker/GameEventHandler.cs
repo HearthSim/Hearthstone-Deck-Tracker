@@ -362,7 +362,9 @@ namespace Hearthstone_Deck_Tracker
 		    if(_awaitingAvenge)
 			    return;
 		    _awaitingAvenge = true;
-		    await _game.GameTime.WaitForDuration(AvengeDelay);
+		    if(_game.OpponentMinionCount == 0)
+			    return;
+			await _game.GameTime.WaitForDuration(AvengeDelay);
 			if(_game.OpponentMinionCount > 0)
 				_game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
 		    _awaitingAvenge = false;
