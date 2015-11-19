@@ -321,53 +321,58 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.ShowSecrets();
         }
 
-        public void HandleOpponentMinionDeath(Entity entity, int turn)
-        {
-            if (!Config.Instance.AutoGrayoutSecrets)
-                return;
+	    public void HandleOpponentMinionDeath(Entity entity, int turn)
+	    {
+		    if(!Config.Instance.AutoGrayoutSecrets)
+			    return;
 
-            _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Duplicate);
+		    _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Duplicate);
 
-			HandleAvengeAsync();
 
-            int numDeathrattleMinions = 0;
+		    var numDeathrattleMinions = 0;
 
-            if (entity.IsActiveDeathrattle)
-                CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId, out numDeathrattleMinions);
+		    if(entity.IsActiveDeathrattle)
+			    CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId, out numDeathrattleMinions);
 
-            // redemption never triggers if a deathrattle effect fills up the board
-            // effigy can trigger ahead of the deathrattle effect, but only if effigy was played before the deathrattle minion
-            if (_game.OpponentMinionCount < 7 - numDeathrattleMinions)
-            {
-                _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Redemption);
-                _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Effigy);
-            }
-            else
-            {
-                // todo: need to properly break ties when effigy + deathrattle played in same turn
-                int minionTurnPlayed = turn - entity.GetTag(GAME_TAG.NUM_TURNS_IN_PLAY);
-                SecretHelper secret = _game.OpponentSecrets.Secrets.FirstOrDefault(x => x.TurnPlayed >= minionTurnPlayed);
-                int secretOffset = secret != null ? _game.OpponentSecrets.Secrets.IndexOf(secret) : 0;
-                _game.OpponentSecrets.SetZeroOlder(CardIds.Secrets.Mage.Effigy, secretOffset);
-            }
+		    HandleAvengeAsync(numDeathrattleMinions);
 
-            if (Core.MainWindow != null)
-				Core.Overlay.ShowSecrets();
-        }
+		    // redemption never triggers if a deathrattle effect fills up the board
+		    // effigy can trigger ahead of the deathrattle effect, but only if effigy was played before the deathrattle minion
+		    if(_game.OpponentMinionCount < 7 - numDeathrattleMinions)
+		    {
+			    _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Redemption);
+			    _game.OpponentSecrets.SetZero(CardIds.Secrets.Mage.Effigy);
+		    }
+		    else
+		    {
+			    // todo: need to properly break ties when effigy + deathrattle played in same turn
+			    int minionTurnPlayed = turn - entity.GetTag(GAME_TAG.NUM_TURNS_IN_PLAY);
+			    SecretHelper secret = _game.OpponentSecrets.Secrets.FirstOrDefault(x => x.TurnPlayed >= minionTurnPlayed);
+			    int secretOffset = secret != null ? _game.OpponentSecrets.Secrets.IndexOf(secret) : 0;
+			    _game.OpponentSecrets.SetZeroOlder(CardIds.Secrets.Mage.Effigy, secretOffset);
+		    }
+
+		    if(Core.MainWindow != null)
+			    Core.Overlay.ShowSecrets();
+	    }
 
 	    private bool _awaitingAvenge;
 	    private const int AvengeDelay = 50;
-	    public async void HandleAvengeAsync()
+	    private int _avengeDeathRattleCount;
+
+	    public async void HandleAvengeAsync(int deathRattleCount)
 	    {
+		    _avengeDeathRattleCount += _avengeDeathRattleCount;
 		    if(_awaitingAvenge)
 			    return;
 		    _awaitingAvenge = true;
 		    if(_game.OpponentMinionCount == 0)
 			    return;
-			await _game.GameTime.WaitForDuration(AvengeDelay);
-			if(_game.OpponentMinionCount > 0)
-				_game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
+		    await _game.GameTime.WaitForDuration(AvengeDelay);
+		    if(_game.OpponentMinionCount - _avengeDeathRattleCount > 0)
+			    _game.OpponentSecrets.SetZero(CardIds.Secrets.Paladin.Avenge);
 		    _awaitingAvenge = false;
+		    _avengeDeathRattleCount = 0;
 	    }
 
         public void HandleOpponentDamage(Entity entity)
