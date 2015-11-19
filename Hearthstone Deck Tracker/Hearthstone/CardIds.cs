@@ -43,9 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"LOE_030"
 		};
 
-		// todo: spells which add deathrattle. Soul of the Forest, Ancestral Spirit
-		// todo: conditional deathrattle summons: Voidcaller, Stalagg/Feugen
-		// todo: Baron Rivendare
+		// todo: conditional deathrattle summons: Voidcaller
 		public static readonly Dictionary<string, int> DeathrattleSummonCardIds = new Dictionary<string, int>
 		{
 			{HearthDb.CardIds.Collectible.Druid.MountedRaptor, 1},

@@ -332,7 +332,25 @@ namespace Hearthstone_Deck_Tracker
 		    var numDeathrattleMinions = 0;
 
 		    if(entity.IsActiveDeathrattle)
-			    CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId, out numDeathrattleMinions);
+		    {
+			    if(!CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId, out numDeathrattleMinions))
+			    {
+				    if(entity.CardId == HearthDb.CardIds.Collectible.Neutral.Stalagg
+				       && _game.Opponent.Graveyard.Any(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.Feugen)
+				       || entity.CardId == HearthDb.CardIds.Collectible.Neutral.Feugen
+				       && _game.Opponent.Graveyard.Any(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.Stalagg))
+					    numDeathrattleMinions = 1;
+				}
+				if(_game.Entities.Any(x => x.Value.CardId == HearthDb.CardIds.NonCollectible.Druid.SoulOfTheForestEnchantment
+										&& x.Value.GetTag(GAME_TAG.ATTACHED) == entity.Id))
+					numDeathrattleMinions++;
+				if(_game.Entities.Any(x => x.Value.CardId == HearthDb.CardIds.NonCollectible.Shaman.AncestralSpiritEnchantment
+										&& x.Value.GetTag(GAME_TAG.ATTACHED) == entity.Id))
+					numDeathrattleMinions++;
+			}
+
+		    if(_game.OpponentEntity != null && _game.OpponentEntity.HasTag(GAME_TAG.EXTRA_DEATHRATTLES))
+			    numDeathrattleMinions *= (_game.OpponentEntity.GetTag(GAME_TAG.EXTRA_DEATHRATTLES) + 1);
 
 		    HandleAvengeAsync(numDeathrattleMinions);
 
