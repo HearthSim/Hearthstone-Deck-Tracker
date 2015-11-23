@@ -455,8 +455,7 @@ namespace Hearthstone_Deck_Tracker
                 }
                 Core.MainWindow.SelectDeck(null, true);
             }
-
-            if (selectedDeck != null)
+			else if (selectedDeck != null)
                 _game.SetPremadeDeck((Deck)selectedDeck.Clone());
             GameEvents.OnGameStart.Execute();
         }
@@ -473,10 +472,17 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.HideTimers();
 			Logger.WriteLine("Game ended...", "HandleGameEnd");
             if (_game.CurrentGameMode == GameMode.Spectator && !Config.Instance.RecordSpectator)
-            {
-                Logger.WriteLine("Game is in Spectator mode, discarded. (Record Spectator disabled)", "HandleGameEnd");
+			{
+				if(Config.Instance.ReselectLastDeckUsed && DeckList.Instance.ActiveDeck == null)
+				{
+					Core.MainWindow.SelectLastUsedDeck();
+					Config.Instance.ReselectLastDeckUsed = false;
+					Logger.WriteLine("ReselectLastUsedDeck set to false", "HandleGameEnd");
+					Config.Save();
+				}
+				Logger.WriteLine("Game is in Spectator mode, discarded. (Record Spectator disabled)", "HandleGameEnd");
                 _assignedDeck = null;
-                return;
+				return;
             }
             var player = _game.Entities.FirstOrDefault(e => e.Value.IsPlayer);
             var opponent = _game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && !e.Value.IsPlayer);
