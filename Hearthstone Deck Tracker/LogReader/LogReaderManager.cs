@@ -21,6 +21,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private static readonly ZoneHandler ZoneHandler = new ZoneHandler();
 		private static readonly BobHandler BobHandler = new BobHandler();
 		private static readonly ArenaHandler ArenaHandler = new ArenaHandler();
+		private static readonly LoadingScreenHandler LoadingScreenHandler = new LoadingScreenHandler();
 		private static LogReader _powerLogReader;
 		private static LogReader _bobLogReader;
 		private static HsGameState _gameState;
@@ -39,6 +40,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			LogReaders.Add(new LogReader(HsLogReaderConstants.RachelleLogReaderInfo));
 			LogReaders.Add(new LogReader(HsLogReaderConstants.AssetLogReaderInfo));
 			LogReaders.Add(new LogReader(HsLogReaderConstants.ArenaLogReaderInfo));
+			LogReaders.Add(new LogReader(HsLogReaderConstants.LoadingScreenLogReaderInfo));
 		}
 
 		public static void Start(GameV2 game)
@@ -181,6 +183,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						case "Arena":
 							ArenaHandler.Handle(line.Line, _gameState, _game);
 							API.LogEvents.OnArenaLogLine.Execute(line.Line);
+							break;
+						case "LoadingScreen":
+							LoadingScreenHandler.Handle(line.Line, _gameState, _game);
 							break;
 					}
 				}

@@ -110,8 +110,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return _currentGameMode; }
 			set
 			{
-				_currentGameMode = value;
-				Logger.WriteLine("Set CurrentGameMode to " + value, "Game");
+				if(_currentGameMode != value)
+				{
+					_currentGameMode = value;
+					Logger.WriteLine("Set CurrentGameMode to " + value, "Game");
+				}
 			}
 		}
 
@@ -131,8 +134,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			if(!IsInMenu && resetStats)
 			{
-				if(CurrentGameMode != GameMode.Spectator)
-					CurrentGameMode = GameMode.None;
+				if(CurrentGameMode == GameMode.Ranked)
+				{
+					Logger.WriteLine("Resetting gamemode to casual", "Game");
+					CurrentGameMode = GameMode.Casual;
+				}
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 				_gameModeDetectionComplete = false;
 			}

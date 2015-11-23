@@ -38,10 +38,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
                 else
                     gameState.GameHandler.HandlePossibleConstructedCard(id, true);
             }
-            else if (HsLogReaderConstants.UnloadBrawlAsset.IsMatch(logLine))
-            {
-                gameState.GameHandler.SetGameMode(GameMode.Brawl);
-            }
         }
     }
 }

@@ -251,6 +251,7 @@
     <Compile Include="Exporting\HueAndBrightness.cs" />
     <Compile Include="Hearthstone\GameTime.cs" />
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
+    <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
     <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
     <Compile Include="Stats\CompiledStats\ChartStats.cs" />
     <Compile Include="Stats\CompiledStats\ClassStats.cs" />

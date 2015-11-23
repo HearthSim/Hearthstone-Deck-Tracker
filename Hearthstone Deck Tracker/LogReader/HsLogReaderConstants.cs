@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
         public static readonly Regex ExistingHeroRegex = new Regex(@"Draft Deck ID: .*, Hero Card = (?<id>(HERO_\w+))");
         public static readonly Regex ExistingCardRegex = new Regex(@"Draft deck contains card (?<id>(\w+))");
         public static readonly Regex NewChoiceRegex = new Regex(@"Client chooses: .* \((?<id>(.+))\)");
+		public static readonly Regex GameModeRegex = new Regex(@"prevMode=(?<prev>(\w+)).*currMode=(?<curr>(\w+))");
 
 		public static LogReaderInfo PowerLogReaderInfo
 		{
@@ -68,5 +69,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			get { return new LogReaderInfo { Name = "Arena" }; }
 		}
-	}
+
+	    public static LogReaderInfo LoadingScreenLogReaderInfo
+	    {
+			get { return new LogReaderInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded"}}; }
+	    }
+    }
 }
