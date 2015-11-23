@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 if (int.TryParse(rawTag, out tmp) && Enum.IsDefined(typeof(GAME_TAG), tmp))
                     tag = (GAME_TAG)tmp;
             }
-            var value = HsLogReaderV2.ParseTagValue(tag, rawValue);
+            var value = LogReaderHelper.ParseTagValue(tag, rawValue);
             var prevValue = game.Entities[id].GetTag(tag);
             game.Entities[id].SetTag(tag, value);
 

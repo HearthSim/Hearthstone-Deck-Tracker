@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 	{
 		private static readonly SortedList<DateTime, List<LogLineItem>> ToProcess = new SortedList<DateTime, List<LogLineItem>>();
 		private static readonly List<LogReader> LogReaders = new List<LogReader>();
-		private static readonly PowerGameStateHandler PowerGameStateLineHandler = new PowerGameStateHandler();
+		private static readonly PowerHandler PowerLineHandler = new PowerHandler();
 		private static readonly RachelleHandler RachelleHandler = new RachelleHandler();
 		private static readonly AssetHandler AssetHandler = new AssetHandler();
 		private static readonly ZoneHandler ZoneHandler = new ZoneHandler();
@@ -161,8 +161,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 					switch(line.Namespace)
 					{
 						case "Power":
-							PowerGameStateLineHandler.Handle(line.Line, _gameState, _game);
 							GameV2.AddHSLogLine(line.Line);
+							PowerLineHandler.Handle(line.Line, _gameState, _game);
 							API.LogEvents.OnPowerLogLine.Execute(line.Line);
 							break;
 						case "Zone":

@@ -252,6 +252,7 @@
     <Compile Include="Hearthstone\GameTime.cs" />
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
+    <Compile Include="LogReader\LogReaderHelper.cs" />
     <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
     <Compile Include="Stats\CompiledStats\ChartStats.cs" />
     <Compile Include="Stats\CompiledStats\ClassStats.cs" />
@@ -345,12 +346,10 @@
     <Compile Include="LogReader\Handlers\ArenaHandler.cs" />
     <Compile Include="LogReader\Handlers\AssetHandler.cs" />
     <Compile Include="LogReader\Handlers\BobHandler.cs" />
-    <Compile Include="LogReader\Handlers\PowerGameStateHandler.cs" />
+    <Compile Include="LogReader\Handlers\PowerHandler.cs" />
     <Compile Include="LogReader\Handlers\ZoneHandler.cs" />
     <Compile Include="LogReader\HsGameState.cs" />
     <Compile Include="LogReader\HsLogReaderConstants.cs" />
-    <Compile Include="LogReader\HsLogReaderV2.cs" />
-    <Compile Include="LogReader\Handlers\PowerHandler.cs" />
     <Compile Include="LogReader\Handlers\RachelleHandler.cs" />
     <Compile Include="LogReader\Handlers\TagChangeHandler.cs" />
     <Compile Include="LogReader\Interfaces\IHsGameState.cs" />
@@ -4306,9 +4305,7 @@
       <Name>HDTHelper</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LogReader\LogFileReader\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Release" (
