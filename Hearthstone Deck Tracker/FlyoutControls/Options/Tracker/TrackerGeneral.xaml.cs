@@ -38,7 +38,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxCardGemRarity.IsChecked = Config.Instance.RarityCardGems;
 			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 			CheckboxTurnTime.IsChecked = Config.Instance.TimerTurnTime == 75;
-			_initialized = true;
+            CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
+            _initialized = true;
 		}
 
 		private void CheckboxAutoSelectDeck_Checked(object sender, RoutedEventArgs e)
@@ -310,5 +311,21 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 			TurnTimer.Instance.SetTurnTime(90);
 		}
+
+        private void CheckboxSpectatorUseNoDeck_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            Config.Instance.SpectatorUseNoDeck = true;
+            Config.Save();
+        }
+
+        private void CheckboxSpectatorUseNoDeck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (!_initialized)
+                return;
+            Config.Instance.SpectatorUseNoDeck = false;
+            Config.Save();
+        }
 	}
 }

@@ -599,7 +599,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ResolvedDeckStatsIds = false;
 
-		[DefaultValue(false)]
+        [DefaultValue(false)]
+        public bool ReselectLastDeckUsed = false;
+
+        [DefaultValue(false)]
 		public bool ResolvedDeckStatsIssue = false;
 
 		[DefaultValue(false)]
@@ -716,7 +719,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool SortDecksByClassArena = false;
 
-		[DefaultValue(false)]
+        [DefaultValue(false)]
+        public bool SpectatorUseNoDeck = false;
+
+        [DefaultValue(false)]
 		public bool StartMinimized = false;
 
 		[DefaultValue(false)]
