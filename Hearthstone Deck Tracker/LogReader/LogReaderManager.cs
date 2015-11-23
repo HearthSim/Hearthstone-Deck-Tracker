@@ -162,6 +162,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 					{
 						case "Power":
 							PowerGameStateLineHandler.Handle(line.Line, _gameState, _game);
+							GameV2.AddHSLogLine(line.Line);
 							API.LogEvents.OnPowerLogLine.Execute(line.Line);
 							break;
 						case "Zone":
