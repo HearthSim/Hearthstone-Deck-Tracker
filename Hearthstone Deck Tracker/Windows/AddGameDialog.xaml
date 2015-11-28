@@ -20,6 +20,7 @@
         <DockPanel Margin="0,2,0,0">
             <Label Content="VS:" Width="90"/>
             <ComboBox Name="ComboBoxOpponent" SelectedIndex="0">
+                <enums:HeroClass>None</enums:HeroClass>
                 <enums:HeroClass>Druid</enums:HeroClass>
                 <enums:HeroClass>Hunter</enums:HeroClass>
                 <enums:HeroClass>Mage</enums:HeroClass>
