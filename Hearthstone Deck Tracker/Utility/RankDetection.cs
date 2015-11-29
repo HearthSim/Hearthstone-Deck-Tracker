@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Threading.Tasks;
 using AForge.Imaging;
 using Hearthstone_Deck_Tracker.Exporting;
 
@@ -11,8 +12,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 	public class RankDetection
 	{
 		private static readonly float _threshold = 0.9f;
-		private static readonly double _legendMinHue = 36.5;
-		private static readonly double _legendMinBrightness = 0.36;
+		private static readonly Range _legendHue = new Range(36.5, 49.5);
+		private static readonly Range _legendBrightness = new Range(0.36, 0.5);
 		private static readonly Size _templateSize = new Size(24, 24);
 		private static readonly Point _opponentLocation = new Point(26, 36);
 		private static readonly Point _playerLocation = new Point(26, 650);
@@ -22,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		private static Dictionary<int, Bitmap> _templates;
 		private static bool _debug;
 
+		// Static initializer
 		static RankDetection()
 		{
 			_templateLocation = "./Images/Ranks";
@@ -31,6 +33,45 @@ namespace Hearthstone_Deck_Tracker.Utility
 			LoadTemplates();
 		}
 
+		// The main match method, takes a screen capture as argument
+		// and tries to find matching ranks for player and opponent
+		public static RankResult Match(Bitmap bmp, bool debug = false)
+		{
+			_debug = debug;
+			RankCapture capture = ProcessImage(bmp);
+			RankResult result = new RankResult();
+			result.Player = FindBest(capture.Player);
+			result.Opponent = FindBest(capture.Opponent);
+			return result;
+		}
+
+		// Secondary match method, called from Match.
+		// Useful for testing.
+		public static int FindBest(Bitmap bmp)
+		{
+			List<RankMatch> results = CompareAll(bmp);
+
+			if(_debug)
+			{
+				for(var i = 0; i < 3 && i < results.Count; i++)
+				{
+					Console.WriteLine("{0}: {1}", results[i].Rank, results[i].Score);
+				}
+			}
+
+			var rank = -1;
+			if(results.Count > 0)
+			{
+				rank = results[0].Rank;
+			}
+			else if(IsLegendRank(bmp))
+			{
+				rank = 0;
+			}
+			return rank;
+		}
+
+		// Load template images
 		private static void LoadTemplates()
 		{
 			// files should be named [1..25].bmp
@@ -44,16 +85,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
-		public static RankResult Match(Bitmap bmp, bool debug = false)
-		{
-			_debug = debug;
-			RankCapture capture = ProcessImage(bmp);
-			RankResult result = new RankResult();
-			result.Player = FindBest(capture.Player);
-			result.Opponent = FindBest(capture.Opponent);
-			return result;
-		}
-
+		// Process a full screen capture to indvidual player and
+		// opponent rectangle images.
 		private static RankCapture ProcessImage(Bitmap bmp)
 		{
 			Bitmap scaled = ResizeImage(bmp);
@@ -81,17 +114,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 			Bitmap target = new Bitmap(rect.Width, rect.Height, PixelFormat.Format24bppRgb);
 			using(Graphics g = Graphics.FromImage(target))
 			{
-				// set graphic quality settings
-				//g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-				//g.SmoothingMode = SmoothingMode.HighQuality;
-				//g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-				//g.CompositingQuality = CompositingQuality.HighQuality;
 				g.DrawImage(bmp,
 					new Rectangle(0, 0, target.Width, target.Height), rect, GraphicsUnit.Pixel);
 			}
 			return target;
 		}
 
+		// Resize captured image to a height of 768
 		private static Bitmap ResizeImage(Bitmap original)
 		{
 			int height = 768;
@@ -103,21 +132,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 			int width = Convert.ToInt32(height * ratio);
 
 			int cropWidth = Convert.ToInt32(original.Height * ratio);
-			int posX = 0;// Convert.ToInt32((original.Width - cropWidth) / 2);
+			int posX = 0;
 
 			Bitmap scaled = new Bitmap(width, height);
-			Graphics graphic = Graphics.FromImage(scaled);
-			//graphic.InterpolationMode = InterpolationMode.HighQualityBicubic;
-			//graphic.SmoothingMode = SmoothingMode.HighQuality;
-			//graphic.PixelOffsetMode = PixelOffsetMode.HighQuality;
-			//graphic.CompositingQuality = CompositingQuality.HighQuality;
 
-			graphic.DrawImage(original,
-				new Rectangle(0, 0, width, height),
-				new Rectangle(posX, 0, cropWidth, original.Height),
-				GraphicsUnit.Pixel);
-
-			graphic.Dispose();
+			using(Graphics g = Graphics.FromImage(scaled))
+			{
+				g.DrawImage(original,
+					new Rectangle(0, 0, width, height),
+					new Rectangle(posX, 0, cropWidth, original.Height),
+					GraphicsUnit.Pixel);
+			}
 
 			if(_debug)
 			{
@@ -128,35 +153,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return scaled;
 		}
 
-		public static int FindBest(Bitmap bmp)
-		{
-			List<RankMatch> results = CompareAll(bmp);
-
-			if(_debug)
-			{
-				for(var i = 0; i < 3 && i < results.Count; i++)
-				{
-					Console.WriteLine("{0}: {1}", results[i].Rank, results[i].Score);
-				}
-			}
-
-			var rank = -1;
-			if(results.Count > 0)
-			{
-				rank = results[0].Rank;
-			}
-			else if(IsLegendRank(bmp))
-			{
-				rank = 0;
-			}
-			return rank;
-		}
-
+		// Color check to determine if it is a legend rank
 		private static bool IsLegendRank(Bitmap bmp)
 		{
 			var b = HueAndBrightness.GetAverage(bmp).Brightness;
 			var h = HueAndBrightness.GetAverage(bmp).Hue;
-			return b > _legendMinBrightness && h > _legendMinHue;
+			return b > _legendBrightness.Min && h > _legendHue.Min
+				&& b < _legendBrightness.Max && h < _legendHue.Max;
 		}
 
 		private static List<RankMatch> CompareAll(Bitmap sample)
@@ -182,8 +185,23 @@ namespace Hearthstone_Deck_Tracker.Utility
 				_templateLocation = dir;
 			}
 		}
+
+		private struct Range
+		{
+			public double Min { get; set; }
+			public double Max { get; set; }
+
+			public Range(double min, double max)
+			{
+				Min = min;
+				Max = max;
+			}
+		}
 	}
 
+	// Holds the result of template match,
+	// includes determined player and opponent ranks,
+	// and also whether it was successful (both players have ranks).
 	public class RankResult
 	{
 		public int Player { get; set; }
@@ -203,6 +221,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 	}
 
+	// Holds player and opponent rectangle bitmaps
 	public class RankCapture
 	{
 		public Bitmap Player { get; set; }
@@ -215,6 +234,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 	}
 
+	// Used to enable sorting of template matching results
 	public class RankMatch : IEquatable<RankMatch>, IComparable<RankMatch>
 	{
 		public int Rank { get; set; }
