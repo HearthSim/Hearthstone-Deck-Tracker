@@ -75,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				Logger.WriteLine("Exporting aborted, window lost focus", "DeckExporter");
 				return -1;
 			}
+            await ClearSearchBox(info.HsHandle,info.SearchBoxPos);
 
 			await MouseActions.ClickOnPoint(info.HsHandle, info.SearchBoxPos);
 
@@ -87,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				SendKeys.SendWait(ExportingHelper.GetSearchString(card));
 			SendKeys.SendWait("{ENTER}");
 
-			Logger.WriteLine("try to export card: " + card.Name, "DeckExporter", 1);
+			Logger.WriteLine("try to export card: " + card.Name + " count:"+card.Count, "DeckExporter", 1);
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
 			if(await ExportingHelper.CheckForSpecialCases(card, info.CardPosX + 50, info.Card2PosX + 50, info.CardPosY + 50, info.HsHandle))
