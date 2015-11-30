@@ -177,6 +177,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		}
 
 		[JsonIgnore]
+		public FontFamily Font
+		{
+			get
+			{
+				var lang = Config.Instance.SelectedLanguage;
+				var font = new FontFamily();
+				// if the language uses a Latin script use Belwe font
+				if(Helper.LatinLanguages.Contains(lang))
+				{
+					font = new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT");
+				}
+				return font;
+			}
+		}
+
+		[JsonIgnore]
 		public string LocalizedName
 		{
 			get { return Card.LocalizedName; }

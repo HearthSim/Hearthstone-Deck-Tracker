@@ -62,6 +62,11 @@ namespace Hearthstone_Deck_Tracker
 			{"Spanish (Mexico)", "esMX"},
 			{"Spanish (Spain)", "esES"}
 		};
+		public static readonly List<string> LatinLanguages = new List<string>
+		{
+			"enUS", "enGB", "frFR", "deDE", "itIT", "ptBR", "esMX", "esES"
+		};
+
 
         [Obsolete("Use Core.MainWindow")]
 		public static MainWindow MainWindow { get { return Core.MainWindow; } }
