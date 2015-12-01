@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Windows;
+using System.Drawing;
 
 #endregion
 
@@ -262,6 +263,28 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine(string.Format("--- Mulligan ---"), "GameEventHandler");
 			while(!_game.IsMulliganDone)
 				await Task.Delay(100);
+			// attempt rank detection
+			if(_game.CurrentGameMode == GameMode.Casual || _game.CurrentGameMode == GameMode.None)
+			{
+				// capture screen, hide the overlay first in case ranks are covered
+				Core.Overlay.ShowOverlay(false);
+				var rect = Helper.GetHearthstoneRect(true);
+				var capture = Helper.CaptureHearthstone(new Point(0, 0), rect.Width, rect.Height);
+				Core.Overlay.ShowOverlay(true);
+
+				// try to detect rank
+				var match = await Utility.RankDetection.Match(capture);
+				if(match.Success)
+				{
+					SetGameMode(GameMode.Ranked);
+					SetRank(match.Player);
+					// set opponent rank, for future use
+					if(_game.CurrentGameStats != null)
+					{
+						_game.CurrentGameStats.OpponentRank = match.Opponent;
+					}
+				}
+			}
 			Logger.WriteLine(string.Format("--- {0} turn {1} ---", player, turnNumber + 1), "GameEventHandler");
             //doesn't really matter whose turn it is for now, just restart timer
             //maybe add timer to player/opponent windows

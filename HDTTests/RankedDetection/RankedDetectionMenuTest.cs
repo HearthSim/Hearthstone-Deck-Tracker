@@ -5,10 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace HDTTests.RankedDetection
 {
 	[TestClass]
-	public class CroppedMenuTest
+	public class RankedDetectionMenuTest
 	{
-		private readonly string _testFiles = "RankedDetection/TestFiles/";
-
 		// Test all menus fail (due to how legend detect works)
 
 		[TestMethod]
@@ -63,9 +61,10 @@ namespace HDTTests.RankedDetection
 
 		private bool MenuFails(string name)
 		{
-			var bmp = new Bitmap("RankedDetection/TestFiles/" + name + "_Opp.png");
+            var testFiles = "RankedDetection/TestFiles/";
+			var bmp = new Bitmap(testFiles + name + "_Opp.png");
 			var opp = RankDetection.FindBest(bmp);
-			bmp = new Bitmap("RankedDetection/TestFiles/" + name + "_Play.png");
+			bmp = new Bitmap(testFiles + name + "_Play.png");
 			var play = RankDetection.FindBest(bmp);
 
 			return opp == -1 && play == -1;

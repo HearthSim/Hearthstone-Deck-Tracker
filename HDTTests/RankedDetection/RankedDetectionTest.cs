@@ -5,8 +5,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace HDTTests.RankedDetection
 {
 	[TestClass]
-	public class CroppedRankTest
+	public class RankedDetectionTest
 	{
+		// Full screen capture
+
+		[TestMethod]
+		public void ScreenCapturePositions()
+		{
+			var bmp = new Bitmap("RankedDetection/TestFiles/Screen768_8-8.jpg");
+			var rd = RankDetection.Match(bmp).Result;
+			Assert.IsTrue(rd.Success);
+			Assert.AreEqual(8, rd.Player);
+			Assert.AreEqual(8, rd.Opponent);
+		}
+
 		// Regular ranks 1-25
 
 		[TestMethod]

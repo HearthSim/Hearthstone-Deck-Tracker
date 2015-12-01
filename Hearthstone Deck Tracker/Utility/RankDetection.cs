@@ -11,37 +11,53 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public class RankDetection
 	{
+		// match threshold, only matches >= this will be returned
 		private static readonly float _threshold = 0.9f;
+		// min/max hue for legend rank
 		private static readonly Range _legendHue = new Range(36.5, 49.5);
+		// min/max brightness for legend rank
 		private static readonly Range _legendBrightness = new Range(0.36, 0.5);
+		// the size of the template images
 		private static readonly Size _templateSize = new Size(24, 24);
+		// the top-left of the opponent rank rectangle (height 768)
 		private static readonly Point _opponentLocation = new Point(26, 36);
+		// the top-left of the player rank rectangle (height 768)
 		private static readonly Point _playerLocation = new Point(26, 650);
+		// location of the templates to compare against
+		private static readonly string _templateLocation = "./Images/Ranks";
 
-		private static ExhaustiveTemplateMatching _templateMatcher;
-		private static string _templateLocation;
 		private static Dictionary<int, Bitmap> _templates;
-		private static bool _debug;
 
 		// Static initializer
 		static RankDetection()
 		{
-			_templateLocation = "./Images/Ranks";
-			_templateMatcher = new ExhaustiveTemplateMatching(_threshold);
+			Logger.WriteLine("Initalizing", "RankedDetection", 1);
 			_templates = new Dictionary<int, Bitmap>();
-			_debug = false;
 			LoadTemplates();
 		}
 
 		// The main match method, takes a screen capture as argument
 		// and tries to find matching ranks for player and opponent
-		public static RankResult Match(Bitmap bmp, bool debug = false)
+		public static async Task<RankResult> Match(Bitmap bmp)
 		{
-			_debug = debug;
-			RankCapture capture = ProcessImage(bmp);
 			RankResult result = new RankResult();
-			result.Player = FindBest(capture.Player);
-			result.Opponent = FindBest(capture.Opponent);
+			if(bmp == null)
+			{
+				Logger.WriteLine("Captured image is null", "RankedDetection");
+				return result;
+			}
+			try
+			{
+				RankCapture capture = await Task<RankCapture>.Run(() => ProcessImage(bmp));
+
+				result.Player = await Task<int>.Run(() => FindBest(capture.Player));
+				result.Opponent = await Task<int>.Run(() => FindBest(capture.Opponent));
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine("Failed: " + e.Message, "RankDetection");
+			}
+			Logger.WriteLine("Match: P=" + result.Player + ", O=" + result.Opponent, "RankedDetection", 1);
 			return result;
 		}
 
@@ -50,14 +66,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static int FindBest(Bitmap bmp)
 		{
 			List<RankMatch> results = CompareAll(bmp);
-
-			if(_debug)
-			{
-				for(var i = 0; i < 3 && i < results.Count; i++)
-				{
-					Console.WriteLine("{0}: {1}", results[i].Rank, results[i].Score);
-				}
-			}
 
 			var rank = -1;
 			if(results.Count > 0)
@@ -82,7 +90,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					_templates[i] = new Bitmap(path);
 				}
+				else
+				{
+					Logger.WriteLine("Template image " + _templateLocation + "/" + i + ".bmp not found", 
+						"RankedDetection", 1);
+				}
 			}
+			Logger.WriteLine(_templates.Count + " templates loaded", "RankedDetection", 1);
 		}
 
 		// Process a full screen capture to indvidual player and
@@ -98,13 +112,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 			Bitmap opponent = CropRect(scaled, opponentRect);
 			Bitmap player = CropRect(scaled, playerRect);
-
-			if(_debug)
-			{
-				var ts = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-				opponent.Save(ts + "_opponent.png");
-				player.Save(ts + "_player.png");
-			}
 
 			return new RankCapture(player, opponent);
 		}
@@ -130,24 +137,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 			double ratio = 4.0 / 3.0;
 			int width = Convert.ToInt32(height * ratio);
-
 			int cropWidth = Convert.ToInt32(original.Height * ratio);
 			int posX = 0;
 
 			Bitmap scaled = new Bitmap(width, height);
-
 			using(Graphics g = Graphics.FromImage(scaled))
 			{
 				g.DrawImage(original,
 					new Rectangle(0, 0, width, height),
 					new Rectangle(posX, 0, cropWidth, original.Height),
 					GraphicsUnit.Pixel);
-			}
-
-			if(_debug)
-			{
-				var ts = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-				scaled.Save(ts + "_resize.png");
 			}
 
 			return scaled;
@@ -165,27 +164,23 @@ namespace Hearthstone_Deck_Tracker.Utility
 		private static List<RankMatch> CompareAll(Bitmap sample)
 		{
 			List<RankMatch> results = new List<RankMatch>();
+			ExhaustiveTemplateMatching matcher = new ExhaustiveTemplateMatching(_threshold);
 
 			foreach(var t in _templates)
 			{
-				TemplateMatch[] tmatch = _templateMatcher.ProcessImage(sample, t.Value);
+				TemplateMatch[] tmatch = matcher.ProcessImage(sample, t.Value);
 				if(tmatch.Length > 0)
 				{
 					results.Add(new RankMatch(t.Key, tmatch[0].Similarity));
 				}
 			}
+
 			results.Sort();
 			return results;
 		}
 
-		public static void SetTemplateLocation(string dir)
-		{
-			if(Directory.Exists(dir))
-			{
-				_templateLocation = dir;
-			}
-		}
-
+		// Holds a the min & max of a range,
+		// used in hue & brightness.
 		private struct Range
 		{
 			public double Min { get; set; }
@@ -213,6 +208,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 				// TODO: what about when only one is -1
 				return Player >= 0 && Opponent >= 0;
 			}
+		}
+
+		public RankResult()
+		{
+			Player = -1;
+			Opponent = -1;
 		}
 
 		public override string ToString()

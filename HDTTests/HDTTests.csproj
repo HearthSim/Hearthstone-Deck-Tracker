@@ -74,8 +74,8 @@
     <Compile Include="LogReader\PowerHandlerTest.cs" />
     <Compile Include="LogReader\LogReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RankedDetection\CroppedMenuTest.cs" />
-    <Compile Include="RankedDetection\CroppedRankTest.cs" />
+    <Compile Include="RankedDetection\RankedDetectionMenuTest.cs" />
+    <Compile Include="RankedDetection\RankedDetectionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj">
@@ -218,6 +218,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RankedDetection\TestFiles\PlayMenu_Play.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RankedDetection\TestFiles\Screen768_8-8.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
