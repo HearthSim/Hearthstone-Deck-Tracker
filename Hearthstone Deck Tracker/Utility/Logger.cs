@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker
 		private const int MaxLogFileAge = 2;
 		private const int KeepOldLogs = 25;
 
-		internal static void Initialzie()
+		internal static void Initialize()
 		{
 			Trace.AutoFlush = true;
 			var logDir = Path.Combine(Config.Instance.DataDir, "Logs");
@@ -38,8 +38,8 @@ namespace Hearthstone_Deck_Tracker
 						//keep logs from the last 2 days plus 25 before that
 						foreach(var file in
 							new DirectoryInfo(logDir).GetFiles("hdt_log*")
-							                         .Where(x => x.CreationTime < DateTime.Now.AddDays(-MaxLogFileAge))
-							                         .OrderByDescending(x => x.CreationTime)
+							                         .Where(x => x.LastWriteTime < DateTime.Now.AddDays(-MaxLogFileAge))
+							                         .OrderByDescending(x => x.LastWriteTime)
 							                         .Skip(KeepOldLogs))
 						{
 							try
@@ -61,6 +61,7 @@ namespace Hearthstone_Deck_Tracker
 						var errLogFile = Path.Combine(logDir, "hdt_log_err.txt");
 						using(var writer = new StreamWriter(errLogFile, true))
 							writer.WriteLine("[{0}]: {1}", DateTime.Now.ToLongTimeString(), "Another instance of HDT is already running.");
+						MessageBox.Show("Another instance of Hearthstone Deck Tracker is already running.", "Error starting Hearthstone Deck Tracker", MessageBoxButton.OK, MessageBoxImage.Error);
 					}
 					catch(Exception)
 					{

@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[Description("Classic")]
 		Classic,
 		[Description("Goblins vs Gnomes")]
-		GoblingVsGnomes,
+		GoblinsVsGnomes,
 		[Description("The Grand Tournament")]
 		TheGrandTournament
 	}

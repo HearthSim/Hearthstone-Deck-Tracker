@@ -200,8 +200,13 @@ namespace Hearthstone_Deck_Tracker.Utility
                         Config.Instance.Reset("GoldProgressTotal");
                         converted = true;
                     }
-                }
-            }
+				}
+				if(configVersion <= new Version(0, 13, 1, 0))   //button moved up with new expansion added to the list
+				{
+					Config.Instance.Reset("ExportAllSetsButtonY");
+					converted = true;
+				}
+			}
 
             if (converted)
             {
@@ -219,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.Utility
             //check for log config and create if not existing
             try
             {
-                var requiredLogs = new[] { "Zone", "Bob", "Power", "Asset", "Rachelle", "Arena", "Achievements" };
+                var requiredLogs = new[] { "Zone", "Bob", "Power", "Asset", "Rachelle", "Arena", "Achievements", "LoadingScreen" };
 
                 var logConfig = new LogConfig();
                 if (File.Exists(LogConfigPath))

@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker
 			DataGridGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 			DataGridOverallGames.Items.SortDescriptions.Add(new SortDescription("StartTime", ListSortDirection.Descending));
 
-			Core.MainWindow.FlyoutOpponentDeck.ClosingFinished += (sender, args) =>
+			Core.MainWindow.FlyoutDeck.ClosingFinished += (sender, args) =>
 			{
 				BtnShowOpponentDeck.Content = BtnOpponentDeckTextShow;
 				BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextShow;
@@ -420,7 +420,7 @@ namespace Hearthstone_Deck_Tracker
 				var selectedGames = DataGridOverallGames.SelectedItems.Cast<GameStats>().ToList();
 				var allTheSameHero = selectedGames.All(g => g.PlayerHero == selectedGames[0].PlayerHero);
 				BtnOverallMoveToOtherDeck.IsEnabled = allTheSameHero;
-				if(Core.MainWindow.FlyoutOpponentDeck.IsOpen)
+				if(Core.MainWindow.FlyoutDeck.IsOpen)
 				{
 					var game = DataGridOverallGames.SelectedItem as GameStats;
 					if(game != null)
@@ -456,7 +456,7 @@ namespace Hearthstone_Deck_Tracker
 			BtnNote.IsEnabled = enabled;
 			BtnMoveToOtherDeck.IsEnabled = enabled;
 			BtnEditGame.IsEnabled = enabled;
-			if(Core.MainWindow.FlyoutOpponentDeck.IsOpen)
+			if(Core.MainWindow.FlyoutDeck.IsOpen)
 			{
 				var game = DataGridGames.SelectedItem as GameStats;
 				if(game != null)
@@ -780,7 +780,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnOverallShowOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
-			if(Core.MainWindow.FlyoutOpponentDeck.IsOpen)
+			if(Core.MainWindow.FlyoutDeck.IsOpen)
 				CloseOpponentDeckFlyout();
 			else
 			{
@@ -792,7 +792,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnShowOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
-			if(Core.MainWindow.FlyoutOpponentDeck.IsOpen)
+			if(Core.MainWindow.FlyoutDeck.IsOpen)
 				CloseOpponentDeckFlyout();
 			else
 			{
@@ -804,7 +804,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CloseOpponentDeckFlyout()
 		{
-			Core.MainWindow.FlyoutOpponentDeck.IsOpen = false;
+			Core.MainWindow.FlyoutDeck.IsOpen = false;
 			BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextShow;
 			BtnShowOpponentDeck.Content = BtnOpponentDeckTextShow;
 		}
@@ -813,8 +813,9 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(stats == null)
 				return;
-			Core.MainWindow.OpponentDeckFlyout.SetDeck(stats.GetOpponentDeck());
-			Core.MainWindow.FlyoutOpponentDeck.IsOpen = true;
+			Core.MainWindow.DeckFlyout.SetDeck(stats.GetOpponentDeck());
+			Core.MainWindow.FlyoutDeck.Header = "Opponent";
+			Core.MainWindow.FlyoutDeck.IsOpen = true;
 			BtnOverallShowOpponentDeck.Content = BtnOpponentDeckTextHide;
 			BtnShowOpponentDeck.Content = BtnOpponentDeckTextHide;
 		}

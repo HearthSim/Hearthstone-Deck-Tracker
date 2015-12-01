@@ -306,12 +306,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(_newDeck == null || !_newDeck.Cards.Any())
 			{
+				TextBlockIconLoe.Visibility = Visibility.Collapsed;
 				TextBlockIconTgt.Visibility = Visibility.Collapsed;
 				TextBlockIconBrm.Visibility = Visibility.Collapsed;
 				TextBlockIconGvg.Visibility = Visibility.Collapsed;
 				TextBlockIconNaxx.Visibility = Visibility.Collapsed;
 				return;
 			}
+			TextBlockIconTgt.Visibility = _newDeck.Cards.Any(card => card.Set == "League of Explorers") ? Visibility.Visible : Visibility.Collapsed;
 			TextBlockIconTgt.Visibility = _newDeck.Cards.Any(card => card.Set == "The Grand Tournament") ? Visibility.Visible : Visibility.Collapsed;
 			TextBlockIconBrm.Visibility = _newDeck.Cards.Any(card => card.Set == "Blackrock Mountain") ? Visibility.Visible : Visibility.Collapsed;
 			TextBlockIconGvg.Visibility = _newDeck.Cards.Any(card => card.Set == "Goblins vs Gnomes") ? Visibility.Visible : Visibility.Collapsed;
@@ -449,15 +451,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			MenuItemExportXml.IsEnabled = enable;
 		}
 
-		private async void MenuItem_OnSubmenuOpened(object sender, RoutedEventArgs e)
+		private void MenuItem_OnSubmenuOpened(object sender, RoutedEventArgs e)
 		{
+			if(_newDeck == null)
+				return;
 			//a menuitems clickevent does not fire if it has subitems
 			//bit of a hacky workaround, but this does the trick (subitems are disabled when a new deck is created, enabled when one is edited)
 			if(_newDeck.IsArenaDeck
 			   || !MenuItemSaveVersionCurrent.IsEnabled && !MenuItemSaveVersionMinor.IsEnabled && !MenuItemSaveVersionMajor.IsEnabled)
 			{
-				MenuItemSave.IsSubmenuOpen = false;
-				SaveDeckWithOverwriteCheck();
+				try
+				{
+					MenuItemSave.IsSubmenuOpen = false;
+					SaveDeckWithOverwriteCheck();
+				}
+				catch(Exception ex)
+				{
+					Logger.WriteLine("Error closing submenu:\r\n" + ex, "MainWindow");
+				}
 			}
 		}
 

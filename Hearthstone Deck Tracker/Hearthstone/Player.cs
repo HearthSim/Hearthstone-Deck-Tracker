@@ -18,7 +18,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Player : INotifyPropertyChanged
 	{
-		public string Name { get;set; }
+		public string Name
+		{
+			get { return _name; }
+			set
+			{
+				_name = value;
+				Log(value, "Name");
+			}
+		}
+
 		public string Class { get; set; }
 		public int Id { get; set; }
 		public bool GoingFirst { get; set; }
@@ -60,6 +69,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public const int DeckSize = 30;
 
 		private readonly Queue<string> _hightlightedCards = new Queue<string>();
+		private string _name;
 
 		public List<Card> DisplayCards
 		{
@@ -270,8 +280,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private void Log(string action, CardEntity ce)
 		{
+			Log(ce.ToString(), action);
+		}
+
+		private void Log(string msg, string category)
+		{
 			var player = IsLocalPlayer ? "Player " : "Opponent ";
-			Logger.WriteLine(ce.ToString(), player + action);
+			Logger.WriteLine(msg, player + category);
 		}
 
 		private async void Highlight(string cardId)
@@ -330,7 +345,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void CreateInHand(Entity entity, int turn)
 		{
 			var ce = new CardEntity(entity) {Turn = turn, CardMark = CardMark.Created, Created = true};
-            Hand.Add(ce);
+			if(entity != null
+			   && (entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin
+			       || entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.GallywixsCoinToken))
+				ce.CardMark = CardMark.Coin;
+			Hand.Add(ce);
 			if(IsLocalPlayer)
 				CreatedInHandCardIds.Add(entity.CardId);
 			Log("CreateInHand", ce);
@@ -511,6 +530,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void StolenByOpponent(Entity entity, int turn)
 		{
 			var ce = MoveCardEntity(entity, Board, Removed, turn);
+			UpdateRevealedEntity(ce, turn);
 			Log("StolenByOpponent", ce);
 		}
 
@@ -518,6 +538,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var ce = MoveCardEntity(entity, Removed, Board, turn);
 			ce.Created = true;
+			UpdateRevealedEntity(ce, turn);
 			Log("StolenFromOpponent", ce);
 		}
 	}

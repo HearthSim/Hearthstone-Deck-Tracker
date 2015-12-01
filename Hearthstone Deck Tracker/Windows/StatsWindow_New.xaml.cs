@@ -37,10 +37,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Config.Instance.StatsInWindow = false;
 			Config.Save();
+			ContentControl.Content = null;
+			Core.MainWindow.StatsFlyoutContentControl.Content = Core.StatsOverview;
 			Core.MainWindow.WindowState = WindowState.Normal;
 			Core.MainWindow.Show();
 			Core.MainWindow.Activate();
 			Core.MainWindow.FlyoutNewStats.IsOpen = true;
+			Core.StatsOverview.UpdateStats();
 			Close();
 		}
 

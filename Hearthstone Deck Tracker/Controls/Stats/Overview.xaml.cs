@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
 			Config.Save();
-			ArenaStats.Instance.UpdateArenaStats();
+			UpdateStats();
 		}
 
 		private void DatePickerCustomTimeFrame_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)

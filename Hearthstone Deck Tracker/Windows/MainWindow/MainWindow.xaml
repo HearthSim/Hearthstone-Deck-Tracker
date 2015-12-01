@@ -65,7 +65,7 @@
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="help" />
                 </StackPanel>
             </Button>
-            <Button Click="BtnDonate_OnClick">
+            <Button Name="BtnDonate" Click="BtnDonate_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="14">
                         <Rectangle.Fill>
@@ -74,6 +74,24 @@
                     </Rectangle>
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="donate" />
                 </StackPanel>
+                <Button.ContextMenu>
+                    <ContextMenu Name="BtnDonateContextMenu">
+                        <MenuItem Header="Patreon" Click="BtnPatreon_OnClick">
+                            <MenuItem.Icon>
+                                <Image Source="/HearthstoneDeckTracker;component/Resources/patreon_logo.png" Width="18" RenderOptions.BitmapScalingMode="Fant" Margin="0,0,-5,0"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="PayPal" Click="BtnPaypal_OnClick">
+                            <MenuItem.Icon>
+                                <Rectangle Width="18" Height="18" Margin="0,0,-5,0">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource appbar_paypal_blue}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
             </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
@@ -95,8 +113,8 @@
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <local:GameDetails x:Name="GameDetailsFlyout" />
             </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutOpponentDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="Opponent Deck">
-                    <flyoutControls:OpponentDeck x:Name="OpponentDeckFlyout" />
+            <controls:Flyout x:Name="FlyoutDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="Opponent Deck">
+                    <flyoutControls:DeckPanel x:Name="DeckFlyout" />
              </controls:Flyout>
             <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
                 <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
@@ -149,7 +167,7 @@
                         </DockPanel>
                     </DataTemplate>
                 </controls:Flyout.HeaderTemplate>
-                <stats:Overview x:Name="NewStatsFlyout" />
+                <ContentControl Name="StatsFlyoutContentControl"/>
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
@@ -399,6 +417,7 @@
                             <TextBlock Name="TextBlockIconGvg" Text="GvG" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10" Margin="2,0" ToolTip="Deck contains cards from the Goblins vs Gnomes expansion."/>
                             <TextBlock Name="TextBlockIconBrm" Text="BRM" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10" Margin="2,0" ToolTip="Deck contains cards from the Blackrock Mountain expansion."/>
                             <TextBlock Name="TextBlockIconTgt" Text="TGT" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10" Margin="2,0" ToolTip="Deck contains cards from the The Grand Tournament expansion."/>
+                            <TextBlock Name="TextBlockIconLoe" Text="LOE" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10" Margin="2,0" ToolTip="Deck contains cards from the League of Explorers expansion."/>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" >
                             <TextBlock Text="CARDS:" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
@@ -524,6 +543,7 @@
                         <RadioButton Content="GOBLINS VS GNOMES" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="BLACKROCK MOUNTAIN" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="THE GRAND TOURNAMENT" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="LEAGUE OF EXPLORERS" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
                 </MenuItem>
             </Menu>

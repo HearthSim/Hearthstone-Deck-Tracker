@@ -53,6 +53,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ArenaStatsShowLegends = true;
+		
+		[DefaultValue(true)]
+		public bool ArenaStatsTextColoring = true;
 
 		[DefaultValue(true)]
 		public bool AskBeforeDiscardingGame = true;
@@ -202,8 +205,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.067)]
 		public double ExportAllSetsButtonX = 0.067;
 
-		[DefaultValue(0.607)]
-		public double ExportAllSetsButtonY = 0.607;
+		[DefaultValue(0.575)]
+		public double ExportAllSetsButtonY = 0.575;
 
 		[DefaultValue(0.04)]
 		public double ExportCard1X = 0.04;
@@ -596,7 +599,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ResolvedDeckStatsIds = false;
 
-		[DefaultValue(false)]
+        [DefaultValue(false)]
+        public bool ReselectLastDeckUsed = false;
+
+        [DefaultValue(false)]
 		public bool ResolvedDeckStatsIssue = false;
 
 		[DefaultValue(false)]
@@ -713,7 +719,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool SortDecksByClassArena = false;
 
-		[DefaultValue(false)]
+        [DefaultValue(false)]
+        public bool SpectatorUseNoDeck = false;
+
+        [DefaultValue(false)]
 		public bool StartMinimized = false;
 
 		[DefaultValue(false)]
@@ -802,6 +811,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(50)]
 		public double TimersVerticalSpacing = 50;
+
+		[DefaultValue(90)]
+		public int TimerTurnTime = 90;
 
 		[DefaultValue(true)]
 		public bool TrackerCardToolTips = true;

@@ -188,7 +188,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var names =
 					deck.GetSelectedDeckVersion()
-						.Cards.Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
+						.Cards.ToSortedCardList().Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
 						.Aggregate((c, n) => c + Environment.NewLine + n);
 				Clipboard.SetText(names);
 				this.ShowMessage("", "copied names to clipboard");

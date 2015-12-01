@@ -25,6 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,7 +55,14 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BoardDamage\BoardCardTest.cs" />
+    <Compile Include="BoardDamage\TestHelper.cs" />
+    <Compile Include="BoardDamage\BoardHeroTest.cs" />
+    <Compile Include="BoardDamage\PlayerBoardTest.cs" />
+    <Compile Include="BoardDamage\BoardStateTest.cs" />
+    <Compile Include="BoardDamage\EntityHelperTest.cs" />
     <Compile Include="HearthStats\ApiTest.cs" />
+    <Compile Include="Hearthstone\GameTimeTest.cs" />
     <Compile Include="Hearthstone\SecretTests.cs" />
     <Compile Include="Hearthstone\WebImportTest.cs" />
     <Compile Include="Hearthstone\DeckTest.cs" />
