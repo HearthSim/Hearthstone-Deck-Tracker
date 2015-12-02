@@ -1391,7 +1391,7 @@ namespace Hearthstone_Deck_Tracker
 			    handler(this, new PropertyChangedEventArgs(propertyName));	
 	    }
 
-	    private const double RankCoveredMaxLeft = 0.1;
+		private const double RankCoveredMaxLeft = 0.1;
 		private const double PlayerRankCoveredMaxHeight = 0.8;
 		private const double OpponentRankCoveredMaxTop = 0.8;
 		public bool IsRankConvered()

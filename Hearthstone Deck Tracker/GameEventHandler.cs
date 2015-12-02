@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using Point = System.Drawing.Point;
 
@@ -279,38 +280,41 @@ namespace Hearthstone_Deck_Tracker
 	    private bool _rankDetectionRunning;
 	    private int _rankDetectionTries;
 	    private const int MaxRankDetectionTries = 3;
+
 	    private async void DetectRanks()
 	    {
 		    if(_rankDetectionTries >= MaxRankDetectionTries)
-			{
-				Logger.WriteLine(string.Format("Exceeded max rank detection tries ({0}). Gamemode must be casual.", MaxRankDetectionTries), "GameEventHandler");
-			}
+		    {
+			    Logger.WriteLine(string.Format("Exceeded max rank detection tries ({0}). Gamemode must be casual.", MaxRankDetectionTries),
+			                     "GameEventHandler");
+		    }
 		    if(_rankDetectionRunning)
 			    return;
-			_rankDetectionRunning = true;
-            Logger.WriteLine(string.Format("Trying to detect ranks... (overlay toggles: {0})", _rankDetectionTries), "GameEventHandler");
-			var rect = Helper.GetHearthstoneRect(true);
+		    _rankDetectionRunning = true;
+		    Logger.WriteLine(string.Format("Trying to detect ranks... (overlay toggles: {0})", _rankDetectionTries), "GameEventHandler");
+		    var rect = Helper.GetHearthstoneRect(true);
 		    var reEnableOverlay = false;
 		    if(Core.Overlay.IsRankConvered())
-			{
-				//only increment rank detection tries if the users can tell it's happening (overlay flickering)
-				_rankDetectionTries++;
-				Logger.WriteLine("Toggling overlay...", "GameEventHandler");
-				Core.Overlay.ShowOverlay(false);
+		    {
+			    //only increment rank detection tries if the users can tell it's happening (overlay flickering)
+			    _rankDetectionTries++;
+			    Logger.WriteLine("Toggling overlay...", "GameEventHandler");
+			    Core.Overlay.ShowOverlay(false);
 			    reEnableOverlay = true;
 		    }
-			while(await Helper.FriendsListOpen())
-				Core.Overlay.ShowFriendsListWarning(true);
-			Core.Overlay.ShowFriendsListWarning(false);
-			var capture = Helper.CaptureHearthstone(new Point(0, 0), rect.Width/3, rect.Height);
+		    while(await Helper.FriendsListOpen())
+			    Core.Overlay.ShowFriendsListWarning(true);
+		    Core.Overlay.ShowFriendsListWarning(false);
+		    var capture = Helper.CaptureHearthstone(new Point(0, 0), rect.Width / 3, rect.Height);
 		    if(reEnableOverlay)
 			    Core.Overlay.ShowOverlay(true);
 
 		    // try to detect rank
-		    var match = await Utility.RankDetection.Match(capture);
+		    var match = await RankDetection.Match(capture);
 		    if(match.Success)
 		    {
-			    Logger.WriteLine(string.Format("Rank detection successful! Player={0}, Opponent={1}", match.Player, match.Opponent), "GameEventHandler");
+			    Logger.WriteLine(string.Format("Rank detection successful! Player={0}, Opponent={1}", match.Player, match.Opponent),
+			                     "GameEventHandler");
 			    SetGameMode(GameMode.Ranked);
 			    if(_game.CurrentGameStats != null)
 			    {
@@ -319,12 +323,12 @@ namespace Hearthstone_Deck_Tracker
 				    _game.CurrentGameStats.OpponentRank = match.Opponent;
 			    }
 		    }
-			else
-				Logger.WriteLine("No ranks were detected.", "GameEventHandler");
-			_rankDetectionRunning = false;
+		    else
+			    Logger.WriteLine("No ranks were detected.", "GameEventHandler");
+		    _rankDetectionRunning = false;
 	    }
 
-	    private Entity _attackingEntity;
+		private Entity _attackingEntity;
         private Entity _defendingEntity;
         public void HandleAttackingEntity(Entity entity)
         {
