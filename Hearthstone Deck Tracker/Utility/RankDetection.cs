@@ -186,7 +186,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			public double Min { get; set; }
 			public double Max { get; set; }
 
-			public Range(double min, double max)
+			public Range(double min, double max) : this()
 			{
 				Min = min;
 				Max = max;

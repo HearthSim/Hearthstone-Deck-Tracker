@@ -8,18 +8,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
     public interface IHsGameState
     {
         int AddToTurn { get; set; }
-        bool AwaitingRankedDetection { get; set; }
-		bool RankedDetectionComplete { get; set; }
         bool CurrentEntityHasCardId { get; set; }
         int CurrentEntityId { get; set; }
         long CurrentOffset { get; set; }
         bool DoUpdate { get; set; }
         bool First { get; set; }
-        bool FoundRanked { get; set; }
         bool GameEnded { get; set; }
         IGameHandler GameHandler { get; set; }
         bool GameLoaded { get; set; }
-        DateTime LastAssetUnload { get; set; }
         long LastGameEnd { get; set; }
         DateTime LastGameStart { get; set; }
         int LastId { get; set; }
@@ -28,7 +24,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
         long PreviousSize { get; set; }
         ReplayKeyPoint ProposedKeyPoint { get; set; }
         dynamic WaitForController { get; set; }
-        bool WaitingForFirstAssetUnload { get; set; }
         bool FoundSpectatorStart { get; set; }
 	    int JoustReveals { get; set; }
 	    Dictionary<int, string> KnownCardIds { get; set; }

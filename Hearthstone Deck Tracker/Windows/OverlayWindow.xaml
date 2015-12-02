@@ -134,10 +134,16 @@
                 <local:HearthstoneTextBlock x:Name="LblGoldProgress" Text="Wins: 0/3 (0/100G)" FontSize="16"
                                             TextAlignment="Left" VerticalAlignment="Center" Visibility="Visible"/>
             </Grid>
-            <StackPanel Orientation="Horizontal" Name="StackPanelWarning">
-                <local:HearthstoneTextBlock Text="Warning!" Margin="3" FontSize="16" Fill="Red"/>
-                <local:HearthstoneTextBlock x:Name="LblWarning" Text="Cards not found in deck:" Margin="3" FontSize="16" Fill="White"/>
-                <local:HearthstoneTextBlock x:Name="LblWarningCards" Text="" Margin="3" FontSize="16" Fill="White"/>
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Name="StackPanelWarning">
+                    <local:HearthstoneTextBlock Text="Warning!" Margin="3" FontSize="16" Fill="Red"/>
+                    <local:HearthstoneTextBlock x:Name="LblWarning" Text="Cards not found in deck:" Margin="3" FontSize="16" Fill="White"/>
+                    <local:HearthstoneTextBlock x:Name="LblWarningCards" Text="" Margin="3" FontSize="16" Fill="White"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Name="StackPanelFriendsListWarning" Visibility="Collapsed">
+                    <local:HearthstoneTextBlock Text="Warning!" Margin="3" FontSize="16" Fill="Red"/>
+                    <local:HearthstoneTextBlock Text="Please close your friendslist so HDT can detect the gamemode/rank." Margin="3" FontSize="16" Fill="White"/>
+                </StackPanel>
             </StackPanel>
             <Grid Name="IconBoardAttackOpponent" Canvas.Top="300" Canvas.Left="300" Width="75" Height="75">
                 <Image Source="/HearthstoneDeckTracker;component/Images/board_damage.png"/>

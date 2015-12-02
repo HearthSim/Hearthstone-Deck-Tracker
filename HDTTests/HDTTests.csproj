@@ -69,7 +69,6 @@
     <Compile Include="Hearthstone\DeckTest.cs" />
     <Compile Include="Hearthstone\CardDbTest.cs" />
     <Compile Include="LogReader\ArenaHandlerTest.cs" />
-    <Compile Include="LogReader\AssetHandlerTest.cs" />
     <Compile Include="LogReader\BobHandlerTest.cs" />
     <Compile Include="LogReader\PowerHandlerTest.cs" />
     <Compile Include="LogReader\LogReaderTest.cs" />
