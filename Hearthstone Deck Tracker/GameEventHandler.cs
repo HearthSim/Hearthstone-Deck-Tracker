@@ -731,6 +731,13 @@ namespace Hearthstone_Deck_Tracker
                 //game was not supposed to be recorded, remove from deck again.
                 _assignedDeck.DeckStats.Games.Remove(_game.CurrentGameStats);
                 statsControl.Refresh();
+                Logger.WriteLine(string.Format("Gamemode {0} is not supposed to be saved. Removed game from {1}.", _game.CurrentGameMode, _assignedDeck), "GameEventHandler");
+            }
+            else if(_assignedDeck == null && DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class).Games.Contains(_game.CurrentGameStats))
+            {
+                DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class).Games.Remove(_game.CurrentGameStats);
+                statsControl.Refresh();
+                Logger.WriteLine(string.Format("Gamemode {0} is not supposed to be saved. Removed game from default {1}.", _game.CurrentGameMode, _game.Player.Class), "GameEventHandler");
             }
         }
 
