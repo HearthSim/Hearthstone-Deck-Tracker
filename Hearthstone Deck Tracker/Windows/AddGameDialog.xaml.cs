@@ -48,8 +48,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 						TextBoxRank.Text = lastGame.Rank.ToString();
 				}
 			}
-			if(lastGame != null && lastGame.Region != Region.UNKNOWN)
-				ComboBoxRegion.SelectedItem = lastGame.Region;
+			if(lastGame != null)
+			{
+				TextBoxPlayerName.Text = lastGame.PlayerName;
+				if(lastGame.Region != Region.UNKNOWN)
+					ComboBoxRegion.SelectedItem = lastGame.Region;
+			}
 			_deck = deck;
 			_game = new GameStats();
 			BtnSave.Content = "add game";
@@ -79,6 +83,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			TextBoxDuration.IsEnabled = false;
 			TextBoxNote.Text = game.Note;
 			TextBoxOppName.Text = game.OpponentName;
+			TextBoxPlayerName.Text = game.PlayerName;
 			BtnSave.Content = "save";
 		}
 
@@ -108,6 +113,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				_game.Rank = rank;
 				_game.Note = TextBoxNote.Text;
 				_game.OpponentName = TextBoxOppName.Text;
+				_game.PlayerName = TextBoxPlayerName.Text;
 				_game.Turns = turns;
 				_game.WasConceded = (YesNo)ComboBoxConceded.SelectedValue == YesNo.Yes;
 				_game.Region = (Region)ComboBoxRegion.SelectedItem;
