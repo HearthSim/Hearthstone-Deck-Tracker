@@ -205,19 +205,27 @@ namespace Hearthstone_Deck_Tracker.Utility
 		{
 			var count = 0;
 			var fixCount = 0;
+			var gamesCount = games.Count;
 			var lockMe = new object();
+			var options = new ParallelOptions {MaxDegreeOfParallelism = Environment.ProcessorCount};
 			await Task.Run(() =>
 			{
-				Parallel.ForEach(games, (game, loopState) =>
+				Parallel.ForEach(games, options, (game, loopState) =>
 				{
 					if(controller.IsCanceled)
 					{
 						loopState.Stop();
 						return;
 					}
-					List<ReplayKeyPoint> replay = ReplayReader.LoadReplay(game.ReplayFile);
-					if(replay == null)
+					List<ReplayKeyPoint> replay;
+                    try
+					{
+						replay = ReplayReader.LoadReplay(game.ReplayFile);
+					}
+					catch
+					{
 						return;
+					}
 					var last = replay.LastOrDefault();
 					if(last == null)
 						return;
@@ -245,7 +253,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					}
 					lock (lockMe)
 					{
-						controller.SetProgress(1.0 * ++count / games.Count);
+						controller.SetProgress(1.0 * ++count / gamesCount);
 					}
 				});
 			});
