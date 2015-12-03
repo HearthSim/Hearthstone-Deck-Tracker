@@ -723,7 +723,7 @@ namespace Hearthstone_Deck_Tracker
                     DeckStatsList.Save();
                 }
 
-                Core.MainWindow.DeckPickerList.UpdateDecks();
+                Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] {_assignedDeck});
                 statsControl.Refresh();
             }
             else if (_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(_game.CurrentGameStats))
