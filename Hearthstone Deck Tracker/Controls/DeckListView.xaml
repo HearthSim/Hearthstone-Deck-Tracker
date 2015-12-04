@@ -24,7 +24,7 @@
                     <DataTemplate>
                         <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="-2,0,0,0" Height="16"
                                                  VerticalAlignment="Center" Text="{Binding LocalizedName}"
-                                                 FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
+                                                 FontFamily="{Binding Font}"
                                                  TextAlignment="Left" FontSize="13" />
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>

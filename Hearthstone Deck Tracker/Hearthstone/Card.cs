@@ -412,6 +412,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public FontFamily Font
+		{
+			get
+			{
+				var lang = Config.Instance.SelectedLanguage;
+				var font = new FontFamily();
+				// if the language uses a Latin script use Belwe font
+				if(Helper.LatinLanguages.Contains(lang))
+				{
+					font = new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT");
+				}
+				return font;
+			}
+		}
+
 		public ImageBrush Background
 		{
 			get
