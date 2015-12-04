@@ -207,7 +207,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		            {
 			            int targetEntityId = actionEntity.GetTag(GAME_TAG.CARD_TARGET);
 			            Entity targetEntity;
-			            var targetsMinion = game.Entities.TryGetValue(targetEntityId, out targetEntity);
+			            var targetsMinion = game.Entities.TryGetValue(targetEntityId, out targetEntity) && targetEntity.IsMinion;
 			            gameState.GameHandler.HandlePlayerSpellPlayed(targetsMinion);
 		            }
 	            }
