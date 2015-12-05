@@ -1390,5 +1390,45 @@ namespace Hearthstone_Deck_Tracker
 		    if(handler != null)
 			    handler(this, new PropertyChangedEventArgs(propertyName));	
 	    }
+
+		private const double RankCoveredMaxLeft = 0.1;
+		private const double PlayerRankCoveredMaxHeight = 0.8;
+		private const double OpponentRankCoveredMaxTop = 0.8;
+		public bool IsRankConvered()
+		{
+			if(Canvas.GetLeft(StackPanelPlayer) < RankCoveredMaxLeft * Height)
+			{
+				if(Canvas.GetTop(StackPanelPlayer) + StackPanelPlayer.ActualHeight > PlayerRankCoveredMaxHeight * Height)
+				{
+					Logger.WriteLine("Player rank is potentially covered by player deck.", "Overlay");
+					return true;
+				}
+				if(Canvas.GetTop(StackPanelPlayer) < OpponentRankCoveredMaxTop * Height)
+				{
+					Logger.WriteLine("Opponent rank is potentially covered by player deck.", "Overlay");
+					return true;
+				}
+			}
+			if(Canvas.GetLeft(StackPanelOpponent) < RankCoveredMaxLeft * Height)
+			{
+				if(Canvas.GetTop(StackPanelOpponent) + StackPanelOpponent.ActualHeight > PlayerRankCoveredMaxHeight * Height)
+				{
+					Logger.WriteLine("Player rank is potentially covered by opponent deck.", "Overlay");
+					return true;
+				}
+				if(Canvas.GetTop(StackPanelOpponent) < OpponentRankCoveredMaxTop * Height)
+				{
+					Logger.WriteLine("Opponent rank is potentially covered by opponent deck.", "Overlay");
+					return true;
+				}
+			}
+			Logger.WriteLine("No ranks should be covered by any decks.", "Overlay");
+			return false;
+		}
+
+	    public void ShowFriendsListWarning(bool show)
+	    {
+		    StackPanelFriendsListWarning.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+	    }
     }
 }

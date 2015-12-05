@@ -68,6 +68,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string ReplayFile { get; set; }
 		public bool WasConceded { get; set; }
 		public int Rank { get; set; }
+		public int OpponentRank { get; set; }
 		public Region Region { get; set; }
 
 		public Guid DeckId
