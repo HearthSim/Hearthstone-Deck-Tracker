@@ -261,7 +261,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			else
 				ce.Reset();
 
-			if(!string.IsNullOrEmpty(entity.CardId) && ce.CardMark != CardMark.Created && ce.CardMark != CardMark.Returned)
+			if(!string.IsNullOrEmpty(entity.CardId) && ce.CardMark != CardMark.Created && ce.CardMark != CardMark.Returned && !ce.Created)
 			{
 				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
 					DrawnCardsMatchDeck = false;
