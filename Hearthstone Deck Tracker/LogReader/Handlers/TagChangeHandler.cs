@@ -497,7 +497,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
 						gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
 		            }
-		            else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY))
+		            else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY) || game.Entities[id].IsInZone(TAG_ZONE.DECK))
 						gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
 				}
 	            else if (value == game.Opponent.Id)
@@ -507,7 +507,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
 						gameState.ProposeKeyPoint(KeyPointType.SecretStolen, id, ActivePlayer.Player);
 		            }
-					else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY))
+					else if (game.Entities[id].IsInZone(TAG_ZONE.PLAY) || game.Entities[id].IsInZone(TAG_ZONE.DECK))
 						gameState.GameHandler.HandlePlayerStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
 	            }
             }
