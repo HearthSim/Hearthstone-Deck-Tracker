@@ -221,9 +221,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					            AddKnownCardId(gameState, game, game.Entities[gameState.LastCardPlayed].CardId);
 					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Neutral.GallywixsCoinToken);
 					            break;
-				            case CardIds.Collectible.Druid.Malorne:
-					            AddKnownCardId(gameState, game, CardIds.Collectible.Druid.Malorne);
-					            break;
 			            }
 		            }
 		            else //POWER
@@ -250,9 +247,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					            break;
 				            case CardIds.Collectible.Neutral.AncientShade:
 					            AddKnownCardId(gameState, game, CardIds.NonCollectible.Neutral.AncientCurseToken);
-					            break;
-				            case CardIds.Collectible.Priest.Entomb:
-					            AddTargetAsKnownCardId(gameState, game, match);
 					            break;
 				            case CardIds.Collectible.Priest.ExcavatedEvil:
 					            AddKnownCardId(gameState, game, CardIds.Collectible.Priest.ExcavatedEvil);
