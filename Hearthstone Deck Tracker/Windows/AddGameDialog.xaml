@@ -48,6 +48,7 @@
                 <enums:Region>US</enums:Region>
                 <enums:Region>EU</enums:Region>
                 <enums:Region>ASIA</enums:Region>
+                <enums:Region>CHINA</enums:Region>
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,2,0,0">
