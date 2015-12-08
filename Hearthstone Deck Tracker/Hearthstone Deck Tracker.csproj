@@ -359,7 +359,6 @@
     <Compile Include="LogReader\Handlers\AssetHandler.cs" />
     <Compile Include="LogReader\Handlers\BobHandler.cs" />
     <Compile Include="LogReader\Handlers\PowerHandler.cs" />
-    <Compile Include="LogReader\Handlers\ZoneHandler.cs" />
     <Compile Include="LogReader\HsGameState.cs" />
     <Compile Include="LogReader\HsLogReaderConstants.cs" />
     <Compile Include="LogReader\Handlers\RachelleHandler.cs" />

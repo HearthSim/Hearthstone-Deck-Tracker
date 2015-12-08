@@ -18,7 +18,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private static readonly PowerHandler PowerLineHandler = new PowerHandler();
 		private static readonly RachelleHandler RachelleHandler = new RachelleHandler();
 		private static readonly AssetHandler AssetHandler = new AssetHandler();
-		private static readonly ZoneHandler ZoneHandler = new ZoneHandler();
 		private static readonly BobHandler BobHandler = new BobHandler();
 		private static readonly ArenaHandler ArenaHandler = new ArenaHandler();
 		private static readonly LoadingScreenHandler LoadingScreenHandler = new LoadingScreenHandler();
@@ -36,7 +35,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_bobLogReader = new LogReader(HsLogReaderConstants.BobLogReaderInfo);
 			LogReaders.Add(_powerLogReader);
 			LogReaders.Add(_bobLogReader);
-			LogReaders.Add(new LogReader(HsLogReaderConstants.ZoneLogReaderInfo));
 			LogReaders.Add(new LogReader(HsLogReaderConstants.RachelleLogReaderInfo));
 			LogReaders.Add(new LogReader(HsLogReaderConstants.AssetLogReaderInfo));
 			LogReaders.Add(new LogReader(HsLogReaderConstants.ArenaLogReaderInfo));
@@ -136,10 +134,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							GameV2.AddHSLogLine(line.Line);
 							PowerLineHandler.Handle(line.Line, _gameState, _game);
 							API.LogEvents.OnPowerLogLine.Execute(line.Line);
-							break;
-						case "Zone":
-							ZoneHandler.Handle(line.Line, _gameState);
-							API.LogEvents.OnZoneLogLine.Execute(line.Line);
 							break;
 						case "Asset":
 							AssetHandler.Handle(line.Line, _gameState, _game);

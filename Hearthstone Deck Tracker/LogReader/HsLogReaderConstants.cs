@@ -61,10 +61,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			get { return new LogReaderInfo { Name = "Rachelle" }; }
 		}
-		public static LogReaderInfo ZoneLogReaderInfo
-		{
-			get { return new LogReaderInfo { Name = "Zone", ContainsFilters = new[] { "zone from" } }; }
-		}
 		public static LogReaderInfo ArenaLogReaderInfo
 		{
 			get { return new LogReaderInfo { Name = "Arena" }; }
