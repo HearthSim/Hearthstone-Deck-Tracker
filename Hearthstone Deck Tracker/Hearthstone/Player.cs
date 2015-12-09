@@ -343,7 +343,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			else
 			{
 				revealed = new CardEntity(entity.Entity) {Turn = turn, Created = entity.Created, Discarded = entity.Discarded};
-                RevealedCards.Add(revealed);
+				var cardType = entity.Entity.GetTag(GAME_TAG.CARDTYPE);
+				if(cardType != (int)TAG_CARDTYPE.HERO && cardType != (int)TAG_CARDTYPE.ENCHANTMENT && cardType != (int)TAG_CARDTYPE.HERO_POWER
+					&& cardType != (int)TAG_CARDTYPE.PLAYER)
+					RevealedCards.Add(revealed);
 			}
 			if(discarded.HasValue)
 				revealed.Discarded = discarded.Value;
