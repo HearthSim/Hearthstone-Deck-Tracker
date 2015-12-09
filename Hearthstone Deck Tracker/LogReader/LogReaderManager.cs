@@ -91,21 +91,30 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			return _gameState.GetTurnNumber();
 		}
 
-		public static async Task Stop()
+		public static async Task<bool> Stop()
 		{
 			if(!_running)
-				return;
+			{
+				Logger.WriteLine("LogReaders could not be stopped, stop already in progress.", "LogReaderManager");
+				return false;
+			}
 			_stop = true;
 			while(_running)
 				await Task.Delay(50);
 			await Task.WhenAll(LogReaders.Select(x => x.Stop()));
+			Logger.WriteLine("Stopped LogReaders.", "LogReaderManager");
+			return true;
 		}
 
-		public static async Task Restart()
+		/// <summary>
+		/// LogReaderManager.Stop needs to be called first!
+		/// These can not happen in one call because other things need to be reset between stopping and restarting.
+		/// </summary>
+		public static void Restart()
 		{
-			if(!_running)
+			if(_running)
 				return;
-			await Stop();
+			Logger.WriteLine("Restarting LogReaders.", "LogReaderManager");
 			_startingPoint = GetStartingPoint();
 			_gameState.Reset();
 			_game.GameTime.TimedTasks.Clear();

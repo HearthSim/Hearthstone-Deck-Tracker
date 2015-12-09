@@ -195,11 +195,7 @@ namespace Hearthstone_Deck_Tracker
                         Logger.WriteLine("Exited game", "UpdateOverlayLoop");
                         Game.CurrentRegion = Region.UNKNOWN;
                         Logger.WriteLine("Reset region", "UpdateOverlayLoop");
-                        //HsLogReaderV2.Instance.ClearLog();
-                        Game.Reset();
-                        if (DeckList.Instance.ActiveDeck != null)
-                            Game.SetPremadeDeck((Deck) DeckList.Instance.ActiveDeck.Clone());
-                        await LogReaderManager.Restart();
+                        await Reset();
 
                         MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
                         TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
@@ -219,6 +215,22 @@ namespace Hearthstone_Deck_Tracker
             }
             CanShutdown = true;
         }
+
+	    public static async Task Reset()
+		{
+			var stoppedReader = await LogReaderManager.Stop();
+			Game.Reset();
+			if(DeckList.Instance.ActiveDeck != null)
+			{
+				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
+				MainWindow.UpdateMenuItemVisibility();
+			}
+			if(stoppedReader)
+				LogReaderManager.Restart();
+			Overlay.Update(false);
+			Overlay.UpdatePlayerCards();
+			Windows.PlayerWindow.UpdatePlayerCards();
+		}
 
 
         public static class Windows

@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			JoustReveals = 0;
 			KnownCardIds.Clear();
 			LastGameStart = DateTime.Now;
+			WaitForController = null;
 		}
 
         public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)

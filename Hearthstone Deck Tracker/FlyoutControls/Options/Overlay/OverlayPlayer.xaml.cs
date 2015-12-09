@@ -106,10 +106,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.RemoveCardsFromDeck = true;
 			SaveConfig(false);
-			_game.Reset();
-			if(DeckList.Instance.ActiveDeck != null)
-				_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-			await LogReaderManager.Restart();
+			await Core.Reset();
 			Core.Overlay.Update(true);
 		}
 
@@ -119,10 +116,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.RemoveCardsFromDeck = false;
 			SaveConfig(false);
-			_game.Reset();
-			if(DeckList.Instance.ActiveDeck != null)
-				_game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
-			await LogReaderManager.Restart();
+			await Core.Reset();
 			Core.Overlay.Update(true);
 		}
 

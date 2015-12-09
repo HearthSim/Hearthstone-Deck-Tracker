@@ -148,6 +148,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				Helper.UpdatePlayerCards();
 				Helper.UpdateOpponentCards();
+				Core.MainWindow.NeedToIncorrectDeckMessage = false;
 			}
 		}
 

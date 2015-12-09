@@ -43,22 +43,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public async void UseDeck(Deck selected)
 		{
-			Core.Game.Reset();
-
 			if(selected != null)
-			{
 				DeckList.Instance.ActiveDeck = selected;
-                Core.Game.SetPremadeDeck((Deck)selected.Clone());
-				UpdateMenuItemVisibility();
-			}
-			//needs to be true for automatic deck detection to work
-			await LogReaderManager.Restart();
-			Core.Overlay.Update(false);
-			Core.Overlay.UpdatePlayerCards();
-			Core.Windows.PlayerWindow.UpdatePlayerCards();
+			await Core.Reset();
 		}
 
-		private void UpdateMenuItemVisibility()
+		internal void UpdateMenuItemVisibility()
 		{
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
@@ -812,6 +802,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			await Task.Delay(1000);
 
+			if(!NeedToIncorrectDeckMessage)
+			{
+				IsShowingIncorrectDeckMessage = false;
+				return;
+			}
+
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
@@ -822,6 +818,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
             Core.Game.NoMatchingDeck = decks.Count == 0;
+
+			if(decks.Any(x => x == DeckList.Instance.ActiveDeck))
+			{
+				Logger.WriteLine("Correct deck already selected.", "IncorrectDeckMessage");
+				IsShowingIncorrectDeckMessage = false;
+				NeedToIncorrectDeckMessage = false;
+				return;
+			}
 			
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
 			{
