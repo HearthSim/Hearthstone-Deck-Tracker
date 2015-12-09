@@ -58,6 +58,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static string CardTypeConverter(CardType type)
 		{
+			if(type == CardType.HERO_POWER)
+				return "Hero Power";
 			return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(type.ToString().ToLower().Replace("_", ""));
 		}
 
