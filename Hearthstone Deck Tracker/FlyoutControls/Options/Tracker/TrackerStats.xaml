@@ -35,7 +35,7 @@
                                               HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked"
                                               Unchecked="CheckboxRecordFriendly_Unchecked" />
-                            <CheckBox x:Name="CheckboxRecordPractice" Content="Practice"
+                            <CheckBox x:Name="CheckboxRecordPractice" Content="Adventure / Practice"
                                               HorizontalAlignment="Left" Margin="0,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked"
                                               Unchecked="CheckboxRecordPractice_Unchecked" />
