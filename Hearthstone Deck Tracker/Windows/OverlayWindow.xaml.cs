@@ -1393,10 +1393,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private const double RankCoveredMaxLeft = 0.1;
 		private const double PlayerRankCoveredMaxHeight = 0.8;
-		private const double OpponentRankCoveredMaxTop = 0.8;
+		private const double OpponentRankCoveredMaxTop = 0.12;
 		public bool IsRankConvered()
 		{
-			if(Canvas.GetLeft(StackPanelPlayer) < RankCoveredMaxLeft * Height)
+			if(Canvas.GetLeft(StackPanelPlayer) < RankCoveredMaxLeft * Width)
 			{
 				if(Canvas.GetTop(StackPanelPlayer) + StackPanelPlayer.ActualHeight > PlayerRankCoveredMaxHeight * Height)
 				{
@@ -1409,7 +1409,7 @@ namespace Hearthstone_Deck_Tracker
 					return true;
 				}
 			}
-			if(Canvas.GetLeft(StackPanelOpponent) < RankCoveredMaxLeft * Height)
+			if(Canvas.GetLeft(StackPanelOpponent) < RankCoveredMaxLeft * Width)
 			{
 				if(Canvas.GetTop(StackPanelOpponent) + StackPanelOpponent.ActualHeight > PlayerRankCoveredMaxHeight * Height)
 				{
