@@ -29,6 +29,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private int _count;
 		private int _inHandCount;
 		private bool _isCreated;
+		private bool _isFrameHighlighted;
 		private int _lastCount;
 		private bool _loaded;
 		private string _localizedName;
@@ -433,7 +434,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames && _coloredGem == Config.Instance.RarityCardGems)
+				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames && _coloredGem == Config.Instance.RarityCardGems
+					&& _isFrameHighlighted == HighlightFrame)
 					return _cachedBackground;
 				_lastCount = Count;
 				_coloredFrame = Config.Instance.RarityCardFrames;
@@ -456,11 +458,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 					//frame
 					var frame = "Images/frame.png";
-					if(Config.Instance.RarityCardFrames)
+					if(HighlightFrame)
 					{
-						if(HighlightFrame)
-							frame = "Images/frame_golden.png";
-						else
+						frame = "Images/frame_golden.png";
+						_isFrameHighlighted = true;
+					}
+					else
+					{
+						_isFrameHighlighted = false;
+						if(Config.Instance.RarityCardFrames)
 						{
 							switch(Rarity)
 							{
