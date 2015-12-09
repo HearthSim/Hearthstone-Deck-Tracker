@@ -57,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			_deck = deck;
 			_game = new GameStats();
 			BtnSave.Content = "add game";
+			Title = "Add new game";
 		}
 
 		public AddGameDialog(GameStats game)
@@ -85,6 +86,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			TextBoxOppName.Text = game.OpponentName;
 			TextBoxPlayerName.Text = game.PlayerName;
 			BtnSave.Content = "save";
+			Title = "Edit game";
 		}
 
 		private void BtnSave_OnClick(object sender, RoutedEventArgs e)
