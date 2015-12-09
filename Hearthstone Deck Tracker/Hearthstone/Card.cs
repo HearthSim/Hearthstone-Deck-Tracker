@@ -393,6 +393,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public bool HighlightFrame { get; set; }
+
 		public SolidColorBrush ColorOpponent
 		{
 			get { return new SolidColorBrush(Colors.White); }
@@ -456,21 +458,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					var frame = "Images/frame.png";
 					if(Config.Instance.RarityCardFrames)
 					{
-						switch(Rarity)
+						if(HighlightFrame)
+							frame = "Images/frame_golden.png";
+						else
 						{
-							case Rarity.Free:
-							case Rarity.Common:
-								frame = "Images/frame_rarity_common.png";
-								break;
-							case Rarity.Rare:
-								frame = "Images/frame_rarity_rare.png";
-								break;
-							case Rarity.Epic:
-								frame = "Images/frame_rarity_epic.png";
-								break;
-							case Rarity.Legendary:
-								frame = "Images/frame_rarity_legendary.png";
-								break;
+							switch(Rarity)
+							{
+								case Rarity.Free:
+								case Rarity.Common:
+									frame = "Images/frame_rarity_common.png";
+									break;
+								case Rarity.Rare:
+									frame = "Images/frame_rarity_rare.png";
+									break;
+								case Rarity.Epic:
+									frame = "Images/frame_rarity_epic.png";
+									break;
+								case Rarity.Legendary:
+									frame = "Images/frame_rarity_legendary.png";
+									break;
+							}
 						}
 					}
 					drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(frame, UriKind.Relative)), new Rect(0, 0, 218, 35)));
@@ -495,6 +502,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 					if(Math.Abs(Count) > 1 || Rarity == Rarity.Legendary)
 					{
+
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
 						                                           new Rect(189, 6, 25, 24)));
 

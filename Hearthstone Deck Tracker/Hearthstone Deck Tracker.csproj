@@ -1231,6 +1231,9 @@
     <Content Include="Images\board_damage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\frame_golden.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\gold_progress_frame_center.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
