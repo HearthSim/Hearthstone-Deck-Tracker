@@ -193,7 +193,7 @@ namespace Hearthstone_Deck_Tracker
 
             if (_game.CurrentGameStats != null)
                 _game.CurrentGameStats.OpponentHero = hero;
-            Logger.WriteLine("Playing against " + hero, "GameEventHandler");
+            Logger.WriteLine("Opponent=" + hero, "GameEventHandler");
         }
 
         public void SetPlayerHero(string hero)
@@ -202,6 +202,7 @@ namespace Hearthstone_Deck_Tracker
             {
                 if (!string.IsNullOrEmpty(hero))
                 {
+                    Logger.WriteLine("Player=" + hero, "GameEventHandler");
                     _game.Player.Class = hero;
                     if (_game.CurrentGameStats != null)
                         _game.CurrentGameStats.PlayerHero = hero;

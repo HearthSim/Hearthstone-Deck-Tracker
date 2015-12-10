@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -376,12 +377,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
                 }
             }
             else if(tag == GAME_TAG.CARDTYPE && value == (int)TAG_CARDTYPE.HERO)
-            {
-                if(string.IsNullOrEmpty(game.Player.Class) && id == game.PlayerEntity.GetTag(GAME_TAG.HERO_ENTITY))
-                    gameState.GameHandler.SetPlayerHero(Database.GetHeroNameFromId(game.Entities[id].CardId));
-                else if(string.IsNullOrEmpty(game.Opponent.Class) && id == game.OpponentEntity.GetTag(GAME_TAG.HERO_ENTITY))
-                    gameState.GameHandler.SetOpponentHero(Database.GetHeroNameFromId(game.Entities[id].CardId));
-            }
+                SetHeroAsync(id, game, gameState);
             else if (tag == GAME_TAG.CURRENT_PLAYER && value == 1)
             {
                 var activePlayer = game.Entities[id].IsPlayer ? ActivePlayer.Player : ActivePlayer.Opponent;
@@ -535,5 +531,30 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
             }
         }
 
+		private async void SetHeroAsync(int id, IGame game, IHsGameState gameState)
+		{
+			Logger.WriteLine("Found hero with id=" + id, "TagChangeHandler");
+			if(game.PlayerEntity == null)
+			{
+				Logger.WriteLine("Waiting for PlayerEntity to exist", "TagChangeHandler");
+				while(game.PlayerEntity == null)
+					await Task.Delay(100);
+				Logger.WriteLine("Found PlayerEntity", "TagChangeHandler");
+			}
+			if(string.IsNullOrEmpty(game.Player.Class) && id == game.PlayerEntity.GetTag(GAME_TAG.HERO_ENTITY))
+			{
+				gameState.GameHandler.SetPlayerHero(Database.GetHeroNameFromId(game.Entities[id].CardId));
+				return;
+			}
+			if(game.OpponentEntity == null)
+			{
+				Logger.WriteLine("Waiting for OpponentEntity to exist", "TagChangeHandler");
+				while(game.OpponentEntity == null)
+					await Task.Delay(100);
+				Logger.WriteLine("Found OpponentEntity", "TagChangeHandler");
+			}
+			if(string.IsNullOrEmpty(game.Opponent.Class) && id == game.OpponentEntity.GetTag(GAME_TAG.HERO_ENTITY))
+				gameState.GameHandler.SetOpponentHero(Database.GetHeroNameFromId(game.Entities[id].CardId));
+		}
     }
 }
