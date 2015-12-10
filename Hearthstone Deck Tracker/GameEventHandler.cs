@@ -499,6 +499,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			_arenaRewardDialog = null;
 			_showedNoteDialog = false;
+	        _rankDetectionTries = 0;
+	        _rankDetectionOverlayToggles = 0;
             _game.IsInMenu = false;
             _game.Reset();
 
