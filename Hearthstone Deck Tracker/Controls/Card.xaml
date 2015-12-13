@@ -18,7 +18,7 @@
                                  TextAlignment="Center" FontSize="20" Grid.Column="0" />
         <local:OutlinedTextBlock Height="16" VerticalAlignment="Center" Text="{Binding LocalizedName}"
                                  Fill="{Binding ColorPlayer}"
-                                 FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
+                                 FontFamily="{Binding Font}"
                                  TextAlignment="Left" FontSize="13" Grid.Column="1" />
     </Grid>
 </UserControl>

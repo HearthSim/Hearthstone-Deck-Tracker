@@ -7,6 +7,7 @@ using System.Windows;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -61,7 +62,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					if(Config.Instance.KeepStatsWhenDeletingDeck)
 					{
-						DefaultDeckStats.Instance.GetDeckStats(deck.Class).Games.AddRange(deckStats.Games);
+						var defaultDeck = DefaultDeckStats.Instance.GetDeckStats(deck.Class);
+						if(defaultDeck != null)
+							defaultDeck.Games.AddRange(deckStats.Games);
 						DefaultDeckStats.Save();
 						Logger.WriteLine(string.Format("Moved deckstats for deck {0} to default stats", deck.Name), "Edit");
 					}

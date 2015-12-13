@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -9,7 +10,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public partial class ArenaRewardDialog
 	{
 		private readonly Deck _deck;
-		public bool SaveButtonWasClicked { get; set; }
 		public ArenaRewardDialog(Deck deck)
 		{
 			_deck = deck;
@@ -27,7 +27,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			_deck.ArenaReward = ArenaRewards.Reward;
 			DeckList.Save();
-			SaveButtonWasClicked = true;
+			ArenaStats.Instance.UpdateArenaRewards();
+			ArenaStats.Instance.UpdateArenaRuns();
 			Close();
 		}
 	}

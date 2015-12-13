@@ -168,27 +168,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			foreach(var card in deck.MissingCards)
 			{
 				message += "\n• " + card.LocalizedName;
-
-				int dust;
-				switch(card.Rarity)
-				{
-					case "Common":
-						dust = 40;
-						break;
-					case "Rare":
-						dust = 100;
-						break;
-					case "Epic":
-						dust = 400;
-						break;
-					case "Legendary":
-						dust = 1600;
-						break;
-					default:
-						dust = 0;
-						break;
-				}
-
 				if(card.Count == 2)
 					message += " x2";
 
@@ -197,7 +176,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				else if(card.Set.Equals("PROMOTION", StringComparison.CurrentCultureIgnoreCase))
 					promo = "and Promotion cards ";
 				else
-					totalDust += dust * card.Count;
+					totalDust += card.DustCost * card.Count;
 			}
 			message += string.Format("\n\nYou need {0} dust {1}{2}to craft the missing cards.", totalDust, nax, promo);
 			await

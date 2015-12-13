@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.API;
@@ -42,22 +43,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public async void UseDeck(Deck selected)
 		{
-			Core.Game.Reset();
-
 			if(selected != null)
-			{
 				DeckList.Instance.ActiveDeck = selected;
-                Core.Game.SetPremadeDeck((Deck)selected.Clone());
-				UpdateMenuItemVisibility();
-			}
-			//needs to be true for automatic deck detection to work
-			await LogReaderManager.Restart();
-			Core.Overlay.Update(false);
-			Core.Overlay.UpdatePlayerCards();
-			Core.Windows.PlayerWindow.UpdatePlayerCards();
+			await Core.Reset();
 		}
 
-		private void UpdateMenuItemVisibility()
+		internal void UpdateMenuItemVisibility()
 		{
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
@@ -757,7 +748,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BtnDonate_OnClick(object sender, RoutedEventArgs e)
 		{
-			Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
+			BtnDonateContextMenu.Placement = PlacementMode.Bottom;
+			BtnDonateContextMenu.PlacementTarget = BtnDonate;
+			BtnDonateContextMenu.IsOpen = true;
+		}
+
+		private void BtnPaypal_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
+			}
+			catch
+			{
+			}
+		}
+
+		private void BtnPatreon_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				Process.Start("https://www.patreon.com/HearthstoneDeckTracker");
+			}
+			catch
+			{
+			}
 		}
 
 		#endregion
@@ -787,6 +802,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			await Task.Delay(1000);
 
+			if(!NeedToIncorrectDeckMessage)
+			{
+				IsShowingIncorrectDeckMessage = false;
+				return;
+			}
+
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
@@ -797,6 +818,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
             Core.Game.NoMatchingDeck = decks.Count == 0;
+
+			if(decks.Any(x => x == DeckList.Instance.ActiveDeck))
+			{
+				Logger.WriteLine("Correct deck already selected.", "IncorrectDeckMessage");
+				IsShowingIncorrectDeckMessage = false;
+				NeedToIncorrectDeckMessage = false;
+				return;
+			}
 			
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
 			{
@@ -919,15 +948,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(Config.Instance.StatsInWindow)
 			{
+				StatsFlyoutContentControl.Content = null;
+				Core.Windows.NewStatsWindow.ContentControl.Content = Core.StatsOverview;
 				Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
 				Core.Windows.NewStatsWindow.Show();
 				Core.Windows.NewStatsWindow.Activate();
-				Core.Windows.NewStatsWindow.Overview.UpdateStats();
+				Core.StatsOverview.UpdateStats();
 			}
 			else
 			{
+				Core.Windows.NewStatsWindow.ContentControl.Content = null;
+				StatsFlyoutContentControl.Content = Core.StatsOverview;
 				FlyoutNewStats.IsOpen = true;
-				NewStatsFlyout.UpdateStats();
+				Core.StatsOverview.UpdateStats();
 			}
 		}
 
@@ -1087,8 +1120,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Config.Instance.StatsInWindow = true;
 			Config.Save();
+			StatsFlyoutContentControl.Content = null;
+			Core.Windows.NewStatsWindow.ContentControl.Content = Core.StatsOverview;
 			Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
 			Core.Windows.NewStatsWindow.Show();
+			Core.StatsOverview.UpdateStats();
 			FlyoutNewStats.IsOpen = false;
 			await Task.Delay(100);
 			Core.Windows.NewStatsWindow.Activate();

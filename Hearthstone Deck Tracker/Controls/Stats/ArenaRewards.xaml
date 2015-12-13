@@ -19,7 +19,7 @@
                 <TextBox Name="TextBoxGold" ToolTip="You can enter values as e.g. 50+125" TextChanged="TextBoxGold_OnTextChanged"/>
             </GroupBox>
             <GroupBox Header="Dust">
-                <TextBox Name="TextBoxDust" ToolTip="You can enter values as e.g. 50+125" TextChanged="TextBoxDust_OnTextChanged"/>
+                <TextBox Name="TextBoxDust" TextChanged="TextBoxDust_OnTextChanged"/>
             </GroupBox>
         </UniformGrid>
         <GroupBox Header="Packs">

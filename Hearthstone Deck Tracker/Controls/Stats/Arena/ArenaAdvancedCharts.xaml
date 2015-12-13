@@ -24,8 +24,8 @@
                 <GroupBox Header="Class distribution by wins" Height="400" MaxWidth="700">
                     <charts:ChartWinsByClass/>
                 </GroupBox>
-                <GroupBox Header="Win/Loss by class" Height="400" MaxWidth="700">
-                    <charts:ChartWinsLossByClass/>
+                <GroupBox Header="Win/Loss vs class" Height="400" MaxWidth="700">
+                    <charts:ChartWinsLossVsClass/>
                 </GroupBox>
             </StackPanel>
         </ScrollViewer>

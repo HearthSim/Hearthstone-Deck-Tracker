@@ -13,7 +13,7 @@
     <UserControl.Resources>
         <converters:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter"/>
     </UserControl.Resources>
-    <DataGrid Name="DataGridArenaRuns" SelectedIndex="0" SelectedItem="{Binding SelectedRun, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay, IsAsync=True}" ItemsSource="{Binding Path=FilteredRuns, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
+    <DataGrid Name="DataGridArenaRuns" SelectedIndex="0" SelectedItem="{Binding SelectedRun, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource, IsAsync=True}" ItemsSource="{Binding Path=FilteredRuns, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True, NotifyOnTargetUpdated=True}" TargetUpdated="DataGridArenaRuns_OnTargetUpdated" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="Class" SortMemberPath="Class">
                 <DataGridTemplateColumn.CellTemplate>
@@ -109,7 +109,8 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
                         <Button Margin="4,0" Content="Edit rewards" Click="ButtonEditRewards_OnClick"/>
-                        <Button Margin="4,4,4,0" Content="Show deck" Click="ButtonShowDeck_OnClick" IsEnabled="{Binding Path=SelectedItem.CanGetOpponentDeck, ElementName=DataGridGames}"/>
+                        <Button Margin="4,4,4,0" Content="Show own deck" Click="ButtonShowDeck_OnClick"/>
+                        <Button Margin="4,4,4,0" Content="Show opp. deck" Click="ButtonShowOppDeck_OnClick" IsEnabled="{Binding Path=SelectedItem.CanGetOpponentDeck, ElementName=DataGridGames}"/>
                         <Button Margin="4,4,4,0" Content="Show replay" Click="ButtonShowReplay_OnClick"
                                 IsEnabled="{Binding Path=SelectedItem.HasReplayFile, ElementName=DataGridGames}">
                         </Button>

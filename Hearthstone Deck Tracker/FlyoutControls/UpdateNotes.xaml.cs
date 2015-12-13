@@ -131,6 +131,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
+		private void ButtonPatreon_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				Process.Start("https://www.patreon.com/HearthstoneDeckTracker");
+			}
+			catch
+			{
+
+			}
+		}
+
 		private void ButtonClose_Click(object sender, RoutedEventArgs e)
 		{
 			Core.MainWindow.FlyoutUpdateNotes.IsOpen = false;

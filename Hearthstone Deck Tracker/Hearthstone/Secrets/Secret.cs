@@ -24,10 +24,14 @@ namespace Hearthstone_Deck_Tracker
 		{
 			return (Config.Instance.AutoGrayoutSecrets
 			        && (game.CurrentGameMode == GameMode.Casual || game.CurrentGameMode == GameMode.Ranked
-			            || game.CurrentGameMode == GameMode.Friendly || game.CurrentGameMode == GameMode.Practice)
+			            || game.CurrentGameMode == GameMode.Friendly || game.CurrentGameMode == GameMode.Practice || ActiveDeckIsConstructed)
 			        && game.Opponent.RevealedCards.Where(x => x != null && x.Entity != null)
 			               .Count(x => x.Entity.Id < 68 && x.Entity.CardId == CardId) >= 2) ? 0 : Count;
 		}
 
+		public bool ActiveDeckIsConstructed
+		{
+			get { return DeckList.Instance.ActiveDeck != null && !DeckList.Instance.ActiveDeck.IsArenaDeck; }
+		}
 	}
 }

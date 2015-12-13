@@ -10,6 +10,9 @@
 		LOST,
 		TIED,
 		DISCONNECTED,
-		QUIT
+		CONCEDED,
+
+		//Renamed
+		QUIT = CONCEDED
 	}
 }

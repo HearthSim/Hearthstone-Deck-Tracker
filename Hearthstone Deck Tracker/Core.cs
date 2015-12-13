@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -20,9 +21,11 @@ namespace Hearthstone_Deck_Tracker
     {
         private static TrayIcon _trayIcon;
         private static OverlayWindow _overlay;
+	    private static Overview _statsOverview;
         public static Version Version { get; set; }
         public static GameV2 Game { get; set; }
         public static MainWindow MainWindow { get; set; }
+		public static Overview StatsOverview { get { return _statsOverview ?? (_statsOverview = new Overview()); } }
         public static bool Initialized { get; private set; }
 
         public static TrayIcon TrayIcon
@@ -45,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 	        var newUser = !Directory.Exists(Config.AppDataPath);
             Config.Load();
             ConfigManager.Run();
-            Logger.Initialzie();
+            Logger.Initialize();
             Helper.UpdateAppTheme();
             var splashScreenWindow = new SplashScreenWindow();
             splashScreenWindow.ShowConditional();
@@ -70,6 +73,12 @@ namespace Hearthstone_Deck_Tracker
 	            loginType = loggedIn ? LoginType.AutoLogin : LoginType.AutoGuest;
             MainWindow = new MainWindow();
             MainWindow.LoadConfigSettings();
+            if(Config.Instance.ReselectLastDeckUsed)
+            {
+                MainWindow.SelectLastUsedDeck();
+                Config.Instance.ReselectLastDeckUsed = false;
+                Config.Save();
+            }
             MainWindow.Show();
             splashScreenWindow.Close();
 
@@ -186,11 +195,7 @@ namespace Hearthstone_Deck_Tracker
                         Logger.WriteLine("Exited game", "UpdateOverlayLoop");
                         Game.CurrentRegion = Region.UNKNOWN;
                         Logger.WriteLine("Reset region", "UpdateOverlayLoop");
-                        //HsLogReaderV2.Instance.ClearLog();
-                        Game.Reset();
-                        if (DeckList.Instance.ActiveDeck != null)
-                            Game.SetPremadeDeck((Deck) DeckList.Instance.ActiveDeck.Clone());
-                        await LogReaderManager.Restart();
+                        await Reset();
 
                         MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
                         TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
@@ -210,6 +215,22 @@ namespace Hearthstone_Deck_Tracker
             }
             CanShutdown = true;
         }
+
+	    public static async Task Reset()
+		{
+			var stoppedReader = await LogReaderManager.Stop();
+			Game.Reset();
+			if(DeckList.Instance.ActiveDeck != null)
+			{
+				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
+				MainWindow.UpdateMenuItemVisibility();
+			}
+			if(stoppedReader)
+				LogReaderManager.Restart();
+			Overlay.Update(false);
+			Overlay.UpdatePlayerCards();
+			Windows.PlayerWindow.UpdatePlayerCards();
+		}
 
 
         public static class Windows

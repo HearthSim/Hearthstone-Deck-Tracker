@@ -17,6 +17,8 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 #endregion
@@ -467,7 +469,7 @@ namespace Hearthstone_Deck_Tracker
 
             var holdingNextTurn2 = Math.Round(100.0f * Helper.DrawProbability(2, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
             var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 1);
-            LblOpponentDrawChance2.Text = drawNextTurn2 + "%";
+            LblOpponentDrawChance2.Text = (cardsLeftInDeck == 1 ? 100 : drawNextTurn2) + "%";
             LblOpponentHandChance2.Text = holdingNextTurn2 + "%";
 
             var holdingNextTurn = Math.Round(100.0f * Helper.DrawProbability(1, (cardsLeftInDeck + handWithoutCoin), handWithoutCoin + 1), 1);
@@ -493,7 +495,8 @@ namespace Hearthstone_Deck_Tracker
             }
             LblPlayerFatigue.Text = "";
 
-            LblDrawChance2.Text = Math.Round(200.0f / cardsLeftInDeck, 1) + "%";
+            var drawNextTurn2 = Math.Round(200.0f / cardsLeftInDeck, 1);
+            LblDrawChance2.Text = (cardsLeftInDeck == 1 ? 100 : drawNextTurn2) + "%";
             LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
         }
 
@@ -625,6 +628,15 @@ namespace Hearthstone_Deck_Tracker
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ratio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ratio));
+			//Scale attack icons, with height
+			var atkWidth = (int)Math.Round(Height * 0.0695, 0);
+			var atkFont = (int)Math.Round(Height * 0.0223, 0);
+			IconBoardAttackPlayer.Width = atkWidth;
+			IconBoardAttackPlayer.Height = atkWidth;
+			TextBlockPlayerAttack.FontSize = atkFont;
+			IconBoardAttackOpponent.Width = atkWidth;
+			IconBoardAttackOpponent.Height = atkWidth;
+			TextBlockOpponentAttack.FontSize = atkFont;
 		}
 
         private void Window_SourceInitialized_1(object sender, EventArgs e)
@@ -768,8 +780,14 @@ namespace Hearthstone_Deck_Tracker
 		{
 			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu ? Visibility.Collapsed : Visibility.Visible;
 			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu ? Visibility.Collapsed : Visibility.Visible;
-			TextBlockPlayerAttack.Text = Core.Game.Player.Board.Where(x => x != null && x.Entity != null).Sum(x => x.Entity.GetTag(GAME_TAG.ATK)).ToString();
-			TextBlockOpponentAttack.Text = Core.Game.Opponent.Board.Where(x => x != null && x.Entity != null).Sum(x => x.Entity.GetTag(GAME_TAG.ATK)).ToString();
+
+			// do the calculation if at least one of the icons is visible
+			if(IconBoardAttackPlayer.Visibility == Visibility.Visible || IconBoardAttackOpponent.Visibility == Visibility.Visible)
+			{
+				var board = new BoardState();
+				TextBlockPlayerAttack.Text = board.Player.Damage.ToString();
+				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
+			}			
 		}
 
 	    private void UpdateGoldProgress()
@@ -1169,14 +1187,14 @@ namespace Hearthstone_Deck_Tracker
             var card = ToolTipCard.DataContext as Card;
             if (card == null)
                 return;
-            if (!CardIds.SubCardIds.Keys.Contains(card.Id))
+			if(card.EntourageCardIds.Length  == 0)
             {
                 HideAdditionalToolTips();
                 return;
             }
 
             StackPanelAdditionalTooltips.Children.Clear();
-            foreach (var id in CardIds.SubCardIds[card.Id])
+            foreach (var id in card.EntourageCardIds)
             {
                 var tooltip = new CardToolTip();
                 tooltip.SetValue(DataContextProperty, Database.GetCardFromId(id));
@@ -1371,6 +1389,46 @@ namespace Hearthstone_Deck_Tracker
 		    var handler = PropertyChanged;
 		    if(handler != null)
 			    handler(this, new PropertyChangedEventArgs(propertyName));	
+	    }
+
+		private const double RankCoveredMaxLeft = 0.1;
+		private const double PlayerRankCoveredMaxHeight = 0.8;
+		private const double OpponentRankCoveredMaxTop = 0.12;
+		public bool IsRankConvered()
+		{
+			if(Canvas.GetLeft(StackPanelPlayer) < RankCoveredMaxLeft * Width)
+			{
+				if(Canvas.GetTop(StackPanelPlayer) + StackPanelPlayer.ActualHeight > PlayerRankCoveredMaxHeight * Height)
+				{
+					Logger.WriteLine("Player rank is potentially covered by player deck.", "Overlay");
+					return true;
+				}
+				if(Canvas.GetTop(StackPanelPlayer) < OpponentRankCoveredMaxTop * Height)
+				{
+					Logger.WriteLine("Opponent rank is potentially covered by player deck.", "Overlay");
+					return true;
+				}
+			}
+			if(Canvas.GetLeft(StackPanelOpponent) < RankCoveredMaxLeft * Width)
+			{
+				if(Canvas.GetTop(StackPanelOpponent) + StackPanelOpponent.ActualHeight > PlayerRankCoveredMaxHeight * Height)
+				{
+					Logger.WriteLine("Player rank is potentially covered by opponent deck.", "Overlay");
+					return true;
+				}
+				if(Canvas.GetTop(StackPanelOpponent) < OpponentRankCoveredMaxTop * Height)
+				{
+					Logger.WriteLine("Opponent rank is potentially covered by opponent deck.", "Overlay");
+					return true;
+				}
+			}
+			Logger.WriteLine("No ranks should be covered by any decks.", "Overlay");
+			return false;
+		}
+
+	    public void ShowFriendsListWarning(bool show)
+	    {
+		    StackPanelFriendsListWarning.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
 	    }
     }
 }

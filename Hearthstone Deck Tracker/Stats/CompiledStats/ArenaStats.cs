@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountGvg
 		{
-			get { return GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.GoblingVsGnomes)); }
+			get { return GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.GoblinsVsGnomes)); }
 		}
 
 		public int PacksCountTgt
@@ -87,6 +87,11 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 				var count = GetFilteredRuns().Count();
 				return count == 0 ? 0 : Math.Round(1.0 * GoldTotal / GetFilteredRuns().Count(), 2);
 			}
+		}
+
+		public int GoldSpent
+		{
+			get {return GetFilteredRuns().Count(x => x.Deck.ArenaReward.PaymentMethod == ArenaPaymentMethod.Gold) * 150; }
 		}
 
 		public int DustTotal
@@ -317,7 +322,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 		}
 
-		public IEnumerable<ChartStats>[] WinLossByClass
+		public IEnumerable<ChartStats>[] WinLossVsClass
 		{
 			get
 			{
@@ -452,6 +457,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			OnPropertyChanged("GoldTotal");
 			OnPropertyChanged("GoldAveragePerRun");
+			OnPropertyChanged("GoldSpent");
 			OnPropertyChanged("DustTotal");
 			OnPropertyChanged("DustAveragePerRun");
 			OnPropertyChanged("PacksCountClassic");
@@ -473,7 +479,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public void UpdateExpensiveArenaStats()
 		{
-			OnPropertyChanged("WinLossByClass");
+			OnPropertyChanged("WinLossVsClass");
 			OnPropertyChanged("WinsByClass");
 		}
 	}

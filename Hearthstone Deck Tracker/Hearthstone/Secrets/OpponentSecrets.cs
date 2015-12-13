@@ -16,15 +16,15 @@ namespace Hearthstone_Deck_Tracker
 		public OpponentSecrets(GameV2 game)
 		{
 			Secrets = new List<SecretHelper>();
-            Game = game;
+			Game = game;
 		}
 
 		public List<SecretHelper> Secrets { get; private set; }
-        public int proposedAttackerEntityId { get;  set; }
-        public int proposedDefenderEntityId { get; set; }
-        public GameV2 Game { get; private set; }
+		public int ProposedAttackerEntityId { get; set; }
+		public int ProposedDefenderEntityId { get; set; }
+		public GameV2 Game { get; private set; }
 
-        public List<HeroClass> DisplayedClasses
+		public List<HeroClass> DisplayedClasses
 		{
 			get { return Secrets.Select(x => x.HeroClass).Distinct().OrderBy(x => x).ToList(); }
 		}
@@ -67,84 +67,89 @@ namespace Hearthstone_Deck_Tracker
 				SetMax(cardId);
 		}
 
-		public void NewSecretPlayed(HeroClass heroClass, int id, int turn)
+		public void NewSecretPlayed(HeroClass heroClass, int id, int turn, string knownCardId = null)
 		{
-			Secrets.Add(new SecretHelper(heroClass, id, turn));
+			var helper = new SecretHelper(heroClass, id, turn);
+			if(knownCardId != null)
+			{
+				foreach(var cardId in SecretHelper.GetSecretIds(heroClass))
+					helper.PossibleSecrets[cardId] = cardId == knownCardId;
+			}
+			Secrets.Add(helper);
 			Logger.WriteLine("Added secret with id:" + id, "OpponentSecrets");
 		}
 
-        public void SecretRemoved(int id, string cardId)
-        {
-            int index = Secrets.FindIndex(s => s.Id == id);
-	        if(index == -1)
+		public void SecretRemoved(int id, string cardId)
+		{
+			int index = Secrets.FindIndex(s => s.Id == id);
+			if(index == -1)
 			{
 				Logger.WriteLine(string.Format("Secret with id={0}, cardId={1} not found when trying to remove it.", id, cardId), "OpponentSecrets");
 				return;
-	        }
-            Entity attacker, defender;
-            Game.Entities.TryGetValue(proposedAttackerEntityId, out attacker);
-            Game.Entities.TryGetValue(proposedDefenderEntityId, out defender);
+			}
+			Entity attacker, defender;
+			Game.Entities.TryGetValue(ProposedAttackerEntityId, out attacker);
+			Game.Entities.TryGetValue(ProposedDefenderEntityId, out defender);
 
-            // see http://hearthstone.gamepedia.com/Advanced_rulebook#Combat for fast vs. slow secrets
+			// see http://hearthstone.gamepedia.com/Advanced_rulebook#Combat for fast vs. slow secrets
 
-            // a few fast secrets can modify combat
-            // freezing trap and vaporize remove the attacking minion
-            // misdirection, noble sacrifice change the target
+			// a few fast secrets can modify combat
+			// freezing trap and vaporize remove the attacking minion
+			// misdirection, noble sacrifice change the target
 
-            // if multiple secrets are in play and a fast secret triggers,
-            // we need to eliminate older secrets which would have been triggered by the attempted combat
-            if (CardIds.Secrets.FastCombat.Contains(cardId) && attacker != null && defender != null)
-            {
-                ZeroFromAttack(Game.Entities[proposedAttackerEntityId], Game.Entities[proposedDefenderEntityId], true, index);
-            }
+			// if multiple secrets are in play and a fast secret triggers,
+			// we need to eliminate older secrets which would have been triggered by the attempted combat
+			if(CardIds.Secrets.FastCombat.Contains(cardId) && attacker != null && defender != null)
+				ZeroFromAttack(Game.Entities[ProposedAttackerEntityId], Game.Entities[ProposedDefenderEntityId], true, index);
 
-            Secrets.Remove(Secrets[index]);
-            Logger.WriteLine("Removed secret with id:" + id, "OpponentSecrets");
-        }
+			Secrets.Remove(Secrets[index]);
+			Logger.WriteLine("Removed secret with id:" + id, "OpponentSecrets");
+		}
 
-        public void ZeroFromAttack(Entity attacker, Entity defender, bool fastOnly = false, int stopIndex = -1)
-        {
-            if (!Config.Instance.AutoGrayoutSecrets)
-                return;
+		public void ZeroFromAttack(Entity attacker, Entity defender, bool fastOnly = false, int stopIndex = -1)
+		{
+			if(!Config.Instance.AutoGrayoutSecrets)
+				return;
 
-            if (stopIndex == -1)
-                stopIndex = Secrets.Count;
+			if(stopIndex == -1)
+				stopIndex = Secrets.Count;
 
-            SetZeroOlder(CardIds.Secrets.Paladin.NobleSacrifice, stopIndex);
+			if(Game.OpponentMinionCount < 7)
+				SetZeroOlder(CardIds.Secrets.Paladin.NobleSacrifice, stopIndex);
 
-            if (defender.IsHero)
-            {
-                if (!fastOnly)
-                {
-                    SetZeroOlder(CardIds.Secrets.Hunter.BearTrap, stopIndex);
-                    SetZeroOlder(CardIds.Secrets.Mage.IceBarrier, stopIndex);
-                }
+			if(defender.IsHero)
+			{
+				if(!fastOnly)
+				{
+					SetZeroOlder(CardIds.Secrets.Hunter.BearTrap, stopIndex);
+					SetZeroOlder(CardIds.Secrets.Mage.IceBarrier, stopIndex);
+				}
 
-                SetZeroOlder(CardIds.Secrets.Hunter.ExplosiveTrap, stopIndex);
+				SetZeroOlder(CardIds.Secrets.Hunter.ExplosiveTrap, stopIndex);
 
-                if (Game.IsMinionInPlay)
-                    SetZeroOlder(CardIds.Secrets.Hunter.Misdirection, stopIndex);
+				if(Game.IsMinionInPlay)
+					SetZeroOlder(CardIds.Secrets.Hunter.Misdirection, stopIndex);
 
-                if (attacker.IsMinion)
-                {
-                    SetZeroOlder(CardIds.Secrets.Mage.Vaporize, stopIndex);
-                    SetZeroOlder(CardIds.Secrets.Hunter.FreezingTrap, stopIndex);
-                }
-            }
-            else
-            {
-                if (!fastOnly)
-                    SetZeroOlder(CardIds.Secrets.Hunter.SnakeTrap, stopIndex);
+				if(attacker.IsMinion)
+				{
+					SetZeroOlder(CardIds.Secrets.Mage.Vaporize, stopIndex);
+					SetZeroOlder(CardIds.Secrets.Hunter.FreezingTrap, stopIndex);
+				}
+			}
+			else
+			{
+				if(!fastOnly)
+					SetZeroOlder(CardIds.Secrets.Hunter.SnakeTrap, stopIndex);
 
-                if (attacker.IsMinion)
-                    SetZeroOlder(CardIds.Secrets.Hunter.FreezingTrap, stopIndex);
-            }
+				if(attacker.IsMinion)
+					SetZeroOlder(CardIds.Secrets.Hunter.FreezingTrap, stopIndex);
+			}
 
-            if (Helper.MainWindow != null)
-                Helper.MainWindow.Overlay.ShowSecrets();
-        }
+			if(Core.MainWindow != null)
+				Core.Overlay.ShowSecrets();
+		}
 
-        public void ClearSecrets()
+		public void ClearSecrets()
 		{
 			Secrets.Clear();
 			Logger.WriteLine("Cleared secrets", "OpponentSecrets");
@@ -152,35 +157,40 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetMax(string cardId)
 		{
+			if(string.IsNullOrEmpty(cardId))
+				return;
 			foreach(var secret in Secrets)
 				secret.PossibleSecrets[cardId] = true;
 		}
 
-        public void SetZero(string cardId)
-        {
-            SetZeroOlder(cardId, Secrets.Count);
-        }
+		public void SetZero(string cardId)
+		{
+			if(string.IsNullOrEmpty(cardId))
+				return;
+			SetZeroOlder(cardId, Secrets.Count);
+		}
 
-        public void SetZeroOlder(string cardId, int stopIndex)
-        {
-            for (int index = 0; index < stopIndex; index++)
-                Secrets[index].PossibleSecrets[cardId] = false;
-        }
+		public void SetZeroOlder(string cardId, int stopIndex)
+		{
+			if(string.IsNullOrEmpty(cardId))
+				return;
+			for(var index = 0; index < stopIndex; index++)
+				Secrets[index].PossibleSecrets[cardId] = false;
+			if(stopIndex > 0)
+				Logger.WriteLine("Set secret to zero: " + Database.GetCardFromId(cardId), "OpponentSecrets");
+		}
 
-        public List<Secret> GetSecrets()
+		public List<Secret> GetSecrets()
 		{
 			var returnThis = DisplayedClasses.SelectMany(SecretHelper.GetSecretIds).Select(cardId => new Secret(cardId, 0)).ToList();
 
-			foreach (var secret in Secrets)
+			foreach(var secret in Secrets)
 			{
-				foreach (var possible in secret.PossibleSecrets)
+				foreach(var possible in secret.PossibleSecrets)
 				{
-					if (possible.Value)
-					{
-						returnThis.Find(x => x.CardId == possible.Key).Count = 1;
-					}
+					if(possible.Value)
+						returnThis.Find(x => x.CardId == possible.Key).Count++;
 				}
-
 			}
 
 			return returnThis;
@@ -188,13 +198,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public List<Secret> GetDefaultSecrets(HeroClass heroClass)
 		{
-			var count = SecretHelper.GetMaxSecretCount(heroClass);
-			var returnThis = new List<Secret>();
-
-			foreach(var cardId in SecretHelper.GetSecretIds(heroClass))
-				returnThis.Add(new Secret(cardId, 1));
-
-			return returnThis;
+			return SecretHelper.GetSecretIds(heroClass).Select(cardId => new Secret(cardId, 1)).ToList();
 		}
 	}
 }

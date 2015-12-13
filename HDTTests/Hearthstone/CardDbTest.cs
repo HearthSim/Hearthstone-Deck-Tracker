@@ -12,8 +12,8 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestTotalCollectableCards()
 		{
-			// 3.0.0.9786 - TGT
-			Assert.AreEqual(698, Database.GetActualCards().Count);
+			// 4.0.0.10833 - LOE
+			Assert.AreEqual(743, Database.GetActualCards().Count);
 		}
 
 		// Dreadscale card has unusual id ending in 't', some tests to check it is recognized
@@ -22,6 +22,13 @@ namespace HDTTests.Hearthstone
 		{
 			var card = Database.GetCardFromId("AT_063t");
 			Assert.AreEqual("Dreadscale", card.Name);
+		}
+		[TestMethod]
+		public void TestMurlocTinyFinInGetActual()
+		{
+			var db = Database.GetActualCards();
+			var found = db.Any<Card>(c => c.LocalizedName.ToLowerInvariant().Contains("murloc tinyfin"));
+			Assert.IsTrue(found);
 		}
 		[TestMethod]
 		public void TestDreadscaleInGetActual()

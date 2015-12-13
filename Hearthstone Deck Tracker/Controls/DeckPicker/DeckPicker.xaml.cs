@@ -520,6 +520,12 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 							SelectClass(heroClass);
 					}
 
+					DeckType deckType = (DeckType) this.ListViewDeckType.SelectedIndex;
+					if (deckType != DeckType.All && deck.IsArenaDeck != (deckType == DeckType.Arena))
+					{
+						SelectDeckType(DeckType.All);
+					}
+
 					UpdateDecks();
 					dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
 					if(dpi == null)
@@ -742,7 +748,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			Core.MainWindow.BtnOpenHearthStats_Click(sender, e);
 		}
 
-		private async void ActiveDeckPanel_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+		private void ActiveDeckPanel_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
 			if((DateTime.Now - _lastActiveDeckPanelClick).TotalMilliseconds < SystemInformation.DoubleClickTime)
 			{

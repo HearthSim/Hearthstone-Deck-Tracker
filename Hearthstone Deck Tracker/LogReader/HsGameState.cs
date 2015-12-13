@@ -13,17 +13,14 @@ namespace Hearthstone_Deck_Tracker.LogReader
     {
         private readonly GameV2 _game;
         public int AddToTurn { get; set; }
-        public bool AwaitingRankedDetection { get; set; }
         public bool CurrentEntityHasCardId { get; set; }
         public int CurrentEntityId { get; set; }
         public long CurrentOffset { get; set; }
         public bool DoUpdate { get; set; }
         public bool First { get; set; }
-        public bool FoundRanked { get; set; }
         public bool GameEnded { get; set; }
         public IGameHandler GameHandler { get; set; }
         public bool GameLoaded { get; set; }
-        public DateTime LastAssetUnload { get; set; }
         public long LastGameEnd { get; set; }
         public DateTime LastGameStart { get; set; }
         public int LastId { get; set; }
@@ -32,10 +29,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
         public long PreviousSize { get; set; }
         public ReplayKeyPoint ProposedKeyPoint { get; set; }
         public dynamic WaitForController { get; set; }
-        public bool WaitingForFirstAssetUnload { get; set; }
         public bool FoundSpectatorStart { get; set; }
         public int JoustReveals { get; set; }
 	    public Dictionary<int, string> KnownCardIds { get; set; }
+		public int LastCardPlayed { get; set; }
 
 	    public HsGameState(GameV2 game)
         {
@@ -52,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			JoustReveals = 0;
 			KnownCardIds.Clear();
 			LastGameStart = DateTime.Now;
+			WaitForController = null;
 		}
 
         public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)

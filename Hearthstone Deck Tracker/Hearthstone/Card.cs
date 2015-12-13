@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -11,7 +12,9 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility;
+using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
 
 #endregion
 
@@ -26,6 +29,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private int _count;
 		private int _inHandCount;
 		private bool _isCreated;
+		private bool _isFrameHighlighted;
 		private int _lastCount;
 		private bool _loaded;
 		private string _localizedName;
@@ -43,14 +47,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string PlayerClass;
 
 		[XmlIgnore]
-		public string Rarity;
+		public Rarity Rarity;
 
 		public Card()
 		{
 			Count = 1;
 		}
 
-		public Card(string id, string playerClass, string rarity, string type, string name, int cost, string localizedName, int inHandCount,
+		public Card(string id, string playerClass, Rarity rarity, string type, string name, int cost, string localizedName, int inHandCount,
 		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability, string artist,
 		            string set, List<string> alternativeNames = null, List<string> alternativeTexts = null)
 		{
@@ -233,6 +237,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public int DustCost
+		{
+			get
+			{
+				switch(Rarity)
+				{
+					case Rarity.Common:
+						return 40;
+					case Rarity.Rare:
+						return 100;
+					case Rarity.Epic:
+						return 400;
+					case Rarity.Legendary:
+						return 1600;
+				}
+				return 0;
+			}
+		}
+
 		[XmlIgnore]
 		public string Artist { get; set; }
 
@@ -248,6 +271,45 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[XmlIgnore]
 		public List<string> AlternativeTexts = new List<string>();
+
+		private readonly HearthDb.Card _dbCard;
+
+		public string[] EntourageCardIds { get { return _dbCard != null ? _dbCard.EntourageCardIds : new string[0]; } }
+
+		public Card(HearthDb.Card dbCard)
+		{
+			_dbCard = dbCard;
+			Language lang;
+			if(!Enum.TryParse(Config.Instance.SelectedLanguage, out lang))
+				lang = Language.enUS;
+			Id = dbCard.Id;
+			Count = 1;
+            PlayerClass = HearthDbConverter.ConvertClass(dbCard.Class);
+			Rarity = HearthDbConverter.RariryConverter(dbCard.Rarity);
+			Type = HearthDbConverter.CardTypeConverter(dbCard.Type);
+			Name = dbCard.GetLocName(Language.enUS);
+			Cost = dbCard.Cost;
+			LocalizedName = dbCard.GetLocName(lang);
+			Text = dbCard.GetLocText(lang);
+			EnglishText = dbCard.GetLocText(Language.enUS);
+			Attack = dbCard.Attack;
+			Health = dbCard.Health;
+			Race = HearthDbConverter.RaceConverter(dbCard.Race);
+			Durability = dbCard.Durability > 0 ? (int?)dbCard.Durability : null;
+			Mechanics = dbCard.Mechanics;
+			Artist = dbCard.ArtistName;
+			Set = HearthDbConverter.SetConverter(dbCard.Set);
+			foreach(var altLangStr in Config.Instance.AlternativeLanguages)
+			{
+				Language altLang;
+				if(Enum.TryParse(altLangStr, out altLang))
+				{
+					AlternativeNames.Add(dbCard.GetLocName(altLang));
+					AlternativeTexts.Add(dbCard.GetLocText(altLang));
+				}
+			}
+			_loaded = true;
+		}
 
 		[XmlIgnore]
 		public int InHandCount
@@ -332,6 +394,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public bool HighlightFrame { get; set; }
+
 		public SolidColorBrush ColorOpponent
 		{
 			get { return new SolidColorBrush(Colors.White); }
@@ -351,11 +415,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public FontFamily Font
+		{
+			get
+			{
+				var lang = Config.Instance.SelectedLanguage;
+				var font = new FontFamily();
+				// if the language uses a Latin script use Belwe font
+				if(Helper.LatinLanguages.Contains(lang))
+				{
+					font = new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT");
+				}
+				return font;
+			}
+		}
+
 		public ImageBrush Background
 		{
 			get
 			{
-				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames && _coloredGem == Config.Instance.RarityCardGems)
+				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames && _coloredGem == Config.Instance.RarityCardGems
+					&& _isFrameHighlighted == HighlightFrame)
 					return _cachedBackground;
 				_lastCount = Count;
 				_coloredFrame = Config.Instance.RarityCardFrames;
@@ -378,23 +458,32 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 					//frame
 					var frame = "Images/frame.png";
-					if(Config.Instance.RarityCardFrames)
+					if(HighlightFrame)
 					{
-						switch(Rarity)
+						frame = "Images/frame_golden.png";
+						_isFrameHighlighted = true;
+					}
+					else
+					{
+						_isFrameHighlighted = false;
+						if(Config.Instance.RarityCardFrames)
 						{
-							case "Free":
-							case "Common":
-								frame = "Images/frame_rarity_common.png";
-								break;
-							case "Rare":
-								frame = "Images/frame_rarity_rare.png";
-								break;
-							case "Epic":
-								frame = "Images/frame_rarity_epic.png";
-								break;
-							case "Legendary":
-								frame = "Images/frame_rarity_legendary.png";
-								break;
+							switch(Rarity)
+							{
+								case Rarity.Free:
+								case Rarity.Common:
+									frame = "Images/frame_rarity_common.png";
+									break;
+								case Rarity.Rare:
+									frame = "Images/frame_rarity_rare.png";
+									break;
+								case Rarity.Epic:
+									frame = "Images/frame_rarity_epic.png";
+									break;
+								case Rarity.Legendary:
+									frame = "Images/frame_rarity_legendary.png";
+									break;
+							}
 						}
 					}
 					drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(frame, UriKind.Relative)), new Rect(0, 0, 218, 35)));
@@ -404,21 +493,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						var gem = "Images/gem_rarity_common.png";
 						switch(Rarity)
 						{
-							case "Rare":
+							case Rarity.Rare:
 								gem = "Images/gem_rarity_rare.png";
 								break;
-							case "Epic":
+							case Rarity.Epic:
 								gem = "Images/gem_rarity_epic.png";
 								break;
-							case "Legendary":
+							case Rarity.Legendary:
 								gem = "Images/gem_rarity_legendary.png";
 								break;
 						}
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(gem, UriKind.Relative)), new Rect(3, 3, 28, 28)));
 					}
 
-					if(Math.Abs(Count) > 1 || Rarity == "Legendary")
+					if(Math.Abs(Count) > 1 || Rarity == Rarity.Legendary)
 					{
+
 						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
 						                                           new Rect(189, 6, 25, 24)));
 
@@ -438,7 +528,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 					if(IsCreated)
 					{
-						var xOffset = Math.Abs(Count) > 1 || Rarity == "Legendary" ? 23 : 3;
+						var xOffset = Math.Abs(Count) > 1 || Rarity == Rarity.Legendary ? 23 : 3;
                         drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-marker.png", "Images"),
 																   new Rect(192 - xOffset, 8, 21, 21)));
 						drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-icon-created.png", "Images"),
