@@ -289,6 +289,12 @@ namespace Hearthstone_Deck_Tracker
 			    return;
 		    _rankDetectionRunning = true;
 		    Logger.WriteLine(string.Format("Trying to detect ranks... (tries={0}, overlaytoggles={1})", _rankDetectionTries, _rankDetectionOverlayToggles), "GameEventHandler");
+		    if(!User32.IsHearthstoneInForeground())
+		    {
+			    Logger.WriteLine("Hearthstone in background. Waiting for it to be in foreground...", "GameEventHandler");
+			    while(!User32.IsHearthstoneInForeground())
+				    await Task.Delay(500);
+		    }
 		    var rect = Helper.GetHearthstoneRect(true);
 		    var reEnableOverlay = false;
 		    if(Core.Overlay.IsRankConvered())
