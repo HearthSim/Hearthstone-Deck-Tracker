@@ -335,7 +335,8 @@ namespace Hearthstone_Deck_Tracker
 			    {
 				    _game.CurrentGameStats.GameMode = GameMode.Ranked;
 				    _game.CurrentGameStats.Rank = match.Player;
-				    _game.CurrentGameStats.OpponentRank = match.Opponent;
+				    if(match.Opponent >= 0)
+					    _game.CurrentGameStats.OpponentRank = match.Opponent;
 			    }
 		    }
 		    else

@@ -206,7 +206,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get
 			{
 				// TODO: what about when only one is -1
-				return Player >= 0 && Opponent >= 0;
+				// for now we don't care if the opponent rank is detected.
+				return Player >= 0;
 			}
 		}
 
