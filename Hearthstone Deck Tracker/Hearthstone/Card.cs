@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	[Serializable]
 	public class Card : ICloneable, INotifyPropertyChanged
 	{
+		[NonSerialized]
 		private ImageBrush _cachedBackground;
 		private bool _coloredFrame;
 		private bool _coloredGem;
@@ -272,6 +273,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public List<string> AlternativeTexts = new List<string>();
 
+		[NonSerialized]
 		private readonly HearthDb.Card _dbCard;
 
 		public string[] EntourageCardIds { get { return _dbCard != null ? _dbCard.EntourageCardIds : new string[0]; } }
