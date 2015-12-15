@@ -261,6 +261,9 @@
     <Compile Include="Exporting\ExportingHelper.cs" />
     <Compile Include="Exporting\ExportingInfo.cs" />
     <Compile Include="Exporting\HueAndBrightness.cs" />
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerNotifications.xaml.cs">
+      <DependentUpon>TrackerNotifications.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Hearthstone\GameTime.cs" />
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
@@ -394,6 +397,9 @@
     <Compile Include="Utility\HotKeys\KeyPressedEventArgs.cs" />
     <Compile Include="Utility\HotKeys\ModifierKeys.cs" />
     <Compile Include="Utility\HotKeys\PredefinedHotKeyActions.cs" />
+    <Compile Include="Windows\GameResultNotificationWindow.xaml.cs">
+      <DependentUpon>GameResultNotificationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -697,6 +703,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\Options\Tracker\TrackerNotifications.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="FlyoutControls\Options\Tracker\TrackerHotKeys.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -754,6 +764,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\ArenaRewardDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\GameResultNotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

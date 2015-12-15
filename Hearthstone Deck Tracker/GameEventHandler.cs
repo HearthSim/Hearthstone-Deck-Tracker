@@ -741,6 +741,11 @@ namespace Hearthstone_Deck_Tracker
             var statsControl = Config.Instance.StatsInWindow ? Core.Windows.StatsWindow.StatsControl : Core.MainWindow.DeckStatsFlyout;
             if (RecordCurrentGameMode)
             {
+                if(Config.Instance.ShowGameResultNotifications && (!Config.Instance.GameResultNotificationsUnexpectedOnly || UnexpectedCasualGame()))
+                {
+                    var deckName = _assignedDeck == null ? "No deck - " + _game.CurrentGameStats.PlayerHero : _assignedDeck.NameAndVersion;
+                    new GameResultNotificationWindow(deckName, _game.CurrentGameStats).Show();
+                }
                 if (Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
                 {
                     _showedNoteDialog = true;
@@ -793,6 +798,25 @@ namespace Hearthstone_Deck_Tracker
                     Logger.WriteLine(string.Format("Gamemode {0} is not supposed to be saved. Removed game from default {1}.", _game.CurrentGameMode, _game.Player.Class), "GameEventHandler");
                 }
             }
+        }
+
+        private bool UnexpectedCasualGame()
+        {
+            if(_game.CurrentGameMode != GameMode.Casual)
+                return false;
+            var games = new List<GameStats>();
+            if(_assignedDeck == null)
+            {
+                var defaultStats = DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class);
+                if(defaultStats != null)
+                    games = defaultStats.Games;
+            }
+            else
+                games = _assignedDeck.DeckStats.Games;
+            games = games.Where(x => x.StartTime > DateTime.Now - TimeSpan.FromHours(1)).ToList();
+            if(games.Count < 2)
+                return false;
+            return games.OrderByDescending(x => x.StartTime).Skip(1).First().GameMode == GameMode.Ranked;
         }
 
         public void HandlePlayerHeroPower(string cardId, int turn)

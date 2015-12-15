@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerNotifications"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hotKeys="clr-namespace:Hearthstone_Deck_Tracker.Utility.HotKeys"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="300">
+    <GroupBox Header="Notifications">
+        <GroupBox.Resources>
+            <hotKeys:HotKeyManager x:Key="HotKeyManager" />
+            <hotKeys:PredefinedHotKeyActions x:Key="PredefinedHotKeyActions" />
+        </GroupBox.Resources>
+        <StackPanel>
+            <GroupBox Header="Game result">
+                <StackPanel>
+                    <CheckBox Name="CheckBoxShowNotifications" Content="Show notifactions" Checked="CheckBoxShowNotifications_OnChecked" Unchecked="CheckBoxShowNotifications_OnUnchecked"/>
+                    <CheckBox Name="CheckBoxUnexpectedOnly" Content="Only show for unexpected casual games" 
+                              IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxShowNotifications}"
+                              Margin="0,5,0,0" Checked="CheckBoxUnexpectedOnly_OnChecked" Unchecked="CheckBoxUnexpectedOnly_OnUnchecked"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0" 
+                              IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxShowNotifications}">
+                        <TextBlock Text="Show for" VerticalAlignment="Center"/>
+                        <TextBox x:Name="TextboxTimerAlert" 
+                                             HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
+                                             Margin="5,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top"
+                                             Width="40" TextChanged="TextboxTimerAlert_TextChanged" PreviewTextInput="TextboxTimerAlert_PreviewTextInput"/>
+                        <TextBlock Text="seconds." VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </GroupBox>
+</UserControl>

@@ -268,6 +268,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
 
+		[DefaultValue(false)]
+		public bool GameResultNotificationsUnexpectedOnly = false;
+
 		[DefaultValue(0.075)]
 		public double GoldProgessX = 0.76;
 
@@ -430,6 +433,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool NoteDialogDelayed = false;
+
+		[DefaultValue(4)]
+		public int NotificationFadeOutDelay = 4;
 
 		[DefaultValue(0)]
 		public int OffsetX = 0;
@@ -688,6 +694,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ShowExportingDialog = true;
+
+		[DefaultValue(true)]
+		public bool ShowGameResultNotifications = true;
 
 		[DefaultValue("c7b1c7904951f7a")]
 		public string ImgurClientId = "c7b1c7904951f7a";
