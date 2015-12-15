@@ -196,6 +196,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
 			while(CurrentGameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
 				await Task.Delay(100);
+			if(CurrentGameStats != null && CurrentGameMode != GameMode.None)
+			{
+				CurrentGameStats.GameMode = CurrentGameMode;
+				Logger.WriteLine("Detected gamemode, set CurrentGameStats.GameMode=" + CurrentGameMode, "GameModeDetection");
+			}
 			_gameModeDetectionComplete = true;
 			_gameModeDetectionRunning = false;
 		}

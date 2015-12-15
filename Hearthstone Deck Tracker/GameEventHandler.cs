@@ -129,12 +129,9 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.HideTimers();
 			Core.Overlay.HideSecrets();
 
-			if(_game.CurrentGameMode == GameMode.None)
-			{
-				Logger.WriteLine("Waiting for game mode detection...", "HandleInMenu");
-				await _game.GameModeDetection();
-				Logger.WriteLine("Detected game mode, continuing.", "HandleInMenu");
-			}
+			Logger.WriteLine("Waiting for game mode detection...", "HandleInMenu");
+			await _game.GameModeDetection();
+			Logger.WriteLine("Detected game mode, continuing.", "HandleInMenu");
 
 			if (Config.Instance.RecordReplays && _game.Entities.Count > 0 && !_game.SavedReplay && _game.CurrentGameStats != null
                && _game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
@@ -657,12 +654,10 @@ namespace Hearthstone_Deck_Tracker
 
                 if (HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
                 {
-                    if (_game.CurrentGameMode == GameMode.None)
-					{
-						Logger.WriteLine("Waiting for game mode detection...", "HandleGameEnd");
-						await _game.GameModeDetection();
-						Logger.WriteLine("Detected game mode, continuing.", "HandleGameEnd");
-					}
+
+					Logger.WriteLine("Waiting for game mode detection...", "HandleGameEnd");
+					await _game.GameModeDetection();
+					Logger.WriteLine("Detected game mode, continuing.", "HandleGameEnd");
 					Logger.WriteLine("Waiting for game mode to be saved to game...", "HandleGameEnd");
 					await GameModeSaved(15);
 					Logger.WriteLine("Game mode was saved, continuing.", "HandleGameEnd");
@@ -760,9 +755,11 @@ namespace Hearthstone_Deck_Tracker
                         Logger.WriteLine("Game has 0 turns, discarded. (DiscardZeroTurnGame)", "GameEventHandler");
                         return;
                     }
-                    _game.CurrentGameStats.GameMode = _game.CurrentGameMode;
-                    Logger.WriteLine("Set CurrentGameStats.GameMode to " + _game.CurrentGameMode, "GameEventHandler");
-                    //_game.CurrentGameStats = null;
+                     if(_game.CurrentGameStats.GameMode != _game.CurrentGameMode)
+                    {
+                         _game.CurrentGameStats.GameMode = _game.CurrentGameMode;
+                         Logger.WriteLine("Set CurrentGameStats.GameMode to " + _game.CurrentGameMode, "SaveAndUpdateStats");
+                    }
                 }
 
                 if (_assignedDeck == null)
