@@ -1394,7 +1394,7 @@ namespace Hearthstone_Deck_Tracker
 		private const double RankCoveredMaxLeft = 0.1;
 		private const double PlayerRankCoveredMaxHeight = 0.8;
 		private const double OpponentRankCoveredMaxTop = 0.12;
-		public bool IsRankConvered()
+		public bool IsRankConvered(bool requireOpponentRank = false)
 		{
 			if(Canvas.GetLeft(StackPanelPlayer) < RankCoveredMaxLeft * Width)
 			{
@@ -1406,7 +1406,8 @@ namespace Hearthstone_Deck_Tracker
 				if(Canvas.GetTop(StackPanelPlayer) < OpponentRankCoveredMaxTop * Height)
 				{
 					Logger.WriteLine("Opponent rank is potentially covered by player deck.", "Overlay");
-					return true;
+					if(requireOpponentRank)
+						return true;
 				}
 			}
 			if(Canvas.GetLeft(StackPanelOpponent) < RankCoveredMaxLeft * Width)
@@ -1419,7 +1420,8 @@ namespace Hearthstone_Deck_Tracker
 				if(Canvas.GetTop(StackPanelOpponent) < OpponentRankCoveredMaxTop * Height)
 				{
 					Logger.WriteLine("Opponent rank is potentially covered by opponent deck.", "Overlay");
-					return true;
+					if(requireOpponentRank)
+						return true;
 				}
 			}
 			Logger.WriteLine("No ranks should be covered by any decks.", "Overlay");
