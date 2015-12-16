@@ -17,6 +17,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay.Controls;
+using CardEntity = Hearthstone_Deck_Tracker.Replay.Controls.CardEntity;
 using DataGrid = System.Windows.Controls.DataGrid;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 
@@ -171,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return string.Empty;
 				var cardId = GetHero(_playerController).CardId;
-				return cardId == null ? null : GameV2.GetHeroNameFromId(cardId);
+				return cardId == null ? null : Database.GetHeroNameFromId(cardId);
 			}
 		}
 
@@ -269,7 +270,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return null;
 				var cardId = GetHero(_opponentController).CardId;
-				return cardId == null ? null : GameV2.GetHeroNameFromId(cardId);
+				return cardId == null ? null : Database.GetHeroNameFromId(cardId);
 			}
 		}
 

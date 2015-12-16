@@ -23,7 +23,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			ToggleSwitchExtraFeatures.IsChecked = Config.Instance.ExtraFeatures;
 			CheckBoxForceExtraFeatures.IsChecked = Config.Instance.ForceMouseHook;
-			CheckBoxForceExtraFeatures.IsEnabled = Config.Instance.ExtraFeatures;
+			CheckBoxSecrets.IsChecked = Config.Instance.ExtraFeaturesSecrets;
+			CheckBoxFriendslist.IsChecked = Config.Instance.ExtraFeaturesFriendslist;
 			_initialized = true;
 		}
 
@@ -32,7 +33,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ExtraFeatures = true;
-			CheckBoxForceExtraFeatures.IsEnabled = true;
 			Config.Save();
 		}
 
@@ -41,7 +41,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ExtraFeatures = false;
-			CheckBoxForceExtraFeatures.IsEnabled = false;
 			Config.Save();
 		}
 
@@ -50,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ForceMouseHook = true;
-			Helper.MainWindow.Overlay.HookMouse();
+			Core.Overlay.HookMouse();
 			Config.Save();
 		}
 
@@ -59,7 +58,39 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ForceMouseHook = false;
-			Helper.MainWindow.Overlay.UnHookMouse();
+			Core.Overlay.UnHookMouse();
+			Config.Save();
+		}
+
+		private void CheckBoxSecrets_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ExtraFeaturesSecrets = true;
+			Config.Save();
+		}
+
+		private void CheckBoxSecrets_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ExtraFeaturesSecrets = false;
+			Config.Save();
+		}
+
+		private void CheckBoxFriendslist_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ExtraFeaturesFriendslist = true;
+			Config.Save();
+		}
+
+		private void CheckBoxFriendslist_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ExtraFeaturesFriendslist = false;
 			Config.Save();
 		}
 	}

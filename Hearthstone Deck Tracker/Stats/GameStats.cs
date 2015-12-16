@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
@@ -98,6 +99,20 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		[XmlIgnore]
+		public SolidColorBrush ResultTextColor
+		{
+			get
+			{
+				var c = Colors.Black;
+				if(Result == GameResult.Win)
+					c = Colors.Green;
+				else if(Result == GameResult.Loss)
+					c = Colors.Red;
+				return new SolidColorBrush(c);
+			}
+		}
+
+		[XmlIgnore]
 		public string RegionString
 		{
 			get { return Region == Region.UNKNOWN ? "-" : Region.ToString(); }
@@ -113,6 +128,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string RankString
 		{
 			get { return HasRank && GameMode == GameMode.Ranked ? Rank.ToString() : "-"; }
+		}
+
+		[XmlIgnore]
+		public int SortableRank
+		{
+			get { return HasRank && GameMode == GameMode.Ranked ? Rank : -1; }
 		}
 
 		[XmlIgnore]
@@ -148,6 +169,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get { return ReplayFile != null && File.Exists(Path.Combine(Config.Instance.ReplayDir, ReplayFile)); }
 		}
+
+		[XmlIgnore]
+		public bool CanGetOpponentDeck { get { return TurnStats.Any(); } }
 
 		[XmlIgnore]
 		public BitmapImage OpponentHeroImage
@@ -358,7 +382,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				TurnStats.Add(turnStats);
 			}
 			turnStats.AddPlay(type, cardId);
-			Logger.WriteLine(string.Format("New play: {0} ({1}, turn: {2})", type, cardId, turn), "GameStats");
+			Logger.WriteLine(string.Format("New play: {0} ({1}, turn: {2})", type, cardId, turn), "GameStats", 2);
 		}
 
 		public override string ToString()
@@ -384,8 +408,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 					if(play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentDeckDiscard || play.Type == PlayType.OpponentHandDiscard
 					   || play.Type == PlayType.OpponentSecretTriggered)
 					{
-						var card = GameV2.GetCardFromId(play.CardId);
-						if(GameV2.IsActualCard(card) && (card.PlayerClass == null || card.PlayerClass == OpponentHero))
+						var card = Database.GetCardFromId(play.CardId);
+						if(Database.IsActualCard(card) && (card.PlayerClass == null || card.PlayerClass == OpponentHero))
 						{
 							if(ignoreCards.Contains(card))
 							{
@@ -401,8 +425,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 					}
 					else if(play.Type == PlayType.OpponentBackToHand)
 					{
-						var card = GameV2.GetCardFromId(play.CardId);
-						if(GameV2.IsActualCard(card))
+						var card = Database.GetCardFromId(play.CardId);
+						if(Database.IsActualCard(card))
 							ignoreCards.Add(card);
 					}
 				}

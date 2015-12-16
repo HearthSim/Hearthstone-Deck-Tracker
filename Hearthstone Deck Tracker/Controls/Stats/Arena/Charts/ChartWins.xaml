@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts.ChartWins"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" Width="356">
+    <Grid>
+        <metroChart:ClusteredColumnChart Name="ClusteredColumnChartWins" Background="Transparent" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="Collapsed" >
+            <metroChart:ClusteredColumnChart.Series>
+                <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=Wins, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+            </metroChart:ClusteredColumnChart.Series>
+        </metroChart:ClusteredColumnChart>
+        <metroChart:EvenlyDistributedColumnsGrid Margin="53,220,20,0" Height="24">
+            <TextBlock Text="0" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="1" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="2" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="3" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="4" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="5" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="6" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="7" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="8" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="9" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="10" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="11" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+            <TextBlock Text="12" Foreground="#FF666666" FontFamily="Segoe UI Light"/>
+        </metroChart:EvenlyDistributedColumnsGrid>
+
+    </Grid>
+</UserControl>

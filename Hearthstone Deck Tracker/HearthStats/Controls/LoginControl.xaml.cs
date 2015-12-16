@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -51,18 +52,18 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			TextBoxPassword.Clear();
 			if(result.Success)
 			{
-				Helper.MainWindow.EnableHearthStatsMenu(true);
-				Helper.MainWindow.FlyoutHearthStatsLogin.IsOpen = false;
-				Helper.MainWindow.MenuItemLogin.Visibility = Visibility.Collapsed;
-				Helper.MainWindow.MenuItemLogout.Visibility = Visibility.Visible;
-				Helper.MainWindow.SeparatorLogout.Visibility = Visibility.Visible;
-				Helper.MainWindow.MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
+				Core.MainWindow.EnableHearthStatsMenu(true);
+				Core.MainWindow.FlyoutHearthStatsLogin.IsOpen = false;
+				Core.MainWindow.MenuItemLogin.Visibility = Visibility.Collapsed;
+				Core.MainWindow.MenuItemLogout.Visibility = Visibility.Visible;
+				Core.MainWindow.SeparatorLogout.Visibility = Visibility.Visible;
+				Core.MainWindow.MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
 
 				var dialogResult =
 					await
-					Helper.MainWindow.ShowMessageAsync("Sync now?", "Do you want to sync with HearthStats now?",
+					Core.MainWindow.ShowMessageAsync("Sync now?", "Do you want to sync with HearthStats now?",
 					                                   MessageDialogStyle.AffirmativeAndNegative,
-					                                   new MetroDialogSettings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
+					                                   new MessageDialogs.Settings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
 				if(dialogResult == MessageDialogResult.Affirmative)
 					HearthStatsManager.SyncAsync();
 			}

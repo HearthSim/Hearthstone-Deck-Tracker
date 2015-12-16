@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			_noteChanged = false;
 			BtnSave.IsEnabled = false;
-			Helper.MainWindow.DeckPickerList.UpdateDecks();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
 		}
 	}
 }

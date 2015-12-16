@@ -41,18 +41,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 				var player = Points.Last().Data.First(x => x.IsPlayer);
 				var opponent = Points.Last().Data.First(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
-				var playerHero =
-					Points.Last()
-					      .Data.First(
-					                  x =>
-					                  !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO")
+				var playerHero = Points.Last().Data.First(x => x.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO
 					                  && x.IsControlledBy(player.GetTag(GAME_TAG.CONTROLLER)));
 				var opponentHero =
 					Points.Last()
 					      .Data.FirstOrDefault(
 					                           x =>
-					                           !string.IsNullOrEmpty(x.CardId) && x.CardId.Contains("HERO")
-					                           && x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
+											   x.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO
+											   && x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
 				if(opponentHero == null)
 				{
 					//adventure bosses
@@ -62,13 +58,13 @@ namespace Hearthstone_Deck_Tracker.Replay
 						                  x =>
 						                  !string.IsNullOrEmpty(x.CardId)
 						                  && ((x.CardId.StartsWith("NAX") && x.CardId.Contains("_01")) || x.CardId.StartsWith("BRMA"))
-						                  && GameV2.GetHeroNameFromId(x.CardId) != null);
+						                  && Database.GetHeroNameFromId(x.CardId) != null);
 
-					ResolveOpponentName(GameV2.GetHeroNameFromId(opponentHero.CardId));
+					ResolveOpponentName(Database.GetHeroNameFromId(opponentHero.CardId));
 				}
 
-				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, GameV2.GetHeroNameFromId(playerHero.CardId), opponent.Name,
-                                             GameV2.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
+				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, Database.GetHeroNameFromId(playerHero.CardId), opponent.Name,
+                                             Database.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
 
 
 				if(!Directory.Exists(Config.Instance.ReplayDir))

@@ -42,15 +42,24 @@ namespace Hearthstone_Deck_Tracker
 		public int Seconds { get; private set; }
 		public int PlayerSeconds { get; private set; }
 		public int OpponentSeconds { get; private set; }
-		public static TurnTimer Instance { get; private set; }
+	    private static TurnTimer _instance;
 
-		/// <summary>
+	    public static TurnTimer Instance
+	    {
+	        get
+	        {
+	            if (_instance == null) Create(90);
+	            return _instance;
+	        }
+	    }
+
+	    /// <summary>
 		/// 
 		/// </summary>
 		/// <param name="turnTime">Time of a turn in seconds</param>
-		public static void Create(int turnTime)
+		private static void Create(int turnTime)
 		{
-			Instance = new TurnTimer
+			_instance = new TurnTimer
 			{
 				Seconds = turnTime,
 				PlayerSeconds = 0,
@@ -58,8 +67,8 @@ namespace Hearthstone_Deck_Tracker
 				_turnTime = turnTime,
 				_timer = new Timer(1000) {AutoReset = true, Enabled = true}
 			};
-			Instance._timer.Elapsed += Instance.TimerOnElapsed;
-			Instance._timer.Stop();
+            _instance._timer.Elapsed += Instance.TimerOnElapsed;
+            _instance._timer.Stop();
 		}
 
 		private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -113,8 +122,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void TimerTick(TurnTimer sender, TimerEventArgs timerEventArgs)
 		{
-			Helper.MainWindow.Overlay.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow.Overlay.UpdateTurnTimer(timerEventArgs)));
-			Helper.MainWindow.TimerWindow.Dispatcher.BeginInvoke(new Action(() => Helper.MainWindow.TimerWindow.Update(timerEventArgs)));
+			Core.Overlay.Dispatcher.BeginInvoke(new Action(() => Core.Overlay.UpdateTurnTimer(timerEventArgs)));
+			Core.Windows.TimerWindow.Dispatcher.BeginInvoke(new Action(() => Core.Windows.TimerWindow.Update(timerEventArgs)));
 
 			if(CurrentActivePlayer == ActivePlayer.Player)
 				CheckForTimerAlarm();

@@ -20,13 +20,14 @@
         </DataTemplate>
     </controls:MetroWindow.IconTemplate>
     <Grid Name="WindowGrid">
-        <StackPanel Name="StackPanelMain">
+        <StackPanel Name="StackPanelMain" Margin="0,1,0,0">
             <Viewbox Name="ViewboxWinRateAgainst" StretchDirection="DownOnly">
                 <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)"/>
             </Viewbox>
             <controls1:DeckListView x:Name="ListViewOpponent" Foreground="White" FontWeight="Bold" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                ItemsSource="{Binding OpponentDeck, RelativeSource={RelativeSource AncestorType=local:OpponentWindow}}"
                                 ScrollViewer.CanContentScroll="False" FontFamily="Arial">
                 <ListView.Resources>
                     <Style TargetType="GridViewColumnHeader">

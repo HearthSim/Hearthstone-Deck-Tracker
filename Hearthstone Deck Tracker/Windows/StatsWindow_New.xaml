@@ -1,0 +1,33 @@
+﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.StatsWindow_New"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        Icon="/HearthstoneDeckTracker;component/Images/HearthstoneDeckTracker.ico"
+        BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
+        SaveWindowPosition="True"
+        Title="STATS" Height="820" Width="1150">
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Rectangle Margin="2" Opacity="0.7">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource hdticon}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Click="BtnSwitchToMainWindow_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_arrow_right_left_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="Move to main window" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <ContentControl Name="ContentControl"/>
+</controls:MetroWindow>
