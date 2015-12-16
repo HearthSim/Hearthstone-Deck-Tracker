@@ -801,5 +801,11 @@ namespace Hearthstone_Deck_Tracker
 				parent = VisualTreeHelper.GetParent(parent);
 			return (MetroWindow)parent;
 		}
+
+		public static bool IsWindows10()
+		{
+			var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+			return reg != null && ((string)reg.GetValue("ProductName")).Contains("Windows 10");
+		}
 	}
 }

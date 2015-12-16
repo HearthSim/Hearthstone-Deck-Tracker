@@ -54,6 +54,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboBoxClassColors.SelectedItem = Config.Instance.ClassColorScheme;
 			CheckBoxArenaStatsTextColoring.IsChecked = Config.Instance.ArenaStatsTextColoring;
 
+			if(Config.Instance.NonLatinUseDefaultFont == null)
+			{
+				Config.Instance.NonLatinUseDefaultFont = Helper.IsWindows10();
+				Config.Save();
+			}
+			CheckBoxDefaultFont.IsChecked = Config.Instance.NonLatinUseDefaultFont;
+
 			_initialized = true;
 		}
 
@@ -229,6 +236,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.ArenaStatsTextColoring = false;
 			Config.Save();
 			ArenaStats.Instance.UpdateArenaStatsHighlights();
+		}
+
+		private void CheckBoxDefaultFont_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NonLatinUseDefaultFont = true;
+			Config.Save();
+		}
+
+		private void CheckBoxDefaultFont_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NonLatinUseDefaultFont = false;
+			Config.Save();
 		}
 	}
 }

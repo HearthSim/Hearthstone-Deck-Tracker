@@ -84,6 +84,7 @@
                             		VerticalAlignment="Top" ToolTip="Alternative languages are used in card search and tooltips" />
                                 <ListBox x:Name="ListBoxAlternativeLanguages" Height="120" Width="170" HorizontalAlignment="Right" />
                             </DockPanel>
+                            <CheckBox Name="CheckBoxDefaultFont" Content="Use default font for non-latin languages" Margin="5,5,0,0" Checked="CheckBoxDefaultFont_OnChecked" Unchecked="CheckBoxDefaultFont_OnUnchecked"/>
                             <Label x:Name="label" Content="Restart HDT to apply language changes"/>
                         </StackPanel>
                     </GroupBox>

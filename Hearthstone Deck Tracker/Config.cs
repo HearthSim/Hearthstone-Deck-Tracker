@@ -431,6 +431,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(null)]
 		public bool? NetDeckClipboardCheck = null;
 
+		[DefaultValue(null)]
+		public bool? NonLatinUseDefaultFont = null;
+
 		[DefaultValue(false)]
 		public bool NoteDialogDelayed = false;
 

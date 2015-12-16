@@ -424,7 +424,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var lang = Config.Instance.SelectedLanguage;
 				var font = new FontFamily();
 				// if the language uses a Latin script use Belwe font
-				if(Helper.LatinLanguages.Contains(lang))
+				if(Helper.LatinLanguages.Contains(lang) || Config.Instance.NonLatinUseDefaultFont == false)
 				{
 					font = new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT");
 				}
