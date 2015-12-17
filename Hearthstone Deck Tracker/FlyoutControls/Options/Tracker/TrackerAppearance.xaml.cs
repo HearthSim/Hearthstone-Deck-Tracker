@@ -100,23 +100,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			UpdateAlternativeLanguageList(language);
 
 			if (!_initialized)
-				return;
-
-			if (!IsLanguageAvailable(language))
-				return;			
+				return;	
 			
 			var selectedLanguage = Helper.LanguageDict[language];
 
 			Config.Instance.SelectedLanguage = selectedLanguage;
 			Config.Save();
-		}
-
-		private bool IsLanguageAvailable(string language)
-		{
-			if (!Helper.LanguageDict.ContainsKey(language))
-				return false;																	  
-
-			return File.Exists(string.Format("Files/cardDB.{0}.xml", Helper.LanguageDict[language]));
 		}
 
 		private void UpdateAlternativeLanguageList(string primaryLanguage)
@@ -146,7 +135,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			foreach (CheckBox box in ListBoxAlternativeLanguages.Items)
 			{
 				string language = (string)box.Content;
-				if (box.IsChecked == true && IsLanguageAvailable(language))
+				if (box.IsChecked == true)
 					languages.Add(Helper.LanguageDict[language]);
 			}			 
 			Config.Instance.AlternativeLanguages = languages;
