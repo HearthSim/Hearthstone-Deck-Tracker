@@ -428,7 +428,7 @@ namespace Hearthstone_Deck_Tracker
 				while(!User32.IsHearthstoneInForeground())
 					await Task.Delay(500);
 			}
-			var rect = Helper.GetHearthstoneRect(true);
+			var rect = Helper.GetHearthstoneRect(false);
 			var reEnableOverlay = false;
 			if(Core.Overlay.IsRankConvered())
 			{
