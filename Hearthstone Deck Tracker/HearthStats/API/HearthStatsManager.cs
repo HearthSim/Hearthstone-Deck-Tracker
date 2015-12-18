@@ -798,7 +798,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		public static async void UpdateArenaMatchAsync(GameStats game, Deck deck, bool saveFilesAfter = true, bool background = false)
 		{
 			var result = await DeleteMatchesAsync(new List<GameStats> {game}, saveFilesAfter, background);
-			if(result == PostResult.WasSuccess)
+			if(result.Success)
 			{
 				game.ResetHearthstatsIds();
 				await UploadArenaMatchAsync(game, deck, saveFilesAfter, background);
@@ -808,7 +808,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		public static async void UpdateMatchAsync(GameStats game, Deck deck, bool saveFilesAfter = true, bool background = false)
 		{
 			var result = await DeleteMatchesAsync(new List<GameStats> {game}, saveFilesAfter, background);
-			if(result == PostResult.WasSuccess)
+			if(result.Success)
 			{
 				game.ResetHearthstatsIds();
 				await UploadMatchAsync(game, deck, saveFilesAfter, background);
