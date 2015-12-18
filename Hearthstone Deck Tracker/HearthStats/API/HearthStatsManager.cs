@@ -361,8 +361,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(background)
 					AddBackgroundActivity();
 
-				var controller = background
-					                 ? null : await Core.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new decks...");
+				var controller = background ? null : await Core.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new decks...");
 				Logger.WriteLine("Checking HearthStats for new decks...", "HearthStatsManager");
 				var localDecks = DeckList.Instance.Decks;
 				var remoteDecks = await DownloadDecksAsync(forceFullSync);
@@ -660,8 +659,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							if(controller != null)
 							{
 								Core.MainWindow.Dispatcher.BeginInvoke(
-								                                         new Action(
-									                                         () => { controller.SetProgress(1.0 * (uploaded += matches.Count()) / total); }));
+								                                       new Action(
+									                                       () => { controller.SetProgress(1.0 * (uploaded += matches.Count()) / total); }));
 							}
 						});
 					});

@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -24,15 +23,18 @@ namespace Hearthstone_Deck_Tracker
 	public partial class PlayerWindow : INotifyPropertyChanged
 	{
 		public static double Scaling = 1.0;
-	    private readonly GameV2 _game;
-	    private readonly bool _forScreenshot;
+		private readonly bool _forScreenshot;
+		private readonly GameV2 _game;
 		private bool _appIsClosing;
+
+
+		private DateTime _lastPlayerUpdateReqest = DateTime.MinValue;
 
 		public PlayerWindow(GameV2 game, List<Card> forScreenshot = null)
 		{
 			InitializeComponent();
-		    _game = game;
-		    _forScreenshot = forScreenshot != null;
+			_game = game;
+			_forScreenshot = forScreenshot != null;
 			//ListViewPlayer.ItemsSource = playerDeck;
 			//playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
 			Height = Config.Instance.PlayerWindowHeight;
@@ -81,9 +83,11 @@ namespace Hearthstone_Deck_Tracker
 			get { return Config.Instance.WindowCardToolTips; }
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		public void Update()
 		{
-            CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			CanvasPlayerCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 			LblWins.Visibility = Config.Instance.ShowDeckWins && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
@@ -165,7 +169,8 @@ namespace Hearthstone_Deck_Tracker
 		private void Scale()
 		{
 			const int offsetToMakeSureGraphicsAreNotClipped = 35;
-			var allLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblWins.ActualHeight + LblDeckTitle.ActualHeight + LblPlayerFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
+			var allLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblWins.ActualHeight
+			                      + LblDeckTitle.ActualHeight + LblPlayerFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
 			if(((Height - allLabelsHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
@@ -230,8 +235,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-
-		private DateTime _lastPlayerUpdateReqest = DateTime.MinValue;
 		public async void UpdatePlayerCards()
 		{
 			_lastPlayerUpdateReqest = DateTime.Now;
@@ -241,8 +244,6 @@ namespace Hearthstone_Deck_Tracker
 			OnPropertyChanged("PlayerDeck");
 			Scale();
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

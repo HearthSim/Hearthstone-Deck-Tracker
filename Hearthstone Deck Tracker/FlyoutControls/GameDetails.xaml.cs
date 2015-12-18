@@ -16,17 +16,16 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class GameDetails
 	{
-	    private GameV2 _game;
-	    private GameStats _gameStats;
+		private GameV2 _game;
+		private GameStats _gameStats;
 		private bool _initialized;
 
 		public GameDetails()
 		{
-		    
-		    InitializeComponent();
+			InitializeComponent();
 		}
 
-	    public void SetGame(GameStats gameStats)
+		public void SetGame(GameStats gameStats)
 		{
 			_gameStats = gameStats;
 			ReloadGameStats();
@@ -68,8 +67,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void LoadConfig(GameV2 game)
 		{
-            _game = game;
-            CheckboxPlayerDraw.IsChecked = Config.Instance.GameDetails.ShowPlayerDraw;
+			_game = game;
+			CheckboxPlayerDraw.IsChecked = Config.Instance.GameDetails.ShowPlayerDraw;
 			CheckboxOpponentDraw.IsChecked = Config.Instance.GameDetails.ShowOpponentDraw;
 			CheckboxPlayerPlay.IsChecked = Config.Instance.GameDetails.ShowPlayerPlay;
 			CheckboxOpponentPlay.IsChecked = Config.Instance.GameDetails.ShowOpponentPlay;
@@ -225,6 +224,5 @@ namespace Hearthstone_Deck_Tracker
 			Core.MainWindow.FlyoutGameDetails.IsOpen = false;
 			Core.MainWindow.FlyoutDeckStats.IsOpen = false;
 		}
-
 	}
 }

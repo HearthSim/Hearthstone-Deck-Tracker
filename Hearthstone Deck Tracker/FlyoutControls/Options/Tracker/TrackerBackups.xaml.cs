@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(dirInfo.Exists)
 			{
 				foreach(var file in dirInfo.GetFiles("Backup*.zip").OrderBy(x => x.CreationTime))
-					ListBoxBackups.Items.Add(new BackupFile { FileInfo = file });
+					ListBoxBackups.Items.Add(new BackupFile {FileInfo = file});
 			}
 		}
 
@@ -43,8 +43,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				var result =
 					await
 					Core.MainWindow.ShowMessageAsync("Restore backup " + selected.DisplayName,
-					                                   "This can not be undone! Make sure you have a current backup (if necessary). To create one, CANCEL and click \"CREATE NEW\".",
-					                                   MessageDialogStyle.AffirmativeAndNegative);
+					                                 "This can not be undone! Make sure you have a current backup (if necessary). To create one, CANCEL and click \"CREATE NEW\".",
+					                                 MessageDialogStyle.AffirmativeAndNegative);
 				if(result == MessageDialogResult.Affirmative)
 				{
 					var archive = new ZipArchive(selected.FileInfo.OpenRead(), ZipArchiveMode.Read);
@@ -108,6 +108,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 		}
 
+		private void TrackerBackups_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			ListBoxBackups.Items.Clear();
+			Load();
+		}
+
 		public class BackupFile
 		{
 			public FileInfo FileInfo { get; set; }
@@ -116,12 +122,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				get { return FileInfo.CreationTime + " " + (FileInfo.Name.StartsWith("Backup_") ? "(auto)" : "(manual)"); }
 			}
-		}
-
-		private void TrackerBackups_OnLoaded(object sender, RoutedEventArgs e)
-		{
-			ListBoxBackups.Items.Clear();
-			Load();
 		}
 	}
 }

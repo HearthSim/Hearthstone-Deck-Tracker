@@ -1,11 +1,14 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using HearthDb;
 using HearthDb.Enums;
 using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
@@ -16,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(string.IsNullOrEmpty(cardId))
 				return null;
 			HearthDb.Card dbCard;
-			if(HearthDb.Cards.All.TryGetValue(cardId, out dbCard))
+			if(Cards.All.TryGetValue(cardId, out dbCard))
 				return new Card(dbCard);
 			Logger.WriteLine("Could not find card with ID=" + cardId, "Database");
 			return new Card(cardId, null, Rarity.Free, "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
@@ -27,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Language lang = Language.enUS;
 			if(localized)
 				Enum.TryParse(Config.Instance.SelectedLanguage, out lang);
-			var card = HearthDb.Cards.GetFromName(name, lang, false);
+			var card = Cards.GetFromName(name, lang, false);
 			if(card != null)
 				return new Card(card);
 			if(showErrorMessage)
@@ -37,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static List<Card> GetActualCards()
 		{
-			return HearthDb.Cards.Collectible.Values.Select(x => new Card(x)).ToList();
+			return Cards.Collectible.Values.Select(x => new Card(x)).ToList();
 		}
 
 		public static string GetHeroNameFromId(string id, bool returnIdIfNotFound = true)
@@ -56,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static bool IsActualCard(Card card)
 		{
-			return card != null && HearthDb.Cards.Collectible.ContainsKey(card.Id);
+			return card != null && Cards.Collectible.ContainsKey(card.Id);
 		}
 	}
 }

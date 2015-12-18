@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
@@ -26,8 +17,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 	/// </summary>
 	public partial class ArenaClassStats : INotifyPropertyChanged
 	{
-		public static readonly DependencyProperty ImageVisiblityProperty = DependencyProperty.Register("ImageVisiblity", typeof(Visibility), typeof(ArenaClassStats), new PropertyMetadata(Visibility.Visible));
-		public static readonly DependencyProperty ClassProperty = DependencyProperty.Register("Class", typeof(string), typeof(ArenaClassStats), new PropertyMetadata(default(string)));
+		public static readonly DependencyProperty ImageVisiblityProperty = DependencyProperty.Register("ImageVisiblity", typeof(Visibility),
+		                                                                                               typeof(ArenaClassStats),
+		                                                                                               new PropertyMetadata(
+			                                                                                               Visibility.Visible));
+
+		public static readonly DependencyProperty ClassProperty = DependencyProperty.Register("Class", typeof(string),
+		                                                                                      typeof(ArenaClassStats),
+		                                                                                      new PropertyMetadata(default(string)));
 
 		public ArenaClassStats()
 		{
@@ -53,10 +50,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		public string Class
 		{
-			get
-			{
-				return (string)GetValue(ClassProperty);
-			}
+			get { return (string)GetValue(ClassProperty); }
 			set { SetValue(ClassProperty, value); }
 		}
 
@@ -71,14 +65,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			}
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		private void ArenaClassStats_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			OnPropertyChanged("ClassImage");
 			OnPropertyChanged("ImageVisiblity");
 			OnPropertyChanged("ClassName");
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

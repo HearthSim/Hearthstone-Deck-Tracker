@@ -57,8 +57,8 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			{
 				await
 					MouseActions.ClickOnPoint(info.HsHandle,
-					                         new Point((int)Helper.GetScaledXPos(Config.Instance.ExportClearX, info.HsRect.Width, info.Ratio),
-					                                   (int)(Config.Instance.ExportClearY * info.HsRect.Height)));
+					                          new Point((int)Helper.GetScaledXPos(Config.Instance.ExportClearX, info.HsRect.Width, info.Ratio),
+					                                    (int)(Config.Instance.ExportClearY * info.HsRect.Height)));
 				if(count++ > 35)
 					break;
 			}
@@ -203,8 +203,9 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			// select "All Sets"
 			await
 				MouseActions.ClickOnPoint(info.HsHandle,
-				                         new Point((int)Helper.GetScaledXPos(Config.Instance.ExportAllSetsButtonX, info.HsRect.Width, info.Ratio),
-				                                   (int)(Config.Instance.ExportAllSetsButtonY * info.HsRect.Height)));
+				                          new Point(
+					                          (int)Helper.GetScaledXPos(Config.Instance.ExportAllSetsButtonX, info.HsRect.Width, info.Ratio),
+					                          (int)(Config.Instance.ExportAllSetsButtonY * info.HsRect.Height)));
 			// close sets menu
 			await MouseActions.ClickOnPoint(info.HsHandle, setsPoint);
 		}

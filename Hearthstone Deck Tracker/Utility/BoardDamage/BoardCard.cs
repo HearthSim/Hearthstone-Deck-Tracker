@@ -1,40 +1,25 @@
-﻿using System;
+﻿#region
+
+using System;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 {
 	public class BoardCard : BoardEntity
 	{
-		private int _health;
-		private int _armor;
-		private int _damageTaken;
-		private bool _exhausted;
-		private bool _cantAttack;
-		private bool _charge;
-		private bool _windfury;
+		private readonly bool _activeTurn;
+		private readonly int _armor;
+		private readonly bool _cantAttack;
+		private readonly int _damageTaken;
+		private readonly int _durability;
+		private readonly bool _frozen;
+		private readonly int _health;
 		private bool _justPlayed;
-		private int _attacksThisTurn;
-		private int _stdAttack;
-		private int _durability;
-		private bool _frozen;
-		private bool _activeTurn;
-
-		public string Name { get; private set; }
-		public string CardId { get; private set; }
-		public int Attack { get; private set; }
-		public int Health { get; private set; }
-		public bool Include { get; private set; }
-		public bool Taunt { get; private set; }
-
-		public int AttacksThisTurn { get { return _attacksThisTurn; } }
-		public bool Exhausted { get { return _exhausted; } }
-		public bool Charge { get { return _charge; } }
-		public bool Windfury { get { return _windfury; } }
-
-		public string Zone { get; private set; }
-		public string CardType { get; private set; }
+		private readonly int _stdAttack;
 
 		public BoardCard(CardEntity e, bool active = true)
 		{
@@ -48,12 +33,12 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			_armor = e.Entity.GetTag(GAME_TAG.ARMOR);
 			_durability = e.Entity.GetTag(GAME_TAG.DURABILITY);
 			_damageTaken = e.Entity.GetTag(GAME_TAG.DAMAGE);
-			_exhausted = e.Entity.GetTag(GAME_TAG.EXHAUSTED) == 1 ? true : false;
+			Exhausted = e.Entity.GetTag(GAME_TAG.EXHAUSTED) == 1 ? true : false;
 			_cantAttack = e.Entity.GetTag(GAME_TAG.CANT_ATTACK) == 1 ? true : false;
 			_frozen = e.Entity.GetTag(GAME_TAG.FROZEN) == 1 ? true : false;
-			_charge = e.Entity.GetTag(GAME_TAG.CHARGE) == 1 ? true : false;
-			_windfury = e.Entity.GetTag(GAME_TAG.WINDFURY) == 1 ? true : false;
-			_attacksThisTurn = e.Entity.GetTag(GAME_TAG.NUM_ATTACKS_THIS_TURN);
+			Charge = e.Entity.GetTag(GAME_TAG.CHARGE) == 1 ? true : false;
+			Windfury = e.Entity.GetTag(GAME_TAG.WINDFURY) == 1 ? true : false;
+			AttacksThisTurn = e.Entity.GetTag(GAME_TAG.NUM_ATTACKS_THIS_TURN);
 			_justPlayed = e.Entity.GetTag(GAME_TAG.JUST_PLAYED) == 1 ? true : false;
 
 			Name = name;
@@ -66,6 +51,22 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			Attack = CalculateAttack(_activeTurn, e.Entity.IsWeapon);
 			Include = IsAbleToAttack(_activeTurn, e.Entity.IsWeapon);
 		}
+
+		public string CardId { get; private set; }
+		public bool Taunt { get; private set; }
+		public bool Charge { get; private set; }
+		public bool Windfury { get; private set; }
+		public string CardType { get; private set; }
+
+		public string Name { get; private set; }
+		public int Attack { get; private set; }
+		public int Health { get; private set; }
+		public bool Include { get; private set; }
+
+		public int AttacksThisTurn { get; private set; }
+		public bool Exhausted { get; private set; }
+
+		public string Zone { get; private set; }
 
 		private int CalculateHealth(bool isWeapon)
 		{
@@ -80,22 +81,16 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		{
 			// V-07-TR-0N is a special case Mega-Windfury
 			if(!string.IsNullOrEmpty(CardId) && CardId == "GVG_111t")
-			{
 				return V07TRONAttack(active);
-			}
-			// for weapons check for windfury and number of hits left
-			else if(isWeapon)
+				// for weapons check for windfury and number of hits left
+			if(isWeapon)
 			{
-				if(_windfury && Health >= 2 && _attacksThisTurn == 0)
-				{
+				if(Windfury && Health >= 2 && AttacksThisTurn == 0)
 					return _stdAttack * 2;
-				}
 			}
 			// for minions with windfury that haven't already attacked, double attack
-			else if(_windfury && (!active || _attacksThisTurn == 0))
-			{
+			else if(Windfury && (!active || AttacksThisTurn == 0))
 				return _stdAttack * 2;
-			}
 			return _stdAttack;
 		}
 
@@ -104,57 +99,38 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			// TODO: if frozen on turn, may be able to attack next turn
 			// don't include weapons if an active turn, count Hero instead
 			if(_cantAttack || _frozen || (isWeapon && active))
-			{
 				return false;
-			}
-			else if(!active)
+			if(!active)
 			{
 				// include everything that can attack if not an active turn
 				return true;
 			}
-			else if(_exhausted)
+			if(Exhausted)
 			{
 				// newly played card could be given charge
-				if(_charge && _attacksThisTurn == 0)
-				{
+				if(Charge && AttacksThisTurn == 0)
 					return true;
-				}
-				else
-				{
-					return false;
-				}
+				return false;
 			}
-			// sometimes cards seem to be in wrong zone while in play,
-			// these cards don't become exhausted, so check attacks.
-			else if (Zone.ToLower() == "deck" || Zone.ToLower() == "hand")
+				// sometimes cards seem to be in wrong zone while in play,
+				// these cards don't become exhausted, so check attacks.
+			if(Zone.ToLower() == "deck" || Zone.ToLower() == "hand")
 			{
-				if(_windfury && _attacksThisTurn >= 2)
-				{
+				if(Windfury && AttacksThisTurn >= 2)
 					return false;
-				}
-				else if(!_windfury && _attacksThisTurn >= 1)
-				{
+				if(!Windfury && AttacksThisTurn >= 1)
 					return false;
-				}
-				else
-				{
-					return true;
-				}
-			}
-			else
-			{
 				return true;
 			}
+			return true;
 		}
 
 		private int V07TRONAttack(bool active)
 		{
 			if(!active)
-			{
 				return _stdAttack * 4;
-			}
 
-			switch(_attacksThisTurn)
+			switch(AttacksThisTurn)
 			{
 				case 0:
 					return _stdAttack * 4;

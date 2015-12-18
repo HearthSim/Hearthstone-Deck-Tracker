@@ -39,7 +39,10 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			get { return Path.Combine(Config.Instance.ConfigDir, "plugins.xml"); }
 		}
 
-		public static int MaxExceptions { get { return 100; } }
+		public static int MaxExceptions
+		{
+			get { return 100; }
+		}
 
 		public void LoadPlugins()
 		{

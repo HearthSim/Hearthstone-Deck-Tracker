@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -12,14 +11,6 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 	//http://stackoverflow.com/questions/2450373/set-global-hotkeys-using-c-sharp
 	public sealed class KeyboardHook : IDisposable
 	{
-		// Registers a hot key with Windows.
-		[DllImport("user32.dll")]
-		private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-
-		// Unregisters the hot key with Windows.
-		[DllImport("user32.dll")]
-		private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
 		private readonly Window _window = new Window();
 		private int _currentId;
 
@@ -32,6 +23,14 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 					KeyPressed(this, args);
 			};
 		}
+
+		// Registers a hot key with Windows.
+		[DllImport("user32.dll")]
+		private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+		// Unregisters the hot key with Windows.
+		[DllImport("user32.dll")]
+		private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
 		/// <summary>
 		/// Registers a hot key in the system.

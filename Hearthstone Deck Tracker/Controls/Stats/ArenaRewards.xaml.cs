@@ -19,6 +19,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	/// </summary>
 	public partial class ArenaRewards
 	{
+		public static RoutedEvent SaveEvent = EventManager.RegisterRoutedEvent("Save", RoutingStrategy.Bubble, typeof(RoutedEventHandler),
+		                                                                       typeof(ArenaRewards));
+
 		private readonly Dictionary<object, string> _invalidFields = new Dictionary<object, string>();
 		private readonly string[] _validSets = {"Classic", "Goblins vs Gnomes", "The Grand Tournament"};
 		private List<string> _cardNames;
@@ -256,15 +259,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		private void RadioButtonPaymentGold_OnChecked(object sender, RoutedEventArgs e)
 		{
-			Reward.PaymentMethod = ArenaPaymentMethod.Gold;;
+			Reward.PaymentMethod = ArenaPaymentMethod.Gold;
+			;
 		}
 
 		private void RadioButtonPaymentMoney_OnChecked(object sender, RoutedEventArgs e)
 		{
 			Reward.PaymentMethod = ArenaPaymentMethod.Money;
 		}
-
-		public static RoutedEvent SaveEvent = EventManager.RegisterRoutedEvent("Save", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(ArenaRewards));
 
 		public event RoutedEventHandler Save
 		{

@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker
 		private static Config _config;
 
 		public static readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-		                                     + @"\HearthstoneDeckTracker";
+		                                            + @"\HearthstoneDeckTracker";
 
 		[DefaultValue("Blue")]
 		public string AccentName = "Blue";
@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ArenaStatsShowLegends = true;
-		
+
 		[DefaultValue(true)]
 		public bool ArenaStatsTextColoring = true;
 
@@ -91,7 +91,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool AutoUseDeck = false;
 
 		[DefaultValue(true)]
-        public bool DeckPickerCaps = true;
+		public bool DeckPickerCaps = true;
 
 		[DefaultValue(true)]
 		public bool AutoSelectDetectedDeck = true;
@@ -277,20 +277,23 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.075)]
 		public double GoldProgessY = 0.93;
 
-        [DefaultValue(new[] { 0, 0, 0, 0, 0 })]
-        //move this to some data file
-        public int[] GoldProgress = { 0, 0, 0, 0, 0 };
+		[DefaultValue(new[] {0, 0, 0, 0, 0})]
+		//move this to some data file
+		public int[] GoldProgress = {0, 0, 0, 0, 0};
 
-        //move this to some data file
-        public DateTime[] GoldProgressLastReset =
-        {
-            DateTime.MinValue, DateTime.MinValue, DateTime.MinValue,
-            DateTime.MinValue, DateTime.MinValue,
-        };
+		//move this to some data file
+		public DateTime[] GoldProgressLastReset =
+		{
+			DateTime.MinValue,
+			DateTime.MinValue,
+			DateTime.MinValue,
+			DateTime.MinValue,
+			DateTime.MinValue
+		};
 
-        [DefaultValue(new[] { 0, 0, 0, 0, 0 })]
-        //move this to some data file
-        public int[] GoldProgressTotal = { 0, 0, 0, 0, 0 };
+		[DefaultValue(new[] {0, 0, 0, 0, 0})]
+		//move this to some data file
+		public int[] GoldProgressTotal = {0, 0, 0, 0, 0};
 
 		[DefaultValue(true)]
 		public bool GoogleAnalytics = true;
@@ -494,11 +497,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool OwnsGoldenStalagg = false;
 
-		[DefaultValue(new[] {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" })]
-		public string[] PanelOrderOpponent = {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" };
+		[DefaultValue(new[] {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter"})]
+		public string[] PanelOrderOpponent = {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter"};
 
-		[DefaultValue(new[] {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" })]
-		public string[] PanelOrderPlayer = {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" };
+		[DefaultValue(new[] {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter"})]
+		public string[] PanelOrderPlayer = {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter"};
 
 		[DefaultValue(65)]
 		public double PlayerDeckHeight = 65;
@@ -608,10 +611,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ResolvedDeckStatsIds = false;
 
-        [DefaultValue(false)]
-        public bool ReselectLastDeckUsed = false;
+		[DefaultValue(false)]
+		public bool ReselectLastDeckUsed = false;
 
-        [DefaultValue(false)]
+		[DefaultValue(false)]
 		public bool ResolvedDeckStatsIssue = false;
 
 		[DefaultValue(false)]
@@ -621,7 +624,7 @@ namespace Hearthstone_Deck_Tracker
 		//SaveConfigInAppData and SaveDataInAppData are set to SaveInAppData AFTER the config isloaded
 		//=> Need to be null to avoid creating new config in appdata if config is stored locally.
 		[DefaultValue(true)]
-		public bool? SaveConfigInAppData = null;
+		public bool? SaveConfigInAppData;
 
 		[DefaultValue(true)]
 		public bool? SaveDataInAppData = null;
@@ -731,10 +734,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool SortDecksByClassArena = false;
 
-        [DefaultValue(false)]
-        public bool SpectatorUseNoDeck = false;
+		[DefaultValue(false)]
+		public bool SpectatorUseNoDeck = false;
 
-        [DefaultValue(false)]
+		[DefaultValue(false)]
 		public bool StartMinimized = false;
 
 		[DefaultValue(false)]
@@ -841,7 +844,7 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool UseAnyUnityWindow = false;
- 
+
 		[DefaultValue(true)]
 		public bool UseAnimations = true;
 

@@ -112,8 +112,7 @@
                         <Button Margin="4,4,4,0" Content="Show own deck" Click="ButtonShowDeck_OnClick"/>
                         <Button Margin="4,4,4,0" Content="Show opp. deck" Click="ButtonShowOppDeck_OnClick" IsEnabled="{Binding Path=SelectedItem.CanGetOpponentDeck, ElementName=DataGridGames}"/>
                         <Button Margin="4,4,4,0" Content="Show replay" Click="ButtonShowReplay_OnClick"
-                                IsEnabled="{Binding Path=SelectedItem.HasReplayFile, ElementName=DataGridGames}">
-                        </Button>
+                                IsEnabled="{Binding Path=SelectedItem.HasReplayFile, ElementName=DataGridGames}" />
                         <Button Margin="4,4,4,0" Content="Add game" Click="ButtonAddGame_OnClick"/>
                         <Button Margin="4,4,4,0" Content="Edit game" Click="ButtonEditGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
                         <Button Margin="4,4,4,4" Content="Delete game" Click="ButtonDeleteGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>

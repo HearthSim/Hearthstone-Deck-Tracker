@@ -1,7 +1,6 @@
 ﻿#region
 
 using System.Drawing;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,19 +18,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayDeckWindows
 	{
-	    private GameV2 _game;
-	    private bool _initialized;
+		private GameV2 _game;
+		private bool _initialized;
 
 		public OverlayDeckWindows()
 		{
-		    
-		    InitializeComponent();
+			InitializeComponent();
 		}
 
-	    public void Load(GameV2 game)
+		public void Load(GameV2 game)
 		{
-            _game = game;
-            CheckboxWindowsTopmost.IsChecked = Config.Instance.WindowsTopmost;
+			_game = game;
+			CheckboxWindowsTopmost.IsChecked = Config.Instance.WindowsTopmost;
 			CheckboxPlayerWindowOpenAutomatically.IsChecked = Config.Instance.PlayerWindowOnStart;
 			CheckboxOpponentWindowOpenAutomatically.IsChecked = Config.Instance.OpponentWindowOnStart;
 			CheckboxTimerTopmost.IsChecked = Config.Instance.TimerWindowTopmost;

@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 	[XmlRoot("HotKeyConfig")]
 	public sealed class HotKeyConfig
 	{
+		private static readonly Lazy<HotKeyConfig> LazyInstance = new Lazy<HotKeyConfig>(Load);
 		private List<HotKeyConfigItem> _hotKeys = new List<HotKeyConfigItem>();
 
 		public static HotKeyConfig Instance
@@ -106,7 +107,5 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 				get { return new HotKey(Mod, Key); }
 			}
 		}
-
-		private static readonly Lazy<HotKeyConfig> LazyInstance = new Lazy<HotKeyConfig>(Load);
 	}
 }

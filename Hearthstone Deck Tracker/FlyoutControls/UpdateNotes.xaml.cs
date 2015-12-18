@@ -42,8 +42,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public List<GithubRelease> ReleaseNotes
 		{
 			get
-			{ 
-				var upToInstalled =_fullReleaseNotes.SkipWhile(r => r.GetVersion() != CurrentVersion).ToList();
+			{
+				var upToInstalled = _fullReleaseNotes.SkipWhile(r => r.GetVersion() != CurrentVersion).ToList();
 				return (upToInstalled.Any() ? upToInstalled : _fullReleaseNotes).Take(_numVersions).ToList();
 			}
 		}
@@ -100,7 +100,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			catch
 			{
 				Core.MainWindow.ShowMessage("Could not start browser",
-				                              "You can find the releases at \"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases\"");
+				                            "You can find the releases at \"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases\"");
 			}
 		}
 
@@ -139,7 +139,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 			catch
 			{
-
 			}
 		}
 

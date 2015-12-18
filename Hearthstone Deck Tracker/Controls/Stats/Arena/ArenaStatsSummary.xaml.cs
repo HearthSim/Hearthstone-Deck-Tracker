@@ -1,6 +1,10 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {

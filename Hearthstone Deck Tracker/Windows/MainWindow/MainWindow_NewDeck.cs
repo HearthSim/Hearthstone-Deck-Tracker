@@ -75,15 +75,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					var cardName = Helper.RemoveDiacritics(card.LocalizedName.ToLowerInvariant(), true);
 					if(!Config.Instance.UseFullTextSearch && !cardName.Contains(formattedInput)
-					   && card.AlternativeNames.All((x) => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
+					   && card.AlternativeNames.All(x => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
 					   && (!string.IsNullOrEmpty(card.RaceOrType) && formattedInput != card.RaceOrType.ToLowerInvariant()))
 						continue;
 					if(Config.Instance.UseFullTextSearch
 					   && words.Any(
 					                w =>
 					                !cardName.Contains(w) && !(!string.IsNullOrEmpty(card.Text) && card.Text.ToLowerInvariant().Contains(w))
-					                && card.AlternativeNames.All((x) => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
-					                && card.AlternativeTexts.All((x) => x == null || !x.ToLowerInvariant().Contains(formattedInput))
+					                && card.AlternativeNames.All(x => !Helper.RemoveDiacritics(x.ToLowerInvariant(), true).Contains(formattedInput))
+					                && card.AlternativeTexts.All(x => x == null || !x.ToLowerInvariant().Contains(formattedInput))
 					                && (!string.IsNullOrEmpty(card.RaceOrType) && w != card.RaceOrType.ToLowerInvariant())
 					                && (w != card.Rarity.ToString().ToLowerInvariant())))
 						continue;
@@ -313,11 +313,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 				TextBlockIconNaxx.Visibility = Visibility.Collapsed;
 				return;
 			}
-			TextBlockIconLoe.Visibility = _newDeck.Cards.Any(card => card.Set == "League of Explorers") ? Visibility.Visible : Visibility.Collapsed;
-			TextBlockIconTgt.Visibility = _newDeck.Cards.Any(card => card.Set == "The Grand Tournament") ? Visibility.Visible : Visibility.Collapsed;
-			TextBlockIconBrm.Visibility = _newDeck.Cards.Any(card => card.Set == "Blackrock Mountain") ? Visibility.Visible : Visibility.Collapsed;
-			TextBlockIconGvg.Visibility = _newDeck.Cards.Any(card => card.Set == "Goblins vs Gnomes") ? Visibility.Visible : Visibility.Collapsed;
-			TextBlockIconNaxx.Visibility = _newDeck.Cards.Any(card => card.Set == "Curse of Naxxramas") ? Visibility.Visible : Visibility.Collapsed;
+			TextBlockIconLoe.Visibility = _newDeck.Cards.Any(card => card.Set == "League of Explorers")
+				                              ? Visibility.Visible : Visibility.Collapsed;
+			TextBlockIconTgt.Visibility = _newDeck.Cards.Any(card => card.Set == "The Grand Tournament")
+				                              ? Visibility.Visible : Visibility.Collapsed;
+			TextBlockIconBrm.Visibility = _newDeck.Cards.Any(card => card.Set == "Blackrock Mountain")
+				                              ? Visibility.Visible : Visibility.Collapsed;
+			TextBlockIconGvg.Visibility = _newDeck.Cards.Any(card => card.Set == "Goblins vs Gnomes")
+				                              ? Visibility.Visible : Visibility.Collapsed;
+			TextBlockIconNaxx.Visibility = _newDeck.Cards.Any(card => card.Set == "Curse of Naxxramas")
+				                               ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		private void UpdateCardCount()
@@ -430,8 +435,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ClearNewDeckSection();
 			DeckPickerListCover.Visibility = Visibility.Hidden;
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
-            PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions
-				                                  ? Visibility.Visible : Visibility.Collapsed;
+			PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
 			PanelCardCount.Visibility = Visibility.Collapsed;
 
 			if(_movedLeft.HasValue)
@@ -586,7 +590,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SaveDeckWithOverwriteCheck(_newDeck.Version);
 		}
 
-        internal void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
+		internal void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
 		{
 			if(saveAsNew)
 			{

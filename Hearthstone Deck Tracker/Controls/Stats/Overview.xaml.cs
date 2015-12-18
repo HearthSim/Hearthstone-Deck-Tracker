@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats
 {
@@ -25,8 +19,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	/// </summary>
 	public partial class Overview : UserControl
 	{
-		private readonly ArenaRuns _arenaRuns = new ArenaRuns();
 		private readonly ArenaAdvancedCharts _arenaAdvancedCharts = new ArenaAdvancedCharts();
+		private readonly ArenaRuns _arenaRuns = new ArenaRuns();
 		private readonly ArenaStatsSummary _arenaStatsSummary = new ArenaStatsSummary();
 		private readonly bool _initialized;
 
@@ -35,7 +29,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			InitializeComponent();
 			ComboBoxTimeframe.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));
 			ComboBoxTimeframe.SelectedItem = Config.Instance.ArenaStatsTimeFrameFilter;
-			ComboBoxClass.ItemsSource = Enum.GetValues(typeof(HeroClassStatsFilter)).Cast<HeroClassStatsFilter>().Select(x => new HeroClassStatsFilterWrapper(x));
+			ComboBoxClass.ItemsSource =
+				Enum.GetValues(typeof(HeroClassStatsFilter)).Cast<HeroClassStatsFilter>().Select(x => new HeroClassStatsFilterWrapper(x));
 			ComboBoxClass.SelectedItem = new HeroClassStatsFilterWrapper(Config.Instance.ArenaStatsClassFilter);
 			ComboBoxRegion.ItemsSource = Enum.GetValues(typeof(RegionAll));
 			ComboBoxRegion.SelectedItem = Config.Instance.ArenaStatsRegionFilter;

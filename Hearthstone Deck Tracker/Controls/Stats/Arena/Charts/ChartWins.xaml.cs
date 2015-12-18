@@ -1,4 +1,8 @@
-﻿using System.Windows.Controls;
+﻿#region
+
+using System.Windows.Controls;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 {

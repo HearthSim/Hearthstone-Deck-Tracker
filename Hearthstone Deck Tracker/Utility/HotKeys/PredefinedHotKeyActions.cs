@@ -58,7 +58,8 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Core.Overlay.UpdatePosition();
 		}
 
-		[PredefinedHotKeyAction("Toggle overlay: card marks", "Turns the card marks and age on the overlay on or off (if the game is running).")]
+		[PredefinedHotKeyAction("Toggle overlay: card marks",
+			"Turns the card marks and age on the overlay on or off (if the game is running).")]
 		public static void ToggleOverlayCardMarks()
 		{
 			if(!Core.Game.IsRunning)
@@ -88,8 +89,9 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Config.Save();
 			Core.Overlay.UpdatePosition();
 		}
-		
-		[PredefinedHotKeyAction("Toggle overlay: attack icons", "Turns both attack icons on the overlay on or off (if the game is running).")]
+
+		[PredefinedHotKeyAction("Toggle overlay: attack icons", "Turns both attack icons on the overlay on or off (if the game is running).")
+		]
 		public static void ToggleOverlayAttack()
 		{
 			if(!Core.Game.IsRunning)
@@ -99,7 +101,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Config.Save();
 			Core.Overlay.UpdatePosition();
 		}
-		
+
 		[PredefinedHotKeyAction("Toggle no deck mode", "Activates \"no deck mode\" (use no deck) or selects the last used deck.")]
 		public static void ToggleNoDeckMode()
 		{

@@ -23,7 +23,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class Deck : ICloneable, INotifyPropertyChanged
 	{
 		private const string baseHearthStatsUrl = @"http://hss.io/d/";
+
+		private readonly string[] _relevantMechanics =
+		{
+			"Battlecry",
+			"Charge",
+			"Combo",
+			"Deathrattle",
+			"Divine Shield",
+			"Freeze",
+			"Inspire",
+			"Secret",
+			"Spellpower",
+			"Taunt",
+			"Windfury"
+		};
+
 		private bool _archived;
+
+		private ArenaReward _arenaReward = new ArenaReward();
 		private List<GameStats> _cachedGames;
 		private Guid _deckId;
 		private int? _dustReward;
@@ -77,7 +95,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, bool archived, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
 		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, string hearthStatsDeckVersionId,
-		            string hearthStatsIdClone = null, SerializableVersion selectedVersion = null, bool? isArenaDeck = null, ArenaReward reward = null)
+		            string hearthStatsIdClone = null, SerializableVersion selectedVersion = null, bool? isArenaDeck = null,
+		            ArenaReward reward = null)
 
 		{
 			Name = name;
@@ -163,7 +182,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _isArenaDeck = value; }
 		}
 
-		private ArenaReward _arenaReward = new ArenaReward();
 		public ArenaReward ArenaReward
 		{
 			get { return IsArenaDeck ? _arenaReward : null; }
@@ -173,6 +191,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					_arenaReward = value;
 			}
 		}
+
 		public bool? IsArenaRunCompleted
 		{
 			get
@@ -235,14 +254,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-                if (Config.Instance.DeckPickerCaps)
-				    return Versions.Count == 0
-					           ? Name.ToUpperInvariant()
-					           : string.Format("{0} (v{1}.{2})", Name.ToUpperInvariant(), SelectedVersion.Major, SelectedVersion.Minor);
-                else
-                    return Versions.Count == 0
-                               ? Name
-                               : string.Format("{0} (v{1}.{2})", Name, SelectedVersion.Major, SelectedVersion.Minor);
+				if(Config.Instance.DeckPickerCaps)
+				{
+					return Versions.Count == 0
+						       ? Name.ToUpperInvariant()
+						       : string.Format("{0} (v{1}.{2})", Name.ToUpperInvariant(), SelectedVersion.Major, SelectedVersion.Minor);
+				}
+				return Versions.Count == 0 ? Name : string.Format("{0} (v{1}.{2})", Name, SelectedVersion.Major, SelectedVersion.Minor);
 			}
 		}
 
@@ -433,10 +451,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get { return _cachedGames != null && DateTime.Now - _lastCacheUpdate < ValidCacheDuration; }
 		}
 
+		[XmlIgnore]
+		public List<Mechanic> Mechanics
+		{
+			get { return _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList(); }
+		}
+
 		public object Clone()
 		{
 			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats,
-			                HearthStatsId, DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck, ArenaReward);
+			                HearthStatsId, DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck,
+			                ArenaReward);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -567,32 +592,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		/// The mechanic attribute, such as windfury or taunt, comes from the cardDB json file
 		public int GetMechanicCount(string newmechanic)
 		{
-			return Cards.Where(card => card.Mechanics != null).Sum(card => card.Mechanics.Count(mechanic => mechanic.Equals(newmechanic)) * card.Count);
+			return
+				Cards.Where(card => card.Mechanics != null)
+				     .Sum(card => card.Mechanics.Count(mechanic => mechanic.Equals(newmechanic)) * card.Count);
 		}
-
-		private readonly string[] _relevantMechanics =
-		{
-			"Battlecry",
-			"Charge",
-			"Combo",
-			"Deathrattle",
-			"Divine Shield",
-			"Freeze",
-			"Inspire",
-			"Secret",
-			"Spellpower",
-			"Taunt",
-			"Windfury"
-		};
-
-		[XmlIgnore]
-		public List<Mechanic> Mechanics
-		{
-			get
-			{
-				return _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList();
-			}
-		} 
 
 		public int GetNumTaunt()
 		{

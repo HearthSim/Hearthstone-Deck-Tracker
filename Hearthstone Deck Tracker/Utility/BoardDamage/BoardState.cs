@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Linq;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 {
 	public class BoardState
 	{
-		public PlayerBoard Player { get; private set; }
-		public PlayerBoard Opponent { get; private set; }
-
 		public BoardState()
 		{
 			Player = CreatePlayerBoard();
@@ -23,6 +22,9 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			Player = CreateBoard(player, entities, true, playerId);
 			Opponent = CreateBoard(opponent, entities, false, playerId);
 		}
+
+		public PlayerBoard Player { get; private set; }
+		public PlayerBoard Opponent { get; private set; }
 
 		public bool IsPlayerDeadToBoard()
 		{
@@ -56,11 +58,11 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			if(!heroFound)
 			{
 				var hero = EntityHelper.GetHeroEntity(isPlayer, entities, playerId);
-				if (hero != null)
+				if(hero != null)
 					list.Add(new CardEntity(hero));
 			}
 
 			return new PlayerBoard(list, activeTurn);
-		}		
+		}
 	}
 }

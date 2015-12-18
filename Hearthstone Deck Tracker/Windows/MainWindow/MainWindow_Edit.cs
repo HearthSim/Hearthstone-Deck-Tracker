@@ -224,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(deck == null)
 				return;
-	
+
 			deck = deck.GetSelectedDeckVersion();
 
 			var cloneStats =

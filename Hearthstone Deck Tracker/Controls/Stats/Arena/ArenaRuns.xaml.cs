@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts;
-using Hearthstone_Deck_Tracker.HearthStats.API;
-using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Windows;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
@@ -33,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			get { return _chartWinsControl; }
 			set
 			{
-				_chartWinsControl = value; 
+				_chartWinsControl = value;
 				OnPropertyChanged();
 			}
 		}

@@ -40,8 +40,7 @@
                         <Style>
                             <Style.Triggers>
                                 <Trigger Property="Rectangle.IsMouseOver" Value="False">
-                                    <Setter Property="Rectangle.Opacity" Value="0.5">
-                                    </Setter>
+                                    <Setter Property="Rectangle.Opacity" Value="0.5" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -51,7 +50,7 @@
                     </Rectangle.Fill>
                 </Rectangle>
             <Image Source="{Binding PlayerClassImage, RelativeSource={RelativeSource AncestorType=Window}}" DockPanel.Dock="Left" RenderOptions.BitmapScalingMode="Fant" Margin="2"/>
-            <TextBlock Text="{Binding DeckName, RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"  Foreground="White"></TextBlock>
+            <TextBlock Text="{Binding DeckName, RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"  Foreground="White" />
         </DockPanel>
         <StackPanel Name="PanelDetailBody" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10" Height="48" Visibility="Collapsed">
             <ComboBox Name="ComboBoxGameMode" SelectedItem="{Binding Mode, RelativeSource={RelativeSource AncestorType=Window}}" Width="100" Height="34"/>
@@ -62,7 +61,7 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding ClassImage}" Height="28" RenderOptions.BitmapScalingMode="Fant" Margin="0,2"/>
-                            <TextBlock Text="{Binding Class}" VerticalAlignment="Center" Margin="5,0"></TextBlock>
+                            <TextBlock Text="{Binding Class}" VerticalAlignment="Center" Margin="5,0" />
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>

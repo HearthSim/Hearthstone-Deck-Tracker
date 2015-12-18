@@ -39,17 +39,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		/// </Summary>
 		public bool IsPlayer { get; set; }
 
-        [JsonIgnore]
-        public bool IsHero
-        {
-            get { return CardId != null && CardIds.HeroIdDict.Keys.Contains(CardId); }
-        }
+		[JsonIgnore]
+		public bool IsHero
+		{
+			get { return CardId != null && CardIds.HeroIdDict.Keys.Contains(CardId); }
+		}
 
-        [JsonIgnore]
-        public bool IsActiveDeathrattle
-        {
-            get { return HasTag(GAME_TAG.DEATHRATTLE) && GetTag(GAME_TAG.DEATHRATTLE) == 1; }
-        }
+		[JsonIgnore]
+		public bool IsActiveDeathrattle
+		{
+			get { return HasTag(GAME_TAG.DEATHRATTLE) && GetTag(GAME_TAG.DEATHRATTLE) == 1; }
+		}
 
 		/// <Summary>
 		/// This is opponent entity, NOT the opponent hero.
@@ -98,8 +98,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				return _cachedCard
 				       ?? (_cachedCard =
 				           (Database.GetCardFromId(CardId)
-				            ?? new Card(string.Empty, null, Rarity.Free, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "",
-				                        "")));
+				            ?? new Card(string.Empty, null, Rarity.Free, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0,
+				                        "", "")));
 			}
 		}
 
@@ -185,9 +185,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				var font = new FontFamily();
 				// if the language uses a Latin script use Belwe font
 				if(Helper.LatinLanguages.Contains(lang) || Config.Instance.NonLatinUseDefaultFont == false)
-				{
 					font = new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT");
-				}
 				return font;
 			}
 		}
@@ -258,9 +256,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			if(!Tags.ContainsKey(tag))
 				Tags.Add(tag, value);
 			else
-			{
 				Tags[tag] = value;
-			}
 		}
 
 		public void SetCardCount(int count)
@@ -272,7 +268,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		{
 			var card = Database.GetCardFromId(CardId);
 			var cardName = card != null ? card.Name : "";
-			return string.Format("id={0}, cardId={1}, cardName={2}", Id, CardId,cardName);
+			return string.Format("id={0}, cardId={1}, cardName={2}", Id, CardId, cardName);
 		}
 	}
 }

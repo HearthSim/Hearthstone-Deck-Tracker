@@ -14,19 +14,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayGeneral
 	{
-	    private GameV2 _game;
-	    private bool _initialized;
+		private GameV2 _game;
+		private bool _initialized;
 
 		public OverlayGeneral()
 		{
-		    
-		    InitializeComponent();
+			InitializeComponent();
 		}
 
-	    public void Load(GameV2 game)
+		public void Load(GameV2 game)
 		{
-            _game = game;
-            CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
+			_game = game;
+			CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
 			CheckboxHideOpponentCardAge.IsChecked = Config.Instance.HideOpponentCardAge;
 			CheckboxHideOpponentCardMarks.IsChecked = Config.Instance.HideOpponentCardMarks;
 			CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
@@ -44,8 +43,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
 			CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
 			CheckboxAlwaysShowGoldProgress.IsChecked = Config.Instance.AlwaysShowGoldProgress;
-		    CheckboxHidePlayerAttackIcon.IsChecked = Config.Instance.HidePlayerAttackIcon;
-		    CheckboxHideOpponentAttackIcon.IsChecked = Config.Instance.HideOpponentAttackIcon;
+			CheckboxHidePlayerAttackIcon.IsChecked = Config.Instance.HidePlayerAttackIcon;
+			CheckboxHideOpponentAttackIcon.IsChecked = Config.Instance.HideOpponentAttackIcon;
 			_initialized = true;
 		}
 
@@ -84,8 +83,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			var result =
 				await
 				Core.MainWindow.ShowMessageAsync("Resetting overlay to default",
-				                                   "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
-				                                   MessageDialogStyle.AffirmativeAndNegative);
+				                                 "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
+				                                 MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
 				return;
 

@@ -1,21 +1,15 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Windows;
-using MahApps.Metro;
 using Microsoft.Win32;
 using Application = System.Windows.Application;
-using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 #endregion
 
@@ -86,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			SaveConfig(false);
 		}
 
-		
+
 		private void ComboboxKeyPressGameStart_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
@@ -231,11 +225,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonGamePath_OnClick(object sender, RoutedEventArgs e)
 		{
-			var dialog = new FolderBrowserDialog()
-			{
-				Description = "Select your Hearthstone Directory",
-				ShowNewFolderButton = false
-			};
+			var dialog = new FolderBrowserDialog {Description = "Select your Hearthstone Directory", ShowNewFolderButton = false};
 			var dialogResult = dialog.ShowDialog();
 
 			if(dialogResult == DialogResult.OK)

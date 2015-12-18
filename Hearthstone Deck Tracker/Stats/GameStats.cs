@@ -172,7 +172,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		[XmlIgnore]
-		public bool CanGetOpponentDeck { get { return TurnStats.Any(); } }
+		public bool CanGetOpponentDeck
+		{
+			get { return TurnStats.Any(); }
+		}
 
 		[XmlIgnore]
 		public BitmapImage OpponentHeroImage

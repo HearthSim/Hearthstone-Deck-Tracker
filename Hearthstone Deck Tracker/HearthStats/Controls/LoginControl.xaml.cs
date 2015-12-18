@@ -62,8 +62,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				var dialogResult =
 					await
 					Core.MainWindow.ShowMessageAsync("Sync now?", "Do you want to sync with HearthStats now?",
-					                                   MessageDialogStyle.AffirmativeAndNegative,
-					                                   new MessageDialogs.Settings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
+					                                 MessageDialogStyle.AffirmativeAndNegative,
+					                                 new MessageDialogs.Settings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
 				if(dialogResult == MessageDialogResult.Affirmative)
 					HearthStatsManager.SyncAsync();
 			}

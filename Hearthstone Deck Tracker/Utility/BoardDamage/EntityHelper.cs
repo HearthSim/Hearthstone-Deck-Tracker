@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 {
@@ -10,10 +14,8 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 	{
 		public static bool IsHero(Entity e)
 		{
-			return e.HasTag(GAME_TAG.CARDTYPE)
-				 && e.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO
-				 && e.HasTag(GAME_TAG.ZONE)
-				 && e.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.PLAY;
+			return e.HasTag(GAME_TAG.CARDTYPE) && e.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO && e.HasTag(GAME_TAG.ZONE)
+			       && e.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.PLAY;
 		}
 
 		public static Entity GetHeroEntity(bool forPlayer)
@@ -21,14 +23,12 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			return GetHeroEntity(forPlayer, Core.Game.Entities, Core.Game.Player.Id);
 		}
 
-		public static Entity GetHeroEntity(bool forPlayer, Dictionary<int,Entity> entities, int id)
+		public static Entity GetHeroEntity(bool forPlayer, Dictionary<int, Entity> entities, int id)
 		{
-			if (!forPlayer)
+			if(!forPlayer)
 				id = (id % 2) + 1;
 
-			var heros = entities.Where(x => IsHero(x.Value))
-				.Select(x => x.Value)
-				.ToList<Entity>();
+			var heros = entities.Where(x => IsHero(x.Value)).Select(x => x.Value).ToList();
 
 			return heros.FirstOrDefault(x => x.GetTag(GAME_TAG.CONTROLLER) == id);
 		}
@@ -46,9 +46,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 				int offset = firstPlayer.IsPlayer ? 0 : 1;
 				Entity gameRoot = entities.FirstOrDefault(e => e.Value != null && e.Value.Name == "GameEntity").Value;
 				if(gameRoot != null)
-				{
 					return (gameRoot.Tags[GAME_TAG.TURN] + offset) % 2 == 1;
-				}
 			}
 			return false;
 		}

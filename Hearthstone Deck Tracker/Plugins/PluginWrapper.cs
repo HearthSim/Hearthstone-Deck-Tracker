@@ -12,9 +12,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 {
 	internal class PluginWrapper
 	{
+		private int _exceptions;
 		private bool _isEnabled;
 		private bool _loaded;
-		private int _exceptions;
 
 		public PluginWrapper()
 		{
@@ -87,7 +87,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
-				ErrorManager.AddError("Error loading Plugin \"" + Name + "\"", "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
+				ErrorManager.AddError("Error loading Plugin \"" + Name + "\"",
+				                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 				Logger.WriteLine("Error loading " + Name + ":\n" + ex, "PluginWrapper");
 				return false;
 			}
@@ -109,7 +110,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				_exceptions++;
 				if(_exceptions > PluginManager.MaxExceptions)
 				{
-					ErrorManager.AddError(NameAndVersion + " threw too many exceptions, disabled Plugin.", "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
+					ErrorManager.AddError(NameAndVersion + " threw too many exceptions, disabled Plugin.",
+					                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 					IsEnabled = false;
 				}
 			}
@@ -117,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			{
 				Logger.WriteLine(string.Format("Warning: Updating {0} took {1} ms.", Name, sw.ElapsedMilliseconds), "PluginWrapper");
 #if(!DEBUG)
-				//IsEnabled = false;
+	//IsEnabled = false;
 #endif
 			}
 		}

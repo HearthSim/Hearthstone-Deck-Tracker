@@ -38,8 +38,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxCardGemRarity.IsChecked = Config.Instance.RarityCardGems;
 			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 			CheckboxTurnTime.IsChecked = Config.Instance.TimerTurnTime == 75;
-            CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
-            _initialized = true;
+			CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
+			_initialized = true;
 		}
 
 		private void CheckboxAutoSelectDeck_Checked(object sender, RoutedEventArgs e)
@@ -265,7 +265,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AutoUseDeck = true;
 			Config.Save();
 			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
-
 		}
 
 		private void CheckBoxAutoUse_OnUnchecked(object sender, RoutedEventArgs e)
@@ -275,7 +274,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AutoUseDeck = false;
 			Config.Save();
 			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
-
 		}
 
 		private void CheckboxArenaRewardDialog_Checked(object sender, RoutedEventArgs e)
@@ -312,20 +310,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			TurnTimer.Instance.SetTurnTime(90);
 		}
 
-        private void CheckboxSpectatorUseNoDeck_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized)
-                return;
-            Config.Instance.SpectatorUseNoDeck = true;
-            Config.Save();
-        }
+		private void CheckboxSpectatorUseNoDeck_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SpectatorUseNoDeck = true;
+			Config.Save();
+		}
 
-        private void CheckboxSpectatorUseNoDeck_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized)
-                return;
-            Config.Instance.SpectatorUseNoDeck = false;
-            Config.Save();
-        }
+		private void CheckboxSpectatorUseNoDeck_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SpectatorUseNoDeck = false;
+			Config.Save();
+		}
 	}
 }

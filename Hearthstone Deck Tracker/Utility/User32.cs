@@ -3,11 +3,8 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
-using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -34,6 +31,8 @@ namespace Hearthstone_Deck_Tracker
 		private const int KeyUp = 0x2;
 		private static DateTime _lastCheck;
 		private static IntPtr _hsWindow;
+
+		private static readonly string[] WindowNames = {"Hearthstone", "하스스톤", "《爐石戰記》", "炉石传说"};
 
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetClientRect(IntPtr hWnd, ref Rect rect);
@@ -96,8 +95,6 @@ namespace Hearthstone_Deck_Tracker
 			return new Point(p.X, p.Y);
 		}
 
-		private static readonly string[] WindowNames = { "Hearthstone", "하스스톤", "《爐石戰記》", "炉石传说" };
-
 		public static IntPtr GetHearthstoneWindow()
 		{
 			if(DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5) && _hsWindow == IntPtr.Zero)
@@ -115,8 +112,8 @@ namespace Hearthstone_Deck_Tracker
 						_hsWindow = process.MainWindowHandle;
 						break;
 					}
-                }
-            }
+				}
+			}
 			else
 			{
 				_hsWindow = FindWindow("UnityWndClass", Config.Instance.HearthstoneWindowName);
@@ -187,7 +184,8 @@ namespace Hearthstone_Deck_Tracker
 		public static void ActivateWindow(IntPtr mainWindowHandle)
 		{
 			// Guard: check if window already has focus.
-			if(mainWindowHandle == GetForegroundWindow()) return;
+			if(mainWindowHandle == GetForegroundWindow())
+				return;
 
 			// Show window maximized.
 			ShowWindow(mainWindowHandle, SwRestore);
@@ -201,7 +199,6 @@ namespace Hearthstone_Deck_Tracker
 			// Show window in forground.
 			SetForegroundWindow(mainWindowHandle);
 		}
-
 
 
 		//http://joelabrahamsson.com/detecting-mouse-and-keyboard-input-with-net/

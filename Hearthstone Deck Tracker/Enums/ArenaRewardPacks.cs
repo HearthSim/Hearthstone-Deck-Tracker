@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Enums
 {
@@ -11,10 +10,13 @@ namespace Hearthstone_Deck_Tracker.Enums
 	{
 		[Description("None")]
 		None,
+
 		[Description("Classic")]
 		Classic,
+
 		[Description("Goblins vs Gnomes")]
 		GoblinsVsGnomes,
+
 		[Description("The Grand Tournament")]
 		TheGrandTournament
 	}

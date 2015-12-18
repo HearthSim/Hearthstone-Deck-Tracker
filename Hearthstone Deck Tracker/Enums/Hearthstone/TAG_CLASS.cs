@@ -13,6 +13,6 @@ namespace Hearthstone_Deck_Tracker.Enums.Hearthstone
 		SHAMAN,
 		WARLOCK,
 		WARRIOR,
-		DREAM,
+		DREAM
 	}
 }

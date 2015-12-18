@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hearthstone_Deck_Tracker.Enums;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Utility
 {

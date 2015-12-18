@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
@@ -22,22 +21,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				else
 					gameState.GameHandler.HandlePossibleConstructedCard(id, false);
 			}
-			else if(HsLogReaderConstants.GoldProgressRegex.IsMatch(logLine)
-				&& (DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10)
-				&& game.CurrentGameMode != GameMode.Spectator)
+			else if(HsLogReaderConstants.GoldProgressRegex.IsMatch(logLine) && (DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10)
+			        && game.CurrentGameMode != GameMode.Spectator)
 			{
-
 				int wins;
 				var rawWins = HsLogReaderConstants.GoldProgressRegex.Match(logLine).Groups["wins"].Value;
 				if(int.TryParse(rawWins, out wins))
 				{
 					var timeZone = GetTimeZoneInfo(game.CurrentRegion);
 					if(timeZone != null)
-					{
 						UpdateGoldProgress(wins, game, timeZone);
-					}
-                }
-
+				}
 			}
 			else if(HsLogReaderConstants.DustRewardRegex.IsMatch(logLine))
 			{

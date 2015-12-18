@@ -1,6 +1,10 @@
-﻿using System.Windows;
+﻿#region
+
+using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -10,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public partial class ArenaRewardDialog
 	{
 		private readonly Deck _deck;
+
 		public ArenaRewardDialog(Deck deck)
 		{
 			_deck = deck;

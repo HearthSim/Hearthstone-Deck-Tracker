@@ -12,6 +12,7 @@ using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+using Point = System.Drawing.Point;
 
 #endregion
 
@@ -199,7 +200,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		
+
 		private void BtnFile_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog {Title = "Select Deck File", DefaultExt = "*.xml;*.txt", Filter = "Deck Files|*.txt;*.xml"};
@@ -293,13 +294,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 			{
 				if(!Core.Game.TempArenaDeck.Cards.Any())
-				{
 					await this.ShowMessageAsync("No arena deck found", "Please enter the arena screen (and build your deck).");
-				}
 				else
-				{
 					SetNewDeck(Core.Game.TempArenaDeck);
-				}
 			}
 		}
 
@@ -323,7 +320,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			await Task.Delay(1000);
 			Core.Overlay.ForceHidden = true;
 			Core.Overlay.UpdatePosition();
-			const double xScale = 0.013; 
+			const double xScale = 0.013;
 			const double yScale = 0.017;
 			const int targetHue = 53;
 			const int hueMargin = 3;
@@ -331,15 +328,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var hsRect = User32.GetHearthstoneRect(false);
 			var ratio = (4.0 / 3.0) / ((double)hsRect.Width / hsRect.Height);
 			var posX = (int)Helper.GetScaledXPos(0.92, hsRect.Width, ratio);
-			var startY = 71.0/768.0 * hsRect.Height;
-			var strideY = 29.0/768.0 * hsRect.Height;
+			var startY = 71.0 / 768.0 * hsRect.Height;
+			var strideY = 29.0 / 768.0 * hsRect.Height;
 			int width = (int)Math.Round(hsRect.Width * xScale);
 			int height = (int)Math.Round(hsRect.Height * yScale);
 
 			for(var i = 0; i < Math.Min(numVisibleCards, deck.Cards.Count); i++)
 			{
 				var posY = (int)(startY + strideY * i);
-				var capture = Helper.CaptureHearthstone(new System.Drawing.Point(posX, posY), width, height, hsHandle);
+				var capture = Helper.CaptureHearthstone(new Point(posX, posY), width, height, hsHandle);
 				if(capture != null)
 				{
 					var yellowPixels = 0;
@@ -364,10 +361,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				const int scrollClicksPerCard = 4;
 				const int scrollDistance = 120;
-				var clientPoint = new System.Drawing.Point(posX, (int)startY);
+				var clientPoint = new Point(posX, (int)startY);
 				var previousPos = System.Windows.Forms.Cursor.Position;
 				User32.ClientToScreen(hsHandle, ref clientPoint);
-				System.Windows.Forms.Cursor.Position = new System.Drawing.Point(clientPoint.X, clientPoint.Y);
+				System.Windows.Forms.Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
 				for(int j = 0; j < scrollClicksPerCard * (deck.Cards.Count - numVisibleCards); j++)
 				{
 					User32.mouse_event((uint)User32.MouseEventFlags.Wheel, 0, 0, -scrollDistance, UIntPtr.Zero);
@@ -378,10 +375,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				var remainingCards = deck.Cards.Count - numVisibleCards;
 				startY = 76.0 / 768.0 * hsRect.Height + (numVisibleCards - remainingCards) * strideY;
-                for(int i = 0; i < remainingCards ; i++)
+				for(int i = 0; i < remainingCards; i++)
 				{
 					var posY = (int)(startY + strideY * i);
-					var capture = Helper.CaptureHearthstone(new System.Drawing.Point(posX, posY), width, height, hsHandle);
+					var capture = Helper.CaptureHearthstone(new Point(posX, posY), width, height, hsHandle);
 					if(capture != null)
 					{
 						var yellowPixels = 0;
@@ -397,12 +394,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 						//Console.WriteLine(yellowPixels + " of " + width * height + " - " + yellowPixels / (double)(width * height));
 						//capture.Save("arenadeckimages/" + i + 21 + ".png");
 						var yellowPixelRatio = yellowPixels / (double)(width * height);
-                        if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
+						if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
 							deck.Cards[numVisibleCards + i].Count = 2;
 					}
 				}
 
-				System.Windows.Forms.Cursor.Position = new System.Drawing.Point(clientPoint.X, clientPoint.Y);
+				System.Windows.Forms.Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
 				for(int j = 0; j < scrollClicksPerCard * (deck.Cards.Count - 21); j++)
 				{
 					User32.mouse_event((uint)User32.MouseEventFlags.Wheel, 0, 0, scrollDistance, UIntPtr.Zero);
@@ -432,9 +429,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					var result =
 						await
 						this.ShowMessageAsync("Setting up",
-											  "This functionality requires a quick semi-automatic setup. HDT needs to know whichs cards on the first page for each class exist as golden and normal.\n\nYou may have to run the setup again if those cards change: 'options > tracker > importing'",
-											  MessageDialogStyle.AffirmativeAndNegative,
-											  new MessageDialogs.Settings { AffirmativeButtonText = "start", NegativeButtonText = "cancel" });
+						                      "This functionality requires a quick semi-automatic setup. HDT needs to know whichs cards on the first page for each class exist as golden and normal.\n\nYou may have to run the setup again if those cards change: 'options > tracker > importing'",
+						                      MessageDialogStyle.AffirmativeAndNegative,
+						                      new MessageDialogs.Settings {AffirmativeButtonText = "start", NegativeButtonText = "cancel"});
 					if(result != MessageDialogResult.Affirmative)
 						return;
 					await Helper.SetupConstructedImporting(Core.Game);
@@ -443,7 +440,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				await
 					this.ShowMessageAsync("How this works:",
-										  "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2) Open \"My Collection\" and open the deck you want to import (do not edit the deck at this point)\n\n3) Go straight back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2. There may issues importing druid cards that exist as normal and golden on your first page.\n\nYou can see this information again in 'options > tracker > importing'");
+					                      "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2) Open \"My Collection\" and open the deck you want to import (do not edit the deck at this point)\n\n3) Go straight back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2. There may issues importing druid cards that exist as normal and golden on your first page.\n\nYou can see this information again in 'options > tracker > importing'");
 				if(Core.Game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
 				   && Core.Game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
 					return;
@@ -459,9 +456,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var legendary = Core.Game.PossibleConstructedCards.Where(c => c.Rarity == Rarity.Legendary).ToList();
 			var remaining =
 				Core.Game.PossibleConstructedCards.Where(
-													c =>
-													c.Rarity != Rarity.Legendary && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class))
-					.ToList();
+				                                         c =>
+				                                         c.Rarity != Rarity.Legendary
+				                                         && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class)).ToList();
 			var count = Math.Abs(30 - (2 * remaining.Count + legendary.Count)) < Math.Abs(30 - (remaining.Count + legendary.Count)) ? 2 : 1;
 			foreach(var card in Core.Game.PossibleConstructedCards)
 			{

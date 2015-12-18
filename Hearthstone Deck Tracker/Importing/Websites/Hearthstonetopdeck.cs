@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿#region
+
+using System;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using Hearthstone_Deck_Tracker.Hearthstone;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Importing.Websites
 {
@@ -18,7 +19,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				var doc = await ImportingHelper.GetHtmlDoc(url);
 
 				var deck = new Deck();
-				deck.Name = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("/html/body/div/div[4]/div/div[2]/div/div[1]/h3").InnerText.Trim());
+				deck.Name =
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("/html/body/div/div[4]/div/div[2]/div/div[1]/h3").InnerText.Trim());
 
 				var cards = doc.DocumentNode.SelectNodes("//div[contains(@class, 'cardname')]/span");
 
@@ -34,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 						{
 							DeckList.Instance.AllTags.Add(decktype);
 							DeckList.Save();
-							if(Helper.MainWindow != null)  // to avoid errors when running tests
+							if(Helper.MainWindow != null) // to avoid errors when running tests
 								Core.MainWindow.ReloadTags();
 						}
 						deck.Tags.Add(decktype);
@@ -61,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Logger.WriteLine(e.ToString(), "DeckImporter");
 				return null;

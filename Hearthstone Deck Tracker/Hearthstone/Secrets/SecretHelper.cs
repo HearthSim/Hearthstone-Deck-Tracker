@@ -10,18 +10,15 @@ namespace Hearthstone_Deck_Tracker
 {
 	public class SecretHelper
 	{
-
 		public SecretHelper(HeroClass heroClass, int id, int turnPlayed)
 		{
 			Id = id;
-            TurnPlayed = turnPlayed;
+			TurnPlayed = turnPlayed;
 			HeroClass = heroClass;
 			PossibleSecrets = new Dictionary<string, bool>();
 
-			foreach (var cardId in GetSecretIds(heroClass))
-			{
+			foreach(var cardId in GetSecretIds(heroClass))
 				PossibleSecrets[cardId] = true;
-			}
 		}
 
 		public int Id { get; private set; }

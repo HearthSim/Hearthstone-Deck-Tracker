@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Garlic;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
@@ -27,7 +28,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(e.Exception is MissingMethodException || e.Exception is TypeLoadException)
 			{
-				var plugin = Plugins.PluginManager.Instance.Plugins.FirstOrDefault(p => new FileInfo(p.FileName).Name.Replace(".dll", "") == e.Exception.Source);
+				var plugin =
+					PluginManager.Instance.Plugins.FirstOrDefault(p => new FileInfo(p.FileName).Name.Replace(".dll", "") == e.Exception.Source);
 				if(plugin != null)
 				{
 					plugin.IsEnabled = false;
@@ -40,7 +42,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var stackTrace = e.Exception.StackTrace.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-			Analytics.Analytics.TrackEvent(e.Exception.GetType().ToString().Split('.').Last(), stackTrace.Length > 0 ? stackTrace[0] : "", stackTrace.Length > 1 ? stackTrace[1] : "");
+			Analytics.Analytics.TrackEvent(e.Exception.GetType().ToString().Split('.').Last(), stackTrace.Length > 0 ? stackTrace[0] : "",
+			                               stackTrace.Length > 1 ? stackTrace[1] : "");
 #if (!DEBUG)
 			var date = DateTime.Now;
 			var fileName = "Crash Reports\\"
@@ -65,10 +68,10 @@ namespace Hearthstone_Deck_Tracker
 #endif
 		}
 
-	    private void App_OnStartup(object sender, StartupEventArgs e)
-        {
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
-            Core.Initialize();
-        }
+		private void App_OnStartup(object sender, StartupEventArgs e)
+		{
+			ShutdownMode = ShutdownMode.OnExplicitShutdown;
+			Core.Initialize();
+		}
 	}
 }

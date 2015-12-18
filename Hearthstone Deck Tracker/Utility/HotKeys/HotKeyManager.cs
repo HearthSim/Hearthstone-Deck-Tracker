@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Forms;
 
 #endregion
 
@@ -13,17 +12,20 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 	public class HotKeyManager
 	{
 		private static readonly KeyboardHook KeyboardHook = new KeyboardHook();
-		private static readonly Dictionary<HotKey, int> _hotKeyIds = new Dictionary<HotKey, int>(); 
+		private static readonly Dictionary<HotKey, int> _hotKeyIds = new Dictionary<HotKey, int>();
 		private static readonly Dictionary<HotKey, Action> _registeredHotKeys = new Dictionary<HotKey, Action>();
-		private static readonly ObservableCollection<KeyValuePair<HotKey, string>> _registeredHotKeysInfo = new ObservableCollection<KeyValuePair<HotKey, string>>();
-		public static ObservableCollection<KeyValuePair<HotKey, string>> RegisteredHotKeysInfo
-		{
-			get { return _registeredHotKeysInfo; }
-		}
+
+		private static readonly ObservableCollection<KeyValuePair<HotKey, string>> _registeredHotKeysInfo =
+			new ObservableCollection<KeyValuePair<HotKey, string>>();
 
 		static HotKeyManager()
 		{
 			KeyboardHook.KeyPressed += KeyboardHookOnKeyPressed;
+		}
+
+		public static ObservableCollection<KeyValuePair<HotKey, string>> RegisteredHotKeysInfo
+		{
+			get { return _registeredHotKeysInfo; }
 		}
 
 		public static bool RegisterHotkey(HotKey hotKey, Action action, string name)

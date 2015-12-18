@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.API
 					Logger.WriteLine(string.Format("Warning: Invoking action{0} took {1} ms.", GetInfo(plugin), sw.ElapsedMilliseconds),
 					                 "ActionListExecution");
 #if(!DEBUG)
-					//remove.Add(action);
+	//remove.Add(action);
 #endif
 				}
 			}
@@ -100,7 +100,7 @@ namespace Hearthstone_Deck_Tracker.API
 					Logger.WriteLine(string.Format("Warning: Invoking action{0} took {1} ms.", GetInfo(plugin), sw.ElapsedMilliseconds),
 					                 "ActionListExecution");
 #if(!DEBUG)
-					//remove.Add(action);
+	//remove.Add(action);
 #endif
 				}
 			}

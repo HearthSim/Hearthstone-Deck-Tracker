@@ -520,11 +520,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 							SelectClass(heroClass);
 					}
 
-					DeckType deckType = (DeckType) this.ListViewDeckType.SelectedIndex;
-					if (deckType != DeckType.All && deck.IsArenaDeck != (deckType == DeckType.Arena))
-					{
+					DeckType deckType = (DeckType)ListViewDeckType.SelectedIndex;
+					if(deckType != DeckType.All && deck.IsArenaDeck != (deckType == DeckType.Arena))
 						SelectDeckType(DeckType.All);
-					}
 
 					UpdateDecks();
 					dpi = _displayedDecks.FirstOrDefault(x => Equals(x.Deck, deck));
@@ -670,7 +668,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				                            ? Visibility.Collapsed : Visibility.Visible;
 			MenuItemOpenHearthStats.Visibility = selectedDecks.First().HasHearthStatsId ? Visibility.Visible : Visibility.Collapsed;
 			MenuItemUseDeck.Visibility =
-				SeparatorUseDeck.Visibility = selectedDecks.First().Equals(DeckList.Instance.ActiveDeck) ? Visibility.Collapsed : Visibility.Visible;
+				SeparatorUseDeck.Visibility =
+				selectedDecks.First().Equals(DeckList.Instance.ActiveDeck) ? Visibility.Collapsed : Visibility.Visible;
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e)

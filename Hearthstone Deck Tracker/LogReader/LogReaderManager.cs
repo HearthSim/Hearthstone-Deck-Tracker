@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Handlers;
 
@@ -81,7 +82,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static DateTime GetStartingPoint()
 		{
-			var powerEntry = _powerLogReader.FindEntryPoint(new [] {"GameState.DebugPrintPower() - CREATE_GAME", "tag=GOLD_REWARD_STATE", "End Spectator" });
+			var powerEntry =
+				_powerLogReader.FindEntryPoint(new[] {"GameState.DebugPrintPower() - CREATE_GAME", "tag=GOLD_REWARD_STATE", "End Spectator"});
 			var bobEntry = _bobLogReader.FindEntryPoint("legend rank");
 			return powerEntry > bobEntry ? powerEntry : bobEntry;
 		}
@@ -142,23 +144,23 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						case "Power":
 							GameV2.AddHSLogLine(line.Line);
 							PowerLineHandler.Handle(line.Line, _gameState, _game);
-							API.LogEvents.OnPowerLogLine.Execute(line.Line);
+							LogEvents.OnPowerLogLine.Execute(line.Line);
 							break;
 						case "Asset":
 							AssetHandler.Handle(line.Line, _gameState, _game);
-							API.LogEvents.OnAssetLogLine.Execute(line.Line);
+							LogEvents.OnAssetLogLine.Execute(line.Line);
 							break;
 						case "Bob":
 							BobHandler.Handle(line.Line, _gameState, _game);
-                            API.LogEvents.OnBobLogLine.Execute(line.Line);
+							LogEvents.OnBobLogLine.Execute(line.Line);
 							break;
 						case "Rachelle":
 							RachelleHandler.Handle(line.Line, _gameState, _game);
-							API.LogEvents.OnRachelleLogLine.Execute(line.Line);
+							LogEvents.OnRachelleLogLine.Execute(line.Line);
 							break;
 						case "Arena":
 							ArenaHandler.Handle(line.Line, _gameState, _game);
-							API.LogEvents.OnArenaLogLine.Execute(line.Line);
+							LogEvents.OnArenaLogLine.Execute(line.Line);
 							break;
 						case "LoadingScreen":
 							LoadingScreenHandler.Handle(line.Line, _gameState, _game);

@@ -2,10 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media.Imaging;
-using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
@@ -87,9 +85,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			get
 			{
 				var packs = _deck.ArenaReward.Packs.Where(x => x != ArenaRewardPacks.None).ToList();
-				return packs.Any()
-					       ? packs.Select(x => EnumDescriptionConverter.GetDescription(x))
-					              .Aggregate((c, n) => c + ", " + n) : "None";
+				return packs.Any() ? packs.Select(x => EnumDescriptionConverter.GetDescription(x)).Aggregate((c, n) => c + ", " + n) : "None";
 			}
 		}
 

@@ -92,12 +92,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var saveOperation = await this.ShowScreenshotUploadSelectionDialog();
 				var tmpFile = new FileInfo(Path.Combine(Config.Instance.DataDir, string.Format("tmp{0}.png", DateTime.Now.ToFileTime())));
 				var fileName = saveOperation.SaveLocal
-								   ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(proposedFileName), "png") : tmpFile.FullName;
+					               ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(proposedFileName), "png") : tmpFile.FullName;
 				if(fileName != null)
 				{
 					string imgurUrl = null;
-					using (var ms = new MemoryStream())
-					using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+					using(var ms = new MemoryStream())
+					using(var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
 					{
 						pngEncoder.Save(ms);
 						ms.WriteTo(fs);
@@ -124,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					{
 						tmpFile.Delete();
 					}
-					catch (Exception ex)
+					catch(Exception ex)
 					{
 						Logger.WriteLine(ex.ToString(), "ExportScreenshot");
 					}
@@ -188,8 +188,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var names =
 					deck.GetSelectedDeckVersion()
-						.Cards.ToSortedCardList().Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
-						.Aggregate((c, n) => c + Environment.NewLine + n);
+					    .Cards.ToSortedCardList()
+					    .Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
+					    .Aggregate((c, n) => c + Environment.NewLine + n);
 				Clipboard.SetText(names);
 				this.ShowMessage("", "copied names to clipboard");
 				Logger.WriteLine("Copied " + deck.GetDeckInfo() + " names to clipboard", "Export");

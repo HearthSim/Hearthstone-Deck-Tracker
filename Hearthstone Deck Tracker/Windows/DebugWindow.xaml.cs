@@ -3,7 +3,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,7 +11,6 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 
 #endregion
@@ -25,9 +23,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public partial class DebugWindow : Window
 	{
 		private readonly GameV2 _game;
+		private readonly List<string> _expanded = new List<string>();
 		private List<object> _previous = new List<object>();
 		private bool _update;
-		private List<string> _expanded = new List<string>();
 
 		public DebugWindow(GameV2 game)
 		{
@@ -43,13 +41,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			while(_update)
 			{
 				if(TabControlDebug.SelectedIndex == 0)
-				{
 					UpdateCards();
-				}
 				else if(TabControlDebug.SelectedIndex == 2)
-				{
 					UpdateBoardDamage();
-				}
 				else
 				{
 					switch((string)ComboBoxData.SelectedValue)
@@ -92,9 +86,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				tvi.Expanded += OnItemExpanded;
 				tvi.Collapsed += OnItemCollapsed;
 				foreach(var item in collection.Collection)
-				{
 					tvi.Items.Add(item.ToString());
-				}
 				TreeViewCards.Items.Add(tvi);
 			}
 		}
@@ -104,20 +96,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var board = new BoardState();
 			PlayerDataGrid.ItemsSource = board.Player.Cards;
 			OpponentDataGrid.ItemsSource = board.Opponent.Cards;
-			PlayerHeader.Text = "Player " + board.Player.ToString();
-			OpponentHeader.Text = "Opponent " + board.Opponent.ToString();
+			PlayerHeader.Text = "Player " + board.Player;
+			OpponentHeader.Text = "Opponent " + board.Opponent;
 			DamageView.UpdateLayout();
-		}
-
-		public class CollectionItem
-		{
-			public CollectionItem(List<CardEntity> collection, string name)
-			{
-				Collection = collection;
-				Name = name;
-			}
-			public List<CardEntity> Collection { get; set; }
-			public string Name { get; set; }
 		}
 
 		private void FilterEntities()
@@ -248,6 +229,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var tvi = item as TreeViewItem;
 				tvi.IsExpanded = false;
 			}
+		}
+
+		public class CollectionItem
+		{
+			public CollectionItem(List<CardEntity> collection, string name)
+			{
+				Collection = collection;
+				Name = name;
+			}
+
+			public List<CardEntity> Collection { get; set; }
+			public string Name { get; set; }
 		}
 	}
 }

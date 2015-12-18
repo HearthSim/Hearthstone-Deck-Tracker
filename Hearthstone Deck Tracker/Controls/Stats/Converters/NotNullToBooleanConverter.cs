@@ -1,6 +1,10 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Globalization;
 using System.Windows.Data;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Converters
 {

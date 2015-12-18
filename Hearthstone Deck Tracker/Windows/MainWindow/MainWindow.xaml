@@ -396,7 +396,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="10,6,10,-4" Grid.Row="0" Visibility="Visible" Style="{StaticResource AccentedSquareButtonStyle}">
-                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="START LAUNCHER / HEARTHSTONE"></TextBlock>
+                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="START LAUNCHER / HEARTHSTONE" />
                 </Button>
                 <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="1" Visibility="Collapsed">
                     <DockPanel>

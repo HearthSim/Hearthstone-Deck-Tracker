@@ -22,14 +22,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public static class MessageDialogs
 	{
-		public class Settings : MetroDialogSettings
-		{
-			public Settings() : base()
-			{
-				AnimateHide = AnimateShow = Config.Instance.UseAnimations;
-			}
-		}
-
 		public static async Task<MessageDialogResult> ShowDeleteGameStatsMessage(this MetroWindow window, GameStats stats)
 		{
 			var settings = new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
@@ -180,8 +172,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			message += string.Format("\n\nYou need {0} dust {1}{2}to craft the missing cards.", totalDust, nax, promo);
 			await
-				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative,
-				                        new Settings {AffirmativeButtonText = "OK"});
+				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
 		}
 
 		public static async Task<bool> ShowAddGameDialog(this MetroWindow window, Deck deck)
@@ -212,9 +203,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(game == null)
 				return false;
 			var dialog = new AddGameDialog(game);
-			await
-				window.ShowMetroDialogAsync(dialog,
-													   new MetroDialogSettings { AffirmativeButtonText = "save", NegativeButtonText = "cancel" });
+			await window.ShowMetroDialogAsync(dialog, new MetroDialogSettings {AffirmativeButtonText = "save", NegativeButtonText = "cancel"});
 			var result = await dialog.WaitForButtonPressAsync();
 			await window.HideMetroDialogAsync(dialog);
 			if(result == null)
@@ -242,12 +231,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var dialogResult =
 				await
 				window.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
-									  MessageDialogStyle.AffirmativeAndNegative,
-									  new MetroDialogSettings { AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)" });
+				                        MessageDialogStyle.AffirmativeAndNegative,
+				                        new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
 			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
 			Core.MainWindow.MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
 			Config.Save();
 			return Config.Instance.HearthStatsAutoDeleteMatches != null && Config.Instance.HearthStatsAutoDeleteMatches.Value;
+		}
+
+		public class Settings : MetroDialogSettings
+		{
+			public Settings()
+			{
+				AnimateHide = AnimateShow = Config.Instance.UseAnimations;
+			}
 		}
 	}
 

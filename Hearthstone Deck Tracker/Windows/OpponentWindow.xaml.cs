@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
@@ -26,13 +25,15 @@ namespace Hearthstone_Deck_Tracker
 	public partial class OpponentWindow : INotifyPropertyChanged
 	{
 		public static double Scaling = 1.0;
-	    private readonly GameV2 _game;
+		private readonly GameV2 _game;
 		private bool _appIsClosing;
+
+		private DateTime _lastOpponentUpdateReqest = DateTime.MinValue;
 
 		public OpponentWindow(GameV2 game)
 		{
 			InitializeComponent();
-		    _game = game;
+			_game = game;
 			//ListViewOpponent.ItemsSource = opponentDeck;
 			//opponentDeck.CollectionChanged += OpponentDeckOnCollectionChanged;
 			Height = Config.Instance.OpponentWindowHeight;
@@ -67,9 +68,12 @@ namespace Hearthstone_Deck_Tracker
 			get { return Config.Instance.WindowCardToolTips; }
 		}
 
+		public event PropertyChangedEventHandler PropertyChanged;
+
 		public void Update()
 		{
-			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
+			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && _game.IsUsingPremade
+				                               ? Visibility.Visible : Visibility.Collapsed;
 			CanvasOpponentChance.Visibility = Config.Instance.HideOpponentDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			CanvasOpponentCount.Visibility = Config.Instance.HideOpponentCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
@@ -81,7 +85,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var winsVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == _game.Opponent.Class);
 				var lossesVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == _game.Opponent.Class);
-				var percent = (winsVs + lossesVs) > 0 ? Math.Round(winsVs * 100.0 / (winsVs + lossesVs), 0).ToString(CultureInfo.InvariantCulture) : "-";
+				var percent = (winsVs + lossesVs) > 0
+					              ? Math.Round(winsVs * 100.0 / (winsVs + lossesVs), 0).ToString(CultureInfo.InvariantCulture) : "-";
 				LblWinRateAgainst.Text = string.Format("VS {0}: {1} - {2} ({3}%)", _game.Opponent.Class, winsVs, lossesVs, percent);
 			}
 		}
@@ -151,7 +156,8 @@ namespace Hearthstone_Deck_Tracker
 		private void Scale()
 		{
 			const int offsetToMakeSureGraphicsAreNotClipped = 40;
-			var allLabelsHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + LblWinRateAgainst.ActualHeight + LblOpponentFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
+			var allLabelsHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + LblWinRateAgainst.ActualHeight
+			                      + LblOpponentFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
 			if(((Height - allLabelsHeight) - (ListViewOpponent.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
 			{
 				var previousScaling = Scaling;
@@ -209,12 +215,11 @@ namespace Hearthstone_Deck_Tracker
 			else
 			{
 				StackPanelMain.Children.Add(ListViewOpponent);
-                StackPanelMain.Children.Add(CanvasOpponentChance);
-                StackPanelMain.Children.Add(CanvasOpponentCount);
-            }
+				StackPanelMain.Children.Add(CanvasOpponentChance);
+				StackPanelMain.Children.Add(CanvasOpponentCount);
+			}
 		}
 
-		private DateTime _lastOpponentUpdateReqest = DateTime.MinValue;
 		public async void UpdateOpponentCards()
 		{
 			_lastOpponentUpdateReqest = DateTime.Now;
@@ -224,8 +229,6 @@ namespace Hearthstone_Deck_Tracker
 			OnPropertyChanged("OpponentDeck");
 			Scale();
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
