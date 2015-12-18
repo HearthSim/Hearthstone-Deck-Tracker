@@ -211,6 +211,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public bool OpponentSuccess
+		{
+			get
+			{
+				return Opponent >= 0;
+			}
+		}
+
 		public RankResult()
 		{
 			Player = -1;

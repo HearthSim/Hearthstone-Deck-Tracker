@@ -317,7 +317,7 @@ namespace Hearthstone_Deck_Tracker
 				    Core.Overlay.ShowFriendsListWarning(true);
 		    }
 			Core.Overlay.ShowFriendsListWarning(false);
-		    var capture = Helper.CaptureHearthstone(new Point(0, 0), rect.Width / 3, rect.Height);
+		    var capture = Helper.CaptureHearthstone(new Point(0, 0), rect.Width, rect.Height);
 		    if(reEnableOverlay)
 			    Core.Overlay.ShowOverlay(true);
 
@@ -336,6 +336,17 @@ namespace Hearthstone_Deck_Tracker
 					    _game.CurrentGameStats.OpponentRank = match.Opponent;
 			    }
 		    }
+			else if(match.OpponentSuccess)
+			{
+				Logger.WriteLine(string.Format("Player rank detection failed. Using opponent rank instead. Player={0}, Opponent={1}", match.Player, match.Opponent),
+								 "GameEventHandler");
+				SetGameMode(GameMode.Ranked);
+				if(_game.CurrentGameStats != null)
+				{
+					_game.CurrentGameStats.GameMode = GameMode.Ranked;
+					_game.CurrentGameStats.Rank = match.Opponent;
+				}
+			}
 		    else
 			    Logger.WriteLine("No ranks were detected.", "GameEventHandler");
 		    _rankDetectionTries++;
