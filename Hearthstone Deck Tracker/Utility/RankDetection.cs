@@ -105,7 +105,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 			Bitmap opponent = CropRect(scaled, opponentRect);
 			Bitmap player = CropRect(scaled, playerRect);
-			player.Save("D:\\player_14.png");
 
 			return new RankCapture(player, opponent);
 		}
