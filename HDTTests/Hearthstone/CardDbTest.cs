@@ -45,6 +45,20 @@ namespace HDTTests.Hearthstone
 		}
 
 		[TestMethod]
+		public void GetFromName_CollectibleByDefault()
+		{
+			var card = Database.GetCardFromName("Baron Geddon");
+			Assert.AreEqual("EX1_249", card.Id);
+		}
+
+		[TestMethod]
+		public void GetFromName_AllWithParam()
+		{
+			var card = Database.GetCardFromName("Baron Geddon", collectible: false);
+			Assert.IsTrue(card.Id.Contains("BRMA05"));
+		}
+
+		[TestMethod]
 		public void TestHeroSkins()
 		{
 			var Alleria = Database.GetHeroNameFromId("HERO_05a");

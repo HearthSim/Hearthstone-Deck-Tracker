@@ -25,12 +25,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return new Card(cardId, null, Rarity.Free, "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
-		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true)
+		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true, bool collectible = true)
 		{
 			Language lang = Language.enUS;
 			if(localized)
 				Enum.TryParse(Config.Instance.SelectedLanguage, out lang);
-			var card = Cards.GetFromName(name, lang, false);
+			var card = Cards.GetFromName(name, lang, collectible);
 			if(card != null)
 				return new Card(card);
 			if(showErrorMessage)
