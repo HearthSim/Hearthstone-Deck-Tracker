@@ -3,7 +3,7 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-                      Icon="/HearthstoneDeckTracker;component/Images/HearthstoneDeckTracker.ico"
+                      Icon="{StaticResource AppIcon}"
                       Title="Stats" Height="500" Width="600"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" SizeChanged="MetroWindow_SizeChanged">
     <controls:MetroWindow.IconTemplate>

@@ -13,6 +13,9 @@
                     <Color x:Key="GrayTextColor2">#FFAAAAAA</Color>
                     <SolidColorBrush x:Key="GrayTextColorBrush" Color="#FF7F7F7F"/>
                 </ResourceDictionary>
+                <ResourceDictionary>
+                    <ImageSource x:Key="AppIcon">pack://siteoforigin:,,,/Images/HearthstoneDeckTracker.ico</ImageSource>
+                </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />

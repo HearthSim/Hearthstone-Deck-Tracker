@@ -4,7 +4,7 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
                       BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
-                      Icon="/HearthstoneDeckTracker;component/Images/HearthstoneDeckTracker.ico"
+                      Icon="{StaticResource AppIcon}"
                       ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Topmost="True"
                       Title="Hearthstone Deck Tracker" Height="400" Width="300">
     <controls:MetroWindow.Resources>
