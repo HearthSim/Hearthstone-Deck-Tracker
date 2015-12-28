@@ -110,9 +110,13 @@ namespace Hearthstone_Deck_Tracker
 					if(sb.ToString().Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
 					{
 						_hsWindow = process.MainWindowHandle;
-						break;
+						_lastCheck = DateTime.Now;
+						return _hsWindow;
 					}
 				}
+
+			_lastCheck = DateTime.Now;
+			return IntPtr.Zero;
 			}
 			else
 			{
