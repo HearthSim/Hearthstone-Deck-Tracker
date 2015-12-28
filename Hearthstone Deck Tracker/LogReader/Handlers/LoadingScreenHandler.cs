@@ -15,9 +15,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var match = HsLogReaderConstants.GameModeRegex.Match(logLine);
 			if(match.Success)
 			{
-				var newMode = GetGameMode(match.Groups["curr"].Value) ?? GetGameMode(match.Groups["prev"].Value);
+				var prev = match.Groups["prev"].Value;
+				var newMode = GetGameMode(match.Groups["curr"].Value) ?? GetGameMode(prev);
 				if(newMode.HasValue && !(game.CurrentGameMode == GameMode.Ranked && newMode.Value == GameMode.Casual))
 					game.CurrentGameMode = newMode.Value;
+				if(prev == "GAMEPLAY")
+					gameState.GameHandler.HandleInMenu();
 			}
 		}
 
