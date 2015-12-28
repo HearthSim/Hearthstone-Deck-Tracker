@@ -32,7 +32,7 @@ namespace HDTTests.Hearthstone
 		public void Hearthpwn()
 		{
 			Deck expected = CreateDeck();
-			Deck found = DeckImporter.Import(@"http://www.hearthpwn.com/decks/274631-senfglas-1-legend-grim-patron-warrior-1074").Result;
+			Deck found = DeckImporter.Import(@"http://www.hearthpwn.com/decks/267064-grim-patron-senfglas").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 

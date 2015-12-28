@@ -9,7 +9,6 @@ namespace HDTTests.BoardDamage
 	public class PlayerBoardTest
 	{
 		private List<CardEntity> _cards;
-		private List<CardEntity> _exceptions;
 
 		[TestInitialize]
 		public void Setup()
