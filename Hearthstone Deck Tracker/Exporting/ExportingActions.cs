@@ -79,6 +79,9 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				return -1;
 			}
 
+			if(Config.Instance.ExportForceClear)
+				await ClearSearchBox(info.HsHandle, info.SearchBoxPos);
+
 			await MouseActions.ClickOnPoint(info.HsHandle, info.SearchBoxPos);
 
 			if(Config.Instance.ExportPasteClipboard)
@@ -90,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				SendKeys.SendWait(ExportingHelper.GetSearchString(card));
 			SendKeys.SendWait("{ENTER}");
 
-			Logger.WriteLine("try to export card: " + card.Name, "DeckExporter");
+			Logger.WriteLine("try to export card: " + card, "DeckExporter");
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
 			if(await ExportingHelper.CheckForSpecialCases(card, info.CardPosX + 50, info.Card2PosX + 50, info.CardPosY + 50, info.HsHandle))

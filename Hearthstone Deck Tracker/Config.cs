@@ -226,6 +226,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.13)]
 		public double ExportClearY = 0.13;
 
+		[DefaultValue(false)]
+		public bool ExportForceClear = false;
+
 		[DefaultValue(0.85)]
 		public double ExportNameDeckX = 0.85;
 

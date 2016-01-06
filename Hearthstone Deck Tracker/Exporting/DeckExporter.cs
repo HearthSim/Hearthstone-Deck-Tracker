@@ -60,13 +60,13 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		{
 			Logger.WriteLine(
 			                 string.Format(
-			                               "HsHandle={0} HsRect={1} Ratio={2} SearchBoxPosX={3} SearchBoxPosY={4} CardPosX={5} Card2PosX={6} CardPosY={7} ExportPasteClipboard={8} ExportNameDeckX={9} ExportNameDeckY={10} PrioritizeGolden={11} DeckExportDelay={12} EnableExportAutoFilter={13} ExportZeroButtonX={14} ExportZeroButtonY={15}",
+			                               "HsHandle={0} HsRect={1} Ratio={2} SearchBoxPosX={3} SearchBoxPosY={4} CardPosX={5} Card2PosX={6} CardPosY={7} ExportPasteClipboard={8} ExportNameDeckX={9} ExportNameDeckY={10} PrioritizeGolden={11} DeckExportDelay={12} EnableExportAutoFilter={13} ExportZeroButtonX={14} ExportZeroButtonY={15} ForceClear={16}",
 			                               info.HsHandle, info.HsRect, info.Ratio, Config.Instance.ExportSearchBoxX,
 			                               Config.Instance.ExportSearchBoxY, Config.Instance.ExportCard1X, Config.Instance.ExportCard2X,
 			                               Config.Instance.ExportCardsY, Config.Instance.ExportPasteClipboard, Config.Instance.ExportNameDeckX,
 			                               Config.Instance.ExportNameDeckY, Config.Instance.PrioritizeGolden, Config.Instance.DeckExportDelay,
 			                               Config.Instance.EnableExportAutoFilter, Config.Instance.ExportZeroButtonX,
-			                               Config.Instance.ExportZeroButtonY), "DeckExporter");
+			                               Config.Instance.ExportZeroButtonY, Config.Instance.ExportForceClear), "DeckExporter");
 		}
 	}
 }
