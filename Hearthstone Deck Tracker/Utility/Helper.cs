@@ -825,8 +825,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public static bool IsWindows10()
 		{
-			var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
-			return reg != null && ((string)reg.GetValue("ProductName")).Contains("Windows 10");
+			try
+			{
+				var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+				return reg != null && ((string)reg.GetValue("ProductName")).Contains("Windows 10");
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error getting windows version information. " + ex);
+				return false;
+			}
 		}
 	}
 }
