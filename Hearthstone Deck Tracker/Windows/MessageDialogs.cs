@@ -156,7 +156,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var message = "The following cards were not found:\n";
 			var totalDust = 0;
 			var promo = "";
+			var reward = "";
 			var nax = "";
+			var tbm = "";
+			var loe = "";
 			foreach(var card in deck.MissingCards)
 			{
 				message += "\n• " + card.LocalizedName;
@@ -167,10 +170,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 					nax = "and the Naxxramas DLC ";
 				else if(card.Set.Equals("PROMOTION", StringComparison.CurrentCultureIgnoreCase))
 					promo = "and Promotion cards ";
+				else if(card.Set.Equals("REWARD", StringComparison.CurrentCultureIgnoreCase))
+					reward = "and the Reward cards ";
+				else if(card.Set.Equals("BLACKROCK MOUNTAIN", StringComparison.CurrentCultureIgnoreCase))
+					tbm = "and the Blackrock Mountain DLC ";
+				else if(card.Set.Equals("LEAGUE OF EXPLORERS", StringComparison.CurrentCultureIgnoreCase))
+					loe = "and the League of Explorers DLC ";
 				else
 					totalDust += card.DustCost * card.Count;
 			}
-			message += string.Format("\n\nYou need {0} dust {1}{2}to craft the missing cards.", totalDust, nax, promo);
+			message += string.Format("\n\nYou need {0} dust {1}{2}{3}{4}{5}to craft the missing cards.", totalDust, nax, tbm, loe, reward, promo);
 			await
 				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
 		}
