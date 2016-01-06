@@ -16,6 +16,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			User32.ClientToScreen(wndHandle, ref clientPoint);
 
 			Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
+			Logger.WriteLine("Clicking " + Cursor.Position, "MouseActions", 1);
 
 			//mouse down
 			if(SystemInformation.MouseButtonsSwapped)

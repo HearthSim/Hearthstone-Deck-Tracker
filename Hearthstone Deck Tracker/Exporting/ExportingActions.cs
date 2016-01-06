@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				SendKeys.SendWait(ExportingHelper.GetSearchString(card));
 			SendKeys.SendWait("{ENTER}");
 
-			Logger.WriteLine("try to export card: " + card.Name, "DeckExporter", 1);
+			Logger.WriteLine("try to export card: " + card.Name, "DeckExporter");
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
 			if(await ExportingHelper.CheckForSpecialCases(card, info.CardPosX + 50, info.Card2PosX + 50, info.CardPosY + 50, info.HsHandle))
@@ -127,7 +127,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 								await MouseActions.ClickOnPoint(info.HsHandle, new Point((int)info.Card2PosX + 50, (int)info.CardPosY + 50));
 								return 0;
 							}
-							Logger.WriteLine("Only one copy found: " + card.Name, "DeckExporter", 1);
+							Logger.WriteLine("Only one copy found: " + card.Name, "DeckExporter");
 							return 1;
 						}
 
