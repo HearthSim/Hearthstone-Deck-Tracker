@@ -153,18 +153,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 					                        MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
 				return;
 			}
-			var message = "The following cards were not found:\n";
-			var totalDust = 0;
-			var promo = "";
+            var message = "The following cards were not found:\n";
+            var totalDust = 0;
+            var promo = "";
             var reward = "";
-			var nax = "";
+            var nax = "";
             var tbm = "";
             var loe = "";
-			foreach(var card in deck.MissingCards)
-			{
-				message += "\n• " + card.LocalizedName;
-				if(card.Count == 2)
-					message += " x2";
+            foreach (var card in deck.MissingCards)
+            {
+                message += "\n• " + card.LocalizedName;
+                if (card.Count == 2)
+                    message += " x2";
 
                 if (card.Set.Equals("CURSE OF NAXXRAMAS", StringComparison.CurrentCultureIgnoreCase))
                     nax = "and the Naxxramas DLC ";
@@ -178,11 +178,11 @@ namespace Hearthstone_Deck_Tracker.Windows
                     reward = "and Reward cards ";
                 else
                     totalDust += card.DustCost * card.Count;
-			}
-			message += string.Format("\n\nYou need {0} dust {1}{2}{3}{4}{5}to craft the missing cards.", totalDust, nax, tbm, loe, promo, reward);
-			await
-				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
-		}
+            }
+            message += string.Format("\n\nYou need {0} dust {1}{2}{3}{4}{5}to craft the missing cards.", totalDust, nax, tbm, loe, promo, reward);
+            await
+                window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative, new Settings { AffirmativeButtonText = "OK" });
+        }
 
 		public static async Task<bool> ShowAddGameDialog(this MetroWindow window, Deck deck)
 		{
