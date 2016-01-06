@@ -14,10 +14,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class ImportingHelper
 	{
-		public static async Task<HtmlDocument> GetHtmlDoc(string url)
-		{
-			return await GetHtmlDoc(url, null, null);
-		}
+		public static async Task<HtmlDocument> GetHtmlDoc(string url) => await GetHtmlDoc(url, null, null);
 
 		public static async Task<HtmlDocument> GetHtmlDocGzip(string url)
 		{
@@ -94,8 +91,9 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			protected override WebRequest GetWebRequest(Uri address)
 			{
-				HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
-				request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+				var request = (HttpWebRequest)base.GetWebRequest(address);
+				if(request != null)
+					request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 				return request;
 			}
 		}

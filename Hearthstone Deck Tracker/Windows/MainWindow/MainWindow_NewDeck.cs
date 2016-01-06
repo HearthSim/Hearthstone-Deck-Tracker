@@ -26,8 +26,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class MainWindow
 	{
-		internal double? _movedLeft;
-		private string editedDeckName;
+		internal double? MovedLeft;
+		private string _editedDeckName;
 
 		private void UpdateDbListView()
 		{
@@ -138,8 +138,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var result =
 					await
 					this.ShowMessageAsync("Not 30 cards",
-					                      string.Format("Deck contains {0} cards. Is this what you want to save anyway?",
-					                                    _newDeck.Cards.Sum(c => c.Count)), MessageDialogStyle.AffirmativeAndNegative, settings);
+										  $"Deck contains {_newDeck.Cards.Sum(c => c.Count)} cards. Is this what you want to save anyway?", MessageDialogStyle.AffirmativeAndNegative, settings);
 				if(result != MessageDialogResult.Affirmative)
 					return;
 			}
@@ -327,40 +326,39 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateCardCount()
 		{
-			var count = _newDeck == null ? 0 : _newDeck.Cards.Sum(c => c.Count);
+			var count = _newDeck?.Cards.Sum(c => c.Count) ?? 0;
 			TextBlockCardCount.Text = count + " / 30";
 			CardCountWarning.Visibility = count > 30 ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public void SetNewDeck(Deck deck, bool editing = false)
 		{
-			if(deck != null)
+			if(deck == null)
+				return;
+			ClearNewDeckSection();
+			SelectDeck(null, false);
+			EditingDeck = editing;
+			if(editing)
 			{
-				ClearNewDeckSection();
-				SelectDeck(null, false);
-				EditingDeck = editing;
-				if(editing)
-				{
-					editedDeckName = deck.Name;
-					_originalDeck = deck;
-				}
-				_newDeck = (Deck)deck.Clone();
-
-				_newDeck.Cards.Clear();
-				foreach(var card in deck.GetSelectedDeckVersion().Cards)
-					_newDeck.Cards.Add(card.Clone() as Card);
-				_newDeck.SelectedVersion = _newDeck.Version;
-				UpdateExpansionIcons();
-
-				ListViewDeck.ItemsSource = _newDeck.Cards;
-				Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
-				TextBoxDeckName.Text = _newDeck.Name;
-				UpdateDeckHistoryPanel(deck, !editing);
-				UpdateDbListView();
-				ExpandNewDeck();
-				UpdateCardCount();
-				ManaCurveMyDecks.SetDeck(_newDeck);
+				_editedDeckName = deck.Name;
+				_originalDeck = deck;
 			}
+			_newDeck = (Deck)deck.Clone();
+
+			_newDeck.Cards.Clear();
+			foreach(var card in deck.GetSelectedDeckVersion().Cards)
+				_newDeck.Cards.Add(card.Clone() as Card);
+			_newDeck.SelectedVersion = _newDeck.Version;
+			UpdateExpansionIcons();
+
+			ListViewDeck.ItemsSource = _newDeck.Cards;
+			Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
+			TextBoxDeckName.Text = _newDeck.Name;
+			UpdateDeckHistoryPanel(deck, !editing);
+			UpdateDbListView();
+			ExpandNewDeck();
+			UpdateCardCount();
+			ManaCurveMyDecks.SetDeck(_newDeck);
 		}
 
 		private void ExpandNewDeck()
@@ -389,10 +387,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			//move window left if opening the edit panel causes it to be outside of a screen
 			foreach(var screen in Screen.AllScreens)
 			{
-				int windowLeft = (int)Left;
-				int windowRight = (int)(Left + Width);
-				int screenLeft = screen.WorkingArea.X;
-				int screenRight = screen.WorkingArea.Right;
+				var windowLeft = (int)Left;
+				var windowRight = (int)(Left + Width);
+				var screenLeft = screen.WorkingArea.X;
+				var screenRight = screen.WorkingArea.Right;
 
 				//if the window is completely outside of this screen, just skip this screen
 				if(windowRight < screenLeft || windowLeft > screenRight)
@@ -413,7 +411,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(screenRight - (Left + Width) > 50)
 						Left = screenRight - Width;
 
-					_movedLeft = windowLeft - Left;
+					MovedLeft = windowLeft - Left;
 					break;
 				}
 			}
@@ -438,10 +436,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
 			PanelCardCount.Visibility = Visibility.Collapsed;
 
-			if(_movedLeft.HasValue)
+			if(MovedLeft.HasValue)
 			{
-				Left += _movedLeft.Value;
-				_movedLeft = null;
+				Left += MovedLeft.Value;
+				MovedLeft = null;
 			}
 		}
 
@@ -476,57 +474,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void MenuItemDashboard_OnClick(object sender, RoutedEventArgs e)
-		{
-			Process.Start(@"http://hearthstats.net/dashboards");
-		}
+		private void MenuItemDashboard_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl(@"http://hearthstats.net/dashboards");
 
 		#region UI
 
-		private void BtnNewDeckDruid_Click(object sender, RoutedEventArgs e)
-		{
-			CreateNewDeck("Druid");
-		}
-
-		private void BtnNewDeckHunter_Click(object sender, RoutedEventArgs e)
-		{
-			CreateNewDeck("Hunter");
-		}
-
-		private void BtnNewDeckMage_Click(object sender, RoutedEventArgs e)
-		{
-			CreateNewDeck("Mage");
-		}
-
-		private void BtnNewDeckPaladin_Click(object sender, RoutedEventArgs e)
-		{
-			CreateNewDeck("Paladin");
-		}
-
-		private void BtnNewDeckPriest_Click(object sender, RoutedEventArgs e)
-		{
-			CreateNewDeck("Priest");
-		}
-
-		private void BtnNewDeckRogue_Click(object sender, RoutedEventArgs e)
-		{
-			CreateNewDeck("Rogue");
-		}
-
-		private void BtnNewDeckShaman_Click(object sender, RoutedEventArgs e)
-		{
-			CreateNewDeck("Shaman");
-		}
-
-		private void BtnNewDeckWarrior_Click(object sender, RoutedEventArgs e)
-		{
-			CreateNewDeck("Warrior");
-		}
-
-		private void BtnNewDeckWarlock_Click(object sender, RoutedEventArgs e)
-		{
-			CreateNewDeck("Warlock");
-		}
+		private void BtnNewDeckDruid_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Druid");
+		private void BtnNewDeckHunter_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Hunter");
+		private void BtnNewDeckMage_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Mage");
+		private void BtnNewDeckPaladin_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Paladin");
+		private void BtnNewDeckPriest_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Priest");
+		private void BtnNewDeckRogue_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Rogue");
+		private void BtnNewDeckShaman_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Shaman");
+		private void BtnNewDeckWarrior_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Warrior");
+		private void BtnNewDeckWarlock_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Warlock");
 
 		private async void CreateNewDeck(string hero)
 		{
@@ -551,7 +511,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var tb = (TextBox)sender;
 			var name = tb.Text;
-			if(DeckList.Instance.Decks.Any(d => d.Name == name) && !(EditingDeck && name == editedDeckName))
+			if(DeckList.Instance.Decks.Any(d => d.Name == name) && !(EditingDeck && name == _editedDeckName))
 			{
 				if(DeckNameExistsWarning.Visibility == Visibility.Collapsed)
 					tb.Width -= 19;
@@ -579,16 +539,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			CloseNewDeck();
 			EditingDeck = false;
-			editedDeckName = string.Empty;
+			_editedDeckName = string.Empty;
 			var prev = DeckPickerList.SelectedDecks.FirstOrDefault();
 			SelectLastUsedDeck();
 			DeckPickerList.SelectDeck(prev);
 		}
 
-		internal void SaveDeckWithOverwriteCheck()
-		{
-			SaveDeckWithOverwriteCheck(_newDeck.Version);
-		}
+		internal void SaveDeckWithOverwriteCheck() => SaveDeckWithOverwriteCheck(_newDeck.Version);
 
 		internal void SaveDeckWithOverwriteCheck(SerializableVersion newVersion, bool saveAsNew = false)
 		{
@@ -604,7 +561,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SaveDeck(EditingDeck, newVersion);
 			DeckPickerList.UpdateArchivedClassVisibility();
 
-			editedDeckName = string.Empty;
+			_editedDeckName = string.Empty;
 		}
 
 		private void TextBoxDBFilter_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -718,21 +675,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void TextBoxDBFilter_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			UpdateDbListView();
-		}
+		private void TextBoxDBFilter_TextChanged(object sender, TextChangedEventArgs e) => UpdateDbListView();
 
-		private void BtnFilter_OnClick(object sender, RoutedEventArgs e)
-		{
-			UpdateDbListView();
-		}
+		private void BtnFilter_OnClick(object sender, RoutedEventArgs e) => UpdateDbListView();
 
 		private void AddDeckHistory()
 		{
-			if(_originalDeck == null)
-				return;
-			var currentClone = _originalDeck.Clone() as Deck;
+			var currentClone = _originalDeck?.Clone() as Deck;
 			if(currentClone == null)
 				return;
 			currentClone.Versions = new List<Deck>(); //empty ref to history

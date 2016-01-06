@@ -31,9 +31,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(Config.Instance.ShowExportingDialog)
 			{
 				var message =
-					string.Format(
-					              "1) create a new {0} deck{1}.\n\n2) leave the deck creation screen open.\n\n3) do not move your mouse or type after clicking \"export\".",
-					              deck.Class, (Config.Instance.AutoClearDeck ? " (or open an existing one to be cleared automatically)" : ""));
+					$"1) create a new {deck.Class} deck{(Config.Instance.AutoClearDeck ? " (or open an existing one to be cleared automatically)" : "")}.\n\n2) leave the deck creation screen open.\n\n3) do not move your mouse or type after clicking \"export\".";
 
 				if(deck.GetSelectedDeckVersion().Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
 				{
@@ -90,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(pngEncoder != null)
 			{
 				var saveOperation = await this.ShowScreenshotUploadSelectionDialog();
-				var tmpFile = new FileInfo(Path.Combine(Config.Instance.DataDir, string.Format("tmp{0}.png", DateTime.Now.ToFileTime())));
+				var tmpFile = new FileInfo(Path.Combine(Config.Instance.DataDir, $"tmp{DateTime.Now.ToFileTime()}.png"));
 				var fileName = saveOperation.SaveLocal
 					               ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(proposedFileName), "png") : tmpFile.FullName;
 				if(fileName != null)
@@ -137,15 +135,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
-
 			var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "xml");
-
-			if(fileName != null)
-			{
-				XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
-				await this.ShowSavedFileMessage(fileName);
-				Logger.WriteLine("Saved " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + fileName, "Export");
-			}
+			if(fileName == null)
+				return;
+			XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
+			await this.ShowSavedFileMessage(fileName);
+			Logger.WriteLine("Saved " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + fileName, "Export");
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
@@ -207,9 +202,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var url = await InputDeckURL();
 			if(url == null)
 				return;
-
 			var deck = await ImportDeckFromURL(url);
-
 			if(deck != null)
 				ExportDeck(deck);
 			else

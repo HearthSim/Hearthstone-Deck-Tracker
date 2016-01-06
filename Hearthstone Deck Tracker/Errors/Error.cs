@@ -8,8 +8,8 @@
 			Text = text;
 		}
 
-		public string Text { get; set; }
-		public string Header { get; set; }
+		public string Text { get; }
+		public string Header { get; }
 
 		public override bool Equals(object obj)
 		{
@@ -31,7 +31,7 @@
 		{
 			unchecked
 			{
-				return ((Text != null ? Text.GetHashCode() : 0) * 397) ^ (Header != null ? Header.GetHashCode() : 0);
+				return ((Text?.GetHashCode() ?? 0) * 397) ^ (Header?.GetHashCode() ?? 0);
 			}
 		}
 	}

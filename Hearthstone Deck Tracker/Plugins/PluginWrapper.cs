@@ -31,15 +31,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		public IPlugin Plugin { get; set; }
 		private MenuItem MenuItem { get; set; }
 
-		public string Name
-		{
-			get { return Plugin != null ? Plugin.Name : FileName; }
-		}
+		public string Name => Plugin != null ? Plugin.Name : FileName;
 
-		public string NameAndVersion
-		{
-			get { return Name + " " + (Plugin != null ? Plugin.Version.ToString() : ""); }
-		}
+		public string NameAndVersion => Name + " " + (Plugin?.Version.ToString() ?? "");
 
 		public bool IsEnabled
 		{
@@ -117,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 			{
-				Logger.WriteLine(string.Format("Warning: Updating {0} took {1} ms.", Name, sw.ElapsedMilliseconds), "PluginWrapper");
+				Logger.WriteLine($"Warning: Updating {Name} took {sw.ElapsedMilliseconds} ms.", "PluginWrapper");
 #if(!DEBUG)
 	//IsEnabled = false;
 #endif

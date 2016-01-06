@@ -59,14 +59,8 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		private static void LogDebugInfo(ExportingInfo info)
 		{
 			Logger.WriteLine(
-			                 string.Format(
-			                               "HsHandle={0} HsRect={1} Ratio={2} SearchBoxPosX={3} SearchBoxPosY={4} CardPosX={5} Card2PosX={6} CardPosY={7} ExportPasteClipboard={8} ExportNameDeckX={9} ExportNameDeckY={10} PrioritizeGolden={11} DeckExportDelay={12} EnableExportAutoFilter={13} ExportZeroButtonX={14} ExportZeroButtonY={15} ForceClear={16}",
-			                               info.HsHandle, info.HsRect, info.Ratio, Config.Instance.ExportSearchBoxX,
-			                               Config.Instance.ExportSearchBoxY, Config.Instance.ExportCard1X, Config.Instance.ExportCard2X,
-			                               Config.Instance.ExportCardsY, Config.Instance.ExportPasteClipboard, Config.Instance.ExportNameDeckX,
-			                               Config.Instance.ExportNameDeckY, Config.Instance.PrioritizeGolden, Config.Instance.DeckExportDelay,
-			                               Config.Instance.EnableExportAutoFilter, Config.Instance.ExportZeroButtonX,
-			                               Config.Instance.ExportZeroButtonY, Config.Instance.ExportForceClear), "DeckExporter");
+							 $"HsHandle={info.HsHandle} HsRect={info.HsRect} Ratio={info.Ratio} SearchBoxPosX={Config.Instance.ExportSearchBoxX} SearchBoxPosY={Config.Instance.ExportSearchBoxY} CardPosX={Config.Instance.ExportCard1X} Card2PosX={Config.Instance.ExportCard2X} CardPosY={Config.Instance.ExportCardsY} ExportPasteClipboard={Config.Instance.ExportPasteClipboard} ExportNameDeckX={Config.Instance.ExportNameDeckX} ExportNameDeckY={Config.Instance.ExportNameDeckY} PrioritizeGolden={Config.Instance.PrioritizeGolden} DeckExportDelay={Config.Instance.DeckExportDelay} EnableExportAutoFilter={Config.Instance.EnableExportAutoFilter} ExportZeroButtonX={Config.Instance.ExportZeroButtonX} ExportZeroButtonY={Config.Instance.ExportZeroButtonY} ForceClear={Config.Instance.ExportForceClear}",
+							 "DeckExporter");
 		}
 	}
 }

@@ -16,16 +16,12 @@ namespace Hearthstone_Deck_Tracker.Replay.Controls
 			InitializeComponent();
 		}
 
-		public Visibility EntityVisibility
-		{
-			get { return DataContext == null ? Visibility.Collapsed : Visibility.Visible; }
-		}
+		public Visibility EntityVisibility => DataContext == null ? Visibility.Collapsed : Visibility.Visible;
 
 		private void CardEntity_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			var binding = GetBindingExpression(VisibilityProperty);
-			if(binding != null)
-				binding.UpdateTarget();
+			binding?.UpdateTarget();
 		}
 	}
 }

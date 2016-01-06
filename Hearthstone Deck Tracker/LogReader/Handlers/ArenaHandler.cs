@@ -3,6 +3,7 @@
 using System;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
 
 #endregion
 
@@ -15,12 +16,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
-			var match = HsLogReaderConstants.ExistingHeroRegex.Match(logLine);
+			var match = ExistingHeroRegex.Match(logLine);
 			if(match.Success)
 				game.NewArenaDeck(match.Groups["id"].Value);
 			else
 			{
-				match = HsLogReaderConstants.ExistingCardRegex.Match(logLine);
+				match = ExistingCardRegex.Match(logLine);
 				if(match.Success)
 				{
 					try
@@ -34,34 +35,33 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				else
 				{
-					match = HsLogReaderConstants.NewChoiceRegex.Match(logLine);
-					if(match.Success)
+					match = NewChoiceRegex.Match(logLine);
+					if(!match.Success)
+						return;
+					if(Database.GetHeroNameFromId(match.Groups["id"].Value, false) != null)
+						game.NewArenaDeck(match.Groups["id"].Value);
+					else
 					{
-						if(Database.GetHeroNameFromId(match.Groups["id"].Value, false) != null)
-							game.NewArenaDeck(match.Groups["id"].Value);
-						else
+						var cardId = match.Groups["id"].Value;
+						var timeSinceLastChoice = DateTime.Now.Subtract(_lastChoice).Milliseconds;
+
+						if(_lastChoiceId == cardId && timeSinceLastChoice < 1000)
 						{
-							var cardId = match.Groups["id"].Value;
-							var timeSinceLastChoice = DateTime.Now.Subtract(_lastChoice).Milliseconds;
-
-							if(_lastChoiceId == cardId && timeSinceLastChoice < 1000)
-							{
-								Logger.WriteLine(string.Format("Card with the same ID ({0}) was chosen less {1} ms ago. Ignoring.", cardId, timeSinceLastChoice));
-								return;
-							}
-
-							try
-							{
-								game.NewArenaCard(cardId);
-							}
-							catch(Exception ex)
-							{
-								Logger.WriteLine("Error adding arena card: " + ex, "ArenaHandler");
-							}
-
-							_lastChoice = DateTime.Now;
-							_lastChoiceId = cardId;
+							Logger.WriteLine($"Card with the same ID ({cardId}) was chosen less {timeSinceLastChoice} ms ago. Ignoring.");
+							return;
 						}
+
+						try
+						{
+							game.NewArenaCard(cardId);
+						}
+						catch(Exception ex)
+						{
+							Logger.WriteLine("Error adding arena card: " + ex, "ArenaHandler");
+						}
+
+						_lastChoice = DateTime.Now;
+						_lastChoiceId = cardId;
 					}
 				}
 			}

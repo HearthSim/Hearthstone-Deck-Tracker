@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			_info = info;
 			_filePath = string.IsNullOrEmpty(info.FilePath)
-				            ? Path.Combine(Config.Instance.HearthstoneDirectory, string.Format("Logs/{0}.log", _info.Name)) : info.FilePath;
+				            ? Path.Combine(Config.Instance.HearthstoneDirectory, $"Logs/{_info.Name}.log") : info.FilePath;
 		}
 
 		public void Start(DateTime startingPoint)
@@ -187,10 +187,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_offset = 0;
 		}
 
-		public DateTime FindEntryPoint(string str)
-		{
-			return FindEntryPoint(new[] {str});
-		}
+		public DateTime FindEntryPoint(string str) => FindEntryPoint(new[] {str});
 
 		public DateTime FindEntryPoint(string[] str)
 		{

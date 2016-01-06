@@ -41,11 +41,11 @@ namespace Hearthstone_Deck_Tracker.API
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine(string.Format("Error invoking action{0}:\n{1}", GetInfo(plugin), ex), "ActionListExecution");
+					Logger.WriteLine($"Error invoking action{GetInfo(plugin)}:\n{ex}", "ActionListExecution");
 				}
 				if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 				{
-					Logger.WriteLine(string.Format("Warning: Invoking action{0} took {1} ms.", GetInfo(plugin), sw.ElapsedMilliseconds),
+					Logger.WriteLine($"Warning: Invoking action{GetInfo(plugin)} took {sw.ElapsedMilliseconds} ms.",
 					                 "ActionListExecution");
 #if(!DEBUG)
 	//remove.Add(action);
@@ -56,10 +56,7 @@ namespace Hearthstone_Deck_Tracker.API
 				_actions.Remove(action);
 		}
 
-		private string GetInfo(PluginWrapper p)
-		{
-			return p != null ? string.Format(" (Plugin: {0})", p.Name) : "";
-		}
+		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : "";
 	}
 
 	public class ActionList
@@ -93,11 +90,11 @@ namespace Hearthstone_Deck_Tracker.API
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine(string.Format("Error invoking action{0}:\n{1}", GetInfo(plugin), ex), "ActionListExecution");
+					Logger.WriteLine($"Error invoking action{GetInfo(plugin)}:\n{ex}", "ActionListExecution");
 				}
 				if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 				{
-					Logger.WriteLine(string.Format("Warning: Invoking action{0} took {1} ms.", GetInfo(plugin), sw.ElapsedMilliseconds),
+					Logger.WriteLine($"Warning: Invoking action{GetInfo(plugin)} took {sw.ElapsedMilliseconds} ms.",
 					                 "ActionListExecution");
 #if(!DEBUG)
 	//remove.Add(action);
@@ -108,9 +105,6 @@ namespace Hearthstone_Deck_Tracker.API
 				_actions.Remove(action);
 		}
 
-		private string GetInfo(PluginWrapper p)
-		{
-			return p != null ? string.Format(" (Plugin: {0})", p.Name) : "";
-		}
+		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : "";
 	}
 }

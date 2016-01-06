@@ -80,9 +80,9 @@ namespace Hearthstone_Deck_Tracker
 
 		private static bool? _hearthstoneDirExists;
 
-		private static readonly Regex _cardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!-]+)");
-		private static readonly Regex _cardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!-]+)(\s+(x\s*)(?<count>\d))(\s*)$");
-		private static readonly Regex _cardLineRegexCountLast2 = new Regex(@"(?<cardname>[\w\s'\.:!-]+)(\s+(?<count>\d))(\s*)$");
+		private static readonly Regex CardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!-]+)");
+		private static readonly Regex CardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!-]+)(\s+(x\s*)(?<count>\d))(\s*)$");
+		private static readonly Regex CardLineRegexCountLast2 = new Regex(@"(?<cardname>[\w\s'\.:!-]+)(\s+(?<count>\d))(\s*)$");
 
 		public static Dictionary<string, MediaColor> ClassicClassColors = new Dictionary<string, MediaColor>
 		{
@@ -116,18 +116,12 @@ namespace Hearthstone_Deck_Tracker
 
 
 		[Obsolete("Use Core.MainWindow")]
-		public static MainWindow MainWindow
-		{
-			get { return Core.MainWindow; }
-		}
+		public static MainWindow MainWindow => Core.MainWindow;
 
 		public static OptionsMain OptionsMain { get; set; }
 		public static bool SettingUpConstructedImporting { get; set; }
 
-		public static Visibility UseButtonVisiblity
-		{
-			get { return Config.Instance.AutoUseDeck ? Visibility.Collapsed : Visibility.Visible; }
-		}
+		public static Visibility UseButtonVisiblity => Config.Instance.AutoUseDeck ? Visibility.Collapsed : Visibility.Visible;
 
 		public static bool HearthstoneDirExists
 		{
@@ -147,30 +141,28 @@ namespace Hearthstone_Deck_Tracker
 			Logger.WriteLine("Checking for " + betaString + " updates...", "Helper");
 
 			var versionXmlUrl = beta
-				                    ? @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/beta-version"
-				                    : @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
+									? @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/beta-version"
+									: @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/live-version";
 
 			var currentVersion = GetCurrentVersion();
-
-			if(currentVersion != null)
+			if(currentVersion == null)
+				return null;
+			try
 			{
-				try
-				{
-					Logger.WriteLine("Current version: " + currentVersion, "Helper");
-					string xml;
-					using(var wc = new WebClient())
-						xml = await wc.DownloadStringTaskAsync(versionXmlUrl);
+				Logger.WriteLine("Current version: " + currentVersion, "Helper");
+				string xml;
+				using(var wc = new WebClient())
+					xml = await wc.DownloadStringTaskAsync(versionXmlUrl);
 
-					var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
-					Logger.WriteLine("Latest " + betaString + " version: " + newVersion, "Helper");
+				var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
+				Logger.WriteLine("Latest " + betaString + " version: " + newVersion, "Helper");
 
-					if(newVersion > currentVersion)
-						return newVersion;
-				}
-				catch(Exception e)
-				{
-					MessageBox.Show("Error checking for new " + betaString + " version.\n\n" + e.Message + "\n\n" + e.InnerException);
-				}
+				if(newVersion > currentVersion)
+					return newVersion;
+			}
+			catch(Exception e)
+			{
+				MessageBox.Show("Error checking for new " + betaString + " version.\n\n" + e.Message + "\n\n" + e.InnerException);
 			}
 			return null;
 		}
@@ -186,34 +178,26 @@ namespace Hearthstone_Deck_Tracker
 			catch(Exception e)
 			{
 				MessageBox.Show(
-				                e.Message + "\n\n" + e.InnerException
-				                + "\n\n If you don't know how to fix this, please overwrite Version.xml with the default file.",
-				                "Error loading Version.xml");
+							    e.Message + "\n\n" + e.InnerException
+								+ "\n\n If you don't know how to fix this, please overwrite Version.xml with the default file.", "Error loading Version.xml");
 
 				return null;
 			}
 		}
 
-		public static string ToVersionString(this Version version)
-		{
-			return string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
-		}
+		public static string ToVersionString(this Version version) => $"{version.Major}.{version.Minor}.{version.Build}";
 
 		public static bool IsNumeric(char c)
 		{
 			int output;
-			return Int32.TryParse(c.ToString(), out output);
+			return int.TryParse(c.ToString(), out output);
 		}
 
 		public static bool IsHex(IEnumerable<char> chars)
-		{
-			return chars.All(c => ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')));
-		}
+			=> chars.All(c => ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F')));
 
 		public static double DrawProbability(int copies, int deck, int draw)
-		{
-			return 1 - (BinomialCoefficient(deck - copies, draw) / BinomialCoefficient(deck, draw));
-		}
+			=> 1 - (BinomialCoefficient(deck - copies, draw) / BinomialCoefficient(deck, draw));
 
 		public static double BinomialCoefficient(int n, int k)
 		{
@@ -245,17 +229,9 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string ShowSaveFileDialog(string filename, string ext)
 		{
-			var saveFileDialog = new SaveFileDialog();
-			saveFileDialog.FileName = filename;
-			saveFileDialog.DefaultExt = string.Format("*.{0}", ext);
+			var saveFileDialog = new SaveFileDialog {FileName = filename, DefaultExt = $"*.{ext}"};
 			saveFileDialog.Filter = string.Format("{0} ({1})|{1}", ext.ToUpper(), saveFileDialog.DefaultExt);
-
-			var result = saveFileDialog.ShowDialog();
-
-			if(result == true)
-				return saveFileDialog.FileName;
-
-			return null;
+			return saveFileDialog.ShowDialog() == true ? saveFileDialog.FileName : null;
 		}
 
 		public static string GetValidFilePath(string dir, string name, string extension)
@@ -282,15 +258,13 @@ namespace Hearthstone_Deck_Tracker
 		public static string RemoveInvalidPathChars(string s)
 		{
 			var invalidChars = new string(Path.GetInvalidPathChars());
-			var regex = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
-			return regex.Replace(s, "");
+			return new Regex($"[{Regex.Escape(invalidChars)}]").Replace(s, "");
 		}
 
 		public static string RemoveInvalidFileNameChars(string s)
 		{
 			var invalidChars = new string(Path.GetInvalidFileNameChars());
-			var regex = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
-			return regex.Replace(s, "");
+			return new Regex($"[{Regex.Escape(invalidChars)}]").Replace(s, "");
 		}
 
 		public static void SortCardCollection(IEnumerable collection, bool classFirst)
@@ -309,17 +283,13 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public static List<Card> ToSortedCardList(this IEnumerable<Card> cards)
-		{
-			return cards.OrderBy(x => x.Cost).ThenByDescending(x => x.Type).ThenBy(x => x.LocalizedName).ToArray().ToList();
-		}
+			=> cards.OrderBy(x => x.Cost).ThenByDescending(x => x.Type).ThenBy(x => x.LocalizedName).ToArray().ToList();
 
 		public static string DeckToIdString(Deck deck)
-		{
-			return deck.GetSelectedDeckVersion().Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
-		}
+			=> deck.GetSelectedDeckVersion().Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
 
 		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr),
-		                                        bool requireInForeground = true)
+												bool requireInForeground = true)
 		{
 			if(wndHandle == default(IntPtr))
 				wndHandle = User32.GetHearthstoneWindow();
@@ -356,26 +326,23 @@ namespace Hearthstone_Deck_Tracker
 			{
 				for(var x = 0; x < capture.Width; x++)
 				{
-					if(IsYellowPixel(capture.GetPixel(x, y)))
+					if(!IsYellowPixel(capture.GetPixel(x, y)))
+						continue;
+					var foundFriendsList = true;
+
+					//check for a straight yellow line (left side of add button)
+					for(var i = 0; i < 5; i++)
 					{
-						var foundFriendsList = true;
-
-						//check for a straight yellow line (left side of add button)
-						for(var i = 0; i < 5; i++)
-						{
-							if(x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x + i, y)))
-								foundFriendsList = false;
-						}
-
-						if(foundFriendsList)
-						{
-							Logger.WriteLine("Found Friendslist", "Helper");
-							return true;
-						}
+						if(x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x + i, y)))
+							foundFriendsList = false;
+					}
+					if(foundFriendsList)
+					{
+						Logger.WriteLine("Found Friendslist", "Helper");
+						return true;
 					}
 				}
 			}
-
 			return false;
 		}
 
@@ -451,11 +418,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public static string GetWinPercentString(int wins, int losses)
-		{
-			if(wins + losses == 0)
-				return "-%";
-			return Math.Round(wins * 100.0 / (wins + losses), 0) + "%";
-		}
+			=> wins + losses == 0 ? "-%" : Math.Round(wins * 100.0 / (wins + losses), 0) + "%";
 
 		public static T DeepClone<T>(T obj)
 		{
@@ -464,7 +427,6 @@ namespace Hearthstone_Deck_Tracker
 				var formatter = new BinaryFormatter();
 				formatter.Serialize(ms, obj);
 				ms.Position = 0;
-
 				return (T)formatter.Deserialize(ms);
 			}
 		}
@@ -476,16 +438,12 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public static DateTime FromUnixTime(long unixTime)
-		{
-			return new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(TimeSpan.FromSeconds(unixTime)).ToLocalTime();
-		}
+			=> new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(TimeSpan.FromSeconds(unixTime)).ToLocalTime();
 
 		public static DateTime FromUnixTime(string unixTime)
 		{
 			long time;
-			if(long.TryParse(unixTime, out time))
-				return FromUnixTime(time);
-			return DateTime.Now;
+			return long.TryParse(unixTime, out time) ? FromUnixTime(time) : DateTime.Now;
 		}
 
 		public static async Task SetupConstructedImporting(GameV2 game)
@@ -497,17 +455,14 @@ namespace Hearthstone_Deck_Tracker
 			SettingUpConstructedImporting = true;
 			await
 				Core.MainWindow.ShowMessageAsync("Step 2:",
-				                                 "Open \"My Collection\" and click each class icon at the top once.\n\n- Do not click on neutral\n- Do not open any decks\n- Do not flip the pages.",
-				                                 settings: new MessageDialogs.Settings {AffirmativeButtonText = "done"});
+												 "Open \"My Collection\" and click each class icon at the top once.\n\n- Do not click on neutral\n- Do not open any decks\n- Do not flip the pages.",
+												 settings: new MessageDialogs.Settings {AffirmativeButtonText = "done"});
 			Config.Instance.ConstructedImportingIgnoreCachedIds = game.PossibleConstructedCards.Select(c => c.Id).ToArray();
 			Config.Save();
 			SettingUpConstructedImporting = false;
 		}
 
-		public static Rectangle GetHearthstoneRect(bool dpiScaling)
-		{
-			return User32.GetHearthstoneRect(dpiScaling);
-		}
+		public static Rectangle GetHearthstoneRect(bool dpiScaling) => User32.GetHearthstoneRect(dpiScaling);
 
 		public static string ParseDeckNameTemplate(string template)
 		{
@@ -576,7 +531,7 @@ namespace Hearthstone_Deck_Tracker
 			if(User32.GetHearthstoneWindow() != IntPtr.Zero)
 				return;
 			Core.MainWindow.BtnStartHearthstone.IsEnabled = false;
-			int useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
+			var useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
 			Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Enabled = false;
 			try
 			{
@@ -587,7 +542,7 @@ namespace Hearthstone_Deck_Tracker
 
 					var foundBnetWindow = false;
 					Core.MainWindow.TextBlockBtnStartHearthstone.Text = "STARTING LAUNCHER...";
-					for(int i = 0; i < 20; i++)
+					for(var i = 0; i < 20; i++)
 					{
 						bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault();
 						if(bnetProc != null && bnetProc.MainWindowHandle != IntPtr.Zero)
@@ -632,14 +587,13 @@ namespace Hearthstone_Deck_Tracker
 					foreach(var line in lines)
 					{
 						var match = regex.Match(line);
-						if(match.Success)
+						if(!match.Success)
+							continue;
+						Region region;
+						if(Enum.TryParse(match.Groups["region"].Value, out region))
 						{
-							Region region;
-							if(Enum.TryParse(match.Groups["region"].Value, out region))
-							{
-								Logger.WriteLine("Current region: " + region, "LogReader");
-								return region;
-							}
+							Logger.WriteLine("Current region: " + region, "LogReader");
+							return region;
 						}
 					}
 				}
@@ -653,30 +607,23 @@ namespace Hearthstone_Deck_Tracker
 
 		private static bool FindHearthstoneDir()
 		{
-			var found = false;
 			if(string.IsNullOrEmpty(Config.Instance.HearthstoneDirectory)
 			   || !File.Exists(Config.Instance.HearthstoneDirectory + @"\Hearthstone.exe"))
 			{
 				using(var hsDirKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Hearthstone"))
 				{
-					if(hsDirKey != null)
-					{
-						var hsDir = (string)hsDirKey.GetValue("InstallLocation");
+					if(hsDirKey == null)
+						return false;
+					var hsDir = (string)hsDirKey.GetValue("InstallLocation");
 
-						//verify the install location actually is correct (possibly moved?)
-						if(File.Exists(hsDir + @"\Hearthstone.exe"))
-						{
-							Config.Instance.HearthstoneDirectory = hsDir;
-							Config.Save();
-							found = true;
-						}
-					}
+					//verify the install location actually is correct (possibly moved?)
+					if(!File.Exists(hsDir + @"\Hearthstone.exe"))
+						return false;
+					Config.Instance.HearthstoneDirectory = hsDir;
+					Config.Save();
 				}
 			}
-			else
-				found = true;
-
-			return found;
+			return true;
 		}
 
 		public static Deck ParseCardString(string cards, bool localizedNames = false)
@@ -690,12 +637,12 @@ namespace Hearthstone_Deck_Tracker
 					var count = 1;
 					var cardName = line.Trim();
 					Match match = null;
-					if(_cardLineRegexCountFirst.IsMatch(cardName))
-						match = _cardLineRegexCountFirst.Match(cardName);
-					else if(_cardLineRegexCountLast.IsMatch(cardName))
-						match = _cardLineRegexCountLast.Match(cardName);
-					else if(_cardLineRegexCountLast2.IsMatch(cardName))
-						match = _cardLineRegexCountLast2.Match(cardName);
+					if(CardLineRegexCountFirst.IsMatch(cardName))
+						match = CardLineRegexCountFirst.Match(cardName);
+					else if(CardLineRegexCountLast.IsMatch(cardName))
+						match = CardLineRegexCountLast.Match(cardName);
+					else if(CardLineRegexCountLast2.IsMatch(cardName))
+						match = CardLineRegexCountLast2.Match(cardName);
 					if(match != null)
 					{
 						var tmpCount = match.Groups["count"];
@@ -705,7 +652,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 
 					var card = Database.GetCardFromName(cardName, localizedNames);
-					if(card == null || string.IsNullOrEmpty(card.Name))
+					if(string.IsNullOrEmpty(card?.Name))
 						continue;
 					card.Count = count;
 
@@ -779,21 +726,16 @@ namespace Hearthstone_Deck_Tracker
 		public static void UpdateAppTheme()
 		{
 			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
-				            ? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
+							? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
 			var accent = string.IsNullOrEmpty(Config.Instance.AccentName)
-				             ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
+							 ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
 			ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
 			Application.Current.Resources["GrayTextColorBrush"] = theme.Name == "BaseLight"
-				                                                      ? new SolidColorBrush(
-					                                                        (MediaColor)Application.Current.Resources["GrayTextColor1"])
-				                                                      : new SolidColorBrush(
-					                                                        (MediaColor)Application.Current.Resources["GrayTextColor2"]);
+																	  ? new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor1"])
+																	  : new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor2"]);
 		}
 
-		public static double GetScaledXPos(double left, int width, double ratio)
-		{
-			return (width * ratio * left) + (width * (1 - ratio) / 2);
-		}
+		public static double GetScaledXPos(double left, int width, double ratio) => (width * ratio * left) + (width * (1 - ratio) / 2);
 
 		public static MediaColor GetClassColor(string className, bool priestAsGray)
 		{
@@ -834,6 +776,18 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Logger.WriteLine("Error getting windows version information. " + ex);
 				return false;
+			}
+		}
+
+		public static void TryOpenUrl(string url)
+		{
+			try
+			{
+				Process.Start(url);
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine($"Error opening url: {e}");
 			}
 		}
 	}

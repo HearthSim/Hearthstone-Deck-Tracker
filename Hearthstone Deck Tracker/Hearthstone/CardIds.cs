@@ -90,141 +90,39 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All
-				{
-					get
-					{
-						if(DateTime.UtcNow < new DateTime(2015, 12, 3)) //LOE wing 3 release date
-							return new List<string> {BearTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap};
-						return new List<string> {BearTrap, DartTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap};
-					}
-				}
-
-				public static string BearTrap
-				{
-					get { return HearthDb.CardIds.Collectible.Hunter.BearTrap; }
-				}
-
-				public static string DartTrap
-				{
-					get { return HearthDb.CardIds.Collectible.Hunter.DartTrap; }
-				}
-
-				public static string ExplosiveTrap
-				{
-					get { return HearthDb.CardIds.Collectible.Hunter.ExplosiveTrap; }
-				}
-
-				public static string FreezingTrap
-				{
-					get { return HearthDb.CardIds.Collectible.Hunter.FreezingTrap; }
-				}
-
-				public static string Misdirection
-				{
-					get { return HearthDb.CardIds.Collectible.Hunter.Misdirection; }
-				}
-
-				public static string Snipe
-				{
-					get { return HearthDb.CardIds.Collectible.Hunter.Snipe; }
-				}
-
-				public static string SnakeTrap
-				{
-					get { return HearthDb.CardIds.Collectible.Hunter.SnakeTrap; }
-				}
+				public static List<string> All => new List<string> {BearTrap, DartTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap};
+				public static string BearTrap => HearthDb.CardIds.Collectible.Hunter.BearTrap;
+				public static string DartTrap => HearthDb.CardIds.Collectible.Hunter.DartTrap;
+				public static string ExplosiveTrap => HearthDb.CardIds.Collectible.Hunter.ExplosiveTrap;
+				public static string FreezingTrap => HearthDb.CardIds.Collectible.Hunter.FreezingTrap;
+				public static string Misdirection => HearthDb.CardIds.Collectible.Hunter.Misdirection;
+				public static string Snipe => HearthDb.CardIds.Collectible.Hunter.Snipe;
+				public static string SnakeTrap => HearthDb.CardIds.Collectible.Hunter.SnakeTrap;
 			}
 
 			public static class Mage
 			{
-				public static List<string> All
-				{
-					get { return new List<string> {Counterspell, Duplicate, Effigy, IceBarrier, IceBlock, MirrorEntity, Spellbender, Vaporize}; }
-				}
-
-				public static string Counterspell
-				{
-					get { return HearthDb.CardIds.Collectible.Mage.Counterspell; }
-				}
-
-				public static string Duplicate
-				{
-					get { return HearthDb.CardIds.Collectible.Mage.Duplicate; }
-				}
-
-				public static string Effigy
-				{
-					get { return HearthDb.CardIds.Collectible.Mage.Effigy; }
-				}
-
-				public static string IceBarrier
-				{
-					get { return HearthDb.CardIds.Collectible.Mage.IceBarrier; }
-				}
-
-				public static string IceBlock
-				{
-					get { return HearthDb.CardIds.Collectible.Mage.IceBlock; }
-				}
-
-				public static string MirrorEntity
-				{
-					get { return HearthDb.CardIds.Collectible.Mage.MirrorEntity; }
-				}
-
-				public static string Spellbender
-				{
-					get { return HearthDb.CardIds.Collectible.Mage.Spellbender; }
-				}
-
-				public static string Vaporize
-				{
-					get { return HearthDb.CardIds.Collectible.Mage.Vaporize; }
-				}
+				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, IceBarrier, IceBlock, MirrorEntity, Spellbender, Vaporize};
+				public static string Counterspell => HearthDb.CardIds.Collectible.Mage.Counterspell;
+				public static string Duplicate => HearthDb.CardIds.Collectible.Mage.Duplicate;
+				public static string Effigy => HearthDb.CardIds.Collectible.Mage.Effigy;
+				public static string IceBarrier => HearthDb.CardIds.Collectible.Mage.IceBarrier;
+				public static string IceBlock => HearthDb.CardIds.Collectible.Mage.IceBlock;
+				public static string MirrorEntity => HearthDb.CardIds.Collectible.Mage.MirrorEntity;
+				public static string Spellbender => HearthDb.CardIds.Collectible.Mage.Spellbender;
+				public static string Vaporize => HearthDb.CardIds.Collectible.Mage.Vaporize;
 			}
 
 			public static class Paladin
 			{
-				public static List<string> All
-				{
-					get { return new List<string> {Avenge, CompetitiveSpirit, EyeForAnEye, NobleSacrifice, Redemption, Repentance, SacredTrial}; }
-				}
-
-				public static string Avenge
-				{
-					get { return HearthDb.CardIds.Collectible.Paladin.Avenge; }
-				}
-
-				public static string CompetitiveSpirit
-				{
-					get { return HearthDb.CardIds.Collectible.Paladin.CompetitiveSpirit; }
-				}
-
-				public static string EyeForAnEye
-				{
-					get { return HearthDb.CardIds.Collectible.Paladin.EyeForAnEye; }
-				}
-
-				public static string NobleSacrifice
-				{
-					get { return HearthDb.CardIds.Collectible.Paladin.NobleSacrifice; }
-				}
-
-				public static string Redemption
-				{
-					get { return HearthDb.CardIds.Collectible.Paladin.Redemption; }
-				}
-
-				public static string Repentance
-				{
-					get { return HearthDb.CardIds.Collectible.Paladin.Repentance; }
-				}
-
-				public static string SacredTrial
-				{
-					get { return HearthDb.CardIds.Collectible.Paladin.SacredTrial; }
-				}
+				public static List<string> All => new List<string> {Avenge, CompetitiveSpirit, EyeForAnEye, NobleSacrifice, Redemption, Repentance, SacredTrial};
+				public static string Avenge => HearthDb.CardIds.Collectible.Paladin.Avenge;
+				public static string CompetitiveSpirit => HearthDb.CardIds.Collectible.Paladin.CompetitiveSpirit;
+				public static string EyeForAnEye => HearthDb.CardIds.Collectible.Paladin.EyeForAnEye;
+				public static string NobleSacrifice => HearthDb.CardIds.Collectible.Paladin.NobleSacrifice;
+				public static string Redemption => HearthDb.CardIds.Collectible.Paladin.Redemption;
+				public static string Repentance => HearthDb.CardIds.Collectible.Paladin.Repentance;
+				public static string SacredTrial => HearthDb.CardIds.Collectible.Paladin.SacredTrial;
 			}
 		}
 	}

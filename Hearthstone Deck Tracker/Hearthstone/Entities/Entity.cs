@@ -40,74 +40,43 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsPlayer { get; set; }
 
 		[JsonIgnore]
-		public bool IsHero
-		{
-			get { return CardId != null && CardIds.HeroIdDict.Keys.Contains(CardId); }
-		}
+		public bool IsHero => CardId != null && CardIds.HeroIdDict.Keys.Contains(CardId);
 
 		[JsonIgnore]
-		public bool IsActiveDeathrattle
-		{
-			get { return HasTag(GAME_TAG.DEATHRATTLE) && GetTag(GAME_TAG.DEATHRATTLE) == 1; }
-		}
+		public bool IsActiveDeathrattle => HasTag(GAME_TAG.DEATHRATTLE) && GetTag(GAME_TAG.DEATHRATTLE) == 1;
 
 		/// <Summary>
 		/// This is opponent entity, NOT the opponent hero.
 		/// </Summary>
 		[JsonIgnore]
-		public bool IsOpponent
-		{
-			get { return !IsPlayer && HasTag(GAME_TAG.PLAYER_ID); }
-		}
+		public bool IsOpponent => !IsPlayer && HasTag(GAME_TAG.PLAYER_ID);
 
 		[JsonIgnore]
-		public bool IsMinion
-		{
-			get { return HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.MINION; }
-		}
+		public bool IsMinion => HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.MINION;
 
 		[JsonIgnore]
-		public bool IsWeapon
-		{
-			get { return HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.WEAPON; }
-		}
+		public bool IsWeapon => HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.WEAPON;
 
 		[JsonIgnore]
-		public bool IsInHand
-		{
-			get { return IsInZone(TAG_ZONE.HAND); }
-		}
+		public bool IsInHand => IsInZone(TAG_ZONE.HAND);
 
 		[JsonIgnore]
-		public bool IsInPlay
-		{
-			get { return IsInZone(TAG_ZONE.PLAY); }
-		}
+		public bool IsInPlay => IsInZone(TAG_ZONE.PLAY);
 
 		[JsonIgnore]
-		public bool IsInGraveyard
-		{
-			get { return IsInZone(TAG_ZONE.GRAVEYARD); }
-		}
+		public bool IsInGraveyard => IsInZone(TAG_ZONE.GRAVEYARD);
 
 		[JsonIgnore]
 		public Card Card
-		{
-			get
-			{
-				return _cachedCard
-				       ?? (_cachedCard =
-				           (Database.GetCardFromId(CardId)
-				            ?? new Card(string.Empty, null, Rarity.Free, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0,
-				                        "", "")));
-			}
-		}
+			=>
+				_cachedCard
+				?? (_cachedCard =
+					(Database.GetCardFromId(CardId)
+					 ?? new Card(string.Empty, null, Rarity.Free, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "", "")))
+			;
 
 		[JsonIgnore]
-		public int Attack
-		{
-			get { return GetTag(GAME_TAG.ATK); }
-		}
+		public int Attack => GetTag(GAME_TAG.ATK);
 
 		[JsonIgnore]
 		public SolidColorBrush AttackTextColor
@@ -122,10 +91,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		}
 
 		[JsonIgnore]
-		public int Health
-		{
-			get { return GetTag(GAME_TAG.HEALTH) - GetTag(GAME_TAG.DAMAGE); }
-		}
+		public int Health => GetTag(GAME_TAG.HEALTH) - GetTag(GAME_TAG.DAMAGE);
 
 		[JsonIgnore]
 		public SolidColorBrush HealthTextColor
@@ -143,15 +109,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		}
 
 		[JsonIgnore]
-		public int Cost
-		{
-			get
-			{
-				if(HasTag(GAME_TAG.COST))
-					return GetTag(GAME_TAG.COST);
-				return Card.Cost;
-			}
-		}
+		public int Cost => HasTag(GAME_TAG.COST) ? GetTag(GAME_TAG.COST) : Card.Cost;
 
 		[JsonIgnore]
 		public SolidColorBrush CostTextColor
@@ -171,10 +129,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		}
 
 		[JsonIgnore]
-		public ImageBrush Background
-		{
-			get { return Card.Background; }
-		}
+		public ImageBrush Background => Card.Background;
 
 		[JsonIgnore]
 		public FontFamily Font
@@ -191,10 +146,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		}
 
 		[JsonIgnore]
-		public string LocalizedName
-		{
-			get { return Card.LocalizedName; }
-		}
+		public string LocalizedName => Card.LocalizedName;
 
 		[JsonIgnore]
 		public string Effects
@@ -219,30 +171,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		}
 
 		[JsonIgnore]
-		public Visibility EffectsVisibility
-		{
-			get { return string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible; }
-		}
+		public Visibility EffectsVisibility => string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible;
 
-		public bool IsSecret
-		{
-			get { return HasTag(GAME_TAG.SECRET); }
-		}
+		public bool IsSecret => HasTag(GAME_TAG.SECRET);
 
-		public bool IsInZone(TAG_ZONE zone)
-		{
-			return HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;
-		}
+		public bool IsInZone(TAG_ZONE zone) => HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;
 
-		public bool IsControlledBy(int controllerId)
-		{
-			return HasTag(GAME_TAG.CONTROLLER) && GetTag(GAME_TAG.CONTROLLER) == controllerId;
-		}
+		public bool IsControlledBy(int controllerId) => HasTag(GAME_TAG.CONTROLLER) && GetTag(GAME_TAG.CONTROLLER) == controllerId;
 
-		public bool HasTag(GAME_TAG tag)
-		{
-			return GetTag(tag) > 0;
-		}
+		public bool HasTag(GAME_TAG tag) => GetTag(tag) > 0;
 
 		public int GetTag(GAME_TAG tag)
 		{
@@ -259,16 +196,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				Tags[tag] = value;
 		}
 
-		public void SetCardCount(int count)
-		{
-			Card.Count = count;
-		}
+		public void SetCardCount(int count) => Card.Count = count;
 
 		public override string ToString()
 		{
 			var card = Database.GetCardFromId(CardId);
 			var cardName = card != null ? card.Name : "";
-			return string.Format("id={0}, cardId={1}, cardName={2}", Id, CardId, cardName);
+			return $"id={Id}, cardId={CardId}, cardName={cardName}";
 		}
 	}
 }

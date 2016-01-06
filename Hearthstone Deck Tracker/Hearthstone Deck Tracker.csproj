@@ -38,7 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>5</LangVersion>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -273,7 +273,7 @@
     <Compile Include="Stats\CompiledStats\ClassStats.cs" />
     <Compile Include="Stats\CompiledStats\MatchupStats.cs" />
     <Compile Include="Utility\BoardDamage\BoardCard.cs" />
-    <Compile Include="Utility\BoardDamage\BoardEntity.cs" />
+    <Compile Include="Utility\BoardDamage\IBoardEntity.cs" />
     <Compile Include="Utility\BoardDamage\BoardHero.cs" />
     <Compile Include="Utility\BoardDamage\BoardState.cs" />
     <Compile Include="Utility\BoardDamage\EntityHelper.cs" />

@@ -69,28 +69,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 			get
 			{
 				HeroClass heroClass;
-				if(Enum.TryParse(_game.OpponentHero, out heroClass))
-					return new HeroClassWrapper(heroClass);
-				return null;
+				return Enum.TryParse(_game.OpponentHero, out heroClass) ? new HeroClassWrapper(heroClass) : null;
 			}
 			set
 			{
-				if(value != null)
-				{
-					HeroClass heroClass;
-					if(Enum.TryParse(value.Class, out heroClass))
-					{
-						_game.OpponentHero = heroClass.ToString();
-						_edited = true;
-					}
-				}
+				if(value == null)
+					return;
+				HeroClass heroClass;
+				if(!Enum.TryParse(value.Class, out heroClass))
+					return;
+				_game.OpponentHero = heroClass.ToString();
+				_edited = true;
 			}
 		}
 
-		public BitmapImage PlayerClassImage
-		{
-			get { return ImageCache.GetClassIcon(_game.PlayerHero); }
-		}
+		public BitmapImage PlayerClassImage => ImageCache.GetClassIcon(_game.PlayerHero);
 
 		public GameMode Mode
 		{
@@ -113,13 +106,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			while(DateTime.UtcNow - _startUpTime < TimeSpan.FromSeconds(Config.Instance.NotificationFadeOutDelay + FadeInDuration))
 			{
 				await Task.Delay(100);
-				if(IsMouseOver)
-				{
-					Expand();
-					_startUpTime = DateTime.UtcNow - TimeSpan.FromSeconds(FadeOutSpeedup);
-					CloseAsync();
-					return;
-				}
+				if(!IsMouseOver)
+					continue;
+				Expand();
+				_startUpTime = DateTime.UtcNow - TimeSpan.FromSeconds(FadeOutSpeedup);
+				CloseAsync();
+				return;
 			}
 			((Storyboard)FindResource("StoryboardFadeOut")).Begin(this);
 		}
@@ -175,22 +167,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public class HeroClassWrapper
 		{
-			private readonly string _heroClass;
-
 			public HeroClassWrapper(HeroClass heroClass)
 			{
-				_heroClass = heroClass.ToString();
+				Class = heroClass.ToString();
 			}
 
-			public BitmapImage ClassImage
-			{
-				get { return ImageCache.GetClassIcon(_heroClass); }
-			}
+			public BitmapImage ClassImage => ImageCache.GetClassIcon(Class);
 
-			public string Class
-			{
-				get { return _heroClass; }
-			}
+			public string Class { get; }
 
 			public override bool Equals(object obj)
 			{
@@ -198,15 +182,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return hcw != null && Equals(hcw);
 			}
 
-			protected bool Equals(HeroClassWrapper other)
-			{
-				return string.Equals(_heroClass, other._heroClass);
-			}
+			protected bool Equals(HeroClassWrapper other) => string.Equals(Class, other.Class);
 
-			public override int GetHashCode()
-			{
-				return (_heroClass != null ? _heroClass.GetHashCode() : 0);
-			}
+			public override int GetHashCode() => Class?.GetHashCode() ?? 0;
 		}
 	}
 }

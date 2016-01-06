@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 	/// </summary>
 	public partial class DuplicateMatchesWindow
 	{
-		public readonly List<GameStatsWrapper> _allWrappers = new List<GameStatsWrapper>();
+		public readonly List<GameStatsWrapper> AllWrappers = new List<GameStatsWrapper>();
 
 		public DuplicateMatchesWindow()
 		{
@@ -32,22 +32,23 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 		{
 			try
 			{
-				_allWrappers.Clear();
+				AllWrappers.Clear();
 				foreach(var set in games.OrderBy(x => x.Value.Count))
 				{
 					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == set.Key.DeckId);
-					var tvi = new TreeViewItem();
-					tvi.ItemTemplate = (DataTemplate)FindResource("DataTemplateCheckBox");
-					tvi.Header = string.Format("[Original - Deck: {0}] : {1} ({2} duplicate(s))", deck != null ? deck.Name : "", GetMatchInfo(set.Key),
-					                           set.Value.Count);
-					tvi.IsExpanded = true;
+					var tvi = new TreeViewItem
+					{
+						ItemTemplate = (DataTemplate)FindResource("DataTemplateCheckBox"),
+						Header = $"[Original - Deck: {(deck != null ? deck.Name : "")}] : {GetMatchInfo(set.Key)} ({set.Value.Count} duplicate(s))",
+						IsExpanded = true
+					};
 					foreach(var game in set.Value)
 					{
 						try
 						{
 							var wrapper = new GameStatsWrapper(game);
 							tvi.Items.Add(wrapper);
-							_allWrappers.Add(wrapper);
+							AllWrappers.Add(wrapper);
 						}
 						catch(Exception e)
 						{
@@ -63,14 +64,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			}
 		}
 
-		public static string GetMatchInfo(GameStats game)
-		{
-			return string.Format("{0} vs {1} ({2}), {3}", game.Result, game.OpponentName, game.OpponentHero, game.StartTime);
-		}
+		public static string GetMatchInfo(GameStats game) => $"{game.Result} vs {game.OpponentName} ({game.OpponentHero}), {game.StartTime}";
 
 		private async void Button_Click(object sender, RoutedEventArgs e)
 		{
-			var selected = _allWrappers.Where(x => x.ToDelete).ToList();
+			var selected = AllWrappers.Where(x => x.ToDelete).ToList();
 			if(selected.Any())
 			{
 				var matches = selected.Select(x => x.GameStats).ToList();
@@ -81,15 +79,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				foreach(var match in matches)
 				{
 					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == match.DeckId);
-					if(deck == null)
-						continue;
-					deck.DeckStats.Games.Remove(match);
+					deck?.DeckStats.Games.Remove(match);
 				}
 				DeckStatsList.Save();
 				Core.MainWindow.DeckPickerList.UpdateDecks();
 				await controller.CloseAsync();
 			}
-			await this.ShowMessageAsync("Success", "Deleted " + _allWrappers.Count(x => x.ToDelete) + " duplicates.");
+			await this.ShowMessageAsync("Success", "Deleted " + AllWrappers.Count(x => x.ToDelete) + " duplicates.");
 			Config.Instance.FixedDuplicateMatches = true;
 			Config.Save();
 			Close();
@@ -97,13 +93,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 
 		private void ButtonSelectAll_Click(object sender, RoutedEventArgs e)
 		{
-			foreach(var wrapper in _allWrappers)
+			foreach(var wrapper in AllWrappers)
 				wrapper.ToDelete = true;
 		}
 
 		private void ButtonDeselectAll_Click(object sender, RoutedEventArgs e)
 		{
-			foreach(var wrapper in _allWrappers)
+			foreach(var wrapper in AllWrappers)
 				wrapper.ToDelete = false;
 		}
 
@@ -136,9 +132,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			[NotifyPropertyChangedInvocator]
 			protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 			{
-				var handler = PropertyChanged;
-				if(handler != null)
-					handler(this, new PropertyChangedEventArgs(propertyName));
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}

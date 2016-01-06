@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Deck : ICloneable, INotifyPropertyChanged
 	{
-		private const string baseHearthStatsUrl = @"http://hss.io/d/";
+		private const string BaseHearthStatsUrl = @"http://hss.io/d/";
 
 		private readonly string[] _relevantMechanics =
 		{
@@ -44,8 +44,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private ArenaReward _arenaReward = new ArenaReward();
 		private List<GameStats> _cachedGames;
 		private Guid _deckId;
-		private int? _dustReward;
-		private int? _goldReward;
 		private string _hearthStatsIdClone;
 		private bool? _isArenaDeck;
 		private bool _isSelectedInGui;
@@ -137,7 +135,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				_archived = value;
 				OnPropertyChanged();
-				OnPropertyChanged("ArchivedVisibility");
+				OnPropertyChanged(nameof(ArchivedVisibility));
 			}
 		}
 
@@ -148,7 +146,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				_note = value;
 				OnPropertyChanged();
-				OnPropertyChanged("NoteVisibility");
+				OnPropertyChanged(nameof(NoteVisibility));
 			}
 		}
 
@@ -159,7 +157,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				_selectedVersion = value;
 				OnPropertyChanged();
-				OnPropertyChanged("NameAndVersion");
+				OnPropertyChanged(nameof(NameAndVersion));
 			}
 		}
 
@@ -172,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set
 			{
 				_isSelectedInGui = value;
-				OnPropertyChanged("GetFontWeight");
+				OnPropertyChanged(nameof(GetFontWeight));
 			}
 		}
 
@@ -215,39 +213,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				_name = value;
 				OnPropertyChanged();
-				OnPropertyChanged("NameAndVersion");
+				OnPropertyChanged(nameof(NameAndVersion));
 			}
 		}
 
 		public bool? SyncWithHearthStats { get; set; }
 
 		[XmlIgnore]
-		public bool HasHearthStatsId
-		{
-			get { return !string.IsNullOrEmpty(HearthStatsId) || !string.IsNullOrEmpty(_hearthStatsIdClone); }
-		}
+		public bool HasHearthStatsId => !string.IsNullOrEmpty(HearthStatsId) || !string.IsNullOrEmpty(_hearthStatsIdClone);
 
 		[XmlIgnore]
-		public string HearthStatsUrl
-		{
-			get
-			{
-				return HasHearthStatsId
-					       ? baseHearthStatsUrl + HearthStatsId : (HasHearthStatsArenaId ? baseHearthStatsUrl + HearthStatsArenaId : "");
-			}
-		}
+		public string HearthStatsUrl => HasHearthStatsId
+											? BaseHearthStatsUrl + HearthStatsId : (HasHearthStatsArenaId ? BaseHearthStatsUrl + HearthStatsArenaId : "");
 
 		[XmlIgnore]
-		public bool HasHearthStatsDeckVersionId
-		{
-			get { return !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
-		}
+		public bool HasHearthStatsDeckVersionId => !string.IsNullOrEmpty(HearthStatsDeckVersionId);
 
 		[XmlIgnore]
-		public List<SerializableVersion> VersionsIncludingSelf
-		{
-			get { return Versions.Select(x => x.Version).Concat(new[] {Version}).ToList(); }
-		}
+		public List<SerializableVersion> VersionsIncludingSelf => Versions.Select(x => x.Version).Concat(new[] {Version}).ToList();
 
 		[XmlIgnore]
 		public string NameAndVersion
@@ -258,9 +241,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					return Versions.Count == 0
 						       ? Name.ToUpperInvariant()
-						       : string.Format("{0} (v{1}.{2})", Name.ToUpperInvariant(), SelectedVersion.Major, SelectedVersion.Minor);
+						       : $"{Name.ToUpperInvariant()} (v{SelectedVersion.Major}.{SelectedVersion.Minor})";
 				}
-				return Versions.Count == 0 ? Name : string.Format("{0} (v{1}.{2})", Name, SelectedVersion.Major, SelectedVersion.Minor);
+				return Versions.Count == 0 ? Name : $"{Name} (v{SelectedVersion.Major}.{SelectedVersion.Minor})";
 			}
 		}
 
@@ -272,8 +255,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var relevantGames = GetRelevantGames();
 				if(relevantGames.Count == 0)
 					return "0-0";
-				return string.Format("{0}-{1}", relevantGames.Count(g => g.Result == GameResult.Win),
-				                     relevantGames.Count(g => g.Result == GameResult.Loss));
+				return $"{relevantGames.Count(g => g.Result == GameResult.Win)}-{relevantGames.Count(g => g.Result == GameResult.Loss)}";
 			}
 		}
 
@@ -302,42 +284,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public string StatsString
-		{
-			get { return GetRelevantGames().Any() ? string.Format("{0} | {1}", WinPercentString, WinLossString) : "NO STATS"; }
-		}
+		public string StatsString => GetRelevantGames().Any() ? $"{WinPercentString} | {WinLossString}" : "NO STATS";
 
 		[XmlIgnore]
-		public DateTime LastPlayed
-		{
-			get
-			{
-				var games = DeckStats.Games;
-				return !games.Any() ? DateTime.MinValue : games.OrderByDescending(g => g.StartTime).First().StartTime;
-			}
-		}
+		public DateTime LastPlayed => !DeckStats.Games.Any() ? DateTime.MinValue : DeckStats.Games.OrderByDescending(g => g.StartTime).First().StartTime;
 
 		[XmlIgnore]
-		public DateTime LastPlayedNewFirst
-		{
-			get
-			{
-				var games = DeckStats.Games;
-				return !games.Any() ? LastEdited : games.OrderByDescending(g => g.StartTime).First().StartTime;
-			}
-		}
+		public DateTime LastPlayedNewFirst => !DeckStats.Games.Any() ? LastEdited : DeckStats.Games.OrderByDescending(g => g.StartTime).First().StartTime;
 
 		[XmlIgnore]
-		public string GetClass
-		{
-			get { return string.IsNullOrEmpty(Class) ? "(No Class Selected)" : "(" + Class + ")"; }
-		}
+		public string GetClass => string.IsNullOrEmpty(Class) ? "(No Class Selected)" : "(" + Class + ")";
 
 		[XmlIgnore]
-		public FontWeight GetFontWeight
-		{
-			get { return IsSelectedInGui ? FontWeights.Black : FontWeights.Regular; }
-		}
+		public FontWeight GetFontWeight => IsSelectedInGui ? FontWeights.Black : FontWeights.Regular;
 
 		[XmlArray(ElementName = "Tags")]
 		[XmlArrayItem(ElementName = "Tag")]
@@ -348,7 +307,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				_tags = value;
 				OnPropertyChanged();
-				OnPropertyChanged("TagList");
+				OnPropertyChanged(nameof(TagList));
 			}
 		}
 
@@ -359,16 +318,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public SolidColorBrush ClassColorBrush
-		{
-			get { return new SolidColorBrush(ClassColor); }
-		}
+		public SolidColorBrush ClassColorBrush => new SolidColorBrush(ClassColor);
 
 		[XmlIgnore]
-		public Color ClassColor
-		{
-			get { return Helper.GetClassColor(Class, false); }
-		}
+		public Color ClassColor => Helper.GetClassColor(Class, false);
 
 		[XmlIgnore]
 		public BitmapImage ClassImage
@@ -383,10 +336,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public BitmapImage HeroImage
-		{
-			get { return ClassImage; }
-		}
+		public BitmapImage HeroImage => ClassImage;
 
 		public DeckStats DeckStats
 		{
@@ -403,15 +353,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public bool HasVersions
-		{
-			get { return Versions != null && Versions.Count > 0; }
-		}
+		public bool HasVersions => Versions != null && Versions.Count > 0;
 
-		public bool HasHearthStatsArenaId
-		{
-			get { return !string.IsNullOrEmpty(HearthStatsArenaId); }
-		}
+		public bool HasHearthStatsArenaId => !string.IsNullOrEmpty(HearthStatsArenaId);
 
 		//I don't know why I need this but I apparently can't serialize anything if versions of a deck have the same hearthstatsid
 
@@ -421,48 +365,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _hearthStatsIdClone = value; }
 		}
 
-		public Visibility VisibilityStats
-		{
-			get { return GetRelevantGames().Any() ? Visibility.Visible : Visibility.Collapsed; }
-		}
+		public Visibility VisibilityStats => GetRelevantGames().Any() ? Visibility.Visible : Visibility.Collapsed;
 
-		public Visibility VisibilityNoStats
-		{
-			get { return VisibilityStats == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible; }
-		}
+		public Visibility VisibilityNoStats => VisibilityStats == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
-		public Visibility NoteVisibility
-		{
-			get { return string.IsNullOrEmpty(Note) ? Visibility.Collapsed : Visibility.Visible; }
-		}
+		public Visibility NoteVisibility => string.IsNullOrEmpty(Note) ? Visibility.Collapsed : Visibility.Visible;
 
-		public Visibility ArchivedVisibility
-		{
-			get { return Archived ? Visibility.Visible : Visibility.Collapsed; }
-		}
+		public Visibility ArchivedVisibility => Archived ? Visibility.Visible : Visibility.Collapsed;
 
-		private TimeSpan ValidCacheDuration
-		{
-			get { return new TimeSpan(0, 0, 1); }
-		}
+		private TimeSpan ValidCacheDuration => new TimeSpan(0, 0, 1);
 
-		private bool CacheIsValid
-		{
-			get { return _cachedGames != null && DateTime.Now - _lastCacheUpdate < ValidCacheDuration; }
-		}
+		private bool CacheIsValid => _cachedGames != null && DateTime.Now - _lastCacheUpdate < ValidCacheDuration;
 
 		[XmlIgnore]
-		public List<Mechanic> Mechanics
-		{
-			get { return _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList(); }
-		}
+		public List<Mechanic> Mechanics => _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList();
 
-		public object Clone()
-		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats,
-			                HearthStatsId, DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck,
-			                ArenaReward);
-		}
+		public object Clone() => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats,
+										  HearthStatsId, DeckId, HearthStatsDeckVersionId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck,
+										  ArenaReward);
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -530,36 +450,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			HearthStatsIdsAlreadyReset = true;
 		}
 
-		public bool? CheckIfArenaDeck()
-		{
-			return !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
-		}
+		public bool? CheckIfArenaDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
 
 		public Deck GetVersion(int major, int minor)
 		{
 			var target = new SerializableVersion(major, minor);
-			if(Version == target)
-				return this;
-			return Versions.FirstOrDefault(x => x.Version == target);
+			return Version == target ? this : Versions.FirstOrDefault(x => x.Version == target);
 		}
 
-		public Deck GetVersion(SerializableVersion version)
-		{
-			if(version == null)
-				return null;
-			return GetVersion(version.Major, version.Minor);
-		}
+		public Deck GetVersion(SerializableVersion version) => version == null ? null : GetVersion(version.Major, version.Minor);
 
-		public bool HasVersion(SerializableVersion version)
-		{
-			return Version == version || Versions.Any(v => v.Version == version);
-		}
+		public bool HasVersion(SerializableVersion version) => Version == version || Versions.Any(v => v.Version == version);
 
-		public object CloneWithNewId(bool isVersion)
-		{
-			return new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats, "",
-			                Guid.NewGuid(), HearthStatsDeckVersionId, isVersion ? HearthStatsIdForUploading : "", SelectedVersion, _isArenaDeck);
-		}
+		public object CloneWithNewId(bool isVersion) => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats, "",
+																 Guid.NewGuid(), HearthStatsDeckVersionId, isVersion ? HearthStatsIdForUploading : "", SelectedVersion, _isArenaDeck);
 
 		public void ResetVersions()
 		{
@@ -568,104 +472,34 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SelectedVersion = Version;
 		}
 
-		public Deck GetSelectedDeckVersion()
-		{
-			return Versions == null ? this : Versions.FirstOrDefault(d => d.Version == SelectedVersion) ?? this;
-		}
+		public Deck GetSelectedDeckVersion() => Versions == null ? this : Versions.FirstOrDefault(d => d.Version == SelectedVersion) ?? this;
 
-		public void SelectVersion(SerializableVersion version)
-		{
-			SelectedVersion = version;
-		}
+		public void SelectVersion(SerializableVersion version) => SelectedVersion = version;
 
-		public void SelectVersion(Deck deck)
-		{
-			SelectVersion(deck.Version);
-		}
+		public void SelectVersion(Deck deck) => SelectVersion(deck.Version);
 
-		public string GetDeckInfo()
-		{
-			return string.Format("deckname:{0}, class:{1}, cards:{2}", Name.Replace("{", "").Replace("}", ""), Class, Cards.Sum(x => x.Count));
-		}
+		public string GetDeckInfo() => $"deckname:{Name.Replace("{", "").Replace("}", "")}, class:{Class}, cards:{Cards.Sum(x => x.Count)}";
 
 		/// returns the number of cards in the deck with mechanics matching the newmechanic.
 		/// The mechanic attribute, such as windfury or taunt, comes from the cardDB json file
-		public int GetMechanicCount(string newmechanic)
-		{
-			return
-				Cards.Where(card => card.Mechanics != null)
-				     .Sum(card => card.Mechanics.Count(mechanic => mechanic.Equals(newmechanic)) * card.Count);
-		}
+		public int GetMechanicCount(string newmechanic) => Cards.Where(card => card.Mechanics != null)
+																.Sum(card => card.Mechanics.Count(mechanic => mechanic.Equals(newmechanic)) * card.Count);
 
-		public int GetNumTaunt()
-		{
-			return GetMechanicCount("Taunt");
-		}
+		public int GetNumTaunt() => GetMechanicCount("Taunt");
+		public int GetNumBattlecry() => GetMechanicCount("Battlecry");
+		public int GetNumImmuneToSpellpower() => GetMechanicCount("ImmuneToSpellpower");
+		public int GetNumSpellpower() => GetMechanicCount("Spellpower");
+		public int GetNumOneTurnEffect() => GetMechanicCount("OneTurnEffect");
+		public int GetNumCharge() => GetMechanicCount("Charge") + GetMechanicCount("GrantCharge");
+		public int GetNumFreeze() => GetMechanicCount("Freeze");
+		public int GetNumAdjacentBuff() => GetMechanicCount("AdjacentBuff");
+		public int GetNumSecret() => GetMechanicCount("Secret");
+		public int GetNumDeathrattle() => GetMechanicCount("Deathrattle");
+		public int GetNumWindfury() => GetMechanicCount("Windfury");
+		public int GetNumDivineShield() => GetMechanicCount("Divine Shield");
+		public int GetNumCombo() => GetMechanicCount("Combo");
 
-		public int GetNumBattlecry()
-		{
-			return GetMechanicCount("Battlecry");
-		}
-
-		public int GetNumImmuneToSpellpower()
-		{
-			return GetMechanicCount("ImmuneToSpellpower");
-		}
-
-		public int GetNumSpellpower()
-		{
-			return GetMechanicCount("Spellpower");
-		}
-
-		public int GetNumOneTurnEffect()
-		{
-			return GetMechanicCount("OneTurnEffect");
-		}
-
-		public int GetNumCharge()
-		{
-			return GetMechanicCount("Charge") + GetMechanicCount("GrantCharge");
-		}
-
-		public int GetNumFreeze()
-		{
-			return GetMechanicCount("Freeze");
-		}
-
-		public int GetNumAdjacentBuff()
-		{
-			return GetMechanicCount("AdjacentBuff");
-		}
-
-		public int GetNumSecret()
-		{
-			return GetMechanicCount("Secret");
-		}
-
-		public int GetNumDeathrattle()
-		{
-			return GetMechanicCount("Deathrattle");
-		}
-
-		public int GetNumWindfury()
-		{
-			return GetMechanicCount("Windfury");
-		}
-
-		public int GetNumDivineShield()
-		{
-			return GetMechanicCount("Divine Shield");
-		}
-
-		public int GetNumCombo()
-		{
-			return GetMechanicCount("Combo");
-		}
-
-		public override string ToString()
-		{
-			return string.Format("{0} ({1})", Name, Class);
-		}
+		public override string ToString() => $"{Name} ({Class})";
 
 		public override bool Equals(object obj)
 		{
@@ -677,12 +511,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return DeckId.Equals(deck.DeckId);
 		}
 
-		public override int GetHashCode()
-		{
-			if(HasHearthStatsId)
-				return HasHearthStatsId.GetHashCode();
-			return DeckId.GetHashCode();
-		}
+		public override int GetHashCode() => HasHearthStatsId ? HasHearthStatsId.GetHashCode() : DeckId.GetHashCode();
 
 		public static List<Card> operator -(Deck first, Deck second)
 		{
@@ -693,6 +522,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			foreach(var c in second.Cards.Where(c => !first.Cards.Contains(c)))
 			{
 				var cd = c.Clone() as Card;
+				if(cd == null)
+					continue;
 				cd.Count = -cd.Count; //merk as negative for visual
 				diff.Add(cd);
 			}
@@ -705,37 +536,31 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			foreach(var card in diffCount)
 			{
 				var cardclone = card.Clone() as Card;
-				cardclone.Count = cardclone.Count - second.Cards.Where(c => c.Id == cardclone.Id).First().Count;
+				if(cardclone == null)
+					continue;
+				cardclone.Count = cardclone.Count - second.Cards.First(c => c.Id == cardclone.Id).Count;
 				diff.Add(cardclone);
 			}
 
 			return diff;
 		}
 
-		public SerializableVersion GetMaxVerion()
-		{
-			return VersionsIncludingSelf.OrderByDescending(x => x).First();
-		}
+		public SerializableVersion GetMaxVerion() => VersionsIncludingSelf.OrderByDescending(x => x).First();
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public void Edited()
-		{
-			LastEdited = DateTime.Now;
-		}
+		public void Edited() => LastEdited = DateTime.Now;
 
 		public void StatsUpdated()
 		{
-			OnPropertyChanged("StatsString");
-			OnPropertyChanged("WinLossString");
-			OnPropertyChanged("WinPercent");
-			OnPropertyChanged("WinPercentString");
+			OnPropertyChanged(nameof(StatsString));
+			OnPropertyChanged(nameof(WinLossString));
+			OnPropertyChanged(nameof(WinPercent));
+			OnPropertyChanged(nameof(WinPercentString));
 		}
 	}
 }

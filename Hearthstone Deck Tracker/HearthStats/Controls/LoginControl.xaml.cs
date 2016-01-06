@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				Core.MainWindow.MenuItemLogin.Visibility = Visibility.Collapsed;
 				Core.MainWindow.MenuItemLogout.Visibility = Visibility.Visible;
 				Core.MainWindow.SeparatorLogout.Visibility = Visibility.Visible;
-				Core.MainWindow.MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
+				Core.MainWindow.MenuItemLogout.Header = $"LOGOUT ({HearthStatsAPI.LoggedInAs})";
 
 				var dialogResult =
 					await

@@ -31,11 +31,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{20, "League of Explorers"}
 		};
 
-		public static string ConvertClass(CardClass cardClass)
-		{
-			return (int)cardClass < 2 || (int)cardClass > 10
-				       ? null : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(cardClass.ToString().ToLower());
-		}
+		public static string ConvertClass(CardClass cardClass) => (int)cardClass < 2 || (int)cardClass > 10
+																	  ? null : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(cardClass.ToString().ToLower());
 
 		public static Rarity RariryConverter(HearthDb.Enums.Rarity rarity)
 		{
@@ -56,12 +53,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static string CardTypeConverter(CardType type)
-		{
-			if(type == CardType.HERO_POWER)
-				return "Hero Power";
-			return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(type.ToString().ToLower().Replace("_", ""));
-		}
+		public static string CardTypeConverter(CardType type) => type == CardType.HERO_POWER ? "Hero Power" : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(type.ToString().ToLower().Replace("_", ""));
 
 
 		public static string RaceConverter(Race race)

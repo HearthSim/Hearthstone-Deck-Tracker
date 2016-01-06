@@ -45,15 +45,12 @@ namespace Hearthstone_Deck_Tracker
 				Core.MainWindow.DeckPickerList.ActiveDeckChanged();
 				Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 				Logger.WriteLine("Set active deck to: " + value, "DeckList");
-				Config.Instance.ActiveDeckId = value == null ? Guid.Empty : value.DeckId;
+				Config.Instance.ActiveDeckId = value?.DeckId ?? Guid.Empty;
 				Config.Save();
 			}
 		}
 
-		public Deck ActiveDeckVersion
-		{
-			get { return ActiveDeck == null ? null : ActiveDeck.GetSelectedDeckVersion(); }
-		}
+		public Deck ActiveDeckVersion => ActiveDeck?.GetSelectedDeckVersion();
 
 		public static DeckList Instance
 		{

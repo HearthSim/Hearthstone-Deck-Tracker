@@ -66,8 +66,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 					var text = HttpUtility.HtmlDecode(node.InnerText).Trim();
 
-					var pattern = @"^\d+\s*(.+?)\s*(x \d+)?$";
-					var match = Regex.Match(text, pattern);
+					var match = Regex.Match(text, @"^\d+\s*(.+?)\s*(x \d+)?$");
 
 					var name = "";
 					if(match.Success && match.Groups.Count == 3)

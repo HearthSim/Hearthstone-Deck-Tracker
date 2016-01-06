@@ -137,26 +137,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 		}
 
-		private void CheckboxDeckSortingClassFirst_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.CardSortingClassFirst = true;
-			SaveConfig(false);
-			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, true);
-			//Helper.SortCardCollection(ListViewNewDeck.Items, true);
-		}
-
-		private void CheckboxDeckSortingClassFirst_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.CardSortingClassFirst = false;
-			SaveConfig(false);
-			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, false);
-			//Helper.SortCardCollection(ListViewNewDeck.Items, false);
-		}
-
 		private void CheckboxHideDecksInOverlay_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)

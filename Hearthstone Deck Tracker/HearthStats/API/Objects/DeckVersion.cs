@@ -20,12 +20,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 		{
 			var clone = (Deck)latest.CloneWithNewId(true);
 			clone.Cards =
-				new ObservableCollection<Card>(cards == null
-					                               ? new List<Card>()
-					                               : cards.Where(x => x != null && x.count != null && x.id != null)
-					                                      .Select(x => x.ToCard())
-					                                      .Where(x => x != null)
-					                                      .ToList());
+				new ObservableCollection<Card>(cards?.Where(x => x?.count != null && x.id != null)
+													 .Select(x => x.ToCard())
+													 .Where(x => x != null)
+													 .ToList() ?? new List<Card>());
 			clone.HearthStatsDeckVersionId = deck_version_id.ToString();
 			clone.Version = SerializableVersion.ParseOrDefault(version);
 			clone.Versions.Clear();

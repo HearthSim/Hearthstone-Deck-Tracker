@@ -11,9 +11,6 @@ namespace Hearthstone_Deck_Tracker.API
 	public class Overlay
 	{
 		[Obsolete("Use API.Core.OverlayCanvas")]
-		public static Canvas OverlayCanvas
-		{
-			get { return Hearthstone_Deck_Tracker.Core.Overlay.CanvasInfo; }
-		}
+		public static Canvas OverlayCanvas => Hearthstone_Deck_Tracker.Core.Overlay.CanvasInfo;
 	}
 }

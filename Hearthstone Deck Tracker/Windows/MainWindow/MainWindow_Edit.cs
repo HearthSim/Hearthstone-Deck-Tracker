@@ -63,10 +63,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(Config.Instance.KeepStatsWhenDeletingDeck)
 					{
 						var defaultDeck = DefaultDeckStats.Instance.GetDeckStats(deck.Class);
-						if(defaultDeck != null)
-							defaultDeck.Games.AddRange(deckStats.Games);
+						defaultDeck?.Games.AddRange(deckStats.Games);
 						DefaultDeckStats.Save();
-						Logger.WriteLine(string.Format("Moved deckstats for deck {0} to default stats", deck.Name), "Edit");
+						Logger.WriteLine($"Moved deckstats for deck {deck.Name} to default stats", "Edit");
 					}
 					else
 					{
@@ -156,17 +155,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 
 				var archivedLog = archive ? "archived" : "unarchived";
-				Logger.WriteLine(String.Format("Successfully {0} deck: {1}", archivedLog, deck.Name), "ArchiveDeck");
+				Logger.WriteLine($"Successfully {archivedLog} deck: {deck.Name}", "ArchiveDeck");
 
 				if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 				{
-					Logger.WriteLine(String.Format("auto uploading {0} deck", archivedLog), "ArchiveDeck");
+					Logger.WriteLine($"auto uploading {archivedLog} deck", "ArchiveDeck");
 					HearthStatsManager.UpdateDeckAsync(deck, background: true);
 				}
 			}
 			catch(Exception)
 			{
-				Logger.WriteLine(String.Format("Error {0} deck", archive ? "archiving" : "unarchiving", deck.Name), "ArchiveDeck");
+				Logger.WriteLine($"Error {(archive ? "archiving" : "unarchiving")} deck {deck.Name}", "ArchiveDeck");
 			}
 		}
 
@@ -289,7 +288,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal async void BtnUpdateDeck_Click(object sender, RoutedEventArgs e)
 		{
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			if(selectedDeck == null || string.IsNullOrEmpty(selectedDeck.Url))
+			if(string.IsNullOrEmpty(selectedDeck?.Url))
 				return;
 			var deck = await DeckImporter.Import(selectedDeck.Url);
 			if(deck == null)
@@ -339,7 +338,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			if(deck == null || string.IsNullOrEmpty(deck.Url))
+			if(string.IsNullOrEmpty(deck?.Url))
 				return;
 			try
 			{
@@ -358,22 +357,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			var settings = new MessageDialogs.Settings {AffirmativeButtonText = "set", NegativeButtonText = "cancel", DefaultText = deck.Name};
 			var newName = await this.ShowInputAsync("Set deck name", "", settings);
-			if(!string.IsNullOrEmpty(newName) && deck.Name != newName)
+			if(string.IsNullOrEmpty(newName) || deck.Name == newName)
+				return;
+			deck.Name = newName;
+			deck.Edited();
+			if(deck.DeckStats.Games.Any())
 			{
-				deck.Name = newName;
-				deck.Edited();
-				if(deck.DeckStats.Games.Any())
-				{
-					foreach(var game in deck.DeckStats.Games)
-						game.DeckName = newName;
-					DeckStatsList.Save();
-				}
-
-				DeckList.Save();
-				DeckPickerList.UpdateDecks();
-				if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
-					HearthStatsManager.UpdateDeckAsync(deck, true, true);
+				foreach(var game in deck.DeckStats.Games)
+					game.DeckName = newName;
+				DeckStatsList.Save();
 			}
+
+			DeckList.Save();
+			DeckPickerList.UpdateDecks();
+			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
+				HearthStatsManager.UpdateDeckAsync(deck, true, true);
 		}
 	}
 }

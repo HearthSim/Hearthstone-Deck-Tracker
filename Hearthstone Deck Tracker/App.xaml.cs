@@ -33,8 +33,7 @@ namespace Hearthstone_Deck_Tracker
 				if(plugin != null)
 				{
 					plugin.IsEnabled = false;
-					var header = string.Format("{0} is not compatible with HDT {1}.", plugin.NameAndVersion,
-					                           Helper.GetCurrentVersion().ToVersionString());
+					var header = $"{plugin.NameAndVersion} is not compatible with HDT {Helper.GetCurrentVersion().ToVersionString()}.";
 					ErrorManager.AddError(header, "Make sure you are using the latest version of the Plugin and HDT.\n\n" + e.Exception);
 					e.Handled = true;
 					return;
@@ -47,7 +46,7 @@ namespace Hearthstone_Deck_Tracker
 #if (!DEBUG)
 			var date = DateTime.Now;
 			var fileName = "Crash Reports\\"
-			               + string.Format("Crash report {0}{1}{2}-{3}{4}", date.Day, date.Month, date.Year, date.Hour, date.Minute);
+			               + $"Crash report {date.Day}{date.Month}{date.Year}-{date.Hour}{date.Minute}";
 
 			if(!Directory.Exists("Crash Reports"))
 				Directory.CreateDirectory("Crash Reports");

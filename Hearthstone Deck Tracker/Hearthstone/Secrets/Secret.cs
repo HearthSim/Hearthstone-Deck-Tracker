@@ -16,13 +16,10 @@ namespace Hearthstone_Deck_Tracker
 			Count = count;
 		}
 
-		public string CardId { get; private set; }
+		public string CardId { get; }
 		public int Count { get; set; }
 
-		public bool ActiveDeckIsConstructed
-		{
-			get { return DeckList.Instance.ActiveDeck != null && !DeckList.Instance.ActiveDeck.IsArenaDeck; }
-		}
+		public bool ActiveDeckIsConstructed => DeckList.Instance.ActiveDeck != null && !DeckList.Instance.ActiveDeck.IsArenaDeck;
 
 
 		public int AdjustedCount(GameV2 game)

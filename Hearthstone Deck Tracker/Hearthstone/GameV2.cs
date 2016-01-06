@@ -19,14 +19,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class GameV2 : IGame
 	{
-		private static List<string> _hsLogLines = new List<string>();
 		public readonly List<Deck> DiscardedArenaDecks = new List<Deck>();
 		private bool _awaitingMainWindowOpen;
 		private GameMode _currentGameMode;
 		private bool _gameModeDetectionComplete;
 
 		private bool _gameModeDetectionRunning;
-		private readonly GameTime _gameTime = new GameTime();
 		public Deck TempArenaDeck = new Deck();
 
 		public GameV2()
@@ -43,40 +41,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Reset();
 		}
 
-		public static List<string> HSLogLines
-		{
-			get { return _hsLogLines; }
-		}
-
+		public static List<string> HSLogLines { get; private set; } = new List<string>();
 		public Deck IgnoreIncorrectDeck { get; set; }
-
-		public GameTime GameTime
-		{
-			get { return _gameTime; }
-		}
-
-		public bool IsMinionInPlay
-		{
-			get { return Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion)).Value != null; }
-		}
+		public GameTime GameTime { get; } = new GameTime();
+		public bool IsMinionInPlay => Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion)).Value != null;
 
 		public bool IsOpponentMinionInPlay
-		{
-			get
-			{
-				return Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))).Value != null;
-			}
-		}
+			=> Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))).Value != null;
 
-		public int OpponentMinionCount
-		{
-			get { return Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))); }
-		}
-
-		public int PlayerMinionCount
-		{
-			get { return Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Player.Id))); }
-		}
+		public int OpponentMinionCount => Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id)));
+		public int PlayerMinionCount => Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Player.Id)));
 
 		public Player Player { get; set; }
 		public Player Opponent { get; set; }
@@ -94,15 +68,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Dictionary<int, Entity> Entities { get; set; }
 		public bool SavedReplay { get; set; }
 
-		public Entity PlayerEntity
-		{
-			get { return Entities.FirstOrDefault(x => x.Value.IsPlayer).Value; }
-		}
+		public Entity PlayerEntity => Entities.FirstOrDefault(x => x.Value.IsPlayer).Value;
 
-		public Entity OpponentEntity
-		{
-			get { return Entities.FirstOrDefault(x => x.Value.HasTag(GAME_TAG.PLAYER_ID) && !x.Value.IsPlayer).Value; }
-		}
+		public Entity OpponentEntity => Entities.FirstOrDefault(x => x.Value.HasTag(GAME_TAG.PLAYER_ID) && !x.Value.IsPlayer).Value;
 
 		public bool IsMulliganDone
 		{
@@ -113,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(player.Value == null || opponent.Value == null)
 					return false;
 				return player.Value.GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DONE
-				       && opponent.Value.GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DONE;
+					   && opponent.Value.GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DONE;
 			}
 		}
 
@@ -154,7 +122,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 				_gameModeDetectionComplete = false;
 			}
-			_hsLogLines = new List<string>();
+			HSLogLines = new List<string>();
 
 			if(Core.Game != null && Core.Overlay != null)
 			{
@@ -174,22 +142,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsUsingPremade = true;
 		}
 
-		public void AddPlayToCurrentGame(PlayType play, int turn, string cardId)
-		{
-			if(CurrentGameStats == null)
-				return;
-			CurrentGameStats.AddPlay(play, turn, cardId);
-		}
+		public void AddPlayToCurrentGame(PlayType play, int turn, string cardId) => CurrentGameStats?.AddPlay(play, turn, cardId);
 
-		public void ResetArenaCards()
-		{
-			PossibleArenaCards.Clear();
-		}
+		public void ResetArenaCards() => PossibleArenaCards.Clear();
 
-		public void ResetConstructedCards()
-		{
-			PossibleConstructedCards.Clear();
-		}
+		public void ResetConstructedCards() => PossibleConstructedCards.Clear();
 
 		public async Task GameModeDetection(int timeoutInSeconds = 300)
 		{
@@ -234,7 +191,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			else
 				TempArenaDeck.Cards.Add((Card)Database.GetCardFromId(cardId).Clone());
 			var numCards = TempArenaDeck.Cards.Sum(c => c.Count);
-			Logger.WriteLine(string.Format("Added new card to arena deck: {0} ({1}/30)", cardId, numCards));
+			Logger.WriteLine($"Added new card to arena deck: {cardId} ({numCards}/30)");
 			if(numCards == 30)
 			{
 				Logger.WriteLine("Found complete arena deck!");
@@ -285,9 +242,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var result =
 				await
 				Core.MainWindow.ShowMessageAsync("New arena deck detected!",
-				                                 "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]",
-				                                 MessageDialogStyle.AffirmativeAndNegative,
-				                                 new MessageDialogs.Settings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
+												 "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]",
+												 MessageDialogStyle.AffirmativeAndNegative,
+												 new MessageDialogs.Settings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
 
 			if(result == MessageDialogResult.Affirmative)
 			{
@@ -311,34 +268,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		#region Database - Obsolete
 
 		[Obsolete("Use Hearthstone.Database.GetCardFromId")]
-		public static Card GetCardFromId(string cardId)
-		{
-			return Database.GetCardFromId(cardId);
-		}
+		public static Card GetCardFromId(string cardId) => Database.GetCardFromId(cardId);
 
 		[Obsolete("Use Hearthstone.Database.GetCardFromName")]
-		public static Card GetCardFromName(string name, bool localized = false)
-		{
-			return Database.GetCardFromName(name, localized);
-		}
+		public static Card GetCardFromName(string name, bool localized = false) => Database.GetCardFromName(name, localized);
 
 		[Obsolete("Use Hearthstone.Database.GetActualCards")]
-		public static List<Card> GetActualCards()
-		{
-			return Database.GetActualCards();
-		}
+		public static List<Card> GetActualCards() => Database.GetActualCards();
 
 		[Obsolete("Use Hearthstone.Database.GetHeroNameFromId")]
 		public static string GetHeroNameFromId(string id, bool returnIdIfNotFound = true)
-		{
-			return Database.GetHeroNameFromId(id, returnIdIfNotFound);
-		}
+			=> Database.GetHeroNameFromId(id, returnIdIfNotFound);
 
 		[Obsolete("Use Hearthstone.Database.IsActualCard")]
-		public static bool IsActualCard(Card card)
-		{
-			return Database.IsActualCard(card);
-		}
+		public static bool IsActualCard(Card card) => Database.IsActualCard(card);
 
 		#endregion
 	}

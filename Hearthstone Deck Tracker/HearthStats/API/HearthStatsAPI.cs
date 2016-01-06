@@ -22,7 +22,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 {
 	public class HearthStatsAPI
 	{
-		private static string _baseUrl = "http://api.hearthstats.net/api/v3";
 #if DEBUG
 		static HearthStatsAPI()
 		{
@@ -35,20 +34,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		}
 #endif
 
-		private static string BaseUrl
-		{
-			get { return _baseUrl; }
-			set { _baseUrl = value; }
-		}
+		private static string BaseUrl { get; } = "http://api.hearthstats.net/api/v3";
 
 		#region authentication
 
 		private static string _authToken;
 
-		public static bool IsLoggedIn
-		{
-			get { return !string.IsNullOrEmpty(_authToken); }
-		}
+		public static bool IsLoggedIn => !string.IsNullOrEmpty(_authToken);
 
 		public static string LoggedInAs { get; private set; }
 
@@ -176,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			catch(WebException e)
 			{
-				if(Helper.MainWindow != null)
+				if(Core.MainWindow != null)
 					ErrorManager.AddError(new Error("HearthStats", e.Message));
 				throw;
 			}
@@ -217,7 +209,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(obj.status == "200")
 				{
 					return
-						obj.data.Where(dw => dw != null && dw.deck != null && dw.cards != null).Select(dw => dw.ToDeck()).Where(d => d != null).ToList();
+						obj.data.Where(dw => dw?.deck != null && dw.cards != null).Select(dw => dw.ToDeck()).Where(d => d != null).ToList();
 				}
 				return new List<Deck>();
 			}

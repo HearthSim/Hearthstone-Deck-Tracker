@@ -18,18 +18,18 @@ namespace Hearthstone_Deck_Tracker
 		{
 			const string url = @"https://api.imgur.com/3/upload";
 
-			WebClient web = new WebClient();
+			var web = new WebClient();
 			web.Headers.Add("Authorization", "Client-ID " + clientId);
 
-			NameValueCollection Keys = new NameValueCollection();
+			var keys = new NameValueCollection();
 			try
 			{
 				var imgBase64 = Convert.ToBase64String(image.GetBuffer());
-				Keys.Add("image", imgBase64);
+				keys.Add("image", imgBase64);
 				if(name != null)
-					Keys.Add("name", name);
+					keys.Add("name", name);
 
-				byte[] responseArray = await web.UploadValuesTaskAsync(url, Keys);
+				var responseArray = await web.UploadValuesTaskAsync(url, keys);
 
 				var reader = new StreamReader(new MemoryStream(responseArray), Encoding.Default);
 				var json = reader.ReadToEnd();

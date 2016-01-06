@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Core.MainWindow.ActivateWindow();
 				while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
 					await Task.Delay(100);
-				var newVersionString = string.Format("{0}.{1}.{2}", newVersion.Major, newVersion.Minor, newVersion.Build);
+				var newVersionString = $"{newVersion.Major}.{newVersion.Minor}.{newVersion.Build}";
 				var betaString = beta ? " BETA" : "";
 				var result =
 					await
@@ -71,11 +71,11 @@ namespace Hearthstone_Deck_Tracker.Utility
 					{
 						newVersion = await Helper.CheckForUpdates(beta);
 						if(newVersion != null)
-							newVersionString = string.Format("{0}.{1}.{2}", newVersion.Major, newVersion.Minor, newVersion.Build);
+							newVersionString = $"{newVersion.Major}.{newVersion.Minor}.{newVersion.Build}";
 					}
 					try
 					{
-						Process.Start("HDTUpdate.exe", string.Format("{0} {1}", Process.GetCurrentProcess().Id, newVersionString));
+						Process.Start("HDTUpdate.exe", $"{Process.GetCurrentProcess().Id} {newVersionString}");
 						Core.MainWindow.Close();
 						Application.Current.Shutdown();
 					}

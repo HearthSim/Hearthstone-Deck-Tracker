@@ -52,9 +52,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 		private async void BtnDeleteRemoteDeck_OnClick(object sender, RoutedEventArgs e)
 		{
 			var btn = sender as Button;
-			if(btn == null)
-				return;
-			var deck = btn.DataContext as Deck;
+			var deck = btn?.DataContext as Deck;
 			if(deck == null)
 				return;
 

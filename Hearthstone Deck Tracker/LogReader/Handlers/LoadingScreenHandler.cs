@@ -3,6 +3,7 @@
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using static Hearthstone_Deck_Tracker.Enums.GameMode;
 
 #endregion
 
@@ -13,15 +14,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
 			var match = HsLogReaderConstants.GameModeRegex.Match(logLine);
-			if(match.Success)
-			{
-				var prev = match.Groups["prev"].Value;
-				var newMode = GetGameMode(match.Groups["curr"].Value) ?? GetGameMode(prev);
-				if(newMode.HasValue && !(game.CurrentGameMode == GameMode.Ranked && newMode.Value == GameMode.Casual))
-					game.CurrentGameMode = newMode.Value;
-				if(prev == "GAMEPLAY")
-					gameState.GameHandler.HandleInMenu();
-			}
+			if(!match.Success)
+				return;
+			var prev = match.Groups["prev"].Value;
+			var newMode = GetGameMode(match.Groups["curr"].Value) ?? GetGameMode(prev);
+			if(newMode.HasValue && !(game.CurrentGameMode == Ranked && newMode.Value == Casual))
+				game.CurrentGameMode = newMode.Value;
+			if(prev == "GAMEPLAY")
+				gameState.GameHandler.HandleInMenu();
 		}
 
 		private GameMode? GetGameMode(string mode)
@@ -29,15 +29,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			switch(mode)
 			{
 				case "ADVENTURE":
-					return GameMode.Practice;
+					return Practice;
 				case "TAVERN_BRAWL":
-					return GameMode.Brawl;
+					return Brawl;
 				case "TOURNAMENT":
-					return GameMode.Casual;
+					return Casual;
 				case "DRAFT":
-					return GameMode.Arena;
+					return Arena;
 				case "FRIENDLY":
-					return GameMode.Friendly;
+					return Friendly;
 				default:
 					return null;
 			}

@@ -38,25 +38,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Deck Deck { get; set; }
 
-		public FontWeight FontWeightActiveDeck
-		{
-			get { return Equals(Deck, DeckList.Instance.ActiveDeck) ? FontWeights.Bold : FontWeights.Regular; }
-		}
+		public FontWeight FontWeightActiveDeck => Equals(Deck, DeckList.Instance.ActiveDeck) ? FontWeights.Bold : FontWeights.Regular;
 
-		public FontWeight FontWeightSelected
-		{
-			get
-			{
-				return Equals(Deck, DeckList.Instance.ActiveDeck)
-					       ? FontWeights.Bold
-					       : (Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
-			}
-		}
+		public FontWeight FontWeightSelected => Equals(Deck, DeckList.Instance.ActiveDeck)
+													? FontWeights.Bold
+													: (Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
 
-		public string TextUseButton
-		{
-			get { return Deck.Equals(DeckList.Instance.ActiveDeck) ? "ACTIVE" : "USE"; }
-		}
+		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? "ACTIVE" : "USE";
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -67,55 +55,33 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public void RefreshProperties()
 		{
-			OnPropertyChanged("FontWeightSelected");
-			OnPropertyChanged("FontWeightActiveDeck");
-			OnPropertyChanged("TextUseButton");
+			OnPropertyChanged(nameof(FontWeightSelected));
+			OnPropertyChanged(nameof(FontWeightActiveDeck));
+			OnPropertyChanged(nameof(TextUseButton));
 		}
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#region sorting properties
 
-		public string Class
-		{
-			get { return Deck.GetClass; }
-		}
+		public string Class => Deck.GetClass;
 
-		public DateTime LastEdited
-		{
-			get { return Deck.LastEdited; }
-		}
+		public DateTime LastEdited => Deck.LastEdited;
 
-		public DateTime LastPlayed
-		{
-			get { return Deck.LastPlayed; }
-		}
+		public DateTime LastPlayed => Deck.LastPlayed;
 
-		public DateTime LastPlayedNewFirst
-		{
-			get { return Deck.LastPlayedNewFirst; }
-		}
+		public DateTime LastPlayedNewFirst => Deck.LastPlayedNewFirst;
 
-		public double WinPercent
-		{
-			get { return Deck.WinPercent; }
-		}
+		public double WinPercent => Deck.WinPercent;
 
-		public string DeckName
-		{
-			get { return Deck.Name; }
-		}
+		public string DeckName => Deck.Name;
 
-		public string TagList
-		{
-			get { return Deck.TagList; }
-		}
+		public string TagList => Deck.TagList;
 
 		#endregion
 	}

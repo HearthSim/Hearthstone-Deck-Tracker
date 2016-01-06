@@ -28,10 +28,7 @@ namespace Hearthstone_Deck_Tracker
 			_initialized = true;
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			SaveAndClose();
-		}
+		private void Button_Click(object sender, RoutedEventArgs e) => SaveAndClose();
 
 		private void SaveAndClose()
 		{

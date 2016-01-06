@@ -25,43 +25,18 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public static readonly Regex NewChoiceRegex = new Regex(@"Client chooses: .* \((?<id>(.+))\)");
 		public static readonly Regex GameModeRegex = new Regex(@"prevMode=(?<prev>(\w+)).*currMode=(?<curr>(\w+))");
 
-		public static LogReaderInfo PowerLogReaderInfo
+		public static LogReaderInfo PowerLogReaderInfo => new LogReaderInfo
 		{
-			get
-			{
-				return new LogReaderInfo
-				{
-					Name = "Power",
-					StartsWithFilters = new[] {"PowerTaskList."},
-					ContainsFilters = new[] {"Begin Spectating", "Start Spectator", "End Spectator"}
-				};
-			}
-		}
+			Name = "Power",
+			StartsWithFilters = new[] {"PowerTaskList."},
+			ContainsFilters = new[] {"Begin Spectating", "Start Spectator", "End Spectator"}
+		};
 
-		public static LogReaderInfo AssetLogReaderInfo
-		{
-			get { return new LogReaderInfo {Name = "Asset"}; }
-		}
-
-		public static LogReaderInfo BobLogReaderInfo
-		{
-			get { return new LogReaderInfo {Name = "Bob"}; }
-		}
-
-		public static LogReaderInfo RachelleLogReaderInfo
-		{
-			get { return new LogReaderInfo {Name = "Rachelle"}; }
-		}
-
-		public static LogReaderInfo ArenaLogReaderInfo
-		{
-			get { return new LogReaderInfo {Name = "Arena"}; }
-		}
-
-		public static LogReaderInfo LoadingScreenLogReaderInfo
-		{
-			get { return new LogReaderInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded"}}; }
-		}
+		public static LogReaderInfo AssetLogReaderInfo => new LogReaderInfo {Name = "Asset"};
+		public static LogReaderInfo BobLogReaderInfo => new LogReaderInfo {Name = "Bob"};
+		public static LogReaderInfo RachelleLogReaderInfo => new LogReaderInfo {Name = "Rachelle"};
+		public static LogReaderInfo ArenaLogReaderInfo => new LogReaderInfo {Name = "Arena"};
+		public static LogReaderInfo LoadingScreenLogReaderInfo => new LogReaderInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded"}};
 
 		public static class GameState
 		{

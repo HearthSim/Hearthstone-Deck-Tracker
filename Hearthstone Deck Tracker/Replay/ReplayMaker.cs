@@ -19,15 +19,9 @@ namespace Hearthstone_Deck_Tracker.Replay
 	{
 		private static readonly List<ReplayKeyPoint> Points = new List<ReplayKeyPoint>();
 
-		public static void Reset()
-		{
-			Points.Clear();
-		}
+		public static void Reset() => Points.Clear();
 
-		public static void Generate(KeyPointType type, int id, ActivePlayer player, IGame game)
-		{
-			Points.Add(new ReplayKeyPoint(game.Entities.Values.ToArray(), type, id, player));
-		}
+		public static void Generate(KeyPointType type, int id, ActivePlayer player, IGame game) => Points.Add(new ReplayKeyPoint(game.Entities.Values.ToArray(), type, id, player));
 
 		public static string SaveToDisk()
 		{
@@ -66,8 +60,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 					ResolveOpponentName(Database.GetHeroNameFromId(opponentHero.CardId));
 				}
 
-				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, Database.GetHeroNameFromId(playerHero.CardId), opponent.Name,
-				                             Database.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
+				var fileName =
+					$"{player.Name}({Database.GetHeroNameFromId(playerHero.CardId)}) vs {opponent.Name}({Database.GetHeroNameFromId(opponentHero.CardId)}) {DateTime.Now.ToString("HHmm-ddMMyy")}";
 
 
 				if(!Directory.Exists(Config.Instance.ReplayDir))

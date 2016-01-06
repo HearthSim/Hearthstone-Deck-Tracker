@@ -50,9 +50,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 		private void DeckDoNotSync_OnChecked(object sender, RoutedEventArgs e)
 		{
 			var cb = sender as CheckBox;
-			if(cb == null)
-				return;
-			var deck = cb.DataContext as Deck;
+			var deck = cb?.DataContext as Deck;
 			if(deck == null)
 				return;
 			ListViewLocalDecksNoSync.Items.Remove(deck);
@@ -65,9 +63,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 		private void DeckDoSync_OnChecked(object sender, RoutedEventArgs e)
 		{
 			var cb = sender as CheckBox;
-			if(cb == null)
-				return;
-			var deck = cb.DataContext as Deck;
+			var deck = cb?.DataContext as Deck;
 			if(deck == null)
 				return;
 			ListViewLocalDecksSync.Items.Remove(deck);

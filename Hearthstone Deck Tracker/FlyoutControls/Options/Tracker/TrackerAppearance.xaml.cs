@@ -134,7 +134,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			var languages = new List<string>();
 			foreach(CheckBox box in ListBoxAlternativeLanguages.Items)
 			{
-				string language = (string)box.Content;
+				var language = (string)box.Content;
 				if(box.IsChecked == true)
 					languages.Add(Helper.LanguageDict[language]);
 			}

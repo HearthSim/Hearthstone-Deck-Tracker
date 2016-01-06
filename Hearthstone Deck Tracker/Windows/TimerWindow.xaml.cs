@@ -48,10 +48,9 @@ namespace Hearthstone_Deck_Tracker
 
 		public void Update(TimerEventArgs timerEventArgs)
 		{
-			LblTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.Seconds / 60) % 60, timerEventArgs.Seconds % 60);
-			LblPlayerTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.PlayerSeconds / 60) % 60, timerEventArgs.PlayerSeconds % 60);
-			LblOpponentTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.OpponentSeconds / 60) % 60,
-			                                         timerEventArgs.OpponentSeconds % 60);
+			LblTurnTime.Text = $"{(timerEventArgs.Seconds / 60) % 60:00}:{timerEventArgs.Seconds % 60:00}";
+			LblPlayerTurnTime.Text = $"{(timerEventArgs.PlayerSeconds / 60) % 60:00}:{timerEventArgs.PlayerSeconds % 60:00}";
+			LblOpponentTurnTime.Text = $"{(timerEventArgs.OpponentSeconds / 60) % 60:00}:{timerEventArgs.OpponentSeconds % 60:00}";
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -68,10 +67,7 @@ namespace Hearthstone_Deck_Tracker
 			Close();
 		}
 
-		private void MetroWindow_Activated(object sender, EventArgs e)
-		{
-			Topmost = true;
-		}
+		private void MetroWindow_Activated(object sender, EventArgs e) => Topmost = true;
 
 		private void MetroWindow_Deactivated(object sender, EventArgs e)
 		{

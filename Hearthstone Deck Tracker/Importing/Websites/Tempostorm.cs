@@ -17,8 +17,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			try
 			{
 				// check url looks correct
-				var pattern = "/decks/([^/]+)$";
-				var match = Regex.Match(url, pattern);
+				var match = Regex.Match(url, "/decks/([^/]+)$");
 				// get deck name from url, and post the json request
 				if(match.Success && match.Groups.Count == 2)
 				{

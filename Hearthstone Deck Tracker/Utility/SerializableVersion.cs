@@ -35,16 +35,10 @@ namespace Hearthstone_Deck_Tracker
 			Build = v.Build > 0 ? v.Build : 0;
 		}
 
-		public static SerializableVersion Default
-		{
-			get { return new SerializableVersion(1, 0); }
-		}
+		public static SerializableVersion Default => new SerializableVersion(1, 0);
 
 		[XmlIgnore]
-		public string ShortVersionString
-		{
-			get { return ToString("v{M}.{m}"); }
-		}
+		public string ShortVersionString => ToString("v{M}.{m}");
 
 		public int CompareTo(object obj)
 		{
@@ -55,30 +49,21 @@ namespace Hearthstone_Deck_Tracker
 			return new Version(Major, Minor, Build, Revision).CompareTo(new Version(other.Major, other.Minor, other.Revision, other.Build));
 		}
 
-		public override string ToString()
-		{
-			return string.Format("{0}.{1}.{2}.{3}", Major, Minor, Revision, Build);
-		}
+		public override string ToString() => string.Format("{0}.{1}.{2}.{3}", Major, Minor, Revision, Build);
 
-		public string ToString(bool reverseRevBuild)
-		{
-			return string.Format("{0}.{1}.{2}.{3}", Major, Minor, Build, Revision);
-		}
+		public string ToString(bool reverseRevBuild) => string.Format("{0}.{1}.{2}.{3}", Major, Minor, Build, Revision);
 
 		/// <summary>
 		/// {M}: Major, {m}: Minor, {r}: Revision, {b}: Build
 		/// </summary>
 		/// <param name="format"></param>
 		/// <returns></returns>
-		public string ToString(string format)
-		{
-			return format.Replace("{M}", Major.ToString())
-			             .Replace("{m}", Minor.ToString())
-			             .Replace("{r}", Revision.ToString())
-			             .Replace("{b}", Build.ToString());
-		}
+		public string ToString(string format) => format.Replace("{M}", Major.ToString())
+													   .Replace("{m}", Minor.ToString())
+													   .Replace("{r}", Revision.ToString())
+													   .Replace("{b}", Build.ToString());
 
-		public override bool Equals(Object obj)
+		public override bool Equals(object obj)
 		{
 			// If parameter is null return false.
 			if(obj == null)
@@ -86,7 +71,7 @@ namespace Hearthstone_Deck_Tracker
 
 			// If parameter cannot be cast to Point return false.
 			var p = obj as SerializableVersion;
-			if((Object)p == null)
+			if((object)p == null)
 				return false;
 			// Return true if the fields match:
 			return Equals(p);
@@ -102,20 +87,11 @@ namespace Hearthstone_Deck_Tracker
 			return Major == sv.Major && Minor == sv.Minor && Revision == sv.Revision && Build == sv.Build;
 		}
 
-		public static SerializableVersion IncreaseMajor(SerializableVersion sv)
-		{
-			return new SerializableVersion(sv.Major + 1, 0);
-		}
+		public static SerializableVersion IncreaseMajor(SerializableVersion sv) => new SerializableVersion(sv.Major + 1, 0);
 
-		public static SerializableVersion IncreaseMinor(SerializableVersion sv)
-		{
-			return new SerializableVersion(sv.Major, sv.Minor + 1);
-		}
+		public static SerializableVersion IncreaseMinor(SerializableVersion sv) => new SerializableVersion(sv.Major, sv.Minor + 1);
 
-		public override int GetHashCode()
-		{
-			return base.GetHashCode();
-		}
+		public override int GetHashCode() => base.GetHashCode();
 
 		public static bool operator ==(SerializableVersion a, SerializableVersion b)
 		{
@@ -131,10 +107,7 @@ namespace Hearthstone_Deck_Tracker
 			return a.Equals(b);
 		}
 
-		public static bool operator !=(SerializableVersion a, SerializableVersion b)
-		{
-			return !(a == b);
-		}
+		public static bool operator !=(SerializableVersion a, SerializableVersion b) => !(a == b);
 
 		public static SerializableVersion Parse(string verionString)
 		{

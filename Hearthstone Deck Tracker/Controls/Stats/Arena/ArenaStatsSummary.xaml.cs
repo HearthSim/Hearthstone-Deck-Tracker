@@ -26,8 +26,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 				e.Handled = true;
 				var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) {RoutedEvent = MouseWheelEvent, Source = sender};
 				var parent = ((Control)sender).Parent as UIElement;
-				if(parent != null)
-					parent.RaiseEvent(eventArg);
+				parent?.RaiseEvent(eventArg);
 			}
 		}
 	}

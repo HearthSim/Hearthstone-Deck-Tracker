@@ -204,8 +204,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		private void TextBoxScaling_OnPreviewTextInput(object sender, TextCompositionEventArgs e)

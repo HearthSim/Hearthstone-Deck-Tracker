@@ -20,8 +20,7 @@ namespace Hearthstone_Deck_Tracker.Replay.Controls
 			get
 			{
 				// Create a StreamGeometry for describing the shape
-				var geometry = new StreamGeometry();
-				geometry.FillRule = FillRule.EvenOdd;
+				var geometry = new StreamGeometry {FillRule = FillRule.EvenOdd};
 
 				using(var context = geometry.Open())
 					InternalDrawArrowGeometry(context);

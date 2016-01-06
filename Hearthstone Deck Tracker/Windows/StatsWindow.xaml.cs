@@ -48,9 +48,6 @@ namespace Hearthstone_Deck_Tracker
 			Close();
 		}
 
-		private void MetroWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-		{
-			FlyoutGameDetails.Width = Width;
-		}
+		private void MetroWindow_SizeChanged(object sender, SizeChangedEventArgs e) => FlyoutGameDetails.Width = Width;
 	}
 }

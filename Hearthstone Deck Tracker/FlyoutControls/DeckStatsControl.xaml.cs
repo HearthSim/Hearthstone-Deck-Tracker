@@ -33,7 +33,6 @@ namespace Hearthstone_Deck_Tracker
 		private const int GroupBoxHeaderHeight = 28;
 		private readonly Dictionary<GroupBox, bool> _isGroupBoxExpanded;
 		private Deck _deck;
-		private GameV2 _game;
 		private bool _initialized;
 		private HeroClassAll? _opponentCb;
 
@@ -49,14 +48,10 @@ namespace Hearthstone_Deck_Tracker
 			_isGroupBoxExpanded = new Dictionary<GroupBox, bool> {{GroupboxClassOverview, true}};
 		}
 
-		public Visibility OnlyOverallVisible
-		{
-			get { return TabControlCurrentOverall.SelectedIndex == 0 ? Visibility.Collapsed : Visibility.Visible; }
-		}
+		public Visibility OnlyOverallVisible => TabControlCurrentOverall.SelectedIndex == 0 ? Visibility.Collapsed : Visibility.Visible;
 
-		public void LoadConfig(GameV2 game)
+		public void LoadConfig()
 		{
-			_game = game;
 			ComboboxGameMode.SelectedItem = Config.Instance.SelectedStatsFilterGameMode;
 			ComboboxTime.SelectedValue = Config.Instance.SelectedStatsFilterTimeFrame;
 			ComboboxUnassigned.SelectedValue = Config.Instance.StatsOverallFilterDeckMode;

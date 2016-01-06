@@ -128,10 +128,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		internal Task<GameStats> WaitForButtonPressAsync()
-		{
-			return _tcs.Task;
-		}
+		internal Task<GameStats> WaitForButtonPressAsync() => _tcs.Task;
 
 		private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
@@ -145,9 +142,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				TextBoxRank.IsEnabled = e.AddedItems.Contains(GameMode.Ranked);
 		}
 
-		private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
-		{
-			_tcs.SetResult(null);
-		}
+		private void BtnCancel_OnClick(object sender, RoutedEventArgs e) => _tcs.SetResult(null);
 	}
 }

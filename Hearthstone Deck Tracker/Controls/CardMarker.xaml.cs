@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			InitializeComponent();
 		}
 
-		public String Text
+		public string Text
 		{
 			get { return CardAge.Text; }
 			set { CardAge.Text = value; }
@@ -35,9 +35,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			set
 			{
 				_mark = value;
-				ImageSourceConverter c = new ImageSourceConverter();
-
-				String source = "";
+				var source = "";
 				switch(_mark)
 				{
 					case CardMark.Coin:
