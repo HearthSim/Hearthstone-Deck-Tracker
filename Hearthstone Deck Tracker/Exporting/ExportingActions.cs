@@ -3,6 +3,7 @@
 using System;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -20,7 +21,9 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		{
 			if(Config.Instance.ExportSetDeckName && !deck.TagList.ToLower().Contains("brawl"))
 			{
-				var name = deck.Name;
+				var name = Regex.Replace(deck.Name, @"[\(\)\{\}]", "");
+				if(name != deck.Name)
+					Logger.WriteLine("Removed parenthesis/braces from deck name. New name: " + name, "DeckExporter");
 				if(Config.Instance.ExportAddDeckVersionToName)
 				{
 					var version = " " + deck.SelectedVersion.ShortVersionString;
