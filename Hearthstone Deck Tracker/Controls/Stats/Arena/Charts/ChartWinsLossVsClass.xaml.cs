@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 			ArenaStats.Instance.PropertyChanged += (sender, args) =>
 			{
 				if(args.PropertyName == "WinLossVsClass")
-					OnPropertyChanged("SeriesSourceWins");
+					OnPropertyChanged(nameof(SeriesSourceWins));
 			};
 		}
 
@@ -50,8 +50,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public class WinChartData

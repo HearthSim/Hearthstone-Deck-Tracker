@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				_currentNewsLine = _news[newsLine];
 				Core.MainWindow.NewsContentControl.Content = StringToTextBlock(_currentNewsLine);
 			}
-			Core.MainWindow.StatusBarItemNewsIndex.Content = string.Format("({0}/{1})", _newsLine + 1, _news.Length);
+			Core.MainWindow.StatusBarItemNewsIndex.Content = $"({_newsLine + 1}/{_news.Length})";
 			_lastNewsUpdate = DateTime.Now;
 		}
 

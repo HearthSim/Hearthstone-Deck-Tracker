@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			const double scale = 0.037; // 40px @ height = 1080
 			const double minHue = 90;
 
-			int size = (int)Math.Round(height * scale);
+			var size = (int)Math.Round(height * scale);
 
 			var capture = Helper.CaptureHearthstone(new Point(posX, posY), size, size, wndHandle);
 			if(capture == null)
@@ -39,8 +39,9 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			const double yScale = 0.0278; // 30px @ height = 1080
 			const double maxBrightness = 5.0 / 11.0;
 
-			int lockWidth = (int)Math.Round(height * xScale);
-			int lockHeight = (int)Math.Round(height * yScale);
+			// ReSharper disable once SuggestVarOrType_BuiltInTypes
+			var lockWidth = (int)Math.Round(height * xScale);
+			var lockHeight = (int)Math.Round(height * yScale);
 
 			var capture = Helper.CaptureHearthstone(new Point(posX, posY), lockWidth, lockHeight, wndHandle);
 			if(capture == null)
@@ -63,10 +64,10 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			const double scale = 0.020; // 22px @ height = 1080
 			const double minBrightness = 0.55;
 
-			int size = (int)Math.Round(height * scale);
+			var size = (int)Math.Round(height * scale);
 
-			int posX = (int)Helper.GetScaledXPos(Config.Instance.ExportZeroSquareX, width, ratio);
-			int posY = (int)(Config.Instance.ExportZeroSquareY * height);
+			var posX = (int)Helper.GetScaledXPos(Config.Instance.ExportZeroSquareX, width, ratio);
+			var posY = (int)(Config.Instance.ExportZeroSquareY * height);
 
 			var capture = Helper.CaptureHearthstone(new Point(posX, posY), size, size, wndHandle);
 

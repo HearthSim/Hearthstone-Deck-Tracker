@@ -26,7 +26,6 @@ namespace Hearthstone_Deck_Tracker
 		private readonly bool _initialized;
 		private ProgressDialogController _controller;
 		private Visibility _loginRegisterVisibility;
-		private LoginType _loginResult = LoginType.None;
 
 		public LoginWindow()
 		{
@@ -35,16 +34,9 @@ namespace Hearthstone_Deck_Tracker
 			_initialized = true;
 		}
 
-		public LoginType LoginResult
-		{
-			get { return _loginResult; }
-			private set { _loginResult = value; }
-		}
+		public LoginType LoginResult { get; private set; } = LoginType.None;
 
-		public double TabWidth
-		{
-			get { return ActualWidth / 2; }
-		}
+		public double TabWidth => ActualWidth / 2;
 
 		public Visibility LoginRegisterVisibility
 		{
@@ -53,21 +45,15 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_loginRegisterVisibility = value;
 				OnPropertyChanged();
-				OnPropertyChanged("ContinueAsGuestVisibility");
+				OnPropertyChanged(nameof(ContinueAsGuestVisibility));
 			}
 		}
 
-		public Visibility ContinueAsGuestVisibility
-		{
-			get { return LoginRegisterVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible; }
-		}
+		public Visibility ContinueAsGuestVisibility => LoginRegisterVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			Process.Start(e.Uri.AbsoluteUri);
-		}
+		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 
 		private async void BtnLogin_Click(object sender, RoutedEventArgs e)
 		{
@@ -102,11 +88,8 @@ namespace Hearthstone_Deck_Tracker
 			TextBlockErrorMessage.Text = error;
 			TextBlockErrorMessage.Visibility = Visibility.Visible;
 			IsEnabled = true;
-			if(_controller != null)
-			{
-				if(_controller.IsOpen)
-					await _controller.CloseAsync();
-			}
+			if(_controller?.IsOpen ?? false)
+				await _controller.CloseAsync();
 		}
 
 		private void CheckBoxRememberLogin_Checked(object sender, RoutedEventArgs e)
@@ -186,15 +169,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void CheckBoxPrivacyPolicy_Checked(object sender, RoutedEventArgs e)
-		{
-			BtnRegister.IsEnabled = true;
-		}
+		private void CheckBoxPrivacyPolicy_Checked(object sender, RoutedEventArgs e) => BtnRegister.IsEnabled = true;
 
-		private void CheckBoxPrivacyPolicy_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			BtnRegister.IsEnabled = false;
-		}
+		private void CheckBoxPrivacyPolicy_OnUnchecked(object sender, RoutedEventArgs e) => BtnRegister.IsEnabled = false;
 
 		private void Button_Continue(object sender, RoutedEventArgs e)
 		{
@@ -218,9 +195,7 @@ namespace Hearthstone_Deck_Tracker
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

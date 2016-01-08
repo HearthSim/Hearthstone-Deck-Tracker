@@ -42,9 +42,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			get
 			{
 				var classStats = DataContext as ClassStats;
-				if(classStats != null)
-					return classStats.Class;
-				return Class;
+				return classStats != null ? classStats.Class : Class;
 			}
 		}
 
@@ -59,9 +57,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			get
 			{
 				var classStats = DataContext as ClassStats;
-				if(classStats != null)
-					return classStats.ClassImage;
-				return ImageCache.GetClassIcon(Class);
+				return classStats != null ? classStats.ClassImage : ImageCache.GetClassIcon(Class);
 			}
 		}
 
@@ -69,17 +65,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		private void ArenaClassStats_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
-			OnPropertyChanged("ClassImage");
-			OnPropertyChanged("ImageVisiblity");
-			OnPropertyChanged("ClassName");
+			OnPropertyChanged(nameof(ClassImage));
+			OnPropertyChanged(nameof(ImageVisiblity));
+			OnPropertyChanged(nameof(ClassName));
 		}
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

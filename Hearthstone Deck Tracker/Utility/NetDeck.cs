@@ -14,16 +14,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		public static void CheckForChromeExtention()
 		{
-			if(!Config.Instance.NetDeckClipboardCheck.HasValue)
-			{
-				var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-				                        @"Google\Chrome\User Data\Default\Extensions\lpdbiakcpmcppnpchohihcbdnojlgeel");
+			if(Config.Instance.NetDeckClipboardCheck.HasValue)
+				return;
+			var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+									@"Google\Chrome\User Data\Default\Extensions\lpdbiakcpmcppnpchohihcbdnojlgeel");
 
-				if(Directory.Exists(path))
-				{
-					Config.Instance.NetDeckClipboardCheck = true;
-					Config.Save();
-				}
+			if(Directory.Exists(path))
+			{
+				Config.Instance.NetDeckClipboardCheck = true;
+				Config.Save();
 			}
 		}
 

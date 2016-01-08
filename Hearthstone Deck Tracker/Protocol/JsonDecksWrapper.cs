@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Protocol
 			Core.MainWindow.ActivateWindow();
 			if(decks.Count > 1 || AutoSave)
 			{
-				var log = string.Format("Saving {0} decks", decks.Count);
+				var log = $"Saving {decks.Count} decks";
 				var controller = await Core.MainWindow.ShowProgressAsync(log, "Please wait...");
 				Logger.WriteLine(log);
 				foreach(var deck in decks)

@@ -68,15 +68,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public bool SearchBarVisibile { get; set; }
 		public string DeckNameFilter { get; set; }
 
-		public Visibility VisibilitySearchIcon
-		{
-			get { return SearchBarVisibile ? Visibility.Collapsed : Visibility.Visible; }
-		}
+		public Visibility VisibilitySearchIcon => SearchBarVisibile ? Visibility.Collapsed : Visibility.Visible;
 
-		public Visibility VisibilitySearchBar
-		{
-			get { return SearchBarVisibile ? Visibility.Visible : Visibility.Collapsed; }
-		}
+		public Visibility VisibilitySearchBar => SearchBarVisibile ? Visibility.Visible : Visibility.Collapsed;
 
 		public ObservableCollection<string> DeckTypeItems
 		{
@@ -88,15 +82,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			}
 		}
 
-		public Deck ActiveDeck
-		{
-			get { return DeckList.Instance.ActiveDeck; }
-		}
+		public Deck ActiveDeck => DeckList.Instance.ActiveDeck;
 
-		public Visibility VisibilityNoDeck
-		{
-			get { return DeckList.Instance.ActiveDeck == null ? Visibility.Visible : Visibility.Collapsed; }
-		}
+		public Visibility VisibilityNoDeck => DeckList.Instance.ActiveDeck == null ? Visibility.Visible : Visibility.Collapsed;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -104,14 +92,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		internal virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public void ActiveDeckChanged()
 		{
-			OnPropertyChanged("ActiveDeck");
-			OnPropertyChanged("VisibilityNoDeck");
+			OnPropertyChanged(nameof(ActiveDeck));
+			OnPropertyChanged(nameof(VisibilityNoDeck));
 		}
 
 		public event SelectedDeckHandler OnSelectedDeckChanged;
@@ -236,8 +223,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				}
 
 				// If we removed the 'All' class earlier, raise the DeckPickerClassItem's OnDeselected event now
-				if(removedAllClassItem != null)
-					removedAllClassItem.OnDelselected();
+				removedAllClassItem?.OnDelselected();
 			}
 
 			if(Core.MainWindow.IsLoaded)
@@ -281,9 +267,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			foreach(var item in ListViewClasses.Items)
 			{
 				var pickerItem = item as DeckPickerClassItem;
-				if(pickerItem == null)
-					continue;
-				var heroClass = pickerItem.DataContext as HeroClassAll?;
+				var heroClass = pickerItem?.DataContext as HeroClassAll?;
 				if(heroClass == null || !classes.Contains(heroClass.Value))
 					continue;
 				ListViewClasses.SelectedItems.Add(pickerItem);
@@ -323,8 +307,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			Sort();
 			if(selectedDeck != null && reselectActiveDeck && decks.Contains(selectedDeck))
 				SelectDeck(selectedDeck);
-			if(ActiveDeck != null)
-				ActiveDeck.StatsUpdated();
+			ActiveDeck?.StatsUpdated();
 		}
 
 		private DeckPickerItem GetDeckPickerItemFromCache(Deck deck)
@@ -368,8 +351,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					_classItems.Add(_archivedClassItem);
 					ArchivedClassVisible = true;
 
-					if(PropertyChanged != null)
-						PropertyChanged(this, new PropertyChangedEventArgs("ArchivedClassVisible"));
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ArchivedClassVisible"));
 				}
 			}
 			else
@@ -380,8 +362,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				{
 					ArchivedClassVisible = false;
 
-					if(PropertyChanged != null)
-						PropertyChanged(this, new PropertyChangedEventArgs("ArchivedClassVisible"));
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("ArchivedClassVisible"));
 				}
 
 				SelectedClasses.Remove(HeroClassAll.Archived);
@@ -440,8 +421,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				foreach(var deck in e.RemovedItems.Cast<DeckPickerItem>())
 					deck.RefreshProperties();
 			}
-			if(e.AddedItems.Count > 0 && OnSelectedDeckChanged != null)
-				OnSelectedDeckChanged(this, SelectedDecks.FirstOrDefault());
+			if(e.AddedItems.Count > 0)
+				OnSelectedDeckChanged?.Invoke(this, SelectedDecks.FirstOrDefault());
 		}
 
 		public void SelectDeckAndAppropriateView(Deck deck)

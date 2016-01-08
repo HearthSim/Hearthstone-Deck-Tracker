@@ -72,15 +72,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboBoxMod_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			OnPropertyChanged("SelectedHotKeyIsValue");
+			OnPropertyChanged(nameof(SelectedHotKeyIsValue));
 		}
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		private void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
@@ -103,7 +101,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ErrorText = "";
 			TextBoxKey.Text = e.Key == Key.System ? "None" : e.Key.ToString();
 			e.Handled = true;
-			OnPropertyChanged("SelectedHotKeyIsValue");
+			OnPropertyChanged(nameof(SelectedHotKeyIsValue));
 		}
 	}
 }

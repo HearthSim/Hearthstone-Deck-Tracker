@@ -354,9 +354,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			var controller =
 				await
 				Core.MainWindow.ShowProgressAsync("Fixing incorrect stats!",
-				                                  string.Format(
-				                                                "Checking {0} replays, this may take a moment...\r\n\r\nNote: This will not work for matches that don't have replay files.",
-				                                                games.Count), true);
+												  $"Checking {games.Count} replays, this may take a moment...\r\n\r\nNote: This will not work for matches that don't have replay files.", true);
 			var fixCount = await DataIssueResolver.FixOppNameAndClass(games, controller);
 			await controller.CloseAsync();
 			await

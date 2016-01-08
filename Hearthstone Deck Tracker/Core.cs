@@ -28,22 +28,13 @@ namespace Hearthstone_Deck_Tracker
 		public static GameV2 Game { get; set; }
 		public static MainWindow MainWindow { get; set; }
 
-		public static Overview StatsOverview
-		{
-			get { return _statsOverview ?? (_statsOverview = new Overview()); }
-		}
+		public static Overview StatsOverview => _statsOverview ?? (_statsOverview = new Overview());
 
 		public static bool Initialized { get; private set; }
 
-		public static TrayIcon TrayIcon
-		{
-			get { return _trayIcon ?? (_trayIcon = new TrayIcon()); }
-		}
+		public static TrayIcon TrayIcon => _trayIcon ?? (_trayIcon = new TrayIcon());
 
-		public static OverlayWindow Overlay
-		{
-			get { return _overlay ?? (_overlay = new OverlayWindow(Game)); }
-		}
+		public static OverlayWindow Overlay => _overlay ?? (_overlay = new OverlayWindow(Game));
 
 		internal static bool UpdateOverlay { get; set; }
 		internal static bool Update { get; set; }
@@ -132,9 +123,7 @@ namespace Hearthstone_Deck_Tracker
 			HotKeyManager.Load();
 			Initialized = true;
 
-			Analytics.Analytics.TrackPageView(
-			                                  string.Format("/app/v{0}/{1}{2}", Helper.GetCurrentVersion().ToVersionString(),
-			                                                loginType.ToString().ToLower(), newUser ? "/new" : ""), "");
+			Analytics.Analytics.TrackPageView($"/app/v{Helper.GetCurrentVersion().ToVersionString()}/{loginType.ToString().ToLower()}{(newUser ? "/new" : "")}", "");
 		}
 
 		private static async void UpdateOverlayAsync()
@@ -247,30 +236,11 @@ namespace Hearthstone_Deck_Tracker
 			private static StatsWindow _statsWindow;
 			private static StatsWindow_New _newStatsWindow;
 
-			public static PlayerWindow PlayerWindow
-			{
-				get { return _playerWindow ?? (_playerWindow = new PlayerWindow(Game)); }
-			}
-
-			public static OpponentWindow OpponentWindow
-			{
-				get { return _opponentWindow ?? (_opponentWindow = new OpponentWindow(Game)); }
-			}
-
-			public static TimerWindow TimerWindow
-			{
-				get { return _timerWindow ?? (_timerWindow = new TimerWindow(Config.Instance)); }
-			}
-
-			public static StatsWindow StatsWindow
-			{
-				get { return _statsWindow ?? (_statsWindow = new StatsWindow()); }
-			}
-
-			public static StatsWindow_New NewStatsWindow
-			{
-				get { return _newStatsWindow ?? (_newStatsWindow = new StatsWindow_New()); }
-			}
+			public static PlayerWindow PlayerWindow => _playerWindow ?? (_playerWindow = new PlayerWindow(Game));
+			public static OpponentWindow OpponentWindow => _opponentWindow ?? (_opponentWindow = new OpponentWindow(Game));
+			public static TimerWindow TimerWindow => _timerWindow ?? (_timerWindow = new TimerWindow(Config.Instance));
+			public static StatsWindow StatsWindow => _statsWindow ?? (_statsWindow = new StatsWindow());
+			public static StatsWindow_New NewStatsWindow => _newStatsWindow ?? (_newStatsWindow = new StatsWindow_New());
 		}
 	}
 }

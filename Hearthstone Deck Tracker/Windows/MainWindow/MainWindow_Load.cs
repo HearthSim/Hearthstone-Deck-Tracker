@@ -95,10 +95,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.TrayIcon.SetContextMenuProperty("useNoDeck", "Checked", DeckList.Instance.ActiveDeck == null);
 
 
-			DeckStatsFlyout.LoadConfig(Core.Game);
-			GameDetailsFlyout.LoadConfig(Core.Game);
-			Core.Windows.StatsWindow.StatsControl.LoadConfig(Core.Game);
-			Core.Windows.StatsWindow.GameDetailsFlyout.LoadConfig(Core.Game);
+			DeckStatsFlyout.LoadConfig();
+			GameDetailsFlyout.LoadConfig();
+			Core.Windows.StatsWindow.StatsControl.LoadConfig();
+			Core.Windows.StatsWindow.GameDetailsFlyout.LoadConfig();
 
 			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
 			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;
@@ -141,17 +141,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
 		{
-			if(depObj != null)
+			if(depObj == null)
+				yield break;
+			for(var i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
 			{
-				for(int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-				{
-					DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
-					if(child != null && child is T)
-						yield return (T)child;
-
-					foreach(T childOfChild in FindVisualChildren<T>(child))
-						yield return childOfChild;
-				}
+				var child = VisualTreeHelper.GetChild(depObj, i) as T;
+				if(child != null)
+					yield return child;
+				foreach(var childOfChild in FindVisualChildren<T>(child))
+					yield return childOfChild;
 			}
 		}
 
@@ -172,9 +170,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					                      MessageDialogStyle.AffirmativeAndNegative);
 				if(result == MessageDialogResult.Affirmative)
 				{
-					var procInfo = new ProcessStartInfo("HDTHelper.exe", "registerProtocol");
-					procInfo.Verb = "runas";
-					procInfo.UseShellExecute = true;
+					var procInfo = new ProcessStartInfo("HDTHelper.exe", "registerProtocol") {Verb = "runas", UseShellExecute = true};
 					var proc = Process.Start(procInfo);
 					await Task.Run(() => proc.WaitForExit());
 				}

@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true, bool collectible = true)
 		{
-			Language lang = Language.enUS;
+			var lang = Language.enUS;
 			if(localized)
 				Enum.TryParse(Config.Instance.SelectedLanguage, out lang);
 			var card = Cards.GetFromName(name, lang, collectible);
@@ -52,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(CardIds.HeroIdDict.TryGetValue(id, out name))
 				return name;
 			var card = GetCardFromId(id);
-			if(card == null || string.IsNullOrEmpty(card.Name) || card.Name == "UNKNOWN" || card.Type != "Hero")
+			if(string.IsNullOrEmpty(card?.Name) || card.Name == "UNKNOWN" || card.Type != "Hero")
 				return returnIdIfNotFound ? id : null;
 			return card.Name;
 		}

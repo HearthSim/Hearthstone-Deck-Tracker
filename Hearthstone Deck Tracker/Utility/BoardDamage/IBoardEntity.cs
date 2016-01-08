@@ -1,6 +1,6 @@
 ﻿namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 {
-	public interface BoardEntity
+	public interface IBoardEntity
 	{
 		string Name { get; }
 		int Health { get; }

@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(!Directory.Exists(Config.Instance.BackupDir))
 				Directory.CreateDirectory(Config.Instance.BackupDir);
 			var dirInfo = new DirectoryInfo(Config.Instance.BackupDir);
-			var backupFileName = string.Format("Backup_{0}.zip", DateTime.Today.ToString("ddMMyyyy"));
+			var backupFileName = $"Backup_{DateTime.Today.ToString("ddMMyyyy")}.zip";
 
 			try
 			{
@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				var count = 1;
 				var fileInfo = new FileInfo(fileName);
 				while(File.Exists(Path.Combine(Config.Instance.BackupDir, fileName)))
-					fileName = string.Format("{0}_{1}.{2}", fileInfo.Name, count++, fileInfo.Extension);
+					fileName = $"{fileInfo.Name}_{count++}.{fileInfo.Extension}";
 
 				var backupFilePath = Path.Combine(Config.Instance.BackupDir, fileName);
 				using(var zip = ZipFile.Open(backupFilePath, ZipArchiveMode.Create))

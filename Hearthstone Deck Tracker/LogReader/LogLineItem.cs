@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		}
 
 		public string Namespace { get; set; }
-		public DateTime Time { get; private set; }
+		public DateTime Time { get; }
 		public string Line { get; set; }
 	}
 }

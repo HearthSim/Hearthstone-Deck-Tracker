@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 			try
 			{
 				var url = "";
-				bool archived = false;
+				var archived = false;
 				if(!string.IsNullOrEmpty(notes))
 				{
 					var match = Regex.Match(notes, noteUrlRegex);
@@ -54,12 +54,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 					               DeckList.Instance.AllTags.FirstOrDefault(t => string.Equals(t, tag, StringComparison.InvariantCultureIgnoreCase))
 					               ?? tag);
 				var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id.Value],
-				                    cards == null
-					                    ? new List<Card>()
-					                    : cards.Where(x => x != null && x.count != null && x.id != null)
-					                           .Select(x => x.ToCard())
-					                           .Where(x => x != null)
-					                           .ToList(), tags, notes ?? "", url, DateTime.Now, archived, new List<Card>(),
+				                    cards?.Where(x => x?.count != null && x.id != null)
+										  .Select(x => x.ToCard())
+										  .Where(x => x != null)
+										  .ToList() ?? new List<Card>(), tags, notes ?? "", url, DateTime.Now, archived, new List<Card>(),
 				                    SerializableVersion.ParseOrDefault(version), new List<Deck>(), true, id.ToString(), Guid.NewGuid(),
 				                    deck_version_id.ToString());
 				deck.LastEdited = updated_at.ToLocalTime();

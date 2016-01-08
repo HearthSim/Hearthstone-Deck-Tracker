@@ -20,10 +20,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class MainWindow
 	{
-		private void BtnWeb_Click(object sender, RoutedEventArgs e)
-		{
-			ImportDeck();
-		}
+		private void BtnWeb_Click(object sender, RoutedEventArgs e) => ImportDeck();
 
 		public async void ImportDeck(string url = null)
 		{
@@ -330,31 +327,30 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var posX = (int)Helper.GetScaledXPos(0.92, hsRect.Width, ratio);
 			var startY = 71.0 / 768.0 * hsRect.Height;
 			var strideY = 29.0 / 768.0 * hsRect.Height;
-			int width = (int)Math.Round(hsRect.Width * xScale);
-			int height = (int)Math.Round(hsRect.Height * yScale);
+			var width = (int)Math.Round(hsRect.Width * xScale);
+			var height = (int)Math.Round(hsRect.Height * yScale);
 
 			for(var i = 0; i < Math.Min(numVisibleCards, deck.Cards.Count); i++)
 			{
 				var posY = (int)(startY + strideY * i);
 				var capture = Helper.CaptureHearthstone(new Point(posX, posY), width, height, hsHandle);
-				if(capture != null)
+				if(capture == null)
+					continue;
+				var yellowPixels = 0;
+				for(var x = 0; x < width; x++)
 				{
-					var yellowPixels = 0;
-					for(int x = 0; x < width; x++)
+					for(var y = 0; y < height; y++)
 					{
-						for(int y = 0; y < height; y++)
-						{
-							var pixel = capture.GetPixel(x, y);
-							if(Math.Abs(pixel.GetHue() - targetHue) < hueMargin)
-								yellowPixels++;
-						}
+						var pixel = capture.GetPixel(x, y);
+						if(Math.Abs(pixel.GetHue() - targetHue) < hueMargin)
+							yellowPixels++;
 					}
-					//Console.WriteLine(yellowPixels + " of " + width * height + " - " + yellowPixels / (double)(width * height));
-					//capture.Save("arenadeckimages/" + i + ".png");
-					var yellowPixelRatio = yellowPixels / (double)(width * height);
-					if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
-						deck.Cards[i].Count = 2;
 				}
+				//Console.WriteLine(yellowPixels + " of " + width * height + " - " + yellowPixels / (double)(width * height));
+				//capture.Save("arenadeckimages/" + i + ".png");
+				var yellowPixelRatio = yellowPixels / (double)(width * height);
+				if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
+					deck.Cards[i].Count = 2;
 			}
 
 			if(deck.Cards.Count > numVisibleCards)
@@ -365,7 +361,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var previousPos = System.Windows.Forms.Cursor.Position;
 				User32.ClientToScreen(hsHandle, ref clientPoint);
 				System.Windows.Forms.Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
-				for(int j = 0; j < scrollClicksPerCard * (deck.Cards.Count - numVisibleCards); j++)
+				for(var j = 0; j < scrollClicksPerCard * (deck.Cards.Count - numVisibleCards); j++)
 				{
 					User32.mouse_event((uint)User32.MouseEventFlags.Wheel, 0, 0, -scrollDistance, UIntPtr.Zero);
 					await Task.Delay(30);
@@ -375,32 +371,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				var remainingCards = deck.Cards.Count - numVisibleCards;
 				startY = 76.0 / 768.0 * hsRect.Height + (numVisibleCards - remainingCards) * strideY;
-				for(int i = 0; i < remainingCards; i++)
+				for(var i = 0; i < remainingCards; i++)
 				{
 					var posY = (int)(startY + strideY * i);
 					var capture = Helper.CaptureHearthstone(new Point(posX, posY), width, height, hsHandle);
-					if(capture != null)
+					if(capture == null)
+						continue;
+					var yellowPixels = 0;
+					for(var x = 0; x < width; x++)
 					{
-						var yellowPixels = 0;
-						for(int x = 0; x < width; x++)
+						for(var y = 0; y < height; y++)
 						{
-							for(int y = 0; y < height; y++)
-							{
-								var pixel = capture.GetPixel(x, y);
-								if(Math.Abs(pixel.GetHue() - targetHue) < hueMargin)
-									yellowPixels++;
-							}
+							var pixel = capture.GetPixel(x, y);
+							if(Math.Abs(pixel.GetHue() - targetHue) < hueMargin)
+								yellowPixels++;
 						}
-						//Console.WriteLine(yellowPixels + " of " + width * height + " - " + yellowPixels / (double)(width * height));
-						//capture.Save("arenadeckimages/" + i + 21 + ".png");
-						var yellowPixelRatio = yellowPixels / (double)(width * height);
-						if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
-							deck.Cards[numVisibleCards + i].Count = 2;
 					}
+					var yellowPixelRatio = yellowPixels / (double)(width * height);
+					if(yellowPixelRatio > 0.25 && yellowPixelRatio < 50)
+						deck.Cards[numVisibleCards + i].Count = 2;
 				}
 
 				System.Windows.Forms.Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
-				for(int j = 0; j < scrollClicksPerCard * (deck.Cards.Count - 21); j++)
+				for(var j = 0; j < scrollClicksPerCard * (deck.Cards.Count - 21); j++)
 				{
 					User32.mouse_event((uint)User32.MouseEventFlags.Wheel, 0, 0, scrollDistance, UIntPtr.Zero);
 					await Task.Delay(30);
@@ -414,11 +407,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ActivateWindow();
 		}
 
-		private void BtnConstructed_Click(object sender, RoutedEventArgs e)
-		{
-			ImportConstructedDeck();
-			//HsLogReaderV2.Instance.ClearLog();
-		}
+		private void BtnConstructed_Click(object sender, RoutedEventArgs e) => ImportConstructedDeck();
 
 		public async Task ImportConstructedDeck()
 		{

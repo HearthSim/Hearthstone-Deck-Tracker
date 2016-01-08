@@ -191,9 +191,6 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public StatType StatType { get; set; }
 
-		public string DisplayName
-		{
-			get { return StatType.ToString().ToUpper(); }
-		}
+		public string DisplayName => StatType.ToString().ToUpper();
 	}
 }

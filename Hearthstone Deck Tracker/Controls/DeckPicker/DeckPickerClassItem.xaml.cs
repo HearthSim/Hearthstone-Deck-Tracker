@@ -18,24 +18,16 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			InitializeComponent();
 		}
 
-		public static int Small
-		{
-			get { return 24; }
-		}
+		public static int Small => 24;
 
-		public static int Big
-		{
-			get { return 36; }
-		}
+		public static int Big => 36;
 
 		public BitmapImage ClassImage
 		{
 			get
 			{
 				var heroClass = DataContext as HeroClassAll?;
-				if(heroClass == null)
-					return new BitmapImage();
-				return ImageCache.GetClassIcon(heroClass.Value);
+				return heroClass == null ? new BitmapImage() : ImageCache.GetClassIcon(heroClass.Value);
 			}
 		}
 

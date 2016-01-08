@@ -8,7 +8,7 @@
 		public SplashScreenWindow()
 		{
 			var version = Helper.GetCurrentVersion();
-			VersionString = string.Format("v{0}.{1}.{2}", version.Major, version.Minor, version.Build);
+			VersionString = $"v{version.Major}.{version.Minor}.{version.Build}";
 			InitializeComponent();
 		}
 

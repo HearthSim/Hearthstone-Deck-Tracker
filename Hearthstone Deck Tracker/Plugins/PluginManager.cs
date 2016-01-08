@@ -22,32 +22,17 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			Plugins = new List<PluginWrapper>();
 		}
 
-		public static int MaxPluginExecutionTime
-		{
-			get { return 2000; }
-		}
+		public static int MaxPluginExecutionTime => 2000;
 
-		public List<PluginWrapper> Plugins { get; private set; }
+		public List<PluginWrapper> Plugins { get; }
 
-		public static PluginManager Instance
-		{
-			get { return _instance ?? (_instance = new PluginManager()); }
-		}
+		public static PluginManager Instance => _instance ?? (_instance = new PluginManager());
 
-		private static string PluginSettingsFile
-		{
-			get { return Path.Combine(Config.Instance.ConfigDir, "plugins.xml"); }
-		}
+		private static string PluginSettingsFile => Path.Combine(Config.Instance.ConfigDir, "plugins.xml");
 
-		public static int MaxExceptions
-		{
-			get { return 100; }
-		}
+		public static int MaxExceptions => 100;
 
-		public void LoadPlugins()
-		{
-			LoadPlugins(DefaultPath, true);
-		}
+		public void LoadPlugins() => LoadPlugins(DefaultPath, true);
 
 		public void LoadPlugins(string pluginPath, bool checkSubDirs)
 		{
@@ -137,10 +122,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
-		public void StopUpdate()
-		{
-			_update = false;
-		}
+		public void StopUpdate() => _update = false;
 
 		private void LoadPluginSettings()
 		{

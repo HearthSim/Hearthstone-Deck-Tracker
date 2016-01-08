@@ -15,37 +15,25 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 	public sealed class HotKeyConfig
 	{
 		private static readonly Lazy<HotKeyConfig> LazyInstance = new Lazy<HotKeyConfig>(Load);
-		private List<HotKeyConfigItem> _hotKeys = new List<HotKeyConfigItem>();
 
-		public static HotKeyConfig Instance
-		{
-			get { return LazyInstance.Value; }
-		}
+		public static HotKeyConfig Instance => LazyInstance.Value;
 
 		[XmlElement("HotKey")]
-		public List<HotKeyConfigItem> HotKeys
-		{
-			get { return _hotKeys; }
-			set { _hotKeys = value; }
-		}
+		public List<HotKeyConfigItem> HotKeys { get; set; } = new List<HotKeyConfigItem>();
 
-		private static string ConfigPath
-		{
-			get { return Path.Combine(Config.Instance.ConfigDir, "HotKeys.xml"); }
-		}
+		private static string ConfigPath => Path.Combine(Config.Instance.ConfigDir, "HotKeys.xml");
 
 		private static HotKeyConfig Load()
 		{
-			if(File.Exists(ConfigPath))
+			if(!File.Exists(ConfigPath))
+				return new HotKeyConfig();
+			try
 			{
-				try
-				{
-					return XmlManager<HotKeyConfig>.Load(ConfigPath);
-				}
-				catch(Exception ex)
-				{
-					Logger.WriteLine("Error loading HotKeyConfig: " + ex, "HotKeyConfig");
-				}
+				return XmlManager<HotKeyConfig>.Load(ConfigPath);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error loading HotKeyConfig: " + ex, "HotKeyConfig");
 			}
 			return new HotKeyConfig();
 		}
@@ -102,10 +90,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			public string Action { get; set; }
 
 			[XmlIgnore]
-			public HotKey HotKey
-			{
-				get { return new HotKey(Mod, Key); }
-			}
+			public HotKey HotKey => new HotKey(Mod, Key);
 		}
 	}
 }

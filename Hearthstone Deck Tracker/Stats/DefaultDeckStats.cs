@@ -31,16 +31,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public DeckStats GetDeckStats(string hero)
 		{
-			//if(!Enum.GetNames(typeof(HeroClass)).Contains(hero))
-			//	return null;
 			if(string.IsNullOrEmpty(hero))
 				return null;
 			var ds = DeckStats.FirstOrDefault(d => d.Name == hero);
-			if(ds == null)
-			{
-				ds = new DeckStats {Name = hero};
-				DeckStats.Add(ds);
-			}
+			if(ds != null)
+				return ds;
+			ds = new DeckStats {Name = hero};
+			DeckStats.Add(ds);
 			return ds;
 		}
 
@@ -137,10 +134,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 
-		public static void Save()
-		{
-			var file = Config.Instance.DataDir + "DefaultDeckStats.xml";
-			XmlManager<DefaultDeckStats>.Save(file, Instance);
-		}
+		public static void Save() => XmlManager<DefaultDeckStats>.Save(Config.Instance.DataDir + "DefaultDeckStats.xml", Instance);
 	}
 }

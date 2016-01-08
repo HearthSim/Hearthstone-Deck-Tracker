@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private async void BtnSaveLog_OnClick(object sender, RoutedEventArgs e)
 		{
 			var date = DateTime.Now;
-			var logName = string.Format("log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year, date.Hour, date.Minute, date.Second);
+			var logName = $"log_{date.Day}{date.Month}{date.Year}-{date.Hour}{date.Minute}{date.Second}.txt";
 			var fileName = Helper.ShowSaveFileDialog(logName, "txt");
 
 			if(fileName != null)

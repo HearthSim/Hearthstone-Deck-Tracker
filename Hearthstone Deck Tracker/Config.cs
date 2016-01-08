@@ -907,55 +907,32 @@ namespace Hearthstone_Deck_Tracker
 		#region Properties
 
 		[Obsolete]
-		public string HomeDir
-		{
-			get { return Instance.SaveInAppData ? AppDataPath + "/" : string.Empty; }
-		}
+		public string HomeDir => Instance.SaveInAppData ? AppDataPath + "/" : string.Empty;
 
-		public string BackupDir
-		{
-			get { return Path.Combine(DataDir, "Backups"); }
-		}
+		public string BackupDir => Path.Combine(DataDir, "Backups");
 
-		public string ConfigPath
-		{
-			get { return Instance.ConfigDir + "config.xml"; }
-		}
+		public string ConfigPath => Instance.ConfigDir + "config.xml";
 
-		public string ConfigDir
-		{
-			get { return Instance.SaveConfigInAppData == false ? string.Empty : AppDataPath + "\\"; }
-		}
+		public string ConfigDir => Instance.SaveConfigInAppData == false ? string.Empty : AppDataPath + "\\";
 
-		public string DataDir
-		{
-			get { return Instance.SaveDataInAppData == false ? DataDirPath + "\\" : AppDataPath + "\\"; }
-		}
+		public string DataDir => Instance.SaveDataInAppData == false ? DataDirPath + "\\" : AppDataPath + "\\";
 
-		public string ReplayDir
-		{
-			get { return Path.Combine(DataDir, "Replays"); }
-		}
+		public string ReplayDir => Path.Combine(DataDir, "Replays");
+
+		public string HearthStatsFilePath => Path.Combine(DataDir, "hearthstatsauth");
 
 		public static Config Instance
 		{
 			get
 			{
-				if(_config == null)
-				{
-					_config = new Config();
-					_config.ResetAll();
-					_config.SelectedTags = new List<string>();
-					_config.GameDetails = new GameDetailsConfig();
-				}
-
+				if(_config != null)
+					return _config;
+				_config = new Config();
+				_config.ResetAll();
+				_config.SelectedTags = new List<string>();
+				_config.GameDetails = new GameDetailsConfig();
 				return _config;
 			}
-		}
-
-		public string HearthStatsFilePath
-		{
-			get { return Path.Combine(DataDir, "hearthstatsauth"); }
 		}
 
 		#endregion
@@ -975,13 +952,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var configPath = Instance.ConfigPath;
 
-			if(File.Exists(configPath))
-			{
-				File.Copy(configPath, configPath + DateTime.Now.ToFileTime());
+			if(!File.Exists(configPath))
+				return;
 
-				if(deleteOriginal)
-					File.Delete(configPath);
-			}
+			File.Copy(configPath, configPath + DateTime.Now.ToFileTime());
+
+			if(deleteOriginal)
+				File.Delete(configPath);
 		}
 
 		public static void Load()
@@ -1065,7 +1042,7 @@ namespace Hearthstone_Deck_Tracker
 				Value = value;
 			}
 
-			public object Value { get; private set; }
+			public object Value { get; }
 		}
 
 		public class GameDetailsConfig

@@ -38,33 +38,31 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private async void ButtonRestore_Click(object sender, RoutedEventArgs e)
 		{
 			var selected = ListBoxBackups.SelectedItem as BackupFile;
-			if(selected != null)
-			{
-				var result =
-					await
-					Core.MainWindow.ShowMessageAsync("Restore backup " + selected.DisplayName,
-					                                 "This can not be undone! Make sure you have a current backup (if necessary). To create one, CANCEL and click \"CREATE NEW\".",
-					                                 MessageDialogStyle.AffirmativeAndNegative);
-				if(result == MessageDialogResult.Affirmative)
-				{
-					var archive = new ZipArchive(selected.FileInfo.OpenRead(), ZipArchiveMode.Read);
-					archive.ExtractToDirectory(Config.Instance.DataDir, true);
-					Config.Load();
-					Config.Save();
-					DeckList.Load();
-					DeckList.Save();
-					DeckStatsList.Load();
-					DeckStatsList.Save();
-					DefaultDeckStats.Load();
-					DefaultDeckStats.Save();
-					Core.MainWindow.ShowMessage("Success", "Please restart HDT for this to take effect.");
-				}
-			}
+			if(selected == null)
+				return;
+			var result =
+				await
+				Core.MainWindow.ShowMessageAsync("Restore backup " + selected.DisplayName,
+												 "This can not be undone! Make sure you have a current backup (if necessary). To create one, CANCEL and click \"CREATE NEW\".",
+												 MessageDialogStyle.AffirmativeAndNegative);
+			if(result != MessageDialogResult.Affirmative)
+				return;
+			var archive = new ZipArchive(selected.FileInfo.OpenRead(), ZipArchiveMode.Read);
+			archive.ExtractToDirectory(Config.Instance.DataDir, true);
+			Config.Load();
+			Config.Save();
+			DeckList.Load();
+			DeckList.Save();
+			DeckStatsList.Load();
+			DeckStatsList.Save();
+			DefaultDeckStats.Load();
+			DefaultDeckStats.Save();
+			Core.MainWindow.ShowMessage("Success", "Please restart HDT for this to take effect.");
 		}
 
 		private void ButtonCreateNew_Click(object sender, RoutedEventArgs e)
 		{
-			BackupManager.CreateBackup(string.Format("BackupManual_{0}.zip", DateTime.Today.ToString("ddMMyyyy")));
+			BackupManager.CreateBackup($"BackupManual_{DateTime.Today.ToString("ddMMyyyy")}.zip");
 			ListBoxBackups.Items.Clear();
 			Load();
 		}
@@ -118,10 +116,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			public FileInfo FileInfo { get; set; }
 
-			public string DisplayName
-			{
-				get { return FileInfo.CreationTime + " " + (FileInfo.Name.StartsWith("Backup_") ? "(auto)" : "(manual)"); }
-			}
+			public string DisplayName => FileInfo.CreationTime + " " + (FileInfo.Name.StartsWith("Backup_") ? "(auto)" : "(manual)");
 		}
 	}
 }

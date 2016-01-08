@@ -24,16 +24,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Player(bool isLocalPlayer)
 		{
-			Hand = new List<CardEntity>();
-			Board = new List<CardEntity>();
-			Deck = new List<CardEntity>();
-			Graveyard = new List<CardEntity>();
-			Secrets = new List<CardEntity>();
-			RevealedCards = new List<CardEntity>();
-			DrawnCardIds = new List<string>();
-			DrawnCardIdsTotal = new List<string>();
-			CreatedInHandCardIds = new List<string>();
-			Removed = new List<CardEntity>();
 			IsLocalPlayer = isLocalPlayer;
 		}
 
@@ -52,34 +42,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool GoingFirst { get; set; }
 		public int Fatigue { get; set; }
 		public bool DrawnCardsMatchDeck { get; set; }
-		public bool IsLocalPlayer { get; private set; }
+		public bool IsLocalPlayer { get; }
 
-		public bool HasCoin
-		{
-			get { return Hand.Any(ce => ce.CardId == "GAME_005" || (ce.Entity != null && ce.Entity.CardId == "GAME_005")); }
-		}
+		public bool HasCoin => Hand.Any(ce => ce.CardId == "GAME_005" || (ce.Entity != null && ce.Entity.CardId == "GAME_005"));
+		public int HandCount => Hand.Count;
+		public int DeckCount => Deck.Count;
 
-		public int HandCount
-		{
-			get { return Hand.Count; }
-		}
-
-		public int DeckCount
-		{
-			get { return Deck.Count; }
-		}
-
-		public List<CardEntity> RevealedCards { get; private set; }
-
-		public List<CardEntity> Hand { get; private set; }
-		public List<CardEntity> Board { get; private set; }
-		public List<CardEntity> Deck { get; private set; }
-		public List<CardEntity> Graveyard { get; private set; }
-		public List<CardEntity> Secrets { get; private set; }
-		public List<CardEntity> Removed { get; private set; }
-		public List<string> DrawnCardIds { get; private set; }
-		public List<string> DrawnCardIdsTotal { get; private set; }
-		public List<string> CreatedInHandCardIds { get; private set; }
+		public List<CardEntity> RevealedCards { get; } = new List<CardEntity>();
+		public List<CardEntity> Hand { get; } = new List<CardEntity>();
+		public List<CardEntity> Board { get; } = new List<CardEntity>();
+		public List<CardEntity> Deck { get; } = new List<CardEntity>();
+		public List<CardEntity> Graveyard { get; } = new List<CardEntity>();
+		public List<CardEntity> Secrets { get; } = new List<CardEntity>();
+		public List<CardEntity> Removed { get; } = new List<CardEntity>();
+		public List<string> DrawnCardIds { get; } = new List<string>();
+		public List<string> DrawnCardIdsTotal { get; } = new List<string>();
+		public List<string> CreatedInHandCardIds { get; } = new List<string>();
 
 		public List<Card> DrawnCards
 		{
@@ -227,14 +205,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private CardEntity GetEntityFromCollection(List<CardEntity> collection, Entity entity)
 		{
-			var cardEntity = collection.FirstOrDefault(ce => ce.Entity == entity);
-			if(cardEntity == null)
-			{
-				cardEntity = collection.FirstOrDefault(ce => !string.IsNullOrEmpty(ce.CardId) && ce.CardId == entity.CardId)
-				             ?? collection.FirstOrDefault(ce => string.IsNullOrEmpty(ce.CardId) && ce.Entity == null);
-			}
-			if(cardEntity != null)
-				cardEntity.Update(entity);
+			var cardEntity = collection.FirstOrDefault(ce => ce.Entity == entity)
+							 ?? (collection.FirstOrDefault(ce => !string.IsNullOrEmpty(ce.CardId) && ce.CardId == entity.CardId)
+							 ?? collection.FirstOrDefault(ce => string.IsNullOrEmpty(ce.CardId) && ce.Entity == null));
+			cardEntity?.Update(entity);
 			return cardEntity;
 		}
 
@@ -262,8 +236,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private int ZonePosComparison(CardEntity ce1, CardEntity ce2)
 		{
-			var v1 = (ce1.Entity != null ? ce1.Entity.GetTag(GAME_TAG.ZONE_POSITION) : 10);
-			var v2 = (ce2.Entity != null ? ce2.Entity.GetTag(GAME_TAG.ZONE_POSITION) : 10);
+			var v1 = ce1.Entity?.GetTag(GAME_TAG.ZONE_POSITION) ?? 10;
+			var v2 = ce2.Entity?.GetTag(GAME_TAG.ZONE_POSITION) ?? 10;
 			return v1.CompareTo(v2);
 		}
 
@@ -285,17 +259,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log("Draw", ce);
 		}
 
-		private static bool CardMatchesActiveDeck(string cardId)
-		{
-			return string.IsNullOrEmpty(cardId) || DeckList.Instance.ActiveDeck == null
-			       || DeckList.Instance.ActiveDeckVersion.Cards.Any(c => c.Id == cardId);
-		}
+		private static bool CardMatchesActiveDeck(string cardId) => string.IsNullOrEmpty(cardId) || DeckList.Instance.ActiveDeck == null
+																	|| DeckList.Instance.ActiveDeckVersion.Cards.Any(c => c.Id == cardId);
 
 
-		private void Log(string action, CardEntity ce)
-		{
-			Log(ce.ToString(), action);
-		}
+		private void Log(string action, CardEntity ce) => Log(ce.ToString(), action);
 
 		private void Log(string msg, string category)
 		{
@@ -517,9 +485,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public void UpdateZonePos(TAG_ZONE zone, int turn)
@@ -598,20 +564,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public CardMark CardMark { get; set; }
 		public bool Discarded { get; set; }
 
-		public bool InHand
-		{
-			get { return (Entity != null && Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.HAND); }
-		}
-
-		public bool InDeck
-		{
-			get { return (Entity == null || Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.DECK); }
-		}
-
-		public bool Unknown
-		{
-			get { return string.IsNullOrEmpty(CardId) && Entity == null; }
-		}
+		public bool InHand => (Entity != null && Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.HAND);
+		public bool InDeck => (Entity == null || Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.DECK);
+		public bool Unknown => string.IsNullOrEmpty(CardId) && Entity == null;
 
 		public bool Created { get; set; }
 

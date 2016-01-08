@@ -206,7 +206,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void CheckboxLogTab_Checked(object sender, RoutedEventArgs e)
 		{
 			Helper.OptionsMain.TreeViewItemTrackerLogging.Visibility = Visibility.Visible;
-			//TabItemLog.Visibility = Visibility.Visible;
 			if(!_initialized)
 				return;
 			Config.Instance.ShowLogTab = true;
@@ -216,7 +215,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void CheckboxLogTab_Unchecked(object sender, RoutedEventArgs e)
 		{
 			Helper.OptionsMain.TreeViewItemTrackerLogging.Visibility = Visibility.Collapsed;
-			//TabItemLog.Visibility = Visibility.Hidden;
 			if(!_initialized)
 				return;
 			Config.Instance.ShowLogTab = false;
@@ -276,8 +274,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			var regKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-			if(regKey != null)
-				regKey.SetValue("Hearthstone Deck Tracker", Application.ResourceAssembly.Location);
+			regKey?.SetValue("Hearthstone Deck Tracker", Application.ResourceAssembly.Location);
 			Config.Instance.StartWithWindows = true;
 			Config.Save();
 		}
@@ -287,8 +284,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			var regKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-			if(regKey != null)
-				regKey.DeleteValue("Hearthstone Deck Tracker", false);
+			regKey?.DeleteValue("Hearthstone Deck Tracker", false);
 			Config.Instance.StartWithWindows = false;
 			Config.Save();
 		}

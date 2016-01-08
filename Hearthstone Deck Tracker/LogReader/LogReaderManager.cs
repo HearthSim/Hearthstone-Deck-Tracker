@@ -4,9 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Handlers;
+using static Hearthstone_Deck_Tracker.API.LogEvents;
+using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
 
 #endregion
 
@@ -32,14 +33,14 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static void InitializeLogReaders()
 		{
-			_powerLogReader = new LogReader(HsLogReaderConstants.PowerLogReaderInfo);
-			_bobLogReader = new LogReader(HsLogReaderConstants.BobLogReaderInfo);
+			_powerLogReader = new LogReader(PowerLogReaderInfo);
+			_bobLogReader = new LogReader(BobLogReaderInfo);
 			LogReaders.Add(_powerLogReader);
 			LogReaders.Add(_bobLogReader);
-			LogReaders.Add(new LogReader(HsLogReaderConstants.RachelleLogReaderInfo));
-			LogReaders.Add(new LogReader(HsLogReaderConstants.AssetLogReaderInfo));
-			LogReaders.Add(new LogReader(HsLogReaderConstants.ArenaLogReaderInfo));
-			LogReaders.Add(new LogReader(HsLogReaderConstants.LoadingScreenLogReaderInfo));
+			LogReaders.Add(new LogReader(RachelleLogReaderInfo));
+			LogReaders.Add(new LogReader(AssetLogReaderInfo));
+			LogReaders.Add(new LogReader(ArenaLogReaderInfo));
+			LogReaders.Add(new LogReader(LoadingScreenLogReaderInfo));
 		}
 
 		public static void Start(GameV2 game)
@@ -88,10 +89,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			return powerEntry > bobEntry ? powerEntry : bobEntry;
 		}
 
-		public static int GetTurnNumber()
-		{
-			return _gameState.GetTurnNumber();
-		}
+		public static int GetTurnNumber() => _gameState.GetTurnNumber();
 
 		public static async Task<bool> Stop()
 		{
@@ -144,23 +142,23 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						case "Power":
 							GameV2.AddHSLogLine(line.Line);
 							PowerLineHandler.Handle(line.Line, _gameState, _game);
-							LogEvents.OnPowerLogLine.Execute(line.Line);
+							OnPowerLogLine.Execute(line.Line);
 							break;
 						case "Asset":
 							AssetHandler.Handle(line.Line, _gameState, _game);
-							LogEvents.OnAssetLogLine.Execute(line.Line);
+							OnAssetLogLine.Execute(line.Line);
 							break;
 						case "Bob":
 							BobHandler.Handle(line.Line, _gameState, _game);
-							LogEvents.OnBobLogLine.Execute(line.Line);
+							OnBobLogLine.Execute(line.Line);
 							break;
 						case "Rachelle":
 							RachelleHandler.Handle(line.Line, _gameState, _game);
-							LogEvents.OnRachelleLogLine.Execute(line.Line);
+							OnRachelleLogLine.Execute(line.Line);
 							break;
 						case "Arena":
 							ArenaHandler.Handle(line.Line, _gameState, _game);
-							LogEvents.OnArenaLogLine.Execute(line.Line);
+							OnArenaLogLine.Execute(line.Line);
 							break;
 						case "LoadingScreen":
 							LoadingScreenHandler.Handle(line.Line, _gameState, _game);

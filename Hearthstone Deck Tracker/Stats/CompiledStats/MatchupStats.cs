@@ -20,27 +20,15 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public IEnumerable<GameStats> Games { get; set; }
 
-		public int Wins
-		{
-			get { return Games.Count(x => x.Result == GameResult.Win); }
-		}
+		public int Wins => Games.Count(x => x.Result == GameResult.Win);
 
-		public int Losses
-		{
-			get { return Games.Count(x => x.Result == GameResult.Loss); }
-		}
+		public int Losses => Games.Count(x => x.Result == GameResult.Loss);
 
-		public double WinRate
-		{
-			get { return (double)Wins / (Wins + Losses); }
-		}
+		public double WinRate => (double)Wins / (Wins + Losses);
 
 		public string Class { get; set; }
 
-		public double WinRatePercent
-		{
-			get { return Math.Round(WinRate * 100); }
-		}
+		public double WinRatePercent => Math.Round(WinRate * 100);
 
 		public SolidColorBrush WinRateTextBrush
 		{
