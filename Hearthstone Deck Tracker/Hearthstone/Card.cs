@@ -363,6 +363,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
 		public bool HighlightFrame { get; set; }
 
 		public SolidColorBrush ColorOpponent => new SolidColorBrush(Colors.White);
