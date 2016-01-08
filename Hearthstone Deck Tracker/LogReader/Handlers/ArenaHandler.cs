@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						else
 						{
 							var cardId = match.Groups["id"].Value;
-							var timeSinceLastChoice = DateTime.Now.Subtract(_lastChoice).Milliseconds;
+							var timeSinceLastChoice = DateTime.Now.Subtract(_lastChoice).TotalMilliseconds;
 
 							if(_lastChoiceId == cardId && timeSinceLastChoice < 1000)
 							{
