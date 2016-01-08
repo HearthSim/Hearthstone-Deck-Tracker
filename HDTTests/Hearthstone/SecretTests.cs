@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
@@ -47,6 +48,7 @@ namespace HDTTests.Hearthstone
             _heroPlayer.IsPlayer = true;
             _heroOpponent = CreateNewEntity("HERO_02");
             _heroOpponent.SetTag(GAME_TAG.CARDTYPE, (int) TAG_CARDTYPE.HERO);
+            _heroOpponent.SetTag(GAME_TAG.CONTROLLER, _heroOpponent.Id);
             _heroOpponent.IsPlayer = false;
 
             _game.Entities.Add(0, _heroPlayer);
@@ -147,6 +149,7 @@ namespace HDTTests.Hearthstone
         {
             _opponentMinion2.SetTag(GAME_TAG.ZONE, (int)TAG_ZONE.PLAY);
             _gameEventHandler.HandleOpponentMinionDeath(_opponentMinion1, 2);
+            _game.GameTime.Time += TimeSpan.FromSeconds(1);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Avenge, PaladinSecrets.Redemption);

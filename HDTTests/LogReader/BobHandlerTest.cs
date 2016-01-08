@@ -37,44 +37,11 @@ namespace HDTTests.LogReader
         }
 
         [TestMethod]
-        public void Handle_RegisterScreenPractice()
-        {
-            var logLine = "[Bob] ---RegisterScreenPractice---";
-            _bobHandler.Handle(logLine, _gameState, _game);
-            _gameHandler.AssertWasCalled(x => x.SetGameMode(GameMode.Practice));
-        }
-
-        [TestMethod]
-        public void Handle_RegisterScreenTourneys()
-        {
-            var logLine = "[Bob] ---RegisterScreenTourneys---";
-            _bobHandler.Handle(logLine, _gameState, _game);
-            _gameHandler.AssertWasCalled(x => x.SetGameMode(GameMode.Casual));
-        }
-
-        [TestMethod]
-        public void Handle_RegisterScreenFriendly()
-        {
-            var logLine = "[Bob] ---RegisterScreenFriendly---";
-            _bobHandler.Handle(logLine, _gameState, _game);
-            _gameHandler.AssertWasCalled(x => x.SetGameMode(GameMode.Friendly));
-        }
-
-        [TestMethod]
         public void Handle_RegisterScreenCollectionManager()
         {
             var logLine = "[Bob] ---RegisterScreenCollectionManager---";
             _bobHandler.Handle(logLine, _gameState, _game);
             _gameHandler.AssertWasCalled(x => x.ResetConstructedImporting());
-        }
-
-        [TestMethod]
-        public void Handle_RegisterScreenForge()
-        {
-            var logLine = "[Bob] ---RegisterScreenForge---";
-            _bobHandler.Handle(logLine, _gameState, _game);
-            _gameHandler.AssertWasCalled(x => x.SetGameMode(GameMode.Arena));
-            _game.AssertWasCalled(x => x.ResetArenaCards());
         }
 
         [TestMethod]
