@@ -38,10 +38,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return new Card("UNKNOWN", null, Rarity.Free, "Minion", name, 0, name, 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
-		public static List<Card> GetActualCards()
-		{
-			return Cards.Collectible.Values.Select(x => new Card(x)).ToList();
-		}
+		public static List<Card> GetActualCards() => Cards.Collectible.Values.Select(x => new Card(x)).ToList();
 
 		public static string GetHeroNameFromId(string id, bool returnIdIfNotFound = true)
 		{
@@ -57,9 +54,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return card.Name;
 		}
 
-		public static bool IsActualCard(Card card)
-		{
-			return card != null && Cards.Collectible.ContainsKey(card.Id);
-		}
+		public static bool IsActualCard(Card card) => card != null && Cards.Collectible.ContainsKey(card.Id);
 	}
 }

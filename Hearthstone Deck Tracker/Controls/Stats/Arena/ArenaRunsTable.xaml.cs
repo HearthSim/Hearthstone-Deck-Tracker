@@ -117,19 +117,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		//http://stackoverflow.com/questions/3498686/wpf-remove-scrollviewer-from-treeview
 		private void ForwardScrollEvent(object sender, MouseWheelEventArgs e)
 		{
-			if(!e.Handled)
-			{
-				e.Handled = true;
-				var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) {RoutedEvent = MouseWheelEvent, Source = sender};
-				var parent = ((Control)sender).Parent as UIElement;
-				parent?.RaiseEvent(eventArg);
-			}
+			if(e.Handled)
+				return;
+			e.Handled = true;
+			var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) {RoutedEvent = MouseWheelEvent, Source = sender};
+			var parent = ((Control)sender).Parent as UIElement;
+			parent?.RaiseEvent(eventArg);
 		}
 
-		private void DataGridArenaRuns_OnTargetUpdated(object sender, DataTransferEventArgs e)
-		{
-			DataGridArenaRuns.SelectedItem = SelectedRun;
-		}
+		private void DataGridArenaRuns_OnTargetUpdated(object sender, DataTransferEventArgs e) => DataGridArenaRuns.SelectedItem = SelectedRun;
 
 		private void ButtonShowDeck_OnClick(object sender, RoutedEventArgs e)
 		{

@@ -5,6 +5,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using static System.TimeZoneInfo;
+using static Hearthstone_Deck_Tracker.Enums.Region;
 using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
 
 #endregion
@@ -55,13 +56,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				switch(region)
 				{
-					case Region.EU:
+					case EU:
 						return FindSystemTimeZoneById("Central European Standard Time");
-					case Region.US:
+					case US:
 						return FindSystemTimeZoneById("Pacific Standard Time");
-					case Region.ASIA:
+					case ASIA:
 						return FindSystemTimeZoneById("Korea Standard Time");
-					case Region.CHINA:
+					case CHINA:
 						return FindSystemTimeZoneById("China Standard Time");
 					default:
 						Logger.WriteLine($"Could not get TimeZoneInfo for Region {region}", "RachelleHandler");

@@ -18,9 +18,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			InitializeComponent();
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			ArenaStats.Instance.UpdateExpensiveArenaStats();
-		}
+		private void Button_Click(object sender, RoutedEventArgs e) => ArenaStats.Instance.UpdateExpensiveArenaStats();
 	}
 }

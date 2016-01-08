@@ -20,8 +20,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	public partial class Overview : UserControl
 	{
 		private readonly ArenaAdvancedCharts _arenaAdvancedCharts = new ArenaAdvancedCharts();
-		private readonly ArenaRuns _arenaRuns = new ArenaRuns();
-		private readonly ArenaStatsSummary _arenaStatsSummary = new ArenaStatsSummary();
 		private readonly bool _initialized;
 
 		public Overview()
@@ -37,20 +35,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			_initialized = true;
 		}
 
-		public ArenaStatsSummary ArenaStatsSummary
-		{
-			get { return _arenaStatsSummary; }
-		}
+		public ArenaStatsSummary ArenaStatsSummary { get; } = new ArenaStatsSummary();
 
-		public ArenaRuns ArenaRuns
-		{
-			get { return _arenaRuns; }
-		}
+		public ArenaRuns ArenaRuns { get; } = new ArenaRuns();
 
-		public object ArenaAdvancedCharts
-		{
-			get { return _arenaAdvancedCharts; }
-		}
+		public object ArenaAdvancedCharts => _arenaAdvancedCharts;
 
 		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -146,17 +135,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			HeroClass = heroClass;
 		}
 
-		public HeroClassStatsFilter HeroClass { get; private set; }
+		public HeroClassStatsFilter HeroClass { get; }
 
-		public BitmapImage ClassImage
-		{
-			get { return ImageCache.GetClassIcon(HeroClass.ToString()); }
-		}
+		public BitmapImage ClassImage => ImageCache.GetClassIcon(HeroClass.ToString());
 
-		public Visibility ImageVisibility
-		{
-			get { return HeroClass == HeroClassStatsFilter.All ? Visibility.Collapsed : Visibility.Visible; }
-		}
+		public Visibility ImageVisibility => HeroClass == HeroClassStatsFilter.All ? Visibility.Collapsed : Visibility.Visible;
 
 		public override bool Equals(object obj)
 		{
@@ -164,9 +147,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			return wrapper != null && HeroClass.Equals(wrapper.HeroClass);
 		}
 
-		public override int GetHashCode()
-		{
-			return HeroClass.GetHashCode();
-		}
+		public override int GetHashCode() => HeroClass.GetHashCode();
 	}
 }

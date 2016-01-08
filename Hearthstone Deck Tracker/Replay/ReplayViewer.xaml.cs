@@ -17,6 +17,8 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay.Controls;
+using static System.Windows.Visibility;
+using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
 using static Hearthstone_Deck_Tracker.Replay.KeyPointType;
 using CardEntity = Hearthstone_Deck_Tracker.Replay.Controls.CardEntity;
 using DataGrid = System.Windows.Controls.DataGrid;
@@ -81,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		private Entity OpponentEntity
 		{
-			get { return _currentGameState?.Data.First(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer); }
+			get { return _currentGameState?.Data.First(x => x.HasTag(PLAYER_ID) && !x.IsPlayer); }
 		}
 
 		private IEnumerable<BoardEntity> BoardEntites => new[]
@@ -166,23 +168,23 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return 30;
 				var hero = GetHero(_playerController);
-				return hero.GetTag(GAME_TAG.HEALTH) - hero.GetTag(GAME_TAG.DAMAGE);
+				return hero.GetTag(HEALTH) - hero.GetTag(DAMAGE);
 			}
 		}
 
-		public int PlayerArmor => _currentGameState == null ? 0 : GetHero(_playerController).GetTag(GAME_TAG.ARMOR);
+		public int PlayerArmor => _currentGameState == null ? 0 : GetHero(_playerController).GetTag(ARMOR);
 
-		public Visibility PlayerArmorVisibility => PlayerArmor > 0 ? Visibility.Visible : Visibility.Hidden;
+		public Visibility PlayerArmorVisibility => PlayerArmor > 0 ? Visible : Hidden;
 
-		public int PlayerAttack => _currentGameState == null ? 0 : GetHero(_playerController).GetTag(GAME_TAG.ATK);
+		public int PlayerAttack => _currentGameState == null ? 0 : GetHero(_playerController).GetTag(ATK);
 
-		public Visibility PlayerAttackVisibility => PlayerAttack > 0 ? Visibility.Visible : Visibility.Hidden;
+		public Visibility PlayerAttackVisibility => PlayerAttack > 0 ? Visible : Hidden;
 
 		public IEnumerable<Entity> PlayerHand => _currentGameState?.Data.Where(x => x.IsInZone(TAG_ZONE.HAND) && x.IsControlledBy(_playerController)) ?? new List<Entity>();
 
 		public IEnumerable<Entity> PlayerBoard => _currentGameState?.Data.Where(
 																			    x =>
-																				x.IsInZone(TAG_ZONE.PLAY) && x.IsControlledBy(_playerController) && x.HasTag(GAME_TAG.HEALTH)
+																				x.IsInZone(TAG_ZONE.PLAY) && x.IsControlledBy(_playerController) && x.HasTag(HEALTH)
 																				&& !string.IsNullOrEmpty(x.CardId) && !x.CardId.Contains("HERO")) ?? new List<Entity>();
 
 		public BitmapImage OpponentHeroImage
@@ -216,23 +218,23 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return 30;
 				var hero = GetHero(_opponentController);
-				return hero.GetTag(GAME_TAG.HEALTH) - hero.GetTag(GAME_TAG.DAMAGE);
+				return hero.GetTag(HEALTH) - hero.GetTag(DAMAGE);
 			}
 		}
 
-		public int OpponentArmor => _currentGameState == null ? 0 : GetHero(_opponentController).GetTag(GAME_TAG.ARMOR);
+		public int OpponentArmor => _currentGameState == null ? 0 : GetHero(_opponentController).GetTag(ARMOR);
 
-		public Visibility OpponentArmorVisibility => OpponentArmor > 0 ? Visibility.Visible : Visibility.Hidden;
+		public Visibility OpponentArmorVisibility => OpponentArmor > 0 ? Visible : Hidden;
 
-		public int OpponentAttack => _currentGameState == null ? 0 : GetHero(_opponentController).GetTag(GAME_TAG.ATK);
+		public int OpponentAttack => _currentGameState == null ? 0 : GetHero(_opponentController).GetTag(ATK);
 
-		public Visibility OpponentAttackVisibility => OpponentAttack > 0 ? Visibility.Visible : Visibility.Hidden;
+		public Visibility OpponentAttackVisibility => OpponentAttack > 0 ? Visible : Hidden;
 
 		public IEnumerable<Entity> OpponentHand => _currentGameState?.Data.Where(x => x.IsInZone(TAG_ZONE.HAND) && x.IsControlledBy(_opponentController)) ?? new List<Entity>();
 
 		public IEnumerable<Entity> OpponentBoard => _currentGameState?.Data.Where(
 																				  x =>
-																				  x.IsInZone(TAG_ZONE.PLAY) && x.IsControlledBy(_opponentController) && x.HasTag(GAME_TAG.HEALTH)
+																				  x.IsInZone(TAG_ZONE.PLAY) && x.IsControlledBy(_opponentController) && x.HasTag(HEALTH)
 																				  && !string.IsNullOrEmpty(x.CardId) && !x.CardId.Contains("HERO")) ?? new List<Entity>();
 
 		public Entity OpponentBoardHero => GetHero(_opponentController);
@@ -278,11 +280,11 @@ namespace Hearthstone_Deck_Tracker.Replay
 			{
 				if(_currentGameState == null)
 					return null;
-				var weaponId = PlayerEntity.GetTag(GAME_TAG.EQUIPPED_WEAPON);
+				var weaponId = PlayerEntity.GetTag(EQUIPPED_WEAPON);
 				if(weaponId == 0)
 					return null;
 				var entity = _currentGameState.Data.FirstOrDefault(x => x.Id == weaponId);
-				entity?.SetCardCount(entity.GetTag(GAME_TAG.DURABILITY) - entity.GetTag(GAME_TAG.DAMAGE));
+				entity?.SetCardCount(entity.GetTag(DURABILITY) - entity.GetTag(DAMAGE));
 				return entity;
 			}
 		}
@@ -293,24 +295,24 @@ namespace Hearthstone_Deck_Tracker.Replay
 			{
 				if(_currentGameState == null)
 					return null;
-				var weaponId = OpponentEntity.GetTag(GAME_TAG.EQUIPPED_WEAPON);
+				var weaponId = OpponentEntity.GetTag(EQUIPPED_WEAPON);
 				if(weaponId == 0)
 					return null;
 				var entity = _currentGameState.Data.FirstOrDefault(x => x.Id == weaponId);
-				entity?.SetCardCount(entity.GetTag(GAME_TAG.DURABILITY) - entity.GetTag(GAME_TAG.DAMAGE));
+				entity?.SetCardCount(entity.GetTag(DURABILITY) - entity.GetTag(DAMAGE));
 				return entity;
 			}
 		}
 
-		public Visibility OpponentSecretVisibility => OpponentSecrets.Any() ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility OpponentSecretVisibility => OpponentSecrets.Any() ? Visible : Collapsed;
 
 		private IEnumerable<Entity> OpponentSecrets => _currentGameState?.Data.Where(
 																					 x =>
-																					 x.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.SECRET && x.IsControlledBy(_opponentController)) ?? new List<Entity>();
+																					 x.GetTag(ZONE) == (int)TAG_ZONE.SECRET && x.IsControlledBy(_opponentController)) ?? new List<Entity>();
 
-		private IEnumerable<Entity> PlayerSecrets => _currentGameState?.Data.Where(x => x.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.SECRET && x.IsControlledBy(_playerController)) ?? new List<Entity>();
+		private IEnumerable<Entity> PlayerSecrets => _currentGameState?.Data.Where(x => x.GetTag(ZONE) == (int)TAG_ZONE.SECRET && x.IsControlledBy(_playerController)) ?? new List<Entity>();
 
-		public Visibility PlayerSecretVisibility => PlayerSecrets.Any() ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility PlayerSecretVisibility => PlayerSecrets.Any() ? Visible : Collapsed;
 
 		public Entity OpponentSecret0 => OpponentSecrets.Any() ? OpponentSecrets.ToArray()[0] : null;
 		public Entity OpponentSecret1 => OpponentSecrets.Count() > 1 ? OpponentSecrets.ToArray()[1] : null;
@@ -334,7 +336,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 					                                      x =>
 					                                      x.IsControlledBy(_playerController) && !string.IsNullOrEmpty(x.CardId)
 					                                      && x.CardId.Contains("HERO"));
-				return new SolidColorBrush((hero != null && hero.GetTag(GAME_TAG.DAMAGE) > 0) ? Colors.Red : Colors.White);
+				return new SolidColorBrush((hero != null && hero.GetTag(DAMAGE) > 0) ? Colors.Red : Colors.White);
 			}
 		}
 
@@ -349,7 +351,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 					                                      x =>
 					                                      x.IsControlledBy(_opponentController) && !string.IsNullOrEmpty(x.CardId)
 					                                      && x.CardId.Contains("HERO"));
-				return new SolidColorBrush((hero != null && hero.GetTag(GAME_TAG.DAMAGE) > 0) ? Colors.Red : Colors.White);
+				return new SolidColorBrush((hero != null && hero.GetTag(DAMAGE) > 0) ? Colors.Red : Colors.White);
 			}
 		}
 
@@ -359,8 +361,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 			{
 				if(_currentGameState == null)
 					return "0/0";
-				var total = PlayerEntity.GetTag(GAME_TAG.RESOURCES);
-				var current = total - PlayerEntity.GetTag(GAME_TAG.RESOURCES_USED);
+				var total = PlayerEntity.GetTag(RESOURCES);
+				var current = total - PlayerEntity.GetTag(RESOURCES_USED);
 				return current + "/" + total;
 			}
 		}
@@ -371,8 +373,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 			{
 				if(_currentGameState == null)
 					return "0/0";
-				var total = OpponentEntity.GetTag(GAME_TAG.RESOURCES);
-				var current = total - OpponentEntity.GetTag(GAME_TAG.RESOURCES_USED);
+				var total = OpponentEntity.GetTag(RESOURCES);
+				var current = total - OpponentEntity.GetTag(RESOURCES_USED);
 				return current + "/" + total;
 			}
 		}
@@ -384,14 +386,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 			var selectedKeypoint = DataGridKeyPoints.SelectedItem as TurnViewItem;
 			DataGridKeyPoints.Items.Clear();
 			Replay = replay;
-			_currentGameState = Replay.FirstOrDefault(r => r.Data.Any(x => x.HasTag(GAME_TAG.PLAYER_ID)));
+			_currentGameState = Replay.FirstOrDefault(r => r.Data.Any(x => x.HasTag(PLAYER_ID)));
 			if(_currentGameState == null)
 			{
 				Logger.WriteLine("Error loading replay. No player entity found.");
 				return;
 			}
-			_playerController = PlayerEntity.GetTag(GAME_TAG.CONTROLLER);
-			_opponentController = OpponentEntity.GetTag(GAME_TAG.CONTROLLER);
+			_playerController = PlayerEntity.GetTag(CONTROLLER);
+			_opponentController = OpponentEntity.GetTag(CONTROLLER);
 			var currentTurn = -1;
 			TurnViewItem tvi = null;
 			foreach(var kp in Replay)
@@ -399,12 +401,12 @@ namespace Hearthstone_Deck_Tracker.Replay
 				var entity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
 				if(entity == null || (string.IsNullOrEmpty(entity.CardId) && kp.Type != Victory && kp.Type != Defeat))
 					continue;
-				if(kp.Type == Summon && entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.ENCHANTMENT)
+				if(kp.Type == Summon && entity.GetTag(CARDTYPE) == (int)TAG_CARDTYPE.ENCHANTMENT)
 					continue;
 				var turn = (kp.Turn + 1) / 2;
 				if(turn == 1)
 				{
-					if(!kp.Data.Any(x => x.HasTag(GAME_TAG.PLAYER_ID) && x.GetTag(GAME_TAG.RESOURCES) == 1))
+					if(!kp.Data.Any(x => x.HasTag(PLAYER_ID) && x.GetTag(RESOURCES) == 1))
 						turn = 0;
 				}
 				if(turn > currentTurn)
@@ -505,13 +507,13 @@ namespace Hearthstone_Deck_Tracker.Replay
 			DataContext = null;
 			DataContext = this;
 
-			var attackArrowVisibility = Visibility.Hidden;
-			var playArrowVisibility = Visibility.Hidden;
+			var attackArrowVisibility = Hidden;
+			var playArrowVisibility = Hidden;
 			if(_currentGameState.Type == Attack)
 			{
 				await Task.Delay(100);
-				var attackerId = _currentGameState.Data[0].GetTag(GAME_TAG.PROPOSED_ATTACKER);
-				var defenderId = _currentGameState.Data[0].GetTag(GAME_TAG.PROPOSED_DEFENDER);
+				var attackerId = _currentGameState.Data[0].GetTag(PROPOSED_ATTACKER);
+				var defenderId = _currentGameState.Data[0].GetTag(PROPOSED_DEFENDER);
 				var attacker = BoardEntites.FirstOrDefault(x => x.DataContext != null && ((Entity)x.DataContext).Id == attackerId);
 				var defender = BoardEntites.FirstOrDefault(x => x.DataContext != null && ((Entity)x.DataContext).Id == defenderId);
 				if(attacker != null && defender != null)
@@ -523,16 +525,16 @@ namespace Hearthstone_Deck_Tracker.Replay
 					AttackArrow.Y1 = a.Y;
 					AttackArrow.X2 = b.X;
 					AttackArrow.Y2 = b.Y;
-					attackArrowVisibility = Visibility.Visible;
+					attackArrowVisibility = Visible;
 				}
 			}
 			else if(_currentGameState.Type == PlaySpell)
 			{
 				await Task.Delay(100);
 				var entity = _currentGameState.Data.FirstOrDefault(e => e.Id == _currentGameState.Id);
-				if(entity != null && entity.HasTag(GAME_TAG.CARD_TARGET))
+				if(entity != null && entity.HasTag(CARD_TARGET))
 				{
-					var targetId = entity.GetTag(GAME_TAG.CARD_TARGET);
+					var targetId = entity.GetTag(CARD_TARGET);
 					var boardEntity = BoardEntites.FirstOrDefault(x => x.DataContext != null && ((Entity)x.DataContext).Id == targetId);
 					if(boardEntity != null)
 					{
@@ -543,7 +545,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 						AttackArrow.Y1 = cardPos.Y;
 						AttackArrow.X2 = boardPos.X;
 						AttackArrow.Y2 = boardPos.Y;
-						attackArrowVisibility = Visibility.Visible;
+						attackArrowVisibility = Visible;
 					}
 				}
 			}
@@ -565,7 +567,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 						PlayArrow.Y1 = cardPos.Y;
 						PlayArrow.X2 = boardPos.X;
 						PlayArrow.Y2 = boardPos.Y;
-						playArrowVisibility = Visibility.Visible;
+						playArrowVisibility = Visible;
 					}
 				}
 			}
@@ -618,15 +620,13 @@ namespace Hearthstone_Deck_Tracker.Replay
 		private Entity GetHero(int controller)
 		{
 			var heroEntityId = controller == _playerController
-				                   ? PlayerEntity.GetTag(GAME_TAG.HERO_ENTITY) : OpponentEntity.GetTag(GAME_TAG.HERO_ENTITY);
+				                   ? PlayerEntity.GetTag(HERO_ENTITY) : OpponentEntity.GetTag(HERO_ENTITY);
 
 			return _currentGameState.Data.FirstOrDefault(x => x.Id == heroEntityId) ?? new Entity();
 		}
 
 		private Entity GetEntity(IEnumerable<Entity> zone, int index)
-		{
-			return zone.FirstOrDefault(x => x.HasTag(GAME_TAG.ZONE_POSITION) && x.GetTag(GAME_TAG.ZONE_POSITION) == index + 1);
-		}
+			=> zone.FirstOrDefault(x => x.HasTag(ZONE_POSITION) && x.GetTag(ZONE_POSITION) == index + 1);
 
 		private void DataGridKeyPoints_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
 		{
@@ -796,10 +796,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			ReloadKeypoints();
 		}
 
-		private void ButtonFilter_OnClick(object sender, RoutedEventArgs e)
-		{
-			ContextMenuFilter.IsOpen = true;
-		}
+		private void ButtonFilter_OnClick(object sender, RoutedEventArgs e) => ContextMenuFilter.IsOpen = true;
 
 		private void RectangleCollapseExpand_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{

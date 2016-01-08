@@ -265,11 +265,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private void Log(string action, CardEntity ce) => Log(ce.ToString(), action);
 
-		private void Log(string msg, string category)
-		{
-			var player = IsLocalPlayer ? "Player " : "Opponent ";
-			Logger.WriteLine(msg, player + category);
-		}
+		private void Log(string msg, string category) => Logger.WriteLine(msg, (IsLocalPlayer ? "Player " : "Opponent ") + category);
 
 		private async void Highlight(string cardId)
 		{

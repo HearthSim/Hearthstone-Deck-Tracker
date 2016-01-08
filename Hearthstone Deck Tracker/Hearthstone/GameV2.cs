@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Reset();
 		}
 
-		public static List<string> HSLogLines { get; private set; } = new List<string>();
+		public static List<string> HSLogLines { get; } = new List<string>();
 		public Deck IgnoreIncorrectDeck { get; set; }
 		public GameTime GameTime { get; } = new GameTime();
 		public bool IsMinionInPlay => Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion)).Value != null;
@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 				_gameModeDetectionComplete = false;
 			}
-			HSLogLines = new List<string>();
+			HSLogLines.Clear();
 
 			if(Core.Game != null && Core.Overlay != null)
 			{
@@ -260,10 +260,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_awaitingMainWindowOpen = false;
 		}
 
-		public static void AddHSLogLine(string logLine)
-		{
-			HSLogLines.Add(logLine);
-		}
+		public static void AddHSLogLine(string logLine) => HSLogLines.Add(logLine);
 
 		#region Database - Obsolete
 

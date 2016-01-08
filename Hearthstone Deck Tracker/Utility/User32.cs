@@ -203,10 +203,7 @@ namespace Hearthstone_Deck_Tracker
 				_mouseHandle = WindowsHookHelper.SetWindowsHookEx(WH_MOUSE_LL, MouseHookDelegate, IntPtr.Zero, 0);
 			}
 
-			public void Dispose()
-			{
-				Dispose(true);
-			}
+			public void Dispose() => Dispose(true);
 
 			public event EventHandler<EventArgs> LmbDown;
 			public event EventHandler<EventArgs> LmbUp;

@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Replay;
 using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
+using static Hearthstone_Deck_Tracker.Enums.Hearthstone.TAG_PLAYSTATE;
 using static Hearthstone_Deck_Tracker.Enums.Hearthstone.TAG_ZONE;
 using static Hearthstone_Deck_Tracker.Replay.KeyPointType;
 
@@ -299,7 +300,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case GRAVEYARD:
 					case SETASIDE:
 					case CREATED:
-					case INVALID:
+					case TAG_ZONE.INVALID:
 					case REMOVEDFROMGAME:
 						switch((TAG_ZONE)value)
 						{
@@ -355,31 +356,31 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(tag == PLAYSTATE)
 			{
-				if(value == (int)TAG_PLAYSTATE.CONCEDED)
+				if(value == (int)CONCEDED)
 					gameState.GameHandler.HandleConcede();
 				if(!gameState.GameEnded)
 				{
 					if(game.Entities[id].IsPlayer)
 					{
-						if(value == (int)TAG_PLAYSTATE.WON)
+						switch((TAG_PLAYSTATE)value)
 						{
-							gameState.GameEndKeyPoint(true, id);
-							gameState.GameHandler.HandleWin();
-							gameState.GameHandler.HandleGameEnd();
-							gameState.GameEnded = true;
-						}
-						else if(value == (int)TAG_PLAYSTATE.LOST)
-						{
-							gameState.GameEndKeyPoint(false, id);
-							gameState.GameHandler.HandleLoss();
-							gameState.GameHandler.HandleGameEnd();
-							gameState.GameEnded = true;
-						}
-						else if(value == (int)TAG_PLAYSTATE.TIED)
-						{
-							gameState.GameEndKeyPoint(false, id);
-							gameState.GameHandler.HandleTied();
-							gameState.GameHandler.HandleGameEnd();
+							case WON:
+								gameState.GameEndKeyPoint(true, id);
+								gameState.GameHandler.HandleWin();
+								gameState.GameHandler.HandleGameEnd();
+								gameState.GameEnded = true;
+								break;
+							case LOST:
+								gameState.GameEndKeyPoint(false, id);
+								gameState.GameHandler.HandleLoss();
+								gameState.GameHandler.HandleGameEnd();
+								gameState.GameEnded = true;
+								break;
+							case TIED:
+								gameState.GameEndKeyPoint(false, id);
+								gameState.GameHandler.HandleTied();
+								gameState.GameHandler.HandleGameEnd();
+								break;
 						}
 					}
 				}

@@ -185,7 +185,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static string ToVersionString(this Version version) => $"{version.Major}.{version.Minor}.{version.Build}";
+		public static string ToVersionString(this Version version) => $"{version?.Major}.{version?.Minor}.{version?.Build}";
 
 		public static bool IsNumeric(char c)
 		{
@@ -229,8 +229,13 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string ShowSaveFileDialog(string filename, string ext)
 		{
-			var saveFileDialog = new SaveFileDialog {FileName = filename, DefaultExt = $"*.{ext}"};
-			saveFileDialog.Filter = string.Format("{0} ({1})|{1}", ext.ToUpper(), saveFileDialog.DefaultExt);
+			var defaultExt = $"*.{ext}";
+			var saveFileDialog = new SaveFileDialog
+			{
+				FileName = filename,
+				DefaultExt = defaultExt,
+				Filter = $"{ext.ToUpper()} ({defaultExt})|{defaultExt}"
+			};
 			return saveFileDialog.ShowDialog() == true ? saveFileDialog.FileName : null;
 		}
 
@@ -255,17 +260,9 @@ namespace Hearthstone_Deck_Tracker
 			return path + extension;
 		}
 
-		public static string RemoveInvalidPathChars(string s)
-		{
-			var invalidChars = new string(Path.GetInvalidPathChars());
-			return new Regex($"[{Regex.Escape(invalidChars)}]").Replace(s, "");
-		}
-
-		public static string RemoveInvalidFileNameChars(string s)
-		{
-			var invalidChars = new string(Path.GetInvalidFileNameChars());
-			return new Regex($"[{Regex.Escape(invalidChars)}]").Replace(s, "");
-		}
+		public static string RemoveInvalidPathChars(string s) => RemoveChars(s, Path.GetInvalidPathChars());
+		public static string RemoveInvalidFileNameChars(string s) => RemoveChars(s, Path.GetInvalidFileNameChars());
+		public static string RemoveChars(string s, char[] c) => new Regex($"[{Regex.Escape(new string(c))}]").Replace(s, "");
 
 		public static void SortCardCollection(IEnumerable collection, bool classFirst)
 		{
@@ -275,11 +272,11 @@ namespace Hearthstone_Deck_Tracker
 			view1.SortDescriptions.Clear();
 
 			if(classFirst)
-				view1.SortDescriptions.Add(new SortDescription("IsClassCard", ListSortDirection.Descending));
+				view1.SortDescriptions.Add(new SortDescription(nameof(Card.IsClassCard), ListSortDirection.Descending));
 
-			view1.SortDescriptions.Add(new SortDescription("Cost", ListSortDirection.Ascending));
-			view1.SortDescriptions.Add(new SortDescription("Type", ListSortDirection.Descending));
-			view1.SortDescriptions.Add(new SortDescription("LocalizedName", ListSortDirection.Ascending));
+			view1.SortDescriptions.Add(new SortDescription(nameof(Card.Cost), ListSortDirection.Ascending));
+			view1.SortDescriptions.Add(new SortDescription(nameof(Card.Type), ListSortDirection.Descending));
+			view1.SortDescriptions.Add(new SortDescription(nameof(Card.LocalizedName), ListSortDirection.Ascending));
 		}
 
 		public static List<Card> ToSortedCardList(this IEnumerable<Card> cards)
@@ -466,12 +463,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string ParseDeckNameTemplate(string template)
 		{
-			bool valid;
-			return ParseDeckNameTemplate(template, out valid);
-		}
-
-		public static string ParseDeckNameTemplate(string template, out bool valid)
-		{
 			try
 			{
 				var result = template;
@@ -482,12 +473,10 @@ namespace Hearthstone_Deck_Tracker
 					var date = DateTime.Now.ToString(match.Groups["date"].Value);
 					result = Regex.Replace(result, dateRegex, date);
 				}
-				valid = true;
 				return result;
 			}
 			catch
 			{
-				valid = false;
 				return template;
 			}
 		}
@@ -578,8 +567,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var regex = new Regex(@"AccountListener.OnAccountLevelInfoUpdated.*currentRegion=(?<region>(\d))");
 				var conLogPath = Path.Combine(Config.Instance.HearthstoneDirectory, "ConnectLog.txt");
-				//while(!_gameState.GameLoaded)
-				//	await Task.Delay(100);
 				using(var fs = new FileStream(conLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				using(var reader = new StreamReader(fs))
 				{

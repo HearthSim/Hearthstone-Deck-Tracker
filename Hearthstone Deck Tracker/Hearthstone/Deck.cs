@@ -190,15 +190,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public bool? IsArenaRunCompleted
-		{
-			get
-			{
-				return IsArenaDeck
-					       ? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 12
-					          || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null;
-			}
-		}
+		public bool? IsArenaRunCompleted => IsArenaDeck
+												? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 12
+												   || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null;
 
 		public Guid DeckId
 		{
@@ -343,11 +337,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(this));
-				if(deckStats == null)
-				{
-					deckStats = new DeckStats(this);
-					DeckStatsList.Instance.DeckStats.Add(deckStats);
-				}
+				if(deckStats != null)
+					return deckStats;
+				deckStats = new DeckStats(this);
+				DeckStatsList.Instance.DeckStats.Add(deckStats);
 				return deckStats;
 			}
 		}
@@ -452,13 +445,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool? CheckIfArenaDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
 
-		public Deck GetVersion(int major, int minor)
-		{
-			var target = new SerializableVersion(major, minor);
-			return Version == target ? this : Versions.FirstOrDefault(x => x.Version == target);
-		}
+		public Deck GetVersion(int major, int minor) => GetVersion(new SerializableVersion(major, minor));
 
-		public Deck GetVersion(SerializableVersion version) => version == null ? null : GetVersion(version.Major, version.Minor);
+		public Deck GetVersion(SerializableVersion version) => version == null ? null : (Version == version ? this : Versions.FirstOrDefault(x => x.Version == version));
 
 		public bool HasVersion(SerializableVersion version) => Version == version || Versions.Any(v => v.Version == version);
 

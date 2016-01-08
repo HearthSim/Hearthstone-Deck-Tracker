@@ -7,12 +7,10 @@
 	{
 		public SplashScreenWindow()
 		{
-			var version = Helper.GetCurrentVersion();
-			VersionString = $"v{version.Major}.{version.Minor}.{version.Build}";
 			InitializeComponent();
 		}
 
-		public string VersionString { get; private set; }
+		public string VersionString => Helper.GetCurrentVersion().ToVersionString();
 
 		public void ShowConditional()
 		{

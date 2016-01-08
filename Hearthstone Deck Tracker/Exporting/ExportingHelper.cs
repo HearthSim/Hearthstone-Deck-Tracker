@@ -13,10 +13,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 {
 	public class ExportingHelper
 	{
-		public static bool AddArtist
-		{
-			get { return new[] {"zhCN", "zhTW", "ruRU", "koKR"}.All(x => Config.Instance.SelectedLanguage != x); }
-		}
+		public static bool AddArtist => new[] {"zhCN", "zhTW", "ruRU", "koKR"}.All(x => Config.Instance.SelectedLanguage != x);
 
 		public static bool CardExists(IntPtr wndHandle, int posX, int posY, int width, int height)
 		{
@@ -149,8 +146,6 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		}
 
 		public static bool ColorDistance(Color color, Color target, double distance)
-		{
-			return Math.Abs(color.R - target.R) < distance && Math.Abs(color.G - target.G) < distance && Math.Abs(color.B - target.B) < distance;
-		}
+			=> Math.Abs(color.R - target.R) < distance && Math.Abs(color.G - target.G) < distance && Math.Abs(color.B - target.B) < distance;
 	}
 }
