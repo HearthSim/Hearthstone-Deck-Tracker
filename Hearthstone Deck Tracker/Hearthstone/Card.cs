@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private string _englishText;
 		private int _inHandCount;
 		private bool _isCreated;
-		private bool _isFrameHighlighted;
+		internal bool IsFrameHighlighted;
 		private int _lastCount;
 		private bool _loaded;
 		private string _localizedName;
@@ -394,7 +394,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames
-				   && _coloredGem == Config.Instance.RarityCardGems && _isFrameHighlighted == HighlightFrame)
+				   && _coloredGem == Config.Instance.RarityCardGems && IsFrameHighlighted == HighlightFrame)
 					return _cachedBackground;
 				_lastCount = Count;
 				_coloredFrame = Config.Instance.RarityCardFrames;
@@ -403,102 +403,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return new ImageBrush();
 				try
 				{
-					var cardFileName = CardFileName + ".png";
-
-
-					//card graphic
-					var drawingGroup = new DrawingGroup();
-
-					if(File.Exists("Images/" + cardFileName))
-					{
-						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/" + cardFileName, UriKind.Relative)),
-						                                           new Rect(104, 1, 110, 34)));
-					}
-
-					//frame
-					var frame = "Images/frame.png";
-					if(HighlightFrame)
-					{
-						frame = "Images/frame_golden.png";
-						_isFrameHighlighted = true;
-					}
-					else
-					{
-						_isFrameHighlighted = false;
-						if(Config.Instance.RarityCardFrames)
-						{
-							switch(Rarity)
-							{
-								case Rarity.Free:
-								case Rarity.Common:
-									frame = "Images/frame_rarity_common.png";
-									break;
-								case Rarity.Rare:
-									frame = "Images/frame_rarity_rare.png";
-									break;
-								case Rarity.Epic:
-									frame = "Images/frame_rarity_epic.png";
-									break;
-								case Rarity.Legendary:
-									frame = "Images/frame_rarity_legendary.png";
-									break;
-							}
-						}
-					}
-					drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(frame, UriKind.Relative)), new Rect(0, 0, 218, 35)));
-					//gem
-					if(Config.Instance.RarityCardGems)
-					{
-						var gem = "Images/gem_rarity_common.png";
-						switch(Rarity)
-						{
-							case Rarity.Rare:
-								gem = "Images/gem_rarity_rare.png";
-								break;
-							case Rarity.Epic:
-								gem = "Images/gem_rarity_epic.png";
-								break;
-							case Rarity.Legendary:
-								gem = "Images/gem_rarity_legendary.png";
-								break;
-						}
-						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(gem, UriKind.Relative)), new Rect(3, 3, 28, 28)));
-					}
-
-					if(Math.Abs(Count) > 1 || Rarity == Rarity.Legendary)
-					{
-						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_countbox.png", UriKind.Relative)),
-						                                           new Rect(189, 6, 25, 24)));
-
-						if(Math.Abs(Count) > 1 && Math.Abs(Count) <= 9)
-						{
-							drawingGroup.Children.Add(
-							                          new ImageDrawing(
-								                          new BitmapImage(new Uri("Images/frame_" + Math.Abs(Count) + ".png", UriKind.Relative)),
-								                          new Rect(194, 8, 18, 21)));
-						}
-						else
-						{
-							drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/frame_legendary.png", UriKind.Relative)),
-							                                           new Rect(194, 8, 18, 21)));
-						}
-					}
-
-					if(IsCreated)
-					{
-						var xOffset = Math.Abs(Count) > 1 || Rarity == Rarity.Legendary ? 23 : 3;
-						drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-marker.png", "Images"), new Rect(192 - xOffset, 8, 21, 21)));
-						drawingGroup.Children.Add(new ImageDrawing(ImageCache.GetImage("card-icon-created.png", "Images"),
-						                                           new Rect(194 - xOffset, 9, 16, 16)));
-					}
-
-					//dark overlay
-					if(Count <= 0 || Jousted)
-						drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri("Images/dark.png", UriKind.Relative)), new Rect(0, 0, 218, 35)));
-
-					var brush = new ImageBrush {ImageSource = new DrawingImage(drawingGroup)};
-					_cachedBackground = brush;
-					return brush;
+					_cachedBackground = new CardImageBuilder(this).Build();
+					return _cachedBackground;
 				}
 				catch(Exception)
 				{
