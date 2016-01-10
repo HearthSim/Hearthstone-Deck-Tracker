@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls.Dialogs;
+using static System.Windows.Visibility;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using RadioButton = System.Windows.Controls.RadioButton;
@@ -217,8 +218,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 					HearthStatsManager.UploadDeckAsync(newDeckClone, background: true);
 			}
 
-			//after cloning the stats, otherwise new stats will be generated
-			//DeckPickerList.AddAndSelectDeck(newDeckClone);
 			if(EditingDeck)
 				DeckManagerEvents.OnDeckUpdated.Execute(newDeckClone);
 			else
@@ -303,32 +302,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateExpansionIcons()
 		{
-			if(_newDeck == null || !_newDeck.Cards.Any())
-			{
-				TextBlockIconLoe.Visibility = Visibility.Collapsed;
-				TextBlockIconTgt.Visibility = Visibility.Collapsed;
-				TextBlockIconBrm.Visibility = Visibility.Collapsed;
-				TextBlockIconGvg.Visibility = Visibility.Collapsed;
-				TextBlockIconNaxx.Visibility = Visibility.Collapsed;
-				return;
-			}
-			TextBlockIconLoe.Visibility = _newDeck.Cards.Any(card => card.Set == "League of Explorers")
-				                              ? Visibility.Visible : Visibility.Collapsed;
-			TextBlockIconTgt.Visibility = _newDeck.Cards.Any(card => card.Set == "The Grand Tournament")
-				                              ? Visibility.Visible : Visibility.Collapsed;
-			TextBlockIconBrm.Visibility = _newDeck.Cards.Any(card => card.Set == "Blackrock Mountain")
-				                              ? Visibility.Visible : Visibility.Collapsed;
-			TextBlockIconGvg.Visibility = _newDeck.Cards.Any(card => card.Set == "Goblins vs Gnomes")
-				                              ? Visibility.Visible : Visibility.Collapsed;
-			TextBlockIconNaxx.Visibility = _newDeck.Cards.Any(card => card.Set == "Curse of Naxxramas")
-				                               ? Visibility.Visible : Visibility.Collapsed;
+			TextBlockIconLoe.Visibility = _newDeck?.ContainsSet("League of Explorers") ?? false ? Visible : Collapsed;
+			TextBlockIconTgt.Visibility = _newDeck?.ContainsSet("The Grand Tournament") ?? false ? Visible : Collapsed;
+			TextBlockIconBrm.Visibility = _newDeck?.ContainsSet("Blackrock Mountain") ?? false ? Visible : Collapsed;
+			TextBlockIconGvg.Visibility = _newDeck?.ContainsSet("Goblins vs Gnomes") ?? false ? Visible : Collapsed;
+			TextBlockIconNaxx.Visibility = _newDeck?.ContainsSet("Curse of Naxxramas") ?? false ? Visible : Collapsed;
 		}
 
 		private void UpdateCardCount()
 		{
 			var count = _newDeck?.Cards.Sum(c => c.Count) ?? 0;
 			TextBlockCardCount.Text = count + " / 30";
-			CardCountWarning.Visibility = count > 30 ? Visibility.Visible : Visibility.Collapsed;
+			CardCountWarning.Visibility = count > 30 ? Visible : Collapsed;
 		}
 
 		public void SetNewDeck(Deck deck, bool editing = false)
@@ -365,13 +350,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			const int widthWithHistoryPanel = 485;
 			const int widthWithoutHistoryPanel = 240;
-			if(GridNewDeck.Visibility != Visibility.Visible)
+			if(GridNewDeck.Visibility != Visible)
 			{
-				GridNewDeck.Visibility = Visibility.Visible;
-				MenuNewDeck.Visibility = Visibility.Visible;
+				GridNewDeck.Visibility = Visible;
+				MenuNewDeck.Visibility = Visible;
 				if(_newDeck != null && _newDeck.HasVersions)
 				{
-					PanelDeckHistory.Visibility = Visibility.Visible;
+					PanelDeckHistory.Visibility = Visible;
 					GridNewDeck.Width = widthWithHistoryPanel;
 				}
 				else
@@ -380,9 +365,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Width += GridNewDeck.ActualWidth;
 				MinWidth += GridNewDeck.ActualWidth;
 			}
-			DeckPickerListCover.Visibility = Visibility.Visible;
-			PanelVersionComboBox.Visibility = Visibility.Collapsed;
-			PanelCardCount.Visibility = Visibility.Visible;
+			DeckPickerListCover.Visibility = Visible;
+			PanelVersionComboBox.Visibility = Collapsed;
+			PanelCardCount.Visibility = Visible;
 
 			//move window left if opening the edit panel causes it to be outside of a screen
 			foreach(var screen in Screen.AllScreens)
@@ -421,20 +406,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(DeckPickerList.SelectedDecks.Any())
 				EnableMenuItems(true);
-			if(GridNewDeck.Visibility != Visibility.Collapsed)
+			if(GridNewDeck.Visibility != Collapsed)
 			{
 				var width = GridNewDeck.ActualWidth;
-				GridNewDeck.Visibility = Visibility.Collapsed;
-				MenuNewDeck.Visibility = Visibility.Collapsed;
-				PanelDeckHistory.Visibility = Visibility.Collapsed;
+				GridNewDeck.Visibility = Collapsed;
+				MenuNewDeck.Visibility = Collapsed;
+				PanelDeckHistory.Visibility = Collapsed;
 				MinWidth -= width;
 				Width -= width;
 			}
 			ClearNewDeckSection();
-			DeckPickerListCover.Visibility = Visibility.Hidden;
+			DeckPickerListCover.Visibility = Hidden;
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
-			PanelCardCount.Visibility = Visibility.Collapsed;
+			PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions ? Visible : Collapsed;
+			PanelCardCount.Visibility = Collapsed;
 
 			if(MovedLeft.HasValue)
 			{
@@ -513,15 +498,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var name = tb.Text;
 			if(DeckList.Instance.Decks.Any(d => d.Name == name) && !(EditingDeck && name == _editedDeckName))
 			{
-				if(DeckNameExistsWarning.Visibility == Visibility.Collapsed)
+				if(DeckNameExistsWarning.Visibility == Collapsed)
 					tb.Width -= 19;
-				DeckNameExistsWarning.Visibility = Visibility.Visible;
+				DeckNameExistsWarning.Visibility = Visible;
 			}
 			else
 			{
-				if(DeckNameExistsWarning.Visibility == Visibility.Visible)
+				if(DeckNameExistsWarning.Visibility == Visible)
 					tb.Width += 19;
-				DeckNameExistsWarning.Visibility = Visibility.Collapsed;
+				DeckNameExistsWarning.Visibility = Collapsed;
 			}
 		}
 
@@ -669,7 +654,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(e.Key == Key.Enter)
 			{
 				var card = (Card)ListViewDB.SelectedItem;
-				if(card == null || string.IsNullOrEmpty(card.Name))
+				if(string.IsNullOrEmpty(card?.Name))
 					return;
 				AddCardToDeck((Card)card.Clone());
 			}

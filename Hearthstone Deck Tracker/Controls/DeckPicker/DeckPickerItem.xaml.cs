@@ -48,10 +48,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public void SetLayout()
-		{
-			Content = Activator.CreateInstance(_deckPickerItem);
-		}
+		public void SetLayout() => Content = Activator.CreateInstance(_deckPickerItem);
 
 		public void RefreshProperties()
 		{
@@ -63,8 +60,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#region sorting properties
@@ -95,15 +91,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			_action = action;
 		}
 
-		public bool CanExecute(object parameter)
-		{
-			return _action != null;
-		}
+		public bool CanExecute(object parameter) => _action != null;
 
-		public void Execute(object parameter)
-		{
-			_action.Invoke();
-		}
+		public void Execute(object parameter) => _action.Invoke();
 
 		public event EventHandler CanExecuteChanged;
 	}

@@ -163,10 +163,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				}
 			}
 
-			public SerializableVersion GetVersion()
-			{
-				return SerializableVersion.ParseOrDefault(TagName);
-			}
+			public SerializableVersion GetVersion() => SerializableVersion.ParseOrDefault(TagName);
 		}
 	}
 }

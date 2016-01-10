@@ -26,6 +26,7 @@ using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using MahApps.Metro.Controls.Dialogs;
+using static System.Windows.Visibility;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
@@ -52,15 +53,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
-			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemArchive.Visibility = DeckPickerList.SelectedDecks.Any(d => !d.Archived) ? Visibility.Visible : Visibility.Collapsed;
-			MenuItemUnarchive.Visibility = DeckPickerList.SelectedDecks.Any(d => d.Archived) ? Visibility.Visible : Visibility.Collapsed;
-			SeparatorDeck1.Visibility = string.IsNullOrEmpty(deck.Url) && !deck.MissingCards.Any() ? Visibility.Collapsed : Visibility.Visible;
-			MenuItemOpenHearthStats.Visibility = deck.HasHearthStatsId ? Visibility.Visible : Visibility.Collapsed;
+			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
+			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visible : Collapsed;
+			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visible : Collapsed;
+			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Collapsed : Visible;
+			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Collapsed : Visible;
+			MenuItemArchive.Visibility = DeckPickerList.SelectedDecks.Any(d => !d.Archived) ? Visible : Collapsed;
+			MenuItemUnarchive.Visibility = DeckPickerList.SelectedDecks.Any(d => d.Archived) ? Visible : Collapsed;
+			SeparatorDeck1.Visibility = string.IsNullOrEmpty(deck.Url) && !deck.MissingCards.Any() ? Collapsed : Visible;
+			MenuItemOpenHearthStats.Visibility = deck.HasHearthStatsId ? Visible : Collapsed;
 		}
 
 		public void UpdateDeckList(Deck selected)
@@ -81,18 +82,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				MenuItemSaveVersionCurrent.IsEnabled = false;
 				MenuItemSaveVersionMinor.IsEnabled = false;
 				MenuItemSaveVersionMajor.IsEnabled = false;
-				MenuItemSaveVersionCurrent.Visibility = Visibility.Collapsed;
-				MenuItemSaveVersionMinor.Visibility = Visibility.Collapsed;
-				MenuItemSaveVersionMajor.Visibility = Visibility.Collapsed;
+				MenuItemSaveVersionCurrent.Visibility = Collapsed;
+				MenuItemSaveVersionMinor.Visibility = Collapsed;
+				MenuItemSaveVersionMajor.Visibility = Collapsed;
 			}
 			else
 			{
 				MenuItemSaveVersionCurrent.IsEnabled = true;
 				MenuItemSaveVersionMinor.IsEnabled = true;
 				MenuItemSaveVersionMajor.IsEnabled = true;
-				MenuItemSaveVersionCurrent.Visibility = Visibility.Visible;
-				MenuItemSaveVersionMinor.Visibility = Visibility.Visible;
-				MenuItemSaveVersionMajor.Visibility = Visibility.Visible;
+				MenuItemSaveVersionCurrent.Visibility = Visible;
+				MenuItemSaveVersionMinor.Visibility = Visible;
+				MenuItemSaveVersionMajor.Visibility = Visible;
 				MenuItemSaveVersionCurrent.Header = _newDeck.Version.ToString("v{M}.{m} (current)");
 				MenuItemSaveVersionMinor.Header = $"v{_newDeck.Version.Major}.{_newDeck.Version.Minor + 1}";
 				MenuItemSaveVersionMajor.Header = $"v{_newDeck.Version.Major + 1}.{0}";
@@ -130,7 +131,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Config.Instance.AutoDeckDetection = enable;
 			Config.Save();
 			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", enable);
-			//MenuItem autoSelectMenuItem=(MenuItem)ContextMenu.Items[1];
 		}
 
 		private void CheckboxClassCardsFirst_Checked(object sender, RoutedEventArgs e) => InvokeIfInitialized(() => SortClassCardsFirst(true));
@@ -263,9 +263,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(HearthStatsAPI.IsLoggedIn)
 			{
 				MenuItemLogout.Header = $"LOGOUT ({HearthStatsAPI.LoggedInAs})";
-				MenuItemLogin.Visibility = Visibility.Collapsed;
-				MenuItemLogout.Visibility = Visibility.Visible;
-				SeparatorLogout.Visibility = Visibility.Visible;
+				MenuItemLogin.Visibility = Collapsed;
+				MenuItemLogout.Visibility = Visible;
+				SeparatorLogout.Visibility = Visible;
 			}
 			EnableHearthStatsMenu(HearthStatsAPI.IsLoggedIn);
 		}
@@ -306,7 +306,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Config.Instance.IgnoreNewsId = NewsUpdater.CurrentNewsId;
 			Config.Save();
-			StatusBarNews.Visibility = Visibility.Collapsed;
+			StatusBarNews.Visibility = Collapsed;
 			MinHeight -= StatusBarNewsHeight;
 			TopRow.Height = new GridLength(0);
 		}
@@ -475,9 +475,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			InitializeComponent();
 			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsTrackerLogging.TextBoxLog));
 			EnableMenuItems(false);
-			TagControlEdit.OperationSwitch.Visibility = Visibility.Collapsed;
-			TagControlEdit.GroupBoxSortingAllConstructed.Visibility = Visibility.Collapsed;
-			TagControlEdit.GroupBoxSortingArena.Visibility = Visibility.Collapsed;
+			TagControlEdit.OperationSwitch.Visibility = Collapsed;
+			TagControlEdit.GroupBoxSortingAllConstructed.Visibility = Collapsed;
+			TagControlEdit.GroupBoxSortingArena.Visibility = Collapsed;
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();
 			FlyoutNotes.ClosingFinished += (sender, args) => DeckNotesEditor.SaveDeck();
 		}
@@ -577,7 +577,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				//Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
 				Config.Instance.SelectedDeckPickerClasses = DeckPickerList.SelectedClasses.ToArray();
 
-				Config.Instance.WindowWidth = (int)(Width - (GridNewDeck.Visibility == Visibility.Visible ? GridNewDeck.ActualWidth : 0));
+				Config.Instance.WindowWidth = (int)(Width - (GridNewDeck.Visibility == Visible ? GridNewDeck.ActualWidth : 0));
 				Config.Instance.WindowHeight = (int)(Height - _heightChangeDueToSearchBox);
 				Config.Instance.TrackerWindowTop = (int)Top;
 				Config.Instance.TrackerWindowLeft = (int)(Left + (MovedLeft.HasValue ? MovedLeft.Value : 0));
@@ -750,7 +750,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Core.TrayIcon.NotifyIcon.Visible = true;
 			Hide();
-			Visibility = Visibility.Collapsed;
+			Visibility = Collapsed;
 			ShowInTaskbar = false;
 		}
 
@@ -847,9 +847,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				//set and save last used deck for class
 				if(setActive)
 				{
-					//Overlay.ListViewPlayer.ItemsSource = Core.Game.PlayerDeck;
-					//PlayerWindow.ListViewPlayer.ItemsSource = Core.Game.PlayerDeck;
-					//Logger.WriteLine("Set player itemsource as PlayerDeck", "Tracker");
 					while(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
 					{
 						var lastSelected = DeckList.Instance.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
@@ -876,12 +873,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				DeckList.Instance.ActiveDeck = null;
 				if(setActive)
-				{
 					DeckPickerList.DeselectDeck();
-					//Overlay.ListViewPlayer.ItemsSource = Core.Game.PlayerDrawn;
-					//PlayerWindow.ListViewPlayer.ItemsSource = Core.Game.PlayerDrawn;
-					//Logger.WriteLine("set player item source to PlayerDrawn", "Tracker");
-				}
 
 				var useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
 				Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = true;
@@ -924,7 +916,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			ComboBoxDeckVersion.ItemsSource = deck?.VersionsIncludingSelf;
 			ComboBoxDeckVersion.SelectedItem = deck?.SelectedVersion;
-			PanelVersionComboBox.Visibility = deck != null && deck.HasVersions ? Visibility.Visible : Visibility.Collapsed;
+			PanelVersionComboBox.Visibility = deck != null && deck.HasVersions ? Visible : Collapsed;
 		}
 
 		#endregion

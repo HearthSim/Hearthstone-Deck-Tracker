@@ -95,22 +95,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			}
 
 
-			Config.Instance.Reset("PlayerDeckTop");
-			Config.Instance.Reset("PlayerDeckLeft");
-			Config.Instance.Reset("PlayerDeckHeight");
+			Config.Instance.Reset(nameof(Config.PlayerDeckTop));
+			Config.Instance.Reset(nameof(Config.PlayerDeckLeft));
+			Config.Instance.Reset(nameof(Config.PlayerDeckHeight));
 
-			Config.Instance.Reset("PlayerDeckHeight");
-			Config.Instance.Reset("OpponentDeckLeft");
-			Config.Instance.Reset("OpponentDeckHeight");
+			Config.Instance.Reset(nameof(Config.PlayerDeckHeight));
+			Config.Instance.Reset(nameof(Config.OpponentDeckLeft));
+			Config.Instance.Reset(nameof(Config.OpponentDeckHeight));
 
-			Config.Instance.Reset("TimersHorizontalPosition");
-			Config.Instance.Reset("TimersHorizontalSpacing");
+			Config.Instance.Reset(nameof(Config.TimersHorizontalPosition));
+			Config.Instance.Reset(nameof(Config.TimersHorizontalSpacing));
 
-			Config.Instance.Reset("TimersHorizontalSpacing");
-			Config.Instance.Reset("TimersVerticalSpacing");
+			Config.Instance.Reset(nameof(Config.TimersHorizontalSpacing));
+			Config.Instance.Reset(nameof(Config.TimersVerticalSpacing));
 
-			Config.Instance.Reset("SecretsTop");
-			Config.Instance.Reset("SecretsLeft");
+			Config.Instance.Reset(nameof(Config.SecretsTop));
+			Config.Instance.Reset(nameof(Config.SecretsLeft));
 
 			SaveConfig(true);
 		}

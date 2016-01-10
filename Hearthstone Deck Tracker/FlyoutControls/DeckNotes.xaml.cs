@@ -39,10 +39,7 @@ namespace Hearthstone_Deck_Tracker
 			BtnSave.IsEnabled = true;
 		}
 
-		private void BtnSave_Click(object sender, RoutedEventArgs e)
-		{
-			SaveDeck();
-		}
+		private void BtnSave_Click(object sender, RoutedEventArgs e) => SaveDeck();
 
 		public void SaveDeck()
 		{

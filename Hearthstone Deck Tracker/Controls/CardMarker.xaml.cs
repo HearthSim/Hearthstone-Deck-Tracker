@@ -1,11 +1,12 @@
 ﻿#region
 
 using System;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
+using static System.Windows.Visibility;
+using static Hearthstone_Deck_Tracker.Enums.CardMark;
 
 #endregion
 
@@ -38,33 +39,33 @@ namespace Hearthstone_Deck_Tracker.Controls
 				var source = "";
 				switch(_mark)
 				{
-					case CardMark.Coin:
+					case Coin:
 						source = "/HearthstoneDeckTracker;component/Images/card-icon-coin.png";
 						break;
-					case CardMark.Kept:
+					case Kept:
 						source = "/HearthstoneDeckTracker;component/Images/card-icon-keep.png";
 						break;
-					case CardMark.Mulliganed:
+					case Mulliganed:
 						source = "/HearthstoneDeckTracker;component/Images/card-icon-mulligan.png";
 						break;
-					case CardMark.Returned:
+					case Returned:
 						source = "/HearthstoneDeckTracker;component/Images/card-icon-returned.png";
 						break;
-					case CardMark.Created:
+					case Created:
 						source = "/HearthstoneDeckTracker;component/Images/card-icon-created.png";
 						break;
 					default:
-						CardIcon.Visibility = Visibility.Collapsed;
+						CardIcon.Visibility = Collapsed;
 						break;
 				}
 
 				if(source != "")
 				{
 					CardIcon.Source = new BitmapImage(new Uri(source, UriKind.Relative));
-					CardIcon.Visibility = Visibility.Visible;
+					CardIcon.Visibility = Visible;
 				}
 				else
-					CardIcon.Visibility = Visibility.Collapsed;
+					CardIcon.Visibility = Collapsed;
 			}
 		}
 	}

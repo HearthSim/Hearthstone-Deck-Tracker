@@ -23,56 +23,39 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public static class MessageDialogs
 	{
 		public static async Task<MessageDialogResult> ShowDeleteGameStatsMessage(this MetroWindow window, GameStats stats)
-		{
-			var settings = new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
-			return
-				await
-				window.ShowMessageAsync("Delete Game",
-				                        stats.Result + " vs " + stats.OpponentHero + "\nfrom " + stats.StartTime + "\n\nAre you sure?",
-				                        MessageDialogStyle.AffirmativeAndNegative, settings);
-		}
+			=> await window.ShowMessageAsync("Delete Game", $"{stats.Result} vs {stats.OpponentHero}\nfrom {stats.StartTime}\n\nAre you sure?",
+				MessageDialogStyle.AffirmativeAndNegative, new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
 
 		public static async Task<MessageDialogResult> ShowDeleteMultipleGameStatsMessage(this MetroWindow window, int count)
-		{
-			var settings = new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
-			return
-				await
-				window.ShowMessageAsync("Delete Games", "This will delete the selected games (" + count + ").\n\nAre you sure?",
-				                        MessageDialogStyle.AffirmativeAndNegative, settings);
-		}
+			=> await window.ShowMessageAsync("Delete Games", $"This will delete the selected games ({count}).\n\nAre you sure?",
+				MessageDialogStyle.AffirmativeAndNegative, new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
 
 		public static async Task ShowUpdateNotesMessage(this MetroWindow window)
 		{
-			const string releaseDownloadUrl = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
-			var settings = new Settings {AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close"};
-
-			var result = await window.ShowMessageAsync("Update successful", "", MessageDialogStyle.AffirmativeAndNegative, settings);
+			var result = await window.ShowMessageAsync("Update successful", "", MessageDialogStyle.AffirmativeAndNegative,
+							new Settings {AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close"});
 			if(result == MessageDialogResult.Affirmative)
-				Process.Start(releaseDownloadUrl);
+				Helper.TryOpenUrl(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases");
 		}
 
-		public static async Task ShowMessage(this MetroWindow window, string title, string message)
-		{
-			await window.ShowMessageAsync(title, message);
-		}
+		public static async Task ShowMessage(this MetroWindow window, string title, string message) => await window.ShowMessageAsync(title, message);
 
 		public static async Task ShowSavedFileMessage(this MainWindow window, string fileName)
 		{
-			var settings = new Settings {NegativeButtonText = "Open folder"};
-			var result =
-				await window.ShowMessageAsync("", "Saved to\n\"" + fileName + "\"", MessageDialogStyle.AffirmativeAndNegative, settings);
+			var result = await window.ShowMessageAsync("", $"Saved to\n\"{fileName}\"", MessageDialogStyle.AffirmativeAndNegative,
+							new Settings {NegativeButtonText = "Open folder"});
 			if(result == MessageDialogResult.Negative)
 				Process.Start(Path.GetDirectoryName(fileName));
 		}
 
 		public static async Task ShowSavedAndUploadedFileMessage(this MainWindow window, string fileName, string url)
 		{
-			var settings = new Settings {NegativeButtonText = "open in browser", FirstAuxiliaryButtonText = "copy url to clipboard"};
 			var sb = new StringBuilder();
 			if(fileName != null)
-				sb.AppendLine("Saved to\n\"" + fileName + "\"");
-			sb.AppendLine("Uploaded to\n" + url);
-			var result = await window.ShowMessageAsync("", sb.ToString(), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+				sb.AppendLine($"Saved to\n\"{fileName}\"");
+			sb.AppendLine($"Uploaded to\n{url}");
+			var result = await window.ShowMessageAsync("", sb.ToString(), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+							new Settings {NegativeButtonText = "open in browser", FirstAuxiliaryButtonText = "copy url to clipboard"});
 			if(result == MessageDialogResult.Negative)
 			{
 				try
@@ -99,16 +82,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task<SaveScreenshotOperation> ShowScreenshotUploadSelectionDialog(this MainWindow window)
 		{
-			var settings = new Settings
-			{
-				AffirmativeButtonText = "save only",
-				NegativeButtonText = "save & upload",
-				FirstAuxiliaryButtonText = "upload only"
-			};
-			var result =
-				await
-				window.ShowMessageAsync("Select Operation", "\"upload\" will automatically upload the image to imgur.com",
-				                        MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, settings);
+			var result = await window.ShowMessageAsync("Select Operation", "\"upload\" will automatically upload the image to imgur.com",
+							MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new Settings
+							{
+								AffirmativeButtonText = "save only",
+								NegativeButtonText = "save & upload",
+								FirstAuxiliaryButtonText = "upload only"
+							});
 			return new SaveScreenshotOperation
 			{
 				SaveLocal = result != MessageDialogResult.FirstAuxiliary,
@@ -119,11 +99,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public static async Task ShowHsNotInstalledMessage(this MetroWindow window)
 		{
 			var settings = new Settings {AffirmativeButtonText = "Ok", NegativeButtonText = "Select manually"};
-			var result =
-				await
-				window.ShowMessageAsync("Hearthstone install directory not found",
-				                        "Hearthstone Deck Tracker will not work properly if Hearthstone is not installed on your machine (obviously).",
-				                        MessageDialogStyle.AffirmativeAndNegative, settings);
+			var result = await window.ShowMessageAsync("Hearthstone install directory not found",
+							"Hearthstone Deck Tracker will not work properly if Hearthstone is not installed on your machine (obviously).",
+							MessageDialogStyle.AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Negative)
 			{
 				var dialog = new OpenFileDialog
@@ -147,10 +125,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(!deck.MissingCards.Any())
 			{
-				await
-					window.ShowMessageAsync("No missing cards",
-					                        "No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
-					                        MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
+				await window.ShowMessageAsync("No missing cards",
+						"No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
+						MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
 				return;
 			}
 			var message = "The following cards were not found:\n";

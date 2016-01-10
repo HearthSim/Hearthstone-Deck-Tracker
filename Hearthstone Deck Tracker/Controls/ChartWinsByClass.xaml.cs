@@ -26,14 +26,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			};
 		}
 
-		public IEnumerable<WinChartData> SeriesSourceWins
-		{
-			get
-			{
-				return
-					Enumerable.Range(0, 13).Select(n => new WinChartData {Index = n.ToString(), ItemsSource = ArenaStats.Instance.WinsByClass[n]});
-			}
-		}
+		public IEnumerable<WinChartData> SeriesSourceWins => Enumerable.Range(0, 13).Select(n => new WinChartData {Index = n.ToString(), ItemsSource = ArenaStats.Instance.WinsByClass[n]});
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

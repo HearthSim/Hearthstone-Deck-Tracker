@@ -488,6 +488,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int GetNumDivineShield() => GetMechanicCount("Divine Shield");
 		public int GetNumCombo() => GetMechanicCount("Combo");
 
+		public bool ContainsSet(string set) => Cards.Any(card => card.Set == set);
+
 		public override string ToString() => $"{Name} ({Class})";
 
 		public override bool Equals(object obj)

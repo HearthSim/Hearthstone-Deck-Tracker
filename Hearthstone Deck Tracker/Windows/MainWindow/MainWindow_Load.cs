@@ -109,15 +109,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		public void UpdateQuickFilterItemSource()
-		{
-			MenuItemQuickSelectFilter.ItemsSource =
-				DeckList.Instance.AllTags.Where(
-				                                t =>
-				                                DeckList.Instance.Decks.Any(
-				                                                            d =>
-				                                                            d.Tags.Contains(t) || t == "All" || t == "None" && d.Tags.Count == 0))
-				        .Select(x => x.ToUpperInvariant());
-		}
+			=>
+				MenuItemQuickSelectFilter.ItemsSource =
+				DeckList.Instance.AllTags.Where(t => DeckList.Instance.Decks.Any(d => d.Tags.Contains(t) || t == "All" || t == "None" && d.Tags.Count == 0))
+						.Select(x => x.ToUpperInvariant());
 
 		public void ReloadTags()
 		{

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Windows;
+using static Hearthstone_Deck_Tracker.Exporting.MouseActions;
 
 #endregion
 
@@ -98,9 +99,9 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			if(card.Name == "Feugen")
 			{
 				if(Config.Instance.OwnsGoldenFeugen && Config.Instance.PrioritizeGolden)
-					await MouseActions.ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
+					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
 				else
-					await MouseActions.ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
+					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
 				return true;
 			}
 			if(card.Name == "Stalagg")
@@ -110,16 +111,16 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				if(Config.Instance.OwnsGoldenFeugen)
 				{
 					if(Config.Instance.OwnsGoldenStalagg && Config.Instance.PrioritizeGolden)
-						await MouseActions.ClickOnPoint(hsHandle, new Point((int)posX4, (int)cardPosY));
+						await ClickOnPoint(hsHandle, new Point((int)posX4, (int)cardPosY));
 					else
-						await MouseActions.ClickOnPoint(hsHandle, new Point((int)posX3, (int)cardPosY));
+						await ClickOnPoint(hsHandle, new Point((int)posX3, (int)cardPosY));
 				}
 				else
 				{
 					if(Config.Instance.OwnsGoldenStalagg && Config.Instance.PrioritizeGolden)
-						await MouseActions.ClickOnPoint(hsHandle, new Point((int)posX3, (int)cardPosY));
+						await ClickOnPoint(hsHandle, new Point((int)posX3, (int)cardPosY));
 					else
-						await MouseActions.ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
+						await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
 				}
 				return true;
 			}

@@ -34,9 +34,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private void SetContent()
-		{
-			Content = Activator.CreateInstance(_toolTipType);
-		}
+		private void SetContent() => Content = Activator.CreateInstance(_toolTipType);
 	}
 }

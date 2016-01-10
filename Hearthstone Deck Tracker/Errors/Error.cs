@@ -22,10 +22,7 @@
 			return Equals((Error)obj);
 		}
 
-		protected bool Equals(Error other)
-		{
-			return string.Equals(Text, other.Text) && string.Equals(Header, other.Header);
-		}
+		protected bool Equals(Error other) => string.Equals(Text, other.Text) && string.Equals(Header, other.Header);
 
 		public override int GetHashCode()
 		{

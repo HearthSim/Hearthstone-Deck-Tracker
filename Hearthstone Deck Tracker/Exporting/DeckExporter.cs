@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using static Hearthstone_Deck_Tracker.Exporting.ExportingActions;
 
 #endregion
 
@@ -28,17 +29,17 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				var inForeground = await ExportingHelper.EnsureHearthstoneInForeground(info.HsHandle);
 				if(!inForeground)
 					return;
-				Logger.WriteLine("Waiting for " + Config.Instance.ExportStartDelay + " seconds before starting the export process", "DeckExporter");
+				Logger.WriteLine($"Waiting for {Config.Instance.ExportStartDelay} seconds before starting the export process", "DeckExporter");
 				await Task.Delay(Config.Instance.ExportStartDelay * 1000);
 				Core.Overlay.ForceHide(true);
 
-				await ExportingActions.ClearDeck(info);
-				await ExportingActions.SetDeckName(deck, info);
-				await ExportingActions.ClearFilters(info);
-				var lostFocus = await ExportingActions.CreateDeck(deck, info);
+				await ClearDeck(info);
+				await SetDeckName(deck, info);
+				await ClearFilters(info);
+				var lostFocus = await CreateDeck(deck, info);
 				if(lostFocus)
 					return;
-				await ExportingActions.ClearSearchBox(info.HsHandle, info.SearchBoxPos);
+				await ClearSearchBox(info.HsHandle, info.SearchBoxPos);
 
 				if(Config.Instance.ExportPasteClipboard)
 					Clipboard.Clear();
