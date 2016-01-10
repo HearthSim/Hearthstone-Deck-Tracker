@@ -166,7 +166,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void BtnClipboardText_Click(object sender, RoutedEventArgs e)
+		private async void BtnClipboardText_Click(object sender, RoutedEventArgs e)
 		{
 			try
 			{
@@ -182,7 +182,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				if(Clipboard.ContainsText())
 				{
-					var deck = Helper.ParseCardString(Clipboard.GetText());
+					var english = true;
+					if(Config.Instance.SelectedLanguage != "enUS")
+					{
+						try
+						{
+							english = await this.ShowLanguageSelectionDialog();
+						}
+						catch(Exception ex)
+						{
+							Logger.WriteLine(ex.ToString());
+						}
+					}
+					var deck = Helper.ParseCardString(Clipboard.GetText(), !english);
 					if(deck != null)
 					{
 						SetNewDeck(deck);

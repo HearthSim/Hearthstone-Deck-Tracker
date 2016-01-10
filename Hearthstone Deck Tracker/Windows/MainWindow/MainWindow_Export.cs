@@ -164,15 +164,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				try
 				{
-					english =
-						await
-						this.ShowMessageAsync("Select language", "", MessageDialogStyle.AffirmativeAndNegative,
-						                      new MessageDialogs.Settings
-						                      {
-							                      AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
-							                      NegativeButtonText = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key
-						                      })
-						== MessageDialogResult.Affirmative;
+					english = await this.ShowLanguageSelectionDialog();
 				}
 				catch(Exception ex)
 				{

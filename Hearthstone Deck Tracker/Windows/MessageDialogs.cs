@@ -248,6 +248,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return Config.Instance.HearthStatsAutoDeleteMatches != null && Config.Instance.HearthStatsAutoDeleteMatches.Value;
 		}
 
+		public static async Task<bool> ShowLanguageSelectionDialog(this MetroWindow window)
+		{
+			var english = await
+				window.ShowMessageAsync("Select language", "", MessageDialogStyle.AffirmativeAndNegative,
+										new Settings
+										{
+											AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
+											NegativeButtonText = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key
+										}) == MessageDialogResult.Affirmative;
+			return english;
+		}
+
 		public class Settings : MetroDialogSettings
 		{
 			public Settings()
