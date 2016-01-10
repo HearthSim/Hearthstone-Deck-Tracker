@@ -26,7 +26,7 @@ Features
 =========
 An in-game overlay:
 
-![Overlay](http://i.imgur.com/EWd6Ung.jpg "The overlay")
+![Overlay](http://i.imgur.com/6IyRti1.jpg "The overlay")
 
 The app: 
 
