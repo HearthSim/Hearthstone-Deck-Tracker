@@ -350,7 +350,7 @@
                     <MenuItem Header="_SELECT REPLAY" Click="MenuItemReplaySelectGame_OnClick" />
                     <MenuItem Header="LOAD REPLAY FROM _FILE" Click="MenuItemReplayFromFile_OnClick"/>
                 </MenuItem>
-                <MenuItem Header="_HEARTHSTATS">
+                <MenuItem Header="_HEARTHSTATS" SubmenuOpened="MenuItemHearthStats_OnSubmenuOpened">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -360,7 +360,14 @@
                     </MenuItem.Icon>
                     <MenuItem Name="MenuItemLogin" Header="LOGIN" Click="MenuItemLogin_OnClick"/>
                     <MenuItem Name="MenuItemDashboard" Header="DASHBOARD (WEB)" Click="MenuItemDashboard_OnClick"/>
-                    <MenuItem Name="MenuItemHearthStatsSync"  Header="SYNC NOW" Click="MenuItemHearthStatsSync_OnClick"/>
+                    <MenuItem Name="MenuItemHearthStatsSync" Click="MenuItemHearthStatsSync_OnClick">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="SYNC NOW"/>
+                                <TextBlock Foreground="DimGray" Margin="10,0,0,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}, Path=LastSync, StringFormat='(LAST: {0})'}"/>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
                     <MenuItem Name="MenuItemHearthStatsForceFullSync"  Header="FORCE FULL SYNC" Click="MenuItemHearthStatsForceFullSync_OnClick"/>
                     <Separator/>
                     <CheckBox Name="MenuItemCheckBoxSyncOnStart" Content="SYNC ON START" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxSyncOnStart_OnChecked" Unchecked="MenuItemCheckBoxSyncOnStart_OnUnchecked"/>

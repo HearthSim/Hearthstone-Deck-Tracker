@@ -465,6 +465,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public int StatusBarNewsHeight => 20;
 
 		public bool ShowToolTip => Config.Instance.TrackerCardToolTips;
+		
+		public string LastSync
+		{
+			get
+			{
+				if(Config.Instance.LastHearthStatsGamesSync == 0)
+					return "NEVER";
+				var time = HearthStatsManager.TimeSinceLastSync;
+				if(time.TotalDays > 7)
+					return "> 1 WEEK AGO";
+				if (time.TotalDays > 1)
+					return (int)time.TotalDays + " DAYS AGO";
+				if ((int)time.TotalDays > 0)
+					return (int)time.TotalDays + " DAY AGO";
+				if (time.TotalHours > 1)
+					return (int)time.TotalHours + " HOURS AGO";
+				if ((int)time.TotalHours > 0)
+					return (int)time.TotalHours + " HOUR AGO";
+				if ((int)time.TotalMinutes > 0)
+					return (int)time.TotalMinutes + " MIN AGO";
+				return "< 1 MIN AGO";
+			}
+		}
+
+		private void MenuItemHearthStats_OnSubmenuOpened(object sender, RoutedEventArgs e) => OnPropertyChanged(nameof(LastSync));
 
 		#endregion
 

@@ -16,8 +16,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 	{
 		public const int RetryDelay = 5000;
 		public const int VersionDelay = 1000;
+		public const int SyncOffset = 600;
 		private static int _backgroundActivities;
 		public static bool SyncInProgress { get; private set; }
+
+		public static TimeSpan TimeSinceLastSync
+			=> DateTime.Now.Subtract(Helper.FromUnixTime(Config.Instance.LastHearthStatsGamesSync + SyncOffset));
 
 		private static void AddBackgroundActivity()
 		{
@@ -663,8 +667,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					});
 					DeckStatsList.Save();
 				}
-				Config.Instance.LastHearthStatsDecksSync = DateTime.Now.ToUnixTime() - 600; //10 minute overlap
-				Config.Instance.LastHearthStatsGamesSync = DateTime.Now.ToUnixTime() - 600;
+				Config.Instance.LastHearthStatsDecksSync = DateTime.Now.ToUnixTime() - SyncOffset; //10 minute overlap
+				Config.Instance.LastHearthStatsGamesSync = DateTime.Now.ToUnixTime() - SyncOffset;
 				Config.Save();
 				if(!background)
 					await controller.CloseAsync();
