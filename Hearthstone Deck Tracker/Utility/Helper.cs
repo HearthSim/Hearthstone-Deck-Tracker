@@ -115,7 +115,7 @@ namespace Hearthstone_Deck_Tracker
 		};
 
 
-		[Obsolete("Use Core.MainWindow")]
+		[Obsolete("Use Core.MainWindow", true)]
 		public static MainWindow MainWindow => Core.MainWindow;
 
 		public static OptionsMain OptionsMain { get; set; }

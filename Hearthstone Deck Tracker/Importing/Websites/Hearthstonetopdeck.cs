@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 						{
 							DeckList.Instance.AllTags.Add(decktype);
 							DeckList.Save();
-							if(Helper.MainWindow != null) // to avoid errors when running tests
+							if(Core.MainWindow != null) // to avoid errors when running tests
 								Core.MainWindow.ReloadTags();
 						}
 						deck.Tags.Add(decktype);

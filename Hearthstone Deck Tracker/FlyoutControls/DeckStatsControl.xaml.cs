@@ -87,11 +87,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void DeleteGames(DataGrid dataGrid, bool overall)
 		{
-			MetroWindow window;
-			if(Config.Instance.StatsInWindow)
-				window = Core.Windows.StatsWindow;
-			else
-				window = Helper.MainWindow;
+			var window = Config.Instance.StatsInWindow ? (MetroWindow)Core.Windows.StatsWindow : Core.MainWindow;
 
 			var count = dataGrid.SelectedItems.Count;
 			if(count == 1)

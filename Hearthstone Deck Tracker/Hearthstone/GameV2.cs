@@ -264,20 +264,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		#region Database - Obsolete
 
-		[Obsolete("Use Hearthstone.Database.GetCardFromId")]
+		[Obsolete("Use Hearthstone.Database.GetCardFromId", true)]
 		public static Card GetCardFromId(string cardId) => Database.GetCardFromId(cardId);
 
-		[Obsolete("Use Hearthstone.Database.GetCardFromName")]
+		[Obsolete("Use Hearthstone.Database.GetCardFromName", true)]
 		public static Card GetCardFromName(string name, bool localized = false) => Database.GetCardFromName(name, localized);
 
-		[Obsolete("Use Hearthstone.Database.GetActualCards")]
+		[Obsolete("Use Hearthstone.Database.GetActualCards", true)]
 		public static List<Card> GetActualCards() => Database.GetActualCards();
 
-		[Obsolete("Use Hearthstone.Database.GetHeroNameFromId")]
+		[Obsolete("Use Hearthstone.Database.GetHeroNameFromId", true)]
 		public static string GetHeroNameFromId(string id, bool returnIdIfNotFound = true)
 			=> Database.GetHeroNameFromId(id, returnIdIfNotFound);
 
-		[Obsolete("Use Hearthstone.Database.IsActualCard")]
+		[Obsolete("Use Hearthstone.Database.IsActualCard", true)]
 		public static bool IsActualCard(Card card) => Database.IsActualCard(card);
 
 		#endregion
