@@ -895,9 +895,7 @@ namespace Hearthstone_Deck_Tracker
 			get
 			{
 				Guid id;
-				if(Guid.TryParse(ActiveDeckIdString, out id))
-					return id;
-				return Guid.Empty;
+				return Guid.TryParse(ActiveDeckIdString, out id) ? id : Guid.Empty;
 			}
 			set { ActiveDeckIdString = value.ToString(); }
 		}
@@ -943,10 +941,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 		}
 
-		public static void Save()
-		{
-			XmlManager<Config>.Save(Instance.ConfigPath, Instance);
-		}
+		public static void Save() => XmlManager<Config>.Save(Instance.ConfigPath, Instance);
 
 		public static void SaveBackup(bool deleteOriginal = false)
 		{

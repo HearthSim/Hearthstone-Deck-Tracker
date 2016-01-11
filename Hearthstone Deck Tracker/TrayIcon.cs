@@ -10,6 +10,11 @@ namespace Hearthstone_Deck_Tracker
 {
 	public class TrayIcon
 	{
+		public const string ClassCardsFirstMenuItemName = "classCardsFirst";
+		public const string StartHearthstoneMenuItemName = "startHearthstone";
+		public const string AutoSelectDeckMenuItemName = "autoSelectDeck";
+		public const string UseNoDeckMenuItemName = "useNoDeck";
+		public const string CheckedProperty = "Checked";
 		private NotifyIcon _notifyIcon;
 
 		public NotifyIcon NotifyIcon
@@ -34,22 +39,22 @@ namespace Hearthstone_Deck_Tracker
 
 			var startHearthstonMenuItem = new MenuItem("Start Launcher/Hearthstone", (sender, args) => Helper.StartHearthstoneAsync())
 			{
-				Name = "startHearthstone"
+				Name = StartHearthstoneMenuItemName
 			};
 			_notifyIcon.ContextMenu.MenuItems.Add(startHearthstonMenuItem);
 
-			var useNoDeckMenuItem = new MenuItem("Use no deck", (sender, args) => UseNoDeckContextMenu()) {Name = "useNoDeck"};
+			var useNoDeckMenuItem = new MenuItem("Use no deck", (sender, args) => UseNoDeckContextMenu()) {Name = UseNoDeckMenuItemName};
 			_notifyIcon.ContextMenu.MenuItems.Add(useNoDeckMenuItem);
 
 			var autoSelectDeckMenuItem = new MenuItem("Autoselect deck", (sender, args) => AutoDeckDetectionContextMenu())
 			{
-				Name = "autoSelectDeck"
+				Name = AutoSelectDeckMenuItemName
 			};
 			_notifyIcon.ContextMenu.MenuItems.Add(autoSelectDeckMenuItem);
 
 			var classCardsFirstMenuItem = new MenuItem("Class cards first", (sender, args) => SortClassCardsFirstContextMenu())
 			{
-				Name = "classCardsFirst"
+				Name = ClassCardsFirstMenuItemName
 			};
 			_notifyIcon.ContextMenu.MenuItems.Add(classCardsFirstMenuItem);
 
@@ -65,11 +70,11 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private void AutoDeckDetectionContextMenu()
-			=> Core.MainWindow.AutoDeckDetection(!(bool)GetContextMenuProperty("autoSelectDeck", "Checked"));
+			=> Core.MainWindow.AutoDeckDetection(!(bool)GetContextMenuProperty(AutoSelectDeckMenuItemName, CheckedProperty));
 
 		private void UseNoDeckContextMenu()
 		{
-			if((bool)GetContextMenuProperty("useNoDeck", "Checked"))
+			if((bool)GetContextMenuProperty(UseNoDeckMenuItemName, CheckedProperty))
 				Core.MainWindow.SelectLastUsedDeck();
 			else
 				Core.MainWindow.SelectDeck(null, true);
@@ -90,7 +95,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private void SortClassCardsFirstContextMenu()
-			=> Core.MainWindow.SortClassCardsFirst(!(bool)GetContextMenuProperty("classCardsFirst", "Checked"));
+			=> Core.MainWindow.SortClassCardsFirst(!(bool)GetContextMenuProperty(ClassCardsFirstMenuItemName, CheckedProperty));
 
 		public void ShowMessage(string text, string title = "Hearthstone Deck Tracker", int duration = 5, ToolTipIcon icon = ToolTipIcon.Info)
 			=> _notifyIcon.ShowBalloonTip(duration, title, text, icon);

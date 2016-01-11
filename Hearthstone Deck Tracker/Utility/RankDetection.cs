@@ -221,15 +221,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public int Rank { get; set; }
 		public float Score { get; set; }
 
-		public int CompareTo(RankMatch other)
-		{
-			// descending
-			return other.Score.CompareTo(Score);
-		}
+		// descending
+		public int CompareTo(RankMatch other) => other.Score.CompareTo(Score);
 
-		public bool Equals(RankMatch other)
-		{
-			return Rank == other.Rank && Score == other.Score;
-		}
+		public bool Equals(RankMatch other) => Rank == other.Rank && Score == other.Score;
 	}
 }

@@ -130,7 +130,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			CheckboxDeckDetection.IsChecked = enable;
 			Config.Instance.AutoDeckDetection = enable;
 			Config.Save();
-			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", enable);
+			Core.TrayIcon.SetContextMenuProperty(TrayIcon.AutoSelectDeckMenuItemName, TrayIcon.CheckedProperty, enable);
 		}
 
 		private void CheckboxClassCardsFirst_Checked(object sender, RoutedEventArgs e) => InvokeIfInitialized(() => SortClassCardsFirst(true));
@@ -143,7 +143,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Config.Instance.CardSortingClassFirst = classFirst;
 			Config.Save();
 			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, classFirst);
-			Core.TrayIcon.SetContextMenuProperty("classCardsFirst", "Checked", classFirst);
+			Core.TrayIcon.SetContextMenuProperty(TrayIcon.ClassCardsFirstMenuItemName, TrayIcon.CheckedProperty, classFirst);
 		}
 
 
@@ -761,7 +761,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				else
 				{
-					this.ShowMessage("Deck detection disabled.", "Can be re-enabled in \"DECKS\" menu.");
+					this.ShowMessage("Deck detection disabled.", "Can be re-enabled in \"MAIN\" menu.");
 					CheckboxDeckDetection.IsChecked = false;
 					Config.Save();
 				}
@@ -885,7 +885,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 					Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
 
-					int useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
+					int useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
 					Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
 				}
 			}
@@ -900,7 +900,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(setActive)
 					DeckPickerList.DeselectDeck();
 
-				var useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("useNoDeck");
+				var useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
 				Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = true;
 			}
 

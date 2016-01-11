@@ -224,10 +224,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			return Equals((GameStats)obj);
 		}
 
-		public override int GetHashCode()
-		{
-			return GameId.GetHashCode();
-		}
+		public override int GetHashCode() => GameId.GetHashCode();
 
 		private void ResolveSecrets(IEnumerable<TurnStats> newTurnStats)
 		{
@@ -298,10 +295,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Save();
 		}
 
-		private void Save()
-		{
-			XmlManager<List<TurnStats>>.Save(GameFile, TurnStats);
-		}
+		private void Save() => XmlManager<List<TurnStats>>.Save(GameFile, TurnStats);
 
 		public void AddPlay(PlayType type, int turn, string cardId)
 		{
@@ -315,10 +309,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Logger.WriteLine($"New play: {type} ({cardId}, turn: {turn})", "GameStats", 2);
 		}
 
-		public override string ToString()
-		{
-			return Result + " vs " + OpponentHero + ", " + StartTime;
-		}
+		public override string ToString() => Result + " vs " + OpponentHero + ", " + StartTime;
 
 		public void ResetHearthstatsIds()
 		{

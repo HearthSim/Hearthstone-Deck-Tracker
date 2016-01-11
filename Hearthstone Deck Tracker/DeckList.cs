@@ -177,11 +177,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static void Save()
-		{
-			var file = Config.Instance.DataDir + "PlayerDecks.xml";
-			XmlManager<DeckList>.Save(file, Instance);
-		}
+		public static void Save() => XmlManager<DeckList>.Save(Config.Instance.DataDir + "PlayerDecks.xml", Instance);
 	}
 
 	public class DeckInfo

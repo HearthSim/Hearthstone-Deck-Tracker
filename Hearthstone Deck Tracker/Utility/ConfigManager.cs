@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Helper.UpdateLogConfig = UpdateLogConfigFile();
 
 			if(!Directory.Exists(Config.Instance.DataDir))
-				Config.Instance.Reset("DataDirPath");
+				Config.Instance.Reset(nameof(Config.DataDirPath));
 		}
 
 		// Logic for dealing with legacy config file semantics
@@ -63,45 +63,45 @@ namespace Hearthstone_Deck_Tracker.Utility
 					// under certain circumstances (GitHub issue #135).
 					if(Config.Instance.TrackerWindowLeft == -32000)
 					{
-						Config.Instance.Reset("TrackerWindowLeft");
+						Config.Instance.Reset(nameof(Config.TrackerWindowLeft));
 						converted = true;
 					}
 					if(Config.Instance.TrackerWindowTop == -32000)
 					{
-						Config.Instance.Reset("TrackerWindowTop");
+						Config.Instance.Reset(nameof(Config.TrackerWindowTop));
 						converted = true;
 					}
 
 					if(Config.Instance.PlayerWindowLeft == -32000)
 					{
-						Config.Instance.Reset("PlayerWindowLeft");
+						Config.Instance.Reset(nameof(Config.PlayerWindowLeft));
 						converted = true;
 					}
 					if(Config.Instance.PlayerWindowTop == -32000)
 					{
-						Config.Instance.Reset("PlayerWindowTop");
+						Config.Instance.Reset(nameof(Config.PlayerWindowTop));
 						converted = true;
 					}
 
 					if(Config.Instance.OpponentWindowLeft == -32000)
 					{
-						Config.Instance.Reset("OpponentWindowLeft");
+						Config.Instance.Reset(nameof(Config.OpponentWindowLeft));
 						converted = true;
 					}
 					if(Config.Instance.OpponentWindowTop == -32000)
 					{
-						Config.Instance.Reset("OpponentWindowTop");
+						Config.Instance.Reset(nameof(Config.OpponentWindowTop));
 						converted = true;
 					}
 
 					if(Config.Instance.TimerWindowLeft == -32000)
 					{
-						Config.Instance.Reset("TimerWindowLeft");
+						Config.Instance.Reset(nameof(Config.TimerWindowLeft));
 						converted = true;
 					}
 					if(Config.Instance.TimerWindowTop == -32000)
 					{
-						Config.Instance.Reset("TimerWindowTop");
+						Config.Instance.Reset(nameof(Config.TimerWindowTop));
 						converted = true;
 					}
 
@@ -132,17 +132,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					if(Config.Instance.ExportClearX == 0.86)
 					{
-						Config.Instance.Reset("ExportClearX");
+						Config.Instance.Reset(nameof(Config.ExportClearX));
 						converted = true;
 					}
 					if(Config.Instance.ExportClearY == 0.16)
 					{
-						Config.Instance.Reset("ExportClearY");
+						Config.Instance.Reset(nameof(Config.ExportClearY));
 						converted = true;
 					}
 					if(Config.Instance.ExportClearCheckYFixed == 0.2)
 					{
-						Config.Instance.Reset("ExportClearCheckYFixed");
+						Config.Instance.Reset(nameof(Config.ExportClearCheckYFixed));
 						converted = true;
 					}
 				}
@@ -150,17 +150,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					if(Config.Instance.ExportCard1X != 0.04)
 					{
-						Config.Instance.Reset("ExportCard1X");
+						Config.Instance.Reset(nameof(Config.ExportCard1X));
 						converted = true;
 					}
 					if(Config.Instance.ExportCard2X != 0.2)
 					{
-						Config.Instance.Reset("ExportCard2X");
+						Config.Instance.Reset(nameof(Config.ExportCard2X));
 						converted = true;
 					}
 					if(Config.Instance.ExportCardsY != 0.168)
 					{
-						Config.Instance.Reset("ExportCardsY");
+						Config.Instance.Reset(nameof(Config.ExportCardsY));
 						converted = true;
 					}
 				}
@@ -168,18 +168,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					if(!Config.Instance.PanelOrderPlayer.Contains("Fatigue Counter"))
 					{
-						Config.Instance.Reset("PanelOrderPlayer");
+						Config.Instance.Reset(nameof(Config.PanelOrderPlayer));
 						converted = true;
 					}
 					if(!Config.Instance.PanelOrderOpponent.Contains("Fatigue Counter"))
 					{
-						Config.Instance.Reset("PanelOrderOpponent");
+						Config.Instance.Reset(nameof(Config.PanelOrderOpponent));
 						converted = true;
 					}
 				}
 				if(configVersion <= new Version(0, 10, 10, 0)) //button moved up with new expansion added to the list
 				{
-					Config.Instance.Reset("ExportAllSetsButtonY");
+					Config.Instance.Reset(nameof(Config.ExportAllSetsButtonY));
 					converted = true;
 				}
 				if(configVersion <= new Version(0, 11, 1, 0))
@@ -198,18 +198,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 					}
 					if(Config.Instance.GoldProgress.Length < 5)
 					{
-						Config.Instance.Reset("GoldProgress");
+						Config.Instance.Reset(nameof(Config.GoldProgress));
 						converted = true;
 					}
 					if(Config.Instance.GoldProgressTotal.Length < 5)
 					{
-						Config.Instance.Reset("GoldProgressTotal");
+						Config.Instance.Reset(nameof(Config.GoldProgressTotal));
 						converted = true;
 					}
 				}
 				if(configVersion <= new Version(0, 13, 1, 0)) //button moved up with new expansion added to the list
 				{
-					Config.Instance.Reset("ExportAllSetsButtonY");
+					Config.Instance.Reset(nameof(Config.ExportAllSetsButtonY));
 					converted = true;
 				}
 			}

@@ -131,14 +131,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CheckForTimerAlarm()
 		{
-			if(Config.Instance.TimerAlert)
-			{
-				if(Seconds == Config.Instance.TimerAlertSeconds)
-				{
-					SystemSounds.Asterisk.Play();
-					User32.FlashHs();
-				}
-			}
+			if(!Config.Instance.TimerAlert || Seconds != Config.Instance.TimerAlertSeconds)
+				return;
+			SystemSounds.Asterisk.Play();
+			User32.FlashHs();
 		}
 	}
 }

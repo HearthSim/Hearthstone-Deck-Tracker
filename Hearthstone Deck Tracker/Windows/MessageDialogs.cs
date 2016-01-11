@@ -15,6 +15,8 @@ using Hearthstone_Deck_Tracker.Stats;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+using static System.StringComparison;
+using static MahApps.Metro.Controls.Dialogs.MessageDialogStyle;
 
 #endregion
 
@@ -24,15 +26,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		public static async Task<MessageDialogResult> ShowDeleteGameStatsMessage(this MetroWindow window, GameStats stats)
 			=> await window.ShowMessageAsync("Delete Game", $"{stats.Result} vs {stats.OpponentHero}\nfrom {stats.StartTime}\n\nAre you sure?",
-				MessageDialogStyle.AffirmativeAndNegative, new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
+				AffirmativeAndNegative, new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
 
 		public static async Task<MessageDialogResult> ShowDeleteMultipleGameStatsMessage(this MetroWindow window, int count)
 			=> await window.ShowMessageAsync("Delete Games", $"This will delete the selected games ({count}).\n\nAre you sure?",
-				MessageDialogStyle.AffirmativeAndNegative, new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
+				AffirmativeAndNegative, new Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
 
 		public static async Task ShowUpdateNotesMessage(this MetroWindow window)
 		{
-			var result = await window.ShowMessageAsync("Update successful", "", MessageDialogStyle.AffirmativeAndNegative,
+			var result = await window.ShowMessageAsync("Update successful", "", AffirmativeAndNegative,
 							new Settings {AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close"});
 			if(result == MessageDialogResult.Affirmative)
 				Helper.TryOpenUrl(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases");
@@ -42,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public static async Task ShowSavedFileMessage(this MainWindow window, string fileName)
 		{
-			var result = await window.ShowMessageAsync("", $"Saved to\n\"{fileName}\"", MessageDialogStyle.AffirmativeAndNegative,
+			var result = await window.ShowMessageAsync("", $"Saved to\n\"{fileName}\"", AffirmativeAndNegative,
 							new Settings {NegativeButtonText = "Open folder"});
 			if(result == MessageDialogResult.Negative)
 				Process.Start(Path.GetDirectoryName(fileName));
@@ -54,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(fileName != null)
 				sb.AppendLine($"Saved to\n\"{fileName}\"");
 			sb.AppendLine($"Uploaded to\n{url}");
-			var result = await window.ShowMessageAsync("", sb.ToString(), MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+			var result = await window.ShowMessageAsync("", sb.ToString(), AffirmativeAndNegativeAndSingleAuxiliary,
 							new Settings {NegativeButtonText = "open in browser", FirstAuxiliaryButtonText = "copy url to clipboard"});
 			if(result == MessageDialogResult.Negative)
 			{
@@ -83,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public static async Task<SaveScreenshotOperation> ShowScreenshotUploadSelectionDialog(this MainWindow window)
 		{
 			var result = await window.ShowMessageAsync("Select Operation", "\"upload\" will automatically upload the image to imgur.com",
-							MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, new Settings
+							AffirmativeAndNegativeAndSingleAuxiliary, new Settings
 							{
 								AffirmativeButtonText = "save only",
 								NegativeButtonText = "save & upload",
@@ -101,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var settings = new Settings {AffirmativeButtonText = "Ok", NegativeButtonText = "Select manually"};
 			var result = await window.ShowMessageAsync("Hearthstone install directory not found",
 							"Hearthstone Deck Tracker will not work properly if Hearthstone is not installed on your machine (obviously).",
-							MessageDialogStyle.AffirmativeAndNegative, settings);
+							AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Negative)
 			{
 				var dialog = new OpenFileDialog
@@ -127,38 +129,33 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				await window.ShowMessageAsync("No missing cards",
 						"No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
-						MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
+						Affirmative, new Settings {AffirmativeButtonText = "OK"});
 				return;
 			}
 			var message = "The following cards were not found:\n";
 			var totalDust = 0;
-			var promo = "";
-			var reward = "";
-			var nax = "";
-			var tbm = "";
-			var loe = "";
+			var sets = new string[5];
 			foreach(var card in deck.MissingCards)
 			{
 				message += "\n• " + card.LocalizedName;
 				if(card.Count == 2)
 					message += " x2";
 
-				if(card.Set.Equals("CURSE OF NAXXRAMAS", StringComparison.CurrentCultureIgnoreCase))
-					nax = "and the Naxxramas DLC ";
-				else if(card.Set.Equals("PROMOTION", StringComparison.CurrentCultureIgnoreCase))
-					promo = "and Promotion cards ";
-				else if(card.Set.Equals("REWARD", StringComparison.CurrentCultureIgnoreCase))
-					reward = "and the Reward cards ";
-				else if(card.Set.Equals("BLACKROCK MOUNTAIN", StringComparison.CurrentCultureIgnoreCase))
-					tbm = "and the Blackrock Mountain DLC ";
-				else if(card.Set.Equals("LEAGUE OF EXPLORERS", StringComparison.CurrentCultureIgnoreCase))
-					loe = "and the League of Explorers DLC ";
+				if(card.Set.Equals("CURSE OF NAXXRAMAS", CurrentCultureIgnoreCase))
+					sets[0] = "and the Naxxramas DLC ";
+				else if(card.Set.Equals("PROMOTION", CurrentCultureIgnoreCase))
+					sets[1] = "and Promotion cards ";
+				else if(card.Set.Equals("REWARD", CurrentCultureIgnoreCase))
+					sets[2] = "and the Reward cards ";
+				else if(card.Set.Equals("BLACKROCK MOUNTAIN", CurrentCultureIgnoreCase))
+					sets[3] = "and the Blackrock Mountain DLC ";
+				else if(card.Set.Equals("LEAGUE OF EXPLORERS", CurrentCultureIgnoreCase))
+					sets[4] = "and the League of Explorers DLC ";
 				else
 					totalDust += card.DustCost * card.Count;
 			}
-			message += $"\n\nYou need {totalDust} dust {nax}{tbm}{loe}{reward}{promo}to craft the missing cards.";
-			await
-				window.ShowMessageAsync("Export incomplete", message, MessageDialogStyle.Affirmative, new Settings {AffirmativeButtonText = "OK"});
+			message += $"\n\nYou need {totalDust} dust {string.Join("", sets)}to craft the missing cards.";
+			await window.ShowMessageAsync("Export incomplete", message, Affirmative, new Settings {AffirmativeButtonText = "OK"});
 		}
 
 		public static async Task<bool> ShowAddGameDialog(this MetroWindow window, Deck deck)
@@ -217,7 +214,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var dialogResult =
 				await
 				window.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
-				                        MessageDialogStyle.AffirmativeAndNegative,
+				                        AffirmativeAndNegative,
 				                        new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
 			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
 			Core.MainWindow.MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
@@ -228,7 +225,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public static async Task<bool> ShowLanguageSelectionDialog(this MetroWindow window)
 		{
 			var english = await
-				window.ShowMessageAsync("Select language", "", MessageDialogStyle.AffirmativeAndNegative,
+				window.ShowMessageAsync("Select language", "", AffirmativeAndNegative,
 										new Settings
 										{
 											AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
