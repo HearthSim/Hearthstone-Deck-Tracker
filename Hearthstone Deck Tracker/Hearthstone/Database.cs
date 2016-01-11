@@ -30,9 +30,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var lang = Language.enUS;
 			if(localized)
 				Enum.TryParse(Config.Instance.SelectedLanguage, out lang);
-			var card = Cards.GetFromName(name, lang, collectible);
-			if(card != null)
-				return new Card(card);
+			try
+			{
+				var card = Cards.GetFromName(name, lang, collectible);
+				if (card != null)
+					return new Card(card);
+			}
+			catch(Exception ex)
+			{
+				Logger.WriteLine("Error getting card from HearthDb:\n" + ex);
+			}
 			if(showErrorMessage)
 				Logger.WriteLine("Could not get card from name: " + name, "Database");
 			return new Card("UNKNOWN", null, Rarity.Free, "Minion", name, 0, name, 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
