@@ -212,15 +212,18 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							if(buffer[i] == '\n')
 								break;
 						}
-						offset -= skip;
-						var reverse = new string(buffer.Skip(skip).Reverse().ToArray());
-						var targetOffsets = targets.Select(x => reverse.IndexOf(x, StringComparison.Ordinal)).Where(x => x > -1).ToList();
-						var targetOffset = targetOffsets.Any() ? targetOffsets.Min() : -1;
-						if(targetOffset != -1)
-						{
-							var line = new string(reverse.Substring(targetOffset).TakeWhile(c => c != '\n').Reverse().ToArray());
-							return new LogLineItem("", line, fileInfo.LastWriteTime).Time;
-						}
+                        if (skip < 4096)
+                        {
+                            offset -= skip;
+                            var reverse = new string(buffer.Skip(skip).Reverse().ToArray());
+                            var targetOffsets = targets.Select(x => reverse.IndexOf(x, StringComparison.Ordinal)).Where(x => x > -1).ToList();
+                            var targetOffset = targetOffsets.Any() ? targetOffsets.Min() : -1;
+                            if(targetOffset != -1)
+                            {
+                                var line = new string(reverse.Substring(targetOffset).TakeWhile(c => c != '\n').Reverse().ToArray());
+                                return new LogLineItem("", line, fileInfo.LastWriteTime).Time;
+                            }
+                        }
 					}
 				}
 			}
