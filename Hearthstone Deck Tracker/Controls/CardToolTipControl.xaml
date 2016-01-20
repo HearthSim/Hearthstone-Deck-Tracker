@@ -28,7 +28,7 @@
                                             Visibility="{Binding ShowIconsInTooltip}" />
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding LocalizedName}" Grid.Column="1" FontSize="14"
                                             VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"
-                                            TextAlignment="Center" />
+                                            TextAlignment="Center" FontFamily="{Binding Font}" />
                 <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="2"
                        VerticalAlignment="Center" HorizontalAlignment="Center"
                        Visibility="{Binding ShowIconsInTooltip}" />

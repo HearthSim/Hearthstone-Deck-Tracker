@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro;
+using static System.Windows.Visibility;
+using static Hearthstone_Deck_Tracker.Replay.KeyPointType;
 
 #endregion
 
@@ -20,58 +22,25 @@ namespace Hearthstone_Deck_Tracker.Replay
 		public bool IsCollapsed { get; set; }
 		public bool ShowAll { get; set; }
 
-		public Card Card
-		{
-			get { return KeyPoint == null ? null : Database.GetCardFromId(KeyPoint.GetCardId()); }
-		}
+		public Card Card => KeyPoint == null ? null : Database.GetCardFromId(KeyPoint.GetCardId());
 
-		public string TurnString
-		{
-			get { return Turn.HasValue ? "Turn " + Turn.Value : ""; }
-		}
+		public string TurnString => Turn.HasValue ? "Turn " + Turn.Value : "";
 
-		public bool IsTurnRow
-		{
-			get { return Turn.HasValue; }
-		}
+		public bool IsTurnRow => Turn.HasValue;
 
-		public SolidColorBrush RowBackground
-		{
-			get
-			{
-				return new SolidColorBrush(Turn.HasValue ? (Color)ThemeManager.DetectAppStyle().Item2.Resources["AccentColor"] : Colors.Transparent);
-			}
-		}
+		public SolidColorBrush RowBackground => new SolidColorBrush(Turn.HasValue ? (Color)ThemeManager.DetectAppStyle().Item2.Resources["AccentColor"] : Colors.Transparent);
 
-		public Visibility VisibilityShowAll
-		{
-			get { return !ShowAll ? Visibility.Visible : Visibility.Collapsed; }
-		}
+		public Visibility VisibilityShowAll => !ShowAll ? Visible : Collapsed;
 
-		public Visibility VisibilityShowFiltered
-		{
-			get { return ShowAll ? Visibility.Visible : Visibility.Collapsed; }
-		}
+		public Visibility VisibilityShowFiltered => ShowAll ? Visible : Collapsed;
 
-		public Visibility VisibilityTurnRow
-		{
-			get { return Turn.HasValue ? Visibility.Visible : Visibility.Hidden; }
-		}
+		public Visibility VisibilityTurnRow => Turn.HasValue ? Visible : Hidden;
 
-		public Visibility VisibilityKeyPoint
-		{
-			get { return !Turn.HasValue ? Visibility.Visible : Visibility.Hidden; }
-		}
+		public Visibility VisibilityKeyPoint => !Turn.HasValue ? Visible : Hidden;
 
-		public Visibility VisibilityPlayer
-		{
-			get { return !string.IsNullOrEmpty(PlayerAction) ? Visibility.Visible : Visibility.Hidden; }
-		}
+		public Visibility VisibilityPlayer => !string.IsNullOrEmpty(PlayerAction) ? Visible : Hidden;
 
-		public Visibility VisibilityOpponent
-		{
-			get { return !string.IsNullOrEmpty(OpponentAction) ? Visibility.Visible : Visibility.Hidden; }
-		}
+		public Visibility VisibilityOpponent => !string.IsNullOrEmpty(OpponentAction) ? Visible : Hidden;
 
 		public string Action
 		{
@@ -81,29 +50,29 @@ namespace Hearthstone_Deck_Tracker.Replay
 					return "";
 				switch(KeyPoint.Type)
 				{
-					case KeyPointType.Attack:
+					case Attack:
 						return "(atk)";
-					case KeyPointType.Death:
+					case Death:
 						return "(dth)";
-					case KeyPointType.DeckDiscard:
-					case KeyPointType.HandDiscard:
+					case DeckDiscard:
+					case HandDiscard:
 						return "(dsc)";
-					case KeyPointType.Draw:
-					case KeyPointType.Mulligan:
-					case KeyPointType.Obtain:
-					case KeyPointType.PlayToDeck:
-					case KeyPointType.PlayToHand:
+					case Draw:
+					case Mulligan:
+					case Obtain:
+					case PlayToDeck:
+					case PlayToHand:
 						return "(drw)";
-					case KeyPointType.HeroPower:
+					case HeroPower:
 						return "(hrp)";
-					case KeyPointType.SecretStolen:
-					case KeyPointType.SecretTriggered:
+					case SecretStolen:
+					case SecretTriggered:
 						return "(scr)";
-					case KeyPointType.Play:
-					case KeyPointType.PlaySpell:
-					case KeyPointType.SecretPlayed:
+					case Play:
+					case PlaySpell:
+					case SecretPlayed:
 						return "(ply)";
-					case KeyPointType.Summon:
+					case Summon:
 						return "(smn)";
 				}
 				return "";
@@ -115,9 +84,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			get
 			{
 				var resource = GetResourceName();
-				if(string.IsNullOrEmpty(resource))
-					return new VisualBrush();
-				return new VisualBrush((Visual)Application.Current.FindResource(resource));
+				return string.IsNullOrEmpty(resource) ? new VisualBrush() : new VisualBrush((Visual)Application.Current.FindResource(resource));
 			}
 		}
 
@@ -127,33 +94,33 @@ namespace Hearthstone_Deck_Tracker.Replay
 				return "";
 			switch(KeyPoint.Type)
 			{
-				case KeyPointType.Attack:
+				case Attack:
 					return "action_attack";
-				case KeyPointType.Death:
-				case KeyPointType.Defeat:
+				case Death:
+				case Defeat:
 					return "action_death";
-				case KeyPointType.Mulligan:
-				case KeyPointType.DeckDiscard:
-				case KeyPointType.HandDiscard:
+				case Mulligan:
+				case DeckDiscard:
+				case HandDiscard:
 					return "action_discard";
-				case KeyPointType.Draw:
-				case KeyPointType.Obtain:
-				case KeyPointType.PlayToDeck:
-				case KeyPointType.PlayToHand:
-				case KeyPointType.CreateToDeck:
+				case Draw:
+				case Obtain:
+				case PlayToDeck:
+				case PlayToHand:
+				case CreateToDeck:
 					return "action_draw";
-				case KeyPointType.HeroPower:
+				case HeroPower:
 					return "action_play";
-				case KeyPointType.SecretStolen:
-				case KeyPointType.SecretTriggered:
+				case SecretStolen:
+				case SecretTriggered:
 					return "action_secret";
-				case KeyPointType.Play:
-				case KeyPointType.PlaySpell:
-				case KeyPointType.SecretPlayed:
+				case Play:
+				case PlaySpell:
+				case SecretPlayed:
 					return "action_play";
-				case KeyPointType.Summon:
+				case Summon:
 					return "action_summon";
-				case KeyPointType.Victory:
+				case Victory:
 					return "action_victory";
 			}
 			return "";

@@ -26,12 +26,9 @@ namespace Hearthstone_Deck_Tracker.Enums
 			}
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			return Enum.ToObject(targetType, value);
-		}
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Enum.ToObject(targetType, value);
 
-		public string GetDescription(Enum en)
+		public static string GetDescription(Enum en)
 		{
 			var type = en.GetType();
 			var memInfo = type.GetMember(en.ToString());

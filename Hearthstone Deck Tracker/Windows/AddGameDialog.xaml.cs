@@ -48,11 +48,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 						TextBoxRank.Text = lastGame.Rank.ToString();
 				}
 			}
-			if(lastGame != null && lastGame.Region != Region.UNKNOWN)
-				ComboBoxRegion.SelectedItem = lastGame.Region;
+			if(lastGame != null)
+			{
+				TextBoxPlayerName.Text = lastGame.PlayerName;
+				if(lastGame.Region != Region.UNKNOWN)
+					ComboBoxRegion.SelectedItem = lastGame.Region;
+			}
 			_deck = deck;
 			_game = new GameStats();
 			BtnSave.Content = "add game";
+			Title = "Add new game";
 		}
 
 		public AddGameDialog(GameStats game)
@@ -64,7 +69,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			if(game == null)
 				return;
 			ComboBoxResult.SelectedItem = game.Result;
-			ComboBoxOpponent.SelectedItem = (HeroClass)Enum.Parse(typeof(HeroClass), game.OpponentHero);
+			HeroClass heroClass;
+			if(Enum.TryParse(game.OpponentHero, out heroClass))
+				ComboBoxOpponent.SelectedItem = heroClass;
 			ComboBoxMode.SelectedItem = game.GameMode;
 			ComboBoxRegion.SelectedItem = game.Region;
 			if(game.GameMode == GameMode.Ranked)
@@ -77,7 +84,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			TextBoxDuration.IsEnabled = false;
 			TextBoxNote.Text = game.Note;
 			TextBoxOppName.Text = game.OpponentName;
+			TextBoxPlayerName.Text = game.PlayerName;
 			BtnSave.Content = "save";
+			Title = "Edit game";
 		}
 
 		private void BtnSave_OnClick(object sender, RoutedEventArgs e)
@@ -106,6 +115,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				_game.Rank = rank;
 				_game.Note = TextBoxNote.Text;
 				_game.OpponentName = TextBoxOppName.Text;
+				_game.PlayerName = TextBoxPlayerName.Text;
 				_game.Turns = turns;
 				_game.WasConceded = (YesNo)ComboBoxConceded.SelectedValue == YesNo.Yes;
 				_game.Region = (Region)ComboBoxRegion.SelectedItem;
@@ -118,10 +128,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		internal Task<GameStats> WaitForButtonPressAsync()
-		{
-			return _tcs.Task;
-		}
+		internal Task<GameStats> WaitForButtonPressAsync() => _tcs.Task;
 
 		private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
@@ -135,9 +142,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				TextBoxRank.IsEnabled = e.AddedItems.Contains(GameMode.Ranked);
 		}
 
-		private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
-		{
-			_tcs.SetResult(null);
-		}
+		private void BtnCancel_OnClick(object sender, RoutedEventArgs e) => _tcs.SetResult(null);
 	}
 }

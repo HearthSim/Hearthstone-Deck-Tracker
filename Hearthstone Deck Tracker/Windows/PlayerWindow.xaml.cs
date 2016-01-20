@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -24,15 +23,18 @@ namespace Hearthstone_Deck_Tracker
 	public partial class PlayerWindow : INotifyPropertyChanged
 	{
 		public static double Scaling = 1.0;
-	    private readonly GameV2 _game;
-	    private readonly bool _forScreenshot;
+		private readonly bool _forScreenshot;
+		private readonly GameV2 _game;
 		private bool _appIsClosing;
+
+
+		private DateTime _lastPlayerUpdateReqest = DateTime.MinValue;
 
 		public PlayerWindow(GameV2 game, List<Card> forScreenshot = null)
 		{
 			InitializeComponent();
-		    _game = game;
-		    _forScreenshot = forScreenshot != null;
+			_game = game;
+			_forScreenshot = forScreenshot != null;
 			//ListViewPlayer.ItemsSource = playerDeck;
 			//playerDeck.CollectionChanged += PlayerDeckOnCollectionChanged;
 			Height = Config.Instance.PlayerWindowHeight;
@@ -71,19 +73,15 @@ namespace Hearthstone_Deck_Tracker
 				Update();
 		}
 
-		public List<Card> PlayerDeck
-		{
-			get { return _game.Player.DisplayCards; }
-		}
+		public List<Card> PlayerDeck => _game.Player.DisplayCards;
 
-		public bool ShowToolTip
-		{
-			get { return Config.Instance.WindowCardToolTips; }
-		}
+		public bool ShowToolTip => Config.Instance.WindowCardToolTips;
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void Update()
 		{
-            CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
+			CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			CanvasPlayerCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
 			LblWins.Visibility = Config.Instance.ShowDeckWins && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
@@ -99,14 +97,10 @@ namespace Hearthstone_Deck_Tracker
 			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck == null)
 				return;
-			LblWins.Text = string.Format("{0} ({1})", selectedDeck.WinLossString, selectedDeck.WinPercentString);
+			LblWins.Text = $"{selectedDeck.WinLossString} ({selectedDeck.WinPercentString})";
 		}
 
-		private void SetDeckTitle()
-		{
-			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
-			LblDeckTitle.Text = selectedDeck != null ? selectedDeck.Name : string.Empty;
-		}
+		private void SetDeckTitle() => LblDeckTitle.Text = DeckList.Instance.ActiveDeckVersion != null ? DeckList.Instance.ActiveDeckVersion.Name : string.Empty;
 
 		public void UpdatePlayerLayout()
 		{
@@ -157,25 +151,20 @@ namespace Hearthstone_Deck_Tracker
 			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
-		private void PlayerDeckOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-		{
-			Scale();
-		}
-
 		private void Scale()
 		{
 			const int offsetToMakeSureGraphicsAreNotClipped = 35;
-			var allLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblWins.ActualHeight + LblDeckTitle.ActualHeight + LblPlayerFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
-			if(((Height - allLabelsHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1 || Scaling < 1)
-			{
-				var previousScaling = Scaling;
-				Scaling = (Height - allLabelsHeight) / (ListViewPlayer.Items.Count * 35);
-				if(Scaling > 1)
-					Scaling = 1;
+			var allLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblWins.ActualHeight
+			                      + LblDeckTitle.ActualHeight + LblPlayerFatigue.ActualHeight + offsetToMakeSureGraphicsAreNotClipped;
+			if(!(((Height - allLabelsHeight) - (ListViewPlayer.Items.Count * 35 * Scaling)) < 1) && !(Scaling < 1))
+				return;
+			var previousScaling = Scaling;
+			Scaling = (Height - allLabelsHeight) / (ListViewPlayer.Items.Count * 35);
+			if(Scaling > 1)
+				Scaling = 1;
 
-				if(previousScaling != Scaling)
-					ListViewPlayer.Items.Refresh();
-			}
+			if(previousScaling != Scaling)
+				ListViewPlayer.Items.Refresh();
 		}
 
 		private void Window_SizeChanged_1(object sender, SizeChangedEventArgs e)
@@ -230,26 +219,20 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-
-		private DateTime _lastPlayerUpdateReqest = DateTime.MinValue;
 		public async void UpdatePlayerCards()
 		{
 			_lastPlayerUpdateReqest = DateTime.Now;
 			await Task.Delay(100);
 			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 100)
 				return;
-			OnPropertyChanged("PlayerDeck");
+			OnPropertyChanged(nameof(PlayerDeck));
 			Scale();
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

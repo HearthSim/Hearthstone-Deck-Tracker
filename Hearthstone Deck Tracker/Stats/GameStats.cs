@@ -6,11 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using static Hearthstone_Deck_Tracker.Enums.PlayType;
 
 #endregion
 
@@ -18,7 +20,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class GameStats
 	{
-		private readonly string[] _hsClasses = {"Druid", "Hunter", "Mage", "Priest", "Paladin", "Shaman", "Rogue", "Warlock", "Warrior"};
 		private Guid? _deckId;
 		private string _deckName;
 		private List<TurnStats> _turnStats;
@@ -40,15 +41,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 			GameId = Guid.NewGuid();
 		}
 
-		private string _gamesDir
-		{
-			get { return Config.Instance.DataDir + "Games"; }
-		}
+		private string GamesDir => Config.Instance.DataDir + "Games";
 
-		private string _gameFile
-		{
-			get { return _gamesDir + string.Format(@"\Game_{0}.xml", GameId); }
-		}
+		private string GameFile => GamesDir + $@"\Game_{GameId}.xml";
 
 		//playerhero does not get loaded from xml for some reason
 		public string PlayerHero { get; set; }
@@ -67,17 +62,17 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string ReplayFile { get; set; }
 		public bool WasConceded { get; set; }
 		public int Rank { get; set; }
+		public int OpponentRank { get; set; }
 		public Region Region { get; set; }
 
 		public Guid DeckId
 		{
 			get
 			{
-				if(!_deckId.HasValue)
-				{
-					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckStats.Games.Any(g => g == this));
-					_deckId = deck != null ? deck.DeckId : Guid.Empty;
-				}
+				if(_deckId.HasValue)
+					return _deckId.Value;
+				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckStats.Games.Any(g => g == this));
+				_deckId = deck?.DeckId ?? Guid.Empty;
 				return _deckId.Value;
 			}
 			set { _deckId = value; }
@@ -87,67 +82,59 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get
 			{
-				if(string.IsNullOrEmpty(_deckName))
-				{
-					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == DeckId);
-					_deckName = deck != null ? deck.Name : "none";
-				}
+				if(!string.IsNullOrEmpty(_deckName))
+					return _deckName;
+				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == DeckId);
+				_deckName = deck != null ? deck.Name : "none";
 				return _deckName;
 			}
 			set { _deckName = value; }
 		}
 
 		[XmlIgnore]
-		public string RegionString
-		{
-			get { return Region == Region.UNKNOWN ? "-" : Region.ToString(); }
-		}
-
-		[XmlIgnore]
-		public bool HasRank
-		{
-			get { return Rank > 0 && Rank <= 25; }
-		}
-
-		[XmlIgnore]
-		public string RankString
-		{
-			get { return HasRank && GameMode == GameMode.Ranked ? Rank.ToString() : "-"; }
-		}
-
-		[XmlIgnore]
-		public string ResultString
-		{
-			get { return Result + (WasConceded ? "*" : ""); }
-		}
-
-		public SerializableVersion PlayerDeckVersion { get; set; }
-
-		public bool IsAssociatedWithDeckVersion
-		{
-			get { return PlayerDeckVersion != null || !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
-		}
-
-		[XmlIgnore]
-		public string PlayerDeckVersionString
+		public SolidColorBrush ResultTextColor
 		{
 			get
 			{
-				return PlayerDeckVersion != null ? PlayerDeckVersion.ToString("v{M}.{m}") : SerializableVersion.Default.ToString("v{M}.{m}");
+				var c = Colors.Black;
+				if(Result == GameResult.Win)
+					c = Colors.Green;
+				else if(Result == GameResult.Loss)
+					c = Colors.Red;
+				return new SolidColorBrush(c);
 			}
 		}
 
 		[XmlIgnore]
-		public ToolTip ResultToolTip
-		{
-			get { return new ToolTip {Content = "conceded", Visibility = (WasConceded ? Visibility.Visible : Visibility.Hidden)}; }
-		}
+		public string RegionString => Region == Region.UNKNOWN ? "-" : Region.ToString();
 
 		[XmlIgnore]
-		public bool HasReplayFile
-		{
-			get { return ReplayFile != null && File.Exists(Path.Combine(Config.Instance.ReplayDir, ReplayFile)); }
-		}
+		public bool HasRank => Rank > 0 && Rank <= 25;
+
+		[XmlIgnore]
+		public string RankString => HasRank && GameMode == GameMode.Ranked ? Rank.ToString() : "-";
+
+		[XmlIgnore]
+		public int SortableRank => HasRank && GameMode == GameMode.Ranked ? Rank : -1;
+
+		[XmlIgnore]
+		public string ResultString => Result + (WasConceded ? "*" : "");
+
+		public SerializableVersion PlayerDeckVersion { get; set; }
+
+		public bool IsAssociatedWithDeckVersion => PlayerDeckVersion != null || !string.IsNullOrEmpty(HearthStatsDeckVersionId);
+
+		[XmlIgnore]
+		public string PlayerDeckVersionString => PlayerDeckVersion != null ? PlayerDeckVersion.ToString("v{M}.{m}") : SerializableVersion.Default.ToString("v{M}.{m}");
+
+		[XmlIgnore]
+		public ToolTip ResultToolTip => new ToolTip {Content = "conceded", Visibility = (WasConceded ? Visibility.Visible : Visibility.Hidden)};
+
+		[XmlIgnore]
+		public bool HasReplayFile => ReplayFile != null && File.Exists(Path.Combine(Config.Instance.ReplayDir, ReplayFile));
+
+		[XmlIgnore]
+		public bool CanGetOpponentDeck => TurnStats.Any();
 
 		[XmlIgnore]
 		public BitmapImage OpponentHeroImage
@@ -155,9 +142,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get
 			{
 				HeroClassAll oppHero;
-				if(Enum.TryParse(OpponentHero, out oppHero))
-					return ImageCache.GetClassIcon(oppHero);
-				return new BitmapImage();
+				return Enum.TryParse(OpponentHero, out oppHero) ? ImageCache.GetClassIcon(oppHero) : new BitmapImage();
 			}
 		}
 
@@ -167,31 +152,20 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get
 			{
 				HeroClassAll playerHero;
-				if(Enum.TryParse(PlayerHero, out playerHero))
-					return ImageCache.GetClassIcon(playerHero);
-				return new BitmapImage();
+				return Enum.TryParse(PlayerHero, out playerHero) ? ImageCache.GetClassIcon(playerHero) : new BitmapImage();
 			}
 		}
 
 		[XmlIgnore]
 		[XmlArray(ElementName = "Turns")]
 		[XmlArrayItem(ElementName = "Turn")]
-		public List<TurnStats> TurnStats
-		{
-			get { return _turnStats ?? (_turnStats = LoadTurnStats()); }
-		}
+		public List<TurnStats> TurnStats => _turnStats ?? (_turnStats = LoadTurnStats());
 
 		[XmlIgnore]
-		public string Duration
-		{
-			get { return (EndTime - StartTime).Minutes + " min"; }
-		}
+		public string Duration => (EndTime - StartTime).Minutes + " min";
 
 		[XmlIgnore]
-		public int SortableDuration
-		{
-			get { return (EndTime - StartTime).Minutes; }
-		}
+		public int SortableDuration => (EndTime - StartTime).Minutes;
 
 		[XmlIgnore]
 		public string GotCoin
@@ -201,31 +175,19 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		[XmlIgnore]
-		public bool HasHearthStatsId
-		{
-			get { return !string.IsNullOrEmpty(HearthStatsId); }
-		}
+		public bool HasHearthStatsId => !string.IsNullOrEmpty(HearthStatsId);
 
 		public string HearthStatsDeckId { get; set; }
 		public string HearthStatsDeckVersionId { get; set; }
 
-		public bool HasHearthStatsDeckVersionId
-		{
-			get { return !string.IsNullOrEmpty(HearthStatsDeckVersionId) && int.Parse(HearthStatsDeckVersionId) > 0; }
-		}
+		public bool HasHearthStatsDeckVersionId => !string.IsNullOrEmpty(HearthStatsDeckVersionId) && int.Parse(HearthStatsDeckVersionId) > 0;
 
-		public bool HasHearthStatsDeckId
-		{
-			get { return !string.IsNullOrEmpty(HearthStatsDeckId) && int.Parse(HearthStatsDeckId) > 0; }
-		}
+		public bool HasHearthStatsDeckId => !string.IsNullOrEmpty(HearthStatsDeckId) && int.Parse(HearthStatsDeckId) > 0;
 
-		public bool BelongsToDeckVerion(Deck deck)
-		{
-			return PlayerDeckVersion == deck.Version
-			       || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId)
-			       || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId == deck.HearthStatsId)
-			       || !IsAssociatedWithDeckVersion && deck.Version == new SerializableVersion(1, 0);
-		}
+		public bool BelongsToDeckVerion(Deck deck) => PlayerDeckVersion == deck.Version
+													  || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId)
+													  || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId == deck.HearthStatsId)
+													  || !IsAssociatedWithDeckVersion && deck.Version == new SerializableVersion(1, 0);
 
 		public GameStats CloneWithNewId()
 		{
@@ -249,10 +211,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			return newGame;
 		}
 
-		protected bool Equals(GameStats other)
-		{
-			return GameId.Equals(other.GameId);
-		}
+		protected bool Equals(GameStats other) => GameId.Equals(other.GameId);
 
 		public override bool Equals(object obj)
 		{
@@ -265,38 +224,32 @@ namespace Hearthstone_Deck_Tracker.Stats
 			return Equals((GameStats)obj);
 		}
 
-		public override int GetHashCode()
-		{
-			return GameId.GetHashCode();
-		}
+		public override int GetHashCode() => GameId.GetHashCode();
 
-		private void ResolveSecrets(IEnumerable<TurnStats> newturnstats)
+		private void ResolveSecrets(IEnumerable<TurnStats> newTurnStats)
 		{
 			var unresolvedSecrets = 0;
 			var triggeredSecrets = 0;
 			TurnStats.Play candidateSecret = null;
 
-			foreach(var turn in newturnstats)
+			foreach(var play in newTurnStats.SelectMany(turn => turn.Plays))
 			{
-				foreach(var play in turn.Plays)
+				// is secret play
+				if((play.Type == OpponentHandDiscard && play.CardId == "") || play.Type == OpponentSecretPlayed)
 				{
-					// is secret play
-					if((play.Type == PlayType.OpponentHandDiscard && play.CardId == "") || play.Type == PlayType.OpponentSecretPlayed)
+					unresolvedSecrets++;
+					candidateSecret = play;
+					play.Type = OpponentSecretPlayed;
+				}
+				else if(play.Type == OpponentSecretTriggered)
+				{
+					if(unresolvedSecrets == 1 && candidateSecret != null)
+						candidateSecret.CardId = play.CardId;
+					triggeredSecrets++;
+					if(triggeredSecrets == unresolvedSecrets)
 					{
-						unresolvedSecrets++;
-						candidateSecret = play;
-						play.Type = PlayType.OpponentSecretPlayed;
-					}
-					else if(play.Type == PlayType.OpponentSecretTriggered)
-					{
-						if(unresolvedSecrets == 1 && candidateSecret != null)
-							candidateSecret.CardId = play.CardId;
-						triggeredSecrets++;
-						if(triggeredSecrets == unresolvedSecrets)
-						{
-							triggeredSecrets = 0;
-							unresolvedSecrets = 0;
-						}
+						triggeredSecrets = 0;
+						unresolvedSecrets = 0;
 					}
 				}
 			}
@@ -304,19 +257,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		private List<TurnStats> LoadTurnStats()
 		{
-			Directory.CreateDirectory(_gamesDir);
-			if(GameId != Guid.Empty && File.Exists(_gameFile))
+			Directory.CreateDirectory(GamesDir);
+			if(GameId == Guid.Empty || !File.Exists(GameFile))
+				return new List<TurnStats>();
+			try
 			{
-				try
-				{
-					var newturnstats = XmlManager<List<TurnStats>>.Load(_gameFile);
-					ResolveSecrets(newturnstats);
-					return newturnstats;
-				}
-				catch(Exception e)
-				{
-					Logger.WriteLine("Error loading file: " + _gameFile + "\n" + e, "GameStats");
-				}
+				var newturnstats = XmlManager<List<TurnStats>>.Load(GameFile);
+				ResolveSecrets(newturnstats);
+				return newturnstats;
+			}
+			catch(Exception e)
+			{
+				Logger.WriteLine("Error loading file: " + GameFile + "\n" + e, "GameStats");
 			}
 			return new List<TurnStats>();
 		}
@@ -325,15 +277,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			try
 			{
-				if(File.Exists(_gameFile))
-				{
-					File.Delete(_gameFile);
-					Logger.WriteLine("Deleted gamefile: " + _gameFile, "GameStats");
-				}
+				if(!File.Exists(GameFile))
+					return;
+				File.Delete(GameFile);
+				Logger.WriteLine("Deleted gamefile: " + GameFile, "GameStats");
 			}
 			catch(Exception)
 			{
-				Logger.WriteLine("Error deleting gamefile: " + _gameFile, "GameStats");
+				Logger.WriteLine("Error deleting gamefile: " + GameFile, "GameStats");
 			}
 		}
 
@@ -344,10 +295,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Save();
 		}
 
-		private void Save()
-		{
-			XmlManager<List<TurnStats>>.Save(_gameFile, TurnStats);
-		}
+		private void Save() => XmlManager<List<TurnStats>>.Save(GameFile, TurnStats);
 
 		public void AddPlay(PlayType type, int turn, string cardId)
 		{
@@ -358,13 +306,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 				TurnStats.Add(turnStats);
 			}
 			turnStats.AddPlay(type, cardId);
-			Logger.WriteLine(string.Format("New play: {0} ({1}, turn: {2})", type, cardId, turn), "GameStats", 2);
+			Logger.WriteLine($"New play: {type} ({cardId}, turn: {turn})", "GameStats", 2);
 		}
 
-		public override string ToString()
-		{
-			return Result + " vs " + OpponentHero + ", " + StartTime;
-		}
+		public override string ToString() => Result + " vs " + OpponentHero + ", " + StartTime;
 
 		public void ResetHearthstatsIds()
 		{
@@ -377,12 +322,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			var ignoreCards = new List<Card>();
 			var deck = new Deck {Class = OpponentHero};
-			foreach(var turn in TurnStats)
+			foreach(var play in TurnStats.SelectMany(turn => turn.Plays))
 			{
-				foreach(var play in turn.Plays)
+				switch(play.Type)
 				{
-					if(play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentDeckDiscard || play.Type == PlayType.OpponentHandDiscard
-					   || play.Type == PlayType.OpponentSecretTriggered)
+					case OpponentPlay:
+					case OpponentDeckDiscard:
+					case OpponentHandDiscard:
+					case OpponentSecretTriggered:
 					{
 						var card = Database.GetCardFromId(play.CardId);
 						if(Database.IsActualCard(card) && (card.PlayerClass == null || card.PlayerClass == OpponentHero))
@@ -399,12 +346,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 								deck.Cards.Add(card);
 						}
 					}
-					else if(play.Type == PlayType.OpponentBackToHand)
+						break;
+					case OpponentBackToHand:
 					{
 						var card = Database.GetCardFromId(play.CardId);
 						if(Database.IsActualCard(card))
 							ignoreCards.Add(card);
 					}
+						break;
 				}
 			}
 			return deck;

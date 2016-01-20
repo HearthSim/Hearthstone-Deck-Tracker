@@ -39,10 +39,7 @@ namespace Hearthstone_Deck_Tracker
 			BtnSave.IsEnabled = true;
 		}
 
-		private void BtnSave_Click(object sender, RoutedEventArgs e)
-		{
-			SaveDeck();
-		}
+		private void BtnSave_Click(object sender, RoutedEventArgs e) => SaveDeck();
 
 		public void SaveDeck()
 		{
@@ -51,7 +48,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Save();
 			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine(string.Format("auto updating {0} deck", _currentDeck), "NoteDialog");
+				Logger.WriteLine($"auto updating {_currentDeck} deck", "NoteDialog");
 				HearthStatsManager.UpdateDeckAsync(_currentDeck, background: true);
 			}
 			_noteChanged = false;

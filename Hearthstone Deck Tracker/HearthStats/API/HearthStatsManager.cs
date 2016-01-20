@@ -16,8 +16,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 	{
 		public const int RetryDelay = 5000;
 		public const int VersionDelay = 1000;
+		public const int SyncOffset = 600;
 		private static int _backgroundActivities;
 		public static bool SyncInProgress { get; private set; }
+
+		public static TimeSpan TimeSinceLastSync
+			=> DateTime.Now.Subtract(Helper.FromUnixTime(Config.Instance.LastHearthStatsGamesSync + SyncOffset));
 
 		private static void AddBackgroundActivity()
 		{
@@ -82,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		public static async Task<PostResult> UploadMultipleMatchesAsync(IEnumerable<GameStats> games, Deck deck, bool saveFilesAfter = true,
 		                                                                bool background = false)
 		{
-			Logger.WriteLine(string.Format("trying to upload {0} matches for deck {1}", games.Count(), deck.Name), "HearthStatsManager");
+			Logger.WriteLine($"trying to upload {games.Count()} matches for deck {deck.Name}", "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
 				Logger.WriteLine("error: not logged in", "HearthStatsManager");
@@ -343,7 +347,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async void SyncAsync(bool forceFullSync = false, bool background = false)
 		{
-			Logger.WriteLine(string.Format("starting sync process: forceFullSync={0}, background={1}", forceFullSync, background),
+			Logger.WriteLine($"starting sync process: forceFullSync={forceFullSync}, background={background}",
 			                 "HearthStatsManager");
 			if(!HearthStatsAPI.IsLoggedIn)
 			{
@@ -361,8 +365,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(background)
 					AddBackgroundActivity();
 
-				var controller = background
-					                 ? null : await Core.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new decks...");
+				var controller = background ? null : await Core.MainWindow.ShowProgressAsync("Syncing...", "Checking HearthStats for new decks...");
 				Logger.WriteLine("Checking HearthStats for new decks...", "HearthStatsManager");
 				var localDecks = DeckList.Instance.Decks;
 				var remoteDecks = await DownloadDecksAsync(forceFullSync);
@@ -407,7 +410,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							var currentDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
 							if(currentDeck == null)
 								continue;
-							var originalDeck = (Deck)currentDeck.Clone();
 							var versions =
 								deck.VersionsIncludingSelf.Where(v => !currentDeck.VersionsIncludingSelf.Contains(v))
 								    .OrderBy(v => v)
@@ -425,8 +427,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 									currentDeck.Versions.Add(clone);
 								}
 								Logger.WriteLine(
-								                 string.Format("saved {0} new versions ({1}) to {2}", versions.Count,
-								                               versions.Select(v => v.Version.ToString()).Aggregate((c, n) => c + ", " + n), deck),
+												 $"saved {versions.Count} new versions ({versions.Select(v => v.Version.ToString()).Aggregate((c, n) => c + ", " + n)}) to {deck}",
 								                 "HearthStatsManager");
 							}
 						}
@@ -457,7 +458,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							var localDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
 							if(localDeck != null)
 							{
-								//localDeck = (Deck)localDeck.Clone();
 								localDeck.Name = deck.Name;
 								localDeck.Tags = deck.Tags;
 								localDeck.Note = deck.Note;
@@ -502,12 +502,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						}
 						if(deck == null)
 						{
-							Logger.WriteLine(string.Format("no deck found for match {0}", game), "HearthStatsManager");
+							Logger.WriteLine($"no deck found for match {game}", "HearthStatsManager");
 							continue;
 						}
 						if(deck.DeckStats.Games.Any(g => g.HearthStatsId == game.HearthStatsId))
 						{
-							Logger.WriteLine(string.Format("deck {0} already has match {1}", deck, game), "HearthStatsManager");
+							Logger.WriteLine($"deck {deck} already has match {game}", "HearthStatsManager");
 							continue;
 						}
 						var deckVersion =
@@ -515,7 +515,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							    .FirstOrDefault(v => v.HearthStatsDeckVersionId == game.HearthStatsDeckVersionId);
 						if(deckVersion == null)
 							continue;
-						Logger.WriteLine(string.Format("added match {0} to version {1} of deck {2}", game, deck.Version.ShortVersionString, deck),
+						Logger.WriteLine($"added match {game} to version {deck.Version.ShortVersionString} of deck {deck}",
 						                 "HearthStatsManager");
 						game.PlayerDeckVersion = deckVersion.Version;
 						deck.DeckStats.AddGameResult(game);
@@ -652,7 +652,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 									                                           && d.HearthStatsDeckVersionId == match.game.HearthStatsDeckVersionId)
 									                      ?? match.deck.GetVersion(match.game.PlayerDeckVersion))
 									                   : (match.game.PlayerDeckVersion != null ? match.deck.GetVersion(match.game.PlayerDeckVersion) : match.deck))
-							                  }).GroupBy(x => x.deckVersion.HearthStatsDeckVersionId);
+							                  }).Where(x => x.deckVersion != null).GroupBy(x => x.deckVersion.HearthStatsDeckVersionId);
 
 						Parallel.ForEach(groupedMatchObs, matches =>
 						{
@@ -660,15 +660,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							if(controller != null)
 							{
 								Core.MainWindow.Dispatcher.BeginInvoke(
-								                                         new Action(
-									                                         () => { controller.SetProgress(1.0 * (uploaded += matches.Count()) / total); }));
+								                                       new Action(
+									                                       () => { controller.SetProgress(1.0 * (uploaded += matches.Count()) / total); }));
 							}
 						});
 					});
 					DeckStatsList.Save();
 				}
-				Config.Instance.LastHearthStatsDecksSync = DateTime.Now.ToUnixTime() - 600; //10 minute overlap
-				Config.Instance.LastHearthStatsGamesSync = DateTime.Now.ToUnixTime() - 600;
+				Config.Instance.LastHearthStatsDecksSync = DateTime.Now.ToUnixTime() - SyncOffset; //10 minute overlap
+				Config.Instance.LastHearthStatsGamesSync = DateTime.Now.ToUnixTime() - SyncOffset;
 				Config.Save();
 				if(!background)
 					await controller.CloseAsync();
@@ -798,7 +798,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		public static async void UpdateArenaMatchAsync(GameStats game, Deck deck, bool saveFilesAfter = true, bool background = false)
 		{
 			var result = await DeleteMatchesAsync(new List<GameStats> {game}, saveFilesAfter, background);
-			if(result == PostResult.WasSuccess)
+			if(result.Success)
 			{
 				game.ResetHearthstatsIds();
 				await UploadArenaMatchAsync(game, deck, saveFilesAfter, background);
@@ -808,7 +808,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		public static async void UpdateMatchAsync(GameStats game, Deck deck, bool saveFilesAfter = true, bool background = false)
 		{
 			var result = await DeleteMatchesAsync(new List<GameStats> {game}, saveFilesAfter, background);
-			if(result == PostResult.WasSuccess)
+			if(result.Success)
 			{
 				game.ResetHearthstatsIds();
 				await UploadMatchAsync(game, deck, saveFilesAfter, background);

@@ -1,13 +1,13 @@
+#region
+
 using System;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.LogReader
 {
 	public class LogLineItem
 	{
-		public string Namespace { get; set; }
-		public DateTime Time { get; private set; }
-		public string Line { get; set; }
-
 		public LogLineItem(string ns, string line, DateTime date)
 		{
 			Namespace = ns;
@@ -17,5 +17,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			if(Time > DateTime.Now)
 				Time = Time.AddDays(-1);
 		}
+
+		public string Namespace { get; set; }
+		public DateTime Time { get; }
+		public string Line { get; set; }
 	}
 }

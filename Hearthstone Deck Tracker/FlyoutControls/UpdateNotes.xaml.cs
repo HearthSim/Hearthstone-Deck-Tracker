@@ -34,16 +34,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			_fullReleaseNotes = new List<GithubRelease>();
 		}
 
-		private SerializableVersion CurrentVersion
-		{
-			get { return new SerializableVersion(Helper.GetCurrentVersion()); }
-		}
+		private SerializableVersion CurrentVersion => new SerializableVersion(Helper.GetCurrentVersion());
 
 		public List<GithubRelease> ReleaseNotes
 		{
 			get
-			{ 
-				var upToInstalled =_fullReleaseNotes.SkipWhile(r => r.GetVersion() != CurrentVersion).ToList();
+			{
+				var upToInstalled = _fullReleaseNotes.SkipWhile(r => r.GetVersion() != CurrentVersion).ToList();
 				return (upToInstalled.Any() ? upToInstalled : _fullReleaseNotes).Take(_numVersions).ToList();
 			}
 		}
@@ -63,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 					versionStr = await wc.DownloadStringTaskAsync(latestReleaseRequestUrl);
 				}
 				_fullReleaseNotes = JsonConvert.DeserializeObject<GithubRelease[]>(versionStr).ToList();
-				OnPropertyChanged("ReleaseNotes");
+				OnPropertyChanged(nameof(ReleaseNotes));
 			}
 			catch(Exception)
 			{
@@ -73,9 +70,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -86,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			if(Math.Abs(ScrollViewerNotes.VerticalOffset - ScrollViewerNotes.ScrollableHeight) < 5)
 			{
 				_numVersions += 2;
-				OnPropertyChanged("ReleaseNotes");
+				OnPropertyChanged(nameof(ReleaseNotes));
 				_lastExpand = DateTime.Now;
 			}
 		}
@@ -100,7 +95,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			catch
 			{
 				Core.MainWindow.ShowMessage("Could not start browser",
-				                              "You can find the releases at \"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases\"");
+				                            "You can find the releases at \"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases\"");
 			}
 		}
 
@@ -116,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			{
 				new GithubRelease {Name = "Loading...", Body = "Loading...", TagName = CurrentVersion.ToString(true)}
 			};
-			OnPropertyChanged("ReleaseNotes");
+			OnPropertyChanged(nameof(ReleaseNotes));
 		}
 
 		private void ButtonPaypal_Click(object sender, RoutedEventArgs e)
@@ -128,6 +123,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			catch(Exception)
 			{
 				Core.MainWindow.ShowMessage("Could not start browser", "You can also find a link at the bottom of the GitHub page!");
+			}
+		}
+
+		private void ButtonPatreon_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				Process.Start("https://www.patreon.com/HearthstoneDeckTracker");
+			}
+			catch
+			{
 			}
 		}
 
@@ -157,10 +163,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				}
 			}
 
-			public SerializableVersion GetVersion()
-			{
-				return SerializableVersion.ParseOrDefault(TagName);
-			}
+			public SerializableVersion GetVersion() => SerializableVersion.ParseOrDefault(TagName);
 		}
 	}
 }

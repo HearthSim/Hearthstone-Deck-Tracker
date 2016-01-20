@@ -41,9 +41,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return tbtl != null && _textBox.Equals(tbtl._textBox);
 		}
 
-		public override int GetHashCode()
-		{
-			return _textBox.GetHashCode();
-		}
+		public override int GetHashCode() => _textBox.GetHashCode();
 	}
 }

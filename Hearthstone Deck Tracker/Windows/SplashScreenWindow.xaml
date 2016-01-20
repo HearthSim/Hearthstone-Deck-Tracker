@@ -10,7 +10,7 @@
     <Grid>
         <Rectangle Width="300" Height="300">
             <Rectangle.Fill>
-                <VisualBrush Visual="{StaticResource hdticon}"></VisualBrush>
+                <VisualBrush Visual="{StaticResource hdticon}" />
             </Rectangle.Fill>
         </Rectangle>
         <Border BorderThickness="5" BorderBrush="White" CornerRadius="16" Margin="0,200,0,0" Width="184" Height="54"/>
@@ -19,7 +19,7 @@
         <Border BorderThickness="5" BorderBrush="White" CornerRadius="11" Margin="275,200,0,0" Width="84" Height="34"/>
         <Rectangle Width="290" Height="290">
             <Rectangle.Fill>
-                <VisualBrush Visual="{StaticResource hdticon_black}"></VisualBrush>
+                <VisualBrush Visual="{StaticResource hdticon_black}" />
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle Height="5" Width="40" Margin="200,200,0,0" Fill="Black"/>

@@ -17,45 +17,31 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 	/// </summary>
 	public partial class OptionsMain
 	{
-		public OverlayDeckWindows OptionsOverlayDeckWindows;
-		public OverlayGeneral OptionsOverlayGeneral;
-		public OverlayInteractivity OptionsOverlayInteractivity;
-		public OverlayOpponent OptionsOverlayOpponent;
-		public OverlayPlayer OptionsOverlayPlayer;
-		public TrackerExporting OptionsTrackerExporting;
-		public TrackerGeneral OptionsTrackerGeneral;
-		public TrackerImporting OptionsTrackerImporting;
-		public TrackerLogging OptionsTrackerLogging;
-		public TrackerPlugins OptionsTrackerPlugins;
-		public TrackerSettings OptionsTrackerSettings;
-		public TrackerStats OptionsTrackerStats;
-		public TrackerAppearance OptionsTrackerAppearance;
-		public TrackerBackups OptionsTrackerBackups;
+		public readonly OverlayDeckWindows OptionsOverlayDeckWindows = new OverlayDeckWindows();
+		public readonly OverlayGeneral OptionsOverlayGeneral = new OverlayGeneral();
+		public readonly OverlayInteractivity OptionsOverlayInteractivity = new OverlayInteractivity();
+		public readonly OverlayOpponent OptionsOverlayOpponent = new OverlayOpponent();
+		public readonly OverlayPlayer OptionsOverlayPlayer = new OverlayPlayer();
+		public readonly TrackerAppearance OptionsTrackerAppearance = new TrackerAppearance();
+		public readonly TrackerBackups OptionsTrackerBackups = new TrackerBackups();
+		public readonly TrackerExporting OptionsTrackerExporting = new TrackerExporting();
+		public readonly TrackerGeneral OptionsTrackerGeneral = new TrackerGeneral();
+		public readonly TrackerHotKeys OptionsTrackerHotKeys = new TrackerHotKeys();
+		public readonly TrackerImporting OptionsTrackerImporting = new TrackerImporting();
+		public readonly TrackerLogging OptionsTrackerLogging = new TrackerLogging();
+		public readonly TrackerNotifications OptionsTrackerNotifications = new TrackerNotifications();
+		public readonly TrackerPlugins OptionsTrackerPlugins = new TrackerPlugins();
+		public readonly TrackerSettings OptionsTrackerSettings = new TrackerSettings();
+		public readonly TrackerStats OptionsTrackerStats = new TrackerStats();
 
 		public OptionsMain()
 		{
 			InitializeComponent();
 			Helper.OptionsMain = this;
-			OptionsOverlayGeneral = new OverlayGeneral();
-			OptionsOverlayDeckWindows = new OverlayDeckWindows();
-			OptionsOverlayOpponent = new OverlayOpponent();
-			OptionsOverlayPlayer = new OverlayPlayer();
-			OptionsOverlayInteractivity = new OverlayInteractivity();
-			OptionsTrackerExporting = new TrackerExporting();
-			OptionsTrackerImporting = new TrackerImporting();
-			OptionsTrackerLogging = new TrackerLogging();
-			OptionsTrackerStats = new TrackerStats();
-			OptionsTrackerExporting = new TrackerExporting();
-			OptionsTrackerSettings = new TrackerSettings();
-			OptionsTrackerGeneral = new TrackerGeneral();
-			OptionsTrackerPlugins = new TrackerPlugins();
-			OptionsTrackerAppearance = new TrackerAppearance();
-			OptionsTrackerBackups = new TrackerBackups();
 			try
 			{
 				foreach(var treeItem in TreeViewOptions.Items.Cast<TreeViewItem>())
 					treeItem.ExpandSubtree();
-				//select overlay - general
 				TreeViewOptions.Items.Cast<TreeViewItem>().First().Items.Cast<TreeViewItem>().First().IsSelected = true;
 			}
 			catch(Exception e)
@@ -80,77 +66,25 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsTrackerGeneral.Load();
 			OptionsTrackerAppearance.Load();
 			OptionsTrackerBackups.Load();
+			OptionsTrackerNotifications.Load();
 			//OptionsTrackerPlugins.Load(); - load in main after loading plugins
 		}
 
-		private void TreeViewItemGeneralOverlay_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsOverlayGeneral;
-		}
-
-		private void TreeViewItemOverlayDeckWindows_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsOverlayDeckWindows;
-		}
-
-		private void TreeViewItemOverlayOpponent_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsOverlayOpponent;
-		}
-
-		private void TreeViewItemOverlayPlayer_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsOverlayPlayer;
-		}
-
-		private void TreeViewItemTrackerGeneral_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerGeneral;
-		}
-
-		private void TreeViewItemTrackerStats_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerStats;
-		}
-
-		private void TreeViewItemTrackerExporting_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerExporting;
-		}
-
-		private void TreeViewItemTrackerImporting_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerImporting;
-		}
-
-		private void TreeViewItemTrackerLogging_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerLogging;
-		}
-
-		private void TreeViewItemOverlayInteractivity_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsOverlayInteractivity;
-		}
-
-		private void TreeViewItemTrackerSettings_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerSettings;
-		}
-
-		private void TreeViewItemTrackerPlugins_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerPlugins;
-		}
-
-		private void TreeViewItemTrackerAppearance_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerAppearance;
-		}
-
-		private void TreeViewItemTrackerBackups_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerBackups;
-		}
+		private void TreeViewItemGeneralOverlay_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayGeneral;
+		private void TreeViewItemOverlayDeckWindows_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayDeckWindows;
+		private void TreeViewItemOverlayOpponent_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayOpponent;
+		private void TreeViewItemOverlayPlayer_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayPlayer;
+		private void TreeViewItemTrackerGeneral_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerGeneral;
+		private void TreeViewItemTrackerStats_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerStats;
+		private void TreeViewItemTrackerExporting_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerExporting;
+		private void TreeViewItemTrackerImporting_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerImporting;
+		private void TreeViewItemTrackerLogging_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerLogging;
+		private void TreeViewItemOverlayInteractivity_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayInteractivity;
+		private void TreeViewItemTrackerSettings_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerSettings;
+		private void TreeViewItemTrackerPlugins_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerPlugins;
+		private void TreeViewItemTrackerAppearance_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerAppearance;
+		private void TreeViewItemTrackerBackups_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerBackups;
+		private void TreeViewItemTrackerHotKeys_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerHotKeys;
+		private void TreeViewItemTrackerNotifications_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerNotifications;
 	}
 }

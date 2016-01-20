@@ -26,10 +26,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			Player = player;
 		}
 
-		public int Turn
-		{
-			get { return Data[0].GetTag(GAME_TAG.TURN); }
-		}
+		public int Turn => Data[0].GetTag(GAME_TAG.TURN);
 
 		[Obsolete]
 		public override string ToString()
@@ -76,16 +73,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 		public string GetCardId()
 		{
 			var id = Type == KeyPointType.Attack ? Data[0].GetTag(GAME_TAG.PROPOSED_ATTACKER) : Id;
-			var entity = Data.FirstOrDefault(x => x.Id == id);
-			return entity != null ? entity.CardId : null;
+			return Data.FirstOrDefault(x => x.Id == id)?.CardId;
 		}
 
 		public string GetAdditionalInfo()
 		{
 			if(Type == KeyPointType.Victory || Type == KeyPointType.Defeat)
 				return Type.ToString();
-			var cardId = GetCardId();
-			return string.IsNullOrEmpty(cardId) ? "Entity " + Id : Database.GetCardFromId(GetCardId()).LocalizedName;
+			return string.IsNullOrEmpty(GetCardId()) ? "Entity " + Id : Database.GetCardFromId(GetCardId()).LocalizedName;
 		}
 	}
 }

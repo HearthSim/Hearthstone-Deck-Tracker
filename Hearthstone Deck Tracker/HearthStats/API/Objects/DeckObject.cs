@@ -16,17 +16,19 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 		private const string noteArchived = "[HDT-archived]";
 		public int deck_version_id;
 		public int id;
-		public int klass_id;
+		public int? klass_id;
 		public string name;
 		public string notes;
 		public DateTime updated_at;
 
 		public Deck ToDeck(CardObject[] cards, string[] rawTags, DeckVersion[] versions, string version)
 		{
+			if(!klass_id.HasValue)
+				return null;
 			try
 			{
 				var url = "";
-				bool archived = false;
+				var archived = false;
 				if(!string.IsNullOrEmpty(notes))
 				{
 					var match = Regex.Match(notes, noteUrlRegex);
@@ -51,13 +53,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 					               tag =>
 					               DeckList.Instance.AllTags.FirstOrDefault(t => string.Equals(t, tag, StringComparison.InvariantCultureIgnoreCase))
 					               ?? tag);
-				var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id],
-				                    cards == null
-					                    ? new List<Card>()
-					                    : cards.Where(x => x != null && x.count != null && x.id != null)
-					                           .Select(x => x.ToCard())
-					                           .Where(x => x != null)
-					                           .ToList(), tags, notes ?? "", url, DateTime.Now, archived, new List<Card>(),
+				var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id.Value],
+				                    cards?.Where(x => x?.count != null && x.id != null)
+										  .Select(x => x.ToCard())
+										  .Where(x => x != null)
+										  .ToList() ?? new List<Card>(), tags, notes ?? "", url, DateTime.Now, archived, new List<Card>(),
 				                    SerializableVersion.ParseOrDefault(version), new List<Deck>(), true, id.ToString(), Guid.NewGuid(),
 				                    deck_version_id.ToString());
 				deck.LastEdited = updated_at.ToLocalTime();

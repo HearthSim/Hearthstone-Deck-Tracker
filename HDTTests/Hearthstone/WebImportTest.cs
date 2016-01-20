@@ -4,13 +4,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Importing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HDTTests.Hearthstone
 {
 	[TestClass]
 	public class WebImportTest
-	{		
+	{
+
+		[TestMethod]
+		public void InvalidUrlTest()
+		{
+			var found = DeckImporter.Import(@"http://hsdecktracker.net").Result;
+			Assert.IsNull(found);
+		}
+
 		[TestMethod]
 		public void Hearthstats()
 		{
@@ -23,7 +32,7 @@ namespace HDTTests.Hearthstone
 		public void Hearthpwn()
 		{
 			Deck expected = CreateDeck();
-			Deck found = DeckImporter.Import(@"http://www.hearthpwn.com/decks/274631-senfglas-1-legend-grim-patron-warrior-1074").Result;
+			Deck found = DeckImporter.Import(@"http://www.hearthpwn.com/decks/267064-grim-patron-senfglas").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 

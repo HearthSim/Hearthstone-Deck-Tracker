@@ -1,10 +1,12 @@
 #region
 
 using System;
-using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using static System.TimeZoneInfo;
+using static Hearthstone_Deck_Tracker.Enums.Region;
+using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
 
 #endregion
 
@@ -14,41 +16,36 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	{
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
-			if(HsLogReaderConstants.CardAlreadyInCacheRegex.IsMatch(logLine))
+			if(CardAlreadyInCacheRegex.IsMatch(logLine))
 			{
-				var id = HsLogReaderConstants.CardAlreadyInCacheRegex.Match(logLine).Groups["id"].Value;
+				var id = CardAlreadyInCacheRegex.Match(logLine).Groups["id"].Value;
 				if(game.CurrentGameMode == GameMode.Arena)
 					gameState.GameHandler.HandlePossibleArenaCard(id);
 				else
 					gameState.GameHandler.HandlePossibleConstructedCard(id, false);
 			}
-			else if(HsLogReaderConstants.GoldProgressRegex.IsMatch(logLine)
-				&& (DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10)
-				&& game.CurrentGameMode != GameMode.Spectator)
+			else if(GoldProgressRegex.IsMatch(logLine) && (DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10)
+			        && game.CurrentGameMode != GameMode.Spectator)
 			{
-
 				int wins;
-				var rawWins = HsLogReaderConstants.GoldProgressRegex.Match(logLine).Groups["wins"].Value;
+				var rawWins = GoldProgressRegex.Match(logLine).Groups["wins"].Value;
 				if(int.TryParse(rawWins, out wins))
 				{
 					var timeZone = GetTimeZoneInfo(game.CurrentRegion);
 					if(timeZone != null)
-					{
 						UpdateGoldProgress(wins, game, timeZone);
-					}
-                }
-
+				}
 			}
-			else if(HsLogReaderConstants.DustRewardRegex.IsMatch(logLine))
+			else if(DustRewardRegex.IsMatch(logLine))
 			{
 				int amount;
-				if(int.TryParse(HsLogReaderConstants.DustRewardRegex.Match(logLine).Groups["amount"].Value, out amount))
+				if(int.TryParse(DustRewardRegex.Match(logLine).Groups["amount"].Value, out amount))
 					gameState.GameHandler.HandleDustReward(amount);
 			}
-			else if(HsLogReaderConstants.GoldRewardRegex.IsMatch(logLine))
+			else if(GoldRewardRegex.IsMatch(logLine))
 			{
 				int amount;
-				if(int.TryParse(HsLogReaderConstants.GoldRewardRegex.Match(logLine).Groups["amount"].Value, out amount))
+				if(int.TryParse(GoldRewardRegex.Match(logLine).Groups["amount"].Value, out amount))
 					gameState.GameHandler.HandleGoldReward(amount);
 			}
 		}
@@ -59,16 +56,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				switch(region)
 				{
-					case Region.EU:
-						return TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
-					case Region.US:
-						return TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time");
-					case Region.ASIA:
-						return TimeZoneInfo.FindSystemTimeZoneById("Korea Standard Time");
-					case Region.CHINA:
-						return TimeZoneInfo.FindSystemTimeZoneById("China Standard Time");
+					case EU:
+						return FindSystemTimeZoneById("Central European Standard Time");
+					case US:
+						return FindSystemTimeZoneById("Pacific Standard Time");
+					case ASIA:
+						return FindSystemTimeZoneById("Korea Standard Time");
+					case CHINA:
+						return FindSystemTimeZoneById("China Standard Time");
 					default:
-						Logger.WriteLine(string.Format("Could not get TimeZoneInfo for Region {0}", region), "RachelleHandler");
+						Logger.WriteLine($"Could not get TimeZoneInfo for Region {region}", "RachelleHandler");
 						return null;
 				}
 			}
@@ -84,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			try
 			{
 				var region = (int)game.CurrentRegion - 1;
-				var date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
+				var date = ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
 				if(Config.Instance.GoldProgressLastReset[region].Date != date)
 				{
 					Config.Instance.GoldProgressTotal[region] = 0;

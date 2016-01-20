@@ -1,11 +1,11 @@
 ﻿#region
 
+// ReSharper disable RedundantUsingDirective
 using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
-// ReSharper disable RedundantUsingDirective
 using Hearthstone_Deck_Tracker.Windows;
 
 // ReSharper enable RedundantUsingDirective
@@ -19,26 +19,25 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	/// </summary>
 	public partial class TrackerLogging
 	{
-	    private GameV2 _game;
-	    private bool _initialized;
+		private GameV2 _game;
+		private bool _initialized;
 
 		public TrackerLogging()
 		{
-		    
-		    InitializeComponent();
+			InitializeComponent();
 		}
 
-	    public void Load(GameV2 game)
+		public void Load(GameV2 game)
 		{
-            _game = game;
-            ComboBoxLogLevel.SelectedValue = Config.Instance.LogLevel.ToString();
+			_game = game;
+			ComboBoxLogLevel.SelectedValue = Config.Instance.LogLevel.ToString();
 			_initialized = true;
 		}
 
 		private async void BtnSaveLog_OnClick(object sender, RoutedEventArgs e)
 		{
 			var date = DateTime.Now;
-			var logName = string.Format("log_{0}{1}{2}-{3}{4}{5}.txt", date.Day, date.Month, date.Year, date.Hour, date.Minute, date.Second);
+			var logName = $"log_{date.Day}{date.Month}{date.Year}-{date.Hour}{date.Minute}{date.Second}.txt";
 			var fileName = Helper.ShowSaveFileDialog(logName, "txt");
 
 			if(fileName != null)

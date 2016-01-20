@@ -29,6 +29,7 @@ namespace Hearthstone_Deck_Tracker
 
 	internal class TurnTimer
 	{
+		private static TurnTimer _instance;
 		private bool _opponentMulliganed;
 		private bool _playerMulliganed;
 		private Timer _timer;
@@ -42,18 +43,20 @@ namespace Hearthstone_Deck_Tracker
 		public int Seconds { get; private set; }
 		public int PlayerSeconds { get; private set; }
 		public int OpponentSeconds { get; private set; }
-	    private static TurnTimer _instance;
 
-	    public static TurnTimer Instance
-	    {
-	        get
-	        {
-	            if (_instance == null) Create(90);
-	            return _instance;
-	        }
-	    }
+		public static TurnTimer Instance
+		{
+			get
+			{
+				if(_instance == null)
+					Create(Config.Instance.TimerTurnTime);
+				return _instance;
+			}
+		}
 
-	    /// <summary>
+		public void SetTurnTime(int turnTime) => _turnTime = turnTime;
+
+		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="turnTime">Time of a turn in seconds</param>
@@ -67,8 +70,8 @@ namespace Hearthstone_Deck_Tracker
 				_turnTime = turnTime,
 				_timer = new Timer(1000) {AutoReset = true, Enabled = true}
 			};
-            _instance._timer.Elapsed += Instance.TimerOnElapsed;
-            _instance._timer.Stop();
+			_instance._timer.Elapsed += Instance.TimerOnElapsed;
+			_instance._timer.Stop();
 		}
 
 		private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -107,10 +110,7 @@ namespace Hearthstone_Deck_Tracker
 			TimerTick(this, new TimerEventArgs(Seconds, PlayerSeconds, OpponentSeconds, false, CurrentActivePlayer));
 		}
 
-		public void SetCurrentPlayer(ActivePlayer activePlayer)
-		{
-			CurrentActivePlayer = activePlayer;
-		}
+		public void SetCurrentPlayer(ActivePlayer activePlayer) => CurrentActivePlayer = activePlayer;
 
 		public void MulliganDone(ActivePlayer activePlayer)
 		{
@@ -131,14 +131,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void CheckForTimerAlarm()
 		{
-			if(Config.Instance.TimerAlert)
-			{
-				if(Seconds == Config.Instance.TimerAlertSeconds)
-				{
-					SystemSounds.Asterisk.Play();
-					User32.FlashHs();
-				}
-			}
+			if(!Config.Instance.TimerAlert || Seconds != Config.Instance.TimerAlertSeconds)
+				return;
+			SystemSounds.Asterisk.Play();
+			User32.FlashHs();
 		}
 	}
 }

@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using static Hearthstone_Deck_Tracker.Enums.PlayType;
 
 #endregion
 
@@ -16,17 +16,15 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class GameDetails
 	{
-	    private GameV2 _game;
-	    private GameStats _gameStats;
+		private GameStats _gameStats;
 		private bool _initialized;
 
 		public GameDetails()
 		{
-		    
-		    InitializeComponent();
+			InitializeComponent();
 		}
 
-	    public void SetGame(GameStats gameStats)
+		public void SetGame(GameStats gameStats)
 		{
 			_gameStats = gameStats;
 			ReloadGameStats();
@@ -34,42 +32,40 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ReloadGameStats()
 		{
-			if(_gameStats != null)
+			if(_gameStats == null)
+				return;
+			var needSeparator = false;
+			DataGridDetails.Items.Clear();
+			foreach(var turn in _gameStats.TurnStats)
 			{
-				var needSeparator = false;
-				DataGridDetails.Items.Clear();
-				foreach(var turn in _gameStats.TurnStats)
+				if(needSeparator)
 				{
-					if(needSeparator)
-					{
-						DataGridDetails.Items.Add(new GameDetailItem());
-						needSeparator = false;
-					}
-					foreach(var play in turn.Plays.Where(play => play != null))
-					{
-						if((play.Type == PlayType.PlayerPlay || play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.PlayerHeroPower
-						    || play.Type == PlayType.PlayerSecretPlayed) && !Config.Instance.GameDetails.ShowPlayerPlay
-						   || (play.Type == PlayType.PlayerDraw || play.Type == PlayType.PlayerGet || play.Type == PlayType.PlayerDeckDiscard)
-						   && !Config.Instance.GameDetails.ShowPlayerDraw
-						   || play.Type == PlayType.PlayerMulligan && !Config.Instance.GameDetails.ShowPlayerMulligan
-						   || (play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentSecretTriggered
-						       || play.Type == PlayType.OpponentHandDiscard || play.Type == PlayType.OpponentHeroPower
-						       || play.Type == PlayType.OpponentSecretPlayed) && !Config.Instance.GameDetails.ShowOpponentPlay
-						   || (play.Type == PlayType.OpponentDraw || play.Type == PlayType.OpponentGet || play.Type == PlayType.OpponentBackToHand
-						       || play.Type == PlayType.OpponentDeckDiscard) && !Config.Instance.GameDetails.ShowOpponentDraw
-						   || play.Type == PlayType.OpponentMulligan && !Config.Instance.GameDetails.ShowOpponentMulligan)
-							continue;
-						needSeparator = true;
-						DataGridDetails.Items.Add(new GameDetailItem(play, turn.Turn));
-					}
+					DataGridDetails.Items.Add(new GameDetailItem());
+					needSeparator = false;
+				}
+				foreach(var play in turn.Plays.Where(play => play != null))
+				{
+					if((play.Type == PlayerPlay || play.Type == PlayerHandDiscard || play.Type == PlayerHeroPower
+						|| play.Type == PlayerSecretPlayed) && !Config.Instance.GameDetails.ShowPlayerPlay
+					   || (play.Type == PlayerDraw || play.Type == PlayerGet || play.Type == PlayerDeckDiscard)
+					   && !Config.Instance.GameDetails.ShowPlayerDraw
+					   || play.Type == PlayerMulligan && !Config.Instance.GameDetails.ShowPlayerMulligan
+					   || (play.Type == OpponentPlay || play.Type == OpponentSecretTriggered
+						   || play.Type == OpponentHandDiscard || play.Type == OpponentHeroPower
+						   || play.Type == OpponentSecretPlayed) && !Config.Instance.GameDetails.ShowOpponentPlay
+					   || (play.Type == OpponentDraw || play.Type == OpponentGet || play.Type == OpponentBackToHand
+						   || play.Type == OpponentDeckDiscard) && !Config.Instance.GameDetails.ShowOpponentDraw
+					   || play.Type == OpponentMulligan && !Config.Instance.GameDetails.ShowOpponentMulligan)
+						continue;
+					needSeparator = true;
+					DataGridDetails.Items.Add(new GameDetailItem(play, turn.Turn));
 				}
 			}
 		}
 
-		public void LoadConfig(GameV2 game)
+		public void LoadConfig()
 		{
-            _game = game;
-            CheckboxPlayerDraw.IsChecked = Config.Instance.GameDetails.ShowPlayerDraw;
+			CheckboxPlayerDraw.IsChecked = Config.Instance.GameDetails.ShowPlayerDraw;
 			CheckboxOpponentDraw.IsChecked = Config.Instance.GameDetails.ShowOpponentDraw;
 			CheckboxPlayerPlay.IsChecked = Config.Instance.GameDetails.ShowPlayerPlay;
 			CheckboxOpponentPlay.IsChecked = Config.Instance.GameDetails.ShowOpponentPlay;
@@ -190,41 +186,39 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var ignoreCards = new List<Card>();
 			var deck = new Deck {Class = _gameStats.OpponentHero};
-			foreach(var turn in _gameStats.TurnStats)
+			foreach(var play in _gameStats.TurnStats.SelectMany(turn => turn.Plays))
 			{
-				foreach(var play in turn.Plays)
+				switch(play.Type)
 				{
-					if(play.Type == PlayType.OpponentPlay || play.Type == PlayType.OpponentDeckDiscard || play.Type == PlayType.OpponentHandDiscard
-					   || play.Type == PlayType.OpponentSecretTriggered)
+					case OpponentPlay:
+					case OpponentDeckDiscard:
+					case OpponentHandDiscard:
+					case OpponentSecretTriggered:
 					{
 						var card = Database.GetCardFromId(play.CardId);
-						if(Database.IsActualCard(card))
-						{
-							if(ignoreCards.Contains(card))
-							{
-								ignoreCards.Remove(card);
-								continue;
-							}
-							var deckCard = deck.Cards.FirstOrDefault(c => c.Id == card.Id);
-							if(deckCard != null)
-								deckCard.Count++;
-							else
-								deck.Cards.Add(card);
-						}
+						if(!Database.IsActualCard(card))
+							continue;
+						if(ignoreCards.Remove(card))
+							continue;
+						var deckCard = deck.Cards.FirstOrDefault(c => c.Id == card.Id);
+						if(deckCard != null)
+							deckCard.Count++;
+						else
+							deck.Cards.Add(card);
 					}
-					else if(play.Type == PlayType.OpponentBackToHand)
+						break;
+					case OpponentBackToHand:
 					{
 						var card = Database.GetCardFromId(play.CardId);
 						if(Database.IsActualCard(card))
 							ignoreCards.Add(card);
 					}
+						break;
 				}
 			}
 			Core.MainWindow.SetNewDeck(deck);
-			//Core.MainWindow.TabControlTracker.SelectedIndex = 1;
 			Core.MainWindow.FlyoutGameDetails.IsOpen = false;
 			Core.MainWindow.FlyoutDeckStats.IsOpen = false;
 		}
-
 	}
 }

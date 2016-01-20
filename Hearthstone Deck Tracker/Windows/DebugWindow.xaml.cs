@@ -3,7 +3,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +11,7 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 
 #endregion
 
@@ -22,14 +22,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 	/// </summary>
 	public partial class DebugWindow : Window
 	{
-	    private readonly GameV2 _game;
-	    private List<object> _previous = new List<object>();
+		private readonly GameV2 _game;
+		private readonly List<string> _expanded = new List<string>();
+		private List<object> _previous = new List<object>();
 		private bool _update;
 
 		public DebugWindow(GameV2 game)
 		{
-		    _game = game;
-		    InitializeComponent();
+			_game = game;
+			InitializeComponent();
 			_update = true;
 			Closing += (sender, args) => _update = false;
 			Update();
@@ -40,9 +41,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			while(_update)
 			{
 				if(TabControlDebug.SelectedIndex == 0)
-				{
 					UpdateCards();
-				}
+				else if(TabControlDebug.SelectedIndex == 2)
+					UpdateBoardDamage();
 				else
 				{
 					switch((string)ComboBoxData.SelectedValue)
@@ -80,25 +81,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			foreach(var collection in collections)
 			{
 				var tvi = new TreeViewItem();
-				tvi.IsExpanded = true;
 				tvi.Header = collection.Name;
+				tvi.IsExpanded = _expanded.Contains(tvi.Header);
+				tvi.Expanded += OnItemExpanded;
+				tvi.Collapsed += OnItemCollapsed;
 				foreach(var item in collection.Collection)
-				{
 					tvi.Items.Add(item.ToString());
-				}
 				TreeViewCards.Items.Add(tvi);
 			}
 		}
 
-		public class CollectionItem
+		private void UpdateBoardDamage()
 		{
-			public CollectionItem(List<CardEntity> collection, string name)
-			{
-				Collection = collection;
-				Name = name;
-			}
-			public List<CardEntity> Collection { get; set; }
-			public string Name { get; set; }
+			var board = new BoardState();
+			PlayerDataGrid.ItemsSource = board.Player.Cards;
+			OpponentDataGrid.ItemsSource = board.Opponent.Cards;
+			PlayerHeader.Text = "Player " + board.Player;
+			OpponentHeader.Text = "Opponent " + board.Opponent;
+			DamageView.UpdateLayout();
 		}
 
 		private void FilterEntities()
@@ -195,6 +195,52 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				_previous = list;
 			}
+		}
+
+		private void OnItemCollapsed(object sender, RoutedEventArgs e)
+		{
+			var item = sender as TreeViewItem;
+			var header = item.Header.ToString();
+			if(_expanded.Contains(header))
+				_expanded.Remove(header);
+		}
+
+		private void OnItemExpanded(object sender, RoutedEventArgs e)
+		{
+			var item = sender as TreeViewItem;
+			var header = item.Header.ToString();
+			if(_expanded.Contains(header) == false)
+				_expanded.Add(header);
+		}
+
+		private void ExpandAllBtn_Click(object sender, RoutedEventArgs e)
+		{
+			foreach(var item in TreeViewCards.Items)
+			{
+				var tvi = item as TreeViewItem;
+				tvi.IsExpanded = true;
+			}
+		}
+
+		private void CollapseAllBtn_Click(object sender, RoutedEventArgs e)
+		{
+			foreach(var item in TreeViewCards.Items)
+			{
+				var tvi = item as TreeViewItem;
+				tvi.IsExpanded = false;
+			}
+		}
+
+		public class CollectionItem
+		{
+			public CollectionItem(List<CardEntity> collection, string name)
+			{
+				Collection = collection;
+				Name = name;
+			}
+
+			public List<CardEntity> Collection { get; set; }
+			public string Name { get; set; }
 		}
 	}
 }

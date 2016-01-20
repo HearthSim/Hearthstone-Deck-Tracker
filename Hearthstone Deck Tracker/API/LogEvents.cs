@@ -7,6 +7,5 @@
 		public static readonly ActionList<string> OnBobLogLine = new ActionList<string>();
 		public static readonly ActionList<string> OnPowerLogLine = new ActionList<string>();
 		public static readonly ActionList<string> OnRachelleLogLine = new ActionList<string>();
-		public static readonly ActionList<string> OnZoneLogLine = new ActionList<string>();
 	}
 }

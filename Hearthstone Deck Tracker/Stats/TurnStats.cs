@@ -21,10 +21,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Plays = new List<Play>();
 		}
 
-		public void AddPlay(PlayType type, string cardId)
-		{
-			Plays.Add(new Play(type, cardId));
-		}
+		public void AddPlay(PlayType type, string cardId) => Plays.Add(new Play(type, cardId));
 
 		public class Play
 		{

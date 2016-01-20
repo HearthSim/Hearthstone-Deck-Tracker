@@ -6,7 +6,7 @@
              xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
              xmlns:xaml="clr-namespace:Hearthstone_Deck_Tracker.Utility.Markdown.Xaml"
              mc:Ignorable="d" Loaded="UpdateNotes_OnLoaded"
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <Style TargetType="FlowDocument" x:Key="DocumentStyle">
             <Setter Property="FontFamily"
@@ -57,9 +57,27 @@
     <DockPanel>
         <GroupBox DockPanel.Dock="Bottom" Header="Continue...">
             <StackPanel Margin="5">
-                <TextBlock Text="If you like my work please consider helping me justify the time I put into making this by clicking the button below or the little heart the title bar. Thank you!" Margin="10,5,10,10" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                <TextBlock Text="If you like my work please consider helping me justify the time I put into making this and support me by clicking one of the button belows or the little heart the title bar. Thank you!" Margin="10,5,10,10" FontWeight="SemiBold" TextWrapping="Wrap"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Name="ButtonPaypal" Content="donate" Width="160" Height="30" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonPaypal_Click" />
+                        <Button Name="ButtonPatreon" Width="120" Height="30" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonPatreon_Click">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/HearthstoneDeckTracker;component/Resources/patreon_logo.png" Width="18" RenderOptions.BitmapScalingMode="Fant"/>
+                                    <TextBlock Margin="10,0,0,0" Text="Patreon" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button.Content></Button>
+                        <Button Name="ButtonPaypal" Width="120" Height="30" Margin="10,0,0,0" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonPaypal_Click">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="18" Height="18">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{StaticResource appbar_paypal_white}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Margin="10,0,0,0" Text="PayPal" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
                     <Button Name="ButtonShowGithub" Content="Show Releases on GitHub" Margin="10,0,10,0" Width="160" Height="30" Click="ButtonShowGithub_OnClick" Style="{DynamicResource SquareButtonStyle}"/>
                     <Button Name="ButtonClose" Content="close" Width="160" Height="30" Style="{DynamicResource SquareButtonStyle}" Click="ButtonClose_Click"/>
                 </StackPanel>

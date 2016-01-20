@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="300">
     <Grid>
         <GroupBox Header="General">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -17,6 +17,11 @@
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxAutoSelectDeck_Checked"
                                           Unchecked="CheckboxAutoSelectDeck_Unchecked" />
+                    <CheckBox x:Name="CheckboxSpectatorUseNoDeck"
+                                          Content="Use no deck on Spectator mode" HorizontalAlignment="Left"
+                                          Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxSpectatorUseNoDeck_Checked"
+                                          Unchecked="CheckboxSpectatorUseNoDeck_Unchecked" />
                     <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxFlashHs_Checked"
@@ -36,6 +41,11 @@
                                              Margin="10,0,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"
                                              Width="60" TextChanged="TextboxTimerAlert_TextChanged" PreviewTextInput="TextboxTimerAlert_PreviewTextInput"/>
                     </DockPanel>
+                    <CheckBox x:Name="CheckboxTurnTime"
+                                          Content="Set turn time to 75s (default 90s) *"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxTurnTime_Checked"
+                                          Unchecked="CheckboxTurnTime_Unchecked" />
                     <CheckBox x:Name="CheckboxNoteDialog"
                                           Content="Show note dialog after game"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
@@ -46,6 +56,11 @@
                                           HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxNoteDialogDelay_Checked"
                                           Unchecked="CheckboxNoteDialogDelay_Unchecked" />
+                    <CheckBox x:Name="CheckboxArenaRewardDialog"
+                                          Content="Show arena reward dialog when run is over"
+                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                                          Checked="CheckboxArenaRewardDialog_Checked"
+                                          Unchecked="CheckboxArenaRewardDialog_Unchecked" />
                     <Separator Margin="0,5,0,0"/>
                     <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
@@ -69,6 +84,8 @@
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxFullTextSearch_Checked"
                                           Unchecked="CheckboxFullTextSearch_Unchecked" />
+                    <Separator Margin="0,5,0,0"/>
+                    <TextBlock Text="* Neither 75s not 90s are quite correct. The base time is 75s but it's extended to up to ~100s, depending on animations playing." TextWrapping="Wrap" Margin="10,5,10,0" FontStyle="Italic"/>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

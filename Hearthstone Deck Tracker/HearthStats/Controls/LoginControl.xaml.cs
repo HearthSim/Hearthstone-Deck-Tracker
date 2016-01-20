@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -56,13 +57,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				Core.MainWindow.MenuItemLogin.Visibility = Visibility.Collapsed;
 				Core.MainWindow.MenuItemLogout.Visibility = Visibility.Visible;
 				Core.MainWindow.SeparatorLogout.Visibility = Visibility.Visible;
-				Core.MainWindow.MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
+				Core.MainWindow.MenuItemLogout.Header = $"LOGOUT ({HearthStatsAPI.LoggedInAs})";
 
 				var dialogResult =
 					await
 					Core.MainWindow.ShowMessageAsync("Sync now?", "Do you want to sync with HearthStats now?",
-					                                   MessageDialogStyle.AffirmativeAndNegative,
-					                                   new MetroDialogSettings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
+					                                 MessageDialogStyle.AffirmativeAndNegative,
+					                                 new MessageDialogs.Settings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
 				if(dialogResult == MessageDialogResult.Affirmative)
 					HearthStatsManager.SyncAsync();
 			}

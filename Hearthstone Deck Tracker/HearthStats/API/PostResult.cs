@@ -11,19 +11,10 @@
 			Retry = retry;
 		}
 
-		public static PostResult WasSuccess
-		{
-			get { return new PostResult(true, false); }
-		}
+		public static PostResult WasSuccess => new PostResult(true, false);
 
-		public static PostResult Failed
-		{
-			get { return new PostResult(false, false); }
-		}
+		public static PostResult Failed => new PostResult(false, false);
 
-		public static PostResult CanRetry
-		{
-			get { return new PostResult(false, true); }
-		}
+		public static PostResult CanRetry => new PostResult(false, true);
 	}
 }

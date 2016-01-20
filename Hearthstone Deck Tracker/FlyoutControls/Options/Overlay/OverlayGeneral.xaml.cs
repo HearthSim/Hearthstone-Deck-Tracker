@@ -14,19 +14,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayGeneral
 	{
-	    private GameV2 _game;
-	    private bool _initialized;
+		private GameV2 _game;
+		private bool _initialized;
 
 		public OverlayGeneral()
 		{
-		    
-		    InitializeComponent();
+			InitializeComponent();
 		}
 
-	    public void Load(GameV2 game)
+		public void Load(GameV2 game)
 		{
-            _game = game;
-            CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
+			_game = game;
+			CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
 			CheckboxHideOpponentCardAge.IsChecked = Config.Instance.HideOpponentCardAge;
 			CheckboxHideOpponentCardMarks.IsChecked = Config.Instance.HideOpponentCardMarks;
 			CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
@@ -44,8 +43,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
 			CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
 			CheckboxAlwaysShowGoldProgress.IsChecked = Config.Instance.AlwaysShowGoldProgress;
-		    CheckboxHidePlayerAttackIcon.IsChecked = Config.Instance.HidePlayerAttackIcon;
-		    CheckboxHideOpponentAttackIcon.IsChecked = Config.Instance.HideOpponentAttackIcon;
+			CheckboxHidePlayerAttackIcon.IsChecked = Config.Instance.HidePlayerAttackIcon;
+			CheckboxHideOpponentAttackIcon.IsChecked = Config.Instance.HideOpponentAttackIcon;
 			_initialized = true;
 		}
 
@@ -84,8 +83,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			var result =
 				await
 				Core.MainWindow.ShowMessageAsync("Resetting overlay to default",
-				                                   "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
-				                                   MessageDialogStyle.AffirmativeAndNegative);
+				                                 "Positions of: Player Deck, Opponent deck, Timers and Secrets will be reset to default. Are you sure?",
+				                                 MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
 				return;
 
@@ -96,22 +95,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			}
 
 
-			Config.Instance.Reset("PlayerDeckTop");
-			Config.Instance.Reset("PlayerDeckLeft");
-			Config.Instance.Reset("PlayerDeckHeight");
+			Config.Instance.Reset(nameof(Config.PlayerDeckTop));
+			Config.Instance.Reset(nameof(Config.PlayerDeckLeft));
+			Config.Instance.Reset(nameof(Config.PlayerDeckHeight));
 
-			Config.Instance.Reset("PlayerDeckHeight");
-			Config.Instance.Reset("OpponentDeckLeft");
-			Config.Instance.Reset("OpponentDeckHeight");
+			Config.Instance.Reset(nameof(Config.PlayerDeckHeight));
+			Config.Instance.Reset(nameof(Config.OpponentDeckLeft));
+			Config.Instance.Reset(nameof(Config.OpponentDeckHeight));
 
-			Config.Instance.Reset("TimersHorizontalPosition");
-			Config.Instance.Reset("TimersHorizontalSpacing");
+			Config.Instance.Reset(nameof(Config.TimersHorizontalPosition));
+			Config.Instance.Reset(nameof(Config.TimersHorizontalSpacing));
 
-			Config.Instance.Reset("TimersHorizontalSpacing");
-			Config.Instance.Reset("TimersVerticalSpacing");
+			Config.Instance.Reset(nameof(Config.TimersHorizontalSpacing));
+			Config.Instance.Reset(nameof(Config.TimersVerticalSpacing));
 
-			Config.Instance.Reset("SecretsTop");
-			Config.Instance.Reset("SecretsLeft");
+			Config.Instance.Reset(nameof(Config.SecretsTop));
+			Config.Instance.Reset(nameof(Config.SecretsLeft));
 
 			SaveConfig(true);
 		}
@@ -136,26 +135,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxOverlaySecretToolTipsOnly.IsEnabled = false;
 			CheckboxOverlaySecretToolTipsOnly.IsChecked = false;
 			SaveConfig(true);
-		}
-
-		private void CheckboxDeckSortingClassFirst_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.CardSortingClassFirst = true;
-			SaveConfig(false);
-			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, true);
-			//Helper.SortCardCollection(ListViewNewDeck.Items, true);
-		}
-
-		private void CheckboxDeckSortingClassFirst_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.CardSortingClassFirst = false;
-			SaveConfig(false);
-			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, false);
-			//Helper.SortCardCollection(ListViewNewDeck.Items, false);
 		}
 
 		private void CheckboxHideDecksInOverlay_Checked(object sender, RoutedEventArgs e)

@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Exporting;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -29,9 +31,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(Config.Instance.ShowExportingDialog)
 			{
 				var message =
-					string.Format(
-					              "1) create a new, empty {0}-Deck {1}.\n\n2) leave the deck creation screen open.\n\n3)do not move your mouse or type after clicking \"export\"",
-					              deck.Class, (Config.Instance.AutoClearDeck ? "(or open an existing one to be cleared automatically)" : ""));
+					$"1) create a new {deck.Class} deck{(Config.Instance.AutoClearDeck ? " (or open an existing one to be cleared automatically)" : "")}.\n\n2) leave the deck creation screen open.\n\n3) do not move your mouse or type after clicking \"export\".";
 
 				if(deck.GetSelectedDeckVersion().Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
 				{
@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						"\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
 				}
 
-				var settings = new MetroDialogSettings {AffirmativeButtonText = "export"};
+				var settings = new MessageDialogs.Settings {AffirmativeButtonText = "Export"};
 				var result =
 					await
 					this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone", message, MessageDialogStyle.AffirmativeAndNegative, settings);
@@ -80,13 +80,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = selectedDeck.GetSelectedDeckVersion();
 			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, 96, 96, deck.Name);
 			screenShotWindow.Shutdown();
+			SaveOrUploadScreenshot(pngEncoder, deck.Name);
+		}
 
+		public async Task SaveOrUploadScreenshot(PngBitmapEncoder pngEncoder, string proposedFileName)
+		{
 			if(pngEncoder != null)
 			{
 				var saveOperation = await this.ShowScreenshotUploadSelectionDialog();
-				var tmpFile = new FileInfo(Path.Combine(Config.Instance.DataDir, string.Format("tmp{0}.png", DateTime.Now.ToFileTime())));
+				var tmpFile = new FileInfo(Path.Combine(Config.Instance.DataDir, $"tmp{DateTime.Now.ToFileTime()}.png"));
 				var fileName = saveOperation.SaveLocal
-					               ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "png") : tmpFile.FullName;
+					               ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(proposedFileName), "png") : tmpFile.FullName;
 				if(fileName != null)
 				{
 					string imgurUrl = null;
@@ -98,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						if(saveOperation.Upload)
 						{
 							var controller = await this.ShowProgressAsync("Uploading...", "");
-							imgurUrl = await Imgur.Upload(Config.Instance.ImgurClientId, ms, deck.Name);
+							imgurUrl = await Imgur.Upload(Config.Instance.ImgurClientId, ms, proposedFileName);
 							await controller.CloseAsync();
 						}
 					}
@@ -110,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					}
 					else
 						await this.ShowSavedFileMessage(fileName);
-					Logger.WriteLine("Saved screenshot of " + deck.GetDeckInfo() + " to file: " + fileName, "Export");
+					Logger.WriteLine("Saved screenshot to: " + fileName, "Export");
 				}
 				if(tmpFile.Exists)
 				{
@@ -131,15 +135,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
-
 			var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "xml");
-
-			if(fileName != null)
-			{
-				XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
-				await this.ShowSavedFileMessage(fileName);
-				Logger.WriteLine("Saved " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + fileName, "Export");
-			}
+			if(fileName == null)
+				return;
+			XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
+			await this.ShowSavedFileMessage(fileName);
+			Logger.WriteLine("Saved " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + fileName, "Export");
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
@@ -163,15 +164,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				try
 				{
-					english =
-						await
-						this.ShowMessageAsync("Select language", "", MessageDialogStyle.AffirmativeAndNegative,
-						                      new MetroDialogSettings
-						                      {
-							                      AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
-							                      NegativeButtonText = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key
-						                      })
-						== MessageDialogResult.Affirmative;
+					english = await this.ShowLanguageSelectionDialog();
 				}
 				catch(Exception ex)
 				{
@@ -182,8 +175,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var names =
 					deck.GetSelectedDeckVersion()
-						.Cards.Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
-						.Aggregate((c, n) => c + Environment.NewLine + n);
+					    .Cards.ToSortedCardList()
+					    .Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
+					    .Aggregate((c, n) => c + Environment.NewLine + n);
 				Clipboard.SetText(names);
 				this.ShowMessage("", "copied names to clipboard");
 				Logger.WriteLine("Copied " + deck.GetDeckInfo() + " names to clipboard", "Export");
@@ -200,9 +194,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var url = await InputDeckURL();
 			if(url == null)
 				return;
-
 			var deck = await ImportDeckFromURL(url);
-
 			if(deck != null)
 				ExportDeck(deck);
 			else

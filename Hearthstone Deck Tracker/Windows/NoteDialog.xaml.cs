@@ -21,16 +21,14 @@ namespace Hearthstone_Deck_Tracker
 			InitializeComponent();
 			_game = game;
 			CheckBoxEnterToSave.IsChecked = Config.Instance.EnterToSaveNote;
+			TextBoxNote.Text = game.Note;
 			Show();
 			Activate();
 			TextBoxNote.Focus();
 			_initialized = true;
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			SaveAndClose();
-		}
+		private void Button_Click(object sender, RoutedEventArgs e) => SaveAndClose();
 
 		private void SaveAndClose()
 		{

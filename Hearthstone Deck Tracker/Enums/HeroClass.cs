@@ -27,4 +27,18 @@
 		Warrior,
 		Archived
 	}
+
+	public enum HeroClassStatsFilter
+	{
+		All,
+		Druid,
+		Hunter,
+		Mage,
+		Paladin,
+		Priest,
+		Rogue,
+		Shaman,
+		Warlock,
+		Warrior
+	}
 }

@@ -3,11 +3,8 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
-using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
@@ -34,6 +31,8 @@ namespace Hearthstone_Deck_Tracker
 		private const int KeyUp = 0x2;
 		private static DateTime _lastCheck;
 		private static IntPtr _hsWindow;
+
+		private static readonly string[] WindowNames = {"Hearthstone", "하스스톤", "《爐石戰記》", "炉石传说"};
 
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetClientRect(IntPtr hWnd, ref Rect rect);
@@ -74,16 +73,9 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
 
-		public static void SetWindowExStyle(IntPtr hwnd, int style)
-		{
-			var extendedStyle = GetWindowLong(hwnd, GwlExstyle);
-			SetWindowLong(hwnd, GwlExstyle, extendedStyle | style);
-		}
+		public static void SetWindowExStyle(IntPtr hwnd, int style) => SetWindowLong(hwnd, GwlExstyle, GetWindowLong(hwnd, GwlExstyle) | style);
 
-		public static bool IsHearthstoneInForeground()
-		{
-			return GetForegroundWindow() == GetHearthstoneWindow();
-		}
+		public static bool IsHearthstoneInForeground() => GetForegroundWindow() == GetHearthstoneWindow();
 
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]
@@ -95,8 +87,6 @@ namespace Hearthstone_Deck_Tracker
 			GetCursorPos(out p);
 			return new Point(p.X, p.Y);
 		}
-
-		private static readonly string[] WindowNames = { "Hearthstone", "하스스톤", "《爐石戰記》", "炉石传说" };
 
 		public static IntPtr GetHearthstoneWindow()
 		{
@@ -110,31 +100,30 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var sb = new StringBuilder(200);
 					GetClassName(process.MainWindowHandle, sb, 200);
-					if(sb.ToString().Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
-					{
-						_hsWindow = process.MainWindowHandle;
-						break;
-					}
-                }
-            }
-			else
-			{
-				_hsWindow = FindWindow("UnityWndClass", Config.Instance.HearthstoneWindowName);
-				if(_hsWindow != IntPtr.Zero)
+					if(!sb.ToString().Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
+						continue;
+					_hsWindow = process.MainWindowHandle;
+					_lastCheck = DateTime.Now;
 					return _hsWindow;
-				foreach(var windowName in WindowNames)
-				{
-					_hsWindow = FindWindow("UnityWndClass", windowName);
-					if(_hsWindow != IntPtr.Zero)
-					{
-						if(Config.Instance.HearthstoneWindowName != windowName)
-						{
-							Config.Instance.HearthstoneWindowName = windowName;
-							Config.Save();
-						}
-						break;
-					}
 				}
+
+			_lastCheck = DateTime.Now;
+			return IntPtr.Zero;
+			}
+			_hsWindow = FindWindow("UnityWndClass", Config.Instance.HearthstoneWindowName);
+			if(_hsWindow != IntPtr.Zero)
+				return _hsWindow;
+			foreach(var windowName in WindowNames)
+			{
+				_hsWindow = FindWindow("UnityWndClass", windowName);
+				if(_hsWindow == IntPtr.Zero)
+					continue;
+				if(Config.Instance.HearthstoneWindowName != windowName)
+				{
+					Config.Instance.HearthstoneWindowName = windowName;
+					Config.Save();
+				}
+				break;
 			}
 			_lastCheck = DateTime.Now;
 			return _hsWindow;
@@ -177,17 +166,14 @@ namespace Hearthstone_Deck_Tracker
 			SetForegroundWindow(hsHandle);
 		}
 
-		public static void FlashHs()
-		{
-			var hsHandle = GetHearthstoneWindow();
-			FlashWindow(hsHandle, false);
-		}
+		public static void FlashHs() => FlashWindow(GetHearthstoneWindow(), false);
 
 		//http://www.roelvanlisdonk.nl/?p=4032
 		public static void ActivateWindow(IntPtr mainWindowHandle)
 		{
 			// Guard: check if window already has focus.
-			if(mainWindowHandle == GetForegroundWindow()) return;
+			if(mainWindowHandle == GetForegroundWindow())
+				return;
 
 			// Show window maximized.
 			ShowWindow(mainWindowHandle, SwRestore);
@@ -203,33 +189,27 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
-
 		//http://joelabrahamsson.com/detecting-mouse-and-keyboard-input-with-net/
 		public class MouseInput : IDisposable
 		{
-			private const Int32 WH_MOUSE_LL = 14;
-			private const Int32 WM_LBUTTONDOWN = 0x201;
-			private const Int32 WM_LBUTTONUP = 0x0202;
-			private readonly WindowsHookHelper.HookDelegate _mouseDelegate;
+			private const int WH_MOUSE_LL = 14;
+			private const int WM_LBUTTONDOWN = 0x201;
+			private const int WM_LBUTTONUP = 0x0202;
 			private readonly IntPtr _mouseHandle;
 			private bool _disposed;
 
 			public MouseInput()
 			{
-				_mouseDelegate = MouseHookDelegate;
-				_mouseHandle = WindowsHookHelper.SetWindowsHookEx(WH_MOUSE_LL, _mouseDelegate, IntPtr.Zero, 0);
+				_mouseHandle = WindowsHookHelper.SetWindowsHookEx(WH_MOUSE_LL, MouseHookDelegate, IntPtr.Zero, 0);
 			}
 
-			public void Dispose()
-			{
-				Dispose(true);
-			}
+			public void Dispose() => Dispose(true);
 
 			public event EventHandler<EventArgs> LmbDown;
 			public event EventHandler<EventArgs> LmbUp;
 			public event EventHandler<EventArgs> MouseMoved;
 
-			private IntPtr MouseHookDelegate(Int32 code, IntPtr wParam, IntPtr lParam)
+			private IntPtr MouseHookDelegate(int code, IntPtr wParam, IntPtr lParam)
 			{
 				if(code < 0)
 					return WindowsHookHelper.CallNextHookEx(_mouseHandle, code, wParam, lParam);
@@ -238,16 +218,13 @@ namespace Hearthstone_Deck_Tracker
 				switch(wParam.ToInt32())
 				{
 					case WM_LBUTTONDOWN:
-						if(LmbDown != null)
-							LmbDown(this, new EventArgs());
+						LmbDown?.Invoke(this, new EventArgs());
 						break;
 					case WM_LBUTTONUP:
-						if(LmbUp != null)
-							LmbUp(this, new EventArgs());
+						LmbUp?.Invoke(this, new EventArgs());
 						break;
 					default:
-						if(MouseMoved != null)
-							MouseMoved(this, new EventArgs());
+						MouseMoved?.Invoke(this, new EventArgs());
 						break;
 				}
 
@@ -256,13 +233,11 @@ namespace Hearthstone_Deck_Tracker
 
 			protected virtual void Dispose(bool disposing)
 			{
-				if(!_disposed)
-				{
-					if(_mouseHandle != IntPtr.Zero)
-						WindowsHookHelper.UnhookWindowsHookEx(_mouseHandle);
-
-					_disposed = true;
-				}
+				if(_disposed)
+					return;
+				if(_mouseHandle != IntPtr.Zero)
+					WindowsHookHelper.UnhookWindowsHookEx(_mouseHandle);
+				_disposed = true;
 			}
 
 			~MouseInput()
@@ -289,16 +264,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public class WindowsHookHelper
 		{
-			public delegate IntPtr HookDelegate(Int32 code, IntPtr wParam, IntPtr lParam);
+			public delegate IntPtr HookDelegate(int code, IntPtr wParam, IntPtr lParam);
 
 			[DllImport("User32.dll")]
-			public static extern IntPtr CallNextHookEx(IntPtr hHook, Int32 nCode, IntPtr wParam, IntPtr lParam);
+			public static extern IntPtr CallNextHookEx(IntPtr hHook, int nCode, IntPtr wParam, IntPtr lParam);
 
 			[DllImport("User32.dll")]
 			public static extern IntPtr UnhookWindowsHookEx(IntPtr hHook);
 
 			[DllImport("User32.dll")]
-			public static extern IntPtr SetWindowsHookEx(Int32 idHook, HookDelegate lpfn, IntPtr hmod, Int32 dwThreadId);
+			public static extern IntPtr SetWindowsHookEx(int idHook, HookDelegate lpfn, IntPtr hmod, int dwThreadId);
 		}
 	}
 }

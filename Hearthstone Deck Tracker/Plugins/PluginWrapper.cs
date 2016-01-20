@@ -12,9 +12,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 {
 	internal class PluginWrapper
 	{
+		private int _exceptions;
 		private bool _isEnabled;
 		private bool _loaded;
-		private int _exceptions;
 
 		public PluginWrapper()
 		{
@@ -31,15 +31,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		public IPlugin Plugin { get; set; }
 		private MenuItem MenuItem { get; set; }
 
-		public string Name
-		{
-			get { return Plugin != null ? Plugin.Name : FileName; }
-		}
+		public string Name => Plugin != null ? Plugin.Name : FileName;
 
-		public string NameAndVersion
-		{
-			get { return Name + " " + (Plugin != null ? Plugin.Version.ToString() : ""); }
-		}
+		public string NameAndVersion => Name + " " + (Plugin?.Version.ToString() ?? "");
 
 		public bool IsEnabled
 		{
@@ -87,7 +81,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
-				ErrorManager.AddError("Error loading Plugin \"" + Name + "\"", "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
+				ErrorManager.AddError("Error loading Plugin \"" + Name + "\"",
+				                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 				Logger.WriteLine("Error loading " + Name + ":\n" + ex, "PluginWrapper");
 				return false;
 			}
@@ -109,15 +104,16 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				_exceptions++;
 				if(_exceptions > PluginManager.MaxExceptions)
 				{
-					ErrorManager.AddError(NameAndVersion + " threw too many exceptions, disabled Plugin.", "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
+					ErrorManager.AddError(NameAndVersion + " threw too many exceptions, disabled Plugin.",
+					                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 					IsEnabled = false;
 				}
 			}
 			if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 			{
-				Logger.WriteLine(string.Format("Warning: Updating {0} took {1} ms.", Name, sw.ElapsedMilliseconds), "PluginWrapper");
+				Logger.WriteLine($"Warning: Updating {Name} took {sw.ElapsedMilliseconds} ms.", "PluginWrapper");
 #if(!DEBUG)
-				//IsEnabled = false;
+	//IsEnabled = false;
 #endif
 			}
 		}

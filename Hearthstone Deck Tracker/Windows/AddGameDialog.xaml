@@ -7,7 +7,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d" 
-             d:DesignHeight="300" Title="Add new game" Height="450" d:DesignWidth="450">
+             d:DesignHeight="300" Title="Add new game" Height="480" d:DesignWidth="450">
     <StackPanel Width="300" Margin="0,15,0,0">
         <DockPanel Margin="0,2,0,0">
             <Label Content="Result:" Width="90"/>
@@ -48,6 +48,7 @@
                 <enums:Region>US</enums:Region>
                 <enums:Region>EU</enums:Region>
                 <enums:Region>ASIA</enums:Region>
+                <enums:Region>CHINA</enums:Region>
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,2,0,0">
@@ -83,6 +84,10 @@
         <DockPanel Margin="0,2,0,0">
             <Label Content="Opponent:" Width="90"/>
             <TextBox Name="TextBoxOppName" />
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Player:" Width="90"/>
+            <TextBox Name="TextBoxPlayerName" />
         </DockPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Width="210" Margin="0,30,0,0">
             <Button Name="BtnSave"  Content="add game" Width="90" Style="{StaticResource AccentedSquareButtonStyle}" Click="BtnSave_OnClick"/>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,15 +16,15 @@ namespace HDTTests.Hearthstone
             Deck d1 = new Deck();
             Deck d2 = new Deck(); 
             //just in d1
-            d1.Cards.Add(new Card("ID_1", "", "", "", "ID 1", 0, "", 0, 1, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+            d1.Cards.Add(new Card("ID_1", "", Rarity.Free, "", "ID 1", 0, "", 0, 1, "", "", 0, 0, "", new string[] { }, 0, "", ""));
             //in both but diff count 
-			d1.Cards.Add(new Card("ID_2", "", "", "", "ID 2", 0, "", 0, 2, "", "", 0, 0, "", new string[] { }, 0, "", ""));
-			d2.Cards.Add(new Card("ID_2", "", "", "", "ID 2", 0, "", 0, 3, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+			d1.Cards.Add(new Card("ID_2", "", Rarity.Free, "", "ID 2", 0, "", 0, 2, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+			d2.Cards.Add(new Card("ID_2", "", Rarity.Free, "", "ID 2", 0, "", 0, 3, "", "", 0, 0, "", new string[] { }, 0, "", ""));
             //just in d2
-			d2.Cards.Add(new Card("ID_3", "", "", "", "ID 3", 0, "", 0, 2, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+			d2.Cards.Add(new Card("ID_3", "", Rarity.Free, "", "ID 3", 0, "", 0, 2, "", "", 0, 0, "", new string[] { }, 0, "", ""));
             //in bth and same cont
-			d1.Cards.Add(new Card("ID_4", "", "", "", "ID 4", 0, "", 0, 5, "", "", 0, 0, "", new string[] { }, 0, "", ""));
-			d2.Cards.Add(new Card("ID_4", "", "", "", "ID 4", 0, "", 0, 5, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+			d1.Cards.Add(new Card("ID_4", "", Rarity.Free, "", "ID 4", 0, "", 0, 5, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+			d2.Cards.Add(new Card("ID_4", "", Rarity.Free, "", "ID 4", 0, "", 0, 5, "", "", 0, 0, "", new string[] { }, 0, "", ""));
 
             IEnumerable<Card> result = d1 - d2;
 

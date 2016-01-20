@@ -9,10 +9,11 @@
                       xmlns:error="clr-namespace:Hearthstone_Deck_Tracker.Controls.Error"
                       xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
+                      xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
                       Title="Hearthstone Deck Tracker" Height="603" Width="700"
                       MinHeight="584" MinWidth="700"
                       Closing="Window_Closing"
-                      Icon="/HearthstoneDeckTracker;component/Images/HearthstoneDeckTracker.ico"
+                      Icon="{StaticResource AppIcon}"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" LocationChanged="MetroWindow_LocationChanged" SizeChanged="MetroWindow_SizeChanged">
     <Window.Resources>
@@ -64,7 +65,7 @@
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="help" />
                 </StackPanel>
             </Button>
-            <Button Click="BtnDonate_OnClick">
+            <Button Name="BtnDonate" Click="BtnDonate_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="14">
                         <Rectangle.Fill>
@@ -73,6 +74,24 @@
                     </Rectangle>
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="donate" />
                 </StackPanel>
+                <Button.ContextMenu>
+                    <ContextMenu Name="BtnDonateContextMenu">
+                        <MenuItem Header="Patreon" Click="BtnPatreon_OnClick">
+                            <MenuItem.Icon>
+                                <Image Source="/HearthstoneDeckTracker;component/Resources/patreon_logo.png" Width="18" RenderOptions.BitmapScalingMode="Fant" Margin="0,0,-5,0"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="PayPal" Click="BtnPaypal_OnClick">
+                            <MenuItem.Icon>
+                                <Rectangle Width="18" Height="18" Margin="0,0,-5,0">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource appbar_paypal_blue}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
             </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
@@ -94,8 +113,8 @@
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <local:GameDetails x:Name="GameDetailsFlyout" />
             </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutOpponentDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="Opponent Deck">
-                    <flyoutControls:OpponentDeck x:Name="OpponentDeckFlyout" />
+            <controls:Flyout x:Name="FlyoutDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="Opponent Deck">
+                    <flyoutControls:DeckPanel x:Name="DeckFlyout" />
              </controls:Flyout>
             <controls:Flyout x:Name="FlyoutSortFilter" Header="Sort / Filter Decks" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
                 <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
@@ -122,6 +141,33 @@
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutUpdateNotes" Header="Update Notes" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <flyoutControls:UpdateNotes x:Name="UpdateNotesControl"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutNewStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <controls:Flyout.HeaderTemplate>
+                    <DataTemplate>
+                        <DockPanel Margin="10,13,10,8">
+                            <Button Click="ButtonCloseStatsFlyout_OnClick" DockPanel.Dock="Right" Width="40" Height="40" VerticalAlignment="Center" Style="{DynamicResource MetroCircleButtonStyle}">
+                                <Rectangle Width="20" Height="15">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource appbar_arrow_left_white}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Button>
+                            <Button Click="ButtonSwitchStatsToNewWindow_OnClick" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" Opacity="0.8" DockPanel.Dock="Left">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="16" Height="16" Margin="0,0,10,0">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{StaticResource appbar_arrow_right_left_white}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="Move to new window" FontWeight="Normal" />
+                                </StackPanel>
+                            </Button>
+                            <TextBlock Text="Stats" Foreground="White" Margin="15,0" FontSize="{StaticResource FlyoutHeaderFontSize}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                        </DockPanel>
+                    </DataTemplate>
+                </controls:Flyout.HeaderTemplate>
+                <ContentControl Name="StatsFlyoutContentControl"/>
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
@@ -297,13 +343,14 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="GAMES &amp; _STATISTICS"  Click="BtnDeckStats_Click"/>
+                    <MenuItem Header="[OLD] GAMES &amp; _STATISTICS"  Click="BtnDeckStats_Click"/>
+                    <MenuItem Header="ARENA RUNS &amp; _STATISTICS"  Click="BtnDeckNewStats_Click"/>
                     <Separator/>
                     <MenuItem Header="_LATEST REPLAY" Click="MenuItemReplayLastGame_OnClick"/>
                     <MenuItem Header="_SELECT REPLAY" Click="MenuItemReplaySelectGame_OnClick" />
                     <MenuItem Header="LOAD REPLAY FROM _FILE" Click="MenuItemReplayFromFile_OnClick"/>
                 </MenuItem>
-                <MenuItem Header="_HEARTHSTATS">
+                <MenuItem Header="_HEARTHSTATS" SubmenuOpened="MenuItemHearthStats_OnSubmenuOpened">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -313,7 +360,14 @@
                     </MenuItem.Icon>
                     <MenuItem Name="MenuItemLogin" Header="LOGIN" Click="MenuItemLogin_OnClick"/>
                     <MenuItem Name="MenuItemDashboard" Header="DASHBOARD (WEB)" Click="MenuItemDashboard_OnClick"/>
-                    <MenuItem Name="MenuItemHearthStatsSync"  Header="SYNC NOW" Click="MenuItemHearthStatsSync_OnClick"/>
+                    <MenuItem Name="MenuItemHearthStatsSync" Click="MenuItemHearthStatsSync_OnClick">
+                        <MenuItem.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="SYNC NOW"/>
+                                <TextBlock Foreground="DimGray" Margin="10,0,0,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}, Path=LastSync, StringFormat='(LAST: {0})'}"/>
+                            </StackPanel>
+                        </MenuItem.Header>
+                    </MenuItem>
                     <MenuItem Name="MenuItemHearthStatsForceFullSync"  Header="FORCE FULL SYNC" Click="MenuItemHearthStatsForceFullSync_OnClick"/>
                     <Separator/>
                     <CheckBox Name="MenuItemCheckBoxSyncOnStart" Content="SYNC ON START" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxSyncOnStart_OnChecked" Unchecked="MenuItemCheckBoxSyncOnStart_OnUnchecked"/>
@@ -349,7 +403,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="10,6,10,-4" Grid.Row="0" Visibility="Visible" Style="{StaticResource AccentedSquareButtonStyle}">
-                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="START LAUNCHER / HEARTHSTONE"></TextBlock>
+                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="START LAUNCHER / HEARTHSTONE" />
                 </Button>
                 <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="1" Visibility="Collapsed">
                     <DockPanel>
@@ -370,6 +424,7 @@
                             <TextBlock Name="TextBlockIconGvg" Text="GvG" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10" Margin="2,0" ToolTip="Deck contains cards from the Goblins vs Gnomes expansion."/>
                             <TextBlock Name="TextBlockIconBrm" Text="BRM" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10" Margin="2,0" ToolTip="Deck contains cards from the Blackrock Mountain expansion."/>
                             <TextBlock Name="TextBlockIconTgt" Text="TGT" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10" Margin="2,0" ToolTip="Deck contains cards from the The Grand Tournament expansion."/>
+                            <TextBlock Name="TextBlockIconLoe" Text="LOE" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="10" Margin="2,0" ToolTip="Deck contains cards from the League of Explorers expansion."/>
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" >
                             <TextBlock Text="CARDS:" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
@@ -495,6 +550,7 @@
                         <RadioButton Content="GOBLINS VS GNOMES" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="BLACKROCK MOUNTAIN" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="THE GRAND TOURNAMENT" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="LEAGUE OF EXPLORERS" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
                 </MenuItem>
             </Menu>

@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,9 +10,8 @@ using System.Windows.Media;
 using HDTHelper;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility;
-using MahApps.Metro;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using Application = System.Windows.Application;
 using Point = System.Drawing.Point;
 
 #endregion
@@ -20,8 +20,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class MainWindow
 	{
-
-	    internal void LoadConfigSettings()
+		internal void LoadConfigSettings()
 		{
 			if(Config.Instance.TrackerWindowTop.HasValue)
 				Top = Config.Instance.TrackerWindowTop.Value;
@@ -55,9 +54,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			Options.Load(Core.Game);
-            Help.TxtblockVersion.Text = "v" + Helper.GetCurrentVersion().ToVersionString();
+			Help.TxtblockVersion.Text = "v" + Helper.GetCurrentVersion().ToVersionString();
 
-            CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
+			CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
 			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", (bool)CheckboxDeckDetection.IsChecked);
 
 			// Don't select the 'archived' class on load
@@ -96,10 +95,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.TrayIcon.SetContextMenuProperty("useNoDeck", "Checked", DeckList.Instance.ActiveDeck == null);
 
 
-			DeckStatsFlyout.LoadConfig(Core.Game);
-			GameDetailsFlyout.LoadConfig(Core.Game);
-			Core.Windows.StatsWindow.StatsControl.LoadConfig(Core.Game);
-			Core.Windows.StatsWindow.GameDetailsFlyout.LoadConfig(Core.Game);
+			DeckStatsFlyout.LoadConfig();
+			GameDetailsFlyout.LoadConfig();
+			Core.Windows.StatsWindow.StatsControl.LoadConfig();
+			Core.Windows.StatsWindow.GameDetailsFlyout.LoadConfig();
 
 			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
 			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;
@@ -110,15 +109,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		public void UpdateQuickFilterItemSource()
-		{
-			MenuItemQuickSelectFilter.ItemsSource =
-				DeckList.Instance.AllTags.Where(
-				                                t =>
-				                                DeckList.Instance.Decks.Any(
-				                                                            d =>
-				                                                            d.Tags.Contains(t) || t == "All" || t == "None" && d.Tags.Count == 0))
-				        .Select(x => x.ToUpperInvariant());
-		}
+			=>
+				MenuItemQuickSelectFilter.ItemsSource =
+				DeckList.Instance.AllTags.Where(t => DeckList.Instance.Decks.Any(d => d.Tags.Contains(t) || t == "All" || t == "None" && d.Tags.Count == 0))
+						.Select(x => x.ToUpperInvariant());
 
 		public void ReloadTags()
 		{
@@ -135,9 +129,30 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Helper.DpiScalingX = presentationsource.CompositionTarget.TransformToDevice.M11;
 				Helper.DpiScalingY = presentationsource.CompositionTarget.TransformToDevice.M22;
 			}
-		    LoadHearthStatsMenu();
-            LoadAndUpdateDecks(); 
-        }
+			LoadHearthStatsMenu();
+			LoadAndUpdateDecks();
+			UpdateFlyoutAnimationsEnabled();
+		}
+
+		public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+		{
+			if(depObj == null)
+				yield break;
+			for(var i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+			{
+				var child = VisualTreeHelper.GetChild(depObj, i) as T;
+				if(child != null)
+					yield return child;
+				foreach(var childOfChild in FindVisualChildren<T>(child))
+					yield return childOfChild;
+			}
+		}
+
+		public void UpdateFlyoutAnimationsEnabled()
+		{
+			foreach(var flyout in FindVisualChildren<Flyout>(Core.MainWindow))
+				flyout.AreAnimationsEnabled = Config.Instance.UseAnimations;
+		}
 
 		internal async Task<bool> SetupProtocol()
 		{
@@ -150,9 +165,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					                      MessageDialogStyle.AffirmativeAndNegative);
 				if(result == MessageDialogResult.Affirmative)
 				{
-					var procInfo = new ProcessStartInfo("HDTHelper.exe", "registerProtocol");
-					procInfo.Verb = "runas";
-					procInfo.UseShellExecute = true;
+					var procInfo = new ProcessStartInfo("HDTHelper.exe", "registerProtocol") {Verb = "runas", UseShellExecute = true};
 					var proc = Process.Start(procInfo);
 					await Task.Run(() => proc.WaitForExit());
 				}
