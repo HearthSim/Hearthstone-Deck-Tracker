@@ -54,14 +54,23 @@ namespace Hearthstone_Deck_Tracker.Importing
 			}
 		}
 
-		public static async Task<string> PostJson(string url, string jsonData)
+		public static async Task<string> PostJson(string url, string data)
+		{
+			return await JsonRequest(url, data);
+		}
+
+		public static async Task<string> JsonRequest(string url, string data = null)
 		{
 			using(var wc = new WebClient())
 			{
 				wc.Encoding = Encoding.UTF8;
 				wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
-				var response = await wc.UploadStringTaskAsync(new Uri(url), jsonData);
+				var response = "";
+				if(string.IsNullOrWhiteSpace(data))
+					response = await wc.DownloadStringTaskAsync(new Uri(url));
+				else
+					response = await wc.UploadStringTaskAsync(new Uri(url), data);
 
 				return response;
 			}
