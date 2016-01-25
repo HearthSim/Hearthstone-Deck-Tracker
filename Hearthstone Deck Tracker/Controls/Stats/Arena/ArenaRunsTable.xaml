@@ -126,7 +126,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Started" Binding="{Binding StartTime, StringFormat={}{0:dd.MMM HH:mm}}" SortMemberPath="StartTime">
+                            <DataGridTextColumn Header="Started" Binding="{Binding StartTime, StringFormat={}{0:dd. MMM. yyyy HH:mm}}" SortMemberPath="StartTime">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
