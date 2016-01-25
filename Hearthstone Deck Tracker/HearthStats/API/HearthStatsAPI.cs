@@ -450,7 +450,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					return PostResult.Failed;
 				}
 				if(json.status.ToString() != "200")
-					Logger.WriteLine("Some error occoured, main status=" + json.status.ToString());
+					Logger.WriteLine($"Error: {json.message.ToString()} (Status code: {json.status.ToString()})", "HearthStatsAPI");
 
 				for(int i = 0; i < validGames.Count; i++)
 				{
