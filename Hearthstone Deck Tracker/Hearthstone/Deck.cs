@@ -258,10 +258,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				var relevantGames = GetRelevantGames();
-				if(relevantGames.Count == 0)
-					return "-";
-				return Math.Round(100.0 * relevantGames.Count(g => g.Result == GameResult.Win) / relevantGames.Count, 0) + "%";
+				var winPercent = WinPercent;
+				return winPercent <= 0 ? "-" : Math.Round(winPercent, 0) + "%";
 			}
 		}
 
@@ -273,7 +271,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var relevantGames = GetRelevantGames();
 				if(relevantGames.Count == 0)
 					return 0.0;
-				return 100.0 * relevantGames.Count(g => g.Result == GameResult.Win) / relevantGames.Count;
+				var wins = relevantGames.Count(g => g.Result == GameResult.Win);
+				var losses = relevantGames.Count(g => g.Result == GameResult.Loss);
+				return 100.0 * wins / (wins + losses);
 			}
 		}
 
