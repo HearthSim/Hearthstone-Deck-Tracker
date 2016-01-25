@@ -212,6 +212,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							if(buffer[i] == '\n')
 								break;
 						}
+						if(skip >= 4096)
+							continue;
 						offset -= skip;
 						var reverse = new string(buffer.Skip(skip).Reverse().ToArray());
 						var targetOffsets = targets.Select(x => reverse.IndexOf(x, StringComparison.Ordinal)).Where(x => x > -1).ToList();
