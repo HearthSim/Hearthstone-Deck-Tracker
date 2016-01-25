@@ -22,21 +22,24 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				if(match.Success && match.Groups.Count == 2)
 				{
 					var slug = match.Groups[1].ToString();
-					var data = await ImportingHelper.PostJson("https://tempostorm.com/deck", "{\"slug\": \"" + slug + "\"}");
-					// parse json
+					var param = "{\"where\":{\"slug\":\""
+						+ slug
+						+ "\"},\"fields\":{},\"include\":[{\"relation\":\"cards\",\"scope\":{\"include\":[\"card\"]}}]}";
+					var data = await ImportingHelper.JsonRequest("https://tempostorm.com/api/decks/findOne?filter=" + param);
+
+					//parse json
 					var jsonObject = JsonConvert.DeserializeObject<dynamic>(data);
-					if(jsonObject.success.ToObject<bool>())
+					if(jsonObject.error == null)
 					{
 						var deck = new Deck();
 
-						deck.Name = jsonObject.deck.name.ToString();
-						//deck.Class = jsonObject.deck.playerClass.ToString();
-						var cards = jsonObject.deck.cards;
+						deck.Name = jsonObject.name.ToString();
+						var cards = jsonObject.cards;
 
 						foreach(var item in cards)
 						{
 							var card = Database.GetCardFromName(item.card.name.ToString());
-							card.Count = item.qty.ToString().Equals("2") ? 2 : 1;
+							card.Count = item.cardQuantity.ToString().Equals("2") ? 2 : 1;
 							deck.Cards.Add(card);
 							if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 								deck.Class = card.PlayerClass;
