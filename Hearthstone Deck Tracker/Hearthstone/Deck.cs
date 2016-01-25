@@ -258,8 +258,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				var winPercent = WinPercent;
-				return winPercent <= 0 ? "-" : Math.Round(winPercent, 0) + "%";
+				var relevantGames = GetRelevantGames();
+				if(relevantGames.Count == 0)
+					return "-";
+				var wins = relevantGames.Count(g => g.Result == GameResult.Win);
+				var losses = relevantGames.Count(g => g.Result == GameResult.Loss);
+				return Math.Round(100.0 * wins / (wins + losses), 0) + "%";
 			}
 		}
 
