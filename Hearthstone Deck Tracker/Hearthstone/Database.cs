@@ -49,6 +49,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static string GetHeroNameFromId(string id, bool returnIdIfNotFound = true)
 		{
+			if(string.IsNullOrEmpty(id))
+				return returnIdIfNotFound ? id : null;
 			string name;
 			var match = Regex.Match(id, @"(?<base>(.*_\d+)).*");
 			if(match.Success)
