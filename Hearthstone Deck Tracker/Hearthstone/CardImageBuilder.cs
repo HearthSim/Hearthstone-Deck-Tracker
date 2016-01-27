@@ -58,10 +58,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				AddFrameCounter();
 			if(_card.IsCreated)
 				AddMarkers();
-			if(_card.Count <= 0 || _card.Jousted)
-				AddChild(DarkOverlay, _frameRect);
+			if(_card.Count <= 0 || _card.Jousted )
+				AddDarken();
 
 			return new ImageBrush {ImageSource = new DrawingImage(_drawingGroup)};
+		}
+
+		private void AddDarken()
+		{
+			AddChild(DarkOverlay, _frameRect);
+			if (_card.HighlightFrame)
+				AddChild(FrameGolden, _frameRect);
 		}
 
 		private void AddMarkers()
