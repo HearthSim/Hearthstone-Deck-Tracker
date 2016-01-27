@@ -189,6 +189,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								}
 								break;
 							case REMOVEDFROMGAME:
+							case SETASIDE:
 							case GRAVEYARD:
 								if(controller == game.Player.Id)
 								{
