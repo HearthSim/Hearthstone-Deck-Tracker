@@ -421,7 +421,7 @@
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Header="Started"
-                                                        Binding="{Binding StartTime, StringFormat={}{0:dd. MMM. yyyy HH:mm}}">
+                                                        Binding="{Binding StartTime, StringFormat={}{0:dd MMM yyyy HH:mm}}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -748,7 +748,7 @@
                                                     </DataGridTextColumn.ElementStyle>
                                                 </DataGridTextColumn>
                                                 <DataGridTextColumn Header="Started"
-                                                                    Binding="{Binding StartTime, StringFormat={}{0:dd. MMM. yyyy HH:mm}}">
+                                                                    Binding="{Binding StartTime, StringFormat={}{0:dd MMM yyyy HH:mm}}">
                                                     <DataGridTextColumn.ElementStyle>
                                                         <Style TargetType="TextBlock">
                                                             <Setter Property="HorizontalAlignment" Value="Center" />

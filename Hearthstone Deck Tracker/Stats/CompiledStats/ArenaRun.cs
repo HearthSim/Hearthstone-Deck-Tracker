@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public BitmapImage ClassImage => Deck.ClassImage;
 
-		public string StartTimeString => StartTime == DateTime.MinValue ? "-" : StartTime.ToString("dd. MMM. yyyy HH:mm");
+		public string StartTimeString => StartTime == DateTime.MinValue ? "-" : StartTime.ToString("dd MMM yyyy HH:mm");
 
 		public DateTime StartTime => Deck.DeckStats.Games.Any() ? Deck.DeckStats.Games.Min(g => g.StartTime) : DateTime.MinValue;
 
