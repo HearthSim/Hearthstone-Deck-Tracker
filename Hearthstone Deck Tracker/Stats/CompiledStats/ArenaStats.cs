@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns().Count();
+				var count = GetFilteredRuns(requirePackReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * PacksCountTotal / count, 2);
 			}
 		}
@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns().Count();
+				var count = GetFilteredRuns(requirePackReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * GoldTotal / count, 2);
 			}
 		}
@@ -60,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns().Count();
+				var count = GetFilteredRuns(requirePackReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * DustTotal / count, 2);
 			}
 		}
@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns().Count();
+				var count = GetFilteredRuns(requirePackReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * CardCountTotal / count, 2);
 			}
 		}
@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns().Count();
+				var count = GetFilteredRuns(requirePackReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * CardCountGolden / count, 2);
 			}
 		}
@@ -241,10 +241,12 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		}
 
 		public IEnumerable<ArenaRun> GetFilteredRuns(bool archivedFilter = true, bool classFilter = true, bool regionFilter = true,
-		                                             bool timeframeFilter = true)
+		                                             bool timeframeFilter = true, bool requirePackReward = false)
 		{
 			var filtered = Runs;
-			if(archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
+			if(requirePackReward)
+				filtered = filtered.Where(x => x.PackCount > 0);
+			if (archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
 				filtered = filtered.Where(x => !x.Deck.Archived);
 			if(classFilter && Config.Instance.ArenaStatsClassFilter != HeroClassStatsFilter.All)
 				filtered = filtered.Where(x => x.Class == Config.Instance.ArenaStatsClassFilter.ToString());
