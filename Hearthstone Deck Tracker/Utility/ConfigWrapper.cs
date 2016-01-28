@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Windows;
 
 #endregion
 
@@ -77,5 +78,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Save();
 			}
 		}
+
+		public static Visibility ShowLastPlayedDateOnDeckVisibility => Config.Instance.ShowLastPlayedDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 	}
 }

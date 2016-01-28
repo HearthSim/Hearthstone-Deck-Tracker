@@ -25,6 +25,7 @@
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="14" />
                     <TextBlock Text="{Binding LastPlayed, Converter={StaticResource DateConverter}}" HorizontalAlignment="Right"
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="11" Margin="0, 3, 0, 0"
+                           Visibility="{Binding Source={x:Static utility:ConfigWrapper.ShowLastPlayedDateOnDeckVisibility}}"
                                ToolTip="Last time played" />
                 </StackPanel>
             </Viewbox>

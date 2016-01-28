@@ -66,6 +66,10 @@
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxDeckPickerCaps_Checked"
                                               Unchecked="CheckboxDeckPickerCaps_Unchecked" ToolTip="Uncheck to use normal case in Deck Picker."/>
+                    <CheckBox x:Name="CheckBoxShowLastPlayedDate" Content="Show last played date on decks"
+                                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                                              VerticalAlignment="Top" Checked="CheckBoxShowLastPlayedDate_Checked"
+                                              Unchecked="CheckBoxShowLastPlayedDate_Unchecked"/>
                     <CheckBox x:Name="CheckboxUseAnimations" Content="Use metro animations"
                     	HorizontalAlignment="Left" Margin="10,5,0,0"
                     	VerticalAlignment="Top"

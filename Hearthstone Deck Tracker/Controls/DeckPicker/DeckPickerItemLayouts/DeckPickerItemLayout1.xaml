@@ -41,6 +41,7 @@
                 </Border>
                 <TextBlock Grid.Row="1" Text="{Binding LastPlayed, Converter={StaticResource DateConverter}}" HorizontalAlignment="Right"
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="11" Margin="0, 0, 10, 3"
+                           Visibility="{Binding Source={x:Static utility:ConfigWrapper.ShowLastPlayedDateOnDeckVisibility}}"
                                ToolTip="Last time played" />
             </Grid>
             
