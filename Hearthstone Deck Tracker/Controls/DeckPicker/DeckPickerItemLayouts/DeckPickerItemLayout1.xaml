@@ -15,22 +15,35 @@
                 <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}"
                        RenderOptions.BitmapScalingMode="Fant" />
             </Grid>
-            <Border DockPanel.Dock="Right" PreviewMouseDown="UseButton_OnPreviewMouseDown" Background="#01000000"
-                    Width="65" Visibility="{Binding Source={ x:Static hearthstoneDeckTracker:Helper.UseButtonVisiblity}}">
-                <Border.Style>
-                    <Style>
-                        <Style.Triggers>
-                            <Trigger Property="Border.IsMouseOver" Value="True">
-                                <Setter Property="TextBlock.FontWeight" Value="Bold" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-                <TextBlock
+            <Grid DockPanel.Dock="Right" Width="65">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <deckPicker:DateConverter x:Key="DateConverter"></deckPicker:DateConverter>
+                </Grid.Resources>
+                <Border  PreviewMouseDown="UseButton_OnPreviewMouseDown" Background="#01000000"
+                    Visibility="{Binding Source={ x:Static hearthstoneDeckTracker:Helper.UseButtonVisiblity}}">
+                    <Border.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                    <Setter Property="TextBlock.FontWeight" Value="Bold" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock
                     Text="{Binding TextUseButton, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
                     FontSize="13" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,10,0"
                     Foreground="{DynamicResource GrayTextColorBrush}" />
-            </Border>
+                </Border>
+                <TextBlock Grid.Row="1" Text="{Binding LastPlayed, Converter={StaticResource DateConverter}}" HorizontalAlignment="Right"
+                           Foreground="{DynamicResource GrayTextColorBrush}" FontSize="11" Margin="0, 0, 10, 3"
+                               ToolTip="Last time played" />
+            </Grid>
+            
             <StackPanel Margin="0,5">
                 <DockPanel>
                     <Image DockPanel.Dock="Left" Source="{x:Static utility:ImageCache.Archived}" Width="16"

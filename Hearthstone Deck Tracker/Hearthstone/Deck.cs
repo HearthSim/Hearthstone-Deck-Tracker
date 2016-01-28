@@ -285,10 +285,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string StatsString => GetRelevantGames().Any() ? $"{WinPercentString} | {WinLossString}" : "NO STATS";
 
 		[XmlIgnore]
-		public DateTime LastPlayed => !DeckStats.Games.Any() ? DateTime.MinValue : DeckStats.Games.OrderByDescending(g => g.StartTime).First().StartTime;
+		public DateTime LastPlayed => !DeckStats.Games.Any() ? DateTime.MinValue : DeckStats.Games.Max(g => g.StartTime);
 
 		[XmlIgnore]
-		public DateTime LastPlayedNewFirst => !DeckStats.Games.Any() ? LastEdited : DeckStats.Games.OrderByDescending(g => g.StartTime).First().StartTime;
+		public DateTime LastPlayedNewFirst => !DeckStats.Games.Any() ? LastEdited : DeckStats.Games.Max(g => g.StartTime);
 
 		[XmlIgnore]
 		public string GetClass => string.IsNullOrEmpty(Class) ? "(No Class Selected)" : "(" + Class + ")";

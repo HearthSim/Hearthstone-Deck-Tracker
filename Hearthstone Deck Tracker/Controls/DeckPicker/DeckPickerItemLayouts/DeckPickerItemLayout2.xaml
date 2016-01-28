@@ -17,8 +17,16 @@
             </Grid>
             <Viewbox DockPanel.Dock="Right" Width="70" StretchDirection="DownOnly" Stretch="Fill"
                      HorizontalAlignment="Right" Margin="0,0,2,0">
-                <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <deckPicker:DateConverter x:Key="DateConverter"></deckPicker:DateConverter>
+                    </StackPanel.Resources>
+                    <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="14" />
+                    <TextBlock Text="{Binding LastPlayed, Converter={StaticResource DateConverter}}" HorizontalAlignment="Right"
+                           Foreground="{DynamicResource GrayTextColorBrush}" FontSize="11" Margin="0, 3, 0, 0"
+                               ToolTip="Last time played" />
+                </StackPanel>
             </Viewbox>
             <StackPanel Margin="0,5">
                 <DockPanel>
