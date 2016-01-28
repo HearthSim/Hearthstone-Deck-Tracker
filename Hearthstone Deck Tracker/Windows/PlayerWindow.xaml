@@ -22,7 +22,7 @@
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain" Margin="0,1,0,0">
             <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Text="Deck title" />
-            <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16" Text="0 - 0 (0%)" />
+            <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16" Text="0-0 (0%)" />
             <controls1:DeckListView x:Name="ListViewPlayer" Foreground="White" FontWeight="Bold" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled"

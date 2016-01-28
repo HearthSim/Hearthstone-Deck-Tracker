@@ -26,7 +26,7 @@
 
             <StackPanel Name="StackPanelPlayer" Canvas.Left="604" Canvas.Top="203" Width="218">
                 <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Text="Deck title" />
-                <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16" Text="0 - 0 (0%)" />
+                <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16" Text="0-0 (0%)" />
                 <controls:DeckListView x:Name="ListViewPlayer" Height="auto" Canvas.Left="350" Canvas.Top="147"
                                     Width="218" Background="{x:Null}" Foreground="White" FontWeight="Bold"
                                     BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -64,7 +64,7 @@
             </StackPanel>
             <StackPanel Name="StackPanelOpponent" Width="218" Canvas.Top="203" Canvas.Left="10">
                 <Viewbox StretchDirection="DownOnly" Name="ViewBoxWinRateAgainst">
-                    <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0 - 0 (0%)"/>
+                    <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Text="VS: 0-0 (0%)"/>
                 </Viewbox>
                 <controls:DeckListView x:Name="ListViewOpponent" Height="auto" Canvas.Left="5" Canvas.Top="147"
                                     Width="218" Background="{x:Null}" Foreground="White" BorderThickness="0"

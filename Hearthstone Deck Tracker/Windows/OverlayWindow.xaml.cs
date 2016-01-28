@@ -803,7 +803,7 @@ namespace Hearthstone_Deck_Tracker
 				var winsVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == _game.Opponent.Class);
 				var lossesVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == _game.Opponent.Class);
 				var percent = (winsVs + lossesVs) > 0 ? Math.Round(winsVs * 100.0 / (winsVs + lossesVs), 0).ToString() : "-";
-				LblWinRateAgainst.Text = $"VS {_game.Opponent.Class}: {winsVs} - {lossesVs} ({percent}%)";
+				LblWinRateAgainst.Text = $"VS {_game.Opponent.Class}: {winsVs}-{lossesVs} ({percent}%)";
 			}
 		}
 
