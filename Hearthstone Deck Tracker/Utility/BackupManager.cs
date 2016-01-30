@@ -22,6 +22,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 			var dirInfo = new DirectoryInfo(Config.Instance.BackupDir);
 			var backupFileName = $"Backup_{DateTime.Today.ToString("ddMMyyyy")}.zip";
 
+			if (dirInfo.GetFiles().Any(x => x.Name == backupFileName))
+			{
+				Logger.WriteLine("Backup for today already exists", "BackupManager");
+				return;
+			}
+
 			try
 			{
 				var backups = dirInfo.GetFiles("Backup_*");
@@ -36,12 +42,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			catch(Exception ex)
 			{
 				Logger.WriteLine("Error deleting old backup: " + ex, "BackupManager");
-			}
-
-			if(dirInfo.GetFiles().Any(x => x.Name == backupFileName))
-			{
-				Logger.WriteLine("Backup for today already exists", "BackupManager");
-				return;
 			}
 
 			Logger.WriteLine("Creating backup for today", "BackupManager");
