@@ -488,7 +488,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				await _game.GameTime.WaitForDuration(AvengeDelay);
 				if(_game.OpponentMinionCount - _avengeDeathRattleCount > 0)
+				{
 					_game.OpponentSecrets.SetZero(Paladin.Avenge);
+					if (Core.MainWindow != null)
+						Core.Overlay.ShowSecrets();
+				}
 			}
 			_awaitingAvenge = false;
 			_avengeDeathRattleCount = 0;
