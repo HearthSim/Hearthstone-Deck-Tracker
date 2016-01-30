@@ -66,6 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Card> PossibleArenaCards { get; set; }
 		public List<Card> PossibleConstructedCards { get; set; }
 		public Dictionary<int, Entity> Entities { get; set; }
+		public GameMetaData MetaData { get; } = new GameMetaData();
 		public bool SavedReplay { get; set; }
 
 		public Entity PlayerEntity => Entities.FirstOrDefault(x => x.Value.IsPlayer).Value;

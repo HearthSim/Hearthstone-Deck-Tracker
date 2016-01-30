@@ -629,7 +629,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				Core.TrayIcon.NotifyIcon.Visible = false;
 				Core.Overlay.Close();
-				await LogReaderManager.Stop();
+				await LogReaderManager.Stop(true);
 				Core.Windows.TimerWindow.Shutdown();
 				Core.Windows.PlayerWindow.Shutdown();
 				Core.Windows.OpponentWindow.Shutdown();

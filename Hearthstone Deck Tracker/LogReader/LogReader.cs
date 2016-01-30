@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 	public class LogReader
 	{
 		private readonly string _filePath;
-		private readonly LogReaderInfo _info;
+		internal readonly LogReaderInfo Info;
 		private readonly List<LogLineItem> _lines = new List<LogLineItem>();
 		private readonly object _sync = new object();
 		private bool _collected;
@@ -29,13 +29,19 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public LogReader(LogReaderInfo info)
 		{
-			_info = info;
+			Info = info;
 			_filePath = string.IsNullOrEmpty(info.FilePath)
-				            ? Path.Combine(Config.Instance.HearthstoneDirectory, $"Logs/{_info.Name}.log") : info.FilePath;
+				            ? Path.Combine(Config.Instance.HearthstoneDirectory, $"Logs/{Info.Name}.log") : info.FilePath;
 		}
 
 		public void Start(DateTime startingPoint)
 		{
+			Logger.WriteLine("Starting...", Info.Name + "LogReader", 2);
+			if (_running)
+			{
+				Logger.WriteLine("...already running.", Info.Name + "LogReader", 2);
+				return;
+			}
 			MoveOrDeleteLogFile();
 			_startingPoint = startingPoint;
 			_stop = false;
@@ -80,10 +86,12 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public async Task Stop()
 		{
+			Logger.WriteLine("Stopping...", Info.Name + "LogReader", 2);
 			_stop = true;
 			while(_running)
 				await Task.Delay(50);
 			await Task.Factory.StartNew(() => _thread.Join());
+			Logger.WriteLine("Stopped.", Info.Name + "LogReader", 2);
 		}
 
 		public List<LogLineItem> Collect()
@@ -126,10 +134,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
 								{
 									if(!line.StartsWith("D ") || (!sr.EndOfStream && sr.Peek() != 'D'))
 										break;
-									if(!_info.HasFilters || _info.StartsWithFilters.Any(x => line.Substring(19).StartsWith(x))
-									   || _info.ContainsFilters.Any(x => line.Substring(19).Contains(x)))
+									if(!Info.HasFilters || Info.StartsWithFilters.Any(x => line.Substring(19).StartsWith(x))
+									   || Info.ContainsFilters.Any(x => line.Substring(19).Contains(x)))
 									{
-										var logLine = new LogLineItem(_info.Name, line, fileInfo.LastWriteTime);
+										var logLine = new LogLineItem(Info.Name, line, fileInfo.LastWriteTime);
 										if(logLine.Time >= _startingPoint)
 											_lines.Add(logLine);
 									}
@@ -173,7 +181,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						{
 							if(string.IsNullOrWhiteSpace(lines[i].Trim('\0')))
 								continue;
-							var logLine = new LogLineItem(_info.Name, lines[i], fileInfo.LastWriteTime);
+							var logLine = new LogLineItem(Info.Name, lines[i], fileInfo.LastWriteTime);
 							if(logLine.Time < _startingPoint)
 							{
 								var negativeOffset = lines.Take(i + 1).Sum(x => Encoding.UTF8.GetByteCount(x + Environment.NewLine));

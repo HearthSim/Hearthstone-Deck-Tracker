@@ -87,7 +87,9 @@ namespace Hearthstone_Deck_Tracker
 		/// </summary>		
 		public static void WriteLine(string line, string category, int logLevel = 0)
 		{
+#if (!DEBUG)
 			if(logLevel <= Config.Instance.LogLevel)
+#endif
 				Trace.WriteLine($"[{DateTime.Now.ToLongTimeString()}] {category}: {line}");
 		}
 	}

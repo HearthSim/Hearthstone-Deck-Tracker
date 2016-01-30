@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public static readonly Regex ExistingCardRegex = new Regex(@"Draft deck contains card (?<id>(\w+))");
 		public static readonly Regex NewChoiceRegex = new Regex(@"Client chooses: .* \((?<id>(.+))\)");
 		public static readonly Regex GameModeRegex = new Regex(@"prevMode=(?<prev>(\w+)).*currMode=(?<curr>(\w+))");
+		public static readonly Regex ConnectionRegex = new Regex(@"ConnectAPI\.GotoGameServer -- address=(?<address>(.+)), game=(?<game>(.+)), client=(?<client>(.+)), spectateKey=(?<spectateKey>(.+))");
 
 		public static LogReaderInfo PowerLogReaderInfo => new LogReaderInfo
 		{
@@ -37,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public static LogReaderInfo RachelleLogReaderInfo => new LogReaderInfo {Name = "Rachelle"};
 		public static LogReaderInfo ArenaLogReaderInfo => new LogReaderInfo {Name = "Arena"};
 		public static LogReaderInfo LoadingScreenLogReaderInfo => new LogReaderInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded"}};
+		public static LogReaderInfo NetLogReaderInfo => new LogReaderInfo { Name = "Net", Reset = false};
 
 		public static class GameState
 		{

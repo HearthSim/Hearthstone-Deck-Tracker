@@ -230,7 +230,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			//check for log config and create if not existing
 			try
 			{
-				var requiredLogs = new[] {"Bob", "Power", "Asset", "Rachelle", "Arena", "Achievements", "LoadingScreen"};
+				var requiredLogs = new[] {"Bob", "Power", "Asset", "Rachelle", "Arena", "Achievements", "LoadingScreen", "Net"};
 
 				var logConfig = new LogConfig();
 				if(File.Exists(LogConfigPath))
