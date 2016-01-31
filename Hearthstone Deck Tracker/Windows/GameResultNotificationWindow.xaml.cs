@@ -120,6 +120,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(_edited)
 			{
+				DeckStatsList.Save();
 				if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
 				{
 					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == _game.DeckId);
