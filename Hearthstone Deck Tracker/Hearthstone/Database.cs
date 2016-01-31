@@ -52,15 +52,33 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(string.IsNullOrEmpty(id))
 				return returnIdIfNotFound ? id : null;
 			string name;
-			var match = Regex.Match(id, @"(?<base>(.*_\d+)).*");
-			if(match.Success)
-				id = match.Groups["base"].Value;
-			if(CardIds.HeroIdDict.TryGetValue(id, out name))
+			var baseId = GetBaseId(id);
+			if(CardIds.HeroIdDict.TryGetValue(baseId, out name))
 				return name;
-			var card = GetCardFromId(id);
+			var card = GetCardFromId(baseId);
 			if(string.IsNullOrEmpty(card?.Name) || card.Name == "UNKNOWN" || card.Type != "Hero")
-				return returnIdIfNotFound ? id : null;
+				return returnIdIfNotFound ? baseId : null;
 			return card.Name;
+		}
+
+		public static bool IsHero(string cardId)
+		{
+			if(string.IsNullOrEmpty(cardId))
+				return false;
+			string name;
+			var baseId = GetBaseId(cardId);
+			if (CardIds.HeroIdDict.TryGetValue(baseId, out name))
+				return true;
+			var card = GetCardFromId(baseId);
+			return !string.IsNullOrEmpty(card?.Name) && card.Name != "UNKNOWN" && card.Type == "Hero";
+		}
+
+		private static string GetBaseId(string cardId)
+		{
+			if(string.IsNullOrEmpty(cardId))
+				return cardId;
+			var match = Regex.Match(cardId, @"(?<base>(.*_\d+)).*");
+			return match.Success ? match.Groups["base"].Value : cardId;
 		}
 
 		public static bool IsActualCard(Card card) => card != null && Cards.Collectible.ContainsKey(card.Id);

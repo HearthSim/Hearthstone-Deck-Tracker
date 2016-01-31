@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsPlayer { get; set; }
 
 		[JsonIgnore]
-		public bool IsHero => CardId != null && CardIds.HeroIdDict.Keys.Contains(CardId);
+		public bool IsHero => Database.IsHero(CardId);
 
 		[JsonIgnore]
 		public bool IsActiveDeathrattle => HasTag(GAME_TAG.DEATHRATTLE) && GetTag(GAME_TAG.DEATHRATTLE) == 1;
