@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 			CheckboxTurnTime.IsChecked = Config.Instance.TimerTurnTime == 75;
 			CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
+			TextboxTimerAlert.Text = Config.Instance.TimerAlertSeconds.ToString();
 			_initialized = true;
 		}
 
