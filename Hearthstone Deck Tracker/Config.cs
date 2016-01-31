@@ -692,6 +692,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowArenaImportMessage = true;
 
+		[DefaultValue(false)]
+		public bool ShowBatteryLife = false;
+
+		[DefaultValue(false)]
+		public bool ShowBatteryLifePercent = false;
+
 		[DefaultValue(true)]
 		public bool ShowConstructedImportMessage = true;
 

@@ -138,4 +138,16 @@
     <Canvas x:Key="appbar_paypal_blue" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
         <Path Width="45.125" Height="45.9167" Canvas.Left="15.0417" Canvas.Top="14.25" Stretch="Fill" Fill="#003087" Data="F1 M 60.1667,29.2917C 60.1667,36.7245 53.7867,45.9167 45.9167,45.9167L 33.8894,45.9167L 30.875,60.1667L 19.7917,60.1667L 20.3778,57.3958L 28.8958,57.3958L 31.9103,43.1458L 43.9375,43.1458C 51.8076,43.1458 58.1875,33.9536 58.1875,26.5208C 58.1875,24.9629 57.9072,23.606 57.3917,22.4342C 59.1358,24.0552 60.1667,26.3039 60.1667,29.2917 Z M 23.75,14.25L 41.1667,14.25L 42.75,14.25L 42.75,14.2902C 49.8749,14.66 55.4167,19 55.4167,24.5417C 55.4167,33.25 49.0367,41.1667 41.1667,41.1667L 29.5352,41.1667L 26.5208,55.4167L 15.0417,55.4167L 23.75,14.25 Z M 44.7292,26.9167C 44.5447,24.7031 43.3967,23.5626 41.5809,22.9583L 33.387,22.9584L 31.0425,34.0417L 37.2032,34.0417C 41.8973,32.6131 44.7292,29.5115 44.7292,26.9167 Z "/>
     </Canvas>
+    <Canvas x:Key="appbar_battery_3" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="39" Height="20" Canvas.Left="20" Canvas.Top="28" Stretch="Fill" Fill="White" Data="F1 M 59,34L 59,42L 56,42L 56,48L 20,48L 20,28L 56,28L 56,34L 59,34 Z M 24,32L 24,44L 52,44L 52,32L 24,32 Z M 25,43L 25,33L 30,33L 35,43L 25,43 Z M 31.5,33L 39.5,33L 44.5,43L 36.5,43L 31.5,33 Z M 51,33L 51,43L 46,43L 41,33L 51,33 Z "/>
+    </Canvas>
+    <Canvas x:Key="appbar_battery_2" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="39" Height="20" Canvas.Left="20" Canvas.Top="28" Stretch="Fill" Fill="White" Data="F1 M 59,34L 59,42L 56,42L 56,48L 20,48L 20,28L 56,28L 56,34L 59,34 Z M 24,32L 24,44L 52,44L 52,32L 24,32 Z M 25,43L 25,33L 30,33L 35,43L 25,43 Z M 31.5,33L 39.5,33L 44.5,43L 36.5,43L 31.5,33 Z "/>
+    </Canvas>
+    <Canvas x:Key="appbar_battery_1" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="39" Height="20" Canvas.Left="20" Canvas.Top="28" Stretch="Fill" Fill="White" Data="F1 M 59,34L 59,42L 56,42L 56,48L 20,48L 20,28L 56,28L 56,34L 59,34 Z M 24,32L 24,44L 52,44L 52,32L 24,32 Z M 25,43L 25,33L 30,33L 35,43L 25,43 Z "/>
+    </Canvas>
+    <Canvas x:Key="appbar_battery_0" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="39" Height="20" Canvas.Left="20" Canvas.Top="28" Stretch="Fill" Fill="White" Data="F1 M 59,34L 59,42L 56,42L 56,48L 20,48L 20,28L 56,28L 56,34L 59,34 Z M 24,32L 24,44L 52,44L 52,32L 24,32 Z "/>
+    </Canvas>
 </ResourceDictionary>

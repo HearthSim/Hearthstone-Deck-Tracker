@@ -99,6 +99,18 @@
                                           Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxAlwaysShowGoldProgress_Checked"
                                           Unchecked="CheckboxAlwaysShowGoldProgress_Unchecked" />
+                    <CheckBox Name="CheckBoxBatteryStatus" Content="Show battery status*" HorizontalAlignment="Left"
+                              ToolTip="Works for mobile devices (Laptop, Tablet, ...) only."
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckBoxBatteryStatus_Checked"
+                              Unchecked="CheckBoxBatteryStatus_Unchecked" />
+                    <CheckBox x:Name="CheckBoxBatteryStatusText"
+                              IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxBatteryStatus}"
+                              Content="Show percent" Margin="30,5,0,0"
+                              VerticalAlignment="Top"
+                              Checked="CheckBoxBatteryStatusText_Checked"
+                              Unchecked="CheckBoxBatteryStatusText_Unchecked"
+                              HorizontalAlignment="Left" />
                     <DockPanel>
                         <Slider x:Name="SliderOverlayOpacity" Margin="5,5,0,0" VerticalAlignment="Center" Value="100" Width="150"
                                 ValueChanged="SliderOverlayOpacity_ValueChanged" DockPanel.Dock="Right" />

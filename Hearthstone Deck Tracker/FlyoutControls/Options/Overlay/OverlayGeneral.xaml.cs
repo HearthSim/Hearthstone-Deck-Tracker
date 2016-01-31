@@ -45,6 +45,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxAlwaysShowGoldProgress.IsChecked = Config.Instance.AlwaysShowGoldProgress;
 			CheckboxHidePlayerAttackIcon.IsChecked = Config.Instance.HidePlayerAttackIcon;
 			CheckboxHideOpponentAttackIcon.IsChecked = Config.Instance.HideOpponentAttackIcon;
+			CheckBoxBatteryStatus.IsChecked = Config.Instance.ShowBatteryLife;
+			CheckBoxBatteryStatusText.IsChecked = Config.Instance.ShowBatteryLifePercent;
 			_initialized = true;
 		}
 
@@ -402,6 +404,42 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.HideOpponentAttackIcon = false;
 			SaveConfig(true);
+		}
+
+		private void CheckBoxBatteryStatus_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.ShowBatteryLife = true;
+			Config.Save();
+			Core.Overlay.EnableBatteryMonitor();
+		}
+
+		private void CheckBoxBatteryStatus_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.ShowBatteryLife = false;
+			Config.Save();
+			Core.Overlay.DisableBatteryMonitor();
+		}
+
+		private void CheckBoxBatteryStatusText_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.ShowBatteryLifePercent = true;
+			Config.Save();
+			Core.Overlay.UpdateBatteryStatus();
+		}
+
+		private void CheckBoxBatteryStatusText_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBatteryLifePercent = false;
+			Config.Save();
+			Core.Overlay.UpdateBatteryStatus();
 		}
 	}
 }

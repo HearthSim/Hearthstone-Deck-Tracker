@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
@@ -39,8 +40,8 @@ namespace Hearthstone_Deck_Tracker
 		private readonly Dictionary<UIElement, ResizeGrip> _movableElements;
 		private readonly int _offsetX;
 		private readonly int _offsetY;
-		private int _cardCount;
 		private bool? _isFriendsListOpen;
+		private BatteryMonitor _batteryMonitor;
 
 		private DateTime _lastOpponentUpdateReqest = DateTime.MinValue;
 
@@ -49,7 +50,6 @@ namespace Hearthstone_Deck_Tracker
 		private bool _lmbDown;
 		private User32.MouseInput _mouseInput;
 		private Point _mousePos;
-		private int _opponentCardCount;
 		private bool _opponentCardsHidden;
 		private bool _playerCardsHidden;
 		private bool _resizeElement;
@@ -76,6 +76,8 @@ namespace Hearthstone_Deck_Tracker
 			_offsetY = Config.Instance.OffsetY;
 			_customWidth = Config.Instance.CustomWidth;
 			_customHeight = Config.Instance.CustomHeight;
+			if(Config.Instance.ShowBatteryLife)
+				EnableBatteryMonitor();
 
 			// Add CardMarkers to the list.  
 			_cardMarks = new List<CardMarker> {Marks0, Marks1, Marks2, Marks3, Marks4, Marks5, Marks6, Marks7, Marks8, Marks9};
@@ -175,10 +177,52 @@ namespace Hearthstone_Deck_Tracker
 			UpdateScaling();
 		}
 
+		public void EnableBatteryMonitor()
+		{
+			if(_batteryMonitor != null)
+				return;
+			_batteryMonitor = new BatteryMonitor();
+			_batteryMonitor.PropertyChanged += BatteryMonitorOnPropertyChanged;
+			UpdateBatteryStatus();
+		}
+
+		public void DisableBatteryMonitor()
+		{
+			if(_batteryMonitor == null)
+				return;
+			_batteryMonitor.PropertyChanged -= BatteryMonitorOnPropertyChanged;
+			_batteryMonitor.Stop();
+			_batteryMonitor = null;
+			UpdateBatteryStatus();
+		}
+
+		private void BatteryMonitorOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == nameof(_batteryMonitor.BatteryStatusVisual))
+				OnPropertyChanged(nameof(BatteryStatusVisual));
+			if (e.PropertyName == nameof(_batteryMonitor.BatteryStatusVisualVisibility))
+				OnPropertyChanged(nameof(BatteryStatusVisualVisibility));
+			if (e.PropertyName == nameof(_batteryMonitor.BatteryStatusPercent))
+				OnPropertyChanged(nameof(BatteryStatusPercent));
+		}
+
+		public Visibility BatteryStatusVisualVisibility => _batteryMonitor?.BatteryStatusVisualVisibility ?? Visibility.Collapsed;
+		public Visibility BatteryStatusTextVisibility => Config.Instance.ShowBatteryLifePercent ? Visibility.Visible : Visibility.Collapsed;
+		public string BatteryStatusPercent => _batteryMonitor?.BatteryStatusPercent;
+		public Visual BatteryStatusVisual => _batteryMonitor?.BatteryStatusVisual;
+
 		public bool ForceHidden { get; set; }
 		public static double Scaling { get; set; }
 		public static double OpponentScaling { get; set; }
 		public Visibility WarningVisibility { get; set; }
+
+		public void UpdateBatteryStatus()
+		{
+			OnPropertyChanged(nameof(BatteryStatusPercent));
+			OnPropertyChanged(nameof(BatteryStatusTextVisibility));
+			OnPropertyChanged(nameof(BatteryStatusVisualVisibility));
+			OnPropertyChanged(nameof(BatteryStatusVisual));
+		}
 
 		public List<Card> PlayerDeck => _game.Player.DisplayCards;
 
@@ -450,8 +494,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SetOpponentCardCount(int cardCount, int cardsLeftInDeck)
 		{
-			_opponentCardCount = cardCount;
-
 			LblOpponentCardCount.Text = cardCount.ToString();
 			LblOpponentDeckCount.Text = cardsLeftInDeck.ToString();
 
@@ -483,8 +525,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SetCardCount(int cardCount, int cardsLeftInDeck)
 		{
-			_cardCount = cardCount;
-
 			LblCardCount.Text = cardCount.ToString();
 			LblDeckCount.Text = cardsLeftInDeck.ToString();
 
@@ -1186,6 +1226,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_mouseInput != null)
 				UnHookMouse();
+			DisableBatteryMonitor();
 		}
 
 		public async Task<bool> UnlockUI()
