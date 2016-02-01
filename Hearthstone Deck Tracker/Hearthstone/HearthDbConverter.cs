@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		};
 
 		public static string ConvertClass(CardClass cardClass) => (int)cardClass < 2 || (int)cardClass > 10
-																	  ? null : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(cardClass.ToString().ToLower());
+																	  ? null : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(cardClass.ToString().ToLowerInvariant());
 
 		public static Rarity RariryConverter(HearthDb.Enums.Rarity rarity)
 		{
@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static string CardTypeConverter(CardType type) => type == CardType.HERO_POWER ? "Hero Power" : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(type.ToString().ToLower().Replace("_", ""));
+		public static string CardTypeConverter(CardType type) => type == CardType.HERO_POWER ? "Hero Power" : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(type.ToString().ToLowerInvariant().Replace("_", ""));
 
 
 		public static string RaceConverter(Race race)
@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				case Race.PET:
 					return "Beast";
 				default:
-					return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(race.ToString().ToLower());
+					return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(race.ToString().ToLowerInvariant());
 			}
 		}
 
