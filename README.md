@@ -14,7 +14,12 @@ Installation
 
 FAQ
 =========
-[Go to the FAQ.](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ)
+- You can find the [FAQ here](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ).
+
+
+Contributing
+=========
+- Please read the [coding style and Commit/Pull Request guidelines](https://github.com/Epix37/Hearthstone-Deck-Tracker/blob/master/CONTRIBUTING.md).
 
 
 Community
