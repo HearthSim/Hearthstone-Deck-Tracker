@@ -238,8 +238,8 @@ namespace Hearthstone_Deck_Tracker.Windows
                             TagControlEdit.SetSelectedTags(deck.Tags);
                         }
                         SetNewDeck(deck);
-                        if (Config.Instance.AutoSaveOnImport || dialog.FileNames.Length > 1)
-                            SaveDeckWithOverwriteCheck();
+						if (Config.Instance.AutoSaveOnImport || dialog.FileNames.Length > 1)
+							SaveDeckWithOverwriteCheck();
                     }
 
                     catch (Exception ex)
