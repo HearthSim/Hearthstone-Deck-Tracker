@@ -198,9 +198,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(deck != null)
 					{
 						SetNewDeck(deck);
-						if(Config.Instance.AutoSaveOnImport)
-							SaveDeckWithOverwriteCheck();
-					}
+                        if (Config.Instance.AutoSaveOnImport)
+                            SaveDeckWithOverwriteCheck();
+                                                   
+                    }
 				}
 			}
 			catch(Exception ex)
@@ -208,39 +209,44 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Logger.WriteLine("Error importing deck from clipboard(text): " + ex, "Import");
 			}
 		}
-
+      
 
 		private void BtnFile_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog {Title = "Select Deck File", DefaultExt = "*.xml;*.txt", Filter = "Deck Files|*.txt;*.xml"};
+            dialog.Multiselect = true;
 			var dialogResult = dialog.ShowDialog();
 			if(dialogResult == true)
 			{
-				try
-				{
-					Deck deck = null;
+                foreach (String file in dialog.FileNames)
+                {
+                    try
+                    {
+                        Deck deck = null;
 
-					if(dialog.FileName.EndsWith(".txt"))
-					{
-						using(var sr = new StreamReader(dialog.FileName))
-							deck = Helper.ParseCardString(sr.ReadToEnd());
-					}
-					else if(dialog.FileName.EndsWith(".xml"))
-					{
-						deck = XmlManager<Deck>.Load(dialog.FileName);
-						//not all required information is saved in xml
-						foreach(var card in deck.Cards)
-							card.Load();
-						TagControlEdit.SetSelectedTags(deck.Tags);
-					}
-					SetNewDeck(deck);
-					if(Config.Instance.AutoSaveOnImport)
-						SaveDeckWithOverwriteCheck();
-				}
-				catch(Exception ex)
-				{
-					Logger.WriteLine("Error getting deck from file: \n" + ex, "Import");
-				}
+                        if (file.EndsWith(".txt"))
+                        {
+                            using (var sr = new StreamReader(file))
+                                deck = Helper.ParseCardString(sr.ReadToEnd());
+                        }
+                        else if (file.EndsWith(".xml"))
+                        {
+                            deck = XmlManager<Deck>.Load(file);
+                            //not all required information is saved in xml
+                            foreach (var card in deck.Cards)
+                                card.Load();
+                            TagControlEdit.SetSelectedTags(deck.Tags);
+                        }
+                        SetNewDeck(deck);
+						if (Config.Instance.AutoSaveOnImport || dialog.FileNames.Length > 1)
+							SaveDeckWithOverwriteCheck();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        Logger.WriteLine("Error getting deck from file: \n" + ex, "Import");
+                    }
+                }
 			}
 		}
 
