@@ -213,33 +213,37 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void BtnFile_Click(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog {Title = "Select Deck File", DefaultExt = "*.xml;*.txt", Filter = "Deck Files|*.txt;*.xml"};
+			dialog.Multiselect = true;
 			var dialogResult = dialog.ShowDialog();
 			if(dialogResult == true)
 			{
-				try
+				foreach(String file in dialog.FileNames)
 				{
-					Deck deck = null;
+					try
+					{
+						Deck deck = null;
 
-					if(dialog.FileName.EndsWith(".txt"))
-					{
-						using(var sr = new StreamReader(dialog.FileName))
-							deck = Helper.ParseCardString(sr.ReadToEnd());
+						if(file.EndsWith(".txt"))
+						{
+							using(var sr = new StreamReader(file))
+								deck = Helper.ParseCardString(sr.ReadToEnd());
+						}
+						else if(file.EndsWith(".xml"))
+						{
+							deck = XmlManager<Deck>.Load(file);
+							//not all required information is saved in xml
+							foreach(var card in deck.Cards)
+								card.Load();
+							TagControlEdit.SetSelectedTags(deck.Tags);
+						}
+						SetNewDeck(deck);
+						if(Config.Instance.AutoSaveOnImport || dialog.FileNames.Length > 1)
+							SaveDeckWithOverwriteCheck();
 					}
-					else if(dialog.FileName.EndsWith(".xml"))
+					catch(Exception ex)
 					{
-						deck = XmlManager<Deck>.Load(dialog.FileName);
-						//not all required information is saved in xml
-						foreach(var card in deck.Cards)
-							card.Load();
-						TagControlEdit.SetSelectedTags(deck.Tags);
+						Logger.WriteLine("Error getting deck from file: \n" + ex, "Import");
 					}
-					SetNewDeck(deck);
-					if(Config.Instance.AutoSaveOnImport)
-						SaveDeckWithOverwriteCheck();
-				}
-				catch(Exception ex)
-				{
-					Logger.WriteLine("Error getting deck from file: \n" + ex, "Import");
 				}
 			}
 		}
