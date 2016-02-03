@@ -1049,12 +1049,12 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentCreateInPlay.Execute(Database.GetCardFromId(cardId));
 		}
 
-		public void HandleZonePositionUpdate(ActivePlayer player, TAG_ZONE zone, int turn)
+		public void HandleZonePositionUpdate(ActivePlayer player, Entity entity, TAG_ZONE zone, int turn)
 		{
 			if(player == ActivePlayer.Player)
-				_game.Player.UpdateZonePos(zone, turn);
+				_game.Player.UpdateZonePos(entity, zone, turn);
 			else if(player == ActivePlayer.Opponent)
-				_game.Opponent.UpdateZonePos(zone, turn);
+				_game.Opponent.UpdateZonePos(entity, zone, turn);
 		}
 
 		public void HandlePlayerJoust(Entity entity, string cardId, int turn)

@@ -484,7 +484,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public void UpdateZonePos(TAG_ZONE zone, int turn)
+		public void UpdateZonePos(Entity entity, TAG_ZONE zone, int turn)
 		{
 			switch(zone)
 			{
@@ -499,6 +499,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 					break;
 				case TAG_ZONE.PLAY:
+					//entites needs to be updated sometimes - why?
+					var cardEntity = GetEntityFromCollection(Board, entity);
+					if(cardEntity != null)
+						cardEntity.Entity = entity;
 					Board.Sort(ZonePosComparison);
 					break;
 			}
@@ -583,6 +587,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(Entity == null)
 				sb.Append("cardId=" + CardId);
 			sb.Append(", turn=" + Turn);
+			sb.Append(", zonePos=" + Entity?.GetTag(GAME_TAG.ZONE_POSITION));
 			if(CardMark != CardMark.None)
 				sb.Append(", mark=" + CardMark);
 			if(Discarded)
