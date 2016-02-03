@@ -260,6 +260,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									gameState.ProposeKeyPoint(PlayToDeck, id, ActivePlayer.Opponent);
 								}
 								break;
+							case REMOVEDFROMGAME:
+							case SETASIDE:
 							case GRAVEYARD:
 								if(controller == game.Player.Id)
 								{
