@@ -317,6 +317,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			TagControlEdit.SetSelectedTags(deck.Tags);
 		}
 
+		internal async void BtnRebaseDeck_Click(object sender, RoutedEventArgs e)
+		{
+			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			selectedDeck.Url = await InputDeckURL();
+			BtnUpdateDeck_Click(sender, e);
+		}
+
 		internal void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e)
 		{
 			foreach(var deck in DeckPickerList.SelectedDecks)
