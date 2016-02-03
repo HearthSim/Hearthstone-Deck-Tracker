@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -776,6 +777,7 @@ namespace Hearthstone_Deck_Tracker
 					Canvas.SetLeft(GroupBoxFlavorText, minionPos.X + MinionWidth / 2 - GroupBoxFlavorText.ActualWidth / 2);
 					FlavorText = oppBoard[i].Entity.Card.FlavorText;
 					FlavorTextVisibility = Visibility.Visible;
+					GameEvents.OnOpponentMinionMouseOver.Execute(oppBoard[i].Entity.Card);
 					return;
 				}
 				if (playerBoard.Count > i && Contains(_playerBoard[i], relativeCanvas))
@@ -785,6 +787,7 @@ namespace Hearthstone_Deck_Tracker
 					Canvas.SetLeft(GroupBoxFlavorText, minionPos.X + MinionWidth / 2 - GroupBoxFlavorText.ActualWidth / 2);
 					FlavorText = playerBoard[i].Entity.Card.FlavorText;
 					FlavorTextVisibility = Visibility.Visible;
+					GameEvents.OnPlayerMinionMouseOver.Execute(playerBoard[i].Entity.Card);
 					return;
 				}
 			}
