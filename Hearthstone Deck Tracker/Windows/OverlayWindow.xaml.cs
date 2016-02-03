@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
@@ -19,6 +20,8 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
+using Point = System.Windows.Point;
+using Size = System.Windows.Size;
 
 #endregion
 
@@ -34,6 +37,8 @@ namespace Hearthstone_Deck_Tracker
 		private const double OpponentRankCoveredMaxTop = 0.12;
 		private readonly Point[][] _cardMarkPos;
 		private readonly List<CardMarker> _cardMarks;
+		private readonly List<Ellipse> _oppBoard; 
+		private readonly List<Ellipse> _playerBoard;
 		private readonly int _customHeight;
 		private readonly int _customWidth;
 		private readonly GameV2 _game;
@@ -56,6 +61,8 @@ namespace Hearthstone_Deck_Tracker
 		private bool _secretsTempVisible;
 		private UIElement _selectedUIElement;
 		private bool _uiMovable;
+
+		private readonly List<Label> _debugBoardLabels = new List<Label>();
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -81,6 +88,26 @@ namespace Hearthstone_Deck_Tracker
 
 			// Add CardMarkers to the list.  
 			_cardMarks = new List<CardMarker> {Marks0, Marks1, Marks2, Marks3, Marks4, Marks5, Marks6, Marks7, Marks8, Marks9};
+			_oppBoard = new List<Ellipse>
+			{
+				EllipseBoardOpp0,
+				EllipseBoardOpp1,
+				EllipseBoardOpp2,
+				EllipseBoardOpp3,
+				EllipseBoardOpp4,
+				EllipseBoardOpp5,
+				EllipseBoardOpp6
+			};
+			_playerBoard = new List<Ellipse>
+			{
+				EllipseBoardPlayer0,
+				EllipseBoardPlayer1,
+				EllipseBoardPlayer2,
+				EllipseBoardPlayer3,
+				EllipseBoardPlayer4,
+				EllipseBoardPlayer5,
+				EllipseBoardPlayer6
+			};
 
 			const double tWidth = 1024.0;
 			const double tHeight = 768.0;
@@ -682,6 +709,9 @@ namespace Hearthstone_Deck_Tracker
 			IconBoardAttackOpponent.Width = atkWidth;
 			IconBoardAttackOpponent.Height = atkWidth;
 			TextBlockOpponentAttack.FontSize = atkFont;
+
+			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
+			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
 		}
 
 		private void Window_SourceInitialized_1(object sender, EventArgs e)
@@ -689,6 +719,95 @@ namespace Hearthstone_Deck_Tracker
 			var hwnd = new WindowInteropHelper(this).Handle;
 			User32.SetWindowExStyle(hwnd, User32.WsExTransparent | User32.WsExToolWindow);
 		}
+
+		public double BoardWidth => Width;
+		public double BoardHeight => Height * 0.158;
+		public double MinionWidth => Width * 0.63 / 7 * ((4.0 / 3.0) / (Width / Height));
+		public Thickness MinionMargin
+		{
+			get
+			{
+				var side = Width * ((4.0 / 3.0) / (Width / Height)) * 0.0029;
+				return new Thickness(side, 0, side, 0); }
+		}
+
+		public string FlavorText
+		{
+			get { return _flavorText; }
+			set
+			{
+				if (value != _flavorText)
+				{
+					_flavorText = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		public Visibility FlavorTextVisibility
+		{
+			get { return _flavorTextVisibility; }
+			set
+			{
+				if(value != _flavorTextVisibility)
+				{
+					_flavorTextVisibility = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		private void UpdateFlavorTextTooltip(List<CardEntity> playerBoard, List<CardEntity> oppBoard)
+		{
+			var count = playerBoard.Count + oppBoard.Count;
+			if(count == 0)
+			{
+				FlavorTextVisibility = Visibility.Collapsed;
+				return;
+			}
+			var pos = User32.GetMousePos();
+			var relativeCanvas = CanvasInfo.PointFromScreen(new Point(pos.X, pos.Y));
+			for (var i = 0; i < 7; i++)
+			{
+				if (oppBoard.Count > i && Contains(_oppBoard[i], relativeCanvas))
+				{
+					var minionPos = _oppBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+					Canvas.SetTop(GroupBoxFlavorText, minionPos.Y - GroupBoxFlavorText.ActualHeight);
+					Canvas.SetLeft(GroupBoxFlavorText, minionPos.X + MinionWidth / 2 - GroupBoxFlavorText.ActualWidth / 2);
+					FlavorText = oppBoard[i].Entity.Card.FlavorText;
+					FlavorTextVisibility = Visibility.Visible;
+					return;
+				}
+				if (playerBoard.Count > i && Contains(_playerBoard[i], relativeCanvas))
+				{
+					var minionPos = _playerBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+					Canvas.SetTop(GroupBoxFlavorText, minionPos.Y - GroupBoxFlavorText.ActualHeight);
+					Canvas.SetLeft(GroupBoxFlavorText, minionPos.X + MinionWidth / 2 - GroupBoxFlavorText.ActualWidth / 2);
+					FlavorText = playerBoard[i].Entity.Card.FlavorText;
+					FlavorTextVisibility = Visibility.Visible;
+					return;
+				}
+			}
+			FlavorTextVisibility = Visibility.Collapsed;
+		}
+
+		public bool Contains(Ellipse ellipse, Point location)
+		{
+			var pos = ellipse.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+			var center = new Point(pos.X + ellipse.Width / 2, pos.Y + ellipse.Height / 2);
+
+			var radiusX = ellipse.Width / 2;
+			var radiusY = ellipse.Height / 2;
+
+			if (radiusX <= 0.0 || radiusY <= 0.0)
+				return false;
+
+			var normalized = new Point(location.X - center.X, location.Y - center.Y);
+
+			return ((normalized.X * normalized.X) / (radiusX * radiusX)) + ((normalized.Y * normalized.Y) / (radiusY * radiusY)) <= 1.0;
+		}
+		private Visibility _flavorTextVisibility;
+		private string _flavorText;
 
 		public void Update(bool refresh)
 		{
@@ -720,6 +839,46 @@ namespace Hearthstone_Deck_Tracker
 			for(var i = handCount; i < 10; i++)
 				_cardMarks[i].Visibility = Visibility.Collapsed;
 
+			var oppBoard = Core.Game.Opponent.Board.Where(x => x.Entity.IsMinion).OrderBy(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
+			var playerBoard = Core.Game.Player.Board.Where(x => x.Entity.IsMinion).OrderBy(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
+			if(Config.Instance.Debug)
+			{
+				foreach(var lbl in _debugBoardLabels)
+					CanvasInfo.Children.Remove(lbl);
+				_debugBoardLabels.Clear();
+			}
+			for (var i = 0; i < 7; i++)
+			{
+				_oppBoard[i].Visibility = oppBoard.Count > i ? Visibility.Visible : Visibility.Collapsed;
+				_playerBoard[i].Visibility = playerBoard.Count > i ? Visibility.Visible : Visibility.Collapsed;
+				if(Config.Instance.Debug)
+				{
+					if (i < oppBoard.Count)
+					{
+						_oppBoard[i].Stroke = new SolidColorBrush(Colors.Red);
+						_oppBoard[i].StrokeThickness = 1;
+						var lbl = new Label() {Content= oppBoard[i].Entity.Card.Name, Foreground = Brushes.White};
+						_debugBoardLabels.Add(lbl);
+						CanvasInfo.Children.Add(lbl);
+						var pos = _oppBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+						Canvas.SetTop(lbl, pos.Y + 10);
+						Canvas.SetLeft(lbl, pos.X + 10);
+					}
+					if (i < playerBoard.Count)
+					{
+						_playerBoard[i].Stroke = new SolidColorBrush(Colors.Red);
+						_playerBoard[i].StrokeThickness = 1;
+						var lbl = new Label() { Content = playerBoard[i].Entity.Card.Name, Foreground = Brushes.White };
+						_debugBoardLabels.Add(lbl);
+						CanvasInfo.Children.Add(lbl);
+						var pos = _playerBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+						Canvas.SetTop(lbl, pos.Y + 10);
+						Canvas.SetLeft(lbl, pos.X + 10);
+					}
+				}
+			}
+			UpdateFlavorTextTooltip(playerBoard, oppBoard);
+
 			StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
 			StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
 			StackPanelSecrets.Opacity = Config.Instance.SecretsOpacity / 100;
@@ -750,9 +909,6 @@ namespace Hearthstone_Deck_Tracker
 
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
-
-			DebugViewer.Visibility = Config.Instance.Debug ? Visibility.Visible : Visibility.Hidden;
-			DebugViewer.Width = (Width * Config.Instance.TimerLeft / 100);
 
 			SetCardCount(_game.Player.HandCount, _game.Player.DeckCount);
 
@@ -1066,7 +1222,20 @@ namespace Hearthstone_Deck_Tracker
 			if(hsRect.Height == 0 || Visibility != Visibility.Visible)
 				return;
 
+			var prevWidth = Width;
+			var prevHeight = Height;
 			SetRect(hsRect.Top, hsRect.Left, hsRect.Width, hsRect.Height);
+			if(Width != prevWidth)
+			{
+				OnPropertyChanged(nameof(BoardWidth));
+			}
+			if(Height != prevHeight)
+			{
+				OnPropertyChanged(nameof(BoardHeight));
+				OnPropertyChanged(nameof(MinionMargin));
+				OnPropertyChanged(nameof(MinionWidth));
+			}
+
 			ReSizePosLists();
 			try
 			{
@@ -1087,11 +1256,6 @@ namespace Hearthstone_Deck_Tracker
 			LblTurnTime.Text = $"{(timerEventArgs.Seconds / 60) % 60:00}:{timerEventArgs.Seconds % 60:00}";
 			LblPlayerTurnTime.Text = $"{(timerEventArgs.PlayerSeconds / 60) % 60:00}:{timerEventArgs.PlayerSeconds % 60:00}";
 			LblOpponentTurnTime.Text = $"{(timerEventArgs.OpponentSeconds / 60) % 60:00}:{timerEventArgs.OpponentSeconds % 60:00}";
-
-			if(!Config.Instance.Debug)
-				return;
-			LblDebugLog.Text += $"Current turn: {timerEventArgs.CurrentActivePlayer} {timerEventArgs.PlayerSeconds} {timerEventArgs.OpponentSeconds} \n";
-			DebugViewer.ScrollToBottom();
 		}
 
 		public void UpdateScaling()

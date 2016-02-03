@@ -419,6 +419,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool HighlightInHand { get; set; }
 
+		[XmlIgnore]
+		public string FlavorText => _dbCard.FlavorText;
+
 		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, EnglishText, Attack,
 										  Health, Race, Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts);
 

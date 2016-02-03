@@ -142,7 +142,6 @@ namespace Hearthstone_Deck_Tracker
 		public string DataDirPath = ".";
 
 		[DefaultValue(false)]
-		[XmlIgnore]
 		public bool Debug = false;
 
 		[DefaultValue(50)]
