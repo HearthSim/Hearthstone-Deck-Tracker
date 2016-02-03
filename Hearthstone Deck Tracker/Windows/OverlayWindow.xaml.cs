@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -713,6 +714,9 @@ namespace Hearthstone_Deck_Tracker
 
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
+
+			Canvas.SetTop(GridFlavorText, Height - GridFlavorText.ActualHeight - 10);
+			Canvas.SetLeft(GridFlavorText, Width - GridFlavorText.ActualWidth - 10);
 		}
 
 		private void Window_SourceInitialized_1(object sender, EventArgs e)
@@ -729,17 +733,31 @@ namespace Hearthstone_Deck_Tracker
 			get
 			{
 				var side = Width * ((4.0 / 3.0) / (Width / Height)) * 0.0029;
-				return new Thickness(side, 0, side, 0); }
+				return new Thickness(side, 0, side, 0);
+			}
 		}
 
 		public string FlavorText
 		{
-			get { return _flavorText; }
+			get { return string.IsNullOrEmpty(_flavorText) ? "This is a token. Tokens are apparently not allowed to have flavor texts. :(" : _flavorText; }
 			set
 			{
 				if (value != _flavorText)
 				{
 					_flavorText = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		public string FlavorTextCardName
+		{
+			get { return _flavorTextCardName; }
+			set
+			{
+				if (value != _flavorTextCardName)
+				{
+					_flavorTextCardName = value;
 					OnPropertyChanged();
 				}
 			}
@@ -758,6 +776,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private Entity _currentMouseOverTarget;
 		private void UpdateFlavorTextTooltip(List<CardEntity> playerBoard, List<CardEntity> oppBoard)
 		{
 			var count = playerBoard.Count + oppBoard.Count;
@@ -772,26 +791,39 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if (oppBoard.Count > i && Contains(_oppBoard[i], relativeCanvas))
 				{
-					var minionPos = _oppBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-					Canvas.SetTop(GroupBoxFlavorText, minionPos.Y - GroupBoxFlavorText.ActualHeight);
-					Canvas.SetLeft(GroupBoxFlavorText, minionPos.X + MinionWidth / 2 - GroupBoxFlavorText.ActualWidth / 2);
-					FlavorText = oppBoard[i].Entity.Card.FlavorText;
-					FlavorTextVisibility = Visibility.Visible;
-					GameEvents.OnOpponentMinionMouseOver.Execute(oppBoard[i].Entity.Card);
+					var entity = oppBoard[i].Entity;
+					if(_currentMouseOverTarget == entity)
+						return;
+					_currentMouseOverTarget = entity;
+					SetFlavorTextDelayed(entity, false);
 					return;
 				}
 				if (playerBoard.Count > i && Contains(_playerBoard[i], relativeCanvas))
 				{
-					var minionPos = _playerBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-					Canvas.SetTop(GroupBoxFlavorText, minionPos.Y - GroupBoxFlavorText.ActualHeight);
-					Canvas.SetLeft(GroupBoxFlavorText, minionPos.X + MinionWidth / 2 - GroupBoxFlavorText.ActualWidth / 2);
-					FlavorText = playerBoard[i].Entity.Card.FlavorText;
-					FlavorTextVisibility = Visibility.Visible;
-					GameEvents.OnPlayerMinionMouseOver.Execute(playerBoard[i].Entity.Card);
+					var entity = playerBoard[i].Entity;
+					if (_currentMouseOverTarget == entity)
+						return;
+					_currentMouseOverTarget = entity;
+					SetFlavorTextDelayed(entity, true);
 					return;
 				}
 			}
+			_currentMouseOverTarget = null;
 			FlavorTextVisibility = Visibility.Collapsed;
+		}
+
+		private async void SetFlavorTextDelayed(Entity entity, bool player)
+		{
+			await Task.Delay(250);
+			if(_currentMouseOverTarget != entity)
+				return;
+			FlavorText = entity.Card.FlavorText;
+			FlavorTextCardName = entity.Card.Name;
+			FlavorTextVisibility = Visibility.Visible;
+			if(player)
+				GameEvents.OnPlayerMinionMouseOver.Execute(entity.Card);
+			else
+				GameEvents.OnOpponentMinionMouseOver.Execute(entity.Card);
 		}
 
 		public bool Contains(Ellipse ellipse, Point location)
@@ -810,6 +842,7 @@ namespace Hearthstone_Deck_Tracker
 			return ((normalized.X * normalized.X) / (radiusX * radiusX)) + ((normalized.Y * normalized.Y) / (radiusY * radiusY)) <= 1.0;
 		}
 		private Visibility _flavorTextVisibility;
+		private string _flavorTextCardName;
 		private string _flavorText;
 
 		public void Update(bool refresh)

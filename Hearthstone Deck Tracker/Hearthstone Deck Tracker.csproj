@@ -4370,6 +4370,8 @@
     <Resource Include="Resources\overlay_hand.png" />
     <Resource Include="Resources\overlay_1.png" />
     <Resource Include="Resources\overlay_2.png" />
+    <Resource Include="Resources\flavor_text.png" />
+    <Resource Include="Resources\banner.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
