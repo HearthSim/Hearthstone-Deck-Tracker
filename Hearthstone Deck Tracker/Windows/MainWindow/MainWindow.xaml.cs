@@ -56,11 +56,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
 			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visible : Collapsed;
 			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visible : Collapsed;
+			MenuItemSetDeckUrl.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
+			MenuItemSetDeckUrl.Header = string.IsNullOrEmpty(deck.Url) ? "LINK TO UR_L" : "LINK TO NEW UR_L";
 			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Collapsed : Visible;
 			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Collapsed : Visible;
 			MenuItemArchive.Visibility = DeckPickerList.SelectedDecks.Any(d => !d.Archived) ? Visible : Collapsed;
 			MenuItemUnarchive.Visibility = DeckPickerList.SelectedDecks.Any(d => d.Archived) ? Visible : Collapsed;
-			SeparatorDeck1.Visibility = string.IsNullOrEmpty(deck.Url) && !deck.MissingCards.Any() ? Collapsed : Visible;
+			SeparatorDeck1.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
 			MenuItemOpenHearthStats.Visibility = deck.HasHearthStatsId ? Visible : Collapsed;
 		}
 
@@ -848,7 +850,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck) => SelectDeck(deck, Config.Instance.AutoUseDeck);
+		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
+		{
+			SelectDeck(deck, Config.Instance.AutoUseDeck);
+			UpdateMenuItemVisibility();
+		}
 
 		public void SelectDeck(Deck deck, bool setActive)
 		{
