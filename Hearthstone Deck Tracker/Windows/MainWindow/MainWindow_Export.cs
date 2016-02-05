@@ -135,12 +135,33 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
-			var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "xml");
-			if(fileName == null)
-				return;
-			XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
-			await this.ShowSavedFileMessage(fileName);
-			Logger.WriteLine("Saved " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + fileName, "Export");
+			System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
+			if(DeckPickerList.SelectedDecks.Count > 1)
+			{
+				dialog.FileName = "Save Here";
+				dialog.Filter = "Folder | \n";
+
+				if(dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+					return;
+				foreach(Deck deckInList in DeckPickerList.SelectedDecks)
+				{
+					String saveLocation = Path.GetDirectoryName(dialog.FileName) + "\\" + Helper.RemoveInvalidFileNameChars(deckInList.Name + ".xml");
+					XmlManager<Deck>.Save(saveLocation, deckInList.GetSelectedDeckVersion());
+					Logger.WriteLine("Saved " + deckInList.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + saveLocation, "Export");
+				}
+				await this.ShowSavedFileMessage(Path.GetDirectoryName(dialog.FileName).ToString());
+
+			}
+			else
+			{
+				dialog.Filter = "XML Files|*.xml";
+				dialog.FileName = deck.Name +".xml";
+				if(dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+					return;
+				XmlManager<Deck>.Save(dialog.FileName, deck.GetSelectedDeckVersion());
+				await this.ShowSavedFileMessage(dialog.FileName);
+				Logger.WriteLine("Saved " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + dialog.FileName, "Export");
+			}
 		}
 
 		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
