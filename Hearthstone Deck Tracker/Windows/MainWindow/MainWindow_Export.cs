@@ -134,25 +134,33 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
 		{
-			if(DeckPickerList.SelectedDecks.Count > 1)
+			var selectedDecks = DeckPickerList.SelectedDecks;
+			if (selectedDecks.Count > 1)
 			{
+				if(selectedDecks.Count > 10)
+				{
+					var result = await
+						this.ShowMessageAsync("Exporting multiple decks!", $"You are about to export {selectedDecks.Count} decks. Are you sure?",
+											  MessageDialogStyle.AffirmativeAndNegative);
+					if(result != MessageDialogResult.Affirmative)
+						return;
+				}
 				var dialog = new FolderBrowserDialog();
 				if(dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
 					return;
 				foreach(var deck in DeckPickerList.SelectedDecks)
 				{
-					var saveLocation = Path.Combine(dialog.SelectedPath, Helper.RemoveInvalidFileNameChars(deck.Name + ".xml"));
+					//Helper.GetValidFilePath avoids overwriting files and properly handles duplicate deck names
+					var saveLocation = Path.Combine(dialog.SelectedPath, Helper.GetValidFilePath(dialog.SelectedPath, deck.Name, "xml"));
 					XmlManager<Deck>.Save(saveLocation, deck.GetSelectedDeckVersion());
 					Logger.WriteLine($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {saveLocation}", "Export");
 				}
 				await this.ShowSavedFileMessage(dialog.SelectedPath);
 
 			}
-			else
+			else if(selectedDecks.Count > 0)
 			{
-				var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
-				if (deck == null)
-					return;
+				var deck = selectedDecks.First();
 				var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "xml");
 				if(fileName == null)
 					return;
