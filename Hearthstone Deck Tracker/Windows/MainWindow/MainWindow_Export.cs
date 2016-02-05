@@ -6,10 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Exporting;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using MahApps.Metro.Controls.Dialogs;
+using Clipboard = System.Windows.Clipboard;
 
 #endregion
 
@@ -132,35 +134,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
 		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			if(deck == null)
-				return;
-			System.Windows.Forms.SaveFileDialog dialog = new System.Windows.Forms.SaveFileDialog();
 			if(DeckPickerList.SelectedDecks.Count > 1)
 			{
-				dialog.FileName = "Save Here";
-				dialog.Filter = "Folder | \n";
-
+				var dialog = new FolderBrowserDialog();
 				if(dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
 					return;
-				foreach(Deck deckInList in DeckPickerList.SelectedDecks)
+				foreach(var deck in DeckPickerList.SelectedDecks)
 				{
-					String saveLocation = Path.GetDirectoryName(dialog.FileName) + "\\" + Helper.RemoveInvalidFileNameChars(deckInList.Name + ".xml");
-					XmlManager<Deck>.Save(saveLocation, deckInList.GetSelectedDeckVersion());
-					Logger.WriteLine("Saved " + deckInList.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + saveLocation, "Export");
+					var saveLocation = Path.Combine(dialog.SelectedPath, Helper.RemoveInvalidFileNameChars(deck.Name + ".xml"));
+					XmlManager<Deck>.Save(saveLocation, deck.GetSelectedDeckVersion());
+					Logger.WriteLine($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {saveLocation}", "Export");
 				}
-				await this.ShowSavedFileMessage(Path.GetDirectoryName(dialog.FileName).ToString());
+				await this.ShowSavedFileMessage(dialog.SelectedPath);
 
 			}
 			else
 			{
-				dialog.Filter = "XML Files|*.xml";
-				dialog.FileName = deck.Name +".xml";
-				if(dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+				var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+				if (deck == null)
 					return;
-				XmlManager<Deck>.Save(dialog.FileName, deck.GetSelectedDeckVersion());
-				await this.ShowSavedFileMessage(dialog.FileName);
-				Logger.WriteLine("Saved " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to file: " + dialog.FileName, "Export");
+				var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "xml");
+				if(fileName == null)
+					return;
+				XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
+				await this.ShowSavedFileMessage(fileName);
+				Logger.WriteLine($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {fileName}", "Export");
 			}
 		}
 
