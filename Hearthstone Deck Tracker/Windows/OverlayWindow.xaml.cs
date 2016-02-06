@@ -728,9 +728,11 @@ namespace Hearthstone_Deck_Tracker
 
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
-
-			Canvas.SetTop(GridFlavorText, Height - GridFlavorText.ActualHeight - 10);
-			Canvas.SetLeft(GridFlavorText, Width - GridFlavorText.ActualWidth - 10);
+			if(Config.Instance.ShowFlavorText)
+			{
+				Canvas.SetTop(GridFlavorText, Height - GridFlavorText.ActualHeight - 10);
+				Canvas.SetLeft(GridFlavorText, Width - GridFlavorText.ActualWidth - 10);
+			};
 		}
 
 		private void Window_SourceInitialized_1(object sender, EventArgs e)
@@ -795,7 +797,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private Entity _currentMouseOverTarget;
 
-		private void UpdateFlavorTextTooltip(List<CardEntity> playerBoard, List<CardEntity> oppBoard)
+		private void DetectMouseOver(List<CardEntity> playerBoard, List<CardEntity> oppBoard)
 		{
 			if(playerBoard.Count == 0 && oppBoard.Count == 0 && _game.Player.HandCount == 0)
 			{
@@ -812,7 +814,11 @@ namespace Hearthstone_Deck_Tracker
 					if(_currentMouseOverTarget == entity)
 						return;
 					_currentMouseOverTarget = entity;
-					SetFlavorTextDelayed(entity, () => GameEvents.OnOpponentMinionMouseOver.Execute(entity.Card));
+					DelayedMouseOverDetection(entity, () =>
+					{
+						SetFlavorTextEntity(entity);
+						GameEvents.OnOpponentMinionMouseOver.Execute(entity.Card);
+					});
 					return;
 				}
 				if(playerBoard.Count > i && Contains(_playerBoard[i], relativeCanvas))
@@ -821,7 +827,11 @@ namespace Hearthstone_Deck_Tracker
 					if(_currentMouseOverTarget == entity)
 						return;
 					_currentMouseOverTarget = entity;
-					SetFlavorTextDelayed(entity, () => GameEvents.OnPlayerMinionMouseOver.Execute(entity.Card));
+					DelayedMouseOverDetection(entity, () =>
+					{
+						SetFlavorTextEntity(entity);
+						GameEvents.OnPlayerMinionMouseOver.Execute(entity.Card);
+					});
 					return;
 				}
 			}
@@ -834,7 +844,11 @@ namespace Hearthstone_Deck_Tracker
 					if(_currentMouseOverTarget == entity)
 						return;
 					_currentMouseOverTarget = entity;
-					SetFlavorTextDelayed(entity, () => GameEvents.OnPlayerHandMouseOver.Execute(entity.Card));
+					DelayedMouseOverDetection(entity, () =>
+					{
+						SetFlavorTextEntity(entity);
+						GameEvents.OnPlayerHandMouseOver.Execute(entity.Card);
+					});
 					return;
 				}
 			}
@@ -842,7 +856,7 @@ namespace Hearthstone_Deck_Tracker
 			FlavorTextVisibility = Visibility.Collapsed;
 		}
 
-		private async void SetFlavorTextDelayed(Entity entity, Action action)
+		private async void DelayedMouseOverDetection(Entity entity, Action action)
 		{
 			var mousePos = User32.GetMousePos();
 			await Task.Delay(Config.Instance.OverlayMouseOverTriggerDelay);
@@ -854,10 +868,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(_currentMouseOverTarget != entity)
 				return;
+			action?.Invoke();
+		}
+
+		private void SetFlavorTextEntity(Entity entity)
+		{
+			if(!Config.Instance.ShowFlavorText)
+				return;
 			FlavorText = entity.Card.FlavorText;
 			FlavorTextCardName = entity.Card.LocalizedName;
 			FlavorTextVisibility = Visibility.Visible;
-			action?.Invoke();
 		}
 
 		private double Distance(System.Drawing.Point p1, System.Drawing.Point p2) => Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2);
@@ -884,7 +904,7 @@ namespace Hearthstone_Deck_Tracker
 				   && rotated.Y < rectCorner.Y + rect.Height;
 		}
 
-		private Visibility _flavorTextVisibility;
+		private Visibility _flavorTextVisibility = Visibility.Collapsed;
 		private string _flavorTextCardName;
 		private string _flavorText;
 
@@ -914,81 +934,12 @@ namespace Hearthstone_Deck_Tracker
 					_cardMarks[i].Visibility = Visibility.Collapsed;
 			}
 
-			var oppBoard = Core.Game.Opponent.Board.Where(x => x.Entity.IsMinion).OrderBy(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
-			var playerBoard = Core.Game.Player.Board.Where(x => x.Entity.IsMinion).OrderBy(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
-			if(Config.Instance.Debug)
-			{
-				foreach(var lbl in _debugBoardObjects)
-					CanvasInfo.Children.Remove(lbl);
-				_debugBoardObjects.Clear();
-			}
-			for (var i = 0; i < 7; i++)
-			{
-				_oppBoard[i].Visibility = oppBoard.Count > i && !_game.IsInMenu? Visibility.Visible : Visibility.Collapsed;
-				_playerBoard[i].Visibility = playerBoard.Count > i && !_game.IsInMenu ? Visibility.Visible : Visibility.Collapsed;
-				if(Config.Instance.Debug && !_game.IsInMenu)
-				{
-					if (i < oppBoard.Count)
-					{
-						_oppBoard[i].Stroke = new SolidColorBrush(Colors.Red);
-						_oppBoard[i].StrokeThickness = 1;
-						var lbl = new Label() {Content= oppBoard[i].Entity.Card.Name, Foreground = Brushes.White};
-						_debugBoardObjects.Add(lbl);
-						CanvasInfo.Children.Add(lbl);
-						var pos = _oppBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-						Canvas.SetTop(lbl, pos.Y + 10);
-						Canvas.SetLeft(lbl, pos.X + 10);
-					}
-					if (i < playerBoard.Count)
-					{
-						_playerBoard[i].Stroke = new SolidColorBrush(Colors.Red);
-						_playerBoard[i].StrokeThickness = 1;
-						var lbl = new Label() { Content = playerBoard[i].Entity.Card.Name, Foreground = Brushes.White };
-						_debugBoardObjects.Add(lbl);
-						CanvasInfo.Children.Add(lbl);
-						var pos = _playerBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-						Canvas.SetTop(lbl, pos.Y + 10);
-						Canvas.SetLeft(lbl, pos.X + 10);
-					}
-				}
-			}
-			var playerHandCount = _game.Player.HandCount;
-			for(var i = 0; i < 10; i++)
-			{
-				if(_game.IsInMenu)
-				{
-					_playerHand[i].Visibility = Visibility.Collapsed;
-					continue;
-				}
-				if(i < playerHandCount)
-				{
-					var pos = GetPlayerCardPosition(i, playerHandCount);
-					var extraRotation = playerHandCount == 7 ? 0 : playerHandCount > 4 ? ((playerHandCount) % 2) : 1;
-					var direction = pos.X > CenterOfHand.X ? -1 + (extraRotation * 0.3 * (playerHandCount - i) * Math.Max(1, i - 7)) : 1;
-					var angle = (CenterOfHand.Y - pos.Y) / Height * 600 * direction * (1 + Math.Sqrt(10.0 / (i + 1)) * 0.08);
-					_playerHand[i].RenderTransform = new RotateTransform(angle, _playerHand[i].Width / 2, _playerHand[i].Height / 2);
-					Canvas.SetTop(_playerHand[i], pos.Y - _playerHand[i].Height / 2);
-					Canvas.SetLeft(_playerHand[i], pos.X - _playerHand[i].Width / 2);
-				}
-				_playerHand[i].Visibility = playerHandCount > i ? Visibility.Visible : Visibility.Collapsed;
-				if(Config.Instance.Debug)
-				{
-					var pos = GetPlayerCardPosition(i, playerHandCount);
-					if(Config.Instance.Debug)
-					{
-						_playerHand[i].Stroke = Brushes.Red;
-						_playerHand[i].StrokeThickness = 1;
-						_playerHand[i].Fill = new SolidColorBrush(Color.FromArgb(90, 255, 0, 0));
-						var e = new Ellipse {Width = 5, Height = 5, Fill = Brushes.Red};
-						Canvas.SetTop(e, pos.Y);
-						Canvas.SetLeft(e, pos.X);
-						CanvasInfo.Children.Add(e);
-						_debugBoardObjects.Add(e);
-					}
-				}
-			}
-
-			UpdateFlavorTextTooltip(playerBoard, oppBoard);
+			var oppBoard =
+				Core.Game.Opponent.Board.Where(x => x.Entity.IsMinion).OrderBy(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
+			var playerBoard =
+				Core.Game.Player.Board.Where(x => x.Entity.IsMinion).OrderBy(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
+			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
+			DetectMouseOver(playerBoard, oppBoard);
 
 			StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
 			StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
@@ -1069,6 +1020,81 @@ namespace Hearthstone_Deck_Tracker
 				Core.Windows.PlayerWindow.Update();
 			if(Core.Windows.OpponentWindow.Visibility == Visibility.Visible)
 				Core.Windows.OpponentWindow.Update();
+		}
+
+		private void UpdateMouseOverDetectionRegions(List<CardEntity> oppBoard, List<CardEntity> playerBoard)
+		{
+			if(Config.Instance.Debug)
+			{
+				foreach(var lbl in _debugBoardObjects)
+					CanvasInfo.Children.Remove(lbl);
+				_debugBoardObjects.Clear();
+			}
+			for(var i = 0; i < 7; i++)
+			{
+				_oppBoard[i].Visibility = oppBoard.Count > i && !_game.IsInMenu ? Visibility.Visible : Visibility.Collapsed;
+				_playerBoard[i].Visibility = playerBoard.Count > i && !_game.IsInMenu ? Visibility.Visible : Visibility.Collapsed;
+				if(Config.Instance.Debug && !_game.IsInMenu)
+				{
+					if(i < oppBoard.Count)
+					{
+						_oppBoard[i].Stroke = new SolidColorBrush(Colors.Red);
+						_oppBoard[i].StrokeThickness = 1;
+						var lbl = new Label() {Content = oppBoard[i].Entity.Card.Name, Foreground = Brushes.White};
+						_debugBoardObjects.Add(lbl);
+						CanvasInfo.Children.Add(lbl);
+						var pos = _oppBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+						Canvas.SetTop(lbl, pos.Y + 10);
+						Canvas.SetLeft(lbl, pos.X + 10);
+					}
+					if(i < playerBoard.Count)
+					{
+						_playerBoard[i].Stroke = new SolidColorBrush(Colors.Red);
+						_playerBoard[i].StrokeThickness = 1;
+						var lbl = new Label() {Content = playerBoard[i].Entity.Card.Name, Foreground = Brushes.White};
+						_debugBoardObjects.Add(lbl);
+						CanvasInfo.Children.Add(lbl);
+						var pos = _playerBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+						Canvas.SetTop(lbl, pos.Y + 10);
+						Canvas.SetLeft(lbl, pos.X + 10);
+					}
+				}
+			}
+			var playerHandCount = _game.Player.HandCount;
+			for(var i = 0; i < 10; i++)
+			{
+				if(_game.IsInMenu)
+				{
+					_playerHand[i].Visibility = Visibility.Collapsed;
+					continue;
+				}
+				if(i < playerHandCount)
+				{
+					var pos = GetPlayerCardPosition(i, playerHandCount);
+					var extraRotation = playerHandCount == 7 ? 0 : playerHandCount > 4 ? ((playerHandCount) % 2) : 1;
+					var direction = pos.X > CenterOfHand.X ? -1 + (extraRotation * 0.3 * (playerHandCount - i) * Math.Max(1, i - 7)) : 1;
+					var angle = (CenterOfHand.Y - pos.Y) / Height * 600 * direction * (1 + Math.Sqrt(10.0 / (i + 1)) * 0.08);
+					_playerHand[i].RenderTransform = new RotateTransform(angle, _playerHand[i].Width / 2, _playerHand[i].Height / 2);
+					Canvas.SetTop(_playerHand[i], pos.Y - _playerHand[i].Height / 2);
+					Canvas.SetLeft(_playerHand[i], pos.X - _playerHand[i].Width / 2);
+				}
+				_playerHand[i].Visibility = playerHandCount > i ? Visibility.Visible : Visibility.Collapsed;
+				if(Config.Instance.Debug)
+				{
+					var pos = GetPlayerCardPosition(i, playerHandCount);
+					if(Config.Instance.Debug)
+					{
+						_playerHand[i].Stroke = Brushes.Red;
+						_playerHand[i].StrokeThickness = 1;
+						_playerHand[i].Fill = new SolidColorBrush(Color.FromArgb(90, 255, 0, 0));
+						var e = new Ellipse {Width = 5, Height = 5, Fill = Brushes.Red};
+						Canvas.SetTop(e, pos.Y);
+						Canvas.SetLeft(e, pos.X);
+						CanvasInfo.Children.Add(e);
+						_debugBoardObjects.Add(e);
+					}
+				}
+			}
 		}
 
 		private void UpdateAttackValues()
