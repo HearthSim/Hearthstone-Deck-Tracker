@@ -924,9 +924,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 			for (var i = 0; i < 7; i++)
 			{
-				_oppBoard[i].Visibility = oppBoard.Count > i ? Visibility.Visible : Visibility.Collapsed;
-				_playerBoard[i].Visibility = playerBoard.Count > i ? Visibility.Visible : Visibility.Collapsed;
-				if(Config.Instance.Debug)
+				_oppBoard[i].Visibility = oppBoard.Count > i && !_game.IsInMenu? Visibility.Visible : Visibility.Collapsed;
+				_playerBoard[i].Visibility = playerBoard.Count > i && !_game.IsInMenu ? Visibility.Visible : Visibility.Collapsed;
+				if(Config.Instance.Debug && !_game.IsInMenu)
 				{
 					if (i < oppBoard.Count)
 					{
@@ -955,6 +955,11 @@ namespace Hearthstone_Deck_Tracker
 			var playerHandCount = _game.Player.HandCount;
 			for(var i = 0; i < 10; i++)
 			{
+				if(_game.IsInMenu)
+				{
+					_playerHand[i].Visibility = Visibility.Collapsed;
+					continue;
+				}
 				if(i < playerHandCount)
 				{
 					var pos = GetPlayerCardPosition(i, playerHandCount);
