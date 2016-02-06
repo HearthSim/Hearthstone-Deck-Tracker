@@ -95,12 +95,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				AlternativeTexts = alternativeTexts;
 		}
 
+		private Language? _selectedLanguage;
+
+		private Language SelectedLanguage
+		{
+			get
+			{
+				if(_selectedLanguage.HasValue)
+					return _selectedLanguage.Value;
+				Language lang;
+				if (!Enum.TryParse(Config.Instance.SelectedLanguage, out lang))
+					lang = Language.enUS;
+				_selectedLanguage = lang;
+				return _selectedLanguage.Value;
+			}
+		}
+
 		public Card(HearthDb.Card dbCard)
 		{
 			_dbCard = dbCard;
-			Language lang;
-			if(!Enum.TryParse(Config.Instance.SelectedLanguage, out lang))
-				lang = Language.enUS;
 			Id = dbCard.Id;
 			Count = 1;
 			PlayerClass = HearthDbConverter.ConvertClass(dbCard.Class);
@@ -108,8 +121,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Type = HearthDbConverter.CardTypeConverter(dbCard.Type);
 			Name = dbCard.GetLocName(Language.enUS);
 			Cost = dbCard.Cost;
-			LocalizedName = dbCard.GetLocName(lang);
-			Text = dbCard.GetLocText(lang);
+			LocalizedName = dbCard.GetLocName(SelectedLanguage);
+			Text = dbCard.GetLocText(SelectedLanguage);
 			EnglishText = dbCard.GetLocText(Language.enUS);
 			Attack = dbCard.Attack;
 			Health = dbCard.Health;
@@ -420,7 +433,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool HighlightInHand { get; set; }
 
 		[XmlIgnore]
-		public string FlavorText => _dbCard.FlavorText;
+		public string FlavorText => _dbCard.GetLocFlavorText(SelectedLanguage);
 
 		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, EnglishText, Attack,
 										  Health, Race, Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts);

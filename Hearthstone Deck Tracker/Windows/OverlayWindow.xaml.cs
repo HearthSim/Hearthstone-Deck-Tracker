@@ -855,7 +855,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_currentMouseOverTarget != entity)
 				return;
 			FlavorText = entity.Card.FlavorText;
-			FlavorTextCardName = entity.Card.Name;
+			FlavorTextCardName = entity.Card.LocalizedName;
 			FlavorTextVisibility = Visibility.Visible;
 			action?.Invoke();
 		}
