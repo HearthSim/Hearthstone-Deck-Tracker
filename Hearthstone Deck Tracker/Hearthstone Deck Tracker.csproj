@@ -508,16 +508,26 @@
     <Compile Include="Enums\GameResult.cs" />
     <Compile Include="Enums\ActivePlayer.cs" />
     <Compile Include="Utility\Logger.cs" />
-    <Compile Include="Windows\MainWindow\MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DeckList.cs" />
     <Compile Include="Utility\Helper.cs" />
-    <Compile Include="Windows\MainWindow\MainWindow_Edit.cs" />
-    <Compile Include="Windows\MainWindow\MainWindow_Export.cs" />
-    <Compile Include="Windows\MainWindow\MainWindow_Import.cs" />
-    <Compile Include="Windows\MainWindow\MainWindow_Load.cs" />
-    <Compile Include="Windows\MainWindow\MainWindow_NewDeck.cs" />
+    <Compile Include="Windows\MainWindow.Edit.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow.Export.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow.Import.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow.Load.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow.NewDeck.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Stats\DeckStats.cs" />
     <Compile Include="Stats\GameStats.cs" />
     <Compile Include="Stats\TurnStats.cs" />
@@ -828,7 +838,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\MainWindow\MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
