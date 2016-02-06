@@ -481,6 +481,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool OverlayCardToolTips = true;
 
+		[DefaultValue(250)]
+		public int OverlayMouseOverTriggerDelay = 250;
+
 		[DefaultValue(100)]
 		public double OverlayOpacity = 100;
 

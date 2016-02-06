@@ -149,6 +149,16 @@
                 <local:HearthstoneTextBlock Text="{Binding FlavorTextCardName, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" VerticalAlignment="Top" Margin="0,7,0,0"  HorizontalAlignment="Center" FontSize="15"/>
                 <TextBlock Text="{Binding FlavorText, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Margin="15,45,15,15" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
+            <Rectangle Name="RectPlayerHand0" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand1" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand2" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand3" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand4" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand5" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand6" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand7" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand8" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand9" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
             <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203" Panel.ZIndex="100"
                                Visibility="Hidden" />
             <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>
