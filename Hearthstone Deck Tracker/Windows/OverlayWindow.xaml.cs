@@ -12,13 +12,18 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
+using Point = System.Windows.Point;
+using Size = System.Windows.Size;
 
 #endregion
 
@@ -34,6 +39,9 @@ namespace Hearthstone_Deck_Tracker
 		private const double OpponentRankCoveredMaxTop = 0.12;
 		private readonly Point[][] _cardMarkPos;
 		private readonly List<CardMarker> _cardMarks;
+		private readonly List<Ellipse> _oppBoard; 
+		private readonly List<Ellipse> _playerBoard;
+		private readonly List<Rectangle> _playerHand;
 		private readonly int _customHeight;
 		private readonly int _customWidth;
 		private readonly GameV2 _game;
@@ -56,6 +64,8 @@ namespace Hearthstone_Deck_Tracker
 		private bool _secretsTempVisible;
 		private UIElement _selectedUIElement;
 		private bool _uiMovable;
+
+		private readonly List<UIElement> _debugBoardObjects = new List<UIElement>();
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -81,6 +91,39 @@ namespace Hearthstone_Deck_Tracker
 
 			// Add CardMarkers to the list.  
 			_cardMarks = new List<CardMarker> {Marks0, Marks1, Marks2, Marks3, Marks4, Marks5, Marks6, Marks7, Marks8, Marks9};
+			_oppBoard = new List<Ellipse>
+			{
+				EllipseBoardOpp0,
+				EllipseBoardOpp1,
+				EllipseBoardOpp2,
+				EllipseBoardOpp3,
+				EllipseBoardOpp4,
+				EllipseBoardOpp5,
+				EllipseBoardOpp6
+			};
+			_playerBoard = new List<Ellipse>
+			{
+				EllipseBoardPlayer0,
+				EllipseBoardPlayer1,
+				EllipseBoardPlayer2,
+				EllipseBoardPlayer3,
+				EllipseBoardPlayer4,
+				EllipseBoardPlayer5,
+				EllipseBoardPlayer6
+			};
+			_playerHand = new List<Rectangle>
+			{
+				RectPlayerHand0,
+				RectPlayerHand1,
+				RectPlayerHand2,
+				RectPlayerHand3,
+				RectPlayerHand4,
+				RectPlayerHand5,
+				RectPlayerHand6,
+				RectPlayerHand7,
+				RectPlayerHand8,
+				RectPlayerHand9
+			};
 
 			const double tWidth = 1024.0;
 			const double tHeight = 768.0;
@@ -682,6 +725,14 @@ namespace Hearthstone_Deck_Tracker
 			IconBoardAttackOpponent.Width = atkWidth;
 			IconBoardAttackOpponent.Height = atkWidth;
 			TextBlockOpponentAttack.FontSize = atkFont;
+
+			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
+			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
+			if(Config.Instance.ShowFlavorText)
+			{
+				Canvas.SetTop(GridFlavorText, Height - GridFlavorText.ActualHeight - 10);
+				Canvas.SetLeft(GridFlavorText, Width - GridFlavorText.ActualWidth - 10);
+			};
 		}
 
 		private void Window_SourceInitialized_1(object sender, EventArgs e)
@@ -689,6 +740,173 @@ namespace Hearthstone_Deck_Tracker
 			var hwnd = new WindowInteropHelper(this).Handle;
 			User32.SetWindowExStyle(hwnd, User32.WsExTransparent | User32.WsExToolWindow);
 		}
+
+		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
+		public double BoardWidth => Width;
+		public double BoardHeight => Height * 0.158;
+		public double MinionWidth => Width * 0.63 / 7 * ScreenRatio;
+		public double CardWidth => Height * 0.125;
+		public double CardHeight => Height * 0.189;
+		public Thickness MinionMargin
+		{
+			get
+			{
+				var side = Width * ScreenRatio * 0.0029;
+				return new Thickness(side, 0, side, 0);
+			}
+		}
+
+		public string FlavorText
+		{
+			get { return string.IsNullOrEmpty(_flavorText) ? "This is a token. Tokens are apparently not allowed to have flavor texts. :(" : _flavorText; }
+			set
+			{
+				if (value != _flavorText)
+				{
+					_flavorText = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		public string FlavorTextCardName
+		{
+			get { return _flavorTextCardName; }
+			set
+			{
+				if (value != _flavorTextCardName)
+				{
+					_flavorTextCardName = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		public Visibility FlavorTextVisibility
+		{
+			get { return _flavorTextVisibility; }
+			set
+			{
+				if(value != _flavorTextVisibility)
+				{
+					_flavorTextVisibility = value;
+					OnPropertyChanged();
+				}
+			}
+		}
+
+		private Entity _currentMouseOverTarget;
+
+		private void DetectMouseOver(List<CardEntity> playerBoard, List<CardEntity> oppBoard)
+		{
+			if(playerBoard.Count == 0 && oppBoard.Count == 0 && _game.Player.HandCount == 0)
+			{
+				FlavorTextVisibility = Visibility.Collapsed;
+				return;
+			}
+			var pos = User32.GetMousePos();
+			var relativeCanvas = CanvasInfo.PointFromScreen(new Point(pos.X, pos.Y));
+			for(var i = 0; i < 7; i++)
+			{
+				if(oppBoard.Count > i && Contains(_oppBoard[i], relativeCanvas))
+				{
+					var entity = oppBoard[i].Entity;
+					if(_currentMouseOverTarget == entity)
+						return;
+					_currentMouseOverTarget = entity;
+					DelayedMouseOverDetection(entity, () =>
+					{
+						SetFlavorTextEntity(entity);
+						GameEvents.OnOpponentMinionMouseOver.Execute(entity.Card);
+					});
+					return;
+				}
+				if(playerBoard.Count > i && Contains(_playerBoard[i], relativeCanvas))
+				{
+					var entity = playerBoard[i].Entity;
+					if(_currentMouseOverTarget == entity)
+						return;
+					_currentMouseOverTarget = entity;
+					DelayedMouseOverDetection(entity, () =>
+					{
+						SetFlavorTextEntity(entity);
+						GameEvents.OnPlayerMinionMouseOver.Execute(entity.Card);
+					});
+					return;
+				}
+			}
+			var handCount = _game.Player.HandCount;
+			for(var i = handCount - 1; i >= 0; i--)
+			{
+				if(Contains(_playerHand[i], relativeCanvas))
+				{
+					var entity = Core.Game.Player.Hand[i].Entity;
+					if(_currentMouseOverTarget == entity)
+						return;
+					_currentMouseOverTarget = entity;
+					DelayedMouseOverDetection(entity, () =>
+					{
+						SetFlavorTextEntity(entity);
+						GameEvents.OnPlayerHandMouseOver.Execute(entity.Card);
+					});
+					return;
+				}
+			}
+			_currentMouseOverTarget = null;
+			FlavorTextVisibility = Visibility.Collapsed;
+		}
+
+		private async void DelayedMouseOverDetection(Entity entity, Action action)
+		{
+			var mousePos = User32.GetMousePos();
+			await Task.Delay(Config.Instance.OverlayMouseOverTriggerDelay);
+			if(Distance(User32.GetMousePos(), mousePos) > 3)
+			{
+				FlavorTextVisibility = Visibility.Collapsed;
+				_currentMouseOverTarget = null;
+				return;
+			}
+			if(_currentMouseOverTarget != entity)
+				return;
+			action?.Invoke();
+		}
+
+		private void SetFlavorTextEntity(Entity entity)
+		{
+			if(!Config.Instance.ShowFlavorText)
+				return;
+			FlavorText = entity.Card.FlavorText;
+			FlavorTextCardName = entity.Card.LocalizedName;
+			FlavorTextVisibility = Visibility.Visible;
+		}
+
+		private double Distance(System.Drawing.Point p1, System.Drawing.Point p2) => Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2);
+
+		public bool Contains(Ellipse ellipse, Point location)
+		{
+			var pos = ellipse.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+			var center = new Point(pos.X + ellipse.Width / 2, pos.Y + ellipse.Height / 2);
+			var radiusX = ellipse.Width / 2;
+			var radiusY = ellipse.Height / 2;
+			if(radiusX <= 0.0 || radiusY <= 0.0)
+				return false;
+			var normalized = new Point(location.X - center.X, location.Y - center.Y);
+			return ((normalized.X * normalized.X) / (radiusX * radiusX)) + ((normalized.Y * normalized.Y) / (radiusY * radiusY)) <= 1.0;
+		}
+
+		public bool Contains(Rectangle rect, Point location)
+		{
+			var rectCorner = new Point(Canvas.GetLeft(rect), Canvas.GetTop(rect));
+			var rectRotation = (RotateTransform)rect.RenderTransform;
+			var transform = new RotateTransform(-rectRotation.Angle, rectCorner.X + rectRotation.CenterX, rectCorner.Y + rectRotation.CenterY);
+			var rotated = transform.Transform(location);
+			return rotated.X > rectCorner.X && rotated.X < rectCorner.X + rect.Width && rotated.Y > rectCorner.Y
+				   && rotated.Y < rectCorner.Y + rect.Height;
+		}
+
+		private Visibility _flavorTextVisibility = Visibility.Collapsed;
+		private string _flavorTextCardName;
+		private string _flavorText;
 
 		public void Update(bool refresh)
 		{
@@ -702,23 +920,26 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 
-			var handCount = _game.Opponent.HandCount;
-			if(handCount < 0)
-				handCount = 0;
-			if(handCount > 10)
-				handCount = 10;
-
-
-			for(var i = 0; i < handCount; i++)
+			var opponentHandCount = _game.Opponent.HandCount;
+			for(var i = 0; i < 10; i++)
 			{
-				_cardMarks[i].Text = !Config.Instance.HideOpponentCardAge ? _game.Opponent.Hand[i].Turn.ToString() : "";
-				_cardMarks[i].Mark = !Config.Instance.HideOpponentCardMarks ? _game.Opponent.Hand[i].CardMark : CardMark.None;
-				_cardMarks[i].Visibility = (_game.IsInMenu || (Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks))
-					                           ? Visibility.Hidden : Visibility.Visible;
+				if(i < opponentHandCount)
+				{
+					_cardMarks[i].Text = !Config.Instance.HideOpponentCardAge ? _game.Opponent.Hand[i].Turn.ToString() : "";
+					_cardMarks[i].Mark = !Config.Instance.HideOpponentCardMarks ? _game.Opponent.Hand[i].CardMark : CardMark.None;
+					_cardMarks[i].Visibility = (_game.IsInMenu || (Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks))
+												   ? Visibility.Hidden : Visibility.Visible;
+				}
+				else
+					_cardMarks[i].Visibility = Visibility.Collapsed;
 			}
-			//Hide unneeded card marks.
-			for(var i = handCount; i < 10; i++)
-				_cardMarks[i].Visibility = Visibility.Collapsed;
+
+			var oppBoard =
+				Core.Game.Opponent.Board.Where(x => x.Entity.IsMinion).OrderBy(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
+			var playerBoard =
+				Core.Game.Player.Board.Where(x => x.Entity.IsMinion).OrderBy(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
+			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
+			DetectMouseOver(playerBoard, oppBoard);
 
 			StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
 			StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
@@ -750,9 +971,6 @@ namespace Hearthstone_Deck_Tracker
 
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
-
-			DebugViewer.Visibility = Config.Instance.Debug ? Visibility.Visible : Visibility.Hidden;
-			DebugViewer.Width = (Width * Config.Instance.TimerLeft / 100);
 
 			SetCardCount(_game.Player.HandCount, _game.Player.DeckCount);
 
@@ -802,6 +1020,81 @@ namespace Hearthstone_Deck_Tracker
 				Core.Windows.PlayerWindow.Update();
 			if(Core.Windows.OpponentWindow.Visibility == Visibility.Visible)
 				Core.Windows.OpponentWindow.Update();
+		}
+
+		private void UpdateMouseOverDetectionRegions(List<CardEntity> oppBoard, List<CardEntity> playerBoard)
+		{
+			if(Config.Instance.Debug)
+			{
+				foreach(var lbl in _debugBoardObjects)
+					CanvasInfo.Children.Remove(lbl);
+				_debugBoardObjects.Clear();
+			}
+			for(var i = 0; i < 7; i++)
+			{
+				_oppBoard[i].Visibility = oppBoard.Count > i && !_game.IsInMenu ? Visibility.Visible : Visibility.Collapsed;
+				_playerBoard[i].Visibility = playerBoard.Count > i && !_game.IsInMenu ? Visibility.Visible : Visibility.Collapsed;
+				if(Config.Instance.Debug && !_game.IsInMenu)
+				{
+					if(i < oppBoard.Count)
+					{
+						_oppBoard[i].Stroke = new SolidColorBrush(Colors.Red);
+						_oppBoard[i].StrokeThickness = 1;
+						var lbl = new Label() {Content = oppBoard[i].Entity.Card.Name, Foreground = Brushes.White};
+						_debugBoardObjects.Add(lbl);
+						CanvasInfo.Children.Add(lbl);
+						var pos = _oppBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+						Canvas.SetTop(lbl, pos.Y + 10);
+						Canvas.SetLeft(lbl, pos.X + 10);
+					}
+					if(i < playerBoard.Count)
+					{
+						_playerBoard[i].Stroke = new SolidColorBrush(Colors.Red);
+						_playerBoard[i].StrokeThickness = 1;
+						var lbl = new Label() {Content = playerBoard[i].Entity.Card.Name, Foreground = Brushes.White};
+						_debugBoardObjects.Add(lbl);
+						CanvasInfo.Children.Add(lbl);
+						var pos = _playerBoard[i].TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+						Canvas.SetTop(lbl, pos.Y + 10);
+						Canvas.SetLeft(lbl, pos.X + 10);
+					}
+				}
+			}
+			var playerHandCount = _game.Player.HandCount;
+			for(var i = 0; i < 10; i++)
+			{
+				if(_game.IsInMenu)
+				{
+					_playerHand[i].Visibility = Visibility.Collapsed;
+					continue;
+				}
+				if(i < playerHandCount)
+				{
+					var pos = GetPlayerCardPosition(i, playerHandCount);
+					var extraRotation = playerHandCount == 7 ? 0 : playerHandCount > 4 ? ((playerHandCount) % 2) : 1;
+					var direction = pos.X > CenterOfHand.X ? -1 + (extraRotation * 0.3 * (playerHandCount - i) * Math.Max(1, i - 7)) : 1;
+					var angle = (CenterOfHand.Y - pos.Y) / Height * 600 * direction * (1 + Math.Sqrt(10.0 / (i + 1)) * 0.08);
+					_playerHand[i].RenderTransform = new RotateTransform(angle, _playerHand[i].Width / 2, _playerHand[i].Height / 2);
+					Canvas.SetTop(_playerHand[i], pos.Y - _playerHand[i].Height / 2);
+					Canvas.SetLeft(_playerHand[i], pos.X - _playerHand[i].Width / 2);
+				}
+				_playerHand[i].Visibility = playerHandCount > i ? Visibility.Visible : Visibility.Collapsed;
+				if(Config.Instance.Debug)
+				{
+					var pos = GetPlayerCardPosition(i, playerHandCount);
+					if(Config.Instance.Debug)
+					{
+						_playerHand[i].Stroke = Brushes.Red;
+						_playerHand[i].StrokeThickness = 1;
+						_playerHand[i].Fill = new SolidColorBrush(Color.FromArgb(90, 255, 0, 0));
+						var e = new Ellipse {Width = 5, Height = 5, Fill = Brushes.Red};
+						Canvas.SetTop(e, pos.Y);
+						Canvas.SetLeft(e, pos.X);
+						CanvasInfo.Children.Add(e);
+						_debugBoardObjects.Add(e);
+					}
+				}
+			}
 		}
 
 		private void UpdateAttackValues()
@@ -1066,7 +1359,22 @@ namespace Hearthstone_Deck_Tracker
 			if(hsRect.Height == 0 || Visibility != Visibility.Visible)
 				return;
 
+			var prevWidth = Width;
+			var prevHeight = Height;
 			SetRect(hsRect.Top, hsRect.Left, hsRect.Width, hsRect.Height);
+			if(Width != prevWidth)
+			{
+				OnPropertyChanged(nameof(BoardWidth));
+			}
+			if(Height != prevHeight)
+			{
+				OnPropertyChanged(nameof(BoardHeight));
+				OnPropertyChanged(nameof(MinionMargin));
+				OnPropertyChanged(nameof(MinionWidth));
+				OnPropertyChanged(nameof(CardWidth));
+				OnPropertyChanged(nameof(CardHeight));
+			}
+
 			ReSizePosLists();
 			try
 			{
@@ -1087,11 +1395,6 @@ namespace Hearthstone_Deck_Tracker
 			LblTurnTime.Text = $"{(timerEventArgs.Seconds / 60) % 60:00}:{timerEventArgs.Seconds % 60:00}";
 			LblPlayerTurnTime.Text = $"{(timerEventArgs.PlayerSeconds / 60) % 60:00}:{timerEventArgs.PlayerSeconds % 60:00}";
 			LblOpponentTurnTime.Text = $"{(timerEventArgs.OpponentSeconds / 60) % 60:00}:{timerEventArgs.OpponentSeconds % 60:00}";
-
-			if(!Config.Instance.Debug)
-				return;
-			LblDebugLog.Text += $"Current turn: {timerEventArgs.CurrentActivePlayer} {timerEventArgs.PlayerSeconds} {timerEventArgs.OpponentSeconds} \n";
-			DebugViewer.ScrollToBottom();
 		}
 
 		public void UpdateScaling()
@@ -1420,5 +1723,39 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public void ShowFriendsListWarning(bool show) => StackPanelFriendsListWarning.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+
+		public Point GetPlayerCardPosition(int position, int count)
+		{
+			var cardWidth = 0.0f;
+			var center = 0.0f;
+			var setAngle = 0;
+			if(count > 3)
+			{
+				setAngle = 1;
+				var width = 40f + count * 2;
+				cardWidth = width / count;
+				center = -width / 2;
+			}
+			var rightOfCenter = cardWidth * position + center;
+			var rightYOffset = 0.0f;
+			if(rightOfCenter > 0.0)
+				rightYOffset = (float)(Math.Sin((float)(Math.Abs(rightOfCenter) * Math.PI / 180)) * GetCardSpacing(count) / 2.0);
+			var x = (float)CenterOfHand.X - GetCardSpacing(count) / 2 * (count - 1 - position * 2);
+			var y = 1f;
+			if(count > 1)
+				y = y + (float)Math.Pow(Math.Abs(position - count / 2), 2) / (4 * count) * 0.11f * setAngle + rightYOffset * 0.0009f;
+			return new Point(x, y * CenterOfHand.Y);
+		}
+
+		private float GetCardSpacing(int count)
+		{
+			var cardWidth = (float)Height / 10 * 1.27f;
+			var maxHandWidth = (float)Width * (float)ScreenRatio * 0.36f;
+			if(count * cardWidth > maxHandWidth)
+				return maxHandWidth / count;
+			return cardWidth;
+		}
+
+		private Point CenterOfHand => new Point((float)Width * 0.5 - 35, (float)Height * 0.95);
 	}
 }

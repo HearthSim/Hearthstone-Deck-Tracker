@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxHideOpponentAttackIcon.IsChecked = Config.Instance.HideOpponentAttackIcon;
 			CheckBoxBatteryStatus.IsChecked = Config.Instance.ShowBatteryLife;
 			CheckBoxBatteryStatusText.IsChecked = Config.Instance.ShowBatteryLifePercent;
+			CheckBoxFlavorText.IsChecked = Config.Instance.ShowFlavorText;
 			_initialized = true;
 		}
 
@@ -440,6 +441,23 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBatteryLifePercent = false;
 			Config.Save();
 			Core.Overlay.UpdateBatteryStatus();
+		}
+
+		private void CheckBoxFlavorText_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.ShowFlavorText = true;
+			Config.Save();
+		}
+
+		private void CheckBoxFlavorText_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.ShowFlavorText = false;
+			Config.Save();
+			Core.Overlay.FlavorTextVisibility = Visibility.Collapsed;
 		}
 	}
 }

@@ -29,12 +29,6 @@
             <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="0" Canvas.Top="338"
                                         Canvas.Left="418" FontSize="24" />
 
-            <ScrollViewer x:Name="DebugViewer" Height="100" Width="400" Canvas.Left="200" Visibility="Hidden"
-                          Background="Beige" Foreground="Aqua" Opacity="75"
-                          VerticalScrollBarVisibility="Visible">
-                <TextBox x:Name="LblDebugLog" Text="Test" TextWrapping="Wrap" FontSize="14" Foreground="Aqua" />
-            </ScrollViewer>
-
             <StackPanel Name="StackPanelPlayer" Canvas.Left="604" Canvas.Top="203" Width="218">
                 <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Text="Deck title" />
                 <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16" Text="0-0 (0%)" />
@@ -127,6 +121,44 @@
             <controls:CardMarker x:Name="Marks7" Width="36" Height="34" />
             <controls:CardMarker x:Name="Marks8" Width="36" Height="34" />
             <controls:CardMarker x:Name="Marks9" Width="36" Height="34" />
+            <Grid Name="GridOpponentBoard" Width="{Binding BoardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Ellipse Name="EllipseBoardOpp0" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardOpp1" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardOpp2" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardOpp3" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardOpp4" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardOpp5" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardOpp6" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Name="GridPlayerBoard" Width="{Binding BoardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Ellipse Name="EllipseBoardPlayer0" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardPlayer1" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardPlayer2" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardPlayer3" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardPlayer4" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardPlayer5" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                    <Ellipse Name="EllipseBoardPlayer6" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Name="GridFlavorText" Visibility="{Binding FlavorTextVisibility, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Panel.ZIndex="5" Width="298" Height="123">
+                <Image Source="../Resources/flavor_text.png" Margin="0,5,0,0"/>
+                <Image Source="../Resources/banner.png" Width="200" VerticalAlignment="Top"/>
+                <local:HearthstoneTextBlock Text="{Binding FlavorTextCardName, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" VerticalAlignment="Top" Margin="0,7,0,0"  HorizontalAlignment="Center" FontSize="15"/>
+                <TextBlock Text="{Binding FlavorText, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Margin="20,45,20,20" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            <Rectangle Name="RectPlayerHand0" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand1" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand2" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand3" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand4" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand5" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand6" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand7" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand8" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
+            <Rectangle Name="RectPlayerHand9" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=local:OverlayWindow}}"/>
             <local:CardToolTip x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203" Panel.ZIndex="100"
                                Visibility="Hidden" />
             <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>

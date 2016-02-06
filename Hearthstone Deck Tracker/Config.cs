@@ -142,7 +142,6 @@ namespace Hearthstone_Deck_Tracker
 		public string DataDirPath = ".";
 
 		[DefaultValue(false)]
-		[XmlIgnore]
 		public bool Debug = false;
 
 		[DefaultValue(50)]
@@ -482,6 +481,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool OverlayCardToolTips = true;
 
+		[DefaultValue(250)]
+		public int OverlayMouseOverTriggerDelay = 250;
+
 		[DefaultValue(100)]
 		public double OverlayOpacity = 100;
 
@@ -709,6 +711,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ShowExportingDialog = true;
+
+		[DefaultValue(true)]
+		public bool ShowFlavorText = true;
 
 		[DefaultValue(true)]
 		public bool ShowGameResultNotifications = true;

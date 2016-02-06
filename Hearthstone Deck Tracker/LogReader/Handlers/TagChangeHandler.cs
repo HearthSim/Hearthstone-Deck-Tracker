@@ -439,18 +439,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(tag == ZONE_POSITION)
 			{
-				var zone = game.Entities[id].GetTag(ZONE);
+				var entity = game.Entities[id];
+				var zone = entity.GetTag(ZONE);
 				if(zone == (int)HAND)
 				{
 					if(controller == game.Player.Id)
 					{
 						ReplayMaker.Generate(HandPos, id, ActivePlayer.Player, game);
-						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Player, HAND, gameState.GetTurnNumber());
+						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Player, entity, HAND, gameState.GetTurnNumber());
 					}
 					else if(controller == game.Opponent.Id)
 					{
 						ReplayMaker.Generate(HandPos, id, ActivePlayer.Opponent, game);
-						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Opponent, HAND, gameState.GetTurnNumber());
+						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Opponent, entity, HAND, gameState.GetTurnNumber());
 					}
 				}
 				else if(zone == (int)PLAY)
@@ -458,12 +459,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(controller == game.Player.Id)
 					{
 						ReplayMaker.Generate(BoardPos, id, ActivePlayer.Player, game);
-						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Player, PLAY, gameState.GetTurnNumber());
+						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Player, entity, PLAY, gameState.GetTurnNumber());
 					}
 					else if(controller == game.Opponent.Id)
 					{
 						ReplayMaker.Generate(BoardPos, id, ActivePlayer.Opponent, game);
-						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Opponent, PLAY, gameState.GetTurnNumber());
+						gameState.GameHandler.HandleZonePositionUpdate(ActivePlayer.Opponent, entity, PLAY, gameState.GetTurnNumber());
 					}
 				}
 			}
