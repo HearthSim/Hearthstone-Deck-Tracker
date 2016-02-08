@@ -1756,6 +1756,6 @@ namespace Hearthstone_Deck_Tracker
 			return cardWidth;
 		}
 
-		private Point CenterOfHand => new Point((float)Width * 0.5 - 35, (float)Height * 0.95);
+		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
 	}
 }
