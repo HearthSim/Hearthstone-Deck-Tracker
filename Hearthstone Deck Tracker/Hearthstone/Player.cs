@@ -486,9 +486,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void UpdateZonePos(Entity entity, TAG_ZONE zone, int turn)
 		{
+			//Todo: figure out why CardEntity.Entity needs to be updated manually for zonepos to be correct.
 			switch(zone)
 			{
 				case TAG_ZONE.HAND:
+					UpdateCardEntity(entity);
 					Hand.Sort(ZonePosComparison);
 					if(!IsLocalPlayer && turn == 0 && Hand.Count == 5 && Hand[4].Entity.Id > 67)
 					{
@@ -499,13 +501,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 					break;
 				case TAG_ZONE.PLAY:
-					//entites needs to be updated sometimes - why?
-					var cardEntity = GetEntityFromCollection(Board, entity);
-					if(cardEntity != null)
-						cardEntity.Entity = entity;
+					UpdateCardEntity(entity);
 					Board.Sort(ZonePosComparison);
 					break;
 			}
+		}
+
+		private void UpdateCardEntity(Entity entity)
+		{
+			var cardEntity = GetEntityFromCollection(Hand, entity);
+			if (cardEntity != null)
+				cardEntity.Entity = entity;
 		}
 
 		public void StolenByOpponent(Entity entity, int turn)
