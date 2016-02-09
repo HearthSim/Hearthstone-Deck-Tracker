@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxShowLoginDialog.IsChecked = Config.Instance.ShowLoginDialog;
 			CheckBoxShowSplashScreen.IsChecked = Config.Instance.ShowSplashScreen;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
-			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;
+			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;			
 
 			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 				Config.Instance.KeyPressOnGameStart = "None";
@@ -56,6 +56,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboboxKeyPressGameEnd.SelectedValue = Config.Instance.KeyPressOnGameEnd;
 
 			_initialized = true;
+		}
+
+		private void TrackerSettings_Loaded(object sender, RoutedEventArgs e)
+		{
+			CheckboxShowNewsBar.IsChecked = Core.MainWindow.StatusBarNews.Visibility != Visibility.Collapsed;
 		}
 
 		private void SaveConfig(bool updateOverlay)
@@ -358,5 +363,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.GoogleAnalytics = false;
 			Config.Save();
 		}
+
+		private void CheckboxShowNewsBar_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Utility.NewsUpdater.ToggleNewsVisibility();
+		}
+
+
+
 	}
 }
