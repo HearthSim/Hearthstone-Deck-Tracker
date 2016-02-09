@@ -58,6 +58,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			_initialized = true;
 		}
 
+		private void TrackerSettings_Loaded(object sender, RoutedEventArgs e)
+		{
+			CheckboxShowNewsBar.IsChecked = Core.MainWindow.StatusBarNews.Visibility != Visibility.Collapsed;
+		}
+
 		private void SaveConfig(bool updateOverlay)
 		{
 			Config.Save();
@@ -357,6 +362,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.GoogleAnalytics = false;
 			Config.Save();
+		}
+
+		private void CheckboxShowNewsBar_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Utility.NewsUpdater.ToggleNewsVisibility();
 		}
 	}
 }

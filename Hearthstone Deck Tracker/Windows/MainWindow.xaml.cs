@@ -279,14 +279,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void MenuItemCheckBoxAutoSyncBackground_OnChecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoSyncInBackground = true);
 		private void MenuItemCheckBoxAutoSyncBackground_OnUnchecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoSyncInBackground = false);
 
-		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e)
-		{
-			Config.Instance.IgnoreNewsId = NewsUpdater.CurrentNewsId;
-			Config.Save();
-			StatusBarNews.Visibility = Collapsed;
-			MinHeight -= StatusBarNewsHeight;
-			TopRow.Height = new GridLength(0);
-		}
+		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e) => NewsUpdater.ToggleNewsVisibility();
 
 		private void BtnNewsPrevious_OnClick(object sender, RoutedEventArgs e) => NewsUpdater.PreviousNewsItem();
 

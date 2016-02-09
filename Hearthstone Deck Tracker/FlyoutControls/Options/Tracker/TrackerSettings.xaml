@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="300" Loaded="TrackerSettings_Loaded">
     <Grid>
         <GroupBox Header="Settings">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -77,6 +77,9 @@
                                     	HorizontalAlignment="Left" Margin="10,5,0,0"
                                     	VerticalAlignment="Top" Checked="CheckboxAdvancedWindowSearch_Checked"
                                     	Unchecked="CheckboxAdvancedWindowSearch_Unchecked" ToolTip="This can be turned off if the overlay shows up in non-Hearthstone windows." />
+                    <CheckBox x:Name="CheckboxShowNewsBar" Content="Show news bar"
+                                    	HorizontalAlignment="Left" Margin="10,5,0,0"
+                                    	VerticalAlignment="Top" Click="CheckboxShowNewsBar_OnClick" />
                     <CheckBox x:Name="CheckboxLogTab" Content="Show Log"
                                               HorizontalAlignment="Left" Margin="10,5,0,0"
                                               VerticalAlignment="Top" Checked="CheckboxLogTab_Checked"

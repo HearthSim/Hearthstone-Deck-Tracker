@@ -98,6 +98,24 @@ namespace Hearthstone_Deck_Tracker.Utility
 			UpdateNews(_newsLine);
 		}
 
+		public static void ToggleNewsVisibility()
+		{
+			if(Core.MainWindow.StatusBarNews.Visibility == Visibility.Collapsed)
+			{
+				Config.Instance.IgnoreNewsId = -1;
+				Config.Save();
+				UpdateAsync();
+			}
+			else
+			{
+				Config.Instance.IgnoreNewsId = CurrentNewsId;
+				Config.Save();
+				Core.MainWindow.StatusBarNews.Visibility = Visibility.Collapsed;
+				Core.MainWindow.MinHeight -= Core.MainWindow.StatusBarNewsHeight;
+				Core.MainWindow.TopRow.Height = new GridLength(0);
+			}
+		}
+
 		internal static async void UpdateAsync()
 		{
 			const string url = "https://raw.githubusercontent.com/Epix37/HDT-Data/master/news";
