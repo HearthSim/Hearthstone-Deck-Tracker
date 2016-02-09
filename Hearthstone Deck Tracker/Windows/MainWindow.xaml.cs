@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void UpdateMenuItemVisibility()
 		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
 			if(deck == null)
 				return;
 			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
