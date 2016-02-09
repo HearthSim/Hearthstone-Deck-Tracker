@@ -49,7 +49,16 @@ namespace Hearthstone_Deck_Tracker
 
 			//create backup
 			if(File.Exists(path))
-				File.Copy(path, backupPath);
+			{
+				try
+				{
+					File.Copy(path, backupPath);
+				}
+				catch(IOException ex)
+				{
+					Logger.WriteLine($"Error copying file: {backupPath}\n{ex}", "XmlManager", 1);
+				}
+			}
 			try
 			{
 				//standard serialization
