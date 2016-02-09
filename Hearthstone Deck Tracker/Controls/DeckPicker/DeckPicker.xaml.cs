@@ -691,5 +691,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 			}
 		}
+
+		private void RectangleSortIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) 
+			=> Core.MainWindow.FlyoutSortFilter.IsOpen = !Core.MainWindow.FlyoutSortFilter.IsOpen;
 	}
 }

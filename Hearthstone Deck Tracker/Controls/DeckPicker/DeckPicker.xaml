@@ -43,6 +43,27 @@
                 </Rectangle>
             </Grid>
         </Border>
+        <Border BorderThickness="1"
+                Width="28" Height="28" DockPanel.Dock="Right" Margin="2,-2,0,0"
+                BorderBrush="{DynamicResource TextBrush}">
+            <Grid>
+                <Grid.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <Trigger Property="Border.IsMouseOver" Value="True">
+                                <Setter Property="Border.Background" Value="{DynamicResource AccentColorBrush3}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Rectangle Name="RectangleSortIcon" Margin="2"
+                           PreviewMouseLeftButtonUp="RectangleSortIcon_OnPreviewMouseLeftButtonUp">
+                    <Rectangle.Fill>
+                        <VisualBrush Visual="{DynamicResource appbar_arrow_up_down}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+        </Border>
         <ListView Name="ListViewDeckType" SelectionChanged="ListViewDeckType_OnSelectionChanged" SelectionMode="Single"
                   Height="28" Margin="0,0,0,2" BorderThickness="1"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
