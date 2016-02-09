@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Windows;
 using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
 
 #endregion
