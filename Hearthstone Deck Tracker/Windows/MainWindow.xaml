@@ -185,36 +185,6 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Menu Grid.Row="1" Grid.ColumnSpan="3">
-                <MenuItem Header="_MAIN">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_box}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="USE _NO DECK" Click="ButtonNoDeck_Click" />
-                    <CheckBox x:Name="CheckboxDeckDetection" Margin="-24,0,0,0" Content="AUTO DECK SELECTION"
-                              FontSize="14"
-                              Checked="CheckboxDeckDetection_Checked"
-                              Unchecked="CheckboxDeckDetection_Unchecked" />
-                    <Separator />
-                    <MenuItem Header="_SORT / FILTER" Click="BtnSortFilter_Click" />
-                    <MenuItem Name="MenuItemQuickSelectFilter" Header="_QUICK FILTER">
-                        <MenuItem.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding}" PreviewMouseDown="MenuItemQuickFilter_Click" />
-                            </DataTemplate>
-                        </MenuItem.ItemTemplate>
-                    </MenuItem>
-                    <Separator />
-                    <CheckBox x:Name="CheckboxClassCardsFirst" Margin="-24,0,0,0" Content="CLASS CARDS FIRST"
-                              FontSize="14"
-                              Checked="CheckboxClassCardsFirst_Checked"
-                              Unchecked="CheckboxClassCardsFirst_Unchecked" />
-                    <Separator />
-                    <MenuItem Header="E_XIT" Click="MenuItemExit_OnClick"/>
-                </MenuItem>
                 <MenuItem Header="_NEW">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">

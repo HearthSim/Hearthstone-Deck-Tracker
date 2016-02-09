@@ -62,6 +62,9 @@
                                           Checked="CheckboxArenaRewardDialog_Checked"
                                           Unchecked="CheckboxArenaRewardDialog_Unchecked" />
                     <Separator Margin="0,5,0,0"/>
+                    <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0" Content="Card sorting: Class cards first"
+                              Checked="CheckBoxClassCardsFirst_Checked"
+                              Unchecked="CheckBoxClassCardsFirst_Unchecked" />
                     <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips"
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxTrackerCardToolTips_Checked"

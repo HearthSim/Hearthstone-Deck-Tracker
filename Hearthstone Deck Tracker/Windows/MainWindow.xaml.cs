@@ -117,51 +117,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void InvokeIfInitialized(Action action)
-		{
-			if(_initialized)
-				action.Invoke();
-		}
-
-		private void CheckboxDeckDetection_Checked(object sender, RoutedEventArgs e) => InvokeIfInitialized(() => AutoDeckDetection(true));
-
-		private void CheckboxDeckDetection_Unchecked(object sender, RoutedEventArgs e) => InvokeIfInitialized(() => AutoDeckDetection(false));
-
 		public void AutoDeckDetection(bool enable)
 		{
-			CheckboxDeckDetection.IsChecked = enable;
+			if(!_initialized)
+				return;
 			Config.Instance.AutoDeckDetection = enable;
 			Config.Save();
+			DeckPickerList.UpdateAutoSelectToggleButton();
 			Core.TrayIcon.SetContextMenuProperty(TrayIcon.AutoSelectDeckMenuItemName, TrayIcon.CheckedProperty, enable);
 		}
 
-		private void CheckboxClassCardsFirst_Checked(object sender, RoutedEventArgs e) => InvokeIfInitialized(() => SortClassCardsFirst(true));
-
-		private void CheckboxClassCardsFirst_Unchecked(object sender, RoutedEventArgs e) => InvokeIfInitialized(() => SortClassCardsFirst(false));
-
 		public void SortClassCardsFirst(bool classFirst)
 		{
-			CheckboxClassCardsFirst.IsChecked = classFirst;
+			if(!_initialized)
+				return;
+			Options.OptionsTrackerGeneral.CheckBoxClassCardsFirst.IsChecked = classFirst;
 			Config.Instance.CardSortingClassFirst = classFirst;
 			Config.Save();
 			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, classFirst);
 			Core.TrayIcon.SetContextMenuProperty(TrayIcon.ClassCardsFirstMenuItemName, TrayIcon.CheckedProperty, classFirst);
-		}
-
-
-		private void MenuItemQuickFilter_Click(object sender, EventArgs e)
-		{
-			var tag = ((TextBlock)sender).Text;
-			var actualTag = SortFilterDecksFlyout.Tags.FirstOrDefault(t => t.Name.ToUpperInvariant() == tag);
-			if(actualTag == null)
-				return;
-			var tags = new List<string> {actualTag.Name};
-			SortFilterDecksFlyout.SetSelectedTags(tags);
-			Config.Instance.SelectedTags = tags;
-			Config.Save();
-			DeckPickerList.UpdateDecks();
-			Core.Windows.StatsWindow.StatsControl.LoadOverallStats();
-			DeckStatsFlyout.LoadOverallStats();
 		}
 
 		private void MenuItemReplayLastGame_OnClick(object sender, RoutedEventArgs e)
@@ -416,8 +390,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MenuItemCheckBoxAutoDeleteGames_OnUnchecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoDeleteMatches = false);
 
-		private void MenuItemExit_OnClick(object sender, RoutedEventArgs e) => Close();
-
 		private void MetroWindow_LocationChanged(object sender, EventArgs e) => MovedLeft = null;
 
 
@@ -652,7 +624,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void BtnSortFilter_Click(object sender, RoutedEventArgs e) => FlyoutSortFilter.IsOpen = !FlyoutSortFilter.IsOpen;
 		private void BtnOptions_OnClick(object sender, RoutedEventArgs e) => FlyoutOptions.IsOpen = true;
 		private void BtnHelp_OnClick(object sender, RoutedEventArgs e) => FlyoutHelp.IsOpen = true;
 
@@ -764,7 +735,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				else
 				{
 					this.ShowMessage("Deck detection disabled.", "Can be re-enabled in \"MAIN\" menu.");
-					CheckboxDeckDetection.IsChecked = false;
+					DeckPickerList.UpdateAutoSelectToggleButton();
 					Config.Save();
 				}
 			}
@@ -808,8 +779,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		#endregion
 
 		#region MY DECKS - GUI
-
-		private void ButtonNoDeck_Click(object sender, RoutedEventArgs e) => SelectDeck(null, true);
 
 		private void BtnDeckStats_Click(object sender, RoutedEventArgs e) => ShowStats();
 

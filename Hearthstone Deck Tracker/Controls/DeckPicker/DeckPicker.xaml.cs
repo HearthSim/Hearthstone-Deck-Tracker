@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Enums;
@@ -694,5 +695,19 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private void RectangleSortIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e) 
 			=> Core.MainWindow.FlyoutSortFilter.IsOpen = !Core.MainWindow.FlyoutSortFilter.IsOpen;
+
+		private void RectangleUseNoDeckIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+			=> Core.MainWindow.SelectDeck(null, true);
+
+		private void BorderAutoSelect_PreviewLeftMouseButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			Core.MainWindow.AutoDeckDetection(!Config.Instance.AutoDeckDetection);
+			UpdateAutoSelectToggleButton();
+		}
+
+		public void UpdateAutoSelectToggleButton() => OnPropertyChanged(nameof(BorderAutoSelectBackground));
+
+		public SolidColorBrush BorderAutoSelectBackground
+			=> Config.Instance.AutoDeckDetection ? (SolidColorBrush)FindResource("AccentColorBrush") : new SolidColorBrush(Colors.Transparent);
 	}
 }

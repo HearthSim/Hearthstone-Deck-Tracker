@@ -6,7 +6,7 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
         <DockPanel Margin="6,0,6,6">
             <GroupBox Name="GroupBoxSortingAllConstructed" Header="Deck sorting: All/Constructed" DockPanel.Dock="Top">
@@ -69,9 +69,11 @@
                         <Button Name="BtnAddTag" Content="Add" Click="BtnAddTag_Click" Height="26" Grid.Column="1"
                                 Margin="3,0,0,0" Width="auto" />
                     </Grid>
-                    <controls:ToggleSwitch Name="OperationSwitch" Header="Filter operation" DockPanel.Dock="Bottom"
-                                           OnLabel="And" OffLabel="Or" Width="124" HorizontalAlignment="Right"
+                    <DockPanel DockPanel.Dock="Bottom">
+                        <Label Content="Filter operation:" VerticalAlignment="Center"/>
+                        <controls:ToggleSwitch Name="OperationSwitch" OnLabel="And" OffLabel="Or" Width="124" HorizontalAlignment="Right"
                                            Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked" />
+                    </DockPanel>
 
                     <ListBox Name="ListboxTags" Height="auto" Width="auto" DockPanel.Dock="Top">
                         <ListBox.ItemTemplate>

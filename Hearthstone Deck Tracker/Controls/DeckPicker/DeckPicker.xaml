@@ -102,36 +102,73 @@
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>
     </ListView>
-    <Border BorderThickness="1" DockPanel.Dock="Bottom" Margin="0,2,0,0" BorderBrush="{DynamicResource TextBrush}"
+    <DockPanel DockPanel.Dock="Bottom">
+        <Border BorderThickness="1" Height="26" DockPanel.Dock="Right" Margin="2,2,0,0" Background="{Binding BorderAutoSelectBackground, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+                BorderBrush="{DynamicResource TextBrush}" PreviewMouseLeftButtonUp="BorderAutoSelect_PreviewLeftMouseButtonUp">
+            <Grid>
+                <Grid.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <Trigger Property="Border.IsMouseOver" Value="True">
+                                <Setter Property="Border.Background" Value="{DynamicResource AccentColorBrush3}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <TextBlock Text="AUTO SELECT"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           ToolTip="Requires an active deck."/>
+            </Grid>
+        </Border>
+        
+        <Border BorderThickness="1" Margin="0,2,0,0" BorderBrush="{DynamicResource TextBrush}"
             PreviewMouseDown="ActiveDeckPanel_OnPreviewMouseDown" Height="26">
-        <DockPanel>
-            <TextBlock Name="TextBlockLabelActiveDeck" Text="ACTIVE DECK: " FontWeight="SemiBold" FontSize="14"
-                       VerticalAlignment="Center" Margin="5,0,0,0" DockPanel.Dock="Left" />
-            <Image
+            <DockPanel>
+                <Grid DockPanel.Dock="Left" Width="24" ToolTip="Unselect deck (no deck mode).">
+                    <Grid.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                    <Setter Property="Border.Background" Value="{DynamicResource AccentColorBrush3}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Style>
+                    <Rectangle Name="RectangleUseNoDeckIcon" Margin="2,2"
+                           PreviewMouseLeftButtonUp="RectangleUseNoDeckIcon_OnPreviewMouseLeftButtonUp">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{DynamicResource appbar_cancel}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+                <TextBlock Name="TextBlockLabelActiveDeck" Text="ACTIVE DECK: " FontWeight="SemiBold" FontSize="14"
+                       VerticalAlignment="Center" Margin="2,0,0,0" DockPanel.Dock="Left" />
+                <Image
                 Source="{Binding ActiveDeck.ClassImage, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                 DockPanel.Dock="Left" Margin="5,1" RenderOptions.BitmapScalingMode="Fant" />
-            <Grid Margin="0,0,5,0">
-                <TextBlock Text="NONE   -   CLICK &quot;USE&quot; ON DECK TO ACTIVATE" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
-                           HorizontalAlignment="Left" Visibility="{Binding VisibilityNoDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"/>
-                <DockPanel>
-                    <DockPanel.Resources>
-                        <deckPicker:MarginConverterNegativeLeft x:Key="MarginConverterLeft" />
-                        <deckPicker:MarginConverterRight x:Key="MarginConverterRight" />
-                    </DockPanel.Resources>
-                    <TextBlock Name="TextBlockName" Background="{DynamicResource ControlBackgroundBrush}"
+                <Grid Margin="0,0,5,0">
+                    <TextBlock Text="NONE   -   CLICK &quot;USE&quot; ON DECK TO ACTIVATE" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                           HorizontalAlignment="Left" Visibility="{Binding VisibilityNoDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
+                               ToolTip="CLICK &quot;USE&quot; ON DECK TO ACTIVATE"/>
+                    <DockPanel>
+                        <DockPanel.Resources>
+                            <deckPicker:MarginConverterNegativeLeft x:Key="MarginConverterLeft" />
+                            <deckPicker:MarginConverterRight x:Key="MarginConverterRight" />
+                        </DockPanel.Resources>
+                        <TextBlock Name="TextBlockName" Background="{DynamicResource ControlBackgroundBrush}"
                                Text="{Binding ActiveDeck.NameAndVersion, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                                Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterRight}}"
                                FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                                DockPanel.Dock="Left" />
-                    <TextBlock Name="TextBlockStats" VerticalAlignment="Center"
+                        <TextBlock Name="TextBlockStats" VerticalAlignment="Center"
                                Foreground="{DynamicResource GrayTextColorBrush}"
                                Text="{Binding ActiveDeck.StatsString, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                                Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterLeft}}" />
-                    <Grid />
-                </DockPanel>
-            </Grid>
-        </DockPanel>
-    </Border>
+                        <Grid />
+                    </DockPanel>
+                </Grid>
+            </DockPanel>
+        </Border>
+    </DockPanel>
     <ListView Name="ListViewDecks" VirtualizingPanel.IsVirtualizing="True"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged"
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick">

@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 			CheckboxTurnTime.IsChecked = Config.Instance.TimerTurnTime == 75;
 			CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
+			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			TextboxTimerAlert.Text = Config.Instance.TimerAlertSeconds.ToString();
 			_initialized = true;
 		}
@@ -326,5 +327,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.SpectatorUseNoDeck = false;
 			Config.Save();
 		}
+
+		private void CheckBoxClassCardsFirst_Checked(object sender, RoutedEventArgs e) => Core.MainWindow.SortClassCardsFirst(true);
+
+		private void CheckBoxClassCardsFirst_Unchecked(object sender, RoutedEventArgs e) => Core.MainWindow.SortClassCardsFirst(false);
+
 	}
 }

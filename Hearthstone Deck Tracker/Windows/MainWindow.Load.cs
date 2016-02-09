@@ -56,8 +56,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Options.Load(Core.Game);
 			Help.TxtblockVersion.Text = "v" + Helper.GetCurrentVersion().ToVersionString();
 
-			CheckboxDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
-			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", (bool)CheckboxDeckDetection.IsChecked);
+			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", Config.Instance.AutoDeckDetection);
 
 			// Don't select the 'archived' class on load
 			var selectedClasses = Config.Instance.SelectedDeckPickerClasses.Where(c => c.ToString() != "Archived").ToList();
@@ -66,10 +65,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			DeckPickerList.SelectClasses(selectedClasses);
 			DeckPickerList.SelectDeckType(Config.Instance.SelectedDeckType, true);
+			DeckPickerList.UpdateAutoSelectToggleButton();
 
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-
-			UpdateQuickFilterItemSource();
 
 			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 
@@ -88,10 +86,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Config.Instance.KeyPressOnGameEnd = "None";
 
 			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
-			//ManaCurveMyDecks.ListViewStatType.SelectedIndex = (int)Config.Instance.ManaCurveFilter;
 
-			CheckboxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
-			Core.TrayIcon.SetContextMenuProperty("classCardsFirst", "Checked", (bool)CheckboxClassCardsFirst.IsChecked);
+			Core.TrayIcon.SetContextMenuProperty("classCardsFirst", "Checked", Config.Instance.CardSortingClassFirst);
 			Core.TrayIcon.SetContextMenuProperty("useNoDeck", "Checked", DeckList.Instance.ActiveDeck == null);
 
 
@@ -107,12 +103,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			MenuItemCheckBoxAutoDeleteDecks.IsChecked = Config.Instance.HearthStatsAutoDeleteDecks;
 			MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
 		}
-
-		public void UpdateQuickFilterItemSource()
-			=>
-				MenuItemQuickSelectFilter.ItemsSource =
-				DeckList.Instance.AllTags.Where(t => DeckList.Instance.Decks.Any(d => d.Tags.Contains(t) || t == "All" || t == "None" && d.Tags.Count == 0))
-						.Select(x => x.ToUpperInvariant());
 
 		public void ReloadTags()
 		{

@@ -95,7 +95,6 @@ namespace Hearthstone_Deck_Tracker
 				}
 				Core.MainWindow.DeckPickerList.UpdateDecks(false);
 				DeckList.Save();
-				Core.MainWindow.UpdateQuickFilterItemSource();
 			}
 		}
 
@@ -144,7 +143,6 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Save();
 			Core.MainWindow.ReloadTags();
 			ListboxTags.SelectedIndex = to - 2;
-			Core.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void CheckBoxSortByClass_OnChecked(object sender, RoutedEventArgs e)
@@ -360,7 +358,6 @@ namespace Hearthstone_Deck_Tracker
 			Tags.Add(new Tag(tag));
 
 			NewTag(tag);
-			Core.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void BtnDeteleTag_Click(object sender, RoutedEventArgs e)
@@ -379,7 +376,6 @@ namespace Hearthstone_Deck_Tracker
 			Tags.Remove(Tags.First(t => t.Equals(tag)));
 
 			DeleteTag(tag.Name);
-			Core.MainWindow.UpdateQuickFilterItemSource();
 		}
 
 		private void OperationSwitch_OnChecked(object sender, RoutedEventArgs e)
