@@ -25,6 +25,7 @@ using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
@@ -399,7 +400,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private void BtnStartHearthstone_Click(object sender, RoutedEventArgs e) => Helper.StartHearthstoneAsync();
+		private void BtnStartHearthstone_Click(object sender, RoutedEventArgs e) => Helper.StartHearthstoneAsync().Forget();
 
 		private void ButtonCloseStatsFlyout_OnClick(object sender, RoutedEventArgs e) => FlyoutNewStats.IsOpen = false;
 
@@ -579,7 +580,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Config.Instance.WindowWidth = (int)(Width - (GridNewDeck.Visibility == Visible ? GridNewDeck.ActualWidth : 0));
 				Config.Instance.WindowHeight = (int)(Height - _heightChangeDueToSearchBox);
 				Config.Instance.TrackerWindowTop = (int)Top;
-				Config.Instance.TrackerWindowLeft = (int)(Left + (MovedLeft.HasValue ? MovedLeft.Value : 0));
+				Config.Instance.TrackerWindowLeft = (int)(Left + (MovedLeft ?? 0));
 
 				//position of add. windows is NaN if they were never opened.
 				if(!double.IsNaN(Core.Windows.PlayerWindow.Left))
@@ -734,7 +735,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				else
 				{
-					this.ShowMessage("Auto deck selection disabled.", "This can be re-enabled by selecting \"AUTO\" in the bottom right of the deck picker.");
+					this.ShowMessage("Auto deck selection disabled.", "This can be re-enabled by selecting \"AUTO\" in the bottom right of the deck picker.").Forget();
 					DeckPickerList.UpdateAutoSelectToggleButton();
 					Config.Save();
 				}

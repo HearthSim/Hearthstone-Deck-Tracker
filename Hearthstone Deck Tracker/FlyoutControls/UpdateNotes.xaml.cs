@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using Newtonsoft.Json;
 
@@ -95,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			catch
 			{
 				Core.MainWindow.ShowMessage("Could not start browser",
-				                            "You can find the releases at \"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases\"");
+				                            "You can find the releases at \"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases\"").Forget();
 			}
 		}
 
@@ -122,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 			catch(Exception)
 			{
-				Core.MainWindow.ShowMessage("Could not start browser", "You can also find a link at the bottom of the GitHub page!");
+				Core.MainWindow.ShowMessage("Could not start browser", "You can also find a link at the bottom of the GitHub page!").Forget();
 			}
 		}
 

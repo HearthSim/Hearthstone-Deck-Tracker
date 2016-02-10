@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -88,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			if(HearthStatsAPI.IsLoggedIn && deck.HasHearthStatsId && await CheckHearthStatsDeckDeletion())
-				HearthStatsManager.DeleteDeckAsync(deck, false, true);
+				HearthStatsManager.DeleteDeckAsync(deck, false, true).Forget();
 
 			DeckList.Instance.Decks.Remove(deck);
 			if(saveAndUpdate)
@@ -160,7 +161,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 				{
 					Logger.WriteLine($"auto uploading {archivedLog} deck", "ArchiveDeck");
-					HearthStatsManager.UpdateDeckAsync(deck, background: true);
+					HearthStatsManager.UpdateDeckAsync(deck, background: true).Forget();
 				}
 			}
 			catch(Exception)
@@ -214,7 +215,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckPickerList.SelectDeckAndAppropriateView(clone);
 
 			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
-				HearthStatsManager.UploadDeckAsync(clone);
+				HearthStatsManager.UploadDeckAsync(clone).Forget();
 		}
 
 		internal async void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e)
@@ -268,7 +269,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckPickerList.SelectDeckAndAppropriateView(clone);
 
 			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
-				HearthStatsManager.UploadDeckAsync(clone);
+				HearthStatsManager.UploadDeckAsync(clone).Forget();
 		}
 
 		internal void BtnTags_Click(object sender, RoutedEventArgs e)
@@ -385,7 +386,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckList.Save();
 			DeckPickerList.UpdateDecks();
 			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
-				HearthStatsManager.UpdateDeckAsync(deck, true, true);
+				HearthStatsManager.UpdateDeckAsync(deck, true, true).Forget();
 		}
 	}
 }

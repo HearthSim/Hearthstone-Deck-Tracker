@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using static Hearthstone_Deck_Tracker.Exporting.ExportingHelper;
 using static Hearthstone_Deck_Tracker.Exporting.MouseActions;
@@ -76,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		{
 			if(!User32.IsHearthstoneInForeground())
 			{
-				Core.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.");
+				Core.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.").Forget();
 				Logger.WriteLine("Exporting aborted, window lost focus", "DeckExporter");
 				return -1;
 			}

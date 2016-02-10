@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -58,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				catch(Exception)
 				{
 					Core.MainWindow.ShowMessage("Error",
-					                            "Plugins directory not found and can not be created. Please manually create it in the Hearthstone Deck Tracker folder.");
+					                            "Plugins directory not found and can not be created. Please manually create it in the Hearthstone Deck Tracker folder.").Forget();
 					return;
 				}
 			}

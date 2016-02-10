@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using Microsoft.Win32;
 using Application = System.Windows.Application;
@@ -230,7 +231,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				Config.Instance.HearthstoneDirectory = dialog.SelectedPath;
 				Config.Save();
-				Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+				Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
 			}
 		}
 

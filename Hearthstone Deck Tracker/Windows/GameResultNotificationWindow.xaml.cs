@@ -12,6 +12,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -136,9 +137,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 						else
 						{
 							if(_game.GameMode == GameMode.Arena)
-								HearthStatsManager.UploadArenaMatchAsync(_game, deck, true, true);
+								HearthStatsManager.UploadArenaMatchAsync(_game, deck, true, true).Forget();
 							else
-								HearthStatsManager.UploadMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true);
+								HearthStatsManager.UploadMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true).Forget();
 						}
 					}
 				}

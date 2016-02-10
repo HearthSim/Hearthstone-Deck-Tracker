@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -111,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonSetUpConstructed_OnClick(object sender, RoutedEventArgs e)
 		{
-			Helper.SetupConstructedImporting(_game);
+			Helper.SetupConstructedImporting(_game).Forget();
 		}
 
 		private void BtnEditTemplate_Click(object sender, RoutedEventArgs e)
@@ -137,7 +138,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonActivateHdtProtocol_OnClick(object sender, RoutedEventArgs e)
 		{
-			Core.MainWindow.SetupProtocol();
+			Core.MainWindow.SetupProtocol().Forget();
 		}
 
 		private void CheckboxUseOldArenaImporting_OnChecked(object sender, RoutedEventArgs e)

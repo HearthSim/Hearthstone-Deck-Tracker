@@ -12,6 +12,7 @@ using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
@@ -118,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					Config.Instance.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
 					Config.Save();
-					Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this to take effect.");
+					Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this to take effect.").Forget();
 				}
 			}
 		}
@@ -172,9 +173,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(Config.Instance.HearthStatsAutoUploadNewGames)
 			{
 				if(game.GameMode == GameMode.Arena)
-					HearthStatsManager.UploadArenaMatchAsync(game, deck, true, true);
+					HearthStatsManager.UploadArenaMatchAsync(game, deck, true, true).Forget();
 				else
-					HearthStatsManager.UploadMatchAsync(game, deck.GetSelectedDeckVersion(), true, true);
+					HearthStatsManager.UploadMatchAsync(game, deck.GetSelectedDeckVersion(), true, true).Forget();
 			}
 			DeckStatsList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] {deck});

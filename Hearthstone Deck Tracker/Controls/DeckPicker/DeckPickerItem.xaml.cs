@@ -94,7 +94,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public bool CanExecute(object parameter) => _action != null;
 
 		public void Execute(object parameter) => _action.Invoke();
-
+#pragma warning disable 0067
 		public event EventHandler CanExecuteChanged;
+#pragma warning restore 0067
 	}
 }

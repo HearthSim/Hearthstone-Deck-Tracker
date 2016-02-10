@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 
@@ -149,7 +150,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ClassIconStyle = (IconStyle)ComboBoxIconSet.SelectedItem;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new iconset to be loaded.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new iconset to be loaded.").Forget();
 		}
 
 		private void ComboboxDeckLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -158,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerItemLayout = (DeckLayout)ComboBoxDeckLayout.SelectedItem;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new layout to be loaded.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new layout to be loaded.").Forget();
 		}
 
 		private void ButtonRestart_OnClick(object sender, RoutedEventArgs e)
@@ -172,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerCaps = true;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
 		}
 
 		private void CheckboxDeckPickerCaps_Unchecked(object sender, RoutedEventArgs e)
@@ -181,7 +182,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerCaps = false;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
 		}
 
 		private void CheckboxUseAnimations_Unchecked(object sender, RoutedEventArgs e)
@@ -250,7 +251,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ShowLastPlayedDateOnDeck = true;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
 		}
 
 		private void CheckBoxShowLastPlayedDate_Unchecked(object sender, RoutedEventArgs e)
@@ -259,7 +260,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ShowLastPlayedDateOnDeck = false;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
+			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
 		}
 	}
 }

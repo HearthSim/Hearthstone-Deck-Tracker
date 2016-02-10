@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 		private class IcyVeinsWrapper
 		{
+#pragma warning disable 649
 			public IcyVeinsCardObj[] deck_cards;
 			public string deck_name;
 
@@ -55,6 +56,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				public string name;
 				public int quantity;
 			}
+#pragma warning restore 649
 		}
 	}
 }

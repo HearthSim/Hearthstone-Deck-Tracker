@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -592,7 +593,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							await UploadVersionAsync(v.version, v.hearthStatsId, false);
 
 							if(controller != null)
-								Core.MainWindow.Dispatcher.BeginInvoke(new Action(() => { controller.SetProgress(1.0 * (++uploaded) / total); }));
+								Core.MainWindow.Dispatcher.BeginInvoke(new Action(() => { controller.SetProgress(1.0 * (++uploaded) / total); })).Task.Forget();
 						}
 					}
 					DeckList.Save();

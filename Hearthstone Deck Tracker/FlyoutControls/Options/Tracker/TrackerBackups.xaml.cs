@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -57,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			DeckStatsList.Save();
 			DefaultDeckStats.Load();
 			DefaultDeckStats.Save();
-			Core.MainWindow.ShowMessage("Success", "Please restart HDT for this to take effect.");
+			Core.MainWindow.ShowMessage("Success", "Please restart HDT for this to take effect.").Forget();
 		}
 
 		private void ButtonCreateNew_Click(object sender, RoutedEventArgs e)
@@ -84,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					{
 						File.Delete(backupFile.FileInfo.FullName);
 					}
-					catch(Exception ex)
+					catch(Exception)
 					{
 						Logger.WriteLine("Error deleting backup: " + backupFile.FileInfo.FullName);
 					}

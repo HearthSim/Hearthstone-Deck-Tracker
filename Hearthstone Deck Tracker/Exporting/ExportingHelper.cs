@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using static Hearthstone_Deck_Tracker.Exporting.MouseActions;
 
@@ -139,7 +140,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			}
 			if(!User32.IsHearthstoneInForeground())
 			{
-				Core.MainWindow.ShowMessage("Exporting error", "Can't find Hearthstone window.");
+				Core.MainWindow.ShowMessage("Exporting error", "Can't find Hearthstone window.").Forget();
 				Logger.WriteLine("Can't find Hearthstone window.", "DeckExporter");
 				return false;
 			}

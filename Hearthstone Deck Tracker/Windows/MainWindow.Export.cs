@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Exporting;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 using Clipboard = System.Windows.Clipboard;
 
@@ -75,14 +76,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(source == null)
 				return;
 
-			//adjusting the DPI is apparently no longer/not necessary?
-			var dpiX = 96.0; //* source.CompositionTarget.TransformToDevice.M11;
-			var dpiY = 96.0; //* source.CompositionTarget.TransformToDevice.M22;
-
 			var deck = selectedDeck.GetSelectedDeckVersion();
 			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, 96, 96, deck.Name);
 			screenShotWindow.Shutdown();
-			SaveOrUploadScreenshot(pngEncoder, deck.Name);
+			await SaveOrUploadScreenshot(pngEncoder, deck.Name);
 		}
 
 		public async Task SaveOrUploadScreenshot(PngBitmapEncoder pngEncoder, string proposedFileName)
@@ -176,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(deck == null)
 				return;
 			Clipboard.SetText(Helper.DeckToIdString(deck.GetSelectedDeckVersion()));
-			this.ShowMessage("", "copied ids to clipboard");
+			this.ShowMessage("", "copied ids to clipboard").Forget();
 			Logger.WriteLine("Copied " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to clipboard", "Export");
 		}
 
@@ -206,13 +203,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 					    .Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
 					    .Aggregate((c, n) => c + Environment.NewLine + n);
 				Clipboard.SetText(names);
-				this.ShowMessage("", "copied names to clipboard");
+				this.ShowMessage("", "copied names to clipboard").Forget();
 				Logger.WriteLine("Copied " + deck.GetDeckInfo() + " names to clipboard", "Export");
 			}
 			catch(Exception ex)
 			{
 				Logger.WriteLine("Error copying card names to clipboard: " + ex);
-				this.ShowMessage("", "Error copying card names to clipboard.");
+				this.ShowMessage("", "Error copying card names to clipboard.").Forget();
 			}
 		}
 

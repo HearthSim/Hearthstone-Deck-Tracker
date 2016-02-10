@@ -10,6 +10,7 @@ using System.Windows.Media;
 using HDTHelper;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Point = System.Drawing.Point;
@@ -163,7 +164,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 			{
 				this.ShowMessage("Protocol already active",
-				                 "The \"hdt\" protocol allows other processes and websites to directly communicate with HDT.");
+				                 "The \"hdt\" protocol allows other processes and websites to directly communicate with HDT.").Forget();
 			}
 			if(HDTProtocol.Verify())
 			{

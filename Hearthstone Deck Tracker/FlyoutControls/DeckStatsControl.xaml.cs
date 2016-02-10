@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -134,7 +135,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 				}
 				if(HearthStatsAPI.IsLoggedIn && selectedGame.HasHearthStatsId && await Core.MainWindow.ShowCheckHearthStatsMatchDeletionDialog())
-					HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {selectedGame});
+					HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {selectedGame}).Forget();
 				//Core.MainWindow.DeckPickerList.Items.Refresh();
 				Core.MainWindow.DeckPickerList.UpdateDecks();
 				Refresh();
@@ -182,7 +183,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(HearthStatsAPI.IsLoggedIn && selectedGames.Any(g => g.HasHearthStatsId)
 				   && await Core.MainWindow.ShowCheckHearthStatsMatchDeletionDialog())
-					HearthStatsManager.DeleteMatchesAsync(selectedGames);
+					HearthStatsManager.DeleteMatchesAsync(selectedGames).Forget();
 				DeckStatsList.Save();
 				DefaultDeckStats.Save();
 				Logger.WriteLine("Deleted " + count + " games", "DeckStatsControl");
@@ -537,7 +538,7 @@ namespace Hearthstone_Deck_Tracker
 				game.DeckName = selectedDeck.Name;
 				selectedDeck.DeckStats.Games.Add(game);
 				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
-					HearthStatsManager.MoveMatchAsync(game, selectedDeck, background: true);
+					HearthStatsManager.MoveMatchAsync(game, selectedDeck, background: true).Forget();
 			}
 			DeckStatsList.Save();
 			DeckList.Save();

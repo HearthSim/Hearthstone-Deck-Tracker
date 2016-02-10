@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -91,7 +92,7 @@ namespace Hearthstone_Deck_Tracker
 					deck.Tags = new List<string>(tags.Concat(keep));
 					deck.Edited();
 					if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewDecks)
-						HearthStatsManager.UpdateDeckAsync(deck);
+						HearthStatsManager.UpdateDeckAsync(deck).Forget();
 				}
 				Core.MainWindow.DeckPickerList.UpdateDecks(false);
 				DeckList.Save();

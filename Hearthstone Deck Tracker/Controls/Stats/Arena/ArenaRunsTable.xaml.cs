@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -91,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 				Logger.WriteLine("Deleted game " + SelectedGame, "Runs.ButtonDeleteGame");
 			}
 			if(HearthStatsAPI.IsLoggedIn && SelectedGame.HasHearthStatsId && await window.ShowCheckHearthStatsMatchDeletionDialog())
-				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {SelectedGame});
+				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {SelectedGame}).Forget();
 			DeckStatsList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks();
 			ArenaStats.Instance.UpdateArenaStats();

@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 using static System.Windows.Visibility;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -210,12 +211,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(EditingDeck)
 				{
 					if(previousVersion != newVersion)
-						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsIdForUploading, background: true);
+						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsIdForUploading, background: true).Forget();
 					else
-						HearthStatsManager.UpdateDeckAsync(newDeckClone, background: true);
+						HearthStatsManager.UpdateDeckAsync(newDeckClone, background: true).Forget();
 				}
 				else
-					HearthStatsManager.UploadDeckAsync(newDeckClone, background: true);
+					HearthStatsManager.UploadDeckAsync(newDeckClone, background: true).Forget();
 			}
 
 			if(EditingDeck)

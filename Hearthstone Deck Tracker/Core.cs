@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.HotKeys;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
@@ -99,7 +100,7 @@ namespace Hearthstone_Deck_Tracker
 				LogReaderManager.Start(Game);
 			}
 			else
-				MainWindow.ShowHsNotInstalledMessage();
+				MainWindow.ShowHsNotInstalledMessage().Forget();
 
 			Helper.CopyReplayFiles();
 			BackupManager.Run();

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Exporting;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 using Clipboard = System.Windows.Clipboard;
 
@@ -116,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void ExportDeck()
 		{
 			if(DeckList.Instance.ActiveDeck != null && Core.Game.IsInMenu)
-				DeckExporter.Export(DeckList.Instance.ActiveDeckVersion);
+				DeckExporter.Export(DeckList.Instance.ActiveDeckVersion).Forget();
 		}
 
 		[PredefinedHotKeyAction("Import from game: arena", "Starts the webimport process with all dialogs.")]
@@ -133,7 +134,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void ImportFromConstructed()
 		{
 			Core.MainWindow.ImportDeck();
-			Core.MainWindow.ImportConstructedDeck();
+			Core.MainWindow.ImportConstructedDeck().Forget();
 		}
 
 		[PredefinedHotKeyAction("Import from web", "Starts the webimport process with all dialogs.")]
@@ -193,7 +194,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void StartHearthstone()
 		{
 			if(Core.MainWindow.BtnStartHearthstone.IsEnabled)
-				Helper.StartHearthstoneAsync();
+				Helper.StartHearthstoneAsync().Forget();
 		}
 
 		[PredefinedHotKeyAction("Show main window", "Brings up the main window.")]
