@@ -13,6 +13,7 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Xps.Serialization;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Enums;
@@ -708,13 +709,14 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public void UpdateAutoSelectToggleButton()
 		{
 			OnPropertyChanged(nameof(BorderAutoSelectBackground));
-			OnPropertyChanged(nameof(BorderAutoSelecTextBrush));
+			OnPropertyChanged(nameof(BorderAutoSelectTextBrush));
 		}
 
 		public SolidColorBrush BorderAutoSelectBackground
 			=> Config.Instance.AutoDeckDetection ? (SolidColorBrush)FindResource("AccentColorBrush") : new SolidColorBrush(Colors.Transparent);
 
-		public SolidColorBrush BorderAutoSelecTextBrush
+		public SolidColorBrush BorderAutoSelectTextBrush
 			=> Config.Instance.AutoDeckDetection ? new SolidColorBrush(Colors.White) : (SolidColorBrush)FindResource("TextBrush");
+
 	}
 }

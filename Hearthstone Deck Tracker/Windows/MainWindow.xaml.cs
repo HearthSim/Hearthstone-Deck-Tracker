@@ -734,7 +734,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				else
 				{
-					this.ShowMessage("Deck detection disabled.", "Can be re-enabled in \"MAIN\" menu.");
+					this.ShowMessage("Auto deck selection disabled.", "This can be re-enabled by selecting \"AUTO\" in the bottom right of the deck picker.");
 					DeckPickerList.UpdateAutoSelectToggleButton();
 					Config.Save();
 				}
