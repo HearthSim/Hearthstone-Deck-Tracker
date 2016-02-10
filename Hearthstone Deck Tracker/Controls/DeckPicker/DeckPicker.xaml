@@ -116,7 +116,7 @@
                     </Style>
                 </Grid.Style>
                 <TextBlock Text="AUTO SELECT"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
-                           ToolTip="Requires an active deck."/>
+                           Foreground="{Binding BorderAutoSelecTextBrush, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}" ToolTip="Requires an active deck."/>
             </Grid>
         </Border>
         
