@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				return;
 			var count = 0;
 			Logger.WriteLine("Clearing deck...", "DeckExporter");
-			while(!IsDeckEmpty(info.HsHandle, info.HsRect.Width, info.HsRect.Height, info.Ratio))
+			while(!await IsDeckEmpty(info.HsHandle, info.HsRect.Width, info.HsRect.Height, info.Ratio))
 			{
 				await
 					ClickOnPoint(info.HsHandle,
@@ -103,11 +103,12 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				return 0;
 
 			//Check if Card exist in collection
-			if(CardExists(info.HsHandle, (int)info.CardPosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height))
+			var cardExists = await CardExists(info.HsHandle, (int)info.CardPosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height);
+			if(cardExists)
 			{
 				//Check if a golden exist
 				if(Config.Instance.PrioritizeGolden
-				   && CardExists(info.HsHandle, (int)info.Card2PosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height))
+				   && await CardExists(info.HsHandle, (int)info.Card2PosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height))
 				{
 					await ClickOnPoint(info.HsHandle, new Point((int)info.Card2PosX + 50, (int)info.CardPosY + 50));
 
@@ -125,10 +126,11 @@ namespace Hearthstone_Deck_Tracker.Exporting
 					{
 						//Check if two card are not available 
 						await Task.Delay(200 - Config.Instance.DeckExportDelay);
-						if(CardHasLock(info.HsHandle, (int)(info.CardPosX + info.HsRect.Width * 0.048),
+						if(await CardHasLock(info.HsHandle, (int)(info.CardPosX + info.HsRect.Width * 0.048),
 						                               (int)(info.CardPosY + info.HsRect.Height * 0.287), info.HsRect.Width, info.HsRect.Height))
 						{
-							if(CardExists(info.HsHandle, (int)info.Card2PosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height))
+							var card2Exists = await CardExists(info.HsHandle, (int)info.Card2PosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height);
+							if(card2Exists)
 							{
 								await ClickOnPoint(info.HsHandle, new Point((int)info.Card2PosX + 50, (int)info.CardPosY + 50));
 								return 0;
@@ -187,7 +189,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			var crystalPoint = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportZeroButtonX, info.HsRect.Width, info.Ratio),
 			                             (int)(Config.Instance.ExportZeroButtonY * info.HsRect.Height));
 
-			if(IsZeroCrystalSelected(info.HsHandle, info.Ratio, info.HsRect.Width, info.HsRect.Height))
+			if(await IsZeroCrystalSelected(info.HsHandle, info.Ratio, info.HsRect.Width, info.HsRect.Height))
 			{
 				// deselect it
 				await ClickOnPoint(info.HsHandle, crystalPoint);

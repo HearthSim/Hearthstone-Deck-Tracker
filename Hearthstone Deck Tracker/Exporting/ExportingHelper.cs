@@ -17,21 +17,21 @@ namespace Hearthstone_Deck_Tracker.Exporting
 	{
 		public static bool AddArtist => new[] {"zhCN", "zhTW", "ruRU", "koKR"}.All(x => Config.Instance.SelectedLanguage != x);
 
-		public static bool CardExists(IntPtr wndHandle, int posX, int posY, int width, int height)
+		public static async Task<bool> CardExists(IntPtr wndHandle, int posX, int posY, int width, int height)
 		{
 			const double scale = 0.037; // 40px @ height = 1080
 			const double minHue = 90;
 
 			var size = (int)Math.Round(height * scale);
 
-			var capture = Helper.CaptureHearthstone(new Point(posX, posY), size, size, wndHandle);
+			var capture = await Helper.CaptureHearthstoneAsync(new Point(posX, posY), size, size, wndHandle);
 			if(capture == null)
 				return false;
 
 			return HueAndBrightness.GetAverage(capture).Hue > minHue;
 		}
 
-		public static bool CardHasLock(IntPtr wndHandle, int posX, int posY, int width, int height)
+		public static async Task<bool> CardHasLock(IntPtr wndHandle, int posX, int posY, int width, int height)
 		{
 			// setting this as a "width" value relative to height, maybe not best solution?
 			const double xScale = 0.051; // 55px @ height = 1080
@@ -42,23 +42,23 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			var lockWidth = (int)Math.Round(height * xScale);
 			var lockHeight = (int)Math.Round(height * yScale);
 
-			var capture = Helper.CaptureHearthstone(new Point(posX, posY), lockWidth, lockHeight, wndHandle);
+			var capture = await Helper.CaptureHearthstoneAsync(new Point(posX, posY), lockWidth, lockHeight, wndHandle);
 			if(capture == null)
 				return false;
 
 			return HueAndBrightness.GetAverage(capture).Brightness < maxBrightness;
 		}
 
-		public static bool IsDeckEmpty(IntPtr wndHandle, int width, int height, double ratio)
+		public static async Task<bool> IsDeckEmpty(IntPtr wndHandle, int width, int height, double ratio)
 		{
 			var capture =
-				Helper.CaptureHearthstone(
+				await Helper.CaptureHearthstoneAsync(
 				                          new Point((int)Helper.GetScaledXPos(Config.Instance.ExportClearX, width, ratio),
 				                                    (int)(Config.Instance.ExportClearCheckYFixed * height)), 1, 1, wndHandle);
 			return capture != null && ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255, 56, 45, 69), 5);
 		}
 
-		public static bool IsZeroCrystalSelected(IntPtr wndHandle, double ratio, int width, int height)
+		public static async Task<bool> IsZeroCrystalSelected(IntPtr wndHandle, double ratio, int width, int height)
 		{
 			const double scale = 0.020; // 22px @ height = 1080
 			const double minBrightness = 0.55;
@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			var posX = (int)Helper.GetScaledXPos(Config.Instance.ExportZeroSquareX, width, ratio);
 			var posY = (int)(Config.Instance.ExportZeroSquareY * height);
 
-			var capture = Helper.CaptureHearthstone(new Point(posX, posY), size, size, wndHandle);
+			var capture = await Helper.CaptureHearthstoneAsync(new Point(posX, posY), size, size, wndHandle);
 
 			if(capture == null)
 				return false;

@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Controls;
@@ -29,12 +30,15 @@ using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Color = System.Drawing.Color;
 using MediaColor = System.Windows.Media.Color;
+using MessageBox = System.Windows.MessageBox;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
 using Region = Hearthstone_Deck_Tracker.Enums.Region;
+using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using Size = System.Drawing.Size;
 
 #endregion
@@ -287,21 +291,22 @@ namespace Hearthstone_Deck_Tracker
 			=> deck.GetSelectedDeckVersion().Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
 
 		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr),
-												bool requireInForeground = true)
+												bool requireInForeground = true) => CaptureHearthstoneAsync(point, width, height, wndHandle, requireInForeground).Result;
+
+		public static async Task<Bitmap> CaptureHearthstoneAsync(Point point, int width, int height, IntPtr wndHandle = default(IntPtr),
+																 bool requireInForeground = true, bool? altScreenCapture = null)
 		{
 			if(wndHandle == default(IntPtr))
 				wndHandle = User32.GetHearthstoneWindow();
 
-			User32.ClientToScreen(wndHandle, ref point);
 			if(requireInForeground && !User32.IsHearthstoneInForeground())
 				return null;
 
 			try
 			{
-				var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-				var graphics = Graphics.FromImage(bmp);
-				graphics.CopyFromScreen(point.X, point.Y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
-				return bmp;
+				if(altScreenCapture ?? Config.Instance.AlternativeScreenCapture)
+					return await Task.Run(() => CaptureWindow(wndHandle, point, width, height));
+				return await Task.Run(() => CaptureScreen(wndHandle, point, width, height));
 			}
 			catch(Exception ex)
 			{
@@ -310,13 +315,52 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public static Bitmap CaptureWindow(IntPtr wndHandle, Point point, int width, int height)
+		{
+			User32.Rect windowRect;
+			User32.GetWindowRect(wndHandle, out windowRect);
+			var windowWidth = windowRect.right - windowRect.left;
+			var windowHeight = windowRect.bottom - windowRect.top;
+			var bmp = new Bitmap(windowWidth, windowHeight, PixelFormat.Format32bppArgb);
+			using(var graphics = Graphics.FromImage(bmp))
+			{
+				var hdc = graphics.GetHdc();
+				
+				try
+				{
+					User32.PrintWindow(wndHandle, hdc, 0);
+				}
+				finally
+				{
+					graphics.ReleaseHdc(hdc);
+				}
+			}
+			var cRect = new User32.Rect();
+			User32.GetClientRect(wndHandle, ref cRect);
+			var cWidth = cRect.right - cRect.left;
+			var cHeight = cRect.bottom - cRect.top;
+			var captionHeight = windowHeight - cHeight > 0 ? SystemInformation.CaptionHeight : 0;
+			return bmp.Clone(new Rectangle((windowWidth - cWidth) / 2 + point.X, 
+				(windowHeight - cHeight - captionHeight) / 2 + captionHeight + point.Y,
+				width, height), PixelFormat.Format32bppArgb);
+		}
+
+		public static Bitmap CaptureScreen(IntPtr wndHandle, Point point, int width, int height)
+		{
+			User32.ClientToScreen(wndHandle, ref point);
+			var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+			var graphics = Graphics.FromImage(bmp);
+			graphics.CopyFromScreen(point.X, point.Y, 0, 0, new Size(width, height), CopyPixelOperation.SourceCopy);
+			return bmp;
+		}
+
 		public static async Task<bool> FriendsListOpen()
 		{
 			//wait for friendslist to open/close
 			await Task.Delay(300);
 
 			var rect = User32.GetHearthstoneRect(false);
-			var capture = CaptureHearthstone(new Point(0, (int)(rect.Height * 0.85)), (int)(rect.Width * 0.1), (int)(rect.Height * 0.15));
+			var capture = await CaptureHearthstoneAsync(new Point(0, (int)(rect.Height * 0.85)), (int)(rect.Width * 0.1), (int)(rect.Height * 0.15));
 			if(capture == null)
 				return false;
 

@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxShowSplashScreen.IsChecked = Config.Instance.ShowSplashScreen;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
 			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;
+			CheckboxAlternativeScreenCapture.IsChecked = Config.Instance.AlternativeScreenCapture;
 
 			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 				Config.Instance.KeyPressOnGameStart = "None";
@@ -369,6 +370,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if (!_initialized)
 				return;
 			Utility.NewsUpdater.ToggleNewsVisibility();
+		}
+
+		private void CheckboxAlternativeScreenCapture_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AlternativeScreenCapture = true;
+			Config.Save();
+		}
+
+		private void CheckboxAlternativeScreenCapture_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AlternativeScreenCapture = false;
+			Config.Save();
 		}
 	}
 }

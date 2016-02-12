@@ -37,6 +37,9 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetClientRect(IntPtr hWnd, ref Rect rect);
 
+		[DllImport("user32.dll", SetLastError = true)]
+		public static extern bool GetWindowRect(IntPtr hwnd, out Rect lpRect);
+
 		[DllImport("user32.dll")]
 		public static extern IntPtr GetForegroundWindow();
 
@@ -72,6 +75,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DllImport("user32.dll")]
 		private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
+
+		[DllImport("user32.dll")]
+		public static extern bool PrintWindow(IntPtr hwnd, IntPtr hdcBlt, uint nFlags);
 
 		public static void SetWindowExStyle(IntPtr hwnd, int style) => SetWindowLong(hwnd, GwlExstyle, GetWindowLong(hwnd, GwlExstyle) | style);
 

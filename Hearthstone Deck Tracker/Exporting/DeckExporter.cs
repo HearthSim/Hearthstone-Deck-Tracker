@@ -17,6 +17,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			if(deck == null)
 				return;
 			var currentClipboard = "";
+			var altScreenCapture = Config.Instance.AlternativeScreenCapture;
 			try
 			{
 				Logger.WriteLine("Exporting " + deck.GetDeckInfo(), "DeckExporter");
@@ -31,7 +32,8 @@ namespace Hearthstone_Deck_Tracker.Exporting
 					return;
 				Logger.WriteLine($"Waiting for {Config.Instance.ExportStartDelay} seconds before starting the export process", "DeckExporter");
 				await Task.Delay(Config.Instance.ExportStartDelay * 1000);
-				Core.Overlay.ForceHide(true);
+				if(!altScreenCapture)
+					Core.Overlay.ForceHide(true);
 
 				await ClearDeck(info);
 				await SetDeckName(deck, info);
@@ -51,7 +53,8 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			}
 			finally
 			{
-				Core.Overlay.ForceHide(false);
+				if(!altScreenCapture)
+					Core.Overlay.ForceHide(false);
 				if(Config.Instance.ExportPasteClipboard && currentClipboard != "")
 					Clipboard.SetText(currentClipboard);
 			}

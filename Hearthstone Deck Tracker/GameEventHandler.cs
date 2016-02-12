@@ -421,12 +421,11 @@ namespace Hearthstone_Deck_Tracker
 			}
 			var rect = Helper.GetHearthstoneRect(false);
 			var reEnableOverlay = false;
-			if(Core.Overlay.IsRankConvered())
+			if(!Config.Instance.AlternativeScreenCapture && Core.Overlay.IsRankConvered())
 			{
 				if(_rankDetectionTries >= MaxRankDetectionTries)
 				{
-					Logger.WriteLine($"Not toggling overlay, exceeded max rank detection tries ({MaxRankDetectionTries}).",
-					                 "GameEventHandler");
+					Logger.WriteLine($"Not toggling overlay, exceeded max rank detection tries ({MaxRankDetectionTries}).", "GameEventHandler");
 					_rankDetectionRunning = false;
 					return;
 				}
@@ -444,7 +443,7 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.ShowFriendsListWarning(true);
 			}
 			Core.Overlay.ShowFriendsListWarning(false);
-			var capture = Helper.CaptureHearthstone(new Point(0, 0), rect.Width, rect.Height);
+			var capture = await Helper.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height);
 			if(reEnableOverlay)
 				Core.Overlay.ShowOverlay(true);
 

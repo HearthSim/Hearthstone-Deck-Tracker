@@ -173,13 +173,44 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			if(handle == IntPtr.Zero)
 				return;
 			var rect = User32.GetHearthstoneRect(false);
-			var bmp = Helper.CaptureHearthstone(new Point(0, 0), rect.Width, rect.Height, handle, false);
-			var encoder = new PngBitmapEncoder();
-			var mem = new MemoryStream();
-			bmp.Save(mem, ImageFormat.Png);
-			encoder.Frames.Add(BitmapFrame.Create(mem));
-			await Core.MainWindow.SaveOrUploadScreenshot(encoder, "Hearthstone " + DateTime.Now.ToString("MM-dd-yy hh-mm-ss"));
-			mem.Dispose();
+			var bmp = await Helper.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, handle, false, false);
+			if(bmp == null)
+			{
+				Logger.WriteLine("There was an error capturing hearthstone.", "Screenshot-Action");
+				return;
+			}
+			using(var mem = new MemoryStream())
+			{
+				var encoder = new PngBitmapEncoder();
+				bmp.Save(mem, ImageFormat.Png);
+				encoder.Frames.Add(BitmapFrame.Create(mem));
+				await Core.MainWindow.SaveOrUploadScreenshot(encoder, "Hearthstone " + DateTime.Now.ToString("MM-dd-yy hh-mm-ss"));
+			}
+			Core.MainWindow.ActivateWindow();
+		}
+
+		[PredefinedHotKeyAction("Game Screenshot",
+			"Creates a screenshot of the game only. Comes with an option to automatically upload to imgur."
+			)]
+		public static async void GameScreenshot()
+		{
+			var handle = User32.GetHearthstoneWindow();
+			if(handle == IntPtr.Zero)
+				return;
+			var rect = User32.GetHearthstoneRect(false);
+			var bmp = await Helper.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, handle, false, true);
+			if(bmp == null)
+			{
+				Logger.WriteLine("There was an error capturing hearthstone.", "GameScreenshot-Action");
+				return;
+			}
+			using(var mem = new MemoryStream())
+			{
+				var encoder = new PngBitmapEncoder();
+				bmp.Save(mem, ImageFormat.Png);
+				encoder.Frames.Add(BitmapFrame.Create(mem));
+				await Core.MainWindow.SaveOrUploadScreenshot(encoder, "Hearthstone " + DateTime.Now.ToString("MM-dd-yy hh-mm-ss"));
+			}
 			Core.MainWindow.ActivateWindow();
 		}
 
