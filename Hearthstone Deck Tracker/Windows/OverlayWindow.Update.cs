@@ -42,7 +42,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var playerBoard =
 				Core.Game.Player.Board.Where(x => x.Entity.IsMinion).OrderBy(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
 			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
-			DetectMouseOver(playerBoard, oppBoard);
+			if(User32.IsHearthstoneInForeground())
+				DetectMouseOver(playerBoard, oppBoard);
 
 			StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
 			StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
