@@ -29,6 +29,7 @@
                             <Button Name="BtnArenaHowTo" Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SHOW ARENA IMPORTING HOW-TO" Click="ButtonArenaHowTo_OnClick" IsEnabled="False"/>
                             <GroupBox Header="Arena deck name template">
                                 <DockPanel>
+                                    <TextBlock Text="Templates: {Class}, {Date FORMAT}" DockPanel.Dock="Bottom" Margin="0,5,0,0" TextWrapping="Wrap" ToolTip="For more information on date formats google &quot;C# date format&quot;."/>
                                     <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
                                         <TextBlock Text="Preview:" />
                                         <TextBlock Name="TextBlockNamePreview" Margin="5,0,0,0"/>

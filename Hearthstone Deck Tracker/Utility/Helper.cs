@@ -462,7 +462,9 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Rectangle GetHearthstoneRect(bool dpiScaling) => User32.GetHearthstoneRect(dpiScaling);
 
-		public static string ParseDeckNameTemplate(string template)
+		public static string ParseDeckNameTemplate(string template) => ParseDeckNameTemplate(template, null);
+
+		public static string ParseDeckNameTemplate(string template, Deck deck)
 		{
 			try
 			{
@@ -474,6 +476,10 @@ namespace Hearthstone_Deck_Tracker
 					var date = DateTime.Now.ToString(match.Groups["date"].Value);
 					result = Regex.Replace(result, dateRegex, date);
 				}
+				const string classRegex = "{Class}";
+				match = Regex.Match(template, classRegex);
+				if(match.Success)
+					result = Regex.Replace(result, classRegex, deck?.Class ?? "");
 				return result;
 			}
 			catch

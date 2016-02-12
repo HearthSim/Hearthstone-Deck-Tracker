@@ -175,10 +175,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			TempArenaDeck = new Deck
 			{
-				Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate),
 				IsArenaDeck = true,
 				Class = Database.GetHeroNameFromId(heroId)
 			};
+			TempArenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, TempArenaDeck);
 			Logger.WriteLine("Created new arena deck: " + TempArenaDeck.Class);
 		}
 

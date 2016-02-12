@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 		{
 			try
 			{
-				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
+				var deck = new Deck {IsArenaDeck = true};
 
 				const string baseUrl = @"http://www.arenavalue.com/deckpopout.php?id=";
 				var newUrl = baseUrl + url.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Last();
@@ -81,6 +81,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 				}
+				deck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, deck);
 				return deck;
 			}
 			catch(Exception e)

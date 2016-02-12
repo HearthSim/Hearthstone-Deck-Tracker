@@ -287,13 +287,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 						return;
 				}
 
-				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
+				var deck = new Deck {IsArenaDeck = true};
 				foreach(var card in Core.Game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
 				{
 					deck.Cards.Add(card);
 					if(deck.Class == null && card.GetPlayerClass != "Neutral")
 						deck.Class = card.GetPlayerClass;
 				}
+				deck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, deck);
 				if(Config.Instance.DeckImportAutoDetectCardCount)
 				{
 					await

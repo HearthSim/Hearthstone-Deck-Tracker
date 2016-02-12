@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			try
 			{
 				var doc = await ImportingHelper.GetHtmlDoc(url);
-				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
+				var deck = new Deck {IsArenaDeck = true};
 
 				var cardNodes = doc.DocumentNode.SelectSingleNode(".//ul[@class='deckList']");
 				var nameNodes = cardNodes.SelectNodes(".//span[@class='name']");
@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				}
 				if(DeckList.Instance.AllTags.Contains("Arena"))
 					deck.Tags.Add("Arena");
+				deck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, deck);
 				return deck;
 			}
 			catch(Exception e)
