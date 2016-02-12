@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public long LastGameEnd { get; set; }
 		public DateTime LastGameStart { get; set; }
 		public int LastId { get; set; }
+		public int MaxId { get; set; }
 		public bool OpponentUsedHeroPower { get; set; }
 		public bool PlayerUsedHeroPower { get; set; }
 		public long PreviousSize { get; set; }
@@ -103,6 +104,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			KnownCardIds.Clear();
 			LastGameStart = DateTime.Now;
 			WaitForController = null;
+			MaxId = 0;
 		}
 	}
 }

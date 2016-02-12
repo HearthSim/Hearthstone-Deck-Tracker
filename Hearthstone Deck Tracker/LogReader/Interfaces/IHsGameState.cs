@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		long LastGameEnd { get; set; }
 		DateTime LastGameStart { get; set; }
 		int LastId { get; set; }
+		int MaxId { get; set; }
 		bool OpponentUsedHeroPower { get; set; }
 		bool PlayerUsedHeroPower { get; set; }
 		long PreviousSize { get; set; }

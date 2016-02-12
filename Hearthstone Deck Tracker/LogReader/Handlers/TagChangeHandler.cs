@@ -32,6 +32,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 			}
 			gameState.LastId = id;
+			if(id > gameState.MaxId)
+				gameState.MaxId = id;
 			if(!game.Entities.ContainsKey(id))
 				game.Entities.Add(id, new Entity(id));
 			GAME_TAG tag;

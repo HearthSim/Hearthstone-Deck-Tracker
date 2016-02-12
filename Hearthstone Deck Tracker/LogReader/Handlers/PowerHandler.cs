@@ -296,7 +296,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
 			for(var i = 0; i < count; i++)
 			{
-				var id = game.Entities.Count + i + 1;
+				var id = GetMaxEntityId(gameState, game) + i + 1;
 				if(!gameState.KnownCardIds.ContainsKey(id))
 					gameState.KnownCardIds.Add(id, targetCardId);
 			}
@@ -306,10 +306,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			for(var i = 0; i < count; i++)
 			{
-				var id = game.Entities.Count + 1 + i;
+				var id = GetMaxEntityId(gameState, game) + 1 + i;
 				if(!gameState.KnownCardIds.ContainsKey(id))
 					gameState.KnownCardIds.Add(id, cardId);
 			}
 		}
+
+		private static int GetMaxEntityId(IHsGameState gameState, IGame game) => Math.Max(game.Entities.Count, gameState.MaxId);
 	}
 }
