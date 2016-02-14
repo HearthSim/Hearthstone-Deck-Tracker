@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		{
 			if(RegisteredHotKeys.ContainsKey(hotKey))
 			{
-				Logger.WriteLine($"HotKey {hotKey} already registered.", "HotKeyManager");
+				Logger.WriteLine($"[{hotKey}] already registered.", "HotKeyManager");
 				return false;
 			}
 			try
@@ -37,6 +37,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 
 				var predefined = PredefinedHotKeyActions.PredefinedActionNames.FirstOrDefault(x => x.MethodName == name);
 				var title = predefined != null ? predefined.Title : name;
+				Logger.WriteLine($"Registering [{hotKey}]: {title}.", "HotKeyManager");
 				RegisteredHotKeysInfo.Add(new KeyValuePair<HotKey, string>(hotKey, title));
 				return true;
 			}
@@ -50,8 +51,12 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		private static void KeyboardHookOnKeyPressed(object sender, KeyPressedEventArgs e)
 		{
 			Action action;
-			if(RegisteredHotKeys.TryGetValue(HotKey.FromKeyPressedEventArgs(e), out action))
+			var hotKey = HotKey.FromKeyPressedEventArgs(e);
+			if(RegisteredHotKeys.TryGetValue(hotKey, out action))
+			{
+				Logger.WriteLine($"[{hotKey}] pressed.", "HotKeyManager");
 				action.Invoke();
+			}
 		}
 
 		public static void Load()
@@ -72,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 
 		public static void RemovePredefinedHotkey(HotKey hotKey)
 		{
+			Logger.WriteLine($"Removing [{hotKey}].", "HotKeyManager");
 			HotKeyConfig.Instance.RemoveHotKey(hotKey);
 			if(RegisteredHotKeys.ContainsKey(hotKey))
 				RegisteredHotKeys.Remove(hotKey);

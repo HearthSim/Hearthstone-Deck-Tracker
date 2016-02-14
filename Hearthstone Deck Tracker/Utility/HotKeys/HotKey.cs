@@ -38,5 +38,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public override int GetHashCode() => Mod.GetHashCode() * 31 + Key.GetHashCode();
 
 		public static HotKey FromKeyPressedEventArgs(KeyPressedEventArgs args) => new HotKey(args.Modifier, args.Key);
+
+		public override string ToString() => $"mod={Mod}, key={Key}";
 	}
 }
