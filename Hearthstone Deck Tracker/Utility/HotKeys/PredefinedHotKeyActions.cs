@@ -120,6 +120,15 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 				DeckExporter.Export(DeckList.Instance.ActiveDeckVersion).Forget();
 		}
 
+		[PredefinedHotKeyAction("Edit active deck", "Opens the edit dialog for the active deck (if any) and brings HDT to foreground.")]
+		public static void EditDeck()
+		{
+			if(DeckList.Instance.ActiveDeck == null)
+				return;
+			Core.MainWindow.SetNewDeck(DeckList.Instance.ActiveDeck, true);
+			Core.MainWindow.ActivateWindow();
+		}
+
 		[PredefinedHotKeyAction("Import from game: arena", "Starts the webimport process with all dialogs.")]
 		public static async void ImportFromArena()
 		{
