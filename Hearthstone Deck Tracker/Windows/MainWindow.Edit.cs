@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -387,6 +388,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckPickerList.UpdateDecks();
 			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 				HearthStatsManager.UpdateDeckAsync(deck, true, true).Forget();
+		}
+
+		private void MainWindow_OnPreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			if(e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control && _newDeck != null)
+			{
+				MenuItemSave.IsSubmenuOpen = true;
+				MenuItemSave.Focus();
+			}
 		}
 	}
 }

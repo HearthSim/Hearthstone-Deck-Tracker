@@ -15,6 +15,7 @@
                       Closing="Window_Closing"
                       Icon="{StaticResource AppIcon}"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
+                      PreviewKeyDown="MainWindow_OnPreviewKeyDown"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" LocationChanged="MetroWindow_LocationChanged" SizeChanged="MetroWindow_SizeChanged">
     <Window.Resources>
         <ResourceDictionary>
