@@ -263,8 +263,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			get
 			{
-				return string.IsNullOrEmpty(_flavorText)
-						   ? "This is a token. Tokens are apparently not allowed to have flavor texts. :(" : _flavorText;
+				return string.IsNullOrEmpty(_flavorText) ? "-" : _flavorText;
 			}
 			set
 			{
