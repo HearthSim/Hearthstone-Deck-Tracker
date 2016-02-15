@@ -234,7 +234,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public bool RotatedRectContains(Rectangle rect, System.Windows.Point location)
 		{
 			var rectCorner = new System.Windows.Point(Canvas.GetLeft(rect), Canvas.GetTop(rect));
-			var rectRotation = (RotateTransform)rect.RenderTransform;
+			var rectRotation = rect.RenderTransform as RotateTransform;
+			if(rectRotation == null)
+				return false;
 			var transform = new RotateTransform(-rectRotation.Angle, rectCorner.X + rectRotation.CenterX, rectCorner.Y + rectRotation.CenterY);
 			var rotated = transform.Transform(location);
 			return rotated.X > rectCorner.X && rotated.X < rectCorner.X + rect.Width && rotated.Y > rectCorner.Y
