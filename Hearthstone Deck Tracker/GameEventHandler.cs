@@ -138,6 +138,7 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.Stop();
 			Core.Overlay.HideTimers();
 			Core.Overlay.HideSecrets();
+			Core.Overlay.Update(true);
 
 			Logger.WriteLine("Waiting for game mode detection...", "HandleInMenu");
 			await _game.GameModeDetection();
