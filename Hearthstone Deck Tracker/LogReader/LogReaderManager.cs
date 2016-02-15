@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private static readonly ArenaHandler ArenaHandler = new ArenaHandler();
 		private static readonly NetHandler NetHandler = new NetHandler();
 		private static readonly LoadingScreenHandler LoadingScreenHandler = new LoadingScreenHandler();
+		private static LogReader _fullPowerLogReader;
 		private static LogReader _powerLogReader;
 		private static LogReader _bobLogReader;
 		private static LogReader _netLogReader;
@@ -35,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private static void InitializeLogReaders()
 		{
+			_fullPowerLogReader = new LogReader(FullPowerLogReaderInfo);
 			_powerLogReader = new LogReader(PowerLogReaderInfo);
 			_bobLogReader = new LogReader(BobLogReaderInfo);
 			_netLogReader = new LogReader(NetLogReaderInfo);
@@ -61,8 +63,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				return;
 			foreach(var logReader in LogReaders)
 				logReader.Start(_startingPoint);
+			_fullPowerLogReader.Start(_startingPoint);
 			_running = true;
 			_stop = false;
+			var powerLines = new List<LogLineItem>();
 			while(!_stop)
 			{
 				await Task.Factory.StartNew(() =>
@@ -78,8 +82,14 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							logLines.Add(line);
 						}
 					}
+					powerLines = _fullPowerLogReader.Collect();
 				});
 				ProcessNewLines();
+				if(powerLines.Any())
+				{
+					Core.Game.PowerLog.AddRange(powerLines.Select(x => x.Line));
+					powerLines.Clear();
+				}
 				await Task.Delay(Config.Instance.UpdateDelay);
 			}
 			_running = false;
@@ -107,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_stop = true;
 			while(_running)
 				await Task.Delay(50);
-			await Task.WhenAll(LogReaders.Where(x => force || x.Info.Reset).Select(x => x.Stop()));
+			await Task.WhenAll(LogReaders.Where(x => force || x.Info.Reset).Concat(new[] {_fullPowerLogReader}).Select(x => x.Stop()));
 			Logger.WriteLine("Stopped LogReaders.", "LogReaderManager");
 			return true;
 		}

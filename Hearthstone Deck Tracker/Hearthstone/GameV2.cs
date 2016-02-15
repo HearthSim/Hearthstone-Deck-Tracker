@@ -42,6 +42,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public static List<string> HSLogLines { get; } = new List<string>();
+		public List<string> PowerLog { get; } = new List<string>();
 		public Deck IgnoreIncorrectDeck { get; set; }
 		public GameTime GameTime { get; } = new GameTime();
 		public bool IsMinionInPlay => Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion)).Value != null;
@@ -124,6 +125,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				_gameModeDetectionComplete = false;
 			}
 			HSLogLines.Clear();
+			PowerLog.Clear();
 
 			if(Core.Game != null && Core.Overlay != null)
 			{
