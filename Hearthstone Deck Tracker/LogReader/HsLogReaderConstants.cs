@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public static LogReaderInfo RachelleLogReaderInfo => new LogReaderInfo {Name = "Rachelle"};
 		public static LogReaderInfo ArenaLogReaderInfo => new LogReaderInfo {Name = "Arena"};
 		public static LogReaderInfo LoadingScreenLogReaderInfo => new LogReaderInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded"}};
-		public static LogReaderInfo NetLogReaderInfo => new LogReaderInfo { Name = "Net", Reset = false};
+		public static LogReaderInfo NetLogReaderInfo => new LogReaderInfo {Name = "Net"};
 		public static LogReaderInfo FullPowerLogReaderInfo => new LogReaderInfo { Name = "Power" };
 
 		public static class GameState

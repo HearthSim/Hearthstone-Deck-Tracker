@@ -176,7 +176,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							LoadingScreenHandler.Handle(line.Line, _gameState, _game);
 							break;
 						case "Net":
-							NetHandler.Handle(line.Line, _game);
+							NetHandler.Handle(line.Line, _gameState, _game);
 							break;
 					}
 				}

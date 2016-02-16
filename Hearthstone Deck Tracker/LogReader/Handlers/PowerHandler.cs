@@ -23,19 +23,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
-			if(logLine.Contains("CREATE_GAME"))
+			if(GameEntityRegex.IsMatch(logLine))
 			{
-				gameState.GameHandler.HandleGameStart();
-				gameState.GameEnded = false;
-				gameState.AddToTurn = -1;
-				gameState.GameLoaded = true;
-				gameState.LastGameStart = DateTime.Now;
-			}
-			else if(GameEntityRegex.IsMatch(logLine))
-			{
-				gameState.GameHandler.HandleGameStart();
-				gameState.GameEnded = false;
-				gameState.AddToTurn = -1;
 				var match = GameEntityRegex.Match(logLine);
 				var id = int.Parse(match.Groups["id"].Value);
 				if(!game.Entities.ContainsKey(id))
