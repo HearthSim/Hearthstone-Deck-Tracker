@@ -164,7 +164,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 				}
 			}
-			var handCount = Math.Max(_game.Player.HandCount, MaxHandSize);
+			var handCount = Math.Min(_game.Player.HandCount, MaxHandSize);
 			for(var i = handCount - 1; i >= 0; i--)
 			{
 				if(RotatedRectContains(_playerHand[i], relativeCanvas))
