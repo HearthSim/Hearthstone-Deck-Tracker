@@ -328,7 +328,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			foreach(var deck in _displayedDecks.Where(dpi => !decks.Contains(dpi.Deck) || forceUpdate.Contains(dpi.Deck)).ToList())
 				_displayedDecks.Remove(deck);
 			foreach(var deck in decks.Where(d => !_displayedDecks.Select(x => x.Deck).Contains(d)))
-				_displayedDecks.Add(GetDeckPickerItemFromCache(deck));
+			{
+				var dpi = GetDeckPickerItemFromCache(deck);
+				if(dpi != null)
+					_displayedDecks.Add(dpi);
+			}
 			Sort();
 			if(selectedDeck != null && reselectActiveDeck && decks.Contains(selectedDeck))
 				SelectDeck(selectedDeck);
@@ -337,6 +341,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private DeckPickerItem GetDeckPickerItemFromCache(Deck deck)
 		{
+			if(deck == null)
+				return null;
 			DeckPickerItem dpi;
 			if(_cachedDeckPickerItems.TryGetValue(deck, out dpi))
 				return dpi;

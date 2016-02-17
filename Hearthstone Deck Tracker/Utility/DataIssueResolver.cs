@@ -253,7 +253,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					if(entity != null)
 					{
 						string hero;
-						if(CardIds.HeroIdDict.TryGetValue(entity.CardId, out hero) && game.OpponentHero != hero)
+						if(CardIds.HeroIdDict.TryGetValue(entity.CardId ?? "", out hero) && game.OpponentHero != hero)
 						{
 							game.OpponentHero = hero;
 							if(!incremented)

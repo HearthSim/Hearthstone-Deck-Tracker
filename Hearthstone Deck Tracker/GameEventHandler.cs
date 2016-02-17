@@ -243,7 +243,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(entity.IsActiveDeathrattle)
 			{
-				if(!CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId, out numDeathrattleMinions))
+				if(!CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId ?? "", out numDeathrattleMinions))
 				{
 					if(entity.CardId == HearthDb.CardIds.Collectible.Neutral.Stalagg
 					   && _game.Opponent.Graveyard.Any(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.Feugen)
