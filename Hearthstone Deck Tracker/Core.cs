@@ -142,7 +142,8 @@ namespace Hearthstone_Deck_Tracker
 					{
 						//game started
 						Game.CurrentRegion = Helper.GetCurrentRegion();
-						BackupManager.Run();
+						if(Game.CurrentRegion != Region.UNKNOWN)
+							BackupManager.Run();
 					}
 					Overlay.UpdatePosition();
 
