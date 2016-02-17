@@ -303,7 +303,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void SetFlavorTextEntity(Entity entity)
 		{
-			if(!Config.Instance.ShowFlavorText)
+			if(!Config.Instance.ShowFlavorText || entity?.Card == null)
 				return;
 			FlavorText = entity.Card.FlavorText;
 			FlavorTextCardName = entity.Card.LocalizedName;
