@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		public static void Generate(KeyPointType type, int id, ActivePlayer player, IGame game) => Points.Add(new ReplayKeyPoint(game.Entities.Values.ToArray(), type, id, player));
 
-		public static string SaveToDisk()
+		public static string SaveToDisk(List<string> powerLog)
 		{
 			try
 			{
@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 							using(var logStream = hsLog.Open())
 							using(var swLog = new StreamWriter(logStream))
-								GameV2.HSLogLines.ForEach(swLog.WriteLine);
+								powerLog?.ForEach(swLog.WriteLine);
 						}
 					}
 
