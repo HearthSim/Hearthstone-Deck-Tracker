@@ -3,7 +3,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 	public class LogReaderInfo
 	{
 
-		public bool HasFilters => StartsWithFilters != null && ContainsFilters != null;
+		public bool HasFilters => StartsWithFilters != null || ContainsFilters != null;
 
 		public string Name { get; set; }
 		public string[] StartsWithFilters { get; set; }

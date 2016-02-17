@@ -134,8 +134,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 								{
 									if(!line.StartsWith("D ") || (!sr.EndOfStream && sr.Peek() != 'D'))
 										break;
-									if(!Info.HasFilters || Info.StartsWithFilters.Any(x => line.Substring(19).StartsWith(x))
-									   || Info.ContainsFilters.Any(x => line.Substring(19).Contains(x)))
+									if(!Info.HasFilters || (Info.StartsWithFilters?.Any(x => line.Substring(19).StartsWith(x)) ?? false)
+									   || (Info.ContainsFilters?.Any(x => line.Substring(19).Contains(x)) ?? false))
 									{
 										var logLine = new LogLineItem(Info.Name, line, fileInfo.LastWriteTime);
 										if(logLine.Time >= _startingPoint)
