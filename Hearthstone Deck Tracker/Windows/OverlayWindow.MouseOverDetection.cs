@@ -134,7 +134,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			}
 			var pos = User32.GetMousePos();
-			var relativeCanvas = CanvasInfo.PointFromScreen(new System.Windows.Point(pos.X, pos.Y));
+			System.Windows.Point relativeCanvas;
+			try
+			{
+				relativeCanvas = CanvasInfo.PointFromScreen(new System.Windows.Point(pos.X, pos.Y));
+			}
+			catch(InvalidOperationException)
+			{
+				return;
+			}
 			for(var i = 0; i < 7; i++)
 			{
 				if(oppBoard.Count > i && EllipseContains(_oppBoard[i], relativeCanvas))
