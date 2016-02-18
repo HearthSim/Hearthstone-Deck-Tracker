@@ -100,7 +100,7 @@
                                           Checked="CheckboxAlwaysShowGoldProgress_Checked"
                                           Unchecked="CheckboxAlwaysShowGoldProgress_Unchecked" />
                     <CheckBox Name="CheckBoxFlavorText" Content="Show card flavor text on mouseover (board/hand)" HorizontalAlignment="Left"
-                              ToolTip="Will only appear if the cursor stays still on a card for a short peroid time."
+                              ToolTip="Will only appear if the cursor stays still on a card for a short period of time."
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckBoxFlavorText_Checked"
                               Unchecked="CheckBoxFlavorText_Unchecked" />
