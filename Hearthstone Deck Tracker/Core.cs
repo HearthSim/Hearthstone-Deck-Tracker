@@ -195,6 +195,7 @@ namespace Hearthstone_Deck_Tracker
 						Game.CurrentRegion = Region.UNKNOWN;
 						Logger.WriteLine("Reset region", "UpdateOverlayLoop");
 						await Reset();
+						Game.IsInMenu = true;
 
 						MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
 						TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
