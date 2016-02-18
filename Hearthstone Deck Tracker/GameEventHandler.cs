@@ -933,7 +933,6 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			LogEvent("PlayerMulligan", cardId);
-			TurnTimer.Instance.MulliganDone(ActivePlayer.Player);
 			_game.Player.Mulligan(entity);
 			Helper.UpdatePlayerCards();
 
@@ -1233,7 +1232,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			LogEvent("OpponentMulligan", from: from);
 			_game.Opponent.Mulligan(entity);
-			TurnTimer.Instance.MulliganDone(ActivePlayer.Opponent);
 			_game.AddPlayToCurrentGame(PlayType.OpponentMulligan, 0, string.Empty);
 			GameEvents.OnOpponentMulligan.Execute();
 		}
