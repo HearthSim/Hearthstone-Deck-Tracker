@@ -828,5 +828,11 @@ namespace Hearthstone_Deck_Tracker
 				Logger.WriteLine($"Error opening url: {e}");
 			}
 		}
+
+		public static int? GetHearthstoneBuild()
+		{
+			var exe = Path.Combine(Config.Instance.HearthstoneDirectory, "Hearthstone.exe");
+			return !File.Exists(exe) ? (int?)null : FileVersionInfo.GetVersionInfo(exe).FilePrivatePart;
+		}
 	}
 }
