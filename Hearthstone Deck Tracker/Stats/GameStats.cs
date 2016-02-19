@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.Enums.PlayType;
 
 #endregion
@@ -266,9 +267,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 				ResolveSecrets(newturnstats);
 				return newturnstats;
 			}
-			catch(Exception e)
+			catch(Exception ex)
 			{
-				Logger.WriteLine("Error loading file: " + GameFile + "\n" + e, "GameStats");
+				Log.Error($"Error loading file: {GameFile}/n{ex}");
 			}
 			return new List<TurnStats>();
 		}
@@ -280,18 +281,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 				if(!File.Exists(GameFile))
 					return;
 				File.Delete(GameFile);
-				Logger.WriteLine("Deleted gamefile: " + GameFile, "GameStats");
+				Log.Info("Deleted gamefile: " + GameFile);
 			}
-			catch(Exception)
+			catch(Exception ex)
 			{
-				Logger.WriteLine("Error deleting gamefile: " + GameFile, "GameStats");
+				Log.Error($"Error deleting gamefile: {GameFile}/n{ex}");
 			}
 		}
 
 		public void GameEnd()
 		{
 			EndTime = DateTime.Now;
-			Logger.WriteLine("Current Game ended after " + Turns + " turns", "Gamestats");
+			Log.Info("Current Game ended after " + Turns + " turns");
 			Save();
 		}
 
@@ -306,7 +307,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 				TurnStats.Add(turnStats);
 			}
 			turnStats.AddPlay(type, cardId);
-			Logger.WriteLine($"New play: {type} ({cardId}, turn: {turn})", "GameStats", 2);
 		}
 
 		public override string ToString() => Result + " vs " + OpponentHero + ", " + StartTime;

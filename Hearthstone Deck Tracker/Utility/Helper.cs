@@ -25,6 +25,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
@@ -143,7 +144,7 @@ namespace Hearthstone_Deck_Tracker
 		public static async Task<Version> CheckForUpdates(bool beta)
 		{
 			var betaString = beta ? "BETA" : "LIVE";
-			Logger.WriteLine("Checking for " + betaString + " updates...", "Helper");
+			Log.Info("Checking for " + betaString + " updates...");
 
 			var versionXmlUrl = beta
 									? @"https://raw.githubusercontent.com/Epix37/HDT-Data/master/beta-version"
@@ -154,20 +155,20 @@ namespace Hearthstone_Deck_Tracker
 				return null;
 			try
 			{
-				Logger.WriteLine("Current version: " + currentVersion, "Helper");
+				Log.Info("Current version: " + currentVersion);
 				string xml;
 				using(var wc = new WebClient())
 					xml = await wc.DownloadStringTaskAsync(versionXmlUrl);
 
 				var newVersion = new Version(XmlManager<SerializableVersion>.LoadFromString(xml).ToString());
-				Logger.WriteLine("Latest " + betaString + " version: " + newVersion, "Helper");
+				Log.Info("Latest " + betaString + " version: " + newVersion);
 
 				if(newVersion > currentVersion)
 					return newVersion;
 			}
 			catch(Exception e)
 			{
-				MessageBox.Show("Error checking for new " + betaString + " version.\n\n" + e.Message + "\n\n" + e.InnerException);
+				Log.Error(e);
 			}
 			return null;
 		}
@@ -182,10 +183,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception e)
 			{
-				MessageBox.Show(
-							    e.Message + "\n\n" + e.InnerException
-								+ "\n\n If you don't know how to fix this, please overwrite Version.xml with the default file.", "Error loading Version.xml");
-
+				Log.Error(e);
 				return null;
 			}
 		}
@@ -310,7 +308,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error capturing hearthstone: " + ex, "Helper");
+				Log.Error(ex);
 				return null;
 			}
 		}
@@ -380,7 +378,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 					if(foundFriendsList)
 					{
-						Logger.WriteLine("Found Friendslist", "Helper");
+						Log.Info("Found Friendslist");
 						return true;
 					}
 				}
@@ -605,7 +603,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error starting launcher/hearthstone: " + ex);
+				Log.Error(ex);
 			}
 
 			Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Enabled = true;
@@ -630,7 +628,7 @@ namespace Hearthstone_Deck_Tracker
 						Region region;
 						if(Enum.TryParse(match.Groups["region"].Value, out region))
 						{
-							Logger.WriteLine("Current region: " + region, "LogReader");
+							Log.Info("Current region: " + region);
 							return region;
 						}
 					}
@@ -638,7 +636,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error getting region:\n" + ex, "LogReader");
+				Log.Error(ex);
 			}
 			return Region.UNKNOWN;
 		}
@@ -711,7 +709,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error parsing card string: " + ex, "Import");
+				Log.Error(ex);
 				return null;
 			}
 		}
@@ -733,14 +731,14 @@ namespace Hearthstone_Deck_Tracker
 					{
 						CopyFolder(appDataReplayDirPath, appDataReplayDirPath + time);
 						Directory.Delete(appDataReplayDirPath, true);
-						Logger.WriteLine("Created backups of replays in appdata", "Load");
+						Log.Info("Created backups of replays in appdata");
 					}
 
 
 					CopyFolder(dataReplayDirPath, appDataReplayDirPath);
 					Directory.Delete(dataReplayDirPath, true);
 
-					Logger.WriteLine("Moved replays to appdata", "Load");
+					Log.Info("Moved replays to appdata");
 				}
 			}
 			else if(Directory.Exists(appDataReplayDirPath)) //Save in DataDir and AppData Replay dir still exists
@@ -752,12 +750,12 @@ namespace Hearthstone_Deck_Tracker
 					CopyFolder(dataReplayDirPath, dataReplayDirPath + time);
 					Directory.Delete(dataReplayDirPath, true);
 				}
-				Logger.WriteLine("Created backups of replays locally", "Load");
+				Log.Info("Created backups of replays locally");
 
 
 				CopyFolder(appDataReplayDirPath, dataReplayDirPath);
 				Directory.Delete(appDataReplayDirPath, true);
-				Logger.WriteLine("Moved replays to appdata", "Load");
+				Log.Info("Moved replays to appdata");
 			}
 		}
 
@@ -812,7 +810,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error getting windows version information. " + ex);
+				Log.Error(ex);
 				return false;
 			}
 		}
@@ -825,7 +823,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine($"Error opening url: {e}");
+				Log.Error(e);
 			}
 		}
 

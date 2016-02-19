@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
 using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants.PowerTaskList;
 
@@ -88,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								//Logger.WriteLine("COPIED TMP ENTITY (" + rawEntity + ")");
 							}
 							else
-								Logger.WriteLine("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY", "LogReader");
+								Log.Warn("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY", "LogReader");
 						}
 					}
 					else
@@ -117,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(gameState.KnownCardIds.TryGetValue(id, out cardId))
 						{
-							Logger.WriteLine($"Found known cardId for entity {id}: {cardId}");
+							Log.Info($"Found known cardId for entity {id}: {cardId}");
 							gameState.KnownCardIds.Remove(id);
 						}
 					}

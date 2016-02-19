@@ -8,6 +8,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -236,7 +237,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					}
 					catch (Exception ex)
 					{
-						Logger.WriteLine(ex.ToString(), "UnlockOverlay");
+						Log.Info(ex.ToString());
 					}
 				}
 			}
@@ -287,7 +288,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_mouseInput.LmbDown += MouseInputOnLmbDown;
 			_mouseInput.LmbUp += MouseInputOnLmbUp;
 			_mouseInput.MouseMoved += MouseInputOnMouseMoved;
-			Logger.WriteLine("Enabled mouse hook", "Overlay");
+			Log.Info("Enabled mouse hook");
 		}
 
 		public void UnHookMouse()
@@ -296,7 +297,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			_mouseInput.Dispose();
 			_mouseInput = null;
-			Logger.WriteLine("Disabled mouse hook", "Overlay");
+			Log.Info("Disabled mouse hook");
 		}
 
 		private void GrayOutSecrets(Point mousePos)

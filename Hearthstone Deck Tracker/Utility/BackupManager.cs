@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -16,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static void Run()
 		{
-			Logger.WriteLine("Running BackupManager", "BackupManager");
+			Log.Info("Running BackupManager");
 			if(!Directory.Exists(Config.Instance.BackupDir))
 				Directory.CreateDirectory(Config.Instance.BackupDir);
 			var dirInfo = new DirectoryInfo(Config.Instance.BackupDir);
@@ -24,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 			if (dirInfo.GetFiles().Any(x => x.Name == backupFileName))
 			{
-				Logger.WriteLine("Backup for today already exists", "BackupManager");
+				Log.Info("Backup for today already exists");
 				return;
 			}
 
@@ -34,17 +35,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 				while(backups.Count() > MaxBackups)
 				{
 					var oldest = backups.OrderBy(x => x.CreationTime).First();
-					Logger.WriteLine("Deleting old backup: " + oldest.Name, "BackupManager");
+					Log.Info("Deleting old backup: " + oldest.Name);
 					oldest.Delete();
 					backups = dirInfo.GetFiles("Backup_*");
 				}
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error deleting old backup: " + ex, "BackupManager");
+				Log.Error("Error deleting old backup: " + ex);
 			}
 
-			Logger.WriteLine("Creating backup for today", "BackupManager");
+			Log.Info("Creating backup for today");
 
 			CreateBackup(backupFileName);
 		}
@@ -70,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error creating backup: " + ex, "BackupManager");
+				Log.Error(ex);
 			}
 		}
 	}

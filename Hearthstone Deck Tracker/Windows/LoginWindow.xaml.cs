@@ -11,6 +11,7 @@ using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -113,7 +114,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error deleting hearthstats credentials file\n" + ex, "HearthStatsAPI");
+				Log.Error("Error deleting hearthstats credentials file\n" + ex);
 			}
 		}
 
@@ -187,7 +188,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Button_ContinueAnyway(object sender, RoutedEventArgs e)
 		{
-			Logger.WriteLine("Continuing as guest...");
+			Log.Info("Continuing as guest...");
 			LoginResult = LoginType.Guest;
 			Close();
 		}

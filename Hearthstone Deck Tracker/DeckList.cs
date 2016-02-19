@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -44,7 +45,7 @@ namespace Hearthstone_Deck_Tracker
 				_activeDeck = value;
 				Core.MainWindow.DeckPickerList.ActiveDeckChanged();
 				Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
-				Logger.WriteLine("Set active deck to: " + value, "DeckList");
+				Log.Info("Set active deck to: " + value);
 				Config.Instance.ActiveDeckId = value?.DeckId ?? Guid.Empty;
 				Config.Save();
 			}
@@ -156,7 +157,7 @@ namespace Hearthstone_Deck_Tracker
 						//backup in case the file already exists
 						File.Move(appDataPath, appDataPath + DateTime.Now.ToFileTime());
 					File.Move(dataDirPath, appDataPath);
-					Logger.WriteLine("Moved decks to appdata", "Load");
+					Log.Info("Moved decks to appdata");
 				}
 			}
 			else if(File.Exists(appDataPath))
@@ -165,7 +166,7 @@ namespace Hearthstone_Deck_Tracker
 					//backup in case the file already exists
 					File.Move(dataDirPath, dataDirPath + DateTime.Now.ToFileTime());
 				File.Move(appDataPath, dataDirPath);
-				Logger.WriteLine("Moved decks to local", "Load");
+				Log.Info("Moved decks to local");
 			}
 
 			//create file if it doesn't exist

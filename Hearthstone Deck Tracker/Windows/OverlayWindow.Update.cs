@@ -7,6 +7,7 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -21,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ListViewOpponent.Items.Refresh();
 				Topmost = false;
 				Topmost = true;
-				Logger.WriteLine("Refreshed overlay topmost status", "UpdateOverlay");
+				Log.Info("Refreshed overlay topmost status");
 			}
 
 			var opponentHandCount = _game.Opponent.HandCount;
@@ -196,7 +197,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			catch (Exception ex)
 			{
-				Logger.WriteLine(ex.ToString(), "UpdateOverlayPosition");
+				Log.Error(ex);
 			}
 		}
 

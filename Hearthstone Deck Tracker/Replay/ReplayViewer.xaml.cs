@@ -17,6 +17,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay.Controls;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
 using static Hearthstone_Deck_Tracker.Replay.KeyPointType;
@@ -389,7 +390,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			_currentGameState = Replay.FirstOrDefault(r => r.Data.Any(x => x.HasTag(PLAYER_ID)));
 			if(_currentGameState == null)
 			{
-				Logger.WriteLine("Error loading replay. No player entity found.");
+				Log.Error("No player entity found.");
 				return;
 			}
 			_playerController = PlayerEntity.GetTag(CONTROLLER);
@@ -648,7 +649,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString(), "ReplayViewer");
+				Log.Error(ex);
 			}
 		}
 

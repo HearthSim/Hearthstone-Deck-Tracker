@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using static System.Windows.Visibility;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -170,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			DeckList.Save();
 
-			Logger.WriteLine("Saved Decks", "SaveDeck");
+			Log.Info("Saved Decks");
 
 			if(EditingDeck)
 			{
@@ -183,7 +184,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						if(overwrite)
 						{
 							statsEntry.Name = deckName;
-							Logger.WriteLine("Deck has new name, updated deckstats", "SaveDeck");
+							Log.Info("Deck has new name, updated deckstats");
 							foreach(var game in statsEntry.Games)
 								game.DeckName = deckName;
 						}
@@ -197,7 +198,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 							}
 							foreach(var game in statsEntry.Games)
 								newStatsEntry.AddGameResult(game.CloneWithNewId());
-							Logger.WriteLine("cloned gamestats for \"Set as new\"", "SaveDeck");
+							Log.Info("cloned gamestats for \"Set as new\"");
 						}
 						DeckStatsList.Save();
 					}
@@ -207,7 +208,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine("auto uploading new/edited deck", "SaveDeck");
+				Log.Info("auto uploading new/edited deck");
 				if(EditingDeck)
 				{
 					if(previousVersion != newVersion)
@@ -455,7 +456,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine("Error closing submenu:\r\n" + ex, "MainWindow");
+					Log.Error("Error closing submenu:\r\n" + ex);
 				}
 			}
 		}

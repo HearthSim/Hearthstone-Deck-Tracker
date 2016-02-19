@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -67,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						var defaultDeck = DefaultDeckStats.Instance.GetDeckStats(deck.Class);
 						defaultDeck?.Games.AddRange(deckStats.Games);
 						DefaultDeckStats.Save();
-						Logger.WriteLine($"Moved deckstats for deck {deck.Name} to default stats", "Edit");
+						Log.Info($"Moved deckstats for deck {deck.Name} to default stats");
 					}
 					else
 					{
@@ -75,18 +76,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 						{
 							foreach(var game in deckStats.Games)
 								game.DeleteGameFile();
-							Logger.WriteLine("Deleted games from deck: " + deck.Name, "Edit");
+							Log.Info("Deleted games from deck: " + deck.Name);
 						}
-						catch(Exception)
+						catch(Exception ex)
 						{
-							Logger.WriteLine("Error deleting games", "Edit");
+							Log.Error("Error deleting games " + ex);
 						}
 					}
 				}
 				DeckStatsList.Instance.DeckStats.Remove(deckStats);
 				if(saveAndUpdate)
 					DeckStatsList.Save();
-				Logger.WriteLine("Removed deckstats from deck: " + deck.Name, "Edit");
+				Log.Info("Removed deckstats from deck: " + deck.Name);
 			}
 
 			if(HearthStatsAPI.IsLoggedIn && deck.HasHearthStatsId && await CheckHearthStatsDeckDeletion())
@@ -100,7 +101,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				DeckPickerList.UpdateArchivedClassVisibility();
 			}
 			ListViewDeck.ItemsSource = null;
-			Logger.WriteLine("Deleted deck: " + deck.Name, "Edit");
+			Log.Info("Deleted deck: " + deck.Name);
 		}
 
 		internal void BtnArchiveDeck_Click(object sender, RoutedEventArgs e)
@@ -157,17 +158,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 
 				var archivedLog = archive ? "archived" : "unarchived";
-				Logger.WriteLine($"Successfully {archivedLog} deck: {deck.Name}", "ArchiveDeck");
+				Log.Info($"Successfully {archivedLog} deck: {deck.Name}");
 
 				if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 				{
-					Logger.WriteLine($"auto uploading {archivedLog} deck", "ArchiveDeck");
+					Log.Info($"auto uploading {archivedLog} deck");
 					HearthStatsManager.UpdateDeckAsync(deck, background: true).Forget();
 				}
 			}
-			catch(Exception)
+			catch(Exception ex)
 			{
-				Logger.WriteLine($"Error {(archive ? "archiving" : "unarchiving")} deck {deck.Name}", "ArchiveDeck");
+				Log.Error($"Error {(archive ? "archiving" : "unarchiving")} deck {deck.Name}/n{ex}");
 			}
 		}
 
@@ -209,7 +210,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				foreach(var game in originalStats.Games)
 					newStatsEntry.AddGameResult(game.CloneWithNewId());
-				Logger.WriteLine("cloned gamestats", "Edit");
+				Log.Info("cloned gamestats");
 			}
 
 			DeckStatsList.Save();
@@ -262,7 +263,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				foreach(var game in originalStatsEntry.Games)
 					newStatsEntry.AddGameResult(game.CloneWithNewId());
-				Logger.WriteLine("cloned gamestats (version)", "Edit");
+				Log.Info("cloned gamestats (version)");
 			}
 
 			DeckStatsList.Save();
@@ -356,14 +357,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(string.IsNullOrEmpty(deck?.Url))
 				return;
-			try
-			{
-				Process.Start(deck.Url);
-			}
-			catch(Exception ex)
-			{
-				Logger.WriteLine("Error opening deck website " + ex);
-			}
+			Helper.TryOpenUrl(deck.Url);
 		}
 
 		internal async void BtnName_Click(object sender, RoutedEventArgs e)

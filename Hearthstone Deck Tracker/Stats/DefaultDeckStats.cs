@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -105,10 +106,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 						//backup in case the file already exists
 						var time = DateTime.Now.ToFileTime();
 						File.Move(appDataPath, appDataPath + time);
-						Logger.WriteLine("Created backups of DefaultDeckStats in appdata", "Load");
+						Log.Info("Created backups of DefaultDeckStats in appdata");
 					}
 					File.Move(dataDirPath, appDataPath);
-					Logger.WriteLine("Moved DefaultDeckStats to appdata", "Load");
+					Log.Info("Moved DefaultDeckStats to appdata");
 				}
 			}
 			else if(File.Exists(appDataPath))
@@ -118,10 +119,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 					//backup in case the file already exists
 					var time = DateTime.Now.ToFileTime();
 					File.Move(dataDirPath, dataDirPath + time);
-					Logger.WriteLine("Created backups of DefaultDeckStats locally", "Load");
+					Log.Info("Created backups of DefaultDeckStats locally");
 				}
 				File.Move(appDataPath, dataDirPath);
-				Logger.WriteLine("Moved DefaultDeckStats to local", "Load");
+				Log.Info("Moved DefaultDeckStats to local");
 			}
 
 			var filePath = Config.Instance.DataDir + "DefaultDeckStats.xml";

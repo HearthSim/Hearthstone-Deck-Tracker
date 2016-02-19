@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using static Hearthstone_Deck_Tracker.Exporting.ExportingHelper;
 using static Hearthstone_Deck_Tracker.Exporting.MouseActions;
@@ -26,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			{
 				var name = Regex.Replace(deck.Name, @"[\(\)\{\}]", "");
 				if(name != deck.Name)
-					Logger.WriteLine("Removed parenthesis/braces from deck name. New name: " + name, "DeckExporter");
+					Log.Info("Removed parenthesis/braces from deck name. New name: " + name);
 				if(Config.Instance.ExportAddDeckVersionToName)
 				{
 					var version = " " + deck.SelectedVersion.ShortVersionString;
@@ -35,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 					name += version;
 				}
 
-				Logger.WriteLine("Setting deck name...", "DeckExporter");
+				Log.Info("Setting deck name...");
 				var nameDeckPos = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportNameDeckX, info.HsRect.Width, info.Ratio),
 				                            (int)(Config.Instance.ExportNameDeckY * info.HsRect.Height));
 				await ClickOnPoint(info.HsHandle, nameDeckPos);
@@ -58,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			if(!Config.Instance.AutoClearDeck)
 				return;
 			var count = 0;
-			Logger.WriteLine("Clearing deck...", "DeckExporter");
+			Log.Info("Clearing deck...");
 			while(!await IsDeckEmpty(info.HsHandle, info.HsRect.Width, info.HsRect.Height, info.Ratio))
 			{
 				await
@@ -78,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			if(!User32.IsHearthstoneInForeground())
 			{
 				Core.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.").Forget();
-				Logger.WriteLine("Exporting aborted, window lost focus", "DeckExporter");
+				Log.Info("Exporting aborted, window lost focus");
 				return -1;
 			}
 
@@ -96,7 +97,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				SendKeys.SendWait(GetSearchString(card));
 			SendKeys.SendWait("{ENTER}");
 
-			Logger.WriteLine("try to export card: " + card, "DeckExporter");
+			Log.Info("try to export card: " + card);
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
 			if(await CheckForSpecialCases(card, info.CardPosX + 50, info.Card2PosX + 50, info.CardPosY + 50, info.HsHandle))
@@ -135,7 +136,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 								await ClickOnPoint(info.HsHandle, new Point((int)info.Card2PosX + 50, (int)info.CardPosY + 50));
 								return 0;
 							}
-							Logger.WriteLine("Only one copy found: " + card.Name, "DeckExporter");
+							Log.Info("Only one copy found: " + card.Name);
 							return 1;
 						}
 
@@ -153,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		/// </summary>
 		public static async Task<bool> CreateDeck(Deck deck, ExportingInfo info)
 		{
-			Logger.WriteLine("Creating deck...", "DeckExporter");
+			Log.Info("Creating deck...");
 			deck.MissingCards.Clear();
 			foreach(var card in deck.Cards.ToSortedCardList())
 			{
@@ -167,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 					deck.MissingCards.Add(missingCard);
 				}
 			}
-			Logger.WriteLine(deck.MissingCards.Count + " missing cards", "DeckExporter");
+			Log.Info(deck.MissingCards.Count + " missing cards");
 			if(deck.MissingCards.Any())
 				DeckList.Save();
 			return false;
@@ -183,7 +184,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 		public static async Task ClearManaFilter(ExportingInfo info)
 		{
-			Logger.WriteLine("Clearing \"Zero\" crystal...", "DeckExporter");
+			Log.Info("Clearing \"Zero\" crystal...");
 
 			// First, ensure mana filters are cleared
 			var crystalPoint = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportZeroButtonX, info.HsRect.Width, info.Ratio),
@@ -204,7 +205,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 		public static async Task ClearSetsFilter(ExportingInfo info)
 		{
-			Logger.WriteLine("Clearing set filter...", "DeckExporter");
+			Log.Info("Clearing set filter...");
 			// Then ensure "All Sets" is selected
 			var setsPoint = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportSetsButtonX, info.HsRect.Width, info.Ratio),
 			                          (int)(Config.Instance.ExportSetsButtonY * info.HsRect.Height));

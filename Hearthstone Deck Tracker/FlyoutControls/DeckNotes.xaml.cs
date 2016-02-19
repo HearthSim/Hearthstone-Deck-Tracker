@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -49,7 +50,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckList.Save();
 			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
 			{
-				Logger.WriteLine($"auto updating {_currentDeck} deck", "NoteDialog");
+				Log.Info($"auto updating {_currentDeck} deck");
 				HearthStatsManager.UpdateDeckAsync(_currentDeck, background: true).Forget();
 			}
 			_noteChanged = false;

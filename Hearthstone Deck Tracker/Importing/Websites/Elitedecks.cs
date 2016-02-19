@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -42,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "DeckImporter");
+				Log.Error(e);
 				return null;
 			}
 		}

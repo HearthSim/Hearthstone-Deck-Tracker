@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -156,7 +157,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					}
 					catch(Exception e)
 					{
-						Logger.WriteLine("Error loading news: " + e, "UpdateNews");
+						Log.Error("Error loading news: " + e);
 					}
 					_lastNewsCheck = DateTime.Now;
 				}

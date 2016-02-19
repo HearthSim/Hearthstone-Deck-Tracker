@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.Controls;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -38,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		{
 			try
 			{
-				Logger.WriteLine("Checking for duplicate matches...");
+				Log.Info("Checking for duplicate matches...");
 				var toRemove = new Dictionary<GameStats, List<GameStats>>();
 				foreach(var deck in DeckList.Instance.Decks)
 				{
@@ -60,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				if(toRemove.Count > 0)
 				{
 					var numMatches = toRemove.Sum(x => x.Value.Count);
-					Logger.WriteLine(numMatches + " duplicate matches found.");
+					Log.Info(numMatches + " duplicate matches found.");
 					var result =
 						await
 						Core.MainWindow.ShowMessageAsync("Detected " + numMatches + " duplicate matches.",
@@ -89,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error checking for duplicate matches: " + e);
+				Log.Error(e);
 			}
 		}
 

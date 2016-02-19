@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -60,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 						Plugins.Add(p);
 				}
 			}
-			Logger.WriteLine("Loading Plugins...", "PluginManager");
+			Log.Info("Loading Plugins...");
 			LoadPluginSettings();
 		}
 
@@ -85,13 +86,13 @@ namespace Hearthstone_Deck_Tracker.Plugins
 					}
 					catch(Exception ex)
 					{
-						Logger.WriteLine("Error Loading " + pFileName + ":\n" + ex, "PluginManager");
+						Log.Error("Error loading " + pFileName + ":\n" + ex);
 					}
 				}
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error Loading " + pFileName + ":\n" + ex, "PluginManager");
+				Log.Error("Error loading " + pFileName + ":\n" + ex);
 			}
 			return plugins;
 		}
@@ -140,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error loading plugin settings:\n" + ex, "PluginManager");
+				Log.Error("Error loading plugin settings:\n" + ex);
 			}
 		}
 
@@ -153,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error saving plugin settings:\n" + ex, "PluginManager");
+				Log.Error("Error saving plugin settings:\n" + ex);
 			}
 		}
 	}

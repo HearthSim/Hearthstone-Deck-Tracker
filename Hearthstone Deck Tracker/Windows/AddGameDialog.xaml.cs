@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -123,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString(), "AddGameDialog");
+				Log.Error(ex);
 				_tcs.SetResult(null);
 			}
 		}

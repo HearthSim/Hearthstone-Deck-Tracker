@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Handlers;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.API.LogEvents;
 using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
 
@@ -107,14 +108,14 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			if(!_running)
 			{
-				Logger.WriteLine("LogReaders could not be stopped, stop already in progress.", "LogReaderManager");
+				Log.Warn("LogReaders could not be stopped, stop already in progress.");
 				return false;
 			}
 			_stop = true;
 			while(_running)
 				await Task.Delay(50);
 			await Task.WhenAll(LogReaders.Where(x => force || x.Info.Reset).Concat(new[] {_gameStatePowerLogReader}).Select(x => x.Stop()));
-			Logger.WriteLine("Stopped LogReaders.", "LogReaderManager");
+			Log.Info("Stopped LogReaders.");
 			return true;
 		}
 
@@ -126,7 +127,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			if(_running)
 				return;
-			Logger.WriteLine("Restarting LogReaders.", "LogReaderManager");
+			Log.Info("Restarting LogReaders.");
 			_startingPoint = GetStartingPoint();
 			_gameState.Reset();
 			_game.GameTime.TimedTasks.Clear();

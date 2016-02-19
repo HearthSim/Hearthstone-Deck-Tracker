@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.User32;
 using static Hearthstone_Deck_Tracker.User32.MouseEventFlags;
 
@@ -18,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			ClientToScreen(wndHandle, ref clientPoint);
 
 			Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
-			Logger.WriteLine("Clicking " + Cursor.Position, "MouseActions", 1);
+			Log.Debug("Clicking " + Cursor.Position);
 
 			//mouse down
 			if(SystemInformation.MouseButtonsSwapped)

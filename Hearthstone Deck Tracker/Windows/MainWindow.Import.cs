@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Point = System.Drawing.Point;
@@ -163,7 +164,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error importing deck from clipboard(id string): " + ex, "Import");
+				Log.Info("Error importing deck from clipboard(id string): " + ex);
 			}
 		}
 
@@ -192,7 +193,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						}
 						catch(Exception ex)
 						{
-							Logger.WriteLine(ex.ToString());
+							Log.Error(ex);
 						}
 					}
 					var deck = Helper.ParseCardString(Clipboard.GetText(), !english);
@@ -206,7 +207,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error importing deck from clipboard(text): " + ex, "Import");
+				Log.Error(ex);
 			}
 		}
 
@@ -243,7 +244,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					}
 					catch(Exception ex)
 					{
-						Logger.WriteLine("Error getting deck from file: \n" + ex, "Import");
+						Log.Error(ex);
 					}
 				}
 			}
@@ -328,8 +329,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			if(!User32.IsHearthstoneInForeground())
 			{
-				MessageBox.Show("Can't find Hearthstone window.");
-				Logger.WriteLine("Can't find Hearthstone window.", "ArenaImport");
+				Log.Error("Can't find Hearthstone window.");
 				return;
 			}
 			await Task.Delay(1000);

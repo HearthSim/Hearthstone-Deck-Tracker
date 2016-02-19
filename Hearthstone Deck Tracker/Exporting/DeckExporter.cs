@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.Exporting.ExportingActions;
 
 #endregion
@@ -20,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			var altScreenCapture = Config.Instance.AlternativeScreenCapture;
 			try
 			{
-				Logger.WriteLine("Exporting " + deck.GetDeckInfo(), "DeckExporter");
+				Log.Info("Exporting " + deck.GetDeckInfo());
 				if(Config.Instance.ExportPasteClipboard && Clipboard.ContainsText())
 					currentClipboard = Clipboard.GetText();
 
@@ -30,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				var inForeground = await ExportingHelper.EnsureHearthstoneInForeground(info.HsHandle);
 				if(!inForeground)
 					return;
-				Logger.WriteLine($"Waiting for {Config.Instance.ExportStartDelay} seconds before starting the export process", "DeckExporter");
+				Log.Info($"Waiting for {Config.Instance.ExportStartDelay} seconds before starting the export process");
 				await Task.Delay(Config.Instance.ExportStartDelay * 1000);
 				if(!altScreenCapture)
 					Core.Overlay.ForceHide(true);
@@ -45,11 +46,11 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 				if(Config.Instance.ExportPasteClipboard)
 					Clipboard.Clear();
-				Logger.WriteLine("Success exporting deck.", "DeckExporter");
+				Log.Info("Success exporting deck.");
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error exporting deck: " + e, "DeckExporter");
+				Log.Error("Error exporting deck: " + e);
 			}
 			finally
 			{
@@ -60,11 +61,6 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			}
 		}
 
-		private static void LogDebugInfo(ExportingInfo info)
-		{
-			Logger.WriteLine(
-							 $"HsHandle={info.HsHandle} HsRect={info.HsRect} Ratio={info.Ratio} SearchBoxPosX={Config.Instance.ExportSearchBoxX} SearchBoxPosY={Config.Instance.ExportSearchBoxY} CardPosX={Config.Instance.ExportCard1X} Card2PosX={Config.Instance.ExportCard2X} CardPosY={Config.Instance.ExportCardsY} ExportPasteClipboard={Config.Instance.ExportPasteClipboard} ExportNameDeckX={Config.Instance.ExportNameDeckX} ExportNameDeckY={Config.Instance.ExportNameDeckY} PrioritizeGolden={Config.Instance.PrioritizeGolden} DeckExportDelay={Config.Instance.DeckExportDelay} EnableExportAutoFilter={Config.Instance.EnableExportAutoFilter} ExportZeroButtonX={Config.Instance.ExportZeroButtonX} ExportZeroButtonY={Config.Instance.ExportZeroButtonY} ForceClear={Config.Instance.ExportForceClear}",
-							 "DeckExporter");
-		}
+		private static void LogDebugInfo(ExportingInfo info) => Log.Debug($"HsHandle={info.HsHandle} HsRect={info.HsRect} Ratio={info.Ratio} SearchBoxPosX={Config.Instance.ExportSearchBoxX} SearchBoxPosY={Config.Instance.ExportSearchBoxY} CardPosX={Config.Instance.ExportCard1X} Card2PosX={Config.Instance.ExportCard2X} CardPosY={Config.Instance.ExportCardsY} ExportPasteClipboard={Config.Instance.ExportPasteClipboard} ExportNameDeckX={Config.Instance.ExportNameDeckX} ExportNameDeckY={Config.Instance.ExportNameDeckY} PrioritizeGolden={Config.Instance.PrioritizeGolden} DeckExportDelay={Config.Instance.DeckExportDelay} EnableExportAutoFilter={Config.Instance.EnableExportAutoFilter} ExportZeroButtonX={Config.Instance.ExportZeroButtonX} ExportZeroButtonY={Config.Instance.ExportZeroButtonY} ForceClear={Config.Instance.ExportForceClear}");
 	}
 }

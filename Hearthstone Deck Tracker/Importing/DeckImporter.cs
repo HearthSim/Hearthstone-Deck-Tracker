@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing.Websites;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -35,13 +36,13 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 		public static async Task<Deck> Import(string url)
 		{
-			Logger.WriteLine("Importing deck from " + url, "DeckImporter");
+			Log.Info("Importing deck from " + url);
 
 			var website = Websites.FirstOrDefault(x => url.Contains(x.Key));
 			if(website.Value != null)
 				return await website.Value.Invoke(url);
 
-			Logger.WriteLine("invalid url", "DeckImporter");
+			Log.Error("invalid url");
 			return null;
 		}
 	}

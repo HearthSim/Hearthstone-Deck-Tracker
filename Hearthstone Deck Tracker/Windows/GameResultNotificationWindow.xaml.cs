@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -49,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdatePosition();
 			_startUpTime = DateTime.UtcNow;
 			CloseAsync();
-			Logger.WriteLine("Now showing", "GameResultNotification");
+			Log.Info("Now showing");
 			Activate();
 		}
 

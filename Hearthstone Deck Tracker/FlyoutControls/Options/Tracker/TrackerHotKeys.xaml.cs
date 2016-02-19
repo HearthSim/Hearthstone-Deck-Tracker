@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility.HotKeys;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ModifierKeys = Hearthstone_Deck_Tracker.Utility.HotKeys.ModifierKeys;
 
@@ -92,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error deleting hotkey: " + ex, "Options.HotKeys");
+				Log.Error("Error deleting hotkey: " + ex);
 			}
 		}
 

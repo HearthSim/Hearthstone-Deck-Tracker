@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -99,7 +100,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error deleting hearthstats credentials file\n" + ex, "HearthStatsAPI");
+				Log.Error("Error deleting hearthstats credentials file\n" + ex);
 			}
 		}
 	}

@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using AForge.Imaging;
 using Hearthstone_Deck_Tracker.Exporting;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -35,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		// Static initializer
 		static RankDetection()
 		{
-			Logger.WriteLine("Initalizing", "RankedDetection", 1);
+			Log.Debug("Initalizing");
 			Templates = new Dictionary<int, Bitmap>();
 			LoadTemplates();
 		}
@@ -47,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			var result = new RankResult();
 			if(bmp == null)
 			{
-				Logger.WriteLine("Captured image is null", "RankedDetection");
+				Log.Error("Captured image is null");
 				return result;
 			}
 			try
@@ -58,9 +59,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Failed: " + e.Message, "RankDetection");
+				Log.Error(e);
 			}
-			Logger.WriteLine("Match: P=" + result.Player + ", O=" + result.Opponent, "RankedDetection", 1);
+			Log.Debug($"Match: P={result.Player}, O={result.Opponent}");
 			return result;
 		}
 
@@ -88,9 +89,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 				if(File.Exists(path))
 					Templates[i] = new Bitmap(path);
 				else
-					Logger.WriteLine("Template image " + TemplateLocation + "/" + i + ".bmp not found", "RankedDetection", 1);
+					Log.Error("Template image " + TemplateLocation + "/" + i + ".bmp not found");
 			}
-			Logger.WriteLine(Templates.Count + " templates loaded", "RankedDetection", 1);
+			Log.Debug(Templates.Count + " templates loaded");
 		}
 
 		// Process a full screen capture to indvidual player and

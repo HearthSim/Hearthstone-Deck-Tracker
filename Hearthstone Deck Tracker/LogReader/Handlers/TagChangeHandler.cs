@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Replay;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
 using static Hearthstone_Deck_Tracker.Enums.Hearthstone.TAG_PLAYSTATE;
 using static Hearthstone_Deck_Tracker.Enums.Hearthstone.TAG_ZONE;
@@ -104,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									if(!string.IsNullOrEmpty(game.Entities[id].CardId))
 									{
 #if DEBUG
-										Logger.WriteLine($"Opponent Draw (EntityID={id}) already has a CardID. Removing. Blizzard Pls.", "TagChange");
+										Log.Debug($"Opponent Draw (EntityID={id}) already has a CardID. Removing. Blizzard Pls.");
 #endif
 										game.Entities[id].CardId = string.Empty;
 									}
@@ -170,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								}
 								break;
 							default:
-								Logger.WriteLine($"WARNING - unhandled zone change (id={id}): {prevValue} -> {value}", "TagChange");
+								Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 								break;
 						}
 						break;
@@ -231,7 +232,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								}
 								break;
 							default:
-								Logger.WriteLine($"WARNING - unhandled zone change (id={id}): {prevValue} -> {value}", "TagChange");
+								Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 								break;
 						}
 						break;
@@ -280,7 +281,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								}
 								break;
 							default:
-								Logger.WriteLine($"WARNING - unhandled zone change (id={id}): {prevValue} -> {value}", "TagChange");
+								Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 								break;
 						}
 						break;
@@ -298,7 +299,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								}
 								break;
 							default:
-								Logger.WriteLine($"WARNING - unhandled zone change (id={id}): {prevValue} -> {value}", "TagChange");
+								Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 								break;
 						}
 						break;
@@ -350,12 +351,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								}
 								break;
 							default:
-								Logger.WriteLine($"WARNING - unhandled zone change (id={id}): {prevValue} -> {value}", "TagChange");
+								Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 								break;
 						}
 						break;
 					default:
-						Logger.WriteLine($"WARNING - unhandled zone change (id={id}): {prevValue} -> {value}", "TagChange");
+						Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 						break;
 				}
 			}
@@ -537,13 +538,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private async void SetHeroAsync(int id, IGame game, IHsGameState gameState)
 		{
-			Logger.WriteLine("Found hero with id=" + id, "TagChangeHandler");
+			Log.Info("Found hero with id=" + id);
 			if(game.PlayerEntity == null)
 			{
-				Logger.WriteLine("Waiting for PlayerEntity to exist", "TagChangeHandler");
+				Log.Info("Waiting for PlayerEntity to exist");
 				while(game.PlayerEntity == null)
 					await Task.Delay(100);
-				Logger.WriteLine("Found PlayerEntity", "TagChangeHandler");
+				Log.Info("Found PlayerEntity");
 			}
 			if(string.IsNullOrEmpty(game.Player.Class) && id == game.PlayerEntity.GetTag(HERO_ENTITY))
 			{
@@ -552,10 +553,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			if(game.OpponentEntity == null)
 			{
-				Logger.WriteLine("Waiting for OpponentEntity to exist", "TagChangeHandler");
+				Log.Info("Waiting for OpponentEntity to exist");
 				while(game.OpponentEntity == null)
 					await Task.Delay(100);
-				Logger.WriteLine("Found OpponentEntity", "TagChangeHandler");
+				Log.Info("Found OpponentEntity");
 			}
 			if(string.IsNullOrEmpty(game.Opponent.Class) && id == game.OpponentEntity.GetTag(HERO_ENTITY))
 				gameState.GameHandler.SetOpponentHero(Database.GetHeroNameFromId(game.Entities[id].CardId));

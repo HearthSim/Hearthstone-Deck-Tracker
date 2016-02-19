@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -44,9 +45,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 					treeItem.ExpandSubtree();
 				TreeViewOptions.Items.Cast<TreeViewItem>().First().Items.Cast<TreeViewItem>().First().IsSelected = true;
 			}
-			catch(Exception e)
+			catch(Exception ex)
 			{
-				Logger.WriteLine(e.ToString(), "Options");
+				Log.Error(ex);
 			}
 		}
 

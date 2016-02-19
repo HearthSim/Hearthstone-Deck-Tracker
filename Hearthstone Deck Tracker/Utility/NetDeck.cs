@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -111,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "NetDeckClipbardCheck");
+				Log.Error(e);
 				return false;
 			}
 			return false;

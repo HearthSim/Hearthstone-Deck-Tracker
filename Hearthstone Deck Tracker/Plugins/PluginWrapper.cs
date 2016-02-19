@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -45,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 					if(!_loaded)
 					{
 						var couldLoad = Load();
-						Logger.WriteLine("Enabled " + Name, "PluginWrapper");
+						Log.Info("Enabled " + Name);
 						if(!couldLoad)
 							return;
 					}
@@ -54,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				{
 					if(_loaded)
 					{
-						Logger.WriteLine("Disabled " + Name, "PluginWrapper");
+						Log.Info("Disabled " + Name);
 						Unload();
 					}
 				}
@@ -68,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				return false;
 			try
 			{
-				Logger.WriteLine("Loading " + Name, "PluginWrapper");
+				Log.Info("Loading " + Name);
 				Plugin.OnLoad();
 				_loaded = true;
 				_exceptions = 0;
@@ -83,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			{
 				ErrorManager.AddError("Error loading Plugin \"" + Name + "\"",
 				                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
-				Logger.WriteLine("Error loading " + Name + ":\n" + ex, "PluginWrapper");
+				Log.Error(Name + ":\n" + ex);
 				return false;
 			}
 			return true;
@@ -100,7 +101,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error updating " + Name + ":\n" + ex, "PluginWrapper");
+				Log.Error(Name + ":\n" + ex);
 				_exceptions++;
 				if(_exceptions > PluginManager.MaxExceptions)
 				{
@@ -111,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 			{
-				Logger.WriteLine($"Warning: Updating {Name} took {sw.ElapsedMilliseconds} ms.", "PluginWrapper");
+				Log.Warn($"Updating {Name} took {sw.ElapsedMilliseconds} ms.");
 #if(!DEBUG)
 	//IsEnabled = false;
 #endif
@@ -128,7 +129,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error performing OnButtonPress for " + Name + ":\n" + ex, "PluginWrapper");
+				Log.Error(Name + "\n" + ex);
 			}
 		}
 
@@ -142,7 +143,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error unloading " + Name + ":\n" + ex, "PluginWrapper");
+				Log.Error(Name + ":\n" + ex);
 			}
 			_loaded = false;
 			if(MenuItem != null)

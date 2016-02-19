@@ -6,6 +6,7 @@ using System.IO.Pipes;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Protocol;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json;
 
 #endregion
@@ -22,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		private static async void StartImportServer()
 		{
-			Logger.WriteLine("Started server", "ImportPipe");
+			Log.Info("Started server");
 			var exceptionCount = 0;
 			while(exceptionCount < 10)
 			{
@@ -30,29 +31,29 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					using(var pipe = new NamedPipeServerStream("hdtimport", PipeDirection.In, 1, PipeTransmissionMode.Message))
 					{
-						Logger.WriteLine("Waiting for connecetion...", "ImportPipe");
+						Log.Info("Waiting for connecetion...");
 						await Task.Run(() => pipe.WaitForConnection());
 						using(var sr = new StreamReader(pipe))
 						{
 							var line = sr.ReadLine();
 							var decks = JsonConvert.DeserializeObject<JsonDecksWrapper>(line);
 							decks.SaveDecks();
-							Logger.WriteLine(line, "ImportPipe");
+							Log.Info(line);
 						}
 					}
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine(ex.ToString(), "ImportPipe");
+					Log.Error(ex);
 					exceptionCount++;
 				}
 			}
-			Logger.WriteLine("Closed server. ExceptionCount=" + exceptionCount, "ImportPipe");
+			Log.Info("Closed server. ExceptionCount=" + exceptionCount);
 		}
 
 		private static async void StartGeneralServer()
 		{
-			Logger.WriteLine("Started server", "GeneralPipe");
+			Log.Info("Started server");
 			var exceptionCount = 0;
 			while(exceptionCount < 10)
 			{
@@ -60,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					using(var pipe = new NamedPipeServerStream("hdtgeneral", PipeDirection.In, 1, PipeTransmissionMode.Message))
 					{
-						Logger.WriteLine("Waiting for connecetion...", "GeneralPipe");
+						Log.Info("Waiting for connecetion...");
 						await Task.Run(() => pipe.WaitForConnection());
 						using(var sr = new StreamReader(pipe))
 						{
@@ -71,17 +72,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 									HearthStatsManager.SyncAsync(false, true);
 									break;
 							}
-							Logger.WriteLine(line, "ImportPipe");
+							Log.Info(line);
 						}
 					}
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine(ex.ToString(), "GeneralPipe");
+					Log.Error(ex);
 					exceptionCount++;
 				}
 			}
-			Logger.WriteLine("Closed server. ExceptionCount=" + exceptionCount, "GeneralPipe");
+			Log.Info("Closed server. ExceptionCount=" + exceptionCount);
 		}
 	}
 }

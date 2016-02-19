@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -79,9 +80,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 						Core.MainWindow.Close();
 						Application.Current.Shutdown();
 					}
-					catch
+					catch(Exception ex)
 					{
-						Logger.WriteLine("Error starting updater");
+						Log.Error("Error starting updater\n" + ex);
 						Process.Start(releaseDownloadUrl);
 					}
 				}
@@ -93,7 +94,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			catch(Exception e)
 			{
 				_showingUpdateMessage = false;
-				Logger.WriteLine("Error showing new update message\n" + e.Message);
+				Log.Error("Error showing new update message\n" + e);
 			}
 		}
 
@@ -110,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error updating updater\n" + e);
+				Log.Error("Error updating updater\n" + e);
 			}
 			try
 			{
@@ -120,7 +121,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error deleting Updater.exe\n" + e);
+				Log.Error("Error deleting Updater.exe\n" + e);
 			}
 		}
 	}

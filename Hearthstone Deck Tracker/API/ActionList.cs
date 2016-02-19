@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -41,12 +42,11 @@ namespace Hearthstone_Deck_Tracker.API
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine($"Error invoking action{GetInfo(plugin)}:\n{ex}", "ActionListExecution");
+					Log.Error($"Error invoking action{GetInfo(plugin)}:\n{ex}");
 				}
 				if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 				{
-					Logger.WriteLine($"Warning: Invoking action{GetInfo(plugin)} took {sw.ElapsedMilliseconds} ms.",
-					                 "ActionListExecution");
+					Log.Warn($"Warning: Invoking action{GetInfo(plugin)} took {sw.ElapsedMilliseconds} ms.");
 #if(!DEBUG)
 	//remove.Add(action);
 #endif
@@ -90,12 +90,11 @@ namespace Hearthstone_Deck_Tracker.API
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine($"Error invoking action{GetInfo(plugin)}:\n{ex}", "ActionListExecution");
+					Log.Error($"Error invoking action{GetInfo(plugin)}:\n{ex}");
 				}
 				if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 				{
-					Logger.WriteLine($"Warning: Invoking action{GetInfo(plugin)} took {sw.ElapsedMilliseconds} ms.",
-					                 "ActionListExecution");
+					Log.Warn($"Invoking action{GetInfo(plugin)} took {sw.ElapsedMilliseconds} ms.");
 #if(!DEBUG)
 	//remove.Add(action);
 #endif

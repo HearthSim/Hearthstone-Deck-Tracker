@@ -3,6 +3,7 @@
 using System;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
 
 #endregion
@@ -30,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					catch(Exception ex)
 					{
-						Logger.WriteLine("Error adding arena card: " + ex, "ArenaHandler");
+						Log.Error("Error adding arena card: " + ex);
 					}
 				}
 				else
@@ -47,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 						if(_lastChoiceId == cardId && timeSinceLastChoice < 1000)
 						{
-							Logger.WriteLine($"Card with the same ID ({cardId}) was chosen less {timeSinceLastChoice} ms ago. Ignoring.");
+							Log.Warn($"Card with the same ID ({cardId}) was chosen less {timeSinceLastChoice} ms ago. Ignoring.");
 							return;
 						}
 
@@ -57,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						}
 						catch(Exception ex)
 						{
-							Logger.WriteLine("Error adding arena card: " + ex, "ArenaHandler");
+							Log.Error("Error adding arena card: " + ex);
 						}
 
 						_lastChoice = DateTime.Now;

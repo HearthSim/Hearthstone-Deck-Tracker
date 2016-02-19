@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
@@ -180,12 +181,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(Canvas.GetTop(StackPanelPlayer) + StackPanelPlayer.ActualHeight > PlayerRankCoveredMaxHeight * Height)
 				{
-					Logger.WriteLine("Player rank is potentially covered by player deck.", "Overlay");
+					Log.Info("Player rank is potentially covered by player deck.");
 					return true;
 				}
 				if(Canvas.GetTop(StackPanelPlayer) < OpponentRankCoveredMaxTop * Height)
 				{
-					Logger.WriteLine("Opponent rank is potentially covered by player deck.", "Overlay");
+					Log.Info("Opponent rank is potentially covered by player deck.");
 					if(requireOpponentRank)
 						return true;
 				}
@@ -194,17 +195,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(Canvas.GetTop(StackPanelOpponent) + StackPanelOpponent.ActualHeight > PlayerRankCoveredMaxHeight * Height)
 				{
-					Logger.WriteLine("Player rank is potentially covered by opponent deck.", "Overlay");
+					Log.Info("Player rank is potentially covered by opponent deck.");
 					return true;
 				}
 				if(Canvas.GetTop(StackPanelOpponent) < OpponentRankCoveredMaxTop * Height)
 				{
-					Logger.WriteLine("Opponent rank is potentially covered by opponent deck.", "Overlay");
+					Log.Info("Opponent rank is potentially covered by opponent deck.");
 					if(requireOpponentRank)
 						return true;
 				}
 			}
-			Logger.WriteLine("No ranks should be covered by any decks.", "Overlay");
+			Log.Info("No ranks should be covered by any decks.");
 			return false;
 		}
 

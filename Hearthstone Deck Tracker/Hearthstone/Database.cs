@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using HearthDb;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
 
 #endregion
@@ -21,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			HearthDb.Card dbCard;
 			if(Cards.All.TryGetValue(cardId, out dbCard))
 				return new Card(dbCard);
-			Logger.WriteLine("Could not find card with ID=" + cardId, "Database");
+			Log.Warn("Could not find card with ID=" + cardId);
 			return new Card(cardId, null, Rarity.Free, "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
@@ -38,10 +39,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error getting card from HearthDb:\n" + ex);
+				Log.Error(ex);
 			}
 			if(showErrorMessage)
-				Logger.WriteLine("Could not get card from name: " + name, "Database");
+				Log.Warn("Could not get card from name: " + name);
 			return new Card("UNKNOWN", null, Rarity.Free, "Minion", name, 0, name, 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 

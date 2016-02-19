@@ -4,6 +4,7 @@ using System;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.TimeZoneInfo;
 using static Hearthstone_Deck_Tracker.Enums.Region;
 using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
@@ -65,13 +66,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					case CHINA:
 						return FindSystemTimeZoneById("China Standard Time");
 					default:
-						Logger.WriteLine($"Could not get TimeZoneInfo for Region {region}", "RachelleHandler");
+						Log.Error($"Could not get TimeZoneInfo for Region {region}");
 						return null;
 				}
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error determining region: " + ex, "RachelleHandler");
+				Log.Error("Error determining region: " + ex);
 			}
 			return null;
 		}
@@ -94,7 +95,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error updating GoldProgress: " + ex, "RachelleHandler");
+				Log.Error("Error updating GoldProgress: " + ex);
 			}
 		}
 	}

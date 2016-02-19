@@ -3,6 +3,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -18,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Error
 		{
 			if(Errors.Contains(error))
 				return;
-			Logger.WriteLine($"New error: {error.Header}\n{error.Text}", "ErrorManager");
+			Log.Info($"New error: {error.Header}\n{error.Text}");
 			Errors.Add(error);
 			Core.MainWindow.ErrorsPropertyChanged();
 		}

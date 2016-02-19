@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -216,7 +217,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 			if(converted)
 			{
-				Logger.WriteLine("changed config values", "ConvertLegacyConfig");
+				Log.Info("changed config values");
 				Config.Save();
 			}
 
@@ -293,7 +294,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					if(logConfig.Configitems.All(x => x.Name != requiredLog))
 					{
 						logConfig.Configitems.Add(new LogConfig.ConfigItem(requiredLog));
-						Logger.WriteLine("Added " + requiredLog + " to log.config.", "UpdateLogConfig");
+						Log.Info("Added " + requiredLog + " to log.config.");
 						updated = true;
 					}
 				}

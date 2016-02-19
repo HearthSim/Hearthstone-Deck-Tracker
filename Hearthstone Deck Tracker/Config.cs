@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -1016,14 +1017,14 @@ namespace Hearthstone_Deck_Tracker
 						Directory.CreateDirectory(Instance.ConfigDir);
 						SaveBackup(true); //backup in case the file already exists
 						File.Move("config.xml", Instance.ConfigPath);
-						Logger.WriteLine("Moved config to appdata", "Config");
+						Log.Info("Moved config to appdata");
 					}
 				}
 				else if(File.Exists(AppDataPath + @"\config.xml"))
 				{
 					SaveBackup(true); //backup in case the file already exists
 					File.Move(AppDataPath + @"\config.xml", Instance.ConfigPath);
-					Logger.WriteLine("Moved config to local", "Config");
+					Log.Info("Moved config to local");
 				}
 			}
 		}

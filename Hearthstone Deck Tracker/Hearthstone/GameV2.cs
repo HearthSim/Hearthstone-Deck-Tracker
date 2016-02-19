@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -94,14 +95,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(_currentGameMode != value)
 				{
 					_currentGameMode = value;
-					Logger.WriteLine("Set CurrentGameMode to " + value, "Game");
+					Log.Info("Set CurrentGameMode to " + value);
 				}
 			}
 		}
 
 		public void Reset(bool resetStats = true)
 		{
-			Logger.WriteLine("-------- Reset ---------", "Game");
+			Log.Info("-------- Reset ---------");
 
 			ReplayMaker.Reset();
 			Player.Reset();
@@ -117,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				if(CurrentGameMode == GameMode.Ranked)
 				{
-					Logger.WriteLine("Resetting gamemode to casual", "Game");
+					Log.Info("Resetting gamemode to casual");
 					CurrentGameMode = GameMode.Casual;
 				}
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
@@ -165,7 +166,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(CurrentGameStats != null && CurrentGameMode != GameMode.None)
 			{
 				CurrentGameStats.GameMode = CurrentGameMode;
-				Logger.WriteLine("Detected gamemode, set CurrentGameStats.GameMode=" + CurrentGameMode, "GameModeDetection");
+				Log.Info("Detected gamemode, set CurrentGameStats.GameMode=" + CurrentGameMode);
 			}
 			_gameModeDetectionComplete = true;
 			_gameModeDetectionRunning = false;
@@ -179,7 +180,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Class = Database.GetHeroNameFromId(heroId)
 			};
 			TempArenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, TempArenaDeck);
-			Logger.WriteLine("Created new arena deck: " + TempArenaDeck.Class);
+			Log.Info("Created new arena deck: " + TempArenaDeck.Class);
 		}
 
 		public void NewArenaCard(string cardId)
@@ -192,30 +193,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			else
 				TempArenaDeck.Cards.Add((Card)Database.GetCardFromId(cardId).Clone());
 			var numCards = TempArenaDeck.Cards.Sum(c => c.Count);
-			Logger.WriteLine($"Added new card to arena deck: {cardId} ({numCards}/30)");
+			Log.Info($"Added new card to arena deck: {cardId} ({numCards}/30)");
 			if(numCards == 30)
 			{
-				Logger.WriteLine("Found complete arena deck!");
+				Log.Info("Found complete arena deck!");
 				if(!Config.Instance.SelectedArenaImportingBehaviour.HasValue)
 				{
-					Logger.WriteLine("...but we are using the old importing method.");
+					Log.Info("...but we are using the old importing method.");
 					return;
 				}
 				var recentArenaDecks = DeckList.Instance.Decks.Where(d => d.IsArenaDeck).OrderByDescending(d => d.LastPlayedNewFirst).Take(15);
 				if(recentArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
 				{
-					Logger.WriteLine("...but we already have that one. Discarding.");
+					Log.Info("...but we already have that one. Discarding.");
 					TempArenaDeck.Cards.Clear();
 					return;
 				}
 				if(DiscardedArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
 				{
-					Logger.WriteLine("...but it was already discarded by the user. No automatic action taken.");
+					Log.Info("...but it was already discarded by the user. No automatic action taken.");
 					return;
 				}
 				if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoImportSave)
 				{
-					Logger.WriteLine("...auto saving new arena deck.");
+					Log.Info("...auto saving new arena deck.");
 					Core.MainWindow.SetNewDeck(TempArenaDeck);
 					Core.MainWindow.SaveDeck(false, TempArenaDeck.Version);
 					TempArenaDeck.Cards.Clear();
@@ -249,13 +250,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			if(result == MessageDialogResult.Affirmative)
 			{
-				Logger.WriteLine("...saving new arena deck.");
+				Log.Info("...saving new arena deck.");
 				Core.MainWindow.SetNewDeck(deck);
 				Core.MainWindow.ActivateWindow();
 			}
 			else
 			{
-				Logger.WriteLine("...discarded by user.");
+				Log.Info("...discarded by user.");
 				DiscardedArenaDecks.Add(deck);
 			}
 			_awaitingMainWindowOpen = false;

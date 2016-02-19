@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Exporting;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using Clipboard = System.Windows.Clipboard;
 
@@ -66,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(selectedDeck == null)
 				return;
-			Logger.WriteLine("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo(), "Screenshot");
+			Log.Info("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo());
 			var screenShotWindow = new PlayerWindow(Core.Game, selectedDeck.GetSelectedDeckVersion().Cards.ToSortedCardList());
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
@@ -109,11 +110,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(imgurUrl != null)
 					{
 						await this.ShowSavedAndUploadedFileMessage(saveOperation.SaveLocal ? fileName : null, imgurUrl);
-						Logger.WriteLine("Uploaded screenshot to " + imgurUrl, "Export");
+						Log.Info("Uploaded screenshot to " + imgurUrl);
 					}
 					else
 						await this.ShowSavedFileMessage(fileName);
-					Logger.WriteLine("Saved screenshot to: " + fileName, "Export");
+					Log.Info("Saved screenshot to: " + fileName);
 				}
 				if(tmpFile.Exists)
 				{
@@ -123,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					}
 					catch(Exception ex)
 					{
-						Logger.WriteLine(ex.ToString(), "ExportScreenshot");
+						Log.Error(ex);
 					}
 				}
 			}
@@ -150,7 +151,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					//Helper.GetValidFilePath avoids overwriting files and properly handles duplicate deck names
 					var saveLocation = Path.Combine(dialog.SelectedPath, Helper.GetValidFilePath(dialog.SelectedPath, deck.Name, "xml"));
 					XmlManager<Deck>.Save(saveLocation, deck.GetSelectedDeckVersion());
-					Logger.WriteLine($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {saveLocation}", "Export");
+					Log.Info($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {saveLocation}");
 				}
 				await this.ShowSavedFileMessage(dialog.SelectedPath);
 
@@ -163,7 +164,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 				XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
 				await this.ShowSavedFileMessage(fileName);
-				Logger.WriteLine($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {fileName}", "Export");
+				Log.Info($"Saved {deck.GetSelectedDeckVersion().GetDeckInfo()} to file: {fileName}");
 			}
 		}
 
@@ -174,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			Clipboard.SetText(Helper.DeckToIdString(deck.GetSelectedDeckVersion()));
 			this.ShowMessage("", "copied ids to clipboard").Forget();
-			Logger.WriteLine("Copied " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to clipboard", "Export");
+			Log.Info("Copied " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to clipboard");
 		}
 
 		private async void BtnClipboardNames_OnClick(object sender, RoutedEventArgs e)
@@ -192,7 +193,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine(ex.ToString());
+					Log.Error(ex);
 				}
 			}
 			try
@@ -204,11 +205,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					    .Aggregate((c, n) => c + Environment.NewLine + n);
 				Clipboard.SetText(names);
 				this.ShowMessage("", "copied names to clipboard").Forget();
-				Logger.WriteLine("Copied " + deck.GetDeckInfo() + " names to clipboard", "Export");
+				Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error copying card names to clipboard: " + ex);
+				Log.Error(ex);
 				this.ShowMessage("", "Error copying card names to clipboard.").Forget();
 			}
 		}

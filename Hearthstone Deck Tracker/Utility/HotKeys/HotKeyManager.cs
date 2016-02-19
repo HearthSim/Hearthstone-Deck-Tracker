@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -26,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		{
 			if(RegisteredHotKeys.ContainsKey(hotKey))
 			{
-				Logger.WriteLine($"[{hotKey}] already registered.", "HotKeyManager");
+				Log.Warn($"[{hotKey}] already registered.");
 				return false;
 			}
 			try
@@ -37,13 +38,13 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 
 				var predefined = PredefinedHotKeyActions.PredefinedActionNames.FirstOrDefault(x => x.MethodName == name);
 				var title = predefined != null ? predefined.Title : name;
-				Logger.WriteLine($"Registering [{hotKey}]: {title}.", "HotKeyManager");
+				Log.Info($"Registering [{hotKey}]: {title}.");
 				RegisteredHotKeysInfo.Add(new KeyValuePair<HotKey, string>(hotKey, title));
 				return true;
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString(), "HotKeyManager");
+				Log.Error(ex);
 				return false;
 			}
 		}
@@ -54,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			var hotKey = HotKey.FromKeyPressedEventArgs(e);
 			if(RegisteredHotKeys.TryGetValue(hotKey, out action))
 			{
-				Logger.WriteLine($"[{hotKey}] pressed.", "HotKeyManager");
+				Log.Info($"[{hotKey}] pressed.");
 				action.Invoke();
 			}
 		}
@@ -77,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 
 		public static void RemovePredefinedHotkey(HotKey hotKey)
 		{
-			Logger.WriteLine($"Removing [{hotKey}].", "HotKeyManager");
+			Log.Info($"Removing [{hotKey}].");
 			HotKeyConfig.Instance.RemoveHotKey(hotKey);
 			if(RegisteredHotKeys.ContainsKey(hotKey))
 				RegisteredHotKeys.Remove(hotKey);
@@ -91,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error removing hotkey: " + ex, "HotKeyManager");
+				Log.Error(ex);
 			}
 		}
 
@@ -100,7 +101,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			var action = typeof(PredefinedHotKeyActions).GetMethods().FirstOrDefault(x => x.Name == actionName);
 			if(action != null)
 				return RegisterHotkey(hotKey, () => action.Invoke(null, null), actionName);
-			Logger.WriteLine($"Could not find predefined action \"{actionName}\"", "HotKeyManager");
+			Log.Warn($"Could not find predefined action \"{actionName}\"");
 			HotKeyConfig.Instance.RemoveHotKey(hotKey);
 			return false;
 		}

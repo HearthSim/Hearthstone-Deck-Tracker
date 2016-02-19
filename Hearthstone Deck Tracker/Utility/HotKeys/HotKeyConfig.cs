@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -33,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error loading HotKeyConfig: " + ex, "HotKeyConfig");
+				Log.Error(ex);
 			}
 			return new HotKeyConfig();
 		}
@@ -46,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error saving HotKeyConfig: " + ex, "HotKeyConfig");
+				Log.Error(ex);
 			}
 		}
 

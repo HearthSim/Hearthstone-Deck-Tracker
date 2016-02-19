@@ -9,6 +9,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json;
 
 #endregion
@@ -97,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "ReplayMaker");
+				Log.Error(e);
 				return null;
 			}
 		}

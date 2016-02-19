@@ -9,6 +9,7 @@ using System.Windows;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -87,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					}
 					catch(Exception)
 					{
-						Logger.WriteLine("Error deleting backup: " + backupFile.FileInfo.FullName);
+						Log.Error("Error deleting backup: " + backupFile.FileInfo.FullName);
 					}
 				}
 				ListBoxBackups.Items.Clear();
@@ -103,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error opening backup dir:\n" + ex);
+				Log.Error(ex);
 			}
 		}
 

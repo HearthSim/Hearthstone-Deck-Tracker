@@ -26,6 +26,7 @@ using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
@@ -150,7 +151,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString(), "LastReplay");
+				Log.Error(ex);
 			}
 		}
 
@@ -171,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString(), "ReplayFromFile");
+				Log.Error(ex);
 			}
 		}
 
@@ -653,7 +654,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(string.IsNullOrEmpty(Core.Game.Player.Class) || Core.Game.Player.DrawnCards.Count < 3)
 			{
 				IsShowingIncorrectDeckMessage = false;
-				Logger.WriteLine("No player hero detected or less then 3 cards drawn. Not showing dialog.", "IncorrectDeckMessage");
+				Log.Info("No player hero detected or less then 3 cards drawn. Not showing dialog.");
 				return;
 			}
 			await Task.Delay(1000);
@@ -675,12 +676,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				                                                                 d.GetSelectedDeckVersion()
 				                                                                  .Cards.Any(c2 => c2.Id == c.Id && c2.Count >= c.Count))).ToList();
 
-			Logger.WriteLine(decks.Count + " possible decks found.", "IncorrectDeckMessage");
+			Log.Info(decks.Count + " possible decks found.");
 			Core.Game.NoMatchingDeck = decks.Count == 0;
 
 			if(decks.Any(x => x == DeckList.Instance.ActiveDeck))
 			{
-				Logger.WriteLine("Correct deck already selected.", "IncorrectDeckMessage");
+				Log.Info("Correct deck already selected.");
 				IsShowingIncorrectDeckMessage = false;
 				NeedToIncorrectDeckMessage = false;
 				return;
@@ -689,7 +690,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
 			{
 				var deck = decks.First();
-				Logger.WriteLine("Automatically selected deck: " + deck.Name, "IncorrectDeckMessage");
+				Log.Info("Automatically selected deck: " + deck.Name);
 				DeckPickerList.SelectDeck(deck);
 				UpdateDeckList(deck);
 				UseDeck(deck);
@@ -715,12 +716,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					else if(selectedDeck.Name == "No match - Keep using active deck")
 					{
 						Core.Game.IgnoreIncorrectDeck = DeckList.Instance.ActiveDeck;
-						Logger.WriteLine($"Now ignoring {DeckList.Instance.ActiveDeck.Name} as an incorrect deck",
-						                 "IncorrectDeckMessage");
+						Log.Info($"Now ignoring {DeckList.Instance.ActiveDeck.Name} as an incorrect deck");
 					}
 					else
 					{
-						Logger.WriteLine("Selected deck: " + selectedDeck.Name, "IncorrectDeckMessage");
+						Log.Info("Selected deck: " + selectedDeck.Name);
 						DeckPickerList.SelectDeck(selectedDeck);
 						UpdateDeckList(selectedDeck);
 						UseDeck(selectedDeck);
@@ -766,7 +766,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString(), "ActivatingWindow");
+				Log.Error(ex);
 			}
 		}
 
@@ -852,7 +852,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					DeckList.Instance.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name, Id = deck.DeckId});
 					DeckList.Save();
 
-					Logger.WriteLine("Switched to deck: " + deck.Name, "Tracker");
+					Log.Info("Switched to deck: " + deck.Name);
 
 					int useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
 					Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;

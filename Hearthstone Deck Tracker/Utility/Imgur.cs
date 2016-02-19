@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json;
 
 #endregion
@@ -35,14 +36,14 @@ namespace Hearthstone_Deck_Tracker
 				var json = reader.ReadToEnd();
 				var resp = JsonConvert.DeserializeObject<ImgurResponse>(json);
 
-				Logger.WriteLine("Response (" + resp.status + ") " + resp.data.link, "Imgur");
+				Log.Info("Response (" + resp.status + ") " + resp.data.link);
 				if(resp.success && resp.status == 200)
 					return resp.data.link;
 				throw new Exception("response code " + resp.status);
 			}
-			catch(Exception s)
+			catch(Exception ex)
 			{
-				Logger.WriteLine("Upload to imgur failed: " + s.Message);
+				Log.Error(ex);
 			}
 			return null;
 		}

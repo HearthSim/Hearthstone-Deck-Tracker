@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -36,10 +37,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public void Start(DateTime startingPoint)
 		{
-			Logger.WriteLine("Starting...", Info.Name + "LogReader", 2);
+			Log.Debug("Starting " + Info.Name);
 			if (_running)
 			{
-				Logger.WriteLine("...already running.", Info.Name + "LogReader", 2);
+				Log.Debug(Info.Name + " is already running.");
 				return;
 			}
 			MoveOrDeleteLogFile();
@@ -86,12 +87,12 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public async Task Stop()
 		{
-			Logger.WriteLine("Stopping...", Info.Name + "LogReader", 2);
+			Log.Debug("Stopping " + Info.Name);
 			_stop = true;
 			while(_running)
 				await Task.Delay(50);
 			await Task.Factory.StartNew(() => _thread?.Join());
-			Logger.WriteLine("Stopped.", Info.Name + "LogReader", 2);
+			Log.Debug(Info.Name + " stopped.");
 		}
 
 		public List<LogLineItem> Collect()

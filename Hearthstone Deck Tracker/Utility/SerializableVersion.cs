@@ -1,5 +1,6 @@
 ﻿#region
 
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using System;
 using System.Xml.Serialization;
 
@@ -136,7 +137,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine(ex.ToString());
+				Log.Error(ex);
 				return Default;
 			}
 		}

@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
@@ -67,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine("Error starting browser: " + ex, "ScreenshotMessageDialog");
+					Log.Error("Error starting browser: " + ex);
 				}
 			}
 			else if(result == MessageDialogResult.FirstAuxiliary)
@@ -78,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine("Error copying url to clipboard: " + ex, "ScreenshotMessageDialog");
+					Log.Error("Error copying url to clipboard: " + ex);
 				}
 			}
 		}

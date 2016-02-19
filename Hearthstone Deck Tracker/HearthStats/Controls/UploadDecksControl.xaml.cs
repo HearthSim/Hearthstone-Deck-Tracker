@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -43,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			_done = false;
 			while(!_done)
 				await Task.Delay(100);
-			Logger.WriteLine("selected " + _selectedDecks.Count + " decks", "UploadDecksControl");
+			Log.Info("selected " + _selectedDecks.Count + " decks");
 			return _selectedDecks;
 		}
 

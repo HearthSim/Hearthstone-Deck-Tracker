@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -52,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 						}
 						catch(Exception e)
 						{
-							Logger.WriteLine("Error loading duplicate match: " + e, "DuplicateMatchesWindow");
+							Log.Error(e);
 						}
 					}
 					TreeViewGames.Items.Add(tvi);
@@ -60,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error loading duplicate matches: " + ex, "DuplicateMatchesWindow");
+				Log.Error(ex);
 			}
 		}
 
@@ -72,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			if(selected.Any())
 			{
 				var matches = selected.Select(x => x.GameStats).ToList();
-				Logger.WriteLine("Deleting " + matches.Count + " duplicate matches.");
+				Log.Info("Deleting " + matches.Count + " duplicate matches.");
 				var controller = await this.ShowProgressAsync("Deleting duplicate matches...", "Deleting duplicates on HearthStats...");
 				await HearthStatsManager.DeleteMatchesAsync(matches.ToList(), false);
 				controller.SetMessage("Deleting local duplicates...");

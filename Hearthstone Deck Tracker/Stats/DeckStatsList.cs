@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -101,16 +102,16 @@ namespace Hearthstone_Deck_Tracker.Stats
 							Helper.CopyFolder(appDataGamesDirPath, appDataGamesDirPath + time);
 							Directory.Delete(appDataGamesDirPath, true);
 						}
-						Logger.WriteLine("Created backups of DeckStats and Games in appdata", "Load");
+						Log.Info("Created backups of DeckStats and Games in appdata");
 					}
 					File.Move(dataDirPath, appDataPath);
-					Logger.WriteLine("Moved DeckStats to appdata", "Load");
+					Log.Info("Moved DeckStats to appdata");
 					if(Directory.Exists(dataGamesDirPath))
 					{
 						Helper.CopyFolder(dataGamesDirPath, appDataGamesDirPath);
 						Directory.Delete(dataGamesDirPath, true);
 					}
-					Logger.WriteLine("Moved Games to appdata", "Load");
+					Log.Info("Moved Games to appdata");
 				}
 			}
 			else if(File.Exists(appDataPath))
@@ -125,16 +126,16 @@ namespace Hearthstone_Deck_Tracker.Stats
 						Helper.CopyFolder(dataGamesDirPath, dataGamesDirPath + time);
 						Directory.Delete(dataGamesDirPath, true);
 					}
-					Logger.WriteLine("Created backups of deckstats and games locally", "Load");
+					Log.Info("Created backups of deckstats and games locally");
 				}
 				File.Move(appDataPath, dataDirPath);
-				Logger.WriteLine("Moved DeckStats to local", "Load");
+				Log.Info("Moved DeckStats to local");
 				if(Directory.Exists(appDataGamesDirPath))
 				{
 					Helper.CopyFolder(appDataGamesDirPath, dataGamesDirPath);
 					Directory.Delete(appDataGamesDirPath, true);
 				}
-				Logger.WriteLine("Moved Games to appdata", "Load");
+				Log.Info("Moved Games to appdata");
 			}
 
 			var filePath = Config.Instance.DataDir + "DeckStats.xml";
