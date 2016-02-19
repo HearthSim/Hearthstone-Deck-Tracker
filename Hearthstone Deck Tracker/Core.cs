@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker
 			var newUser = !Directory.Exists(Config.AppDataPath);
 			Config.Load();
 			ConfigManager.Run();
-			Logger.Initialize();
+			Log.Initialize();
 			Helper.UpdateAppTheme();
 			var splashScreenWindow = new SplashScreenWindow();
 			splashScreenWindow.ShowConditional();
