@@ -213,6 +213,9 @@
     <Compile Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml.cs">
       <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Constructed\ConstructedGames.xaml.cs">
+      <DependentUpon>ConstructedGames.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\Converters\CustomTimeframeVisibilityConverter.cs" />
     <Compile Include="Controls\Stats\Converters\IsNullConverter.cs" />
     <Compile Include="Controls\Stats\Converters\NotNullToBooleanConverter.cs" />
@@ -298,7 +301,9 @@
     <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
     <Compile Include="Stats\CompiledStats\ChartStats.cs" />
     <Compile Include="Stats\CompiledStats\ClassStats.cs" />
+    <Compile Include="Stats\CompiledStats\ConstructedStats.cs" />
     <Compile Include="Stats\CompiledStats\MatchupStats.cs" />
+    <Compile Include="Stats\GameStatsHelper.cs" />
     <Compile Include="Utility\AttachedFormattedString.cs" />
     <Compile Include="Utility\BatteryMonitor.cs" />
     <Compile Include="Utility\BoardDamage\BoardCard.cs" />
@@ -741,6 +746,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Constructed\ConstructedGames.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

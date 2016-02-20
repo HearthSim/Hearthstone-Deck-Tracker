@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena;
+using Hearthstone_Deck_Tracker.Controls.Stats.Constructed;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
@@ -38,6 +39,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		public ArenaStatsSummary ArenaStatsSummary { get; } = new ArenaStatsSummary();
 
 		public ArenaRuns ArenaRuns { get; } = new ArenaRuns();
+
+		public ConstructedGames ConstructedGames { get; } = new ConstructedGames();
 
 		public object ArenaAdvancedCharts => _arenaAdvancedCharts;
 
@@ -91,6 +94,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public void UpdateStats()
 		{
+			if(TreeViewItemConstructedGames.IsSelected)
+			{
+				ConstructedStats.Instance.UpdateConstructedStats();
+				return;
+			}
 			ArenaStats.Instance.UpdateArenaStats();
 			if(TreeViewItemArenaRunsSummary.IsSelected || TreeViewItemArenaRuns.IsSelected)
 			{
@@ -125,6 +133,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			UpdateStats();
+		}
+
+		private void TreeViewItemConstructedGames_OnSelected(object sender, RoutedEventArgs e)
+		{
+				//TODO
 		}
 	}
 

@@ -17,7 +17,7 @@
     <DockPanel>
         <DockPanel>
             <GroupBox Header="MENU" DockPanel.Dock="Top">
-                <TreeView Name="TreeViewStats" Height="175">
+                <TreeView Name="TreeViewStats" Height="200">
                     <TreeViewItem Name="TreeViewItemArenaRuns" IsExpanded="True"
                                   Selected="TreeViewItemArenaRuns_OnSelected" Header="Arena Runs"
                                   DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}">
@@ -31,18 +31,13 @@
                         <TreeViewItem Name="TreeViewItemArenaRunsAdvanced"
                                       Selected="TreeViewItemArenaRunsAdvanced_OnSelected" Header="Advanced charts"
                                       DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                        <TreeViewItem Header="[more coming soon]" IsEnabled="False"/>
                     </TreeViewItem>
-                    <TreeViewItem Header="Constructed" IsExpanded="True" IsEnabled="False">
-                        <TreeViewItem Header="[coming soon]" />
-                        <!--<TreeViewItem Header="Overall" IsExpanded="False">
-                            <TreeViewItem Header="Overview"/>
-                            <TreeViewItem Header="Games"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="Active Deck" IsExpanded="False">
-                            <TreeViewItem Header="Overview"/>
-                            <TreeViewItem Header="Games"/>
-                        </TreeViewItem>-->
+                    <TreeViewItem Header="Constructed" IsExpanded="True">
+                        <TreeViewItem Header="Summary"/>
+                        <TreeViewItem Name="TreeViewItemConstructedGames" 
+                                      Selected="TreeViewItemConstructedGames_OnSelected" Header="Matches"
+                                      DataContext="{Binding ConstructedGames, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                        <TreeViewItem Header="Charts"/>
                     </TreeViewItem>
                 </TreeView>
             </GroupBox>

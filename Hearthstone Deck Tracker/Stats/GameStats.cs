@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 	{
 		private Guid? _deckId;
 		private string _deckName;
+		private string _deckNameAndVersion;
 		private List<TurnStats> _turnStats;
 		public Guid GameId;
 		public string HearthStatsId;
@@ -86,10 +87,24 @@ namespace Hearthstone_Deck_Tracker.Stats
 				if(!string.IsNullOrEmpty(_deckName))
 					return _deckName;
 				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == DeckId);
-				_deckName = deck != null ? deck.Name : "none";
+				_deckName = deck?.Name ?? "none";
 				return _deckName;
 			}
 			set { _deckName = value; }
+		}
+
+		[XmlIgnore]
+		public string DeckNameAndVersion
+		{
+			get
+			{
+				if (!string.IsNullOrEmpty(_deckNameAndVersion))
+					return _deckNameAndVersion;
+				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == DeckId)?.GetVersion(PlayerDeckVersion);
+				_deckNameAndVersion = deck?.NameAndVersion ?? "none";
+				return _deckNameAndVersion;
+			}
+			set { _deckNameAndVersion = value; }
 		}
 
 		[XmlIgnore]
