@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private bool _gameModeDetectionRunning;
 		public Deck TempArenaDeck = new Deck();
+		private Mode _currentMode;
 
 		public GameV2()
 		{
@@ -68,6 +69,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Card> PossibleConstructedCards { get; set; }
 		public Dictionary<int, Entity> Entities { get; set; }
 		public GameMetaData MetaData { get; } = new GameMetaData();
+
+		public Mode CurrentMode
+		{
+			get { return _currentMode; }
+			set
+			{
+				_currentMode = value;
+				Log.Info(value.ToString());
+			}
+		}
+
+		public Mode PreviousMode { get; set; }
+
 		public bool SavedReplay { get; set; }
 
 		public Entity PlayerEntity => Entities.FirstOrDefault(x => x.Value.IsPlayer).Value;
