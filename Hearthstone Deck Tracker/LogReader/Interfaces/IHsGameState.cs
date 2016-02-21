@@ -19,8 +19,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		bool First { get; set; }
 		bool GameEnded { get; set; }
 		IGameHandler GameHandler { get; set; }
-		bool GameLoaded { get; set; }
-		long LastGameEnd { get; set; }
 		DateTime LastGameStart { get; set; }
 		int LastId { get; set; }
 		int MaxId { get; set; }
@@ -34,7 +32,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		Dictionary<int, string> KnownCardIds { get; set; }
 		int LastCardPlayed { get; set; }
 		void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player);
-		void GameEnd();
 		int GetTurnNumber();
 		void GameEndKeyPoint(bool victory, int id);
 		bool PlayersTurn();

@@ -21,7 +21,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 				gameState.Reset();
 				gameState.GameHandler.HandleGameStart();
-				gameState.GameLoaded = true;
 			}
 		}
 	}

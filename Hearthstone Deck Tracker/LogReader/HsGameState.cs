@@ -31,8 +31,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool First { get; set; }
 		public bool GameEnded { get; set; }
 		public IGameHandler GameHandler { get; set; }
-		public bool GameLoaded { get; set; }
-		public long LastGameEnd { get; set; }
 		public DateTime LastGameStart { get; set; }
 		public int LastId { get; set; }
 		public int MaxId { get; set; }
@@ -52,8 +50,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				ReplayMaker.Generate(ProposedKeyPoint.Type, ProposedKeyPoint.Id, ProposedKeyPoint.Player, _game);
 			ProposedKeyPoint = new ReplayKeyPoint(null, type, id, player);
 		}
-
-		public void GameEnd() => LastGameEnd = CurrentOffset;
 
 		public int GetTurnNumber()
 		{
