@@ -46,21 +46,6 @@
                                           HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                                           Checked="CheckboxTurnTime_Checked"
                                           Unchecked="CheckboxTurnTime_Unchecked" />
-                    <CheckBox x:Name="CheckboxNoteDialog"
-                                          Content="Show note dialog after game"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxNoteDialog_Checked"
-                                          Unchecked="CheckboxNoteDialog_Unchecked" />
-                    <CheckBox x:Name="CheckboxNoteDialogDelayed"
-                                          Content="Wait until back in menu"
-                                          HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxNoteDialogDelay_Checked"
-                                          Unchecked="CheckboxNoteDialogDelay_Unchecked" />
-                    <CheckBox x:Name="CheckboxArenaRewardDialog"
-                                          Content="Show arena reward dialog when run is over"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxArenaRewardDialog_Checked"
-                                          Unchecked="CheckboxArenaRewardDialog_Unchecked" />
                     <Separator Margin="0,5,0,0"/>
                     <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0" Content="Card sorting: Class cards first"
                               Checked="CheckBoxClassCardsFirst_Checked"

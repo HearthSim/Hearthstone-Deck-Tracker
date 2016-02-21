@@ -31,13 +31,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxAutoSelectDeck.IsChecked = Config.Instance.AutoSelectDetectedDeck;
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
-			CheckboxNoteDialog.IsChecked = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
-			CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
-			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxCardFrameRarity.IsChecked = Config.Instance.RarityCardFrames;
 			CheckboxCardGemRarity.IsChecked = Config.Instance.RarityCardGems;
-			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 			CheckboxTurnTime.IsChecked = Config.Instance.TimerTurnTime == 75;
 			CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
@@ -177,40 +173,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private void CheckboxNoteDialog_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowNoteDialogAfterGame = true;
-			CheckboxNoteDialogDelayed.IsEnabled = true;
-			Config.Save();
-		}
-
-		private void CheckboxNoteDialog_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowNoteDialogAfterGame = false;
-			CheckboxNoteDialogDelayed.IsEnabled = false;
-			Config.Save();
-		}
-
-		private void CheckboxNoteDialogDelay_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.NoteDialogDelayed = false;
-			Config.Save();
-		}
-
-		private void CheckboxNoteDialogDelay_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.NoteDialogDelayed = true;
-			Config.Save();
-		}
-
 		private void CheckboxTimerAlert_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -277,22 +239,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AutoUseDeck = false;
 			Config.Save();
 			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
-		}
-
-		private void CheckboxArenaRewardDialog_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ArenaRewardDialog = true;
-			Config.Save();
-		}
-
-		private void CheckboxArenaRewardDialog_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ArenaRewardDialog = false;
-			Config.Save();
 		}
 
 		private void CheckboxTurnTime_Checked(object sender, RoutedEventArgs e)

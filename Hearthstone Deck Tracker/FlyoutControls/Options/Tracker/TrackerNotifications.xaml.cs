@@ -24,6 +24,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			CheckBoxShowNotifications.IsChecked = Config.Instance.ShowGameResultNotifications;
 			CheckBoxUnexpectedOnly.IsChecked = Config.Instance.GameResultNotificationsUnexpectedOnly;
+			CheckboxNoteDialog.IsChecked = Config.Instance.ShowNoteDialogAfterGame;
+			CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
+			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
+			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 			_initialized = true;
 		}
 
@@ -86,6 +90,56 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.GameResultNotificationsUnexpectedOnly = false;
+			Config.Save();
+		}
+
+		private void CheckboxNoteDialog_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.ShowNoteDialogAfterGame = true;
+			CheckboxNoteDialogDelayed.IsEnabled = true;
+			Config.Save();
+		}
+
+		private void CheckboxNoteDialog_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.ShowNoteDialogAfterGame = false;
+			CheckboxNoteDialogDelayed.IsEnabled = false;
+			Config.Save();
+		}
+
+		private void CheckboxNoteDialogDelay_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.NoteDialogDelayed = false;
+			Config.Save();
+		}
+
+		private void CheckboxNoteDialogDelay_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.NoteDialogDelayed = true;
+			Config.Save();
+		}
+
+		private void CheckboxArenaRewardDialog_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.ArenaRewardDialog = true;
+			Config.Save();
+		}
+
+		private void CheckboxArenaRewardDialog_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.ArenaRewardDialog = false;
 			Config.Save();
 		}
 	}
