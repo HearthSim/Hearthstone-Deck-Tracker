@@ -375,18 +375,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 			#region MODIFIED by Epix37
 
 			result.NavigateUri = new Uri(url);
-			result.RequestNavigate += (sender, args) =>
-			{
-				try
-				{
-					Process.Start(args.Uri.AbsoluteUri);
-				}
-				catch(Exception)
-				{
-				}
-			};
-			//result.Command = HyperlinkCommand;
-			//result.CommandParameter = url;
+			result.RequestNavigate += (sender, args) => Helper.TryOpenUrl(args.Uri.AbsoluteUri);
 
 			#endregion
 

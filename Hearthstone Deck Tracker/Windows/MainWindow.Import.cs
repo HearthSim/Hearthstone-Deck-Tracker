@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				if(result == MessageDialogResult.Affirmative)
 				{
-					Process.Start("https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel");
+					Helper.TryOpenUrl("https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel");
 					var enableOptionResult =
 						await
 						this.ShowMessageAsync("Enable one-click importing?",

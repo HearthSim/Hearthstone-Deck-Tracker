@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					catch(Exception ex)
 					{
 						Log.Error("Error starting updater\n" + ex);
-						Process.Start(releaseDownloadUrl);
+						Helper.TryOpenUrl(releaseDownloadUrl);
 					}
 				}
 				else

@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					ParseMarkup(rest[restIndex], tb);
 					var link = new Hyperlink();
 					link.NavigateUri = new Uri(url.Groups["url"].Value);
-					link.RequestNavigate += (sender, args) => Process.Start(args.Uri.AbsoluteUri);
+					link.RequestNavigate += (sender, args) => Helper.TryOpenUrl(args.Uri.AbsoluteUri);
 					link.Inlines.Add(new Run(url.Groups["text"].Value));
 					link.Foreground = new SolidColorBrush(Colors.White);
 					tb.Inlines.Add(link);

@@ -27,10 +27,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			InitializeComponent();
 		}
 
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			Process.Start(e.Uri.AbsoluteUri);
-		}
+		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 
 		public void Load(GameV2 game)
 		{

@@ -41,10 +41,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			(ListBoxPlugins.SelectedItem as PluginWrapper)?.OnButtonPress();
 		}
 
-		private void ButtonAvailablePlugins_OnClick(object sender, RoutedEventArgs e)
-		{
-			Process.Start(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
-		}
+		private void ButtonAvailablePlugins_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
 
 		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
 		{

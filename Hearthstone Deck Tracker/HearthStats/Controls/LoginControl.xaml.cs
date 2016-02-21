@@ -30,10 +30,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			_inizialized = true;
 		}
 
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			Process.Start(e.Uri.AbsoluteUri);
-		}
+		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 
 		private async void BtnLogin_Click(object sender, RoutedEventArgs e)
 		{

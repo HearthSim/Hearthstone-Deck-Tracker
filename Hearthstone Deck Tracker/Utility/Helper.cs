@@ -11,6 +11,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -35,7 +36,6 @@ using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Color = System.Drawing.Color;
 using MediaColor = System.Windows.Media.Color;
-using MessageBox = System.Windows.MessageBox;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Point = System.Drawing.Point;
 using Region = Hearthstone_Deck_Tracker.Enums.Region;
@@ -810,15 +810,18 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static void TryOpenUrl(string url)
+		public static bool TryOpenUrl(string url, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
 		{
 			try
 			{
+				Log.Info("[Helper.TryOpenUrl] " + url, memberName, sourceFilePath);
 				Process.Start(url);
+				return true;
 			}
 			catch(Exception e)
 			{
-				Log.Error(e);
+				Log.Error("[Helper.TryOpenUrl] " + e, memberName, sourceFilePath);
+				return false;
 			}
 		}
 

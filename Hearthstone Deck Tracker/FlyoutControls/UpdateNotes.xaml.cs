@@ -89,15 +89,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void ButtonShowGithub_OnClick(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				Process.Start("https://github.com/Epix37/Hearthstone-Deck-Tracker/releases");
-			}
-			catch
-			{
-				Core.MainWindow.ShowMessage("Could not start browser",
-				                            "You can find the releases at \"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases\"").Forget();
-			}
+			const string url = "https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
+			if (!Helper.TryOpenUrl(url))
+				Core.MainWindow.ShowMessage("Could not start browser", $"You can find the releases at \"{url}\"").Forget();
 		}
 
 		private void FlowDocumentScrollViewer_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -117,25 +111,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void ButtonPaypal_Click(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
-			}
-			catch(Exception)
-			{
+			if (!Helper.TryOpenUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ"))
 				Core.MainWindow.ShowMessage("Could not start browser", "You can also find a link at the bottom of the GitHub page!").Forget();
-			}
 		}
 
 		private void ButtonPatreon_Click(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				Process.Start("https://www.patreon.com/HearthstoneDeckTracker");
-			}
-			catch
-			{
-			}
+			const string url = "https://www.patreon.com/HearthstoneDeckTracker";
+			if (!Helper.TryOpenUrl(url))
+				Core.MainWindow.ShowMessage("Could not start browser", "You can find the patreon page here: " + url).Forget();
 		}
 
 		private void ButtonClose_Click(object sender, RoutedEventArgs e)

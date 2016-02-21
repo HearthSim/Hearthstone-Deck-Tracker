@@ -239,7 +239,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null || !deck.HasHearthStatsId)
 				return;
-			Process.Start(deck.HearthStatsUrl);
+			Helper.TryOpenUrl(deck.HearthStatsUrl);
 		}
 	}
 }

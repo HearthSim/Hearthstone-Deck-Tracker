@@ -61,16 +61,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var result = await window.ShowMessageAsync("", sb.ToString(), AffirmativeAndNegativeAndSingleAuxiliary,
 							new Settings {NegativeButtonText = "open in browser", FirstAuxiliaryButtonText = "copy url to clipboard"});
 			if(result == MessageDialogResult.Negative)
-			{
-				try
-				{
-					Process.Start(url);
-				}
-				catch(Exception ex)
-				{
-					Log.Error("Error starting browser: " + ex);
-				}
-			}
+				Helper.TryOpenUrl(url);
 			else if(result == MessageDialogResult.FirstAuxiliary)
 			{
 				try
