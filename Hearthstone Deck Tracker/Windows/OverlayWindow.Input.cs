@@ -345,8 +345,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 							var needToHide = Canvas.GetTop(panel) + panel.ActualHeight > Height * 0.3;
 							if (needToHide)
 							{
+								var isPlayerPanel = panel.Equals(StackPanelPlayer);
+								Log.Info("Friendslist is open! Hiding " + (isPlayerPanel ? "player" : "opponent") + " panel.");
 								panel.Visibility = Visibility.Collapsed;
-								if (panel.Equals(StackPanelPlayer))
+								if (isPlayerPanel)
 									_playerCardsHidden = true;
 								else
 									_opponentCardsHidden = true;

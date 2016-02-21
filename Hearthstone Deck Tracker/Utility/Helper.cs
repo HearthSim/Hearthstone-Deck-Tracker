@@ -377,10 +377,7 @@ namespace Hearthstone_Deck_Tracker
 							foundFriendsList = false;
 					}
 					if(foundFriendsList)
-					{
-						Log.Info("Found Friendslist");
 						return true;
-					}
 				}
 			}
 			return false;
