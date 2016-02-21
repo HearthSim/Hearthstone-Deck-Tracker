@@ -1,13 +1,13 @@
 #region
 
-using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.LogReader
+namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	public class AssetHandler
 	{
@@ -16,9 +16,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			if(!UnloadCardRegex.IsMatch(logLine))
 				return;
 			var id = UnloadCardRegex.Match(logLine).Groups["id"].Value;
-			if(game.CurrentGameMode == GameMode.Arena)
+			if(game.CurrentMode == Mode.DRAFT && game.PreviousMode == Mode.HUB)
 				gameState.GameHandler.HandlePossibleArenaCard(id);
-			else
+			else if(game.CurrentMode == Mode.COLLECTIONMANAGER && game.PreviousMode == Mode.HUB)
 				gameState.GameHandler.HandlePossibleConstructedCard(id, true);
 		}
 	}
