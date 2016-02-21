@@ -441,12 +441,11 @@ namespace Hearthstone_Deck_Tracker
 				Log.Info("Waiting for friendslist to close...");
 				do
 				{
-					if (_rankDetectionTries >= MaxRankDetectionTries)
+					if(_rankDetectionTries >= MaxRankDetectionTries)
 						await Task.Delay(300);
 					else
 						Core.Overlay.ShowFriendsListWarning(true);
-				}
-				while(await Helper.FriendsListOpen())
+				} while(await Helper.FriendsListOpen());
 			}
 			Core.Overlay.ShowFriendsListWarning(false);
 			var capture = await Helper.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height);
