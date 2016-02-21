@@ -189,6 +189,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 				}
 			}
+			if(_currentMouseOverTarget != null)
+				GameEvents.OnMouseOverOff.Execute();
 			_currentMouseOverTarget = null;
 			FlavorTextVisibility = Visibility.Collapsed;
 		}

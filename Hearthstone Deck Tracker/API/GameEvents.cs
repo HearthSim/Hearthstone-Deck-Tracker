@@ -60,6 +60,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public static readonly ActionList OnGameTied = new ActionList();
 		public static readonly ActionList OnInMenu = new ActionList();
 		public static readonly ActionList<ActivePlayer> OnTurnStart = new ActionList<ActivePlayer>();
+		public static readonly ActionList OnMouseOverOff = new ActionList();
 
 		#endregion
 	}
