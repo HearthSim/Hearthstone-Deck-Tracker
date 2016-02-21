@@ -4,14 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Loaded="ConstructedGames_OnLoaded"
              d:DesignHeight="300" d:DesignWidth="800">
     <GroupBox Header="MATCHES">
         <DockPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Visibility="{Binding MultiSelectPanelVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                <Button Margin="4,4,0,4" Content="Move" Click="ButtonMultiMove_OnClick" ToolTip="All selected games must have the same player hero."
-                        ToolTipService.ShowOnDisabled="True" IsEnabled="{Binding ButtonMultiMoveEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                <Button Margin="4,4,0,4" Content="Delete" Click="ButtonMultiDelete_OnClick" Background="Red" />
+                <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonMultiMove_OnClick" ToolTip="All selected games must have the same player hero."
+                        ToolTipService.ShowOnDisabled="True" IsEnabled="{Binding ButtonMultiMoveEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="12">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{Binding MoveIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock Text="MOVE SELECTED" Margin="4,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonMultiDelete_OnClick" Background="Red">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="12">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{Binding DeleteIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <TextBlock Text="DELETE SELECTED" Margin="4,0,0,0"/>
+                     </StackPanel>
+                </Button>
             </StackPanel>
             <DataGrid Name="DataGridGames" SelectedIndex="0" SelectedItem="{Binding SelectedGame, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource, IsAsync=True}" 
                       ItemsSource="{Binding Path=FilteredGames, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True, NotifyOnTargetUpdated=True}" 
@@ -110,20 +128,68 @@
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="{Binding ElementName=DataGridGames, Path=Columns[0].ActualWidth}"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                <Button Margin="4,4,0,4" Content="Show replay" Click="ButtonShowReplay_OnClick" Background="Green"/>
-                                <Button Margin="4,4,0,4" Content="Opponent deck" Click="ButtonShowOppDeck_OnClick" IsEnabled="{Binding Path=SelectedItem.CanGetOpponentDeck, ElementName=DataGridGames}"/>
-                                <Button Margin="4,4,0,4" Content="Edit" Click="ButtonEdit_OnClick" />
-                                <Button Margin="4,4,0,4" Content="Edit Note" Click="ButtonEditNote_OnClick" />
-                                <Button Margin="4,4,0,4" Content="Move" Click="ButtonMove_OnClick" />
-                                <Button Margin="4,4,0,4" Content="Delete" Click="ButtonDelete_OnClick" Background="Red" />
-                            </StackPanel>
-                        </Grid>
+                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                            <Button Margin="4,4,0,4" MinWidth="70"  Click="ButtonShowReplay_OnClick" Background="Green">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="12">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{Binding ReplayIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="REPLAY" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonShowOppDeck_OnClick" IsEnabled="{Binding Path=CanGetOpponentDeck}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="12">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{Binding OppDeckIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="OPP. DECK" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonEdit_OnClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="12">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{Binding EditIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="EDIT" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonEditNote_OnClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="12">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{Binding NoteIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="NOTE" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonMove_OnClick">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="12">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{Binding MoveIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="MOVE" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                            <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonDelete_OnClick" Background="Red">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="12">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{Binding DeleteIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="DELETE" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
             </DataGrid>

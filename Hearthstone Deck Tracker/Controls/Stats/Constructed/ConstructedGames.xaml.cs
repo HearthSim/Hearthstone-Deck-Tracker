@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -119,5 +120,26 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 
 		private async void ButtonMultiDelete_OnClick(object sender, RoutedEventArgs e)
 			=> await GameStatsHelper.DeleteGamesWithDialog(this, SelectedGames.ToArray());
+
+		public void UpdateVisuals()
+		{
+			OnPropertyChanged(nameof(ReplayIconVisual));
+			OnPropertyChanged(nameof(OppDeckIconVisual));
+			OnPropertyChanged(nameof(EditIconVisual));
+			OnPropertyChanged(nameof(NoteIconVisual));
+			OnPropertyChanged(nameof(MoveIconVisual));
+			OnPropertyChanged(nameof(DeleteIconVisual));
+		}
+
+		public Visual ReplayIconVisual => TryFindResource("appbar_control_play_" + VisualColor) as Visual;
+		public Visual OppDeckIconVisual => TryFindResource("appbar_layer_" + VisualColor) as Visual;
+		public Visual EditIconVisual => TryFindResource("appbar_edit_" + VisualColor) as Visual;
+		public Visual NoteIconVisual => TryFindResource("appbar_edit_box_" + VisualColor) as Visual;
+		public Visual MoveIconVisual => TryFindResource("appbar_page_arrow_" + VisualColor) as Visual;
+		public Visual DeleteIconVisual => TryFindResource("appbar_delete_" + VisualColor) as Visual;
+
+		private string VisualColor => Config.Instance.StatsInWindow && Config.Instance.ThemeName != "BaseDark" ? "black" : "white";
+
+		private void ConstructedGames_OnLoaded(object sender, RoutedEventArgs e) => UpdateVisuals();
 	}
 }

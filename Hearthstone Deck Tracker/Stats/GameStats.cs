@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool HasReplayFile => ReplayFile != null && File.Exists(Path.Combine(Config.Instance.ReplayDir, ReplayFile));
 
 		[XmlIgnore]
-		public bool CanGetOpponentDeck => TurnStats.Any();
+		public bool CanGetOpponentDeck => TurnStats.Any(x => x.Plays.Any(p => p.Type == OpponentPlay));
 
 		[XmlIgnore]
 		public BitmapImage OpponentHeroImage
