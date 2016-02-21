@@ -31,8 +31,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				game.ResetArenaCards();
 			else if(logLine.Contains("---RegisterProfileNotices---"))
 				gameState.GameLoaded = true;
-			else if(logLine.Contains("---RegisterFriendChallenge---"))
-				gameState.GameHandler.HandleInMenu();
 			else if(logLine.Contains("---RegisterScreenCollectionManager---"))
 				gameState.GameHandler.ResetConstructedImporting();
 		}
