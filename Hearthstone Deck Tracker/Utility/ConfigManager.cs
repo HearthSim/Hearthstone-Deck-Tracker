@@ -18,6 +18,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 		                                               + @"\Blizzard\Hearthstone\log.config";
 
 		public static Version UpdatedVersion { get; private set; }
+		public static bool LogConfigUpdated { get; set; }
+		public static bool LogConfigUpdateFailed { get; private set; } 
 
 		public static void Run()
 		{
@@ -35,7 +37,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.SelectedTags.Add("All");
 
 			if(Helper.HearthstoneDirExists)
-				Helper.UpdateLogConfig = UpdateLogConfigFile();
+			{
+				try
+				{
+					LogConfigUpdated = UpdateLogConfigFile();
+				}
+				catch
+				{
+					LogConfigUpdateFailed = true;
+				}
+			}
 
 			if(!Directory.Exists(Config.Instance.DataDir))
 				Config.Instance.Reset(nameof(Config.DataDirPath));
@@ -324,14 +335,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 			catch(Exception e)
 			{
-				if(Helper.UpdateLogConfig)
-				{
-					MessageBox.Show(
-					                e.Message + "\n\n" + e.InnerException
-					                + "\n\n Please manually copy the log.config from the Files directory to \"%LocalAppData%/Blizzard/Hearthstone\".",
-					                "Error writing log.config");
-					Application.Current.Shutdown();
-				}
+				Log.Error(e);
+				throw;
 			}
 			return updated;
 		}

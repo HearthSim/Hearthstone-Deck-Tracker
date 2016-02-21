@@ -139,8 +139,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static bool UpdateLogConfig { get; set; }
-
 		public static async Task<Version> CheckForUpdates(bool beta)
 		{
 			var betaString = beta ? "BETA" : "LIVE";
