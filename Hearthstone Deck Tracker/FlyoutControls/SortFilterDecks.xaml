@@ -75,7 +75,7 @@
                                            Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked" />
                     </DockPanel>
 
-                    <ListBox Name="ListboxTags" Height="auto" Width="auto" DockPanel.Dock="Top">
+                    <ListBox Name="ListboxTags" Height="auto" Width="auto" DockPanel.Dock="Top" VirtualizingPanel.IsVirtualizing="False">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}"
