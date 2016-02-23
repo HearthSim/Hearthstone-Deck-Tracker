@@ -8,6 +8,7 @@
     <DockPanel>
         <Border Margin="5,5,0,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
             <TreeView Name="TreeViewOptions" Width="150">
+                <TreeViewItem Name="TreeViewItemSearch" Header="Search" Selected="TreeViewItemSearch_OnSelected"></TreeViewItem>
                 <TreeViewItem Header="Overlay">
                     <TreeViewItem Name="TreeViewItemOverlayGeneral" Header="General" Selected="TreeViewItemGeneralOverlay_OnSelected"/>
                     <TreeViewItem Name="TreeViewItemOverlayDeckWindows" Header="Deck Windows" Selected="TreeViewItemOverlayDeckWindows_OnSelected"/>

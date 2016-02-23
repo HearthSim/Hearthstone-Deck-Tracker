@@ -711,5 +711,36 @@ namespace Hearthstone_Deck_Tracker
 			var exe = Path.Combine(Config.Instance.HearthstoneDirectory, "Hearthstone.exe");
 			return !File.Exists(exe) ? (int?)null : FileVersionInfo.GetVersionInfo(exe).FilePrivatePart;
 		}
+
+		public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+		{
+			if(depObj == null)
+				yield break;
+			for(var i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+			{
+				var child = VisualTreeHelper.GetChild(depObj, i) as T;
+				if(child != null)
+					yield return child;
+				foreach(var childOfChild in FindVisualChildren<T>(child))
+					yield return childOfChild;
+			}
+		}
+
+		public static IEnumerable<T> FindLogicalChildren<T>(DependencyObject depObj) where T : DependencyObject
+		{
+			if(depObj == null)
+				yield break;
+			foreach(var child in LogicalTreeHelper.GetChildren(depObj))
+			{
+				var obj = child as T;
+				if(obj != null)
+					yield return obj;
+				var childDepObj = child as DependencyObject;
+				if(childDepObj == null)
+					continue;
+				foreach(var childOfChild in FindLogicalChildren<T>(childDepObj))
+					yield return childOfChild;
+			}
+		}
 	}
 }

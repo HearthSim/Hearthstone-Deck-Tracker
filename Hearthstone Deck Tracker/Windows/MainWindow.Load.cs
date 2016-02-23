@@ -125,23 +125,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateFlyoutAnimationsEnabled();
 		}
 
-		public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
-		{
-			if(depObj == null)
-				yield break;
-			for(var i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
-			{
-				var child = VisualTreeHelper.GetChild(depObj, i) as T;
-				if(child != null)
-					yield return child;
-				foreach(var childOfChild in FindVisualChildren<T>(child))
-					yield return childOfChild;
-			}
-		}
-
 		public void UpdateFlyoutAnimationsEnabled()
 		{
-			foreach(var flyout in FindVisualChildren<Flyout>(Core.MainWindow))
+			foreach(var flyout in Helper.FindVisualChildren<Flyout>(Core.MainWindow))
 				flyout.AreAnimationsEnabled = Config.Instance.UseAnimations;
 		}
 
