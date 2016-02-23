@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	public class BackupManager
 	{
 		private const int MaxBackups = 7;
-		private static readonly string[] Files = {"PlayerDecks.xml", "DeckStats.xml", "DefaultDeckStats.xml", "config.xml"};
+		private static readonly string[] Files = {"PlayerDecks.xml", "DeckStats.xml", "DefaultDeckStats.xml", "config.xml", "HotKeys.xml"};
 
 		public static void Run()
 		{
@@ -65,7 +65,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 					foreach(var file in Files)
 					{
 						var path = Path.Combine(Config.Instance.DataDir, file);
-						zip.CreateEntryFromFile(path, file);
+						if(File.Exists(path))
+							zip.CreateEntryFromFile(path, file);
 					}
 				}
 			}
