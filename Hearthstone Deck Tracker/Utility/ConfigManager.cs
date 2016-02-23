@@ -319,6 +319,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				if(updated)
 				{
+					try
+					{
+						// ReSharper disable once ObjectCreationAsStatement
+						new FileInfo(LogConfigPath) {IsReadOnly = false};
+					}
+					catch(Exception e)
+					{
+						Log.Error("Could not remove read-only from log.config:\n" + e);
+					}
 					using(var sw = new StreamWriter(LogConfigPath))
 					{
 						foreach(var configItem in logConfig.Configitems)
