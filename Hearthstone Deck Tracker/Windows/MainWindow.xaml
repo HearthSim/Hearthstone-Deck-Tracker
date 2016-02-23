@@ -557,46 +557,51 @@
                      controls:TextBoxHelper.IsWaitingForData="True" />
                     </Border>
                 </StackPanel>
-                <ListView x:Name="ListViewDB" Foreground="White" Background="#696969"
+                <DockPanel Grid.Row="1" Grid.Column="0" Margin="0,2,0,6">
+                    <Border Name="BorderConstructedCardLimits" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" DockPanel.Dock="Bottom" Margin="0,2,0,0" HorizontalAlignment="Left" Width="235">
+                        <CheckBox Name="CheckBoxConstructedCardLimits" Content="Constructed card limits" IsChecked="True" Margin="2"/>
+                    </Border>
+                    <ListView x:Name="ListViewDB" Foreground="White" Background="#696969"
                                     FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,2,0,6"
+                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial"
                                     HorizontalAlignment="Left"
                                     Width="235" KeyDown="ListViewDB_KeyDown"
-                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp" Grid.Row="1" Grid.Column="0">
-                    <ListView.Resources>
-                        <Style TargetType="GridViewColumnHeader">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </Style>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
-                            <Setter Property="ToolTipService.ShowDuration" Value="60000" />
-                            <Setter Property="ToolTipService.IsEnabled"
+                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp">
+                        <ListView.Resources>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </Style>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                <Setter Property="ToolTipService.ShowDuration" Value="60000" />
+                                <Setter Property="ToolTipService.IsEnabled"
                                     Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}, Path=ShowToolTip}" />
-                            <Setter Property="ToolTip">
-                                <Setter.Value>
-                                    <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                        <local:CardToolTip />
-                                    </ToolTip>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Margin" Value="-4,-3,-3,0"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected"
+                                <Setter Property="ToolTip">
+                                    <Setter.Value>
+                                        <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                            <local:CardToolTip />
+                                        </ToolTip>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Margin" Value="-4,-3,-3,0"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected"
                                          Value="True">
-                                    <Setter Property="BorderBrush"
+                                        <Setter Property="BorderBrush"
                                             Value="Blue" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListView.Resources>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <controls1:Card/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <controls1:Card/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </DockPanel>
                 <DockPanel Name="PanelDeckHistory" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed">
                     <Border Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="0,6,6,-4" DockPanel.Dock="Top">
                         <StackPanel Orientation="Horizontal">

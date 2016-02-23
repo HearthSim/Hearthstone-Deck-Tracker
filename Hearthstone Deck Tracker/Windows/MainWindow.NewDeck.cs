@@ -281,7 +281,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var cardInDeck = _newDeck.Cards.FirstOrDefault(c => c.Name == card.Name);
 			if(cardInDeck != null)
 			{
-				if(!_newDeck.IsArenaDeck && (cardInDeck.Count >= 2 || cardInDeck.Rarity == Rarity.Legendary && cardInDeck.Count >= 1))
+				if(!_newDeck.IsArenaDeck && CheckBoxConstructedCardLimits.IsChecked == true 
+					&&(cardInDeck.Count >= 2 || cardInDeck.Rarity == Rarity.Legendary && cardInDeck.Count >= 1))
 					return;
 				cardInDeck.Count++;
 			}
@@ -341,6 +342,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ListViewDeck.ItemsSource = _newDeck.Cards;
 			Helper.SortCardCollection(ListViewDeck.ItemsSource, false);
 			TextBoxDeckName.Text = _newDeck.Name;
+			BorderConstructedCardLimits.Visibility = _newDeck.IsArenaDeck ? Collapsed : Visible;
+			CheckBoxConstructedCardLimits.IsChecked = true;
 			UpdateDeckHistoryPanel(deck, !editing);
 			UpdateDbListView();
 			ExpandNewDeck();
@@ -486,6 +489,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(result == MessageDialogResult.Negative)
 				_newDeck.IsArenaDeck = true;
 
+			BorderConstructedCardLimits.Visibility = _newDeck.IsArenaDeck ? Collapsed : Visible;
+			CheckBoxConstructedCardLimits.IsChecked = true;
 			SelectDeck(null, false);
 			ExpandNewDeck();
 			ListViewDeck.ItemsSource = _newDeck.Cards;
