@@ -170,8 +170,11 @@ namespace Hearthstone_Deck_Tracker
 			var selected = ComboBoxStatType.SelectedItem as StatTypeWrapper;
 			if(selected != null)
 			{
-				Config.Instance.ManaCurveFilter = selected.StatType;
-				Config.Save();
+				if(Config.Instance.ManaCurveFilter != selected.StatType)
+				{
+					Config.Instance.ManaCurveFilter = selected.StatType;
+					Config.Save();
+				}
 				UpdateValues();
 			}
 		}

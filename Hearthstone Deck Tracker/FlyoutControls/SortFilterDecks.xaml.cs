@@ -150,8 +150,11 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.SortDecksByClass = true;
-			Config.Save();
+			if(!Config.Instance.SortDecksByClass)
+			{
+				Config.Instance.SortDecksByClass = true;
+				Config.Save();
+			}
 			Core.MainWindow.DeckPickerList.UpdateDecks();
 		}
 

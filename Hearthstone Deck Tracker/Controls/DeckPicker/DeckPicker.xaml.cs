@@ -574,27 +574,27 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			if(_ignoreSelectionChange)
 				return;
-			if(e.AddedItems.Count == 0)
-				Config.Instance.SelectedDeckType = DeckType.All;
-			else
+			var deckType = DeckType.All;
+			if(e.AddedItems.Count >= 0)
 			{
 				var item = e.AddedItems[0] as string;
 				if(item != null)
 				{
 					switch(item)
 					{
-						case "ALL":
-							Config.Instance.SelectedDeckType = DeckType.All;
-							break;
 						case "ARENA":
-							Config.Instance.SelectedDeckType = DeckType.Arena;
+							deckType = DeckType.Arena;
 							break;
 						case "CONSTRUCTED":
-							Config.Instance.SelectedDeckType = DeckType.Constructed;
+							deckType = DeckType.Constructed;
 							break;
 					}
 				}
-				Config.Save();
+				if(Config.Instance.SelectedDeckType != deckType)
+				{
+					Config.Instance.SelectedDeckType = deckType;
+					Config.Save();
+				}
 				UpdateDecks();
 			}
 		}
