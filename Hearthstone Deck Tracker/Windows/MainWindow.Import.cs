@@ -351,7 +351,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			for(var i = 0; i < Math.Min(numVisibleCards, deck.Cards.Count); i++)
 			{
 				var posY = (int)(startY + strideY * i);
-				var capture = await Helper.CaptureHearthstoneAsync(new Point(posX, posY), width, height, hsHandle);
+				var capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(posX, posY), width, height, hsHandle);
 				if(capture == null)
 					continue;
 				var yellowPixels = 0;
@@ -392,7 +392,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				for(var i = 0; i < remainingCards; i++)
 				{
 					var posY = (int)(startY + strideY * i);
-					var capture = await Helper.CaptureHearthstoneAsync(new Point(posX, posY), width, height, hsHandle);
+					var capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(posX, posY), width, height, hsHandle);
 					if(capture == null)
 						continue;
 					var yellowPixels = 0;

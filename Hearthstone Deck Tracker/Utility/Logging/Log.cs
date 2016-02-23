@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 

@@ -300,7 +300,11 @@
     <Compile Include="Importing\Websites\Hearthstonetopdecks.cs" />
     <Compile Include="Importing\Websites\Icyveins.cs" />
     <Compile Include="Importing\Websites\Tempostorm.cs" />
+    <Compile Include="Utility\Extensions\CardListExtensions.cs" />
+    <Compile Include="Utility\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Utility\Extensions\TaskExtensions.cs" />
+    <Compile Include="Utility\Extensions\VersionExtensions.cs" />
+    <Compile Include="Utility\Extensions\ZipArchiveExtensions.cs" />
     <Compile Include="Utility\Logging\Log.cs" />
     <Compile Include="Utility\Logging\LogType.cs" />
     <Compile Include="Utility\MouseActions.cs" />
@@ -394,6 +398,7 @@
     <Compile Include="Stats\CompiledStats\ArenaStats.cs" />
     <Compile Include="Utility\ConfigWrapper.cs" />
     <Compile Include="Utility\RankDetection.cs" />
+    <Compile Include="Utility\ScreenCapture.cs" />
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
       <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
     </Compile>

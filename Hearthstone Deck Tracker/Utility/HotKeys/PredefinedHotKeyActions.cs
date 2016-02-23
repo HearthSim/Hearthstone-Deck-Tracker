@@ -183,7 +183,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			if(handle == IntPtr.Zero)
 				return;
 			var rect = User32.GetHearthstoneRect(false);
-			var bmp = await Helper.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, handle, false, false);
+			var bmp = await ScreenCapture.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, handle, false, false);
 			if(bmp == null)
 			{
 				Log.Error("There was an error capturing hearthstone.");
@@ -208,7 +208,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			if(handle == IntPtr.Zero)
 				return;
 			var rect = User32.GetHearthstoneRect(false);
-			var bmp = await Helper.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, handle, false, true);
+			var bmp = await ScreenCapture.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, handle, false, true);
 			if(bmp == null)
 			{
 				Log.Error("There was an error capturing hearthstone.");

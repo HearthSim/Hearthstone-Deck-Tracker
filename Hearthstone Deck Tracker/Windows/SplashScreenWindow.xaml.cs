@@ -1,4 +1,6 @@
-﻿namespace Hearthstone_Deck_Tracker.Windows
+﻿using Hearthstone_Deck_Tracker.Utility.Extensions;
+
+namespace Hearthstone_Deck_Tracker.Windows
 {
 	/// <summary>
 	/// Interaction logic for SplashScreenWindow.xaml

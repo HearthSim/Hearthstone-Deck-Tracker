@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -25,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 			var size = (int)Math.Round(height * scale);
 
-			var capture = await Helper.CaptureHearthstoneAsync(new Point(posX, posY), size, size, wndHandle);
+			var capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(posX, posY), size, size, wndHandle);
 			if(capture == null)
 				return false;
 
@@ -43,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			var lockWidth = (int)Math.Round(height * xScale);
 			var lockHeight = (int)Math.Round(height * yScale);
 
-			var capture = await Helper.CaptureHearthstoneAsync(new Point(posX, posY), lockWidth, lockHeight, wndHandle);
+			var capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(posX, posY), lockWidth, lockHeight, wndHandle);
 			if(capture == null)
 				return false;
 
@@ -53,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		public static async Task<bool> IsDeckEmpty(IntPtr wndHandle, int width, int height, double ratio)
 		{
 			var capture =
-				await Helper.CaptureHearthstoneAsync(
+				await ScreenCapture.CaptureHearthstoneAsync(
 				                          new Point((int)Helper.GetScaledXPos(Config.Instance.ExportClearX, width, ratio),
 				                                    (int)(Config.Instance.ExportClearCheckYFixed * height)), 1, 1, wndHandle);
 			return capture != null && ColorDistance(capture.GetPixel(0, 0), Color.FromArgb(255, 56, 45, 69), 5);
@@ -69,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			var posX = (int)Helper.GetScaledXPos(Config.Instance.ExportZeroSquareX, width, ratio);
 			var posY = (int)(Config.Instance.ExportZeroSquareY * height);
 
-			var capture = await Helper.CaptureHearthstoneAsync(new Point(posX, posY), size, size, wndHandle);
+			var capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(posX, posY), size, size, wndHandle);
 
 			if(capture == null)
 				return false;

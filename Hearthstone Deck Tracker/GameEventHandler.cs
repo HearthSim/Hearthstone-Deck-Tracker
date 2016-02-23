@@ -448,14 +448,14 @@ namespace Hearthstone_Deck_Tracker
 				} while(await Helper.FriendsListOpen());
 			}
 			Core.Overlay.ShowFriendsListWarning(false);
-			var capture = await Helper.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height);
+			var capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height);
 			if(reEnableOverlay)
 				Core.Overlay.ShowOverlay(true);
 			var success = await FindRanks(capture);
 			if(!success && !Config.Instance.AlternativeScreenCapture && _rankDetectionTries < 3)
 			{
 				Log.Info("ScreenCapture rank detection failed. Trying window capture.");
-				capture = await Helper.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, altScreenCapture: true);
+				capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, altScreenCapture: true);
 				success = await FindRanks(capture);
 				if(success)
 				{
