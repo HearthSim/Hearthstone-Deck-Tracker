@@ -43,6 +43,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool AlwaysShowGoldProgress = false;
 
+		[DefaultValue(true)]
+		public bool ArenaSummaryChartsExpanded = true;
+
 		[DefaultValue(DisplayedTimeFrame.AllTime)]
 		public DisplayedTimeFrame ArenaStatsTimeFrameFilter = DisplayedTimeFrame.AllTime;
 
