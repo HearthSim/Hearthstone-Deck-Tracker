@@ -17,36 +17,41 @@
         <StackPanel>
             <GroupBox Header="Game result">
                 <StackPanel>
-                    <CheckBox Name="CheckBoxShowNotifications" Content="Show notifications" Checked="CheckBoxShowNotifications_OnChecked" Unchecked="CheckBoxShowNotifications_OnUnchecked"/>
-                    <CheckBox Name="CheckBoxUnexpectedOnly" Content="Only show for unexpected casual games*" ToolTip="In case HDT likely failed to detect gamemode as ranked (previous game was ranked)" 
+                    <CheckBox Name="CheckBoxShowNotifications" Content="Show notifications"
+                              Checked="CheckBoxShowNotifications_OnChecked"
+                              Unchecked="CheckBoxShowNotifications_OnUnchecked" />
+                    <CheckBox Name="CheckBoxUnexpectedOnly" Content="Only show for unexpected casual games*"
+                              ToolTip="In case HDT likely failed to detect gamemode as ranked (previous game was ranked)"
                               IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxShowNotifications}"
-                              Margin="0,5,0,0" Checked="CheckBoxUnexpectedOnly_OnChecked" Unchecked="CheckBoxUnexpectedOnly_OnUnchecked"/>
-                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0" 
-                              IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxShowNotifications}">
-                        <TextBlock Text="Show for" VerticalAlignment="Center"/>
-                        <TextBox x:Name="TextboxTimerAlert" 
-                                             HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
-                                             Margin="5,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top"
-                                             Width="40" TextChanged="TextboxTimerAlert_TextChanged" PreviewTextInput="TextboxTimerAlert_PreviewTextInput"/>
-                        <TextBlock Text="seconds." VerticalAlignment="Center"/>
+                              Margin="0,5,0,0" Checked="CheckBoxUnexpectedOnly_OnChecked"
+                              Unchecked="CheckBoxUnexpectedOnly_OnUnchecked" />
+                    <StackPanel Orientation="Horizontal" Margin="0,5,0,0"
+                                IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxShowNotifications}">
+                        <TextBlock Text="Show for" VerticalAlignment="Center" />
+                        <TextBox x:Name="TextboxTimerAlert"
+                                 HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
+                                 Margin="5,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top"
+                                 Width="40" TextChanged="TextboxTimerAlert_TextChanged"
+                                 PreviewTextInput="TextboxTimerAlert_PreviewTextInput" />
+                        <TextBlock Text="seconds." VerticalAlignment="Center" />
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
             <CheckBox x:Name="CheckboxArenaRewardDialog"
-                                          Content="Show arena reward dialog when run is over"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxArenaRewardDialog_Checked"
-                                          Unchecked="CheckboxArenaRewardDialog_Unchecked" />
+                      Content="Show arena reward dialog when run is over"
+                      HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                      Checked="CheckboxArenaRewardDialog_Checked"
+                      Unchecked="CheckboxArenaRewardDialog_Unchecked" />
             <CheckBox x:Name="CheckboxNoteDialog"
-                                          Content="Show note dialog after game"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxNoteDialog_Checked"
-                                          Unchecked="CheckboxNoteDialog_Unchecked" />
+                      Content="Show note dialog after game"
+                      HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                      Checked="CheckboxNoteDialog_Checked"
+                      Unchecked="CheckboxNoteDialog_Unchecked" />
             <CheckBox x:Name="CheckboxNoteDialogDelayed"
-                                          Content="Wait until back in menu"
-                                          HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxNoteDialogDelay_Checked"
-                                          Unchecked="CheckboxNoteDialogDelay_Unchecked" />
+                      Content="Wait until back in menu"
+                      HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
+                      Checked="CheckboxNoteDialogDelay_Checked"
+                      Unchecked="CheckboxNoteDialogDelay_Unchecked" />
         </StackPanel>
     </GroupBox>
 </UserControl>

@@ -60,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			ListBoxSearchResult.Items.Clear();
 			if(string.IsNullOrEmpty(text))
 				return;
-			foreach( var wrapper in CheckBoxWrappers.Where(x => x.CheckBox.Content.ToString().ToUpperInvariant().Contains(text.ToUpperInvariant())
+			foreach(var wrapper in CheckBoxWrappers.Where(x => x.CheckBox.Content.ToString().ToUpperInvariant().Contains(text.ToUpperInvariant())
 															|| (x.CheckBox.Name.ToUpperInvariant().Replace("CHECKBOX", "").Contains(text.ToUpperInvariant()))))
 				ListBoxSearchResult.Items.Add(wrapper);
 		}
@@ -73,14 +73,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			var tvis = Helper.FindLogicalChildren<TreeViewItem>(Core.MainWindow.Options.TreeViewOptions);
 			var target = tvis.FirstOrDefault(x => x.Name.Contains(selected.MenuItem.Name.Substring(7)));
 			if(target != null)
+			{
+				if(selected.CheckBox.Visibility == Visibility.Collapsed)
+					AdvancedOptions.Instance.Show = true;
 				target.IsSelected = true;
+			}
 		}
 
 		public class CheckBoxWrapper
 		{
 			public CheckBox CheckBox { get; set; }
 			public UserControlWrapper MenuItem { get; set; }
-			public override string ToString() => $"{MenuItem.Name.Substring(7).Insert(7, " > ")}: {CheckBox.Content}";
+			public override string ToString() => $"{(CheckBox.Visibility == Visibility.Collapsed ? "[Adv.] " : "")}{MenuItem.Name.Substring(7).Insert(7, " > ")}: {CheckBox.Content}";
 		}
 
 		public class UserControlWrapper

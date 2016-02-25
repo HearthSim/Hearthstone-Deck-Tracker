@@ -1,79 +1,101 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerGeneral"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="300">
     <Grid>
         <GroupBox Header="General">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <CheckBox x:Name="CheckBoxAutoUse" Margin="10,5,0,0"  
-                              Content="Automatically &quot;USE&quot; decks. (disables button on decks)" 
-                              Checked="CheckBoxAutoUse_OnChecked" Unchecked="CheckBoxAutoUse_OnUnchecked"/>
+                    <CheckBox x:Name="CheckBoxAutoUse" Margin="10,5,0,0"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Content="Automatically &quot;USE&quot; decks. (disables button on decks)"
+                              Checked="CheckBoxAutoUse_OnChecked" Unchecked="CheckBoxAutoUse_OnUnchecked" />
                     <CheckBox x:Name="CheckboxAutoSelectDeck"
-                                          Content="Autoselect deck if only one possible" HorizontalAlignment="Left"
-                                          Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxAutoSelectDeck_Checked"
-                                          Unchecked="CheckboxAutoSelectDeck_Unchecked" />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Content="Autoselect deck if only one possible" HorizontalAlignment="Left"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxAutoSelectDeck_Checked"
+                              Unchecked="CheckboxAutoSelectDeck_Unchecked" />
                     <CheckBox x:Name="CheckboxSpectatorUseNoDeck"
-                                          Content="Use no deck on Spectator mode" HorizontalAlignment="Left"
-                                          Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxSpectatorUseNoDeck_Checked"
-                                          Unchecked="CheckboxSpectatorUseNoDeck_Unchecked" />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Content="Use no deck on Spectator mode" HorizontalAlignment="Left"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxSpectatorUseNoDeck_Checked"
+                              Unchecked="CheckboxSpectatorUseNoDeck_Unchecked" />
                     <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxFlashHs_Checked"
-                                          Unchecked="CheckboxFlashHs_Unchecked" />
+                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxFlashHs_Checked"
+                              Unchecked="CheckboxFlashHs_Unchecked" />
                     <CheckBox x:Name="CheckboxBringHsToForegorund"
-                                          Content="Popup Hearthstone on turn start" HorizontalAlignment="Left"
-                                          Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxBringHsToForegorund_Checked"
-                                          Unchecked="CheckboxBringHsToForegorund_Unchecked" />
-                    <DockPanel Margin="10,5,10,0">
-
+                              Content="Popup Hearthstone on turn start" HorizontalAlignment="Left"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxBringHsToForegorund_Checked"
+                              Unchecked="CheckboxBringHsToForegorund_Unchecked" />
+                    <DockPanel Margin="10,5,10,0"
+                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
                         <CheckBox x:Name="CheckboxTimerAlert"
-                                              Content="Alert at X seconds" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="Sound an alert and flash when you have X seconds remaining"
-                                              VerticalAlignment="Top" Checked="CheckboxTimerAlert_Checked" Unchecked="CheckboxTimerAlert_Unchecked" />
-                        <TextBox x:Name="TextboxTimerAlert" 
-                                             HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
-                                             Margin="10,0,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"
-                                             Width="60" TextChanged="TextboxTimerAlert_TextChanged" PreviewTextInput="TextboxTimerAlert_PreviewTextInput"/>
+                                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                                  Content="Alert at X seconds" HorizontalAlignment="Left" Margin="0,5,0,0"
+                                  ToolTip="Sound an alert and flash when you have X seconds remaining"
+                                  VerticalAlignment="Top" Checked="CheckboxTimerAlert_Checked"
+                                  Unchecked="CheckboxTimerAlert_Unchecked" />
+                        <TextBox x:Name="TextboxTimerAlert"
+                                 HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
+                                 Margin="10,0,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"
+                                 Width="60" TextChanged="TextboxTimerAlert_TextChanged"
+                                 PreviewTextInput="TextboxTimerAlert_PreviewTextInput" />
                     </DockPanel>
                     <CheckBox x:Name="CheckboxTurnTime"
-                                          Content="Set turn time to 75s (default 90s) *"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxTurnTime_Checked"
-                                          Unchecked="CheckboxTurnTime_Unchecked" />
-                    <Separator Margin="0,5,0,0"/>
-                    <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0" Content="Card sorting: Class cards first"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Content="Set turn time to 75s (default 90s) *"
+                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxTurnTime_Checked"
+                              Unchecked="CheckboxTurnTime_Unchecked" />
+                    <Separator Margin="0,5,0,0" />
+                    <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0"
+                              Content="Card sorting: Class cards first"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Checked="CheckBoxClassCardsFirst_Checked"
                               Unchecked="CheckBoxClassCardsFirst_Unchecked" />
                     <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxTrackerCardToolTips_Checked"
-                                          Unchecked="CheckboxTrackerCardToolTips_Unchecked" />
+                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxTrackerCardToolTips_Checked"
+                              Unchecked="CheckboxTrackerCardToolTips_Unchecked" />
                     <CheckBox x:Name="CheckboxCardFrameRarity" Content="Rarity-colored card frames"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxCardFrameRarity_OnChecked"
-                                          Unchecked="CheckboxCardFrameRarity_OnUnchecked" />
+                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxCardFrameRarity_OnChecked"
+                              Unchecked="CheckboxCardFrameRarity_OnUnchecked" />
                     <CheckBox x:Name="CheckboxCardGemRarity" Content="Rarity-colored card gems"
-                                          HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxCardGemRarity_OnChecked"
-                                          Unchecked="CheckboxCardGemRarity_OnUnchecked" />
+                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxCardGemRarity_OnChecked"
+                              Unchecked="CheckboxCardGemRarity_OnUnchecked" />
                     <CheckBox x:Name="CheckboxHideManaCurveMyDecks"
-                                              Content="Show Manacurve" HorizontalAlignment="Left"
-                                              Margin="10,5,0,0" VerticalAlignment="Top"
-                                              Checked="CheckboxManaCurveMyDecks_Checked"
-                                              Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Content="Show Manacurve" HorizontalAlignment="Left"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxManaCurveMyDecks_Checked"
+                              Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
                     <CheckBox x:Name="CheckboxFullTextSearch"
-                                          Content="Full text search in New Deck" HorizontalAlignment="Left"
-                                          Margin="10,5,0,0" VerticalAlignment="Top"
-                                          Checked="CheckboxFullTextSearch_Checked"
-                                          Unchecked="CheckboxFullTextSearch_Unchecked" />
-                    <Separator Margin="0,5,0,0"/>
-                    <TextBlock Text="* Neither 75s not 90s are quite correct. The base time is 75s but it's extended to up to ~100s, depending on animations playing." TextWrapping="Wrap" Margin="10,5,10,0" FontStyle="Italic"/>
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Content="Full text search in New Deck" HorizontalAlignment="Left"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxFullTextSearch_Checked"
+                              Unchecked="CheckboxFullTextSearch_Unchecked" />
+                    <Separator Margin="0,5,0,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+                    <TextBlock Text="* Neither 75s not 90s are quite correct. The base time is 75s but it's extended to up to ~100s, depending on animations playing."
+                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                               TextWrapping="Wrap" Margin="10,5,10,0" FontStyle="Italic" />
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

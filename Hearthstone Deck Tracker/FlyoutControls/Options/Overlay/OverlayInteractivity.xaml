@@ -1,29 +1,36 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayInteractivity"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <GroupBox Header="Interactivity">
             <StackPanel>
-                <Label Content="WARNING:" FontWeight="Bold" Foreground="Red"/>
+                <Label Content="WARNING:" FontWeight="Bold" Foreground="Red" />
                 <Label Content="May cause the cursor to freeze occasionally" Margin="0,-10,0,0" Foreground="Red" />
                 <controls:ToggleSwitch x:Name="ToggleSwitchExtraFeatures" Margin="10,0,0,0"
-                                                   OnLabel="Enabled" OffLabel="Disabled"
-                                                   Checked="ToggleSwitchExtraFeatures_Checked"
-                                                   Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
-                <CheckBox Name="CheckBoxForceExtraFeatures" Content="Force on (don't use this unless you need to)" Margin="10,0,5,0"
-                                      Checked="CheckBoxForceExtraFeatures_OnChecked"
-                                      Unchecked="CheckBoxForceExtraFeatures_OnUnchecked" 
-                                      IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}"/>
-                <Separator Margin="0,20,0,10"/>
-                <Label Content="FEATURES:" FontWeight="Bold"/>
-                <CheckBox Name="CheckBoxFriendslist" Content="Hide deck when friendslist is open" Checked="CheckBoxFriendslist_OnChecked" Unchecked="CheckBoxFriendslist_OnUnchecked" Margin="10,5,0,0" IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}"/>
-                <CheckBox Name="CheckBoxSecrets" Content="Click secrets to gray out" Checked="CheckBoxSecrets_OnChecked" Unchecked="CheckBoxSecrets_OnUnchecked" Margin="10,5,0,0" IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}"/>
-                <TextBlock Text="NOTE: May not work correctly if &quot;options > overlay > general > automatically gray out secrets&quot; is enabled." TextWrapping="Wrap" FontStyle="Italic" Margin="34,0,0,0"/>
+                                       OnLabel="Enabled" OffLabel="Disabled"
+                                       Checked="ToggleSwitchExtraFeatures_Checked"
+                                       Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
+                <CheckBox Name="CheckBoxForceExtraFeatures" Content="Force on (don't use this unless you need to)"
+                          Margin="10,0,5,0"
+                          Checked="CheckBoxForceExtraFeatures_OnChecked"
+                          Unchecked="CheckBoxForceExtraFeatures_OnUnchecked"
+                          IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}" />
+                <Separator Margin="0,20,0,10" />
+                <Label Content="FEATURES:" FontWeight="Bold" />
+                <CheckBox Name="CheckBoxFriendslist" Content="Hide deck when friendslist is open"
+                          Checked="CheckBoxFriendslist_OnChecked" Unchecked="CheckBoxFriendslist_OnUnchecked"
+                          Margin="10,5,0,0" IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}" />
+                <CheckBox Name="CheckBoxSecrets" Content="Click secrets to gray out"
+                          Checked="CheckBoxSecrets_OnChecked" Unchecked="CheckBoxSecrets_OnUnchecked" Margin="10,5,0,0"
+                          IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}" />
+                <TextBlock
+                    Text="NOTE: May not work correctly if &quot;options > overlay > general > automatically gray out secrets&quot; is enabled."
+                    TextWrapping="Wrap" FontStyle="Italic" Margin="34,0,0,0" />
             </StackPanel>
         </GroupBox>
     </Grid>

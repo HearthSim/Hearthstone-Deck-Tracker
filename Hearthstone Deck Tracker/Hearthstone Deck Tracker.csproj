@@ -265,6 +265,7 @@
     <Compile Include="FlyoutControls\Options\OptionsSearch.xaml.cs">
       <DependentUpon>OptionsSearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\Options\AdvancedOptions.cs" />
     <Compile Include="FlyoutControls\Options\Tracker\TrackerNotifications.xaml.cs">
       <DependentUpon>TrackerNotifications.xaml</DependentUpon>
     </Compile>

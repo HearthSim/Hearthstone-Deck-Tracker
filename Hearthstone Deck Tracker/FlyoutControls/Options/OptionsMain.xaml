@@ -2,35 +2,41 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
         <Border Margin="5,5,0,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-            <TreeView Name="TreeViewOptions" Width="150">
-                <TreeViewItem Name="TreeViewItemSearch" Header="Search" Selected="TreeViewItemSearch_OnSelected"></TreeViewItem>
-                <TreeViewItem Header="Overlay">
-                    <TreeViewItem Name="TreeViewItemOverlayGeneral" Header="General" Selected="TreeViewItemGeneralOverlay_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemOverlayDeckWindows" Header="Deck Windows" Selected="TreeViewItemOverlayDeckWindows_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemOverlayPlayer" Header="Player" Selected="TreeViewItemOverlayPlayer_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemOverlayOpponent" Header="Opponent" Selected="TreeViewItemOverlayOpponent_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemOverlayInteractivity" Header="Interactivity" Selected="TreeViewItemOverlayInteractivity_OnSelected"/>
-                </TreeViewItem>
-                <TreeViewItem Header="Tracker">
-                    <TreeViewItem Name="TreeViewItemTrackerGeneral" Header="General" Selected="TreeViewItemTrackerGeneral_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerStats" Header="Stats" Selected="TreeViewItemTrackerStats_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerExporting" Header="Exporting" Selected="TreeViewItemTrackerExporting_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerImporting" Header="Importing" Selected="TreeViewItemTrackerImporting_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerPlugins" Header="Plugins" Selected="TreeViewItemTrackerPlugins_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerHotKeys" Header="Hotkeys" Selected="TreeViewItemTrackerHotKeys_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerNotifications" Header="Notifications" Selected="TreeViewItemTrackerNotifications_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerAppearance" Header="Appearance" Selected="TreeViewItemTrackerAppearance_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerSettings" Header="Settings" Selected="TreeViewItemTrackerSettings_OnSelected"/>
-                    <TreeViewItem Name="TreeViewItemTrackerLogging" Header="Logging" Selected="TreeViewItemTrackerLogging_OnSelected" Visibility="Collapsed"/>
-                    <TreeViewItem Name="TreeViewItemTrackerBackups" Header="Backups" Selected="TreeViewItemTrackerBackups_OnSelected"/>
-                </TreeViewItem>
-            </TreeView>
-            </Border>
+            <DockPanel>
+                <Border DockPanel.Dock="Bottom" Margin="-1,0,-1,-1" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                    <CheckBox Content="Advanced options" Margin="5" IsChecked="{Binding Show, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                </Border>
+                <TreeView Name="TreeViewOptions" Width="150">
+                    <TreeViewItem Name="TreeViewItemSearch" Header="Search" Selected="TreeViewItemSearch_OnSelected"></TreeViewItem>
+                    <TreeViewItem Header="Overlay">
+                        <TreeViewItem Name="TreeViewItemOverlayGeneral" Header="General" Selected="TreeViewItemGeneralOverlay_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemOverlayDeckWindows" Header="Deck Windows" Selected="TreeViewItemOverlayDeckWindows_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                        <TreeViewItem Name="TreeViewItemOverlayPlayer" Header="Player" Selected="TreeViewItemOverlayPlayer_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemOverlayOpponent" Header="Opponent" Selected="TreeViewItemOverlayOpponent_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemOverlayInteractivity" Header="Interactivity" Selected="TreeViewItemOverlayInteractivity_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Tracker">
+                        <TreeViewItem Name="TreeViewItemTrackerGeneral" Header="General" Selected="TreeViewItemTrackerGeneral_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerStats" Header="Stats" Selected="TreeViewItemTrackerStats_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerExporting" Header="Exporting" Selected="TreeViewItemTrackerExporting_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                        <TreeViewItem Name="TreeViewItemTrackerImporting" Header="Importing" Selected="TreeViewItemTrackerImporting_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                        <TreeViewItem Name="TreeViewItemTrackerNotifications" Header="Notifications" Selected="TreeViewItemTrackerNotifications_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerPlugins" Header="Plugins" Selected="TreeViewItemTrackerPlugins_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerHotKeys" Header="Hotkeys" Selected="TreeViewItemTrackerHotKeys_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                        <TreeViewItem Name="TreeViewItemTrackerBackups" Header="Backups" Selected="TreeViewItemTrackerBackups_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                        <TreeViewItem Name="TreeViewItemTrackerAppearance" Header="Appearance" Selected="TreeViewItemTrackerAppearance_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerSettings" Header="Settings" Selected="TreeViewItemTrackerSettings_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerLogging" Header="Logging" Selected="TreeViewItemTrackerLogging_OnSelected" Visibility="Collapsed"/>
+                    </TreeViewItem>
+                </TreeView>
+            </DockPanel>
+        </Border>
         <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0"/>
     </DockPanel>
 </UserControl>

@@ -1,10 +1,10 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerSettings"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
-             mc:Ignorable="d" 
+             xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300" Loaded="TrackerSettings_Loaded">
     <Grid>
         <GroupBox Header="Settings">
@@ -12,86 +12,115 @@
                 <StackPanel>
                     <GroupBox Header="Google Analytics">
                         <StackPanel>
-                            <CheckBox Name="CheckBoxAnalytics" Content="Submit anonymous data" Checked="CheckBoxAnalytics_OnChecked" Unchecked="CheckBoxAnalytics_OnUnchecked"/>
+                            <CheckBox Name="CheckBoxAnalytics" Content="Submit anonymous data"
+                                      Checked="CheckBoxAnalytics_OnChecked" Unchecked="CheckBoxAnalytics_OnUnchecked" />
                             <TextBlock
                                 Text="This only tracks two things: App starts, where the version number and login mode is submitted, as well as information about crashes."
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </GroupBox>
-                    <DockPanel Margin="10,5,10,0">
+                    <DockPanel Margin="10,5,10,0"
+                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
                         <Label Content="Key on game start:" HorizontalAlignment="Right"
-                                               VerticalAlignment="Top" />
+                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                               VerticalAlignment="Top" />
                         <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="150"
-                                                  SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged" />
+                                  VerticalAlignment="Top" Width="150"
+                                  SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged" />
                     </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
+                    <DockPanel Margin="10,5,10,0"
+                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
                         <Label Content="Key on game end:" HorizontalAlignment="Left"
-                                               VerticalAlignment="Top" />
+                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                               VerticalAlignment="Top" />
                         <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Right"
-                                                  VerticalAlignment="Top" Width="150"
-                                                  SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged" />
+                                  VerticalAlignment="Top" Width="150"
+                                  SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged" />
                     </DockPanel>
                     <CheckBox x:Name="CheckboxConfigSaveAppData" Content="Save config in AppData"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxConfigSaveAppData_Checked"
-                                              Unchecked="CheckboxConfigSaveAppData_Unchecked" />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxConfigSaveAppData_Checked"
+                              Unchecked="CheckboxConfigSaveAppData_Unchecked" />
                     <CheckBox x:Name="CheckboxDataSaveAppData" Content="Save data in AppData"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxDataSaveAppData_Checked"
-                                              Unchecked="CheckboxDataSaveAppData_Unchecked" />
-                    <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
-                                              Unchecked="CheckboxMinimizeTray_Unchecked" />
-                    <CheckBox x:Name="CheckboxStartMinimized" Content="Start minimized"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked"
-                                              Unchecked="CheckboxStartMinimized_Unchecked" />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxDataSaveAppData_Checked"
+                              Unchecked="CheckboxDataSaveAppData_Unchecked" />
                     <CheckBox x:Name="CheckboxStartWithWindows" Content="Start with windows"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxStartWithWindows_Checked"
-                                              Unchecked="CheckboxStartWithWindows_Unchecked" />
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxStartWithWindows_Checked"
+                              Unchecked="CheckboxStartWithWindows_Unchecked" />
+                    <CheckBox x:Name="CheckboxStartMinimized" Content="Start minimized"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked"
+                              Unchecked="CheckboxStartMinimized_Unchecked" />
+                    <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
+                              Unchecked="CheckboxMinimizeTray_Unchecked" />
                     <CheckBox x:Name="CheckBoxShowLoginDialog" Content="Show login dialog"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxShowLoginDialog_Checked"
-                                              Unchecked="CheckboxShowLoginDialog_Unchecked" />
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxShowLoginDialog_Checked"
+                              Unchecked="CheckboxShowLoginDialog_Unchecked" />
                     <CheckBox x:Name="CheckBoxShowSplashScreen" Content="Show the loading splash screen"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxShowSplashScreen_Checked"
-                                              Unchecked="CheckboxShowSplashScreen_Unchecked" />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxShowSplashScreen_Checked"
+                              Unchecked="CheckboxShowSplashScreen_Unchecked" />
                     <CheckBox x:Name="CheckboxCloseWithHearthstone"
-                                              Content="Close with Hearthstone" HorizontalAlignment="Left"
-                                              Margin="10,5,0,0" VerticalAlignment="Top"
-                                              Checked="CheckboxCloseWithHearthstone_Checked"
-                                              Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
+                              Content="Close with Hearthstone" HorizontalAlignment="Left"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxCloseWithHearthstone_Checked"
+                              Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
                     <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked"
-                                              Unchecked="CheckboxCheckForUpdates_Unchecked" />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked"
+                              Unchecked="CheckboxCheckForUpdates_Unchecked" />
                     <CheckBox x:Name="CheckboxCheckForBetaUpdates" Content="Check for BETA updates"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxCheckForBetaUpdates_Checked"
-                                              Unchecked="CheckboxCheckForBetaUpdates_Unchecked" />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxCheckForBetaUpdates_Checked"
+                              Unchecked="CheckboxCheckForBetaUpdates_Unchecked" />
                     <CheckBox x:Name="CheckboxAdvancedWindowSearch" Content="Advanced window search"
-                                    	HorizontalAlignment="Left" Margin="10,5,0,0"
-                                    	VerticalAlignment="Top" Checked="CheckboxAdvancedWindowSearch_Checked"
-                                    	Unchecked="CheckboxAdvancedWindowSearch_Unchecked" ToolTip="This can be turned off if the overlay shows up in non-Hearthstone windows." />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxAdvancedWindowSearch_Checked"
+                              Unchecked="CheckboxAdvancedWindowSearch_Unchecked"
+                              ToolTip="This can be turned off if the overlay shows up in non-Hearthstone windows." />
                     <CheckBox x:Name="CheckboxAlternativeScreenCapture" Content="Alternative screen capture"
-                                    	HorizontalAlignment="Left" Margin="10,5,0,0"
-                                    	VerticalAlignment="Top" Checked="CheckboxAlternativeScreenCapture_Checked"
-                                    	Unchecked="CheckboxAlternativeScreenCapture_Unchecked" ToolTip="Try enabling this if you are having trouble with rank(ed) detection." />
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxAlternativeScreenCapture_Checked"
+                              Unchecked="CheckboxAlternativeScreenCapture_Unchecked"
+                              ToolTip="Try enabling this if you are having trouble with rank(ed) detection." />
                     <CheckBox x:Name="CheckboxShowNewsBar" Content="Show news bar"
-                                    	HorizontalAlignment="Left" Margin="10,5,0,0"
-                                    	VerticalAlignment="Top" Click="CheckboxShowNewsBar_OnClick" />
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Click="CheckboxShowNewsBar_OnClick" />
                     <CheckBox x:Name="CheckboxLogTab" Content="Show Log"
-                                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                                              VerticalAlignment="Top" Checked="CheckboxLogTab_Checked"
-                                              Unchecked="CheckboxLogTab_Unchecked" />
-                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content ="set hearthstone path" Click="ButtonGamePath_OnClick"/>
-                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content ="open appdata folder" Click="ButtonOpenAppData_OnClick"/>
-                    <Button Name="SelectSaveDataPath" Margin="10,5,10,0" Content="set data path" Click="SelectSaveDataPath_Click"/>
-                    <Button Name="ButtonRestart" Margin="10,15,10,0" Content="restart hdt" Click="ButtonRestart_OnClick"/>
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxLogTab_Checked"
+                              Unchecked="CheckboxLogTab_Unchecked" />
+                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content="set hearthstone path"
+                            Click="ButtonGamePath_OnClick" />
+                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content="open appdata folder"
+                            Click="ButtonOpenAppData_OnClick" />
+                    <Button Name="SelectSaveDataPath" Margin="10,5,10,0" Content="set data path"
+                            Click="SelectSaveDataPath_Click"
+                            Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                            Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+                    <Button Name="ButtonRestart" Margin="10,15,10,0" Content="restart hdt"
+                            Click="ButtonRestart_OnClick" />
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>
