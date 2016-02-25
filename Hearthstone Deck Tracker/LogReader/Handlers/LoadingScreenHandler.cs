@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			switch(game.CurrentMode)
 			{
 				case Mode.COLLECTIONMANAGER:
+				case Mode.TAVERN_BRAWL:
 					gameState.GameHandler.ResetConstructedImporting();
 					break;
 				case Mode.DRAFT:

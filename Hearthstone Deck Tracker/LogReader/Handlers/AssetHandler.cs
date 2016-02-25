@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var id = UnloadCardRegex.Match(logLine).Groups["id"].Value;
 			if(game.CurrentMode == Mode.DRAFT && game.PreviousMode == Mode.HUB)
 				gameState.GameHandler.HandlePossibleArenaCard(id);
-			else if(game.CurrentMode == Mode.COLLECTIONMANAGER && game.PreviousMode == Mode.HUB)
+			else if((game.CurrentMode == Mode.COLLECTIONMANAGER || game.CurrentMode == Mode.TAVERN_BRAWL) && game.PreviousMode == Mode.HUB)
 				gameState.GameHandler.HandlePossibleConstructedCard(id, true);
 		}
 	}
