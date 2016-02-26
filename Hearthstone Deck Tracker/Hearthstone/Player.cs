@@ -588,7 +588,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool InDeck => (Entity == null || Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.DECK);
 		public bool Unknown => string.IsNullOrEmpty(CardId) && Entity == null;
 
-		public bool Created { get; set; }
+		private bool _created;
+		public bool Created
+		{
+			get { return _created && (Entity == null || Entity.Id > 67); }
+			set { _created = value; }
+		}
 
 		public void Update(Entity entity = null)
 		{
