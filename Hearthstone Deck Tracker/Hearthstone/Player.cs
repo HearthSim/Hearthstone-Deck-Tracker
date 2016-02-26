@@ -521,7 +521,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void StolenFromOpponent(Entity entity, int turn)
 		{
 			var ce = MoveCardEntity(entity, Removed, Board, turn);
-			ce.Created = true;
+			ce.Stolen = true;
 			UpdateRevealedEntity(ce, turn);
 			Log(ce);
 		}
@@ -572,7 +572,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return CardMark.Coin;
 				if(Returned)
 					return CardMark.Returned;
-				if(Created)
+				if(Created || Stolen)
 					return CardMark.Created;
 				if(Mulliganed)
 					return CardMark.Mulliganed;
@@ -583,6 +583,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool Discarded { get; set; }
 		public bool Returned { get; set; }
 		public bool Mulliganed { get; set; }
+		public bool Stolen { get; set; }
 
 		public bool InHand => (Entity != null && Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.HAND);
 		public bool InDeck => (Entity == null || Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.DECK);
