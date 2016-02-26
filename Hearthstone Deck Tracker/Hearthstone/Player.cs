@@ -283,10 +283,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var ce = MoveCardEntity(entity, Hand, entity.IsSecret ? Secrets : Board, turn);
 			if(entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.TOKEN)
-			{
-				ce.CardMark = CardMark.Created;
 				ce.Created = true;
-			}
 			UpdateRevealedEntity(ce, turn);
 			Log(ce);
 		}
@@ -305,7 +302,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(ce);
 		}
 
-		private void UpdateRevealedEntity(CardEntity entity, int turn, bool? discarded = null, CardMark? cardMark = null)
+		private void UpdateRevealedEntity(CardEntity entity, int turn, bool? discarded = null)
 		{
 			var revealed =
 				RevealedCards.FirstOrDefault(
@@ -324,17 +321,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			if(discarded.HasValue)
 				revealed.Discarded = discarded.Value;
-			if(cardMark.HasValue)
-				revealed.CardMark = cardMark.Value;
 		}
 
 		public void CreateInHand(Entity entity, int turn)
 		{
-			var ce = new CardEntity(entity) {Turn = turn, CardMark = CardMark.Created, Created = true};
-			if(entity != null
-			   && (entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin
-			       || entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.GallywixsCoinToken))
-				ce.CardMark = CardMark.Coin;
+			var ce = new CardEntity(entity) {Turn = turn, Created = true};
 			Hand.Add(ce);
 			if(IsLocalPlayer)
 				CreatedInHandCardIds.Add(entity.CardId);
@@ -383,7 +374,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			//new cards are drawn first
 			var newCard = Hand.FirstOrDefault(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION) == entity.GetTag(GAME_TAG.ZONE_POSITION));
 			if(newCard != null)
-				newCard.CardMark = CardMark.Mulliganed;
+				newCard.Mulliganed = true;
 			if(!string.IsNullOrEmpty(entity.CardId) && DrawnCardIds.Contains(entity.CardId))
 				DrawnCardIds.Remove(entity.CardId);
 			Log(ce);
@@ -422,8 +413,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void BoardToHand(Entity entity, int turn)
 		{
 			var ce = MoveCardEntity(entity, Board, Hand, turn);
-			ce.CardMark = CardMark.Returned;
-			UpdateRevealedEntity(ce, turn, cardMark: CardMark.Returned);
+			ce.Returned = true;
+			UpdateRevealedEntity(ce, turn);
 			Log(ce);
 		}
 
@@ -445,13 +436,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(ce);
 		}
 
-		public void RevealDeckCard(string cardId, int turn)
+		public void RevealDeckCard(string cardId, int turn, bool created = false)
 		{
 			var cardEntity = Deck.FirstOrDefault(ce => ce.Unknown);
 			if(cardEntity != null)
 			{
 				cardEntity.CardId = cardId;
 				cardEntity.Turn = turn;
+				if(created)
+					cardEntity.Created = true;
 			}
 		}
 
@@ -497,7 +490,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Hand.Sort(ZonePosComparison);
 					if(!IsLocalPlayer && turn == 0 && Hand.Count == 5 && Hand[4].Entity.Id > 67)
 					{
-						Hand[4].CardMark = CardMark.Coin;
+						Hand[4].CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoin;
 						Hand[4].Created = true;
 						Deck.Add(new CardEntity(null));
 						Log("Coin " + Hand[4]);
@@ -553,7 +546,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CardId = (string.IsNullOrEmpty(cardId) && entity != null) ? entity.CardId : cardId;
 			Entity = entity;
 			Turn = -1;
-			CardMark = (entity != null && entity.Id > 68) ? CardMark.Created : CardMark.None;
 		}
 
 		public string CardId { get; set; }
@@ -570,8 +562,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public int PrevTurn { get; private set; }
-		public CardMark CardMark { get; set; }
+		public CardMark CardMark
+		{
+			get
+			{
+				if(CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin
+					   || CardId == HearthDb.CardIds.NonCollectible.Neutral.GallywixsCoinToken)
+					return CardMark.Coin;
+				if(Returned)
+					return CardMark.Returned;
+				if(Created)
+					return CardMark.Created;
+				if(Mulliganed)
+					return CardMark.Mulliganed;
+				return CardMark.None;
+			}
+		}
+
 		public bool Discarded { get; set; }
+		public bool Returned { get; set; }
+		public bool Mulliganed { get; set; }
 
 		public bool InHand => (Entity != null && Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.HAND);
 		public bool InDeck => (Entity == null || Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.DECK);
@@ -606,11 +616,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return sb.ToString();
 		}
 
-		public void Reset()
-		{
-			CardMark = CardMark.None;
-			Created = false;
-			CardId = string.Empty;
-		}
+		public void Reset() => CardId = string.Empty;
 	}
 }
