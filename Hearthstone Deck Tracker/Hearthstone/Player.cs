@@ -335,17 +335,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void CreateInDeck(Entity entity, int turn)
 		{
 			CardEntity ce;
+			var created = turn > 1;
 			if(IsLocalPlayer)
 			{
-				ce = new CardEntity(entity) {Turn = turn};
+				ce = new CardEntity(entity) {Turn = turn, Created = created};
 				Deck.Add(ce);
-				RevealedCards.Add(new CardEntity(entity) {Turn = turn});
+				RevealedCards.Add(new CardEntity(entity) {Turn = turn, Created = created});
 			}
 			else
 			{
 				Deck.Add(new CardEntity(null));
-				RevealDeckCard(entity.CardId, turn);
-				ce = new CardEntity(entity.CardId, null) {Turn = turn};
+				RevealDeckCard(entity.CardId, turn, created);
+				ce = new CardEntity(entity.CardId, null) {Turn = turn, Created = created};
 				RevealedCards.Add(ce);
 			}
 			Log(ce);
