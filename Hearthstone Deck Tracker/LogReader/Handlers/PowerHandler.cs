@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var match = GameEntityRegex.Match(logLine);
 				var id = int.Parse(match.Groups["id"].Value);
 				if(!game.Entities.ContainsKey(id))
-					game.Entities.Add(id, new Entity(id));
+					game.Entities.Add(id, new Entity(id) {Name = "GameEntity"});
 				gameState.CurrentEntityId = id;
 			}
 			else if(PlayerEntityRegex.IsMatch(logLine))
