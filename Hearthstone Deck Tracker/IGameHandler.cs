@@ -59,7 +59,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleAttackingEntity(Entity entity);
 		void HandleDefendingEntity(Entity entity);
 		void HandlePlayerMinionPlayed();
-		void HandlePlayerSpellPlayed(bool isMinionTargeted);
 		void HandleOpponentMinionDeath(Entity entity, int turn);
 		void HandleOpponentDamage(Entity entity);
 		void HandleOpponentTurnStart(Entity entity);

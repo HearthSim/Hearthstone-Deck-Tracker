@@ -174,7 +174,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(ActionStartRegex.IsMatch(logLine))
 			{
-				Entity actionEntity;
 				var playerEntity =
 					game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == game.Player.Id);
 				var opponentEntity =
@@ -186,20 +185,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 				if(string.IsNullOrEmpty(actionStartingCardId))
 				{
+					Entity actionEntity;
 					if(game.Entities.TryGetValue(actionStartingEntityId, out actionEntity))
 						actionStartingCardId = actionEntity.CardId;
-				}
-				if(game.Entities.TryGetValue(actionStartingEntityId, out actionEntity))
-				{
-					// spell owned by the player
-					if(actionEntity.HasTag(GAME_TAG.CONTROLLER) && actionEntity.GetTag(GAME_TAG.CONTROLLER) == game.Player.Id
-					   && actionEntity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.SPELL)
-					{
-						int targetEntityId = actionEntity.GetTag(GAME_TAG.CARD_TARGET);
-						Entity targetEntity;
-						var targetsMinion = game.Entities.TryGetValue(targetEntityId, out targetEntity) && targetEntity.IsMinion;
-						gameState.GameHandler.HandlePlayerSpellPlayed(targetsMinion);
-					}
 				}
 				if(string.IsNullOrEmpty(actionStartingCardId))
 					return;
