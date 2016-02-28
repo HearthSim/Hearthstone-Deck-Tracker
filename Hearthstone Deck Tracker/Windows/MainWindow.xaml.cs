@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
+using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
@@ -933,5 +934,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		#endregion
+
+		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e) => Updater.StartUpdate();
 	}
 }
