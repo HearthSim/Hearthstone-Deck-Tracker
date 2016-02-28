@@ -123,6 +123,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case FATIGUE:
 					FatigueChange(gameState, rawValue, game, controller);
 					break;
+				case STEP:
+					StepChange(gameState, game);
+					break;
 			}
 			if(gameState.WaitForController != null && !isRecursive)
 			{
@@ -130,6 +133,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						  (string)gameState.WaitForController.Value, game, true);
 				gameState.WaitForController = null;
 			}
+		}
+
+		private void StepChange(IHsGameState gameState, IGame game)
+		{
+			if(game.Entities.Count > 1 || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
+				return;
+			Log.Info("Game was already in progress.");
+			gameState.WasInProgress = true;
 		}
 
 		private static void DeterminePlayers(IHsGameState gameState, IGame game, int controller)
@@ -373,9 +384,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case TAG_ZONE.SECRET:
 					ZoneChangeFromSecret(gameState, id, game, value, prevValue, controller, cardId);
 					break;
+				case CREATED:
+					if(gameState.WasInProgress && !gameState.SetupDone && id < 68)
+						DelayedZoneChangeFromDeck(gameState, id, game, value, prevValue, cardId);
+					else
+						ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, cardId);
+					break;
 				case GRAVEYARD:
 				case SETASIDE:
-				case CREATED:
 				case TAG_ZONE.INVALID:
 				case REMOVEDFROMGAME:
 					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, cardId);
@@ -384,6 +400,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 					break;
 			}
+		}
+
+		private static async void DelayedZoneChangeFromDeck(IHsGameState gameState, int id, IGame game, int value, int prevValue, string cardId)
+		{
+			await game.GameTime.WaitForDuration(50);
+			var entity = game.Entities[id];
+			if(!entity.IsHero && !entity.IsHeroPower && !entity.HasTag(PLAYER_ID))
+				ZoneChangeFromDeck(gameState, id, game, value, prevValue, entity.GetTag(CONTROLLER), cardId);
 		}
 
 		private static void ZoneChangeFromOther(IHsGameState gameState, int id, IGame game, int value, int prevValue, int controller,

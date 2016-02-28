@@ -69,6 +69,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Card> PossibleConstructedCards { get; set; }
 		public Dictionary<int, Entity> Entities { get; set; }
 		public GameMetaData MetaData { get; } = new GameMetaData();
+		internal List<Tuple<string, List<string>>> StoredPowerLogs { get; } = new List<Tuple<string, List<string>>>();
 
 		public Mode CurrentMode
 		{
@@ -184,6 +185,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			_gameModeDetectionComplete = true;
 			_gameModeDetectionRunning = false;
+		}
+
+		public void StorePowerLog()
+		{
+			if(string.IsNullOrEmpty(MetaData.GameId))
+				return;
+			Log.Info($"Storing PowerLog for gameId={MetaData.GameId}");
+			StoredPowerLogs.Add(new Tuple<string, List<string>>(MetaData.GameId, new List<string>(PowerLog)));
 		}
 
 		public void NewArenaDeck(string heroId)

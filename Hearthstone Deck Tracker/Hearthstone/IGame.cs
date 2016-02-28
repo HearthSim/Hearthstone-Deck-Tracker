@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		GameMetaData MetaData { get; }
 		Mode CurrentMode { get; set; }
 		Mode PreviousMode { get; set; }
+		GameTime GameTime { get; }
 		void Reset(bool resetStats = true);
 		void SetPremadeDeck(Deck deck);
 		void AddPlayToCurrentGame(PlayType play, int turn, string cardId);
@@ -43,5 +44,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		void NewArenaDeck(string heroId);
 		void NewArenaCard(string cardId);
 		Task GameModeDetection(int timeout);
+		void StorePowerLog();
 	}
 }

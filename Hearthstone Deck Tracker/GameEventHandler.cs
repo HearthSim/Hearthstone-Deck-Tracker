@@ -152,6 +152,8 @@ namespace Hearthstone_Deck_Tracker
 
 			SaveAndUpdateStats();
 
+			_game.StoredPowerLogs.Clear();
+
 			if(_arenaRewardDialog != null)
 			{
 				_arenaRewardDialog.Show();
