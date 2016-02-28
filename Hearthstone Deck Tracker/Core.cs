@@ -234,6 +234,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(stoppedReader)
 				LogReaderManager.Restart();
+			Overlay.HideSecrets();
 			Overlay.Update(false);
 			Overlay.UpdatePlayerCards();
 			Windows.PlayerWindow.UpdatePlayerCards();
