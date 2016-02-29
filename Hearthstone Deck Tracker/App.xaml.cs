@@ -24,6 +24,8 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class App : Application
 	{
+		private static bool _createdReport;
+
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
 			if(e.Exception is MissingMethodException || e.Exception is TypeLoadException)
@@ -39,32 +41,32 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 			}
-
-			var stackTrace = e.Exception.StackTrace.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-			Analytics.Analytics.TrackEvent(e.Exception.GetType().ToString().Split('.').Last(), stackTrace.Length > 0 ? stackTrace[0] : "",
-			                               stackTrace.Length > 1 ? stackTrace[1] : "");
-#if (!DEBUG)
-			var date = DateTime.Now;
-			var fileName = "Crash Reports\\"
-			               + $"Crash report {date.Day}{date.Month}{date.Year}-{date.Hour}{date.Minute}";
-
-			if(!Directory.Exists("Crash Reports"))
-				Directory.CreateDirectory("Crash Reports");
-
-			using(var sr = new StreamWriter(fileName + ".txt", true))
+			if(!_createdReport)
 			{
-				sr.WriteLine("########## " + DateTime.Now + " ##########");
-				sr.WriteLine(e.Exception);
-				sr.WriteLine(Core.MainWindow.Options.OptionsTrackerLogging.TextBoxLog.Text);
-			}
+				_createdReport = true;
+				var stackTrace = e.Exception.StackTrace.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+				Analytics.Analytics.TrackEvent(e.Exception.GetType().ToString().Split('.').Last(), stackTrace.Length > 0 ? stackTrace[0] : "", stackTrace.Length > 1 ? stackTrace[1] : "");
+#if(!DEBUG)
+				var date = DateTime.Now;
+				var fileName = "Crash Reports\\" + $"Crash report {date.Day}{date.Month}{date.Year}-{date.Hour}{date.Minute}";
 
-			MessageBox.Show(e.Exception.Message + "\n\n" + 
-			                "A crash report file was created at:\n\"" + Environment.CurrentDirectory + "\\" + fileName
-			                + ".txt\"\n\nPlease \na) create an issue on github (https://github.com/Epix37/Hearthstone-Deck-Tracker) \nor \nb) send an email to support@hsdecktracker.net.\n\nPlease include the generated crash report(s) and a short explanation of what lead to the crash.",
-			                "Oops! Something went wrong.", MessageBoxButton.OK, MessageBoxImage.Error);
+				if(!Directory.Exists("Crash Reports"))
+					Directory.CreateDirectory("Crash Reports");
+
+				using(var sr = new StreamWriter(fileName + ".txt", true))
+				{
+					sr.WriteLine("########## " + DateTime.Now + " ##########");
+					sr.WriteLine(e.Exception);
+					sr.WriteLine(Core.MainWindow.Options.OptionsTrackerLogging.TextBoxLog.Text);
+				}
+
+				MessageBox.Show(e.Exception.Message + "\n\n" + "A crash report file was created at:\n\"" + Environment.CurrentDirectory + "\\" + fileName
+								+ ".txt\"\n\nPlease \na) create an issue on github (https://github.com/Epix37/Hearthstone-Deck-Tracker) \nor \nb) send an email to support@hsdecktracker.net.\n\nPlease include the generated crash report(s) and a short explanation of what lead to the crash.",
+								"Oops! Something went wrong.", MessageBoxButton.OK, MessageBoxImage.Error);
+#endif
+			}
 			e.Handled = true;
 			Shutdown();
-#endif
 		}
 
 		private void App_OnStartup(object sender, StartupEventArgs e)
