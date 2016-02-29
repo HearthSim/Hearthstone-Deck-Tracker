@@ -66,8 +66,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public Card(string id, string playerClass, Rarity rarity, string type, string name, int cost, string localizedName, int inHandCount,
-		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability,
-		            string artist, string set, List<string> alternativeNames = null, List<string> alternativeTexts = null)
+					int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability,
+					string artist, string set, List<string> alternativeNames = null, List<string> alternativeTexts = null)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -400,6 +400,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string FlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage)) ?? "";
 
+		[XmlIgnore]
+		public string FormattedFlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage), false) ?? "";
+
 		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, EnglishText, Attack,
 										  Health, Race, Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts);
 
@@ -452,7 +455,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private string CleanUpText(string text) => text?.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "")
-													   .Replace("$", "").Replace("#", "").Replace("\\n", "\n");
+		private static string CleanUpText(string text, bool replaceTags = true)
+		{
+			if (replaceTags)
+			{
+				text = text?.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "");
+			}
+			return text?.Replace("$", "").Replace("#", "").Replace("\\n", "\n");
+		}
 	}
 }
