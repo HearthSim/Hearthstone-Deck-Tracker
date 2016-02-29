@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	public static class ScreenCapture
 	{
 		public static Bitmap CaptureHearthstone(Point point, int width, int height, IntPtr wndHandle = default(IntPtr),
-												bool requireInForeground = true) => CaptureHearthstoneAsync(point, width, height, wndHandle, requireInForeground).Result;
+												bool requireInForeground = true) => Task.Run(async () => await CaptureHearthstoneAsync(point, width, height, wndHandle, requireInForeground)).Result;
 
 		public static async Task<Bitmap> CaptureHearthstoneAsync(Point point, int width, int height, IntPtr wndHandle = default(IntPtr),
 																 bool requireInForeground = true, bool? altScreenCapture = null)
