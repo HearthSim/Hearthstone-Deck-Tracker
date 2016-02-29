@@ -152,6 +152,8 @@ namespace Hearthstone_Deck_Tracker
 
 			SaveAndUpdateStats();
 
+			_game.StoredPowerLogs.Clear();
+
 			if(_arenaRewardDialog != null)
 			{
 				_arenaRewardDialog.Show();
@@ -985,7 +987,7 @@ namespace Hearthstone_Deck_Tracker
 			HandleSecretsOnPlay(entity);
 		}
 
-		private async void HandleSecretsOnPlay(Entity entity)
+		public async void HandleSecretsOnPlay(Entity entity)
 		{
 			if(!Config.Instance.AutoGrayoutSecrets)
 				return;

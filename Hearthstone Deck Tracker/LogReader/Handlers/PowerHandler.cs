@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
+			var setup = false;
 			if(GameEntityRegex.IsMatch(logLine))
 			{
 				var match = GameEntityRegex.Match(logLine);
@@ -31,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(!game.Entities.ContainsKey(id))
 					game.Entities.Add(id, new Entity(id) {Name = "GameEntity"});
 				gameState.CurrentEntityId = id;
+				setup = true;
 			}
 			else if(PlayerEntityRegex.IsMatch(logLine))
 			{
@@ -39,6 +41,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(!game.Entities.ContainsKey(id))
 					game.Entities.Add(id, new Entity(id));
 				gameState.CurrentEntityId = id;
+				setup = true;
 			}
 			else if(TagChangeRegex.IsMatch(logLine))
 			{
@@ -76,20 +79,36 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						GAME_TAG tag;
 						Enum.TryParse(match.Groups["tag"].Value, out tag);
 						var value = LogReaderHelper.ParseTagValue(tag, match.Groups["value"].Value);
-						tmpEntity.SetTag(tag, value);
-						if(tmpEntity.HasTag(GAME_TAG.ENTITY_ID))
+						var unnamedPlayers = game.Entities.Where(x => x.Value.HasTag(GAME_TAG.PLAYER_ID) && string.IsNullOrEmpty(x.Value.Name)).ToList();
+						if(unnamedPlayers.Count == 1)
+							entity = unnamedPlayers.Single();
+						else if(unnamedPlayers.Count == 2 && tag == GAME_TAG.CURRENT_PLAYER && value == 0)
+							entity = game.Entities.FirstOrDefault(x => x.Value?.HasTag(GAME_TAG.CURRENT_PLAYER) ?? false);
+						if(entity.Value != null)
 						{
-							var id = tmpEntity.GetTag(GAME_TAG.ENTITY_ID);
-							if(game.Entities.ContainsKey(id))
+							entity.Value.Name = tmpEntity.Name;
+							foreach(var t in tmpEntity.Tags)
+								entity.Value.SetTag(t.Key, t.Value);
+							SetPlayerName(game, entity.Value.GetTag(GAME_TAG.PLAYER_ID), tmpEntity.Name);
+							_tmpEntities.Remove(tmpEntity);
+							_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, entity.Key, match.Groups["value"].Value, game);
+						}
+						if(_tmpEntities.Contains(tmpEntity))
+						{
+							tmpEntity.SetTag(tag, value);
+							if(tmpEntity.HasTag(GAME_TAG.ENTITY_ID))
 							{
-								game.Entities[id].Name = tmpEntity.Name;
-								foreach(var t in tmpEntity.Tags)
-									game.Entities[id].SetTag(t.Key, t.Value);
-								_tmpEntities.Remove(tmpEntity);
-								//Logger.WriteLine("COPIED TMP ENTITY (" + rawEntity + ")");
+								var id = tmpEntity.GetTag(GAME_TAG.ENTITY_ID);
+								if(game.Entities.ContainsKey(id))
+								{
+									game.Entities[id].Name = tmpEntity.Name;
+									foreach(var t in tmpEntity.Tags)
+										game.Entities[id].SetTag(t.Key, t.Value);
+									_tmpEntities.Remove(tmpEntity);
+								}
+								else
+									Log.Warn("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY");
 							}
-							else
-								Log.Warn("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY", "LogReader");
 						}
 					}
 					else
@@ -101,10 +120,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					match = EntityNameRegex.Match(logLine);
 					var name = match.Groups["name"].Value;
 					var player = int.Parse(match.Groups["value"].Value);
-					if(player == game.Player.Id)
-						game.Player.Name = name;
-					else if(player == game.Opponent.Id)
-						game.Opponent.Name = name;
+					SetPlayerName(game, player, name);
 				}
 			}
 			else if(CreationRegex.IsMatch(logLine))
@@ -126,6 +142,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				gameState.CurrentEntityId = id;
 				gameState.CurrentEntityHasCardId = !string.IsNullOrEmpty(cardId);
+				setup = true;
 			}
 			else if(UpdatingEntityRegex.IsMatch(logLine))
 			{
@@ -164,6 +181,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				var match = CreationTagRegex.Match(logLine);
 				_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, gameState.CurrentEntityId, match.Groups["value"].Value, game);
+				setup = true;
 			}
 			else if((logLine.Contains("Begin Spectating") || logLine.Contains("Start Spectator")) && game.IsInMenu)
 				gameState.GameHandler.SetGameMode(GameMode.Spectator);
@@ -261,6 +279,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(logLine.Contains("BlockType=JOUST"))
 				gameState.JoustReveals = 2;
+			else if(logLine.Contains("CREATE_GAME"))
+				setup = true;
+
+			if(!setup)
+				gameState.SetupDone = true;
+		}
+
+		private static void SetPlayerName(IGame game, int playerId, string name)
+		{
+			if(playerId == game.Player.Id)
+				game.Player.Name = name;
+			else if(playerId == game.Opponent.Id)
+				game.Opponent.Name = name;
 		}
 
 		private static void AddTargetAsKnownCardId(IHsGameState gameState, IGame game, Match match, int count = 1)

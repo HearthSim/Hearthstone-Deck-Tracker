@@ -43,6 +43,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int JoustReveals { get; set; }
 		public Dictionary<int, string> KnownCardIds { get; set; }
 		public int LastCardPlayed { get; set; }
+		public bool WasInProgress { get; set; }
+		public bool SetupDone { get; set; }
 
 		public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
 		{
@@ -101,6 +103,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			LastGameStart = DateTime.Now;
 			WaitForController = null;
 			MaxId = 0;
+			WasInProgress = false;
+			SetupDone = false;
 		}
 	}
 }

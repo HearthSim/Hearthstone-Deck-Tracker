@@ -10,6 +10,7 @@
                       xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
                       xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
+                      xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
                       Title="Hearthstone Deck Tracker" Height="603" Width="700"
                       MinHeight="584" MinWidth="700"
                       Closing="Window_Closing"
@@ -172,7 +173,19 @@
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
-    <Grid>
+    <DockPanel>
+        <StatusBar Name="StatusBarUpdate" DockPanel.Dock="Top" Margin="0,1,0,0" Visibility="{Binding Visibility, Source={x:Static utility:Updater.StatusBar}}">
+            <StatusBarItem Margin="10,0,0,0" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" FontSize="14">
+                        <Run FontWeight="SemiBold">A NEW UPDATE IS AVAILABLE - </Run>
+                        <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkUpdateNow_OnClick">
+                            CLICK HERE TO UPDATE NOW
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Name="TopRow" Height="0" />
@@ -682,5 +695,5 @@
                 
             </StatusBar>
         </Grid>
-    </Grid>
+    </DockPanel>
 </controls:MetroWindow>

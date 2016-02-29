@@ -33,9 +33,9 @@ namespace HDTTests.LogReader
 			var powerEntryStartEnd = _powerLogReader.FindEntryPoint(new[] { "GameState.DebugPrintPower() - CREATE_GAME", "tag=GOLD_REWARD_STATE" }); //10:00, 10:10
 			var bobEntry = _bobLogReader.FindEntryPoint("legend rank"); //10:09
 
-			Assert.IsTrue(powerEntryStartEnd > powerEntryStartOnly, "powerEntryStartEnd > powerEntryStartOnly");
-			Assert.IsTrue(powerEntryStartEnd > bobEntry, "powerEntryStartEnd > bobEntry");
-			Assert.IsTrue(bobEntry > powerEntryStartOnly, "bobEntry > powerEntryStartOnly");
+			Assert.IsTrue(powerEntryStartEnd.TimeOfDay > powerEntryStartOnly.TimeOfDay, "powerEntryStartEnd > powerEntryStartOnly");
+			Assert.IsTrue(powerEntryStartEnd.TimeOfDay > bobEntry.TimeOfDay, "powerEntryStartEnd > bobEntry");
+			Assert.IsTrue(bobEntry.TimeOfDay > powerEntryStartOnly.TimeOfDay, "bobEntry > powerEntryStartOnly");
 		}
 	}
 }

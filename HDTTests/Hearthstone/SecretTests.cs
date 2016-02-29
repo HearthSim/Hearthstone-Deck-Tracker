@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
@@ -22,6 +23,8 @@ namespace HDTTests.Hearthstone
 
         private Entity _heroPlayer,
             _heroOpponent,
+            _playerSpell1,
+            _playerSpell2,
             _playerMinion1,
             _opponentMinion1,
             _opponentMinion2,
@@ -65,6 +68,13 @@ namespace HDTTests.Hearthstone
             _opponentMinion2 = CreateNewEntity("EX1_021");
             _opponentMinion2.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.MINION);
             _opponentMinion2.SetTag(GAME_TAG.CONTROLLER, _heroOpponent.Id);
+            _playerSpell1 = CreateNewEntity("CS2_029");
+            _playerSpell1.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.SPELL);
+            _playerSpell1.SetTag(GAME_TAG.CARD_TARGET, _opponentMinion1.Id);
+            _playerSpell1.SetTag(GAME_TAG.CONTROLLER, _heroPlayer.Id);
+            _playerSpell2 = CreateNewEntity("CS2_025");
+            _playerSpell2.SetTag(GAME_TAG.CARDTYPE, (int)TAG_CARDTYPE.SPELL);
+            _playerSpell2.SetTag(GAME_TAG.CONTROLLER, _heroPlayer.Id);
 
             _game.Entities.Add(2, _playerMinion1);
             _game.Entities.Add(3, _opponentMinion1);
@@ -176,7 +186,8 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_MinionTarget_SpellPlayed()
         {
-            _gameEventHandler.HandlePlayerSpellPlayed(true);
+            _gameEventHandler.HandleSecretsOnPlay(_playerSpell1);
+            _game.GameTime.Time += TimeSpan.FromSeconds(1);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender);
             VerifySecrets(2, PaladinSecrets.All);
@@ -185,7 +196,8 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_NoMinionTarget_SpellPlayed()
         {
-            _gameEventHandler.HandlePlayerSpellPlayed(false);
+            _gameEventHandler.HandleSecretsOnPlay(_playerSpell2);
+            _game.GameTime.Time += TimeSpan.FromSeconds(1);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell);
             VerifySecrets(2, PaladinSecrets.All);
