@@ -385,8 +385,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					ZoneChangeFromSecret(gameState, id, game, value, prevValue, controller, cardId);
 					break;
 				case CREATED:
-					if(gameState.WasInProgress && !gameState.SetupDone && id < 68)
-						DelayedZoneChangeFromDeck(gameState, id, game, value, prevValue, cardId);
+					if(gameState.WasInProgress && !gameState.SetupDone && id <= 68)
+						DelayedZoneChangeFromDeck(gameState, id, game, value, cardId);
 					else
 						ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, cardId);
 					break;
@@ -402,12 +402,25 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 		}
 
-		private static async void DelayedZoneChangeFromDeck(IHsGameState gameState, int id, IGame game, int value, int prevValue, string cardId)
+		private static async void DelayedZoneChangeFromDeck(IHsGameState gameState, int id, IGame game, int value, string cardId)
 		{
 			await game.GameTime.WaitForDuration(50);
 			var entity = game.Entities[id];
-			if(!entity.IsHero && !entity.IsHeroPower && !entity.HasTag(PLAYER_ID))
-				ZoneChangeFromDeck(gameState, id, game, value, prevValue, entity.GetTag(CONTROLLER), cardId);
+			if(!entity.IsHero && !entity.IsHeroPower && !entity.HasTag(PLAYER_ID) && entity.GetTag(CARDTYPE) != (int)TAG_CARDTYPE.GAME)
+			{
+				if(value == (int)DECK)
+					return;
+				if(id < 68)
+					ZoneChangeFromDeck(gameState, id, game, (int)HAND, (int)DECK, entity.GetTag(CONTROLLER), cardId);
+				else if(id == 68 && entity.IsSpell)
+					ZoneChangeFromOther(gameState, id, game, (int)HAND, (int)CREATED, entity.GetTag(CONTROLLER), cardId);
+				if(value == (int)HAND)
+					return;
+				ZoneChangeFromHand(gameState, id, game, (int)PLAY, (int)HAND, entity.GetTag(CONTROLLER), cardId);
+				if(value == (int)PLAY)
+					return;
+				ZoneChangeFromPlay(gameState, id, game, value, (int)PLAY, entity.GetTag(CONTROLLER), cardId);
+			}
 		}
 
 		private static void ZoneChangeFromOther(IHsGameState gameState, int id, IGame game, int value, int prevValue, int controller,
@@ -610,7 +623,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					else if(controller == game.Opponent.Id)
 					{
-						if(!string.IsNullOrEmpty(game.Entities[id].CardId))
+						if(!string.IsNullOrEmpty(game.Entities[id].CardId) && gameState.SetupDone)
 						{
 #if DEBUG
 							Log.Debug($"Opponent Draw (EntityID={id}) already has a CardID. Removing. Blizzard Pls.");
