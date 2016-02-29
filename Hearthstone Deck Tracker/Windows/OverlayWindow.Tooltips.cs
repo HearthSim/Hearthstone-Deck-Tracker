@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var cardMark =
 				relativeCardMark.FirstOrDefault(
-											    x =>
+												x =>
 												x.Label.IsVisible && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight, new Thickness(3, 1, 7, 1)));
 			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
 			{
