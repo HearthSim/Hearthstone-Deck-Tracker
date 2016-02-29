@@ -4,6 +4,7 @@
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
         xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
         xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
+        xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
         Title="HearthstoneOverlay" Height="571" Width="832" Background="{x:Null}" ResizeMode="NoResize"
         ShowInTaskbar="False" SourceInitialized="Window_SourceInitialized_1" AllowsTransparency="True"
         Loaded="OverlayWindow_OnLoaded"
@@ -148,7 +149,7 @@
                 <Image Source="../Resources/flavor_text.png" Margin="0,5,0,0"/>
                 <Image Source="../Resources/banner.png" Width="200" VerticalAlignment="Top"/>
                 <local:HearthstoneTextBlock Text="{Binding FlavorTextCardName, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" VerticalAlignment="Top" Margin="0,7,0,0"  HorizontalAlignment="Center" FontSize="15"/>
-                <TextBlock Text="{Binding FlavorText, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Margin="20,45,20,20" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock utility:AttachedFormattedString.FormattedText="{Binding FlavorText, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Margin="20,45,20,20" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Rectangle Name="RectPlayerHand0" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
             <Rectangle Name="RectPlayerHand1" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
