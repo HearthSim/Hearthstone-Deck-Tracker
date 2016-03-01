@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d" Width="200" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
@@ -36,10 +37,10 @@
                                             VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"
                                             Visibility="{Binding ShowIconsInTooltip}" />
             </Grid>
-            <TextBlock Name="CardTextBlock" Text="{Binding Text}" Grid.Row="1" FontSize="14"
+            <TextBlock Name="CardTextBlock" utility:AttachedFormattedString.FormattedText="{Binding FormattedText}" Grid.Row="1" FontSize="14"
                        Foreground="{DynamicResource TextBrush}" VerticalAlignment="Top" FontWeight="Medium"
                        HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,0,10,0" TextAlignment="Center" />
-            <TextBlock Name="AlternativeLanguageText" Text="{Binding AlternativeLanguageText}" Grid.Row="2" FontSize="12"
+            <TextBlock Name="AlternativeLanguageText" utility:AttachedFormattedString.FormattedText="{Binding FormattedAlternativeLanguageText}" Grid.Row="2" FontSize="12"
                        Foreground="#FF7F7F7F" VerticalAlignment="Top"
                        Visibility="{Binding ShowAlternativeLanguageTextInTooltip}"
                        HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,10,10,0" TextAlignment="Center" />

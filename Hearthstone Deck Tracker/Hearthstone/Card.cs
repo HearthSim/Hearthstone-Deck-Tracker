@@ -163,33 +163,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string Text
 		{
-			get { return _text; }
-			set { _text = CleanUpText(value); }
+			get { return CleanUpText(_text); }
+			set { _text = value; }
 		}
+
+		[XmlIgnore]
+		public string FormattedText => CleanUpText(_text, false) ?? "";
 
 		[XmlIgnore]
 		public string EnglishText
 		{
-			get { return string.IsNullOrEmpty(_englishText) ? Text : _englishText; }
-			set { _englishText = CleanUpText(value); }
+			get { return CleanUpText(string.IsNullOrEmpty(_englishText) ? Text : _englishText); }
+			set { _englishText =value; }
 		}
 
 		[XmlIgnore]
-		public string AlternativeLanguageText
+		public string AlternativeLanguageText => GetAlternativeText(false);
+
+		[XmlIgnore]
+		public string FormattedAlternativeLanguageText => GetAlternativeText(true);
+
+		private string GetAlternativeText(bool formatted)
 		{
-			get
+			var result = "";
+			for(var i = 0; i < AlternativeNames.Count; ++i)
 			{
-				var result = "";
-				for(var i = 0; i < AlternativeNames.Count; ++i)
-				{
-					if(i > 0)
-						result += "-\n";
-					result += "[" + AlternativeNames[i] + "]\n";
-					if(AlternativeTexts[i] != null)
-						result += CleanUpText(AlternativeTexts[i]) + "\n";
-				}
-				return result.TrimEnd(' ', '\n');
+				if(i > 0)
+					result += "-\n";
+				result += "[" + AlternativeNames[i] + "]\n";
+				if(AlternativeTexts[i] != null)
+					result += CleanUpText(AlternativeTexts[i], !formatted) + "\n";
 			}
+			return result.TrimEnd(' ', '\n');
 		}
 
 		[XmlIgnore]
@@ -403,7 +408,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string FormattedFlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage), false) ?? "";
 
-		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, Text, EnglishText, Attack,
+		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, _text, EnglishText, Attack,
 										  Health, Race, Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts);
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -435,7 +440,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Cost = stats.Cost;
 			LocalizedName = stats.LocalizedName;
 			InHandCount = stats.InHandCount;
-			Text = stats.Text;
+			Text = stats._text;
 			EnglishText = stats.EnglishText;
 			Attack = stats.Attack;
 			Health = stats.Health;
