@@ -190,6 +190,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Log.Info("Continuing as guest...");
 			LoginResult = LoginType.Guest;
+			Config.Instance.ShowLoginDialog = false;
+			Config.Save();
 			Close();
 		}
 
