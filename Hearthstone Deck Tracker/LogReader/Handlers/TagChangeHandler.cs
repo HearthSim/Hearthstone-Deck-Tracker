@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					ProposedAttackerChange(game, value);
 					break;
 				case NUM_MINIONS_PLAYED_THIS_TURN:
-					NumMinionsPlayedThisTurnChange(gameState, value);
+					NumMinionsPlayedThisTurnChange(gameState, game, value);
 					break;
 				case PREDAMAGE:
 					PredamageChange(gameState, id, game, value);
@@ -202,11 +202,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private static void ProposedAttackerChange(IGame game, int value) => game.OpponentSecrets.ProposedAttackerEntityId = value;
 
-		private static void NumMinionsPlayedThisTurnChange(IHsGameState gameState, int value)
+		private static void NumMinionsPlayedThisTurnChange(IHsGameState gameState, IGame game, int value)
 		{
 			if(value <= 0)
 				return;
-			if(gameState.PlayersTurn())
+			if(game.PlayerEntity.IsCurrentPlayer)
 				gameState.GameHandler.HandlePlayerMinionPlayed();
 		}
 
@@ -214,7 +214,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(value <= 0)
 				return;
-			if(gameState.PlayersTurn())
+			if(game.PlayerEntity.IsCurrentPlayer)
 				gameState.GameHandler.HandleOpponentDamage(game.Entities[id]);
 		}
 
@@ -222,7 +222,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(value <= 0)
 				return;
-			if(!gameState.PlayersTurn())
+			if(game.OpponentEntity.IsCurrentPlayer)
 				gameState.GameHandler.HandleOpponentTurnStart(game.Entities[id]);
 		}
 
@@ -328,13 +328,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private static void NumAttacksThisTurnChange(IHsGameState gameState, int id, IGame game, int value, int controller)
 		{
-			if(value > 0)
-			{
-				if(controller == game.Player.Id)
-					gameState.ProposeKeyPoint(Attack, id, ActivePlayer.Player);
-				else if(controller == game.Opponent.Id)
-					gameState.ProposeKeyPoint(Attack, id, ActivePlayer.Opponent);
-			}
+			if(value <= 0)
+				return;
+			if(controller == game.Player.Id)
+				gameState.ProposeKeyPoint(Attack, id, ActivePlayer.Player);
+			else if(controller == game.Opponent.Id)
+				gameState.ProposeKeyPoint(Attack, id, ActivePlayer.Opponent);
 		}
 
 		private void CardTypeChange(IHsGameState gameState, int id, IGame game, int value)
@@ -541,7 +540,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					else if(controller == game.Opponent.Id)
 					{
-						gameState.GameHandler.HandleOpponentPlayToGraveyard(game.Entities[id], cardId, gameState.GetTurnNumber(), gameState.PlayersTurn());
+						gameState.GameHandler.HandleOpponentPlayToGraveyard(game.Entities[id], cardId, gameState.GetTurnNumber(), game.PlayerEntity.IsCurrentPlayer);
 						if(game.Entities[id].HasTag(HEALTH))
 							gameState.ProposeKeyPoint(Death, id, ActivePlayer.Opponent);
 					}

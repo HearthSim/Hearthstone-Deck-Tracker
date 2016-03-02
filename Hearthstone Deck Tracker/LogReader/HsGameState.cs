@@ -59,19 +59,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			return (_game.GameEntity?.GetTag(GAME_TAG.TURN) + 1) / 2 ?? 0;
 		}
 
-		public bool PlayersTurn()
-		{
-			var firstPlayer = _game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.FIRST_PLAYER)).Value;
-			if(firstPlayer != null)
-			{
-				var offset = firstPlayer.IsPlayer ? 0 : 1;
-				var gameRoot = _game.Entities.FirstOrDefault(e => e.Value != null && e.Value.Name == "GameEntity").Value;
-				if(gameRoot != null)
-					return (gameRoot.Tags[GAME_TAG.TURN] + offset) % 2 == 1;
-			}
-			return false;
-		}
-
 		public void GameEndKeyPoint(bool victory, int id)
 		{
 			if(ProposedKeyPoint != null)

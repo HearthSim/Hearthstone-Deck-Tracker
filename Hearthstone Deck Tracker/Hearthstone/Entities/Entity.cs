@@ -179,6 +179,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool IsHeroPower => GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO_POWER;
 
+		public bool IsCurrentPlayer => HasTag(GAME_TAG.CURRENT_PLAYER);
+
 		public bool IsInZone(TAG_ZONE zone) => HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;
 
 		public bool IsControlledBy(int controllerId) => HasTag(GAME_TAG.CONTROLLER) && GetTag(GAME_TAG.CONTROLLER) == controllerId;
