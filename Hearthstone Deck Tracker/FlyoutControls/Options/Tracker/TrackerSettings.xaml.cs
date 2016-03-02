@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
 			CheckboxCheckForBetaUpdates.IsChecked = Config.Instance.CheckForBetaUpdates;
 			CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
+			CheckboxStartHearthstoneWithHDT.IsChecked = Config.Instance.StartHearthstoneWithHDT;
 			CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
 			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
@@ -149,6 +150,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.CloseWithHearthstone = false;
+			Config.Save();
+		}
+		
+		private void CheckboxStartHearthstoneWithHDT_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.StartHearthstoneWithHDT = true;
+			Config.Save();
+		}
+
+		private void CheckboxStartHearthstoneWithHDT_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.StartHearthstoneWithHDT = false;
 			Config.Save();
 		}
 
