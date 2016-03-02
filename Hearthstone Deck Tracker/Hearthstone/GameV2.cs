@@ -89,6 +89,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Entity OpponentEntity => Entities.FirstOrDefault(x => x.Value.HasTag(GAME_TAG.PLAYER_ID) && !x.Value.IsPlayer).Value;
 
+		public Entity GameEntity => Entities.FirstOrDefault(x => x.Value?.Name == "GameEntity").Value;
+
 		public bool IsMulliganDone
 		{
 			get
