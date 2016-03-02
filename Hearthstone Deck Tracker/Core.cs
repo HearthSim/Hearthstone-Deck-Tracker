@@ -125,6 +125,10 @@ namespace Hearthstone_Deck_Tracker
 			UpdateOverlayAsync();
 			NewsUpdater.UpdateAsync();
 			HotKeyManager.Load();
+
+			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
+				Helper.StartHearthstoneAsync();
+
 			Initialized = true;
 
 			Analytics.Analytics.TrackPageView($"/app/v{Helper.GetCurrentVersion().ToVersionString()}/{loginType.ToString().ToLower()}{(newUser ? "/new" : "")}", "");
