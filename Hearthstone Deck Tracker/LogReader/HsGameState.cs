@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
@@ -21,13 +20,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_game = game;
 			KnownCardIds = new Dictionary<int, string>();
 		}
-
-		public int AddToTurn { get; set; }
 		public bool CurrentEntityHasCardId { get; set; }
 		public int CurrentEntityId { get; set; }
-		public long CurrentOffset { get; set; }
-		public bool DoUpdate { get; set; }
-		public bool First { get; set; }
 		public bool GameEnded { get; set; }
 		public IGameHandler GameHandler { get; set; }
 		public DateTime LastGameStart { get; set; }
@@ -35,7 +29,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int MaxId { get; set; }
 		public bool OpponentUsedHeroPower { get; set; }
 		public bool PlayerUsedHeroPower { get; set; }
-		public long PreviousSize { get; set; }
 		public ReplayKeyPoint ProposedKeyPoint { get; set; }
 		public dynamic WaitForController { get; set; }
 		public bool FoundSpectatorStart { get; set; }
@@ -71,10 +64,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public void Reset()
 		{
-			First = true;
-			AddToTurn = -1;
 			GameEnded = false;
-			FoundSpectatorStart = false;
 			JoustReveals = 0;
 			KnownCardIds.Clear();
 			LastGameStart = DateTime.Now;
