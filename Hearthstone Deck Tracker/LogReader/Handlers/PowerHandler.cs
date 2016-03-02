@@ -88,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							entity.Value.Name = tmpEntity.Name;
 							foreach(var t in tmpEntity.Tags)
-								entity.Value.SetTag(t.Key, t.Value);
+								_tagChangeHandler.TagChange(gameState, t.Key, tmpEntity.GetTag(GAME_TAG.ENTITY_ID), t.Value, game);
 							SetPlayerName(game, entity.Value.GetTag(GAME_TAG.PLAYER_ID), tmpEntity.Name);
 							_tmpEntities.Remove(tmpEntity);
 							_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, entity.Key, match.Groups["value"].Value, game);
@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								{
 									game.Entities[id].Name = tmpEntity.Name;
 									foreach(var t in tmpEntity.Tags)
-										game.Entities[id].SetTag(t.Key, t.Value);
+										_tagChangeHandler.TagChange(gameState, t.Key, id, t.Value, game);
 									_tmpEntities.Remove(tmpEntity);
 								}
 								else

@@ -23,6 +23,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	{
 		public void TagChange(IHsGameState gameState, string rawTag, int id, string rawValue, IGame game, bool isRecursive = false)
 		{
+			GAME_TAG tag;
+			if(!Enum.TryParse(rawTag, out tag))
+			{
+				int tmp;
+				if(int.TryParse(rawTag, out tmp) && Enum.IsDefined(typeof(GAME_TAG), tmp))
+					tag = (GAME_TAG)tmp;
+			}
+			var value = LogReaderHelper.ParseTagValue(tag, rawValue);
+			TagChange(gameState, tag, id, value, game, isRecursive);
+		}
+
+		public void TagChange(IHsGameState gameState, GAME_TAG tag, int id, int value, IGame game, bool isRecursive = false)
+		{
 			if(gameState.LastId != id)
 			{
 				//game.SecondToLastUsedId = gameState.LastId;
@@ -37,14 +50,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.MaxId = id;
 			if(!game.Entities.ContainsKey(id))
 				game.Entities.Add(id, new Entity(id));
-			GAME_TAG tag;
-			if(!Enum.TryParse(rawTag, out tag))
-			{
-				int tmp;
-				if(int.TryParse(rawTag, out tmp) && Enum.IsDefined(typeof(GAME_TAG), tmp))
-					tag = (GAME_TAG)tmp;
-			}
-			var value = LogReaderHelper.ParseTagValue(tag, rawValue);
 			var prevValue = game.Entities[id].GetTag(tag);
 			game.Entities[id].SetTag(tag, value);
 
@@ -63,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(controller == 0)
 						{
 							game.Entities[id].SetTag(ZONE, prevValue);
-							gameState.WaitForController = new {Tag = rawTag, Id = id, Value = rawValue};
+							gameState.WaitForController = new {Tag = tag, Id = id, Value = value};
 							return;
 						}
 					}
@@ -121,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					ControllerChange(gameState, id, game, prevValue, value, cardId);
 					break;
 				case FATIGUE:
-					FatigueChange(gameState, rawValue, game, controller);
+					FatigueChange(gameState, value, game, controller);
 					break;
 				case STEP:
 					StepChange(gameState, game);
@@ -129,8 +134,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			if(gameState.WaitForController != null && !isRecursive)
 			{
-				TagChange(gameState, (string)gameState.WaitForController.Tag, (int)gameState.WaitForController.Id,
-						  (string)gameState.WaitForController.Value, game, true);
+				TagChange(gameState, (GAME_TAG)gameState.WaitForController.Tag, (int)gameState.WaitForController.Id,
+						  (int)gameState.WaitForController.Value, game, true);
 				gameState.WaitForController = null;
 			}
 		}
@@ -209,17 +214,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.GameHandler.HandleOpponentTurnStart(game.Entities[id]);
 		}
 
-		private static void FatigueChange(IHsGameState gameState, string rawValue, IGame game, int controller)
+		private static void FatigueChange(IHsGameState gameState, int value, IGame game, int controller)
 		{
 			if(controller == game.Player.Id)
-				gameState.GameHandler.HandlePlayerFatigue(Convert.ToInt32(rawValue));
+				gameState.GameHandler.HandlePlayerFatigue(value);
 			else if(controller == game.Opponent.Id)
-				gameState.GameHandler.HandleOpponentFatigue(Convert.ToInt32(rawValue));
+				gameState.GameHandler.HandleOpponentFatigue(value);
 		}
 
 		private static void ControllerChange(IHsGameState gameState, int id, IGame game, int prevValue, int value, string cardId)
 		{
 			if(prevValue <= 0)
+				return;
+			if(game.Entities[id].HasTag(PLAYER_ID))
 				return;
 			if(value == game.Player.Id)
 			{
@@ -539,6 +546,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(game.Entities[id].HasTag(HEALTH))
 							gameState.ProposeKeyPoint(Death, id, ActivePlayer.Opponent);
 					}
+					break;
+				case PLAY:
 					break;
 				default:
 					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
