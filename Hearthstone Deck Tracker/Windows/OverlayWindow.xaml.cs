@@ -210,5 +210,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		public void ShowFriendsListWarning(bool show) => StackPanelFriendsListWarning.Visibility = show ? Visible : Collapsed;
+
+		public void ShowRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Visible;
+
+		public void HideRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Collapsed;
 	}
 }
