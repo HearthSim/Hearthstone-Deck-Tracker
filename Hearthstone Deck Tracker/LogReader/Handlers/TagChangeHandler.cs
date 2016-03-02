@@ -80,9 +80,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case CARDTYPE:
 					CardTypeChange(gameState, id, game, value);
 					break;
-				case CURRENT_PLAYER:
-					CurrentPlayerChange(gameState, id, game, value);
-					break;
 				case LAST_CARD_PLAYED:
 					LastCardPlayedChange(gameState, value);
 					break;
@@ -131,6 +128,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case STEP:
 					StepChange(gameState, game);
 					break;
+				case TURN:
+					TurnChange(gameState, game);
+					break;
 			}
 			if(gameState.WaitForController != null && !isRecursive)
 			{
@@ -138,6 +138,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						  (int)gameState.WaitForController.Value, game, true);
 				gameState.WaitForController = null;
 			}
+		}
+
+		private void TurnChange(IHsGameState gameState, IGame game)
+		{
+			if(game.Entities.Count <= 1)
+				return;
+			var activePlayer = game.PlayerEntity.HasTag(CURRENT_PLAYER) ? ActivePlayer.Player : ActivePlayer.Opponent;
+			gameState.GameHandler.TurnStart(activePlayer, gameState.GetTurnNumber());
+			if(activePlayer == ActivePlayer.Player)
+				gameState.PlayerUsedHeroPower = false;
+			else
+				gameState.OpponentUsedHeroPower = false;
 		}
 
 		private void StepChange(IHsGameState gameState, IGame game)
@@ -322,19 +334,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					gameState.ProposeKeyPoint(Attack, id, ActivePlayer.Player);
 				else if(controller == game.Opponent.Id)
 					gameState.ProposeKeyPoint(Attack, id, ActivePlayer.Opponent);
-			}
-		}
-
-		private static void CurrentPlayerChange(IHsGameState gameState, int id, IGame game, int value)
-		{
-			if(value == 1)
-			{
-				var activePlayer = game.Entities[id].IsPlayer ? ActivePlayer.Player : ActivePlayer.Opponent;
-				gameState.GameHandler.TurnStart(activePlayer, gameState.GetTurnNumber());
-				if(activePlayer == ActivePlayer.Player)
-					gameState.PlayerUsedHeroPower = false;
-				else
-					gameState.OpponentUsedHeroPower = false;
 			}
 		}
 
