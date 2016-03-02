@@ -373,17 +373,29 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private readonly Queue<Tuple<ActivePlayer, int>> _turnQueue = new Queue<Tuple<ActivePlayer, int>>();
 		public async void TurnStart(ActivePlayer player, int turnNumber)
 		{
 			if(!_game.IsMulliganDone)
 				Log.Info("--- Mulligan ---");
+			if(turnNumber == 0)
+				turnNumber++;
+			_turnQueue.Enqueue(new Tuple<ActivePlayer, int>(player, turnNumber));
 			while(!_game.IsMulliganDone)
 				await Task.Delay(100);
+			while(_turnQueue.Any())
+				HandleTurnStart(_turnQueue.Dequeue());
+		}
+
+		private void HandleTurnStart(Tuple<ActivePlayer, int> turn)
+		{
+			var player = turn.Item1;
+			Log.Info($"--- {player} turn {turn.Item2} ---");
+			GameEvents.OnTurnStart.Execute(player);
+			if(_turnQueue.Count > 0)
+				return;
 			if(_game.CurrentGameMode == Casual || _game.CurrentGameMode == None)
 				DetectRanks();
-			Log.Info($"--- {player} turn {turnNumber + 1} ---");
-			//doesn't really matter whose turn it is for now, just restart timer
-			//maybe add timer to player/opponent windows
 			TurnTimer.Instance.SetCurrentPlayer(player);
 			TurnTimer.Instance.Restart();
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
@@ -394,7 +406,6 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.BringHsToForeground)
 					User32.BringHsToForeground();
 			}
-			GameEvents.OnTurnStart.Execute(player);
 		}
 
 		private async void DetectRanks()
