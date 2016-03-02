@@ -76,6 +76,11 @@
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxCloseWithHearthstone_Checked"
                               Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
+                    <CheckBox x:Name="CheckboxStartHearthstoneWithHDT"
+                              Content="Start Hearthstone with HDT" HorizontalAlignment="Left"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxStartHearthstoneWithHDT_Checked"
+                              Unchecked="CheckboxStartHearthstoneWithHDT_Unchecked" />
                     <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
