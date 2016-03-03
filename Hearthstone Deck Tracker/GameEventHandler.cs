@@ -668,7 +668,6 @@ namespace Hearthstone_Deck_Tracker
 
 				_lastGame = _game.CurrentGameStats;
 				selectedDeck.DeckStats.AddGameResult(_lastGame);
-				selectedDeck.StatsUpdated();
 				if(Config.Instance.ArenaRewardDialog && selectedDeck.IsArenaRunCompleted.HasValue && selectedDeck.IsArenaRunCompleted.Value)
 					_arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
 
@@ -804,18 +803,16 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else
 				{
+					_assignedDeck.StatsUpdated();
 					Log.Info("Saving DeckStats");
 					DeckStatsList.Save();
 				}
-
-				Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] {_assignedDeck});
 				statsControl.Refresh();
 			}
 			else if(_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(_game.CurrentGameStats))
 			{
 				//game was not supposed to be recorded, remove from deck again.
 				_assignedDeck.DeckStats.Games.Remove(_game.CurrentGameStats);
-				statsControl.Refresh();
 				Log.Info($"Gamemode {_game.CurrentGameMode} is not supposed to be saved. Removed game from {_assignedDeck}.");
 			}
 			else if(_assignedDeck == null)
@@ -824,7 +821,6 @@ namespace Hearthstone_Deck_Tracker
 				if(defaultDeck != null)
 				{
 					defaultDeck.Games.Remove(_game.CurrentGameStats);
-					statsControl.Refresh();
 					Log.Info($"Gamemode {_game.CurrentGameMode} is not supposed to be saved. Removed game from default {_game.Player.Class}.");
 				}
 			}
