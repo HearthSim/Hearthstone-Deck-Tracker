@@ -206,7 +206,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(value <= 0)
 				return;
-			if(game.PlayerEntity.IsCurrentPlayer)
+			if(game.PlayerEntity?.IsCurrentPlayer ?? false)
 				gameState.GameHandler.HandlePlayerMinionPlayed();
 		}
 
@@ -214,7 +214,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(value <= 0)
 				return;
-			if(game.PlayerEntity.IsCurrentPlayer)
+			if(game.PlayerEntity?.IsCurrentPlayer ?? false)
 				gameState.GameHandler.HandleOpponentDamage(game.Entities[id]);
 		}
 
@@ -222,7 +222,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(value <= 0)
 				return;
-			if(game.OpponentEntity.IsCurrentPlayer)
+			if(game.OpponentEntity?.IsCurrentPlayer ?? false)
 				gameState.GameHandler.HandleOpponentTurnStart(game.Entities[id]);
 		}
 
@@ -540,7 +540,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					else if(controller == game.Opponent.Id)
 					{
-						gameState.GameHandler.HandleOpponentPlayToGraveyard(game.Entities[id], cardId, gameState.GetTurnNumber(), game.PlayerEntity.IsCurrentPlayer);
+						gameState.GameHandler.HandleOpponentPlayToGraveyard(game.Entities[id], cardId, gameState.GetTurnNumber(), game.PlayerEntity?.IsCurrentPlayer ?? false);
 						if(game.Entities[id].HasTag(HEALTH))
 							gameState.ProposeKeyPoint(Death, id, ActivePlayer.Opponent);
 					}
