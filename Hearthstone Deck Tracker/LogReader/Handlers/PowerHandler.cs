@@ -62,13 +62,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 					if(entity.Value == null)
 					{
-						entity = game.Entities.FirstOrDefault(x => x.Value.Name == "UNKNOWN HUMAN PLAYER");
-						if(entity.Value != null)
-							entity.Value.Name = rawEntity;
-					}
+						var players = game.Entities.Where(x => x.Value.HasTag(GAME_TAG.PLAYER_ID)).Take(2).ToList();
+						var unnamedPlayers = players.Where(x => string.IsNullOrEmpty(x.Value.Name)).ToList();
+						var unknownHumanPlayer = players.FirstOrDefault(x => x.Value.Name == "UNKNOWN HUMAN PLAYER");
+						if(unnamedPlayers.Count == 0 && unknownHumanPlayer.Value != null)
+						{
+							Log.Info("Updating UNKNOWN HUMAN PLAYER");
+							entity = unknownHumanPlayer;
+							SetPlayerName(game, entity.Value.GetTag(GAME_TAG.PLAYER_ID), rawEntity);
+						}
 
-					if(entity.Value == null)
-					{
 						//while the id is unknown, store in tmp entities
 						var tmpEntity = _tmpEntities.FirstOrDefault(x => x.Name == rawEntity);
 						if(tmpEntity == null)
@@ -79,7 +82,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						GAME_TAG tag;
 						Enum.TryParse(match.Groups["tag"].Value, out tag);
 						var value = LogReaderHelper.ParseTagValue(tag, match.Groups["value"].Value);
-						var unnamedPlayers = game.Entities.Where(x => x.Value.HasTag(GAME_TAG.PLAYER_ID) && string.IsNullOrEmpty(x.Value.Name)).ToList();
 						if(unnamedPlayers.Count == 1)
 							entity = unnamedPlayers.Single();
 						else if(unnamedPlayers.Count == 2 && tag == GAME_TAG.CURRENT_PLAYER && value == 0)
