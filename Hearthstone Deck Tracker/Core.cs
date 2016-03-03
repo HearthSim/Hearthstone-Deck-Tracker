@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.HotKeys;
+using Hearthstone_Deck_Tracker.Utility.LogConfig;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
@@ -49,6 +50,8 @@ namespace Hearthstone_Deck_Tracker
 			Config.Load();
 			Log.Initialize();
 			ConfigManager.Run();
+			LogConfigUpdater.Run().Forget();
+			LogConfigWatcher.Start();
 			Helper.UpdateAppTheme();
 			var splashScreenWindow = new SplashScreenWindow();
 			splashScreenWindow.ShowConditional();
@@ -112,9 +115,9 @@ namespace Hearthstone_Deck_Tracker
 
 			if(Helper.HearthstoneDirExists)
 			{
-				if(ConfigManager.LogConfigUpdateFailed)
+				if(LogConfigUpdater.LogConfigUpdateFailed)
 					MainWindow.ShowLogConfigUpdateFailedMessage().Forget();
-				else if(ConfigManager.LogConfigUpdated && Game.IsRunning)
+				else if(LogConfigUpdater.LogConfigUpdated && Game.IsRunning)
 				{
 					MainWindow.ShowMessageAsync("Hearthstone restart required", "The log.config file has been updated. HDT may not work properly until Hearthstone has been restarted.");
 					Overlay.ShowRestartRequiredWarning();

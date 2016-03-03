@@ -742,5 +742,24 @@ namespace Hearthstone_Deck_Tracker
 					yield return childOfChild;
 			}
 		}
+
+		public static async Task WaitForFileAccess(string path, int delay)
+		{
+			while(true)
+			{
+				try
+				{
+					using(var stream = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+					{
+						if(stream.Name != null)
+							break;
+					}
+				}
+				catch
+				{
+					await Task.Delay(delay);
+				}
+			}
+		}
 	}
 }

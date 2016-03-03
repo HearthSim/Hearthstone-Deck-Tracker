@@ -310,6 +310,12 @@
     <Compile Include="Utility\Extensions\TaskExtensions.cs" />
     <Compile Include="Utility\Extensions\VersionExtensions.cs" />
     <Compile Include="Utility\Extensions\ZipArchiveExtensions.cs" />
+    <Compile Include="Utility\LogConfig\LogConfigConstants.cs" />
+    <Compile Include="Utility\LogConfig\LogConfigItem.cs" />
+    <Compile Include="Utility\LogConfig\LogConfig.cs" />
+    <Compile Include="Utility\LogConfig\LogConfigUpdater.cs" />
+    <Compile Include="Utility\LogConfig\LogConfigWatcher.cs" />
+    <Compile Include="Utility\LogConfig\RequiredValueAttribute.cs" />
     <Compile Include="Utility\Logging\Log.cs" />
     <Compile Include="Utility\Logging\LogType.cs" />
     <Compile Include="Utility\MouseActions.cs" />

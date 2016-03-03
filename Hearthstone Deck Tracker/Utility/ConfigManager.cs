@@ -14,12 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public static class ConfigManager
 	{
-		private static readonly string LogConfigPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-		                                               + @"\Blizzard\Hearthstone\log.config";
-
 		public static Version UpdatedVersion { get; private set; }
-		public static bool LogConfigUpdated { get; set; }
-		public static bool LogConfigUpdateFailed { get; private set; } 
 
 		public static void Run()
 		{
@@ -35,18 +30,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 			if(Config.Instance.SelectedTags.Count == 0)
 				Config.Instance.SelectedTags.Add("All");
-
-			if(Helper.HearthstoneDirExists)
-			{
-				try
-				{
-					LogConfigUpdated = UpdateLogConfigFile();
-				}
-				catch
-				{
-					LogConfigUpdateFailed = true;
-				}
-			}
 
 			if(!Directory.Exists(Config.Instance.DataDir))
 				Config.Instance.Reset(nameof(Config.DataDirPath));
@@ -234,156 +217,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 			if(configVersion != null && currentVersion > configVersion)
 				UpdatedVersion = currentVersion;
-		}
-
-		private static bool UpdateLogConfigFile()
-		{
-			var updated = false;
-			//check for log config and create if not existing
-			try
-			{
-				var requiredLogs = new[] {"Bob", "Power", "Asset", "Rachelle", "Arena", "Achievements", "LoadingScreen", "Net"};
-
-				var logConfig = new LogConfig();
-				if(File.Exists(LogConfigPath))
-				{
-					using(var sr = new StreamReader(LogConfigPath))
-					{
-						LogConfig.ConfigItem current = null;
-						string line;
-						while(!sr.EndOfStream && (line = sr.ReadLine()) != null)
-						{
-							var nameMatch = LogConfig.NameRegex.Match(line);
-							if(nameMatch.Success)
-							{
-								if(current != null)
-									logConfig.Configitems.Add(current);
-								current = new LogConfig.ConfigItem(nameMatch.Groups["value"].Value);
-								continue;
-							}
-							if(current == null)
-								continue;
-							var logLevelMatch = LogConfig.LogLevelRegex.Match(line);
-							if(logLevelMatch.Success)
-							{
-								current.LogLevel = int.Parse(logLevelMatch.Groups["value"].Value);
-								continue;
-							}
-
-							var filePrintingMatch = LogConfig.FilePrintingRegex.Match(line);
-							if(filePrintingMatch.Success)
-							{
-								current.FilePrinting = bool.Parse(filePrintingMatch.Groups["value"].Value);
-								continue;
-							}
-
-							var consolePrintingMatch = LogConfig.ConsolePrintingRegex.Match(line);
-							if(consolePrintingMatch.Success)
-							{
-								current.ConsolePrinting = bool.Parse(consolePrintingMatch.Groups["value"].Value);
-								continue;
-							}
-
-							var screenPrintingMatch = LogConfig.ScreenPrintingRegex.Match(line);
-							if(screenPrintingMatch.Success)
-							{
-								current.ScreenPrinting = bool.Parse(screenPrintingMatch.Groups["value"].Value);
-								continue;
-							}
-
-							var verboseMatch = LogConfig.VerboseRegex.Match(line);
-							if(verboseMatch.Success)
-								current.Verbose = bool.Parse(verboseMatch.Groups["value"].Value);
-						}
-						if(current != null)
-							logConfig.Configitems.Add(current);
-					}
-				}
-
-				foreach(var requiredLog in requiredLogs)
-				{
-					if(logConfig.Configitems.All(x => x.Name != requiredLog))
-					{
-						logConfig.Configitems.Add(new LogConfig.ConfigItem(requiredLog));
-						Log.Info("Added " + requiredLog + " to log.config.");
-						updated = true;
-					}
-				}
-
-				if(logConfig.Configitems.Any(x => !x.FilePrinting || x.ConsolePrinting != Config.Instance.LogConfigConsolePrinting))
-				{
-					foreach(var configItem in logConfig.Configitems)
-						configItem.ResetValues();
-					updated = true;
-				}
-
-				if(updated)
-				{
-					try
-					{
-						// ReSharper disable once ObjectCreationAsStatement
-						new FileInfo(LogConfigPath) {IsReadOnly = false};
-					}
-					catch(Exception e)
-					{
-						Log.Error("Could not remove read-only from log.config:\n" + e);
-					}
-					using(var sw = new StreamWriter(LogConfigPath))
-					{
-						foreach(var configItem in logConfig.Configitems)
-						{
-							sw.WriteLine("[{0}]", configItem.Name);
-							sw.WriteLine("LogLevel={0}", configItem.LogLevel);
-							sw.WriteLine("FilePrinting={0}", configItem.FilePrinting.ToString().ToLower());
-							sw.WriteLine("ConsolePrinting={0}", configItem.ConsolePrinting.ToString().ToLower());
-							sw.WriteLine("ScreenPrinting={0}", configItem.ScreenPrinting.ToString().ToLower());
-							sw.WriteLine("Verbose={0}", configItem.Verbose.ToString().ToLower());
-						}
-					}
-				}
-			}
-			catch(Exception e)
-			{
-				Log.Error(e);
-				throw;
-			}
-			return updated;
-		}
-
-		public class LogConfig
-		{
-			public static readonly Regex NameRegex = new Regex(@"\[(?<value>(\w+))\]");
-			public static readonly Regex LogLevelRegex = new Regex(@"LogLevel=(?<value>(\d+))");
-			public static readonly Regex FilePrintingRegex = new Regex(@"FilePrinting=(?<value>(\w+))");
-			public static readonly Regex ConsolePrintingRegex = new Regex(@"ConsolePrinting=(?<value>(\w+))");
-			public static readonly Regex ScreenPrintingRegex = new Regex(@"ScreenPrinting=(?<value>(\w+))");
-			public static readonly Regex VerboseRegex = new Regex(@"Verbose=(?<value>(\w+))");
-			public readonly List<ConfigItem> Configitems = new List<ConfigItem>();
-
-			public class ConfigItem
-			{
-				public ConfigItem(string name)
-				{
-					Name = name;
-					ResetValues();
-				}
-
-				public string Name { get; set; }
-				public int LogLevel { get; set; }
-				public bool FilePrinting { get; set; }
-				public bool ConsolePrinting { get; set; }
-				public bool ScreenPrinting { get; set; }
-				public bool Verbose { get; set; }
-
-				public void ResetValues()
-				{
-					LogLevel = 1;
-					FilePrinting = true;
-					ConsolePrinting = Config.Instance.LogConfigConsolePrinting;
-					ScreenPrinting = false;
-					Verbose = true;
-				}
-			}
 		}
 	}
 }
