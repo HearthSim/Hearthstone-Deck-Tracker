@@ -71,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public GameMetaData MetaData { get; } = new GameMetaData();
 		internal List<Tuple<string, List<string>>> StoredPowerLogs { get; } = new List<Tuple<string, List<string>>>();
 		internal Dictionary<int, string> StoredPlayerNames { get; } = new Dictionary<int, string>();
+		internal GameStats StoredGameStats { get; set; }
 
 		public Mode CurrentMode
 		{
@@ -190,7 +191,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_gameModeDetectionRunning = false;
 		}
 
-		public void StorePowerLog()
+		public void StoreGameState()
 		{
 			if(string.IsNullOrEmpty(MetaData.GameId))
 				return;
@@ -200,6 +201,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				StoredPlayerNames.Add(Player.Id, Player.Name);
 			if(Opponent.Id != -1 && !StoredPlayerNames.ContainsKey(Opponent.Id))
 				StoredPlayerNames.Add(Opponent.Id, Opponent.Name);
+			if(StoredGameStats == null)
+				StoredGameStats = CurrentGameStats;
 		}
 
 		public string GetStoredPlayerName(int id)
@@ -207,6 +210,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			string name;
 			StoredPlayerNames.TryGetValue(id, out name);
 			return name;
+		}
+
+		internal void ResetStoredGameState()
+		{
+			StoredPowerLogs.Clear();
+			StoredPlayerNames.Clear();
+			StoredGameStats = null;
 		}
 
 		public void NewArenaDeck(string heroId)

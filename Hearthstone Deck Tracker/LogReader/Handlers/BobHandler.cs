@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			}
 			if(logLine == HsLogReaderConstants.ReconnectMessage)
-				game.StorePowerLog();
+				game.StoreGameState();
 		}
 	}
 }

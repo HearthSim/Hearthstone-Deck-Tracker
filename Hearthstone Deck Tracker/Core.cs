@@ -206,7 +206,7 @@ namespace Hearthstone_Deck_Tracker
 					{
 						//game was closed
 						if(!Game.IsInMenu)
-							Game.StorePowerLog();
+							Game.StoreGameState();
 						Log.Info("Exited game");
 						Game.CurrentRegion = Region.UNKNOWN;
 						Log.Info("Reset region");

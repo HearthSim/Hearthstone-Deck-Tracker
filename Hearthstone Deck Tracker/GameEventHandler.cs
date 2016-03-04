@@ -150,10 +150,12 @@ namespace Hearthstone_Deck_Tracker
 			   && _game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
 				_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(_game.PowerLog);
 
+			if(_game.StoredGameStats != null && _game.CurrentGameStats != null)
+				_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
+
 			SaveAndUpdateStats();
 
-			_game.StoredPowerLogs.Clear();
-			_game.StoredPlayerNames.Clear();
+			_game.ResetStoredGameState();
 
 			if(_arenaRewardDialog != null)
 			{
