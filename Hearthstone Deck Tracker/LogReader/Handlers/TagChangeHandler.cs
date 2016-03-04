@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void TurnChange(IHsGameState gameState, IGame game)
 		{
-			if(game.Entities.Count <= 1)
+			if(game.Entities.Count <= 1 || game.PlayerEntity == null)
 				return;
 			var activePlayer = game.PlayerEntity.HasTag(CURRENT_PLAYER) ? ActivePlayer.Player : ActivePlayer.Opponent;
 			gameState.GameHandler.TurnStart(activePlayer, gameState.GetTurnNumber());
