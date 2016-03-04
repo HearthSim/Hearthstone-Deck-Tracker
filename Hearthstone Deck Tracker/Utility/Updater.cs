@@ -36,7 +36,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 			_lastUpdateCheck = DateTime.Now;
 			_newVersion = await GetLatestVersion(false);
 			if(_newVersion != null)
+			{
+				StatusBar.Visibility = Visibility.Visible;
 				ShowNewUpdateMessage(false);
+			}
 			else if(Config.Instance.CheckForBetaUpdates)
 			{
 				_newVersion = await GetLatestVersion(true);
@@ -72,10 +75,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				if(result == MessageDialogResult.Affirmative)
 					StartUpdate();
 				else
-				{
 					TempUpdateCheckDisabled = true;
-					StatusBar.Visibility = Visibility.Visible;
-				}
 
 				_showingUpdateMessage = false;
 			}
