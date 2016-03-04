@@ -42,6 +42,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					game.Entities.Add(id, new Entity(id));
 				gameState.CurrentEntityId = id;
 				setup = true;
+				if(gameState.WasInProgress)
+					game.Entities[id].Name = game.GetStoredPlayerName(id);
 			}
 			else if(TagChangeRegex.IsMatch(logLine))
 			{

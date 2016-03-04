@@ -46,5 +46,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		void NewArenaCard(string cardId);
 		Task GameModeDetection(int timeout);
 		void StorePowerLog();
+		string GetStoredPlayerName(int id);
 	}
 }

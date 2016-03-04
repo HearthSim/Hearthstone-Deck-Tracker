@@ -153,6 +153,7 @@ namespace Hearthstone_Deck_Tracker
 			SaveAndUpdateStats();
 
 			_game.StoredPowerLogs.Clear();
+			_game.StoredPlayerNames.Clear();
 
 			if(_arenaRewardDialog != null)
 			{

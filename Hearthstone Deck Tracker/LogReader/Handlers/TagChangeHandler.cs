@@ -182,6 +182,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				game.Player.Id = controller % 2 + 1;
 				game.Opponent.Id = controller;
 			}
+			if(gameState.WasInProgress)
+			{
+				var playerName = game.GetStoredPlayerName(game.Player.Id);
+				if(!string.IsNullOrEmpty(playerName))
+					game.Player.Name = playerName;
+				var opponentName = game.GetStoredPlayerName(game.Opponent.Id);
+				if(!string.IsNullOrEmpty(opponentName))
+					game.Opponent.Name = opponentName;
+			}
 		}
 
 		private static void LastCardPlayedChange(IHsGameState gameState, int value) => gameState.LastCardPlayed = value;
