@@ -538,8 +538,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.ProposeKeyPoint(PlayToDeck, id, ActivePlayer.Opponent);
 					}
 					break;
-				case REMOVEDFROMGAME:
-				case SETASIDE:
 				case GRAVEYARD:
 					if(controller == game.Player.Id)
 					{
@@ -553,6 +551,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(game.Entities[id].HasTag(HEALTH))
 							gameState.ProposeKeyPoint(Death, id, ActivePlayer.Opponent);
 					}
+					break;
+				case REMOVEDFROMGAME:
+				case SETASIDE:
+					if(controller == game.Player.Id)
+						gameState.GameHandler.HandlePlayerRemoveFromPlay(game.Entities[id], gameState.GetTurnNumber());
+					else if(controller == game.Opponent.Id)
+						gameState.GameHandler.HandleOpponentRemoveFromPlay(game.Entities[id], gameState.GetTurnNumber());
 					break;
 				case PLAY:
 					break;

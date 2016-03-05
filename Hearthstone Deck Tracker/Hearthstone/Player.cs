@@ -475,6 +475,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(ce);
 		}
 
+		public void RemoveFromPlay(Entity entity, int turn)
+		{
+			var ce = MoveCardEntity(entity, Board, Removed, turn);
+			Log(ce);
+		}
+
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{

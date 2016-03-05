@@ -53,6 +53,8 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentRemoveFromDeck(Entity entity, int turn);
 		void HandlePlayerStolen(Entity entity, string cardId, int turn);
 		void HandleOpponentStolen(Entity entity, string cardId, int turn);
+		void HandlePlayerRemoveFromPlay(Entity entity, int turn);
+		void HandleOpponentRemoveFromPlay(Entity entity, int turn);
 
 		#region SecretTriggers
 
