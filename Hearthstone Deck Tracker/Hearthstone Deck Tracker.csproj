@@ -179,6 +179,9 @@
     <Compile Include="Controls\Stats\Arena\ArenaClassStats.xaml.cs">
       <DependentUpon>ArenaClassStats.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Arena\ArenaRewardsStatistics.xaml.cs">
+      <DependentUpon>ArenaRewardsStatistics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\Arena\ArenaRuns.xaml.cs">
       <DependentUpon>ArenaRuns.xaml</DependentUpon>
     </Compile>
@@ -206,6 +209,7 @@
     <Compile Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml.cs">
       <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Arena\IEnumerableToAverageConverter.cs" />
     <Compile Include="Controls\Stats\Converters\CustomTimeframeVisibilityConverter.cs" />
     <Compile Include="Controls\Stats\Converters\IsNullConverter.cs" />
     <Compile Include="Controls\Stats\Converters\NotNullToBooleanConverter.cs" />
@@ -676,6 +680,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Stats\Arena\ArenaClassStats.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Arena\ArenaRewardsStatistics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

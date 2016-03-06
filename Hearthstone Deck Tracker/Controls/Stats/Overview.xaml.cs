@@ -41,6 +41,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public object ArenaAdvancedCharts => _arenaAdvancedCharts;
 
+		public ArenaRewardsStatistics ArenaRewardsStatistics { get; } = new ArenaRewardsStatistics();
+
 		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
@@ -123,6 +125,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		private void TreeViewItemArenaRuns_OnSelected(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
+				return;
+			UpdateStats();
+		}
+
+		private void TreeViewItemArenaRunsRewards_OnSelected(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
 				return;
 			UpdateStats();
 		}

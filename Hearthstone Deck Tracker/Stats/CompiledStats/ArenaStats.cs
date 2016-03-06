@@ -280,6 +280,14 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			return filtered;
 		}
 
+		public IEnumerable<IGrouping<int, ArenaRun>> RunsGroupedByWins
+		{
+			get
+			{
+				return GetFilteredRuns().ToLookup(x => x.Wins);
+			}
+		}
+
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
