@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						}
 						GAME_TAG tag;
 						Enum.TryParse(match.Groups["tag"].Value, out tag);
-						var value = LogReaderHelper.ParseTagValue(tag, match.Groups["value"].Value);
+						var value = LogReaderHelper.ParseTag(tag, match.Groups["value"].Value);
 						if(unnamedPlayers.Count == 1)
 							entity = unnamedPlayers.Single();
 						else if(unnamedPlayers.Count == 2 && tag == GAME_TAG.CURRENT_PLAYER && value == 0)

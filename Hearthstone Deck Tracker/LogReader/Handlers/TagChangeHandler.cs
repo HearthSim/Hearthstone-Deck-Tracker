@@ -23,15 +23,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	{
 		public void TagChange(IHsGameState gameState, string rawTag, int id, string rawValue, IGame game, bool isRecursive = false)
 		{
-			GAME_TAG tag;
-			if(!Enum.TryParse(rawTag, out tag))
-			{
-				int tmp;
-				if(int.TryParse(rawTag, out tmp) && Enum.IsDefined(typeof(GAME_TAG), tmp))
-					tag = (GAME_TAG)tmp;
-			}
-			var value = LogReaderHelper.ParseTagValue(tag, rawValue);
-			TagChange(gameState, tag, id, value, game, isRecursive);
+			var tag = LogReaderHelper.ParseEnum<GAME_TAG>(rawTag);
+			var value = LogReaderHelper.ParseTag(tag, rawValue);
+			TagChange(gameState, tag, id, value, game);
 		}
 
 		public void TagChange(IHsGameState gameState, GAME_TAG tag, int id, int value, IGame game, bool isRecursive = false)
