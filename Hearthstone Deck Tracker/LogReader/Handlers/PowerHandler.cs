@@ -146,6 +146,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				gameState.CurrentEntityId = id;
 				gameState.CurrentEntityHasCardId = !string.IsNullOrEmpty(cardId);
+				gameState.CurrentEntityZone = LogReaderHelper.ParseEnum<TAG_ZONE>(match.Groups["zone"].Value);
 				setup = true;
 			}
 			else if(UpdatingEntityRegex.IsMatch(logLine))

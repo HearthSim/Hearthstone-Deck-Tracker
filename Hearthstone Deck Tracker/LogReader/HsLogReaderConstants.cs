@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				new Regex(@".*ACTION_START.*id=(?<id>\d*).*(cardId=(?<Id>(\w*))).*BlockType=(?<type>(POWER|TRIGGER)).*Target=(?<target>(.+))");
 
 			public static readonly Regex CardIdRegex = new Regex(@"cardId=(?<cardId>(\w+))");
-			public static readonly Regex CreationRegex = new Regex(@"FULL_ENTITY - Updating.*id=(?<id>(\d+)).*CardID=(?<cardId>(\w*))");
+			public static readonly Regex CreationRegex = new Regex(@"FULL_ENTITY - Updating.*id=(?<id>(\d+)).*zone=(?<zone>(\w+)).*CardID=(?<cardId>(\w*))");
 			public static readonly Regex CreationTagRegex = new Regex(@"tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
 
 			public static readonly Regex EntityNameRegex =

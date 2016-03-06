@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Replay;
@@ -37,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int LastCardPlayed { get; set; }
 		public bool WasInProgress { get; set; }
 		public bool SetupDone { get; set; }
+		public TAG_ZONE CurrentEntityZone { get; set; }
 
 		public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
 		{

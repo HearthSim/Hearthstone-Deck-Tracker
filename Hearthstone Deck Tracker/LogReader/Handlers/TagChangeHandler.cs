@@ -47,7 +47,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var prevValue = game.Entities[id].GetTag(tag);
 			game.Entities[id].SetTag(tag, value);
 
-			if(tag == CONTROLLER && gameState.WaitForController != null && game.Player.Id == -1)
+			if(tag == CONTROLLER && gameState.CurrentEntityZone == HAND && !gameState.CurrentEntityHasCardId 
+				&& (!game.PlayerEntity?.IsPlayer ?? true))
 				DeterminePlayers(gameState, game, value);
 
 			var controller = game.Entities[id].GetTag(CONTROLLER);
@@ -154,28 +155,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			gameState.WasInProgress = true;
 		}
 
-		private static void DeterminePlayers(IHsGameState gameState, IGame game, int controller)
+		private static void DeterminePlayers(IHsGameState gameState, IGame game, int opponentPlayerId)
 		{
-			var p1 = game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 1).Value;
-			var p2 = game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 2).Value;
-			if(gameState.CurrentEntityHasCardId)
-			{
-				if(p1 != null)
-					p1.IsPlayer = controller == 1;
-				if(p2 != null)
-					p2.IsPlayer = controller != 1;
-				game.Player.Id = controller;
-				game.Opponent.Id = controller % 2 + 1;
-			}
-			else
-			{
-				if(p1 != null)
-					p1.IsPlayer = controller != 1;
-				if(p2 != null)
-					p2.IsPlayer = controller == 1;
-				game.Player.Id = controller % 2 + 1;
-				game.Opponent.Id = controller;
-			}
+			game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 1).Value?.SetPlayer(opponentPlayerId != 1);
+			game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 2).Value?.SetPlayer(opponentPlayerId == 1);
+			game.Player.Id = opponentPlayerId % 2 + 1;
+			game.Opponent.Id = opponentPlayerId;
 			if(gameState.WasInProgress)
 			{
 				var playerName = game.GetStoredPlayerName(game.Player.Id);

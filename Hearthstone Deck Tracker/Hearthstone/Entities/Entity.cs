@@ -39,6 +39,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		/// </Summary>
 		public bool IsPlayer { get; set; }
 
+		internal void SetPlayer(bool isPlayer) => IsPlayer = isPlayer;
+
 		[JsonIgnore]
 		public bool IsHero => Database.IsHero(CardId);
 
