@@ -403,7 +403,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		private static void SimulateZoneChangesFromDeck(IHsGameState gameState, int id, IGame game, int value, string cardId)
 		{
 			var entity = game.Entities[id];
-			if(entity.IsHero || entity.IsHeroPower || entity.HasTag(PLAYER_ID) || entity.GetTag(CARDTYPE) == (int)TAG_CARDTYPE.GAME)
+			if(entity.IsHero || entity.IsHeroPower || entity.HasTag(PLAYER_ID) || entity.GetTag(CARDTYPE) == (int)TAG_CARDTYPE.GAME
+				|| entity.HasTag(CREATOR))
 				return;
 			if(value == (int)DECK)
 				return;
