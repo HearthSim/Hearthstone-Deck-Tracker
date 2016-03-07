@@ -276,6 +276,7 @@
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
     <Compile Include="LogReader\Handlers\NetHandler.cs" />
     <Compile Include="Enums\Hearthstone\Mode.cs" />
+    <Compile Include="LogReader\Handlers\TagChangeActions.cs" />
     <Compile Include="LogReader\LogReaderHelper.cs" />
     <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
     <Compile Include="Stats\CompiledStats\ChartStats.cs" />

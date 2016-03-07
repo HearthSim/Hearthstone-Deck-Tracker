@@ -295,7 +295,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(game.IsInMenu)
 				return;
 			if(!creationTag && gameState.DeterminedPlayers)
-				_tagChangeHandler.ExecuteCreationTagActions();
+				_tagChangeHandler.InvokeQueuedActions();
 			else if(!gameState.DeterminedPlayers && gameState.SetupDone)
 			{
 				Log.Warn("Could not determine players by checking for opponent hand.");
