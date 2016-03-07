@@ -22,7 +22,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		bool OpponentUsedHeroPower { get; set; }
 		bool PlayerUsedHeroPower { get; set; }
 		ReplayKeyPoint ProposedKeyPoint { get; set; }
-		dynamic WaitForController { get; set; }
 		bool FoundSpectatorStart { get; set; }
 		int JoustReveals { get; set; }
 		Dictionary<int, string> KnownCardIds { get; set; }
@@ -30,6 +29,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		bool WasInProgress { get; set; }
 		bool SetupDone { get; set; }
 		TAG_ZONE CurrentEntityZone { get; set; }
+		bool DeterminedPlayers { get; set; }
 		void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player);
 		int GetTurnNumber();
 		void GameEndKeyPoint(bool victory, int id);

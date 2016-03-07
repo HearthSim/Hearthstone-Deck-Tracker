@@ -31,7 +31,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool OpponentUsedHeroPower { get; set; }
 		public bool PlayerUsedHeroPower { get; set; }
 		public ReplayKeyPoint ProposedKeyPoint { get; set; }
-		public dynamic WaitForController { get; set; }
 		public bool FoundSpectatorStart { get; set; }
 		public int JoustReveals { get; set; }
 		public Dictionary<int, string> KnownCardIds { get; set; }
@@ -39,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool WasInProgress { get; set; }
 		public bool SetupDone { get; set; }
 		public TAG_ZONE CurrentEntityZone { get; set; }
+		public bool DeterminedPlayers { get; set; }
 
 		public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
 		{
@@ -70,10 +70,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			JoustReveals = 0;
 			KnownCardIds.Clear();
 			LastGameStart = DateTime.Now;
-			WaitForController = null;
 			MaxId = 0;
 			WasInProgress = false;
 			SetupDone = false;
+			DeterminedPlayers = false;
 		}
 	}
 }

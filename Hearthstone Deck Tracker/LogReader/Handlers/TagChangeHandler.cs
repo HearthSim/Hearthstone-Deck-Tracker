@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
@@ -19,20 +20,20 @@ using static Hearthstone_Deck_Tracker.Replay.KeyPointType;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
+
 	class TagChangeHandler
 	{
-		public void TagChange(IHsGameState gameState, string rawTag, int id, string rawValue, IGame game, bool isRecursive = false)
+		public void TagChange(IHsGameState gameState, string rawTag, int id, string rawValue, IGame game, bool isCreationTag = false)
 		{
 			var tag = LogReaderHelper.ParseEnum<GAME_TAG>(rawTag);
 			var value = LogReaderHelper.ParseTag(tag, rawValue);
-			TagChange(gameState, tag, id, value, game);
+			TagChange(gameState, tag, id, value, game, isCreationTag);
 		}
 
-		public void TagChange(IHsGameState gameState, GAME_TAG tag, int id, int value, IGame game, bool isRecursive = false)
+		public void TagChange(IHsGameState gameState, GAME_TAG tag, int id, int value, IGame game, bool isCreationTag = false)
 		{
 			if(gameState.LastId != id)
 			{
-				//game.SecondToLastUsedId = gameState.LastId;
 				if(gameState.ProposedKeyPoint != null)
 				{
 					ReplayMaker.Generate(gameState.ProposedKeyPoint.Type, gameState.ProposedKeyPoint.Id, gameState.ProposedKeyPoint.Player, game);
@@ -44,100 +45,83 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.MaxId = id;
 			if(!game.Entities.ContainsKey(id))
 				game.Entities.Add(id, new Entity(id));
+
+			if(!gameState.DeterminedPlayers)
+			{
+				var entity = game.Entities[id];
+				if(tag == CONTROLLER && entity.IsInHand && string.IsNullOrEmpty(entity.CardId))
+					DeterminePlayers(gameState, game, value);
+			}
+
 			var prevValue = game.Entities[id].GetTag(tag);
 			game.Entities[id].SetTag(tag, value);
 
-			if(tag == CONTROLLER && gameState.CurrentEntityZone == HAND && !gameState.CurrentEntityHasCardId 
-				&& (!game.PlayerEntity?.IsPlayer ?? true))
-				DeterminePlayers(gameState, game, value);
+			var action = GetTagAction(tag, game, gameState, id, value, prevValue);
+			if(!isCreationTag)
+				action?.Invoke();
+			else if(action != null)
+				CreationTagActionQueue.Enqueue(action);
+		}
 
-			var controller = game.Entities[id].GetTag(CONTROLLER);
-			var cardId = game.Entities[id].CardId;
+		internal void ExecuteCreationTagActions()
+		{
+			while(CreationTagActionQueue.Any())
+				CreationTagActionQueue.Dequeue().Invoke();
+		}
+
+		private Queue<Action> CreationTagActionQueue { get; } = new Queue<Action>();
+
+		private Action GetTagAction(GAME_TAG tag, IGame game, IHsGameState gameState, int id, int value, int prevValue)
+		{
 			switch(tag)
 			{
 				case ZONE:
-					if(((TAG_ZONE)value == HAND || ((TAG_ZONE)value == PLAY || (TAG_ZONE)value == DECK) && game.IsMulliganDone) && gameState.WaitForController == null)
-					{
-						if(!game.IsMulliganDone)
-							prevValue = (int)DECK;
-						if(controller == 0)
-						{
-							game.Entities[id].SetTag(ZONE, prevValue);
-							gameState.WaitForController = new {Tag = tag, Id = id, Value = value};
-							return;
-						}
-					}
-					ZoneChange(gameState, id, game, value, prevValue, controller, cardId);
-					break;
+					return () => ZoneChange(gameState, id, game, value, prevValue);
 				case PLAYSTATE:
-					PlaystateChange(gameState, id, game, value);
-					break;
+					return () => PlaystateChange(gameState, id, game, value);
 				case CARDTYPE:
-					CardTypeChange(gameState, id, game, value);
-					break;
+					return () => CardTypeChange(gameState, id, game, value);
 				case LAST_CARD_PLAYED:
-					LastCardPlayedChange(gameState, value);
-					break;
+					return () => LastCardPlayedChange(gameState, value);
 				case DEFENDING:
-					DefendingChange(gameState, id, game, controller, value);
-					break;
+					return () => DefendingChange(gameState, id, game, value);
 				case ATTACKING:
-					AttackingChange(gameState, id, game, controller, value);
-					break;
+					return () => AttackingChange(gameState, id, game, value);
 				case PROPOSED_DEFENDER:
-					ProposedDefenderChange(game, value);
-					break;
+					return () => ProposedDefenderChange(game, value);
 				case PROPOSED_ATTACKER:
-					ProposedAttackerChange(game, value);
-					break;
+					return () => ProposedAttackerChange(game, value);
 				case NUM_MINIONS_PLAYED_THIS_TURN:
-					NumMinionsPlayedThisTurnChange(gameState, game, value);
-					break;
+					return () => NumMinionsPlayedThisTurnChange(gameState, game, value);
 				case PREDAMAGE:
-					PredamageChange(gameState, id, game, value);
-					break;
+					return () => PredamageChange(gameState, id, game, value);
 				case NUM_TURNS_IN_PLAY:
-					NumTurnsInPlayChange(gameState, id, game, value);
-					break;
+					return () => NumTurnsInPlayChange(gameState, id, game, value);
 				case NUM_ATTACKS_THIS_TURN:
-					NumAttacksThisTurnChange(gameState, id, game, value, controller);
-					break;
+					return () => NumAttacksThisTurnChange(gameState, id, game, value);
 				case ZONE_POSITION:
-					ZonePositionChange(gameState, id, game, controller);
-					break;
+					return () => ZonePositionChange(gameState, id, game);
 				case CARD_TARGET:
-					CardTargetChange(gameState, id, game, value, controller);
-					break;
+					return () => CardTargetChange(gameState, id, game, value);
 				case EQUIPPED_WEAPON:
-					EquippedWeaponChange(gameState, id, game, value, controller);
-					break;
+					return () => EquippedWeaponChange(gameState, id, game, value);
 				case EXHAUSTED:
-					ExhaustedChange(gameState, id, game, value, controller);
-					break;
+					return () => ExhaustedChange(gameState, id, game, value);
 				case CONTROLLER:
-					ControllerChange(gameState, id, game, prevValue, value, cardId);
-					break;
+					return () => ControllerChange(gameState, id, game, prevValue, value);
 				case FATIGUE:
-					FatigueChange(gameState, value, game, controller);
-					break;
+					return () => FatigueChange(gameState, value, game, id);
 				case STEP:
-					StepChange(gameState, game);
-					break;
+					return () => StepChange(gameState, game);
 				case TURN:
-					TurnChange(gameState, game);
-					break;
+					return () => TurnChange(gameState, game);
 			}
-			if(gameState.WaitForController != null && !isRecursive)
-			{
-				TagChange(gameState, (GAME_TAG)gameState.WaitForController.Tag, (int)gameState.WaitForController.Id,
-						  (int)gameState.WaitForController.Value, game, true);
-				gameState.WaitForController = null;
-			}
+			return null;
 		}
 
 		private void TurnChange(IHsGameState gameState, IGame game)
 		{
-			if(game.Entities.Count <= 1 || game.PlayerEntity == null)
+			if(!gameState.SetupDone || game.PlayerEntity == null)
 				return;
 			var activePlayer = game.PlayerEntity.HasTag(CURRENT_PLAYER) ? ActivePlayer.Player : ActivePlayer.Opponent;
 			gameState.GameHandler.TurnStart(activePlayer, gameState.GetTurnNumber());
@@ -149,18 +133,29 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void StepChange(IHsGameState gameState, IGame game)
 		{
-			if(game.Entities.Count > 1 || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
+			if(gameState.SetupDone || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
 				return;
 			Log.Info("Game was already in progress.");
 			gameState.WasInProgress = true;
 		}
 
-		private static void DeterminePlayers(IHsGameState gameState, IGame game, int opponentPlayerId)
+
+		internal void DeterminePlayers(IHsGameState gameState, IGame game, int playerId, bool isOpponentId = true)
 		{
-			game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 1).Value?.SetPlayer(opponentPlayerId != 1);
-			game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 2).Value?.SetPlayer(opponentPlayerId == 1);
-			game.Player.Id = opponentPlayerId % 2 + 1;
-			game.Opponent.Id = opponentPlayerId;
+			if(isOpponentId)
+			{
+				game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 1).Value?.SetPlayer(playerId != 1);
+				game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 2).Value?.SetPlayer(playerId == 1);
+				game.Player.Id = playerId % 2 + 1;
+				game.Opponent.Id = playerId;
+			}
+			else
+			{
+				game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 1).Value?.SetPlayer(playerId == 1);
+				game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 2).Value?.SetPlayer(playerId != 1);
+				game.Player.Id = playerId;
+				game.Opponent.Id = playerId % 2 + 1;
+			}
 			if(gameState.WasInProgress)
 			{
 				var playerName = game.GetStoredPlayerName(game.Player.Id);
@@ -170,19 +165,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(!string.IsNullOrEmpty(opponentName))
 					game.Opponent.Name = opponentName;
 			}
+			gameState.DeterminedPlayers = game.PlayerEntity != null;
 		}
 
 		private static void LastCardPlayedChange(IHsGameState gameState, int value) => gameState.LastCardPlayed = value;
 
-		private static void DefendingChange(IHsGameState gameState, int id, IGame game, int controller, int value)
+		private static void DefendingChange(IHsGameState gameState, int id, IGame game, int value)
 		{
-			if(controller == game.Opponent.Id)
+			if(game.Entities[id].GetTag(CONTROLLER) == game.Opponent.Id)
 				gameState.GameHandler.HandleDefendingEntity(value == 1 ? game.Entities[id] : null);
 		}
 
-		private static void AttackingChange(IHsGameState gameState, int id, IGame game, int controller, int value)
+		private static void AttackingChange(IHsGameState gameState, int id, IGame game, int value)
 		{
-			if(controller == game.Player.Id)
+			if(game.Entities[id].GetTag(CONTROLLER) == game.Player.Id)
 				gameState.GameHandler.HandleAttackingEntity(value == 1 ? game.Entities[id] : null);
 		}
 
@@ -214,46 +210,49 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.GameHandler.HandleOpponentTurnStart(game.Entities[id]);
 		}
 
-		private static void FatigueChange(IHsGameState gameState, int value, IGame game, int controller)
+		private static void FatigueChange(IHsGameState gameState, int value, IGame game, int id)
 		{
+			var controller = game.Entities[id].GetTag(CONTROLLER);
 			if(controller == game.Player.Id)
 				gameState.GameHandler.HandlePlayerFatigue(value);
 			else if(controller == game.Opponent.Id)
 				gameState.GameHandler.HandleOpponentFatigue(value);
 		}
 
-		private static void ControllerChange(IHsGameState gameState, int id, IGame game, int prevValue, int value, string cardId)
+		private static void ControllerChange(IHsGameState gameState, int id, IGame game, int prevValue, int value)
 		{
 			if(prevValue <= 0)
 				return;
-			if(game.Entities[id].HasTag(PLAYER_ID))
+			var entity = game.Entities[id];
+			if(entity.HasTag(PLAYER_ID))
 				return;
 			if(value == game.Player.Id)
 			{
-				if(game.Entities[id].IsInZone(TAG_ZONE.SECRET))
+				if(entity.IsInZone(TAG_ZONE.SECRET))
 				{
-					gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+					gameState.GameHandler.HandleOpponentStolen(entity, entity.CardId, gameState.GetTurnNumber());
 					gameState.ProposeKeyPoint(SecretStolen, id, ActivePlayer.Player);
 				}
-				else if(game.Entities[id].IsInZone(PLAY))
-					gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+				else if(entity.IsInZone(PLAY))
+					gameState.GameHandler.HandleOpponentStolen(entity, entity.CardId, gameState.GetTurnNumber());
 			}
 			else if(value == game.Opponent.Id)
 			{
-				if(game.Entities[id].IsInZone(TAG_ZONE.SECRET))
+				if(entity.IsInZone(TAG_ZONE.SECRET))
 				{
-					gameState.GameHandler.HandleOpponentStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+					gameState.GameHandler.HandleOpponentStolen(entity, entity.CardId, gameState.GetTurnNumber());
 					gameState.ProposeKeyPoint(SecretStolen, id, ActivePlayer.Player);
 				}
-				else if(game.Entities[id].IsInZone(PLAY))
-					gameState.GameHandler.HandlePlayerStolen(game.Entities[id], cardId, gameState.GetTurnNumber());
+				else if(entity.IsInZone(PLAY))
+					gameState.GameHandler.HandlePlayerStolen(entity, entity.CardId, gameState.GetTurnNumber());
 			}
 		}
 
-		private static void ExhaustedChange(IHsGameState gameState, int id, IGame game, int value, int controller)
+		private static void ExhaustedChange(IHsGameState gameState, int id, IGame game, int value)
 		{
 			if(value <= 0)
 				return;
+			var controller = game.Entities[id].GetTag(CONTROLLER);
 			if(game.Entities[id].GetTag(CARDTYPE) != (int)TAG_CARDTYPE.HERO_POWER)
 				return;
 			if(controller == game.Player.Id)
@@ -262,30 +261,33 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.ProposeKeyPoint(HeroPower, id, ActivePlayer.Opponent);
 		}
 
-		private static void EquippedWeaponChange(IHsGameState gameState, int id, IGame game, int value, int controller)
+		private static void EquippedWeaponChange(IHsGameState gameState, int id, IGame game, int value)
 		{
 			if(value != 0)
 				return;
+			var controller = game.Entities[id].GetTag(CONTROLLER);
 			if(controller == game.Player.Id)
 				gameState.ProposeKeyPoint(WeaponDestroyed, id, ActivePlayer.Player);
 			else if(controller == game.Opponent.Id)
 				gameState.ProposeKeyPoint(WeaponDestroyed, id, ActivePlayer.Opponent);
 		}
 
-		private static void CardTargetChange(IHsGameState gameState, int id, IGame game, int value, int controller)
+		private static void CardTargetChange(IHsGameState gameState, int id, IGame game, int value)
 		{
 			if(value <= 0)
 				return;
+			var controller = game.Entities[id].GetTag(CONTROLLER);
 			if(controller == game.Player.Id)
 				gameState.ProposeKeyPoint(PlaySpell, id, ActivePlayer.Player);
 			else if(controller == game.Opponent.Id)
 				gameState.ProposeKeyPoint(PlaySpell, id, ActivePlayer.Opponent);
 		}
 
-		private static void ZonePositionChange(IHsGameState gameState, int id, IGame game, int controller)
+		private static void ZonePositionChange(IHsGameState gameState, int id, IGame game)
 		{
 			var entity = game.Entities[id];
 			var zone = entity.GetTag(ZONE);
+			var controller = entity.GetTag(CONTROLLER);
 			if(zone == (int)HAND)
 			{
 				if(controller == game.Player.Id)
@@ -314,10 +316,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 		}
 
-		private static void NumAttacksThisTurnChange(IHsGameState gameState, int id, IGame game, int value, int controller)
+		private static void NumAttacksThisTurnChange(IHsGameState gameState, int id, IGame game, int value)
 		{
 			if(value <= 0)
 				return;
+			var controller = game.Entities[id].GetTag(CONTROLLER);
 			if(controller == game.Player.Id)
 				gameState.ProposeKeyPoint(Attack, id, ActivePlayer.Player);
 			else if(controller == game.Opponent.Id)
@@ -361,33 +364,35 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		}
 
 		private static void ZoneChange(IHsGameState gameState, int id, IGame game, int value,
-											 int prevValue, int controller, string cardId)
+											 int prevValue)
 		{
+			var entity = game.Entities[id];
+			var controller = entity.GetTag(CONTROLLER);
 			switch((TAG_ZONE)prevValue)
 			{
 				case DECK:
-					ZoneChangeFromDeck(gameState, id, game, value, prevValue, controller, cardId);
+					ZoneChangeFromDeck(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
 				case HAND:
-					ZoneChangeFromHand(gameState, id, game, value, prevValue, controller, cardId);
+					ZoneChangeFromHand(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
 				case PLAY:
-					ZoneChangeFromPlay(gameState, id, game, value, prevValue, controller, cardId);
+					ZoneChangeFromPlay(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
 				case TAG_ZONE.SECRET:
-					ZoneChangeFromSecret(gameState, id, game, value, prevValue, controller, cardId);
+					ZoneChangeFromSecret(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
 				case CREATED:
-					if(gameState.WasInProgress && !gameState.SetupDone && id <= 68)
-						DelayedZoneChangeFromDeck(gameState, id, game, value, cardId);
+					if(!gameState.SetupDone && id <= 68)
+						SimulateZoneChangesFromDeck(gameState, id, game, value, entity.CardId);
 					else
-						ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, cardId);
+						ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
 				case GRAVEYARD:
 				case SETASIDE:
 				case TAG_ZONE.INVALID:
 				case REMOVEDFROMGAME:
-					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, cardId);
+					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
 				default:
 					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
@@ -395,25 +400,23 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 		}
 
-		private static async void DelayedZoneChangeFromDeck(IHsGameState gameState, int id, IGame game, int value, string cardId)
+		private static void SimulateZoneChangesFromDeck(IHsGameState gameState, int id, IGame game, int value, string cardId)
 		{
-			await game.GameTime.WaitForDuration(50);
 			var entity = game.Entities[id];
-			if(!entity.IsHero && !entity.IsHeroPower && !entity.HasTag(PLAYER_ID) && entity.GetTag(CARDTYPE) != (int)TAG_CARDTYPE.GAME)
-			{
-				if(value == (int)DECK)
-					return;
-				if(id < 68)
-					ZoneChangeFromDeck(gameState, id, game, (int)HAND, (int)DECK, entity.GetTag(CONTROLLER), cardId);
-				else if(id == 68 && entity.IsSpell)
-					ZoneChangeFromOther(gameState, id, game, (int)HAND, (int)CREATED, entity.GetTag(CONTROLLER), cardId);
-				if(value == (int)HAND)
-					return;
-				ZoneChangeFromHand(gameState, id, game, (int)PLAY, (int)HAND, entity.GetTag(CONTROLLER), cardId);
-				if(value == (int)PLAY)
-					return;
-				ZoneChangeFromPlay(gameState, id, game, value, (int)PLAY, entity.GetTag(CONTROLLER), cardId);
-			}
+			if(entity.IsHero || entity.IsHeroPower || entity.HasTag(PLAYER_ID) || entity.GetTag(CARDTYPE) == (int)TAG_CARDTYPE.GAME)
+				return;
+			if(value == (int)DECK)
+				return;
+			if(id < 68)
+				ZoneChangeFromDeck(gameState, id, game, (int)HAND, (int)DECK, entity.GetTag(CONTROLLER), cardId);
+			else if(id == 68 && entity.GetTag(ZONE_POSITION) == 5)
+				ZoneChangeFromOther(gameState, id, game, (int)HAND, (int)CREATED, entity.GetTag(CONTROLLER), cardId);
+			if(value == (int)HAND)
+				return;
+			ZoneChangeFromHand(gameState, id, game, (int)PLAY, (int)HAND, entity.GetTag(CONTROLLER), cardId);
+			if(value == (int)PLAY)
+				return;
+			ZoneChangeFromPlay(gameState, id, game, value, (int)PLAY, entity.GetTag(CONTROLLER), cardId);
 		}
 
 		private static void ZoneChangeFromOther(IHsGameState gameState, int id, IGame game, int value, int prevValue, int controller,

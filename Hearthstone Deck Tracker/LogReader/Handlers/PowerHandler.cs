@@ -25,6 +25,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
 			var setup = false;
+			var creationTag = false;
 			if(GameEntityRegex.IsMatch(logLine))
 			{
 				var match = GameEntityRegex.Match(logLine);
@@ -185,8 +186,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			else if(CreationTagRegex.IsMatch(logLine) && !logLine.Contains("HIDE_ENTITY"))
 			{
 				var match = CreationTagRegex.Match(logLine);
-				_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, gameState.CurrentEntityId, match.Groups["value"].Value, game);
+				_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, gameState.CurrentEntityId, match.Groups["value"].Value, game, true);
 				setup = true;
+				creationTag = true;
 			}
 			else if((logLine.Contains("Begin Spectating") || logLine.Contains("Start Spectator")) && game.IsInMenu)
 				gameState.GameHandler.SetGameMode(GameMode.Spectator);
@@ -289,6 +291,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 			if(!setup)
 				gameState.SetupDone = true;
+
+			if(!creationTag && gameState.DeterminedPlayers)
+				_tagChangeHandler.ExecuteCreationTagActions();
+			else if(!gameState.DeterminedPlayers && gameState.SetupDone)
+			{
+				Log.Warn("Could not determine players by checking for opponent hand.");
+				var playerCard = game.Entities.FirstOrDefault(x => x.Value.IsInHand && !string.IsNullOrEmpty(x.Value.CardId)).Value;
+				if(playerCard != null)
+					_tagChangeHandler.DeterminePlayers(gameState, game, playerCard.GetTag(GAME_TAG.CONTROLLER), false);
+				else
+					Log.Warn("Could not determine players by checking for player hand either... waiting for draws...");
+			}
 		}
 
 		private static void SetPlayerName(IGame game, int playerId, string name)
