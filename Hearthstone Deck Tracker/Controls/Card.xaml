@@ -16,9 +16,11 @@
                                  Text="{Binding Cost}" Fill="{Binding ColorPlayer}"
                                  FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
                                  TextAlignment="Center" FontSize="20" Grid.Column="0" />
-        <local:OutlinedTextBlock Height="16" VerticalAlignment="Center" Text="{Binding LocalizedName}"
-                                 Fill="{Binding ColorPlayer}"
-                                 FontFamily="{Binding Font}"
-                                 TextAlignment="Left" FontSize="13" Grid.Column="1" />
+        <Viewbox Height="16" HorizontalAlignment="Left" Grid.Column="1">
+            <local:OutlinedTextBlock VerticalAlignment="Center" Text="{Binding LocalizedName}"
+                                 Fill="{Binding ColorPlayer}" 
+                                 FontFamily="{Binding Font}" 
+                                 TextAlignment="Left" FontSize="13" />
+        </Viewbox>
     </Grid>
 </UserControl>

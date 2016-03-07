@@ -22,10 +22,12 @@
             <GridViewColumn Header="name" Width="155">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
-                        <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="-2,0,0,0" Height="16"
+                        <Viewbox Margin="-2,0,0,0" Height="16" HorizontalAlignment="Left">
+                            <local:OutlinedTextBlock Fill="{Binding ColorPlayer}"
                                                  VerticalAlignment="Center" Text="{Binding LocalizedName}"
                                                  FontFamily="{Binding Font}"
                                                  TextAlignment="Left" FontSize="13" />
+                        </Viewbox>
                     </DataTemplate>
                 </GridViewColumn.CellTemplate>
             </GridViewColumn>
