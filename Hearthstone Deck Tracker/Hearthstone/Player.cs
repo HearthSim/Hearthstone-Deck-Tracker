@@ -163,7 +163,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					                      new
 					                      {
 						                      ce.CardId,
-						                      Hidden = (ce.InHand || ce.InDeck),
+						                      Hidden = (ce.InHand || ce.InDeck) && (ce.Entity?.IsControlledBy(Id) ?? true),
 						                      ce.Created,
 						                      Discarded = ce.Discarded && Config.Instance.HighlightDiscarded
 					                      })
