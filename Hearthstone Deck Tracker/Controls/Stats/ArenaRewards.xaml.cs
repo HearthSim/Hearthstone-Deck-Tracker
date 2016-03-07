@@ -36,7 +36,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		private IEnumerable<string> CardNames => _cardNames
 												 ?? (_cardNames =
-													 Database.GetActualCards().Where(x => _validSets.Any(set => x.Set == set)).Select(x => x.LocalizedName).ToList());
+													 Database.GetActualCards().Where(x => _validSets.Any(set => x.Set == set)).Select(x => x.LocalizedName)
+																.OrderBy(x => x.Length).ToList());
 
 		private void AddInvalidField(object obj, string error)
 		{
