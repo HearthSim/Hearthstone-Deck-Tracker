@@ -292,6 +292,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!setup)
 				gameState.SetupDone = true;
 
+			if(game.IsInMenu)
+				return;
 			if(!creationTag && gameState.DeterminedPlayers)
 				_tagChangeHandler.ExecuteCreationTagActions();
 			else if(!gameState.DeterminedPlayers && gameState.SetupDone)
