@@ -889,7 +889,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			LogEvent("PlayerGetToDeck", cardId);
 			_game.Player.CreateInDeck(entity, turn);
 			Helper.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerGetToDeck, turn, cardId);
@@ -900,7 +899,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			LogEvent("PlayerGet", cardId);
 			_game.Player.CreateInHand(entity, turn);
 			if(cardId == "GAME_005" && _game.CurrentGameStats != null)
 			{
@@ -916,7 +914,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			LogEvent("PlayerBackToHand", cardId);
 			Helper.UpdatePlayerCards();
 			_game.Player.BoardToHand(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.PlayerBackToHand, turn, cardId);
@@ -950,7 +947,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			LogEvent("PlayerMulligan", cardId);
 			_game.Player.Mulligan(entity);
 			Helper.UpdatePlayerCards();
 
@@ -962,7 +958,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			LogEvent("PlayerSecretPlayed", cardId);
 			if(fromDeck)
 				_game.Player.SecretPlayedFromDeck(entity, turn);
 			else
@@ -976,7 +971,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			LogEvent("PlayerHandDiscard", cardId);
 			_game.Player.HandDiscard(entity, turn);
 			Helper.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerHandDiscard, turn, cardId);
@@ -987,7 +981,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			LogEvent("PlayerPlay", cardId);
 			_game.Player.Play(entity, turn);
 			Helper.UpdatePlayerCards();
 
@@ -1024,7 +1017,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn)
 		{
-			LogEvent("PlayerDeckDiscard", cardId);
 			_game.Player.DeckDiscard(entity, turn);
 			if(!_game.Player.DrawnCardsMatchDeck && Config.Instance.AutoDeckDetection && !Core.MainWindow.NeedToIncorrectDeckMessage
 			   && !Core.MainWindow.IsShowingIncorrectDeckMessage && _game.IsUsingPremade && _game.CurrentGameMode != Spectator)
@@ -1042,7 +1034,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			LogEvent("PlayerPlayToDeck", cardId);
 			_game.Player.BoardToDeck(entity, turn);
 
 			Helper.UpdatePlayerCards();
@@ -1057,7 +1048,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentGetToDeck(Entity entity, int turn)
 		{
-			LogEvent("OpponentGetToDeck", turn: turn);
 			_game.Opponent.CreateInDeck(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.OpponentGetToDeck, turn, string.Empty);
 			Helper.UpdateOpponentCards();
@@ -1132,7 +1122,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandlePlayerStolen(Entity entity, string cardId, int turn)
 		{
-			LogEvent("PlayerStolen");
 			_game.Player.StolenByOpponent(entity, turn);
 			_game.Opponent.StolenFromOpponent(entity, turn);
 			if(entity.IsSecret)
@@ -1161,7 +1150,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentStolen(Entity entity, string cardId, int turn)
 		{
-			LogEvent("OpponentStolen");
 			_game.Opponent.StolenByOpponent(entity, turn);
 			_game.Player.StolenFromOpponent(entity, turn);
 			if(entity.IsSecret)
@@ -1230,7 +1218,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentPlay(Entity entity, string cardId, int from, int turn)
 		{
-			LogEvent("OpponentPlay", cardId, turn, from);
 			_game.Opponent.Play(entity, turn);
 			Helper.UpdateOpponentCards();
 			_game.AddPlayToCurrentGame(PlayType.OpponentPlay, turn, cardId);
@@ -1247,7 +1234,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentHandDiscard(Entity entity, string cardId, int from, int turn)
 		{
-			LogEvent("OpponentHandDiscard", cardId, turn, from);
 			try
 			{
 				_game.Opponent.Play(entity, turn);
@@ -1263,7 +1249,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandlOpponentDraw(Entity entity, int turn)
 		{
-			LogEvent("OpponentDraw", turn: turn);
 			_game.Opponent.Draw(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.OpponentDraw, turn, string.Empty);
 			GameEvents.OnOpponentDraw.Execute();
@@ -1271,7 +1256,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentMulligan(Entity entity, int from)
 		{
-			LogEvent("OpponentMulligan", from: from);
 			_game.Opponent.Mulligan(entity);
 			_game.AddPlayToCurrentGame(PlayType.OpponentMulligan, 0, string.Empty);
 			GameEvents.OnOpponentMulligan.Execute();
@@ -1279,7 +1263,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentGet(Entity entity, int turn, int id)
 		{
-			LogEvent("OpponentGet", turn: turn);
 			_game.Opponent.CreateInHand(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.OpponentGet, turn, string.Empty);
 			Helper.UpdateOpponentCards();
@@ -1288,7 +1271,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, bool fromDeck, int otherId)
 		{
-			LogEvent("OpponentSecretPlayed");
 			_game.OpponentSecretCount++;
 			if(fromDeck)
 				_game.Opponent.SecretPlayedFromDeck(entity, turn);
@@ -1316,7 +1298,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentPlayToHand(Entity entity, string cardId, int turn, int id)
 		{
-			LogEvent("OpponentBackToHand", cardId, turn);
 			_game.Opponent.BoardToHand(entity, turn);
 			Helper.UpdateOpponentCards();
 			_game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
@@ -1326,7 +1307,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentPlayToDeck(Entity entity, string cardId, int turn)
 		{
-			LogEvent("OpponentPlayToDeck", cardId, turn);
 			_game.Opponent.BoardToDeck(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.OpponentPlayToDeck, turn, cardId);
 			Helper.UpdateOpponentCards();
@@ -1335,7 +1315,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentSecretTrigger(Entity entity, string cardId, int turn, int otherId)
 		{
-			LogEvent("OpponentSecretTrigger", cardId);
 			_game.Opponent.SecretTriggered(entity, turn);
 			_game.OpponentSecretCount--;
 			_game.OpponentSecrets.SecretRemoved(otherId, cardId);
@@ -1355,7 +1334,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentDeckDiscard(Entity entity, string cardId, int turn)
 		{
-			LogEvent("OpponentDeckDiscard", cardId);
 			_game.Opponent.DeckDiscard(entity, turn);
 
 			//there seems to be an issue with the overlay not updating here.
