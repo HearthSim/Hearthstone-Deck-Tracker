@@ -887,8 +887,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandlePlayerGetToDeck(Entity entity, string cardId, int turn)
 		{
-			if(string.IsNullOrEmpty(cardId))
-				return;
 			_game.Player.CreateInDeck(entity, turn);
 			Helper.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerGetToDeck, turn, cardId);
