@@ -287,7 +287,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			else if(logLine.Contains("BlockType=JOUST"))
 				gameState.JoustReveals = 2;
 			else if(logLine.Contains("CREATE_GAME"))
+			{
 				setup = true;
+				_tagChangeHandler.ClearQueuedActions();
+			}
 
 			if(!setup)
 				gameState.SetupDone = true;

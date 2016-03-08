@@ -65,6 +65,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				_creationTagActionQueue.Dequeue().Invoke();
 		}
 
+		public void ClearQueuedActions() => _creationTagActionQueue.Clear();
+
 		internal void DeterminePlayers(IHsGameState gameState, IGame game, int playerId, bool isOpponentId = true)
 		{
 			if(isOpponentId)
