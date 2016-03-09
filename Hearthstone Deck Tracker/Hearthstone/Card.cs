@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class Card : ICloneable, INotifyPropertyChanged
 	{
 		[NonSerialized]
-		private readonly HearthDb.Card _dbCard;
+		private HearthDb.Card _dbCard;
 
 		private readonly Regex _overloadRegex = new Regex(@"Overload:.+?\((?<value>(\d+))\)");
 
@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Card(string id, string playerClass, Rarity rarity, string type, string name, int cost, string localizedName, int inHandCount,
 		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability,
-		            string artist, string set, List<string> alternativeNames = null, List<string> alternativeTexts = null)
+		            string artist, string set, List<string> alternativeNames = null, List<string> alternativeTexts = null, HearthDb.Card dbCard = null)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -91,6 +91,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				AlternativeNames = alternativeNames;
 			if(alternativeTexts != null)
 				AlternativeTexts = alternativeTexts;
+			_dbCard = dbCard;
 		}
 
 		private Language? _selectedLanguage;
@@ -409,7 +410,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string FormattedFlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage), false) ?? "";
 
 		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, _text, EnglishText, Attack,
-										  Health, Race, Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts);
+										  Health, Race, Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts, _dbCard);
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -451,6 +452,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Set = stats.Set;
 			AlternativeNames = stats.AlternativeNames;
 			AlternativeTexts = stats.AlternativeTexts;
+			_dbCard = stats._dbCard;
 			_loaded = true;
 			OnPropertyChanged();
 		}
