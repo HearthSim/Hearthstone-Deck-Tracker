@@ -997,10 +997,13 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.OpponentSecrets.SetZero(Mage.Counterspell);
 
-				//CARD_TARGET is set after ZONE, wait for 50ms gametime before checking
-				await _game.GameTime.WaitForDuration(50);
-				if(entity.HasTag(CARD_TARGET) && _game.Entities[entity.GetTag(CARD_TARGET)].IsMinion)
-					_game.OpponentSecrets.SetZero(Mage.Spellbender);
+				if(_game.OpponentMinionCount < 7)
+				{
+					//CARD_TARGET is set after ZONE, wait for 50ms gametime before checking
+					await _game.GameTime.WaitForDuration(50);
+					if(entity.HasTag(CARD_TARGET) && _game.Entities[entity.GetTag(CARD_TARGET)].IsMinion)
+						_game.OpponentSecrets.SetZero(Mage.Spellbender);
+				}
 
 				if(Core.MainWindow != null)
 					Core.Overlay.ShowSecrets();
