@@ -229,8 +229,8 @@ namespace Hearthstone_Deck_Tracker
 			if(!Config.Instance.AutoGrayoutSecrets)
 				return;
 
-			_game.OpponentSecrets.SetZero(Mage.Duplicate);
-
+			if(_game.Opponent.HandCount < 10)
+				_game.OpponentSecrets.SetZero(Mage.Duplicate);
 
 			var numDeathrattleMinions = 0;
 
