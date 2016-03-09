@@ -957,7 +957,10 @@ namespace Hearthstone_Deck_Tracker
 			if(fromDeck)
 				_game.Player.SecretPlayedFromDeck(entity, turn);
 			else
+			{
 				_game.Player.SecretPlayedFromHand(entity, turn);
+				HandleSecretsOnPlay(entity);
+			}
 			Helper.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerSecretPlayed, turn, cardId);
 			GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
