@@ -592,10 +592,13 @@ namespace Hearthstone_Deck_Tracker
 				_assignedDeck = null;
 				return;
 			}
-			var player = _game.Entities.FirstOrDefault(e => e.Value.IsPlayer);
+			var player = _game.Entities.FirstOrDefault(e => e.Value.IsPlayer).Value;
 			var opponent = _game.Entities.FirstOrDefault(e => e.Value.HasTag(PLAYER_ID) && !e.Value.IsPlayer);
-			if(player.Value != null)
-				_game.CurrentGameStats.PlayerName = player.Value.Name;
+			if(player != null)
+			{
+				_game.CurrentGameStats.PlayerName = player.Name;
+				_game.CurrentGameStats.Coin = !player.HasTag(FIRST_PLAYER);
+			}
 			if(opponent.Value != null && CardIds.HeroIdDict.ContainsValue(_game.CurrentGameStats.OpponentHero))
 				_game.CurrentGameStats.OpponentName = opponent.Value.Name;
 			else
@@ -898,11 +901,6 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			_game.Player.CreateInHand(entity, turn);
-			if(cardId == "GAME_005" && _game.CurrentGameStats != null)
-			{
-				_game.CurrentGameStats.Coin = true;
-				Log.Info("Got coin");
-			}
 			Helper.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerGet, turn, cardId);
 			GameEvents.OnPlayerGet.Execute(Database.GetCardFromId(cardId));
