@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.IO;
 using Hearthstone_Deck_Tracker.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -207,7 +208,7 @@ namespace HDTTests.RankedDetection
 		private bool RankIsCorrect(int rank)
 		{
 			var bmp = new Bitmap("RankedDetection/TestFiles/" + rank + ".png");
-            return rank == RankDetection.FindBest(bmp);
+			return rank == RankDetection.FindBest(bmp);
 		}
 	}
 }
