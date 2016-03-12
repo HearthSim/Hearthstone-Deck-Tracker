@@ -359,6 +359,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(revealed != null)
 				RevealedCards.Remove(revealed);
 			var ce = MoveCardEntity(entity, Deck, Removed, turn);
+			UpdateRevealedEntity(ce, turn, true);
+			VerifyCardMatchesDeck(ce);
 			Log(ce);
 		}
 
