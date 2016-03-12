@@ -145,7 +145,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 									if(!Info.HasFilters || (Info.StartsWithFilters?.Any(x => line.Substring(19).StartsWith(x)) ?? false)
 									   || (Info.ContainsFilters?.Any(x => line.Substring(19).Contains(x)) ?? false))
 									{
-										var logLine = new LogLineItem(Info.Name, line, fileInfo.LastWriteTime);
+										var logLine = new LogLineItem(Info.Name, line);
 										if(logLine.Time >= _startingPoint)
 											_lines.Add(logLine);
 									}
@@ -189,7 +189,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						{
 							if(string.IsNullOrWhiteSpace(lines[i].Trim('\0')))
 								continue;
-							var logLine = new LogLineItem(Info.Name, lines[i], fileInfo.LastWriteTime);
+							var logLine = new LogLineItem(Info.Name, lines[i]);
 							if(logLine.Time < _startingPoint)
 							{
 								var negativeOffset = lines.Take(i + 1).Sum(x => Encoding.UTF8.GetByteCount(x + Environment.NewLine));
@@ -237,7 +237,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						if(targetOffset != -1)
 						{
 							var line = new string(reverse.Substring(targetOffset).TakeWhile(c => c != '\n').Reverse().ToArray());
-							return new LogLineItem("", line, fileInfo.LastWriteTime).Time;
+							return new LogLineItem("", line).Time;
 						}
 					}
 				}
