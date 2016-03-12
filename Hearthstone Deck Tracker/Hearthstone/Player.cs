@@ -249,19 +249,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Highlight(entity.CardId);
 			else
 				ce.Reset();
-
-			if(!string.IsNullOrEmpty(entity.CardId) && ce.CardMark != CardMark.Created && ce.CardMark != CardMark.Returned && !ce.Created)
-			{
-				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
-					DrawnCardsMatchDeck = false;
-				DrawnCardIds.Add(entity.CardId);
-				DrawnCardIdsTotal.Add(entity.CardId);
-			}
+			VerifyCardMatchesDeck(ce);
 			Log(ce);
 		}
-
-		private static bool CardMatchesActiveDeck(string cardId) => string.IsNullOrEmpty(cardId) || DeckList.Instance.ActiveDeck == null
-																	|| DeckList.Instance.ActiveDeckVersion.Cards.Any(c => c.Id == cardId);
 
 
 		private void Log(CardEntity ce, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") 
@@ -292,14 +282,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var ce = MoveCardEntity(entity, Deck, Board, turn);
 			UpdateRevealedEntity(ce, turn);
-			if(!string.IsNullOrEmpty(entity.CardId) && ce.CardMark != CardMark.Created && ce.CardMark != CardMark.Returned)
-			{
-				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
-					DrawnCardsMatchDeck = false;
-				DrawnCardIds.Add(entity.CardId);
-				DrawnCardIdsTotal.Add(entity.CardId);
-			}
+			VerifyCardMatchesDeck(ce);
 			Log(ce);
+		}
+
+		private void VerifyCardMatchesDeck(CardEntity ce)
+		{
+			if(string.IsNullOrEmpty(ce?.Entity?.CardId) || ce.Created || ce.Returned || ce.Stolen)
+				return;
+			if(IsLocalPlayer && (DeckList.Instance.ActiveDeckVersion?.Cards.Any(c => c.Id == ce.Entity.CardId) ?? false))
+				DrawnCardsMatchDeck = false;
+			DrawnCardIds.Add(ce.Entity.CardId);
+			DrawnCardIdsTotal.Add(ce.Entity.CardId);
 		}
 
 		private void UpdateRevealedEntity(CardEntity entity, int turn, bool? discarded = null)
@@ -392,13 +386,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var ce = MoveCardEntity(entity, Deck, Graveyard, turn);
 			UpdateRevealedEntity(ce, turn, true);
-			if(!string.IsNullOrEmpty(entity.CardId) && ce.CardMark != CardMark.Created && ce.CardMark != CardMark.Returned)
-			{
-				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
-					DrawnCardsMatchDeck = false;
-				DrawnCardIds.Add(entity.CardId);
-				DrawnCardIdsTotal.Add(entity.CardId);
-			}
+			VerifyCardMatchesDeck(ce);
 			Log(ce);
 		}
 
@@ -453,13 +441,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var ce = MoveCardEntity(entity, Deck, Secrets, turn);
 			UpdateRevealedEntity(ce, turn);
-			if(!string.IsNullOrEmpty(entity.CardId))
-			{
-				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
-					DrawnCardsMatchDeck = false;
-				DrawnCardIds.Add(entity.CardId);
-				DrawnCardIdsTotal.Add(entity.CardId);
-			}
+			VerifyCardMatchesDeck(ce);
 			Log(ce);
 		}
 
