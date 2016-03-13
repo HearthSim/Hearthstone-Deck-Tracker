@@ -8,10 +8,10 @@
           d:DesignHeight="300" d:DesignWidth="300" Height="auto" Background="Transparent">
     <ListView.View>
         <GridView>
-            <GridViewColumn Header="cost" Width="32">
+            <GridViewColumn Header="cost" Width="38">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
-                        <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Margin="1,-3,0,0" Width="32" Height="25"
+                        <local:OutlinedTextBlock Fill="{Binding ColorPlayer}" Width="32" Height="25"
                                                  VerticalAlignment="Center" HorizontalAlignment="Center"
                                                  Text="{Binding Cost}"
                                                  FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
@@ -22,7 +22,7 @@
             <GridViewColumn Header="name" Width="155">
                 <GridViewColumn.CellTemplate>
                     <DataTemplate>
-                        <Viewbox Margin="-2,0,0,0" Height="16" HorizontalAlignment="Left">
+                        <Viewbox Margin="-5,0,0,0" Height="16" HorizontalAlignment="Left">
                             <local:OutlinedTextBlock Fill="{Binding ColorPlayer}"
                                                  VerticalAlignment="Center" Text="{Binding LocalizedName}"
                                                  FontFamily="{Binding Font}"
