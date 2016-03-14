@@ -290,7 +290,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(string.IsNullOrEmpty(ce?.Entity?.CardId) || ce.Created || ce.Returned || ce.Stolen)
 				return;
-			if(IsLocalPlayer && (DeckList.Instance.ActiveDeckVersion?.Cards.Any(c => c.Id == ce.Entity.CardId) ?? false))
+			if(IsLocalPlayer && (DeckList.Instance.ActiveDeckVersion?.Cards.All(c => c.Id != ce.Entity.CardId) ?? false))
 				DrawnCardsMatchDeck = false;
 			DrawnCardIds.Add(ce.Entity.CardId);
 			DrawnCardIdsTotal.Add(ce.Entity.CardId);
