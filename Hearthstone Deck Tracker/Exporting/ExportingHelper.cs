@@ -17,8 +17,6 @@ namespace Hearthstone_Deck_Tracker.Exporting
 {
 	public class ExportingHelper
 	{
-		public static bool AddArtist => new[] {"zhCN", "zhTW", "ruRU", "koKR"}.All(x => Config.Instance.SelectedLanguage != x);
-
 		public static async Task<bool> CardExists(IntPtr wndHandle, int posX, int posY, int width, int height)
 		{
 			const double scale = 0.037; // 40px @ height = 1080
@@ -80,13 +78,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 
 		public static string GetSearchString(Card card)
-		{
-			var searchString = card.LocalizedName.ToLowerInvariant();
-			if(AddArtist)
-				searchString += " " + card.Artist.ToLowerInvariant();
-			searchString += GetSpecialSearchCases(card.Name);
-			return searchString;
-		}
+			=> $"{card.LocalizedName} {card.Artist}{GetSpecialSearchCases(card.Name)}".ToLowerInvariant();
 
 		public static string GetSpecialSearchCases(string cardName)
 		{
