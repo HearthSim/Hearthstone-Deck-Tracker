@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:hdt="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
     <Grid>
         <GroupBox Header="Settings">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -73,6 +78,17 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckBoxShowLastPlayedDate_Checked"
                               Unchecked="CheckBoxShowLastPlayedDate_Unchecked" />
+                    <DockPanel Margin="35,5,10,0" Visibility="{Binding Path=IsChecked, ElementName=CheckBoxShowLastPlayedDate, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <ComboBox DockPanel.Dock="Right" Name="ComboBoxLastPlayedDateFormat"  Margin="5,0,0,0" Width="150" HorizontalAlignment="Left"
+                              SelectionChanged="ComboBoxLastPlayedDateFormat_OnSelectionChanged" >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Label Content="Format:"/>
+                    </DockPanel>
                     <CheckBox x:Name="CheckboxUseAnimations" Content="Use metro animations"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

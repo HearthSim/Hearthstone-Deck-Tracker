@@ -222,6 +222,7 @@
     <Compile Include="Enums\EnumValuesExtension.cs" />
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
     <Compile Include="Enums\IconStyle.cs" />
+    <Compile Include="Enums\LastPlayedDateFormat.cs" />
     <Compile Include="Enums\LoginType.cs" />
     <Compile Include="Enums\Card\Rarity.cs" />
     <Compile Include="Errors\ErrorItem.xaml.cs">
@@ -306,6 +307,7 @@
     <Compile Include="Importing\Websites\Hearthstonetopdecks.cs" />
     <Compile Include="Importing\Websites\Icyveins.cs" />
     <Compile Include="Importing\Websites\Tempostorm.cs" />
+    <Compile Include="Utility\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Utility\Extensions\CardListExtensions.cs" />
     <Compile Include="Utility\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Utility\Extensions\TaskExtensions.cs" />

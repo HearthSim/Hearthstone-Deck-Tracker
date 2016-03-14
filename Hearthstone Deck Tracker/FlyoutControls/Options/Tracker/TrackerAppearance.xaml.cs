@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboBoxClassColors.ItemsSource = Enum.GetValues(typeof(ClassColorScheme));
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
 			CheckboxUseAnimations.IsChecked = Config.Instance.UseAnimations;
+			ComboBoxLastPlayedDateFormat.ItemsSource = Enum.GetValues(typeof(LastPlayedDateFormat));
 
 			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
 				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
@@ -54,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboBoxClassColors.SelectedItem = Config.Instance.ClassColorScheme;
 			CheckBoxArenaStatsTextColoring.IsChecked = Config.Instance.ArenaStatsTextColoring;
 			CheckBoxShowLastPlayedDate.IsChecked = Config.Instance.ShowLastPlayedDateOnDeck;
+			ComboBoxLastPlayedDateFormat.SelectedItem = Config.Instance.LastPlayedDateFormat;
 
 			if(Config.Instance.NonLatinUseDefaultFont == null)
 			{
@@ -261,6 +263,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.ShowLastPlayedDateOnDeck = false;
 			Config.Save();
 			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
+		}
+
+		private void ComboBoxLastPlayedDateFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.LastPlayedDateFormat = (LastPlayedDateFormat)ComboBoxLastPlayedDateFormat.SelectedItem;
+			Config.Save();
 		}
 	}
 }
