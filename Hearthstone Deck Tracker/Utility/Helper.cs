@@ -63,7 +63,8 @@ namespace Hearthstone_Deck_Tracker
 			{"Portuguese (Brazil)", "ptBR"},
 			{"Russian", "ruRU"},
 			{"Spanish (Mexico)", "esMX"},
-			{"Spanish (Spain)", "esES"}
+			{"Spanish (Spain)", "esES"},
+			{"Thai", "thTH"}
 		};
 
 		public static readonly List<string> LatinLanguages = new List<string>
