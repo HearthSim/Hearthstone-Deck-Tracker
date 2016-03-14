@@ -88,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 			await ClickOnPoint(info.HsHandle, info.SearchBoxPos);
 
-			if(Config.Instance.ExportPasteClipboard)
+			if(Config.Instance.ExportPasteClipboard || !Helper.LatinLanguages.Contains(Config.Instance.SelectedLanguage))
 			{
 				Clipboard.SetText(GetSearchString(card));
 				SendKeys.SendWait("^v");
