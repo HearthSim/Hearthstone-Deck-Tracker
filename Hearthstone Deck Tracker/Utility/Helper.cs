@@ -30,6 +30,7 @@ using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Color = System.Drawing.Color;
@@ -491,24 +492,29 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				var regex = new Regex(@"AccountListener.OnAccountLevelInfoUpdated.*currentRegion=(?<region>(\d))");
-				var conLogPath = Path.Combine(Config.Instance.HearthstoneDirectory, "ConnectLog.txt");
-				using(var fs = new FileStream(conLogPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+				var bnetAppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battle.net");
+				var files = new DirectoryInfo(bnetAppData).GetFiles();
+				var config = files.OrderByDescending(x => x.LastWriteTime).FirstOrDefault(x => Regex.IsMatch(x.Name, @"\w{8}.config"));
+				if(config == null)
+					return Region.UNKNOWN;
+				string content;
+				using(var fs = new FileStream(config.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				using(var reader = new StreamReader(fs))
+					content = reader.ReadToEnd();
+				dynamic json = JsonConvert.DeserializeObject(content);
+				var region = (string)json.User.Client.PlayScreen.GameFamily.WTCG.LastSelectedGameRegion;
+				if(string.IsNullOrEmpty(region))
+					return Region.UNKNOWN;
+				switch(region)
 				{
-					var lines = reader.ReadToEnd().Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-					foreach(var line in lines)
-					{
-						var match = regex.Match(line);
-						if(!match.Success)
-							continue;
-						Region region;
-						if(Enum.TryParse(match.Groups["region"].Value, out region))
-						{
-							Log.Info("Current region: " + region);
-							return region;
-						}
-					}
+					case "EU":
+						return Region.EU;
+					case "US":
+						return Region.US;
+					case "KR":
+						return Region.ASIA;
+					default:
+						return Region.CHINA;
 				}
 			}
 			catch(Exception ex)
@@ -761,6 +767,21 @@ namespace Hearthstone_Deck_Tracker
 					await Task.Delay(delay);
 				}
 			}
+		}
+
+		public static Region GetRegionByServerIp(string ip)
+		{
+			if(string.IsNullOrEmpty(ip))
+				return Region.UNKNOWN;
+			if(ip.StartsWith("12.130"))
+				return Region.US;
+			if(ip.StartsWith("80.239"))
+				return Region.EU;
+			if(ip.StartsWith("117.52"))
+				return Region.ASIA;
+			//if(ip.StartsWith("???"))
+			//	return Region.CHINA;
+			return Region.UNKNOWN;
 		}
 	}
 }

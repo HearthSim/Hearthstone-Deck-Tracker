@@ -23,6 +23,7 @@ using Hearthstone_Deck_Tracker.Windows;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
+using Region = Hearthstone_Deck_Tracker.Enums.Region;
 
 #endregion
 
@@ -799,6 +800,11 @@ namespace Hearthstone_Deck_Tracker
 					{
 						_game.CurrentGameStats.GameMode = _game.CurrentGameMode;
 						Log.Info("Set CurrentGameStats.GameMode to " + _game.CurrentGameMode);
+					}
+					if(_game.CurrentGameStats.Region == Region.UNKNOWN)
+					{
+						_game.CurrentGameStats.Region = Helper.GetRegionByServerIp(_game.MetaData.ServerAddress);
+						Log.Info($"Unknown Region. Getting from IP: IP={_game.MetaData.ServerAddress}, Region={_game.CurrentGameStats.Region}");
 					}
 				}
 
