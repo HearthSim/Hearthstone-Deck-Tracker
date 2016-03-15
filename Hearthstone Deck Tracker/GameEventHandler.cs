@@ -803,8 +803,11 @@ namespace Hearthstone_Deck_Tracker
 					}
 					if(_game.CurrentGameStats.Region == Region.UNKNOWN)
 					{
-						_game.CurrentGameStats.Region = Helper.GetRegionByServerIp(_game.MetaData.ServerAddress);
-						Log.Info($"Unknown Region. Getting from IP: IP={_game.MetaData.ServerAddress}, Region={_game.CurrentGameStats.Region}");
+						var region = Helper.GetRegionByServerIp(_game.MetaData.ServerAddress);
+						if(_game.CurrentRegion == Region.UNKNOWN && region != Region.UNKNOWN)
+							_game.CurrentRegion = region;
+						_game.CurrentGameStats.Region = region;
+						Log.Info($"Unknown Region. Getting from IP: IP={_game.MetaData.ServerAddress}, Region={region}");
 					}
 				}
 
