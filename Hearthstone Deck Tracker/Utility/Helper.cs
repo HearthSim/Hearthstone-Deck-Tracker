@@ -644,15 +644,17 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void UpdateAppTheme()
 		{
-			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
-							? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
-			var accent = string.IsNullOrEmpty(Config.Instance.AccentName)
-							 ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
-			ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
-			Application.Current.Resources["GrayTextColorBrush"] = theme.Name == "BaseLight"
+			var theme = GetAppTheme();
+			ThemeManager.ChangeAppStyle(Application.Current, GetAppAccent(), theme);
+			Application.Current.Resources["GrayTextColorBrush"] = theme.Name == MetroTheme.BaseLight.ToString()
 																	  ? new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor1"])
 																	  : new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor2"]);
 		}
+
+		public static Accent GetAppAccent() => string.IsNullOrEmpty(Config.Instance.AccentName)
+												  ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
+
+		public static AppTheme GetAppTheme() => ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName.ToString());
 
 		public static double GetScaledXPos(double left, int width, double ratio) => (width * ratio * left) + (width * (1 - ratio) / 2);
 

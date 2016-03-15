@@ -815,8 +815,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(TagFilerOperation.Or)]
 		public TagFilerOperation TagOperation = TagFilerOperation.Or;
 
-		[DefaultValue("BaseLight")]
-		public string ThemeName = "BaseLight";
+		[DefaultValue(MetroTheme.BaseLight)]
+		public MetroTheme ThemeName = MetroTheme.BaseLight;
 
 		[DefaultValue(false)]
 		public bool TimerAlert = false;

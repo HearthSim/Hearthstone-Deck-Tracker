@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(@class == HeroClassAll.All || @class == HeroClassAll.Archived)
 			{
 				path.Append("/General/");
-				path.Append(string.IsNullOrEmpty(Config.Instance.ThemeName) ? "BaseLight" : Config.Instance.ThemeName);
+				path.Append(Config.Instance.ThemeName);
 				path.Append(@class == HeroClassAll.All ? "/all.png" : "/archived.png");
 			}
 			else

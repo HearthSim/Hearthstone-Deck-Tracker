@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public void Load()
 		{
 			ComboboxAccent.ItemsSource = ThemeManager.Accents;
-			ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
+			ComboboxTheme.ItemsSource = Enum.GetValues(typeof(MetroTheme));
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
 			ComboBoxDeckLayout.ItemsSource = Enum.GetValues(typeof(DeckLayout));
 			ComboBoxIconSet.ItemsSource = Enum.GetValues(typeof(IconStyle));
@@ -43,12 +43,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
 				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
 
-			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
-				            ? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
-			var accent = string.IsNullOrEmpty(Config.Instance.AccentName)
-				             ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
-			ComboboxTheme.SelectedItem = theme;
-			ComboboxAccent.SelectedItem = accent;
+			ComboboxTheme.SelectedItem = Config.Instance.ThemeName;
+			ComboboxAccent.SelectedItem = Helper.GetAppAccent();
 
 			ComboBoxIconSet.SelectedItem = Config.Instance.ClassIconStyle;
 			ComboBoxDeckLayout.SelectedItem = Config.Instance.DeckPickerItemLayout;
@@ -84,17 +80,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			var theme = ComboboxTheme.SelectedItem as AppTheme;
-			if(theme != null)
-			{
-				ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.DetectAppStyle().Item2, theme);
-				Config.Instance.ThemeName = theme.Name;
-				Application.Current.Resources["GrayTextColorBrush"] = theme.Name == "BaseLight"
-					                                                      ? new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor1"])
-					                                                      : new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor2"]);
-				Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();
-				Config.Save();
-			}
+			Config.Instance.ThemeName = (MetroTheme)ComboboxTheme.SelectedItem;
+			Config.Save();
+			Helper.UpdateAppTheme();
+			Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();
 		}
 
 		private void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
