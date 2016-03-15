@@ -53,7 +53,7 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxRemoveCards_Checked"
                               Unchecked="CheckboxRemoveCards_Unchecked" />
-                    <CheckBox x:Name="CheckboxShowPlayerGet" Content="Include obtained cards"
+                    <CheckBox x:Name="CheckboxShowPlayerGet" Content="Include cards created in hand (e.g. The Coin)"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxShowPlayerGet_Checked"
                               Unchecked="CheckboxShowPlayerGet_Unchecked" />
