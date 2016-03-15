@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Threading.Tasks;
 using AForge.Imaging;
 using Hearthstone_Deck_Tracker.Exporting;
@@ -29,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		// the top-left of the player rank rectangle (height 768)
 		private static readonly Point PlayerLocation = new Point(26, 650);
 		// location of the templates to compare against
-		private const string TemplateLocation = "./Images/Ranks";
+		private const string TemplateLocation = "/HearthstoneDeckTracker;component/Resources/Ranks/";
 
 		private static readonly Dictionary<int, Bitmap> Templates;
 
@@ -85,11 +84,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 			// files should be named [1..25].bmp
 			for(var i = 1; i <= 25; i++)
 			{
-				var path = TemplateLocation + "/" + i + ".bmp";
-				if(File.Exists(path))
-					Templates[i] = new Bitmap(path);
-				else
-					Log.Error("Template image " + TemplateLocation + "/" + i + ".bmp not found");
+				try
+				{
+					var resource = System.Windows.Application.GetResourceStream(
+						new Uri(TemplateLocation + i + ".bmp", UriKind.Relative));
+					Templates[i] = new Bitmap(resource.Stream);
+				}
+				catch (Exception e)
+				{
+					Log.Error($"Template image {i}.bmp not found. [{e.Message}]");
+				}					
 			}
 			Log.Debug(Templates.Count + " templates loaded");
 		}

@@ -23,6 +23,7 @@ namespace HDTTests.Hearthstone
 			var card = Database.GetCardFromId("AT_063t");
 			Assert.AreEqual("Dreadscale", card.Name);
 		}
+
 		[TestMethod]
 		public void TestMurlocTinyFinInGetActual()
 		{
@@ -30,6 +31,7 @@ namespace HDTTests.Hearthstone
 			var found = db.Any<Card>(c => c.LocalizedName.ToLowerInvariant().Contains("murloc tinyfin"));
 			Assert.IsTrue(found);
 		}
+
 		[TestMethod]
 		public void TestDreadscaleInGetActual()
 		{
@@ -37,6 +39,7 @@ namespace HDTTests.Hearthstone
 			var found = db.Any<Card>(c => c.LocalizedName.ToLowerInvariant().Contains("dreadscale"));
 			Assert.IsTrue(found);
 		}
+
 		[TestMethod]
 		public void TestDreadscaleIsActual()
 		{
@@ -79,11 +82,11 @@ namespace HDTTests.Hearthstone
 		}
 
 		[TestMethod]
-		public void TestCardImages()
+		public void TestCardBarImages()
 		{
-			foreach(var card in Database.GetActualCards())
+			foreach (var card in Database.GetActualCards())
 			{
-				Assert.IsTrue(File.Exists("Images/" + card.CardFileName + ".png"), card.Name);
+				Assert.IsTrue(File.Exists("Images/Bars/" + card.Id + ".png"), card.Name);
 			}
 		}
 	}

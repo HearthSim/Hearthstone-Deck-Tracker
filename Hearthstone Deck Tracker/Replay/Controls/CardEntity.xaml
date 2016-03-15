@@ -11,12 +11,12 @@
             <local:CardToolTip DataContext="{Binding Card}"/>
         </ToolTip>
     </UserControl.ToolTip>
-    <Grid Height="35" Width="217">
+    <Grid Height="34" Width="217">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="35" />
+            <ColumnDefinition Width="38" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Rectangle Fill="{Binding Background}" Height="35" Width="215" Grid.ColumnSpan="2"/>
+        <Rectangle Fill="{Binding Background}" Height="34" Width="217" Grid.ColumnSpan="2"/>
         <local:OutlinedTextBlock Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
                                  Text="{Binding Cost}" Fill="{Binding CostTextColor}"
                                  FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
