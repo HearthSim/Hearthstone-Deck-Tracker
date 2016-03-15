@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				AddChild(FrameCountBox, _frameCountBoxRect);
 
 			var count = Math.Abs(_card.Count);
-			if(count == 1 && _card.Rarity == Rarity.Legendary)
+			if(count <= 1 && _card.Rarity == Rarity.Legendary)
 				AddChild(FrameCounterLegendary, _frameCountBoxRect);
 			else
 			{
