@@ -614,6 +614,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return sb.ToString();
 		}
 
-		public void Reset() => CardId = string.Empty;
+		public void Reset()
+		{
+			CardId = string.Empty;
+			Created = false;
+			Stolen = false;
+		}
 	}
 }
