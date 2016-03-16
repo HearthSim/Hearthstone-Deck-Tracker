@@ -483,7 +483,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					{
 						Hand[4].CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoin;
 						Hand[4].Created = true;
-						Deck.Add(new CardEntity(null));
 						Log("Coin " + Hand[4]);
 					}
 					break;

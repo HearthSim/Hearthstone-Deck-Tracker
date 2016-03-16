@@ -298,8 +298,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					ZoneChangeFromSecret(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
 				case CREATED:
-					if(!gameState.SetupDone && id <= 68)
-						SimulateZoneChangesFromDeck(gameState, id, game, value, entity.CardId);
+					var maxId = GetMaxHeroId(game);
+					if(!gameState.SetupDone && id <= maxId)
+						SimulateZoneChangesFromDeck(gameState, id, game, value, entity.CardId, maxId);
 					else
 						ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
@@ -315,7 +316,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 		}
 
-		private void SimulateZoneChangesFromDeck(IHsGameState gameState, int id, IGame game, int value, string cardId)
+		// The last heropower is created after the last hero, therefore +1
+		private int GetMaxHeroId(IGame game) => 
+			Math.Max(game.PlayerEntity?.GetTag(HERO_ENTITY) ?? 66, game.OpponentEntity?.GetTag(HERO_ENTITY) ?? 66) + 1;
+
+		private void SimulateZoneChangesFromDeck(IHsGameState gameState, int id, IGame game, int value, string cardId, int maxId)
 		{
 			var entity = game.Entities[id];
 			if(entity.IsHero || entity.IsHeroPower || entity.HasTag(PLAYER_ID) || entity.GetTag(CARDTYPE) == (int)TAG_CARDTYPE.GAME
@@ -323,9 +328,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(value == (int)DECK)
 				return;
-			if(id < 68)
+			if(id <= maxId)
+			{
+				if(value == (int)SETASIDE)
+					return;
 				ZoneChangeFromDeck(gameState, id, game, (int)HAND, (int)DECK, entity.GetTag(CONTROLLER), cardId);
-			else if(id == 68 && entity.GetTag(ZONE_POSITION) == 5)
+			}
+			else if(entity.GetTag(ZONE_POSITION) == 5)
 				ZoneChangeFromOther(gameState, id, game, (int)HAND, (int)CREATED, entity.GetTag(CONTROLLER), cardId);
 			if(value == (int)HAND)
 				return;
