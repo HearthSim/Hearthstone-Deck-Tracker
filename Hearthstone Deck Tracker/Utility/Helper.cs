@@ -780,8 +780,8 @@ namespace Hearthstone_Deck_Tracker
 				return Region.EU;
 			if(ip.StartsWith("117.52"))
 				return Region.ASIA;
-			//if(ip.StartsWith("???"))
-			//	return Region.CHINA;
+			if(ip.StartsWith("114.113"))
+				return Region.CHINA;
 			return Region.UNKNOWN;
 		}
 	}
