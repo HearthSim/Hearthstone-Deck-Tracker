@@ -17,6 +17,7 @@ using Hearthstone_Deck_Tracker.Utility.LogConfig;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
+using Hearthstone_Deck_Tracker.Utility.Themes;
 
 #endregion
 
@@ -53,6 +54,7 @@ namespace Hearthstone_Deck_Tracker
 			LogConfigUpdater.Run().Forget();
 			LogConfigWatcher.Start();
 			Helper.UpdateAppTheme();
+			ThemeManager.Run();
 			var splashScreenWindow = new SplashScreenWindow();
 			splashScreenWindow.ShowConditional();
 			Game = new GameV2();

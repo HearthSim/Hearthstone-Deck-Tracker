@@ -130,6 +130,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(IconStyle.Round)]
 		public IconStyle ClassIconStyle = IconStyle.Round;
 
+		[DefaultValue("classic")]
+		public string CardBarTheme = "classic";
+
 		[DefaultValue(true)]
 		public bool ClearLogFileAfterGame = true;
 
