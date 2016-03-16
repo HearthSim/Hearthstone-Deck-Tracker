@@ -494,7 +494,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				var bnetAppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battle.net");
 				var files = new DirectoryInfo(bnetAppData).GetFiles();
-				var config = files.OrderByDescending(x => x.LastWriteTime).FirstOrDefault(x => Regex.IsMatch(x.Name, @"\w{8}.config"));
+				var config = files.OrderByDescending(x => x.LastWriteTime).FirstOrDefault(x => Regex.IsMatch(x.Name, @"\w{8}\.config"));
 				if(config == null)
 					return Region.UNKNOWN;
 				string content;
@@ -502,10 +502,7 @@ namespace Hearthstone_Deck_Tracker
 				using(var reader = new StreamReader(fs))
 					content = reader.ReadToEnd();
 				dynamic json = JsonConvert.DeserializeObject(content);
-				var region = (string)json.User.Client.PlayScreen.GameFamily.WTCG.LastSelectedGameRegion;
-				if(string.IsNullOrEmpty(region))
-					return Region.UNKNOWN;
-				switch(region)
+				switch((string)json.User.Client.PlayScreen.GameFamily.WTCG.LastSelectedGameRegion)
 				{
 					case "EU":
 						return Region.EU;
@@ -513,8 +510,10 @@ namespace Hearthstone_Deck_Tracker
 						return Region.US;
 					case "KR":
 						return Region.ASIA;
-					default:
+					case "CN":
 						return Region.CHINA;
+					default:
+						return Region.UNKNOWN;
 				}
 			}
 			catch(Exception ex)
