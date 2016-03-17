@@ -62,18 +62,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return card.Name;
 		}
 
-		public static bool IsHero(string cardId)
-		{
-			if(string.IsNullOrEmpty(cardId))
-				return false;
-			string name;
-			var baseId = GetBaseId(cardId);
-			if (CardIds.HeroIdDict.TryGetValue(baseId, out name))
-				return true;
-			var card = GetCardFromId(baseId);
-			return !string.IsNullOrEmpty(card?.Name) && card.Name != "UNKNOWN" && card.Type == "Hero";
-		}
-
 		private static string GetBaseId(string cardId)
 		{
 			if(string.IsNullOrEmpty(cardId))
