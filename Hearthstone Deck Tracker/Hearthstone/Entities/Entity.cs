@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		internal void SetPlayer(bool isPlayer) => IsPlayer = isPlayer;
 
 		[JsonIgnore]
-		public bool IsHero => Database.IsHero(CardId);
+		public bool IsHero => GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO;
 
 		[JsonIgnore]
 		public bool IsActiveDeathrattle => HasTag(GAME_TAG.DEATHRATTLE) && GetTag(GAME_TAG.DEATHRATTLE) == 1;
