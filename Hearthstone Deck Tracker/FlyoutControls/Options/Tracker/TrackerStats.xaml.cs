@@ -287,7 +287,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedStats = (DisplayedStats)ComboboxDisplayedStats.SelectedItem;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			foreach(var deck in DeckList.Instance.Decks)
+				deck.StatsUpdated();
 			Core.Overlay.Update(true);
 		}
 
@@ -297,7 +298,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedMode = (GameMode)ComboboxDisplayedMode.SelectedItem;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			foreach(var deck in DeckList.Instance.Decks)
+				deck.StatsUpdated();
 			Core.Overlay.Update(true);
 		}
 
@@ -307,7 +309,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedTimeFrame = (DisplayedTimeFrame)ComboboxDisplayedTimeFrame.SelectedItem;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			foreach(var deck in DeckList.Instance.Decks)
+				deck.StatsUpdated();
 			Core.Overlay.Update(true);
 			PanelCustomTimeFrame.Visibility = Config.Instance.DisplayedTimeFrame == DisplayedTimeFrame.Custom
 				                                  ? Visibility.Visible : Visibility.Collapsed;
@@ -319,7 +322,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.CustomDisplayedTimeFrame = DatePickerCustomTimeFrame.SelectedDate;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			foreach(var deck in DeckList.Instance.Decks)
+				deck.StatsUpdated();
 			Core.Overlay.Update(true);
 		}
 
