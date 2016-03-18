@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Utility.Themes;
 using Hearthstone_Deck_Tracker.Windows;
 using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
 
@@ -30,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool _coloredFrame;
 		private bool _coloredGem;
 		private int _count;
+		private string _theme;
 		private string _englishText;
 		private int _inHandCount;
 		private bool _isCreated;
@@ -378,7 +380,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames
-				   && _coloredGem == Config.Instance.RarityCardGems && IsFrameHighlighted == HighlightFrame)
+				   && _coloredGem == Config.Instance.RarityCardGems && IsFrameHighlighted == HighlightFrame
+				   && _theme == Config.Instance.CardBarTheme.ToLowerInvariant())
 					return _cachedBackground;
 				_lastCount = Count;
 				_coloredFrame = Config.Instance.RarityCardFrames;
@@ -387,11 +390,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return new ImageBrush();
 				try
 				{
-					_cachedBackground = new CardImageBuilder(this).Build();
+					var builder = ThemeManager.GetBarImageBuilder(this);
+					_cachedBackground = builder.Build();
+					_theme = ThemeManager.CurrentTheme?.Name;
 					return _cachedBackground;
 				}
-				catch(Exception)
+				catch(Exception ex)
 				{
+					Utility.Logging.Log.Error($"Image builder failed: {ex.Message}", "Card.Background");
 					return new ImageBrush();
 				}
 			}

@@ -148,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboBoxCardTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.CardBarTheme = ComboBoxCardTheme.SelectedItem.ToString().ToLowerInvariant();
 			Config.Save();
