@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -30,8 +31,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		private static IEnumerable<Inline> GetInlines(string value)
 		{
 			//<w> is a wrapper so it gets read as an XElement
-			value = "<w>" + value + "</w>";
-			var element = XElement.Parse(value);
+			var element = XElement.Parse("<w>" + Regex.Replace(value, @"\<(\w+?)\>", x => x.Captures[0].Value.ToLower()) + "</w>");
 			//descendantnodes is the only method that includes the XTexts, but it also includes the XTexts of the children XElements.
 			//so we gotta make sure the parent is the element we created to know these are the values we are after.
 			foreach (var n in element.DescendantNodes().Where(x => x.Parent.Name == "w"))
