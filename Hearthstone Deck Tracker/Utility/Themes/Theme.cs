@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		public override string ToString()
 		{
-			return Name.Substring(0,1).ToUpperInvariant() 
+			return Name.Substring(0, 1).ToUpperInvariant()
 				+ (Name.Length > 1 ? Name.Substring(1) : "");
 		}
 	}
@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			Rectangle = rect;
 		}
 
-		public ThemeElementInfo(string fileName, 
+		public ThemeElementInfo(string fileName,
 			double x, double y, double w, double h)
 		{
 			FileName = fileName;

@@ -271,7 +271,8 @@
     <Compile Include="FlyoutControls\Options\Tracker\TrackerNotifications.xaml.cs">
       <DependentUpon>TrackerNotifications.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Hearthstone\CardImageBuilder.cs" />
+    <Compile Include="Utility\Extensions\RectExtensions.cs" />
+    <Compile Include="Utility\Themes\CardBarImageBuilder.cs" />
     <Compile Include="Hearthstone\GameTime.cs" />
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="Hearthstone\GameMetaData.cs" />
@@ -414,6 +415,11 @@
     <Compile Include="Utility\ConfigWrapper.cs" />
     <Compile Include="Utility\RankDetection.cs" />
     <Compile Include="Utility\ScreenCapture.cs" />
+    <Compile Include="Utility\Themes\ClassicImageBuilder.cs" />
+    <Compile Include="Utility\Themes\DefaultBarImageBuilder.cs" />
+    <Compile Include="Utility\Themes\MinimalBarImageBuilder.cs" />
+    <Compile Include="Utility\Themes\Theme.cs" />
+    <Compile Include="Utility\Themes\ThemeManager.cs" />
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
       <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
     </Compile>
