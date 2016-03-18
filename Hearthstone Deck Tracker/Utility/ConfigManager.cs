@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -206,6 +207,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 				{
 					Config.Instance.Reset(nameof(Config.ExportAllSetsButtonY));
 					converted = true;
+				}
+				if(configVersion <= new Version(0, 13, 16, 0))
+				{
+					MetroTheme theme;
+					if(Enum.TryParse(Config.Instance.ThemeName, out theme))
+					{
+						Config.Instance.AppTheme = theme;
+						converted = true;
+					}
 				}
 			}
 

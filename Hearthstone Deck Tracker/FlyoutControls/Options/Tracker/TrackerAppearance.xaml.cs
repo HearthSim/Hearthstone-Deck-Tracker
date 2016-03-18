@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
 				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
 
-			ComboboxTheme.SelectedItem = Config.Instance.ThemeName;
+			ComboboxTheme.SelectedItem = Config.Instance.AppTheme;
 			ComboboxAccent.SelectedItem = Helper.GetAppAccent();
 
 			ComboBoxIconSet.SelectedItem = Config.Instance.ClassIconStyle;
@@ -80,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.ThemeName = (MetroTheme)ComboboxTheme.SelectedItem;
+			Config.Instance.AppTheme = (MetroTheme)ComboboxTheme.SelectedItem;
 			Config.Save();
 			Helper.UpdateAppTheme();
 			Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();

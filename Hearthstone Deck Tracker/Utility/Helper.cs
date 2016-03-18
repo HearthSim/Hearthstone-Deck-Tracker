@@ -653,7 +653,7 @@ namespace Hearthstone_Deck_Tracker
 		public static Accent GetAppAccent() => string.IsNullOrEmpty(Config.Instance.AccentName)
 												  ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
 
-		public static AppTheme GetAppTheme() => ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName.ToString());
+		public static AppTheme GetAppTheme() => ThemeManager.AppThemes.First(t => t.Name == Config.Instance.AppTheme.ToString());
 
 		public static double GetScaledXPos(double left, int width, double ratio) => (width * ratio * left) + (width * (1 - ratio) / 2);
 
