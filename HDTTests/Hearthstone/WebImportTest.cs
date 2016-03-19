@@ -126,7 +126,7 @@ namespace HDTTests.Hearthstone
 		public void HearthstoneTopDeck()
 		{
 			Deck expected = CreateDeck();
-			Deck found = DeckImporter.Import(@"http://www.hearthstonetopdeck.com/deck/4700/current/otk-patron-senfglas-lifecoach").Result;
+			Deck found = DeckImporter.Import(@"http://www.hearthstonetopdeck.com/deck/wild/4700/otk-patron-senfglas-lifecoach").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}				
 
