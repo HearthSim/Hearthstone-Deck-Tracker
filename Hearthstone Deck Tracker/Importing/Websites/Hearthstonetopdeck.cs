@@ -20,18 +20,23 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				var doc = await ImportingHelper.GetHtmlDoc(url);
 
 				var deck = new Deck();
-				deck.Name =
-					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("/html/body/div/div[4]/div/div[2]/div/div[1]/h3").InnerText.Trim());
+				var dname = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode(
+					"//h1[contains(@class, 'panel-title')]").InnerText);
+				deck.Name = Regex.Replace(dname, @"\s+", " "); // remove sequence of tabs
 
 				var cards = doc.DocumentNode.SelectNodes("//div[contains(@class, 'cardname')]/span");
 
-				var deckInfo = doc.DocumentNode.SelectSingleNode("//div[@id='subinfo']").SelectNodes("//span[contains(@class, 'midlarge')]/span");
-				if(deckInfo.Count == 2)
-				{
-					deck.Class = HttpUtility.HtmlDecode(deckInfo[0].InnerText).Trim();
+				var deckExtra = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'deck_banner_description')]");
+				var deckInfo = deckExtra.SelectNodes("//span[contains(@class, 'midlarge')]/span");
 
-					var decktype = HttpUtility.HtmlDecode(deckInfo[1].InnerText).Trim();
-					if(!string.IsNullOrEmpty(decktype) && decktype != "None" && Config.Instance.TagDecksOnImport)
+				// get class and tags
+				if(deckInfo.Count == 3)
+				{
+					deck.Class = HttpUtility.HtmlDecode(deckInfo[1].InnerText).Trim();
+
+					var decktype = HttpUtility.HtmlDecode(deckInfo[2].InnerText).Trim();
+					if(!string.IsNullOrWhiteSpace(decktype)
+						&& decktype != "None" && Config.Instance.TagDecksOnImport)
 					{
 						if(!DeckList.Instance.AllTags.Contains(decktype))
 						{
@@ -43,6 +48,25 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 						deck.Tags.Add(decktype);
 					}
 				}
+
+				// TODO uncomment for standard/wild tags
+				/*
+				var deckFormat = deckExtra.SelectSingleNode("//span[contains(@class, 'small')]").InnerText.Trim();
+				if(!string.IsNullOrWhiteSpace(deckFormat) && Config.Instance.TagDecksOnImport)
+				{
+					var format = "Standard";
+					if(Regex.IsMatch(deckFormat, @"Format:\s*Wild"))
+						format = "Wild";
+					if(!DeckList.Instance.AllTags.Contains(format))
+					{
+						DeckList.Instance.AllTags.Add(format);
+						DeckList.Save();
+						if(Core.MainWindow != null) // to avoid errors when running tests
+							Core.MainWindow.ReloadTags();
+					}
+					deck.Tags.Add(format);
+				}
+				*/
 
 				foreach(var cardNode in cards)
 				{
