@@ -802,6 +802,7 @@ namespace Hearthstone_Deck_Tracker
 						Log.Info("Set CurrentGameStats.GameMode to " + _game.CurrentGameMode);
 					}
 
+					Region region = Region.UNKNOWN;
 					var regionByServerIp = Helper.GetRegionByServerIp(_game.MetaData.ServerAddress);
 					if(regionByServerIp == Region.UNKNOWN)
 					{
@@ -812,16 +813,16 @@ namespace Hearthstone_Deck_Tracker
 						}
 						else
 						{
-							_game.CurrentRegion = regionByConfigFile;
-							_game.CurrentGameStats.Region = regionByConfigFile;
+							region = regionByConfigFile;
 							Log.Info($"Unknown Region. Getting from IP: IP={_game.MetaData.ServerAddress}, Region={regionByConfigFile}");
 						}
 					}
 					else
 					{
-						_game.CurrentRegion = regionByServerIp;
-						_game.CurrentGameStats.Region = regionByServerIp;
+						region = regionByServerIp;
 					}
+					_game.CurrentRegion = region;
+					_game.CurrentGameStats.Region = region;
 				}
 
 				if(_assignedDeck == null)
