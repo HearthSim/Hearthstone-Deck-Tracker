@@ -772,17 +772,19 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Region GetRegionByServerIp(string ip)
 		{
-			if(string.IsNullOrEmpty(ip))
-				return Region.UNKNOWN;
-			if(ip.StartsWith("12.130"))
-				return Region.US;
-			if(ip.StartsWith("80.239"))
-				return Region.EU;
-			if(ip.StartsWith("117.52"))
-				return Region.ASIA;
-			if(ip.StartsWith("114.113"))
-				return Region.CHINA;
-			return Region.UNKNOWN;
+			Region region = Region.UNKNOWN;
+			if(string.IsNullOrEmpty(ip) == false)
+			{
+				if(ip.StartsWith("12.130"))
+					region = Region.US;
+				else if(ip.StartsWith("80.239"))
+					region = Region.EU;
+				else if(ip.StartsWith("117.52"))
+					region = Region.ASIA;
+				else if(ip.StartsWith("114.113"))
+					region = Region.CHINA;
+			}
+			return region;
 		}
 	}
 }

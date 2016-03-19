@@ -801,14 +801,28 @@ namespace Hearthstone_Deck_Tracker
 						_game.CurrentGameStats.GameMode = _game.CurrentGameMode;
 						Log.Info("Set CurrentGameStats.GameMode to " + _game.CurrentGameMode);
 					}
-					if(_game.CurrentGameStats.Region == Region.UNKNOWN)
+
+					Region region = Region.UNKNOWN;
+					var regionByServerIp = Helper.GetRegionByServerIp(_game.MetaData.ServerAddress);
+					if(regionByServerIp == Region.UNKNOWN)
 					{
-						var region = Helper.GetRegionByServerIp(_game.MetaData.ServerAddress);
-						if(_game.CurrentRegion == Region.UNKNOWN && region != Region.UNKNOWN)
-							_game.CurrentRegion = region;
-						_game.CurrentGameStats.Region = region;
-						Log.Info($"Unknown Region. Getting from IP: IP={_game.MetaData.ServerAddress}, Region={region}");
+						var regionByConfigFile = Helper.GetCurrentRegion();
+						if(regionByConfigFile == Region.UNKNOWN)
+						{
+							Log.Info($"Unknown Region. Getting from IP: IP={_game.MetaData.ServerAddress}");
+						}
+						else
+						{
+							region = regionByConfigFile;
+							Log.Info($"Unknown Region. Getting from IP: IP={_game.MetaData.ServerAddress}, Region={regionByConfigFile}");
+						}
 					}
+					else
+					{
+						region = regionByServerIp;
+					}
+					_game.CurrentRegion = region;
+					_game.CurrentGameStats.Region = region;
 				}
 
 				if(_assignedDeck == null)
