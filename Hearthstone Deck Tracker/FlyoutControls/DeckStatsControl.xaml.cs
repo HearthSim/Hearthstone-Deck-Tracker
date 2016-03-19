@@ -892,7 +892,8 @@ namespace Hearthstone_Deck_Tracker
 				if(_stats == null)
 					return "-";
 				var wins = _stats.Count(s => s.Result == GameResult.Win && (hsClass == null || s.OpponentHero == hsClass));
-				var total = _stats.Count(s => s.Result != GameResult.None && (hsClass == null || s.OpponentHero == hsClass));
+				var losses = _stats.Count(s => s.Result == GameResult.Loss && (hsClass == null || s.OpponentHero == hsClass));
+				var total = wins + losses;
 				return total > 0 ? Math.Round(100.0 * wins / total, 1) + "%" : "-";
 			}
 
