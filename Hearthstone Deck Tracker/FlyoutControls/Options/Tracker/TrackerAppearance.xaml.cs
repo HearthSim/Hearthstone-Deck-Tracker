@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
 			CheckboxUseAnimations.IsChecked = Config.Instance.UseAnimations;
 			ComboBoxLastPlayedDateFormat.ItemsSource = Enum.GetValues(typeof(LastPlayedDateFormat));
+			ComboBoxCardTheme.ItemsSource = Utility.Themes.ThemeManager.Themes;
 
 			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
 				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
@@ -52,6 +53,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxArenaStatsTextColoring.IsChecked = Config.Instance.ArenaStatsTextColoring;
 			CheckBoxShowLastPlayedDate.IsChecked = Config.Instance.ShowLastPlayedDateOnDeck;
 			ComboBoxLastPlayedDateFormat.SelectedItem = Config.Instance.LastPlayedDateFormat;
+			ComboBoxCardTheme.SelectedItem = Utility.Themes.ThemeManager.FindTheme(Config.Instance.CardBarTheme);
 
 			if(Config.Instance.NonLatinUseDefaultFont == null)
 			{
@@ -142,6 +144,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.ClassIconStyle = (IconStyle)ComboBoxIconSet.SelectedItem;
 			Config.Save();
 			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new iconset to be loaded.").Forget();
+		}
+
+		private void ComboBoxCardTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.CardBarTheme = ComboBoxCardTheme.SelectedItem.ToString().ToLowerInvariant();
+			Config.Save();
+			Utility.Themes.ThemeManager.SetTheme(Config.Instance.CardBarTheme);
 		}
 
 		private void ComboboxDeckLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
