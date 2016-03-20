@@ -337,8 +337,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					color = Colors.Orange;
 				else if(HighlightInHand && Config.Instance.HighlightCardsInHand)
 					color = Colors.GreenYellow;
-				else if(Count <= 0 || Jousted)
-					color = Colors.Gray;
 				else if(WasDiscarded && Config.Instance.HighlightDiscarded)
 					color = Colors.IndianRed;
 				else

@@ -240,12 +240,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		protected virtual void AddCost()
 		{
-			AddText(_card.Cost, 22, new Rect(6, 0, 25, 34), Brushes.White, true);
+			AddText(_card.Cost, 22, new Rect(6, 0, 25, 34), _card.ColorPlayer, true);
 		}
 
 		protected virtual void AddCardName()
 		{
-			AddText(_card.LocalizedName, 14, new Rect(38, 8, _frameRect.Width - _boxRect.Width - 38, 34), Brushes.White);
+			AddText(_card.LocalizedName, 14, new Rect(38, 8, _frameRect.Width - _boxRect.Width - 38, 34), _card.ColorPlayer);
 		}
 
 		protected virtual void AddText(object obj, int size, Rect rect, Brush fill, bool centered = false)
