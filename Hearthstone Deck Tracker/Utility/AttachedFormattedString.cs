@@ -30,6 +30,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		private static IEnumerable<Inline> GetInlines(string value)
 		{
+			if(value == null)
+				 yield break;
 			//<w> is a wrapper so it gets read as an XElement
 			var element = XElement.Parse("<w>" + Regex.Replace(value, @"\<(\w+?)\>", x => x.Captures[0].Value.ToLower()) + "</w>");
 			//descendantnodes is the only method that includes the XTexts, but it also includes the XTexts of the children XElements.
