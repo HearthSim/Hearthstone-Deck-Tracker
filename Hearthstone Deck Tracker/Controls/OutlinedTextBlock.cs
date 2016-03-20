@@ -159,23 +159,9 @@ namespace Hearthstone_Deck_Tracker
 
 			if(_formattedText == null)
 				return;
-
-			const int outlineWidth = 1;
-			const int step = 1;
-
-			_formattedText.SetForegroundBrush(Stroke);
-
-			for(var x = -outlineWidth; x <= outlineWidth; x += step)
-			{
-				for(var y = -outlineWidth; y <= outlineWidth; y += step)
-				{
-					if(x != 0 || y != 0)
-						drawingContext.DrawText(_formattedText, new Point(x, y));
-				}
-			}
-
-			_formattedText.SetForegroundBrush(Fill);
-			drawingContext.DrawText(_formattedText, new Point(0, 0));
+			var y = !double.IsNaN(ActualHeight) ? (ActualHeight - _formattedText.Height) / 2 : 0;
+			drawingContext.DrawGeometry(Stroke, new Pen(Brushes.Black, 2.0), _formattedText.BuildGeometry(new Point(0, y)));
+			drawingContext.DrawGeometry(Fill, new Pen(Brushes.White, 0), _formattedText.BuildGeometry(new Point(0, y)));
 		}
 
 		protected override Size MeasureOverride(Size availableSize)
