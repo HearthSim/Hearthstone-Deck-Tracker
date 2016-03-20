@@ -140,12 +140,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					card.Count = 0;
 					card.HighlightDraw = _hightlightedCards.Contains(c.Id);
 					if(Hand.Any(ce => ce.CardId == c.Id))
-					{
 						card.HighlightInHand = true;
-						if(IsLocalPlayer && card.Id == HearthDb.CardIds.Collectible.Neutral.RenoJackson
-						   && Deck.Where(x => !string.IsNullOrEmpty(x.CardId)).Select(x => x.CardId).GroupBy(x => x).All(x => x.Count() <= 1))
-							card.HighlightFrame = true;
-					}
 					return card;
 				});
 				return stillInDeck.Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
