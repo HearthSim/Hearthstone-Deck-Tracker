@@ -367,15 +367,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		private int _lastTextColorHash;
 		public ImageBrush Background
 		{
 			get
 			{
 				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames
 				   && _coloredGem == Config.Instance.RarityCardGems && IsFrameHighlighted == HighlightFrame
-				   && _theme == Config.Instance.CardBarTheme.ToLowerInvariant())
+				   && _theme == Config.Instance.CardBarTheme.ToLowerInvariant()
+				   && _lastTextColorHash == ColorPlayer.Color.GetHashCode())
 					return _cachedBackground;
 				_lastCount = Count;
+				_lastTextColorHash = ColorPlayer.Color.GetHashCode();
 				_coloredFrame = Config.Instance.RarityCardFrames;
 				_coloredGem = Config.Instance.RarityCardGems;
 				if(Id == null || Name == null)
