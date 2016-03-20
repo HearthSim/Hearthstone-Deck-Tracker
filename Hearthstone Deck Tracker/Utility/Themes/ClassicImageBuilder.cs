@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -18,32 +17,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		public ClassicBarImageBuilder(Card card, string dir) : base(card, dir)
 		{
 			_card = card;
-		}
-
-		public override ImageBrush Build()
-		{
-			if(!_hasAllRequired)
-				return new ImageBrush();
-
-			AddCardImage();
-			AddFadeOverlay();
-			if(Math.Abs(_card.Count) > 1 || _card.Rarity == Rarity.Legendary)
-			{
-				AddCountBox();
-				AddCountText();
-			}
-			if(_card.IsCreated)
-				AddCreatedIcon();
-			if(Math.Abs(_card.Count) <= 1 && _card.Rarity == Rarity.Legendary)
-				AddLegendaryIcon();
-			AddFrame();
-			AddGem();
-			AddCost();
-			AddCardName();
-			if(_card.Count <= 0 || _card.Jousted)
-				AddDarken();
-
-			return new ImageBrush { ImageSource = new DrawingImage(_drawingGroup) };
 		}
 
 		protected override void AddCardImage()

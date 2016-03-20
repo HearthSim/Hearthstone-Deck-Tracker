@@ -82,7 +82,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 			AddCardImage();
 			AddFadeOverlay();
-			AddGem();
 			if(Math.Abs(_card.Count) > 1 || _card.Rarity == Rarity.Legendary)
 			{
 				AddCountBox();
@@ -93,6 +92,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			if(Math.Abs(_card.Count) <= 1 && _card.Rarity == Rarity.Legendary)
 				AddLegendaryIcon();
 			AddFrame();
+			AddGem();
 			AddCost();
 			AddCardName();
 			if(_card.Count <= 0 || _card.Jousted)
