@@ -782,6 +782,7 @@ namespace Hearthstone_Deck_Tracker
 				return Region.ASIA;
 			if(ip.StartsWith("114.113"))
 				return Region.CHINA;
+			Log.Warn("Unknown IP: " + ip);
 			return Region.UNKNOWN;
 		}
 	}
