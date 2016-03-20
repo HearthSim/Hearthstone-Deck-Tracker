@@ -64,9 +64,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
 				HookMouse();
-
-			Scaling = 1.0;
-			OpponentScaling = 1.0;
 			ShowInTaskbar = Config.Instance.ShowInTaskbar;
 			if(Config.Instance.VisibleOverlay)
 				Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#4C0000FF");
@@ -82,13 +79,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
 		public bool ForceHidden { get; set; }
-		public static double Scaling { get; set; }
-		public static double OpponentScaling { get; set; }
 		public Visibility WarningVisibility { get; set; }
 		public List<Card> PlayerDeck => _game.Player.DisplayCards;
 		public List<Card> OpponentDeck => _game.Opponent.DisplayRevealedCards;
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		public double PlayerListHeight => Config.Instance.PlayerDeckHeight / 100 * Height - PlayerLabelsHeight;
+		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
+			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight;
+		public double PlayerDeckHeight => Math.Min(34 * PlayerDeck.Count, PlayerListHeight);
+
+		public double OpponentListHeight => Config.Instance.OpponentDeckHeight / 100 * Height - OpponentLabelsHeight;
+
+		public double OpponentLabelsHeight => CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight
+											+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight;
+		public double OpponentDeckHeight => Math.Min(34 * OpponentDeck.Count, OpponentListHeight);
 
 		public void ShowOverlay(bool enable)
 		{

@@ -326,14 +326,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public int Height => (int)Math.Round(OverlayWindow.Scaling * 35, 0);
-
-		public int OpponentHeight => (int)Math.Round(OverlayWindow.OpponentScaling * 35, 0);
-
-		public int PlayerWindowHeight => (int)Math.Round(PlayerWindow.Scaling * 35, 0);
-
-		public int OpponentWindowHeight => (int)Math.Round(OpponentWindow.Scaling * 35, 0);
-
 		public string GetPlayerClass => PlayerClass ?? "Neutral";
 
 		public SolidColorBrush ColorPlayer

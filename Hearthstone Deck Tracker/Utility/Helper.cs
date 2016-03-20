@@ -15,6 +15,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -173,7 +174,7 @@ namespace Hearthstone_Deck_Tracker
 			return result;
 		}
 
-		public static PngBitmapEncoder ScreenshotDeck(DeckListView dlv, double dpiX, double dpiY, string name)
+		public static PngBitmapEncoder ScreenshotDeck(ListView dlv, double dpiX, double dpiY, string name)
 		{
 			try
 			{

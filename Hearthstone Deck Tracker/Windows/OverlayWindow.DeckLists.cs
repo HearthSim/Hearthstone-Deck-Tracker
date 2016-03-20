@@ -18,13 +18,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void UpdatePlayerLayout()
 		{
 			StackPanelPlayer.Children.Clear();
-			foreach (var item in Config.Instance.PanelOrderPlayer)
+			foreach(var item in Config.Instance.PanelOrderPlayer)
 			{
-				switch (item)
+				switch(item)
 				{
-					case DeckPanelCards:
-						StackPanelPlayer.Children.Add(ListViewPlayer);
-						break;
 					case DeckPanelDrawChances:
 						StackPanelPlayer.Children.Add(CanvasPlayerChance);
 						break;
@@ -40,6 +37,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					case DeckPanelWins:
 						StackPanelPlayer.Children.Add(LblWins);
 						break;
+					case DeckPanelCards:
+						StackPanelPlayer.Children.Add(ViewBoxPlayer);
+						break;
 				}
 			}
 		}
@@ -51,9 +51,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				switch (item)
 				{
-					case DeckPanelCards:
-						StackPanelOpponent.Children.Add(ListViewOpponent);
-						break;
 					case DeckPanelDrawChances:
 						StackPanelOpponent.Children.Add(CanvasOpponentChance);
 						break;
@@ -64,7 +61,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 						StackPanelOpponent.Children.Add(LblOpponentFatigue);
 						break;
 					case DeckPanelWinrate:
-						StackPanelOpponent.Children.Add(ViewBoxWinRateAgainst);
+						StackPanelOpponent.Children.Add(LblWinRateAgainst);
+						break;
+					case DeckPanelCards:
+						StackPanelOpponent.Children.Add(ViewBoxOpponent);
 						break;
 				}
 			}
@@ -147,6 +147,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if ((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 50)
 				return;
 			OnPropertyChanged(nameof(PlayerDeck));
+			OnPropertyChanged(nameof(PlayerDeckHeight));
 		}
 
 		public async void UpdateOpponentCards()
@@ -156,6 +157,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if ((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
 				return;
 			OnPropertyChanged(nameof(OpponentDeck));
+			OnPropertyChanged(nameof(OpponentDeckHeight));
 		}
 
 	}

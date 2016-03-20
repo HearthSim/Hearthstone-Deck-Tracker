@@ -38,6 +38,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 				AddLegendaryIcon();
 			AddFrame();
 			AddGem();
+			AddCost();
+			AddCardName();
 			if(_card.Count <= 0 || _card.Jousted)
 				AddDarken();
 

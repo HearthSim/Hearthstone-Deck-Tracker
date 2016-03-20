@@ -93,6 +93,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			if(Math.Abs(_card.Count) <= 1 && _card.Rarity == Rarity.Legendary)
 				AddLegendaryIcon();
 			AddFrame();
+			AddCost();
+			AddCardName();
 			if(_card.Count <= 0 || _card.Jousted)
 				AddDarken();
 
@@ -215,9 +217,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{
 				var countText = count > 9 ? "9" : count.ToString();
 				var color = new SolidColorBrush(Color.FromRgb(240, 195, 72));
-				AddText(countText, 20, 198, 4, color);
+				AddText(countText, 20, new Rect(198, 4, double.NaN, double.NaN), color);
 				if(count > 9)
-					AddText("+", 13, 203, 3, color);
+					AddText("+", 13, new Rect(203, 3, double.NaN, double.NaN), color);
 			}
 		}
 
@@ -236,16 +238,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			AddChild(_required[ThemeElement.LegendaryIcon]);
 		}
 
-		protected virtual void AddText(object obj, int size, int x, int y, Brush fill)
+		protected virtual void AddCost()
 		{
-			var text = new FormattedText(obj.ToString(), CultureInfo.GetCultureInfo("en-us"),
-						FlowDirection.LeftToRight, _countType, size, Brushes.White);
-			var point = new Point(x, y);
+			AddText(_card.Cost, 22, new Rect(6, 0, 25, 34), Brushes.White, true);
+		}
 
-			_drawingGroup.Children.Add(new GeometryDrawing(Brushes.Black,
-				new Pen(Brushes.Black, 2.0), text.BuildGeometry(point)));
-			_drawingGroup.Children.Add(new GeometryDrawing(fill,
-				new Pen(Brushes.White, 0), text.BuildGeometry(point)));
+		protected virtual void AddCardName()
+		{
+			AddText(_card.LocalizedName, 14, new Rect(38, 8, _frameRect.Width - _boxRect.Width - 38, 34), Brushes.White);
+		}
+
+		protected virtual void AddText(object obj, int size, Rect rect, Brush fill, bool centered = false)
+		{
+			foreach(var d in CardTextImageBuilder.GetOutlinedText(obj.ToString(), size, rect, fill, Brushes.Black, centered: centered))
+				_drawingGroup.Children.Add(d);
 		}
 
 		protected void AddChild(string uri, Rect rect)

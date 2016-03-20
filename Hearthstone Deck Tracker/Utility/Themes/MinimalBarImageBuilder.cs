@@ -11,10 +11,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
 	public class MinimalBarImageBuilder : CardBarImageBuilder
 	{
-		private readonly Typeface _countType = new Typeface(new FontFamily(
-			new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT"),
-				FontStyles.Normal, FontWeights.Normal, FontStretches.Condensed);
-
 		public MinimalBarImageBuilder(Card card, string dir) : base(card, dir)
 		{
 		}
@@ -37,6 +33,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			if(Math.Abs(_card.Count) <= 1 && _card.Rarity == Rarity.Legendary)
 				AddLegendaryIcon();
 			AddFrame();
+			AddCost();
+			AddCardName();
 			if(_card.Count <= 0 || _card.Jousted)
 				AddDarken();
 
@@ -57,9 +55,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			}
 		}
 
-		protected override void AddText(object obj, int size, int x, int y, Brush fill)
+		protected override void AddCountText()
 		{
-			Brush rarity = fill;
+			Brush rarity;
 			switch(_card.Rarity)
 			{
 				case Rarity.Rare:
@@ -78,15 +76,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 					rarity = Brushes.White;
 					break;
 			}
-
-			var text = new FormattedText(obj.ToString(), CultureInfo.GetCultureInfo("en-us"),
-						FlowDirection.LeftToRight, _countType, size, Brushes.White);
-			var point = new Point(x, y);
-
-			_drawingGroup.Children.Add(new GeometryDrawing(Brushes.Black,
-				new Pen(Brushes.Black, 2.0), text.BuildGeometry(point)));
-			_drawingGroup.Children.Add(new GeometryDrawing(rarity,
-				new Pen(Brushes.White, 0), text.BuildGeometry(point)));
+			var count = Math.Abs(_card.Count);
+			if(count > 1)
+			{
+				var countText = count > 9 ? "9" : count.ToString();
+				AddText(countText, 20, new Rect(198, 4, double.NaN, double.NaN), rarity);
+				if(count > 9)
+					AddText("+", 13, new Rect(203, 3, double.NaN, double.NaN), rarity);
+			}
 		}
 
 		private BitmapImage BitmapToImageSource(System.Drawing.Bitmap bitmap)

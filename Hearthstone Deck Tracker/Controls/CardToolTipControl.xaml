@@ -25,17 +25,17 @@
                        VerticalAlignment="Center" HorizontalAlignment="Center"
                        Visibility="{Binding ShowIconsInTooltip}" />
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Attack}" Grid.Column="0" FontSize="24"
-                                            VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0"
+                                            TextAlignment="Center"  Width="30" Height="33" Margin="5,2,0,0"
                                             Visibility="{Binding ShowIconsInTooltip}" />
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding LocalizedName}" Grid.Column="1" FontSize="14"
-                                            VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"
+                                            Height="35" Width="130"
                                             TextAlignment="Center" FontFamily="{Binding Font}" />
                 <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="2"
                        VerticalAlignment="Center" HorizontalAlignment="Center"
                        Visibility="{Binding ShowIconsInTooltip}" />
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding DurabilityOrHealth}" Grid.Column="2" FontSize="24"
-                                            VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"
-                                            Visibility="{Binding ShowIconsInTooltip}" />
+                                            TextAlignment="Center" Margin="2,2,0,0"
+                                            Width="33" Height="33" Visibility="{Binding ShowIconsInTooltip}" />
             </Grid>
             <TextBlock Name="CardTextBlock" utility:AttachedFormattedString.FormattedText="{Binding FormattedText}" Grid.Row="1" FontSize="14"
                        Foreground="{DynamicResource TextBrush}" VerticalAlignment="Top" FontWeight="Medium"
@@ -45,9 +45,8 @@
                        Visibility="{Binding ShowAlternativeLanguageTextInTooltip}"
                        HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,10,10,0" TextAlignment="Center" />
             <Grid Grid.Row="3" Background="{DynamicResource AccentColorBrush}">
-                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding RaceOrType}" Grid.Column="1" FontSize="14"
-                                            VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"
-                                            TextAlignment="Center" />
+                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding RaceOrType}" Width="200" FontSize="14"
+                                            Height="20" TextAlignment="Center" />
             </Grid>
         </Grid>
     </Border>

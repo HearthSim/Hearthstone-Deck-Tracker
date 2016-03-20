@@ -415,6 +415,7 @@
     <Compile Include="Utility\ConfigWrapper.cs" />
     <Compile Include="Utility\RankDetection.cs" />
     <Compile Include="Utility\ScreenCapture.cs" />
+    <Compile Include="Utility\Themes\CardTextImageBuilder.cs" />
     <Compile Include="Utility\Themes\ClassicImageBuilder.cs" />
     <Compile Include="Utility\Themes\DefaultBarImageBuilder.cs" />
     <Compile Include="Utility\Themes\MinimalBarImageBuilder.cs" />
@@ -487,9 +488,6 @@
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
       <DependentUpon>CardToolTip.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\DeckListView.xaml.cs">
-      <DependentUpon>DeckListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\DeckNotes.xaml.cs">
       <DependentUpon>DeckNotes.xaml</DependentUpon>
@@ -640,10 +638,6 @@
     <Page Include="Controls\ChartWinsByClass.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DeckListView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeckPicker\DeckPickerClassItem.xaml">
       <SubType>Designer</SubType>

@@ -7,9 +7,10 @@
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       Title="Player" Height="440" Width="230" MinWidth="226" MaxWidth="230"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
-                      SizeChanged="Window_SizeChanged_1" Activated="Window_Activated_1"
+                      Activated="PlayerWindow_OnActivated"
                       Icon="{StaticResource AppIcon}"
-                      Deactivated="MetroWindow_Deactivated">
+                      SizeChanged="PlayerWindow_OnSizeChanged"
+                      Deactivated="PlayerWindow_OnDeactivated">
     <controls:MetroWindow.IconTemplate>
         <DataTemplate>
             <Rectangle Margin="2" Opacity="0.7">
@@ -21,43 +22,28 @@
     </controls:MetroWindow.IconTemplate>
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain" Margin="0,1,0,0">
-            <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Text="Deck title" />
-            <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16" Text="0-0 (0%)" />
-            <controls1:DeckListView x:Name="ListViewPlayer" Foreground="White" FontWeight="Bold" BorderThickness="0"
-                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Height="25" Width="200" TextAlignment="Center" Text="Deck title"/>
+            <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16"  Height="25" Width="200" TextAlignment="Center" Text="0-0 (0%)"/>
+            <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill" Height="{Binding PlayerDeckHeight, RelativeSource={RelativeSource AncestorType=local:PlayerWindow}}">
+                <ListView x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
+                                ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
                                 ItemsSource="{Binding PlayerDeck, RelativeSource={RelativeSource AncestorType=local:PlayerWindow}}"
-                                ScrollViewer.CanContentScroll="False" FontFamily="Arial">
-                <ListView.Resources>
-                    <Style TargetType="GridViewColumnHeader">
-                        <Setter Property="Visibility" Value="Collapsed" />
-                    </Style>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
-                        <Setter Property="ToolTipService.ShowDuration" Value="60000" />
-                        <Setter Property="ToolTipService.IsEnabled"
-                                Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PlayerWindow}}, Path=ShowToolTip}" />
-                        <Setter Property="ToolTip">
-                            <Setter.Value>
-                                <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                    <local:CardToolTip />
-                                </ToolTip>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
-                        <Setter Property="Background" Value="{Binding Background}" />
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="Height" Value="{Binding PlayerWindowHeight}" />
-                        <Setter Property="Margin" Value="0,-2,0,0" />
-                        <Setter Property="IsEnabled" Value="False" />
-                        <Style.Triggers>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="{Binding ColorPlayer}" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.Resources>
-            </controls1:DeckListView>
+                                ScrollViewer.CanContentScroll="False">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Fill="{Binding Background}" Height="35" ToolTipService.ShowOnDisabled="True" 
+                                       ToolTipService.IsEnabled="{Binding Path=ShowToolTip, RelativeSource={RelativeSource AncestorType=local:PlayerWindow}}">
+                                <Rectangle.ToolTip>
+                                    <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                        <local:CardToolTip />
+                                    </ToolTip>
+                                </Rectangle.ToolTip>
+                            </Rectangle>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Viewbox>
             <Canvas Name="CanvasPlayerCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2">
                 <Canvas.Background>
                     <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/frame_card_counter.png"/>

@@ -6,6 +6,5 @@
                          xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                          mc:Ignorable="d"
                          d:DesignHeight="300" d:DesignWidth="300"
-                         HorizontalAlignment="Center" VerticalAlignment="Top"
                          FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT" FontSize="20">
 </local:OutlinedTextBlock>

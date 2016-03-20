@@ -262,36 +262,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateElementSizes()
 		{
-			var totalPlayerLabelsHeight = CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight + LblPlayerFatigue.ActualHeight
-										  + LblDeckTitle.ActualHeight + LblWins.ActualHeight;
-			if (((Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100)
-				- (ListViewPlayer.Items.Count * 35 * Scaling + totalPlayerLabelsHeight)) < 1 || Scaling < 1)
-			{
-				var previousScaling = Scaling;
-				Scaling = (Height * Config.Instance.PlayerDeckHeight / (Config.Instance.OverlayPlayerScaling / 100) / 100)
-						  / (ListViewPlayer.Items.Count * 35 + totalPlayerLabelsHeight);
-				if (Scaling > 1)
-					Scaling = 1;
-
-				if (previousScaling != Scaling)
-					ListViewPlayer.Items.Refresh();
-			}
-
-			var totalOpponentLabelsHeight = CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight
-											+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight;
-			if (((Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100)
-				- (ListViewOpponent.Items.Count * 35 * OpponentScaling + totalOpponentLabelsHeight)) < 1 || OpponentScaling < 1)
-			{
-				var previousScaling = OpponentScaling;
-				OpponentScaling = (Height * Config.Instance.OpponentDeckHeight / (Config.Instance.OverlayOpponentScaling / 100) / 100)
-								  / (ListViewOpponent.Items.Count * 35 + totalOpponentLabelsHeight);
-				if (OpponentScaling > 1)
-					OpponentScaling = 1;
-
-				if (previousScaling != OpponentScaling)
-					ListViewOpponent.Items.Refresh();
-			}
-
+			OnPropertyChanged(nameof(PlayerListHeight));
+			OnPropertyChanged(nameof(OpponentListHeight));
 			//Gold progress
 			RectGoldDisplay.Height = GoldFrameHeight;
 			RectGoldDisplay.Width = GoldFrameWidth;
@@ -306,9 +278,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var atkFont = (int)Math.Round(Height * 0.0223, 0);
 			IconBoardAttackPlayer.Width = atkWidth;
 			IconBoardAttackPlayer.Height = atkWidth;
+			TextBlockPlayerAttack.Width = atkWidth;
+			TextBlockPlayerAttack.Height = atkWidth;
 			TextBlockPlayerAttack.FontSize = atkFont;
 			IconBoardAttackOpponent.Width = atkWidth;
 			IconBoardAttackOpponent.Height = atkWidth;
+			TextBlockOpponentAttack.Width = atkWidth;
+			TextBlockOpponentAttack.Height = atkWidth;
 			TextBlockOpponentAttack.FontSize = atkFont;
 
 		}
