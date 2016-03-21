@@ -16,6 +16,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 	[Serializable]
 	public class Entity
 	{
+		[NonSerialized]
 		private Card _cachedCard;
 
 		public Entity()
