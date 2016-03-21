@@ -117,13 +117,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		{
 			var frame = _required[ThemeElement.DefaultFrame];
 			if(_card.HighlightFrame)
-			{
 				frame = _required[ThemeElement.GoldenFrame];
-				_card.IsFrameHighlighted = true;
-			}
 			else
 			{
-				_card.IsFrameHighlighted = false;
 				if(Config.Instance.RarityCardFrames && _hasAllOptional)
 				{
 					switch(_card.Rarity)
