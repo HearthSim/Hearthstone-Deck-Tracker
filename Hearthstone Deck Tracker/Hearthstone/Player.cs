@@ -66,6 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					var card = Database.GetCardFromId(g.Key);
 					card.Count = g.Count();
+					card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key);
 					return card;
 				}).Where(x => x.Name != "UNKNOWN").ToList();
 			}
@@ -113,7 +114,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									        card.HighlightFrame = true;
 								        return card;
 							        });
-						;
 						stillInDeck = stillInDeck.Concat(inHand).ToList();
 					}
 					return stillInDeck.Concat(createdInHand).ToSortedCardList();
