@@ -78,6 +78,13 @@
                               Checked="CheckboxOverlayAdditionalCardToolTips_Checked"
                               Unchecked="CheckboxOverlayAdditionalCardToolTips_Unchecked"
                               HorizontalAlignment="Left" />
+                    <CheckBox x:Name="CheckBoxOverlayUseAnimations" Content="Use card animations"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxOverlayUseAnimations_Checked"
+                              Unchecked="CheckboxOverlayUseAnimations_Unchecked"
+                              HorizontalAlignment="Left" />
                     <CheckBox x:Name="CheckboxOverlayCardMarkToolTips" Content="Card-mark tooltips*"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

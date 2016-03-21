@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Xml.Serialization;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
@@ -329,9 +330,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				Color color;
-				if(HighlightDraw && Config.Instance.HighlightLastDrawn)
-					color = Colors.Orange;
-				else if(HighlightInHand && Config.Instance.HighlightCardsInHand)
+				if(HighlightInHand && Config.Instance.HighlightCardsInHand)
 					color = Colors.GreenYellow;
 				else if(WasDiscarded && Config.Instance.HighlightDiscarded)
 					color = Colors.IndianRed;
@@ -397,8 +396,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void Update() => OnPropertyChanged(nameof(Background));
 
-		[XmlIgnore]
-		public bool HighlightDraw { get; set; }
+		public ImageBrush Highlight => ThemeManager.CurrentTheme?.HighlightImage ?? new ImageBrush();
 
 		[XmlIgnore]
 		public bool HighlightInHand { get; set; }

@@ -17,26 +17,27 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public Hearthstone.Card Card => (Hearthstone.Card)DataContext;
 
-		public async Task Spawn(bool fadeIn)
+		public async Task FadeIn(bool fadeIn)
  		{
  			Card.Update();
- 			if(fadeIn)
- 				await RunStoryBoard("StoryboardSpawn");
- 			else
- 				Height = MaxHeight;
+ 			if(fadeIn && Config.Instance.OverlayCardAnimations)
+ 				await RunStoryBoard("StoryboardFadeIn");
  		}
  
- 		public async Task Despawn(bool highlight)
+ 		public async Task FadeOut(bool highlight)
 		{
 			if(highlight && Config.Instance.OverlayCardAnimations)
 				await RunStoryBoard("StoryboardUpdate");
 			Card.Update();
+			if(Config.Instance.OverlayCardAnimations)
+				await RunStoryBoard("StoryboardFadeOut");
  		}
  
  		public async Task Update(bool highlight)
 		{
+			if(highlight && Config.Instance.OverlayCardAnimations)
+				await RunStoryBoard("StoryboardUpdate");
 			Card.Update();
-			await RunStoryBoard("StoryboardUpdate");
  		}
  
  		private readonly List<string> _runningStoryBoards = new List<string>();

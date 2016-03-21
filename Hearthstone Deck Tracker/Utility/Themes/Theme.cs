@@ -1,13 +1,29 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
 	public class Theme
 	{
+		private ImageBrush _highlightImage;
 		public string Name { get; set; }
 		public string Directory { get; set; }
 		public Type BuildType { get; set; }
+
+		public ImageBrush HighlightImage => _highlightImage ?? (_highlightImage = GetHighlightImage());
+
+		private ImageBrush GetHighlightImage()
+		{
+			var file = Path.Combine(Directory, "highlight.png");
+			if(File.Exists(file))
+				return new ImageBrush(new BitmapImage(new Uri(file, UriKind.Relative)));
+			Log.Warn($"highlight.png for theme '{Name}' does not exist.");
+			return new ImageBrush();
+		}
 
 		public Theme(string name, string dir, Type buildType)
 		{

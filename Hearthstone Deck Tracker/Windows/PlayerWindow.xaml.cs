@@ -178,7 +178,6 @@ namespace Hearthstone_Deck_Tracker
 			await Task.Delay(100);
 			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 100)
 				return;
-			//OnPropertyChanged(nameof(PlayerDeck));
 			ListViewPlayer.Update(PlayerDeck, true, reset);
 		}
 

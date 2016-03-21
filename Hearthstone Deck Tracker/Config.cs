@@ -498,6 +498,9 @@ namespace Hearthstone_Deck_Tracker
 		public int? OpponentWindowTop = null;
 
 		[DefaultValue(true)]
+		public bool OverlayCardAnimations = true;
+
+		[DefaultValue(true)]
 		public bool OverlayCardMarkToolTips = true;
 
 		[DefaultValue(true)]

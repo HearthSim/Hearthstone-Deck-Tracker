@@ -19,8 +19,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class Player : INotifyPropertyChanged
 	{
 		public const int DeckSize = 30;
-
-		private readonly Queue<string> _hightlightedCards = new Queue<string>();
 		private string _name;
 
 		public Player(bool isLocalPlayer)
@@ -96,25 +94,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						var card = Database.GetCardFromId(g.Key.CardId);
 						card.Count = g.Count();
 						card.IsCreated = g.Key.CardMark == CardMark.Created;
-						card.HighlightDraw = _hightlightedCards.Contains(g.Key.CardId);
 						card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
 						return card;
 					}).ToList();
 				if(Config.Instance.RemoveCardsFromDeck)
 				{
-					if(Config.Instance.HighlightLastDrawn)
-					{
-						var drawHighlight =
-							DeckList.Instance.ActiveDeck.Cards.Where(c => _hightlightedCards.Contains(c.Id) && stillInDeck.All(c2 => c2.Id != c.Id))
-							        .Select(c =>
-							        {
-								        var card = (Card)c.Clone();
-								        card.Count = 0;
-								        card.HighlightDraw = true;
-								        return card;
-							        });
-						stillInDeck = stillInDeck.Concat(drawHighlight).ToList();
-					}
 					if(Config.Instance.HighlightCardsInHand)
 					{
 						var inHand =
@@ -138,7 +122,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					var card = (Card)c.Clone();
 					card.Count = 0;
-					card.HighlightDraw = _hightlightedCards.Contains(c.Id);
 					if(Hand.Any(ce => ce.CardId == c.Id))
 						card.HighlightInHand = true;
 					return card;
@@ -240,9 +223,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void Draw(Entity entity, int turn)
 		{
 			var ce = MoveCardEntity(entity, Deck, Hand, turn);
-			if(IsLocalPlayer)
-				Highlight(entity.CardId);
-			else
+			if(!IsLocalPlayer)
 				ce.Reset();
 			VerifyCardMatchesDeck(ce);
 			Log(ce);
@@ -254,15 +235,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private void Log(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") 
 			=> Utility.Logging.Log.Info((IsLocalPlayer ? "[Player] "  : "[Opponent] ") + msg, memberName, sourceFilePath);
-
-		private async void Highlight(string cardId)
-		{
-			_hightlightedCards.Enqueue(cardId);
-			Helper.UpdatePlayerCards(false);
-			await Task.Delay(3000);
-			_hightlightedCards.Dequeue();
-			Helper.UpdatePlayerCards(false);
-		}
 
 		public void Play(Entity entity, int turn)
 		{

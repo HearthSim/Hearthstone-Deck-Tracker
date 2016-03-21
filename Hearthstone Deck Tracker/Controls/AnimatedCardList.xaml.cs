@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 					var newCard = new AnimatedCard(card);
 					_animatedCards.Insert(cards.IndexOf(card), newCard);
 					ItemsControl.Items.Insert(cards.IndexOf(card), newCard);
-					newCard.Spawn(!reset).Forget();
+					newCard.FadeIn(!reset).Forget();
 				}
 				else if(existing.Card.Count != card.Count || existing.Card.HighlightInHand != card.HighlightInHand)
 				{
@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				return;
 			if(Config.Instance.RemoveCardsFromDeck || !player || DeckList.Instance.ActiveDeck == null)
 			{
-				await existing.Despawn(existing.Card.Count > 0);
+				await existing.FadeOut(existing.Card.Count > 0);
 				_animatedCards.Remove(existing);
 				ItemsControl.Items.Remove(existing);
 			}
