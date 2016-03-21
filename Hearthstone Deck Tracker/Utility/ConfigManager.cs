@@ -217,6 +217,21 @@ namespace Hearthstone_Deck_Tracker.Utility
 						converted = true;
 					}
 				}
+				if(configVersion <= new Version(0, 13, 17, 0))
+				{
+					if(Math.Abs(Config.Instance.OpponentDeckHeight - 65) < 1 && Math.Abs(Config.Instance.OpponentDeckTop - 17) < 1)
+					{
+						Config.Instance.Reset(nameof(Config.OpponentDeckHeight));
+						Config.Instance.Reset(nameof(Config.OpponentDeckTop));
+						converted = true;
+					}
+					if(Math.Abs(Config.Instance.PlayerDeckHeight - 65) < 1 && Math.Abs(Config.Instance.PlayerDeckTop - 17) < 1)
+					{
+						Config.Instance.Reset(nameof(Config.PlayerDeckHeight));
+						Config.Instance.Reset(nameof(Config.PlayerDeckTop));
+						converted = true;
+					}
+				}
 			}
 
 			if(converted)

@@ -473,14 +473,14 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0)]
 		public int OffsetY = 0;
 
-		[DefaultValue(65)]
-		public double OpponentDeckHeight = 65;
+		[DefaultValue(72)]
+		public double OpponentDeckHeight = 72;
 
 		[DefaultValue(0.5)]
 		public double OpponentDeckLeft = 0.5;
 
-		[DefaultValue(17)]
-		public double OpponentDeckTop = 17;
+		[DefaultValue(10)]
+		public double OpponentDeckTop = 10;
 
 		[DefaultValue(100)]
 		public double OpponentOpacity = 100;
@@ -530,14 +530,14 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(new[] {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter"})]
 		public string[] PanelOrderPlayer = {"Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter"};
 
-		[DefaultValue(65)]
-		public double PlayerDeckHeight = 65;
+		[DefaultValue(88)]
+		public double PlayerDeckHeight = 88;
 
 		[DefaultValue(99.5)]
 		public double PlayerDeckLeft = 99.5;
 
-		[DefaultValue(17)]
-		public double PlayerDeckTop = 17;
+		[DefaultValue(2)]
+		public double PlayerDeckTop = 2;
 
 		[DefaultValue(100)]
 		public double PlayerOpacity = 100;
