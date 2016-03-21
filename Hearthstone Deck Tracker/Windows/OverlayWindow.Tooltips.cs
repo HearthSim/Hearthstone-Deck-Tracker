@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
+using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 #endregion
 
@@ -94,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(cardIndex < 0 || cardIndex >= ListViewPlayer.Items.Count)
 					return;
 
-				ToolTipCard.SetValue(DataContextProperty, ListViewPlayer.Items[cardIndex]);
+				ToolTipCard.SetValue(DataContextProperty, ListViewPlayer.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card);
 
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(StackPanelPlayer) + GetListViewOffset(StackPanelPlayer)
@@ -118,7 +120,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(cardIndex < 0 || cardIndex >= ListViewOpponent.Items.Count)
 					return;
 
-				ToolTipCard.SetValue(DataContextProperty, ListViewOpponent.Items[cardIndex]);
+				ToolTipCard.SetValue(DataContextProperty, ListViewOpponent.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card);
 
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(StackPanelOpponent) + GetListViewOffset(StackPanelOpponent)

@@ -33,18 +33,12 @@
             <StackPanel Name="StackPanelPlayer" Canvas.Left="604" Canvas.Top="203" Width="218">
                 <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Height="25" Width="200" TextAlignment="Center" Text="Deck title"/>
                 <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16"  Height="25" Width="200" TextAlignment="Center" Text="0-0 (0%)"/>
-                <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill" Height="{Binding PlayerDeckHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
-                    <ListView x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
+                <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding PlayerListHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                    <controls:AnimatedCardList x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
-                                ItemsSource="{Binding PlayerDeck, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                                 ScrollViewer.CanContentScroll="False">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Rectangle Fill="{Binding Background}" Height="35"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    </controls:AnimatedCardList>
                 </Viewbox>
                 <Canvas Name="CanvasPlayerCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2">
                     <Canvas.Background>
@@ -64,18 +58,12 @@
             </StackPanel>
             <StackPanel Name="StackPanelOpponent" Width="218" Canvas.Top="203" Canvas.Left="10">
                 <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="16" Height="25" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
-                <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" Height="{Binding OpponentDeckHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
-                    <ListView x:Name="ListViewOpponent" Background="Transparent" BorderThickness="0"
+                <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding OpponentListHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                    <controls:AnimatedCardList x:Name="ListViewOpponent" Background="Transparent" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
-                                ItemsSource="{Binding OpponentDeck, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                                 ScrollViewer.CanContentScroll="False">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Rectangle Fill="{Binding Background}" Height="35"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                    </controls:AnimatedCardList>
                 </Viewbox>
                 <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2">
                     <Canvas.Background>

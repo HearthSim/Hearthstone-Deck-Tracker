@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 
 			var deck = selectedDeck.GetSelectedDeckVersion();
-			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer, 96, 96, deck.Name);
+			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer.ItemsControl, 96, 96, deck.Name);
 			screenShotWindow.Shutdown();
 			await SaveOrUploadScreenshot(pngEncoder, deck.Name);
 		}

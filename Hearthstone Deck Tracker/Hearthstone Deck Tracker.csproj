@@ -132,6 +132,12 @@
     <Compile Include="API\GameEvents.cs" />
     <Compile Include="API\LogEvents.cs" />
     <Compile Include="API\Overlay.cs" />
+    <Compile Include="Controls\AnimatedCard.xaml.cs">
+      <DependentUpon>AnimatedCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AnimatedCardList.xaml.cs">
+      <DependentUpon>AnimatedCardList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Card.xaml.cs">
       <DependentUpon>Card.xaml</DependentUpon>
     </Compile>
@@ -619,6 +625,14 @@
       <DependentUpon>TimerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility\XmlManager.cs" />
+    <Page Include="Controls\AnimatedCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AnimatedCardList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Card.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

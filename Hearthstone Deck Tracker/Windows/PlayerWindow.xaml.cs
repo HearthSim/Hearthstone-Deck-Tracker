@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker
 				Update();
 		}
 
-		public double PlayerDeckHeight => Math.Min(34 * PlayerDeck.Count, ActualHeight - PlayerLabelsHeight);
+		public double PlayerDeckMaxHeight => ActualHeight - PlayerLabelsHeight;
 
 		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
 			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + 42;
@@ -89,7 +89,6 @@ namespace Hearthstone_Deck_Tracker
 
 			SetDeckTitle();
 			SetWinRates();
-			OnPropertyChanged(nameof(PlayerDeckHeight));
 		}
 
 		private void SetWinRates()
@@ -173,14 +172,14 @@ namespace Hearthstone_Deck_Tracker
 				Topmost = false;
 		}
 
-		public async void UpdatePlayerCards()
+		public async void UpdatePlayerCards(bool reset)
 		{
 			_lastPlayerUpdateReqest = DateTime.Now;
 			await Task.Delay(100);
 			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 100)
 				return;
-			OnPropertyChanged(nameof(PlayerDeck));
-			OnPropertyChanged(nameof(PlayerDeckHeight));
+			//OnPropertyChanged(nameof(PlayerDeck));
+			ListViewPlayer.Update(PlayerDeck, true, reset);
 		}
 
 		[NotifyPropertyChangedInvocator]
@@ -189,6 +188,6 @@ namespace Hearthstone_Deck_Tracker
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private void PlayerWindow_OnSizeChanged(object sender, SizeChangedEventArgs e) => OnPropertyChanged(nameof(PlayerDeckHeight));
+		private void PlayerWindow_OnSizeChanged(object sender, SizeChangedEventArgs e) => OnPropertyChanged(nameof(PlayerDeckMaxHeight));
 	}
 }

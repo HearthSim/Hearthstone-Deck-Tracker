@@ -174,7 +174,7 @@ namespace Hearthstone_Deck_Tracker
 			return result;
 		}
 
-		public static PngBitmapEncoder ScreenshotDeck(ListView dlv, double dpiX, double dpiY, string name)
+		public static PngBitmapEncoder ScreenshotDeck(ItemsControl dlv, double dpiX, double dpiY, string name)
 		{
 			try
 			{
@@ -431,16 +431,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static void UpdatePlayerCards()
+		public static void UpdatePlayerCards(bool reset = false)
 		{
-			Core.Overlay.UpdatePlayerCards();
-			Core.Windows.PlayerWindow.UpdatePlayerCards();
+			Core.Overlay.UpdatePlayerCards(reset);
+			Core.Windows.PlayerWindow.UpdatePlayerCards(reset);
 		}
 
-		public static void UpdateOpponentCards()
+		public static void UpdateOpponentCards(bool reset = false)
 		{
-			Core.Overlay.UpdateOpponentCards();
-			Core.Windows.OpponentWindow.UpdateOpponentCards();
+			Core.Overlay.UpdateOpponentCards(reset);
+			Core.Windows.OpponentWindow.UpdateOpponentCards(reset);
 		}
 
 		public static async Task StartHearthstoneAsync()

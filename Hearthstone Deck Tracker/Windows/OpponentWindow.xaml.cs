@@ -138,12 +138,12 @@ namespace Hearthstone_Deck_Tracker
 			LblOpponentHandChance1.Text = holdingNextTurn + "%";
 		}
 
-		public double OpponentDeckHeight => Math.Min(34 * OpponentDeck.Count, ActualHeight - OpponentLabelsHeight);
+		public double OpponentDeckMaxHeight =>  ActualHeight - OpponentLabelsHeight;
 
 		public double OpponentLabelsHeight => CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight
 			+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight + 42;
 
-		private void OpponentWindow_OnSizeChanged(object sender, SizeChangedEventArgs e) => OnPropertyChanged(nameof(OpponentDeckHeight));
+		private void OpponentWindow_OnSizeChanged(object sender, SizeChangedEventArgs e) => OnPropertyChanged(nameof(OpponentDeckMaxHeight));
 
 		protected override void OnClosing(CancelEventArgs e)
 		{
@@ -167,14 +167,13 @@ namespace Hearthstone_Deck_Tracker
 				Topmost = false;
 		}
 
-		public async void UpdateOpponentCards()
+		public async void UpdateOpponentCards(bool reset)
 		{
 			_lastOpponentUpdateReqest = DateTime.Now;
 			await Task.Delay(50);
 			if((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
 				return;
-			OnPropertyChanged(nameof(OpponentDeck));
-			OnPropertyChanged(nameof(OpponentDeckHeight));
+			ListViewOpponent.Update(OpponentDeck, false, reset);
 		}
 
 		[NotifyPropertyChangedInvocator]

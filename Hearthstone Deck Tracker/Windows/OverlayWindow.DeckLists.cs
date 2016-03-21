@@ -140,24 +140,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
-		public async void UpdatePlayerCards()
+		public async void UpdatePlayerCards(bool reset)
 		{
 			_lastPlayerUpdateReqest = DateTime.Now;
 			await Task.Delay(50);
 			if ((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 50)
 				return;
-			OnPropertyChanged(nameof(PlayerDeck));
-			OnPropertyChanged(nameof(PlayerDeckHeight));
+			ListViewPlayer.Update(PlayerDeck, true, reset);
 		}
 
-		public async void UpdateOpponentCards()
+		public async void UpdateOpponentCards(bool reset)
 		{
 			_lastOpponentUpdateReqest = DateTime.Now;
 			await Task.Delay(50);
 			if ((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
 				return;
-			OnPropertyChanged(nameof(OpponentDeck));
-			OnPropertyChanged(nameof(OpponentDeckHeight));
+			ListViewOpponent.Update(OpponentDeck, false, reset);
 		}
 
 	}

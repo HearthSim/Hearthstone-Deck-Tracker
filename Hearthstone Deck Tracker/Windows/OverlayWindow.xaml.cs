@@ -87,13 +87,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double PlayerListHeight => Config.Instance.PlayerDeckHeight / 100 * Height - PlayerLabelsHeight;
 		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
 			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight;
-		public double PlayerDeckHeight => Math.Min(34 * PlayerDeck.Count, PlayerListHeight);
 
 		public double OpponentListHeight => Config.Instance.OpponentDeckHeight / 100 * Height - OpponentLabelsHeight;
 
 		public double OpponentLabelsHeight => CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight
 											+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight;
-		public double OpponentDeckHeight => Math.Min(34 * OpponentDeck.Count, OpponentListHeight);
 
 		public void ShowOverlay(bool enable)
 		{

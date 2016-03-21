@@ -147,8 +147,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			if(Core.Game != null && Core.Overlay != null)
 			{
-				Helper.UpdatePlayerCards();
-				Helper.UpdateOpponentCards();
+				Helper.UpdatePlayerCards(true);
+				Helper.UpdateOpponentCards(true);
 				Core.MainWindow.NeedToIncorrectDeckMessage = false;
 			}
 		}

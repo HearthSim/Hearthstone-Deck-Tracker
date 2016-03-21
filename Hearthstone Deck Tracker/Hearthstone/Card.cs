@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 using Hearthstone_Deck_Tracker.Windows;
 using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
@@ -370,10 +371,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(_cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames
-				   && _coloredGem == Config.Instance.RarityCardGems && IsFrameHighlighted == HighlightFrame
-				   && _theme == Config.Instance.CardBarTheme.ToLowerInvariant()
-				   && _lastTextColorHash == ColorPlayer.Color.GetHashCode())
+				if(CachedBackgroundIsValid)
 					return _cachedBackground;
 				_lastCount = Count;
 				_lastTextColorHash = ColorPlayer.Color.GetHashCode();
@@ -396,6 +394,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		private bool CachedBackgroundIsValid => _cachedBackground != null && Count == _lastCount && _coloredFrame == Config.Instance.RarityCardFrames
+												&& _coloredGem == Config.Instance.RarityCardGems && IsFrameHighlighted == HighlightFrame
+												&& _theme == Config.Instance.CardBarTheme.ToLowerInvariant()
+												&& _lastTextColorHash == ColorPlayer.Color.GetHashCode();
+
+		public void Update() => OnPropertyChanged(nameof(Background));
+
 		[XmlIgnore]
 		public bool HighlightDraw { get; set; }
 
@@ -410,8 +415,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, _text, EnglishText, Attack,
 										  Health, Race, Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts, _dbCard);
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		public override string ToString() => Name + "(" + Count + ")";
 
@@ -456,16 +459,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OnPropertyChanged();
 		}
 
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
 		private static string CleanUpText(string text, bool replaceTags = true)
 		{
 			if (replaceTags)
 				text = text?.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "");
 			return text?.Replace("$", "").Replace("#", "").Replace("\\n", "\n");
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

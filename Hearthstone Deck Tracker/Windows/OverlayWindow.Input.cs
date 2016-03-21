@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					{
 						Config.Instance.PlayerDeckHeight += delta.Y / Height * scaling;
 						_movableElements[panel].Height = Height * Config.Instance.PlayerDeckHeight / 100 * scaling;
-						OnPropertyChanged(nameof(PlayerDeckHeight));
+						OnPropertyChanged(nameof(OpponentListHeight));
 					}
 					else
 					{
@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					{
 						Config.Instance.OpponentDeckHeight += delta.Y / Height * scaling;
 						_movableElements[panel].Height = Height * Config.Instance.OpponentDeckHeight / 100 * scaling;
-						OnPropertyChanged(nameof(OpponentDeckHeight));
+						OnPropertyChanged(nameof(OpponentListHeight));
 					}
 					else
 					{
