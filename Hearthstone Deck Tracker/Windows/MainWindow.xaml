@@ -452,7 +452,7 @@
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                                     ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
-                                    HorizontalAlignment="Center" Width="235" Height="auto"
+                                    HorizontalAlignment="Center" Width="236" Height="auto"
                                     MouseLeftButtonUp="ListViewDeck_MouseLeftButtonUp"
                                     MouseRightButtonUp="ListViewDeck_MouseRightButtonUp">
                     <ListView.Resources>
@@ -574,7 +574,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
-                            Width="235" Grid.ColumnSpan="2">
+                            Width="236" Grid.ColumnSpan="2">
                     <Border Width="107"
             BorderThickness="1" DockPanel.Dock="Top" BorderBrush="{DynamicResource TextBrush}">
                         <TextBox controls:TextBoxHelper.Watermark="Name..." TextWrapping="NoWrap"
@@ -596,7 +596,7 @@
                     </Border>
                 </StackPanel>
                 <DockPanel Grid.Row="1" Grid.Column="0" Margin="0,2,0,6">
-                    <Border Name="BorderConstructedCardLimits" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" DockPanel.Dock="Bottom" Margin="0,2,0,0" HorizontalAlignment="Left" Width="235">
+                    <Border Name="BorderConstructedCardLimits" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" DockPanel.Dock="Bottom" Margin="0,2,0,0" HorizontalAlignment="Left" Width="236">
                         <CheckBox Name="CheckBoxConstructedCardLimits" Content="Constructed card limits" IsChecked="True" Margin="2"/>
                     </Border>
                     <ListView x:Name="ListViewDB" Foreground="White" Background="#696969"
@@ -605,7 +605,7 @@
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.CanContentScroll="True" FontFamily="Arial"
                                     HorizontalAlignment="Left"
-                                    Width="235" KeyDown="ListViewDB_KeyDown"
+                                    Width="236" KeyDown="ListViewDB_KeyDown"
                                     MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp">
                         <ListView.Resources>
                             <Style TargetType="GridViewColumnHeader">
