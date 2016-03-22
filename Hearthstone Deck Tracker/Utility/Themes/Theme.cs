@@ -32,11 +32,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			BuildType = buildType;
 		}
 
-		public override string ToString()
-		{
-			return Name.Substring(0, 1).ToUpperInvariant()
-				+ (Name.Length > 1 ? Name.Substring(1) : "");
-		}
+		public override string ToString() => Name.Substring(0, 1).ToUpperInvariant() + (Name.Length > 1 ? Name.Substring(1) : "");
 	}
 
 	public class ThemeElementInfo
@@ -67,7 +63,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 	public enum ThemeElement
 	{
 		DefaultFrame,
-		GoldenFrame,
 		CommonFrame,
 		RareFrame,
 		EpicFrame,

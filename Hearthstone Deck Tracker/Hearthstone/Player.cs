@@ -109,9 +109,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 								        var card = (Card)c.Clone();
 								        card.Count = 0;
 								        card.HighlightInHand = true;
-								        if(IsLocalPlayer && card.Id == HearthDb.CardIds.Collectible.Neutral.RenoJackson
-								           && Deck.Where(x => !string.IsNullOrEmpty(x.CardId)).Select(x => x.CardId).GroupBy(x => x).All(x => x.Count() <= 1))
-									        card.HighlightFrame = true;
 								        return card;
 							        });
 						stillInDeck = stillInDeck.Concat(inHand).ToList();

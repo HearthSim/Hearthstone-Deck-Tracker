@@ -340,9 +340,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		[XmlIgnore]
-		public bool HighlightFrame { get; set; }
-
 		public SolidColorBrush ColorOpponent => new SolidColorBrush(Colors.White);
 
 		public string CardFileName => Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "").Replace(",", "");
@@ -476,7 +473,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int Count { get; }
 		public bool ColoredFrame { get; }
 		public bool ColoredGem { get; }
-		public bool HighlightedFrame { get; }
 		public string Theme { get; }
 		public int TextColorHash { get; }
 
@@ -490,7 +486,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Count = card.Count;
 			ColoredFrame = Config.Instance.RarityCardFrames;
 			ColoredGem = Config.Instance.RarityCardGems;
-			HighlightedFrame = card.HighlightFrame;
 			Theme = ThemeManager.CurrentTheme?.Name;
 			TextColorHash = card.ColorPlayer.Color.GetHashCode();
 		}
@@ -503,7 +498,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		protected bool Equals(CardImageObject other)
 			=> Count == other.Count && ColoredFrame == other.ColoredFrame && ColoredGem == other.ColoredGem
-				&& HighlightedFrame == other.HighlightedFrame && string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash;
+				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash;
 
 		public override int GetHashCode()
 		{
@@ -512,7 +507,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var hashCode = Count;
 				hashCode = (hashCode * 397) ^ ColoredFrame.GetHashCode();
 				hashCode = (hashCode * 397) ^ ColoredGem.GetHashCode();
-				hashCode = (hashCode * 397) ^ HighlightedFrame.GetHashCode();
 				hashCode = (hashCode * 397) ^ (Theme?.GetHashCode() ?? 0);
 				hashCode = (hashCode * 397) ^ TextColorHash;
 				return hashCode;

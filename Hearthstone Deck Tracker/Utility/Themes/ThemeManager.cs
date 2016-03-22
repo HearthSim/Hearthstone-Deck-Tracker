@@ -11,21 +11,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 	{
 		private const string ThemeDir = @"Images\Themes\Bars";
 		private const string ThemeRegex = @"[a-zA-Z]+";
-		private static Theme _barTheme;
 
 		public static List<Theme> Themes = new List<Theme>();
 
-		public static Theme CurrentTheme
-		{
-			get
-			{
-				return _barTheme;
-			}
-			set
-			{
-				_barTheme = value;
-			}
-		}
+		public static Theme CurrentTheme { get; private set; }
 
 		public static void Run()
 		{
@@ -43,45 +32,35 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 				}
 				else
 				{
-					Logging.Log.Warn($"Invalid theme directory name {di.Name}", "ThemeManager");
+					Logging.Log.Warn($"Invalid theme directory name {di.Name}");
 				}
 			}
-			_barTheme = FindTheme(Config.Instance.CardBarTheme);
+			CurrentTheme = FindTheme(Config.Instance.CardBarTheme);
 		}
 
 		public static Theme FindTheme(string name)
-		{
-			if(string.IsNullOrWhiteSpace(name))
-				return null;
-			return Themes.FirstOrDefault(x =>
-				x.Name.ToLowerInvariant() == name.ToLowerInvariant());
-		}
+			=> string.IsNullOrWhiteSpace(name) ? null : Themes.FirstOrDefault(x => x.Name.ToLowerInvariant() == name.ToLowerInvariant());
 
 		public static void SetTheme(string theme)
 		{
-			var t = Themes.FirstOrDefault(
-				x => x.Name.ToLowerInvariant() == theme.ToLowerInvariant());
-			if(t != null)
-			{
-				_barTheme = t;
-				Helper.UpdatePlayerCards(true);
-				Helper.UpdateOpponentCards(true);
-				Core.Overlay.PlayerDeck.ForEach(c => c.UpdateHighlight());
-				Core.Overlay.OpponentDeck.ForEach(c => c.UpdateHighlight());
-				Core.Windows.PlayerWindow.PlayerDeck.ForEach(c => c.UpdateHighlight());
-				Core.Windows.OpponentWindow.OpponentDeck.ForEach(c => c.UpdateHighlight());
-				foreach(var card in Core.MainWindow.ListViewDeck.Items.Cast<Card>())
-					card.Update();
-			}
+			var t = Themes.FirstOrDefault(x => x.Name.ToLowerInvariant() == theme.ToLowerInvariant());
+			if(t == null)
+				return;
+			CurrentTheme = t;
+			Helper.UpdatePlayerCards(true);
+			Helper.UpdateOpponentCards(true);
+			Core.Overlay.PlayerDeck.ForEach(c => c.UpdateHighlight());
+			Core.Overlay.OpponentDeck.ForEach(c => c.UpdateHighlight());
+			Core.Windows.PlayerWindow.PlayerDeck.ForEach(c => c.UpdateHighlight());
+			Core.Windows.OpponentWindow.OpponentDeck.ForEach(c => c.UpdateHighlight());
+			foreach(var card in Core.MainWindow.ListViewDeck.Items.Cast<Card>())
+				card.Update();
 		}
 
 		public static CardBarImageBuilder GetBarImageBuilder(Card card)
 		{
-			Type buildType = _barTheme.BuildType;
-			if(buildType == null)
-				buildType = typeof(DefaultBarImageBuilder);
-
-			return (CardBarImageBuilder)Activator.CreateInstance(buildType, card, _barTheme.Directory);
+			var buildType = CurrentTheme.BuildType ?? typeof(DefaultBarImageBuilder);
+			return (CardBarImageBuilder)Activator.CreateInstance(buildType, card, CurrentTheme.Directory);
 		}
 
 		private static Type GetBuilderType(string name)
@@ -102,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			}
 			catch(Exception)
 			{
-				Logging.Log.Warn($"Theme builder {className} not found, using default.", "ThemeManager");
+				Logging.Log.Warn($"Theme builder {className} not found, using default.");
 			}
 			return buildType;
 		}

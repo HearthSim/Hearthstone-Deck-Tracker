@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
@@ -8,13 +7,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
 	public class CardTextImageBuilder
 	{
-		private static readonly Typeface TypeFace = new Typeface(new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT"),
-															FontStyles.Normal, FontWeights.Normal, FontStretches.Condensed);
-
-		public static GeometryDrawing[] GetOutlinedText(string text, double maxFontSize, Rect rect, Brush fill, Brush stroke,
+		public static GeometryDrawing[] GetOutlinedText(string text, double maxFontSize, Rect rect, Brush fill, Brush stroke, Typeface typeFace,
 												  double strokeThickness = 2, bool centered = false)
 		{
-			var fText = new FormattedText(text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, TypeFace, maxFontSize, fill);
+			var fText = new FormattedText(text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, typeFace, maxFontSize, fill);
 			if(!double.IsNaN(rect.Width))
 			{
 				if(fText.Width > rect.Width)
