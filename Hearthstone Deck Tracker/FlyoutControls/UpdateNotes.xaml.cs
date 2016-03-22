@@ -6,12 +6,14 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Information;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using Newtonsoft.Json;
@@ -33,6 +35,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			InitializeComponent();
 			_fullReleaseNotes = new List<GithubRelease>();
+		}
+
+		public void SetHighlight(Version previousVersion)
+		{
+			if(previousVersion == null)
+				return;
+			UserControl infoControl = null;
+			if(previousVersion < new Version(0, 13, 18))
+				infoControl = new CardThemesInfo();
+			if(infoControl == null)
+				return;
+			ContentControlHighlight.Content = infoControl;
+			TabControl.SelectedIndex = 1;
 		}
 
 		private SerializableVersion CurrentVersion => new SerializableVersion(Helper.GetCurrentVersion());
@@ -150,5 +165,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 			public SerializableVersion GetVersion() => SerializableVersion.ParseOrDefault(TagName);
 		}
+
+		private void ButtonContinue_OnClick(object sender, RoutedEventArgs e) => TabControl.SelectedIndex = 0;
 	}
 }

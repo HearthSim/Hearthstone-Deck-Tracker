@@ -16,10 +16,11 @@ namespace Hearthstone_Deck_Tracker.Utility
 	public static class ConfigManager
 	{
 		public static Version UpdatedVersion { get; private set; }
+		public static Version PreviousVersion { get; private set; }
 
 		public static void Run()
 		{
-			var configVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
+			PreviousVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
 			var currentVersion = Helper.GetCurrentVersion();
 			if(currentVersion != null)
 			{
@@ -27,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				// is rewritten to disk, thereby telling us what version of the application created it
 				Config.Instance.CreatedByVersion = currentVersion.ToString();
 			}
-			ConvertLegacyConfig(currentVersion, configVersion);
+			ConvertLegacyConfig(currentVersion, PreviousVersion);
 
 			if(Config.Instance.SelectedTags.Count == 0)
 				Config.Instance.SelectedTags.Add("All");

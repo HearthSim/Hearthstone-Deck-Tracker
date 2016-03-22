@@ -394,7 +394,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public void Update() => OnPropertyChanged(nameof(Background));
+		internal void Update() => OnPropertyChanged(nameof(Background));
+		internal void UpdateHighlight() => OnPropertyChanged(nameof(Highlight));
 
 		public ImageBrush Highlight => ThemeManager.CurrentTheme?.HighlightImage ?? new ImageBrush();
 

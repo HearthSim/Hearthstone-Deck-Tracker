@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Controls.Information;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.LogReader;
@@ -91,6 +92,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Updater.Cleanup();
 				MainWindow.FlyoutUpdateNotes.IsOpen = true;
+				MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
 				MainWindow.UpdateNotesControl.LoadUpdateNotes();
 			}
 			NetDeck.CheckForChromeExtention();
