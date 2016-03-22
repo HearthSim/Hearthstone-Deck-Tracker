@@ -62,7 +62,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var t = Themes.FirstOrDefault(
 				x => x.Name.ToLowerInvariant() == theme.ToLowerInvariant());
 			if(t != null)
+			{
 				_barTheme = t;
+				Helper.UpdatePlayerCards(true);
+				Helper.UpdateOpponentCards(true);
+				Core.Overlay.PlayerDeck.ForEach(c => c.UpdateHighlight());
+				Core.Overlay.OpponentDeck.ForEach(c => c.UpdateHighlight());
+				Core.Windows.PlayerWindow.PlayerDeck.ForEach(c => c.UpdateHighlight());
+				Core.Windows.OpponentWindow.OpponentDeck.ForEach(c => c.UpdateHighlight());
+				foreach(var card in Core.MainWindow.ListViewDeck.Items.Cast<Card>())
+					card.Update();
+			}
 		}
 
 		public static CardBarImageBuilder GetBarImageBuilder(Card card)
