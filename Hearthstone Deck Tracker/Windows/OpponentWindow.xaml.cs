@@ -52,7 +52,6 @@ namespace Hearthstone_Deck_Tracker
 				Top = 100;
 				Left = 100;
 			}
-			Update();
 		}
 
 		public List<Card> OpponentDeck => _game.Opponent.DisplayRevealedCards;
@@ -105,6 +104,7 @@ namespace Hearthstone_Deck_Tracker
 						break;
 				}
 			}
+			OnPropertyChanged(nameof(OpponentDeckMaxHeight));
 		}
 
 		public void SetOpponentCardCount(int cardCount, int cardsLeftInDeck, bool opponentHasCoin)
@@ -180,6 +180,12 @@ namespace Hearthstone_Deck_Tracker
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private void OpponentWindow_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			Update();
+			UpdateOpponentLayout();
 		}
 	}
 }

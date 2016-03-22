@@ -9,6 +9,7 @@
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       Activated="PlayerWindow_OnActivated"
                       Icon="{StaticResource AppIcon}"
+                      Loaded="PlayerWindow_OnLoaded"
                       SizeChanged="PlayerWindow_OnSizeChanged"
                       Deactivated="PlayerWindow_OnDeactivated">
     <controls:MetroWindow.IconTemplate>

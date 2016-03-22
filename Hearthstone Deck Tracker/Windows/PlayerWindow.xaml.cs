@@ -64,8 +64,6 @@ namespace Hearthstone_Deck_Tracker
 
 				Height = 34 * ListViewPlayer.Items.Count;
 			}
-			else
-				Update();
 		}
 
 		public double PlayerDeckMaxHeight => ActualHeight - PlayerLabelsHeight;
@@ -128,6 +126,7 @@ namespace Hearthstone_Deck_Tracker
 						break;
 				}
 			}
+			OnPropertyChanged(nameof(PlayerDeckMaxHeight));
 		}
 
 		public void SetCardCount(int cardCount, int cardsLeftInDeck)
@@ -188,5 +187,11 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private void PlayerWindow_OnSizeChanged(object sender, SizeChangedEventArgs e) => OnPropertyChanged(nameof(PlayerDeckMaxHeight));
+
+		private void PlayerWindow_OnLoaded(object sender, RoutedEventArgs e)
+		{
+			Update();
+			UpdatePlayerLayout();
+		}
 	}
 }

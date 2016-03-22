@@ -69,9 +69,15 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 			Core.Overlay.Update(false);
 			if(_isPlayerList)
+			{
 				Core.Windows.PlayerWindow.Update();
+				Core.Windows.PlayerWindow.UpdatePlayerLayout();
+			}
 			else
+			{
 				Core.Windows.OpponentWindow.Update();
+				Core.Windows.OpponentWindow.UpdateOpponentLayout();
+			}
 		}
 
 		private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
@@ -82,9 +88,15 @@ namespace Hearthstone_Deck_Tracker
 			Config.Save();
 			Core.Overlay.Update(false);
 			if(_isPlayerList)
+			{
 				Core.Windows.PlayerWindow.Update();
+				Core.Windows.PlayerWindow.UpdatePlayerLayout();
+			}
 			else
+			{
 				Core.Windows.OpponentWindow.Update();
+				Core.Windows.OpponentWindow.UpdateOpponentLayout();
+			}
 		}
 	}
 }

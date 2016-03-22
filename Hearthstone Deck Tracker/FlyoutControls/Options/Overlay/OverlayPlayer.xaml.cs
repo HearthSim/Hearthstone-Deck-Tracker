@@ -93,8 +93,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 						break;
 				}
 			}
-			Core.Overlay.UpdatePlayerLayout();
-			Core.Windows.PlayerWindow.UpdatePlayerLayout();
 			_initialized = true;
 		}
 
