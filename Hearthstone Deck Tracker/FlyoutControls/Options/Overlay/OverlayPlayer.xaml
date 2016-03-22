@@ -39,6 +39,12 @@
                                 VerticalAlignment="Center" Width="205" Value="100"
                                 ValueChanged="SliderPlayerOpacity_ValueChanged" SmallChange="1" LargeChange="10" />
                     </DockPanel>
+                    <CheckBox x:Name="CheckBoxCenterDeckVertically"
+                              Content="Center deck vertically" HorizontalAlignment="Left"
+                              ToolTip="Center cards and information panels vertically within the selected region for the deck. Region can be changed via 'overlay > general > unlock'."
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckBoxCenterDeckVertically_Checked"
+                              Unchecked="CheckBoxCenterDeckVertically_Unchecked" />
                     <CheckBox x:Name="CheckboxHighlightCardsInHand"
                               Content="Highlight cards in hand" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"

@@ -225,10 +225,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateElementPositions()
 		{
-			Canvas.SetTop(StackPanelPlayer, Height * Config.Instance.PlayerDeckTop / 100);
-			Canvas.SetLeft(StackPanelPlayer, Width * Config.Instance.PlayerDeckLeft / 100 - StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
-			Canvas.SetTop(StackPanelOpponent, Height * Config.Instance.OpponentDeckTop / 100);
-			Canvas.SetLeft(StackPanelOpponent, Width * Config.Instance.OpponentDeckLeft / 100);
+			Canvas.SetTop(BorderStackPanelPlayer, Height * Config.Instance.PlayerDeckTop / 100);
+			Canvas.SetLeft(BorderStackPanelPlayer, Width * Config.Instance.PlayerDeckLeft / 100 - StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
+			Canvas.SetTop(BorderStackPanelOpponent, Height * Config.Instance.OpponentDeckTop / 100);
+			Canvas.SetLeft(BorderStackPanelOpponent, Width * Config.Instance.OpponentDeckLeft / 100);
 			Canvas.SetTop(StackPanelSecrets, Height * Config.Instance.SecretsTop / 100);
 			Canvas.SetLeft(StackPanelSecrets, Width * Config.Instance.SecretsLeft / 100);
 			Canvas.SetTop(LblTurnTime, Height * Config.Instance.TimersVerticalPosition / 100 - 5);
@@ -262,7 +262,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateElementSizes()
 		{
+			OnPropertyChanged(nameof(PlayerStackHeight));
 			OnPropertyChanged(nameof(PlayerListHeight));
+			OnPropertyChanged(nameof(OpponentStackHeight));
 			OnPropertyChanged(nameof(OpponentListHeight));
 			//Gold progress
 			RectGoldDisplay.Height = GoldFrameHeight;
@@ -286,7 +288,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			TextBlockOpponentAttack.Width = atkWidth;
 			TextBlockOpponentAttack.Height = atkWidth;
 			TextBlockOpponentAttack.FontSize = atkFont;
+		}
 
+		public void UpdateStackPanelAlignment()
+		{
+			OnPropertyChanged(nameof(PlayerStackPanelAlignment));
+			OnPropertyChanged(nameof(OpponentStackPanelAlignment));
 		}
 
 		public double GoldFrameHeight => Height * 25 / 768;

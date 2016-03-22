@@ -126,8 +126,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				new Point(573 / tWidth, 37 / tHeight),
 				new Point(600 / tWidth, 27 / tHeight)
 			};
-			_movableElements.Add(StackPanelPlayer, new ResizeGrip());
-			_movableElements.Add(StackPanelOpponent, new ResizeGrip());
+			_movableElements.Add(BorderStackPanelPlayer, new ResizeGrip());
+			_movableElements.Add(BorderStackPanelOpponent, new ResizeGrip());
 			_movableElements.Add(StackPanelSecrets, new ResizeGrip());
 			_movableElements.Add(LblTurnTime, new ResizeGrip());
 			_movableElements.Add(IconBoardAttackPlayer, new ResizeGrip());

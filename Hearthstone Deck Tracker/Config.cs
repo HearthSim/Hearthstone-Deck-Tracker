@@ -518,6 +518,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(100)]
 		public double OverlayPlayerScaling = 100;
 
+		[DefaultValue(true)]
+		public bool OverlayCenterPlayerStackPanel = true;
+
+		[DefaultValue(true)]
+		public bool OverlayCenterOpponentStackPanel = true;
+
 		[DefaultValue(false)]
 		public bool OverlaySecretToolTipsOnly = false;
 

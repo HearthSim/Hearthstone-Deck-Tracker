@@ -36,50 +36,56 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var delta = new Point((newPos.X - _mousePos.X) * 100, (newPos.Y - _mousePos.Y) * 100);
 			_mousePos = newPos;
 
-			var panel = _selectedUiElement as Panel;
-			if (panel != null)
+
+			var border = _selectedUiElement as Border;
+			if(border != null)
 			{
-				if (panel.Equals(StackPanelPlayer))
+				if(border.Equals(BorderStackPanelPlayer))
 				{
 					var scaling = Config.Instance.OverlayPlayerScaling / 100;
-					if (_resizeElement)
+					if(_resizeElement)
 					{
 						Config.Instance.PlayerDeckHeight += delta.Y / Height * scaling;
-						_movableElements[panel].Height = Height * Config.Instance.PlayerDeckHeight / 100 * scaling;
+						_movableElements[border].Height = Height * Config.Instance.PlayerDeckHeight / 100 * scaling;
 						OnPropertyChanged(nameof(OpponentListHeight));
 					}
 					else
 					{
 						Config.Instance.PlayerDeckTop += delta.Y / Height * scaling;
 						Config.Instance.PlayerDeckLeft += delta.X / Width * scaling;
-						Canvas.SetTop(_movableElements[panel], Height * Config.Instance.PlayerDeckTop / 100);
-						Canvas.SetLeft(_movableElements[panel],
+						Canvas.SetTop(_movableElements[border], Height * Config.Instance.PlayerDeckTop / 100);
+						Canvas.SetLeft(_movableElements[border],
 									   Width * Config.Instance.PlayerDeckLeft / 100
 									   - StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
 					}
 					return;
 				}
-				if (panel.Equals(StackPanelOpponent))
+				if(border.Equals(BorderStackPanelOpponent))
 				{
 					var scaling = Config.Instance.OverlayOpponentScaling / 100;
-					if (_resizeElement)
+					if(_resizeElement)
 					{
 						Config.Instance.OpponentDeckHeight += delta.Y / Height * scaling;
-						_movableElements[panel].Height = Height * Config.Instance.OpponentDeckHeight / 100 * scaling;
+						_movableElements[border].Height = Height * Config.Instance.OpponentDeckHeight / 100 * scaling;
 						OnPropertyChanged(nameof(OpponentListHeight));
 					}
 					else
 					{
 						Config.Instance.OpponentDeckTop += delta.Y / Height * scaling;
 						Config.Instance.OpponentDeckLeft += delta.X / Width * scaling;
-						Canvas.SetTop(_movableElements[panel], Height * Config.Instance.OpponentDeckTop / 100);
-						Canvas.SetLeft(_movableElements[panel], Width * Config.Instance.OpponentDeckLeft / 100);
+						Canvas.SetTop(_movableElements[border], Height * Config.Instance.OpponentDeckTop / 100);
+						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.OpponentDeckLeft / 100);
 					}
 					return;
 				}
-				if (panel.Equals(StackPanelSecrets))
+			}
+
+			var panel = _selectedUiElement as Panel;
+			if(panel != null)
+			{
+				if(panel.Equals(StackPanelSecrets))
 				{
-					if (!_resizeElement)
+					if(!_resizeElement)
 					{
 						Config.Instance.SecretsTop += delta.Y / Height * Config.Instance.SecretsPanelScaling;
 						Config.Instance.SecretsLeft += delta.X / Width * Config.Instance.SecretsPanelScaling;
@@ -148,24 +154,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 				foreach (var movableElement in _movableElements)
 				{
 					var relativePos = movableElement.Value.PointFromScreen(_mousePos);
-					var panel = movableElement.Key as Panel;
-					if (panel != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
+					var border = movableElement.Key as Border;
+					if(border != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
 					{
-						if (Math.Abs(relativePos.X - movableElement.Value.ActualWidth) < 30
+						if(Math.Abs(relativePos.X - movableElement.Value.ActualWidth) < 30
 						   && Math.Abs(relativePos.Y - movableElement.Value.ActualHeight) < 30)
 							_resizeElement = true;
 
 						_selectedUiElement = movableElement.Key;
 						return;
 					}
-					var timer = movableElement.Key as HearthstoneTextBlock;
-					if (timer != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
+					var panel = movableElement.Key as Panel;
+					if(panel != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
 					{
 						_selectedUiElement = movableElement.Key;
 						return;
 					}
-					var grid = movableElement.Key as Grid;
-					if (grid != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
+					var timer = movableElement.Key as HearthstoneTextBlock;
+					if (timer != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
 					{
 						_selectedUiElement = movableElement.Key;
 						return;
@@ -208,7 +214,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
 
 						var elementSize = GetUiElementSize(movableElement.Key);
-						if (movableElement.Key == StackPanelPlayer)
+						if (movableElement.Key == BorderStackPanelPlayer)
 						{
 							if (!TrySetResizeGripHeight(movableElement.Value, Config.Instance.PlayerDeckHeight * Height / 100))
 							{
@@ -218,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 							movableElement.Value.Height *= Config.Instance.OverlayPlayerScaling / 100;
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width * Config.Instance.OverlayPlayerScaling/100 : 0;
 						}
-						else if (movableElement.Key == StackPanelOpponent)
+						else if (movableElement.Key == BorderStackPanelOpponent)
 						{
 							if (!TrySetResizeGripHeight(movableElement.Value, Config.Instance.OpponentDeckHeight * Height / 100))
 							{
@@ -276,8 +282,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if (element == null)
 				return new Size();
+			var border = element as Border;
+			if(border != null)
+				return new Size(border.ActualWidth, border.ActualHeight);
 			var panel = element as Panel;
-			if (panel != null)
+			if(panel != null)
 				return new Size(panel.ActualWidth, panel.ActualHeight);
 			var block = element as HearthstoneTextBlock;
 			if (block != null)

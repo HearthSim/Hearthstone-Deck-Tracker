@@ -84,14 +84,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public List<Card> OpponentDeck => _game.Opponent.DisplayRevealedCards;
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public double PlayerListHeight => Config.Instance.PlayerDeckHeight / 100 * Height - PlayerLabelsHeight;
+		public double PlayerStackHeight => Config.Instance.PlayerDeckHeight / 100 * Height;
+		public double PlayerListHeight => PlayerStackHeight - PlayerLabelsHeight;
 		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
 			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight;
 
-		public double OpponentListHeight => Config.Instance.OpponentDeckHeight / 100 * Height - OpponentLabelsHeight;
+		public VerticalAlignment PlayerStackPanelAlignment
+			=> Config.Instance.OverlayCenterPlayerStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
+
+		public double OpponentStackHeight => Config.Instance.OpponentDeckHeight / 100 * Height;
+		public double OpponentListHeight => OpponentStackHeight - OpponentLabelsHeight;
 
 		public double OpponentLabelsHeight => CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight
 											+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight;
+
+		public VerticalAlignment OpponentStackPanelAlignment
+			=> Config.Instance.OverlayCenterOpponentStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
 
 		public void ShowOverlay(bool enable)
 		{

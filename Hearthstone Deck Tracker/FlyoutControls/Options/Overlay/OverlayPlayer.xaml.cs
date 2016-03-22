@@ -60,6 +60,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SliderOverlayPlayerScaling.Value = Config.Instance.OverlayPlayerScaling;
 			TextBoxScaling.Text = Config.Instance.OverlayPlayerScaling.ToString(CultureInfo.InvariantCulture);
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
+			CheckBoxCenterDeckVertically.IsChecked = Config.Instance.OverlayCenterPlayerStackPanel;
 
 			ElementSorterPlayer.IsPlayer = true;
 			foreach(var itemName in Config.Instance.PanelOrderPlayer)
@@ -211,6 +212,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!char.IsDigit(e.Text, e.Text.Length - 1))
 				e.Handled = true;
+		}
+
+		private void CheckBoxCenterDeckVertically_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlayCenterPlayerStackPanel = true;
+			Config.Save();
+			Core.Overlay.UpdateStackPanelAlignment();
+		}
+
+		private void CheckBoxCenterDeckVertically_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlayCenterPlayerStackPanel = false;
+			Config.Save();
+			Core.Overlay.UpdateStackPanelAlignment();
 		}
 	}
 }
