@@ -3,7 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-                      Title="Timer" Height="130" Width="150"
+                      Title="Timer" Height="142" Width="150"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       Activated="MetroWindow_Activated" Deactivated="MetroWindow_Deactivated">
     <controls:MetroWindow.IconTemplate>
@@ -17,9 +17,9 @@
     </controls:MetroWindow.IconTemplate>
     <Grid>
         <StackPanel VerticalAlignment="Center">
-            <local:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="0" FontSize="24" />
-            <local:HearthstoneTextBlock x:Name="LblTurnTime" Text="90" FontSize="32" />
-            <local:HearthstoneTextBlock x:Name="LblPlayerTurnTime" Text="0" FontSize="24" />
+            <local:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="0" FontSize="24" TextAlignment="Center" Height="30"/>
+            <local:HearthstoneTextBlock x:Name="LblTurnTime" Text="90" FontSize="32" TextAlignment="Center" Height="45"/>
+            <local:HearthstoneTextBlock x:Name="LblPlayerTurnTime" Text="0" FontSize="24" TextAlignment="Center" Height="35"/>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>
