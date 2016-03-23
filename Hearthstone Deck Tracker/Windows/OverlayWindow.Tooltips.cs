@@ -98,8 +98,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				ToolTipCard.SetValue(DataContextProperty, ListViewPlayer.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card);
 
+				var centeredListOffset = Config.Instance.OverlayCenterPlayerStackPanel ? (BorderStackPanelPlayer.ActualHeight - StackPanelPlayer.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
-				var topOffset = Canvas.GetTop(BorderStackPanelPlayer) + (BorderStackPanelPlayer.ActualHeight - StackPanelPlayer.ActualHeight) / 2
+				var topOffset = Canvas.GetTop(BorderStackPanelPlayer) + centeredListOffset
 								+ GetListViewOffset(StackPanelPlayer) + cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100;
 
 				//prevent tooltip from going outside of the overlay
@@ -122,8 +123,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				ToolTipCard.SetValue(DataContextProperty, ListViewOpponent.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card);
 
+				var centeredListOffset = Config.Instance.OverlayCenterOpponentStackPanel ? (BorderStackPanelOpponent.ActualHeight - StackPanelOpponent.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
-				var topOffset = Canvas.GetTop(BorderStackPanelOpponent) + (BorderStackPanelOpponent.ActualHeight - StackPanelOpponent.ActualHeight) / 2 
+				var topOffset = Canvas.GetTop(BorderStackPanelOpponent) + centeredListOffset
 								+ GetListViewOffset(StackPanelOpponent) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100;
 
 				//prevent tooltip from going outside of the overlay
