@@ -60,7 +60,7 @@ namespace Hearthstone_Deck_Tracker
 				CanvasPlayerCount.Visibility = Visibility.Collapsed;
 				LblWins.Visibility = Visibility.Collapsed;
 				LblDeckTitle.Visibility = Visibility.Collapsed;
-				ListViewPlayer.ItemsSource = forScreenshot;
+				ListViewPlayer.Update(forScreenshot, true, true);
 
 				Height = 34 * ListViewPlayer.Items.Count;
 			}
