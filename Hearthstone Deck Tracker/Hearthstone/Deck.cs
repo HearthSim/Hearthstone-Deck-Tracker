@@ -557,6 +557,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OnPropertyChanged(nameof(WinLossString));
 			OnPropertyChanged(nameof(WinPercent));
 			OnPropertyChanged(nameof(WinPercentString));
+			OnPropertyChanged(nameof(VisibilityStats));
+			OnPropertyChanged(nameof(VisibilityNoStats));
 		}
 	}
 }
