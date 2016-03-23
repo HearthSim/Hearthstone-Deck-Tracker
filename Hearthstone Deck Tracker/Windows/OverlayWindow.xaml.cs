@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const double RankCoveredMaxLeft = 0.1;
 		private const double PlayerRankCoveredMaxHeight = 0.8;
 		private const double OpponentRankCoveredMaxTop = 0.12;
+		private const int ChancePanelsMargins = 8;
 		private readonly Point[][] _cardMarkPos = new Point[MaxHandSize][];
 		private readonly List<CardMarker> _cardMarks = new List<CardMarker>();
 		private readonly int _customHeight;
@@ -87,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double PlayerStackHeight => Config.Instance.PlayerDeckHeight / 100 * Height;
 		public double PlayerListHeight => PlayerStackHeight - PlayerLabelsHeight;
 		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
-			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight;
+			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + ChancePanelsMargins;
 
 		public VerticalAlignment PlayerStackPanelAlignment
 			=> Config.Instance.OverlayCenterPlayerStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
@@ -96,7 +97,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double OpponentListHeight => OpponentStackHeight - OpponentLabelsHeight;
 
 		public double OpponentLabelsHeight => CanvasOpponentChance.ActualHeight + CanvasOpponentCount.ActualHeight
-											+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight;
+											+ LblOpponentFatigue.ActualHeight + LblWinRateAgainst.ActualHeight + ChancePanelsMargins;
 
 		public VerticalAlignment OpponentStackPanelAlignment
 			=> Config.Instance.OverlayCenterOpponentStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
