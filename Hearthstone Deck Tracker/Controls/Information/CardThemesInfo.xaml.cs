@@ -2,12 +2,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Themes;
@@ -20,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 	/// <summary>
 	/// Interaction logic for CardThemesInfo.xaml
 	/// </summary>
-	public partial class CardThemesInfo : UserControl
+	public partial class CardThemesInfo : INotifyPropertyChanged
 	{
 		private readonly List<Hearthstone.Card> _cards = new List<Hearthstone.Card>();
 		private bool _update = true;
@@ -48,6 +50,35 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		public ImageBrush MinimalCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "minimal"), Card).Build();
 		public ImageBrush DarkCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "dark"), Card).Build();
 		public ImageBrush LightCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "light"), Card).Build();
+
+
+		public bool RarityGems
+		{
+			get { return Config.Instance.RarityCardGems; }
+			set
+			{
+				Config.Instance.RarityCardGems = value;
+				UpdateCards();
+				OnPropertyChanged(nameof(ClassicCard));
+				OnPropertyChanged(nameof(MinimalCard));
+				OnPropertyChanged(nameof(DarkCard));
+				OnPropertyChanged(nameof(LightCard));
+			}
+		}
+
+		public bool RarityFrames
+		{
+			get { return Config.Instance.RarityCardFrames; }
+			set
+			{
+				Config.Instance.RarityCardFrames = value;
+				UpdateCards();
+				OnPropertyChanged(nameof(ClassicCard));
+				OnPropertyChanged(nameof(MinimalCard));
+				OnPropertyChanged(nameof(DarkCard));
+				OnPropertyChanged(nameof(LightCard));
+			}
+		}
 
 		private async void UpdateAnimatedCardListAsync()
 		{
@@ -105,6 +136,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 			var tb = sender as ToggleButton;
 			if(tb != null)
 				ThemeManager.SetTheme(tb.Content.ToString().ToLower());
+			UpdateCards();
+		}
+
+		private void UpdateCards()
+		{
 			foreach(var card in AnimatedCardList.Items.Cast<AnimatedCard>().Select(x => x.Card))
 			{
 				card.UpdateHighlight();
@@ -113,5 +149,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		}
 
 		private void CardThemesInfo_OnUnloaded(object sender, RoutedEventArgs e) => _update = false;
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }
