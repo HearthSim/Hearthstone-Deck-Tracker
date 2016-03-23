@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 					Logging.Log.Warn($"Invalid theme directory name {di.Name}");
 				}
 			}
-			CurrentTheme = FindTheme(Config.Instance.CardBarTheme);
+			CurrentTheme = FindTheme(Config.Instance.CardBarTheme) ?? Themes.FirstOrDefault();
 		}
 
 		public static Theme FindTheme(string name)
