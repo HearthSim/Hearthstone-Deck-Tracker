@@ -54,6 +54,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxShowLastPlayedDate.IsChecked = Config.Instance.ShowLastPlayedDateOnDeck;
 			ComboBoxLastPlayedDateFormat.SelectedItem = Config.Instance.LastPlayedDateFormat;
 			ComboBoxCardTheme.SelectedItem = Utility.Themes.ThemeManager.FindTheme(Config.Instance.CardBarTheme);
+			CheckboxCardFrameRarity.IsChecked = Config.Instance.RarityCardFrames;
+			CheckboxCardGemRarity.IsChecked = Config.Instance.RarityCardGems;
 
 			if(Config.Instance.NonLatinUseDefaultFont == null)
 			{
@@ -270,6 +272,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.LastPlayedDateFormat = (LastPlayedDateFormat)ComboBoxLastPlayedDateFormat.SelectedItem;
+			Config.Save();
+		}
+
+		private void CheckboxCardFrameRarity_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardFrames = true;
+			Config.Save();
+		}
+
+		private void CheckboxCardFrameRarity_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardFrames = false;
+			Config.Save();
+		}
+
+		private void CheckboxCardGemRarity_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardGems = true;
+			Config.Save();
+		}
+
+		private void CheckboxCardGemRarity_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardGems = false;
 			Config.Save();
 		}
 	}

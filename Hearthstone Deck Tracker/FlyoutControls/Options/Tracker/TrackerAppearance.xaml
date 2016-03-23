@@ -70,6 +70,14 @@
                                   VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboboxDeckLayout_SelectionChanged" />
                     </DockPanel>
+                    <CheckBox x:Name="CheckboxCardFrameRarity" Content="Rarity-colored card frames"
+                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxCardFrameRarity_OnChecked"
+                              Unchecked="CheckboxCardFrameRarity_OnUnchecked" />
+                    <CheckBox x:Name="CheckboxCardGemRarity" Content="Rarity-colored card gems"
+                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxCardGemRarity_OnChecked"
+                              Unchecked="CheckboxCardGemRarity_OnUnchecked" />
                     <CheckBox x:Name="CheckBoxArenaStatsTextColoring" Content="Red/green text color in stats summary"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

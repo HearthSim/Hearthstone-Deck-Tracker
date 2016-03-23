@@ -32,8 +32,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
 			CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
-			CheckboxCardFrameRarity.IsChecked = Config.Instance.RarityCardFrames;
-			CheckboxCardGemRarity.IsChecked = Config.Instance.RarityCardGems;
 			CheckboxTurnTime.IsChecked = Config.Instance.TimerTurnTime == 75;
 			CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
@@ -188,38 +186,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TimerAlert = false;
 			TextboxTimerAlert.IsEnabled = false;
-			Config.Save();
-		}
-
-		private void CheckboxCardFrameRarity_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.RarityCardFrames = true;
-			Config.Save();
-		}
-
-		private void CheckboxCardFrameRarity_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.RarityCardFrames = false;
-			Config.Save();
-		}
-
-		private void CheckboxCardGemRarity_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.RarityCardGems = true;
-			Config.Save();
-		}
-
-		private void CheckboxCardGemRarity_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.RarityCardGems = false;
 			Config.Save();
 		}
 
