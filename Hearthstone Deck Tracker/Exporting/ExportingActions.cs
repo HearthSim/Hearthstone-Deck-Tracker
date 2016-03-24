@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				if(Config.Instance.ExportPasteClipboard)
 				{
 					Clipboard.SetText(name);
-					SendKeys.SendWait("^v");
+					SendKeys.SendWait("^{v}");
 				}
 				else
 					SendKeys.SendWait(name);
@@ -91,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			if(Config.Instance.ExportPasteClipboard || !Helper.LatinLanguages.Contains(Config.Instance.SelectedLanguage))
 			{
 				Clipboard.SetText(GetSearchString(card));
-				SendKeys.SendWait("^v");
+				SendKeys.SendWait("^{v}");
 			}
 			else
 				SendKeys.SendWait(GetSearchString(card));
