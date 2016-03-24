@@ -23,9 +23,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected bool HasAllOptionalGems;
 		protected bool HasAllOptionalCountBoxes;
 		protected int CreatedIconOffset = -23;
-		protected readonly Typeface TextTypeFace;
-		protected readonly Typeface NumbersTypeFace = new Typeface(new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT"), FontStyles.Normal,
+		protected Typeface TextTypeFace;
+		protected Typeface NumbersTypeFace = new Typeface(new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Chunkfive"), FontStyles.Normal,
 										  FontWeights.Normal, FontStretches.Condensed);
+
+		protected double CountFontSize = 17;
+		protected double TextFontSize = 13;
+		protected double CostFontSize = 20;
 
 		protected static readonly Rect FrameRect = new Rect(0, 0, 217, 34);
 		protected static readonly Rect GemRect = new Rect(0, 0, 34, 34);
@@ -204,13 +208,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected virtual void AddCountText()
 		{
 			var count = Math.Abs(Card.Count);
-			if(count > 1)
-			{
-				var countText = count > 9 ? "9" : count.ToString();
-				AddText(countText, 20, new Rect(198, 4, double.NaN, double.NaN), CountTextBrush, NumbersTypeFace);
-				if(count > 9)
-					AddText("+", 13, new Rect(203, 3, double.NaN, double.NaN), CountTextBrush, TextTypeFace);
-			}
+			if(count <= 1)
+				return;
+			AddText(Math.Min(count, 9), CountFontSize, new Rect(198, 0, double.NaN, 34), CountTextBrush, NumbersTypeFace);
+			if(count > 9)
+				AddText("+", 13, new Rect(203, 3, double.NaN, double.NaN), CountTextBrush, TextTypeFace);
 		}
 
 		protected virtual void AddCreatedIcon()
@@ -226,14 +228,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			AddChild(Required[ThemeElement.LegendaryIcon]);
 		}
 
-		protected virtual void AddCost() => AddText(Card.Cost, 22, new Rect(6, 0, 25, 34), Card.ColorPlayer, NumbersTypeFace, true);
+		protected virtual void AddCost() => AddText(Card.Cost, CostFontSize, new Rect(6, 0, 25, 34), Card.ColorPlayer, NumbersTypeFace, 3.0, true);
 
 		protected virtual void AddCardName()
-			=> AddText(Card.LocalizedName, 14, new Rect(38, 8, FrameRect.Width - BoxRect.Width - 38, 34), Card.ColorPlayer, TextTypeFace);
+			=> AddText(Card.LocalizedName, TextFontSize, new Rect(38, 8, FrameRect.Width - BoxRect.Width - 38, 34), Card.ColorPlayer, TextTypeFace);
 
-		protected virtual void AddText(object obj, int size, Rect rect, Brush fill, Typeface typeface, bool centered = false)
+		protected virtual void AddText(object obj, double size, Rect rect, Brush fill, Typeface typeface, double strokeThickness = 2.0, bool centered = false)
 		{
-			foreach(var d in CardTextImageBuilder.GetOutlinedText(obj.ToString(), size, rect, fill, Brushes.Black, typeface, centered: centered))
+			foreach(var d in CardTextImageBuilder.GetOutlinedText(obj.ToString(), size, rect, fill, Brushes.Black, typeface, 2.0, centered))
 				DrawingGroup.Children.Add(d);
 		}
 

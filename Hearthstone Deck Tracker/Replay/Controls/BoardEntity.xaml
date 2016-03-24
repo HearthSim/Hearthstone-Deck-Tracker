@@ -17,7 +17,6 @@
         <DockPanel Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
             <Grid DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}">
                 <local:HearthstoneTextBlock Text="{Binding LocalizedName}" FontSize="14"
-                                            FontFamily="{Binding Font}"
                                             VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap"
                                             TextAlignment="Center" Height="20"/>
             </Grid>

@@ -159,7 +159,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(_formattedText == null)
 				return;
-			var y = !double.IsNaN(ActualHeight) ? (ActualHeight - _formattedText.Height) / 2 : 0;
+			var y = !double.IsNaN(ActualHeight) ? (ActualHeight - _formattedText.Height) / 2 + _formattedText.Height * 0.05: 0;
 			drawingContext.DrawGeometry(Stroke, new Pen(Brushes.Black, 2.0), _formattedText.BuildGeometry(new Point(0, y)));
 			drawingContext.DrawGeometry(Fill, new Pen(Brushes.White, 0), _formattedText.BuildGeometry(new Point(0, y)));
 		}

@@ -11,18 +11,5 @@
             <local:CardToolTip DataContext="{Binding Card}"/>
         </ToolTip>
     </UserControl.ToolTip>
-    <Grid Height="34" Width="217">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="38" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Rectangle Fill="{Binding Background}" Height="34" Width="217" Grid.ColumnSpan="2"/>
-        <local:OutlinedTextBlock Width="32" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                 Text="{Binding Cost}" Fill="{Binding CostTextColor}"
-                                 FontFamily="/HearthstoneDeckTracker;component/Resources/#Belwe Bd BT"
-                                 TextAlignment="Center" FontSize="20" Grid.Column="0" />
-        <local:OutlinedTextBlock Height="16" VerticalAlignment="Center" Text="{Binding LocalizedName}"
-                                 FontFamily="{Binding Font}"
-                                 TextAlignment="Left" FontSize="13" Grid.Column="1" />
-    </Grid>
+    <Rectangle Fill="{Binding Background}" Height="34" Width="217" Grid.ColumnSpan="2"/>
 </UserControl>

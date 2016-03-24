@@ -12,7 +12,7 @@
             <Canvas.Background>
                <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/card-marker.png"/>
             </Canvas.Background>
-            <Hearthstone_Deck_Tracker:HearthstoneTextBlock x:Name="CardAge" FontSize="20" Text="0" Canvas.Left="0" Width="32" Canvas.Top="2" TextAlignment="Center" />
+            <Hearthstone_Deck_Tracker:HearthstoneTextBlock x:Name="CardAge" FontSize="18" Text="0" Canvas.Left="0" Width="32" Height="32" Canvas.Top="0" TextAlignment="Center" />
         </Canvas>
         <Image x:Name="CardIcon" Width="16" Height="16" Canvas.Left="20" Canvas.Top="18" Source="/HearthstoneDeckTracker;component/Images/card-icon-coin.png" />
 

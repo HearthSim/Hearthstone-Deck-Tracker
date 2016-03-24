@@ -999,6 +999,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\Chunkfive.otf" />
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
     <Resource Include="Resources\SplashScreen.png" />
     <Content Include="HDTHelper.exe">
@@ -1048,7 +1049,6 @@
     <Resource Include="Resources\Ranks\8.bmp" />
     <Resource Include="Resources\Ranks\9.bmp" />
     <Resource Include="Images\frame_card_counter.png" />
-    <Resource Include="Resources\1553.ttf" />
     <Content Include="Images\HearthstoneDeckTracker.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
