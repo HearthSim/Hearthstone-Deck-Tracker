@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class GameV2 : IGame
 	{
-		public readonly List<Deck> DiscardedArenaDecks = new List<Deck>();
+		public readonly List<Deck> IgnoredArenaDecks = new List<Deck>();
 		private bool _awaitingMainWindowOpen;
 		private GameMode _currentGameMode;
 		private bool _gameModeDetectionComplete;
@@ -256,7 +256,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					TempArenaDeck.Cards.Clear();
 					return;
 				}
-				if(DiscardedArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
+				if(IgnoredArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
 				{
 					Log.Info("...but it was already discarded by the user. No automatic action taken.");
 					return;
@@ -302,10 +302,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Core.MainWindow.ActivateWindow();
 			}
 			else
-			{
 				Log.Info("...discarded by user.");
-				DiscardedArenaDecks.Add(deck);
-			}
+			IgnoredArenaDecks.Add(deck);
 			_awaitingMainWindowOpen = false;
 		}
 
