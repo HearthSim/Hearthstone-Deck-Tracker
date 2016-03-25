@@ -224,17 +224,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 					{
 						Config.Instance.Reset(nameof(Config.OpponentDeckHeight));
 						Config.Instance.Reset(nameof(Config.OpponentDeckTop));
+						converted = true;
 					}
-					else
-						Config.Instance.OverlayCenterOpponentStackPanel = false;
 					if(Math.Abs(Config.Instance.PlayerDeckHeight - 65) < 1 && Math.Abs(Config.Instance.PlayerDeckTop - 17) < 1)
 					{
 						Config.Instance.Reset(nameof(Config.PlayerDeckHeight));
 						Config.Instance.Reset(nameof(Config.PlayerDeckTop));
+						converted = true;
 					}
-					else
-						Config.Instance.OverlayCenterPlayerStackPanel = false;
-					converted = true;
 				}
 			}
 
