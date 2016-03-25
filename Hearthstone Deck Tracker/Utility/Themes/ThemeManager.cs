@@ -47,6 +47,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			if(t == null)
 				return;
 			CurrentTheme = t;
+			UpdateCards();
+		}
+
+		public static void UpdateCards()
+		{
 			Helper.UpdatePlayerCards(true);
 			Helper.UpdateOpponentCards(true);
 			Core.Overlay.PlayerDeck.ForEach(c => c.UpdateHighlight());
