@@ -23,6 +23,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected bool HasAllOptionalGems;
 		protected bool HasAllOptionalCountBoxes;
 		protected int CreatedIconOffset = -23;
+		protected int FadeOffset = -23;
+		protected int ImageOffset = -23;
 		protected Typeface TextTypeFace;
 		protected Typeface NumbersTypeFace = new Typeface(new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Chunkfive"), FontStyles.Normal,
 										  FontWeights.Normal, FontStretches.Condensed);
@@ -35,6 +37,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected static readonly Rect GemRect = new Rect(0, 0, 34, 34);
 		protected static readonly Rect BoxRect = new Rect(183, 0, 34, 34);
 		protected static readonly Rect ImageRect = new Rect(83, 0, 134, 34);
+		protected static readonly Rect CountTextRect = new Rect(198, 0, double.NaN, 34);
+		protected static readonly Rect CostTextRect = new Rect(0, 0, 34, 34);
 
 		protected static readonly Dictionary<ThemeElement, ThemeElementInfo> Required = new Dictionary<ThemeElement, ThemeElementInfo>
 		{
@@ -111,14 +115,27 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			return new ImageBrush { ImageSource = new DrawingImage(DrawingGroup) };
 		}
 
-		protected virtual void AddCardImage()
+		protected virtual void AddCardImage() => AddCardImage(ImageRect, false);
+		protected void AddCardImage(Rect rect, bool offsetByCountBox)
 		{
 			var cardFile = Path.Combine(BarImageDir, Card.Id + ".png");
 			if(File.Exists(cardFile))
-				AddChild(cardFile, ImageRect);
+			{
+				if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.Legendary))
+					AddChild(cardFile, rect.Move(ImageOffset, 0));
+				else
+					AddChild(cardFile, rect);
+			}
 		}
 
-		protected virtual void AddFadeOverlay() => AddChild(Required[ThemeElement.FadeOverlay]);
+		protected virtual void AddFadeOverlay() => AddFadeOverlay(Required[ThemeElement.FadeOverlay].Rectangle, false);
+		protected virtual void AddFadeOverlay(Rect rect, bool offsetByCountBox)
+		{
+			if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.Legendary))
+				AddChild(Required[ThemeElement.FadeOverlay], rect.Move(FadeOffset, 0));
+			else
+				AddChild(Required[ThemeElement.FadeOverlay], rect);
+		}
 
 		protected virtual void AddFrame()
 		{
@@ -205,33 +222,35 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		protected virtual SolidColorBrush CountTextBrush => new SolidColorBrush(Color.FromRgb(240, 195, 72));
 
-		protected virtual void AddCountText()
+		protected virtual void AddCountText() => AddCountText(CountTextRect);
+		protected void AddCountText(Rect rect)
 		{
 			var count = Math.Abs(Card.Count);
 			if(count <= 1)
 				return;
-			AddText(Math.Min(count, 9), CountFontSize, new Rect(198, 0, double.NaN, 34), CountTextBrush, NumbersTypeFace);
+			AddText(Math.Min(count, 9), CountFontSize, rect, CountTextBrush, NumbersTypeFace);
 			if(count > 9)
-				AddText("+", 13, new Rect(203, 3, double.NaN, double.NaN), CountTextBrush, TextTypeFace);
+				AddText("+", 13, new Rect(rect.X + 5, 3, double.NaN, double.NaN), CountTextBrush, TextTypeFace);
 		}
 
-		protected virtual void AddCreatedIcon()
+		protected virtual void AddCreatedIcon() => AddCreatedIcon(Required[ThemeElement.CreatedIcon].Rectangle);
+		protected virtual void AddCreatedIcon(Rect rect)
 		{
 			if(Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.Legendary)
-				AddChild(Required[ThemeElement.CreatedIcon], Required[ThemeElement.CreatedIcon].Rectangle.Move(CreatedIconOffset, 0));
+				AddChild(Required[ThemeElement.CreatedIcon], rect.Move(CreatedIconOffset, 0));
 			else
-				AddChild(Required[ThemeElement.CreatedIcon]);
+				AddChild(Required[ThemeElement.CreatedIcon], rect);
 		}
 
-		protected virtual void AddLegendaryIcon()
-		{
-			AddChild(Required[ThemeElement.LegendaryIcon]);
-		}
+		protected virtual void AddLegendaryIcon() => AddLegendaryIcon(Required[ThemeElement.LegendaryIcon].Rectangle);
+		protected void AddLegendaryIcon(Rect rect) => AddChild(Required[ThemeElement.LegendaryIcon], rect);
 
-		protected virtual void AddCost() => AddText(Card.Cost, CostFontSize, new Rect(6, 0, 25, 34), Card.ColorPlayer, NumbersTypeFace, 3.0, true);
+		protected virtual void AddCost() => AddCost(CostTextRect);
+		protected void AddCost(Rect rect) => AddText(Card.Cost, CostFontSize, rect, Card.ColorPlayer, NumbersTypeFace, 3.0, true);
 
-		protected virtual void AddCardName()
-			=> AddText(Card.LocalizedName, TextFontSize, new Rect(38, 8, FrameRect.Width - BoxRect.Width - 38, 34), Card.ColorPlayer, TextTypeFace);
+		protected virtual void AddCardName() => AddCardName(new Rect(38, 8, FrameRect.Width - BoxRect.Width - 38, 34));
+		protected void AddCardName(Rect rect)
+			=> AddText(Card.LocalizedName, TextFontSize, rect, Card.ColorPlayer, TextTypeFace);
 
 		protected virtual void AddText(object obj, double size, Rect rect, Brush fill, Typeface typeface, double strokeThickness = 2.0, bool centered = false)
 		{

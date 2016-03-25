@@ -1,6 +1,5 @@
 ﻿#region
 
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
 

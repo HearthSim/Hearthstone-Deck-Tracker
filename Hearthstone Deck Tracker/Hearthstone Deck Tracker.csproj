@@ -427,7 +427,9 @@
     <Compile Include="Utility\Themes\CardTextImageBuilder.cs" />
     <Compile Include="Utility\Themes\ClassicImageBuilder.cs" />
     <Compile Include="Utility\Themes\DefaultBarImageBuilder.cs" />
+    <Compile Include="Utility\Themes\FrostBarImageBuilder.cs" />
     <Compile Include="Utility\Themes\MinimalBarImageBuilder.cs" />
+    <Compile Include="Utility\Themes\DarkBarImageBuilder.cs" />
     <Compile Include="Utility\Themes\Theme.cs" />
     <Compile Include="Utility\Themes\ThemeManager.cs" />
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">

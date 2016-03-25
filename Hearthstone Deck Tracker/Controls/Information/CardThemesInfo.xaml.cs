@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		public ImageBrush ClassicCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "classic"), Card).Build();
 		public ImageBrush MinimalCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "minimal"), Card).Build();
 		public ImageBrush DarkCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "dark"), Card).Build();
-		public ImageBrush LightCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "light"), Card).Build();
+		public ImageBrush FrostCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "frost"), Card).Build();
 
 
 		public bool RarityGems
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 				OnPropertyChanged(nameof(ClassicCard));
 				OnPropertyChanged(nameof(MinimalCard));
 				OnPropertyChanged(nameof(DarkCard));
-				OnPropertyChanged(nameof(LightCard));
+				OnPropertyChanged(nameof(FrostCard));
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 				OnPropertyChanged(nameof(ClassicCard));
 				OnPropertyChanged(nameof(MinimalCard));
 				OnPropertyChanged(nameof(DarkCard));
-				OnPropertyChanged(nameof(LightCard));
+				OnPropertyChanged(nameof(FrostCard));
 			}
 		}
 
