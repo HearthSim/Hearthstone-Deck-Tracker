@@ -19,6 +19,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	public class PowerHandler
 	{
+		private DateTime _lastDeterminePlayersWarning = DateTime.MinValue;
 		private readonly TagChangeHandler _tagChangeHandler = new TagChangeHandler();
 		private readonly List<Entity> _tmpEntities = new List<Entity>();
 
@@ -299,8 +300,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(!creationTag && gameState.DeterminedPlayers)
 				_tagChangeHandler.InvokeQueuedActions();
-			else if(!gameState.DeterminedPlayers && gameState.SetupDone)
+			else if(!gameState.DeterminedPlayers && gameState.SetupDone && (DateTime.Now - _lastDeterminePlayersWarning).TotalSeconds > 5)
 			{
+				_lastDeterminePlayersWarning = DateTime.Now;
 				Log.Warn("Could not determine players by checking for opponent hand.");
 				var playerCard = game.Entities.FirstOrDefault(x => x.Value.IsInHand && !string.IsNullOrEmpty(x.Value.CardId)).Value;
 				if(playerCard != null)
