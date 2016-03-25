@@ -53,7 +53,7 @@
                             <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/player-chance-frame.png"/>
                         </Canvas.Background>
                         <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="55" Height="25" />
-                        <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="18" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="55" Height="25" />
+                        <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="55" Height="25" />
                     </Canvas>
                     <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
                 </StackPanel>
