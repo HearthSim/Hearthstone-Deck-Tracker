@@ -130,8 +130,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(IconStyle.Round)]
 		public IconStyle ClassIconStyle = IconStyle.Round;
 
-		[DefaultValue("classic")]
-		public string CardBarTheme = "classic";
+		[DefaultValue("dark")]
+		public string CardBarTheme = "dark";
 
 		[DefaultValue(true)]
 		public bool ClearLogFileAfterGame = true;
@@ -566,11 +566,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool PrioritizeGolden = true;
 
-		[DefaultValue(true)]
-		public bool RarityCardFrames = true;
+		[DefaultValue(false)]
+		public bool RarityCardFrames = false;
 
-		[DefaultValue(true)]
-		public bool RarityCardGems = true;
+		[DefaultValue(false)]
+		public bool RarityCardGems = false;
 
 		[DefaultValue(true)]
 		public bool RecordArena = true;
