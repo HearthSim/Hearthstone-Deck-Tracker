@@ -46,11 +46,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		}
 
 		public Hearthstone.Card Card => Database.GetCardFromId(CardIds.Collectible.Neutral.RagnarosTheFirelord);
-		public ImageBrush ClassicCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "classic"), Card).Build();
-		public ImageBrush MinimalCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "minimal"), Card).Build();
-		public ImageBrush DarkCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "dark"), Card).Build();
-		public ImageBrush FrostCard => GetBarImageBuilder(ThemeManager.Themes.First(x => x.Name == "frost"), Card).Build();
+		public ImageBrush ClassicCard => GetCardImage("classic");
+		public ImageBrush MinimalCard => GetCardImage("minimal");
+		public ImageBrush DarkCard => GetCardImage("dark");
+		public ImageBrush FrostCard => GetCardImage("frost");
 
+		public ImageBrush GetCardImage(string themeName)
+		{
+			var theme = ThemeManager.Themes.FirstOrDefault(x => x.Name == themeName);
+			if(theme == null)
+				return new ImageBrush();
+			var buildType = theme.BuildType ?? typeof(DefaultBarImageBuilder);
+			return ((CardBarImageBuilder)Activator.CreateInstance(buildType, Card, theme.Directory)).Build();
+		}
 
 		public bool RarityGems
 		{
@@ -121,12 +129,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 					AnimatedCardList.Update(_cards.ToSortedCardList().Select(x => (Hearthstone.Card)x.Clone()).ToList(), true, false);
 				}
 			}
-		}
-
-		public static CardBarImageBuilder GetBarImageBuilder(Theme theme, Hearthstone.Card card)
-		{
-			var buildType = theme.BuildType ?? typeof(DefaultBarImageBuilder);
-			return (CardBarImageBuilder)Activator.CreateInstance(buildType, card, theme.Directory);
 		}
 
 		private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
