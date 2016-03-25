@@ -501,6 +501,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool OverlayCardAnimations = true;
 
 		[DefaultValue(true)]
+		public bool OverlayCardAnimationsOpacity = true;
+
+		[DefaultValue(true)]
 		public bool OverlayCardMarkToolTips = true;
 
 		[DefaultValue(true)]

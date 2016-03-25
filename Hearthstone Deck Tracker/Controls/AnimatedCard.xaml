@@ -7,13 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-          <Storyboard x:Key="StoryboardFadeIn" Duration="0:0:1">
+        <Storyboard x:Key="StoryboardFadeIn" Duration="0:0:1">
             <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Height" From="0" To="34" Duration="0:0:0.5"/>
             <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1"/>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardFadeInNoOpacity" Duration="0:0:1">
+            <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Height" From="0" To="34" Duration="0:0:0.5"/>
         </Storyboard>
         <Storyboard x:Key="StoryboardFadeOut" Duration="0:0:0.7">
             <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.7"/>
             <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Height" From="34" To="0" Duration="0:0:0.4" BeginTime="0:0:0.3"/>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardFadeOutNoOpacity" Duration="0:0:0.7">
+            <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Height" From="34" To="0" Duration="0:0:0.4"/>
         </Storyboard>
         <Storyboard x:Key="StoryboardUpdate" Duration="0:0:1">
             <DoubleAnimation Storyboard.TargetName="RectHighlight" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
