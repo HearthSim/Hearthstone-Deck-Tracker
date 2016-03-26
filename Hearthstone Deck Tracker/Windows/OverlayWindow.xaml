@@ -24,11 +24,11 @@
                 <local:HearthstoneTextBlock VerticalAlignment="Center" Text="{Binding Path=BatteryStatusPercent, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                                             Visibility ="{Binding Path=BatteryStatusTextVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
             </StackPanel>
-            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblOpponentTurnTime" Text="0" Canvas.Top="418"
+            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblOpponentTurnTime" Text="00:00" Canvas.Top="418"
                                         Canvas.Left="418" FontSize="20" />
-            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblTurnTime" Text="90" Canvas.Top="378"
+            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblTurnTime" Text="01:15" Canvas.Top="378"
                                         Canvas.Left="353" FontSize="28" />
-            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="0" Canvas.Top="338"
+            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="00:00" Canvas.Top="338"
                                         Canvas.Left="418" FontSize="20" />
             <Border Name="BorderStackPanelPlayer" Canvas.Left="604" Canvas.Top="203" Height="{Binding PlayerStackHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                 <StackPanel Name="StackPanelPlayer" Width="218" VerticalAlignment="{Binding PlayerStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">

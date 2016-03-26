@@ -202,16 +202,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		internal void UpdateTurnTimer(TimerEventArgs timerEventArgs)
+		internal void UpdateTurnTimer(TimerState timerState)
 		{
-			if(!timerEventArgs.Running || (timerEventArgs.PlayerSeconds <= 0 && timerEventArgs.OpponentSeconds <= 0) 
-				|| _game.CurrentMode != Mode.GAMEPLAY)
+			if((timerState.PlayerSeconds <= 0 && timerState.OpponentSeconds <= 0) || _game.CurrentMode != Mode.GAMEPLAY)
 				return;
-
 			ShowTimers();
-			LblTurnTime.Text = $"{(timerEventArgs.Seconds / 60) % 60:00}:{timerEventArgs.Seconds % 60:00}";
-			LblPlayerTurnTime.Text = $"{(timerEventArgs.PlayerSeconds / 60) % 60:00}:{timerEventArgs.PlayerSeconds % 60:00}";
-			LblOpponentTurnTime.Text = $"{(timerEventArgs.OpponentSeconds / 60) % 60:00}:{timerEventArgs.OpponentSeconds % 60:00}";
+			var seconds = (int)Math.Abs(timerState.Seconds);
+			LblTurnTime.Text = double.IsPositiveInfinity(timerState.Seconds) ? "\u221E" : $"{seconds / 60 % 60:00}:{seconds % 60:00}";
+			LblTurnTime.Fill = timerState.Seconds < 0 ? Brushes.LimeGreen : Brushes.White;
+			LblPlayerTurnTime.Text = $"{timerState.PlayerSeconds / 60 % 60:00}:{timerState.PlayerSeconds % 60:00}";
+			LblOpponentTurnTime.Text = $"{timerState.OpponentSeconds / 60 % 60:00}:{timerState.OpponentSeconds % 60:00}";
 		}
 
 		public void UpdateScaling()

@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
@@ -400,8 +401,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			if(_game.CurrentGameMode == Casual || _game.CurrentGameMode == None)
 				DetectRanks();
-			TurnTimer.Instance.SetCurrentPlayer(player);
-			TurnTimer.Instance.Restart();
+			TurnTimer.Instance.SetPlayer(player);
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
 			{
 				if(Config.Instance.FlashHsOnTurnStart)
@@ -547,6 +547,7 @@ namespace Hearthstone_Deck_Tracker
 			_rankDetectionOverlayToggles = 0;
 			_game.IsInMenu = false;
 			_game.Reset();
+			TurnTimer.Instance.Start(_game).Forget();
 
 			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 

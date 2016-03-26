@@ -32,7 +32,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
 			CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
-			CheckboxTurnTime.IsChecked = Config.Instance.TimerTurnTime == 75;
 			CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			TextboxTimerAlert.Text = Config.Instance.TimerAlertSeconds.ToString();
@@ -205,24 +204,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AutoUseDeck = false;
 			Config.Save();
 			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
-		}
-
-		private void CheckboxTurnTime_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.TimerTurnTime = 75;
-			Config.Save();
-			TurnTimer.Instance.SetTurnTime(75);
-		}
-
-		private void CheckboxTurnTime_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.TimerTurnTime = 90;
-			Config.Save();
-			TurnTimer.Instance.SetTurnTime(90);
 		}
 
 		private void CheckboxSpectatorUseNoDeck_Checked(object sender, RoutedEventArgs e)

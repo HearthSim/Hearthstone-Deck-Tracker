@@ -52,13 +52,6 @@
                                  Width="60" TextChanged="TextboxTimerAlert_TextChanged"
                                  PreviewTextInput="TextboxTimerAlert_PreviewTextInput" />
                     </DockPanel>
-                    <CheckBox x:Name="CheckboxTurnTime"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Set turn time to 75s (default 90s) *"
-                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxTurnTime_Checked"
-                              Unchecked="CheckboxTurnTime_Unchecked" />
                     <Separator Margin="0,5,0,0" />
                     <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0"
                               Content="Card sorting: Class cards first"

@@ -17,9 +17,9 @@
     </controls:MetroWindow.IconTemplate>
     <Grid>
         <StackPanel VerticalAlignment="Center">
-            <local:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="0" FontSize="20" TextAlignment="Center" Height="30"/>
-            <local:HearthstoneTextBlock x:Name="LblTurnTime" Text="90" FontSize="28" TextAlignment="Center" Height="45"/>
-            <local:HearthstoneTextBlock x:Name="LblPlayerTurnTime" Text="0" FontSize="20" TextAlignment="Center" Height="35"/>
+            <local:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="00:00" FontSize="20" TextAlignment="Center" Height="30"/>
+            <local:HearthstoneTextBlock x:Name="LblTurnTime" Text="01:15" FontSize="28" TextAlignment="Center" Height="45"/>
+            <local:HearthstoneTextBlock x:Name="LblPlayerTurnTime" Text="00:00" FontSize="20" TextAlignment="Center" Height="35"/>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>
