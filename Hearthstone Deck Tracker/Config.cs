@@ -863,17 +863,17 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(150)]
 		public int TimerWindowWidth = 150;
 
-		[DefaultValue(80)]
-		public double TimersHorizontalPosition = 80;
+		[DefaultValue(72)]
+		public double TimersHorizontalPosition = 72;
 
-		[DefaultValue(0)]
-		public double TimersHorizontalSpacing = 0;
+		[DefaultValue(48)]
+		public double TimersHorizontalSpacing = 48;
 
-		[DefaultValue(43.5)]
-		public double TimersVerticalPosition = 43.5;
+		[DefaultValue(44.5)]
+		public double TimersVerticalPosition = 44.5;
 
-		[DefaultValue(50)]
-		public double TimersVerticalSpacing = 50;
+		[DefaultValue(42)]
+		public double TimersVerticalSpacing = 42;
 
 		[DefaultValue(true)]
 		public bool TrackerCardToolTips = true;
