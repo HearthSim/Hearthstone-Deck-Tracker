@@ -1,5 +1,6 @@
 ## Creating Issues
-- Please check if a similar issue already exists (use the search function).
+- Have a look at the [FAQ](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ).
+- Check if a similar issue already exists (use the search function).
 - In case of a bug/crash/problem: Add as much detail as possible, including crash reports/logs ([see here](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Reporting-Issues)).
 
 ## Contributing
