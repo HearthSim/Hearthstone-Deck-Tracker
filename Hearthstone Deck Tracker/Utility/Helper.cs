@@ -312,14 +312,6 @@ namespace Hearthstone_Deck_Tracker
 
 			if(Core.Windows.OpponentWindow.IsVisible)
 				Core.Windows.OpponentWindow.SetOpponentCardCount(game.Opponent.HandCount, game.Opponent.DeckCount, game.Opponent.HasCoin);
-
-
-			if(Core.MainWindow.NeedToIncorrectDeckMessage && !Core.MainWindow.IsShowingIncorrectDeckMessage
-			   && game.CurrentGameMode != GameMode.Spectator && game.IgnoreIncorrectDeck != DeckList.Instance.ActiveDeck)
-			{
-				Core.MainWindow.IsShowingIncorrectDeckMessage = true;
-				Core.MainWindow.ShowIncorrectDeckMessage();
-			}
 		}
 
 		//http://stackoverflow.com/questions/23927702/move-a-folder-from-one-drive-to-another-in-c-sharp

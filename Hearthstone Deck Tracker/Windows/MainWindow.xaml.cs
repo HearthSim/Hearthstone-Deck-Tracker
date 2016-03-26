@@ -421,10 +421,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private bool _initialized => Core.Initialized;
 
 		public bool EditingDeck;
-
-
-		public bool IsShowingIncorrectDeckMessage;
-		public bool NeedToIncorrectDeckMessage;
 		private Deck _newDeck;
 		private bool _newDeckUnsavedChanges;
 		private Deck _originalDeck;
@@ -636,109 +632,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		#endregion
 
 		#region GENERAL METHODS
-
-		public async void ShowIncorrectDeckMessage()
-		{
-			if(Core.Game.Player.DrawnCards.Count == 0)
-			{
-				IsShowingIncorrectDeckMessage = false;
-				return;
-			}
-
-			//wait for player hero to be detected and at least 3 cards to be drawn
-			for(var i = 0; i < 50; i++)
-			{
-				if(Core.Game.Player.Class != null && Core.Game.Player.DrawnCards.Count >= 3)
-					break;
-				await Task.Delay(100);
-			}
-			if(string.IsNullOrEmpty(Core.Game.Player.Class) || Core.Game.Player.DrawnCards.Count < 3)
-			{
-				IsShowingIncorrectDeckMessage = false;
-				Log.Info("No player hero detected or less then 3 cards drawn. Not showing dialog.");
-				return;
-			}
-			await Task.Delay(1000);
-
-			if(!NeedToIncorrectDeckMessage)
-			{
-				IsShowingIncorrectDeckMessage = false;
-				return;
-			}
-
-			var decks =
-				DeckList.Instance.Decks.Where(
-				                              d =>
-				                              d.Class == Core.Game.Player.Class && !d.Archived && d.IsArenaRunCompleted != true
-				                              && Core.Game.Player.DrawnCardIdsTotal.Distinct()
-				                                     .All(id => d.GetSelectedDeckVersion().Cards.Any(c => id == c.Id))
-				                              && Core.Game.Player.DrawnCards.All(
-				                                                                 c =>
-				                                                                 d.GetSelectedDeckVersion()
-				                                                                  .Cards.Any(c2 => c2.Id == c.Id && c2.Count >= c.Count))).ToList();
-
-			Log.Info(decks.Count + " possible decks found.");
-			Core.Game.NoMatchingDeck = decks.Count == 0;
-
-			if(decks.Any(x => x == DeckList.Instance.ActiveDeck))
-			{
-				Log.Info("Correct deck already selected.");
-				IsShowingIncorrectDeckMessage = false;
-				NeedToIncorrectDeckMessage = false;
-				return;
-			}
-
-			if(decks.Count == 1 && Config.Instance.AutoSelectDetectedDeck)
-			{
-				var deck = decks.First();
-				Log.Info("Automatically selected deck: " + deck.Name);
-				DeckPickerList.SelectDeck(deck);
-				UpdateDeckList(deck);
-				UseDeck(deck);
-			}
-			else
-			{
-				decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
-				                   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
-				if(decks.Count == 1 && DeckList.Instance.ActiveDeckVersion != null)
-				{
-					decks.Add(new Deck("No match - Keep using active deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false,
-					                   new List<Card>(), SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
-				}
-				var dsDialog = new DeckSelectionDialog(decks);
-				dsDialog.ShowDialog();
-
-				var selectedDeck = dsDialog.SelectedDeck;
-
-				if(selectedDeck != null)
-				{
-					if(selectedDeck.Name == "Use no deck")
-						SelectDeck(null, true);
-					else if(selectedDeck.Name == "No match - Keep using active deck")
-					{
-						Core.Game.IgnoreIncorrectDeck = DeckList.Instance.ActiveDeck;
-						Log.Info($"Now ignoring {DeckList.Instance.ActiveDeck.Name} as an incorrect deck");
-					}
-					else
-					{
-						Log.Info("Selected deck: " + selectedDeck.Name);
-						DeckPickerList.SelectDeck(selectedDeck);
-						UpdateDeckList(selectedDeck);
-						UseDeck(selectedDeck);
-					}
-				}
-				else
-				{
-					this.ShowMessage("Auto deck selection disabled.", "This can be re-enabled by selecting \"AUTO\" in the bottom right of the deck picker.").Forget();
-					DeckPickerList.UpdateAutoSelectToggleButton();
-					Config.Save();
-				}
-			}
-
-			IsShowingIncorrectDeckMessage = false;
-			NeedToIncorrectDeckMessage = false;
-		}
-
+		
 		private void MinimizeToTray()
 		{
 			Core.TrayIcon.NotifyIcon.Visible = true;

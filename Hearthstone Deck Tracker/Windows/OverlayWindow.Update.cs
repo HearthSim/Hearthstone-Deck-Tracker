@@ -90,19 +90,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LblWinRateAgainst.Visibility = Config.Instance.ShowWinRateAgainst && _game.IsUsingPremade
 											   ? Visible : Collapsed;
 
-			var showWarning = !_game.IsInMenu && !_game.Player.DrawnCardsMatchDeck;
+			var showWarning = !_game.IsInMenu && DeckList.Instance.ActiveDeckVersion != null && DeckManager.NotFoundCards.Any() && DeckManager.IgnoredDeckId != DeckList.Instance.ActiveDeckVersion.DeckId;
 			StackPanelWarning.Visibility = showWarning ? Visible : Collapsed;
-			if (showWarning)
+			if(showWarning)
 			{
-				var drawn = new Deck { Cards = new ObservableCollection<Card>(_game.Player.DrawnCards.Where(c => !c.IsCreated)) };
-				var diff = (drawn - DeckList.Instance.ActiveDeckVersion).Where(c => c.Count > 0).ToList();
-				if (diff.Count > 0)
-				{
-					var count = diff.Count > 3 ? 3 : diff.Count;
-					LblWarningCards.Text = diff.Take(count).Select(c => c.LocalizedName).Aggregate((c, n) => c + ", " + n);
-					if (diff.Count > 3)
-						LblWarningCards.Text += ", ...";
-				}
+				LblWarningCards.Text = string.Join(", ", DeckManager.NotFoundCards.Take(Math.Min(DeckManager.NotFoundCards.Count, 3)).Select(c => c.LocalizedName));
+				if(DeckManager.NotFoundCards.Count > 3)
+					LblWarningCards.Text += ", ...";
 			}
 
 			if (_game.IsInMenu)

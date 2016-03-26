@@ -19,7 +19,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Entity PlayerEntity { get; }
 		Entity OpponentEntity { get; }
 		bool IsMulliganDone { get; }
-		bool NoMatchingDeck { get; set; }
 		bool IsInMenu { get; set; }
 		bool IsUsingPremade { get; set; }
 		int OpponentSecretCount { get; set; }

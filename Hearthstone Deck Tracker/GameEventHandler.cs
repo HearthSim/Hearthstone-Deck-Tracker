@@ -143,6 +143,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.HideTimers();
 			Core.Overlay.HideSecrets();
 			Core.Overlay.Update(true);
+			DeckManager.ResetIgnoredDeckId();
 
 			Log.Info("Waiting for game mode detection...");
 			await _game.GameModeDetection();
@@ -320,62 +321,12 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetPlayerHero(string hero)
 		{
-			try
-			{
-				if(string.IsNullOrEmpty(hero))
-					return;
-				Log.Info("Player=" + hero);
-				_game.Player.Class = hero;
-				if(_game.CurrentGameStats != null)
-					_game.CurrentGameStats.PlayerHero = hero;
-				var selectedDeck = DeckList.Instance.ActiveDeckVersion;
-				if(!_game.IsUsingPremade || !Config.Instance.AutoDeckDetection)
-					return;
-				if(selectedDeck != null && selectedDeck.Class == _game.Player.Class)
-					return;
-				var classDecks = DeckList.Instance.Decks.Where(d => d.Class == _game.Player.Class && !d.Archived).ToList();
-				switch(classDecks.Count)
-				{
-					case 0:
-						Log.Info("Found no deck to switch to");
-						break;
-					case 1:
-						Core.MainWindow.DeckPickerList.SelectDeck(classDecks[0]);
-						Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
-						Log.Info("Found deck to switch to: " + classDecks[0].Name);
-						break;
-					default:
-						if(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == _game.Player.Class))
-						{
-							var lastDeck = DeckList.Instance.LastDeckClass.First(ldc => ldc.Class == _game.Player.Class);
-
-							var deck = lastDeck.Id == Guid.Empty
-										   ? DeckList.Instance.Decks.FirstOrDefault(d => d.Name == lastDeck.Name)
-										   : DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastDeck.Id);
-							if(deck != null && deck.IsArenaRunCompleted != true
-							   && _game.Player.DrawnCardIdsTotal.Distinct().All(id => deck.GetSelectedDeckVersion().Cards.Any(c => id == c.Id)))
-							{
-								Log.Info("Found more than 1 deck to switch to - last played: " + lastDeck.Name);
-								if(deck.Archived)
-								{
-									Log.Info("Deck " + deck.Name + " is archived - waiting for deck selection dialog");
-									return;
-								}
-
-								Core.MainWindow.NeedToIncorrectDeckMessage = false;
-								Core.MainWindow.DeckPickerList.SelectDeck(deck);
-								Core.MainWindow.UpdateDeckList(deck);
-								Core.MainWindow.UseDeck(deck);
-								Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
-							}
-						}
-						break;
-				}
-			}
-			catch(Exception exception)
-			{
-				Log.Error("Error setting player hero: " + exception);
-			}
+			if(string.IsNullOrEmpty(hero))
+				return;
+			_game.Player.Class = hero;
+			if(_game.CurrentGameStats != null)
+				_game.CurrentGameStats.PlayerHero = hero;
+			Log.Info("Player=" + hero);
 		}
 
 		private readonly Queue<Tuple<ActivePlayer, int>> _turnQueue = new Queue<Tuple<ActivePlayer, int>>();
@@ -928,18 +879,12 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.Player.Draw(entity, turn);
 				Helper.UpdatePlayerCards();
-
-				if(!_game.Player.DrawnCardsMatchDeck && Config.Instance.AutoDeckDetection && !Core.MainWindow.NeedToIncorrectDeckMessage
-				   && !Core.MainWindow.IsShowingIncorrectDeckMessage && _game.IsUsingPremade && _game.CurrentGameMode != Spectator)
-				{
-					Core.MainWindow.NeedToIncorrectDeckMessage = true;
-					Log.Info("Found incorrect deck on PlayerDraw");
-				}
-
 				_game.AddPlayToCurrentGame(PlayType.PlayerDraw, turn, cardId);
+				DeckManager.DetectCurrentDeck().Forget();
 			}
 			GameEvents.OnPlayerDraw.Execute(Database.GetCardFromId(cardId));
 		}
+
 
 		public void HandlePlayerMulligan(Entity entity, string cardId)
 		{
@@ -957,7 +902,10 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			if(fromDeck)
+			{
 				_game.Player.SecretPlayedFromDeck(entity, turn);
+				DeckManager.DetectCurrentDeck().Forget();
+			}
 			else
 			{
 				_game.Player.SecretPlayedFromHand(entity, turn);
@@ -1022,14 +970,8 @@ namespace Hearthstone_Deck_Tracker
 		public void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn)
 		{
 			_game.Player.DeckDiscard(entity, turn);
-			if(!_game.Player.DrawnCardsMatchDeck && Config.Instance.AutoDeckDetection && !Core.MainWindow.NeedToIncorrectDeckMessage
-			   && !Core.MainWindow.IsShowingIncorrectDeckMessage && _game.IsUsingPremade && _game.CurrentGameMode != Spectator)
-			{
-				Core.MainWindow.NeedToIncorrectDeckMessage = true;
-				Log.Info("Found incorrect deck on PlayerDeckDiscard");
-			}
 			_game.AddPlayToCurrentGame(PlayType.PlayerDeckDiscard, turn, cardId);
-
+			DeckManager.DetectCurrentDeck().Forget();
 			Helper.UpdatePlayerCards();
 			GameEvents.OnPlayerDeckDiscard.Execute(Database.GetCardFromId(cardId));
 		}
@@ -1115,6 +1057,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandlePlayerRemoveFromDeck(Entity entity, int turn)
 		{
 			_game.Player.RemoveFromDeck(entity, turn);
+			DeckManager.DetectCurrentDeck().Forget();
 			Helper.UpdatePlayerCards();
 		}
 

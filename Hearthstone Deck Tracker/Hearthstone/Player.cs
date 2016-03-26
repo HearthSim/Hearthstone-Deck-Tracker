@@ -40,7 +40,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int Id { get; set; }
 		public bool GoingFirst { get; set; }
 		public int Fatigue { get; set; }
-		public bool DrawnCardsMatchDeck { get; set; }
 		public bool IsLocalPlayer { get; }
 
 		public bool HasCoin => Hand.Any(ce => ce.CardId == "GAME_005" || (ce.Entity != null && ce.Entity.CardId == "GAME_005"));
@@ -57,6 +56,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<string> DrawnCardIds { get; } = new List<string>();
 		public List<string> DrawnCardIdsTotal { get; } = new List<string>();
 		public List<string> CreatedInHandCardIds { get; } = new List<string>();
+
+		public IEnumerable<CardEntity> AllCardEntities => Hand.Concat(Board).Concat(Deck).Concat(Graveyard).Concat(Secrets).Concat(Removed);
 
 		public List<Card> DrawnCards
 		{
@@ -163,7 +164,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Id = -1;
 			GoingFirst = false;
 			Fatigue = 0;
-			DrawnCardsMatchDeck = true;
 			Hand.Clear();
 			Board.Clear();
 			Deck.Clear();
@@ -222,7 +222,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var ce = MoveCardEntity(entity, Deck, Hand, turn);
 			if(!IsLocalPlayer)
 				ce.Reset();
-			VerifyCardMatchesDeck(ce);
+			UpdateDrawnCardIds(ce);
 			Log(ce);
 		}
 
@@ -246,16 +246,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var ce = MoveCardEntity(entity, Deck, Board, turn);
 			UpdateRevealedEntity(ce, turn);
-			VerifyCardMatchesDeck(ce);
+			UpdateDrawnCardIds(ce);
 			Log(ce);
 		}
 
-		private void VerifyCardMatchesDeck(CardEntity ce)
+		private void UpdateDrawnCardIds(CardEntity ce)
 		{
 			if(string.IsNullOrEmpty(ce?.Entity?.CardId) || ce.Created || ce.Returned || ce.Stolen)
 				return;
-			if(IsLocalPlayer && (DeckList.Instance.ActiveDeckVersion?.Cards.All(c => c.Id != ce.Entity.CardId) ?? false))
-				DrawnCardsMatchDeck = false;
 			DrawnCardIds.Add(ce.Entity.CardId);
 			DrawnCardIdsTotal.Add(ce.Entity.CardId);
 		}
@@ -324,7 +322,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				RevealedCards.Remove(revealed);
 			var ce = MoveCardEntity(entity, Deck, Removed, turn);
 			UpdateRevealedEntity(ce, turn, true);
-			VerifyCardMatchesDeck(ce);
+			UpdateDrawnCardIds(ce);
 			Log(ce);
 		}
 
@@ -352,7 +350,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var ce = MoveCardEntity(entity, Deck, Graveyard, turn);
 			UpdateRevealedEntity(ce, turn, true);
-			VerifyCardMatchesDeck(ce);
+			UpdateDrawnCardIds(ce);
 			Log(ce);
 		}
 
@@ -407,7 +405,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var ce = MoveCardEntity(entity, Deck, Secrets, turn);
 			UpdateRevealedEntity(ce, turn);
-			VerifyCardMatchesDeck(ce);
+			UpdateDrawnCardIds(ce);
 			Log(ce);
 		}
 

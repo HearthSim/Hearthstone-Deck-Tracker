@@ -56,7 +56,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Player Player { get; set; }
 		public Player Opponent { get; set; }
-		public bool NoMatchingDeck { get; set; }
 		public bool IsInMenu { get; set; }
 		public bool IsUsingPremade { get; set; }
 		public int OpponentSecretCount { get; set; }
@@ -131,7 +130,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			SavedReplay = false;
 			OpponentSecretCount = 0;
 			OpponentSecrets.ClearSecrets();
-			NoMatchingDeck = false;
 
 			if(!IsInMenu && resetStats)
 			{
@@ -149,7 +147,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				Helper.UpdatePlayerCards(true);
 				Helper.UpdateOpponentCards(true);
-				Core.MainWindow.NeedToIncorrectDeckMessage = false;
 			}
 		}
 

@@ -280,6 +280,7 @@
     <Compile Include="FlyoutControls\Options\Tracker\TrackerNotifications.xaml.cs">
       <DependentUpon>TrackerNotifications.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DeckManager.cs" />
     <Compile Include="Utility\Extensions\RectExtensions.cs" />
     <Compile Include="Utility\Themes\CardBarImageBuilder.cs" />
     <Compile Include="Hearthstone\GameTime.cs" />
