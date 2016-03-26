@@ -451,7 +451,7 @@
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
+                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,0"
                                     HorizontalAlignment="Center" Width="236" Height="auto"
                                     MouseLeftButtonUp="ListViewDeck_MouseLeftButtonUp"
                                     MouseRightButtonUp="ListViewDeck_MouseRightButtonUp">
@@ -487,7 +487,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="3" Height="150" Margin="0,0,0,6" />
+                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="3" Height="150" Margin="0,6,0,6" />
             </Grid>
                 <deckPicker:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                               Grid.Row="2"
