@@ -42,37 +42,34 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(border.Equals(BorderStackPanelPlayer))
 				{
-					var scaling = Config.Instance.OverlayPlayerScaling / 100;
 					if(_resizeElement)
 					{
-						Config.Instance.PlayerDeckHeight += delta.Y / Height * scaling;
-						_movableElements[border].Height = Height * Config.Instance.PlayerDeckHeight / 100 * scaling;
+						Config.Instance.PlayerDeckHeight += delta.Y / Height;
+						_movableElements[border].Height = Height * Config.Instance.PlayerDeckHeight / 100;
 						OnPropertyChanged(nameof(OpponentListHeight));
 					}
 					else
 					{
-						Config.Instance.PlayerDeckTop += delta.Y / Height * scaling;
-						Config.Instance.PlayerDeckLeft += delta.X / Width * scaling;
+						Config.Instance.PlayerDeckTop += delta.Y / Height;
+						Config.Instance.PlayerDeckLeft += delta.X / Width;
 						Canvas.SetTop(_movableElements[border], Height * Config.Instance.PlayerDeckTop / 100);
-						Canvas.SetLeft(_movableElements[border],
-									   Width * Config.Instance.PlayerDeckLeft / 100
-									   - StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
+						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.PlayerDeckLeft / 100 
+										- StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
 					}
 					return;
 				}
 				if(border.Equals(BorderStackPanelOpponent))
 				{
-					var scaling = Config.Instance.OverlayOpponentScaling / 100;
 					if(_resizeElement)
 					{
-						Config.Instance.OpponentDeckHeight += delta.Y / Height * scaling;
-						_movableElements[border].Height = Height * Config.Instance.OpponentDeckHeight / 100 * scaling;
+						Config.Instance.OpponentDeckHeight += delta.Y / Height;
+						_movableElements[border].Height = Height * Config.Instance.OpponentDeckHeight / 100;
 						OnPropertyChanged(nameof(OpponentListHeight));
 					}
 					else
 					{
-						Config.Instance.OpponentDeckTop += delta.Y / Height * scaling;
-						Config.Instance.OpponentDeckLeft += delta.X / Width * scaling;
+						Config.Instance.OpponentDeckTop += delta.Y / Height;
+						Config.Instance.OpponentDeckLeft += delta.X / Width;
 						Canvas.SetTop(_movableElements[border], Height * Config.Instance.OpponentDeckTop / 100);
 						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.OpponentDeckLeft / 100);
 					}
@@ -221,7 +218,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 								Config.Instance.Reset("PlayerDeckHeight");
 								TrySetResizeGripHeight(movableElement.Value, Config.Instance.PlayerDeckHeight * Height / 100);
 							}
-							movableElement.Value.Height *= Config.Instance.OverlayPlayerScaling / 100;
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width * Config.Instance.OverlayPlayerScaling/100 : 0;
 						}
 						else if (movableElement.Key == BorderStackPanelOpponent)
@@ -231,7 +227,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 								Config.Instance.Reset("OpponentDeckHeight");
 								TrySetResizeGripHeight(movableElement.Value, Config.Instance.OpponentDeckHeight * Height / 100);
 							}
-							movableElement.Value.Height *= Config.Instance.OverlayOpponentScaling / 100;
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width * Config.Instance.OverlayOpponentScaling / 100 : 0;
 						}
 						else if(movableElement.Key == StackPanelSecrets)
