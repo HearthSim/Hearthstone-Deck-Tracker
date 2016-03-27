@@ -76,6 +76,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				EnableBatteryMonitor();
 			InitializeCollections();
 			UpdateScaling();
+			UpdatePlayerLayout();
+			UpdateOpponentLayout();
 		}
 
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
