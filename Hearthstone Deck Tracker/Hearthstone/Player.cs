@@ -439,7 +439,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			switch(zone)
 			{
 				case TAG_ZONE.HAND:
-					UpdateCardEntity(entity);
+					UpdateCardEntity(Hand, entity);
 					Hand.Sort(ZonePosComparison);
 					if(!IsLocalPlayer && turn == 0 && Hand.Count == 5 && Hand[4].Entity.Id > 67)
 					{
@@ -449,15 +449,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 					break;
 				case TAG_ZONE.PLAY:
-					UpdateCardEntity(entity);
+					UpdateCardEntity(Board, entity);
 					Board.Sort(ZonePosComparison);
 					break;
 			}
 		}
 
-		private void UpdateCardEntity(Entity entity)
+		private void UpdateCardEntity(List<CardEntity> zone, Entity entity)
 		{
-			var cardEntity = GetEntityFromCollection(Hand, entity);
+			var cardEntity = GetEntityFromCollection(zone, entity);
 			if (cardEntity != null)
 				cardEntity.Entity = entity;
 		}
