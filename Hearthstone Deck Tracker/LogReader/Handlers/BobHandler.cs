@@ -16,10 +16,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				var rank = int.Parse(match.Groups["rank"].Value);
 				game.MetaData.LegendRank = rank;
-				return;
 			}
-			if(logLine == HsLogReaderConstants.ReconnectMessage)
-				game.StoreGameState();
 		}
 	}
 }
