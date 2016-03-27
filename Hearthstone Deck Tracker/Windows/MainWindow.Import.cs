@@ -50,7 +50,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private async Task<string> InputDeckURL()
 		{
 			var settings = new MessageDialogs.Settings();
-			var clipboard = Clipboard.ContainsText() ? Clipboard.GetText() : "";
 			var validUrls = new[]
 			{
 				"hearthstats",
@@ -69,8 +68,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				"icy-veins",
 				"hearthbuilder"
 			};
-			if(validUrls.Any(clipboard.Contains))
-				settings.DefaultText = clipboard;
+			try
+			{
+				var clipboard = Clipboard.ContainsText() ? new string(Clipboard.GetText().Take(1000).ToArray()) : "";
+				if(validUrls.Any(clipboard.Contains))
+					settings.DefaultText = clipboard;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
 
 			if(Config.Instance.DisplayNetDeckAd)
 			{
