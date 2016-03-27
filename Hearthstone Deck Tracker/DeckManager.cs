@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker
 			if(notFound.Any())
 			{
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Entity?.Card).Distinct().ToList();
+				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
 				await AutoSelectDeck(Core.Game.Player.Class, Core.Game.CurrentGameMode, cardEntites);
 			}
 			else
@@ -62,8 +63,9 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(validDecks.Count == 1)
 			{
-				Log.Info("Found one matching deck!");
-				Core.MainWindow.SelectDeck(validDecks.Single(), true);
+				var deck = validDecks.Single();
+				Log.Info("Found one matching deck: " + deck);
+				Core.MainWindow.SelectDeck(deck, true);
 				return;
 			}
 			var lastUsed = DeckList.Instance.LastDeckClass.FirstOrDefault(x => x.Class == heroClass);
@@ -90,6 +92,7 @@ namespace Hearthstone_Deck_Tracker
 								   new List<Card>(), SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
 			}
 			_waitingForUserInput = true;
+			Log.Info("Waiting for user input...");
 			var dsDialog = new DeckSelectionDialog(decks);
 			dsDialog.ShowDialog();
 
@@ -98,6 +101,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(selectedDeck.Name == "Use no deck")
 				{
+					Log.Info("Auto deck detection disabled.");
 					Core.MainWindow.SelectDeck(null, true);
 					NotFoundCards.Clear();
 				}
@@ -115,6 +119,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
+				Log.Info("Auto deck detection disabled.");
 				Core.MainWindow.ShowMessage("Auto deck selection disabled.", "This can be re-enabled by selecting \"AUTO\" in the bottom right of the deck picker.").Forget();
 				Config.Instance.AutoDeckDetection = false;
 				Config.Save();
