@@ -26,8 +26,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private readonly GameV2 _game;
 		private bool _appIsClosing;
-
-		private DateTime _lastOpponentUpdateReqest = DateTime.MinValue;
+		private int _updateRequests;
 
 		public OpponentWindow(GameV2 game)
 		{
@@ -169,9 +168,10 @@ namespace Hearthstone_Deck_Tracker
 
 		public async void UpdateOpponentCards(bool reset)
 		{
-			_lastOpponentUpdateReqest = DateTime.Now;
-			await Task.Delay(50);
-			if((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
+			_updateRequests++;
+			await Task.Delay(100);
+			_updateRequests--;
+			if(_updateRequests > 0)
 				return;
 			ListViewOpponent.Update(OpponentDeck, false, reset);
 		}

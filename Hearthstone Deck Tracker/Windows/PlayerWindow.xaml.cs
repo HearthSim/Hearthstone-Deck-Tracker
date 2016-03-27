@@ -25,9 +25,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private readonly GameV2 _game;
 		private bool _appIsClosing;
-
-
-		private DateTime _lastPlayerUpdateReqest = DateTime.MinValue;
+		private int _updateRequests;
 
 		public PlayerWindow(GameV2 game, List<Card> forScreenshot = null)
 		{
@@ -173,9 +171,10 @@ namespace Hearthstone_Deck_Tracker
 
 		public async void UpdatePlayerCards(bool reset)
 		{
-			_lastPlayerUpdateReqest = DateTime.Now;
+			_updateRequests++;
 			await Task.Delay(100);
-			if((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 100)
+			_updateRequests--;
+			if(_updateRequests > 0)
 				return;
 			ListViewPlayer.Update(PlayerDeck, true, reset);
 		}

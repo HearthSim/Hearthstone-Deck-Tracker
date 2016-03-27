@@ -142,18 +142,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public async void UpdatePlayerCards(bool reset)
 		{
-			_lastPlayerUpdateReqest = DateTime.Now;
-			await Task.Delay(50);
-			if ((DateTime.Now - _lastPlayerUpdateReqest).Milliseconds < 50)
+			_updateRequestsPlayer++;
+			await Task.Delay(100);
+			_updateRequestsPlayer--;
+			if(_updateRequestsPlayer > 0)
 				return;
 			ListViewPlayer.Update(PlayerDeck, true, reset);
 		}
 
 		public async void UpdateOpponentCards(bool reset)
 		{
-			_lastOpponentUpdateReqest = DateTime.Now;
-			await Task.Delay(50);
-			if ((DateTime.Now - _lastOpponentUpdateReqest).Milliseconds < 50)
+			_updateRequestsOpponent++;
+			await Task.Delay(100);
+			_updateRequestsOpponent--;
+			if(_updateRequestsOpponent > 0)
 				return;
 			ListViewOpponent.Update(OpponentDeck, false, reset);
 		}
