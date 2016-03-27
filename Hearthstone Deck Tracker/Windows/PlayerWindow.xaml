@@ -30,7 +30,7 @@
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
                                 ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
                                 ScrollViewer.CanContentScroll="False">
-                    <controls1:AnimatedCardList.Resources>
+                    <controls1:AnimatedCardList.ItemContainerStyle>
                         <Style TargetType="controls1:AnimatedCard">
                             <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
                             <Setter Property="ToolTipService.ShowDuration" Value="60000" />
@@ -42,8 +42,9 @@
                                     </ToolTip>
                                 </Setter.Value>
                             </Setter>
+                            <Setter Property="Margin" Value="0,1,0,0"/>
                         </Style>
-                    </controls1:AnimatedCardList.Resources>
+                    </controls1:AnimatedCardList.ItemContainerStyle>
                 </controls1:AnimatedCardList>
             </Viewbox>
             <Canvas Name="CanvasPlayerCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2">
