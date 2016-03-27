@@ -178,17 +178,11 @@ namespace Hearthstone_Deck_Tracker
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
 				Log.Info("Sent keypress: " + Config.Instance.KeyPressOnGameEnd);
 			}
-			if(!Config.Instance.KeepDecksVisible)
-			{
-				var deck = DeckList.Instance.ActiveDeckVersion;
-				if(deck != null)
-					_game.SetPremadeDeck((Deck)deck.Clone());
-			}
 			if(!_game.IsUsingPremade)
 				_game.DrawnLastGame = new List<Card>(_game.Player.DrawnCards);
 
 			if(!Config.Instance.KeepDecksVisible)
-				_game.Reset(false);
+				Core.Reset().Forget();
 			if(_game.CurrentGameMode == Spectator)
 				SetGameMode(None);
 			GameEvents.OnInMenu.Execute();
