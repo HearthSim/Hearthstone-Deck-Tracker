@@ -116,8 +116,9 @@ namespace Hearthstone_Deck_Tracker
 			else
 			{
 				Core.MainWindow.ShowMessage("Auto deck selection disabled.", "This can be re-enabled by selecting \"AUTO\" in the bottom right of the deck picker.").Forget();
-				Core.MainWindow.DeckPickerList.UpdateAutoSelectToggleButton();
+				Config.Instance.AutoDeckDetection = false;
 				Config.Save();
+				Core.MainWindow.DeckPickerList.UpdateAutoSelectToggleButton();
 			}
 			_waitingForUserInput = false;
 		}
