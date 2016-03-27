@@ -117,6 +117,12 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SetPlayer(ActivePlayer player)
 		{
+			if(_game == null)
+			{
+				Seconds = 75;
+				Log.Warn("Set timer to 75, game is null");
+				return;
+			}
 			if(player == ActivePlayer.Player && _game.PlayerEntity != null)
 				Seconds = _game.PlayerEntity.HasTag(GAME_TAG.TIMEOUT) ? _game.PlayerEntity.GetTag(GAME_TAG.TIMEOUT) : double.PositiveInfinity;
 			else if(player == ActivePlayer.Opponent && _game.OpponentEntity != null)
@@ -124,7 +130,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 			{
 				Seconds = 75;
-				Log.Warn("Could not update timer, both player entities are null");
+				Log.Warn("Set timer to 75, both player entities are null");
 			}
 		}
 	}
