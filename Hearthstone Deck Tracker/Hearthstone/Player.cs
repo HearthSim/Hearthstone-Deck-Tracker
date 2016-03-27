@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<string> DrawnCardIdsTotal { get; } = new List<string>();
 		public List<string> CreatedInHandCardIds { get; } = new List<string>();
 
-		public IEnumerable<CardEntity> AllCardEntities => Hand.Concat(Board).Concat(Deck).Concat(Graveyard).Concat(Secrets).Concat(Removed);
+		public IEnumerable<CardEntity> AllCardEntities => Hand.Concat(Board).Concat(Deck).Concat(Graveyard).Concat(Secrets);
 
 		public List<Card> DrawnCards
 		{
