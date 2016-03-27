@@ -23,9 +23,9 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <RadioButton Content="Classic" IsChecked="True" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Checked="ToggleButton_OnChecked"/>
+            <RadioButton Content="Classic" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Checked="ToggleButton_OnChecked"/>
             <Rectangle Fill="{Binding ClassicCard, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="217" Height="34" Grid.Row="0" Grid.Column="1" Margin="5"/>
-            <RadioButton Content="Dark" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Checked="ToggleButton_OnChecked"/>
+            <RadioButton Content="Dark" IsChecked="True" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Checked="ToggleButton_OnChecked"/>
             <Rectangle Fill="{Binding DarkCard, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="217" Height="34" Grid.Row="1" Grid.Column="1" Margin="5"/>
             <RadioButton Content="Frost" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Checked="ToggleButton_OnChecked"/>
             <Rectangle Fill="{Binding FrostCard, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="217" Height="34" Grid.Row="2" Grid.Column="1" Margin="5"/>
