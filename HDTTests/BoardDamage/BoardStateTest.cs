@@ -40,9 +40,9 @@ namespace HDTTests.BoardDamage
 		[TestMethod]
 		public void IsDeadToBoard1()
 		{
-			var playerHero = new EntityBuilder("HERO_01", 0, 30).Damage(20).ToEntity();
+			var playerHero = new EntityBuilder("HERO_01", 0, 30).Hero().Damage(20).ToEntity();
 			_player.Add(playerHero);
-			var opponentHero = new EntityBuilder("HERO_02", 0, 30).Damage(10).ToEntity();
+			var opponentHero = new EntityBuilder("HERO_02", 0, 30).Hero().Damage(10).ToEntity();
 			_opponent.Add(opponentHero);
 
 			var board = new BoardState(_player, _opponent, _entities, 1);
@@ -54,9 +54,9 @@ namespace HDTTests.BoardDamage
 		[TestMethod]
 		public void IsDeadToBoard2()
 		{
-			var playerHero = new EntityBuilder("HERO_01", 0, 30).Damage(20).Armor(8).ToEntity();
+			var playerHero = new EntityBuilder("HERO_01", 0, 30).Hero().Damage(20).Armor(8).ToEntity();
 			_player.Add(playerHero);
-			var opponentHero = new EntityBuilder("HERO_02", 0, 30).Damage(25).ToEntity();
+			var opponentHero = new EntityBuilder("HERO_02", 0, 30).Hero().Damage(25).ToEntity();
 			_opponent.Add(opponentHero);
 
 			var board = new BoardState(_player, _opponent, _entities, 1);
@@ -69,7 +69,7 @@ namespace HDTTests.BoardDamage
 		// when hero is dead and removed from play
 		public void NullOpponentHero()
 		{
-			var hero = new EntityBuilder("HERO_01", 0, 30).Damage(20).ToEntity();
+			var hero = new EntityBuilder("HERO_01", 0, 30).Hero().Damage(20).ToEntity();
 			_player.Add(hero);
 			var board = new BoardState(_player, _opponent, _entities, 1);
 
@@ -79,7 +79,7 @@ namespace HDTTests.BoardDamage
 		[TestMethod]
 		public void NullPlayerHero()
 		{
-			var hero = new EntityBuilder("HERO_01", 0, 30).Damage(20).ToEntity();
+			var hero = new EntityBuilder("HERO_01", 0, 30).Hero().Damage(20).ToEntity();
 			_opponent.Add(hero);
 			var board = new BoardState(_player, _opponent, _entities, 1);
 
