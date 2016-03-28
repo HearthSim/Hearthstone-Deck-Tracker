@@ -2,12 +2,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.API;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Point = System.Drawing.Point;
@@ -38,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void UpdateMouseOverDetectionRegions(List<CardEntity> oppBoard, List<CardEntity> playerBoard)
+		private void UpdateMouseOverDetectionRegions(List<Entity> oppBoard, List<Entity> playerBoard)
 		{
 			if(Config.Instance.Debug)
 			{
@@ -99,11 +101,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_debugBoardObjects.Add(e);
 		}
 
-		private void AddMinionDebugOverlay(CardEntity entity, Ellipse entityEllipse)
+		private void AddMinionDebugOverlay(Entity entity, Ellipse entityEllipse)
 		{
 			entityEllipse.Stroke = new SolidColorBrush(Colors.Red);
 			entityEllipse.StrokeThickness = 1;
-			var lbl = new Label {Content = entity.Entity.Card.Name, Foreground = Brushes.White};
+			var lbl = new Label {Content = entity.Card.Name, Foreground = Brushes.White};
 			_debugBoardObjects.Add(lbl);
 			CanvasInfo.Children.Add(lbl);
 			var pos = entityEllipse.TransformToAncestor(CanvasInfo).Transform(new System.Windows.Point(0, 0));
@@ -126,7 +128,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			action?.Invoke();
 		}
 
-		private void DetectMouseOver(List<CardEntity> playerBoard, List<CardEntity> oppBoard)
+		private void DetectMouseOver(List<Entity> playerBoard, List<Entity> oppBoard)
 		{
 			if(playerBoard.Count == 0 && oppBoard.Count == 0 && _game.Player.HandCount == 0)
 			{
@@ -147,7 +149,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(oppBoard.Count > i && EllipseContains(_oppBoard[i], relativeCanvas))
 				{
-					var entity = oppBoard[i].Entity;
+					var entity = oppBoard[i];
 					if(_currentMouseOverTarget == entity)
 						return;
 					_currentMouseOverTarget = entity;
@@ -160,7 +162,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				if(playerBoard.Count > i && EllipseContains(_playerBoard[i], relativeCanvas))
 				{
-					var entity = playerBoard[i].Entity;
+					var entity = playerBoard[i];
 					if(_currentMouseOverTarget == entity)
 						return;
 					_currentMouseOverTarget = entity;
@@ -177,8 +179,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(RotatedRectContains(_playerHand[i], relativeCanvas))
 				{
-					var entity = Core.Game.Player.Hand[i].Entity;
-					if(_currentMouseOverTarget == entity)
+					var entity = Core.Game.Player.Hand.FirstOrDefault(x => x.GetTag(GAME_TAG.ZONE_POSITION) == i+1);
+					if(entity == null || _currentMouseOverTarget == entity)
 						return;
 					_currentMouseOverTarget = entity;
 					DelayedMouseOverDetection(entity, () =>

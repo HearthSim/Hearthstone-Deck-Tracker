@@ -33,8 +33,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var id = int.Parse(match.Groups["id"].Value);
 				if(!game.Entities.ContainsKey(id))
 					game.Entities.Add(id, new Entity(id) {Name = "GameEntity"});
-				gameState.CurrentEntityId = id;
-				setup = true;
+				gameState.SetCurrentEntity(id);
+				if(gameState.DeterminedPlayers)
+					_tagChangeHandler.InvokeQueuedActions();
+				return;
 			}
 			else if(PlayerEntityRegex.IsMatch(logLine))
 			{
@@ -42,10 +44,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var id = int.Parse(match.Groups["id"].Value);
 				if(!game.Entities.ContainsKey(id))
 					game.Entities.Add(id, new Entity(id));
-				gameState.CurrentEntityId = id;
-				setup = true;
 				if(gameState.WasInProgress)
 					game.Entities[id].Name = game.GetStoredPlayerName(id);
+				gameState.SetCurrentEntity(id);
+				if(gameState.DeterminedPlayers)
+					_tagChangeHandler.InvokeQueuedActions();
+				return;
 			}
 			else if(TagChangeRegex.IsMatch(logLine))
 			{
@@ -94,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							entity.Value.Name = tmpEntity.Name;
 							foreach(var t in tmpEntity.Tags)
-								_tagChangeHandler.TagChange(gameState, t.Key, tmpEntity.GetTag(GAME_TAG.ENTITY_ID), t.Value, game);
+								_tagChangeHandler.TagChange(gameState, t.Key, tmpEntity.Id, t.Value, game);
 							SetPlayerName(game, entity.Value.GetTag(GAME_TAG.PLAYER_ID), tmpEntity.Name);
 							_tmpEntities.Remove(tmpEntity);
 							_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, entity.Key, match.Groups["value"].Value, game);
@@ -146,10 +150,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					game.Entities.Add(id, new Entity(id) {CardId = cardId});
 				}
-				gameState.CurrentEntityId = id;
+				gameState.SetCurrentEntity(id);
+				if(gameState.DeterminedPlayers)
+					_tagChangeHandler.InvokeQueuedActions();
 				gameState.CurrentEntityHasCardId = !string.IsNullOrEmpty(cardId);
 				gameState.CurrentEntityZone = LogReaderHelper.ParseEnum<TAG_ZONE>(match.Groups["zone"].Value);
-				setup = true;
+				return;
 			}
 			else if(UpdatingEntityRegex.IsMatch(logLine))
 			{
@@ -166,10 +172,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					entityId = -1;
 				if(entityId != -1)
 				{
-					gameState.CurrentEntityId = entityId;
 					if(!game.Entities.ContainsKey(entityId))
 						game.Entities.Add(entityId, new Entity(entityId));
 					game.Entities[entityId].CardId = cardId;
+					gameState.SetCurrentEntity(entityId);
+					if(gameState.DeterminedPlayers)
+						_tagChangeHandler.InvokeQueuedActions();
 				}
 				if(gameState.JoustReveals > 0)
 				{
@@ -183,6 +191,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					//gameState.JoustReveals--;
 				}
+				return;
 			}
 			else if(CreationTagRegex.IsMatch(logLine) && !logLine.Contains("HIDE_ENTITY"))
 			{
@@ -293,13 +302,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				_tagChangeHandler.ClearQueuedActions();
 			}
 
-			if(!setup)
-				gameState.SetupDone = true;
 
 			if(game.IsInMenu)
 				return;
 			if(!creationTag && gameState.DeterminedPlayers)
 				_tagChangeHandler.InvokeQueuedActions();
+			if(!creationTag)
+				gameState.ResetCurrentEntity();
 			else if(!gameState.DeterminedPlayers && gameState.SetupDone && (DateTime.Now - _lastDeterminePlayersWarning).TotalSeconds > 5)
 			{
 				_lastDeterminePlayersWarning = DateTime.Now;
@@ -310,6 +319,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				else
 					Log.Warn("Could not determine players by checking for player hand either... waiting for draws...");
 			}
+			if(!setup)
+				gameState.SetupDone = true;
 		}
 
 		private static void SetPlayerName(IGame game, int playerId, string name)
@@ -348,5 +359,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		}
 
 		private static int GetMaxEntityId(IHsGameState gameState, IGame game) => Math.Max(game.Entities.Count, gameState.MaxId);
+
+		internal void Reset()
+		{
+			_tagChangeHandler.ClearQueuedActions();
+		}
 	}
 }

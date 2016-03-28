@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Replay;
 
@@ -22,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			KnownCardIds = new Dictionary<int, string>();
 		}
 		public bool CurrentEntityHasCardId { get; set; }
-		public int CurrentEntityId { get; set; }
+		public int CurrentEntityId { get; private set; }
 		public bool GameEnded { get; set; }
 		public IGameHandler GameHandler { get; set; }
 		public DateTime LastGameStart { get; set; }
@@ -74,6 +75,25 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			WasInProgress = false;
 			SetupDone = false;
 			DeterminedPlayers = false;
+			CurrentEntityId = 0;
+		}
+
+		public void SetCurrentEntity(int id)
+		{
+			Entity entity;
+			if(_game.Entities.TryGetValue(CurrentEntityId, out entity))
+				entity.Info.HasOutstandingTagChanges = false;
+			CurrentEntityId = id;
+			if(_game.Entities.TryGetValue(CurrentEntityId, out entity))
+				entity.Info.HasOutstandingTagChanges = true;
+		}
+
+		public void ResetCurrentEntity()
+		{
+			Entity entity;
+			if(_game.Entities.TryGetValue(CurrentEntityId, out entity))
+				entity.Info.HasOutstandingTagChanges = false;
+			CurrentEntityId = 0;
 		}
 	}
 }

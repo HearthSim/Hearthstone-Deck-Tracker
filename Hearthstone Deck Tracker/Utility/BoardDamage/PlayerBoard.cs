@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
 
 #endregion
@@ -13,14 +14,14 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 	public class PlayerBoard
 	{
 		// TODO: optimize this somehow
-		public PlayerBoard(List<CardEntity> list, bool activeTurn)
+		public PlayerBoard(List<Entity> list, bool activeTurn)
 		{
 			Cards = new List<IBoardEntity>();
 			var filtered = Filter(list);
 			var weapon = GetWeapon(filtered);
 			foreach(var card in filtered)
 			{
-				if(card.Entity.IsHero)
+				if(card.IsHero)
 				{
 					Hero = new BoardHero(card, weapon, activeTurn);
 					Cards.Add(Hero);
@@ -36,19 +37,19 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 
 		public int Damage => Cards.Where(x => x.Include).Sum(x => x.Attack);
 
-		public CardEntity GetWeapon(List<CardEntity> list)
+		public Entity GetWeapon(List<Entity> list)
 		{
-			var weapons = list.Where(x => x.Entity.IsWeapon).ToList();
-			return weapons.Count == 1 ? weapons[0] : list.FirstOrDefault(x => x.Entity.HasTag(JUST_PLAYED) && x.Entity.GetTag(JUST_PLAYED) == 1);
+			var weapons = list.Where(x => x.IsWeapon).ToList();
+			return weapons.Count == 1 ? weapons[0] : list.FirstOrDefault(x => x.HasTag(JUST_PLAYED) && x.GetTag(JUST_PLAYED) == 1);
 		}
 
 		public override string ToString() => $"(H:{Hero?.Health ?? 0} A:{Damage})";
 
-		private List<CardEntity> Filter(List<CardEntity> cards)
+		private List<Entity> Filter(List<Entity> cards)
 			=>
 				cards.Where(
 						    x =>
-							x?.Entity?.GetTag(CARDTYPE) != (int)TAG_CARDTYPE.ENCHANTMENT && x?.Entity?.GetTag(CARDTYPE) != (int)TAG_CARDTYPE.HERO_POWER
-							&& x?.Entity?.GetTag(ZONE) != (int)TAG_ZONE.SETASIDE && x?.Entity?.GetTag(ZONE) != (int)TAG_ZONE.GRAVEYARD).ToList();
+							x?.GetTag(CARDTYPE) != (int)TAG_CARDTYPE.ENCHANTMENT && x?.GetTag(CARDTYPE) != (int)TAG_CARDTYPE.HERO_POWER
+							&& x?.GetTag(ZONE) != (int)TAG_ZONE.SETASIDE && x?.GetTag(ZONE) != (int)TAG_ZONE.GRAVEYARD).ToList();
 	}
 }

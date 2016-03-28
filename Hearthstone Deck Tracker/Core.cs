@@ -233,21 +233,30 @@ namespace Hearthstone_Deck_Tracker
 			CanShutdown = true;
 		}
 
+		private static bool _resetting;
 		public static async Task Reset()
 		{
+
+			if(_resetting)
+			{
+				Log.Warn("Reset already in progress.");
+				return;
+			}
+			_resetting = true;
 			var stoppedReader = await LogReaderManager.Stop();
 			Game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
 			{
-				Game.SetPremadeDeck((Deck)DeckList.Instance.ActiveDeck.Clone());
+				Game.IsUsingPremade = true;
 				MainWindow.UpdateMenuItemVisibility();
 			}
+			await Task.Delay(1000);
 			if(stoppedReader)
 				LogReaderManager.Restart();
 			Overlay.HideSecrets();
 			Overlay.Update(false);
 			Overlay.UpdatePlayerCards(true);
-			Windows.PlayerWindow.UpdatePlayerCards(true);
+			_resetting = false;
 		}
 
 

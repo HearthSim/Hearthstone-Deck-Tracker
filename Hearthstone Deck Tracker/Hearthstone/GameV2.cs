@@ -33,8 +33,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			Player = new Player(true);
 			Opponent = new Player(false);
-
-			Entities = new Dictionary<int, Entity>();
 			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
 			PossibleArenaCards = new List<Card>();
@@ -66,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Card> DrawnLastGame { get; set; }
 		public List<Card> PossibleArenaCards { get; set; }
 		public List<Card> PossibleConstructedCards { get; set; }
-		public Dictionary<int, Entity> Entities { get; set; }
+		public Dictionary<int, Entity> Entities { get; } = new Dictionary<int, Entity>();
 		public GameMetaData MetaData { get; } = new GameMetaData();
 		internal List<Tuple<string, List<string>>> StoredPowerLogs { get; } = new List<Tuple<string, List<string>>>();
 		internal Dictionary<int, string> StoredPlayerNames { get; } = new Dictionary<int, string>();
@@ -148,16 +146,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Helper.UpdatePlayerCards(true);
 				Helper.UpdateOpponentCards(true);
 			}
-		}
-
-		public void SetPremadeDeck(Deck deck)
-		{
-			foreach(var card in deck.GetSelectedDeckVersion().Cards)
-			{
-				for(var i = 0; i < card.Count; i++)
-					Player.RevealDeckCard(card.Id, -1);
-			}
-			IsUsingPremade = true;
 		}
 
 		public void AddPlayToCurrentGame(PlayType play, int turn, string cardId) => CurrentGameStats?.AddPlay(play, turn, cardId);

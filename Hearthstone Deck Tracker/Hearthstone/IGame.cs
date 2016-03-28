@@ -30,14 +30,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		List<Card> DrawnLastGame { get; set; }
 		List<Card> PossibleArenaCards { get; set; }
 		List<Card> PossibleConstructedCards { get; set; }
-		Dictionary<int, Entity> Entities { get; set; }
+		Dictionary<int, Entity> Entities { get; }
 		bool SavedReplay { get; set; }
 		GameMetaData MetaData { get; }
 		Mode CurrentMode { get; set; }
 		Mode PreviousMode { get; set; }
 		GameTime GameTime { get; }
 		void Reset(bool resetStats = true);
-		void SetPremadeDeck(Deck deck);
 		void AddPlayToCurrentGame(PlayType play, int turn, string cardId);
 		void ResetArenaCards();
 		void ResetConstructedCards();

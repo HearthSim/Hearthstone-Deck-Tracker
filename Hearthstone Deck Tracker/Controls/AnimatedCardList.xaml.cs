@@ -38,30 +38,21 @@ namespace Hearthstone_Deck_Tracker.Controls
 					existing.Card.HighlightInHand = card.HighlightInHand;
 					existing.Update(highlight).Forget();
 				}
+				else if(existing.Card.IsCreated != card.IsCreated)
+					existing.Update(false).Forget();
 			}
-			foreach(var card in _animatedCards.Select(x => x.Card).ToList())
+			foreach(var card in _animatedCards)
 			{
-				if(!cards.Any(x =>  AreEqualForList(x, card)))
-					RemoveCard(card, player);
+				if(!cards.Any(x => AreEqualForList(x, card.Card)))
+					RemoveCard(card);
 			}
 		}
-		
-		private async void RemoveCard(Hearthstone.Card card, bool player)
+
+		private async void RemoveCard(AnimatedCard card)
 		{
-			var existing = _animatedCards.FirstOrDefault(x => AreEqualForList(x.Card, card));
-			if(existing == null)
-				return;
-			if(Config.Instance.RemoveCardsFromDeck || !player || DeckList.Instance.ActiveDeck == null)
-			{
-				await existing.FadeOut(existing.Card.Count > 0);
-				_animatedCards.Remove(existing);
-				ItemsControl.Items.Remove(existing);
-			}
-			else if(existing.Card.Count > 0)
-			{
-				await existing.Update(true);
-				existing.Card.Count = 0;
-			}
+			await card.FadeOut(card.Card.Count > 0);
+			_animatedCards.Remove(card);
+			ItemsControl.Items.Remove(card);
 		}
 
 		private bool AreEqualForList(Hearthstone.Card c1, Hearthstone.Card c2)

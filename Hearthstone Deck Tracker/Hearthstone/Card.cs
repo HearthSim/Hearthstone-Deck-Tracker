@@ -474,6 +474,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool Jousted { get; }
 		public bool ColoredFrame { get; }
 		public bool ColoredGem { get; }
+		public bool Created { get; }
 		public string Theme { get; }
 		public int TextColorHash { get; }
 
@@ -490,6 +491,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ColoredGem = Config.Instance.RarityCardGems;
 			Theme = ThemeManager.CurrentTheme?.Name;
 			TextColorHash = card.ColorPlayer.Color.GetHashCode();
+			Created = card.IsCreated;
 		}
 
 		public override bool Equals(object obj)
@@ -500,7 +502,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		protected bool Equals(CardImageObject other)
 			=> Count == other.Count && Jousted == other.Jousted && ColoredFrame == other.ColoredFrame && ColoredGem == other.ColoredGem
-				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash;
+				&& string.Equals(Theme, other.Theme) && TextColorHash == other.TextColorHash && Created == other.Created;
 
 		public override int GetHashCode()
 		{
@@ -512,6 +514,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				hashCode = (hashCode * 397) ^ ColoredGem.GetHashCode();
 				hashCode = (hashCode * 397) ^ (Theme?.GetHashCode() ?? 0);
 				hashCode = (hashCode * 397) ^ TextColorHash;
+				hashCode = (hashCode * 397) ^ Created.GetHashCode();
 				return hashCode;
 			}
 		}

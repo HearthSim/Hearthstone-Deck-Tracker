@@ -116,6 +116,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				await Task.Delay(50);
 			await Task.WhenAll(LogReaders.Where(x => force || x.Info.Reset).Concat(new[] {_gameStatePowerLogReader}).Select(x => x.Stop()));
 			Log.Info("Stopped LogReaders.");
+			PowerLineHandler.Reset();
 			return true;
 		}
 

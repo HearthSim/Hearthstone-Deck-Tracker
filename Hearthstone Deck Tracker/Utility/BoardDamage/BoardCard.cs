@@ -3,6 +3,7 @@
 using System;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
 
 #endregion
@@ -19,33 +20,33 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		private readonly int _health;
 		private readonly int _stdAttack;
 
-		public BoardCard(CardEntity e, bool active = true)
+		public BoardCard(Entity e, bool active = true)
 		{
 			var card = Database.GetCardFromId(e.CardId);
 			var cardName = card != null ? card.Name : "";
-			var name = string.IsNullOrEmpty(e.Entity.Name) ? cardName : e.Entity.Name;
+			var name = string.IsNullOrEmpty(e.Name) ? cardName : e.Name;
 
-			_stdAttack = e.Entity.GetTag(ATK);
-			_health = e.Entity.GetTag(HEALTH);
-			_armor = e.Entity.GetTag(ARMOR);
-			_durability = e.Entity.GetTag(DURABILITY);
-			_damageTaken = e.Entity.GetTag(DAMAGE);
-			Exhausted = e.Entity.GetTag(EXHAUSTED) == 1;
-			_cantAttack = e.Entity.GetTag(CANT_ATTACK) == 1;
-			_frozen = e.Entity.GetTag(FROZEN) == 1;
-			Charge = e.Entity.GetTag(CHARGE) == 1;
-			Windfury = e.Entity.GetTag(WINDFURY) == 1;
-			AttacksThisTurn = e.Entity.GetTag(NUM_ATTACKS_THIS_TURN);
+			_stdAttack = e.GetTag(ATK);
+			_health = e.GetTag(HEALTH);
+			_armor = e.GetTag(ARMOR);
+			_durability = e.GetTag(DURABILITY);
+			_damageTaken = e.GetTag(DAMAGE);
+			Exhausted = e.GetTag(EXHAUSTED) == 1;
+			_cantAttack = e.GetTag(CANT_ATTACK) == 1;
+			_frozen = e.GetTag(FROZEN) == 1;
+			Charge = e.GetTag(CHARGE) == 1;
+			Windfury = e.GetTag(WINDFURY) == 1;
+			AttacksThisTurn = e.GetTag(NUM_ATTACKS_THIS_TURN);
 
 			Name = name;
 			CardId = e.CardId;
-			Taunt = e.Entity.GetTag(TAUNT) == 1;
-			Zone = Enum.Parse(typeof(TAG_ZONE), e.Entity.GetTag(ZONE).ToString()).ToString();
-			CardType = Enum.Parse(typeof(TAG_CARDTYPE), e.Entity.GetTag(CARDTYPE).ToString()).ToString();
+			Taunt = e.GetTag(TAUNT) == 1;
+			Zone = Enum.Parse(typeof(TAG_ZONE), e.GetTag(ZONE).ToString()).ToString();
+			CardType = Enum.Parse(typeof(TAG_CARDTYPE), e.GetTag(CARDTYPE).ToString()).ToString();
 
-			Health = CalculateHealth(e.Entity.IsWeapon);
-			Attack = CalculateAttack(active, e.Entity.IsWeapon);
-			Include = IsAbleToAttack(active, e.Entity.IsWeapon);
+			Health = CalculateHealth(e.IsWeapon);
+			Attack = CalculateAttack(active, e.IsWeapon);
+			Include = IsAbleToAttack(active, e.IsWeapon);
 		}
 
 		public string CardId { get; }

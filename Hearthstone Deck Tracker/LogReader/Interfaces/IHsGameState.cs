@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 	public interface IHsGameState
 	{
 		bool CurrentEntityHasCardId { get; set; }
-		int CurrentEntityId { get; set; }
+		int CurrentEntityId { get; }
 		bool GameEnded { get; set; }
 		IGameHandler GameHandler { get; set; }
 		DateTime LastGameStart { get; set; }
@@ -34,5 +34,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		int GetTurnNumber();
 		void GameEndKeyPoint(bool victory, int id);
 		void Reset();
+		void SetCurrentEntity(int id);
+		void ResetCurrentEntity();
 	}
 }

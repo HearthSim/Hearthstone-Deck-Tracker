@@ -2,6 +2,7 @@
 
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 #endregion
 
@@ -13,11 +14,11 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		private readonly BoardCard _hero;
 		private readonly BoardCard _weapon;
 
-		public BoardHero(CardEntity hero, CardEntity weapon, bool activeTurn)
+		public BoardHero(Entity hero, Entity weapon, bool activeTurn)
 		{
 			_hero = new BoardCard(hero, activeTurn);
 			// hero gains windfury with weapon, doubling attack get base attack
-			_baseAttack = hero.Entity.GetTag(GAME_TAG.ATK);
+			_baseAttack = hero.GetTag(GAME_TAG.ATK);
 			if(weapon != null)
 				_weapon = new BoardCard(weapon, activeTurn);
 			Include = activeTurn && _hero.Include;

@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
@@ -22,14 +24,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public Entity()
 		{
 			Tags = new Dictionary<GAME_TAG, int>();
+			_info = new EntityInfo(this);
 		}
 
-		public Entity(int id)
+		public Entity(int id) : this()
 		{
-			Tags = new Dictionary<GAME_TAG, int>();
 			Id = id;
 		}
 
+		[NonSerialized]
+		private readonly EntityInfo _info;
+		public EntityInfo Info => _info;
 		public Dictionary<GAME_TAG, int> Tags { get; set; }
 		public string Name { get; set; }
 		public int Id { get; set; }
@@ -67,7 +72,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsInPlay => IsInZone(TAG_ZONE.PLAY);
 
 		[JsonIgnore]
+		public bool IsInDeck => IsInZone(TAG_ZONE.DECK);
+
+		[JsonIgnore]
 		public bool IsInGraveyard => IsInZone(TAG_ZONE.GRAVEYARD);
+
+		[JsonIgnore]
+		public bool IsInSetAside => IsInZone(TAG_ZONE.SETASIDE);
+
+		[JsonIgnore]
+		public bool IsInSecret => IsInZone(TAG_ZONE.SECRET);
 
 		[JsonIgnore]
 		public Card Card
@@ -184,6 +198,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool IsCurrentPlayer => HasTag(GAME_TAG.CURRENT_PLAYER);
 
+		public bool HasCardId => !string.IsNullOrEmpty(CardId);
+
 		public bool IsInZone(TAG_ZONE zone) => HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;
 
 		public bool IsControlledBy(int controllerId) => HasTag(GAME_TAG.CONTROLLER) && GetTag(GAME_TAG.CONTROLLER) == controllerId;
@@ -211,7 +227,65 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		{
 			var card = Database.GetCardFromId(CardId);
 			var cardName = card != null ? card.Name : "";
-			return $"id={Id}, cardId={CardId}, cardName={cardName}";
+			return $"id={Id}, cardId={CardId}, cardName={cardName}, zonePos={GetTag(GAME_TAG.ZONE_POSITION)},Info={{{Info}}}";
+		}
+	}
+
+	public class EntityInfo
+	{
+		private readonly Entity _entity;
+		public EntityInfo(Entity entity)
+		{
+			_entity = entity;
+		}
+
+		public int Turn { get; set; }
+
+		public CardMark CardMark
+		{
+			get
+			{
+				if(Hidden)
+					return CardMark.None;
+				if(_entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin
+					   || _entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.GallywixsCoinToken)
+					return CardMark.Coin;
+				if(Returned)
+					return CardMark.Returned;
+				if(Created || Stolen)
+					return CardMark.Created;
+				if(Mulliganed)
+					return CardMark.Mulliganed;
+				return CardMark.None;
+			}
+		}
+
+		public bool Discarded { get; set; }
+		public bool Returned { get; set; }
+		public bool Mulliganed { get; set; }
+		public bool Stolen => OriginalController > 0 && OriginalController != _entity.GetTag(GAME_TAG.CONTROLLER);
+		public bool Created { get; set; }
+		public bool HasOutstandingTagChanges { get; set; }
+		public int OriginalController { get; set; }
+		public bool Hidden { get; set; }
+
+		public override string ToString()
+		{
+			var sb = new StringBuilder();
+			sb.Append("turn=" + Turn);
+			if(CardMark != CardMark.None)
+				sb.Append(", mark=" + CardMark);
+			if(Discarded)
+				sb.Append(", discarded=true");
+			if(Returned)
+				sb.Append(", returned=true");
+			if(Mulliganed)
+				sb.Append(", mulliganed=true");
+			if(Stolen)
+				sb.Append(", stolen=true");
+			if(Created)
+				sb.Append(", created=true");
+			return sb.ToString();
 		}
 	}
 }

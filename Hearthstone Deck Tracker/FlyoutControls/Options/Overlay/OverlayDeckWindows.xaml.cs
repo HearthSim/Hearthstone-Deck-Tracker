@@ -203,7 +203,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Core.Windows.PlayerWindow.Show();
 			Core.Windows.PlayerWindow.Activate();
-			Core.Windows.PlayerWindow.SetCardCount(_game.Player.HandCount, _game.Player.DeckCount);
+			Core.Windows.PlayerWindow.SetCardCount(_game.Player.HandCount, _game.IsInMenu ? 30 : _game.Player.DeckCount);
 			Config.Instance.PlayerWindowOnStart = true;
 			Config.Save();
 		}
@@ -223,7 +223,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Core.Windows.OpponentWindow.Show();
 			Core.Windows.OpponentWindow.Activate();
-			Core.Windows.OpponentWindow.SetOpponentCardCount(_game.Opponent.HandCount, _game.Opponent.DeckCount, _game.Opponent.HasCoin);
+			Core.Windows.OpponentWindow.SetOpponentCardCount(_game.Opponent.HandCount, _game.IsInMenu ? 30 : _game.Opponent.DeckCount, _game.Opponent.HasCoin);
 			Config.Instance.OpponentWindowOnStart = true;
 			Config.Save();
 		}

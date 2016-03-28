@@ -11,8 +11,8 @@ namespace HDTTests.BoardDamage
 	[TestClass]
 	public class BoardStateTest
 	{
-		private List<CardEntity> _player;
-		private List<CardEntity> _opponent;
+		private List<Entity> _player;
+		private List<Entity> _opponent;
 		private Dictionary<int, Entity> _entities;
 
 		[TestInitialize]
@@ -26,23 +26,23 @@ namespace HDTTests.BoardDamage
 			_entities[1].Name = "GameEntity";
 			_entities[1].SetTag(GAME_TAG.TURN, 11);
 
-			_player = new List<CardEntity>();
-			_player.Add(new EntityBuilder("", 3, 1).InPlay().Charge().ToCardEntity());
-			_player.Add(new EntityBuilder("", 4, 5).InPlay().ToCardEntity());
-			_player.Add(new EntityBuilder("", 3, 2).InPlay().Exhausted().ToCardEntity());
+			_player = new List<Entity>();
+			_player.Add(new EntityBuilder("", 3, 1).InPlay().Charge().ToEntity());
+			_player.Add(new EntityBuilder("", 4, 5).InPlay().ToEntity());
+			_player.Add(new EntityBuilder("", 3, 2).InPlay().Exhausted().ToEntity());
 
-			_opponent = new List<CardEntity>();
-			_opponent.Add(new EntityBuilder("", 7, 5).InPlay().ToCardEntity());
-			_opponent.Add(new EntityBuilder("", 3, 1).InPlay().Windfury().AttacksThisTurn(1).ToCardEntity());
-			_opponent.Add(new EntityBuilder("", 2, 2).InPlay().Exhausted().ToCardEntity());
+			_opponent = new List<Entity>();
+			_opponent.Add(new EntityBuilder("", 7, 5).InPlay().ToEntity());
+			_opponent.Add(new EntityBuilder("", 3, 1).InPlay().Windfury().AttacksThisTurn(1).ToEntity());
+			_opponent.Add(new EntityBuilder("", 2, 2).InPlay().Exhausted().ToEntity());
 		}
 
 		[TestMethod]
 		public void IsDeadToBoard1()
 		{
-			var playerHero = new EntityBuilder("HERO_01", 0, 30).Damage(20).ToCardEntity();
+			var playerHero = new EntityBuilder("HERO_01", 0, 30).Damage(20).ToEntity();
 			_player.Add(playerHero);
-			var opponentHero = new EntityBuilder("HERO_02", 0, 30).Damage(10).ToCardEntity();
+			var opponentHero = new EntityBuilder("HERO_02", 0, 30).Damage(10).ToEntity();
 			_opponent.Add(opponentHero);
 
 			var board = new BoardState(_player, _opponent, _entities, 1);
@@ -54,9 +54,9 @@ namespace HDTTests.BoardDamage
 		[TestMethod]
 		public void IsDeadToBoard2()
 		{
-			var playerHero = new EntityBuilder("HERO_01", 0, 30).Damage(20).Armor(8).ToCardEntity();
+			var playerHero = new EntityBuilder("HERO_01", 0, 30).Damage(20).Armor(8).ToEntity();
 			_player.Add(playerHero);
-			var opponentHero = new EntityBuilder("HERO_02", 0, 30).Damage(25).ToCardEntity();
+			var opponentHero = new EntityBuilder("HERO_02", 0, 30).Damage(25).ToEntity();
 			_opponent.Add(opponentHero);
 
 			var board = new BoardState(_player, _opponent, _entities, 1);
@@ -69,7 +69,7 @@ namespace HDTTests.BoardDamage
 		// when hero is dead and removed from play
 		public void NullOpponentHero()
 		{
-			var hero = new EntityBuilder("HERO_01", 0, 30).Damage(20).ToCardEntity();
+			var hero = new EntityBuilder("HERO_01", 0, 30).Damage(20).ToEntity();
 			_player.Add(hero);
 			var board = new BoardState(_player, _opponent, _entities, 1);
 
@@ -79,7 +79,7 @@ namespace HDTTests.BoardDamage
 		[TestMethod]
 		public void NullPlayerHero()
 		{
-			var hero = new EntityBuilder("HERO_01", 0, 30).Damage(20).ToCardEntity();
+			var hero = new EntityBuilder("HERO_01", 0, 30).Damage(20).ToEntity();
 			_opponent.Add(hero);
 			var board = new BoardState(_player, _opponent, _entities, 1);
 
@@ -96,9 +96,9 @@ namespace HDTTests.BoardDamage
 		[TestMethod]
 		public void WindfuryWeaponEquipped()
 		{
-			_player.Add(new EntityBuilder("HERO_01", 5, 30).InPlay().Hero().Damage(20).ToCardEntity());
-			_player.Add(new EntityBuilder("DS1_188", 5, 0).InPlay().Weapon().Windfury().Durability(4).ToCardEntity());
-			_opponent.Add(new EntityBuilder("HERO_02", 0, 30).InPlay().Hero().Damage(10).ToCardEntity());
+			_player.Add(new EntityBuilder("HERO_01", 5, 30).InPlay().Hero().Damage(20).ToEntity());
+			_player.Add(new EntityBuilder("DS1_188", 5, 0).InPlay().Weapon().Windfury().Durability(4).ToEntity());
+			_opponent.Add(new EntityBuilder("HERO_02", 0, 30).InPlay().Hero().Damage(10).ToEntity());
 
 			var board = new BoardState(_player, _opponent, _entities, 1);
 

@@ -159,24 +159,14 @@ namespace HDTTests.BoardDamage
 		public Entity ToEntity()
 		{
 			if(string.IsNullOrWhiteSpace(_cardId))
-			{
 				return _instance;
-			}
-			else
-			{
-				_instance.CardId = _cardId;
-				return _instance;
-			}				
-		}
-
-		public CardEntity ToCardEntity()
-		{
-			return new CardEntity(ToEntity());			
+			_instance.CardId = _cardId;
+			return _instance;
 		}
 
 		public BoardCard ToBoardCard(bool active = true)
 		{
-			return new BoardCard(ToCardEntity(), active);
+			return new BoardCard(ToEntity(), active);
 		}
 	}
 }

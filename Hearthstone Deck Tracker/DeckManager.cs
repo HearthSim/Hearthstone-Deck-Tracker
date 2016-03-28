@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -30,18 +31,18 @@ namespace Hearthstone_Deck_Tracker
 					await Task.Delay(100);
 				_waitingForClass = false;
 			}
-			var cardEntites = Core.Game.Player.AllCardEntities.Where(x => x.Entity != null && (x.Entity.IsMinion || x.Entity.IsSpell || x.Entity.IsWeapon) && !x.Created && !x.Stolen).GroupBy(x => x.CardId).ToList();
+			var cardEntites = Core.Game.Player.RevealedCards.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen).GroupBy(x => x.CardId).ToList();
 			var notFound = cardEntites.Where(x => !deck.Cards.Any(c => c.Id == x.Key && c.Count >= x.Count())).ToList();
 			if(notFound.Any())
 			{
-				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Entity?.Card).Distinct().ToList();
+				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
 				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
 				await AutoSelectDeck(Core.Game.Player.Class, Core.Game.CurrentGameMode, cardEntites);
 			}
 			else
 				NotFoundCards.Clear();
 		}
-		private static async Task AutoSelectDeck(string heroClass, GameMode mode, List<IGrouping<string, CardEntity>> cardEntites = null)
+		private static async Task AutoSelectDeck(string heroClass, GameMode mode, List<IGrouping<string, Entity>> cardEntites = null)
 		{
 			_waitingForDraws++;
 			await Task.Delay(500);
