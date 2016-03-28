@@ -159,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				if(entity.IsInZone(TAG_ZONE.SECRET))
 				{
-					gameState.GameHandler.HandleOpponentStolen(entity, entity.CardId, gameState.GetTurnNumber());
+					gameState.GameHandler.HandlePlayerStolen(entity, entity.CardId, gameState.GetTurnNumber());
 					gameState.ProposeKeyPoint(SecretStolen, id, ActivePlayer.Player);
 				}
 				else if(entity.IsInZone(PLAY))
