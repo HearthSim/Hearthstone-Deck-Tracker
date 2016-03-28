@@ -7,7 +7,8 @@
                       Title="Opponent" Height="440" Width="230" MinWidth="230" MaxWidth="230"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       SizeChanged="OpponentWindow_OnSizeChanged" 
-                      Activated="OpponentWindow_OnActivated"
+                      Activated="OpponentWindow_OnActivated" 
+                      Loaded="OpponentWindow_OnLoaded"
                       Icon="{StaticResource AppIcon}"
                       Deactivated="OpponentWindow_OnDeactivated">
     <controls:MetroWindow.IconTemplate>

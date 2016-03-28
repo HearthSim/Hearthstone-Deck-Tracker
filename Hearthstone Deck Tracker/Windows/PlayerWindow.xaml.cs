@@ -169,14 +169,9 @@ namespace Hearthstone_Deck_Tracker
 				Topmost = false;
 		}
 
-		public async void UpdatePlayerCards(bool reset)
+		public async void UpdatePlayerCards(List<Card> cards, bool reset)
 		{
-			_updateRequests++;
-			await Task.Delay(100);
-			_updateRequests--;
-			if(_updateRequests > 0)
-				return;
-			ListViewPlayer.Update(PlayerDeck, true, reset);
+			ListViewPlayer.Update(cards, true, reset);
 		}
 
 		[NotifyPropertyChangedInvocator]

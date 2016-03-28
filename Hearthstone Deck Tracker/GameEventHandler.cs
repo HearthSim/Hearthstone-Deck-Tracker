@@ -842,7 +842,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandlePlayerGetToDeck(Entity entity, string cardId, int turn)
 		{
 			_game.Player.CreateInDeck(entity, turn);
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerGetToDeck, turn, cardId);
 			GameEvents.OnPlayerCreateInDeck.Execute(Database.GetCardFromId(cardId));
 		}
@@ -852,7 +852,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			_game.Player.CreateInHand(entity, turn);
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerGet, turn, cardId);
 			GameEvents.OnPlayerGet.Execute(Database.GetCardFromId(cardId));
 		}
@@ -861,7 +861,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 			_game.Player.BoardToHand(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.PlayerBackToHand, turn, cardId);
 			GameEvents.OnPlayerPlayToHand.Execute(Database.GetCardFromId(cardId));
@@ -876,7 +876,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 			{
 				_game.Player.Draw(entity, turn);
-				Helper.UpdatePlayerCards();
+				Core.UpdatePlayerCards();
 				_game.AddPlayToCurrentGame(PlayType.PlayerDraw, turn, cardId);
 				DeckManager.DetectCurrentDeck().Forget();
 			}
@@ -889,7 +889,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			_game.Player.Mulligan(entity);
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 
 			_game.AddPlayToCurrentGame(PlayType.PlayerMulligan, 0, cardId);
 			GameEvents.OnPlayerMulligan.Execute(Database.GetCardFromId(cardId));
@@ -909,7 +909,7 @@ namespace Hearthstone_Deck_Tracker
 				_game.Player.SecretPlayedFromHand(entity, turn);
 				HandleSecretsOnPlay(entity);
 			}
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerSecretPlayed, turn, cardId);
 			GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
 		}
@@ -919,7 +919,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			_game.Player.HandDiscard(entity, turn);
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 			_game.AddPlayToCurrentGame(PlayType.PlayerHandDiscard, turn, cardId);
 			GameEvents.OnPlayerHandDiscard.Execute(Database.GetCardFromId(cardId));
 		}
@@ -929,7 +929,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			_game.Player.Play(entity, turn);
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 
 			_game.AddPlayToCurrentGame(PlayType.PlayerPlay, turn, cardId);
 			GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
@@ -970,7 +970,7 @@ namespace Hearthstone_Deck_Tracker
 			_game.Player.DeckDiscard(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.PlayerDeckDiscard, turn, cardId);
 			DeckManager.DetectCurrentDeck().Forget();
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 			GameEvents.OnPlayerDeckDiscard.Execute(Database.GetCardFromId(cardId));
 		}
 
@@ -980,7 +980,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_game.Player.BoardToDeck(entity, turn);
 
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 
 			_game.AddPlayToCurrentGame(PlayType.PlayerPlayToDeck, turn, cardId);
 			GameEvents.OnPlayerPlayToDeck.Execute(Database.GetCardFromId(cardId));
@@ -994,7 +994,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_game.Opponent.CreateInDeck(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.OpponentGetToDeck, turn, string.Empty);
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 		}
 
 		public void HandlePlayerRemoveFromPlay(Entity entity, int turn) => _game.Player.RemoveFromPlay(entity, turn);
@@ -1026,21 +1026,21 @@ namespace Hearthstone_Deck_Tracker
 		public void HandlePlayerJoust(Entity entity, string cardId, int turn)
 		{
 			_game.Player.JoustReveal(entity, turn);
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 			GameEvents.OnPlayerJoustReveal.Execute(Database.GetCardFromId(cardId));
 		}
 
 		public void HandlePlayerDeckToPlay(Entity entity, string cardId, int turn)
 		{
 			_game.Player.DeckToPlay(entity, turn);
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 			GameEvents.OnPlayerDeckToPlay.Execute(Database.GetCardFromId(cardId));
 		}
 
 		public void HandleOpponentDeckToPlay(Entity entity, string cardId, int turn)
 		{
 			_game.Opponent.DeckToPlay(entity, turn);
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 			GameEvents.OnOpponentDeckToPlay.Execute(Database.GetCardFromId(cardId));
 		}
 
@@ -1048,13 +1048,13 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_game.Player.RemoveFromDeck(entity, turn);
 			DeckManager.DetectCurrentDeck().Forget();
-			Helper.UpdatePlayerCards();
+			Core.UpdatePlayerCards();
 		}
 
 		public void HandleOpponentRemoveFromDeck(Entity entity, int turn)
 		{
 			_game.Opponent.RemoveFromDeck(entity, turn);
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 		}
 
 		public void HandlePlayerStolen(Entity entity, string cardId, int turn)
@@ -1101,7 +1101,7 @@ namespace Hearthstone_Deck_Tracker
 						_game.OpponentSecrets.SetZero(cardId);
 					Core.Overlay.ShowSecrets();
 				}
-				Helper.UpdateOpponentCards();
+				Core.UpdateOpponentCards();
 				_game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);
 				GameEvents.OnOpponentSecretTriggered.Execute(Database.GetCardFromId(cardId));
 			}
@@ -1156,7 +1156,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentPlay(Entity entity, string cardId, int from, int turn)
 		{
 			_game.Opponent.Play(entity, turn);
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 			_game.AddPlayToCurrentGame(PlayType.OpponentPlay, turn, cardId);
 			GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
 		}
@@ -1165,14 +1165,14 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentJoust(Entity entity, string cardId, int turn)
 		{
 			_game.Opponent.JoustReveal(entity, turn);
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 			GameEvents.OnOpponentJoustReveal.Execute(Database.GetCardFromId(cardId));
 		}
 
 		public void HandleOpponentHandDiscard(Entity entity, string cardId, int from, int turn)
 		{
 			_game.Opponent.HandDiscard(entity, turn);
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 			_game.AddPlayToCurrentGame(PlayType.OpponentHandDiscard, turn, cardId);
 			GameEvents.OnOpponentHandDiscard.Execute(Database.GetCardFromId(cardId));
 		}
@@ -1197,7 +1197,7 @@ namespace Hearthstone_Deck_Tracker
 				entity.CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoin;
 			_game.Opponent.CreateInHand(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.OpponentGet, turn, string.Empty);
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 			GameEvents.OnOpponentGet.Execute();
 		}
 
@@ -1231,7 +1231,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentPlayToHand(Entity entity, string cardId, int turn, int id)
 		{
 			_game.Opponent.BoardToHand(entity, turn);
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 			_game.AddPlayToCurrentGame(PlayType.OpponentBackToHand, turn, cardId);
 			GameEvents.OnOpponentPlayToHand.Execute(Database.GetCardFromId(cardId));
 		}
@@ -1241,7 +1241,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_game.Opponent.BoardToDeck(entity, turn);
 			_game.AddPlayToCurrentGame(PlayType.OpponentPlayToDeck, turn, cardId);
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 			GameEvents.OnOpponentPlayToDeck.Execute(Database.GetCardFromId(cardId));
 		}
 
@@ -1259,7 +1259,7 @@ namespace Hearthstone_Deck_Tracker
 					_game.OpponentSecrets.SetZero(cardId);
 				Core.Overlay.ShowSecrets();
 			}
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 			_game.AddPlayToCurrentGame(PlayType.OpponentSecretTriggered, turn, cardId);
 			GameEvents.OnOpponentSecretTriggered.Execute(Database.GetCardFromId(cardId));
 		}
@@ -1270,7 +1270,7 @@ namespace Hearthstone_Deck_Tracker
 
 			//there seems to be an issue with the overlay not updating here.
 			//possibly a problem with order of logs?
-			Helper.UpdateOpponentCards();
+			Core.UpdateOpponentCards();
 			_game.AddPlayToCurrentGame(PlayType.OpponentDeckDiscard, turn, cardId);
 			GameEvents.OnOpponentDeckDiscard.Execute(Database.GetCardFromId(cardId));
 		}

@@ -166,15 +166,7 @@ namespace Hearthstone_Deck_Tracker
 				Topmost = false;
 		}
 
-		public async void UpdateOpponentCards(bool reset)
-		{
-			_updateRequests++;
-			await Task.Delay(100);
-			_updateRequests--;
-			if(_updateRequests > 0)
-				return;
-			ListViewOpponent.Update(OpponentDeck, false, reset);
-		}
+		public void UpdateOpponentCards(List<Card> cards, bool reset) => ListViewOpponent.Update(cards, false, reset);
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

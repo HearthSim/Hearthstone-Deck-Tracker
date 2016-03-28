@@ -52,8 +52,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		public static void UpdateCards()
 		{
-			Helper.UpdatePlayerCards(true);
-			Helper.UpdateOpponentCards(true);
+			Core.UpdatePlayerCards(true);
+			Core.UpdateOpponentCards(true);
 			Core.Overlay.PlayerDeck.ForEach(c => c.UpdateHighlight());
 			Core.Overlay.OpponentDeck.ForEach(c => c.UpdateHighlight());
 			Core.Windows.PlayerWindow.PlayerDeck.ForEach(c => c.UpdateHighlight());

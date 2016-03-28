@@ -29,6 +29,8 @@ namespace Hearthstone_Deck_Tracker
 		private static TrayIcon _trayIcon;
 		private static OverlayWindow _overlay;
 		private static Overview _statsOverview;
+		private static int _updateRequestsPlayer;
+		private static int _updateRequestsOpponent;
 		public static Version Version { get; set; }
 		public static GameV2 Game { get; set; }
 		public static MainWindow MainWindow { get; set; }
@@ -255,8 +257,32 @@ namespace Hearthstone_Deck_Tracker
 				LogReaderManager.Restart();
 			Overlay.HideSecrets();
 			Overlay.Update(false);
-			Overlay.UpdatePlayerCards(true);
+			UpdatePlayerCards(true);
 			_resetting = false;
+		}
+
+		internal static async void UpdatePlayerCards(bool reset = false)
+		{
+			_updateRequestsPlayer++;
+			await Task.Delay(100);
+			_updateRequestsPlayer--;
+			if(_updateRequestsPlayer > 0)
+				return;
+			var cards = Game.Player.DisplayCards;
+			Overlay.UpdatePlayerCards(cards, reset);
+			Windows.PlayerWindow.UpdatePlayerCards(cards, reset);
+		}
+
+		internal static async void UpdateOpponentCards(bool reset = false)
+		{
+			_updateRequestsOpponent++;
+			await Task.Delay(100);
+			_updateRequestsOpponent--;
+			if(_updateRequestsOpponent > 0)
+				return;
+			var cards = Game.Opponent.DisplayRevealedCards;
+			Overlay.UpdateOpponentCards(cards, reset);
+			Windows.OpponentWindow.UpdateOpponentCards(cards, reset);
 		}
 
 

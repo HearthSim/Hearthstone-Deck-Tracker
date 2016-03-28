@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -140,25 +142,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
-		public async void UpdatePlayerCards(bool reset)
-		{
-			_updateRequestsPlayer++;
-			await Task.Delay(100);
-			_updateRequestsPlayer--;
-			if(_updateRequestsPlayer > 0)
-				return;
-			ListViewPlayer.Update(PlayerDeck, true, reset);
-		}
+		public void UpdatePlayerCards(List<Card> cards, bool reset) => ListViewPlayer.Update(cards, true, reset);
 
-		public async void UpdateOpponentCards(bool reset)
-		{
-			_updateRequestsOpponent++;
-			await Task.Delay(100);
-			_updateRequestsOpponent--;
-			if(_updateRequestsOpponent > 0)
-				return;
-			ListViewOpponent.Update(OpponentDeck, false, reset);
-		}
-
+		public void UpdateOpponentCards(List<Card> cards, bool reset) => ListViewOpponent.Update(cards, false, reset);
 	}
 }

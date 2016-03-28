@@ -423,18 +423,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static void UpdatePlayerCards(bool reset = false)
-		{
-			Core.Overlay.UpdatePlayerCards(reset);
-			Core.Windows.PlayerWindow.UpdatePlayerCards(reset);
-		}
-
-		public static void UpdateOpponentCards(bool reset = false)
-		{
-			Core.Overlay.UpdateOpponentCards(reset);
-			Core.Windows.OpponentWindow.UpdateOpponentCards(reset);
-		}
-
 		public static async Task StartHearthstoneAsync()
 		{
 			if(User32.GetHearthstoneWindow() != IntPtr.Zero)
