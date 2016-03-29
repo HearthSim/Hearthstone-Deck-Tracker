@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					game.Entities.Add(id, new Entity(id) {Name = "GameEntity"});
 				gameState.SetCurrentEntity(id);
 				if(gameState.DeterminedPlayers)
-					_tagChangeHandler.InvokeQueuedActions();
+					_tagChangeHandler.InvokeQueuedActions(game);
 				return;
 			}
 			else if(PlayerEntityRegex.IsMatch(logLine))
@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					game.Entities[id].Name = game.GetStoredPlayerName(id);
 				gameState.SetCurrentEntity(id);
 				if(gameState.DeterminedPlayers)
-					_tagChangeHandler.InvokeQueuedActions();
+					_tagChangeHandler.InvokeQueuedActions(game);
 				return;
 			}
 			else if(TagChangeRegex.IsMatch(logLine))
@@ -153,7 +153,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				gameState.SetCurrentEntity(id);
 				if(gameState.DeterminedPlayers)
-					_tagChangeHandler.InvokeQueuedActions();
+					_tagChangeHandler.InvokeQueuedActions(game);
 				gameState.CurrentEntityHasCardId = !string.IsNullOrEmpty(cardId);
 				gameState.CurrentEntityZone = LogReaderHelper.ParseEnum<TAG_ZONE>(match.Groups["zone"].Value);
 				return;
@@ -178,7 +178,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					game.Entities[entityId].CardId = cardId;
 					gameState.SetCurrentEntity(entityId);
 					if(gameState.DeterminedPlayers)
-						_tagChangeHandler.InvokeQueuedActions();
+						_tagChangeHandler.InvokeQueuedActions(game);
 				}
 				if(gameState.JoustReveals > 0)
 				{
@@ -307,7 +307,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(game.IsInMenu)
 				return;
 			if(!creationTag && gameState.DeterminedPlayers)
-				_tagChangeHandler.InvokeQueuedActions();
+				_tagChangeHandler.InvokeQueuedActions(game);
 			if(!creationTag)
 				gameState.ResetCurrentEntity();
 			if(!gameState.DeterminedPlayers && gameState.SetupDone)

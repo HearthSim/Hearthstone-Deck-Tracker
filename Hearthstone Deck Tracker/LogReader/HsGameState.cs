@@ -81,19 +81,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public void SetCurrentEntity(int id)
 		{
 			Entity entity;
-			if(_game.Entities.TryGetValue(CurrentEntityId, out entity))
-				entity.Info.HasOutstandingTagChanges = false;
 			CurrentEntityId = id;
 			if(_game.Entities.TryGetValue(CurrentEntityId, out entity))
 				entity.Info.HasOutstandingTagChanges = true;
 		}
 
-		public void ResetCurrentEntity()
-		{
-			Entity entity;
-			if(_game.Entities.TryGetValue(CurrentEntityId, out entity))
-				entity.Info.HasOutstandingTagChanges = false;
-			CurrentEntityId = 0;
-		}
+		public void ResetCurrentEntity() => CurrentEntityId = 0;
 	}
 }

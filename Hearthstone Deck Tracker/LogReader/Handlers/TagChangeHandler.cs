@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	internal class TagChangeHandler
 	{
 		private readonly TagChangeActions _tagChangeActions = new TagChangeActions();
-		private readonly Queue<Action> _creationTagActionQueue = new Queue<Action>();
+		private readonly Queue<Tuple<int, Action>> _creationTagActionQueue = new Queue<Tuple<int, Action>>();
 
 		public void TagChange(IHsGameState gameState, string rawTag, int id, string rawValue, IGame game, bool isCreationTag = false)
 		{
@@ -53,16 +53,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			game.Entities[id].SetTag(tag, value);
 
 			if(isCreationTag)
-				_tagChangeActions.FindAction(tag, game, gameState, id, value, prevValue)?.Enqueue(_creationTagActionQueue);
+			{
+				var action = _tagChangeActions.FindAction(tag, game, gameState, id, value, prevValue);
+				if(action != null)
+					_creationTagActionQueue.Enqueue(new Tuple<int, Action>(id, action));
+			}
 			else
 				_tagChangeActions.FindAction(tag, game, gameState, id, value, prevValue)?.Invoke();
 		}
 		
 
-		public void InvokeQueuedActions()
+		public void InvokeQueuedActions(IGame game)
 		{
 			while(_creationTagActionQueue.Any())
-				_creationTagActionQueue.Dequeue().Invoke();
+			{
+				var item = _creationTagActionQueue.Dequeue();
+				item.Item2?.Invoke();
+				Entity entity;
+				if(_creationTagActionQueue.All(x => x.Item1 != item.Item1) && game.Entities.TryGetValue(item.Item1, out entity))
+					entity.Info.HasOutstandingTagChanges = false;
+			}
 		}
 
 		public void ClearQueuedActions() => _creationTagActionQueue.Clear();
@@ -94,10 +104,5 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			gameState.DeterminedPlayers = game.PlayerEntity != null;
 		}
-	}
-
-	public static class ActionExtensions
-	{
-		public static void Enqueue(this Action action, Queue<Action> queue) => queue.Enqueue(action);
 	}
 }
