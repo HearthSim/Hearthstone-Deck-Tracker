@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
@@ -16,35 +18,42 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public void Update(List<Hearthstone.Card> cards, bool player, bool reset)
 		{
-			if(reset)
+			try
 			{
-				_animatedCards.Clear();
-				ItemsControl.Items.Clear();
-			}
-			foreach(var card in cards)
-			{
-				var existing = _animatedCards.FirstOrDefault(x => AreEqualForList(x.Card, card));
-				if(existing == null)
+				if(reset)
 				{
-					var newCard = new AnimatedCard(card);
-					_animatedCards.Insert(cards.IndexOf(card), newCard);
-					ItemsControl.Items.Insert(cards.IndexOf(card), newCard);
-					newCard.FadeIn(!reset).Forget();
+					_animatedCards.Clear();
+					ItemsControl.Items.Clear();
 				}
-				else if(existing.Card.Count != card.Count || existing.Card.HighlightInHand != card.HighlightInHand)
+				foreach(var card in cards)
 				{
-					var highlight = existing.Card.Count != card.Count;
-					existing.Card.Count = card.Count;
-					existing.Card.HighlightInHand = card.HighlightInHand;
-					existing.Update(highlight).Forget();
+					var existing = _animatedCards.FirstOrDefault(x => AreEqualForList(x.Card, card));
+					if(existing == null)
+					{
+						var newCard = new AnimatedCard(card);
+						_animatedCards.Insert(cards.IndexOf(card), newCard);
+						ItemsControl.Items.Insert(cards.IndexOf(card), newCard);
+						newCard.FadeIn(!reset).Forget();
+					}
+					else if(existing.Card.Count != card.Count || existing.Card.HighlightInHand != card.HighlightInHand)
+					{
+						var highlight = existing.Card.Count != card.Count;
+						existing.Card.Count = card.Count;
+						existing.Card.HighlightInHand = card.HighlightInHand;
+						existing.Update(highlight).Forget();
+					}
+					else if(existing.Card.IsCreated != card.IsCreated)
+						existing.Update(false).Forget();
 				}
-				else if(existing.Card.IsCreated != card.IsCreated)
-					existing.Update(false).Forget();
+				foreach(var card in _animatedCards)
+				{
+					if(!cards.Any(x => AreEqualForList(x, card.Card)))
+						RemoveCard(card);
+				}
 			}
-			foreach(var card in _animatedCards)
+			catch(Exception e)
 			{
-				if(!cards.Any(x => AreEqualForList(x, card.Card)))
-					RemoveCard(card);
+				Log.Error(e);
 			}
 		}
 
