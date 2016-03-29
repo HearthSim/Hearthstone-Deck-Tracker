@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker
 		public static async Task DetectCurrentDeck()
 		{
 			var deck = DeckList.Instance.ActiveDeck;
-			if(deck == null || !Config.Instance.AutoDeckDetection || deck.DeckId == IgnoredDeckId || _waitingForClass || _waitingForUserInput)
+			if(deck == null || deck.DeckId == IgnoredDeckId || _waitingForClass || _waitingForUserInput)
 				return;
 			if(string.IsNullOrEmpty(Core.Game.Player.Class))
 			{
@@ -37,7 +37,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
 				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
-				await AutoSelectDeck(Core.Game.Player.Class, Core.Game.CurrentGameMode, cardEntites);
+				if(Config.Instance.AutoDeckDetection)
+					await AutoSelectDeck(Core.Game.Player.Class, Core.Game.CurrentGameMode, cardEntites);
 			}
 			else
 				NotFoundCards.Clear();
