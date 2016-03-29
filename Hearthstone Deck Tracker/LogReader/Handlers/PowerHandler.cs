@@ -19,7 +19,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	public class PowerHandler
 	{
-		private DateTime _lastDeterminePlayersWarning = DateTime.MinValue;
+		private DateTime _lastDeterminePlayersWarning1 = DateTime.MinValue;
+		private DateTime _lastDeterminePlayersWarning2 = DateTime.MinValue;
 		private readonly TagChangeHandler _tagChangeHandler = new TagChangeHandler();
 		private readonly List<Entity> _tmpEntities = new List<Entity>();
 
@@ -309,15 +310,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				_tagChangeHandler.InvokeQueuedActions();
 			if(!creationTag)
 				gameState.ResetCurrentEntity();
-			else if(!gameState.DeterminedPlayers && gameState.SetupDone && (DateTime.Now - _lastDeterminePlayersWarning).TotalSeconds > 5)
+			if(!gameState.DeterminedPlayers && gameState.SetupDone)
 			{
-				_lastDeterminePlayersWarning = DateTime.Now;
-				Log.Warn("Could not determine players by checking for opponent hand.");
+				if((DateTime.Now - _lastDeterminePlayersWarning1).TotalSeconds > 5)
+				{
+					Log.Warn("Could not determine players by checking for opponent hand.");
+					_lastDeterminePlayersWarning1 = DateTime.Now;
+				}
 				var playerCard = game.Entities.FirstOrDefault(x => x.Value.IsInHand && !string.IsNullOrEmpty(x.Value.CardId)).Value;
 				if(playerCard != null)
 					_tagChangeHandler.DeterminePlayers(gameState, game, playerCard.GetTag(GAME_TAG.CONTROLLER), false);
-				else
+				else if((DateTime.Now - _lastDeterminePlayersWarning2).TotalSeconds > 5)
+				{
 					Log.Warn("Could not determine players by checking for player hand either... waiting for draws...");
+					_lastDeterminePlayersWarning2 = DateTime.Now;
+				}
 			}
 			if(!setup)
 				gameState.SetupDone = true;
