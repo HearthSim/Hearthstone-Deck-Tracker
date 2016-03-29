@@ -93,6 +93,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_stop = true;
 			while(_running || _thread == null || _thread.ThreadState == ThreadState.Unstarted)
 				await Task.Delay(50);
+			_lines.Clear();
 			await Task.Factory.StartNew(() => _thread?.Join());
 			Log.Debug(Info.Name + " stopped.");
 		}
