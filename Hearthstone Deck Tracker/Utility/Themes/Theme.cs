@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		public string Name { get; set; }
 		public string Directory { get; set; }
 		public Type BuildType { get; set; }
+		public OverlayTheme OverlayTheme { get; }
 
 		public ImageBrush HighlightImage => _highlightImage ?? (_highlightImage = GetHighlightImage());
 
@@ -30,9 +31,36 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			Name = name.ToLowerInvariant();
 			Directory = dir;
 			BuildType = buildType;
+			OverlayTheme = new OverlayTheme(Name);
 		}
 
 		public override string ToString() => Name.Substring(0, 1).ToUpperInvariant() + (Name.Length > 1 ? Name.Substring(1) : "");
+	}
+
+	public class OverlayTheme
+	{
+		public OverlayTheme(string name)
+		{
+			Name = name;
+		}
+		public string Name { get; }
+		public const string Directory = @"Images\Themes\Overlay";
+		private ImageBrush _cardCounterFrame;
+		private ImageBrush _playerChanceFrame;
+		private ImageBrush _opponentChangeFrame;
+		public ImageBrush CardCounterFrame => _cardCounterFrame ?? (_cardCounterFrame = GetOverlayImage(Name, "card-counter-frame.png"));
+		public ImageBrush PlayerChanceFrame => _playerChanceFrame ?? (_playerChanceFrame = GetOverlayImage(Name, "player-chance-frame.png"));
+		public ImageBrush OpponentChanceFrame => _opponentChangeFrame ?? (_opponentChangeFrame = GetOverlayImage(Name, "opponent-chance-frame.png"));
+
+		private ImageBrush GetOverlayImage(string name, string image)
+		{
+			var file = Path.Combine(Directory, name, image);
+			if(File.Exists(file))
+				return new ImageBrush(new BitmapImage(new Uri(file, UriKind.Relative)));
+			if(name != "default")
+				return GetOverlayImage("default", image);
+			return new ImageBrush();
+		}
 	}
 
 	public class ThemeElementInfo

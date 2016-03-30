@@ -7,7 +7,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
-	public static class ThemeManager
+	public class ThemeManager
 	{
 		private const string ThemeDir = @"Images\Themes\Bars";
 		private const string ThemeRegex = @"[a-zA-Z]+";
@@ -60,6 +60,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			Core.Windows.OpponentWindow.OpponentDeck.ForEach(c => c.UpdateHighlight());
 			foreach(var card in Core.MainWindow.ListViewDeck.Items.Cast<Card>())
 				card.Update();
+			Core.Windows.PlayerWindow.UpdateCardFrames();
+			Core.Windows.OpponentWindow.UpdateCardFrames();
+			Core.Overlay.UpdateCardFrames();
 		}
 
 		public static CardBarImageBuilder GetBarImageBuilder(Card card)

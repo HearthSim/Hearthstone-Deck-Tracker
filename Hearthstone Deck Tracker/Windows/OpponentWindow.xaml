@@ -4,6 +4,7 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+                      xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
                       Title="Opponent" Height="440" Width="230" MinWidth="230" MaxWidth="230"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       SizeChanged="OpponentWindow_OnSizeChanged" 
@@ -11,6 +12,9 @@
                       Loaded="OpponentWindow_OnLoaded"
                       Icon="{StaticResource AppIcon}"
                       Deactivated="OpponentWindow_OnDeactivated">
+    <controls:MetroWindow.Resources>
+        <themes:ThemeManager x:Key="ThemeManager"/>
+    </controls:MetroWindow.Resources>
     <controls:MetroWindow.IconTemplate>
         <DataTemplate>
             <Rectangle Margin="2" Opacity="0.7">
@@ -45,17 +49,11 @@
                     </controls1:AnimatedCardList.ItemContainerStyle>
                 </controls1:AnimatedCardList>
             </Viewbox>
-            <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2">
-                <Canvas.Background>
-                    <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/frame_card_counter.png"/>
-                </Canvas.Background>
+            <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.CardCounterFrame, Source={StaticResource ThemeManager}}">
                 <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25"/>
                 <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25"/>
             </Canvas>
-            <Canvas Name="CanvasOpponentChance" HorizontalAlignment="Stretch" Height="71" Width="218" Margin="0,2">
-                <Canvas.Background>
-                    <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/opponent-chance-frame.png"/>
-                </Canvas.Background>
+            <Canvas Name="CanvasOpponentChance" HorizontalAlignment="Stretch" Height="71" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.OpponentChanceFrame, Source={StaticResource ThemeManager}}">
                 <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="55" Height="25"/>
                 <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="55" Height="25"/>
                 <local:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="55" Height="25"/>

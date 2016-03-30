@@ -2,18 +2,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Point = System.Drawing.Point;
+using Panel = System.Windows.Controls.Panel;
 
 #endregion
 
@@ -178,6 +177,12 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Update();
 			UpdateOpponentLayout();
+		}
+
+		public void UpdateCardFrames()
+		{
+			CanvasOpponentChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
+			CanvasOpponentCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 		}
 	}
 }

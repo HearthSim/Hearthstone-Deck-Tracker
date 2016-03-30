@@ -1014,8 +1014,6 @@
     <Content Include="HDTUpdate.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Images\opponent-chance-frame.png" />
-    <Resource Include="Images\player-chance-frame.png" />
     <Resource Include="Images\card-icon-coin.png" />
     <Resource Include="Images\card-icon-created.png" />
     <Resource Include="Images\card-icon-keep.png" />
@@ -1051,7 +1049,6 @@
     <Resource Include="Resources\Ranks\7.bmp" />
     <Resource Include="Resources\Ranks\8.bmp" />
     <Resource Include="Resources\Ranks\9.bmp" />
-    <Resource Include="Images\frame_card_counter.png" />
     <Content Include="Images\HearthstoneDeckTracker.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
@@ -290,6 +288,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			OnPropertyChanged(nameof(PlayerStackPanelAlignment));
 			OnPropertyChanged(nameof(OpponentStackPanelAlignment));
+		}
+
+		public void UpdateCardFrames()
+		{
+			CanvasOpponentChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
+			CanvasOpponentCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
+			CanvasPlayerChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
+			CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 		}
 
 		public double GoldFrameHeight => Height * 25 / 768;
