@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 				else
 					card.Count++;
 			}
-			AnimatedCardList.Update(_cards.ToSortedCardList().Select(x => (Hearthstone.Card)x.Clone()).ToList(), true, true);
+			AnimatedCardList.Update(_cards.ToSortedCardList().Select(x => (Hearthstone.Card)x.Clone()).ToList(), true);
 			while(_update)
 			{
 				foreach(var cardId in _demoCards)
@@ -114,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 						else
 							card.Count--;
 					}
-					AnimatedCardList.Update(_cards.ToSortedCardList().Select(x => (Hearthstone.Card)x.Clone()).ToList(), false, false);
+					AnimatedCardList.Update(_cards.ToSortedCardList().Select(x => (Hearthstone.Card)x.Clone()).ToList(), false);
 				}
 				foreach(var cardId in _demoCards)
 				{
@@ -126,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 						_cards.Add(Database.GetCardFromId(cardId));
 					else
 						card.Count++;
-					AnimatedCardList.Update(_cards.ToSortedCardList().Select(x => (Hearthstone.Card)x.Clone()).ToList(), true, false);
+					AnimatedCardList.Update(_cards.ToSortedCardList().Select(x => (Hearthstone.Card)x.Clone()).ToList(), false);
 				}
 			}
 		}

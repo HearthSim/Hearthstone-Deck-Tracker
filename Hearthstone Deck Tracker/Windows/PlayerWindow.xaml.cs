@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker
 				CanvasPlayerCount.Visibility = Visibility.Collapsed;
 				LblWins.Visibility = Visibility.Collapsed;
 				LblDeckTitle.Visibility = Visibility.Collapsed;
-				ListViewPlayer.Update(forScreenshot, true, true);
+				ListViewPlayer.Update(forScreenshot, true);
 
 				Height = 34 * ListViewPlayer.Items.Count;
 			}
@@ -167,10 +167,7 @@ namespace Hearthstone_Deck_Tracker
 				Topmost = false;
 		}
 
-		public async void UpdatePlayerCards(List<Card> cards, bool reset)
-		{
-			ListViewPlayer.Update(cards, true, reset);
-		}
+		public void UpdatePlayerCards(List<Card> cards, bool reset) => ListViewPlayer.Update(cards, reset);
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
