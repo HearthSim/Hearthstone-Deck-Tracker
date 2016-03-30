@@ -116,14 +116,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public IEnumerable<Card> RevealedCards
 			=> RevealedEntities.Where(x => !x.Info.Created && (x.IsMinion || x.IsSpell || x.IsWeapon)
-									   && (!x.IsInDeck || (x.Info.Stolen && x.Info.OriginalController == Id)))
+									   && ((!x.IsInDeck && (!x.Info.Stolen || x.Info.OriginalController == Id)) || (x.Info.Stolen && x.Info.OriginalController == Id)))
 								.GroupBy(x => new {x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id})
 								.Select(x =>
 								{
 									var card = Database.GetCardFromId(x.Key.CardId);
 									card.Count = x.Count();
 									card.IsCreated = x.Key.Stolen;
-									card.HighlightInHand = x.Any(c => c.IsInHand);
+									card.HighlightInHand = x.Any(c => c.IsInHand && c.IsControlledBy(Id));
 									return card;
 								});
 
@@ -168,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			=> RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon || !x.HasTag(GAME_TAG.CARDTYPE))
 											&& (x.GetTag(GAME_TAG.CREATOR) == 1 || (!x.Info.Created && x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck)
 											&& !(x.Info.Created && x.IsInSetAside))
-								.GroupBy(e => new { e.CardId, Hidden = (e.IsInHand || e.IsInDeck),
+								.GroupBy(e => new { e.CardId, Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
 													Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
 													Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded
 								}).Select(g =>

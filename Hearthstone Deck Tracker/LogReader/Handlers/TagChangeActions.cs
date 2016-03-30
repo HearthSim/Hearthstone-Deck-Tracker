@@ -536,13 +536,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					else if(controller == game.Opponent.Id)
 					{
-						if(!string.IsNullOrEmpty(game.Entities[id].CardId) && gameState.SetupDone)
-						{
-#if DEBUG
-							Log.Debug($"Opponent Draw (EntityID={id}) already has a CardID. Removing. Blizzard Pls.");
-#endif
-							game.Entities[id].CardId = string.Empty;
-						}
 						gameState.GameHandler.HandleOpponentDraw(game.Entities[id], gameState.GetTurnNumber());
 						gameState.ProposeKeyPoint(Draw, id, ActivePlayer.Opponent);
 					}

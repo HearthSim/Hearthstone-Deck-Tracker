@@ -227,8 +227,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		{
 			var card = Database.GetCardFromId(CardId);
 			var cardName = card != null ? card.Name : "";
-			return $"id={Id}, cardId={CardId}, cardName={cardName}, zonePos={GetTag(GAME_TAG.ZONE_POSITION)},Info={{{Info}}}";
-		}
+			var hide = Info.Hidden && (IsInHand || IsInDeck);
+			return $"id={Id}, cardId={(hide ? "" : CardId)}, cardName={(hide ? "" : cardName)}, zonePos={GetTag(GAME_TAG.ZONE_POSITION)},Info={{{Info}}}";
+        }
 	}
 
 	public class EntityInfo
