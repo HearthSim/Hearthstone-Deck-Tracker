@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker
 		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
 			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + 42;
 
-		public List<Card> PlayerDeck => _game.Player.DisplayCards;
+		public List<Card> PlayerDeck => _game.Player.PlayerCardList;
 
 		public bool ShowToolTip => Config.Instance.WindowCardToolTips;
 

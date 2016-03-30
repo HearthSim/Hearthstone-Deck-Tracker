@@ -180,7 +180,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(!_game.IsUsingPremade)
 				_game.DrawnLastGame =
-					new List<Card>(_game.Player.RevealedCards.Where(x => !x.Info.Created && !x.Info.Stolen).GroupBy(x => x.CardId).Select(x =>
+					new List<Card>(_game.Player.RevealedEntities.Where(x => !x.Info.Created && !x.Info.Stolen).GroupBy(x => x.CardId).Select(x =>
 					{
 						var card = Database.GetCardFromId(x.Key);
 						card.Count = x.Count();
@@ -571,7 +571,7 @@ namespace Hearthstone_Deck_Tracker
 			if(selectedDeck != null)
 			{
 				if(Config.Instance.DiscardGameIfIncorrectDeck
-				   && !_game.Player.RevealedCards.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen)
+				   && !_game.Player.RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen)
 				   .GroupBy(x => x.CardId).All(x => selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => x.Key == c2.Id && x.Count() <= c2.Count)))
 				{
 					if(Config.Instance.AskBeforeDiscardingGame)

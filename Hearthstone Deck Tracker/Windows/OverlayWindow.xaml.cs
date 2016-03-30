@@ -83,8 +83,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
 		public bool ForceHidden { get; set; }
 		public Visibility WarningVisibility { get; set; }
-		public List<Card> PlayerDeck => _game.Player.DisplayCards;
-		public List<Card> OpponentDeck => _game.Opponent.DisplayRevealedCards;
+		public List<Card> PlayerDeck => _game.Player.PlayerCardList;
+		public List<Card> OpponentDeck => _game.Opponent.OpponentCardList;
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public double PlayerStackHeight => (Config.Instance.PlayerDeckHeight / 100 * Height) / (Config.Instance.OverlayPlayerScaling / 100);

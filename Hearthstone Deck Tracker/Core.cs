@@ -268,7 +268,7 @@ namespace Hearthstone_Deck_Tracker
 			_updateRequestsPlayer--;
 			if(_updateRequestsPlayer > 0)
 				return;
-			var cards = Game.Player.DisplayCards;
+			var cards = Game.Player.PlayerCardList;
 			Overlay.UpdatePlayerCards(cards, reset);
 			Windows.PlayerWindow.UpdatePlayerCards(cards, reset);
 		}
@@ -280,7 +280,7 @@ namespace Hearthstone_Deck_Tracker
 			_updateRequestsOpponent--;
 			if(_updateRequestsOpponent > 0)
 				return;
-			var cards = Game.Opponent.DisplayRevealedCards;
+			var cards = Game.Opponent.OpponentCardList;
 			Overlay.UpdateOpponentCards(cards, reset);
 			Windows.OpponentWindow.UpdateOpponentCards(cards, reset);
 		}

@@ -52,7 +52,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public List<Card> OpponentDeck => _game.Opponent.DisplayRevealedCards;
+		public List<Card> OpponentDeck => _game.Opponent.OpponentCardList;
 
 		public bool ShowToolTip => Config.Instance.WindowCardToolTips;
 

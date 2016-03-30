@@ -71,13 +71,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				new CollectionItem(_game.Player.Deck, "Player Deck"),
 				new CollectionItem(_game.Player.Graveyard, "Player Graveyard"),
 				new CollectionItem(_game.Player.Secrets, "Player Secrets"),
-				new CollectionItem(_game.Player.RevealedCards, "Player RevealedCards"),
+				new CollectionItem(_game.Player.RevealedEntities, "Player RevealedEntities"),
 				new CollectionItem(_game.Opponent.Hand, "Opponent Hand"),
 				new CollectionItem(_game.Opponent.Board, "Opponent Board"),
 				new CollectionItem(_game.Opponent.Deck, "Opponent Deck"),
 				new CollectionItem(_game.Opponent.Graveyard, "Opponent Graveyard"),
 				new CollectionItem(_game.Opponent.Secrets, "Opponent Secrets"),
-				new CollectionItem(_game.Opponent.RevealedCards, "Opponent RevealedCards")
+				new CollectionItem(_game.Opponent.RevealedEntities, "Opponent RevealedEntities")
 			};
 			foreach(var collection in collections)
 			{

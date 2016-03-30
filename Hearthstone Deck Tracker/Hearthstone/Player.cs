@@ -47,137 +47,144 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int HandCount => Hand.Count(x => x.IsControlledBy(Id));
 		public int DeckCount => Deck.Count(x => x.IsControlledBy(Id));
 
-		public IEnumerable<Entity> PlayerEntites => Core.Game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && x.IsControlledBy(Id));
-		public IEnumerable<Entity> RevealedCards => Core.Game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && (x.IsControlledBy(Id) || x.Info.OriginalController == Id)).Where(x => x.HasCardId);
-		public IEnumerable<Entity> Hand => PlayerEntites.Where(x => x.IsInHand);
-		public IEnumerable<Entity> Board => PlayerEntites.Where(x => x.IsInPlay);
-		public IEnumerable<Entity> Deck => PlayerEntites.Where(x => x.IsInDeck);
-		public IEnumerable<Entity> Graveyard => PlayerEntites.Where(x => x.IsInGraveyard);
-		public IEnumerable<Entity> Secrets => PlayerEntites.Where(x => x.IsInSecret);
-		public IEnumerable<Entity> SetAside => PlayerEntites.Where(x => x.IsInSetAside);
+		public IEnumerable<Entity> PlayerEntities => Core.Game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && x.IsControlledBy(Id));
+		public IEnumerable<Entity> RevealedEntities => Core.Game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && (x.IsControlledBy(Id) || x.Info.OriginalController == Id)).Where(x => x.HasCardId);
+		public IEnumerable<Entity> Hand => PlayerEntities.Where(x => x.IsInHand);
+		public IEnumerable<Entity> Board => PlayerEntities.Where(x => x.IsInPlay);
+		public IEnumerable<Entity> Deck => PlayerEntities.Where(x => x.IsInDeck);
+		public IEnumerable<Entity> Graveyard => PlayerEntities.Where(x => x.IsInGraveyard);
+		public IEnumerable<Entity> Secrets => PlayerEntities.Where(x => x.IsInSecret);
+		public IEnumerable<Entity> SetAside => PlayerEntities.Where(x => x.IsInSetAside);
 
-		public List<JoustedCard> KnownCardsInDeck { get; } = new List<JoustedCard>();
+		public List<PredictedCard> InDeckPrecitions { get; } = new List<PredictedCard>();
 
-		private Tuple<List<Card>, List<Card>> GetCardsInDeck()
+		private DeckState GetDeckState()
 		{
-			var knownEntitesInDeck =
-				Deck.Where(x => x.HasCardId && (x.Info.Created || x.Info.Stolen)).GroupBy(ce => new { ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded }).Select(g =>
-				{
-					var card = Database.GetCardFromId(g.Key.CardId);
-					card.Count = g.Count();
-					card.IsCreated = g.Key.Created;
-					card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
-					return card;
-				}).ToList();
-			var foo = DeckList.Instance.ActiveDeckVersion.Cards.Select(x => Enumerable.Repeat(x.Id, x.Count)).SelectMany(x => x).ToList();
-			var revealed = RevealedCards.Where(x => !x.Info.Created && (x.IsSpell || x.IsWeapon || x.IsMinion) && (!x.IsInDeck || (x.Info.Stolen && x.Info.OriginalController == Id))).ToList();
-			var notInDeck = new List<string>();
-			foreach(var e in revealed)
+			var createdCardsInDeck =
+				Deck.Where(x => x.HasCardId && (x.Info.Created || x.Info.Stolen))
+					.GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded})
+					.Select(g =>
+					{
+						var card = Database.GetCardFromId(g.Key.CardId);
+						card.Count = g.Count();
+						card.IsCreated = g.Key.Created;
+						card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
+						return card;
+					});
+			var originalCardsInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Select(x => Enumerable.Repeat(x.Id, x.Count)).SelectMany(x => x).ToList();
+			var revealedNotInDeck = RevealedEntities.Where(x => !x.Info.Created && (x.IsSpell || x.IsWeapon || x.IsMinion) && (!x.IsInDeck || (x.Info.Stolen && x.Info.OriginalController == Id))).ToList();
+			var removedFromDeck = new List<string>();
+			foreach(var e in revealedNotInDeck)
 			{
-				foo.Remove(e.CardId);
+				originalCardsInDeck.Remove(e.CardId);
 				if(!e.Info.Stolen || e.Info.OriginalController == Id)
-					notInDeck.Add(e.CardId);
+					removedFromDeck.Add(e.CardId);
 			}
-			return new Tuple<List<Card>, List<Card>>(knownEntitesInDeck.Concat(foo.GroupBy(x => x).Select(x =>
+			return new DeckState(createdCardsInDeck.Concat(originalCardsInDeck.GroupBy(x => x).Select(x =>
 			{
 				var card = Database.GetCardFromId(x.Key);
 				card.Count = x.Count();
 				if(Hand.Any(e => e.CardId == x.Key))
 					card.HighlightInHand = true;
 				return card;
-			})).ToList(), notInDeck.GroupBy(x => x).Select(c =>
+			})), removedFromDeck.GroupBy(x => x).Select(c =>
 			{
 				var card = Database.GetCardFromId(c.Key);
 				card.Count = 0;
 				if(Hand.Any(e => e.CardId == c.Key))
 					card.HighlightInHand = true;
 				return card;
-			}).ToList());
+			}));
 		}
 
-		public List<Card> DisplayCards
+		public IEnumerable<Card> PredictedCardsInDeck => InDeckPrecitions.Select(x =>
+		{
+			var card = Database.GetCardFromId(x.CardId);
+			card.Jousted = true;
+			return card;
+		});
+
+		public IEnumerable<Card> KnownCardsInDeck
+			=> Deck.Where(x => x.HasCardId).GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen)}).Select(g =>
+			{
+				var card = Database.GetCardFromId(g.Key.CardId);
+				card.Count = g.Count();
+				card.IsCreated = g.Key.Created;
+				card.Jousted = true;
+				return card;
+			}).ToList();
+
+		public IEnumerable<Card> RevealedCards
+			=> RevealedEntities.Where(x => !x.Info.Created && (x.IsMinion || x.IsSpell || x.IsWeapon)
+									   && (!x.IsInDeck || (x.Info.Stolen && x.Info.OriginalController == Id)))
+								.GroupBy(x => new {x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id})
+								.Select(x =>
+								{
+									var card = Database.GetCardFromId(x.Key.CardId);
+									card.Count = x.Count();
+									card.IsCreated = x.Key.Stolen;
+									card.HighlightInHand = x.Any(c => c.IsInHand);
+									return card;
+								});
+
+		public IEnumerable<Card> CreatedCardsInHand => Hand.Where(x => x.Info.Created).GroupBy(x => x.CardId).Select(x =>
+		{
+			var card = Database.GetCardFromId(x.Key);
+			card.Count = x.Count();
+			card.IsCreated = true;
+			card.HighlightInHand = Hand.Any(ce => ce.CardId == card.Id);
+			return card;
+		});
+
+		public IEnumerable<Card> GetHighlightedCardsInHand(List<Card> cardsInDeck)
+			=> DeckList.Instance.ActiveDeckVersion.Cards.Where(c => cardsInDeck.All(c2 => c2.Id != c.Id) && Hand.Any(ce => c.Id == ce.CardId))
+						.Select(c =>
+						{
+							var card = (Card)c.Clone();
+							card.Count = 0;
+							card.HighlightInHand = true;
+							return card;
+						});
+
+		public List<Card> PlayerCardList
 		{
 			get
 			{
-				var createdInHand = Config.Instance.ShowPlayerGet ? Hand.Where(x => x.Info.Created).GroupBy(x => x.CardId).Select(x => CardSelector(x, true)).ToList() : new List<Card>();
-				var revealed =
-					RevealedCards.Where(x => !x.Info.Created && (x.IsMinion || x.IsSpell || x.IsWeapon) && (!x.IsInDeck || (x.Info.Stolen && x.Info.OriginalController == Id)))
-								 .GroupBy(x => new {x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id})
-								 .Select(x =>
-								 {
-									 var card = Database.GetCardFromId(x.Key.CardId);
-									 card.Count = x.Count();
-									 card.IsCreated = x.Key.Stolen;
-									 card.HighlightInHand = x.Any(c => c.IsInHand);
-									 return card;
-								 });
-				var knownEntitesInDeck =
-					Deck.Where(x => x.HasCardId).GroupBy(ce => new { ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen)}).Select(g =>
-					{
-						var card = Database.GetCardFromId(g.Key.CardId);
-						card.Count = g.Count();
-						card.IsCreated = g.Key.Created;
-						card.Jousted = true;
-						return card;
-					}).ToList();
-				var knownCardsInDeck = KnownCardsInDeck.Select(x =>
-				{
-					var card = Database.GetCardFromId(x.CardId);
-					card.Jousted = true;
-					return card;
-				});
+				var createdInHand = Config.Instance.ShowPlayerGet ? CreatedCardsInHand : new List<Card>();
 				if(DeckList.Instance.ActiveDeck == null)
-					return revealed.Concat(createdInHand).Concat(knownEntitesInDeck).Concat(knownCardsInDeck).ToSortedCardList();
-				var cards = GetCardsInDeck();
-				var inDeck = cards.Item1;
-				var notInDeck = cards.Item2.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
-				if(Config.Instance.RemoveCardsFromDeck)
-				{
-					if(!Config.Instance.HighlightCardsInHand)
-						return inDeck.Concat(createdInHand).ToSortedCardList();
-					var inHand = DeckList.Instance.ActiveDeckVersion.Cards.Where(c => inDeck.All(c2 => c2.Id != c.Id) && Hand.Any(ce => c.Id == ce.CardId))
-									.Select(c =>
-									{
-										var card = (Card)c.Clone();
-										card.Count = 0;
-										card.HighlightInHand = true;
-										return card;
-									});
-					return inDeck.Concat(inHand).Concat(createdInHand).ToSortedCardList();
-				}
-				return inDeck.Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
+					return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(PredictedCardsInDeck).ToSortedCardList();
+				var deckState = GetDeckState();
+				var inDeck = deckState.RemainingInDeck.ToList();
+				var notInDeck = deckState.RemovedFromDeck.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
+				if(!Config.Instance.RemoveCardsFromDeck)
+					return inDeck.Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
+				if(Config.Instance.HighlightCardsInHand)
+					return inDeck.Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand).ToSortedCardList();
+				return inDeck.Concat(createdInHand).ToSortedCardList();
 			}
 		}
 
-		private Card CardSelector(IGrouping<string, Entity> entityGrouping, bool created)
-		{
-			var card = Database.GetCardFromId(entityGrouping.Key);
-			card.Count = entityGrouping.Count();
-			card.IsCreated = created;
-			card.HighlightInHand = Hand.Any(ce => ce.CardId == card.Id);
-			return card;
-		}
-
-		public List<Card> DisplayRevealedCards 
-			=> RevealedCards.Where(x => 
-				(x.IsMinion || x.IsSpell || x.IsWeapon || !x.HasTag(GAME_TAG.CARDTYPE)) 
-			&& (x.GetTag(GAME_TAG.CREATOR) == 1 || (!x.Info.Created && x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck) 
-			&& !(x.Info.Created && x.IsInSetAside))
-			.GroupBy(e => new {e.CardId, Hidden = (e.IsInHand || e.IsInDeck), Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id), Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded})
-				.Select(g =>
-				{
-					var card = Database.GetCardFromId(g.Key.CardId);
-					card.Count = g.Count();
-					card.Jousted = g.Key.Hidden;
-					card.IsCreated = g.Key.Created;
-					card.WasDiscarded = g.Key.Discarded;
-					return card;
-				}).Concat(KnownCardsInDeck.Select(x =>
-				{
-					var card = Database.GetCardFromId(x.CardId);
-					card.Jousted = true;
-					return card;
-				})).ToSortedCardList();
+		public List<Card> OpponentCardList 
+			=> RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon || !x.HasTag(GAME_TAG.CARDTYPE))
+											&& (x.GetTag(GAME_TAG.CREATOR) == 1 || (!x.Info.Created && x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck)
+											&& !(x.Info.Created && x.IsInSetAside))
+								.GroupBy(e => new { e.CardId, Hidden = (e.IsInHand || e.IsInDeck),
+													Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
+													Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded
+								}).Select(g =>
+								{
+									var card = Database.GetCardFromId(g.Key.CardId);
+									card.Count = g.Count();
+									card.Jousted = g.Key.Hidden;
+									card.IsCreated = g.Key.Created;
+									card.WasDiscarded = g.Key.Discarded;
+									return card;
+								}).Concat(InDeckPrecitions.Select(x =>
+								{
+									var card = Database.GetCardFromId(x.CardId);
+									card.Jousted = true;
+									return card;
+								})).ToSortedCardList();
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -188,7 +195,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Id = -1;
 			GoingFirst = false;
 			Fatigue = 0;
-			KnownCardsInDeck.Clear();
+			InDeckPrecitions.Clear();
 		}
 
 		public void Draw(Entity entity, int turn)
@@ -294,19 +301,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void JoustReveal(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
-			var card = KnownCardsInDeck.FirstOrDefault(x => x.CardId == entity.CardId);
+			var card = InDeckPrecitions.FirstOrDefault(x => x.CardId == entity.CardId);
 			if(card != null)
 				card.Turn = turn;
 			else
-				KnownCardsInDeck.Add(new JoustedCard(entity.CardId, turn));
+				InDeckPrecitions.Add(new PredictedCard(entity.CardId, turn));
 			Log(entity);
 		}
 
 		private void UpdateKnownEntitesInDeck(string cardId, int turn = int.MaxValue)
 		{
-			var card = KnownCardsInDeck.FirstOrDefault(x => x.CardId == cardId && turn >= x.Turn);
+			var card = InDeckPrecitions.FirstOrDefault(x => x.CardId == cardId && turn >= x.Turn);
 			if(card != null)
-				KnownCardsInDeck.Remove(card);
+				InDeckPrecitions.Remove(card);
 		}
 
 		public void SecretTriggered(Entity entity, int turn)
@@ -356,18 +363,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			entity.Info.Turn = turn;
 			Log(entity);
-		}
-	}
-
-	public class JoustedCard
-	{
-		public string CardId { get; set; }
-		public int Turn { get; set; }
-
-		public JoustedCard(string cardId, int turn)
-		{
-			CardId = cardId;
-			Turn = turn;
 		}
 	}
 }
