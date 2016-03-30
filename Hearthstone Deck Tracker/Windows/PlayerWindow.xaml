@@ -27,7 +27,7 @@
     </controls:MetroWindow.IconTemplate>
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain" Margin="0,1,0,0">
-            <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Height="25" Width="200" TextAlignment="Center" Text="Deck title"/>
+            <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" MinHeight="25" Width="200" TextAlignment="Center" Text="Deck title" TextWrapping="Wrap"/>
             <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16"  Height="25" Width="200" TextAlignment="Center" Text="0-0 (0%)"/>
             <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding PlayerDeckMaxHeight, RelativeSource={RelativeSource AncestorType=local:PlayerWindow}}">
                 <controls1:AnimatedCardList x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
