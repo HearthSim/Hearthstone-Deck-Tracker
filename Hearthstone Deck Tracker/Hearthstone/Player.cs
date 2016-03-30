@@ -127,12 +127,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									return card;
 								});
 
-		public IEnumerable<Card> CreatedCardsInHand => Hand.Where(x => x.Info.Created).GroupBy(x => x.CardId).Select(x =>
+		public IEnumerable<Card> CreatedCardsInHand => Hand.Where(x => (x.Info.Created || x.Info.Stolen)).GroupBy(x => x.CardId).Select(x =>
 		{
 			var card = Database.GetCardFromId(x.Key);
 			card.Count = x.Count();
 			card.IsCreated = true;
-			card.HighlightInHand = Hand.Any(ce => ce.CardId == card.Id);
+			card.HighlightInHand = true;
 			return card;
 		});
 
