@@ -307,11 +307,12 @@ namespace Hearthstone_Deck_Tracker
 			if(Core.Overlay.IsVisible)
 				Core.Overlay.Update(false);
 
+			var gameStarted = !game.IsInMenu && game.Entities.Count >= 67;
 			if(Core.Windows.PlayerWindow.IsVisible)
-				Core.Windows.PlayerWindow.SetCardCount(game.Player.HandCount, game.IsInMenu ? 30 : game.Player.DeckCount);
+				Core.Windows.PlayerWindow.SetCardCount(game.Player.HandCount, !gameStarted ? 30 : game.Player.DeckCount);
 
 			if(Core.Windows.OpponentWindow.IsVisible)
-				Core.Windows.OpponentWindow.SetOpponentCardCount(game.Opponent.HandCount, game.IsInMenu ? 30 : game.Opponent.DeckCount, game.Opponent.HasCoin);
+				Core.Windows.OpponentWindow.SetOpponentCardCount(game.Opponent.HandCount, !gameStarted ? 30 : game.Opponent.DeckCount, game.Opponent.HasCoin);
 		}
 
 		//http://stackoverflow.com/questions/23927702/move-a-folder-from-one-drive-to-another-in-c-sharp
