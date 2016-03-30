@@ -313,9 +313,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void SimulateZoneChangesFromDeck(IHsGameState gameState, int id, IGame game, int value, string cardId, int maxId)
 		{
-			if(value == (int)DECK || value == (int)SETASIDE)
+			if(value == (int)DECK)
 				return;
 			var entity = game.Entities[id];
+			if(value == (int)SETASIDE)
+			{
+				entity.Info.Created = true;
+				return;
+			}
 			if(entity.IsHero || entity.IsHeroPower || entity.HasTag(PLAYER_ID) || entity.GetTag(CARDTYPE) == (int)TAG_CARDTYPE.GAME
 				|| entity.HasTag(CREATOR))
 				return;
