@@ -103,7 +103,7 @@
         </ListView.ItemsPanel>
     </ListView>
     <DockPanel DockPanel.Dock="Bottom">
-        <Border BorderThickness="1" Height="26" DockPanel.Dock="Right" Margin="2,2,0,0"
+        <Border BorderThickness="1" Height="26" DockPanel.Dock="Right" Margin="2,2,0,0" Background="{Binding BorderDeckModeBackground, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                 BorderBrush="{DynamicResource TextBrush}" PreviewMouseLeftButtonUp="RectangleUseNoDeckIcon_OnPreviewMouseLeftButtonUp">
             <Grid>
                 <Grid.Style>
@@ -115,8 +115,8 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <TextBlock Text="CLEAR"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
-                           ToolTip="Clear the active deck. (no-deck mode)"/>
+                <TextBlock Text="NO-DECK MODE"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Foreground="{Binding BorderDeckModeTextBrush, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"/>
             </Grid>
         </Border>
         <Border BorderThickness="1" Height="26" DockPanel.Dock="Right" Margin="2,2,0,0" Background="{Binding BorderAutoSelectBackground, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"

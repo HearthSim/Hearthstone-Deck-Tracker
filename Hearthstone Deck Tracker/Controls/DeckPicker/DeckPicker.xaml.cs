@@ -125,6 +125,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			OnPropertyChanged(nameof(ActiveDeck));
 			OnPropertyChanged(nameof(VisibilityNoDeck));
+			UpdateDeckModeToggleButton();
 		}
 
 		public event SelectedDeckHandler OnSelectedDeckChanged;
@@ -705,7 +706,13 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			=> Core.MainWindow.FlyoutSortFilter.IsOpen = !Core.MainWindow.FlyoutSortFilter.IsOpen;
 
 		private void RectangleUseNoDeckIcon_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-			=> Core.MainWindow.SelectDeck(null, true);
+		{
+			if(DeckList.Instance.ActiveDeck == null)
+				Core.MainWindow.SelectLastUsedDeck();
+			else
+				Core.MainWindow.SelectDeck(null, true);
+			UpdateDeckModeToggleButton();
+		}
 
 		private void BorderAutoSelect_PreviewLeftMouseButtonUp(object sender, MouseButtonEventArgs e)
 		{
@@ -719,11 +726,23 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			OnPropertyChanged(nameof(BorderAutoSelectTextBrush));
 		}
 
+		public void UpdateDeckModeToggleButton()
+		{
+			OnPropertyChanged(nameof(BorderDeckModeBackground));
+			OnPropertyChanged(nameof(BorderDeckModeTextBrush));
+		}
+
 		public SolidColorBrush BorderAutoSelectBackground
 			=> Config.Instance.AutoDeckDetection ? (SolidColorBrush)FindResource("AccentColorBrush") : new SolidColorBrush(Colors.Transparent);
 
 		public SolidColorBrush BorderAutoSelectTextBrush
 			=> Config.Instance.AutoDeckDetection ? new SolidColorBrush(Colors.White) : (SolidColorBrush)FindResource("TextBrush");
+
+		public SolidColorBrush BorderDeckModeBackground
+			=> DeckList.Instance.ActiveDeck == null ? (SolidColorBrush)FindResource("AccentColorBrush") : new SolidColorBrush(Colors.Transparent);
+
+		public SolidColorBrush BorderDeckModeTextBrush
+			=> DeckList.Instance.ActiveDeck == null ? new SolidColorBrush(Colors.White) : (SolidColorBrush)FindResource("TextBrush");
 
 	}
 }
