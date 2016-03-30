@@ -76,12 +76,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				EnableBatteryMonitor();
 			InitializeCollections();
 			GridMain.Visibility = Hidden;
-			UpdatePosition();
+			if(User32.GetHearthstoneWindow() != IntPtr.Zero)
+				UpdatePosition();
 			Update(true);
 			UpdateScaling();
 			UpdatePlayerLayout();
 			UpdateOpponentLayout();
-			GridMain.Visibility = Visibility;
+			GridMain.Visibility = Visible;
 		}
 
 		private double ScreenRatio => (4.0 / 3.0) / (Width / Height);
