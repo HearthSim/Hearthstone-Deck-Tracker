@@ -203,7 +203,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(IsLocalPlayer)
 				UpdateKnownEntitesInDeck(entity.CardId);
 			if(!IsLocalPlayer)
-				entity.Info.Hidden = true;
+			{
+				if(Core.Game.OpponentEntity?.GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DEALING)
+					entity.Info.Mulliganed = true;
+				else
+					entity.Info.Hidden = true;
+			}
 			entity.Info.Turn = turn;
 			Log(entity);
 		}
@@ -261,11 +266,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(entity);
 		}
 
-		public void Mulligan(Entity entity)
-		{
-			entity.Info.Mulliganed = true;
-			Log(entity);
-		}
+		public void Mulligan(Entity entity) => Log(entity);
 
 		public void HandDiscard(Entity entity, int turn)
 		{
