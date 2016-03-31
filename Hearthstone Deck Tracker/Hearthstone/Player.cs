@@ -226,6 +226,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				UpdateKnownEntitesInDeck(entity.CardId, entity.Info.Turn);
 			if(entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.TOKEN)
 				entity.Info.Created = true;
+			entity.Info.Hidden = false;
 			entity.Info.Turn = turn;
 			Log(entity);
 		}
