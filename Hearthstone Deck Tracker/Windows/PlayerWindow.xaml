@@ -27,8 +27,8 @@
     </controls:MetroWindow.IconTemplate>
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain" Margin="0,1,0,0">
-            <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" MinHeight="25" Width="200" TextAlignment="Center" Text="Deck title" TextWrapping="Wrap"/>
-            <local:HearthstoneTextBlock x:Name="LblWins" FontSize="16"  Height="25" Width="200" TextAlignment="Center" Text="0-0 (0%)"/>
+            <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Width="200" TextAlignment="Center" Text="Deck title" TextWrapping="Wrap"/>
+            <local:HearthstoneTextBlock x:Name="LblWins" FontSize="14" Width="200" TextAlignment="Center" Text="0-0 (0%)"/>
             <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding PlayerDeckMaxHeight, RelativeSource={RelativeSource AncestorType=local:PlayerWindow}}">
                 <controls1:AnimatedCardList x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
@@ -56,8 +56,8 @@
                 <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25"/>
             </Canvas>
             <Canvas Name="CanvasPlayerChance" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.PlayerChanceFrame, Source={StaticResource ThemeManager}}">
-                <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="55" Height="25"/>
-                <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="55" Height="25"/>
+                <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25"/>
+                <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25"/>
             </Canvas>
             <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
         </StackPanel>
