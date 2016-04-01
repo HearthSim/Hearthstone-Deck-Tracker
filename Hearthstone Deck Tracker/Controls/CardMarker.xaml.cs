@@ -68,5 +68,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 					CardIcon.Visibility = Collapsed;
 			}
 		}
+
+		public void SetCostReduction(int i)
+		{
+			TextCostReduction.Text = (-i).ToString();
+			TextCostReduction.Visibility = i > 0 ? Visible : Collapsed;
+		}
 	}
 }

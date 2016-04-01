@@ -8,6 +8,8 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
+using static HearthDb.CardIds.NonCollectible;
+using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -29,11 +31,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if (i < opponentHandCount)
 				{
-					var entity = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(GAME_TAG.ZONE_POSITION) == i + 1);
+					var entity = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(ZONE_POSITION) == i + 1);
 					if(entity == null)
 						continue;
 					_cardMarks[i].Text = !Config.Instance.HideOpponentCardAge ? entity.Info.Turn.ToString() : "";
-					_cardMarks[i].Mark = !Config.Instance.HideOpponentCardMarks ? entity.Info.CardMark : CardMark.None;
+					if(!Config.Instance.HideOpponentCardMarks)
+					{
+						_cardMarks[i].Mark = entity.Info.CardMark;
+						var impFavor = _game.Opponent.Board.FirstOrDefault(x => x.CardId == Neutral.ImperialFavorEnchantment && x.GetTag(ATTACHED) == entity.Id);
+						_cardMarks[i].SetCostReduction(impFavor?.GetTag(NUM_TURNS_IN_PLAY) ?? 0);
+					}
+					else
+						_cardMarks[i].Mark = CardMark.None;
 					_cardMarks[i].Visibility = (_game.IsInMenu || (Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks))
 												   ? Hidden : Visible;
 				}
@@ -41,8 +50,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_cardMarks[i].Visibility = Collapsed;
 			}
 
-			var oppBoard = Core.Game.Opponent.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
-			var playerBoard = Core.Game.Player.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(GAME_TAG.ZONE_POSITION)).ToList();
+			var oppBoard = Core.Game.Opponent.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
+			var playerBoard = Core.Game.Player.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
 			if(!_game.IsInMenu && _game.IsMulliganDone && User32.IsHearthstoneInForeground())
 				DetectMouseOver(playerBoard, oppBoard);
