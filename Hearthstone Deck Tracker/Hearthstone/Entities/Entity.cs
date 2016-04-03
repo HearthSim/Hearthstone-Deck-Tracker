@@ -269,6 +269,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool HasOutstandingTagChanges { get; set; }
 		public int OriginalController { get; set; }
 		public bool Hidden { get; set; }
+		public int CostReduction { get; set; }
 
 		public override string ToString()
 		{

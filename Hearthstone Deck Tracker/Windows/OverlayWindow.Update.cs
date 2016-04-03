@@ -38,8 +38,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(!Config.Instance.HideOpponentCardMarks)
 					{
 						_cardMarks[i].Mark = entity.Info.CardMark;
-						var impFavor = _game.Opponent.Board.FirstOrDefault(x => x.CardId == Neutral.ImperialFavorEnchantment && x.GetTag(ATTACHED) == entity.Id);
-						_cardMarks[i].SetCostReduction(impFavor?.GetTag(NUM_TURNS_IN_PLAY) ?? 0);
+						_cardMarks[i].SetCostReduction(entity.Info.CostReduction);
 					}
 					else
 						_cardMarks[i].Mark = CardMark.None;

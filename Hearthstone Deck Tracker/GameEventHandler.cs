@@ -347,6 +347,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var player = turn.Item1;
 			Log.Info($"--- {player} turn {turn.Item2} ---");
+			if(player == ActivePlayer.Player)
+				HandleThaurissanCostReduction();
 			GameEvents.OnTurnStart.Execute(player);
 			if(_turnQueue.Count > 0)
 				return;
@@ -360,6 +362,20 @@ namespace Hearthstone_Deck_Tracker
 
 				if(Config.Instance.BringHsToForeground)
 					User32.BringHsToForeground();
+			}
+		}
+
+		private void HandleThaurissanCostReduction()
+		{
+			var thaurissan = _game.Opponent.Board.FirstOrDefault(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan);
+			if(thaurissan == null || thaurissan.HasTag(SILENCED))
+				return;
+
+			foreach(var impFavor in _game.Opponent.Board.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.ImperialFavorEnchantment))
+			{
+				Entity entity;
+				if(_game.Entities.TryGetValue(impFavor.GetTag(ATTACHED), out entity))
+					entity.Info.CostReduction++;
 			}
 		}
 
