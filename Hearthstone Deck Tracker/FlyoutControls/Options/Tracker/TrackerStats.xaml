@@ -129,8 +129,8 @@
 
                     <CheckBox x:Name="CheckboxDeleteDeckKeepStats"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Keep stats when deleting a deck"
+                              Content="Keep stats when deleting a deck*"
+                              ToolTip="This will move stats to the 'class default deck' (the same matches in no-deck mode are saved to). That means, runs in the arena statistics will be lost when deleting arena decks!"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxDeleteDeckKeepStats_Checked"
                               Unchecked="CheckboxDeleteDeckKeepStats_Unchecked" />
