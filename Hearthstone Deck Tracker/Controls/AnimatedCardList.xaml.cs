@@ -55,8 +55,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 					if(newCard != null)
 					{
 						var newAnimated = new AnimatedCard(newCard);
-						_animatedCards.Insert(cards.IndexOf(newCard), newAnimated);
-						ItemsControl.Items.Insert(cards.IndexOf(newCard), newAnimated);
+						_animatedCards.Insert(_animatedCards.IndexOf(card), newAnimated);
+						ItemsControl.Items.Insert(_animatedCards.IndexOf(card), newAnimated);
 						newAnimated.Update(true).Forget();
 						newCards.Remove(newCard);
 					}
