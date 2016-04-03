@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				var toRemove = new List<Tuple<AnimatedCard, bool>>();
 				foreach(var card in toUpdate)
 				{
-					var newCard = newCards.FirstOrDefault(x => x.Id == card.Card.Id);
+					var newCard = newCards.FirstOrDefault(x => x.Id.Equals(card.Card.Id));
 					toRemove.Add(new Tuple<AnimatedCard, bool>(card, newCard == null));
 					if(newCard != null)
 					{
@@ -87,7 +87,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private bool AreEqualForList(Hearthstone.Card c1, Hearthstone.Card c2)
 		{
-			return c1.Id == c2.Id && c1.Jousted == c2.Jousted && c1.IsCreated == c2.IsCreated
+			return c1.Id.Equals(c2.Id) && c1.Jousted == c2.Jousted && c1.IsCreated == c2.IsCreated
 				   && (!Config.Instance.HighlightDiscarded || c1.WasDiscarded == c2.WasDiscarded);
 		}
 	}

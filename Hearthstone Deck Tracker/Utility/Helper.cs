@@ -226,7 +226,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string RemoveInvalidPathChars(string s) => RemoveChars(s, Path.GetInvalidPathChars());
 		public static string RemoveInvalidFileNameChars(string s) => RemoveChars(s, Path.GetInvalidFileNameChars());
-		public static string RemoveChars(string s, char[] c) => new Regex($"[{Regex.Escape(new string(c))}]").Replace(s, "");
+		public static string RemoveChars(string s, char[] c) => new Regex($"[{Regex.Escape(new string(c))}]").Replace(s, string.Empty);
 
 		public static void SortCardCollection(IEnumerable collection, bool classFirst)
 		{
@@ -556,8 +556,8 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 					card.Count = count;
 
-					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-						deck.Class = card.PlayerClass;
+					if(string.IsNullOrEmpty(deck.Class) && !card.PlayerClass.Equals("Neutral"))
+                        deck.Class = card.PlayerClass;
 
 					if(deck.Cards.Contains(card))
 					{
@@ -627,15 +627,15 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var theme = GetAppTheme();
 			ThemeManager.ChangeAppStyle(Application.Current, GetAppAccent(), theme);
-			Application.Current.Resources["GrayTextColorBrush"] = theme.Name == MetroTheme.BaseLight.ToString()
+			Application.Current.Resources["GrayTextColorBrush"] = theme.Name.Equals(MetroTheme.BaseLight.ToString())
 																	  ? new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor1"])
 																	  : new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor2"]);
 		}
 
 		public static Accent GetAppAccent() => string.IsNullOrEmpty(Config.Instance.AccentName)
-												  ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
+												  ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name.Equals(Config.Instance.AccentName));
 
-		public static AppTheme GetAppTheme() => ThemeManager.AppThemes.First(t => t.Name == Config.Instance.AppTheme.ToString());
+		public static AppTheme GetAppTheme() => ThemeManager.AppThemes.First(t => t.Name.Equals(Config.Instance.AppTheme.ToString()));
 
 		public static double GetScaledXPos(double left, int width, double ratio) => (width * ratio * left) + (width * (1 - ratio) / 2);
 
@@ -651,7 +651,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 			{
-				if(className == "Priest" && priestAsGray)
+				if(className.Equals("Priest") && priestAsGray)
 					color = MediaColor.FromArgb(0xFF, 0xD2, 0xD2, 0xD2); //#D2D2D2
 				else if(!ClassicClassColors.TryGetValue(className, out color))
 					color = MediaColor.FromArgb(0xFF, 0x80, 0x80, 0x80); //#808080
@@ -741,7 +741,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					using(var stream = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
 					{
-						if(stream.Name != null)
+						if(!string.IsNullOrWhiteSpace(stream.Name))
 							break;
 					}
 				}

@@ -60,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", Config.Instance.AutoDeckDetection);
 
 			// Don't select the 'archived' class on load
-			var selectedClasses = Config.Instance.SelectedDeckPickerClasses.Where(c => c.ToString() != "Archived").ToList();
+			var selectedClasses = Config.Instance.SelectedDeckPickerClasses.Where(c => !c.ToString().Equals("Archived")).ToList();
 			if(selectedClasses.Count == 0)
 				selectedClasses.Add(HeroClassAll.All);
 
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 
-			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
+			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => !tag.Equals("All") && !tag.Equals("None")).ToList());
 			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
 
 			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void ReloadTags()
 		{
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
+			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => !tag.Equals("All") && !tag.Equals("None")).ToList());
 			MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 		}
 

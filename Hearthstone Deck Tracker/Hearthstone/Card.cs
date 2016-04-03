@@ -201,7 +201,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Visibility ShowAlternativeLanguageTextInTooltip => AlternativeNames.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
 		[XmlIgnore]
-		public Visibility ShowIconsInTooltip => Type == "Spell" || Type == "Enchantment" || Type == "Hero Power" ? Visibility.Hidden : Visibility.Visible;
+		public Visibility ShowIconsInTooltip => Type.Equals("Spell") || Type.Equals("Enchantment") || Type.Equals("Hero Power") ? Visibility.Hidden : Visibility.Visible;
 
 		[XmlIgnore]
 		public string Set { get; set; }
@@ -299,7 +299,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public bool IsClassCard => GetPlayerClass != "Neutral";
+		public bool IsClassCard => !GetPlayerClass.Equals("Neutral");
 
 		[XmlIgnore]
 		public bool IsCreated
@@ -361,7 +361,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(Id == null || Name == null)
+				if(string.IsNullOrWhiteSpace(Id) || string.IsNullOrWhiteSpace(Name))
 					return new ImageBrush();
 				var cardImageObj = new CardImageObject(this);
 				Dictionary<int, CardImageObject> cache;
@@ -399,11 +399,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool HighlightInHand { get; set; }
 
-		[XmlIgnore]
-		public string FlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage)) ?? "";
+        [XmlIgnore]
+        public string FlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage)) ?? string.Empty;
 		
 		[XmlIgnore]
-		public string FormattedFlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage), false) ?? "";
+		public string FormattedFlavorText => CleanUpText(_dbCard?.GetLocFlavorText(SelectedLanguage), false) ?? string.Empty;
 
 		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, _text, EnglishText, Attack,
 										  Health, Race, Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts, _dbCard);
@@ -418,7 +418,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return c.Name == Name;
 		}
 
-		public bool EqualsWithCount(Card card) => card.Id == Id && card.Count == Count;
+		public bool EqualsWithCount(Card card) => card.Id.Equals(Id) && card.Count == Count;
 
 		public override int GetHashCode() => Name.GetHashCode();
 

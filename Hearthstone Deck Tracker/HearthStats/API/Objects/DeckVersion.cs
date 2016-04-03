@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 		{
 			var clone = (Deck)latest.CloneWithNewId(true);
 			clone.Cards =
-				new ObservableCollection<Card>(cards?.Where(x => x?.count != null && x.id != null)
+				new ObservableCollection<Card>(cards?.Where(x => !string.IsNullOrWhiteSpace(x?.count) && !string.IsNullOrWhiteSpace(x.id))
 													 .Select(x => x.ToCard())
 													 .Where(x => x != null)
 													 .ToList() ?? new List<Card>());

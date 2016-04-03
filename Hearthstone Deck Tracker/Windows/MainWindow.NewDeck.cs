@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				selectedSet = "ALL";
 			}
-			if(selectedClass == "Select a Class")
+			if(selectedClass.Equals("Select a Class"))
 				ListViewDB.Items.Clear();
 			else
 			{
@@ -92,22 +92,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 						continue;
 
 					// mana filter
-					if(selectedManaCost != "ALL" && ((selectedManaCost != "9+" || card.Cost < 9) && (selectedManaCost != card.Cost.ToString())))
+					if(!selectedManaCost.Equals("ALL") && ((!selectedManaCost.Equals("9+") || card.Cost < 9) && (!selectedManaCost.Equals(card.Cost.ToString()))))
 						continue;
-					if(selectedSet != "ALL" && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
+					if(!selectedSet.Equals("ALL") && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
 						continue;
 					switch(selectedNeutral)
 					{
 						case "ALL":
-							if(card.GetPlayerClass == selectedClass || card.GetPlayerClass == "Neutral")
+							if(card.GetPlayerClass.Equals(selectedClass) || card.GetPlayerClass.Equals("Neutral"))
 								ListViewDB.Items.Add(card);
 							break;
 						case "CLASS ONLY":
-							if(card.GetPlayerClass == selectedClass)
+							if(card.GetPlayerClass.Equals(selectedClass))
 								ListViewDB.Items.Add(card);
 							break;
 						case "NEUTRAL ONLY":
-							if(card.GetPlayerClass == "Neutral")
+							if(card.GetPlayerClass.Equals("Neutral"))
 								ListViewDB.Items.Add(card);
 							break;
 					}
@@ -121,13 +121,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var deckName = TextBoxDeckName.Text;
 
-			if(string.IsNullOrEmpty(deckName))
+			if(string.IsNullOrWhiteSpace(deckName))
 			{
 				var settings = new MessageDialogs.Settings {AffirmativeButtonText = "Set", DefaultText = deckName};
 
 				var name = await this.ShowInputAsync("No name set", "Please set a name for the deck", settings);
 
-				if(string.IsNullOrEmpty(name))
+				if(string.IsNullOrWhiteSpace(name))
 					return;
 
 				deckName = name;
@@ -152,7 +152,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				AddDeckHistory();
 				_newDeck.Version = newVersion;
 				_newDeck.SelectedVersion = newVersion;
-				_newDeck.HearthStatsDeckVersionId = "";
+				_newDeck.HearthStatsDeckVersionId = string.Empty;
 			}
 
 			if(EditingDeck && overwrite)
@@ -176,7 +176,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(EditingDeck)
 			{
 				TagControlEdit.SetSelectedTags(new List<string>());
-				if(deckName != oldDeckName)
+				if(!deckName.Equals(oldDeckName))
 				{
 					var statsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(_newDeck));
 					if(statsEntry != null)
@@ -278,7 +278,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(card == null)
 				return;
-			var cardInDeck = _newDeck.Cards.FirstOrDefault(c => c.Name == card.Name);
+			var cardInDeck = _newDeck.Cards.FirstOrDefault(c => c.Name.Equals(card.Name));
 			if(cardInDeck != null)
 			{
 				if(!_newDeck.IsArenaDeck && CheckBoxConstructedCardLimits.IsChecked == true 
@@ -504,7 +504,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var tb = (TextBox)sender;
 			var name = tb.Text;
-			if(DeckList.Instance.Decks.Any(d => d.Name == name) && !(EditingDeck && name == _editedDeckName))
+			if(DeckList.Instance.Decks.Any(d => d.Name.Equals(name)) && !(EditingDeck && name.Equals(_editedDeckName)))
 			{
 				if(DeckNameExistsWarning.Visibility == Collapsed)
 					tb.Width -= 19;

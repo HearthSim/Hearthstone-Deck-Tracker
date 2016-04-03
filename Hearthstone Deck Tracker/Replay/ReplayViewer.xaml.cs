@@ -158,7 +158,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return string.Empty;
 				var cardId = GetHero(_playerController).CardId;
-				return cardId == null ? null : Database.GetHeroNameFromId(cardId);
+				return string.IsNullOrWhiteSpace(cardId) ? null : Database.GetHeroNameFromId(cardId);
 			}
 		}
 
@@ -192,7 +192,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 		{
 			get
 			{
-				if(!Enum.GetNames(typeof(HeroClass)).Contains(OpponentHero) && OpponentHero != "Jaraxxus")
+				if(!Enum.GetNames(typeof(HeroClass)).Contains(OpponentHero) && !OpponentHero.Equals("Jaraxxus"))
 					return new BitmapImage();
 				var uri = new Uri($"../Resources/{OpponentHero.ToLower()}_small.png", UriKind.Relative);
 				return new BitmapImage(uri);
@@ -208,7 +208,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				if(_currentGameState == null)
 					return null;
 				var cardId = GetHero(_opponentController).CardId;
-				return cardId == null ? null : Database.GetHeroNameFromId(cardId);
+				return string.IsNullOrWhiteSpace(cardId) ? null : Database.GetHeroNameFromId(cardId);
 			}
 		}
 

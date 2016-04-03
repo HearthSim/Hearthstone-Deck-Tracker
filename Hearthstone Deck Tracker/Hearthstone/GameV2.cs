@@ -88,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Entity OpponentEntity => Entities.FirstOrDefault(x => x.Value.HasTag(GAME_TAG.PLAYER_ID) && !x.Value.IsPlayer).Value;
 
-		public Entity GameEntity => Entities.FirstOrDefault(x => x.Value?.Name == "GameEntity").Value;
+		public Entity GameEntity => Entities.FirstOrDefault(x => x.Value.Name.Equals("GameEntity")).Value;
 
 		public bool IsMulliganDone
 		{
@@ -219,7 +219,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(TempArenaDeck == null || string.IsNullOrEmpty(cardId))
 				return;
-			var existingCard = TempArenaDeck.Cards.FirstOrDefault(c => c.Id == cardId);
+			var existingCard = TempArenaDeck.Cards.FirstOrDefault(c => c.Id.Equals(cardId));
 			if(existingCard != null)
 				existingCard.Count++;
 			else
@@ -235,13 +235,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return;
 				}
 				var recentArenaDecks = DeckList.Instance.Decks.Where(d => d.IsArenaDeck).OrderByDescending(d => d.LastPlayedNewFirst).Take(15);
-				if(recentArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
+				if(recentArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id.Equals(c2.Id) && c.Count == c2.Count))))
 				{
 					Log.Info("...but we already have that one. Discarding.");
 					TempArenaDeck.Cards.Clear();
 					return;
 				}
-				if(IgnoredArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
+				if(IgnoredArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id.Equals(c2.Id) && c.Count == c2.Count))))
 				{
 					Log.Info("...but it was already discarded by the user. No automatic action taken.");
 					return;

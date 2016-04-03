@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker
 			Action = play.Type.ToString().Replace("Player", string.Empty).Replace("Opponent", string.Empty);
 			Card = Database.GetCardFromId(play.CardId);
 
-			if(play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.OpponentHandDiscard && (Card != null && Card.Type == "Spell"))
+			if(play.Type == PlayType.PlayerHandDiscard || play.Type == PlayType.OpponentHandDiscard && (Card != null && Card.Type.Equals("Spell")))
 				Action = "Play/Discard";
 		}
 

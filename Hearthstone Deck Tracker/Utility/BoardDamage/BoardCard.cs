@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		private int CalculateAttack(bool active, bool isWeapon)
 		{
 			// V-07-TR-0N is a special case Mega-Windfury
-			if(!string.IsNullOrEmpty(CardId) && CardId == "GVG_111t")
+			if(!string.IsNullOrEmpty(CardId) && CardId.Equals("GVG_111t"))
 				return V07TRONAttack(active);
 				// for weapons check for windfury and number of hits left
 			if(isWeapon)
@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			}
 			// sometimes cards seem to be in wrong zone while in play,
 				// these cards don't become exhausted, so check attacks.
-			if(Zone.ToLower() == "deck" || Zone.ToLower() == "hand")
+			if(Zone.ToLower().Equals("deck") || Zone.ToLower().Equals("hand"))
 				return (!Windfury || AttacksThisTurn < 2) && (Windfury || AttacksThisTurn < 1);
 			return true;
 		}

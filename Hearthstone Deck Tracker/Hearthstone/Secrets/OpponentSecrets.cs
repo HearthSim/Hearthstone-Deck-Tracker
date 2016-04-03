@@ -71,10 +71,10 @@ namespace Hearthstone_Deck_Tracker
 		public void NewSecretPlayed(HeroClass heroClass, int id, int turn, string knownCardId = null)
 		{
 			var helper = new SecretHelper(heroClass, id, turn);
-			if(knownCardId != null)
+			if(!string.IsNullOrWhiteSpace(knownCardId))
 			{
 				foreach(var cardId in SecretHelper.GetSecretIds(heroClass))
-					helper.PossibleSecrets[cardId] = cardId == knownCardId;
+					helper.PossibleSecrets[cardId] = cardId.Equals(knownCardId);
 			}
 			Secrets.Add(helper);
 			Log.Info("Added secret with id:" + id);
@@ -190,7 +190,7 @@ namespace Hearthstone_Deck_Tracker
 				foreach(var possible in secret.PossibleSecrets)
 				{
 					if(possible.Value)
-						returnThis.Find(x => x.CardId == possible.Key).Count++;
+						returnThis.Find(x => x.CardId.Equals(possible.Key)).Count++;
 				}
 			}
 

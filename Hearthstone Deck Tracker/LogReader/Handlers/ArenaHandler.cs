@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						var cardId = match.Groups["id"].Value;
 							var timeSinceLastChoice = DateTime.Now.Subtract(_lastChoice).TotalMilliseconds;
 
-						if(_lastChoiceId == cardId && timeSinceLastChoice < 1000)
+						if(_lastChoiceId.Equals(cardId) && timeSinceLastChoice < 1000)
 						{
 							Log.Warn($"Card with the same ID ({cardId}) was chosen less {timeSinceLastChoice} ms ago. Ignoring.");
 							return;

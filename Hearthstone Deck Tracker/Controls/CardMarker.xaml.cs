@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			set
 			{
 				_mark = value;
-				var source = "";
+				var source = string.Empty;
 				switch(_mark)
 				{
 					case Coin:
@@ -55,11 +55,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 						source = "/HearthstoneDeckTracker;component/Images/card-icon-created.png";
 						break;
 					default:
-						CardIcon.Visibility = Collapsed;
 						break;
 				}
 
-				if(source != "")
+				if(!string.IsNullOrWhiteSpace(source))
 				{
 					CardIcon.Source = new BitmapImage(new Uri(source, UriKind.Relative));
 					CardIcon.Visibility = Visible;
