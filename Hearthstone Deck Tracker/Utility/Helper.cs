@@ -19,6 +19,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls;
@@ -80,6 +81,8 @@ namespace Hearthstone_Deck_Tracker
 			"esMX",
 			"esES"
 		};
+
+		public static string[] WildOnlySets = new[] { CardSet.FP1, CardSet.PE1 }.Select(HearthDbConverter.SetConverter).ToArray();
 
 		private static Version _currentVersion;
 

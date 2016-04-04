@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -30,8 +29,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		internal double? MovedLeft;
 		private string _editedDeckName;
-
-		public string[] WildOnlySets = new[] {CardSet.FP1, CardSet.PE1 }.Select(HearthDbConverter.SetConverter).ToArray();
 
 		private void UpdateDbListView()
 		{
@@ -97,7 +94,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						continue;
 					if(selectedSet != "ALL" && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
 						continue;
-					if(!(CheckBoxIncludeWild.IsChecked ?? true) && WildOnlySets.Contains(card.Set))
+					if(!(CheckBoxIncludeWild.IsChecked ?? true) && Helper.WildOnlySets.Contains(card.Set))
 						continue;
 					switch(selectedNeutral)
 					{

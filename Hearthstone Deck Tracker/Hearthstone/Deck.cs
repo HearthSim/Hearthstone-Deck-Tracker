@@ -159,6 +159,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				_selectedVersion = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(NameAndVersion));
+				OnPropertyChanged(nameof(StandardViableVisibility));
 			}
 		}
 
@@ -369,6 +370,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Visibility NoteVisibility => string.IsNullOrEmpty(Note) ? Visibility.Collapsed : Visibility.Visible;
 
+		public Visibility StandardViableVisibility => IsArenaDeck || GetSelectedDeckVersion().Cards.Any(x => Helper.WildOnlySets.Contains(x.Set)) ? Visibility.Collapsed : Visibility.Visible;
+
 		public Visibility ArchivedVisibility => Archived ? Visibility.Visible : Visibility.Collapsed;
 
 		private TimeSpan ValidCacheDuration => new TimeSpan(0, 0, 1);
@@ -560,5 +563,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OnPropertyChanged(nameof(VisibilityStats));
 			OnPropertyChanged(nameof(VisibilityNoStats));
 		}
+
+		public void UpdateStandardIndicatorVisibility() => OnPropertyChanged(nameof(StandardViableVisibility));
 	}
 }

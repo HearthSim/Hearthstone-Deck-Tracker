@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" Height="52" Margin="0,-1,0,0">
     <Border Name="BorderItem" BorderThickness="1"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
@@ -16,8 +17,9 @@
                 </LinearGradientBrush>
             </DockPanel.Background>
             <Grid Width="46" Height="46" Margin="5,1,10,0">
-                <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}"
-                       RenderOptions.BitmapScalingMode="Fant" />
+                <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}" RenderOptions.BitmapScalingMode="Fant" />
+                <hearthstoneDeckTracker:HearthstoneTextBlock Text="s" FontSize="14" Fill="LimeGreen" Width="10" Height="18" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,2,0" Visibility="{Binding StandardViableVisibility}"
+                                                             ToolTip="This deck can be used in 'Standard' mode."/>
             </Grid>
             <Border BorderThickness="1"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Width="48" DockPanel.Dock="Right" Margin="-1">
                 <Grid>
