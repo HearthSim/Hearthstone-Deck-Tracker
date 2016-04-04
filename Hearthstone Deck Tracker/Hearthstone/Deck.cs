@@ -159,6 +159,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				_selectedVersion = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(NameAndVersion));
+				OnPropertyChanged(nameof(StandardViableVisibility));
 			}
 		}
 
@@ -368,6 +369,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Visibility VisibilityNoStats => VisibilityStats == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
 		public Visibility NoteVisibility => string.IsNullOrEmpty(Note) ? Visibility.Collapsed : Visibility.Visible;
+
+		public Visibility StandardViableVisibility => IsArenaDeck || GetSelectedDeckVersion().Cards.Any(x => Helper.WildOnlySets.Contains(x.Set)) ? Visibility.Collapsed : Visibility.Visible;
 
 		public Visibility ArchivedVisibility => Archived ? Visibility.Visible : Visibility.Collapsed;
 

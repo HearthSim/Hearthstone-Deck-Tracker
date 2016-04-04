@@ -573,7 +573,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private void ListViewDeckType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(_ignoreSelectionChange)
+			if(_ignoreSelectionChange || !Core.Initialized)
 				return;
 			var deckType = DeckType.All;
 			if(e.AddedItems.Count >= 0)
