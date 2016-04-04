@@ -373,6 +373,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			DeckPickerListCover.Visibility = Visible;
 			PanelVersionComboBox.Visibility = Collapsed;
+			BtnStartHearthstone.Visibility = Collapsed;
 			PanelCardCount.Visibility = Visible;
 
 			//move window left if opening the edit panel causes it to be outside of a screen
@@ -406,6 +407,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					break;
 				}
 			}
+			UpdateExpansionIcons();
 		}
 
 		private void CloseNewDeck()
@@ -426,6 +428,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions ? Visible : Collapsed;
 			PanelCardCount.Visibility = Collapsed;
+			BtnStartHearthstone.Visibility = Core.Game.IsRunning ? Collapsed : Visible;
 
 			if(MovedLeft.HasValue)
 			{
