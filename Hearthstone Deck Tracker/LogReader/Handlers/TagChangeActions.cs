@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void StepChange(IHsGameState gameState, IGame game)
 		{
-			if(gameState.SetupDone || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
+			if(gameState.SetupDone || !game.Entities.FirstOrDefault().Value.Name.Equals("GameEntity"))
 				return;
 			Log.Info("Game was already in progress.");
 			gameState.WasInProgress = true;

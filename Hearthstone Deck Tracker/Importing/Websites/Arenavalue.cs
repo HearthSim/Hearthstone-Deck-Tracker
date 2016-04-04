@@ -69,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 					var match = Regex.Match(text, @"^\d+\s*(.+?)\s*(x \d+)?$");
 
-					var name = "";
+					var name = string.Empty;
 					if(match.Success && match.Groups.Count == 3)
 						name = match.Groups[1].ToString();
 					if(string.IsNullOrWhiteSpace(name))
@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					card.Count = count;
 					deck.Cards.Add(card);
 
-					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
+					if(string.IsNullOrEmpty(deck.Class) && !card.GetPlayerClass.Equals("Neutral"))
 						deck.Class = card.PlayerClass;
 				}
 				deck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, deck);

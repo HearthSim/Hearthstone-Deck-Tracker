@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				var cardCountNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]");
 				//<span class="deck-type">Midrange</span>
 				var decktype = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'deck-type')]").InnerText;
-				if(decktype != "None" && Config.Instance.TagDecksOnImport)
+				if(!decktype.Equals("None") && Config.Instance.TagDecksOnImport)
 				{
 					if(!DeckList.Instance.AllTags.Contains(decktype))
 					{
@@ -63,8 +63,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					var card = Database.GetCardFromName(info.Name.Trim());
 					card.Count = info.Count;
 					deck.Cards.Add(card);
-					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-						deck.Class = card.PlayerClass;
+					if(string.IsNullOrEmpty(deck.Class) && !card.PlayerClass.Equals("Neutral"))
+                        deck.Class = card.PlayerClass;
 				}
 
 				return deck;
@@ -115,8 +115,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					var card = Database.GetCardFromName(cardName);
 					card.Count = cardCount;
 					deck.Cards.Add(card);
-					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-						deck.Class = card.PlayerClass;
+					if(string.IsNullOrEmpty(deck.Class) && !card.PlayerClass.Equals("Neutral"))
+                        deck.Class = card.PlayerClass;
 				}
 
 				return deck;

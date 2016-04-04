@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker
 				_waitingForClass = false;
 			}
 			var cardEntites = Core.Game.Player.RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen).GroupBy(x => x.CardId).ToList();
-			var notFound = cardEntites.Where(x => !deck.GetSelectedDeckVersion().Cards.Any(c => c.Id == x.Key && c.Count >= x.Count())).ToList();
+			var notFound = cardEntites.Where(x => !deck.GetSelectedDeckVersion().Cards.Any(c => c.Id.Equals(x.Key) && c.Count >= x.Count())).ToList();
 			if(notFound.Any())
 			{
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
@@ -50,13 +50,13 @@ namespace Hearthstone_Deck_Tracker
 			_waitingForDraws--;
 			if(_waitingForDraws > 0)
 				return;
-			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived).ToList();
+			var validDecks = DeckList.Instance.Decks.Where(x => x.Class.Equals(heroClass) && !x.Archived).ToList();
 			if(mode == GameMode.Arena)
 				validDecks = validDecks.Where(x => x.IsArenaDeck && x.IsArenaRunCompleted != true).ToList();
 			else if(mode != GameMode.None)
 				validDecks = validDecks.Where(x => !x.IsArenaDeck).ToList();
 			if(validDecks.Count > 1 && cardEntites != null)
-				validDecks = validDecks.Where(x => cardEntites.All(ce => x.GetSelectedDeckVersion().Cards.Any(c => c.Id == ce.Key && c.Count >= ce.Count()))).ToList();
+				validDecks = validDecks.Where(x => cardEntites.All(ce => x.GetSelectedDeckVersion().Cards.Any(c => c.Id.Equals(ce.Key) && c.Count >= ce.Count()))).ToList();
 			if(validDecks.Count == 0)
 			{
 				Log.Info("Could not find matching deck.");
@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.MainWindow.SelectDeck(deck, true);
 				return;
 			}
-			var lastUsed = DeckList.Instance.LastDeckClass.FirstOrDefault(x => x.Class == heroClass);
+			var lastUsed = DeckList.Instance.LastDeckClass.FirstOrDefault(x => x.Class.Equals(heroClass));
 			if(lastUsed != null)
 			{
 				var deck = validDecks.FirstOrDefault(x => x.DeckId == lastUsed.Id);
@@ -101,13 +101,13 @@ namespace Hearthstone_Deck_Tracker
 			var selectedDeck = dsDialog.SelectedDeck;
 			if(selectedDeck != null)
 			{
-				if(selectedDeck.Name == "Use no deck")
+				if(selectedDeck.Name.Equals("Use no deck"))
 				{
 					Log.Info("Auto deck detection disabled.");
 					Core.MainWindow.SelectDeck(null, true);
 					NotFoundCards.Clear();
 				}
-				else if(selectedDeck.Name == "No match - Keep using active deck")
+				else if(selectedDeck.Name.Equals("No match - Keep using active deck"))
 				{
 					IgnoredDeckId = DeckList.Instance.ActiveDeck?.DeckId ?? Guid.Empty;
 					Log.Info($"Now ignoring {DeckList.Instance.ActiveDeck?.Name}");

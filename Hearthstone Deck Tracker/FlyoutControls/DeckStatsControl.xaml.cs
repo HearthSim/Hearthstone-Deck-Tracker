@@ -239,7 +239,7 @@ namespace Hearthstone_Deck_Tracker
 
 			DataGridWinLossClass.Items.Clear();
 			var allGames =
-				DeckList.Instance.Decks.Where(d => d.GetClass == _deck.GetClass)
+				DeckList.Instance.Decks.Where(d => d.GetClass.Equals(_deck.GetClass))
 				        .SelectMany(d => FilterGames(d.DeckStats.Games).Where(g => !g.IsClone))
 				        .Concat(FilterGames(defaultStats.Games))
 				        .ToList();
@@ -507,7 +507,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var heroPlayed = heroes.Any() ? heroes.OrderByDescending(x => x.Value).First().Key : "Any";
-			var possibleTargets = DeckList.Instance.Decks.Where(d => d.Class == heroPlayed || heroPlayed == "Any");
+			var possibleTargets = DeckList.Instance.Decks.Where(d => d.Class.Equals(heroPlayed) || heroPlayed.Equals("Any"));
 
 			var dialog = new MoveGameDialog(possibleTargets);
 			if(Config.Instance.StatsInWindow)
@@ -622,7 +622,7 @@ namespace Hearthstone_Deck_Tracker
 				var allGames = new List<GameStats>();
 				if(Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.WithDeck
 				   || Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.All)
-					allGames.AddRange(DeckList.Instance.Decks.Where(x => x.Class == @class && MatchesTagFilters(x)).SelectMany(d => d.DeckStats.Games));
+					allGames.AddRange(DeckList.Instance.Decks.Where(x => x.Class.Equals(@class) && MatchesTagFilters(x)).SelectMany(d => d.DeckStats.Games));
 				if(Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.WithoutDeck
 				   || Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.All)
 					allGames.AddRange(DefaultDeckStats.Instance.GetDeckStats(@class).Games);
@@ -824,7 +824,7 @@ namespace Hearthstone_Deck_Tracker
 
 			public WinLoss(List<GameStats> stats, string text, SerializableVersion version)
 			{
-				_percent = text == "%";
+				_percent = text.Equals("%");
 				_stats = stats;
 				Text = text;
 				Version = version == null ? "ALL" : version.ToString("v{M}.{m}");
@@ -850,11 +850,11 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 
-			public Visibility VisibilityImage => _playerHero != "Total" ? Visible : Collapsed;
+            public Visibility VisibilityImage => !_playerHero.Equals("Total") ? Visible : Collapsed;
 
-			public Visibility VisibilityText => _playerHero == "Total" ? Visible : Collapsed;
+            public Visibility VisibilityText => _playerHero.Equals("Total") ? Visible : Collapsed;
 
-			public string PlayerText => _playerHero.ToUpper();
+            public string PlayerText => _playerHero.ToUpper();
 
 			public string Text { get; private set; }
 
@@ -882,8 +882,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(_stats == null)
 					return "0 - 0";
-				var wins = _stats.Count(s => s.Result == GameResult.Win && (hsClass == null || s.OpponentHero == hsClass));
-				var losses = _stats.Count(s => s.Result == GameResult.Loss && (hsClass == null || s.OpponentHero == hsClass));
+				var wins = _stats.Count(s => s.Result == GameResult.Win && (string.IsNullOrWhiteSpace(hsClass) || s.OpponentHero.Equals(hsClass)));
+				var losses = _stats.Count(s => s.Result == GameResult.Loss && (string.IsNullOrWhiteSpace(hsClass) || s.OpponentHero.Equals(hsClass)));
 				return wins + " - " + losses;
 			}
 
@@ -891,8 +891,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(_stats == null)
 					return "-";
-				var wins = _stats.Count(s => s.Result == GameResult.Win && (hsClass == null || s.OpponentHero == hsClass));
-				var losses = _stats.Count(s => s.Result == GameResult.Loss && (hsClass == null || s.OpponentHero == hsClass));
+				var wins = _stats.Count(s => s.Result == GameResult.Win && (string.IsNullOrWhiteSpace(hsClass) || s.OpponentHero.Equals(hsClass)));
+				var losses = _stats.Count(s => s.Result == GameResult.Loss && (string.IsNullOrWhiteSpace(hsClass) || s.OpponentHero.Equals(hsClass)));
 				var total = wins + losses;
 				return total > 0 ? Math.Round(100.0 * wins / total, 1) + "%" : "-";
 			}

@@ -54,8 +54,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 					               tag =>
 					               DeckList.Instance.AllTags.FirstOrDefault(t => string.Equals(t, tag, StringComparison.InvariantCultureIgnoreCase))
 					               ?? tag);
-				var deck = new Deck(name ?? "", Dictionaries.HeroDict[klass_id.Value],
-				                    cards?.Where(x => x?.count != null && x.id != null)
+				var deck = new Deck(name ?? string.Empty, Dictionaries.HeroDict[klass_id.Value],
+				                    cards?.Where(x => x?.count != null && !string.IsNullOrWhiteSpace(x.id))
 										  .Select(x => x.ToCard())
 										  .Where(x => x != null)
 										  .ToList() ?? new List<Card>(), tags, notes ?? "", url, DateTime.Now, archived, new List<Card>(),
@@ -63,8 +63,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 				                    deck_version_id.ToString());
 				deck.LastEdited = updated_at.ToLocalTime();
 				if(versions.Length > 0)
-					deck.Versions = versions.Where(v => v.version != version).Select(v => v.ToDeck(deck)).ToList();
-				var current = versions.FirstOrDefault(v => v.version == version);
+					deck.Versions = versions.Where(v => !v.version.Equals(version)).Select(v => v.ToDeck(deck)).ToList();
+				var current = versions.FirstOrDefault(v => v.version.Equals(version));
 				if(current != null)
 					deck.HearthStatsDeckVersionId = current.deck_version_id.ToString();
 				deck.HearthStatsIdsAlreadyReset = true;

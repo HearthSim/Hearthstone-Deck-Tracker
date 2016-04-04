@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 					var decktype = HttpUtility.HtmlDecode(deckInfo[2].InnerText).Trim();
 					if(!string.IsNullOrWhiteSpace(decktype)
-						&& decktype != "None" && Config.Instance.TagDecksOnImport)
+						&& !decktype.Equals("None") && Config.Instance.TagDecksOnImport)
 					{
 						if(!DeckList.Instance.AllTags.Contains(decktype))
 						{
@@ -81,8 +81,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 						var card = Database.GetCardFromName(name);
 						card.Count = count.Equals("2") ? 2 : 1;
 						deck.Cards.Add(card);
-						if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-							deck.Class = card.PlayerClass;
+						if(string.IsNullOrEmpty(deck.Class) && !card.PlayerClass.Equals("Neutral"))
+                            deck.Class = card.PlayerClass;
 					}
 				}
 

@@ -372,7 +372,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				var remoteDecks = await DownloadDecksAsync(forceFullSync);
 				if(remoteDecks.Any())
 				{
-					var newDecks = remoteDecks.Where(deck => localDecks.All(localDeck => localDeck.HearthStatsId != deck.HearthStatsId)).ToList();
+					var newDecks = remoteDecks.Where(deck => localDecks.All(localDeck => !localDeck.HearthStatsId.Equals(deck.HearthStatsId))).ToList();
 					if(newDecks.Any())
 					{
 						Core.MainWindow.FlyoutHearthStatsDownload.IsOpen = true;
@@ -402,13 +402,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						                  deck =>
 						                  localDecks.Any(
 						                                 localDeck =>
-						                                 localDeck.HasHearthStatsId && deck.HearthStatsId == localDeck.HearthStatsId
+						                                 localDeck.HasHearthStatsId && deck.HearthStatsId.Equals(localDeck.HearthStatsId)
 						                                 && localDeck.GetMaxVerion() != deck.GetMaxVerion())).ToList();
 					if(decksWithNewVersions.Any())
 					{
 						foreach(var deck in decksWithNewVersions)
 						{
-							var currentDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
+							var currentDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId.Equals(deck.HearthStatsId));
 							if(currentDeck == null)
 								continue;
 							var versions =
@@ -447,14 +447,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 						                  r =>
 						                  localDecks.Any(
 						                                 l =>
-						                                 l.HasHearthStatsId && l.HearthStatsId == r.HearthStatsId && r.LastEdited > l.LastEdited
-						                                 && (l.Name != r.Name || !(new HashSet<string>(l.Tags).SetEquals(r.Tags)) || l.Note != r.Note
+						                                 l.HasHearthStatsId && l.HearthStatsId.Equals(r.HearthStatsId) && r.LastEdited > l.LastEdited
+						                                 && (!l.Name.Equals(r.Name) || !(new HashSet<string>(l.Tags).SetEquals(r.Tags)) || !l.Note.Equals(r.Note)
 						                                     || (l - r).Count > 0))).ToList();
 					if(editedDecks.Any())
 					{
 						foreach(var deck in editedDecks)
 						{
-							var localDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId == deck.HearthStatsId);
+							var localDeck = localDecks.FirstOrDefault(d => d.HasHearthStatsId && d.HearthStatsId.Equals(deck.HearthStatsId));
 							if(localDeck != null)
 							{
 								localDeck.Name = deck.Name;
@@ -491,11 +491,11 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							                                       d =>
 							                                       d.VersionsIncludingSelf.Select(v => d.GetVersion(v.Major, v.Minor))
 							                                        .Where(v => v != null && v.HasHearthStatsDeckVersionId)
-							                                        .Any(v => game.HearthStatsDeckVersionId == v.HearthStatsDeckVersionId));
+							                                        .Any(v => game.HearthStatsDeckVersionId.Equals(v.HearthStatsDeckVersionId)));
 						if(deck == null)
 						{
 							//deck_version_id seems to be null for older matches
-							deck = DeckList.Instance.Decks.FirstOrDefault(d => d.HasHearthStatsId && game.HearthStatsDeckId == d.HearthStatsId);
+							deck = DeckList.Instance.Decks.FirstOrDefault(d => d.HasHearthStatsId && game.HearthStatsDeckId.Equals(d.HearthStatsId));
 							if(deck != null)
 								game.HearthStatsDeckVersionId = deck.HearthStatsDeckVersionId;
 						}
@@ -504,14 +504,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 							Log.Warn($"no deck found for match {game}");
 							continue;
 						}
-						if(deck.DeckStats.Games.Any(g => g.HearthStatsId == game.HearthStatsId))
+						if(deck.DeckStats.Games.Any(g => g.HearthStatsId.Equals(game.HearthStatsId)))
 						{
 							Log.Warn($"deck {deck} already has match {game}");
 							continue;
 						}
 						var deckVersion =
 							deck.VersionsIncludingSelf.Select(deck.GetVersion)
-							    .FirstOrDefault(v => v.HearthStatsDeckVersionId == game.HearthStatsDeckVersionId);
+							    .FirstOrDefault(v => v.HearthStatsDeckVersionId.Equals(game.HearthStatsDeckVersionId));
 						if(deckVersion == null)
 							continue;
 						Log.Info($"added match {game} to version {deck.Version.ShortVersionString} of deck {deck}");
@@ -604,8 +604,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					                 l =>
 					                 remoteDecks.Any(
 					                                 r =>
-					                                 r.HasHearthStatsId && r.HearthStatsId == l.HearthStatsId && l.LastEdited > r.LastEdited
-					                                 && (r.Name != l.Name || !(new HashSet<string>(r.Tags).SetEquals(l.Tags)) || r.Note != l.Note
+					                                 r.HasHearthStatsId && r.HearthStatsId.Equals(l.HearthStatsId) && l.LastEdited > r.LastEdited
+					                                 && (!r.Name.Equals(l.Name) || !(new HashSet<string>(r.Tags).SetEquals(l.Tags)) || !r.Note.Equals(l.Note)
 					                                     || (r - l).Count > 0))).ToList();
 				if(editedLocalDecks.Any())
 				{
@@ -647,7 +647,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 									                           .FirstOrDefault(
 									                                           d =>
 									                                           d.HasHearthStatsDeckVersionId
-									                                           && d.HearthStatsDeckVersionId == match.game.HearthStatsDeckVersionId)
+									                                           && d.HearthStatsDeckVersionId.Equals(match.game.HearthStatsDeckVersionId))
 									                      ?? match.deck.GetVersion(match.game.PlayerDeckVersion))
 									                   : (match.game.PlayerDeckVersion != null ? match.deck.GetVersion(match.game.PlayerDeckVersion) : match.deck))
 							                  }).Where(x => x.deckVersion != null).GroupBy(x => x.deckVersion.HearthStatsDeckVersionId);

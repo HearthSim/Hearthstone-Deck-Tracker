@@ -134,7 +134,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 		public static async Task<bool> CheckForSpecialCases(Card card, double cardPosX, double card2PosX, double cardPosY, IntPtr hsHandle)
 		{
-			if(card.Name == "Feugen")
+			if(card.Name.Equals("Feugen"))
 			{
 				if(Config.Instance.OwnsGoldenFeugen && Config.Instance.PrioritizeGolden)
 					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
 				return true;
 			}
-			if(card.Name == "Stalagg")
+			if(card.Name.Equals("Stalagg"))
 			{
 				var posX3 = cardPosX + (card2PosX - cardPosX) * 2;
 				var posX4 = cardPosX + (card2PosX - cardPosX) * 3;

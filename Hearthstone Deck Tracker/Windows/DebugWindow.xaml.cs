@@ -159,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var props = typeof(GameV2).GetProperties().OrderBy(x => x.Name);
 			foreach(var prop in props)
 			{
-				if(prop.Name == "HSLogLines" || prop.Name == "Entities")
+				if(prop.Name.Equals("HSLogLines") || prop.Name.Equals("Entities"))
 					continue;
 				string val = "";
 				var propVal = prop.GetValue(_game, null);
@@ -212,7 +212,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var item = sender as TreeViewItem;
 			var header = item.Header.ToString();
-			if(_expanded.Contains(header) == false)
+			if(!_expanded.Contains(header))
 				_expanded.Add(header);
 		}
 

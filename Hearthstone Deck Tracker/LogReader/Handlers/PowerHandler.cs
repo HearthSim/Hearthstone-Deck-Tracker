@@ -67,13 +67,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, entityId, match.Groups["value"].Value, game);
 				else
 				{
-					var entity = game.Entities.FirstOrDefault(x => x.Value.Name == rawEntity);
+					var entity = game.Entities.FirstOrDefault(x => x.Value.Name.Equals(rawEntity));
 
 					if(entity.Value == null)
 					{
 						var players = game.Entities.Where(x => x.Value.HasTag(GAME_TAG.PLAYER_ID)).Take(2).ToList();
 						var unnamedPlayers = players.Where(x => string.IsNullOrEmpty(x.Value.Name)).ToList();
-						var unknownHumanPlayer = players.FirstOrDefault(x => x.Value.Name == "UNKNOWN HUMAN PLAYER");
+						var unknownHumanPlayer = players.FirstOrDefault(x => x.Value.Name.Equals("UNKNOWN HUMAN PLAYER"));
 						if(unnamedPlayers.Count == 0 && unknownHumanPlayer.Value != null)
 						{
 							Log.Info("Updating UNKNOWN HUMAN PLAYER");
@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									_tmpEntities.Remove(tmpEntity);
 								}
 								else
-									Log.Warn("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY");
+									Log.Warn($"TMP ENTITY ({rawEntity}) NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY");
 							}
 						}
 					}
@@ -227,7 +227,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				if(string.IsNullOrEmpty(actionStartingCardId))
 					return;
-				if(match.Groups["type"].Value == "TRIGGER")
+				if(match.Groups["type"].Value.Equals("TRIGGER"))
 				{
 					switch(actionStartingCardId)
 					{
@@ -277,7 +277,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							   && !gameState.OpponentUsedHeroPower)
 							{
 								var card = Database.GetCardFromId(actionStartingCardId);
-								if(card.Type == "Hero Power")
+								if(card.Type.Equals("Hero Power"))
 								{
 									if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
 									{

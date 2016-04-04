@@ -487,10 +487,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void DeckPickerList_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			if(e.PropertyName == "ArchivedClassVisible")
+			if(e.PropertyName.Equals("ArchivedClassVisible"))
 				MinHeight += DeckPickerList.ArchivedClassVisible ? DeckPickerClassItem.Big : -DeckPickerClassItem.Big;
 
-			if(e.PropertyName == "VisibilitySearchBar")
+			if(e.PropertyName.Equals("VisibilitySearchBar"))
 			{
 				if(DeckPickerList.SearchBarVisibile)
 				{
@@ -736,9 +736,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				//set and save last used deck for class
 				if(setActive)
 				{
-					while(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class == deck.Class))
+					while(DeckList.Instance.LastDeckClass.Any(ldc => ldc.Class.Equals(deck.Class)))
 					{
-						var lastSelected = DeckList.Instance.LastDeckClass.FirstOrDefault(ldc => ldc.Class == deck.Class);
+						var lastSelected = DeckList.Instance.LastDeckClass.FirstOrDefault(ldc => ldc.Class.Equals(deck.Class));
 						if(lastSelected != null)
 							DeckList.Instance.LastDeckClass.Remove(lastSelected);
 						else
@@ -769,7 +769,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			//set up stats
-			var statsTitle = $"Stats{(deck == null ? "" : ": " + deck.Name)}";
+			var statsTitle = $"Stats{(deck == null ? string.Empty : ": " + deck.Name)}";
 			Core.Windows.StatsWindow.Title = statsTitle;
 			FlyoutDeckStats.Header = statsTitle;
 			Core.Windows.StatsWindow.StatsControl.SetDeck(deck);

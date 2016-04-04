@@ -222,7 +222,7 @@ namespace Hearthstone_Deck_Tracker
 				var other = obj as Tag;
 				if(other == null)
 					return false;
-				return other.Name == Name;
+				return other.Name.Equals(Name);
 			}
 
 			public override int GetHashCode() => Name.GetHashCode();
@@ -250,7 +250,7 @@ namespace Hearthstone_Deck_Tracker
 			Tags.Clear();
 			foreach(var tag in tags)
 			{
-				var old = oldTag.FirstOrDefault(t => t.Name == tag);
+				var old = oldTag.FirstOrDefault(t => t.Name.Equals(tag));
 				Tags.Add(old != null ? new Tag(tag, old.Selected) : new Tag(tag));
 			}
 			_initialized = true;
@@ -302,12 +302,12 @@ namespace Hearthstone_Deck_Tracker
 
 		public void AddSelectedTag(string tag)
 		{
-			if(Tags.All(t => t.Name != tag))
+			if(Tags.All(t => !t.Name.Equals(tag)))
 				return;
-			if(Tags.First(t => t.Name == "All").Selected == true)
+			if(Tags.First(t => t.Name.Equals("All")).Selected == true)
 				return;
 
-			Tags.First(t => t.Name == tag).Selected = true;
+			Tags.First(t => t.Name.Equals(tag)).Selected = true;
 			SortFilterDecksFlyoutOnSelectedTagsChanged();
 		}
 
@@ -325,16 +325,16 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			var selectedValue = (originalSource as CheckBox).Content.ToString();
-			Tags.First(t => t.Name == selectedValue).Selected = true;
-			if (Tags.Any(t => t.Name == "All"))
+			Tags.First(t => t.Name.Equals(selectedValue)).Selected = true;
+			if (Tags.Any(t => t.Name.Equals("All")))
 			{
-				if (selectedValue == "All")
+				if (selectedValue.Equals("All"))
 				{
-					foreach (var tag in Tags.Where(tag => tag.Name != "All"))
+					foreach (var tag in Tags.Where(tag => !tag.Name.Equals("All")))
 						tag.Selected = false;
 				}
 				else
-					Tags.First(t => t.Name == "All").Selected = false;
+					Tags.First(t => t.Name.Equals("All")).Selected = false;
 			}
 			ListboxTags.Items.Refresh();
 			SortFilterDecksFlyoutOnSelectedTagsChanged();
@@ -349,14 +349,14 @@ namespace Hearthstone_Deck_Tracker
 			if(originalSource == null)
 				return;
 			var selectedValue = (originalSource as CheckBox).Content.ToString();
-			Tags.First(t => t.Name == selectedValue).Selected = false;
+			Tags.First(t => t.Name.Equals(selectedValue)).Selected = false;
 			SortFilterDecksFlyoutOnSelectedTagsChanged();
 		}
 
 		private void BtnAddTag_Click(object sender, RoutedEventArgs e)
 		{
 			var tag = TextboxNewTag.Text;
-			if(Tags.Any(t => t.Name == tag))
+			if(Tags.Any(t => t.Name.Equals(tag)))
 				return;
 
 			Tags.Add(new Tag(tag));

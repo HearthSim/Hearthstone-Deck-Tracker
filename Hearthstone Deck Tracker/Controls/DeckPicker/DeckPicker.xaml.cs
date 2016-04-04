@@ -321,8 +321,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				                              && DeckMatchesSelectedDeckType(d) && DeckMatchesSelectedTags(d)
 				                              && (SelectedClasses.Any(
 				                                                      c =>
-				                                                      ((c.ToString() == "All" || d.Class == c.ToString()) && !d.Archived)
-				                                                      || (c.ToString() == "Archived" && d.Archived)))).ToList();
+				                                                      ((c.ToString().Equals("All") || d.Class.Equals(c.ToString())) && !d.Archived)
+				                                                      || (c.ToString().Equals("Archived") && d.Archived)))).ToList();
 
 
 			if(forceUpdate == null)
@@ -555,10 +555,10 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private bool DeckMatchesSelectedTags(Deck deck)
 		{
 			var selectedTags = Config.Instance.SelectedTags;
-			return selectedTags.Any(t => t == "All")
+			return selectedTags.Any(t => t.Equals("All"))
 			       || (Config.Instance.TagOperation == TagFilerOperation.Or
-				           ? selectedTags.Any(t => deck.Tags.Contains(t) || t == "None" && deck.Tags.Count == 0)
-				           : selectedTags.All(t => deck.Tags.Contains(t) || t == "None" && deck.Tags.Count == 0));
+				           ? selectedTags.Any(t => deck.Tags.Contains(t) || t.Equals("None") && deck.Tags.Count == 0)
+				           : selectedTags.All(t => deck.Tags.Contains(t) || t.Equals("None") && deck.Tags.Count == 0));
 		}
 
 		private async void ListViewDecks_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
