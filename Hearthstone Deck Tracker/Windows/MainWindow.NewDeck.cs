@@ -485,8 +485,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var result =
 				await
-				this.ShowMessageAsync("Deck type?", "Please select a deck type.", MessageDialogStyle.AffirmativeAndNegative,
-				                      new MessageDialogs.Settings {AffirmativeButtonText = "constructed", NegativeButtonText = "arena run"});
+				this.ShowMessageAsync("Deck type?", "Please select a deck type.", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+				                      new MessageDialogs.Settings {AffirmativeButtonText = "constructed", NegativeButtonText = "arena run", FirstAuxiliaryButtonText = "cancel"});
+			if(result == MessageDialogResult.FirstAuxiliary)
+				return;
 			if(result == MessageDialogResult.Negative)
 				_newDeck.IsArenaDeck = true;
 
