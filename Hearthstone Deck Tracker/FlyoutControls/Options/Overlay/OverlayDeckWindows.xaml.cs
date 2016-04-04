@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxWinTopmostHsForeground.IsChecked = Config.Instance.WindowsTopmostIfHsForeground;
 			CheckboxWinTopmostHsForeground.IsEnabled = Config.Instance.WindowsTopmost;
 			ComboboxWindowBackground.SelectedItem = Config.Instance.SelectedWindowBackground;
-			TextboxCustomBackground.IsEnabled = Config.Instance.SelectedWindowBackground.Equals("Custom");
+			TextboxCustomBackground.IsEnabled = Config.Instance.SelectedWindowBackground == "Custom";
 			TextboxCustomBackground.Text = string.IsNullOrEmpty(Config.Instance.WindowsBackgroundHex)
 				                               ? "#696969" : Config.Instance.WindowsBackgroundHex;
 			UpdateAdditionalWindowsBackground();
@@ -163,14 +163,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			TextboxCustomBackground.IsEnabled = ComboboxWindowBackground.SelectedItem.ToString().Equals("Custom");
+			TextboxCustomBackground.IsEnabled = ComboboxWindowBackground.SelectedItem.ToString() == "Custom";
 			Config.Instance.SelectedWindowBackground = ComboboxWindowBackground.SelectedItem.ToString();
 			UpdateAdditionalWindowsBackground();
 		}
 
 		private void TextboxCustomBackground_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			if(!_initialized || !ComboboxWindowBackground.SelectedItem.ToString().Equals("Custom"))
+			if(!_initialized || ComboboxWindowBackground.SelectedItem.ToString() != "Custom")
 				return;
 			var background = BackgroundFromHex();
 			if(background != null)

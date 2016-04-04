@@ -528,13 +528,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			//diff count
 			var diffCount =
-				first.Cards.Where(c => second.Cards.Any(c2 => c2.Id.Equals(c.Id)) && second.Cards.First(c2 => c2.Id.Equals(c.Id)).Count != c.Count);
+				first.Cards.Where(c => second.Cards.Any(c2 => c2.Id == c.Id) && second.Cards.First(c2 => c2.Id == c.Id).Count != c.Count);
 			foreach(var card in diffCount)
 			{
 				var cardclone = card.Clone() as Card;
 				if(cardclone == null)
 					continue;
-				cardclone.Count = cardclone.Count - second.Cards.First(c => c.Id.Equals(cardclone.Id)).Count;
+				cardclone.Count = cardclone.Count - second.Cards.First(c => c.Id == cardclone.Id).Count;
 				diff.Add(cardclone);
 			}
 

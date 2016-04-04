@@ -170,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var card = ToolTipCard.GetValue(DataContextProperty) as Card;
 				if(card != null)
 				{
-					if(!_lastToolTipCardId.Equals(card.Id))
+					if(_lastToolTipCardId != card.Id)
 					{
 						_lastToolTipCardId = card.Id;
 						ShowAdditionalToolTips();

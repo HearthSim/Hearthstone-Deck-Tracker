@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var message =
 					$"1) create a new {deck.Class} deck{(Config.Instance.AutoClearDeck ? " (or open an existing one to be cleared automatically)" : "")}.\n\n2) leave the deck creation screen open.\n\n3) do not move your mouse or type after clicking \"export\".";
 
-				if(deck.GetSelectedDeckVersion().Cards.Any(c => c.Name.Equals("Stalagg") || c.Name.Equals("Feugen")))
+				if(deck.GetSelectedDeckVersion().Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
 				{
 					message +=
 						"\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var settings = new MessageDialogs.Settings {AffirmativeButtonText = "Export"};
 				var result =
 					await
-					this.ShowMessageAsync($"Export {deck.Name} to Hearthstone", message, MessageDialogStyle.AffirmativeAndNegative, settings);
+					this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone", message, MessageDialogStyle.AffirmativeAndNegative, settings);
 				export = result == MessageDialogResult.Affirmative;
 			}
 			if(export)
@@ -160,7 +160,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var deck = selectedDecks.First();
 				var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "xml");
-				if(string.IsNullOrWhiteSpace(fileName))
+				if(fileName == null)
 					return;
 				XmlManager<Deck>.Save(fileName, deck.GetSelectedDeckVersion());
 				await this.ShowSavedFileMessage(fileName);
@@ -185,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 
 			var english = true;
-			if(!Config.Instance.SelectedLanguage.Equals("enUS"))
+			if(Config.Instance.SelectedLanguage != "enUS")
 			{
 				try
 				{
@@ -204,20 +204,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 					    .Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
 					    .Aggregate((c, n) => c + Environment.NewLine + n);
 				Clipboard.SetText(names);
-				this.ShowMessage(string.Empty, "copied names to clipboard").Forget();
-				Log.Info($"Copied {deck.GetDeckInfo()} names to clipboard");
+				this.ShowMessage("", "copied names to clipboard").Forget();
+				Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				this.ShowMessage(string.Empty, "Error copying card names to clipboard.").Forget();
+				this.ShowMessage("", "Error copying card names to clipboard.").Forget();
 			}
 		}
 
 		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)
 		{
 			var url = await InputDeckURL();
-			if(string.IsNullOrWhiteSpace(url))
+			if(url == null)
 				return;
 			var deck = await ImportDeckFromURL(url);
 			if(deck != null)

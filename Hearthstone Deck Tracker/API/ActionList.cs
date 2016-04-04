@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.API
 				_actions.Remove(action);
 		}
 
-		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : string.Empty;
+		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : "";
 	}
 
 	public class ActionList
@@ -104,6 +104,6 @@ namespace Hearthstone_Deck_Tracker.API
 				_actions.Remove(action);
 		}
 
-		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : string.Empty;
+		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : "";
 	}
 }

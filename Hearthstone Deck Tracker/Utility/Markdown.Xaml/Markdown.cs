@@ -516,9 +516,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 			// paragraph for the last item in a list, if necessary:
 			list = Regex.Replace(list, @"\n{2,}", "\n\n\n");
 
-			var resultList = Create<List, ListItem>(ProcessListItems(list, listType.Equals("ul") ? _markerUL : _markerOL));
+			var resultList = Create<List, ListItem>(ProcessListItems(list, listType == "ul" ? _markerUL : _markerOL));
 
-			resultList.MarkerStyle = listType.Equals("ul") ? TextMarkerStyle.Disc : TextMarkerStyle.Decimal;
+			resultList.MarkerStyle = listType == "ul" ? TextMarkerStyle.Disc : TextMarkerStyle.Decimal;
 
 			return resultList;
 		}
@@ -679,7 +679,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 		/// </summary>
 		private string Outdent(string block)
 		{
-			return _outDent.Replace(block, string.Empty);
+			return _outDent.Replace(block, "");
 		}
 
 		/// <summary>
@@ -709,7 +709,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 						valid = false;
 						break;
 					case '\r':
-						if((i < text.Length - 1) && (!text[i + 1].Equals('\n')))
+						if((i < text.Length - 1) && (text[i + 1] != '\n'))
 						{
 							if(valid)
 								output.Append(line);
@@ -726,7 +726,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 					case '\x1A':
 						break;
 					default:
-						if(!valid && !text[i].Equals(' '))
+						if(!valid && text[i] != ' ')
 							valid = true;
 						line.Append(text[i]);
 						break;
@@ -746,7 +746,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 		/// </summary>
 		private static string RepeatString(string text, int count)
 		{
-			if(string.IsNullOrWhiteSpace(text))
+			if(text == null)
 				throw new ArgumentNullException("text");
 
 			var sb = new StringBuilder(text.Length * count);
@@ -766,7 +766,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 
 		private IEnumerable<T> Evaluate<T>(string text, Regex expression, Func<Match, T> build, Func<string, IEnumerable<T>> rest)
 		{
-			if(string.IsNullOrWhiteSpace(text))
+			if(text == null)
 				throw new ArgumentNullException("text");
 
 			var matches = expression.Matches(text);
@@ -798,7 +798,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 			if(text == null)
 				throw new ArgumentNullException("text");
 
-			var t = _eoln.Replace(text, string.Empty);
+			var t = _eoln.Replace(text, " ");
 			yield return new Run(t);
 		}
 	}

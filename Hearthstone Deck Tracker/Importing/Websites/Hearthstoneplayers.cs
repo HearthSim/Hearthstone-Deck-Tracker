@@ -40,8 +40,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 						count = int.Parse(countNode.InnerText);
 
 					var card = Database.GetCardFromName(name);
-					if(string.IsNullOrEmpty(deck.Class) && !card.PlayerClass.Equals("Neutral"))
-                        deck.Class = card.PlayerClass;
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+						deck.Class = card.PlayerClass;
 					card.Count = count;
 					deck.Cards.Add(card);
 				}

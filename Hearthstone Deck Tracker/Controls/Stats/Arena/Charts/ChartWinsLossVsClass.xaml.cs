@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 			InitializeComponent();
 			ArenaStats.Instance.PropertyChanged += (sender, args) =>
 			{
-				if(args.PropertyName.Equals("WinLossVsClass"))
+				if(args.PropertyName == "WinLossVsClass")
 					OnPropertyChanged(nameof(SeriesSourceWins));
 			};
 		}

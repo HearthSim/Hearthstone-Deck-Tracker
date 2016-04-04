@@ -207,7 +207,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				var response = await PostAsync(url, data);
 
 				var obj = JsonConvert.DeserializeObject<ResponseWrapper<DeckObjectWrapper[]>>(response);
-				if(obj.status.Equals("200"))
+				if(obj.status == "200")
 				{
 					return
 						obj.data.Where(dw => dw?.deck != null && dw.cards != null).Select(dw => dw.ToDeck()).Where(d => d != null).ToList();
@@ -230,7 +230,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				var obj = JsonConvert.DeserializeObject<ResponseWrapper<GameStatsObjectWrapper[]>>(response);
-				if(obj.status.Equals("200"))
+				if(obj.status == "200")
 					return obj.data.Select(x => x.ToGameStats()).ToList();
 				return new List<GameStats>();
 			}
@@ -271,7 +271,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				dynamic json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("200"))
+				if(json.status.ToString() == "200")
 				{
 					deck.HearthStatsId = json.data.deck.id;
 					deck.DeckStats.HearthStatsDeckId = json.data.deck.id;
@@ -304,7 +304,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				return PostResult.Failed;
 			}
 			var version = deck.Version.ToString("{M}.{m}");
-			Log.Info($"uploading version {version} of {deck}");
+			Log.Info("uploading version " + version + " of " + deck);
 			var url = BaseUrl + "/decks/create_version?auth_token=" + _authToken;
 			var cards = deck.Cards.Where(Database.IsActualCard).Select(x => new CardObject(x));
 			var data = JsonConvert.SerializeObject(new {deck_id = hearthStatsId, version, cards});
@@ -312,7 +312,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				dynamic json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("200"))
+				if(json.status.ToString() == "200")
 				{
 					deck.HearthStatsDeckVersionId = json.data.id;
 					deck.HearthStatsIdForUploading = hearthStatsId;
@@ -374,13 +374,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				var json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("200"))
+				if(json.status.ToString() == "200")
 				{
 					game.HearthStatsId = json.data.id;
 					Log.Info("assigned id to match: " + game.HearthStatsId);
 					return PostResult.WasSuccess;
 				}
-				if(json.status.ToString().Equals("fail") && json.message.ToString().Contains("Deck could not be found"))
+				if(json.status.ToString() == "fail" && json.message.ToString().Contains("Deck could not be found"))
 				{
 					//deck does not exist on hearthstats
 					deck.ResetHearthstatsIds();
@@ -419,9 +419,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				gameObjs[i].numturns = validGames[i].Turns;
 				gameObjs[i].duration = (int)(validGames[i].EndTime - validGames[i].StartTime).TotalSeconds;
 				gameObjs[i].deck_id = deck.HearthStatsIdForUploading;
-				gameObjs[i].deck_version_id = versionId;                
-
-                if (!string.IsNullOrEmpty(validGames[i].OpponentHero))
+				gameObjs[i].deck_version_id = versionId;
+				if(!string.IsNullOrEmpty(validGames[i].OpponentHero))
 					gameObjs[i].oppclass = validGames[i].OpponentHero;
 				if(!string.IsNullOrEmpty(validGames[i].OpponentName))
 					gameObjs[i].oppname = validGames[i].OpponentName;
@@ -442,7 +441,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				dynamic json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("404"))
+				if(json.status.ToString() == "404")
 				{
 					//deck does not exist on hearthstats
 					deck.ResetHearthstatsIds();
@@ -451,12 +450,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					DeckStatsList.Save();
 					return PostResult.Failed;
 				}
-				if(!json.status.ToString().Equals("200"))
+				if(json.status.ToString() != "200")
 					Log.Error($"{json.message.ToString()} (Status code: {json.status.ToString()})");
 
 				for(int i = 0; i < validGames.Count; i++)
 				{
-					if(json.data[i].status.Equals("200"))
+					if(json.data[i].status == "200")
 					{
 						validGames[i].HearthStatsId = json.data[i].data.id;
 						Log.Info("assigned id to match: " + validGames[i].HearthStatsId);
@@ -490,7 +489,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var invalidId = filtered.Where(d => !Regex.IsMatch(d.HearthStatsId, @"^\d+$")).ToList();
 			foreach(var deck in invalidId)
 			{
-				Log.Error($"deck {deck.Name} has no valid HearthStatsId");
+				Log.Error("deck " + deck.Name + " has no valid HearthStatsId");
 				filtered.Remove(deck);
 			}
 			if(!filtered.Any())
@@ -506,7 +505,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				dynamic json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("200"))
+				if(json.status.ToString() == "200")
 				{
 					Log.Info("deleted decks");
 					return PostResult.WasSuccess;
@@ -563,7 +562,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				dynamic json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("200"))
+				if(json.status.ToString() == "200")
 				{
 					Log.Info("deleted game");
 					return PostResult.WasSuccess;
@@ -621,7 +620,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				dynamic json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("200"))
+				if(json.status.ToString() == "200")
 				{
 					Log.Info("moved game");
 					return PostResult.WasSuccess;
@@ -665,7 +664,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				dynamic json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("200"))
+				if(json.status.ToString() == "200")
 					return PostResult.WasSuccess;
 				return PostResult.Failed;
 			}
@@ -727,7 +726,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				dynamic json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("200"))
+				if(json.status.ToString() == "200")
 				{
 					deck.HearthStatsArenaId = json.data.id;
 					Log.Info("assigned arena id to deck: " + deck.HearthStatsArenaId);
@@ -774,7 +773,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				var response = await PostAsync(url, data);
 				var json = JsonConvert.DeserializeObject(response);
-				if(json.status.ToString().Equals("200"))
+				if(json.status.ToString() == "200")
 					return PostResult.WasSuccess;
 				return PostResult.Failed;
 			}
@@ -793,7 +792,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static bool IsValidGame(GameStats game)
 		{
-			var baseMsg = $"Game {game} is not valid ({0})";
+			var baseMsg = "Game " + game + " is not valid ({0})";
 			if(game == null)
 			{
 				Log.Warn(string.Format(baseMsg, "null"));
@@ -824,7 +823,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static bool IsValidArenaGame(GameStats game)
 		{
-			var baseMsg = $"Game {game} is not valid arena game ({0})";
+			var baseMsg = "Game " + game + " is no valid arena game ({0})";
 			if(game == null)
 			{
 				Log.Warn(string.Format(baseMsg, "null"));
@@ -852,7 +851,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			var note = deck.Note;
 			if(!string.IsNullOrEmpty(deck.Url))
-				note += $"\r\n[HDT-source={deck.Url}]";
+				note += "\r\n[HDT-source=" + deck.Url + "]";
 
 			if(deck.Archived)
 				note += "\r\n[HDT-archived]";

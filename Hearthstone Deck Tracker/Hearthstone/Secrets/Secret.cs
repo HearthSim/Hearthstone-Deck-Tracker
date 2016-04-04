@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker
 			return (Config.Instance.AutoGrayoutSecrets
 			        && (game.CurrentGameMode == GameMode.Casual || game.CurrentGameMode == GameMode.Ranked
 			            || game.CurrentGameMode == GameMode.Friendly || game.CurrentGameMode == GameMode.Practice || ActiveDeckIsConstructed)
-			        && game.Opponent.RevealedEntities.Count(x => x.Id < 68 && x.CardId.Equals(CardId)) >= 2) ? 0 : Count;
+			        && game.Opponent.RevealedEntities.Count(x => x.Id < 68 && x.CardId == CardId) >= 2) ? 0 : Count;
 		}
 	}
 }

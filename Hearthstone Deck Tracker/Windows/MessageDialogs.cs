@@ -228,11 +228,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public static async Task<bool> ShowLanguageSelectionDialog(this MetroWindow window)
 		{
 			var english = await
-				window.ShowMessageAsync("Select language", string.Empty, AffirmativeAndNegative,
+				window.ShowMessageAsync("Select language", "", AffirmativeAndNegative,
 										new Settings
 										{
-											AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value.Equals("enUS")).Key,
-											NegativeButtonText = Helper.LanguageDict.First(x => x.Value.Equals(Config.Instance.SelectedLanguage)).Key
+											AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
+											NegativeButtonText = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key
 										}) == MessageDialogResult.Affirmative;
 			return english;
 		}

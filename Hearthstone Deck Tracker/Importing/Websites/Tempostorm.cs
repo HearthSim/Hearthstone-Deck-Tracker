@@ -42,15 +42,15 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 							var card = Database.GetCardFromName(item.card.name.ToString());
 							card.Count = item.cardQuantity.ToString().Equals("2") ? 2 : 1;
 							deck.Cards.Add(card);
-							if(string.IsNullOrEmpty(deck.Class) && !card.PlayerClass.Equals("Neutral"))
-                                deck.Class = card.PlayerClass;
+							if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+								deck.Class = card.PlayerClass;
 						}
 
 						return deck;
 					}
-					throw new Exception($"JSON request failed for '{slug}'.");
+					throw new Exception("JSON request failed for '" + slug + "'.");
 				}
-				throw new Exception($"The url ({url}) is not a vaild TempoStorm deck.");
+				throw new Exception("The url (" + url + ") is not a vaild TempoStorm deck.");
 			}
 			catch(Exception e)
 			{

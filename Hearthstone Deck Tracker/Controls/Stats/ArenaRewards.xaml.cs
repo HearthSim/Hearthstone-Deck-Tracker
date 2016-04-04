@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			{
 				AddInvalidField(textBox, "Invalid card name: " + textBox.Text);
 				textBox.BorderBrush = Brushes.Red;
-				UpdateCardReward(string.Empty, textBox);
+				UpdateCardReward("", textBox);
 				return;
 			}
 			RemoveInvalidField(textBox);
@@ -93,17 +93,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			var card = Database.GetCardFromName(cardName, true, false);
 			if(textBox == TextBoxCard1)
 			{
-				Reward.Cards[0] = !card.Id.Equals("UNKNOWN")
+				Reward.Cards[0] = card.Id != "UNKNOWN"
 					                  ? new ArenaReward.CardReward {CardId = card.Id, Golden = CheckBoxGolden1.IsChecked == true} : null;
 			}
 			else if(textBox == TextBoxCard2)
 			{
-				Reward.Cards[1] = !card.Id.Equals("UNKNOWN")
+				Reward.Cards[1] = card.Id != "UNKNOWN"
 					                  ? new ArenaReward.CardReward {CardId = card.Id, Golden = CheckBoxGolden2.IsChecked == true} : null;
 			}
 			else if(textBox == TextBoxCard3)
 			{
-				Reward.Cards[2] = !card.Id.Equals("UNKNOWN")
+				Reward.Cards[2] = card.Id != "UNKNOWN"
 					                  ? new ArenaReward.CardReward {CardId = card.Id, Golden = CheckBoxGolden3.IsChecked == true} : null;
 			}
 		}
@@ -116,13 +116,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(string.IsNullOrEmpty(textBox?.Text))
 				return;
 			_deletingSelection = true;
-			textBox.SelectedText = string.Empty;
+			textBox.SelectedText = "";
 			_deletingSelection = false;
 		}
 
 		public bool Validate(out string error)
 		{
-			error = _invalidFields.Any() ? _invalidFields.First().Value : string.Empty;
+			error = _invalidFields.Any() ? _invalidFields.First().Value : "";
 			return !_invalidFields.Any();
 		}
 
@@ -141,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			var gold = 0;
 			if(!string.IsNullOrEmpty(TextBoxGold.Text) && !int.TryParse(TextBoxGold.Text.Trim(), out gold))
 			{
-				if(TextBoxGold.Text.Contains('+'))
+				if(TextBoxGold.Text.Contains("+"))
 				{
 					try
 					{
@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			var dust = 0;
 			if(!string.IsNullOrEmpty(TextBoxDust.Text) && !int.TryParse(TextBoxDust.Text.Trim(), out dust))
 			{
-				if(TextBoxDust.Text.Contains('+'))
+				if(TextBoxDust.Text.Contains("+"))
 				{
 					try
 					{

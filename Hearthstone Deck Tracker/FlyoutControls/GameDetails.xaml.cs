@@ -200,7 +200,7 @@ namespace Hearthstone_Deck_Tracker
 							continue;
 						if(ignoreCards.Remove(card))
 							continue;
-						var deckCard = deck.Cards.FirstOrDefault(c => c.Id.Equals(card.Id));
+						var deckCard = deck.Cards.FirstOrDefault(c => c.Id == card.Id);
 						if(deckCard != null)
 							deckCard.Count++;
 						else

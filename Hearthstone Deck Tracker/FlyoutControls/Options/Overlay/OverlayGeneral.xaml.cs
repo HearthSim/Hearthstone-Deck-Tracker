@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(result != MessageDialogResult.Affirmative)
 				return;
 
-			if( ((string)BtnUnlockOverlay.Content).Equals("Lock") )
+			if((string)BtnUnlockOverlay.Content == "Lock")
 			{
 				await Core.Overlay.UnlockUi();
 				BtnUnlockOverlay.Content = "Unlock";

@@ -236,7 +236,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public ClassStats GetClassStats(string @class)
 		{
-			var runs = GetFilteredRuns(classFilter: false).Where(x => x.Class.Equals(@class)).ToList();
+			var runs = GetFilteredRuns(classFilter: false).Where(x => x.Class == @class).ToList();
 			return !runs.Any() ? null : new ClassStats(@class, runs);
 		}
 
@@ -249,7 +249,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			if (archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
 				filtered = filtered.Where(x => !x.Deck.Archived);
 			if(classFilter && Config.Instance.ArenaStatsClassFilter != HeroClassStatsFilter.All)
-				filtered = filtered.Where(x => x.Class.Equals(Config.Instance.ArenaStatsClassFilter.ToString()));
+				filtered = filtered.Where(x => x.Class == Config.Instance.ArenaStatsClassFilter.ToString());
 			if(regionFilter && Config.Instance.ArenaStatsRegionFilter != RegionAll.ALL)
 			{
 				var region = (Region)Enum.Parse(typeof(Region), Config.Instance.ArenaStatsRegionFilter.ToString());

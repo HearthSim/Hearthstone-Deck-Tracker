@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var file = Path.Combine(Directory, name, image);
 			if(File.Exists(file))
 				return new ImageBrush(new BitmapImage(new Uri(file, UriKind.Relative)));
-			if(!name.Equals("default"))
+			if(name != "default")
 				return GetOverlayImage("default", image);
 			return new ImageBrush();
 		}

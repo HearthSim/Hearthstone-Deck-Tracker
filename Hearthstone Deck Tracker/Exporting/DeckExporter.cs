@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			{
 				if(!altScreenCapture)
 					Core.Overlay.ForceHide(false);
-				if(Config.Instance.ExportPasteClipboard && !string.IsNullOrWhiteSpace(currentClipboard))
+				if(Config.Instance.ExportPasteClipboard && currentClipboard != "")
 					Clipboard.SetText(currentClipboard);
 			}
 		}

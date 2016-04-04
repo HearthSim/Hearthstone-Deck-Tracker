@@ -34,9 +34,9 @@ namespace HDTTests.Hearthstone
 				Console.Out.WriteLine(c.ToString());
 			}
 			Assert.AreEqual(3, result.Count());
-			Assert.AreEqual(1, result.Where(c => c.Id.Equals("ID_1") && c.Count == 1).Count(), "ID 1, expected count 1");
-			Assert.AreEqual(1, result.Where(c => c.Id.Equals("ID_2") && c.Count == -1).Count(), "ID 2, expected count -1");
-			Assert.AreEqual(1, result.Where(c => c.Id.Equals("ID_3") && c.Count == -2).Count(), "ID 3, expected count -2");
+			Assert.AreEqual(1, result.Where(c => c.Id == "ID_1" && c.Count == 1).Count(), "ID 1, expected count 1");
+			Assert.AreEqual(1, result.Where(c => c.Id == "ID_2" && c.Count == -1).Count(), "ID 2, expected count -1");
+			Assert.AreEqual(1, result.Where(c => c.Id == "ID_3" && c.Count == -2).Count(), "ID 3, expected count -2");
 		}
 	}
 }

@@ -26,16 +26,16 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				{
 					var cardName = cardObj.name;
 					if(cardName.EndsWith(" Naxx"))
-						cardName = cardName.Replace(" Naxx", string.Empty);
+						cardName = cardName.Replace(" Naxx", "");
 					if(cardName.EndsWith(" GvG"))
-						cardName = cardName.Replace(" GvG", string.Empty);
+						cardName = cardName.Replace(" GvG", "");
 					if(cardName.EndsWith(" BrM"))
-						cardName = cardName.Replace(" BrM", string.Empty);
+						cardName = cardName.Replace(" BrM", "");
 					var card = Database.GetCardFromName(cardName);
 					card.Count = cardObj.quantity;
 					deck.Cards.Add(card);
-					if(string.IsNullOrEmpty(deck.Class) && !card.PlayerClass.Equals("Neutral"))
-                        deck.Class = card.PlayerClass;
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+						deck.Class = card.PlayerClass;
 				}
 				return deck;
 			}

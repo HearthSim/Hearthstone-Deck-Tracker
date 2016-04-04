@@ -93,10 +93,10 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_unloadedCardCount++;
 				var containsOtherThanDruid =
-					_game.PossibleConstructedCards.Any(c => !string.IsNullOrEmpty(c.PlayerClass) && !c.PlayerClass.Equals("Druid"));
+					_game.PossibleConstructedCards.Any(c => !string.IsNullOrEmpty(c.PlayerClass) && c.PlayerClass != "Druid");
 				var cardCount =
 					_game.PossibleConstructedCards.Where(c => !Config.Instance.ConstructedImportingIgnoreCachedIds.Contains(c.Id))
-					     .Count(c => (!containsOtherThanDruid || !c.PlayerClass.Equals("Druid")));
+					     .Count(c => (!containsOtherThanDruid || c.PlayerClass != "Druid"));
 				if(_unloadedCardCount > MaxCardsOnCollectionPage && card.Cost < _lastManaCost && cardCount > 10)
 				{
 					_doneImportingConstructed = true;
@@ -173,7 +173,7 @@ namespace Hearthstone_Deck_Tracker
 				ArenaStats.Instance.UpdateArenaStatsHighlights();
 			}
 
-			if(!Config.Instance.KeyPressOnGameEnd.Equals("None") && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
+			if(Config.Instance.KeyPressOnGameEnd != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
 				Log.Info("Sent keypress: " + Config.Instance.KeyPressOnGameEnd);
@@ -239,24 +239,24 @@ namespace Hearthstone_Deck_Tracker
 
 			if(entity.IsActiveDeathrattle)
 			{
-				if(!CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId ?? string.Empty, out numDeathrattleMinions))
+				if(!CardIds.DeathrattleSummonCardIds.TryGetValue(entity.CardId ?? "", out numDeathrattleMinions))
 				{
-					if(entity.CardId.Equals(HearthDb.CardIds.Collectible.Neutral.Stalagg)
-					   && _game.Opponent.Graveyard.Any(x => x.CardId.Equals(HearthDb.CardIds.Collectible.Neutral.Feugen))
-					   || entity.CardId.Equals(HearthDb.CardIds.Collectible.Neutral.Feugen)
-					   && _game.Opponent.Graveyard.Any(x => x.CardId.Equals(HearthDb.CardIds.Collectible.Neutral.Stalagg)))
+					if(entity.CardId == HearthDb.CardIds.Collectible.Neutral.Stalagg
+					   && _game.Opponent.Graveyard.Any(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.Feugen)
+					   || entity.CardId == HearthDb.CardIds.Collectible.Neutral.Feugen
+					   && _game.Opponent.Graveyard.Any(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.Stalagg))
 						numDeathrattleMinions = 1;
 				}
 				if(
 					_game.Entities.Any(
 					                   x =>
-					                   x.Value.CardId.Equals(HearthDb.CardIds.NonCollectible.Druid.SoulOfTheForestEnchantment)
+					                   x.Value.CardId == HearthDb.CardIds.NonCollectible.Druid.SoulOfTheForestEnchantment
 					                   && x.Value.GetTag(ATTACHED) == entity.Id))
 					numDeathrattleMinions++;
 				if(
 					_game.Entities.Any(
 					                   x =>
-					                   x.Value.CardId.Equals(HearthDb.CardIds.NonCollectible.Shaman.AncestralSpiritEnchantment)
+					                   x.Value.CardId == HearthDb.CardIds.NonCollectible.Shaman.AncestralSpiritEnchantment
 					                   && x.Value.GetTag(ATTACHED) == entity.Id))
 					numDeathrattleMinions++;
 			}
@@ -367,11 +367,11 @@ namespace Hearthstone_Deck_Tracker
 
 		private void HandleThaurissanCostReduction()
 		{
-			var thaurissan = _game.Opponent.Board.FirstOrDefault(x => x.CardId.Equals(HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan));
+			var thaurissan = _game.Opponent.Board.FirstOrDefault(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan);
 			if(thaurissan == null || thaurissan.HasTag(SILENCED))
 				return;
 
-			foreach(var impFavor in _game.Opponent.Board.Where(x => x.CardId.Equals(HearthDb.CardIds.NonCollectible.Neutral.ImperialFavorEnchantment)))
+			foreach(var impFavor in _game.Opponent.Board.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.ImperialFavorEnchantment))
 			{
 				Entity entity;
 				if(_game.Entities.TryGetValue(impFavor.GetTag(ATTACHED), out entity))
@@ -503,7 +503,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.BringHsToForeground)
 				User32.BringHsToForeground();
 
-			if(!Config.Instance.KeyPressOnGameStart.Equals("None") && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
+			if(Config.Instance.KeyPressOnGameStart != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
 			{
 				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
 				Log.Info("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
@@ -603,7 +603,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 						if(discardDialog.Result == DiscardGameDialogResult.MoveToOther)
 						{
-							var moveDialog = new MoveGameDialog(DeckList.Instance.Decks.Where(d => d.Class.Equals(_game.CurrentGameStats.PlayerHero)))
+							var moveDialog = new MoveGameDialog(DeckList.Instance.Decks.Where(d => d.Class == _game.CurrentGameStats.PlayerHero))
 							{
 								Topmost = true
 							};
@@ -655,7 +655,7 @@ namespace Hearthstone_Deck_Tracker
 				// Unarchive the active deck after we have played a game with it
 				if(_assignedDeck.Archived)
 				{
-					Log.Info($"Automatically unarchiving deck {selectedDeck.Name} after assigning current game");
+					Log.Info("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game");
 					Core.MainWindow.ArchiveDeck(_assignedDeck, false);
 				}
 
@@ -841,14 +841,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandlePlayerFatigue(int currentDamage)
 		{
-			LogEvent("PlayerFatigue", string.Empty, currentDamage);
+			LogEvent("PlayerFatigue", "", currentDamage);
 			_game.Player.Fatigue = currentDamage;
 			GameEvents.OnPlayerFatigue.Execute(currentDamage);
 		}
 
 		public void HandleOpponentFatigue(int currentDamage)
 		{
-			LogEvent("OpponentFatigue", string.Empty, currentDamage);
+			LogEvent("OpponentFatigue", "", currentDamage);
 			_game.Opponent.Fatigue = currentDamage;
 			GameEvents.OnOpponentFatigue.Execute(currentDamage);
 		}
@@ -887,7 +887,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			if(cardId.Equals("GAME_005"))
+			if(cardId == "GAME_005")
 				HandlePlayerGet(entity, cardId, turn);
 			else
 			{

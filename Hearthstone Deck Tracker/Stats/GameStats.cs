@@ -172,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string GotCoin
 		{
 			get { return Coin ? "Yes" : "No"; }
-			set { Coin = value.ToLower().Equals("Yes"); }
+			set { Coin = value.ToLower() == "Yes"; }
 		}
 
 		[XmlIgnore]
@@ -186,8 +186,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool HasHearthStatsDeckId => !string.IsNullOrEmpty(HearthStatsDeckId) && int.Parse(HearthStatsDeckId) > 0;
 
 		public bool BelongsToDeckVerion(Deck deck) => PlayerDeckVersion == deck.Version
-													  || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId.Equals(deck.HearthStatsDeckVersionId))
-													  || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId.Equals(deck.HearthStatsId))
+													  || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId)
+													  || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId == deck.HearthStatsId)
 													  || !IsAssociatedWithDeckVersion && deck.Version == new SerializableVersion(1, 0);
 
 		public GameStats CloneWithNewId()
@@ -236,7 +236,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			foreach(var play in newTurnStats.SelectMany(turn => turn.Plays))
 			{
 				// is secret play
-				if((play.Type == OpponentHandDiscard && play.CardId.Equals(string.Empty)) || play.Type == OpponentSecretPlayed)
+				if((play.Type == OpponentHandDiscard && play.CardId == "") || play.Type == OpponentSecretPlayed)
 				{
 					unresolvedSecrets++;
 					candidateSecret = play;
@@ -292,7 +292,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public void GameEnd()
 		{
 			EndTime = DateTime.Now;
-			Log.Info($"Current Game ended after {Turns} turns");
+			Log.Info("Current Game ended after " + Turns + " turns");
 			Save();
 		}
 
@@ -332,14 +332,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 					case OpponentSecretTriggered:
 					{
 						var card = Database.GetCardFromId(play.CardId);
-						if(Database.IsActualCard(card) && (string.IsNullOrWhiteSpace(card.PlayerClass) || card.PlayerClass.Equals(OpponentHero)))
+						if(Database.IsActualCard(card) && (card.PlayerClass == null || card.PlayerClass == OpponentHero))
 						{
 							if(ignoreCards.Contains(card))
 							{
 								ignoreCards.Remove(card);
 								continue;
 							}
-							var deckCard = deck.Cards.FirstOrDefault(c => c.Id.Equals(card.Id));
+							var deckCard = deck.Cards.FirstOrDefault(c => c.Id == card.Id);
 							if(deckCard != null)
 								deckCard.Count++;
 							else

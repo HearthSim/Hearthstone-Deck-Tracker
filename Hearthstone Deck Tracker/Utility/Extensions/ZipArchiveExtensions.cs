@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 			foreach(var file in archive.Entries)
 			{
 				var completeFileName = Path.Combine(destinationDirectoryName, file.FullName);
-				if(file.Name.Equals(string.Empty))
+				if(file.Name == "")
 				{
 					// Assuming Empty for Directory
 					Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));

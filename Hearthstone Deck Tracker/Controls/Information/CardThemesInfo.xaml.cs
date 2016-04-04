@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		{
 			foreach(var cardId in _demoCards)
 			{
-				var card = _cards.FirstOrDefault(x => x.Id.Equals(cardId));
+				var card = _cards.FirstOrDefault(x => x.Id == cardId);
 				if(card == null)
 					_cards.Add(Database.GetCardFromId(cardId));
 				else
@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 					if(!_update)
 						break;
 					await Task.Delay(2000);
-					var card = _cards.FirstOrDefault(x => x.Id.Equals(cardId));
+					var card = _cards.FirstOrDefault(x => x.Id == cardId);
 					if(card != null)
 					{
 						if(card.Count == 1)
@@ -121,7 +121,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 					if(!_update)
 						break;
 					await Task.Delay(2000);
-					var card = _cards.FirstOrDefault(x => x.Id.Equals(cardId));
+					var card = _cards.FirstOrDefault(x => x.Id == cardId);
 					if(card == null)
 						_cards.Add(Database.GetCardFromId(cardId));
 					else

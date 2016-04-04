@@ -26,14 +26,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public async void ImportDeck(string url = null)
 		{
-			if(string.IsNullOrWhiteSpace(url))
+			if(url == null)
 				url = await InputDeckURL();
-			if(string.IsNullOrWhiteSpace(url))
+			if(url == null)
 				return;
 			var deck = await ImportDeckFromURL(url);
 			if(deck != null)
 			{
-				var reimport = EditingDeck && _newDeck != null && _newDeck.Url.Equals(deck.Url);
+				var reimport = EditingDeck && _newDeck != null && _newDeck.Url == deck.Url;
 
 				if(reimport) //keep old notes
 					deck.Note = _newDeck.Note;
@@ -136,8 +136,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			try
 			{
 				var settings = new MessageDialogs.Settings();
-				var clipboard = Clipboard.ContainsText() ? Clipboard.GetText() : string.Empty;
-				if(clipboard.Count(c => c.Equals(':')) > 0 && clipboard.Count(c => c.Equals(';')) > 0)
+				var clipboard = Clipboard.ContainsText() ? Clipboard.GetText() : "";
+				if(clipboard.Count(c => c == ':') > 0 && clipboard.Count(c => c == ';') > 0)
 					settings.DefaultText = clipboard;
 
 				//import dialog
@@ -155,13 +155,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(splitEntry.Length != 2)
 						continue;
 					var card = Database.GetCardFromId(splitEntry[0]);
-					if(card.Id.Equals("UNKNOWN"))
+					if(card.Id == "UNKNOWN")
 						continue;
 					int count;
 					int.TryParse(splitEntry[1], out count);
 					card.Count = count;
 
-					if(string.IsNullOrEmpty(deck.Class) && !card.GetPlayerClass.Equals("Neutral"))
+					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
 						deck.Class = card.GetPlayerClass;
 
 					deck.Cards.Add(card);
@@ -193,7 +193,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(Clipboard.ContainsText())
 				{
 					var english = true;
-					if(!Config.Instance.SelectedLanguage.Equals("enUS"))
+					if(Config.Instance.SelectedLanguage != "enUS")
 					{
 						try
 						{
@@ -227,7 +227,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var dialogResult = dialog.ShowDialog();
 			if(dialogResult == true)
 			{
-				foreach(var file in dialog.FileNames)
+				foreach(String file in dialog.FileNames)
 				{
 					try
 					{
@@ -270,7 +270,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				deck.Cards.Add(card);
 
-				if(string.IsNullOrEmpty(deck.Class) && !card.GetPlayerClass.Equals("Neutral"))
+				if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
 					deck.Class = card.PlayerClass;
 			}
 
@@ -300,7 +300,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				foreach(var card in Core.Game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
 				{
 					deck.Cards.Add(card);
-					if(string.IsNullOrWhiteSpace(deck.Class) && !card.GetPlayerClass.Equals("Neutral"))
+					if(deck.Class == null && card.GetPlayerClass != "Neutral")
 						deck.Class = card.GetPlayerClass;
 				}
 				deck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, deck);
@@ -459,8 +459,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await
 					this.ShowMessageAsync("How this works:",
 					                      "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2) Open \"My Collection\" and open the deck you want to import (do not edit the deck at this point)\n\n3) Go straight back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2. There may issues importing druid cards that exist as normal and golden on your first page.\n\nYou can see this information again in 'options > tracker > importing'");
-				if(Core.Game.PossibleConstructedCards.Count(c => c.PlayerClass.Equals("Druid") || string.IsNullOrWhiteSpace(c.PlayerClass)) < 10
-				   && Core.Game.PossibleConstructedCards.Count(c => !c.PlayerClass.Equals("Druid")) < 10)
+				if(Core.Game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
+				   && Core.Game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
 					return;
 			}
 
@@ -476,15 +476,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Core.Game.PossibleConstructedCards.Where(
 				                                         c =>
 				                                         c.Rarity != Rarity.Legendary
-				                                         && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass.Equals(deck.Class))).ToList();
+				                                         && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class)).ToList();
 			var count = Math.Abs(30 - (2 * remaining.Count + legendary.Count)) < Math.Abs(30 - (remaining.Count + legendary.Count)) ? 2 : 1;
 			foreach(var card in Core.Game.PossibleConstructedCards)
 			{
-				if(!string.IsNullOrEmpty(card.PlayerClass) && !card.PlayerClass.Equals(deck.Class))
+				if(!string.IsNullOrEmpty(card.PlayerClass) && card.PlayerClass != deck.Class)
 					continue;
 				card.Count = card.Rarity == Rarity.Legendary ? 1 : count;
 				deck.Cards.Add(card);
-				if(string.IsNullOrWhiteSpace(deck.Class) && !card.GetPlayerClass.Equals("Neutral"))
+				if(deck.Class == null && card.GetPlayerClass != "Neutral")
 					deck.Class = card.GetPlayerClass;
 			}
 			SetNewDeck(deck);
