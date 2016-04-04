@@ -370,7 +370,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Visibility NoteVisibility => string.IsNullOrEmpty(Note) ? Visibility.Collapsed : Visibility.Visible;
 
-		public Visibility StandardViableVisibility => IsArenaDeck || GetSelectedDeckVersion().Cards.Any(x => Helper.WildOnlySets.Contains(x.Set)) ? Visibility.Collapsed : Visibility.Visible;
+		public Visibility StandardViableVisibility => StandardViable ? Visibility.Visible : Visibility.Collapsed;
+
+		public bool StandardViable => !IsArenaDeck && !GetSelectedDeckVersion().Cards.Any(x => Helper.WildOnlySets.Contains(x.Set));
 
 		public Visibility ArchivedVisibility => Archived ? Visibility.Visible : Visibility.Collapsed;
 
