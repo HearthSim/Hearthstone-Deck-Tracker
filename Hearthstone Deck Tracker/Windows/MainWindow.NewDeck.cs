@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +9,6 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.API;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
@@ -95,6 +93,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(selectedManaCost != "ALL" && ((selectedManaCost != "9+" || card.Cost < 9) && (selectedManaCost != card.Cost.ToString())))
 						continue;
 					if(selectedSet != "ALL" && !string.Equals(selectedSet, card.Set.ToSpacedString(), StringComparison.InvariantCultureIgnoreCase))
+						continue;
+					if(!(CheckBoxIncludeWild.IsChecked ?? true) && Helper.WildOnlySets.Contains(card.Set))
 						continue;
 					switch(selectedNeutral)
 					{
@@ -282,7 +282,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(cardInDeck != null)
 			{
 				if(!_newDeck.IsArenaDeck && CheckBoxConstructedCardLimits.IsChecked == true 
-					&&(cardInDeck.Count >= 2 || cardInDeck.Rarity == Rarity.Legendary && cardInDeck.Count >= 1))
+					&&(cardInDeck.Count >= 2 || cardInDeck.Rarity == Enums.Rarity.Legendary && cardInDeck.Count >= 1))
 					return;
 				cardInDeck.Count++;
 			}
@@ -373,6 +373,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			DeckPickerListCover.Visibility = Visible;
 			PanelVersionComboBox.Visibility = Collapsed;
+			BtnStartHearthstone.Visibility = Collapsed;
 			PanelCardCount.Visibility = Visible;
 
 			//move window left if opening the edit panel causes it to be outside of a screen
@@ -406,6 +407,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					break;
 				}
 			}
+			UpdateExpansionIcons();
 		}
 
 		private void CloseNewDeck()
@@ -426,6 +428,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions ? Visible : Collapsed;
 			PanelCardCount.Visibility = Collapsed;
+			BtnStartHearthstone.Visibility = Core.Game.IsRunning ? Collapsed : Visible;
 
 			if(MovedLeft.HasValue)
 			{
@@ -485,8 +488,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var result =
 				await
-				this.ShowMessageAsync("Deck type?", "Please select a deck type.", MessageDialogStyle.AffirmativeAndNegative,
-				                      new MessageDialogs.Settings {AffirmativeButtonText = "constructed", NegativeButtonText = "arena run"});
+				this.ShowMessageAsync("Deck type?", "Please select a deck type.", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
+				                      new MessageDialogs.Settings {AffirmativeButtonText = "constructed", NegativeButtonText = "arena run", FirstAuxiliaryButtonText = "cancel"});
+			if(result == MessageDialogResult.FirstAuxiliary)
+				return;
 			if(result == MessageDialogResult.Negative)
 				_newDeck.IsArenaDeck = true;
 
@@ -682,5 +687,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		#endregion
+
+		private void CheckBoxIncludeWild_Changed(object sender, RoutedEventArgs e) => UpdateDbListView();
 	}
 }

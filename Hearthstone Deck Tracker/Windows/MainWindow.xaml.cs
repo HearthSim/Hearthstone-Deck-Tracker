@@ -466,7 +466,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			InitializeComponent();
 			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsTrackerLogging.TextBoxLog));
 			EnableMenuItems(false);
-			TagControlEdit.OperationSwitch.Visibility = Collapsed;
+			TagControlEdit.StackPanelFilterOptions.Visibility = Collapsed;
 			TagControlEdit.GroupBoxSortingAllConstructed.Visibility = Collapsed;
 			TagControlEdit.GroupBoxSortingArena.Visibility = Collapsed;
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();

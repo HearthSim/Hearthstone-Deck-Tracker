@@ -169,6 +169,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(DeckLayout.Layout1)]
 		public DeckLayout DeckPickerItemLayout = DeckLayout.Layout1;
 
+		[DefaultValue(true)]
+		public bool DeckPickerWildIncludesStandard = true;
+
 		[DefaultValue(false)]
 		public bool DeckImportAutoDetectCardCount = false;
 

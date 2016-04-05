@@ -69,11 +69,15 @@
                         <Button Name="BtnAddTag" Content="Add" Click="BtnAddTag_Click" Height="26" Grid.Column="1"
                                 Margin="3,0,0,0" Width="auto" />
                     </Grid>
-                    <DockPanel DockPanel.Dock="Bottom">
-                        <Label Content="Filter operation:" VerticalAlignment="Center"/>
-                        <controls:ToggleSwitch Name="OperationSwitch" OnLabel="And" OffLabel="Or" Width="124" HorizontalAlignment="Right"
+                    <StackPanel Name="StackPanelFilterOptions" DockPanel.Dock="Bottom">
+                        <Separator/>
+                        <DockPanel>
+                            <Label Content="Filter operation:" VerticalAlignment="Center"/>
+                            <controls:ToggleSwitch Name="OperationSwitch" OnLabel="And" OffLabel="Or" Width="110" HorizontalAlignment="Right"
                                            Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked" />
-                    </DockPanel>
+                        </DockPanel>
+                        <CheckBox Content="Include 'Standard' decks in 'Wild'" Margin="0,0,0,5" IsChecked="{Binding Path=DeckPickerWildIncludesStandard, Source={StaticResource ConfigWrapper}}"/>
+                    </StackPanel>
 
                     <ListBox Name="ListboxTags" Height="auto" Width="auto" DockPanel.Dock="Top" VirtualizingPanel.IsVirtualizing="False">
                         <ListBox.ItemTemplate>
