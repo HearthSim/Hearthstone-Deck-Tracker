@@ -11,24 +11,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public static class HearthDbConverter
 	{
-		public static readonly Dictionary<int, string> SetDict = new Dictionary<int, string>
+		public static readonly Dictionary<int, Enums.CardSet> SetDict = new Dictionary<int, Enums.CardSet>
 		{
-			{0, null},
-			{2, "Basic"},
-			{3, "Classic"},
-			{4, "Reward"},
-			{5, "Missions"},
-			{7, "System"},
-			{8, "Debug"},
-			{11, "Promotion"},
-			{12, "Curse of Naxxramas"},
-			{13, "Goblins vs Gnomes"},
-			{14, "Blackrock Mountain"},
-			{15, "The Grand Tournament"},
-			{16, "Credits"},
-			{17, "Hero Skins"},
-			{18, "Tavern Brawl"},
-			{20, "League of Explorers"}
+			{0, Enums.CardSet.None},
+			{2, Enums.CardSet.Basic},
+			{3, Enums.CardSet.Classic},
+			{4, Enums.CardSet.Reward},
+			{5, Enums.CardSet.Missions},
+			{7, Enums.CardSet.System},
+			{8, Enums.CardSet.Debug},
+			{11, Enums.CardSet.Promotion},
+			{12, Enums.CardSet.Curse_of_Naxxramas},
+			{13, Enums.CardSet.Goblins_vs_Gnomes},
+			{14, Enums.CardSet.Blackrock_Mountain},
+			{15, Enums.CardSet.The_Grand_Tournament},
+			{16, Enums.CardSet.Credits},
+			{17, Enums.CardSet.Hero_Skins},
+			{18, Enums.CardSet.Tavern_Brawl},
+			{20, Enums.CardSet.League_of_Explorers}
 		};
 
 		public static string ConvertClass(CardClass cardClass) => (int)cardClass < 2 || (int)cardClass > 10
@@ -71,11 +71,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static string SetConverter(CardSet set)
+		public static Enums.CardSet SetConverter(CardSet set)
 		{
-			string str;
-			SetDict.TryGetValue((int)set, out str);
-			return str;
+			Enums.CardSet cardSet;
+			SetDict.TryGetValue((int)set, out cardSet);
+			return cardSet;
 		}
 	}
 }

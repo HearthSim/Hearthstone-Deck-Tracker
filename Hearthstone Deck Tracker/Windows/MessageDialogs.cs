@@ -144,15 +144,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(card.Count == 2)
 					message += " x2";
 
-				if(card.Set.Equals("CURSE OF NAXXRAMAS", CurrentCultureIgnoreCase))
+				if(card.Set == CardSet.Curse_of_Naxxramas)
 					sets[0] = "and the Naxxramas DLC ";
-				else if(card.Set.Equals("PROMOTION", CurrentCultureIgnoreCase))
+				else if(card.Set == CardSet.Promotion)
 					sets[1] = "and Promotion cards ";
-				else if(card.Set.Equals("REWARD", CurrentCultureIgnoreCase))
+				else if(card.Set == CardSet.Reward)
 					sets[2] = "and the Reward cards ";
-				else if(card.Set.Equals("BLACKROCK MOUNTAIN", CurrentCultureIgnoreCase))
+				else if(card.Set == CardSet.Blackrock_Mountain)
 					sets[3] = "and the Blackrock Mountain DLC ";
-				else if(card.Set.Equals("LEAGUE OF EXPLORERS", CurrentCultureIgnoreCase))
+				else if(card.Set == CardSet.League_of_Explorers)
 					sets[4] = "and the League of Explorers DLC ";
 				else
 					totalDust += card.DustCost * card.Count;

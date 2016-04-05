@@ -493,7 +493,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int GetNumDivineShield() => GetMechanicCount("Divine Shield");
 		public int GetNumCombo() => GetMechanicCount("Combo");
 
-		public bool ContainsSet(string set) => Cards.Any(card => card.Set == set);
+		public bool ContainsSet(CardSet set) => Cards.Any(card => card.Set == set);
 
 		public override string ToString() => $"{Name} ({Class})";
 
@@ -520,7 +520,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var cd = c.Clone() as Card;
 				if(cd == null)
 					continue;
-				cd.Count = -cd.Count; //merk as negative for visual
+				cd.Count = -cd.Count; //mark as negative for visual
 				diff.Add(cd);
 			}
 			//added
