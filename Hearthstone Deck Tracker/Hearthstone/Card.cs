@@ -14,7 +14,6 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
-using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
 
@@ -67,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Card(string id, string playerClass, Rarity rarity, string type, string name, int cost, string localizedName, int inHandCount,
 		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability,
-		            string artist, Enums.CardSet set, List<string> alternativeNames = null, List<string> alternativeTexts = null, HearthDb.Card dbCard = null)
+		            string artist, string set, List<string> alternativeNames = null, List<string> alternativeTexts = null, HearthDb.Card dbCard = null)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -205,7 +204,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Visibility ShowIconsInTooltip => Type == "Spell" || Type == "Enchantment" || Type == "Hero Power" ? Visibility.Hidden : Visibility.Visible;
 
 		[XmlIgnore]
-		public Enums.CardSet Set { get; set; }
+		public string Set { get; set; }
 
 		[XmlIgnore]
 		public string Race { get; set; }
@@ -415,7 +414,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(!(card is Card))
 				return false;
-			var c = card as Card;
+			var c = (Card)card;
 			return c.Name == Name;
 		}
 

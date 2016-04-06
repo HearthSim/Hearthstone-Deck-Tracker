@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public string CardId { get; set; }
 		public string Name { get; set; }
-		public CardSet CardSet { get; set; }
+		public string CardSet { get; set; }
 		public Rarity Rarity { get; set; }
 		public string Type { get; set; }
 		public int Attack { get; set; }
