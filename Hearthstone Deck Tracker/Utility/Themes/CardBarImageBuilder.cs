@@ -209,7 +209,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 						countBox = OptionalCountBoxes[ThemeElement.EpicCountBox];
 						break;
 
-                    case Rarity.LEGENDARY:
+                    			case Rarity.LEGENDARY:
 						countBox = OptionalCountBoxes[ThemeElement.LegendaryCountBox];
 						break;
 
