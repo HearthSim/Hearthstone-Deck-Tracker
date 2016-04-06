@@ -28,7 +28,7 @@ namespace HDTTests.Hearthstone
 		public void TestMurlocTinyFinInGetActual()
 		{
 			var db = Database.GetActualCards();
-			var found = db.Any(c => c.LocalizedName.ToLowerInvariant().Contains("murloc tinyfin"));
+			var found = db.Any<Card>(c => c.LocalizedName.ToLowerInvariant().Contains("murloc tinyfin"));
 			Assert.IsTrue(found);
 		}
 
@@ -36,7 +36,7 @@ namespace HDTTests.Hearthstone
 		public void TestDreadscaleInGetActual()
 		{
 			var db = Database.GetActualCards();
-			var found = db.Any(c => c.LocalizedName.ToLowerInvariant().Contains("dreadscale"));
+			var found = db.Any<Card>(c => c.LocalizedName.ToLowerInvariant().Contains("dreadscale"));
 			Assert.IsTrue(found);
 		}
 

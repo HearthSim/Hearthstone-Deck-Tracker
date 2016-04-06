@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(Cards.All.TryGetValue(cardId, out dbCard))
 				return new Card(dbCard);
 			Log.Warn("Could not find card with ID=" + cardId);
-			return new Card(cardId, null, Rarity.Free, "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", Enums.CardSet.None);
+			return new Card(cardId, null, Rarity.Free, "Minion", "UNKNOWN", 0, "UNKNOWN", 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
 		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true, bool collectible = true)
@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			if(showErrorMessage)
 				Log.Warn("Could not get card from name: " + name);
-			return new Card("UNKNOWN", null, Rarity.Free, "Minion", name, 0, name, 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", Enums.CardSet.None);
+			return new Card("UNKNOWN", null, Rarity.Free, "Minion", name, 0, name, 0, 1, "", "", 0, 0, "UNKNOWN", null, 0, "", "");
 		}
 
 		public static List<Card> GetActualCards() => Cards.Collectible.Values.Select(x => new Card(x)).ToList();

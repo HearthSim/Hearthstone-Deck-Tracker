@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		                                                                       typeof(ArenaRewards));
 
 		private readonly Dictionary<object, string> _invalidFields = new Dictionary<object, string>();
-		private readonly CardSet[] _validSets = {CardSet.Classic, CardSet.Goblins_vs_Gnomes, CardSet.The_Grand_Tournament};
+		private readonly string[] _validSets = {"Classic", "Goblins vs Gnomes", "The Grand Tournament"};
 		private List<string> _cardNames;
 		private bool _deletingSelection;
 
