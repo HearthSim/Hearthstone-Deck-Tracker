@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
@@ -97,14 +96,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 			AddCardImage();
 			AddFadeOverlay();
-			if(Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.LEGENDARY)
+			if(Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.Legendary)
 			{
 				AddCountBox();
 				AddCountText();
 			}
 			if(Card.IsCreated)
 				AddCreatedIcon();
-			if(Math.Abs(Card.Count) <= 1 && Card.Rarity == Rarity.LEGENDARY)
+			if(Math.Abs(Card.Count) <= 1 && Card.Rarity == Rarity.Legendary)
 				AddLegendaryIcon();
 			AddFrame();
 			AddGem();
@@ -122,7 +121,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var cardFile = Path.Combine(BarImageDir, Card.Id + ".png");
 			if(File.Exists(cardFile))
 			{
-				if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.LEGENDARY))
+				if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.Legendary))
 					AddChild(cardFile, rect.Move(ImageOffset, 0));
 				else
 					AddChild(cardFile, rect);
@@ -132,7 +131,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected virtual void AddFadeOverlay() => AddFadeOverlay(Required[ThemeElement.FadeOverlay].Rectangle, false);
 		protected virtual void AddFadeOverlay(Rect rect, bool offsetByCountBox)
 		{
-			if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.LEGENDARY))
+			if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.Legendary))
 				AddChild(Required[ThemeElement.FadeOverlay], rect.Move(FadeOffset, 0));
 			else
 				AddChild(Required[ThemeElement.FadeOverlay], rect);
@@ -145,15 +144,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{
 				switch(Card.Rarity)
 				{
-					case Rarity.RARE:
+					case Rarity.Rare:
 						frame = OptionalFrame[ThemeElement.RareFrame];
 						break;
 
-					case Rarity.EPIC:
+					case Rarity.Epic:
 						frame = OptionalFrame[ThemeElement.EpicFrame];
 						break;
 
-					case Rarity.LEGENDARY:
+					case Rarity.Legendary:
 						frame = OptionalFrame[ThemeElement.LegendaryFrame];
 						break;
 
@@ -172,15 +171,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{
 				switch(Card.Rarity)
 				{
-					case Rarity.RARE:
+					case Rarity.Rare:
 						gem = OptionalGems[ThemeElement.RareGem];
 						break;
 
-					case Rarity.EPIC:
+					case Rarity.Epic:
 						gem = OptionalGems[ThemeElement.EpicGem];
 						break;
 
-					case Rarity.LEGENDARY:
+					case Rarity.Legendary:
 						gem = OptionalGems[ThemeElement.LegendaryGem];
 						break;
 
@@ -201,15 +200,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{
 				switch(Card.Rarity)
 				{
-					case Rarity.RARE:
+					case Rarity.Rare:
 						countBox = OptionalCountBoxes[ThemeElement.RareCountBox];
 						break;
 
-					case Rarity.EPIC:
+					case Rarity.Epic:
 						countBox = OptionalCountBoxes[ThemeElement.EpicCountBox];
 						break;
 
-                    			case Rarity.LEGENDARY:
+					case Rarity.Legendary:
 						countBox = OptionalCountBoxes[ThemeElement.LegendaryCountBox];
 						break;
 
@@ -237,7 +236,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected virtual void AddCreatedIcon() => AddCreatedIcon(Required[ThemeElement.CreatedIcon].Rectangle);
 		protected virtual void AddCreatedIcon(Rect rect)
 		{
-			if(Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.LEGENDARY)
+			if(Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.Legendary)
 				AddChild(Required[ThemeElement.CreatedIcon], rect.Move(CreatedIconOffset, 0));
 			else
 				AddChild(Required[ThemeElement.CreatedIcon], rect);

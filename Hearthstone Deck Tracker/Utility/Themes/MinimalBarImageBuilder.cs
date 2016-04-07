@@ -4,7 +4,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using AForge.Imaging.Filters;
 using Hearthstone_Deck_Tracker.Enums;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
@@ -38,11 +37,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{
 				switch(Card.Rarity)
 				{
-					case Rarity.RARE:
+					case Rarity.Rare:
 						return new SolidColorBrush(Color.FromRgb(49, 134, 222));
-					case Rarity.EPIC:
+					case Rarity.Epic:
 						return new SolidColorBrush(Color.FromRgb(173, 113, 247));
-					case Rarity.LEGENDARY:
+					case Rarity.Legendary:
 						return new SolidColorBrush(Color.FromRgb(255, 154, 16));
 					default:
 						return Brushes.White;

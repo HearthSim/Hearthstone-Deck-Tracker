@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -283,7 +282,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(cardInDeck != null)
 			{
 				if(!_newDeck.IsArenaDeck && CheckBoxConstructedCardLimits.IsChecked == true 
-					&&(cardInDeck.Count >= 2 || cardInDeck.Rarity == Rarity.LEGENDARY && cardInDeck.Count >= 1))
+					&&(cardInDeck.Count >= 2 || cardInDeck.Rarity == Enums.Rarity.Legendary && cardInDeck.Count >= 1))
 					return;
 				cardInDeck.Count++;
 			}
