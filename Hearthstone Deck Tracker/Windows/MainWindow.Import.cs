@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility;
@@ -15,6 +14,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Point = System.Drawing.Point;
+using HearthDb.Enums;
 
 #endregion
 
@@ -471,18 +471,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			deck.Class = lastNonNeutralCard.PlayerClass;
 
-			var legendary = Core.Game.PossibleConstructedCards.Where(c => c.Rarity == Rarity.Legendary).ToList();
+			var legendary = Core.Game.PossibleConstructedCards.Where(c => c.Rarity == Rarity.LEGENDARY).ToList();
 			var remaining =
 				Core.Game.PossibleConstructedCards.Where(
 				                                         c =>
-				                                         c.Rarity != Rarity.Legendary
+				                                         c.Rarity != Rarity.LEGENDARY
 				                                         && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class)).ToList();
 			var count = Math.Abs(30 - (2 * remaining.Count + legendary.Count)) < Math.Abs(30 - (remaining.Count + legendary.Count)) ? 2 : 1;
 			foreach(var card in Core.Game.PossibleConstructedCards)
 			{
 				if(!string.IsNullOrEmpty(card.PlayerClass) && card.PlayerClass != deck.Class)
 					continue;
-				card.Count = card.Rarity == Rarity.Legendary ? 1 : count;
+				card.Count = card.Rarity == Rarity.LEGENDARY ? 1 : count;
 				deck.Cards.Add(card);
 				if(deck.Class == null && card.GetPlayerClass != "Neutral")
 					deck.Class = card.GetPlayerClass;

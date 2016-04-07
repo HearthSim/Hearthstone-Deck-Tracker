@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Newtonsoft.Json;
@@ -89,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				_cachedCard
 				?? (_cachedCard =
 					(Database.GetCardFromId(CardId)
-					 ?? new Card(string.Empty, null, Rarity.Free, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "", "")))
+					 ?? new Card(string.Empty, null, Rarity.FREE, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "", "")))
 			;
 
 		[JsonIgnore]

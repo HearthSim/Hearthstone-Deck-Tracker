@@ -20,6 +20,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using RadioButton = System.Windows.Controls.RadioButton;
 using TextBox = System.Windows.Controls.TextBox;
+using HearthDb.Enums;
 
 #endregion
 
@@ -282,7 +283,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(cardInDeck != null)
 			{
 				if(!_newDeck.IsArenaDeck && CheckBoxConstructedCardLimits.IsChecked == true 
-					&&(cardInDeck.Count >= 2 || cardInDeck.Rarity == Enums.Rarity.Legendary && cardInDeck.Count >= 1))
+					&&(cardInDeck.Count >= 2 || cardInDeck.Rarity == Rarity.LEGENDARY && cardInDeck.Count >= 1))
 					return;
 				cardInDeck.Count++;
 			}

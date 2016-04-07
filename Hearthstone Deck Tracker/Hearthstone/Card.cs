@@ -13,7 +13,6 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Themes;
-using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
 
 #endregion
 
@@ -124,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Id = dbCard.Id;
 			Count = 1;
 			PlayerClass = HearthDbConverter.ConvertClass(dbCard.Class);
-			Rarity = HearthDbConverter.RariryConverter(dbCard.Rarity);
+			Rarity = dbCard.Rarity;
 			Type = HearthDbConverter.CardTypeConverter(dbCard.Type);
 			Name = dbCard.GetLocName(Language.enUS);
 			Cost = dbCard.Cost;
@@ -262,13 +261,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				switch(Rarity)
 				{
-					case Rarity.Common:
+					case Rarity.COMMON:
 						return 40;
-					case Rarity.Rare:
+					case Rarity.RARE:
 						return 100;
-					case Rarity.Epic:
+					case Rarity.EPIC:
 						return 400;
-					case Rarity.Legendary:
+					case Rarity.LEGENDARY:
 						return 1600;
 				}
 				return 0;
