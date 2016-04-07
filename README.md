@@ -31,11 +31,11 @@ Features
 =========
 An in-game overlay:
 
-![Overlay](http://i.imgur.com/3ZX9Elm.jpg "The overlay")
+![Overlay](https://github.com/Epix37/Hearthstone-Deck-Tracker/raw/master/raw-assets/readme/overlay.png "Overlay")
 
 The app: 
 
-![Tracker](http://i.imgur.com/FE7Xwxl.png "The tracker")
+![Tracker](https://github.com/Epix37/Hearthstone-Deck-Tracker/raw/master/raw-assets/readme/hdt-ui.png "HDT UI")
 
 - **Tracks**:
   - Cards left in your deck or cards drawn from your deck.

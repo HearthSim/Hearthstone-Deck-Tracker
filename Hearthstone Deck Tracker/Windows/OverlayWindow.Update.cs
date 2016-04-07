@@ -280,7 +280,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			
 			//Scale attack icons, with height
 			var atkWidth = (int)Math.Round(Height * 0.0695, 0);
-			var atkFont = (int)Math.Round(Height * 0.0223, 0);
+			var atkFont = (int)Math.Round(Height * 0.0204, 0);
+			var atkFontMarginTop = (int)Math.Round(Height * 0.0038, 0);
 			IconBoardAttackPlayer.Width = atkWidth;
 			IconBoardAttackPlayer.Height = atkWidth;
 			TextBlockPlayerAttack.Width = atkWidth;
@@ -291,6 +292,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			TextBlockOpponentAttack.Width = atkWidth;
 			TextBlockOpponentAttack.Height = atkWidth;
 			TextBlockOpponentAttack.FontSize = atkFont;
+			TextBlockPlayerAttack.Margin = new Thickness(0, atkFontMarginTop, 0, 0);
+			TextBlockOpponentAttack.Margin = new Thickness(0, atkFontMarginTop, 0, 0);
 		}
 
 		public void UpdateStackPanelAlignment()
