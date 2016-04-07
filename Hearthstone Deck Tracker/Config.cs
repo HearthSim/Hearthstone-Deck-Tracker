@@ -482,8 +482,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.5)]
 		public double OpponentDeckLeft = 0.5;
 
-		[DefaultValue(10)]
-		public double OpponentDeckTop = 10;
+		[DefaultValue(12.5)]
+		public double OpponentDeckTop = 12.5;
 
 		[DefaultValue(100)]
 		public double OpponentOpacity = 100;
