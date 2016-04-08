@@ -31,8 +31,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public GameV2()
 		{
-			Player = new Player(true);
-			Opponent = new Player(false);
+			Player = new Player(this, true);
+			Opponent = new Player(this, false);
 			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
 			PossibleArenaCards = new List<Card>();

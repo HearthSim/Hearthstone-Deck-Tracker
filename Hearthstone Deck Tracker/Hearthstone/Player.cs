@@ -21,9 +21,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public const int DeckSize = 30;
 		private string _name;
+		private readonly GameV2 _game;
 
-		public Player(bool isLocalPlayer)
+		public Player(GameV2 game, bool isLocalPlayer)
 		{
+			_game = game;
 			IsLocalPlayer = isLocalPlayer;
 		}
 
@@ -47,8 +49,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int HandCount => Hand.Count(x => x.IsControlledBy(Id));
 		public int DeckCount => Deck.Count(x => x.IsControlledBy(Id));
 
-		public IEnumerable<Entity> PlayerEntities => Core.Game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && x.IsControlledBy(Id));
-		public IEnumerable<Entity> RevealedEntities => Core.Game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && (x.IsControlledBy(Id) || x.Info.OriginalController == Id)).Where(x => x.HasCardId);
+		public IEnumerable<Entity> PlayerEntities => _game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && x.IsControlledBy(Id));
+		public IEnumerable<Entity> RevealedEntities => _game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && (x.IsControlledBy(Id) || x.Info.OriginalController == Id)).Where(x => x.HasCardId);
 		public IEnumerable<Entity> Hand => PlayerEntities.Where(x => x.IsInHand);
 		public IEnumerable<Entity> Board => PlayerEntities.Where(x => x.IsInPlay);
 		public IEnumerable<Entity> Deck => PlayerEntities.Where(x => x.IsInDeck);
@@ -204,7 +206,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				UpdateKnownEntitesInDeck(entity.CardId);
 			if(!IsLocalPlayer)
 			{
-				if(Core.Game.OpponentEntity?.GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DEALING)
+				if(_game.OpponentEntity?.GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DEALING)
 					entity.Info.Mulliganed = true;
 				else
 					entity.Info.Hidden = true;
