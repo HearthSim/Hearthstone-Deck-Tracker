@@ -84,10 +84,8 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestCardBarImages()
 		{
-			foreach (var card in Database.GetActualCards())
-			{
-				Assert.IsTrue(File.Exists("Images/Bars/" + card.Id + ".png"), card.Name);
-			}
+			foreach(var card in Database.GetActualCards())
+				Assert.IsTrue(File.Exists("../../../Hearthstone Deck Tracker/Images/Bars/" + card.Id + ".png"), card.Name);
 		}
 	}
 }
