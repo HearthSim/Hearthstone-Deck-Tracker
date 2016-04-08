@@ -32,10 +32,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool _isCreated;
 		private bool _loaded;
 		private string _localizedName;
-		private string _name;
 		private int? _overload;
 		private string _text;
 		private bool _wasDiscarded;
+		private string _id;
 
 		[NonSerialized]
 		private static readonly Dictionary<string, Dictionary<int, CardImageObject>> CardImageCache =
@@ -47,7 +47,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public List<string> AlternativeTexts = new List<string>();
 
-		public string Id;
+		public string Id
+		{
+			get { return _id; }
+			set
+			{
+				_id = value;
+				if(_dbCard == null)
+					Load();
+			}
+		}
 
 		/// The mechanics attribute, such as windfury or taunt, comes from the cardDB json file
 		[XmlIgnore]
@@ -222,16 +231,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string Type { get; set; }
 
 		[XmlIgnore]
-		public string Name
-		{
-			get
-			{
-				if(_name == null)
-					Load();
-				return _name;
-			}
-			set { _name = value; }
-		}
+		public string Name { get; set; }
 
 		[XmlIgnore]
 		public int Cost { get; set; }
