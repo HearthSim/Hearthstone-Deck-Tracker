@@ -114,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Id = dbCard.Id;
 			Count = 1;
 			PlayerClass = HearthDbConverter.ConvertClass(dbCard.Class);
-             Rarity = dbCard.Rarity;
+             		Rarity = dbCard.Rarity;
 			Type = HearthDbConverter.CardTypeConverter(dbCard.Type);
 			Name = dbCard.GetLocName(Language.enUS);
 			Cost = dbCard.Cost;
