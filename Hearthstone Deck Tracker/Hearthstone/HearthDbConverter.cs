@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using HearthDb.Enums;
-using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
 
 #endregion
 
@@ -33,25 +32,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static string ConvertClass(CardClass cardClass) => (int)cardClass < 2 || (int)cardClass > 10
 																	  ? null : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(cardClass.ToString().ToLowerInvariant());
-
-		public static Rarity RariryConverter(HearthDb.Enums.Rarity rarity)
-		{
-			switch(rarity)
-			{
-				case HearthDb.Enums.Rarity.FREE:
-					return Rarity.Free;
-				case HearthDb.Enums.Rarity.COMMON:
-					return Rarity.Common;
-				case HearthDb.Enums.Rarity.RARE:
-					return Rarity.Rare;
-				case HearthDb.Enums.Rarity.EPIC:
-					return Rarity.Epic;
-				case HearthDb.Enums.Rarity.LEGENDARY:
-					return Rarity.Legendary;
-				default:
-					return Rarity.Free;
-			}
-		}
 
 		public static string CardTypeConverter(CardType type) => type == CardType.HERO_POWER ? "Hero Power" : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(type.ToString().ToLowerInvariant().Replace("_", ""));
 
