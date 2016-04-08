@@ -702,7 +702,7 @@ namespace Hearthstone_Deck_Tracker
 		public string SelectedDeckSortingArena = "Name";
 
 		[DefaultValue(DeckType.All)]
-		public DeckType SelectedDeckType = DeckType.All;
+		public DeckType SelectedDeckPickerDeckType = DeckType.All;
 
 		[DefaultValue("enUS")]
 		public string SelectedLanguage = "enUS";

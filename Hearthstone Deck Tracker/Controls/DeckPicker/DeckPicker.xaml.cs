@@ -394,23 +394,23 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private bool DeckMatchesSelectedDeckType(Deck deck)
 		{
-			if(Config.Instance.SelectedDeckType == DeckType.All)
+			if(Config.Instance.SelectedDeckPickerDeckType == DeckType.All)
 				return true;
-			return Config.Instance.SelectedDeckType == DeckType.Arena && deck.IsArenaDeck 
+			return Config.Instance.SelectedDeckPickerDeckType == DeckType.Arena && deck.IsArenaDeck 
 				|| (!deck.IsArenaDeck 
-					&& ((Config.Instance.SelectedDeckType == DeckType.Standard && deck.StandardViable)
-						|| Config.Instance.SelectedDeckType == DeckType.Wild && (Config.Instance.DeckPickerWildIncludesStandard || !deck.StandardViable)));
+					&& ((Config.Instance.SelectedDeckPickerDeckType == DeckType.Standard && deck.StandardViable)
+						|| Config.Instance.SelectedDeckPickerDeckType == DeckType.Wild && (Config.Instance.DeckPickerWildIncludesStandard || !deck.StandardViable)));
 		}
 
 		public void Sort()
 		{
 			var view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDecks.ItemsSource);
 			view.SortDescriptions.Clear();
-			if(Config.Instance.SortDecksByClass && Config.Instance.SelectedDeckType != DeckType.Arena
-			   || Config.Instance.SortDecksByClassArena && Config.Instance.SelectedDeckType == DeckType.Arena)
+			if(Config.Instance.SortDecksByClass && Config.Instance.SelectedDeckPickerDeckType != DeckType.Arena
+			   || Config.Instance.SortDecksByClassArena && Config.Instance.SelectedDeckPickerDeckType == DeckType.Arena)
 				view.SortDescriptions.Add(new SortDescription("Class", Ascending));
 
-			var deckSorting = Config.Instance.SelectedDeckType == DeckType.Arena
+			var deckSorting = Config.Instance.SelectedDeckPickerDeckType == DeckType.Arena
 				                  ? Config.Instance.SelectedDeckSortingArena : Config.Instance.SelectedDeckSorting;
 			switch(deckSorting)
 			{
@@ -453,15 +453,15 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			if(deck == null)
 				return;
 			ClearFromCache(deck);
-			if(Config.Instance.SelectedDeckType != DeckType.All)
+			if(Config.Instance.SelectedDeckPickerDeckType != DeckType.All)
 			{
-				if(deck.IsArenaDeck && Config.Instance.SelectedDeckType != DeckType.Arena)
+				if(deck.IsArenaDeck && Config.Instance.SelectedDeckPickerDeckType != DeckType.Arena)
 					SelectDeckType(DeckType.Arena);
 				else if(!deck.IsArenaDeck)
 				{
-					if(deck.StandardViable && Config.Instance.SelectedDeckType != DeckType.Standard)
+					if(deck.StandardViable && Config.Instance.SelectedDeckPickerDeckType != DeckType.Standard)
 						SelectDeckType(DeckType.Standard);
-					else if(Config.Instance.SelectedDeckType != DeckType.Wild)
+					else if(Config.Instance.SelectedDeckPickerDeckType != DeckType.Wild)
 						SelectDeckType(DeckType.Wild);
 				}
 			}
@@ -600,9 +600,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 							break;
 					}
 				}
-				if(Config.Instance.SelectedDeckType != deckType)
+				if(Config.Instance.SelectedDeckPickerDeckType != deckType)
 				{
-					Config.Instance.SelectedDeckType = deckType;
+					Config.Instance.SelectedDeckPickerDeckType = deckType;
 					Config.Save();
 				}
 				UpdateDecks();

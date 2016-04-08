@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				selectedClasses.Add(HeroClassAll.All);
 
 			DeckPickerList.SelectClasses(selectedClasses);
-			DeckPickerList.SelectDeckType(Config.Instance.SelectedDeckType, true);
+			DeckPickerList.SelectDeckType(Config.Instance.SelectedDeckPickerDeckType, true);
 			DeckPickerList.UpdateAutoSelectToggleButton();
 
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
