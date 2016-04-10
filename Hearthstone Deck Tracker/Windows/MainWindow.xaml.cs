@@ -777,6 +777,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(setActive)
 				UseDeck(deck);
+			DeckPickerList.SelectDeck(deck);
 			UpdateDeckList(deck);
 			EnableMenuItems(deck != null);
 			ManaCurveMyDecks.SetDeck(deck);
