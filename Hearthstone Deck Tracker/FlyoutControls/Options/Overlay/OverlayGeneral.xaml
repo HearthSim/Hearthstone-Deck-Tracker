@@ -94,11 +94,11 @@
                               Checked="CheckBoxOverlayUseAnimationsOpacity_Checked"
                               Unchecked="CheckBoxOverlayUseAnimationsOpacityy_Unchecked"
                               HorizontalAlignment="Left" />
-                    <CheckBox x:Name="CheckboxOverlayCardMarkToolTips" Content="Card-mark tooltips*"
+                    <CheckBox x:Name="CheckboxOverlayCardMarkToolTips" Content="Card mark tooltips"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Margin="10,5,0,0" VerticalAlignment="Top"
-                              ToolTip="Displays the card *responsible* for stealing/returning"
+                              ToolTip="Displays the created/returned card, if the information is available."
                               Checked="CheckboxOverlayCardMarkToolTips_Checked"
                               Unchecked="CheckboxOverlayCardMarkToolTips_Unchecked"
                               HorizontalAlignment="Left" />
