@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				return;
 			ComboBoxResult.SelectedItem = game.Result;
 			HeroClass heroClass;
-			if(Enum.TryParse(game.OpponentHero, out heroClass))
+			if(!string.IsNullOrWhiteSpace(game.OpponentHero) && Enum.TryParse(game.OpponentHero, out heroClass))
 				ComboBoxOpponent.SelectedItem = heroClass;
 			ComboBoxMode.SelectedItem = game.GameMode;
 			ComboBoxRegion.SelectedItem = game.Region;
