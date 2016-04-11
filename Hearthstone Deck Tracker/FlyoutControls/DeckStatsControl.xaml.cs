@@ -616,8 +616,7 @@ namespace Hearthstone_Deck_Tracker
 			var sortedCol = DataGridOverallGames.Columns.FirstOrDefault(col => col.SortDirection != null);
 			var total = new List<GameStats>();
 			var modified = false;
-			var classes = Enum.GetNames(typeof(HeroClass)).Concat(DefaultDeckStats.Instance.DeckStats.Select(x => x.Name)).Distinct();
-			foreach(var @class in classes)
+			foreach(var @class in Enum.GetNames(typeof(HeroClass)))
 			{
 				var allGames = new List<GameStats>();
 				if(Config.Instance.StatsOverallFilterDeckMode == FilterDeckMode.WithDeck
