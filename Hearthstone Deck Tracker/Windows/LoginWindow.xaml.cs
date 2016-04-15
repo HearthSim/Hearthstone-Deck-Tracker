@@ -23,10 +23,8 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class LoginWindow : INotifyPropertyChanged
 	{
-		//private readonly GameV2 _game;
 		private readonly bool _initialized;
 		private ProgressDialogController _controller;
-		private Visibility _loginRegisterVisibility;
 
 		public LoginWindow()
 		{
@@ -36,21 +34,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public LoginType LoginResult { get; private set; } = LoginType.None;
-
-		public double TabWidth => ActualWidth / 2;
-
-		public Visibility LoginRegisterVisibility
-		{
-			get { return _loginRegisterVisibility; }
-			set
-			{
-				_loginRegisterVisibility = value;
-				OnPropertyChanged();
-				OnPropertyChanged(nameof(ContinueAsGuestVisibility));
-			}
-		}
-
-		public Visibility ContinueAsGuestVisibility => LoginRegisterVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -176,19 +159,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Button_Continue(object sender, RoutedEventArgs e)
 		{
-			LoginRegisterVisibility = Visibility.Collapsed;
-			TabControlLoginRegister.SelectedIndex = 2;
-		}
-
-		private void ButtonBack_OnClick(object sender, RoutedEventArgs e)
-		{
-			LoginRegisterVisibility = Visibility.Visible;
-			TabControlLoginRegister.SelectedIndex = 1;
-		}
-
-		private void Button_ContinueAnyway(object sender, RoutedEventArgs e)
-		{
-			Log.Info("Continuing as guest...");
+			Log.Info("Continuing...");
 			LoginResult = LoginType.Guest;
 			Config.Instance.ShowLoginDialog = false;
 			Config.Save();
@@ -200,5 +171,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+		private void BtnShowRegister_OnClick(object sender, RoutedEventArgs e) => TabControlLoginRegister.SelectedIndex = 1;
 	}
 }
