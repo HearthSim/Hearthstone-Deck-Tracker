@@ -38,12 +38,13 @@ namespace Hearthstone_Deck_Tracker
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
 				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
 				if(Config.Instance.AutoDeckDetection)
-					await AutoSelectDeck(Core.Game.Player.Class, Core.Game.CurrentGameMode, cardEntites);
+					await AutoSelectDeck(deck, Core.Game.Player.Class, Core.Game.CurrentGameMode, cardEntites);
 			}
 			else
 				NotFoundCards.Clear();
 		}
-		private static async Task AutoSelectDeck(string heroClass, GameMode mode, List<IGrouping<string, Entity>> cardEntites = null)
+
+		private static async Task AutoSelectDeck(Deck currentDeck, string heroClass, GameMode mode, List<IGrouping<string, Entity>> cardEntites = null)
 		{
 			_waitingForDraws++;
 			await Task.Delay(500);
@@ -51,6 +52,8 @@ namespace Hearthstone_Deck_Tracker
 			if(_waitingForDraws > 0)
 				return;
 			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived).ToList();
+			if(currentDeck != null)
+				validDecks.Remove(currentDeck);
 			if(mode == GameMode.Arena)
 				validDecks = validDecks.Where(x => x.IsArenaDeck && x.IsArenaRunCompleted != true).ToList();
 			else if(mode != GameMode.None)
