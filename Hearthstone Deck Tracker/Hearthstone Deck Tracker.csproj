@@ -1007,15 +1007,6 @@
     <Resource Include="Resources\Chunkfive.otf" />
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
     <Resource Include="Resources\SplashScreen.png" />
-    <Content Include="HDTHelper.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="HDTUninstaller.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="HDTUpdate.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Images\card-icon-coin.png" />
     <Resource Include="Images\card-icon-created.png" />
     <Resource Include="Images\card-icon-keep.png" />
@@ -1183,9 +1174,6 @@
     xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Hearthstone Deck Tracker"
     ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe" "Hearthstone Deck Tracker.exe"
     ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe.config" "Hearthstone Deck Tracker.exe.config"
-    xcopy /Y "HDTHelper.exe" "..\Hearthstone Deck Tracker"
-    xcopy /Y "HDTUpdate.exe" "..\Hearthstone Deck Tracker"
-    xcopy /Y "HDTUninstaller.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "AForge.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "AForge.Math.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "AForge.Imaging.dll" "..\Hearthstone Deck Tracker"
@@ -1196,7 +1184,10 @@
     xcopy /Y "MahApps.Metro.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "Newtonsoft.Json.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "System.Windows.Interactivity.dll" "..\Hearthstone Deck Tracker"
-    xcopy /Y "Version.xml" "..\Hearthstone Deck Tracker" )</PostBuildEvent>
+    xcopy /Y "Version.xml" "..\Hearthstone Deck Tracker"
+    xcopy /Y "..\..\..\HDTUpdate\bin\Release\HDTUpdate.exe" "..\Hearthstone Deck Tracker"
+    xcopy /Y "..\..\..\HDTHelper\bin\Release\HDTHelper.exe" "..\Hearthstone Deck Tracker"
+    xcopy /Y "..\..\..\HDTUninstaller\bin\Release\HDTUninstaller.exe" "..\Hearthstone Deck Tracker" )</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>mkdir "$(TargetDir)\Images\Bars"
