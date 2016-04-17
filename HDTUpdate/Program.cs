@@ -11,7 +11,7 @@ namespace HDTUpdate
 {
 	internal class Program
 	{
-		private const string Url = @"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases/download/v{0}/Hearthstone.Deck.Tracker-v{0}.zip";
+		private const string Url = @"https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases/download/v{0}/Hearthstone.Deck.Tracker-v{0}.zip";
 
 		private static void Main(string[] args)
 		{
@@ -83,7 +83,7 @@ namespace HDTUpdate
 			{
 				Console.WriteLine("There was a problem updating to the latest version. Pressing any key will direct you to the manual download.");
 				Console.ReadKey();
-				Process.Start(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases");
+				Process.Start(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases");
 			}
 			finally
 			{

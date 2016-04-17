@@ -105,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			catch(Exception ex)
 			{
 				Log.Error("Error starting updater\n" + ex);
-				Helper.TryOpenUrl(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases");
+				Helper.TryOpenUrl(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases");
 			}
 		}
 
