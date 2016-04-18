@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Enums;
 using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
 
 #endregion
@@ -76,6 +77,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			string str;
 			SetDict.TryGetValue((int)set, out str);
 			return str;
+		}
+
+		public static GameType GetGameType(GameMode mode)
+		{
+			switch(mode)
+			{
+				case GameMode.Arena:
+					return GameType.GT_ARENA;
+				case GameMode.Ranked:
+					return GameType.GT_RANKED;
+				case GameMode.Casual:
+					return GameType.GT_UNRANKED;
+				case GameMode.Brawl:
+					return GameType.GT_TAVERNBRAWL;
+				case GameMode.Friendly:
+					return GameType.GT_VS_FRIEND;
+				case GameMode.Practice:
+					return GameType.GT_VS_AI;
+				default:
+					return GameType.GT_UNKNOWN;
+			}
 		}
 	}
 }
