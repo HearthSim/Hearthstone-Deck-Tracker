@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public static readonly Regex GameModeRegex = new Regex(@"prevMode=(?<prev>(\w+)).*currMode=(?<curr>(\w+))");
 		public static readonly Regex ConnectionRegex = new Regex(@"ConnectAPI\.GotoGameServer -- address=(?<address>(.*)), game=(?<game>(.*)), client=(?<client>(.*)), spectateKey=(?<spectateKey>(.*)),? reconn");
 		public static readonly Regex LegendRankRegex = new Regex(@"legend rank (?<rank>(\d+))");
+		public static readonly Regex BeginBlurRegex = new Regex(@"BeginEffect blur \d => 1");
 
 		public static LogReaderInfo PowerLogReaderInfo => new LogReaderInfo
 		{
@@ -41,6 +42,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public static LogReaderInfo LoadingScreenLogReaderInfo => new LogReaderInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded"}};
 		public static LogReaderInfo NetLogReaderInfo => new LogReaderInfo {Name = "Net"};
 		public static LogReaderInfo GameStatePowerLogReaderInfo => new LogReaderInfo {Name = "Power", StartsWithFilters = new[] {"GameState."}};
+		public static LogReaderInfo FullScreenFxLogReaderInfo => new LogReaderInfo { Name = "FullScreenFX", Reset = false};
 
 		public static class GameState
 		{

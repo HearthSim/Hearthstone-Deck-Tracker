@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string GameId { get; set; }
 		public string SpectateKey { get; set; }
 		public int LegendRank { get; set; }
+		public DateTime EnqueueTime { get; set; }
 
 		public int? HearthstoneBuild
 		{
@@ -28,6 +29,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public override string ToString() 
-			=> $"HearthstoneBuild={HearthstoneBuild}, ServerAddress={ServerAddress}, ClientId={ClientId}, GameId={GameId}, SpectateKey={SpectateKey}, LegendRank={LegendRank}";
+			=> $"HearthstoneBuild={HearthstoneBuild}, ServerAddress={ServerAddress}, ClientId={ClientId}, GameId={GameId}, SpectateKey={SpectateKey}, LegendRank={LegendRank}, EnqueueTime={EnqueueTime}";
 	}
 }

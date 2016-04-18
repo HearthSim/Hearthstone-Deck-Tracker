@@ -25,6 +25,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private static readonly ArenaHandler ArenaHandler = new ArenaHandler();
 		private static readonly NetHandler NetHandler = new NetHandler();
 		private static readonly LoadingScreenHandler LoadingScreenHandler = new LoadingScreenHandler();
+		private static readonly FullScreenFxHandler FullScreenFxHandler = new FullScreenFxHandler();
 		private static LogReader _gameStatePowerLogReader;
 		private static LogReader _powerLogReader;
 		private static LogReader _netLogReader;
@@ -46,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			LogReaders.Add(new LogReader(AssetLogReaderInfo));
 			LogReaders.Add(new LogReader(ArenaLogReaderInfo));
 			LogReaders.Add(new LogReader(LoadingScreenLogReaderInfo));
+			LogReaders.Add(new LogReader(FullScreenFxLogReaderInfo));
 		}
 
 		public static void Start(GameV2 game)
@@ -182,6 +184,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							break;
 						case "Net":
 							NetHandler.Handle(line.Line, _gameState, _game);
+							break;
+						case "FullScreenFX":
+							FullScreenFxHandler.Handle(line, _game);
 							break;
 					}
 				}

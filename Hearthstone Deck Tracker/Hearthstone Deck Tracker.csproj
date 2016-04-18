@@ -283,6 +283,7 @@
     <Compile Include="DeckManager.cs" />
     <Compile Include="Hearthstone\DeckState.cs" />
     <Compile Include="Hearthstone\PredictedCard.cs" />
+    <Compile Include="LogReader\Handlers\FullScreenFxHandler.cs" />
     <Compile Include="Utility\Extensions\RectExtensions.cs" />
     <Compile Include="Utility\Themes\CardBarImageBuilder.cs" />
     <Compile Include="Hearthstone\GameTime.cs" />
