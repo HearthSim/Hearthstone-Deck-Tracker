@@ -11,8 +11,6 @@ namespace HDTUpdate
 {
 	internal class Program
 	{
-		private const string Url = @"https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases/download/v{0}/Hearthstone.Deck.Tracker-v{0}.zip";
-
 		private static void Main(string[] args)
 		{
 			Console.Title = "Hearthstone Deck Tracker Updater";
@@ -45,11 +43,12 @@ namespace HDTUpdate
 
 		}
 
-		private static async Task Update(string version)
+		private static async Task Update(string url)
 		{
 			try
 			{
-				var filePath = string.Format("temp/v{0}.zip", version);
+				var fileName = url.Split('/').LastOrDefault() ?? "tmp.zip";
+				var filePath = Path.Combine("temp", fileName);
 
 				Console.WriteLine("Creating temp file directory");
 				if(Directory.Exists("temp"))
@@ -69,7 +68,7 @@ namespace HDTUpdate
 								Console.WriteLine("Downloading latest version... {0}/{1}KB ({2}%)", e.BytesReceived / (1024), e.TotalBytesToReceive / (1024), e.ProgressPercentage);
 							}
 						};
-					await wc.DownloadFileTaskAsync(string.Format(Url, version), filePath);
+					await wc.DownloadFileTaskAsync(url, filePath);
 				}
 				File.Move(filePath, filePath.Replace("rar", "zip"));
 				Console.WriteLine("Extracting files...");
