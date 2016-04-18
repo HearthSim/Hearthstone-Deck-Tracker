@@ -41,7 +41,8 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 					Note = notes ?? "",
 					Rank = ranklvl,
 					StartTime = createdAt,
-					EndTime = createdAt.AddSeconds(duration ?? 0)
+					EndTime = createdAt.AddSeconds(duration ?? 0),
+					HearthstoneBuild = null
 				};
 			}
 			catch(Exception e)

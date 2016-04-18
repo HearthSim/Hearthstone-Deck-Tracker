@@ -120,6 +120,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				_game.Turns = turns;
 				_game.WasConceded = (YesNo)ComboBoxConceded.SelectedValue == YesNo.Yes;
 				_game.Region = (Region)ComboBoxRegion.SelectedItem;
+				_game.HearthstoneBuild = Helper.GetHearthstoneBuild();
 				_tcs.SetResult(_game);
 			}
 			catch(Exception ex)
