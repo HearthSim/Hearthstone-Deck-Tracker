@@ -21,6 +21,7 @@ using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Toasts;
 using Hearthstone_Deck_Tracker.Windows;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
@@ -767,7 +768,7 @@ namespace Hearthstone_Deck_Tracker
 				   && (!Config.Instance.GameResultNotificationsUnexpectedOnly || UnexpectedCasualGame()))
 				{
 					var deckName = _assignedDeck == null ? "No deck - " + _game.CurrentGameStats.PlayerHero : _assignedDeck.NameAndVersion;
-					new GameResultNotificationWindow(deckName, _game.CurrentGameStats).Show();
+					ToastManager.ShowGameResultToast(deckName, _game.CurrentGameStats);
 				}
 				if(Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 				{

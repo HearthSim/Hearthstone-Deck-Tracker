@@ -458,6 +458,21 @@
     <Compile Include="Utility\Themes\DarkBarImageBuilder.cs" />
     <Compile Include="Utility\Themes\Theme.cs" />
     <Compile Include="Utility\Themes\ThemeManager.cs" />
+    <Compile Include="Utility\Toasts\ToastControls\GameResultToast.xaml.cs">
+      <DependentUpon>GameResultToast.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Toasts\ToastControls\ReplayProgress.cs" />
+    <Compile Include="Utility\Toasts\ToastControls\ReplayProgressToast.xaml.cs">
+      <DependentUpon>ReplayProgressToast.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Toasts\ToastControls\ReplayToast.xaml.cs">
+      <DependentUpon>ReplayToast.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Toasts\ToastHelper.cs" />
+    <Compile Include="Utility\Toasts\ToastManager.cs" />
+    <Compile Include="Utility\Toasts\ToastWindow.xaml.cs">
+      <DependentUpon>ToastWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
       <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
     </Compile>
@@ -470,9 +485,6 @@
     <Compile Include="Utility\HotKeys\KeyPressedEventArgs.cs" />
     <Compile Include="Utility\HotKeys\ModifierKeys.cs" />
     <Compile Include="Utility\HotKeys\PredefinedHotKeyActions.cs" />
-    <Compile Include="Windows\GameResultNotificationWindow.xaml.cs">
-      <DependentUpon>GameResultNotificationWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -880,11 +892,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ArenaRewardDialog.xaml">
+    <Page Include="Utility\Toasts\ToastControls\GameResultToast.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GameResultNotificationWindow.xaml">
+    <Page Include="Utility\Toasts\ToastControls\ReplayProgressToast.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\Toasts\ToastControls\ReplayToast.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\Toasts\ToastWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ArenaRewardDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -346,7 +346,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(selected == null)
 				return;
-			if(Keyboard.IsKeyDown(Key.LeftCtrl) || !(await HsReplayManager.ShowReplay(selected)))
+			if(Keyboard.IsKeyDown(Key.LeftCtrl) || !(await HsReplayManager.ShowReplay(selected, true)))
 			{
 				if (Config.Instance.StatsInWindow)
 				{

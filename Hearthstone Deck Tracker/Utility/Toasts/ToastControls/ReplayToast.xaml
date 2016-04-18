@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls.ReplayToast"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls"
+             mc:Ignorable="d" 
+             Height="40" Width="250">
+    <Border Name="BorderReplay" DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}" Height="40"
+                MouseEnter="BorderReplay_OnMouseEnter" MouseLeave="BorderReplay_OnMouseLeave" MouseLeftButtonUp="BorderReplay_OnMouseLeftButtonUp">
+        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Rectangle Width="20" Height="24" DockPanel.Dock="Left">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{DynamicResource appbar_chevron_right_white}">
+                    </VisualBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock Text="www.hsreplay.net" DockPanel.Dock="Bottom" Foreground="White" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0,-5,0,0" FontSize="12"/>
+            <TextBlock Text="SHARE THE REPLAY!" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0" FontSize="15"/>
+        </DockPanel>
+    </Border>
+</UserControl>

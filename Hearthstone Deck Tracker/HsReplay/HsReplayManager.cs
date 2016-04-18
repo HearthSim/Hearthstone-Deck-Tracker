@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay.API;
 using Hearthstone_Deck_Tracker.HsReplay.Converter;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Toasts;
+using Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls;
 using static Hearthstone_Deck_Tracker.HsReplay.Constants;
 
 #endregion
@@ -36,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task<bool> ShowReplay(GameStats game)
+		public static async Task<bool> ShowReplay(GameStats game, bool showToast)
 		{
 			if(game == null)
 				return false;
@@ -45,11 +48,19 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				ReplayReader.LaunchReplayViewer(game.ReplayFile);
 				return true;
 			}
+			Action<ReplayProgress> setToastStatus = null;
 			var rfm = new ReplayFileManager(game);
 			if(!rfm.HasHsReplayFile)
+			{
+				if(showToast && rfm.HasRawLogFile)
+					setToastStatus = ToastManager.ShowReplayProgressToast();
 				await rfm.ConvertAndStoreHsReplay();
+			}
 			if(rfm.HasHsReplayFile && (!game.HsReplay?.Uploaded ?? true))
 			{
+				if(showToast && setToastStatus == null)
+					setToastStatus = ToastManager.ShowReplayProgressToast();
+				setToastStatus?.Invoke(ReplayProgress.Uploading);
 				var result = await HsReplayUploader.UploadXml(rfm.HsReplay);
 				if(result.Success)
 				{
@@ -60,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 						DeckStatsList.Save();
 				}
 			}
+			setToastStatus?.Invoke(ReplayProgress.Complete);
 			if(game.HsReplay?.Uploaded ?? false)
 				Helper.TryOpenUrl(game.HsReplay?.Url);
 			else if(game.HasReplayFile)
@@ -88,18 +100,26 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task ShowReplay(string fileName)
+		public static async Task ShowReplay(string fileName, bool showToast)
 		{
 			if(Config.Instance.ForceLocalReplayViewer)
 			{
 				ReplayReader.LaunchReplayViewer(fileName);
 				return;
 			}
+			Action<ReplayProgress> setToastStatus = null;
 			var rfm = new ReplayFileManager(fileName);
 			if(!rfm.HasHsReplayFile)
+			{
+				if(showToast && rfm.HasRawLogFile)
+					setToastStatus = ToastManager.ShowReplayProgressToast();
 				await rfm.ConvertAndStoreHsReplay();
+			}
 			if(rfm.HasHsReplayFile)
 			{
+				if(showToast && setToastStatus == null)
+					setToastStatus = ToastManager.ShowReplayProgressToast();
+				setToastStatus?.Invoke(ReplayProgress.Uploading);
 				var result = await HsReplayUploader.UploadXml(rfm.HsReplay);
 				if(result.Success)
 					Helper.TryOpenUrl(new HsReplayInfo(result.ReplayId).Url);
@@ -108,6 +128,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			else
 				ReplayReader.LaunchReplayViewer(fileName);
+			setToastStatus?.Invoke(ReplayProgress.Complete);
 		}
 	}
 }
