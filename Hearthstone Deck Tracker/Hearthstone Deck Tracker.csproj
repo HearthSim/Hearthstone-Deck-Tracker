@@ -283,6 +283,7 @@
     <Compile Include="DeckManager.cs" />
     <Compile Include="Hearthstone\DeckState.cs" />
     <Compile Include="Hearthstone\PredictedCard.cs" />
+    <Compile Include="HsReplay\Account.cs" />
     <Compile Include="LogReader\Handlers\FullScreenFxHandler.cs" />
     <Compile Include="Utility\Extensions\RectExtensions.cs" />
     <Compile Include="Utility\Themes\CardBarImageBuilder.cs" />
@@ -292,11 +293,13 @@
     <Compile Include="HsReplay\Constants.cs" />
     <Compile Include="HsReplay\API\ApiManager.cs" />
     <Compile Include="HsReplay\API\Header.cs" />
+    <Compile Include="HsReplay\Enums\AccountStatus.cs" />
     <Compile Include="HsReplay\API\UploadResult.cs" />
     <Compile Include="HsReplay\API\Web.cs" />
     <Compile Include="HsReplay\Converter\BuildDates.cs" />
     <Compile Include="HsReplay\Converter\HsReplayConverter.cs" />
     <Compile Include="HsReplay\Converter\LogValidator.cs" />
+    <Compile Include="HsReplay\Enums\Privacy.cs" />
     <Compile Include="HsReplay\HsReplayManager.cs" />
     <Compile Include="HsReplay\HsReplayUpdater.cs" />
     <Compile Include="HsReplay\API\HsReplayUploader.cs" />

@@ -75,5 +75,63 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 			_uploadToken = token;
 			return token;
 		}
+
+		private static async Task<string> GetAccountUrl() => BaseApiUrl + "/agents/upload_token/" + await GetUploadToken();
+
+		private static async Task<string> GetClaimAccountUrl() => $"{BaseApiUrl}/agents/{ApiKey}/attach_upload_token/{await GetUploadToken()}";
+
+		public static async Task<bool> UpdateReplayPrivacy(bool isPublic)
+		{
+			Log.Info($"Setting replay privacy to public={isPublic}");
+			var json = JsonConvert.SerializeObject(new { replays_are_public = isPublic });
+			var response = await Web.PutAsync(await GetAccountUrl(), json, ApiKeyHeader);
+			Log.Info($"Status={response.StatusCode}");
+			return response.StatusCode == HttpStatusCode.OK;
+		}
+
+		public static async Task ClaimAccount()
+		{
+			try
+			{
+				Log.Info("Opening browser to claim account");
+				Process.Start(await GetClaimAccountUrl());
+			}
+			catch(Exception)
+			{
+				Log.Error("Could not open browser.");
+			}
+		}
+
+		public static async Task UpdateAccountStatus()
+		{
+			Log.Info("Checking account status...");
+			var response = await Web.GetAsync(await GetAccountUrl(), ApiKeyHeader);
+			var statusMsg = $"Response={response.StatusCode}";
+			if(response.StatusCode == HttpStatusCode.OK)
+			{
+				try
+				{
+					using(var responseStream = response.GetResponseStream())
+					using(var reader = new StreamReader(responseStream))
+					{
+						dynamic json = JsonConvert.DeserializeObject(reader.ReadToEnd());
+						var status = (string)json.status;
+						statusMsg += " Status=" + status;
+						Account.BattleTag = (string)json.battle_tag;
+						statusMsg += " BattleTag=" + Account.BattleTag;
+						Account.ReplaysArePublic = (bool)json.replays_are_public;
+						statusMsg += " ReplaysArePublic=" + Account.ReplaysArePublic;
+						AccountStatus accountStatus;
+						if(Enum.TryParse(status, true, out accountStatus))
+							Account.Status = accountStatus;
+					}
+				}
+				catch(Exception e)
+				{
+					Log.Error(e);
+				}
+			}
+			Log.Info(statusMsg);
+		}
 	}
 }
