@@ -290,11 +290,16 @@
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="Hearthstone\GameMetaData.cs" />
     <Compile Include="HsReplay\Constants.cs" />
+    <Compile Include="HsReplay\API\ApiManager.cs" />
+    <Compile Include="HsReplay\API\Header.cs" />
+    <Compile Include="HsReplay\API\UploadResult.cs" />
+    <Compile Include="HsReplay\API\Web.cs" />
     <Compile Include="HsReplay\Converter\BuildDates.cs" />
     <Compile Include="HsReplay\Converter\HsReplayConverter.cs" />
     <Compile Include="HsReplay\Converter\LogValidator.cs" />
     <Compile Include="HsReplay\HsReplayManager.cs" />
     <Compile Include="HsReplay\HsReplayUpdater.cs" />
+    <Compile Include="HsReplay\API\HsReplayUploader.cs" />
     <Compile Include="HsReplay\Converter\XmlHelper.cs" />
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
     <Compile Include="LogReader\Handlers\NetHandler.cs" />
