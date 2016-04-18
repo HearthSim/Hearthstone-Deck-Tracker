@@ -513,6 +513,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			try
 			{
+				LastGames.Instance.Remove(GameId);
 				if(!File.Exists(GameFile))
 					return;
 				File.Delete(GameFile);

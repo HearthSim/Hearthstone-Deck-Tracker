@@ -703,6 +703,8 @@ namespace Hearthstone_Deck_Tracker
 					Log.Info("Saving DeckStats");
 					DeckStatsList.Save();
 				}
+				LastGames.Instance.Add(_game.CurrentGameStats);
+				LastGames.Save();
 			}
 			else if(_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(_game.CurrentGameStats))
 			{
