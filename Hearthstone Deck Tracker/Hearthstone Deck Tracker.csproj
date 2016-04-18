@@ -289,6 +289,9 @@
     <Compile Include="Hearthstone\GameTime.cs" />
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="Hearthstone\GameMetaData.cs" />
+    <Compile Include="HsReplay\Constants.cs" />
+    <Compile Include="HsReplay\HsReplayManager.cs" />
+    <Compile Include="HsReplay\HsReplayUpdater.cs" />
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
     <Compile Include="LogReader\Handlers\NetHandler.cs" />
     <Compile Include="Enums\Hearthstone\Mode.cs" />
