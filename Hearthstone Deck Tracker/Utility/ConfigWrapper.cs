@@ -99,6 +99,96 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public static bool ForceLocalReplayViewer
+		{
+			get { return Config.Instance.ForceLocalReplayViewer; }
+			set
+			{
+				Config.Instance.ForceLocalReplayViewer = value;
+				Config.Save();
+			}
+		}
+
+		public static bool HsReplayAutoUpload
+		{
+			get { return Config.Instance.HsReplayAutoUpload; }
+			set
+			{
+				Config.Instance.HsReplayAutoUpload = value;
+				Config.Save();
+			}
+		}
+
+		public static bool HsReplayUploadRanked
+		{
+			get { return Config.Instance.HsReplayUploadRanked; }
+			set
+			{
+				Config.Instance.HsReplayUploadRanked = value;
+				Config.Save();
+			}
+		}
+
+		public static bool HsReplayUploadCasual
+		{
+			get { return Config.Instance.HsReplayUploadCasual; }
+			set
+			{
+				Config.Instance.HsReplayUploadCasual = value;
+				Config.Save();
+			}
+		}
+
+		public static bool HsReplayUploadArena
+		{
+			get { return Config.Instance.HsReplayUploadArena; }
+			set
+			{
+				Config.Instance.HsReplayUploadArena = value;
+				Config.Save();
+			}
+		}
+
+		public static bool HsReplayUploadBrawl
+		{
+			get { return Config.Instance.HsReplayUploadBrawl; }
+			set
+			{
+				Config.Instance.HsReplayUploadBrawl = value;
+				Config.Save();
+			}
+		}
+
+		public static bool HsReplayUploadFriendly
+		{
+			get { return Config.Instance.HsReplayUploadFriendly; }
+			set
+			{
+				Config.Instance.HsReplayUploadFriendly = value;
+				Config.Save();
+			}
+		}
+
+		public static bool HsReplayUploadPractice
+		{
+			get { return Config.Instance.HsReplayUploadPractice; }
+			set
+			{
+				Config.Instance.HsReplayUploadPractice = value;
+				Config.Save();
+			}
+		}
+
+		public static bool HsReplayUploadSpectator
+		{
+			get { return Config.Instance.HsReplayUploadSpectator; }
+			set
+			{
+				Config.Instance.HsReplayUploadSpectator = value;
+				Config.Save();
+			}
+		}
+
 		public static Visibility ShowLastPlayedDateOnDeckVisibility => Config.Instance.ShowLastPlayedDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 
 		public static Visibility UseButtonVisiblity => Config.Instance.AutoUseDeck ? Visibility.Collapsed : Visibility.Visible;

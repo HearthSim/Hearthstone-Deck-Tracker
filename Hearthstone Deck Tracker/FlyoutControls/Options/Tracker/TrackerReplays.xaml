@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerReplays"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <GroupBox Header="REPLAYS">
+        <StackPanel>
+            <GroupBox Header="HSREPLAY.NET">
+                <StackPanel>
+                    <CheckBox Content="Upload replays automatically" Margin="5,5,0,0" IsChecked="{Binding HsReplayAutoUpload, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Content="Ranked" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadRanked, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Content="Casual" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadCasual, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Content="Arena" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadArena, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Content="Brawl" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadBrawl, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Content="Friendly" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadFriendly, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Content="Adventure/Practice" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadPractice, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Content="Spectator" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadSpectator, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Name="CheckBoxReplayPrivacy" Content="Make uploaded replays public" Margin="5,5,0,0" IsChecked="{Binding UploadPublic, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    <Separator Margin="0,5"/>
+                    <DockPanel>
+                        <Label Content="Account Status:" DockPanel.Dock="Left"/>
+                        <Label Content="{Binding AccountStatus, RelativeSource={RelativeSource AncestorType=UserControl}}" DockPanel.Dock="Left"/>
+                        <Button Name="ButtonRefresh" DockPanel.Dock="Right" Width="26" Click="ButtonRefresh_OnClick">
+                            <Rectangle Width="11" Height="14" HorizontalAlignment="Center">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_refresh}"/>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Button>
+                        <TextBlock VerticalAlignment="Center" Text="{Binding BattleTag, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    </DockPanel>
+                    <Button Name="ButtonClaimAccount" Content="Claim Account" Margin="0,2,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Click="ButtonClaimAccount_OnClick"/>
+                    <Label Content="Some text about claiming..." Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                </StackPanel>
+            </GroupBox>
+            <CheckBox Content="Use local replay viewer by default (not maintained)" Margin="5,5,0,0"
+                              IsChecked="{Binding ForceLocalReplayViewer, Source={StaticResource ConfigWrapper}}"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+        </StackPanel>
+    </GroupBox>
+</UserControl>

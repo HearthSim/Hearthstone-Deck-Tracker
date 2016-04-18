@@ -115,7 +115,7 @@
                     <CheckBox x:Name="CheckboxReplays"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Record Replays"
+                              Content="Record local replays"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxRecordReplays_Checked"
                               Unchecked="CheckboxRecordReplays_Unchecked" />
