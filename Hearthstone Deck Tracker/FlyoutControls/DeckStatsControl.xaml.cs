@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
@@ -341,23 +342,24 @@ namespace Hearthstone_Deck_Tracker
 			OpenGameDetails(DataGridGames.SelectedItem as GameStats);
 		}
 
-		private void OpenGameDetails(GameStats selected)
+		private async void OpenGameDetails(GameStats selected)
 		{
 			if(selected == null)
 				return;
-			if(selected.HasReplayFile && !Keyboard.IsKeyDown(Key.LeftCtrl)) //hold ctrl to open old game viewer
-				ReplayReader.LaunchReplayViewer(selected.ReplayFile);
-			else if(Config.Instance.StatsInWindow)
+			if(Keyboard.IsKeyDown(Key.LeftCtrl) || !(await HsReplayManager.ShowReplay(selected)))
 			{
-				Core.Windows.StatsWindow.GameDetailsFlyout.SetGame(selected);
-				Core.Windows.StatsWindow.FlyoutGameDetails.Header = selected.ToString();
-				Core.Windows.StatsWindow.FlyoutGameDetails.IsOpen = true;
-			}
-			else
-			{
-				Core.MainWindow.GameDetailsFlyout.SetGame(selected);
-				Core.MainWindow.FlyoutGameDetails.Header = selected.ToString();
-				Core.MainWindow.FlyoutGameDetails.IsOpen = true;
+				if (Config.Instance.StatsInWindow)
+				{
+					Core.Windows.StatsWindow.GameDetailsFlyout.SetGame(selected);
+					Core.Windows.StatsWindow.FlyoutGameDetails.Header = selected.ToString();
+					Core.Windows.StatsWindow.FlyoutGameDetails.IsOpen = true;
+				}
+				else
+				{
+					Core.MainWindow.GameDetailsFlyout.SetGame(selected);
+					Core.MainWindow.FlyoutGameDetails.Header = selected.ToString();
+					Core.MainWindow.FlyoutGameDetails.IsOpen = true;
+				}
 			}
 		}
 
