@@ -66,6 +66,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Converter
 			game.SetAttributeValue(XmlAttributes.ServerAddress, gameMetaData?.ServerAddress);
 			game.SetAttributeValue(XmlAttributes.ClientId, gameMetaData?.ClientId);
 			game.SetAttributeValue(XmlAttributes.SpectateKey, gameMetaData?.SpectateKey);
+			if(gameMetaData?.EnqueueTime != DateTime.MinValue)
+				game.SetAttributeValue(XmlAttributes.EnqueueTime, gameMetaData?.EnqueueTime.ToString("yyyy-MM-ddTHH:mm:ss"));
 		}
 
 		private static void AddDeckList(XElement player, GameStats stats)
@@ -92,6 +94,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Converter
 			public const string ServerAddress = "x-address";
 			public const string ClientId = "x-clientid";
 			public const string SpectateKey = "x-spectateKey";
+			public const string EnqueueTime = "x-enqueueTime";
 			public const string Count = "count";
 			public const string Type = "type";
 			public const string Rank = "rank";
