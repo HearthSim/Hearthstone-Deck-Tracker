@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		public async void LoadUpdateNotes()
 		{
-			const string latestReleaseRequestUrl = @"https://api.github.com/repos/Epix37/Hearthstone-Deck-Tracker/releases";
+			const string latestReleaseRequestUrl = @"https://api.github.com/repos/HearthSim/Hearthstone-Deck-Tracker/releases";
 
 			try
 			{
@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void ButtonShowGithub_OnClick(object sender, RoutedEventArgs e)
 		{
-			const string url = "https://github.com/Epix37/Hearthstone-Deck-Tracker/releases";
+			const string url = "https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases";
 			if (!Helper.TryOpenUrl(url))
 				Core.MainWindow.ShowMessage("Could not start browser", $"You can find the releases at \"{url}\"").Forget();
 		}
@@ -159,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				set
 				{
 					_body = Regex.Replace(value, "\r\n", "\r\n\n");
-					_body = Regex.Replace(_body, "#(\\d+)", "[#$1](https://github.com/Epix37/Hearthstone-Deck-Tracker/issues/$1)");
+					_body = Regex.Replace(_body, "#(\\d+)", "[#$1](https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues/$1)");
 				}
 			}
 

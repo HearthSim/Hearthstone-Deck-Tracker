@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var result = await window.ShowMessageAsync("Update successful", "", AffirmativeAndNegative,
 							new Settings {AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close"});
 			if(result == MessageDialogResult.Affirmative)
-				Helper.TryOpenUrl(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases");
+				Helper.TryOpenUrl(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases");
 		}
 
 		public static async Task ShowMessage(this MetroWindow window, string title, string message) => await window.ShowMessageAsync(title, message);
@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 										"New log.config settings are required for HDT to function correctly.\n\nTry starting HDT as administrator.\n\nIf that does not help, click \"show instructions\" to see how to update it manually.",
 										AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Affirmative)
-				Helper.TryOpenUrl("https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Setting-up-the-log.config");
+				Helper.TryOpenUrl("https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Setting-up-the-log.config");
 		}
 
 		public static async void ShowMissingCardsMessage(this MetroWindow window, Deck deck)
