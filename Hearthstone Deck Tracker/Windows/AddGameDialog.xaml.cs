@@ -137,6 +137,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				_game.Turns = turns;
 				_game.WasConceded = (YesNo)ComboBoxConceded.SelectedValue == Yes;
 				_game.Region = (Region)ComboBoxRegion.SelectedItem;
+				_game.HearthstoneBuild = Helper.GetHearthstoneBuild();
 				if(_game.GameMode == Casual || _game.GameMode == Ranked)
 					_game.Format = (Format)ComboBoxFormat.SelectedItem;
 				_tcs.SetResult(_game);
