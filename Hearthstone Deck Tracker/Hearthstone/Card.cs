@@ -428,6 +428,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return;
 
 			var stats = Database.GetCardFromId(Id);
+			if(stats == null)
+				return;
 			PlayerClass = stats.PlayerClass;
 			Rarity = stats.Rarity;
 			Type = stats.Type;
