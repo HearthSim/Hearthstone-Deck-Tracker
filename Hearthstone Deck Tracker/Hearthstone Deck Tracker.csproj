@@ -300,6 +300,7 @@
     <Compile Include="HsReplay\Converter\HsReplayConverter.cs" />
     <Compile Include="HsReplay\Converter\LogValidator.cs" />
     <Compile Include="HsReplay\Enums\Privacy.cs" />
+    <Compile Include="HsReplay\HsReplayInfo.cs" />
     <Compile Include="HsReplay\HsReplayManager.cs" />
     <Compile Include="HsReplay\HsReplayUpdater.cs" />
     <Compile Include="HsReplay\API\HsReplayUploader.cs" />
@@ -309,6 +310,7 @@
     <Compile Include="Enums\Hearthstone\Mode.cs" />
     <Compile Include="LogReader\Handlers\TagChangeActions.cs" />
     <Compile Include="LogReader\LogReaderHelper.cs" />
+    <Compile Include="HsReplay\ReplayFileManager.cs" />
     <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
     <Compile Include="Stats\CompiledStats\ChartStats.cs" />
     <Compile Include="Stats\CompiledStats\ClassStats.cs" />

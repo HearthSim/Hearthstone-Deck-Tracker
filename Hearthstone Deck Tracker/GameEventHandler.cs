@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -71,6 +72,14 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Friendly && Config.Instance.RecordFriendly
 											 || _game.CurrentGameMode == Casual && Config.Instance.RecordCasual
 											 || _game.CurrentGameMode == Spectator && Config.Instance.RecordSpectator;
+
+		public bool UploadCurrentGameMode => _game.CurrentGameMode == Practice && Config.Instance.HsReplayUploadPractice
+											 || _game.CurrentGameMode == Arena && Config.Instance.HsReplayUploadArena
+											 || _game.CurrentGameMode == Brawl && Config.Instance.HsReplayUploadBrawl
+											 || _game.CurrentGameMode == Ranked && Config.Instance.HsReplayUploadRanked
+											 || _game.CurrentGameMode == Friendly && Config.Instance.HsReplayUploadFriendly
+											 || _game.CurrentGameMode == Casual && Config.Instance.HsReplayUploadCasual
+											 || _game.CurrentGameMode == Spectator && Config.Instance.HsReplayUploadSpectator;
 
 		public void ResetConstructedImporting()
 		{
@@ -149,12 +158,20 @@ namespace Hearthstone_Deck_Tracker
 			await _game.GameModeDetection();
 			Log.Info("Detected game mode, continuing.");
 
-			if(Config.Instance.RecordReplays && _game.Entities.Count > 0 && !_game.SavedReplay && _game.CurrentGameStats != null
-			   && _game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
-				_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(_game.PowerLog);
-
 			if(_game.StoredGameStats != null && _game.CurrentGameStats != null)
 				_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
+
+			if(_game.CurrentGameStats != null)
+			{
+				var powerLog = new List<string>();
+				foreach(var stored in _game.StoredPowerLogs.Where(x => x.Item1 == _game.MetaData.GameId))
+					powerLog.AddRange(stored.Item2);
+				powerLog.AddRange(_game.PowerLog);
+				if(Config.Instance.RecordReplays && RecordCurrentGameMode && _game.Entities.Count > 0 && !_game.SavedReplay && _game.CurrentGameStats.ReplayFile == null)
+					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(powerLog);
+				if(Config.Instance.HsReplayAutoUpload && UploadCurrentGameMode)
+					HsReplayManager.ProcessPowerLog(powerLog, _game.CurrentGameStats, _game.MetaData, PlayerDeckMatchesRevealedCards).Forget();
+			}
 
 			SaveAndUpdateStats();
 
