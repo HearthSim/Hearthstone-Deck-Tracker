@@ -328,6 +328,7 @@
     <Compile Include="Utility\Extensions\TaskExtensions.cs" />
     <Compile Include="Utility\Extensions\VersionExtensions.cs" />
     <Compile Include="Utility\Extensions\ZipArchiveExtensions.cs" />
+    <Compile Include="Utility\GitHub.cs" />
     <Compile Include="Utility\LogConfig\LogConfigConstants.cs" />
     <Compile Include="Utility\LogConfig\LogConfigItem.cs" />
     <Compile Include="Utility\LogConfig\LogConfig.cs" />
