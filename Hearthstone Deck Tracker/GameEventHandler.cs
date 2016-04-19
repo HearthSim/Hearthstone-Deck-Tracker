@@ -203,15 +203,30 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleAttackingEntity(Entity entity)
 		{
 			_attackingEntity = entity;
-			if(_attackingEntity != null && _defendingEntity != null)
+			if(_attackingEntity == null || _defendingEntity == null)
+				return;
+			if(entity.IsControlledBy(_game.Player.Id))
 				_game.OpponentSecrets.ZeroFromAttack(_attackingEntity, _defendingEntity);
+			OnAttackEvent();
 		}
 
 		public void HandleDefendingEntity(Entity entity)
 		{
 			_defendingEntity = entity;
-			if(_attackingEntity != null && _defendingEntity != null)
+			if(_attackingEntity == null || _defendingEntity == null)
+				return;
+			if(entity.IsControlledBy(_game.Opponent.Id))
 				_game.OpponentSecrets.ZeroFromAttack(_attackingEntity, _defendingEntity);
+			OnAttackEvent();
+		}
+
+		private void OnAttackEvent()
+		{
+			var attackInfo = new AttackInfo((Card)_attackingEntity.Card.Clone(), (Card)_defendingEntity.Card.Clone());
+			if(_attackingEntity.IsControlledBy(_game.Player.Id))
+				GameEvents.OnPlayerMinionAttack.Execute(attackInfo);
+			else
+				GameEvents.OnOpponentMinionAttack.Execute(attackInfo);
 		}
 
 		public void HandlePlayerMinionPlayed()

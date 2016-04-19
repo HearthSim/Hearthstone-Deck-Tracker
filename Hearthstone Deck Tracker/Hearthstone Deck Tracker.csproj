@@ -127,6 +127,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="API\ActionList.cs" />
+    <Compile Include="API\AttackInfo.cs" />
     <Compile Include="API\DeckManagerEvents.cs" />
     <Compile Include="API\Core.cs" />
     <Compile Include="API\GameEvents.cs" />

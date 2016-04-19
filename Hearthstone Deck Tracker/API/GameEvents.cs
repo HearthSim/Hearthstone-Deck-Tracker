@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public static readonly ActionList<int> OnPlayerFatigue = new ActionList<int>();
 		public static readonly ActionList<Card> OnPlayerMinionMouseOver = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerHandMouseOver = new ActionList<Card>();
+		public static readonly ActionList<AttackInfo> OnPlayerMinionAttack = new ActionList<AttackInfo>();
 
 		#endregion
 
@@ -48,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public static readonly ActionList OnOpponentHeroPower = new ActionList();
 		public static readonly ActionList<int> OnOpponentFatigue = new ActionList<int>();
 		public static readonly ActionList<Card> OnOpponentMinionMouseOver = new ActionList<Card>();
+		public static readonly ActionList<AttackInfo> OnOpponentMinionAttack = new ActionList<AttackInfo>();
 
 		#endregion
 

@@ -86,17 +86,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void LastCardPlayedChange(IHsGameState gameState, int value) => gameState.LastCardPlayed = value;
 
-		private void DefendingChange(IHsGameState gameState, int id, IGame game, int value)
-		{
-			if(game.Entities[id].GetTag(CONTROLLER) == game.Opponent.Id)
-				gameState.GameHandler.HandleDefendingEntity(value == 1 ? game.Entities[id] : null);
-		}
+		private void DefendingChange(IHsGameState gameState, int id, IGame game, int value) 
+			=> gameState.GameHandler.HandleDefendingEntity(value == 1 ? game.Entities[id] : null);
 
-		private void AttackingChange(IHsGameState gameState, int id, IGame game, int value)
-		{
-			if(game.Entities[id].GetTag(CONTROLLER) == game.Player.Id)
-				gameState.GameHandler.HandleAttackingEntity(value == 1 ? game.Entities[id] : null);
-		}
+		private void AttackingChange(IHsGameState gameState, int id, IGame game, int value) 
+			=> gameState.GameHandler.HandleAttackingEntity(value == 1 ? game.Entities[id] : null);
 
 		private void ProposedDefenderChange(IGame game, int value) => game.OpponentSecrets.ProposedDefenderEntityId = value;
 
