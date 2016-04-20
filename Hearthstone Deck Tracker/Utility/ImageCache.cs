@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
@@ -45,6 +46,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static BitmapImage GetClassIcon(HeroClassAll @class)
 		{
+			if(LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+				return new BitmapImage();
 			var path = new StringBuilder("ClassIcons");
 			if(@class == HeroClassAll.All || @class == HeroClassAll.Archived)
 			{

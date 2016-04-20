@@ -89,12 +89,32 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public static bool ConstructedSummaryChartsExpanded
+		{
+			get { return Config.Instance.ConstructedSummaryChartsExpanded; }
+			set
+			{
+				Config.Instance.ConstructedSummaryChartsExpanded = value;
+				Config.Save();
+			}
+		}
+
 		public static bool DeckPickerWildIncludesStandard
 		{
 			get { return Config.Instance.DeckPickerWildIncludesStandard; }
 			set
 			{
 				Config.Instance.DeckPickerWildIncludesStandard = value;
+				Config.Save();
+			}
+		}
+
+		public static bool ConstructedStatsAsPercent
+		{
+			get { return Config.Instance.ConstructedStatsAsPercent; }
+			set
+			{
+				Config.Instance.ConstructedStatsAsPercent = value;
 				Config.Save();
 			}
 		}

@@ -216,6 +216,12 @@
     <Compile Include="Controls\Stats\Constructed\ConstructedGames.xaml.cs">
       <DependentUpon>ConstructedGames.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Constructed\ConstructedMatchupTable.xaml.cs">
+      <DependentUpon>ConstructedMatchupTable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Stats\Constructed\ConstructedSummary.xaml.cs">
+      <DependentUpon>ConstructedSummary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\Converters\CustomTimeframeVisibilityConverter.cs" />
     <Compile Include="Controls\Stats\Converters\IsNullConverter.cs" />
     <Compile Include="Controls\Stats\Converters\NotNullToBooleanConverter.cs" />
@@ -750,6 +756,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Stats\Constructed\ConstructedGames.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Constructed\ConstructedMatchupTable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Constructed\ConstructedSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

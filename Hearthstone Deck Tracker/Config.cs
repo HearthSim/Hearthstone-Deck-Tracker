@@ -133,6 +133,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("dark")]
 		public string CardBarTheme = "dark";
 
+		[DefaultValue(false)]
+		public bool ConstructedStatsAsPercent = false;
+
+		[DefaultValue(true)]
+		public bool ConstructedSummaryChartsExpanded = true;
+
 		[DefaultValue(true)]
 		public bool ClearLogFileAfterGame = true;
 

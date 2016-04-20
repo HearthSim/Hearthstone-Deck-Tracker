@@ -42,6 +42,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public ConstructedGames ConstructedGames { get; } = new ConstructedGames();
 
+		public ConstructedSummary ConstructedSummary { get; } = new ConstructedSummary();
+
 		public object ArenaAdvancedCharts => _arenaAdvancedCharts;
 
 		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -94,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public void UpdateStats()
 		{
-			if(TreeViewItemConstructedGames.IsSelected)
+			if(TreeViewItemConstructedGames.IsSelected || TreeViewItemConstructedSummary.IsSelected)
 			{
 				ConstructedStats.Instance.UpdateConstructedStats();
 				return;
@@ -138,6 +140,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		private void TreeViewItemConstructedGames_OnSelected(object sender, RoutedEventArgs e)
 		{
 				//TODO
+		}
+
+		private void TreeViewItemConstructedSummary_OnSelected(object sender, RoutedEventArgs e)
+		{
+			
 		}
 	}
 

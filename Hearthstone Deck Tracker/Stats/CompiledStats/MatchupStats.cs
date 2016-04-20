@@ -39,5 +39,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 				return new SolidColorBrush(WinRate >= 0.5 ? Colors.Green : Colors.Red);
 			}
 		}
+
+		public string Summary => Config.Instance.ConstructedStatsAsPercent ? (double.IsNaN(WinRate) ? "-" : $" {WinRatePercent}%") : $"{Wins} - {Losses}";
 	}
 }

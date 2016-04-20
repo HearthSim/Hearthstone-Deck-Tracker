@@ -9,7 +9,7 @@
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:Width="500">
+             d:DesignHeight="600" d:DesignWidth="500">
     <UserControl.Resources>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     </UserControl.Resources>
