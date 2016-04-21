@@ -7,4 +7,12 @@ namespace Hearthstone_Deck_Tracker.Enums
 		Loss,
 		Draw
 	}
+
+	public enum GameResultAll
+	{
+		All,
+		Win,
+		Loss,
+		Draw
+	}
 }

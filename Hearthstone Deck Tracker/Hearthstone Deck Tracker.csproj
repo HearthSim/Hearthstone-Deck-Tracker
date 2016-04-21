@@ -177,6 +177,9 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Controls\Stats\ArenaFilters.xaml.cs">
+      <DependentUpon>ArenaFilters.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\ArenaRewards.xaml.cs">
       <DependentUpon>ArenaRewards.xaml</DependentUpon>
     </Compile>
@@ -213,6 +216,9 @@
     <Compile Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml.cs">
       <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\ConstructedFilters.xaml.cs">
+      <DependentUpon>ConstructedFilters.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\Constructed\ConstructedGames.xaml.cs">
       <DependentUpon>ConstructedGames.xaml</DependentUpon>
     </Compile>
@@ -226,6 +232,7 @@
     <Compile Include="Controls\Stats\Converters\IsNullConverter.cs" />
     <Compile Include="Controls\Stats\Converters\NotNullToBooleanConverter.cs" />
     <Compile Include="Controls\Stats\Converters\ToUpperValueConverter.cs" />
+    <Compile Include="Controls\Stats\HeroClassStatsFilterWrapper.cs" />
     <Compile Include="Controls\Stats\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
@@ -236,6 +243,7 @@
     <Compile Include="Enums\ClassColorScheme.cs" />
     <Compile Include="Enums\DeckLayout.cs" />
     <Compile Include="Enums\EnumValuesExtension.cs" />
+    <Compile Include="Enums\Format.cs" />
     <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
     <Compile Include="Enums\IconStyle.cs" />
     <Compile Include="Enums\LastPlayedDateFormat.cs" />
@@ -707,6 +715,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Stats\ArenaFilters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Stats\ArenaRewards.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -752,6 +764,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Stats\Arena\Charts\ChartWinsByClass.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\ConstructedFilters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

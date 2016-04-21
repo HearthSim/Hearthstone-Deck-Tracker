@@ -5,4 +5,11 @@
 		Yes,
 		No
 	}
+
+	public enum AllYesNo
+	{
+		All,
+		Yes,
+		No
+	}
 }

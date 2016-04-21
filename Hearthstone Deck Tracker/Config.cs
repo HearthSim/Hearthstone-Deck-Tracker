@@ -139,6 +139,57 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ConstructedSummaryChartsExpanded = true;
 
+		[DefaultValue(GameMode.All)]
+		public GameMode ConstructedStatsModeFilter = GameMode.All;
+
+		[DefaultValue(DisplayedTimeFrame.AllTime)]
+		public DisplayedTimeFrame ConstructedStatsTimeFrameFilter = DisplayedTimeFrame.AllTime;
+
+		[DefaultValue(HeroClassStatsFilter.All)]
+		public HeroClassStatsFilter ConstructedStatsClassFilter = HeroClassStatsFilter.All;
+
+		[DefaultValue(HeroClassStatsFilter.All)]
+		public HeroClassStatsFilter ConstructedStatsOpponentClassFilter = HeroClassStatsFilter.All;
+
+		[DefaultValue(RegionAll.ALL)]
+		public RegionAll ConstructedStatsRegionFilter = RegionAll.ALL;
+
+		[DefaultValue(Format.All)]
+		public Format ConstructedStatsFormatFilter = Format.All;
+
+		[DefaultValue(AllYesNo.All)]
+		public AllYesNo ConstructedStatsCoinFilter = AllYesNo.All;
+
+		[DefaultValue(GameResultAll.All)]
+		public GameResultAll ConstructedStatsResultFilter = GameResultAll.All;
+
+		[DefaultValue(null)]
+		public DateTime? ConstructedStatsTimeFrameCustomStart = null;
+
+		[DefaultValue(null)]
+		public DateTime? ConstructedStatsTimeFrameCustomEnd = null;
+
+		[DefaultValue(true)]
+		public bool ConstructedStatsIncludeArchived = true;
+
+		[DefaultValue("L1")]
+		public string ConstructedStatsRankFilterMin = "L1";
+
+		[DefaultValue("25")]
+		public string ConstructedStatsRankFilterMax = "25";
+
+		[DefaultValue(0)]
+		public int ConstructedStatsTurnsFilterMin = 0;
+
+		[DefaultValue(99)]
+		public int ConstructedStatsTurnsFilterMax = 99;
+
+		[DefaultValue("")]
+		public string ConstructedStatsOpponentNameFilter = "";
+
+		[DefaultValue("")]
+		public string ConstructedStatsNoteFilter = "";
+
 		[DefaultValue(true)]
 		public bool ClearLogFileAfterGame = true;
 
@@ -802,6 +853,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool StartWithWindows = false;
+
+		[DefaultValue(true)]
+		public bool StatsAutoRefresh = true;
 
 		[DefaultValue(false)]
 		public bool StatsClassOverviewIsExpanded = false;

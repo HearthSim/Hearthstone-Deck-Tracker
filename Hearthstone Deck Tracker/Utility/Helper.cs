@@ -662,12 +662,14 @@ namespace Hearthstone_Deck_Tracker
 			return color;
 		}
 
-		public static MetroWindow GetParentWindow(DependencyObject current)
+		public static MetroWindow GetParentWindow(DependencyObject current) => GetVisualParent<MetroWindow>(current);
+
+		public static T GetVisualParent<T>(DependencyObject current)
 		{
 			var parent = VisualTreeHelper.GetParent(current);
-			while(parent != null && !(parent is MetroWindow))
+			while(parent != null && !(parent is T))
 				parent = VisualTreeHelper.GetParent(parent);
-			return (MetroWindow)parent;
+			return (T)(object)parent;
 		}
 
 		public static bool IsWindows10()

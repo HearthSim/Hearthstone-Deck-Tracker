@@ -4,12 +4,11 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+using System.Windows.Controls.Primitives;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena;
 using Hearthstone_Deck_Tracker.Controls.Stats.Constructed;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
-using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -26,13 +25,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		public Overview()
 		{
 			InitializeComponent();
-			ComboBoxTimeframe.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));
-			ComboBoxTimeframe.SelectedItem = Config.Instance.ArenaStatsTimeFrameFilter;
-			ComboBoxClass.ItemsSource =
-				Enum.GetValues(typeof(HeroClassStatsFilter)).Cast<HeroClassStatsFilter>().Select(x => new HeroClassStatsFilterWrapper(x));
-			ComboBoxClass.SelectedItem = new HeroClassStatsFilterWrapper(Config.Instance.ArenaStatsClassFilter);
-			ComboBoxRegion.ItemsSource = Enum.GetValues(typeof(RegionAll));
-			ComboBoxRegion.SelectedItem = Config.Instance.ArenaStatsRegionFilter;
+			ArenaFilters.SetUpdateCallback(UpdateCallBack);
+			ConstructedFilters.SetUpdateCallback(UpdateCallBack);
 			_initialized = true;
 		}
 
@@ -44,54 +38,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public ConstructedSummary ConstructedSummary { get; } = new ConstructedSummary();
 
+		public ConstructedFilters ConstructedFilters { get; } = new ConstructedFilters();
+
+		public ArenaFilters ArenaFilters { get; } = new ArenaFilters();
+
 		public object ArenaAdvancedCharts => _arenaAdvancedCharts;
 
-		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void UpdateCallBack()
 		{
-			if(!_initialized)
-				return;
-			Config.Instance.ArenaStatsTimeFrameFilter = (DisplayedTimeFrame)ComboBoxTimeframe.SelectedItem;
-			Config.Save();
-			UpdateStats();
-		}
-
-		private void ComboBoxClass_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
-			Config.Save();
-			UpdateStats();
-		}
-
-		private void DatePickerCustomTimeFrame_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			UpdateStats();
-		}
-
-		private void ComboBoxRegion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ArenaStatsRegionFilter = (RegionAll)ComboBoxRegion.SelectedItem;
-			Config.Save();
-			UpdateStats();
-		}
-
-		private void CheckBoxArchived_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			UpdateStats();
-		}
-
-		private void CheckBoxArchived_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			UpdateStats();
+			if(Config.Instance.StatsAutoRefresh)
+				UpdateStats();
 		}
 
 		public void UpdateStats()
@@ -146,27 +102,25 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			
 		}
-	}
 
-	public class HeroClassStatsFilterWrapper
-	{
-		public HeroClassStatsFilterWrapper(HeroClassStatsFilter heroClass)
+		private void TreeViewStats_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
 		{
-			HeroClass = heroClass;
+			var selected = TreeViewStats.SelectedItem as TreeViewItem;
+			if(selected == null)
+				return;
+			if(selected.Equals(TreeViewItemArenaRuns) || (Helper.GetVisualParent<TreeViewItem>(selected)?.Equals(TreeViewItemArenaRuns) ?? false))
+				ContentControlFilter.Content = ArenaFilters;
+			else if(selected.Equals(TreeViewItemConstructed) || (Helper.GetVisualParent<TreeViewItem>(selected)?.Equals(TreeViewItemConstructed) ?? false))
+				ContentControlFilter.Content = ConstructedFilters;
 		}
 
-		public HeroClassStatsFilter HeroClass { get; }
+		private void ButtonRefresh_OnClick(object sender, RoutedEventArgs e) => UpdateStats();
 
-		public BitmapImage ClassImage => ImageCache.GetClassIcon(HeroClass.ToString());
-
-		public Visibility ImageVisibility => HeroClass == HeroClassStatsFilter.All ? Visibility.Collapsed : Visibility.Visible;
-
-		public override bool Equals(object obj)
+		private void ButtonMore_OnClick(object sender, RoutedEventArgs e)
 		{
-			var wrapper = obj as HeroClassStatsFilterWrapper;
-			return wrapper != null && HeroClass.Equals(wrapper.HeroClass);
+			ButtonMoreContextMenu.Placement = PlacementMode.Bottom;
+			ButtonMoreContextMenu.PlacementTarget = ButtonMore;
+			ButtonMoreContextMenu.IsOpen = true;
 		}
-
-		public override int GetHashCode() => HeroClass.GetHashCode();
 	}
 }

@@ -53,6 +53,9 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[Description("Season")]
 		CurrentSeason,
 
+		[Description("Last Season")]
+		LastSeason,
+
 		[Description("All Time")]
 		AllTime,
 
