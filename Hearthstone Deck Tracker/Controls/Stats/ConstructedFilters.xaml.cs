@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ComboBoxFormat.SelectedItem = Config.Instance.ConstructedStatsFormatFilter;
 			ComboBoxCoin.ItemsSource = Enum.GetValues(typeof(AllYesNo));
 			ComboBoxCoin.SelectedItem = Config.Instance.ConstructedStatsCoinFilter;
-			ComboBoxResult.ItemsSource = Enum.GetValues(typeof(GameResult));
+			ComboBoxResult.ItemsSource = Enum.GetValues(typeof(GameResultAll));
 			ComboBoxResult.SelectedItem = Config.Instance.ConstructedStatsResultFilter;
 			ComboBoxOpponentClass.ItemsSource =
 				Enum.GetValues(typeof(HeroClassStatsFilter)).Cast<HeroClassStatsFilter>().Select(x => new HeroClassStatsFilterWrapper(x));

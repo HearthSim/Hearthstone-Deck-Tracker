@@ -25,33 +25,39 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 
 		public IEnumerable<GameStats> GetFilteredGames(bool archivedFilter = true, bool classFilter = true, bool regionFilter = true,
-													   bool timeframeFilter = true)
+													   bool timeframeFilter = true, bool modeFilter = true, bool rankFilter = true, 
+													   bool filterFormat = true, bool turnsFilter = true, bool coinFilter = true,
+													   bool resultFilter = true, bool oppClassFilter = true, bool oppNameFilter = true,
+													   bool noteFilter = true)
 		{
 			IEnumerable<Deck> decks = DeckList.Instance.Decks;
-			if(archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
+			if(archivedFilter && !Config.Instance.ConstructedStatsIncludeArchived)
 				decks = decks.Where(x => !x.Archived);
 
 			var filtered = decks.SelectMany(x => x.DeckStats.Games);
 
-			//if(includenodeck)
 			filtered = filtered.Concat(DefaultDeckStats.Instance.DeckStats.SelectMany(x => x.Games));
 
 
-			if(classFilter && Config.Instance.ArenaStatsClassFilter != HeroClassStatsFilter.All)
-				filtered = filtered.Where(x => x.PlayerHero == Config.Instance.ArenaStatsClassFilter.ToString());
-			if(regionFilter && Config.Instance.ArenaStatsRegionFilter != RegionAll.ALL)
+			if(classFilter && Config.Instance.ConstructedStatsClassFilter != HeroClassStatsFilter.All)
+				filtered = filtered.Where(x => x.PlayerHero == Config.Instance.ConstructedStatsClassFilter.ToString());
+			if(regionFilter && Config.Instance.ConstructedStatsRegionFilter != RegionAll.ALL)
 			{
-				var region = (Region)Enum.Parse(typeof(Region), Config.Instance.ArenaStatsRegionFilter.ToString());
+				var region = (Region)Enum.Parse(typeof(Region), Config.Instance.ConstructedStatsRegionFilter.ToString());
 				filtered = filtered.Where(x => x.Region == region);
 			}
 			if(timeframeFilter)
 			{
-				switch(Config.Instance.ArenaStatsTimeFrameFilter)
+				switch(Config.Instance.ConstructedStatsTimeFrameFilter)
 				{
 					case DisplayedTimeFrame.AllTime:
 						break;
 					case DisplayedTimeFrame.CurrentSeason:
-						filtered = filtered.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+						filtered = filtered.Where(g => g.StartTime >= new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+						break;
+					case DisplayedTimeFrame.LastSeason:
+						filtered = filtered.Where(g => g.StartTime >= new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-1) 
+													&& g.StartTime < new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
 						break;
 					case DisplayedTimeFrame.ThisWeek:
 						filtered = filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
@@ -60,12 +66,71 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 						filtered = filtered.Where(g => g.StartTime > DateTime.Today);
 						break;
 					case DisplayedTimeFrame.Custom:
-						var start = (Config.Instance.ArenaStatsTimeFrameCustomStart ?? DateTime.MinValue).Date;
-						var end = (Config.Instance.ArenaStatsTimeFrameCustomEnd ?? DateTime.MaxValue).Date;
+						var start = (Config.Instance.ConstructedStatsTimeFrameCustomStart ?? DateTime.MinValue).Date;
+						var end = (Config.Instance.ConstructedStatsTimeFrameCustomEnd ?? DateTime.MaxValue).Date;
 						filtered = filtered.Where(g => g.EndTime.Date >= start && g.EndTime.Date <= end);
 						break;
 				}
 			}
+			if(modeFilter && Config.Instance.ConstructedStatsModeFilter != GameMode.All)
+				filtered = filtered.Where(x => x.GameMode == Config.Instance.ConstructedStatsModeFilter);
+			if(rankFilter)
+			{
+				var min = Config.Instance.ConstructedStatsRankFilterMin;
+				int rank;
+				if(min != "L1")
+				{
+					if(min.StartsWith("L"))
+					{
+						//if(int.TryParse(min.Substring(1), out rank))
+						//	filtered = filtered.Where(x => x.LegendRank >= rank);
+					}
+					else
+					{
+						if(int.TryParse(min, out rank))
+							filtered = filtered.Where(x => x.Rank >= rank);
+					}
+				}
+				var max = Config.Instance.ConstructedStatsRankFilterMax;
+				if(max != "25")
+				{
+					if(max.StartsWith("L"))
+					{
+						//if(int.TryParse(min.Substring(1), out rank))
+						//	filtered = filtered.Where(x => x.LegendRank <= rank);
+					}
+					else
+					{
+						if(int.TryParse(max, out rank))
+							filtered = filtered.Where(x => x.Rank <= rank);
+					}
+				}
+			}
+			//if(filterFormat && Config.Instance.ConstructedStatsFormatFilter != Format.All)
+			//{
+			//	//TODO
+			//}
+			if(turnsFilter)
+			{
+				if(Config.Instance.ConstructedStatsTurnsFilterMin > 0)
+					filtered = filtered.Where(x => x.Turns >= Config.Instance.ConstructedStatsTurnsFilterMin);
+				if(Config.Instance.ConstructedStatsTurnsFilterMax < 99)
+					filtered = filtered.Where(x => x.Turns <= Config.Instance.ConstructedStatsTurnsFilterMax);
+			}
+			if(coinFilter && Config.Instance.ConstructedStatsCoinFilter != AllYesNo.All)
+				filtered = filtered.Where(x => x.Coin == (Config.Instance.ConstructedStatsCoinFilter == AllYesNo.Yes));
+			if(resultFilter && Config.Instance.ConstructedStatsResultFilter != GameResultAll.All)
+			{
+				var result = (GameResult)Enum.Parse(typeof(GameResult), Config.Instance.ConstructedStatsResultFilter.ToString());
+				filtered = filtered.Where(x => x.Result == result);
+			}
+			if(oppClassFilter && Config.Instance.ConstructedStatsOpponentClassFilter != HeroClassStatsFilter.All)
+				filtered = filtered.Where(x => x.OpponentHero == Config.Instance.ConstructedStatsOpponentClassFilter.ToString());
+			if(oppNameFilter && !string.IsNullOrEmpty(Config.Instance.ConstructedStatsOpponentNameFilter))
+				filtered = filtered.Where(x => x.OpponentName?.Contains(Config.Instance.ConstructedStatsOpponentNameFilter) ?? false);
+			if(noteFilter && !string.IsNullOrEmpty(Config.Instance.ConstructedStatsNoteFilter))
+				filtered = filtered.Where(x => x.Note?.Contains(Config.Instance.ConstructedStatsNoteFilter) ?? false);
+
 			return filtered;
 		}
 
