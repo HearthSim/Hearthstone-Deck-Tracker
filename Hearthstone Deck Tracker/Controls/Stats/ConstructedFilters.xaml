@@ -7,6 +7,7 @@
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
     <UserControl.Resources>
@@ -105,7 +106,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Name="TextBoxRankMin" Height="26" TextAlignment="Center" Grid.Column="0" Grid.Row="0" LostFocus="TextBoxRankMin_OnLostFocus">
+            <TextBox Name="TextBoxRankMin" Height="26" TextAlignment="Center" Grid.Column="0" Grid.Row="0" LostFocus="TextBoxRankMin_OnLostFocus" PreviewKeyUp="TextBox_OnEnter">
                 <TextBox.Text>
                     <Binding Path="ConstructedStatsRankFilterMin" Source="{StaticResource ConfigWrapper}">
                         <Binding.ValidationRules>
@@ -115,7 +116,7 @@
                 </TextBox.Text>
             </TextBox>
             <Label Content="to" Grid.Column="1" Grid.Row="0"/>
-            <TextBox Name="TextBoxRankMax" Height="26" TextAlignment="Center" Grid.Column="2" Grid.Row="0" LostFocus="TextBoxRankMax_OnLostFocus">
+            <TextBox Name="TextBoxRankMax" Height="26" TextAlignment="Center" Grid.Column="2" Grid.Row="0" LostFocus="TextBoxRankMax_OnLostFocus" PreviewKeyUp="TextBox_OnEnter">
                 <TextBox.Text>
                     <Binding Path="ConstructedStatsRankFilterMax" Source="{StaticResource ConfigWrapper}">
                         <Binding.ValidationRules>
@@ -148,10 +149,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBox Name="TextBoxTurnsMin" Height="26" Text="0" TextAlignment="Center" Grid.Column="0" Grid.Row="0" MaxLength="3"
-                     PreviewTextInput="TextBoxTurn_OnPreviewTextInput" LostFocus="TextBoxTurnsMin_OnLostFocus"/>
+                     PreviewTextInput="TextBoxTurn_OnPreviewTextInput" LostFocus="TextBoxTurnsMin_OnLostFocus" PreviewKeyUp="TextBox_OnEnter"/>
             <Label Content="to" Grid.Column="1" Grid.Row="0"/>
             <TextBox Name="TextBoxTurnsMax" Height="26" Text="99" TextAlignment="Center" Grid.Column="2" Grid.Row="0" MaxLength="3"
-                     PreviewTextInput="TextBoxTurn_OnPreviewTextInput" LostFocus="TextBoxTurnsMax_OnLostFocus"/>
+                     PreviewTextInput="TextBoxTurn_OnPreviewTextInput" LostFocus="TextBoxTurnsMax_OnLostFocus" PreviewKeyUp="TextBox_OnEnter"/>
         </Grid>
         <Label Content="Coin:" Grid.Column="0" Grid.Row="9" Margin="0,5,0,0"/>
         <ComboBox Name="ComboBoxCoin" SelectedIndex="0" Grid.Column="1" Grid.Row="9" Margin="0,5,0,0"
@@ -186,8 +187,15 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <Label Content="O. Name:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="12"/>
-        <TextBox Name="TextBoxOpponentName" Grid.Column="1" Grid.Row="12" Margin="0,5,0,0" LostFocus="TextBoxOpponentName_OnLostFocus"/>
+        <TextBox Name="TextBoxOpponentName" controls:TextBoxHelper.Watermark="Opponent name..." Grid.Column="1" Grid.Row="12" Margin="0,5,0,0" 
+                 LostFocus="TextBoxOpponentName_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
         <Label Content="Note:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="13"/>
-        <TextBox Name="TextBoxNote" Grid.Column="1" Grid.Row="13" Margin="0,5,0,0" LostFocus="TextBoxNote_OnLostFocus"/>
+        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="Match notes..." Grid.Column="1" Grid.Row="13" Margin="0,5,0,0" 
+                 LostFocus="TextBoxNote_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
+        <Label Content="Tags:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="14"/>
+        <CheckBox Name="CheckBoxTags" Content="Apply tag filters" Margin="0,5,0,0" Grid.Column="1" Grid.Row="14"
+                              ToolTip="Apply tag filteres currently set in 'DeckPicker' > 'Sort/Filter Decks' (double arrow button)."
+                              IsChecked="{Binding Path=ConstructedStatsApplyTagFilters, Source={StaticResource ConfigWrapper}}"
+                              Checked="CheckBoxArchived_OnChecked" Unchecked="CheckBoxArchived_OnUnchecked" />
     </Grid>
 </UserControl>

@@ -1,22 +1,17 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats
 {
@@ -28,13 +23,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		private readonly bool _initialized;
 		private Action _updateCallback;
 
-		internal void SetUpdateCallback(Action action)
-		{
-			if(_updateCallback == null)
-				_updateCallback = action;
-		}
-
-		public ConstructedFilters()
+		public ConstructedFilters(Action updateCallback = null)
 		{
 			InitializeComponent();
 			ComboBoxTimeframe.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));
@@ -68,8 +57,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			TextBoxNote.Text = Config.Instance.ConstructedStatsNoteFilter;
 			TextBoxTurnsMin.Text = Config.Instance.ConstructedStatsTurnsFilterMin.ToString();
 			TextBoxTurnsMax.Text = Config.Instance.ConstructedStatsTurnsFilterMax.ToString();
-
+			if(updateCallback != null)
+				SetUpdateCallback(updateCallback);
 			_initialized = true;
+		}
+
+		public Visibility RankFilterVisibility
+			=> Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked ? Visibility.Visible : Visibility.Collapsed;
+
+		public Visibility FormatFilterVisibility
+			=> Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked || Config.Instance.ConstructedStatsModeFilter == GameMode.Casual
+					? Visibility.Visible : Visibility.Collapsed;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		internal void SetUpdateCallback(Action callback)
+		{
+			if(_updateCallback == null)
+				_updateCallback = callback;
 		}
 
 		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -125,6 +130,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			Config.Save();
 			_updateCallback?.Invoke();
 		}
+
 		private void CheckBoxArchived_OnChecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -138,15 +144,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			_updateCallback?.Invoke();
 		}
-
-		public Visibility RankFilterVisibility
-			=> Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked ? Visibility.Visible : Visibility.Collapsed;
-
-		public Visibility FormatFilterVisibility
-			=> Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked || Config.Instance.ConstructedStatsModeFilter == GameMode.Casual
-					? Visibility.Visible : Visibility.Collapsed;
-
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -257,6 +254,38 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			Config.Instance.ConstructedStatsTurnsFilterMax = value;
 			Config.Save();
 			_updateCallback?.Invoke();
+		}
+
+		public void Reset()
+		{
+			new List<string>
+			{
+				nameof(Config.Instance.ConstructedStatsTimeFrameFilter),
+				nameof(Config.Instance.ConstructedStatsTimeFrameCustomStart),
+				nameof(Config.Instance.ConstructedStatsTimeFrameCustomEnd),
+				nameof(Config.Instance.ConstructedStatsClassFilter),
+				nameof(Config.Instance.ConstructedStatsRegionFilter),
+				nameof(Config.Instance.ConstructedStatsIncludeArchived),
+				nameof(Config.Instance.ConstructedStatsModeFilter),
+				nameof(Config.Instance.ConstructedStatsRankFilterMin),
+				nameof(Config.Instance.ConstructedStatsRankFilterMax),
+				nameof(Config.Instance.ConstructedStatsFormatFilter),
+				nameof(Config.Instance.ConstructedStatsTurnsFilterMin),
+				nameof(Config.Instance.ConstructedStatsTurnsFilterMax),
+				nameof(Config.Instance.ConstructedStatsCoinFilter),
+				nameof(Config.Instance.ConstructedStatsResultFilter),
+				nameof(Config.Instance.ConstructedStatsOpponentClassFilter),
+				nameof(Config.Instance.ConstructedStatsOpponentNameFilter),
+				nameof(Config.Instance.ConstructedStatsNoteFilter),
+				nameof(Config.Instance.ConstructedStatsApplyTagFilters)
+			}.ForEach(Config.Instance.Reset);
+			Config.Save();
+		}
+
+		private void TextBox_OnEnter(object sender, KeyEventArgs e)
+		{
+			if(e.Key == Key.Enter)
+				(sender as TextBox)?.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
 		}
 	}
 }

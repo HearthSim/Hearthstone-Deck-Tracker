@@ -1,18 +1,13 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats
 {
@@ -24,13 +19,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		private readonly bool _initialized;
 		private Action _updateCallback;
 
-		internal void SetUpdateCallback(Action action)
-		{
-			if(_updateCallback == null)
-				_updateCallback = action;
-		}
-
-		public ArenaFilters()
+		public ArenaFilters(Action updateCallback = null)
 		{
 			InitializeComponent();
 			ComboBoxTimeframe.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));
@@ -40,7 +29,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ComboBoxClass.SelectedItem = new HeroClassStatsFilterWrapper(Config.Instance.ArenaStatsClassFilter);
 			ComboBoxRegion.ItemsSource = Enum.GetValues(typeof(RegionAll));
 			ComboBoxRegion.SelectedItem = Config.Instance.ArenaStatsRegionFilter;
+			if(updateCallback != null)
+				SetUpdateCallback(updateCallback);
 			_initialized = true;
+		}
+
+		internal void SetUpdateCallback(Action callback)
+		{
+			if(_updateCallback == null)
+				_updateCallback = callback;
 		}
 
 		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -89,6 +86,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			_updateCallback?.Invoke();
+		}
+
+		public void Reset()
+		{
+			new List<string>
+			{
+				nameof(Config.Instance.ArenaStatsTimeFrameFilter),
+				nameof(Config.Instance.ArenaStatsTimeFrameCustomStart),
+				nameof(Config.Instance.ArenaStatsTimeFrameCustomEnd),
+				nameof(Config.Instance.ArenaStatsClassFilter),
+				nameof(Config.Instance.ArenaStatsRegionFilter),
+				nameof(Config.Instance.ArenaStatsIncludeArchived)
+			}.ForEach(Config.Instance.Reset);
+			Config.Save();
 		}
 	}
 }

@@ -1,13 +1,10 @@
 ﻿#region
 
-using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena;
 using Hearthstone_Deck_Tracker.Controls.Stats.Constructed;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 
 #endregion
@@ -27,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			InitializeComponent();
 			ArenaFilters.SetUpdateCallback(UpdateCallBack);
 			ConstructedFilters.SetUpdateCallback(UpdateCallBack);
+			ContentControlFilter.Content = ArenaFilters;
 			_initialized = true;
 		}
 
@@ -38,9 +36,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public ConstructedSummary ConstructedSummary { get; } = new ConstructedSummary();
 
-		public ConstructedFilters ConstructedFilters { get; } = new ConstructedFilters();
+		public ConstructedFilters ConstructedFilters { get; private set; } = new ConstructedFilters();
 
-		public ArenaFilters ArenaFilters { get; } = new ArenaFilters();
+		public ArenaFilters ArenaFilters { get; private set; } = new ArenaFilters();
 
 		public object ArenaAdvancedCharts => _arenaAdvancedCharts;
 
@@ -95,12 +93,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		private void TreeViewItemConstructedGames_OnSelected(object sender, RoutedEventArgs e)
 		{
-				//TODO
+			//TODO
 		}
 
 		private void TreeViewItemConstructedSummary_OnSelected(object sender, RoutedEventArgs e)
 		{
-			
 		}
 
 		private void TreeViewStats_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -108,9 +105,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			var selected = TreeViewStats.SelectedItem as TreeViewItem;
 			if(selected == null)
 				return;
-			if(selected.Equals(TreeViewItemArenaRuns) || (Helper.GetVisualParent<TreeViewItem>(selected)?.Equals(TreeViewItemArenaRuns) ?? false))
+			if(selected.Equals(TreeViewItemArenaRuns)
+			   || (Helper.GetVisualParent<TreeViewItem>(selected)?.Equals(TreeViewItemArenaRuns) ?? false))
 				ContentControlFilter.Content = ArenaFilters;
-			else if(selected.Equals(TreeViewItemConstructed) || (Helper.GetVisualParent<TreeViewItem>(selected)?.Equals(TreeViewItemConstructed) ?? false))
+			else if(selected.Equals(TreeViewItemConstructed)
+					|| (Helper.GetVisualParent<TreeViewItem>(selected)?.Equals(TreeViewItemConstructed) ?? false))
 				ContentControlFilter.Content = ConstructedFilters;
 		}
 
@@ -121,6 +120,25 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ButtonMoreContextMenu.Placement = PlacementMode.Bottom;
 			ButtonMoreContextMenu.PlacementTarget = ButtonMore;
 			ButtonMoreContextMenu.IsOpen = true;
+		}
+
+		private void MenuItemReset_OnClick(object sender, RoutedEventArgs e)
+		{
+			if(ContentControlFilter.Content is ArenaFilters)
+			{
+				ArenaFilters.Reset();
+				ArenaFilters = new ArenaFilters(UpdateCallBack);
+				ContentControlFilter.Content = ArenaFilters;
+			}
+			else if(ContentControlFilter.Content is ConstructedFilters)
+			{
+				ConstructedFilters.Reset();
+				ConstructedFilters = new ConstructedFilters(UpdateCallBack);
+				ContentControlFilter.Content = ConstructedFilters;
+			}
+			else
+				return;
+			UpdateStats();
 		}
 	}
 }

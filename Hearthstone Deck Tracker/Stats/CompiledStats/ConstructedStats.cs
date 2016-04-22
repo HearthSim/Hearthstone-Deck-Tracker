@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 													   bool timeframeFilter = true, bool modeFilter = true, bool rankFilter = true, 
 													   bool filterFormat = true, bool turnsFilter = true, bool coinFilter = true,
 													   bool resultFilter = true, bool oppClassFilter = true, bool oppNameFilter = true,
-													   bool noteFilter = true)
+													   bool noteFilter = true, bool applyTagFilters = true)
 		{
 			IEnumerable<Deck> decks = DeckList.Instance.Decks;
 			if(archivedFilter && !Config.Instance.ConstructedStatsIncludeArchived)
@@ -130,6 +130,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 				filtered = filtered.Where(x => x.OpponentName?.Contains(Config.Instance.ConstructedStatsOpponentNameFilter) ?? false);
 			if(noteFilter && !string.IsNullOrEmpty(Config.Instance.ConstructedStatsNoteFilter))
 				filtered = filtered.Where(x => x.Note?.Contains(Config.Instance.ConstructedStatsNoteFilter) ?? false);
+			if(applyTagFilters && Config.Instance.ConstructedStatsApplyTagFilters && !Config.Instance.SelectedTags.Contains("All"))
+				filtered = filtered.Where(x => DeckList.Instance.Decks.Any(d => d.DeckId == x.DeckId && d.Tags.Any(t => Config.Instance.SelectedTags.Contains(t))));
 
 			return filtered;
 		}

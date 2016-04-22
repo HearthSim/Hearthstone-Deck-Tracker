@@ -136,6 +136,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ConstructedStatsAsPercent = false;
 
+		[DefaultValue(false)]
+		public bool ConstructedStatsApplyTagFilters = false;
+
 		[DefaultValue(true)]
 		public bool ConstructedSummaryChartsExpanded = true;
 
