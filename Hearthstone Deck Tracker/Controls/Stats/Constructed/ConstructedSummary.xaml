@@ -54,13 +54,13 @@
             <GroupBox PreviewMouseWheel="ForwardScrollEvent">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="OVERVIEW" Foreground="White"/>
+                        <TextBlock Text="{Binding GroupBoxMatchupsHeader, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="White"/>
                         <CheckBox Name="CheckBoxPercent" Content="show as percent" Margin="20,0,0,0" Foreground="White" 
                                   IsChecked="{Binding Path=ConstructedStatsAsPercent, Source={StaticResource ConfigWrapper}}"
                                   Checked="CheckBoxPercent_OnCheckedChanged" Unchecked="CheckBoxPercent_OnCheckedChanged"/>
                     </StackPanel>
                 </GroupBox.Header>
-                <local:ConstructedMatchupTable x:Name="ConstructedMatchupTable"/>
+                <ContentControl Name="ContentControlMatchups"/>
             </GroupBox>
         </DockPanel>
     </ScrollViewer>

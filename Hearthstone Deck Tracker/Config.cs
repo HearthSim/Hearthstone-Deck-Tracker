@@ -193,6 +193,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string ConstructedStatsNoteFilter = "";
 
+		[DefaultValue(false)]
+		public bool ConstructedStatsActiveDeckOnly = false;
+
 		[DefaultValue(true)]
 		public bool ClearLogFileAfterGame = true;
 

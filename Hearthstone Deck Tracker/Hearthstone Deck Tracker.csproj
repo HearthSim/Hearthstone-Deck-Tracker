@@ -219,6 +219,9 @@
     <Compile Include="Controls\Stats\ConstructedFilters.xaml.cs">
       <DependentUpon>ConstructedFilters.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Constructed\ConstructedDeckDetailsTable.xaml.cs">
+      <DependentUpon>ConstructedDeckDetailsTable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\Constructed\ConstructedGames.xaml.cs">
       <DependentUpon>ConstructedGames.xaml</DependentUpon>
     </Compile>
@@ -229,6 +232,7 @@
       <DependentUpon>ConstructedSummary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Stats\Converters\CustomTimeframeVisibilityConverter.cs" />
+    <Compile Include="Controls\Stats\Converters\InverseBooleanConverter.cs" />
     <Compile Include="Controls\Stats\Converters\IsNullConverter.cs" />
     <Compile Include="Controls\Stats\Converters\NotNullToBooleanConverter.cs" />
     <Compile Include="Controls\Stats\Converters\ToUpperValueConverter.cs" />
@@ -302,6 +306,8 @@
     <Compile Include="Hearthstone\DeckState.cs" />
     <Compile Include="Hearthstone\PredictedCard.cs" />
     <Compile Include="LogReader\Handlers\FullScreenFxHandler.cs" />
+    <Compile Include="Stats\CompiledStats\ConstructedDeckDetails.cs" />
+    <Compile Include="Stats\CompiledStats\ConstructedMatchup.cs" />
     <Compile Include="Utility\Extensions\RectExtensions.cs" />
     <Compile Include="Utility\Themes\CardBarImageBuilder.cs" />
     <Compile Include="Hearthstone\GameTime.cs" />
@@ -768,6 +774,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Stats\ConstructedFilters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Constructed\ConstructedDeckDetailsTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

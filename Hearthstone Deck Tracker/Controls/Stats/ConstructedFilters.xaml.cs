@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
@@ -69,12 +70,32 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			=> Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked || Config.Instance.ConstructedStatsModeFilter == GameMode.Casual
 					? Visibility.Visible : Visibility.Collapsed;
 
+		public bool ActiveDeckOnlyIsEnabled => !DeckList.Instance.ActiveDeck?.IsArenaDeck ?? false;
+
+		public string ActiveDeckOnlyToolTip
+			=>DeckList.Instance.ActiveDeck == null
+					? "No active deck" : (DeckList.Instance.ActiveDeck.IsArenaDeck ? "Active deck is an arena deck" : "");
+		public bool ActiveDeckOnlyToolTipIsEnabled => !ActiveDeckOnlyIsEnabled;
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		internal void SetUpdateCallback(Action callback)
 		{
 			if(_updateCallback == null)
 				_updateCallback = callback;
+		}
+
+		internal void UpdateActiveDeckOnlyCheckBox()
+		{
+			if(Config.Instance.ConstructedStatsActiveDeckOnly && (DeckList.Instance.ActiveDeck?.IsArenaDeck ?? true))
+			{
+				Config.Instance.ConstructedStatsActiveDeckOnly = false;
+				Config.Save();
+				CheckBoxDecks.GetBindingExpression(ToggleButton.IsCheckedProperty)?.UpdateTarget();
+			}
+			OnPropertyChanged(nameof(ActiveDeckOnlyIsEnabled));
+			OnPropertyChanged(nameof(ActiveDeckOnlyToolTip));
+			OnPropertyChanged(nameof(ActiveDeckOnlyToolTipIsEnabled));
 		}
 
 		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -131,14 +152,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			_updateCallback?.Invoke();
 		}
 
-		private void CheckBoxArchived_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			_updateCallback?.Invoke();
-		}
-
-		private void CheckBoxArchived_OnUnchecked(object sender, RoutedEventArgs e)
+		private void CheckBox_UpdateStats(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
@@ -286,6 +300,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(e.Key == Key.Enter)
 				(sender as TextBox)?.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+		}
+
+		private void CheckBoxDecks_OnCheckedChanged(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			_updateCallback?.Invoke();
 		}
 	}
 }

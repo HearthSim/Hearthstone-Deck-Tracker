@@ -3,199 +3,189 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
-             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
     <UserControl.Resources>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <converters:CustomTimeframeVisibilityConverter x:Key="CustomTimeframeVisibilityConverter" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Label Content="Time:" Grid.Column="0" Grid.Row="0"/>
-        <ComboBox Name="ComboBoxTimeframe" SelectedIndex="3" Grid.Column="1" Grid.Row="0"
-                              SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <StackPanel Margin="0,5,0,0"  Grid.Column="1" Grid.Row="1"
-                                Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
-            <Label Content="Start" />
+    <StackPanel>
+        <CheckBox Name="CheckBoxDecks" Content="Active deck only" Margin="5"
+                  IsChecked="{Binding Path=ConstructedStatsActiveDeckOnly, Source={StaticResource ConfigWrapper}}"
+                  IsEnabled="{Binding ActiveDeckOnlyIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                  ToolTip="{Binding ActiveDeckOnlyToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                  ToolTipService.IsEnabled="{Binding ActiveDeckOnlyToolTipIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" ToolTipService.ShowOnDisabled="True" />
+        <Separator/>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Time:" Width="60"/>
+            <ComboBox Name="ComboBoxTimeframe" SelectedIndex="3" SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
+            <Label Content="Start:" Margin="10,0,0,0" Width="50"/>
             <DatePicker Name="DatePickerCustomTimeFrameStart" DockPanel.Dock="Right"
                                     SelectedDate="{Binding Path=ConstructedStatsTimeFrameCustomStart, Source={StaticResource ConfigWrapper}}"
                                     SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
-            <Label Content="End" />
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
+            <Label Content="End:" Margin="10,0,0,0" Width="50"/>
             <DatePicker Name="DatePickerCustomTimeFrameEnd" DockPanel.Dock="Right"
                                     SelectedDate="{Binding Path=ConstructedStatsTimeFrameCustomEnd, Source={StaticResource ConfigWrapper}}"
                                     SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
-        </StackPanel>
-        <Label Content="Class:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="2"/>
-        <ComboBox Name="ComboBoxClass"  Margin="0,5,0,0" SelectedIndex="0" Grid.Column="1" Grid.Row="2"
-                              SelectionChanged="ComboBoxClass_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="24">
-                        <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24"
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Class:" Width="60"/>
+            <ComboBox Name="ComboBoxClass" SelectedIndex="0" SelectionChanged="ComboBoxClass_OnSelectionChanged"
+                      IsEnabled="{Binding IsChecked, ElementName=CheckBoxDecks, Converter={StaticResource InverseBooleanConverter}}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Height="24">
+                            <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24" RenderOptions.BitmapScalingMode="Fant" 
+                                   Margin="0,0,3,0" Visibility="{Binding ImageVisibility}" />
+                            <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="VS:" Width="60"/>
+            <ComboBox Name="ComboBoxOpponentClass" SelectionChanged="ComboBoxOpponentClass_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Height="24">
+                            <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24"
                                            RenderOptions.BitmapScalingMode="Fant" Margin="0,0,3,0"
                                            Visibility="{Binding ImageVisibility}" />
-                        <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Label Content="Region:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="3"/>
-        <ComboBox Name="ComboBoxRegion" SelectedIndex="0" Margin="0,5,0,0" Grid.Column="1" Grid.Row="3"
-                              SelectionChanged="ComboBoxRegion_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Label Content="Archived:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="4"/>
-        <CheckBox Name="CheckBoxArchived" Content="Include" Margin="0,5,0,0" Grid.Column="1" Grid.Row="4"
-                              IsChecked="{Binding Path=ConstructedStatsIncludeArchived, Source={StaticResource ConfigWrapper}}"
-                              Checked="CheckBoxArchived_OnChecked" Unchecked="CheckBoxArchived_OnUnchecked" />
-        <Label Content="Mode:" Grid.Column="0" Grid.Row="5" Margin="0,5,0,0"/>
-        <ComboBox Name="ComboBoxMode" SelectedIndex="0" Margin="0,5,0,0" Grid.Column="1" Grid.Row="5"
-                              SelectionChanged="ComboBoxMode_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Label Content="Rank:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="6" 
-               Visibility="{Binding RankFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-        <Grid Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" Margin="0,5,0,0"
-              Visibility="{Binding RankFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="22*"/>
-                <RowDefinition Height="9*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBox Name="TextBoxRankMin" Height="26" TextAlignment="Center" Grid.Column="0" Grid.Row="0" LostFocus="TextBoxRankMin_OnLostFocus" PreviewKeyUp="TextBox_OnEnter">
-                <TextBox.Text>
-                    <Binding Path="ConstructedStatsRankFilterMin" Source="{StaticResource ConfigWrapper}">
-                        <Binding.ValidationRules>
-                            <ExceptionValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <Label Content="to" Grid.Column="1" Grid.Row="0"/>
-            <TextBox Name="TextBoxRankMax" Height="26" TextAlignment="Center" Grid.Column="2" Grid.Row="0" LostFocus="TextBoxRankMax_OnLostFocus" PreviewKeyUp="TextBox_OnEnter">
-                <TextBox.Text>
-                    <Binding Path="ConstructedStatsRankFilterMax" Source="{StaticResource ConfigWrapper}">
-                        <Binding.ValidationRules>
-                            <ExceptionValidationRule/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-        </Grid>
-        <Label Content="Format:" Grid.Column="0" Grid.Row="7" Margin="0,5,0,0"
-                              Visibility="{Binding FormatFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-        <ComboBox Name="ComboBoxFormat" SelectedIndex="0" Margin="0,5,0,0" Grid.Column="1" Grid.Row="7"
-                              Visibility="{Binding FormatFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                              SelectionChanged="ComboBoxFormat_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Label Content="Turns:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="8"/>
-        <Grid Grid.Column="1" Grid.Row="8" VerticalAlignment="Center" Margin="0,5,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="22*"/>
-                <RowDefinition Height="9*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBox Name="TextBoxTurnsMin" Height="26" Text="0" TextAlignment="Center" Grid.Column="0" Grid.Row="0" MaxLength="3"
+                            <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Mode:" Width="60"/>
+            <ComboBox Name="ComboBoxMode" SelectedIndex="0" SelectionChanged="ComboBoxMode_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding RankFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Label Content="Rank:" Width="60"/>
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="22*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="TextBoxRankMin" Height="26" TextAlignment="Center" Grid.Column="0" Grid.Row="0" LostFocus="TextBoxRankMin_OnLostFocus" PreviewKeyUp="TextBox_OnEnter">
+                    <TextBox.Text>
+                        <Binding Path="ConstructedStatsRankFilterMin" Source="{StaticResource ConfigWrapper}">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Label Content="to" Grid.Column="1" Grid.Row="0"/>
+                <TextBox Name="TextBoxRankMax" Height="26" TextAlignment="Center" Grid.Column="2" Grid.Row="0" LostFocus="TextBoxRankMax_OnLostFocus" PreviewKeyUp="TextBox_OnEnter">
+                    <TextBox.Text>
+                        <Binding Path="ConstructedStatsRankFilterMax" Source="{StaticResource ConfigWrapper}">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding FormatFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Label Content="Format:" Width="60"/>
+            <ComboBox Name="ComboBoxFormat" SelectedIndex="0" SelectionChanged="ComboBoxFormat_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Result:" Width="60"/>
+            <ComboBox Name="ComboBoxResult" SelectionChanged="ComboBoxResult_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Turns:" Width="60"/>
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="22*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="TextBoxTurnsMin" Height="26" Text="0" TextAlignment="Center" Grid.Column="0" Grid.Row="0" MaxLength="3"
                      PreviewTextInput="TextBoxTurn_OnPreviewTextInput" LostFocus="TextBoxTurnsMin_OnLostFocus" PreviewKeyUp="TextBox_OnEnter"/>
-            <Label Content="to" Grid.Column="1" Grid.Row="0"/>
-            <TextBox Name="TextBoxTurnsMax" Height="26" Text="99" TextAlignment="Center" Grid.Column="2" Grid.Row="0" MaxLength="3"
+                <Label Content="to" Grid.Column="1" Grid.Row="0"/>
+                <TextBox Name="TextBoxTurnsMax" Height="26" Text="99" TextAlignment="Center" Grid.Column="2" Grid.Row="0" MaxLength="3"
                      PreviewTextInput="TextBoxTurn_OnPreviewTextInput" LostFocus="TextBoxTurnsMax_OnLostFocus" PreviewKeyUp="TextBox_OnEnter"/>
-        </Grid>
-        <Label Content="Coin:" Grid.Column="0" Grid.Row="9" Margin="0,5,0,0"/>
-        <ComboBox Name="ComboBoxCoin" SelectedIndex="0" Grid.Column="1" Grid.Row="9" Margin="0,5,0,0"
-                              SelectionChanged="ComboBoxCoin_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Label Content="Result:" Grid.Column="0" Grid.Row="10" Margin="0,5,0,0"/>
-        <ComboBox Name="ComboBoxResult" SelectedIndex="0" Grid.Column="1" Grid.Row="10" Margin="0,5,0,0"
-                              SelectionChanged="ComboBoxResult_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Label Content="O. Class:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="11"/>
-        <ComboBox Name="ComboBoxOpponentClass"  Margin="0,5,0,0" SelectedIndex="0" Grid.Column="1" Grid.Row="11"
-                              SelectionChanged="ComboBoxOpponentClass_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="24">
-                        <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24"
-                                           RenderOptions.BitmapScalingMode="Fant" Margin="0,0,3,0"
-                                           Visibility="{Binding ImageVisibility}" />
-                        <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Label Content="O. Name:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="12"/>
-        <TextBox Name="TextBoxOpponentName" controls:TextBoxHelper.Watermark="Opponent name..." Grid.Column="1" Grid.Row="12" Margin="0,5,0,0" 
+            </Grid>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Coin:" Width="60"/>
+            <ComboBox Name="ComboBoxCoin" SelectedIndex="0" SelectionChanged="ComboBoxCoin_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Region:" Width="60"/>
+            <ComboBox Name="ComboBoxRegion" SelectedIndex="0" SelectionChanged="ComboBoxRegion_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <TextBox Name="TextBoxOpponentName" controls:TextBoxHelper.Watermark="Opponent name..." Margin="0,5,0,0" 
                  LostFocus="TextBoxOpponentName_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
-        <Label Content="Note:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="13"/>
-        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="Match notes..." Grid.Column="1" Grid.Row="13" Margin="0,5,0,0" 
+        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="Notes..." Margin="0,5,0,0" 
                  LostFocus="TextBoxNote_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
-        <Label Content="Tags:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="14"/>
-        <CheckBox Name="CheckBoxTags" Content="Apply tag filters" Margin="0,5,0,0" Grid.Column="1" Grid.Row="14"
-                              ToolTip="Apply tag filteres currently set in 'DeckPicker' > 'Sort/Filter Decks' (double arrow button)."
-                              IsChecked="{Binding Path=ConstructedStatsApplyTagFilters, Source={StaticResource ConfigWrapper}}"
-                              Checked="CheckBoxArchived_OnChecked" Unchecked="CheckBoxArchived_OnUnchecked" />
-    </Grid>
+        <CheckBox Name="CheckBoxArchived" Content="Include archived decks" Margin="5,5,0,0" 
+                  IsChecked="{Binding Path=ConstructedStatsIncludeArchived, Source={StaticResource ConfigWrapper}}"
+                  IsEnabled="{Binding IsChecked, ElementName=CheckBoxDecks, Converter={StaticResource InverseBooleanConverter}}"
+                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" />
+        <CheckBox Name="CheckBoxTags" Content="Apply tag filters" Margin="5,5,0,0" 
+                  ToolTip="Apply tag filteres currently set in 'DeckPicker' > 'Sort/Filter Decks' (double arrow button)."
+                  IsChecked="{Binding Path=ConstructedStatsApplyTagFilters, Source={StaticResource ConfigWrapper}}"
+                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" />
+    </StackPanel>
 </UserControl>

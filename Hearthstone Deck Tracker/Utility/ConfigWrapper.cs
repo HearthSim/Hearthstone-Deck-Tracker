@@ -174,6 +174,29 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static Visibility UseButtonVisiblity => Config.Instance.AutoUseDeck ? Visibility.Collapsed : Visibility.Visible;
 
+		public static bool ConstructedStatsActiveDeckOnly
+		{
+			get
+			{
+				if(DeckList.Instance.ActiveDeck != null)
+					return Config.Instance.ConstructedStatsActiveDeckOnly;
+				if(Config.Instance.ConstructedStatsActiveDeckOnly)
+				{
+					Config.Instance.ConstructedStatsActiveDeckOnly = false;
+					Config.Save();
+				}
+				return Config.Instance.ConstructedStatsActiveDeckOnly;
+			}
+			set
+			{
+				var newValue = DeckList.Instance.ActiveDeck != null && value;
+				if(Config.Instance.ConstructedStatsActiveDeckOnly == newValue)
+					return;
+				Config.Instance.ConstructedStatsActiveDeckOnly = newValue;
+				Config.Save();
+			}
+		}
+
 		public static string ConstructedStatsRankFilterMin
 		{
 			get { return Config.Instance.ConstructedStatsRankFilterMin; }

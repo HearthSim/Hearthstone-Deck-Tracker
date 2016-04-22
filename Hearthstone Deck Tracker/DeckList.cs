@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -42,12 +43,16 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(Equals(_activeDeck, value))
 					return;
+				var switchedDeck = _activeDeck != null;
 				_activeDeck = value;
 				Core.MainWindow.DeckPickerList.ActiveDeckChanged();
 				Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 				Log.Info("Set active deck to: " + value);
 				Config.Instance.ActiveDeckId = value?.DeckId ?? Guid.Empty;
 				Config.Save();
+				Core.StatsOverview.ConstructedFilters.UpdateActiveDeckOnlyCheckBox();
+				if(switchedDeck)
+					Core.StatsOverview.ConstructedSummary.UpdateContent();
 			}
 		}
 

@@ -6,11 +6,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -23,30 +21,40 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-
-		public IEnumerable<GameStats> GetFilteredGames(bool archivedFilter = true, bool classFilter = true, bool regionFilter = true,
-													   bool timeframeFilter = true, bool modeFilter = true, bool rankFilter = true, 
-													   bool filterFormat = true, bool turnsFilter = true, bool coinFilter = true,
-													   bool resultFilter = true, bool oppClassFilter = true, bool oppNameFilter = true,
-													   bool noteFilter = true, bool applyTagFilters = true)
+		public IEnumerable<GameStats> GetFilteredGames(bool archived = true, bool playerClass = true, bool region = true,
+													   bool timeFrame = true, bool mode = true, bool rank = true, bool format = true, bool turns = true, bool coin = true,
+													   bool result = true, bool oppClass = true, bool oppName = true, bool note = true, bool tags = true)
 		{
-			IEnumerable<Deck> decks = DeckList.Instance.Decks;
-			if(archivedFilter && !Config.Instance.ConstructedStatsIncludeArchived)
+			var decks = Config.Instance.ConstructedStatsActiveDeckOnly && DeckList.Instance.ActiveDeck != null ? new[] {DeckList.Instance.ActiveDeck} : DeckList.Instance.Decks.ToArray();
+			return GetFilteredGames(decks, archived, playerClass, region, timeFrame, mode, rank, format, turns, coin, result,
+									oppClass, oppName, note, tags);
+		}
+
+		public IEnumerable<GameStats> GetFilteredGames(IEnumerable<Deck> decks, bool archived = true, bool playerClass = true, bool region = true,
+													   bool timeframe = true, bool mode = true, bool rank = true, 
+													   bool format = true, bool turns = true, bool coin = true,
+													   bool result = true, bool oppClass = true, bool oppName = true,
+													   bool note = true, bool tags = true)
+		{
+			if(archived && !Config.Instance.ConstructedStatsIncludeArchived && !Config.Instance.ConstructedStatsActiveDeckOnly)
 				decks = decks.Where(x => !x.Archived);
+
+			if(tags && Config.Instance.ConstructedStatsApplyTagFilters && !Config.Instance.SelectedTags.Contains("All") && !Config.Instance.ConstructedStatsActiveDeckOnly)
+				decks = decks.Where(d => d.Tags.Any(t => Config.Instance.SelectedTags.Contains(t)));
 
 			var filtered = decks.SelectMany(x => x.DeckStats.Games);
 
-			filtered = filtered.Concat(DefaultDeckStats.Instance.DeckStats.SelectMany(x => x.Games));
+			if(!Config.Instance.ConstructedStatsActiveDeckOnly)
+				filtered = filtered.Concat(DefaultDeckStats.Instance.DeckStats.SelectMany(x => x.Games));
 
-
-			if(classFilter && Config.Instance.ConstructedStatsClassFilter != HeroClassStatsFilter.All)
+			if(playerClass && Config.Instance.ConstructedStatsClassFilter != HeroClassStatsFilter.All && !Config.Instance.ConstructedStatsActiveDeckOnly)
 				filtered = filtered.Where(x => x.PlayerHero == Config.Instance.ConstructedStatsClassFilter.ToString());
-			if(regionFilter && Config.Instance.ConstructedStatsRegionFilter != RegionAll.ALL)
+			if(region && Config.Instance.ConstructedStatsRegionFilter != RegionAll.ALL)
 			{
-				var region = (Region)Enum.Parse(typeof(Region), Config.Instance.ConstructedStatsRegionFilter.ToString());
-				filtered = filtered.Where(x => x.Region == region);
+				var parsed = (Region)Enum.Parse(typeof(Region), Config.Instance.ConstructedStatsRegionFilter.ToString());
+				filtered = filtered.Where(x => x.Region == parsed);
 			}
-			if(timeframeFilter)
+			if(timeframe)
 			{
 				switch(Config.Instance.ConstructedStatsTimeFrameFilter)
 				{
@@ -72,12 +80,12 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 						break;
 				}
 			}
-			if(modeFilter && Config.Instance.ConstructedStatsModeFilter != GameMode.All)
+			if(mode && Config.Instance.ConstructedStatsModeFilter != GameMode.All)
 				filtered = filtered.Where(x => x.GameMode == Config.Instance.ConstructedStatsModeFilter);
-			if(rankFilter)
+			if(rank)
 			{
 				var min = Config.Instance.ConstructedStatsRankFilterMin;
-				int rank;
+				int value;
 				if(min != "L1")
 				{
 					if(min.StartsWith("L"))
@@ -87,8 +95,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					}
 					else
 					{
-						if(int.TryParse(min, out rank))
-							filtered = filtered.Where(x => x.Rank >= rank);
+						if(int.TryParse(min, out value))
+							filtered = filtered.Where(x => x.Rank >= value);
 					}
 				}
 				var max = Config.Instance.ConstructedStatsRankFilterMax;
@@ -101,37 +109,35 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					}
 					else
 					{
-						if(int.TryParse(max, out rank))
-							filtered = filtered.Where(x => x.Rank <= rank);
+						if(int.TryParse(max, out value))
+							filtered = filtered.Where(x => x.Rank <= value);
 					}
 				}
 			}
-			//if(filterFormat && Config.Instance.ConstructedStatsFormatFilter != Format.All)
+			//if(format && Config.Instance.ConstructedStatsFormatFilter != Format.All)
 			//{
 			//	//TODO
 			//}
-			if(turnsFilter)
+			if(turns)
 			{
 				if(Config.Instance.ConstructedStatsTurnsFilterMin > 0)
 					filtered = filtered.Where(x => x.Turns >= Config.Instance.ConstructedStatsTurnsFilterMin);
 				if(Config.Instance.ConstructedStatsTurnsFilterMax < 99)
 					filtered = filtered.Where(x => x.Turns <= Config.Instance.ConstructedStatsTurnsFilterMax);
 			}
-			if(coinFilter && Config.Instance.ConstructedStatsCoinFilter != AllYesNo.All)
+			if(coin && Config.Instance.ConstructedStatsCoinFilter != AllYesNo.All)
 				filtered = filtered.Where(x => x.Coin == (Config.Instance.ConstructedStatsCoinFilter == AllYesNo.Yes));
-			if(resultFilter && Config.Instance.ConstructedStatsResultFilter != GameResultAll.All)
+			if(result && Config.Instance.ConstructedStatsResultFilter != GameResultAll.All)
 			{
-				var result = (GameResult)Enum.Parse(typeof(GameResult), Config.Instance.ConstructedStatsResultFilter.ToString());
-				filtered = filtered.Where(x => x.Result == result);
+				var parsed = (GameResult)Enum.Parse(typeof(GameResult), Config.Instance.ConstructedStatsResultFilter.ToString());
+				filtered = filtered.Where(x => x.Result == parsed);
 			}
-			if(oppClassFilter && Config.Instance.ConstructedStatsOpponentClassFilter != HeroClassStatsFilter.All)
+			if(oppClass && Config.Instance.ConstructedStatsOpponentClassFilter != HeroClassStatsFilter.All)
 				filtered = filtered.Where(x => x.OpponentHero == Config.Instance.ConstructedStatsOpponentClassFilter.ToString());
-			if(oppNameFilter && !string.IsNullOrEmpty(Config.Instance.ConstructedStatsOpponentNameFilter))
+			if(oppName && !string.IsNullOrEmpty(Config.Instance.ConstructedStatsOpponentNameFilter))
 				filtered = filtered.Where(x => x.OpponentName?.Contains(Config.Instance.ConstructedStatsOpponentNameFilter) ?? false);
-			if(noteFilter && !string.IsNullOrEmpty(Config.Instance.ConstructedStatsNoteFilter))
+			if(note && !string.IsNullOrEmpty(Config.Instance.ConstructedStatsNoteFilter))
 				filtered = filtered.Where(x => x.Note?.Contains(Config.Instance.ConstructedStatsNoteFilter) ?? false);
-			if(applyTagFilters && Config.Instance.ConstructedStatsApplyTagFilters && !Config.Instance.SelectedTags.Contains("All"))
-				filtered = filtered.Where(x => DeckList.Instance.Decks.Any(d => d.DeckId == x.DeckId && d.Tags.Any(t => Config.Instance.SelectedTags.Contains(t))));
 
 			return filtered;
 		}
@@ -189,60 +195,34 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			.OrderBy(x => x.Value);
 
 
-		public IEnumerable<Matchup> Matchups
+		public IEnumerable<ConstructedMatchup> Matchups
 		{
 			get
 			{
-				var games = GetFilteredGames(classFilter: false).ToList();
-				return new[]
-				{
-					new Matchup(HeroClass.Druid, games),
-					new Matchup(HeroClass.Hunter, games),
-					new Matchup(HeroClass.Mage, games),
-					new Matchup(HeroClass.Paladin, games),
-					new Matchup(HeroClass.Priest, games),
-					new Matchup(HeroClass.Rogue, games),
-					new Matchup(HeroClass.Shaman, games),
-					new Matchup(HeroClass.Warlock, games),
-					new Matchup(HeroClass.Warrior, games),
-					new Matchup(games)
-				};
+				var games = GetFilteredGames(playerClass: false).ToList();
+				foreach(var c in Enum.GetValues(typeof(HeroClass)).Cast<HeroClass>())
+					yield return new ConstructedMatchup(c, games);
+				yield return new ConstructedMatchup(games);
 			}
 		}
 
-		public class Matchup
+		public IEnumerable<ConstructedDeckDetails> DeckDetails
 		{
-			private readonly HeroClass? _player;
-			private readonly IEnumerable<GameStats> _games;
-
-			public string Class => _player?.ToString() ?? "Total";
-			public BitmapImage ClassImage => _player != null ? ImageCache.GetClassIcon(_player.ToString()) : new BitmapImage();
-
-			public Matchup(HeroClass player, IEnumerable<GameStats> games)
+			get
 			{
-				_player = player;
-				_games = games.Where(x => x.PlayerHero == player.ToString());
+				var deck = DeckList.Instance.ActiveDeck;
+				if(deck == null)
+					yield break;
+				var games = GetFilteredGames(new[] {deck}, playerClass: false).ToList();
+				if(deck.HasVersions)
+					yield return new ConstructedDeckDetails("All", games);
+				else
+					yield return new ConstructedDeckDetails("1.0", games);
+				foreach(var v in deck.Versions)
+					yield return new ConstructedDeckDetails(v.Version.ShortVersionString, games.Where(x => x.BelongsToDeckVerion(v)));
 			}
+		} 
 
-			public Matchup(IEnumerable<GameStats> games)
-			{
-				_games = games;
-			}
-
-			public MatchupStats Druid => GetMatchupStats(HeroClass.Druid);
-			public MatchupStats Hunter => GetMatchupStats(HeroClass.Hunter);
-			public MatchupStats Mage => GetMatchupStats(HeroClass.Mage);
-			public MatchupStats Paladin => GetMatchupStats(HeroClass.Paladin);
-			public MatchupStats Priest => GetMatchupStats(HeroClass.Priest);
-			public MatchupStats Rogue => GetMatchupStats(HeroClass.Rogue);
-			public MatchupStats Shaman => GetMatchupStats(HeroClass.Shaman);
-			public MatchupStats Warlock => GetMatchupStats(HeroClass.Warlock);
-			public MatchupStats Warrior => GetMatchupStats(HeroClass.Warrior);
-			public MatchupStats Total => new MatchupStats("Total", _games);
-
-			public MatchupStats GetMatchupStats(HeroClass opponent)
-				=> new MatchupStats(opponent.ToString(), _games.Where(x => x.OpponentHero == opponent.ToString()).Select(x => x));
-		}
 
 		public void UpdateConstructedStats()
 		{
@@ -250,10 +230,17 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			OnPropertyChanged(nameof(PlayedClassesPercent));
 			OnPropertyChanged(nameof(OpponentClassesPercent));
 			OnPropertyChanged(nameof(AvgWinratePerClass));
-			OnPropertyChanged(nameof(Matchups));
+			UpdateMatchups();
+
 		}
 
-		public void UpdateMatchups() => OnPropertyChanged(nameof(Matchups));
+		public void UpdateMatchups()
+		{
+			if(Config.Instance.ConstructedStatsActiveDeckOnly)
+				OnPropertyChanged(nameof(DeckDetails));
+			else
+				OnPropertyChanged(nameof(Matchups));
+		}
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

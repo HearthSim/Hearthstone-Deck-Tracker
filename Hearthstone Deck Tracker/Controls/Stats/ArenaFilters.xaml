@@ -13,64 +13,55 @@
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <converters:CustomTimeframeVisibilityConverter x:Key="CustomTimeframeVisibilityConverter" />
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Label Content="Time:" Grid.Column="0" Grid.Row="0"/>
-        <ComboBox Name="ComboBoxTimeframe" SelectedIndex="3" Grid.Column="1" Grid.Row="0"
-                              SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <StackPanel Margin="0,5,0,0"  Grid.Column="1" Grid.Row="1"
-                                Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
-            <Label Content="Start" />
+    <StackPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Time:" Width="60"/>
+            <ComboBox Name="ComboBoxTimeframe" SelectedIndex="3" SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
+            <Label Content="Start:" Margin="10,0,0,0" Width="50"/>
             <DatePicker Name="DatePickerCustomTimeFrameStart" DockPanel.Dock="Right"
                                     SelectedDate="{Binding Path=ArenaStatsTimeFrameCustomStart, Source={StaticResource ConfigWrapper}}"
                                     SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
-            <Label Content="End" />
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
+            <Label Content="End:" Margin="10,0,0,0" Width="50"/>
             <DatePicker Name="DatePickerCustomTimeFrameEnd" DockPanel.Dock="Right"
                                     SelectedDate="{Binding Path=ArenaStatsTimeFrameCustomEnd, Source={StaticResource ConfigWrapper}}"
                                     SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
-        </StackPanel>
-        <Label Content="Class:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="2"/>
-        <ComboBox Name="ComboBoxClass"  Margin="0,5,0,0" SelectedIndex="0" Grid.Column="1" Grid.Row="2"
-                              SelectionChanged="ComboBoxClass_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="24">
-                        <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24"
-                                           RenderOptions.BitmapScalingMode="Fant" Margin="0,0,3,0"
-                                           Visibility="{Binding ImageVisibility}" />
-                        <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
-                    </StackPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Label Content="Region:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="3"/>
-        <ComboBox Name="ComboBoxRegion" SelectedIndex="0" Margin="0,5,0,0" Grid.Column="1" Grid.Row="3"
-                              SelectionChanged="ComboBoxRegion_OnSelectionChanged">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <Label Content="Archived:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="4"/>
-        <CheckBox Name="CheckBoxArchived" Content="Include" Margin="0,5,0,0" Grid.Column="1" Grid.Row="4"
-                              IsChecked="{Binding Path=ArenaStatsIncludeArchived, Source={StaticResource ConfigWrapper}}"
-                              Checked="CheckBoxArchived_OnChecked" Unchecked="CheckBoxArchived_OnUnchecked" />
-    </Grid>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Class:" Width="60"/>
+            <ComboBox Name="ComboBoxClass" SelectedIndex="0" SelectionChanged="ComboBoxClass_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Height="24">
+                            <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24" RenderOptions.BitmapScalingMode="Fant" 
+                                   Margin="0,0,3,0" Visibility="{Binding ImageVisibility}" />
+                            <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Region:" Width="60"/>
+            <ComboBox Name="ComboBoxRegion" SelectedIndex="0" SelectionChanged="ComboBoxRegion_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <CheckBox Name="CheckBoxArchived" Content="Include archived runs" Margin="5,5,0,0" 
+                  IsChecked="{Binding Path=ArenaStatsIncludeArchived, Source={StaticResource ConfigWrapper}}"
+                  Checked="CheckBoxArchived_OnChecked" Unchecked="CheckBoxArchived_OnUnchecked" />
+    </StackPanel>
 </UserControl>

@@ -24,6 +24,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			InitializeComponent();
 			ArenaFilters.SetUpdateCallback(UpdateCallBack);
 			ConstructedFilters.SetUpdateCallback(UpdateCallBack);
+			ConstructedFilters.CheckBoxDecks.Checked += (sender, args) => ConstructedSummary.UpdateContent();
+			ConstructedFilters.CheckBoxDecks.Unchecked += (sender, args) => ConstructedSummary.UpdateContent();
 			ContentControlFilter.Content = ArenaFilters;
 			_initialized = true;
 		}
