@@ -216,6 +216,57 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public static string ConstructedStatsCustomSeasonMin
+		{
+			get { return Config.Instance.ConstructedStatsCustomSeasonMin.ToString(); }
+			set
+			{
+				Config.Instance.ConstructedStatsCustomSeasonMin = ValidateSeason(value);
+				Config.Save();
+			}
+		}
+		public static string ConstructedStatsCustomSeasonMax
+		{
+			get { return Config.Instance.ConstructedStatsCustomSeasonMax.ToString(); }
+			set
+			{
+				Config.Instance.ConstructedStatsCustomSeasonMax = ValidateSeason(value);
+				Config.Save();
+			}
+		}
+
+		public static string ArenaStatsCustomSeasonMin
+		{
+			get { return Config.Instance.ArenaStatsCustomSeasonMin.ToString(); }
+			set
+			{
+				Config.Instance.ArenaStatsCustomSeasonMin = ValidateSeason(value);
+				Config.Save();
+			}
+		}
+		public static string ArenaStatsCustomSeasonMax
+		{
+			get { return Config.Instance.ArenaStatsCustomSeasonMax.ToString(); }
+			set
+			{
+				Config.Instance.ArenaStatsCustomSeasonMax = ValidateSeason(value);
+				Config.Save();
+			}
+		}
+
+		private static int ValidateSeason(string value)
+		{
+			int season;
+			if(!int.TryParse(value, out season))
+				throw new ApplicationException("Invalid season");
+			if(season < 1)
+				throw new ApplicationException("Invalid season. Minimum value: 1");
+			var currentSeaon = Helper.CurrentSeason;
+			if(season > currentSeaon)
+				throw new ApplicationException("Invalid season. Current season: " + currentSeaon);
+			return season;
+		}
+
 		private static string ValidateRank(string value)
 		{
 			var match = Regex.Match(value, @"(?<legend>([lL]))?(?<rank>(\d+))");

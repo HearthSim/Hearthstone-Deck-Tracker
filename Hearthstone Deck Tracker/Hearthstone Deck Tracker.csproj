@@ -231,6 +231,7 @@
     <Compile Include="Controls\Stats\Constructed\ConstructedSummary.xaml.cs">
       <DependentUpon>ConstructedSummary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Converters\CustomTimeframeSeasonVisibilityConverter.cs" />
     <Compile Include="Controls\Stats\Converters\CustomTimeframeVisibilityConverter.cs" />
     <Compile Include="Controls\Stats\Converters\InverseBooleanConverter.cs" />
     <Compile Include="Controls\Stats\Converters\IsNullConverter.cs" />

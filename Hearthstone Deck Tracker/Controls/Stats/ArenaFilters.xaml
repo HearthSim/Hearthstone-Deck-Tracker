@@ -12,6 +12,7 @@
     <UserControl.Resources>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <converters:CustomTimeframeVisibilityConverter x:Key="CustomTimeframeVisibilityConverter" />
+        <converters:CustomTimeframeSeasonVisibilityConverter x:Key="CustomTimeframeSeasonVisibilityConverter" />
     </UserControl.Resources>
     <StackPanel>
         <DockPanel Margin="0,5,0,0">
@@ -35,6 +36,41 @@
             <DatePicker Name="DatePickerCustomTimeFrameEnd" DockPanel.Dock="Right"
                                     SelectedDate="{Binding Path=ArenaStatsTimeFrameCustomEnd, Source={StaticResource ConfigWrapper}}"
                                     SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeSeasonVisibilityConverter}}">
+            <Label Content="Seasons:" Width="40"/>
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="22*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="TextBoxCustomSeasonMin" Height="26" TextAlignment="Center" Grid.Column="0" Grid.Row="0" LostFocus="TextBoxCustomSeasonMin_OnLostFocus"
+                         PreviewTextInput="TextBox_OnPreviewTextInput_DigitsOnly" PreviewKeyUp="TextBox_OnEnter">
+                    <TextBox.Text>
+                        <Binding Path="ArenaStatsCustomSeasonMin" Source="{StaticResource ConfigWrapper}">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Label Content="to" Grid.Column="1" Grid.Row="0"/>
+                <TextBox Name="TextBoxCustomSeasonMax" Height="26" TextAlignment="Center" Grid.Column="2" Grid.Row="0" LostFocus="TextBoxCustomSeasonMax_OnLostFocus"
+                         PreviewTextInput="TextBox_OnPreviewTextInput_DigitsOnly" PreviewKeyUp="TextBox_OnEnter">
+                    <TextBox.Text>
+                        <Binding Path="ArenaStatsCustomSeasonMax" Source="{StaticResource ConfigWrapper}">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
             <Label Content="Class:" Width="60"/>

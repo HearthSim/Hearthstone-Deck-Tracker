@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -174,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			_updateCallback?.Invoke();
 		}
 
-		private void TextBoxTurn_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+		private void TextBox_OnPreviewTextInput_DigitsOnly(object sender, TextCompositionEventArgs e)
 		{
 			if(!char.IsDigit(e.Text, e.Text.Length - 1))
 				e.Handled = true;
@@ -220,25 +221,25 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			_updateCallback?.Invoke();
 		}
 
-		private void TextBoxRankMin_OnLostFocus(object sender, RoutedEventArgs e)
+		private async void TextBoxRankMin_OnLostFocus(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			if(TextBoxRankMin.Text == Config.Instance.ConstructedStatsRankFilterMin)
+			await Task.Delay(100);
+			if(TextBoxRankMin.Text == Config.Instance.ConstructedStatsRankFilterMin
+			   || Validation.GetHasError(TextBoxRankMin))
 				return;
-			Config.Instance.ConstructedStatsRankFilterMin = TextBoxRankMin.Text;
-			Config.Save();
 			_updateCallback?.Invoke();
 		}
 
-		private void TextBoxRankMax_OnLostFocus(object sender, RoutedEventArgs e)
+		private async void TextBoxRankMax_OnLostFocus(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			if(TextBoxRankMax.Text == Config.Instance.ConstructedStatsRankFilterMax)
+			await Task.Delay(100);
+			if(TextBoxRankMax.Text == Config.Instance.ConstructedStatsRankFilterMax
+			   || Validation.GetHasError(TextBoxRankMax))
 				return;
-			Config.Instance.ConstructedStatsRankFilterMax = TextBoxRankMax.Text;
-			Config.Save();
 			_updateCallback?.Invoke();
 		}
 
@@ -302,9 +303,26 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				(sender as TextBox)?.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
 		}
 
-		private void CheckBoxDecks_OnCheckedChanged(object sender, RoutedEventArgs e)
+		private async void TextBoxCustomSeasonMin_OnLostFocus(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
+				return;
+			if(TextBoxCustomSeasonMin.Text == Config.Instance.ConstructedStatsCustomSeasonMin.ToString())
+				return;
+			await Task.Delay(100);
+			if(Validation.GetHasError(TextBoxCustomSeasonMin))
+				return;
+			_updateCallback?.Invoke();
+		}
+
+		private async void TextBoxCustomSeasonMax_OnLostFocus(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			if(TextBoxCustomSeasonMax.Text == Config.Instance.ConstructedStatsCustomSeasonMax.ToString())
+				return;
+			await Task.Delay(100);
+			if(Validation.GetHasError(TextBoxCustomSeasonMax))
 				return;
 			_updateCallback?.Invoke();
 		}

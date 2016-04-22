@@ -139,6 +139,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public static int CurrentSeason => (DateTime.Now.Year - 2014) * 12 - 3 + DateTime.Now.Month;
+
 		// A bug in the SerializableVersion.ToString() method causes this to load Version.xml incorrectly.
 		// The build and revision numbers are swapped (i.e. a Revision of 21 in Version.xml loads to Version.Build == 21).
 		public static Version GetCurrentVersion()

@@ -268,6 +268,13 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 						filtered = filtered.Where(g => g.StartTime >= new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-1)
 													&& g.StartTime < new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
 						break;
+					case DisplayedTimeFrame.CustomSeason:
+						var current = Helper.CurrentSeason;
+						filtered = filtered.Where(g => g.StartTime >= new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+																		.AddMonths(Config.Instance.ArenaStatsCustomSeasonMin - current)
+													&& g.StartTime < new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+																		.AddMonths(Config.Instance.ArenaStatsCustomSeasonMax - current + 1));
+						break;
 					case DisplayedTimeFrame.ThisWeek:
 						filtered = filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
 						break;

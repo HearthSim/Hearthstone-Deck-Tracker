@@ -76,6 +76,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ArenaStatsIncludeArchived = true;
 
+		[DefaultValue(1)]
+		public int ArenaStatsCustomSeasonMin = 1;
+
+		[DefaultValue(25)]
+		public int ArenaStatsCustomSeasonMax = 25;
+
 		[DefaultValue(71.67)]
 		public double AttackIconPlayerVerticalPosition = 71.67;
 
@@ -180,6 +186,12 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue("25")]
 		public string ConstructedStatsRankFilterMax = "25";
+
+		[DefaultValue(1)]
+		public int ConstructedStatsCustomSeasonMin = 1;
+
+		[DefaultValue(25)]
+		public int ConstructedStatsCustomSeasonMax = 25;
 
 		[DefaultValue(0)]
 		public int ConstructedStatsTurnsFilterMin = 0;

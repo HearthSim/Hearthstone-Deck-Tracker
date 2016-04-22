@@ -3,8 +3,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
@@ -100,6 +102,42 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				nameof(Config.Instance.ArenaStatsIncludeArchived)
 			}.ForEach(Config.Instance.Reset);
 			Config.Save();
+		}
+
+		private async void TextBoxCustomSeasonMin_OnLostFocus(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			if(TextBoxCustomSeasonMin.Text == Config.Instance.ArenaStatsCustomSeasonMin.ToString())
+				return;
+			await Task.Delay(100);
+			if(Validation.GetHasError(TextBoxCustomSeasonMin))
+				return;
+			_updateCallback?.Invoke();
+		}
+
+		private async void TextBoxCustomSeasonMax_OnLostFocus(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			if(TextBoxCustomSeasonMax.Text == Config.Instance.ArenaStatsCustomSeasonMax.ToString())
+				return;
+			await Task.Delay(100);
+			if(Validation.GetHasError(TextBoxCustomSeasonMax))
+				return;
+			_updateCallback?.Invoke();
+		}
+
+		private void TextBox_OnPreviewTextInput_DigitsOnly(object sender, TextCompositionEventArgs e)
+		{
+			if(!char.IsDigit(e.Text, e.Text.Length - 1))
+				e.Handled = true;
+		}
+
+		private void TextBox_OnEnter(object sender, KeyEventArgs e)
+		{
+			if(e.Key == Key.Enter)
+				(sender as TextBox)?.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
 		}
 	}
 }
