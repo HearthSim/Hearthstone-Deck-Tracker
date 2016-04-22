@@ -5,25 +5,36 @@ using System.Windows;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Windows
 {
 	/// <summary>
 	/// Interaction logic for StatsWindow.xaml
 	/// </summary>
 	public partial class StatsWindow
 	{
-		private bool _appIsClosing;
-
 		public StatsWindow()
 		{
 			InitializeComponent();
-
 			Height = Config.Instance.StatsWindowHeight;
 			Width = Config.Instance.StatsWindowWidth;
 			if(Config.Instance.StatsWindowLeft.HasValue)
 				Left = Config.Instance.StatsWindowLeft.Value;
 			if(Config.Instance.StatsWindowTop.HasValue)
 				Top = Config.Instance.StatsWindowTop.Value;
+		}
+
+		private void BtnSwitchToMainWindow_OnClick(object sender, RoutedEventArgs e)
+		{
+			Config.Instance.StatsInWindow = false;
+			Config.Save();
+			ContentControl.Content = null;
+			Core.MainWindow.StatsFlyoutContentControl.Content = Core.StatsOverview;
+			Core.MainWindow.WindowState = WindowState.Normal;
+			Core.MainWindow.Show();
+			Core.MainWindow.Activate();
+			Core.MainWindow.FlyoutStats.IsOpen = true;
+			Core.StatsOverview.UpdateStats();
+			Close();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -35,19 +46,8 @@ namespace Hearthstone_Deck_Tracker
 			Config.Instance.StatsWindowHeight = (int)Height;
 			Config.Instance.StatsWindowWidth = (int)Width;
 			Config.Save();
-
-			if(_appIsClosing)
-				return;
 			e.Cancel = true;
 			Hide();
 		}
-
-		internal void Shutdown()
-		{
-			_appIsClosing = true;
-			Close();
-		}
-
-		private void MetroWindow_SizeChanged(object sender, SizeChangedEventArgs e) => FlyoutGameDetails.Width = Width;
 	}
 }

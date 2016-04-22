@@ -292,13 +292,11 @@ namespace Hearthstone_Deck_Tracker
 			private static OpponentWindow _opponentWindow;
 			private static TimerWindow _timerWindow;
 			private static StatsWindow _statsWindow;
-			private static StatsWindow_New _newStatsWindow;
 
 			public static PlayerWindow PlayerWindow => _playerWindow ?? (_playerWindow = new PlayerWindow(Game));
 			public static OpponentWindow OpponentWindow => _opponentWindow ?? (_opponentWindow = new OpponentWindow(Game));
 			public static TimerWindow TimerWindow => _timerWindow ?? (_timerWindow = new TimerWindow(Config.Instance));
 			public static StatsWindow StatsWindow => _statsWindow ?? (_statsWindow = new StatsWindow());
-			public static StatsWindow_New NewStatsWindow => _newStatsWindow ?? (_newStatsWindow = new StatsWindow_New());
 		}
 	}
 }

@@ -521,7 +521,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					DeckStatsList.Save();
 					Core.MainWindow.DeckPickerList.UpdateDecks();
 					Core.MainWindow.DeckPickerList.UpdateArchivedClassVisibility();
-					Core.MainWindow.DeckStatsFlyout.LoadOverallStats();
 				}
 
 				if(!background)

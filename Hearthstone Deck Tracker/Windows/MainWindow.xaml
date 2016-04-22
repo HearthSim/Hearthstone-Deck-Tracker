@@ -107,10 +107,6 @@
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <local:Help x:Name="Help" />
             </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutDeckStats" Position="Left" Panel.ZIndex="100"
-                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
-                <local:DeckStatsControl x:Name="DeckStatsFlyout" />
-            </controls:Flyout>
             <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <local:GameDetails x:Name="GameDetailsFlyout" />
@@ -144,7 +140,7 @@
             <controls:Flyout x:Name="FlyoutUpdateNotes" Header="Update Notes" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <flyoutControls:UpdateNotes x:Name="UpdateNotesControl"/>
             </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutNewStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+            <controls:Flyout x:Name="FlyoutStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls:Flyout.HeaderTemplate>
                     <DataTemplate>
                         <DockPanel Margin="10,13,10,8">
@@ -328,8 +324,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="[OLD] GAMES &amp; _STATISTICS"  Click="BtnDeckStats_Click"/>
-                    <MenuItem Header="ARENA RUNS &amp; _STATISTICS"  Click="BtnDeckNewStats_Click"/>
+                    <MenuItem Header="_CONSTRUCTED"  Click="BtnConstructedStats_Click"/>
+                    <MenuItem Header="_ARENA"  Click="BtnArenaStats_Click"/>
                     <Separator/>
                     <MenuItem Header="_LATEST REPLAY" Click="MenuItemReplayLastGame_OnClick"/>
                     <MenuItem Header="_SELECT REPLAY" Click="MenuItemReplaySelectGame_OnClick" />

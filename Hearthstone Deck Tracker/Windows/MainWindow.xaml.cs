@@ -177,23 +177,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void MenuItemReplaySelectGame_OnClick(object sender, RoutedEventArgs e)
-		{
-			if(Config.Instance.StatsInWindow)
-			{
-				Core.Windows.StatsWindow.WindowState = WindowState.Normal;
-				Core.Windows.StatsWindow.Show();
-				Core.Windows.StatsWindow.Activate();
-				Core.Windows.StatsWindow.StatsControl.TabControlCurrentOverall.SelectedIndex = 1;
-				Core.Windows.StatsWindow.StatsControl.TabControlOverall.SelectedIndex = 1;
-			}
-			else
-			{
-				FlyoutDeckStats.IsOpen = true;
-				DeckStatsFlyout.TabControlCurrentOverall.SelectedIndex = 1;
-				DeckStatsFlyout.TabControlOverall.SelectedIndex = 1;
-			}
-		}
+		private void MenuItemReplaySelectGame_OnClick(object sender, RoutedEventArgs e) => ShowStats(false, true);
 
 		private void MenuItemSaveVersionCurrent_OnClick(object sender, RoutedEventArgs e) => SaveDeckWithOverwriteCheck(_newDeck.Version);
 
@@ -397,20 +381,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BtnStartHearthstone_Click(object sender, RoutedEventArgs e) => Helper.StartHearthstoneAsync().Forget();
 
-		private void ButtonCloseStatsFlyout_OnClick(object sender, RoutedEventArgs e) => FlyoutNewStats.IsOpen = false;
+		private void ButtonCloseStatsFlyout_OnClick(object sender, RoutedEventArgs e) => FlyoutStats.IsOpen = false;
 
 		private async void ButtonSwitchStatsToNewWindow_OnClick(object sender, RoutedEventArgs e)
 		{
 			Config.Instance.StatsInWindow = true;
 			Config.Save();
 			StatsFlyoutContentControl.Content = null;
-			Core.Windows.NewStatsWindow.ContentControl.Content = Core.StatsOverview;
-			Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
-			Core.Windows.NewStatsWindow.Show();
+			Core.Windows.StatsWindow.ContentControl.Content = Core.StatsOverview;
+			Core.Windows.StatsWindow.WindowState = WindowState.Normal;
+			Core.Windows.StatsWindow.Show();
 			Core.StatsOverview.UpdateStats();
-			FlyoutNewStats.IsOpen = false;
+			FlyoutStats.IsOpen = false;
 			await Task.Delay(100);
-			Core.Windows.NewStatsWindow.Activate();
+			Core.Windows.StatsWindow.Activate();
 		}
 
 		#region Properties
@@ -599,7 +583,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Core.Windows.TimerWindow.Shutdown();
 				Core.Windows.PlayerWindow.Shutdown();
 				Core.Windows.OpponentWindow.Shutdown();
-				Core.Windows.StatsWindow.Shutdown();
 				Config.Save();
 				DeckList.Save();
 				DeckStatsList.Save();
@@ -669,43 +652,41 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		#region MY DECKS - GUI
 
-		private void BtnDeckStats_Click(object sender, RoutedEventArgs e) => ShowStats();
+		private void BtnArenaStats_Click(object sender, RoutedEventArgs e) => ShowStats(true, false);
 
-		public void ShowStats()
+		private void BtnConstructedStats_Click(object sender, RoutedEventArgs e) => ShowStats(false, false);
+
+		internal void ShowStats(bool arena, bool matches)
 		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
 			if(Config.Instance.StatsInWindow)
 			{
-				Core.Windows.StatsWindow.StatsControl.SetDeck(deck);
+				StatsFlyoutContentControl.Content = null;
+				Core.Windows.StatsWindow.ContentControl.Content = Core.StatsOverview;
 				Core.Windows.StatsWindow.WindowState = WindowState.Normal;
 				Core.Windows.StatsWindow.Show();
 				Core.Windows.StatsWindow.Activate();
 			}
 			else
 			{
-				DeckStatsFlyout.SetDeck(deck);
-				FlyoutDeckStats.IsOpen = true;
+				Core.Windows.StatsWindow.ContentControl.Content = null;
+				StatsFlyoutContentControl.Content = Core.StatsOverview;
+				FlyoutStats.IsOpen = true;
 			}
-		}
-
-		private void BtnDeckNewStats_Click(object sender, RoutedEventArgs e)
-		{
-			if(Config.Instance.StatsInWindow)
+			if(arena)
 			{
-				StatsFlyoutContentControl.Content = null;
-				Core.Windows.NewStatsWindow.ContentControl.Content = Core.StatsOverview;
-				Core.Windows.NewStatsWindow.WindowState = WindowState.Normal;
-				Core.Windows.NewStatsWindow.Show();
-				Core.Windows.NewStatsWindow.Activate();
-				Core.StatsOverview.UpdateStats();
+				if(matches)
+					Core.StatsOverview.TreeViewItemArenaRunsOverview.IsSelected = true;
+				else
+					Core.StatsOverview.TreeViewItemArenaRunsSummary.IsSelected = true;
 			}
 			else
 			{
-				Core.Windows.NewStatsWindow.ContentControl.Content = null;
-				StatsFlyoutContentControl.Content = Core.StatsOverview;
-				FlyoutNewStats.IsOpen = true;
-				Core.StatsOverview.UpdateStats();
+				if(matches)
+					Core.StatsOverview.TreeViewItemConstructedGames.IsSelected = true;
+				else
+					Core.StatsOverview.TreeViewItemConstructedSummary.IsSelected = true;
 			}
+			Core.StatsOverview.UpdateStats();
 		}
 
 		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
@@ -767,13 +748,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
 				Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = true;
 			}
-
-			//set up stats
-			var statsTitle = $"Stats{(deck == null ? "" : ": " + deck.Name)}";
-			Core.Windows.StatsWindow.Title = statsTitle;
-			FlyoutDeckStats.Header = statsTitle;
-			Core.Windows.StatsWindow.StatsControl.SetDeck(deck);
-			DeckStatsFlyout.SetDeck(deck);
 
 			if(setActive)
 				UseDeck(deck);

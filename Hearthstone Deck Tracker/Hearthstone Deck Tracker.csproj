@@ -496,9 +496,6 @@
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\DeckStatsControl.xaml.cs">
-      <DependentUpon>DeckStatsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FlyoutControls\GameDetails.xaml.cs">
       <DependentUpon>GameDetails.xaml</DependentUpon>
     </Compile>
@@ -653,9 +650,6 @@
     </Compile>
     <Compile Include="Windows\StatsWindow.xaml.cs">
       <DependentUpon>StatsWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\StatsWindow_New.xaml.cs">
-      <DependentUpon>StatsWindow_New.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\TimerWindow.xaml.cs">
       <DependentUpon>TimerWindow.xaml</DependentUpon>
@@ -937,10 +931,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\DeckStatsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="FlyoutControls\GameDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1027,10 +1017,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\StatsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\StatsWindow_New.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

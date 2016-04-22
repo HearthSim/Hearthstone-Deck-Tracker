@@ -247,11 +247,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		[PredefinedHotKeyAction("Show stats", "Brings up the stats window or flyout.")]
 		public static void ShowStats()
 		{
-			Core.MainWindow.ShowStats();
-			if(Config.Instance.StatsInWindow)
-				Core.Windows.StatsWindow.Activate();
-			else
-				Core.MainWindow.ActivateWindow();
+			Core.MainWindow.ShowStats(false, false);
 		}
 
 		[PredefinedHotKeyAction("Reload deck", "Resets HDT to last game start.")]

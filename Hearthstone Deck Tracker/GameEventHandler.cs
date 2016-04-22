@@ -754,7 +754,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void SaveAndUpdateStats()
 		{
-			var statsControl = Config.Instance.StatsInWindow ? Core.Windows.StatsWindow.StatsControl : Core.MainWindow.DeckStatsFlyout;
 			if(RecordCurrentGameMode)
 			{
 				if(Config.Instance.ShowGameResultNotifications
@@ -782,6 +781,14 @@ namespace Hearthstone_Deck_Tracker
 						_game.CurrentGameStats.GameMode = _game.CurrentGameMode;
 						Log.Info("Set CurrentGameStats.GameMode to " + _game.CurrentGameMode);
 					}
+					if(_game.CurrentGameStats.GameMode == Arena)
+					{
+						ArenaStats.Instance.UpdateArenaStats();
+						ArenaStats.Instance.UpdateArenaRuns();
+						ArenaStats.Instance.UpdateArenaStatsHighlights();
+					}
+					else
+						ConstructedStats.Instance.UpdateConstructedStats();
 				}
 
 				if(_assignedDeck == null)
@@ -795,7 +802,6 @@ namespace Hearthstone_Deck_Tracker
 					Log.Info("Saving DeckStats");
 					DeckStatsList.Save();
 				}
-				statsControl.Refresh();
 			}
 			else if(_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(_game.CurrentGameStats))
 			{

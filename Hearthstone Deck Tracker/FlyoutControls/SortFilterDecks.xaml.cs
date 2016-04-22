@@ -79,8 +79,6 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.SelectedTags = tags;
 				Config.Save();
 				Core.MainWindow.DeckPickerList.UpdateDecks();
-				Core.Windows.StatsWindow.StatsControl.LoadOverallStats();
-				Core.MainWindow.DeckStatsFlyout.LoadOverallStats();
 			}
 			else if(Name == nameof(Core.MainWindow.TagControlEdit))
 			{

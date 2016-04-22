@@ -91,11 +91,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.TrayIcon.SetContextMenuProperty("classCardsFirst", "Checked", Config.Instance.CardSortingClassFirst);
 			Core.TrayIcon.SetContextMenuProperty("useNoDeck", "Checked", DeckList.Instance.ActiveDeck == null);
 
-
-			DeckStatsFlyout.LoadConfig();
 			GameDetailsFlyout.LoadConfig();
-			Core.Windows.StatsWindow.StatsControl.LoadConfig();
-			Core.Windows.StatsWindow.GameDetailsFlyout.LoadConfig();
 
 			MenuItemCheckBoxSyncOnStart.IsChecked = Config.Instance.HearthStatsSyncOnStart;
 			MenuItemCheckBoxAutoUploadDecks.IsChecked = Config.Instance.HearthStatsAutoUploadNewDecks;

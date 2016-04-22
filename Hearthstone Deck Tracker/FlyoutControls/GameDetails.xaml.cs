@@ -218,7 +218,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			Core.MainWindow.SetNewDeck(deck);
 			Core.MainWindow.FlyoutGameDetails.IsOpen = false;
-			Core.MainWindow.FlyoutDeckStats.IsOpen = false;
+			Core.MainWindow.FlyoutStats.IsOpen = false;
 		}
 	}
 }
