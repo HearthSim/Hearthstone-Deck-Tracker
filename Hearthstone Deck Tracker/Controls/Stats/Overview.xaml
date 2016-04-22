@@ -45,7 +45,7 @@
                                 Width="32" Height="32" Margin="5, -9, -7, -9" Click="ButtonMore_OnClick" DockPanel.Dock="Right">
                             <Button.ContextMenu>
                                 <ContextMenu Name="ButtonMoreContextMenu">
-                                    <CheckBox Name="CheckBoxPercent" DockPanel.Dock="Right" Content="AUTO REFRESH" Margin="-25,0,5,0" Foreground="White" 
+                                    <CheckBox Name="CheckBoxPercent" DockPanel.Dock="Right" Content="AUTO REFRESH" Margin="-25,0,5,0" Foreground="{DynamicResource TextBrush}" 
                                   IsChecked="{Binding Path=StatsAutoRefresh, Source={StaticResource ConfigWrapper}}"/>
                                     <MenuItem Header="RESET" Click="MenuItemReset_OnClick"/>
                                 </ContextMenu>

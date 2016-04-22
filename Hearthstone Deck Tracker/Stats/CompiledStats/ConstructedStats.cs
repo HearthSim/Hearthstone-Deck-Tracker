@@ -199,7 +199,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var games = GetFilteredGames(playerClass: false).ToList();
+				var games = GetFilteredGames(playerClass: false, oppClass: false).ToList();
 				foreach(var c in Enum.GetValues(typeof(HeroClass)).Cast<HeroClass>())
 					yield return new ConstructedMatchup(c, games);
 				yield return new ConstructedMatchup(games);
@@ -213,7 +213,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 				var deck = DeckList.Instance.ActiveDeck;
 				if(deck == null)
 					yield break;
-				var games = GetFilteredGames(new[] {deck}, playerClass: false).ToList();
+				var games = GetFilteredGames(new[] {deck}, playerClass: false, oppClass: false).ToList();
 				if(deck.HasVersions)
 					yield return new ConstructedDeckDetails("All", games);
 				else
