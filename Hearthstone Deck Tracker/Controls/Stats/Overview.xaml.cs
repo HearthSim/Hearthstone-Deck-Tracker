@@ -26,7 +26,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ConstructedFilters.SetUpdateCallback(UpdateCallBack);
 			ConstructedFilters.CheckBoxDecks.Checked += (sender, args) => ConstructedSummary.UpdateContent();
 			ConstructedFilters.CheckBoxDecks.Unchecked += (sender, args) => ConstructedSummary.UpdateContent();
-			ContentControlFilter.Content = ArenaFilters;
 			_initialized = true;
 		}
 
@@ -95,11 +94,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		private void TreeViewItemConstructedGames_OnSelected(object sender, RoutedEventArgs e)
 		{
-			//TODO
+			if(!_initialized)
+				return;
+			UpdateStats();
 		}
 
 		private void TreeViewItemConstructedSummary_OnSelected(object sender, RoutedEventArgs e)
 		{
+			if(!_initialized)
+				return;
+			UpdateStats();
 		}
 
 		private void TreeViewStats_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)

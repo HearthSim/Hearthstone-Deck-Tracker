@@ -8,28 +8,40 @@
              d:DesignHeight="300" d:DesignWidth="800">
     <GroupBox Header="MATCHES">
         <DockPanel>
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Visibility="{Binding MultiSelectPanelVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonMultiMove_OnClick" ToolTip="All selected games must have the same player hero."
-                        ToolTipService.ShowOnDisabled="True" IsEnabled="{Binding ButtonMultiMoveEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" >
+                <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonAdd_OnClick" Visibility="{Binding ButtonAddVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="12">
                             <Rectangle.Fill>
-                                <VisualBrush Visual="{Binding MoveIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                <VisualBrush Visual="{Binding AddIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <TextBlock Text="MOVE SELECTED" Margin="4,0,0,0"/>
+                        <TextBlock Text="ADD NEW GAME" Margin="4,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonMultiDelete_OnClick" Background="Red">
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="12">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{Binding DeleteIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <TextBlock Text="DELETE SELECTED" Margin="4,0,0,0"/>
-                     </StackPanel>
-                </Button>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding MultiSelectPanelVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonMultiMove_OnClick" ToolTip="All selected games must have the same player hero."
+                        ToolTipService.ShowOnDisabled="True" IsEnabled="{Binding ButtonMultiMoveEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="12">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{Binding MoveIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock Text="MOVE SELECTED" Margin="4,0,0,0"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonMultiDelete_OnClick" Background="Red">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="12">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{Binding DeleteIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <TextBlock Text="DELETE SELECTED" Margin="4,0,0,0"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
             </StackPanel>
             <DataGrid Name="DataGridGames" SelectedIndex="0" SelectedItem="{Binding SelectedGame, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource, IsAsync=True}" 
                       ItemsSource="{Binding Path=FilteredGames, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True, NotifyOnTargetUpdated=True}" 

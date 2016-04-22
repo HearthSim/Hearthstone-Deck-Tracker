@@ -326,5 +326,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			_updateCallback?.Invoke();
 		}
+
+		private void CheckBoxDecks_OnCheckedChanged(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			_updateCallback?.Invoke();
+			Core.StatsOverview.ConstructedGames.UpdateAddGameButtonVisibility();
+		}
 	}
 }

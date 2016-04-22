@@ -254,5 +254,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+		public void UpdateGames() => OnPropertyChanged(nameof(FilteredGames));
 	}
 }

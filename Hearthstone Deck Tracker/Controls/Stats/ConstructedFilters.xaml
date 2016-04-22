@@ -20,7 +20,7 @@
                   IsEnabled="{Binding ActiveDeckOnlyIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
                   ToolTip="{Binding ActiveDeckOnlyToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
                   ToolTipService.IsEnabled="{Binding ActiveDeckOnlyToolTipIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" ToolTipService.ShowOnDisabled="True" />
+                  Checked="CheckBoxDecks_OnCheckedChanged" Unchecked="CheckBoxDecks_OnCheckedChanged" ToolTipService.ShowOnDisabled="True" />
         <Separator/>
         <DockPanel Margin="0,5,0,0">
             <Label Content="Time:" Width="60"/>

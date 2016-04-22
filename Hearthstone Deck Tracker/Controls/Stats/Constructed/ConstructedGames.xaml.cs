@@ -36,6 +36,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 
 		public GameStats SelectedGame { get; set; }
 
+		public Visibility ButtonAddVisibility 
+			=> Config.Instance.ConstructedStatsActiveDeckOnly && (!DeckList.Instance.ActiveDeck?.IsArenaDeck ?? false) ? Visibility.Visible : Visibility.Collapsed;
+
 		public DataGridRowDetailsVisibilityMode RowDetailVisibility
 			=> SelectedGames.Count > 1 ? DataGridRowDetailsVisibilityMode.Collapsed : DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
 
@@ -129,7 +132,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			OnPropertyChanged(nameof(NoteIconVisual));
 			OnPropertyChanged(nameof(MoveIconVisual));
 			OnPropertyChanged(nameof(DeleteIconVisual));
+			OnPropertyChanged(nameof(AddIconVisual));
 		}
+
+		public void UpdateAddGameButtonVisibility() => OnPropertyChanged(nameof(ButtonAddVisibility));
 
 		public Visual ReplayIconVisual => TryFindResource("appbar_control_play_" + VisualColor) as Visual;
 		public Visual OppDeckIconVisual => TryFindResource("appbar_layer_" + VisualColor) as Visual;
@@ -137,9 +143,23 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		public Visual NoteIconVisual => TryFindResource("appbar_edit_box_" + VisualColor) as Visual;
 		public Visual MoveIconVisual => TryFindResource("appbar_page_arrow_" + VisualColor) as Visual;
 		public Visual DeleteIconVisual => TryFindResource("appbar_delete_" + VisualColor) as Visual;
+		public Visual AddIconVisual => TryFindResource("appbar_add_" + VisualColor) as Visual;
 
 		private string VisualColor => Config.Instance.StatsInWindow && Config.Instance.ThemeName != "BaseDark" ? "black" : "white";
 
 		private void ConstructedGames_OnLoaded(object sender, RoutedEventArgs e) => UpdateVisuals();
+
+		private async void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
+		{
+			var deck = DeckList.Instance.ActiveDeck;
+			if(deck == null || deck.IsArenaDeck)
+				return;
+			var dialog = Helper.GetParentWindow(Core.StatsOverview)?.ShowAddGameDialog(deck);
+			if(dialog != null)
+			{
+				await dialog;
+				ConstructedStats.Instance.UpdateGames();
+			}
+		}
 	}
 }

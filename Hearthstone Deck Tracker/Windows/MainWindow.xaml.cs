@@ -678,6 +678,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					Core.StatsOverview.TreeViewItemArenaRunsOverview.IsSelected = true;
 				else
 					Core.StatsOverview.TreeViewItemArenaRunsSummary.IsSelected = true;
+				Core.StatsOverview.ContentControlFilter.Content = Core.StatsOverview.ArenaFilters;
 			}
 			else
 			{
@@ -685,6 +686,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					Core.StatsOverview.TreeViewItemConstructedGames.IsSelected = true;
 				else
 					Core.StatsOverview.TreeViewItemConstructedSummary.IsSelected = true;
+				Core.StatsOverview.ContentControlFilter.Content = Core.StatsOverview.ConstructedFilters;
 			}
 			Core.StatsOverview.UpdateStats();
 		}

@@ -38,7 +38,7 @@
                                     SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
         </DockPanel>
         <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeSeasonVisibilityConverter}}">
-            <Label Content="Seasons:" Width="40"/>
+            <Label Content="Seasons:" Width="60"/>
             <Grid VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="22*"/>
