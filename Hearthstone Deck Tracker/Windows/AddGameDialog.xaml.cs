@@ -92,6 +92,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void BtnSave_OnClick(object sender, RoutedEventArgs e)
 		{
+			BtnSave.IsEnabled = false;
 			try
 			{
 				int duration;
@@ -143,6 +144,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				TextBoxRank.IsEnabled = e.AddedItems.Contains(GameMode.Ranked);
 		}
 
-		private void BtnCancel_OnClick(object sender, RoutedEventArgs e) => _tcs.SetResult(null);
+		private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+		{
+			BtnCancel.IsEnabled = false;
+			_tcs.SetResult(null);
+		}
 	}
 }

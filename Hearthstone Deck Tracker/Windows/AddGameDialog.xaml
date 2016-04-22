@@ -91,7 +91,7 @@
         </DockPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Width="210" Margin="0,30,0,0">
             <Button Name="BtnSave"  Content="add game" Width="90" Style="{StaticResource AccentedSquareButtonStyle}" Click="BtnSave_OnClick"/>
-            <Button Content="cancel" Width="90" Margin="20,0,0,0" Click="BtnCancel_OnClick"/>
+            <Button Name="BtnCancel" Content="cancel" Width="90" Margin="20,0,0,0" Click="BtnCancel_OnClick"/>
         </StackPanel>
     </StackPanel>
 </dialogs:CustomDialog>

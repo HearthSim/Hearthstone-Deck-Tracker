@@ -141,7 +141,7 @@
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                            <Button Margin="4,4,0,4" MinWidth="70"  Click="ButtonShowReplay_OnClick" Background="Green">
+                            <Button Margin="4,4,0,4" MinWidth="70"  Click="ButtonShowReplay_OnClick" Background="Green" IsEnabled="{Binding HasReplayFile}">
                                 <StackPanel Orientation="Horizontal">
                                     <Rectangle Width="12">
                                         <Rectangle.Fill>
