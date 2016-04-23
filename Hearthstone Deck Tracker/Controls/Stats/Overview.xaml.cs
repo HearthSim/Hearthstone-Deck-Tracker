@@ -155,6 +155,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				ConstructedFilters.Reset();
 				ConstructedFilters = new ConstructedFilters(UpdateCallBack);
 				ContentControlFilter.Content = ConstructedFilters;
+				ConstructedFilters.CheckBoxDecks.Checked += (s, args) => ConstructedSummary.UpdateContent();
+				ConstructedFilters.CheckBoxDecks.Unchecked += (s, args) => ConstructedSummary.UpdateContent();
 			}
 			else
 				return;
