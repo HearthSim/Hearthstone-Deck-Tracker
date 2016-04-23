@@ -151,8 +151,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(GameMode.All)]
 		public GameMode ConstructedStatsModeFilter = GameMode.All;
 
-		[DefaultValue(DisplayedTimeFrame.AllTime)]
-		public DisplayedTimeFrame ConstructedStatsTimeFrameFilter = DisplayedTimeFrame.AllTime;
+		[DefaultValue(DisplayedTimeFrame.CurrentSeason)]
+		public DisplayedTimeFrame ConstructedStatsTimeFrameFilter = DisplayedTimeFrame.CurrentSeason;
 
 		[DefaultValue(HeroClassStatsFilter.All)]
 		public HeroClassStatsFilter ConstructedStatsClassFilter = HeroClassStatsFilter.All;
