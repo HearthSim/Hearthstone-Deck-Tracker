@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility;
@@ -28,6 +29,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public string Class => _player?.ToString() ?? "Total";
 		public BitmapImage ClassImage => _player != null ? ImageCache.GetClassIcon(_player.ToString()) : new BitmapImage();
+		public Visibility TextVisibility => _player != null ? Visibility.Collapsed : Visibility.Visible;
+		public string Text => Class.ToUpper();
 
 		public MatchupStats Druid => GetMatchupStats(HeroClass.Druid);
 		public MatchupStats Hunter => GetMatchupStats(HeroClass.Hunter);

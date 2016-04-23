@@ -14,7 +14,11 @@
             <DataGridTemplateColumn Header="YOU \ VS" SortMemberPath="Class">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding ClassImage}" Width="30" Height="30" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding Class}" />
+                        <Grid>
+                            <Image Source="{Binding ClassImage}" Width="30" Height="30" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding Class}" />
+                            <TextBlock Text="{Binding Text}" Visibility="{Binding TextVisibility}" FontWeight="SemiBold"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
+                        </Grid>
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
