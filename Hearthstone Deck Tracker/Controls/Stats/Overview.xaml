@@ -34,7 +34,9 @@
                         <TreeViewItem Name="TreeViewItemConstructedGames" 
                                       Selected="TreeViewItemConstructedGames_OnSelected" Header="Matches"
                                       DataContext="{Binding ConstructedGames, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                        <TreeViewItem Header="Charts"/>
+                        <TreeViewItem Name="TreeViewItemConstructedCharts" 
+                                      Selected="TreeViewItemConstructedCharts_OnSelected" Header="Charts"
+                                      DataContext="{Binding ConstructedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                     </TreeViewItem>
                 </TreeView>
             </GroupBox>

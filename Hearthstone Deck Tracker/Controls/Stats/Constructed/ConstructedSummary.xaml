@@ -25,6 +25,14 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <DockPanel Height="300" MinWidth="300" Grid.Column="0">
+                            <TextBlock Text="Winrate" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <metroChart:RadialGaugeChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="Collapsed">
+                                <metroChart:RadialGaugeChart.Series>
+                                    <metroChart:ChartSeries SeriesTitle="Winrate" DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=Winrate, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
+                                </metroChart:RadialGaugeChart.Series>
+                            </metroChart:RadialGaugeChart>
+                        </DockPanel>
+                        <DockPanel Height="300" MinWidth="300" Grid.Column="1">
                             <TextBlock Text="Played" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
                             <metroChart:DoughnutChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <metroChart:DoughnutChart.Series>
@@ -32,21 +40,13 @@
                                 </metroChart:DoughnutChart.Series>
                             </metroChart:DoughnutChart>
                         </DockPanel>
-                        <DockPanel Height="300" MinWidth="300" Grid.Column="1">
+                        <DockPanel Height="300" MinWidth="300" Grid.Column="2">
                             <TextBlock Text="Opponents" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
                             <metroChart:DoughnutChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <metroChart:DoughnutChart.Series>
                                     <metroChart:ChartSeries SeriesTitle="Opponents" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=OpponentClassesPercent, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                                 </metroChart:DoughnutChart.Series>
                             </metroChart:DoughnutChart>
-                        </DockPanel>
-                        <DockPanel Height="300" MinWidth="300" Grid.Column="2">
-                            <TextBlock Text="Average winrate per class" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
-                            <metroChart:ClusteredColumnChart Background="Transparent" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
-                                <metroChart:ClusteredColumnChart.Series>
-                                    <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=AvgWinratePerClass, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
-                                </metroChart:ClusteredColumnChart.Series>
-                            </metroChart:ClusteredColumnChart>
                         </DockPanel>
                     </Grid>
                 </ScrollViewer>

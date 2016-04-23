@@ -219,6 +219,9 @@
     <Compile Include="Controls\Stats\ConstructedFilters.xaml.cs">
       <DependentUpon>ConstructedFilters.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Constructed\ConstructedCharts.xaml.cs">
+      <DependentUpon>ConstructedCharts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\Constructed\ConstructedDeckDetailsTable.xaml.cs">
       <DependentUpon>ConstructedDeckDetailsTable.xaml</DependentUpon>
     </Compile>
@@ -769,6 +772,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Stats\ConstructedFilters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Stats\Constructed\ConstructedCharts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

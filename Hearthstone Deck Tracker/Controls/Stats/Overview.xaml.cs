@@ -37,6 +37,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public ConstructedSummary ConstructedSummary { get; } = new ConstructedSummary();
 
+		public ConstructedCharts ConstructedCharts { get; } = new ConstructedCharts();
+
 		public ConstructedFilters ConstructedFilters { get; private set; } = new ConstructedFilters();
 
 		public ArenaFilters ArenaFilters { get; private set; } = new ArenaFilters();
@@ -54,6 +56,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(TreeViewItemConstructedGames.IsSelected || TreeViewItemConstructedSummary.IsSelected)
 			{
 				ConstructedStats.Instance.UpdateConstructedStats();
+				return;
+			}
+			if(TreeViewItemConstructedCharts.IsSelected)
+			{
+				ConstructedStats.Instance.UpdateConstructedCharts();
 				return;
 			}
 			ArenaStats.Instance.UpdateArenaStats();
@@ -100,6 +107,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		}
 
 		private void TreeViewItemConstructedSummary_OnSelected(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			UpdateStats();
+		}
+
+		private void TreeViewItemConstructedCharts_OnSelected(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
