@@ -142,9 +142,9 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			if(oppClass && Config.Instance.ConstructedStatsOpponentClassFilter != HeroClassStatsFilter.All)
 				filtered = filtered.Where(x => x.OpponentHero == Config.Instance.ConstructedStatsOpponentClassFilter.ToString());
 			if(oppName && !string.IsNullOrEmpty(Config.Instance.ConstructedStatsOpponentNameFilter))
-				filtered = filtered.Where(x => x.OpponentName?.Contains(Config.Instance.ConstructedStatsOpponentNameFilter) ?? false);
+				filtered = filtered.Where(x => x.OpponentName?.ToUpperInvariant().Contains(Config.Instance.ConstructedStatsOpponentNameFilter.ToUpperInvariant()) ?? false);
 			if(note && !string.IsNullOrEmpty(Config.Instance.ConstructedStatsNoteFilter))
-				filtered = filtered.Where(x => x.Note?.Contains(Config.Instance.ConstructedStatsNoteFilter) ?? false);
+				filtered = filtered.Where(x => x.Note?.ToUpperInvariant().Contains(Config.Instance.ConstructedStatsNoteFilter.ToUpperInvariant()) ?? false);
 
 			return filtered.OrderByDescending(x => x.StartTime);
 		}
