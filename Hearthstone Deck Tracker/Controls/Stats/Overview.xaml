@@ -27,7 +27,9 @@
                                       Selected="TreeViewItemArenaRunsAdvanced_OnSelected" Header="Advanced charts"
                                       DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                     </TreeViewItem>
-                    <TreeViewItem Name="TreeViewItemConstructed" Header="Constructed" IsExpanded="True">
+                    <TreeViewItem Name="TreeViewItemConstructed" Header="Constructed" IsExpanded="True"
+                                      Selected="TreeViewItemConstructedSummary_OnSelected"
+                                      DataContext="{Binding ConstructedSummary, RelativeSource={RelativeSource AncestorType=UserControl}}" >
                         <TreeViewItem Name="TreeViewItemConstructedSummary" 
                                       Selected="TreeViewItemConstructedSummary_OnSelected" Header="Summary"
                                       DataContext="{Binding ConstructedSummary, RelativeSource={RelativeSource AncestorType=UserControl}}" />
