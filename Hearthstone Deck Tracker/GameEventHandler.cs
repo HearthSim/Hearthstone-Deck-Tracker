@@ -149,12 +149,22 @@ namespace Hearthstone_Deck_Tracker
 			await _game.GameModeDetection();
 			Log.Info("Detected game mode, continuing.");
 
-			if(Config.Instance.RecordReplays && _game.Entities.Count > 0 && !_game.SavedReplay && _game.CurrentGameStats != null
-			   && _game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
-				_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(_game.PowerLog);
+			if(_game.CurrentGameStats != null)
+			{
+				if(Config.Instance.RecordReplays && _game.Entities.Count > 0 && !_game.SavedReplay
+				   && _game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
+					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(_game.PowerLog);
 
-			if(_game.StoredGameStats != null && _game.CurrentGameStats != null)
-				_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
+				if(_game.StoredGameStats != null)
+					_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
+
+				if(_usePostGameLegendRank)
+				{
+					_game.CurrentGameStats.LegendRank = _game.MetaData.LegendRank;
+					_usePostGameLegendRank = false;
+				}
+
+			}
 
 			SaveAndUpdateStats();
 
@@ -454,6 +464,7 @@ namespace Hearthstone_Deck_Tracker
 			_rankDetectionRunning = false;
 		}
 
+		private bool _usePostGameLegendRank;
 		private async Task<bool> FindRanks(Bitmap capture)
 		{
 			var match = await RankDetection.Match(capture);
@@ -465,6 +476,12 @@ namespace Hearthstone_Deck_Tracker
 				{
 					_game.CurrentGameStats.GameMode = Ranked;
 					_game.CurrentGameStats.Rank = match.Player;
+					if(match.PlayerIsLegendRank)
+					{
+						_game.CurrentGameStats.LegendRank = _game.MetaData.LegendRank;
+						if(_game.MetaData.LegendRank == 0)
+							_usePostGameLegendRank = true;
+					}
 					if(match.Opponent >= 0)
 						_game.CurrentGameStats.OpponentRank = match.Opponent;
 				}

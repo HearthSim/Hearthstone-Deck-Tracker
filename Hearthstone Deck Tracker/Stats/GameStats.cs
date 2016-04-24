@@ -64,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string ReplayFile { get; set; }
 		public bool WasConceded { get; set; }
 		public int Rank { get; set; }
+		public int LegendRank { get; set; }
 		public int OpponentRank { get; set; }
 		public Region Region { get; set; }
 
@@ -128,10 +129,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool HasRank => Rank > 0 && Rank <= 25;
 
 		[XmlIgnore]
-		public string RankString => HasRank && GameMode == GameMode.Ranked ? Rank.ToString() : "-";
+		public bool HasLegendRank => LegendRank > 0;
 
 		[XmlIgnore]
-		public int SortableRank => HasRank && GameMode == GameMode.Ranked ? Rank : -1;
+		public string RankString => GameMode == GameMode.Ranked ? (HasLegendRank ? $"L{LegendRank}" : (HasRank ? Rank.ToString() : "-")) : "-";
+
+		[XmlIgnore]
+		public int SortableRank => GameMode == GameMode.Ranked ? (HasLegendRank ? -int.MaxValue + LegendRank : (HasRank ? Rank : int.MaxValue)) : int.MaxValue;
 
 		[XmlIgnore]
 		public string ResultString => Result + (WasConceded ? "*" : "");

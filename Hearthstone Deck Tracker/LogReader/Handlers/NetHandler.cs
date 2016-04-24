@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
@@ -11,11 +12,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	public class NetHandler
 	{
-		public void Handle(string logLine, IHsGameState gameState, IGame game)
+		private DateTime _lastGameStart;
+		public void Handle(LogLineItem logLine, IHsGameState gameState, IGame game)
 		{
-			var match = HsLogReaderConstants.ConnectionRegex.Match(logLine);
+			var match = HsLogReaderConstants.ConnectionRegex.Match(logLine.Line);
 			if(match.Success)
 			{
+				if(_lastGameStart != logLine.Time)
+				{
+					game.MetaData.PropagateLegendRank();
+					_lastGameStart = logLine.Time;
+				}
+
 				game.MetaData.ServerAddress = match.Groups["address"].Value.Trim();
 				game.MetaData.ClientId = match.Groups["client"].Value.Trim();
 				game.MetaData.GameId = match.Groups["game"].Value.Trim();
@@ -29,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 
 				//just to make sure this still works in case the typo gets fixed
-				if(logLine.ToLower().Contains("reconncting=true") || logLine.ToLower().Contains("reconnecting=true"))
+				if(logLine.Line.ToLower().Contains("reconncting=true") || logLine.Line.ToLower().Contains("reconnecting=true"))
 					game.StoreGameState();
 				gameState.Reset();
 				gameState.GameHandler.HandleGameStart();

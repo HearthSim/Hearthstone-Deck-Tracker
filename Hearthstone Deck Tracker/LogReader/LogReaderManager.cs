@@ -183,7 +183,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							LoadingScreenHandler.Handle(line.Line, _gameState, _game);
 							break;
 						case "Net":
-							NetHandler.Handle(line.Line, _gameState, _game);
+							NetHandler.Handle(line, _gameState, _game);
 							break;
 						case "FullScreenFX":
 							FullScreenFxHandler.Handle(line, _game);

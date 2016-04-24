@@ -198,6 +198,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public bool Success => Player >= 0;
 		public bool OpponentSuccess => Opponent >= 0;
 
+		public bool PlayerIsLegendRank => Player == 0;
+
 		public override string ToString() => $"Player: {Player}, Opponent: {Opponent}, {Success}";
 	}
 
