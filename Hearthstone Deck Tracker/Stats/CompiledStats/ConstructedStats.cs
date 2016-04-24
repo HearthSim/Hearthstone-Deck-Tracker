@@ -92,33 +92,30 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			if(rank)
 			{
 				var min = Config.Instance.ConstructedStatsRankFilterMin;
-				int value;
 				if(min != "L1")
 				{
+					int minValue;
 					if(min.StartsWith("L"))
 					{
-						//if(int.TryParse(min.Substring(1), out rank))
-						//	filtered = filtered.Where(x => x.LegendRank >= rank);
+						if(int.TryParse(min.Substring(1), out minValue))
+							filtered = filtered.Where(x => !x.HasLegendRank ||  x.LegendRank >= minValue);
 					}
-					else
-					{
-						if(int.TryParse(min, out value))
-							filtered = filtered.Where(x => x.Rank >= value);
-					}
+					else if(int.TryParse(min, out minValue))
+						filtered = filtered.Where(x => !x.HasLegendRank && x.HasRank && x.Rank >= minValue);
+					
 				}
 				var max = Config.Instance.ConstructedStatsRankFilterMax;
 				if(max != "25")
 				{
+					int maxValue;
 					if(max.StartsWith("L"))
 					{
-						//if(int.TryParse(min.Substring(1), out rank))
-						//	filtered = filtered.Where(x => x.LegendRank <= rank);
+						if(int.TryParse(min.Substring(1), out maxValue))
+							filtered = filtered.Where(x => x.HasLegendRank && x.LegendRank <= maxValue);
 					}
-					else
-					{
-						if(int.TryParse(max, out value))
-							filtered = filtered.Where(x => x.Rank <= value);
-					}
+					else if(int.TryParse(max, out maxValue))
+						filtered = filtered.Where(x => x.HasLegendRank || x.HasRank && x.Rank <= maxValue);
+					
 				}
 			}
 			//if(format && Config.Instance.ConstructedStatsFormatFilter != Format.All)

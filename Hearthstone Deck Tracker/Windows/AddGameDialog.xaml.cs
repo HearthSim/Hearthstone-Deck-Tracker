@@ -42,11 +42,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			{
 				ComboBoxMode.IsEnabled = true;
 				TextBoxRank.IsEnabled = true;
+				TextBoxLegendRank.IsEnabled = true;
 				if(lastGame != null)
 				{
 					ComboBoxMode.SelectedItem = lastGame.GameMode;
 					if(lastGame.GameMode == GameMode.Ranked)
+					{
 						TextBoxRank.Text = lastGame.Rank.ToString();
+						TextBoxLegendRank.Text = lastGame.LegendRank.ToString();
+					}
 				}
 			}
 			if(lastGame != null)
@@ -76,8 +80,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ComboBoxMode.SelectedItem = game.GameMode;
 			ComboBoxRegion.SelectedItem = game.Region;
 			if(game.GameMode == GameMode.Ranked)
+			{
 				TextBoxRank.Text = game.Rank.ToString();
+				TextBoxLegendRank.Text = game.LegendRank.ToString();
+			}
 			TextBoxRank.IsEnabled = game.GameMode == GameMode.Ranked;
+			TextBoxLegendRank.IsEnabled = game.GameMode == GameMode.Ranked;
 			ComboBoxCoin.SelectedItem = game.Coin ? YesNo.Yes : YesNo.No;
 			ComboBoxConceded.SelectedItem = game.WasConceded ? YesNo.Yes : YesNo.No;
 			TextBoxTurns.Text = game.Turns.ToString();
@@ -99,6 +107,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				int.TryParse(TextBoxDuration.Text, out duration);
 				int rank;
 				int.TryParse(TextBoxRank.Text, out rank);
+				int legendRank;
+				int.TryParse(TextBoxLegendRank.Text, out legendRank);
 				int turns;
 				int.TryParse(TextBoxTurns.Text, out turns);
 				if(!_editing)
@@ -115,6 +125,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				_game.OpponentHero = ComboBoxOpponent.SelectedValue.ToString();
 				_game.Coin = (YesNo)ComboBoxCoin.SelectedValue == YesNo.Yes;
 				_game.Rank = rank;
+				_game.LegendRank = legendRank;
 				_game.Note = TextBoxNote.Text;
 				_game.OpponentName = TextBoxOppName.Text;
 				_game.PlayerName = TextBoxPlayerName.Text;

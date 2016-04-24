@@ -7,7 +7,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d" 
-             d:DesignHeight="300" Title="Add new game" Height="480" d:DesignWidth="450">
+             d:DesignHeight="300" Title="Add new game" Height="510" d:DesignWidth="450">
     <StackPanel Width="300" Margin="0,15,0,0">
         <DockPanel Margin="0,2,0,0">
             <Label Content="Result:" Width="90"/>
@@ -54,6 +54,10 @@
         <DockPanel Margin="0,2,0,0">
             <Label Content="Rank:" Width="90"/>
             <TextBox Name="TextBoxRank" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
+        </DockPanel>
+        <DockPanel Margin="0,2,0,0">
+            <Label Content="Legend Rank:" Width="90"/>
+            <TextBox Name="TextBoxLegendRank" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
         </DockPanel>
         <DockPanel Margin="0,2,0,0">
             <Label Content="Coin:" Width="90"/>
