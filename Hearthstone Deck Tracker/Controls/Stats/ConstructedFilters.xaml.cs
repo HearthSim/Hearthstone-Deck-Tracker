@@ -75,8 +75,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public string ActiveDeckOnlyToolTip
 			=>DeckList.Instance.ActiveDeck == null
-					? "No active deck" : (DeckList.Instance.ActiveDeck.IsArenaDeck ? "Active deck is an arena deck" : "");
-		public bool ActiveDeckOnlyToolTipIsEnabled => !ActiveDeckOnlyIsEnabled;
+					? "No active deck" : (DeckList.Instance.ActiveDeck.IsArenaDeck ? "Active deck is an arena deck" : "Deck: " + DeckList.Instance.ActiveDeck.Name);
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -96,7 +95,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			}
 			OnPropertyChanged(nameof(ActiveDeckOnlyIsEnabled));
 			OnPropertyChanged(nameof(ActiveDeckOnlyToolTip));
-			OnPropertyChanged(nameof(ActiveDeckOnlyToolTipIsEnabled));
 		}
 
 		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
