@@ -53,7 +53,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public void UpdateStats()
 		{
-			if(TreeViewItemConstructedGames.IsSelected || TreeViewItemConstructedSummary.IsSelected || TreeViewItemConstructed.IsSelected)
+			if(TreeViewItemConstructedGames.IsSelected)
+			{
+				ConstructedStats.Instance.UpdateGames();
+				return;
+			}
+			if(TreeViewItemConstructedSummary.IsSelected || TreeViewItemConstructed.IsSelected)
 			{
 				ConstructedStats.Instance.UpdateConstructedStats();
 				return;

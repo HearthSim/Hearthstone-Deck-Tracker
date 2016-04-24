@@ -225,9 +225,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
+			if(TextBoxRankMin.Text == Config.Instance.ConstructedStatsRankFilterMin)
+				return;
 			await Task.Delay(100);
-			if(TextBoxRankMin.Text == Config.Instance.ConstructedStatsRankFilterMin
-			   || Validation.GetHasError(TextBoxRankMin))
+			if(Validation.GetHasError(TextBoxRankMin))
 				return;
 			_updateCallback?.Invoke();
 		}
@@ -236,9 +237,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
+			if(TextBoxRankMax.Text == Config.Instance.ConstructedStatsRankFilterMax)
+				return;
 			await Task.Delay(100);
-			if(TextBoxRankMax.Text == Config.Instance.ConstructedStatsRankFilterMax
-			   || Validation.GetHasError(TextBoxRankMax))
+			if(Validation.GetHasError(TextBoxRankMax))
 				return;
 			_updateCallback?.Invoke();
 		}
