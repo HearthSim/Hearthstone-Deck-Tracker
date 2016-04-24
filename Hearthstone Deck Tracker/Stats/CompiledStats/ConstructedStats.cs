@@ -9,6 +9,7 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -22,19 +23,20 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public IEnumerable<GameStats> GetFilteredGames(bool archived = true, bool playerClass = true, bool region = true,
-													   bool timeFrame = true, bool mode = true, bool rank = true, bool format = true, bool turns = true, bool coin = true,
-													   bool result = true, bool oppClass = true, bool oppName = true, bool note = true, bool tags = true)
+													   bool timeFrame = true, bool mode = true, bool rank = true, bool format = true, 
+													   bool turns = true, bool coin = true, bool result = true, bool oppClass = true, 
+													   bool oppName = true, bool note = true, bool tags = true, bool includeNoDeck = true)
 		{
 			var decks = Config.Instance.ConstructedStatsActiveDeckOnly && DeckList.Instance.ActiveDeck != null ? new[] {DeckList.Instance.ActiveDeck} : DeckList.Instance.Decks.ToArray();
 			return GetFilteredGames(decks, archived, playerClass, region, timeFrame, mode, rank, format, turns, coin, result,
-									oppClass, oppName, note, tags);
+									oppClass, oppName, note, tags, includeNoDeck);
 		}
 
 		public IEnumerable<GameStats> GetFilteredGames(IEnumerable<Deck> decks, bool archived = true, bool playerClass = true, bool region = true,
 													   bool timeframe = true, bool mode = true, bool rank = true, 
 													   bool format = true, bool turns = true, bool coin = true,
 													   bool result = true, bool oppClass = true, bool oppName = true,
-													   bool note = true, bool tags = true)
+													   bool note = true, bool tags = true, bool includeNoDeck = true)
 		{
 			if(archived && !Config.Instance.ConstructedStatsIncludeArchived && !Config.Instance.ConstructedStatsActiveDeckOnly)
 				decks = decks.Where(x => !x.Archived);
@@ -42,10 +44,10 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			if(tags && Config.Instance.ConstructedStatsApplyTagFilters && !Config.Instance.SelectedTags.Contains("All") && !Config.Instance.ConstructedStatsActiveDeckOnly)
 				decks = decks.Where(d => d.Tags.Any(t => Config.Instance.SelectedTags.Contains(t)));
 
-			var filtered = decks.SelectMany(x => x.DeckStats.Games);
+			var filtered = decks.SelectMany(x => x.DeckStats.Games).Where(x => !x.IsClone);
 
-			if(!Config.Instance.ConstructedStatsActiveDeckOnly)
-				filtered = filtered.Concat(DefaultDeckStats.Instance.DeckStats.SelectMany(x => x.Games));
+			if(!Config.Instance.ConstructedStatsActiveDeckOnly && includeNoDeck)
+				filtered = filtered.Concat(DefaultDeckStats.Instance.DeckStats.SelectMany(x => x.Games).Where(x => !x.IsClone));
 
 			if(playerClass && Config.Instance.ConstructedStatsClassFilter != HeroClassStatsFilter.All && !Config.Instance.ConstructedStatsActiveDeckOnly)
 				filtered = filtered.Where(x => x.PlayerHero == Config.Instance.ConstructedStatsClassFilter.ToString());
@@ -281,6 +283,15 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			OnPropertyChanged(nameof(PlayedClassesPercent));
 			OnPropertyChanged(nameof(OpponentClassesPercent));
 			OnPropertyChanged(nameof(Winrate));
+			OnPropertyChanged(nameof(DeckStatsTotal));
+			OnPropertyChanged(nameof(HighestRank));
+			if(!Config.Instance.ConstructedStatsActiveDeckOnly)
+			{
+				OnPropertyChanged(nameof(DeckStatsMostPlayed));
+				OnPropertyChanged(nameof(DeckStatsBest));
+				OnPropertyChanged(nameof(DeckStatsFastest));
+				OnPropertyChanged(nameof(DeckStatsSlowest));
+			}
 			UpdateMatchups();
 		}
 
@@ -306,5 +317,59 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		}
 
 		public void UpdateGames() => OnPropertyChanged(nameof(FilteredGames));
+
+		public ConstructedDeckStats DeckStatsBest
+			=> GetFilteredGames(includeNoDeck: false)
+					.GroupBy(x => x.DeckId)
+					.Select(x => new { grouping = x, WinRate = WeightedWinrate(x) })
+					.OrderByDescending(x => x.WinRate)
+					.FirstOrDefault(x => x.grouping.Any())?
+					.grouping?.ToConstructedDeckStats();
+
+		public ConstructedDeckStats DeckStatsMostPlayed
+			=> GetFilteredGames(includeNoDeck: false)
+					.GroupBy(x => x.DeckId)
+					.Select(x => new { grouping = x, Count = x.Count() })
+					.OrderByDescending(x => x.Count)
+					.FirstOrDefault(x => x.grouping.Any())?
+					.grouping?.ToConstructedDeckStats();
+
+		public ConstructedDeckStats DeckStatsFastest
+			=> GetFilteredGames(includeNoDeck: false)
+					.GroupBy(x => x.DeckId)
+					.Where(x => x.Count() > 1)
+					.OrderBy(x => x.Average(g => g.Turns))
+					.FirstOrDefault()?.ToConstructedDeckStats();
+
+		public ConstructedDeckStats DeckStatsSlowest
+			=> GetFilteredGames(includeNoDeck: false)
+					.GroupBy(x => x.DeckId)
+					.Where(x => x.Count() > 1)
+					.OrderByDescending(x => x.Average(g => g.Turns))
+					.FirstOrDefault()?.ToConstructedDeckStats();
+
+		public ConstructedDeckStats DeckStatsTotal
+		{
+			get
+			{
+				var games = GetFilteredGames().ToArray();
+				return games.Length > 0 ? new ConstructedDeckStats(games) : null;
+			}
+		}
+
+		public string HighestRank => GetFilteredGames().OrderBy(x => x.SortableRank).FirstOrDefault()?.RankString;
+
+		public double WeightedWinrate(IEnumerable<GameStats> matches)
+		{
+			if(matches == null)
+				return 0;
+			var heroes = Enum.GetValues(typeof(HeroClass)).Cast<HeroClass>().ToArray();
+			return heroes.Select(hero => matches.Where(x => x.OpponentHero == hero.ToString()))
+							 .Average(x =>
+							 {
+								 var games = x.ToArray();
+								 return (games.Length > 0 ? (double)games.Count(g => g.Result == GameResult.Win) / games.Length : 0.5) * (games.Length + 1);
+							 });
+		}
 	}
 }
