@@ -94,6 +94,13 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
+                    <DataGridTextColumn Header="Format" Binding="{Binding Format}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <DataGridTextColumn Header="Rank" Binding="{Binding RankString}" SortMemberPath="SortableRank">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
