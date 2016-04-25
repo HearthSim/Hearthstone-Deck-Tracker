@@ -7,14 +7,14 @@ Installation
 - Requirements:
   - Windows Vista or higher
   - .NET Framework 4.5 or higher
-- [__Download__](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) the `Hearthstone.Deck.Tracker-vx.xx.xx.zip` archive.
+- [__Download__](https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases) the `Hearthstone.Deck.Tracker-vx.xx.xx.zip` archive.
 - Extract the archive.
 - Run the "Hearthstone Deck Tracker.exe"
  
 
 FAQ
 =========
-- You can find the [FAQ here](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ).
+- You can find the [FAQ here](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/FAQ).
 
 
 Contributing
@@ -24,7 +24,7 @@ Contributing
 
 Community
 =========
-- **Gitter**: [![Join the chat at https://gitter.im/Epix37/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Epix37/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+- **Gitter**: [![Join the chat at https://gitter.im/HearthSim/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Epix37/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 - **HearthSim**: Hearthstone Deck Tracker is a [HearthSim](http://hearthsim.info) project. Come join us in #hearthsim on chat.freenode.net.
 
 Features
