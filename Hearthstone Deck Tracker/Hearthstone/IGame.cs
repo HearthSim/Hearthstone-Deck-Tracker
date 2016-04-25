@@ -37,7 +37,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Mode PreviousMode { get; set; }
 		GameTime GameTime { get; }
 		void Reset(bool resetStats = true);
-		void AddPlayToCurrentGame(PlayType play, int turn, string cardId);
 		void ResetArenaCards();
 		void ResetConstructedCards();
 		void NewArenaDeck(string heroId);

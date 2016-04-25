@@ -1,8 +1,10 @@
 ﻿#region
 
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
@@ -26,6 +28,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			Core.MainWindow.SetNewDeck(_deck);
 			Core.MainWindow.FlyoutStats.IsOpen = false;
 			Core.MainWindow.FlyoutDeck.IsOpen = false;
+		}
+
+		public void SetDeck(IEnumerable<TrackedCard> cards, bool showImportButton = true)
+		{
+			var deck = new Deck();
+			foreach(var c in cards)
+			{
+				var card = Database.GetCardFromId(c.Id);
+				card.Count = c.Count;
+				deck.Cards.Add(card);
+			}
+			SetDeck(deck, showImportButton);
 		}
 
 		public void SetDeck(Deck deck, bool showImportButton = true)

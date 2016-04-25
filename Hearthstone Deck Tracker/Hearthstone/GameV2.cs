@@ -163,8 +163,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public void AddPlayToCurrentGame(PlayType play, int turn, string cardId) => CurrentGameStats?.AddPlay(play, turn, cardId);
-
 		public void ResetArenaCards() => PossibleArenaCards.Clear();
 
 		public void ResetConstructedCards() => PossibleConstructedCards.Clear();

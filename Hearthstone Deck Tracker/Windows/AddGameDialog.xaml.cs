@@ -124,7 +124,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 					_game.EndTime = DateTime.Now.AddMinutes(duration);
 					_game.PlayerHero = _deck.Class;
 					_game.PlayerDeckVersion = _deck.SelectedVersion;
-					_game.VerifiedHeroes = true;
 				}
 				_game.Result = (GameResult)ComboBoxResult.SelectedItem;
 				_game.GameMode = (GameMode)ComboBoxMode.SelectedItem;

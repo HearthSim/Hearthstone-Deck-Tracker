@@ -107,10 +107,6 @@
                          Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <local:Help x:Name="Help" />
             </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutGameDetails" Position="Left" Panel.ZIndex="101"
-                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
-                <local:GameDetails x:Name="GameDetailsFlyout" />
-            </controls:Flyout>
             <controls:Flyout x:Name="FlyoutDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="Opponent Deck">
                     <flyoutControls:DeckPanel x:Name="DeckFlyout" />
              </controls:Flyout>

@@ -363,9 +363,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				gameObj.notes = game.Note;
 			if(game.GameMode == GameMode.Ranked && game.HasRank)
 				gameObj.ranklvl = game.Rank.ToString();
-			var opponentCards = game.GetOpponentDeck().Cards;
-			if(opponentCards.Where(Database.IsActualCard).Any())
-				gameObj.oppcards = opponentCards.Where(Database.IsActualCard).Select(c => new {id = c.Id, count = c.Count}).ToArray();
+			var opponentCards = game.OpponentCards;
+			if(opponentCards.Any())
+				gameObj.oppcards = opponentCards.Select(c => new {id = c.Id, count = c.Count}).ToArray();
 			gameObj.created_at = game.StartTime.ToUniversalTime().ToString("s");
 
 			var data = JsonConvert.SerializeObject(gameObj);
@@ -428,9 +428,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					gameObjs[i].notes = validGames[i].Note;
 				if(validGames[i].GameMode == GameMode.Ranked && validGames[i].HasRank)
 					gameObjs[i].ranklvl = validGames[i].Rank.ToString();
-				var opponentCards = validGames[i].GetOpponentDeck().Cards;
-				if(opponentCards.Where(Database.IsActualCard).Any())
-					gameObjs[i].oppcards = opponentCards.Where(Database.IsActualCard).Select(c => new {id = c.Id, count = c.Count}).ToArray();
+				var opponentCards = validGames[i].OpponentCards;
+				if(opponentCards.Any())
+					gameObjs[i].oppcards = opponentCards.Select(c => new {id = c.Id, count = c.Count}).ToArray();
 				gameObjs[i].created_at = validGames[i].StartTime.ToUniversalTime().ToString("s");
 			}
 

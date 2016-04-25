@@ -315,6 +315,7 @@
     <Compile Include="Stats\CompiledStats\ConstructedDeckDetails.cs" />
     <Compile Include="Stats\CompiledStats\ConstructedDeckStats.cs" />
     <Compile Include="Stats\CompiledStats\ConstructedMatchup.cs" />
+    <Compile Include="Stats\TrackedCard.cs" />
     <Compile Include="Utility\Extensions\GroupingExtensions.cs" />
     <Compile Include="Utility\Extensions\RectExtensions.cs" />
     <Compile Include="Utility\Themes\CardBarImageBuilder.cs" />
@@ -372,7 +373,6 @@
     <Compile Include="Utility\Logging\Log.cs" />
     <Compile Include="Utility\Logging\LogType.cs" />
     <Compile Include="Utility\MouseActions.cs" />
-    <Compile Include="FlyoutControls\GameDetailItem.cs" />
     <Compile Include="FlyoutControls\DeckPanel.xaml.cs">
       <DependentUpon>DeckPanel.xaml</DependentUpon>
     </Compile>
@@ -503,9 +503,6 @@
     <Compile Include="Utility\Updater.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="FlyoutControls\GameDetails.xaml.cs">
-      <DependentUpon>GameDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Help.xaml.cs">
       <DependentUpon>Help.xaml</DependentUpon>
@@ -944,10 +941,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ManaCostBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FlyoutControls\GameDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
