@@ -295,6 +295,16 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 
+		public bool ShouldSerializeFormat() => Format.HasValue;
+		public bool ShouldSerializeNote() => !string.IsNullOrEmpty(Note);
+		public bool ShouldSerializePlayerCards() => PlayerCards.Any();
+		public bool ShouldSerializeOpponentCards() => OpponentCards.Any();
+		public bool ShouldSerializeRank() => Rank > 0;
+		public bool ShouldSerializeLegendRank() => LegendRank > 0;
+		public bool ShouldSerializeOpponentRank() => OpponentRank > 0;
+		public bool ShouldSerializeRegion() => Region != Region.UNKNOWN;
+		public bool ShouldSerializeIsClone() => IsClone;
+
 		#region Obsolete
 
 		private string GameFile => Config.Instance.DataDir + $@"Games\Game_{GameId}.xml";
