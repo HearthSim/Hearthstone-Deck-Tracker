@@ -212,12 +212,14 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 			// open sets menu
 			await ClickOnPoint(info.HsHandle, setsPoint);
+			await Task.Delay(100);
 			// select "All Sets"
 			await
 				ClickOnPoint(info.HsHandle,
 				                          new Point(
 					                          (int)Helper.GetScaledXPos(Config.Instance.ExportAllSetsButtonX, info.HsRect.Width, info.Ratio),
 					                          (int)(Config.Instance.ExportStandardSetButtonY * info.HsRect.Height)));
+			await Task.Delay(100);
 			// close sets menu
 			await ClickOnPoint(info.HsHandle, setsPoint);
 		}
