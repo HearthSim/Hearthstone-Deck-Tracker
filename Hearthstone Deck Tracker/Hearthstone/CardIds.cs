@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #endregion
 
@@ -98,6 +99,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string Misdirection => HearthDb.CardIds.Collectible.Hunter.Misdirection;
 				public static string Snipe => HearthDb.CardIds.Collectible.Hunter.Snipe;
 				public static string SnakeTrap => HearthDb.CardIds.Collectible.Hunter.SnakeTrap;
+
+				public static List<string> GetCards(bool standardOnly) => 
+					standardOnly ? All.Where(x => !Helper.WildOnlySets.Contains(Database.GetCardFromId(x).Set)).ToList() : All;
 			}
 
 			public static class Mage
@@ -111,6 +115,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string MirrorEntity => HearthDb.CardIds.Collectible.Mage.MirrorEntity;
 				public static string Spellbender => HearthDb.CardIds.Collectible.Mage.Spellbender;
 				public static string Vaporize => HearthDb.CardIds.Collectible.Mage.Vaporize;
+
+				public static List<string> GetCards(bool standardOnly) =>
+					standardOnly ? All.Where(x => !Helper.WildOnlySets.Contains(Database.GetCardFromId(x).Set)).ToList() : All;
 			}
 
 			public static class Paladin
@@ -123,6 +130,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string Redemption => HearthDb.CardIds.Collectible.Paladin.Redemption;
 				public static string Repentance => HearthDb.CardIds.Collectible.Paladin.Repentance;
 				public static string SacredTrial => HearthDb.CardIds.Collectible.Paladin.SacredTrial;
+
+				public static List<string> GetCards(bool standardOnly) =>
+					standardOnly ? All.Where(x => !Helper.WildOnlySets.Contains(Database.GetCardFromId(x).Set)).ToList() : All;
 			}
 		}
 	}
