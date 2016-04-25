@@ -139,6 +139,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("dark")]
 		public string CardBarTheme = "dark";
 
+		[DefaultValue(true)]
+		public bool CardDbIncludeWildOnlyCards = true;
+
 		[DefaultValue(false)]
 		public bool ConstructedStatsAsPercent = false;
 

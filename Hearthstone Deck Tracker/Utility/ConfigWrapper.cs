@@ -10,6 +10,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public class ConfigWrapper
 	{
+		public static bool CardDbIncludeWildOnlyCards
+		{
+			get { return Config.Instance.CardDbIncludeWildOnlyCards; }
+			set
+			{
+				Config.Instance.CardDbIncludeWildOnlyCards = value;
+				Config.Save();
+			}
+		}
+
 		public static bool ArenaStatsShowLegends
 		{
 			get { return Config.Instance.ArenaStatsShowLegends; }
