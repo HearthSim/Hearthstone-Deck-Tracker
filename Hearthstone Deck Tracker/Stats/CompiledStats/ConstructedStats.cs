@@ -38,6 +38,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 													   bool result = true, bool oppClass = true, bool oppName = true,
 													   bool note = true, bool tags = true, bool includeNoDeck = true)
 		{
+			decks = decks.Where(x => !x.IsArenaDeck);
+
 			if(archived && !Config.Instance.ConstructedStatsIncludeArchived && !Config.Instance.ConstructedStatsActiveDeckOnly)
 				decks = decks.Where(x => !x.Archived);
 
