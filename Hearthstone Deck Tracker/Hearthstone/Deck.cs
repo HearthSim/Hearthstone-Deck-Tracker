@@ -342,7 +342,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(this));
+				var list = new List<DeckStats>(DeckStatsList.Instance.DeckStats);
+				var deckStats = list.FirstOrDefault(ds => ds.BelongsToDeck(this));
 				if(deckStats != null)
 					return deckStats;
 				deckStats = new DeckStats(this);
