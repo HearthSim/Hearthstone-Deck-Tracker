@@ -613,7 +613,11 @@ namespace Hearthstone_Deck_Tracker
 				GameEvents.OnGameEnd.Execute();
 				return;
 			}
-			_game.CurrentGameStats.Format = DetermineFormat(_game.Entities.Select(x => x.Value));
+			if(_game.CurrentGameMode == Ranked || _game.CurrentGameMode == Casual)
+			{
+				_game.CurrentGameStats.Format = _game.CurrentFormat;
+				Log.Info("Format: " + _game.CurrentGameStats.Format);
+			}
 			_game.CurrentGameStats.GameEnd();
 			GameEvents.OnGameEnd.Execute();
 			var selectedDeck = DeckList.Instance.ActiveDeck;
@@ -1039,17 +1043,6 @@ namespace Hearthstone_Deck_Tracker
 
 			_game.AddPlayToCurrentGame(PlayType.PlayerPlayToDeck, turn, cardId);
 			GameEvents.OnPlayerPlayToDeck.Execute(Database.GetCardFromId(cardId));
-		}
-
-		private Format DetermineFormat(IEnumerable<Entity> entites)
-		{
-			var isWild = entites.Where(x => !string.IsNullOrEmpty(x?.CardId))
-								.Select(x => Database.GetCardFromId(x.CardId))
-								.Any(x => x.Collectible && Helper.WildOnlySets.Contains(x.Set));
-			if(!isWild && (!DeckList.Instance.ActiveDeck?.StandardViable ?? false))
-				isWild = true;
-			Log.Info("Format: " + (isWild ? "Wild" : "Standard"));
-			return isWild ? Format.Wild : Format.Standard;
 		}
 
 		#endregion

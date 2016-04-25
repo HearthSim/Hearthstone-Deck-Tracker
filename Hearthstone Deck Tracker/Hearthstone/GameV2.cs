@@ -80,6 +80,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public Format? CurrentFormat
+		{
+			get
+			{
+				if(CurrentGameMode != GameMode.Casual && CurrentGameMode != GameMode.Ranked)
+					return null;
+				if(DeckList.Instance.ActiveDeck?.IsArenaDeck ?? false)
+					return null;
+				if(!DeckList.Instance.ActiveDeck?.StandardViable ?? false)
+					return Format.Wild;
+				return Entities.Values.Where(x => !string.IsNullOrEmpty(x?.CardId) && !x.Info.Created && !string.IsNullOrEmpty(x.Card.Set))
+							.Any(x => Helper.WildOnlySets.Contains(x.Card.Set)) ? Format.Wild : Format.Standard;
+			}
+		}
+
 		public Mode PreviousMode { get; set; }
 
 		public bool SavedReplay { get; set; }
