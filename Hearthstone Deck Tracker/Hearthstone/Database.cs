@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using HearthDb;
-using HearthDb.CardDefs;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Rarity = Hearthstone_Deck_Tracker.Enums.Rarity;
 
 #endregion
 

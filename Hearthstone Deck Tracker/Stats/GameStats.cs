@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private List<TurnStats> _turnStats;
 		public Guid GameId;
 		public string HearthStatsId;
+		private Format _format = Enums.Format.Standard;
 
 		public GameStats()
 		{
@@ -67,6 +68,19 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int LegendRank { get; set; }
 		public int OpponentRank { get; set; }
 		public Region Region { get; set; }
+
+		public Format? Format
+		{
+			get
+			{
+				return (GameMode == GameMode.Ranked || GameMode == GameMode.Casual) ? (Format?)_format : null;
+			}
+			set
+			{
+				if(value.HasValue)
+					_format = value.Value;
+			}
+		}
 
 		public Guid DeckId
 		{
