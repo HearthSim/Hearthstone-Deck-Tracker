@@ -7,7 +7,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d" 
-             d:DesignHeight="300" Title="Add new game" Height="510" d:DesignWidth="450">
+             d:DesignHeight="300" Title="Add new game" Height="525" d:DesignWidth="450">
     <StackPanel Width="300" Margin="0,15,0,0">
         <DockPanel Margin="0,2,0,0">
             <Label Content="Result:" Width="90"/>
@@ -42,6 +42,13 @@
                 <enums:GameMode>Practice</enums:GameMode>
             </ComboBox>
         </DockPanel>
+        <DockPanel Margin="0,2,0,0" Name="PanelFormat">
+            <Label Content="Format:" Width="90"/>
+            <ComboBox Name="ComboBoxFormat" SelectedIndex="0">
+                <enums:Format>Standard</enums:Format>
+                <enums:Format>Wild</enums:Format>
+            </ComboBox>
+        </DockPanel>
         <DockPanel Margin="0,2,0,0">
             <Label Content="Region:" Width="90"/>
             <ComboBox Name="ComboBoxRegion" SelectedIndex="0" SelectionChanged="ComboBoxMode_OnSelectionChanged">
@@ -51,11 +58,11 @@
                 <enums:Region>CHINA</enums:Region>
             </ComboBox>
         </DockPanel>
-        <DockPanel Margin="0,2,0,0">
+        <DockPanel Margin="0,2,0,0" Name="PanelRank">
             <Label Content="Rank:" Width="90"/>
             <TextBox Name="TextBoxRank" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
         </DockPanel>
-        <DockPanel Margin="0,2,0,0">
+        <DockPanel Margin="0,2,0,0" Name="PanelLegendRank">
             <Label Content="Legend Rank:" Width="90"/>
             <TextBox Name="TextBoxLegendRank" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
         </DockPanel>
