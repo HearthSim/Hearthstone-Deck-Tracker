@@ -28,7 +28,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{16, "Credits"},
 			{17, "Hero Skins"},
 			{18, "Tavern Brawl"},
-			{20, "League of Explorers"}
+			{20, "League of Explorers"},
+			{21, "Whispers of the Old Gods"}
 		};
 
 		public static string ConvertClass(CardClass cardClass) => (int)cardClass < 2 || (int)cardClass > 10
