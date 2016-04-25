@@ -324,8 +324,8 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_CONSTRUCTED"  Click="BtnConstructedStats_Click"/>
                     <MenuItem Header="_ARENA"  Click="BtnArenaStats_Click"/>
+                    <MenuItem Header="_CONSTRUCTED"  Click="BtnConstructedStats_Click"/>
                     <Separator/>
                     <MenuItem Header="_LATEST REPLAY" Click="MenuItemReplayLastGame_OnClick"/>
                     <MenuItem Header="_SELECT REPLAY" Click="MenuItemReplaySelectGame_OnClick" />
