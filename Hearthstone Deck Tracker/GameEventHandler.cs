@@ -275,13 +275,13 @@ namespace Hearthstone_Deck_Tracker
 				if(
 					_game.Entities.Any(
 					                   x =>
-					                   x.Value.CardId == HearthDb.CardIds.NonCollectible.Druid.SoulOfTheForestEnchantment
+					                   x.Value.CardId == HearthDb.CardIds.NonCollectible.Druid.SouloftheForest_SoulOfTheForestEnchantment
 					                   && x.Value.GetTag(ATTACHED) == entity.Id))
 					numDeathrattleMinions++;
 				if(
 					_game.Entities.Any(
 					                   x =>
-					                   x.Value.CardId == HearthDb.CardIds.NonCollectible.Shaman.AncestralSpiritEnchantment
+					                   x.Value.CardId == HearthDb.CardIds.NonCollectible.Shaman.AncestralSpirit_AncestralSpiritEnchantment
 					                   && x.Value.GetTag(ATTACHED) == entity.Id))
 					numDeathrattleMinions++;
 			}
@@ -396,7 +396,7 @@ namespace Hearthstone_Deck_Tracker
 			if(thaurissan == null || thaurissan.HasTag(SILENCED))
 				return;
 
-			foreach(var impFavor in _game.Opponent.Board.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.ImperialFavorEnchantment))
+			foreach(var impFavor in _game.Opponent.Board.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.EmperorThaurissan_ImperialFavorEnchantment))
 			{
 				Entity entity;
 				if(_game.Entities.TryGetValue(impFavor.GetTag(ATTACHED), out entity))
