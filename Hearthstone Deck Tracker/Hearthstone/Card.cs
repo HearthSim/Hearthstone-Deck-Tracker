@@ -457,7 +457,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if (replaceTags)
 				text = text?.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "");
-			return text?.Replace("$", "").Replace("#", "").Replace("\\n", "\n");
+			return text?.Replace("$", "").Replace("#", "").Replace("\\n", "\n").Replace("[x]", "");
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

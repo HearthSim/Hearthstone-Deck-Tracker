@@ -38,21 +38,22 @@ namespace Hearthstone_Deck_Tracker.Utility
 			//so we gotta make sure the parent is the element we created to know these are the values we are after.
 			foreach (var n in element.DescendantNodes().Where(x => x.Parent.Name == "w"))
 			{
-				if (n is XText)
+				var text = n as XText;
+				if (text != null)
 				{
-					yield return new Run(((XText) n).Value);
+					yield return new Run(text.Value);
 					continue;
 				}
 				var x = (XElement) n;
 				if (x.Name == "b")
 				{
-					yield return
-						new Run(((XText) x.DescendantNodes().First()).Value) { FontWeight = FontWeights.Bold };
+					foreach(var xText in x.DescendantNodes().OfType<XText>())
+						yield return new Run(xText.Value) {FontWeight = FontWeights.Bold};
 				}
-				if (x.Name == "i")
+				else if (x.Name == "i")
 				{
-					yield return
-						new Run(((XText) x.DescendantNodes().First()).Value) { FontStyle = FontStyles.Italic };
+					foreach(var xText in x.DescendantNodes().OfType<XText>())
+						yield return new Run(xText.Value) { FontStyle = FontStyles.Italic };
 				}
 			}
 		}
