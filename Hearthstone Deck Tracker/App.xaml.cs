@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
-			if(e.Exception is MissingMethodException || e.Exception is TypeLoadException)
+			if(e.Exception is MissingMethodException || e.Exception is MissingFieldException || e.Exception is MissingMemberException || e.Exception is TypeLoadException)
 			{
 				var plugin =
 					PluginManager.Instance.Plugins.FirstOrDefault(p => new FileInfo(p.FileName).Name.Replace(".dll", "") == e.Exception.Source);
