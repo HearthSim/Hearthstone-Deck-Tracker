@@ -208,14 +208,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.GameHandler.SetGameMode(GameMode.Spectator);
 				gameState.GameHandler.HandleGameEnd();
 			}
-			else if(ActionStartRegex.IsMatch(logLine))
+			else if(BlockStartRegex.IsMatch(logLine))
 			{
 				var playerEntity =
 					game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == game.Player.Id);
 				var opponentEntity =
 					game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == game.Opponent.Id);
 
-				var match = ActionStartRegex.Match(logLine);
+				var match = BlockStartRegex.Match(logLine);
 				var actionStartingCardId = match.Groups["cardId"].Value.Trim();
 				var actionStartingEntityId = int.Parse(match.Groups["id"].Value);
 
