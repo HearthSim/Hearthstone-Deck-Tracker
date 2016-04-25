@@ -174,11 +174,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 						converted = true;
 					}
 				}
-				if(configVersion <= new Version(0, 10, 10, 0)) //button moved up with new expansion added to the list
-				{
-					Config.Instance.Reset(nameof(Config.ExportAllSetsButtonY));
-					converted = true;
-				}
 				if(configVersion <= new Version(0, 11, 1, 0))
 				{
 					if(Config.Instance.GoldProgressLastReset.Length < 5)
@@ -203,11 +198,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 						Config.Instance.Reset(nameof(Config.GoldProgressTotal));
 						converted = true;
 					}
-				}
-				if(configVersion <= new Version(0, 13, 1, 0)) //button moved up with new expansion added to the list
-				{
-					Config.Instance.Reset(nameof(Config.ExportAllSetsButtonY));
-					converted = true;
 				}
 				if(configVersion <= new Version(0, 13, 16, 0))
 				{

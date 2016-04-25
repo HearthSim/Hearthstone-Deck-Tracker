@@ -217,7 +217,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				ClickOnPoint(info.HsHandle,
 				                          new Point(
 					                          (int)Helper.GetScaledXPos(Config.Instance.ExportAllSetsButtonX, info.HsRect.Width, info.Ratio),
-					                          (int)(Config.Instance.ExportAllSetsButtonY * info.HsRect.Height)));
+					                          (int)(Config.Instance.ExportStandardSetButtonY * info.HsRect.Height)));
 			// close sets menu
 			await ClickOnPoint(info.HsHandle, setsPoint);
 		}
