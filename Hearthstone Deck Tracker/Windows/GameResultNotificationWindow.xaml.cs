@@ -1,7 +1,9 @@
 ﻿#region
 
 using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -19,7 +21,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
-	public partial class GameResultNotificationWindow
+	public partial class GameResultNotificationWindow : INotifyPropertyChanged
 	{
 		private const int ExpandedHeight = 100;
 		private const int ExpandedWidth = 350;
@@ -35,8 +37,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			InitializeComponent();
 			DeckName = deckName;
 			_game = game;
-			ComboBoxOpponentClass.ItemsSource = Enum.GetValues(typeof(HeroClass)).Cast<HeroClass>().Select(x => new HeroClassWrapper(x));
-			ComboBoxResult.ItemsSource = new[] {GameResult.Win, GameResult.Loss};
+			ComboBoxResult.ItemsSource = new[] { GameResult.Win, GameResult.Loss };
+			ComboBoxFormat.ItemsSource = new[] { Enums.Format.Standard, Enums.Format.Wild };
 			ComboBoxGameMode.ItemsSource = new[]
 			{
 				GameMode.Arena,
@@ -87,6 +89,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public BitmapImage PlayerClassImage => ImageCache.GetClassIcon(_game.PlayerHero);
 
+		public bool FormatSelectionEnabled => Mode == GameMode.Casual || Mode == GameMode.Ranked;
+
+		public Format? Format
+		{
+			get { return _game.Format; }
+			set
+			{
+				_game.Format = value;
+				_edited = true;
+			}
+		}
+
 		public GameMode Mode
 		{
 			get { return _game.GameMode; }
@@ -94,6 +108,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				_game.GameMode = value;
 				_edited = true;
+				OnPropertyChanged(nameof(FormatSelectionEnabled));
 			}
 		}
 
@@ -188,6 +203,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			protected bool Equals(HeroClassWrapper other) => string.Equals(Class, other.Class);
 
 			public override int GetHashCode() => Class?.GetHashCode() ?? 0;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
