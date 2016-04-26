@@ -166,14 +166,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public List<Card> OpponentCardList 
+		public List<Card> OpponentCardList
 			=> RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon || !x.HasTag(GAME_TAG.CARDTYPE))
-											&& (x.GetTag(GAME_TAG.CREATOR) == 1 || (!x.Info.Created && x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck)
-											&& !(x.Info.Created && x.IsInSetAside))
-								.GroupBy(e => new { e.CardId, Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
+										&& (x.GetTag(GAME_TAG.CREATOR) == 1 || ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
+											&& x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck) && !(x.Info.Created && x.IsInSetAside))
+								.GroupBy(e => new {	e.CardId, Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
 													Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
-													Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded
-								}).Select(g =>
+													Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded})
+								.Select(g =>
 								{
 									var card = Database.GetCardFromId(g.Key.CardId);
 									card.Count = g.Count();

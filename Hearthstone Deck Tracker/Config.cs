@@ -563,6 +563,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(12.5)]
 		public double OpponentDeckTop = 12.5;
 
+		[DefaultValue(true)]
+		public bool OpponentIncludeCreated = true;
+
 		[DefaultValue(100)]
 		public double OpponentOpacity = 100;
 

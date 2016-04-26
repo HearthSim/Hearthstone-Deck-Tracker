@@ -69,6 +69,11 @@
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckBoxCenterDeckVertically_Checked"
                               Unchecked="CheckBoxCenterDeckVertically_Unchecked" />
+                    <CheckBox x:Name="CheckboxIncludeCreated"
+                              Content="Include created cards" HorizontalAlignment="Left"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckboxIncludeCreated_Checked"
+                              Unchecked="CheckboxIncludeCreated_Unchecked" />
                     <CheckBox x:Name="CheckboxHighlightDiscarded"
                               Content="Highlight discarded from deck" HorizontalAlignment="Left"
                               Margin="10,5,0,10" VerticalAlignment="Top"

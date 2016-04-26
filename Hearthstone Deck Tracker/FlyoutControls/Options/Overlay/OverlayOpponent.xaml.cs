@@ -77,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
 			SliderSecretOpacity.Value = Config.Instance.SecretsOpacity;
 			CheckBoxCenterDeckVertically.IsChecked = Config.Instance.OverlayCenterOpponentStackPanel;
+			CheckboxIncludeCreated.IsChecked = Config.Instance.OpponentIncludeCreated;
 
 			ElementSorterOpponent.IsPlayer = false;
 			foreach(var itemName in Config.Instance.PanelOrderOpponent)
@@ -197,6 +198,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.OverlayCenterOpponentStackPanel = false;
 			Config.Save();
 			Core.Overlay.UpdateStackPanelAlignment();
+		}
+
+		private void CheckboxIncludeCreated_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OpponentIncludeCreated = true;
+			Config.Save();
+		}
+
+		private void CheckboxIncludeCreated_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OpponentIncludeCreated = false;
+			Config.Save();
 		}
 	}
 }
