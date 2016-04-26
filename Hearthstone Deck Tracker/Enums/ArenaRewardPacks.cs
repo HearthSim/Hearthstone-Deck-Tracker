@@ -18,6 +18,9 @@ namespace Hearthstone_Deck_Tracker.Enums
 		GoblinsVsGnomes,
 
 		[Description("The Grand Tournament")]
-		TheGrandTournament
+		TheGrandTournament,
+
+		[Description("Whispers of the Old Gods")]
+		WhispersOfTheOldGods
 	}
 }
