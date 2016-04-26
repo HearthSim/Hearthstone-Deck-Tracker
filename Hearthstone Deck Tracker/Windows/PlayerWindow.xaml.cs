@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker
 			LblWins.Text = $"{selectedDeck.WinLossString} ({selectedDeck.WinPercentString})";
 		}
 
-		private void SetDeckTitle() => LblDeckTitle.Text = DeckList.Instance.ActiveDeckVersion != null ? DeckList.Instance.ActiveDeckVersion.Name : string.Empty;
+		private void SetDeckTitle() => LblDeckTitle.Text = DeckList.Instance.ActiveDeck?.Name ?? string.Empty;
 
 		public void UpdatePlayerLayout()
 		{

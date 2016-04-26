@@ -89,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void SetDeckTitle() => LblDeckTitle.Text = DeckList.Instance.ActiveDeckVersion?.Name ?? "";
+		private void SetDeckTitle() => LblDeckTitle.Text = DeckList.Instance.ActiveDeck?.Name ?? "";
 
 		private void SetOpponentCardCount(int cardCount, int cardsLeftInDeck)
 		{
