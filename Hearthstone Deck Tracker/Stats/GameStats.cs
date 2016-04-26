@@ -2,14 +2,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
@@ -28,6 +31,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public Guid GameId;
 		public string HearthStatsId;
 		private Format _format = Enums.Format.Standard;
+		private string _note;
+		private string _playerHero;
+		private string _opponentHero;
+		private bool _coin;
+		private GameMode _gameMode;
+		private GameResult _result;
+		private int _turns;
+		private string _playerName;
+		private string _opponentName;
+		private int _rank;
+		private int _legendRank;
+		private Region _region;
 
 		public GameStats()
 		{
@@ -45,12 +60,65 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		//playerhero does not get loaded from xml for some reason
-		public string PlayerHero { get; set; }
-		public string OpponentHero { get; set; }
-		public bool Coin { get; set; }
-		public GameMode GameMode { get; set; }
-		public GameResult Result { get; set; }
-		public int Turns { get; set; }
+		public string PlayerHero
+		{
+			get { return _playerHero; }
+			set
+			{
+				_playerHero = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(PlayerHeroImage));
+			}
+		}
+
+		public string OpponentHero
+		{
+			get { return _opponentHero; }
+			set
+			{
+				_opponentHero = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(OpponentHeroImage));
+			}
+		}
+
+		public bool Coin
+		{
+			get { return _coin; }
+			set
+			{
+				_coin = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(GotCoin));
+			}
+		}
+
+		public GameMode GameMode
+		{
+			get { return _gameMode; }
+			set { _gameMode = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public GameResult Result
+		{
+			get { return _result; }
+			set { _result = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(ResultString));
+				OnPropertyChanged(nameof(ResultTextColor));
+			}
+		}
+
+		public int Turns
+		{
+			get { return _turns; }
+			set { _turns = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 
@@ -65,14 +133,55 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		public bool IsClone { get; set; }
-		public string PlayerName { get; set; }
-		public string OpponentName { get; set; }
+
+		public string PlayerName
+		{
+			get { return _playerName; }
+			set { _playerName = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string OpponentName
+		{
+			get { return _opponentName; }
+			set { _opponentName = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public string ReplayFile { get; set; }
+
 		public bool WasConceded { get; set; }
-		public int Rank { get; set; }
-		public int LegendRank { get; set; }
+
+		public int Rank
+		{
+			get { return _rank; }
+			set { _rank = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(RankString));
+			}
+		}
+
+		public int LegendRank
+		{
+			get { return _legendRank; }
+			set { _legendRank = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(RankString));
+			}
+		}
+
 		public int OpponentRank { get; set; }
-		public Region Region { get; set; }
+
+		public Region Region
+		{
+			get { return _region; }
+			set { _region = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(RegionString));
+			}
+		}
 
 		public Format? Format
 		{
@@ -83,7 +192,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 			set
 			{
 				if(value.HasValue)
+				{
 					_format = value.Value;
+					OnPropertyChanged();
+				}
 			}
 		}
 
@@ -110,7 +222,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 				_deckName = deck?.Name ?? "none";
 				return _deckName;
 			}
-			set { _deckName = value; }
+			set { _deckName = value;
+				OnPropertyChanged();
+			}
 		}
 
 		[XmlIgnore]
@@ -124,7 +238,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 				_deckNameAndVersion = deck?.NameAndVersion ?? "none";
 				return _deckNameAndVersion;
 			}
-			set { _deckNameAndVersion = value; }
+			set { _deckNameAndVersion = value;
+				OnPropertyChanged();
+			}
 		}
 
 		[XmlIgnore]

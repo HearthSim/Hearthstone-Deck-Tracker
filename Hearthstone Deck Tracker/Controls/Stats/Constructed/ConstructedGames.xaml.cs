@@ -75,9 +75,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			var window = Helper.GetParentWindow(this);
 			if(window == null)
 				return;
-			var edited = await window.ShowEditGameDialog(SelectedGame);
-			if(edited)
-				ConstructedStats.Instance.UpdateConstructedStats();
+			await window.ShowEditGameDialog(SelectedGame);
+			DeckStatsList.Save();
+			DefaultDeckStats.Save();
 		}
 
 
