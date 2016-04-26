@@ -38,13 +38,13 @@ namespace Hearthstone_Deck_Tracker
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
 				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
 				if(Config.Instance.AutoDeckDetection)
-					await AutoSelectDeck(deck, Core.Game.Player.Class, Core.Game.CurrentGameMode, cardEntites);
+					await AutoSelectDeck(deck, Core.Game.Player.Class, Core.Game.CurrentGameMode, Core.Game.CurrentFormat, cardEntites);
 			}
 			else
 				NotFoundCards.Clear();
 		}
 
-		private static async Task AutoSelectDeck(Deck currentDeck, string heroClass, GameMode mode, List<IGrouping<string, Entity>> cardEntites = null)
+		private static async Task AutoSelectDeck(Deck currentDeck, string heroClass, GameMode mode, Format? currentFormat, List<IGrouping<string, Entity>> cardEntites = null)
 		{
 			_waitingForDraws++;
 			await Task.Delay(500);
@@ -57,7 +57,12 @@ namespace Hearthstone_Deck_Tracker
 			if(mode == GameMode.Arena)
 				validDecks = validDecks.Where(x => x.IsArenaDeck && x.IsArenaRunCompleted != true).ToList();
 			else if(mode != GameMode.None)
+			{
 				validDecks = validDecks.Where(x => !x.IsArenaDeck).ToList();
+				if(currentFormat == Format.Wild)
+					validDecks = validDecks.Where(x => !x.StandardViable).ToList();
+
+			}
 			if(validDecks.Count > 1 && cardEntites != null)
 				validDecks = validDecks.Where(x => cardEntites.All(ce => x.GetSelectedDeckVersion().Cards.Any(c => c.Id == ce.Key && c.Count >= ce.Count()))).ToList();
 			if(validDecks.Count == 0)
