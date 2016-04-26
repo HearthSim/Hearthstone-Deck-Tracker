@@ -113,7 +113,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			OnPropertyChanged(nameof(RowDetailVisibility));
 			OnPropertyChanged(nameof(ButtonMultiMoveEnabled));
 			OnPropertyChanged(nameof(MultiSelectPanelVisibility));
-			if(Core.MainWindow.FlyoutDeck.IsOpen)
+			if(Core.MainWindow.FlyoutDeck.IsOpen && SelectedGame != null)
 				Core.MainWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
 		}
 
