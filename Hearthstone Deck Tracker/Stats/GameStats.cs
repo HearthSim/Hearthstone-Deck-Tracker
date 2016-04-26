@@ -400,15 +400,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 			PlayerCards.Clear();
 			foreach(var c in revealedCards)
 				PlayerCards.Add(new TrackedCard(c.Id, c.Count));
-			foreach(var c in deck.Cards)
+			if(deck != null)
 			{
-				var e = PlayerCards.FirstOrDefault(x => x.Id == c.Id);
-				if(e == null)
-					PlayerCards.Add(new TrackedCard(c.Id, c.Count, c.Count));
-				else if(c.Count > e.Count)
+				foreach(var c in deck.Cards)
 				{
-					e.Unconfirmed = c.Count - e.Count;
-					e.Count = c.Count;
+					var e = PlayerCards.FirstOrDefault(x => x.Id == c.Id);
+					if(e == null)
+						PlayerCards.Add(new TrackedCard(c.Id, c.Count, c.Count));
+					else if(c.Count > e.Count)
+					{
+						e.Unconfirmed = c.Count - e.Count;
+						e.Count = c.Count;
+					}
 				}
 			}
 		}
