@@ -332,7 +332,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			_updateCallback?.Invoke();
-			Core.StatsOverview.ConstructedGames.UpdateAddGameButtonVisibility();
+			Core.StatsOverview.ConstructedGames.UpdateAddGameButton();
 		}
 	}
 }

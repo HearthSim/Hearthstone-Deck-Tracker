@@ -9,14 +9,15 @@
     <GroupBox Header="MATCHES">
         <DockPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" >
-                <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonAdd_OnClick" Visibility="{Binding ButtonAddVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonAdd_OnClick" IsEnabled="{Binding ButtonAddGameIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        ToolTip="{Binding ButtonAddGameIsEnabledToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}" ToolTipService.ShowOnDisabled="True">
                     <StackPanel Orientation="Horizontal">
                         <Rectangle Width="12">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{Binding AddIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <TextBlock Text="ADD NEW GAME" Margin="4,0,0,0"/>
+                        <TextBlock Text="ADD NEW GAME TO ACTIVE DECK" Margin="4,0,0,0"/>
                     </StackPanel>
                 </Button>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding MultiSelectPanelVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">

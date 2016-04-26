@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			_deck = deck;
 			_game = new GameStats();
 			BtnSave.Content = "add game";
-			Title = "Add new game";
+			Title = _deck.Name;
 		}
 
 		public AddGameDialog(GameStats game)

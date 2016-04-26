@@ -36,11 +36,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 
 		public GameStats SelectedGame { get; set; }
 
-		public Visibility ButtonAddVisibility 
-			=> Config.Instance.ConstructedStatsActiveDeckOnly && (!DeckList.Instance.ActiveDeck?.IsArenaDeck ?? false) ? Visibility.Visible : Visibility.Collapsed;
-
 		public DataGridRowDetailsVisibilityMode RowDetailVisibility
 			=> SelectedGames.Count > 1 ? DataGridRowDetailsVisibilityMode.Collapsed : DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+
+		public bool ButtonAddGameIsEnabled => !DeckList.Instance.ActiveDeck?.IsArenaDeck ?? false;
+
+		public string ButtonAddGameIsEnabledToolTip
+			=> DeckList.Instance.ActiveDeck == null
+					? "No active deck" : (DeckList.Instance.ActiveDeck.IsArenaDeck ? "Active deck is an arena deck" : "Deck: " + DeckList.Instance.ActiveDeck.Name);
 
 		public Visibility MultiSelectPanelVisibility => SelectedGames.Count > 1 ? Visibility.Visible : Visibility.Collapsed;
 		public bool ButtonMultiMoveEnabled => SelectedGames.All(g => g.PlayerHero == SelectedGames.First().PlayerHero);
@@ -135,7 +138,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			OnPropertyChanged(nameof(AddIconVisual));
 		}
 
-		public void UpdateAddGameButtonVisibility() => OnPropertyChanged(nameof(ButtonAddVisibility));
+		public void UpdateAddGameButton()
+		{
+			OnPropertyChanged(nameof(ButtonAddGameIsEnabled));
+			OnPropertyChanged(nameof(ButtonAddGameIsEnabledToolTip));
+		}
 
 		public Visual ReplayIconVisual => TryFindResource("appbar_control_play_" + VisualColor) as Visual;
 		public Visual OppDeckIconVisual => TryFindResource("appbar_layer_" + VisualColor) as Visual;
@@ -155,11 +162,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			if(deck == null || deck.IsArenaDeck)
 				return;
 			var dialog = Helper.GetParentWindow(Core.StatsOverview)?.ShowAddGameDialog(deck);
-			if(dialog != null)
-			{
-				await dialog;
+			if(dialog != null && await dialog)
 				ConstructedStats.Instance.UpdateGames();
-			}
 		}
 	}
 }

@@ -51,6 +51,7 @@ namespace Hearthstone_Deck_Tracker
 				Config.Instance.ActiveDeckId = value?.DeckId ?? Guid.Empty;
 				Config.Save();
 				Core.StatsOverview.ConstructedFilters.UpdateActiveDeckOnlyCheckBox();
+				Core.StatsOverview.ConstructedGames.UpdateAddGameButton();
 				if(switchedDeck)
 					Core.StatsOverview.ConstructedSummary.UpdateContent();
 			}
