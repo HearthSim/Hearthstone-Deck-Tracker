@@ -42,8 +42,10 @@ namespace HDTTests.Hearthstone
 
         [TestInitialize]
         public void Setup()
-        {
-            _game = new GameV2();
+		{
+			Core.Game = null;
+			_game = new GameV2();
+	        Core.Game = _game;
             _gameEventHandler = new GameEventHandler(_game);
 
             _heroPlayer = CreateNewEntity("HERO_01");

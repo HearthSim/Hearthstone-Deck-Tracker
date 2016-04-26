@@ -8,14 +8,6 @@ namespace HDTTests.Hearthstone
 	[TestClass]
 	public class CardDBTest
 	{
-		// Test collectable card count
-		[TestMethod]
-		public void TestTotalCollectableCards()
-		{
-			// 4.0.0.10833 - LOE
-			Assert.AreEqual(743, Database.GetActualCards().Count);
-		}
-
 		// Dreadscale card has unusual id ending in 't', some tests to check it is recognized
 		[TestMethod]
 		public void TestDreadscaleFromId()
