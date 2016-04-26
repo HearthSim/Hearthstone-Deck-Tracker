@@ -971,9 +971,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(null)]
 		public int? TrackerWindowTop = null;
 
-		[DefaultValue(100)]
-		public int UpdateDelay = 100;
-
 		[DefaultValue(false)]
 		public bool UseAnyUnityWindow = false;
 

@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker
 {
 	public static class Core
 	{
+		internal const int UpdateDelay = 100;
 		private static TrayIcon _trayIcon;
 		private static OverlayWindow _overlay;
 		private static Overview _statsOverview;
@@ -230,7 +231,7 @@ namespace Hearthstone_Deck_Tracker
 				   && !User32.IsHearthstoneInForeground())
 					NetDeck.CheckForClipboardImport();
 
-				await Task.Delay(Config.Instance.UpdateDelay);
+				await Task.Delay(UpdateDelay);
 			}
 			CanShutdown = true;
 		}

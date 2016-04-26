@@ -16,6 +16,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 {
 	public class LogReaderManager
 	{
+		internal const int UpdateDelay = 100;
 		private static readonly SortedList<DateTime, List<LogLineItem>> ToProcess = new SortedList<DateTime, List<LogLineItem>>();
 		private static readonly List<LogReader> LogReaders = new List<LogReader>();
 		private static readonly PowerHandler PowerLineHandler = new PowerHandler();
@@ -91,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 					Core.Game.PowerLog.AddRange(powerLines.Select(x => x.Line));
 					powerLines.Clear();
 				}
-				await Task.Delay(Config.Instance.UpdateDelay);
+				await Task.Delay(UpdateDelay);
 			}
 			_running = false;
 		}

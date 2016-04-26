@@ -133,7 +133,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							fs.Seek(_offset, SeekOrigin.Begin);
 							if(fs.Length == _offset)
 							{
-								Thread.Sleep(Config.Instance.UpdateDelay);
+								Thread.Sleep(LogReaderManager.UpdateDelay);
 								continue;
 							}
 							using(var sr = new StreamReader(fs))
@@ -156,7 +156,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						}
 					}
 				}
-				Thread.Sleep(Config.Instance.UpdateDelay);
+				Thread.Sleep(LogReaderManager.UpdateDelay);
 			}
 			_running = false;
 		}
