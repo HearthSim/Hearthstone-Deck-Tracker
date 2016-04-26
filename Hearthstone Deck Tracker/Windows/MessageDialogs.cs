@@ -78,14 +78,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public static async Task<SaveScreenshotOperation> ShowScreenshotUploadSelectionDialog(this MainWindow window)
 		{
 			var result = await window.ShowMessageAsync("Select Operation", "\"upload\" will automatically upload the image to imgur.com",
-							AffirmativeAndNegativeAndSingleAuxiliary, new Settings
+							AffirmativeAndNegativeAndDoubleAuxiliary, new Settings
 							{
-								AffirmativeButtonText = "save only",
+								AffirmativeButtonText = "save",
 								NegativeButtonText = "save & upload",
-								FirstAuxiliaryButtonText = "upload only"
+								FirstAuxiliaryButtonText = "upload",
+								SecondAuxiliaryButtonText = "cancel"
 							});
 			return new SaveScreenshotOperation
 			{
+				Cancelled =  result == MessageDialogResult.SecondAuxiliary,
 				SaveLocal = result != MessageDialogResult.FirstAuxiliary,
 				Upload = result != MessageDialogResult.Affirmative
 			};
@@ -248,6 +250,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 	public class SaveScreenshotOperation
 	{
+		public bool Cancelled { get; set; }
 		public bool SaveLocal { get; set; }
 		public bool Upload { get; set; }
 	}

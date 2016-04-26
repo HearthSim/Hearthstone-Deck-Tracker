@@ -88,6 +88,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(pngEncoder != null)
 			{
 				var saveOperation = await this.ShowScreenshotUploadSelectionDialog();
+				if(saveOperation.Cancelled)
+					return;
 				var tmpFile = new FileInfo(Path.Combine(Config.Instance.DataDir, $"tmp{DateTime.Now.ToFileTime()}.png"));
 				var fileName = saveOperation.SaveLocal
 					               ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(proposedFileName), "png") : tmpFile.FullName;
