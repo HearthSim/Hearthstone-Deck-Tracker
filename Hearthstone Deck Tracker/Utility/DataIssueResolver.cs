@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.Controls;
@@ -276,6 +277,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		private static async void InitiateGameFilesCleanup()
 		{
+			while(!Core.MainWindow.IsLoaded || Core.MainWindow.WindowState == WindowState.Minimized || Core.MainWindow.FlyoutUpdateNotes.IsOpen)
+				await Task.Delay(500);
 			var result = await Core.MainWindow.ShowMessageAsync("Data maintenance required",
 														  "Some files need to be cleaned up, to help HDT run a bit better.\n\nThis should not talk too long, you can do just do it later though.",
 														  MessageDialogStyle.AffirmativeAndNegative,
