@@ -282,7 +282,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 														  new MetroDialogSettings() {AffirmativeButtonText = "start", NegativeButtonText = "ask again later"});
 			if(result == MessageDialogResult.Negative)
 				return;
-			var controller = await Core.MainWindow.ShowProgressAsync("Cleanig up stuff...", "", true);
+			var controller = await Core.MainWindow.ShowProgressAsync("Cleaning up stuff...", "", true);
 			await CleanUpGameFiles(controller);
 			await controller.CloseAsync();
 			if(controller.IsCanceled)
