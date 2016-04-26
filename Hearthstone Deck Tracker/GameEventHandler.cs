@@ -619,7 +619,7 @@ namespace Hearthstone_Deck_Tracker
 				Log.Info("Format: " + _game.CurrentGameStats.Format);
 			}
 			_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.ToList());
-			_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList);
+			_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList.Where(x => !x.IsCreated).ToList());
 			_game.CurrentGameStats.GameEnd();
 			GameEvents.OnGameEnd.Execute();
 			var selectedDeck = DeckList.Instance.ActiveDeck;
