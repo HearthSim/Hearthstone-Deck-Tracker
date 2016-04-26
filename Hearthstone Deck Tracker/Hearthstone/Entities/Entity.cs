@@ -271,6 +271,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public int OriginalController { get; set; }
 		public bool Hidden { get; set; }
 		public int CostReduction { get; set; }
+		public TAG_ZONE? OriginalZone { get; set; }
+		public bool CreatedInDeck => OriginalZone == TAG_ZONE.DECK;
+		public bool CreatedInHand => OriginalZone == TAG_ZONE.HAND;
 
 		public override string ToString()
 		{
@@ -288,6 +291,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				sb.Append(", stolen=true");
 			if(Created)
 				sb.Append(", created=true");
+			if(OriginalZone.HasValue)
+				sb.Append(", originalZone=" + OriginalZone);
 			return sb.ToString();
 		}
 	}
