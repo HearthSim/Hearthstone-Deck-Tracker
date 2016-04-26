@@ -20,7 +20,7 @@ using static Hearthstone_Deck_Tracker.Enums.PlayType;
 
 namespace Hearthstone_Deck_Tracker.Stats
 {
-	public class GameStats
+	public class GameStats : INotifyPropertyChanged
 	{
 		private Guid? _deckId;
 		private string _deckName;
@@ -53,7 +53,17 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int Turns { get; set; }
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
-		public string Note { get; set; }
+
+		public string Note
+		{
+			get { return _note; }
+			set
+			{
+				_note = value; 
+				OnPropertyChanged();
+			}
+		}
+
 		public bool IsClone { get; set; }
 		public string PlayerName { get; set; }
 		public string OpponentName { get; set; }
@@ -339,5 +349,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 		#endregion
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }

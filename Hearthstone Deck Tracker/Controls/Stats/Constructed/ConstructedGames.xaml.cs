@@ -95,7 +95,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 				return;
 			SelectedGame.Note = newNote;
 			DeckStatsList.Save();
-			ConstructedStats.Instance.UpdateConstructedStats();
+			DefaultDeckStats.Save();
 		}
 
 		[NotifyPropertyChangedInvocator]
