@@ -271,6 +271,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						case NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken:
 							AddKnownCardId(gameState, game, NonCollectible.Neutral.EliseStarseeker_GoldenMonkeyToken);
 							break;
+						case Collectible.Neutral.Doomcaller:
+							AddKnownCardId(gameState, game, NonCollectible.Neutral.Cthun);
+							break;
 						default:
 							if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1 && !gameState.PlayerUsedHeroPower
 							   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
