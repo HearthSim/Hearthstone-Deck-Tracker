@@ -189,7 +189,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(!_game.IsUsingPremade)
 				_game.DrawnLastGame =
-					new List<Card>(_game.Player.RevealedEntities.Where(x => !x.Info.Created && !x.Info.Stolen).GroupBy(x => x.CardId).Select(x =>
+					new List<Card>(_game.Player.RevealedEntities.Where(x => !x.Info.Created && !x.Info.Stolen && x.Card.Collectible 
+									&& (x.IsMinion || x.IsSpell || x.IsWeapon)).GroupBy(x => x.CardId).Select(x =>
 					{
 						var card = Database.GetCardFromId(x.Key);
 						card.Count = x.Count();
