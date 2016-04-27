@@ -1,0 +1,2 @@
+The following icons from game-icons.net were used:
+- "[Crystal wand icon](http://game-icons.net/lorc/originals/crystal-wand.html)" by Lorc, licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)

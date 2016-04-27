@@ -49,18 +49,6 @@
                               HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0"
                               VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked"
                               Unchecked="CheckboxHideSecrets_Unchecked" Margin="10,5,0,0" />
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0"
-                                Orientation="Horizontal">
-                        <TextBlock Text="Hide Attack Icon: " />
-                        <CheckBox x:Name="CheckboxHidePlayerAttackIcon" Content="Player"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Top" Checked="CheckboxHidePlayerAttackIcon_Checked"
-                                  Unchecked="CheckboxHidePlayerAttackIcon_Unchecked" Margin="5,0,0,0" />
-                        <CheckBox x:Name="CheckboxHideOpponentAttackIcon" Content="Opponent"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Top" Checked="CheckboxHideOpponentAttackIcon_Checked"
-                                  Unchecked="CheckboxHideOpponentAttackIcon_Unchecked" Margin="5,0,0,0" />
-                    </StackPanel>
                     <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="Card tooltips"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxOverlayCardToolTips_Checked"

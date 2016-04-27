@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -109,6 +110,27 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
+			var wotogIcons = _selectedUiElement as WotogCounter;
+			if(wotogIcons != null)
+			{
+				if(wotogIcons.Equals(WotogIconsPlayer))
+				{
+					Config.Instance.WotogIconsPlayerVertical += delta.Y / Height;
+					Config.Instance.WotogIconsPlayerHorizontal += delta.X / (Width * ScreenRatio);
+					Canvas.SetTop(_movableElements[wotogIcons], Height * Config.Instance.WotogIconsPlayerVertical / 100);
+					Canvas.SetLeft(_movableElements[wotogIcons], Helper.GetScaledXPos(Config.Instance.WotogIconsPlayerHorizontal / 100, (int)Width, ScreenRatio));
+					return;
+				}
+				if(wotogIcons.Equals(WotogIconsOpponent))
+				{
+					Config.Instance.WotogIconsOpponentVertical += delta.Y / Height;
+					Config.Instance.WotogIconsOpponentHorizontal += delta.X / (Width * ScreenRatio);
+					Canvas.SetTop(_movableElements[wotogIcons], Height * Config.Instance.WotogIconsOpponentVertical / 100);
+					Canvas.SetLeft(_movableElements[wotogIcons], Helper.GetScaledXPos(Config.Instance.WotogIconsOpponentHorizontal / 100, (int)Width, ScreenRatio));
+					return;
+				}
+			}
+
 			var timer = _selectedUiElement as HearthstoneTextBlock;
 			if (timer != null)
 			{
@@ -169,7 +191,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 						return;
 					}
 					var timer = movableElement.Key as HearthstoneTextBlock;
-					if (timer != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
+					if(timer != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
+					{
+						_selectedUiElement = movableElement.Key;
+						return;
+					}
+					var wotogIcons = movableElement.Key as WotogCounter;
+					if(wotogIcons != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
 					{
 						_selectedUiElement = movableElement.Key;
 						return;
@@ -199,6 +227,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				if (LblTurnTime.Visibility != Visibility.Visible)
 					ShowTimers();
+				WotogIconsPlayer.ForceShow(true);
+				WotogIconsOpponent.ForceShow(true);
 				foreach (var movableElement in _movableElements)
 				{
 					try
@@ -259,7 +289,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if (_game.IsInMenu)
 					HideTimers();
 
-				foreach (var movableElement in _movableElements)
+				WotogIconsPlayer.ForceShow(false);
+				WotogIconsOpponent.ForceShow(false);
+
+				foreach(var movableElement in _movableElements)
 					movableElement.Value.Visibility = Visibility.Collapsed;
 			}
 
@@ -287,6 +320,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var block = element as HearthstoneTextBlock;
 			if (block != null)
 				return new Size(block.ActualWidth, block.ActualHeight);
+			var wotogIcons = element as WotogCounter;
+			if(wotogIcons != null)
+				return new Size(wotogIcons.IconWidth * _wotogSize, wotogIcons.ActualHeight * _wotogSize);
 			return new Size();
 		}
 		public void HookMouse()

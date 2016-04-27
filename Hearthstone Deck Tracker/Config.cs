@@ -442,6 +442,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool HideOpponentAttackIcon = true;
 
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode OpponentCthunCounter = DisplayMode.Auto;
+
+		[DefaultValue(DisplayMode.Never)]
+		public DisplayMode OpponentSpellsCounter = DisplayMode.Never;
+
 		[DefaultValue(false)]
 		public bool HideOpponentCardAge = false;
 
@@ -468,6 +474,12 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool HidePlayerAttackIcon = true;
+
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode PlayerCthunCounter = DisplayMode.Auto;
+
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode PlayerSpellsCounter = DisplayMode.Auto;
 
 		[DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
@@ -1006,6 +1018,18 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool WindowsTopmostIfHsForeground = false;
+
+		[DefaultValue(68.5)]
+		public double WotogIconsPlayerVertical = 68.5;
+
+		[DefaultValue(86.8)]
+		public double WotogIconsPlayerHorizontal = 86.8;
+
+		[DefaultValue(18.5)]
+		public double WotogIconsOpponentVertical = 18.5;
+
+		[DefaultValue(86.5)]
+		public double WotogIconsOpponentHorizontal = 86.5;
 
 		#region deprecated
 

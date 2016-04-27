@@ -3,12 +3,14 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using HearthDb;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using static HearthDb.Enums.GameTag;
+using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -118,7 +120,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 				GoldProgressGrid.Visibility = Collapsed;
 
-			UpdateAttackValues();
+			UpdateIcons();
 
 			SetDeckTitle();
 			SetWinRates();
@@ -134,12 +136,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 
-		private void UpdateAttackValues()
+		private void UpdateIcons()
 		{
-			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu
-												   ? Collapsed : Visible;
-			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu
-													 ? Collapsed : Visible;
+			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu ? Collapsed : Visible;
+			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu ? Collapsed : Visible;
 
 			// do the calculation if at least one of the icons is visible
 			if (_game.Entities.Count > 67 && (IconBoardAttackPlayer.Visibility == Visible || IconBoardAttackOpponent.Visibility == Visible))
@@ -148,7 +148,47 @@ namespace Hearthstone_Deck_Tracker.Windows
 				TextBlockPlayerAttack.Text = board.Player.Damage.ToString();
 				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
 			}
+
+			var playerCthuns = _game.Player.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.Cthun).ToList();
+			var playerCthunProxy = _game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
+			var showPlayerCthunIcon = !_game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
+										  || (Config.Instance.PlayerCthunCounter == DisplayMode.Auto && playerCthunProxy != null
+											  && (!playerCthuns.Any() || playerCthuns.Any(x => x.IsInDeck || x.IsInHand))));
+
+			var playerYoggs = _game.Player.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.YoggSaronHopesEnd).ToList();
+			var showPlayerSpellsIcon = !_game.IsInMenu && (Config.Instance.PlayerSpellsCounter == DisplayMode.Always
+											|| Config.Instance.PlayerSpellsCounter == DisplayMode.Auto
+											&& (!playerYoggs.Any() && DeckContains(CardIds.Collectible.Neutral.YoggSaronHopesEnd) || playerYoggs.Any(x => x.IsInHand || x.IsInDeck)));
+			if(showPlayerCthunIcon)
+			{
+				WotogIconsPlayer.Attack = (playerCthunProxy?.Attack ?? 6).ToString();
+				WotogIconsPlayer.Health = (playerCthunProxy?.Health ?? 6).ToString();
+			}
+			if(showPlayerSpellsIcon)
+				WotogIconsPlayer.Spells = _game.Player.SpellsPlayedCount.ToString();
+			WotogIconsPlayer.WotogCounterStyle = showPlayerCthunIcon && showPlayerSpellsIcon
+												   ? Full : (showPlayerCthunIcon ? Cthun : (showPlayerSpellsIcon ? Spells : None));
+
+
+			var opponentCthuns = _game.Opponent.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.Cthun).ToList();
+			var opponentCthunProxy = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
+			var showOpponentCthunIcon = !_game.IsInMenu && (Config.Instance.OpponentCthunCounter == DisplayMode.Always
+											|| (Config.Instance.OpponentCthunCounter == DisplayMode.Auto && opponentCthunProxy != null
+												&& (!opponentCthuns.Any() || opponentCthuns.Any(x => x.IsInDeck || x.IsInHand))));
+			var showOpponentSpellsIcon = !_game.IsInMenu && Config.Instance.OpponentSpellsCounter == DisplayMode.Always;
+			if(showOpponentCthunIcon)
+			{
+				WotogIconsOpponent.Attack = (opponentCthunProxy?.Attack ?? 6).ToString();
+				WotogIconsOpponent.Health = (opponentCthunProxy?.Health ?? 6).ToString();
+			}
+			if(showOpponentSpellsIcon)
+				WotogIconsOpponent.Spells = _game.Opponent.SpellsPlayedCount.ToString();
+			WotogIconsOpponent.WotogCounterStyle = showOpponentCthunIcon && showOpponentSpellsIcon
+												   ? Full : (showOpponentCthunIcon ? Cthun : (showOpponentSpellsIcon ? Spells : None));
+
 		}
+
+		private bool DeckContains(string cardId) => DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId) ?? false;
 
 		private void UpdateGoldProgress()
 		{
@@ -239,6 +279,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(LblOpponentTurnTime, Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
 			Canvas.SetTop(LblPlayerTurnTime, Height * Config.Instance.TimersVerticalPosition / 100 + Config.Instance.TimersVerticalSpacing);
 			Canvas.SetLeft(LblPlayerTurnTime, Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
+			Canvas.SetTop(WotogIconsPlayer, Height * Config.Instance.WotogIconsPlayerVertical / 100);
+			Canvas.SetLeft(WotogIconsPlayer, Helper.GetScaledXPos(Config.Instance.WotogIconsPlayerHorizontal / 100, (int)Width, ScreenRatio));
+			Canvas.SetTop(WotogIconsOpponent, Height * Config.Instance.WotogIconsOpponentVertical / 100);
+			Canvas.SetLeft(WotogIconsOpponent, Helper.GetScaledXPos(Config.Instance.WotogIconsOpponentHorizontal / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackPlayer, Height * Config.Instance.AttackIconPlayerVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
@@ -262,6 +306,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
+		private double _wotogSize;
 		private void UpdateElementSizes()
 		{
 			OnPropertyChanged(nameof(PlayerStackHeight));
@@ -293,6 +338,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			TextBlockOpponentAttack.FontSize = atkFont;
 			TextBlockPlayerAttack.Margin = new Thickness(0, atkFontMarginTop, 0, 0);
 			TextBlockOpponentAttack.Margin = new Thickness(0, atkFontMarginTop, 0, 0);
+
+			var wotogSize = Math.Min(1, Height / 1800);
+			if(_wotogSize != wotogSize)
+			{
+				WotogIconsPlayer.RenderTransform = new ScaleTransform(wotogSize, wotogSize);
+				WotogIconsOpponent.RenderTransform = new ScaleTransform(wotogSize, wotogSize);
+				_wotogSize = wotogSize;
+			}
 		}
 
 		public void UpdateStackPanelAlignment()

@@ -43,8 +43,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
 			CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
 			CheckboxAlwaysShowGoldProgress.IsChecked = Config.Instance.AlwaysShowGoldProgress;
-			CheckboxHidePlayerAttackIcon.IsChecked = Config.Instance.HidePlayerAttackIcon;
-			CheckboxHideOpponentAttackIcon.IsChecked = Config.Instance.HideOpponentAttackIcon;
 			CheckBoxBatteryStatus.IsChecked = Config.Instance.ShowBatteryLife;
 			CheckBoxBatteryStatusText.IsChecked = Config.Instance.ShowBatteryLifePercent;
 			CheckBoxFlavorText.IsChecked = Config.Instance.ShowFlavorText;
@@ -374,38 +372,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.AlwaysShowGoldProgress = false;
-			SaveConfig(true);
-		}
-
-		private void CheckboxHidePlayerAttackIcon_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HidePlayerAttackIcon = true;
-			SaveConfig(true);
-		}
-
-		private void CheckboxHidePlayerAttackIcon_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HidePlayerAttackIcon = false;
-			SaveConfig(true);
-		}
-
-		private void CheckboxHideOpponentAttackIcon_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HideOpponentAttackIcon = true;
-			SaveConfig(true);
-		}
-
-		private void CheckboxHideOpponentAttackIcon_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HideOpponentAttackIcon = false;
 			SaveConfig(true);
 		}
 

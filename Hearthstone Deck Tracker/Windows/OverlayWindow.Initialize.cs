@@ -132,6 +132,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_movableElements.Add(LblTurnTime, new ResizeGrip());
 			_movableElements.Add(IconBoardAttackPlayer, new ResizeGrip());
 			_movableElements.Add(IconBoardAttackOpponent, new ResizeGrip());
+			_movableElements.Add(WotogIconsPlayer, new ResizeGrip());
+			_movableElements.Add(WotogIconsOpponent, new ResizeGrip());
 			_movableElements.Add(LblPlayerTurnTime, new ResizeGrip());
 		}
 	}

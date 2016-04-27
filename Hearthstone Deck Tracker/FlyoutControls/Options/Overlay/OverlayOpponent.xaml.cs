@@ -2,10 +2,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
@@ -78,6 +81,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SliderSecretOpacity.Value = Config.Instance.SecretsOpacity;
 			CheckBoxCenterDeckVertically.IsChecked = Config.Instance.OverlayCenterOpponentStackPanel;
 			CheckboxIncludeCreated.IsChecked = Config.Instance.OpponentIncludeCreated;
+			CheckBoxAttack.IsChecked = !Config.Instance.HideOpponentAttackIcon;
+			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
+			ComboBoxCthun.SelectedItem = Config.Instance.OpponentCthunCounter;
+			ComboBoxSpells.ItemsSource = new[] {DisplayMode.Always, DisplayMode.Never};
+			ComboBoxSpells.SelectedItem = Config.Instance.OpponentSpellsCounter;
 
 			ElementSorterOpponent.IsPlayer = false;
 			foreach(var itemName in Config.Instance.PanelOrderOpponent)
@@ -213,6 +221,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.OpponentIncludeCreated = false;
+			Config.Save();
+		}
+
+		private void ComboBoxCthun_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OpponentCthunCounter = (DisplayMode)ComboBoxCthun.SelectedItem;
+			Config.Save();
+		}
+
+		private void ComboBoxSpells_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OpponentSpellsCounter = (DisplayMode)ComboBoxSpells.SelectedItem;
+			Config.Save();
+		}
+
+		private void CheckBoxAttack_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentAttackIcon = false;
+			Config.Save();
+		}
+
+		private void CheckBoxAttack_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentAttackIcon = true;
 			Config.Save();
 		}
 	}

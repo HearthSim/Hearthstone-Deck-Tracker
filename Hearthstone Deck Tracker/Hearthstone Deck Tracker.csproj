@@ -177,6 +177,9 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Controls\Overlay\WotogCounter.xaml.cs">
+      <DependentUpon>WotogCounter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Stats\ArenaFilters.xaml.cs">
       <DependentUpon>ArenaFilters.xaml</DependentUpon>
     </Compile>
@@ -253,6 +256,7 @@
     <Compile Include="Enums\ArenaRewardPacks.cs" />
     <Compile Include="Enums\ClassColorScheme.cs" />
     <Compile Include="Enums\DeckLayout.cs" />
+    <Compile Include="Enums\DisplayMode.cs" />
     <Compile Include="Enums\EnumValuesExtension.cs" />
     <Compile Include="Enums\Format.cs" />
     <Compile Include="Enums\IconStyle.cs" />
@@ -714,6 +718,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Overlay\WotogCounter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Stats\ArenaFilters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1158,6 +1166,9 @@
     <Resource Include="Resources\overlay_2.png" />
     <Resource Include="Resources\flavor_text.png" />
     <Resource Include="Resources\banner.png" />
+    <Resource Include="Images\icon-cthun-spells.png" />
+    <Resource Include="Images\icon-cthun.png" />
+    <Resource Include="Images\icon-spells.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

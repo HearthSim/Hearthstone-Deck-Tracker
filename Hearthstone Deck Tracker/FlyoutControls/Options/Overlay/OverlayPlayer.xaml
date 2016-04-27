@@ -39,6 +39,23 @@
                                 VerticalAlignment="Center" Width="205" Value="100"
                                 ValueChanged="SliderPlayerOpacity_ValueChanged" SmallChange="1" LargeChange="10" />
                     </DockPanel>
+                    <DockPanel Margin="5,5,5,0">
+                        <Label Content="Show C'Thun counter:" Width="155"/>
+                        <ComboBox x:Name="ComboBoxCthun" HorizontalAlignment="Right"
+                                  Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                                  SelectionChanged="ComboBoxCthun_SelectionChanged"/>
+                    </DockPanel>
+                    <DockPanel Margin="5,5,5,0">
+                        <Label Content="Show Yogg-Saron counter:" Width="155"/>
+                        <ComboBox x:Name="ComboBoxSpells" HorizontalAlignment="Right"
+                                  Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                                  SelectionChanged="ComboBoxSpells_SelectionChanged"/>
+                    </DockPanel>
+                    <CheckBox x:Name="CheckBoxAttack"
+                              Content="Show board attack counter" HorizontalAlignment="Left"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckBoxAttack_Checked"
+                              Unchecked="CheckBoxAttack_Unchecked" />
                     <CheckBox x:Name="CheckBoxCenterDeckVertically"
                               Content="Center deck vertically" HorizontalAlignment="Left"
                               ToolTip="Center cards and information panels vertically within the selected region for the deck. Region can be changed via 'overlay > general > unlock'."

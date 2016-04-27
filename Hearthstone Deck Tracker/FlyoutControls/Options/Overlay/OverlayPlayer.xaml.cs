@@ -3,10 +3,13 @@
 using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
@@ -61,6 +64,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			TextBoxScaling.Text = Config.Instance.OverlayPlayerScaling.ToString(CultureInfo.InvariantCulture);
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
 			CheckBoxCenterDeckVertically.IsChecked = Config.Instance.OverlayCenterPlayerStackPanel;
+			CheckBoxAttack.IsChecked = !Config.Instance.HidePlayerAttackIcon;
+			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
+			ComboBoxCthun.SelectedItem = Config.Instance.PlayerCthunCounter;
+			ComboBoxSpells.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
+			ComboBoxSpells.SelectedItem = Config.Instance.PlayerSpellsCounter;
 
 			ElementSorterPlayer.IsPlayer = true;
 			foreach(var itemName in Config.Instance.PanelOrderPlayer)
@@ -228,6 +236,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.OverlayCenterPlayerStackPanel = false;
 			Config.Save();
 			Core.Overlay.UpdateStackPanelAlignment();
+		}
+
+		private void ComboBoxCthun_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.PlayerCthunCounter = (DisplayMode)ComboBoxCthun.SelectedItem;
+			Config.Save();
+		}
+
+		private void ComboBoxSpells_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.PlayerSpellsCounter = (DisplayMode)ComboBoxSpells.SelectedItem;
+			Config.Save();
+		}
+
+		private void CheckBoxAttack_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerAttackIcon = false;
+			Config.Save();
+		}
+
+		private void CheckBoxAttack_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerAttackIcon = true;
+			Config.Save();
 		}
 	}
 }
