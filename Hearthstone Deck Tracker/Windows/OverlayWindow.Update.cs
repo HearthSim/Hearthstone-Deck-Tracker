@@ -149,7 +149,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
 			}
 
-			var playerCthuns = _game.Player.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.Cthun).ToList();
+			var playerCthuns = _game.Player.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.Cthun && !(x.IsInSetAside && x.Info.Created)).ToList();
 			var playerCthunProxy = _game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
 			var showPlayerCthunIcon = !_game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
 										  || (Config.Instance.PlayerCthunCounter == DisplayMode.Auto && playerCthunProxy != null
@@ -170,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 												   ? Full : (showPlayerCthunIcon ? Cthun : (showPlayerSpellsIcon ? Spells : None));
 
 
-			var opponentCthuns = _game.Opponent.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.Cthun).ToList();
+			var opponentCthuns = _game.Opponent.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.Cthun && !(x.IsInSetAside && x.Info.Created)).ToList();
 			var opponentCthunProxy = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
 			var showOpponentCthunIcon = !_game.IsInMenu && (Config.Instance.OpponentCthunCounter == DisplayMode.Always
 											|| (Config.Instance.OpponentCthunCounter == DisplayMode.Auto && opponentCthunProxy != null
