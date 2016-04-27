@@ -44,6 +44,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool GoingFirst { get; set; }
 		public int Fatigue { get; set; }
 		public bool IsLocalPlayer { get; }
+		public int SpellsPlayedCount { get; private set; }
 
 		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin);
 		public int HandCount => Hand.Count(x => x.IsControlledBy(Id));
@@ -226,8 +227,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(!IsLocalPlayer)
 				UpdateKnownEntitesInDeck(entity.CardId, entity.Info.Turn);
-			if(entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.TOKEN)
-				entity.Info.Created = true;
+			switch(entity.GetTag(GAME_TAG.CARDTYPE))
+			{
+				case (int)TAG_CARDTYPE.TOKEN:
+					entity.Info.Created = true;
+					break;
+				case (int)TAG_CARDTYPE.SPELL:
+					SpellsPlayedCount++;
+					break;
+			}
 			entity.Info.Hidden = false;
 			entity.Info.Turn = turn;
 			Log(entity);
@@ -336,6 +344,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void SecretPlayedFromHand(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
+			SpellsPlayedCount++;
 			Log(entity);
 		}
 
