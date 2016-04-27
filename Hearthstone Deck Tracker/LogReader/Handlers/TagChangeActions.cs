@@ -338,7 +338,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void ZoneChangeFromOther(IHsGameState gameState, int id, IGame game, int value, int prevValue, int controller, string cardId)
 		{
-			game.Entities[id].Info.Created = true;
+			var entity = game.Entities[id];
+			if(entity.Info.OriginalZone == DECK)
+			{
+				//This entity was moved from DECK to SETASIDE to HAND, e.g. by Tracking
+				entity.Info.Discarded = false;
+				ZoneChangeFromDeck(gameState, id, game, value, prevValue, controller, cardId);
+				return;
+			}
+			entity.Info.Created = true;
 			switch((Zone)value)
 			{
 				case PLAY:
