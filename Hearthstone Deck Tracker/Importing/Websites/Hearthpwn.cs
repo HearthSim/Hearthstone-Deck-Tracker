@@ -38,7 +38,6 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 				var cardNameNodes =
 					doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]//a[contains(@href,'/cards/') and contains(@class,'rarity')]");
-				var cardCountNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]");
 				//<span class="deck-type">Midrange</span>
 				var decktype = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'deck-type')]").InnerText;
 				if(decktype != "None" && Config.Instance.TagDecksOnImport)
@@ -55,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 
 				var cardNames = cardNameNodes.Select(cardNameNode => HttpUtility.HtmlDecode(cardNameNode.InnerText));
-				var cardCosts = cardCountNodes.Select(countNode => int.Parse(Regex.Match(countNode.LastChild.InnerText, @"\d+").Value));
+				var cardCosts = cardNameNodes.Select(cardNameNode => int.Parse(cardNameNode.Attributes["data-Count"].Value));
 
 				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
 				foreach(var info in cardInfo)
