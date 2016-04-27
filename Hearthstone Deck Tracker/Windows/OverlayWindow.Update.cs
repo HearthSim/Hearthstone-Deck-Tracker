@@ -8,8 +8,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
-using static HearthDb.CardIds.NonCollectible;
-using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
+using static HearthDb.Enums.GameTag;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {

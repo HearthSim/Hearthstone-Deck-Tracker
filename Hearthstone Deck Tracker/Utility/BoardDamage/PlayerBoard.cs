@@ -2,10 +2,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using Hearthstone_Deck_Tracker.Hearthstone;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
+using static HearthDb.Enums.GameTag;
 
 #endregion
 
@@ -48,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		private List<Entity> Filter(List<Entity> cards)
 			=>
 				cards.Where(x => x != null && 
-							x.GetTag(CARDTYPE) != (int)TAG_CARDTYPE.ENCHANTMENT && x.GetTag(CARDTYPE) != (int)TAG_CARDTYPE.HERO_POWER
-							&& x.GetTag(ZONE) != (int)TAG_ZONE.SETASIDE && x.GetTag(ZONE) != (int)TAG_ZONE.GRAVEYARD).ToList();
+							x.GetTag(CARDTYPE) != (int)CardType.ENCHANTMENT && x.GetTag(CARDTYPE) != (int)CardType.HERO_POWER
+							&& x.GetTag(ZONE) != (int)Zone.SETASIDE && x.GetTag(ZONE) != (int)Zone.GRAVEYARD).ToList();
 	}
 }

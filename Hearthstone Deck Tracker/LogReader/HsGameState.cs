@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int LastCardPlayed { get; set; }
 		public bool WasInProgress { get; set; }
 		public bool SetupDone { get; set; }
-		public TAG_ZONE CurrentEntityZone { get; set; }
+		public Zone CurrentEntityZone { get; set; }
 		public bool DeterminedPlayers { get; set; }
 
 		public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
@@ -52,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			if(!_game.IsMulliganDone)
 				return 0;
-			return (_game.GameEntity?.GetTag(GAME_TAG.TURN) + 1) / 2 ?? 0;
+			return (_game.GameEntity?.GetTag(GameTag.TURN) + 1) / 2 ?? 0;
 		}
 
 		public void GameEndKeyPoint(bool victory, int id)

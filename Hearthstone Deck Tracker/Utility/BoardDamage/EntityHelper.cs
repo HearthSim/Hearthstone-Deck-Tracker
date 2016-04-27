@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
+using static HearthDb.Enums.GameTag;
 
 #endregion
 
@@ -12,8 +12,8 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 {
 	public static class EntityHelper
 	{
-		public static bool IsHero(Entity e) => e.HasTag(CARDTYPE) && e.GetTag(CARDTYPE) == (int)TAG_CARDTYPE.HERO && e.HasTag(ZONE)
-											   && e.GetTag(ZONE) == (int)TAG_ZONE.PLAY;
+		public static bool IsHero(Entity e) => e.HasTag(CARDTYPE) && e.GetTag(CARDTYPE) == (int)CardType.HERO && e.HasTag(ZONE)
+											   && e.GetTag(ZONE) == (int)Zone.PLAY;
 
 		public static Entity GetHeroEntity(bool forPlayer) => GetHeroEntity(forPlayer, Core.Game.Entities, Core.Game.Player.Id);
 

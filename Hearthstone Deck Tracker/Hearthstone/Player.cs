@@ -1,15 +1,11 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
@@ -168,8 +164,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public List<Card> OpponentCardList
-			=> RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon || !x.HasTag(GAME_TAG.CARDTYPE))
-										&& (x.GetTag(GAME_TAG.CREATOR) == 1 || ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
+			=> RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon || !x.HasTag(GameTag.CARDTYPE))
+										&& (x.GetTag(GameTag.CREATOR) == 1 || ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
 											&& x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck) && !(x.Info.Created && x.IsInSetAside))
 								.GroupBy(e => new {	e.CardId, Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
 													Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
@@ -207,7 +203,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				UpdateKnownEntitesInDeck(entity.CardId);
 			if(!IsLocalPlayer)
 			{
-				if(_game.OpponentEntity?.GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DEALING)
+				if(_game.OpponentEntity?.GetTag(GameTag.MULLIGAN_STATE) == (int)HearthDb.Enums.Mulligan.DEALING)
 					entity.Info.Mulliganed = true;
 				else
 					entity.Info.Hidden = true;
@@ -227,12 +223,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(!IsLocalPlayer)
 				UpdateKnownEntitesInDeck(entity.CardId, entity.Info.Turn);
-			switch(entity.GetTag(GAME_TAG.CARDTYPE))
+			switch(entity.GetTag(GameTag.CARDTYPE))
 			{
-				case (int)TAG_CARDTYPE.TOKEN:
+				case (int)CardType.TOKEN:
 					entity.Info.Created = true;
 					break;
-				case (int)TAG_CARDTYPE.SPELL:
+				case (int)CardType.SPELL:
 					SpellsPlayedCount++;
 					break;
 			}

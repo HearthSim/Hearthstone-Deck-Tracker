@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -101,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Entity PlayerEntity => Entities.FirstOrDefault(x => x.Value.IsPlayer).Value;
 
-		public Entity OpponentEntity => Entities.FirstOrDefault(x => x.Value.HasTag(GAME_TAG.PLAYER_ID) && !x.Value.IsPlayer).Value;
+		public Entity OpponentEntity => Entities.FirstOrDefault(x => x.Value.HasTag(GameTag.PLAYER_ID) && !x.Value.IsPlayer).Value;
 
 		public Entity GameEntity => Entities.FirstOrDefault(x => x.Value?.Name == "GameEntity").Value;
 
@@ -110,11 +111,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			get
 			{
 				var player = Entities.FirstOrDefault(x => x.Value.IsPlayer);
-				var opponent = Entities.FirstOrDefault(x => x.Value.HasTag(GAME_TAG.PLAYER_ID) && !x.Value.IsPlayer);
+				var opponent = Entities.FirstOrDefault(x => x.Value.HasTag(GameTag.PLAYER_ID) && !x.Value.IsPlayer);
 				if(player.Value == null || opponent.Value == null)
 					return false;
-				return player.Value.GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DONE
-					   && opponent.Value.GetTag(GAME_TAG.MULLIGAN_STATE) == (int)TAG_MULLIGAN.DONE;
+				return player.Value.GetTag(GameTag.MULLIGAN_STATE) == (int)Mulligan.DONE
+					   && opponent.Value.GetTag(GameTag.MULLIGAN_STATE) == (int)Mulligan.DONE;
 			}
 		}
 

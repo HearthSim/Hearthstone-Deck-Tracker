@@ -3,12 +3,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hearthstone_Deck_Tracker.Enums;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Replay;
-using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
+using static HearthDb.Enums.GameTag;
 
 #endregion
 
@@ -21,12 +21,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public void TagChange(IHsGameState gameState, string rawTag, int id, string rawValue, IGame game, bool isCreationTag = false)
 		{
-			var tag = LogReaderHelper.ParseEnum<GAME_TAG>(rawTag);
+			var tag = LogReaderHelper.ParseEnum<GameTag>(rawTag);
 			var value = LogReaderHelper.ParseTag(tag, rawValue);
 			TagChange(gameState, tag, id, value, game, isCreationTag);
 		}
 
-		public void TagChange(IHsGameState gameState, GAME_TAG tag, int id, int value, IGame game, bool isCreationTag = false)
+		public void TagChange(IHsGameState gameState, GameTag tag, int id, int value, IGame game, bool isCreationTag = false)
 		{
 			if(gameState.LastId != id)
 			{

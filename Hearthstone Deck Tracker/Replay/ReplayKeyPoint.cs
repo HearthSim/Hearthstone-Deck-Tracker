@@ -1,7 +1,7 @@
 #region
 
-using System;
 using System.Linq;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -26,11 +26,11 @@ namespace Hearthstone_Deck_Tracker.Replay
 			Player = player;
 		}
 
-		public int Turn => Data[0].GetTag(GAME_TAG.TURN);
+		public int Turn => Data[0].GetTag(GameTag.TURN);
 		
 		public string GetCardId()
 		{
-			var id = Type == KeyPointType.Attack ? Data[0].GetTag(GAME_TAG.PROPOSED_ATTACKER) : Id;
+			var id = Type == KeyPointType.Attack ? Data[0].GetTag(GameTag.PROPOSED_ATTACKER) : Id;
 			return Data.FirstOrDefault(x => x.Id == id)?.CardId;
 		}
 

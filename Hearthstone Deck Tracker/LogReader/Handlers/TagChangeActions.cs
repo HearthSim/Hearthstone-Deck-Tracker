@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
-using static Hearthstone_Deck_Tracker.Enums.Hearthstone.TAG_PLAYSTATE;
-using static Hearthstone_Deck_Tracker.Enums.Hearthstone.TAG_ZONE;
+using static HearthDb.Enums.GameTag;
+using static HearthDb.Enums.PlayState;
+using static HearthDb.Enums.Zone;
 using static Hearthstone_Deck_Tracker.Replay.KeyPointType;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	internal class TagChangeActions
 	{
-		public Action FindAction(GAME_TAG tag, IGame game, IHsGameState gameState, int id, int value, int prevValue)
+		public Action FindAction(GameTag tag, IGame game, IHsGameState gameState, int id, int value, int prevValue)
 		{
 			switch(tag)
 			{
@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => ZonePositionChange(gameState, id, game);
 				case CARD_TARGET:
 					return () => CardTargetChange(gameState, id, game, value);
-				case EQUIPPED_WEAPON:
+				case WEAPON:
 					return () => EquippedWeaponChange(gameState, id, game, value);
 				case EXHAUSTED:
 					return () => ExhaustedChange(gameState, id, game, value);
@@ -141,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(value == game.Player.Id)
 			{
-				if(entity.IsInZone(TAG_ZONE.SECRET))
+				if(entity.IsInZone(Zone.SECRET))
 				{
 					gameState.GameHandler.HandleOpponentStolen(entity, entity.CardId, gameState.GetTurnNumber());
 					gameState.ProposeKeyPoint(SecretStolen, id, ActivePlayer.Player);
@@ -151,7 +151,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(value == game.Opponent.Id)
 			{
-				if(entity.IsInZone(TAG_ZONE.SECRET))
+				if(entity.IsInZone(Zone.SECRET))
 				{
 					gameState.GameHandler.HandlePlayerStolen(entity, entity.CardId, gameState.GetTurnNumber());
 					gameState.ProposeKeyPoint(SecretStolen, id, ActivePlayer.Player);
@@ -166,7 +166,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(value <= 0)
 				return;
 			var controller = game.Entities[id].GetTag(CONTROLLER);
-			if(game.Entities[id].GetTag(CARDTYPE) != (int)TAG_CARDTYPE.HERO_POWER)
+			if(game.Entities[id].GetTag(CARDTYPE) != (int)CardType.HERO_POWER)
 				return;
 			if(controller == game.Player.Id)
 				gameState.ProposeKeyPoint(HeroPower, id, ActivePlayer.Player);
@@ -230,7 +230,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void CardTypeChange(IHsGameState gameState, int id, IGame game, int value)
 		{
-			if(value == (int)TAG_CARDTYPE.HERO)
+			if(value == (int)CardType.HERO)
 				SetHeroAsync(id, game, gameState);
 		}
 
@@ -242,7 +242,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(!game.Entities[id].IsPlayer)
 				return;
-			switch((TAG_PLAYSTATE)value)
+			switch((PlayState)value)
 			{
 				case WON:
 					gameState.GameEndKeyPoint(true, id);
@@ -269,13 +269,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var entity = game.Entities[id];
 			if(!entity.Info.OriginalZone.HasValue)
 			{
-				if(prevValue != (int)CREATED && prevValue != (int)SETASIDE)
-					entity.Info.OriginalZone = (TAG_ZONE)prevValue;
-				else if(value != (int)CREATED && value != (int)SETASIDE)
-					entity.Info.OriginalZone = (TAG_ZONE)value;
+				if(prevValue != (int)Zone.INVALID && prevValue != (int)SETASIDE)
+					entity.Info.OriginalZone = (Zone)prevValue;
+				else if(value != (int)Zone.INVALID && value != (int)SETASIDE)
+					entity.Info.OriginalZone = (Zone)value;
 			}
 			var controller = entity.GetTag(CONTROLLER);
-			switch((TAG_ZONE)prevValue)
+			switch((Zone)prevValue)
 			{
 				case DECK:
 					ZoneChangeFromDeck(gameState, id, game, value, prevValue, controller, entity.CardId);
@@ -286,10 +286,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case PLAY:
 					ZoneChangeFromPlay(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
-				case TAG_ZONE.SECRET:
+				case Zone.SECRET:
 					ZoneChangeFromSecret(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
-				case CREATED:
+				case Zone.INVALID:
 					var maxId = GetMaxHeroPowerId(game);
 					if(!gameState.SetupDone && id <= maxId)
 					{
@@ -301,7 +301,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					break;
 				case GRAVEYARD:
 				case SETASIDE:
-				case TAG_ZONE.INVALID:
 				case REMOVEDFROMGAME:
 					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.CardId);
 					break;
@@ -325,7 +324,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				entity.Info.Created = true;
 				return;
 			}
-			if(entity.IsHero || entity.IsHeroPower || entity.HasTag(PLAYER_ID) || entity.GetTag(CARDTYPE) == (int)TAG_CARDTYPE.GAME
+			if(entity.IsHero || entity.IsHeroPower || entity.HasTag(PLAYER_ID) || entity.GetTag(CARDTYPE) == (int)CardType.GAME
 				|| entity.HasTag(CREATOR))
 				return;
 			ZoneChangeFromDeck(gameState, id, game, (int)HAND, (int)DECK, entity.GetTag(CONTROLLER), cardId);
@@ -340,7 +339,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		private void ZoneChangeFromOther(IHsGameState gameState, int id, IGame game, int value, int prevValue, int controller, string cardId)
 		{
 			game.Entities[id].Info.Created = true;
-			switch((TAG_ZONE)value)
+			switch((Zone)value)
 			{
 				case PLAY:
 					if(controller == game.Player.Id)
@@ -390,9 +389,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void ZoneChangeFromSecret(IHsGameState gameState, int id, IGame game, int value, int prevValue, int controller, string cardId)
 		{
-			switch((TAG_ZONE)value)
+			switch((Zone)value)
 			{
-				case TAG_ZONE.SECRET:
+				case Zone.SECRET:
 				case GRAVEYARD:
 					if(controller == game.Player.Id)
 						gameState.ProposeKeyPoint(SecretTriggered, id, ActivePlayer.Player);
@@ -410,7 +409,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void ZoneChangeFromPlay(IHsGameState gameState, int id, IGame game, int value, int prevValue, int controller, string cardId)
 		{
-			switch((TAG_ZONE)value)
+			switch((Zone)value)
 			{
 				case HAND:
 					if(controller == game.Player.Id)
@@ -467,7 +466,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void ZoneChangeFromHand(IHsGameState gameState, int id, IGame game, int value, int prevValue, int controller, string cardId)
 		{
-			switch((TAG_ZONE)value)
+			switch((Zone)value)
 			{
 				case PLAY:
 					if(controller == game.Player.Id)
@@ -497,7 +496,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.ProposeKeyPoint(HandDiscard, id, ActivePlayer.Opponent);
 					}
 					break;
-				case TAG_ZONE.SECRET:
+				case Zone.SECRET:
 					if(controller == game.Player.Id)
 					{
 						gameState.GameHandler.HandlePlayerSecretPlayed(game.Entities[id], cardId, gameState.GetTurnNumber(), false);
@@ -514,12 +513,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(controller == game.Player.Id)
 					{
 						gameState.GameHandler.HandlePlayerMulligan(game.Entities[id], cardId);
-						gameState.ProposeKeyPoint(Mulligan, id, ActivePlayer.Player);
+						gameState.ProposeKeyPoint(KeyPointType.Mulligan, id, ActivePlayer.Player);
 					}
 					else if(controller == game.Opponent.Id)
 					{
 						gameState.GameHandler.HandleOpponentMulligan(game.Entities[id], game.Entities[id].GetTag(ZONE_POSITION));
-						gameState.ProposeKeyPoint(Mulligan, id, ActivePlayer.Opponent);
+						gameState.ProposeKeyPoint(KeyPointType.Mulligan, id, ActivePlayer.Opponent);
 					}
 					break;
 				default:
@@ -530,7 +529,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void ZoneChangeFromDeck(IHsGameState gameState, int id, IGame game, int value, int prevValue, int controller, string cardId)
 		{
-			switch((TAG_ZONE)value)
+			switch((Zone)value)
 			{
 				case HAND:
 					if(controller == game.Player.Id)
@@ -589,7 +588,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.ProposeKeyPoint(DeckDiscard, id, ActivePlayer.Opponent);
 					}
 					break;
-				case TAG_ZONE.SECRET:
+				case Zone.SECRET:
 					if(controller == game.Player.Id)
 					{
 						gameState.GameHandler.HandlePlayerSecretPlayed(game.Entities[id], cardId, gameState.GetTurnNumber(), true);

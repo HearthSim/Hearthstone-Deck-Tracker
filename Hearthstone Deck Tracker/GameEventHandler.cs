@@ -7,9 +7,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.HearthStats.API;
@@ -22,9 +22,8 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
-using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
+using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
-using Region = Hearthstone_Deck_Tracker.Enums.Region;
 
 #endregion
 
@@ -1107,7 +1106,7 @@ namespace Hearthstone_Deck_Tracker
 			if(entity.IsSecret)
 			{
 				HeroClass heroClass;
-				var className = ((TAG_CLASS)entity.GetTag(CLASS)).ToString();
+				var className = ((CardClass)entity.GetTag(CLASS)).ToString();
 				if(!string.IsNullOrEmpty(className))
 				{
 					className = className.Substring(0, 1).ToUpper() + className.Substring(1, className.Length - 1).ToLower();
@@ -1247,7 +1246,7 @@ namespace Hearthstone_Deck_Tracker
 				_game.Opponent.SecretPlayedFromHand(entity, turn);
 
 			HeroClass heroClass;
-			var className = ((TAG_CLASS)entity.GetTag(CLASS)).ToString();
+			var className = ((CardClass)entity.GetTag(CLASS)).ToString();
 			if(!string.IsNullOrEmpty(className))
 			{
 				className = className.Substring(0, 1).ToUpper() + className.Substring(1, className.Length - 1).ToLower();

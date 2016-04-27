@@ -255,7 +255,6 @@
     <Compile Include="Enums\DeckLayout.cs" />
     <Compile Include="Enums\EnumValuesExtension.cs" />
     <Compile Include="Enums\Format.cs" />
-    <Compile Include="Enums\Hearthstone\TAG_CLASS.cs" />
     <Compile Include="Enums\IconStyle.cs" />
     <Compile Include="Enums\LastPlayedDateFormat.cs" />
     <Compile Include="Enums\LoginType.cs" />
@@ -282,11 +281,6 @@
     <Compile Include="Enums\DisplayedStats.cs" />
     <Compile Include="Enums\EnumDescriptionConverter.cs" />
     <Compile Include="Enums\FilterDeckMode.cs" />
-    <Compile Include="Enums\Hearthstone\GAME_TAG.cs" />
-    <Compile Include="Enums\Hearthstone\TAG_CARDTYPE.cs" />
-    <Compile Include="Enums\Hearthstone\TAG_MULLIGAN.cs" />
-    <Compile Include="Enums\Hearthstone\TAG_PLAYSTATE.cs" />
-    <Compile Include="Enums\Hearthstone\TAG_ZONE.cs" />
     <Compile Include="Enums\HeroClass.cs" />
     <Compile Include="Enums\StatType.cs" />
     <Compile Include="Enums\Region.cs" />

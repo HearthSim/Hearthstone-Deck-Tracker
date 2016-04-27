@@ -2,14 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Newtonsoft.Json;
 
 #endregion
@@ -24,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public Entity()
 		{
-			Tags = new Dictionary<GAME_TAG, int>();
+			Tags = new Dictionary<GameTag, int>();
 			_info = new EntityInfo(this);
 		}
 
@@ -36,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		[NonSerialized]
 		private readonly EntityInfo _info;
 		public EntityInfo Info => _info;
-		public Dictionary<GAME_TAG, int> Tags { get; set; }
+		public Dictionary<GameTag, int> Tags { get; set; }
 		public string Name { get; set; }
 		public int Id { get; set; }
 		public string CardId { get; set; }
@@ -49,40 +46,40 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		internal void SetPlayer(bool isPlayer) => IsPlayer = isPlayer;
 
 		[JsonIgnore]
-		public bool IsHero => GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO;
+		public bool IsHero => GetTag(GameTag.CARDTYPE) == (int)CardType.HERO;
 
 		[JsonIgnore]
-		public bool IsActiveDeathrattle => HasTag(GAME_TAG.DEATHRATTLE) && GetTag(GAME_TAG.DEATHRATTLE) == 1;
+		public bool IsActiveDeathrattle => HasTag(GameTag.DEATHRATTLE) && GetTag(GameTag.DEATHRATTLE) == 1;
 
 		/// <Summary>
 		/// This is opponent entity, NOT the opponent hero.
 		/// </Summary>
 		[JsonIgnore]
-		public bool IsOpponent => !IsPlayer && HasTag(GAME_TAG.PLAYER_ID);
+		public bool IsOpponent => !IsPlayer && HasTag(GameTag.PLAYER_ID);
 
 		[JsonIgnore]
-		public bool IsMinion => HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.MINION;
+		public bool IsMinion => HasTag(GameTag.CARDTYPE) && GetTag(GameTag.CARDTYPE) == (int)CardType.MINION;
 
 		[JsonIgnore]
-		public bool IsWeapon => HasTag(GAME_TAG.CARDTYPE) && GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.WEAPON;
+		public bool IsWeapon => HasTag(GameTag.CARDTYPE) && GetTag(GameTag.CARDTYPE) == (int)CardType.WEAPON;
 
 		[JsonIgnore]
-		public bool IsInHand => IsInZone(TAG_ZONE.HAND);
+		public bool IsInHand => IsInZone(Zone.HAND);
 
 		[JsonIgnore]
-		public bool IsInPlay => IsInZone(TAG_ZONE.PLAY);
+		public bool IsInPlay => IsInZone(Zone.PLAY);
 
 		[JsonIgnore]
-		public bool IsInDeck => IsInZone(TAG_ZONE.DECK);
+		public bool IsInDeck => IsInZone(Zone.DECK);
 
 		[JsonIgnore]
-		public bool IsInGraveyard => IsInZone(TAG_ZONE.GRAVEYARD);
+		public bool IsInGraveyard => IsInZone(Zone.GRAVEYARD);
 
 		[JsonIgnore]
-		public bool IsInSetAside => IsInZone(TAG_ZONE.SETASIDE);
+		public bool IsInSetAside => IsInZone(Zone.SETASIDE);
 
 		[JsonIgnore]
-		public bool IsInSecret => IsInZone(TAG_ZONE.SECRET);
+		public bool IsInSecret => IsInZone(Zone.SECRET);
 
 		[JsonIgnore]
 		public Card Card
@@ -94,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			;
 
 		[JsonIgnore]
-		public int Attack => GetTag(GAME_TAG.ATK);
+		public int Attack => GetTag(GameTag.ATK);
 
 		[JsonIgnore]
 		public SolidColorBrush AttackTextColor
@@ -109,7 +106,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		}
 
 		[JsonIgnore]
-		public int Health => GetTag(GAME_TAG.HEALTH) - GetTag(GAME_TAG.DAMAGE);
+		public int Health => GetTag(GameTag.HEALTH) - GetTag(GameTag.DAMAGE);
 
 		[JsonIgnore]
 		public SolidColorBrush HealthTextColor
@@ -117,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			get
 			{
 				var color = Colors.White;
-				if(GetTag(GAME_TAG.DAMAGE) > 0)
+				if(GetTag(GameTag.DAMAGE) > 0)
 					color = Colors.Red;
 				else if(!string.IsNullOrEmpty(CardId) && Health > Card.Health)
 					color = Colors.LawnGreen;
@@ -127,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		}
 
 		[JsonIgnore]
-		public int Cost => HasTag(GAME_TAG.COST) ? GetTag(GAME_TAG.COST) : Card.Cost;
+		public int Cost => HasTag(GameTag.COST) ? GetTag(GameTag.COST) : Card.Cost;
 
 		[JsonIgnore]
 		public SolidColorBrush CostTextColor
@@ -172,17 +169,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			get
 			{
 				var effects = "";
-				if(HasTag(GAME_TAG.DIVINE_SHIELD))
+				if(HasTag(GameTag.DIVINE_SHIELD))
 					effects += "Divine Shield";
-				if(HasTag(GAME_TAG.TAUNT))
+				if(HasTag(GameTag.TAUNT))
 					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Taunt";
-				if(HasTag(GAME_TAG.STEALTH))
+				if(HasTag(GameTag.STEALTH))
 					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Stealth";
-				if(HasTag(GAME_TAG.SILENCED))
+				if(HasTag(GameTag.SILENCED))
 					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Silenced";
-				if(HasTag(GAME_TAG.FROZEN))
+				if(HasTag(GameTag.FROZEN))
 					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Frozen";
-				if(HasTag(GAME_TAG.ENRAGED))
+				if(HasTag(GameTag.ENRAGED))
 					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Enraged";
 				return effects;
 			}
@@ -191,30 +188,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		[JsonIgnore]
 		public Visibility EffectsVisibility => string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible;
 
-		public bool IsSecret => HasTag(GAME_TAG.SECRET);
+		public bool IsSecret => HasTag(GameTag.SECRET);
 
-		public bool IsSpell => GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.SPELL;
+		public bool IsSpell => GetTag(GameTag.CARDTYPE) == (int)CardType.SPELL;
 
-		public bool IsHeroPower => GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO_POWER;
+		public bool IsHeroPower => GetTag(GameTag.CARDTYPE) == (int)CardType.HERO_POWER;
 
-		public bool IsCurrentPlayer => HasTag(GAME_TAG.CURRENT_PLAYER);
+		public bool IsCurrentPlayer => HasTag(GameTag.CURRENT_PLAYER);
 
 		public bool HasCardId => !string.IsNullOrEmpty(CardId);
 
-		public bool IsInZone(TAG_ZONE zone) => HasTag(GAME_TAG.ZONE) && GetTag(GAME_TAG.ZONE) == (int)zone;
+		public bool IsInZone(Zone zone) => HasTag(GameTag.ZONE) && GetTag(GameTag.ZONE) == (int)zone;
 
-		public bool IsControlledBy(int controllerId) => HasTag(GAME_TAG.CONTROLLER) && GetTag(GAME_TAG.CONTROLLER) == controllerId;
+		public bool IsControlledBy(int controllerId) => HasTag(GameTag.CONTROLLER) && GetTag(GameTag.CONTROLLER) == controllerId;
 
-		public bool HasTag(GAME_TAG tag) => GetTag(tag) > 0;
+		public bool HasTag(GameTag tag) => GetTag(tag) > 0;
 
-		public int GetTag(GAME_TAG tag)
+		public int GetTag(GameTag tag)
 		{
 			int value;
 			Tags.TryGetValue(tag, out value);
 			return value;
 		}
 
-		public void SetTag(GAME_TAG tag, int value)
+		public void SetTag(GameTag tag, int value)
 		{
 			if(!Tags.ContainsKey(tag))
 				Tags.Add(tag, value);
@@ -229,7 +226,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			var card = Database.GetCardFromId(CardId);
 			var cardName = card != null ? card.Name : "";
 			var hide = Info.Hidden && (IsInHand || IsInDeck);
-			return $"id={Id}, cardId={(hide ? "" : CardId)}, cardName={(hide ? "" : cardName)}, zonePos={GetTag(GAME_TAG.ZONE_POSITION)},Info={{{Info}}}";
+			return $"id={Id}, cardId={(hide ? "" : CardId)}, cardName={(hide ? "" : cardName)}, zonePos={GetTag(GameTag.ZONE_POSITION)},Info={{{Info}}}";
         }
 	}
 
@@ -265,15 +262,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool Discarded { get; set; }
 		public bool Returned { get; set; }
 		public bool Mulliganed { get; set; }
-		public bool Stolen => OriginalController > 0 && OriginalController != _entity.GetTag(GAME_TAG.CONTROLLER);
+		public bool Stolen => OriginalController > 0 && OriginalController != _entity.GetTag(GameTag.CONTROLLER);
 		public bool Created { get; set; }
 		public bool HasOutstandingTagChanges { get; set; }
 		public int OriginalController { get; set; }
 		public bool Hidden { get; set; }
 		public int CostReduction { get; set; }
-		public TAG_ZONE? OriginalZone { get; set; }
-		public bool CreatedInDeck => OriginalZone == TAG_ZONE.DECK;
-		public bool CreatedInHand => OriginalZone == TAG_ZONE.HAND;
+		public Zone? OriginalZone { get; set; }
+		public bool CreatedInDeck => OriginalZone == Zone.DECK;
+		public bool CreatedInHand => OriginalZone == Zone.HAND;
 
 		public override string ToString()
 		{

@@ -8,9 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.API;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Point = System.Drawing.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
@@ -179,7 +178,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(RotatedRectContains(_playerHand[i], relativeCanvas))
 				{
-					var entity = Core.Game.Player.Hand.FirstOrDefault(x => x.GetTag(GAME_TAG.ZONE_POSITION) == i+1);
+					var entity = Core.Game.Player.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == i+1);
 					if(entity == null || _currentMouseOverTarget == entity)
 						return;
 					_currentMouseOverTarget = entity;

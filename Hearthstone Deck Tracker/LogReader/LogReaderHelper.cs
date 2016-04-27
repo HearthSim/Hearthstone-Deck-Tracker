@@ -1,9 +1,8 @@
 ﻿#region
 
 using System;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
+using HearthDb.Enums;
+using static HearthDb.Enums.GameTag;
 
 #endregion
 
@@ -11,20 +10,20 @@ namespace Hearthstone_Deck_Tracker.LogReader
 {
 	public class LogReaderHelper
 	{
-		public static int ParseTag(GAME_TAG tag, string rawValue)
+		public static int ParseTag(GameTag tag, string rawValue)
 		{
 			switch(tag)
 			{
 				case ZONE:
-					return (int)ParseEnum<TAG_ZONE>(rawValue);
+					return (int)ParseEnum<Zone>(rawValue);
 				case MULLIGAN_STATE:
-					return (int)ParseEnum<TAG_MULLIGAN>(rawValue);
+					return (int)ParseEnum<Mulligan>(rawValue);
 				case PLAYSTATE:
-					return (int)ParseEnum<TAG_PLAYSTATE>(rawValue);
+					return (int)ParseEnum<PlayState>(rawValue);
 				case CARDTYPE:
-					return (int)ParseEnum<TAG_CARDTYPE>(rawValue);
+					return (int)ParseEnum<CardType>(rawValue);
 				case CLASS:
-					return (int)ParseEnum<TAG_CLASS>(rawValue);
+					return (int)ParseEnum<CardClass>(rawValue);
 				default:
 					int value;
 					int.TryParse(rawValue, out value);

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.Controls;
@@ -254,7 +255,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 						Interlocked.Increment(ref fixCount);
 						incremented = true;
 					}
-					var heroEntityId = opponent.GetTag(GAME_TAG.HERO_ENTITY);
+					var heroEntityId = opponent.GetTag(GameTag.HERO_ENTITY);
 					var entity = last.Data.FirstOrDefault(x => x.Id == heroEntityId);
 					if(entity != null)
 					{

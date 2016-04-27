@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Hearthstone_Deck_Tracker.Enums;
+﻿using System.Collections.Generic;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,37 +18,37 @@ namespace HDTTests.BoardDamage
 		{
 			_entities = new Dictionary<int, Entity>();
 			_entities[0] = new Entity(0);
-			_entities[0].SetTag(GAME_TAG.FIRST_PLAYER, 1);
+			_entities[0].SetTag(GameTag.FIRST_PLAYER, 1);
 			_entities[0].IsPlayer = true;
 			_entities[1] = new Entity(1);
 			_entities[1].Name = "GameEntity";
-			_entities[1].SetTag(GAME_TAG.TURN, 11);
+			_entities[1].SetTag(GameTag.TURN, 11);
 
 			_heroA = new Entity(4);
 			_heroA.CardId = "HERO_08";
 			_heroA.Name = null;
 			_heroA.IsPlayer = false;
-			_heroA.SetTag(GAME_TAG.HEALTH, 30);
-			_heroA.SetTag(GAME_TAG.ZONE, 1);
-			_heroA.SetTag(GAME_TAG.CONTROLLER, 1);
-			_heroA.SetTag(GAME_TAG.ENTITY_ID, 4);
-			_heroA.SetTag(GAME_TAG.CARDTYPE, 3);
-			_heroA.SetTag(GAME_TAG.DAMAGE, 7);
-			_heroA.SetTag(GAME_TAG.ARMOR, 0);
+			_heroA.SetTag(GameTag.HEALTH, 30);
+			_heroA.SetTag(GameTag.ZONE, 1);
+			_heroA.SetTag(GameTag.CONTROLLER, 1);
+			_heroA.SetTag(GameTag.ENTITY_ID, 4);
+			_heroA.SetTag(GameTag.CARDTYPE, 3);
+			_heroA.SetTag(GameTag.DAMAGE, 7);
+			_heroA.SetTag(GameTag.ARMOR, 0);
 
 			_heroB = new Entity(36);
 			_heroB.CardId = "HERO_03";
 			_heroB.Name = null;
 			_heroB.IsPlayer = false;
-			_heroB.SetTag(GAME_TAG.HEALTH, 30);
-			_heroB.SetTag(GAME_TAG.ZONE, 1);
-			_heroB.SetTag(GAME_TAG.CONTROLLER, 2);
-			_heroB.SetTag(GAME_TAG.ENTITY_ID, 36);
-			_heroB.SetTag(GAME_TAG.CARDTYPE, 3);
-			_heroB.SetTag(GAME_TAG.DAMAGE, 14);
-			_heroB.SetTag(GAME_TAG.ARMOR, 0);
-			_heroB.SetTag(GAME_TAG.ATK, 1);
-			_heroB.SetTag(GAME_TAG.EXHAUSTED, 1);
+			_heroB.SetTag(GameTag.HEALTH, 30);
+			_heroB.SetTag(GameTag.ZONE, 1);
+			_heroB.SetTag(GameTag.CONTROLLER, 2);
+			_heroB.SetTag(GameTag.ENTITY_ID, 36);
+			_heroB.SetTag(GameTag.CARDTYPE, 3);
+			_heroB.SetTag(GameTag.DAMAGE, 14);
+			_heroB.SetTag(GameTag.ARMOR, 0);
+			_heroB.SetTag(GameTag.ATK, 1);
+			_heroB.SetTag(GameTag.EXHAUSTED, 1);
 		}
 
 		[TestMethod]

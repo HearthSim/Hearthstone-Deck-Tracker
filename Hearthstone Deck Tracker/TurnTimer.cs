@@ -4,6 +4,7 @@ using System;
 using System.Media;
 using System.Threading.Tasks;
 using System.Timers;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -44,7 +45,7 @@ namespace Hearthstone_Deck_Tracker
 		public int PlayerSeconds { get; private set; }
 		public int OpponentSeconds { get; private set; }
 
-		private bool IsPlayersTurn => _game.PlayerEntity?.HasTag(GAME_TAG.CURRENT_PLAYER) ?? false;
+		private bool IsPlayersTurn => _game.PlayerEntity?.HasTag(GameTag.CURRENT_PLAYER) ?? false;
 
 		public static TurnTimer Instance { get; } = new TurnTimer();
 
@@ -124,9 +125,9 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			if(player == ActivePlayer.Player && _game.PlayerEntity != null)
-				Seconds = _game.PlayerEntity.HasTag(GAME_TAG.TIMEOUT) ? _game.PlayerEntity.GetTag(GAME_TAG.TIMEOUT) : double.PositiveInfinity;
+				Seconds = _game.PlayerEntity.HasTag(GameTag.TIMEOUT) ? _game.PlayerEntity.GetTag(GameTag.TIMEOUT) : double.PositiveInfinity;
 			else if(player == ActivePlayer.Opponent && _game.OpponentEntity != null)
-				Seconds = _game.OpponentEntity.HasTag(GAME_TAG.TIMEOUT) ? _game.OpponentEntity.GetTag(GAME_TAG.TIMEOUT) : double.PositiveInfinity;
+				Seconds = _game.OpponentEntity.HasTag(GameTag.TIMEOUT) ? _game.OpponentEntity.GetTag(GameTag.TIMEOUT) : double.PositiveInfinity;
 			else
 			{
 				Seconds = 75;

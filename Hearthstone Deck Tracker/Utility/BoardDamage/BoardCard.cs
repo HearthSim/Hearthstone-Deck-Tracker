@@ -1,10 +1,10 @@
 ﻿#region
 
 using System;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using static Hearthstone_Deck_Tracker.Enums.GAME_TAG;
+using static HearthDb.Enums.GameTag;
 
 #endregion
 
@@ -41,8 +41,8 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			Name = name;
 			CardId = e.CardId;
 			Taunt = e.GetTag(TAUNT) == 1;
-			Zone = Enum.Parse(typeof(TAG_ZONE), e.GetTag(ZONE).ToString()).ToString();
-			CardType = Enum.Parse(typeof(TAG_CARDTYPE), e.GetTag(CARDTYPE).ToString()).ToString();
+			Zone = Enum.Parse(typeof(Zone), e.GetTag(ZONE).ToString()).ToString();
+			CardType = Enum.Parse(typeof(CardType), e.GetTag(CARDTYPE).ToString()).ToString();
 
 			Health = CalculateHealth(e.IsWeapon);
 			Attack = CalculateAttack(active, e.IsWeapon);

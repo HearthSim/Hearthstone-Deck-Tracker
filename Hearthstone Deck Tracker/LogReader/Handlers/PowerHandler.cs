@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
@@ -71,14 +71,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 					if(entity.Value == null)
 					{
-						var players = game.Entities.Where(x => x.Value.HasTag(GAME_TAG.PLAYER_ID)).Take(2).ToList();
+						var players = game.Entities.Where(x => x.Value.HasTag(GameTag.PLAYER_ID)).Take(2).ToList();
 						var unnamedPlayers = players.Where(x => string.IsNullOrEmpty(x.Value.Name)).ToList();
 						var unknownHumanPlayer = players.FirstOrDefault(x => x.Value.Name == "UNKNOWN HUMAN PLAYER");
 						if(unnamedPlayers.Count == 0 && unknownHumanPlayer.Value != null)
 						{
 							Log.Info("Updating UNKNOWN HUMAN PLAYER");
 							entity = unknownHumanPlayer;
-							SetPlayerName(game, entity.Value.GetTag(GAME_TAG.PLAYER_ID), rawEntity);
+							SetPlayerName(game, entity.Value.GetTag(GameTag.PLAYER_ID), rawEntity);
 						}
 
 						//while the id is unknown, store in tmp entities
@@ -88,28 +88,28 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							tmpEntity = new Entity(_tmpEntities.Count + 1) {Name = rawEntity};
 							_tmpEntities.Add(tmpEntity);
 						}
-						GAME_TAG tag;
+						GameTag tag;
 						Enum.TryParse(match.Groups["tag"].Value, out tag);
 						var value = LogReaderHelper.ParseTag(tag, match.Groups["value"].Value);
 						if(unnamedPlayers.Count == 1)
 							entity = unnamedPlayers.Single();
-						else if(unnamedPlayers.Count == 2 && tag == GAME_TAG.CURRENT_PLAYER && value == 0)
-							entity = game.Entities.FirstOrDefault(x => x.Value?.HasTag(GAME_TAG.CURRENT_PLAYER) ?? false);
+						else if(unnamedPlayers.Count == 2 && tag == GameTag.CURRENT_PLAYER && value == 0)
+							entity = game.Entities.FirstOrDefault(x => x.Value?.HasTag(GameTag.CURRENT_PLAYER) ?? false);
 						if(entity.Value != null)
 						{
 							entity.Value.Name = tmpEntity.Name;
 							foreach(var t in tmpEntity.Tags)
 								_tagChangeHandler.TagChange(gameState, t.Key, entity.Key, t.Value, game);
-							SetPlayerName(game, entity.Value.GetTag(GAME_TAG.PLAYER_ID), tmpEntity.Name);
+							SetPlayerName(game, entity.Value.GetTag(GameTag.PLAYER_ID), tmpEntity.Name);
 							_tmpEntities.Remove(tmpEntity);
 							_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, entity.Key, match.Groups["value"].Value, game);
 						}
 						if(_tmpEntities.Contains(tmpEntity))
 						{
 							tmpEntity.SetTag(tag, value);
-							if(tmpEntity.HasTag(GAME_TAG.ENTITY_ID))
+							if(tmpEntity.HasTag(GameTag.ENTITY_ID))
 							{
-								var id = tmpEntity.GetTag(GAME_TAG.ENTITY_ID);
+								var id = tmpEntity.GetTag(GameTag.ENTITY_ID);
 								if(game.Entities.ContainsKey(id))
 								{
 									game.Entities[id].Name = tmpEntity.Name;
@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(gameState.DeterminedPlayers)
 					_tagChangeHandler.InvokeQueuedActions(game);
 				gameState.CurrentEntityHasCardId = !string.IsNullOrEmpty(cardId);
-				gameState.CurrentEntityZone = LogReaderHelper.ParseEnum<TAG_ZONE>(match.Groups["zone"].Value);
+				gameState.CurrentEntityZone = LogReaderHelper.ParseEnum<Zone>(match.Groups["zone"].Value);
 				return;
 			}
 			else if(UpdatingEntityRegex.IsMatch(logLine))
@@ -211,9 +211,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			else if(BlockStartRegex.IsMatch(logLine))
 			{
 				var playerEntity =
-					game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == game.Player.Id);
+					game.Entities.FirstOrDefault(e => e.Value.HasTag(GameTag.PLAYER_ID) && e.Value.GetTag(GameTag.PLAYER_ID) == game.Player.Id);
 				var opponentEntity =
-					game.Entities.FirstOrDefault(e => e.Value.HasTag(GAME_TAG.PLAYER_ID) && e.Value.GetTag(GAME_TAG.PLAYER_ID) == game.Opponent.Id);
+					game.Entities.FirstOrDefault(e => e.Value.HasTag(GameTag.PLAYER_ID) && e.Value.GetTag(GameTag.PLAYER_ID) == game.Opponent.Id);
 
 				var match = BlockStartRegex.Match(logLine);
 				var actionStartingCardId = match.Groups["cardId"].Value.Trim();
@@ -272,14 +272,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							AddKnownCardId(gameState, game, NonCollectible.Neutral.EliseStarseeker_GoldenMonkeyToken);
 							break;
 						default:
-							if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1 && !gameState.PlayerUsedHeroPower
-							   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1
+							if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1 && !gameState.PlayerUsedHeroPower
+							   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 							   && !gameState.OpponentUsedHeroPower)
 							{
 								var card = Database.GetCardFromId(actionStartingCardId);
 								if(card.Type == "Hero Power")
 								{
-									if(playerEntity.Value != null && playerEntity.Value.GetTag(GAME_TAG.CURRENT_PLAYER) == 1)
+									if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1)
 									{
 										gameState.GameHandler.HandlePlayerHeroPower(actionStartingCardId, gameState.GetTurnNumber());
 										gameState.PlayerUsedHeroPower = true;
@@ -319,7 +319,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				var playerCard = game.Entities.FirstOrDefault(x => x.Value.IsInHand && !string.IsNullOrEmpty(x.Value.CardId)).Value;
 				if(playerCard != null)
-					_tagChangeHandler.DeterminePlayers(gameState, game, playerCard.GetTag(GAME_TAG.CONTROLLER), false);
+					_tagChangeHandler.DeterminePlayers(gameState, game, playerCard.GetTag(GameTag.CONTROLLER), false);
 				else if((DateTime.Now - _lastDeterminePlayersWarning2).TotalSeconds > 5)
 				{
 					Log.Warn("Could not determine players by checking for player hand either... waiting for draws...");

@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
@@ -132,22 +131,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private string GetTagKeyValue(KeyValuePair<GAME_TAG, int> pair)
+		private string GetTagKeyValue(KeyValuePair<GameTag, int> pair)
 		{
 			string value = pair.Value.ToString();
 			switch(pair.Key)
 			{
-				case GAME_TAG.ZONE:
-					value = Enum.Parse(typeof(TAG_ZONE), value).ToString();
+				case GameTag.ZONE:
+					value = Enum.Parse(typeof(Zone), value).ToString();
 					break;
-				case GAME_TAG.CARDTYPE:
-					value = Enum.Parse(typeof(TAG_CARDTYPE), value).ToString();
+				case GameTag.CARDTYPE:
+					value = Enum.Parse(typeof(CardType), value).ToString();
 					break;
-				case GAME_TAG.MULLIGAN_STATE:
-					value = Enum.Parse(typeof(TAG_MULLIGAN), value).ToString();
+				case GameTag.MULLIGAN_STATE:
+					value = Enum.Parse(typeof(Mulligan), value).ToString();
 					break;
-				case GAME_TAG.PLAYSTATE:
-					value = Enum.Parse(typeof(TAG_PLAYSTATE), value).ToString();
+				case GameTag.PLAYSTATE:
+					value = Enum.Parse(typeof(PlayState), value).ToString();
 					break;
 			}
 			return pair.Key + ":" + value;
