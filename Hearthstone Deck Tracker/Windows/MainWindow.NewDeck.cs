@@ -567,6 +567,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var index = ListViewDB.SelectedIndex;
 			Card card = null;
+			var shiftPressed = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
+
 			switch(e.Key)
 			{
 				case Key.Enter:
@@ -576,23 +578,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 						card = (Card)ListViewDB.Items[0];
 					break;
 				case Key.D1:
-					if(ListViewDB.Items.Count > 0)
+					if(ListViewDB.Items.Count > 0 && !shiftPressed)
 						card = (Card)ListViewDB.Items[0];
 					break;
 				case Key.D2:
-					if(ListViewDB.Items.Count > 1)
+					if(ListViewDB.Items.Count > 1 && !shiftPressed)
 						card = (Card)ListViewDB.Items[1];
 					break;
 				case Key.D3:
-					if(ListViewDB.Items.Count > 2)
+					if(ListViewDB.Items.Count > 2 && !shiftPressed)
 						card = (Card)ListViewDB.Items[2];
 					break;
 				case Key.D4:
-					if(ListViewDB.Items.Count > 3)
+					if(ListViewDB.Items.Count > 3 && !shiftPressed)
 						card = (Card)ListViewDB.Items[3];
 					break;
 				case Key.D5:
-					if(ListViewDB.Items.Count > 4)
+					if(ListViewDB.Items.Count > 4 && !shiftPressed)
 						card = (Card)ListViewDB.Items[4];
 					break;
 				case Key.Down:
