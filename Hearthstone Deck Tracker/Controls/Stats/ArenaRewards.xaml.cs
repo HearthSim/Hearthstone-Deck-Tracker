@@ -23,7 +23,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		                                                                       typeof(ArenaRewards));
 
 		private readonly Dictionary<object, string> _invalidFields = new Dictionary<object, string>();
-		private readonly string[] _validSets = {"Classic", "Goblins vs Gnomes", "The Grand Tournament"};
+
+		private readonly string[] _validSets =
+			Enum.GetValues(typeof(ArenaRewardPacks))
+				.Cast<ArenaRewardPacks>()
+				.Skip(1)
+				.Select(x => EnumDescriptionConverter.GetDescription(x))
+				.ToArray();
+
 		private List<string> _cardNames;
 		private bool _deletingSelection;
 
