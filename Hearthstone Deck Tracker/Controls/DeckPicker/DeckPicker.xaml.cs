@@ -753,5 +753,10 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public SolidColorBrush BorderDeckModeTextBrush
 			=> DeckList.Instance.ActiveDeck == null ? new SolidColorBrush(Colors.White) : (SolidColorBrush)FindResource("TextBrush");
 
+		private void ListViewDecks_OnKeyUp(object sender, KeyEventArgs e)
+		{
+			if(e.Key == Key.Delete)
+				Core.MainWindow.BtnDeleteDeck_Click(sender, e);
+		}
 	}
 }
