@@ -195,6 +195,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			GoingFirst = false;
 			Fatigue = 0;
 			InDeckPrecitions.Clear();
+			SpellsPlayedCount = 0;
 		}
 
 		public void Draw(Entity entity, int turn)
