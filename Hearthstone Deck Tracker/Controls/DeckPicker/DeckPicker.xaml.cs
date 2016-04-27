@@ -461,7 +461,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				{
 					if(deck.StandardViable && Config.Instance.SelectedDeckPickerDeckType != DeckType.Standard)
 						SelectDeckType(DeckType.Standard);
-					else if(Config.Instance.SelectedDeckPickerDeckType != DeckType.Wild)
+					else if(!deck.StandardViable && Config.Instance.SelectedDeckPickerDeckType != DeckType.Wild)
 						SelectDeckType(DeckType.Wild);
 				}
 			}
