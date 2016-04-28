@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         ShowInTaskbar="False"
         WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Topmost="True"
-        Height="34" Width="270" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+        Height="34" Width="280" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
     <Window.Resources>
         <Storyboard x:Key="StoryboardFadeOut" Completed="StoryboardFadeOut_OnCompleted">
             <DoubleAnimation Duration="0:0:0.4" From="1" To="0" Storyboard.TargetProperty="Opacity"/>
