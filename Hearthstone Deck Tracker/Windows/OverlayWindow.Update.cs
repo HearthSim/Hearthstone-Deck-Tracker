@@ -6,6 +6,7 @@ using System.Windows.Media;
 using HearthDb;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
@@ -149,46 +150,32 @@ namespace Hearthstone_Deck_Tracker.Windows
 				TextBlockOpponentAttack.Text = board.Opponent.Damage.ToString();
 			}
 
-			var playerCthuns = _game.Player.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.Cthun && !(x.IsInSetAside && x.Info.Created)).ToList();
-			var playerCthunProxy = _game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
-			var showPlayerCthunIcon = !_game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
-										  || (Config.Instance.PlayerCthunCounter == DisplayMode.Auto && playerCthunProxy != null
-											  && (!playerCthuns.Any() || playerCthuns.Any(x => x.IsInDeck || x.IsInHand))));
 
-			var playerYoggs = _game.Player.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.YoggSaronHopesEnd).ToList();
-			var showPlayerSpellsIcon = !_game.IsInMenu && (Config.Instance.PlayerSpellsCounter == DisplayMode.Always
-											|| Config.Instance.PlayerSpellsCounter == DisplayMode.Auto
-											&& (!playerYoggs.Any() && DeckContains(CardIds.Collectible.Neutral.YoggSaronHopesEnd) || playerYoggs.Any(x => x.IsInHand || x.IsInDeck)));
-			if(showPlayerCthunIcon)
+			var showPlayerCthunCounter = WotogCounterHelper.ShowPlayerCthunCounter;
+			var showPlayerSpellsCounter = WotogCounterHelper.ShowPlayerSpellsCounter;
+			if(showPlayerCthunCounter)
 			{
-				WotogIconsPlayer.Attack = (playerCthunProxy?.Attack ?? 6).ToString();
-				WotogIconsPlayer.Health = (playerCthunProxy?.Health ?? 6).ToString();
+				var proxy = WotogCounterHelper.PlayerCthunProxy;
+				WotogIconsPlayer.Attack = (proxy?.Attack ?? 6).ToString();
+				WotogIconsPlayer.Health = (proxy?.Health ?? 6).ToString();
 			}
-			if(showPlayerSpellsIcon)
+			if(showPlayerSpellsCounter)
 				WotogIconsPlayer.Spells = _game.Player.SpellsPlayedCount.ToString();
-			WotogIconsPlayer.WotogCounterStyle = showPlayerCthunIcon && showPlayerSpellsIcon
-												   ? Full : (showPlayerCthunIcon ? Cthun : (showPlayerSpellsIcon ? Spells : None));
+			WotogIconsPlayer.WotogCounterStyle = showPlayerCthunCounter && showPlayerSpellsCounter ? Full : (showPlayerCthunCounter ? Cthun : (showPlayerSpellsCounter ? Spells : None));
 
-
-			var opponentCthuns = _game.Opponent.PlayerEntities.Where(x => x.CardId == CardIds.Collectible.Neutral.Cthun && !(x.IsInSetAside && x.Info.Created)).ToList();
-			var opponentCthunProxy = _game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
-			var showOpponentCthunIcon = !_game.IsInMenu && (Config.Instance.OpponentCthunCounter == DisplayMode.Always
-											|| (Config.Instance.OpponentCthunCounter == DisplayMode.Auto && opponentCthunProxy != null
-												&& (!opponentCthuns.Any() || opponentCthuns.Any(x => x.IsInDeck || x.IsInHand))));
-			var showOpponentSpellsIcon = !_game.IsInMenu && Config.Instance.OpponentSpellsCounter == DisplayMode.Always;
-			if(showOpponentCthunIcon)
+			var showOpponentCthunCounter = WotogCounterHelper.ShowOpponentCthunCounter;
+			var showOpponentSpellsCounter = WotogCounterHelper.ShowOpponentSpellsCounter;
+			if(showOpponentCthunCounter)
 			{
-				WotogIconsOpponent.Attack = (opponentCthunProxy?.Attack ?? 6).ToString();
-				WotogIconsOpponent.Health = (opponentCthunProxy?.Health ?? 6).ToString();
+				var proxy = WotogCounterHelper.OpponentCthunProxy;
+				WotogIconsOpponent.Attack = (proxy?.Attack ?? 6).ToString();
+				WotogIconsOpponent.Health = (proxy?.Health ?? 6).ToString();
 			}
-			if(showOpponentSpellsIcon)
+			if(showOpponentSpellsCounter)
 				WotogIconsOpponent.Spells = _game.Opponent.SpellsPlayedCount.ToString();
-			WotogIconsOpponent.WotogCounterStyle = showOpponentCthunIcon && showOpponentSpellsIcon
-												   ? Full : (showOpponentCthunIcon ? Cthun : (showOpponentSpellsIcon ? Spells : None));
+			WotogIconsOpponent.WotogCounterStyle = showOpponentCthunCounter && showOpponentSpellsCounter ? Full : (showOpponentCthunCounter ? Cthun : (showOpponentSpellsCounter ? Spells : None));
 
 		}
-
-		private bool DeckContains(string cardId) => DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId) ?? false;
 
 		private void UpdateGoldProgress()
 		{

@@ -469,6 +469,7 @@
     <Compile Include="Utility\Themes\DarkBarImageBuilder.cs" />
     <Compile Include="Utility\Themes\Theme.cs" />
     <Compile Include="Utility\Themes\ThemeManager.cs" />
+    <Compile Include="Utility\WotogCounterHelper.cs" />
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
       <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
     </Compile>
