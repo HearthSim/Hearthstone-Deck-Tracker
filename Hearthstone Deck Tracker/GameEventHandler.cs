@@ -948,19 +948,23 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnPlayerMulligan.Execute(Database.GetCardFromId(cardId));
 		}
 
-		public void HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, bool fromDeck)
+		public void HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone)
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			if(fromDeck)
+			switch(fromZone)
 			{
-				_game.Player.SecretPlayedFromDeck(entity, turn);
-				DeckManager.DetectCurrentDeck().Forget();
-			}
-			else
-			{
-				_game.Player.SecretPlayedFromHand(entity, turn);
-				HandleSecretsOnPlay(entity);
+				case Zone.DECK:
+					_game.Player.SecretPlayedFromDeck(entity, turn);
+					DeckManager.DetectCurrentDeck().Forget();
+					break;
+				case Zone.HAND:
+					_game.Player.SecretPlayedFromHand(entity, turn);
+					HandleSecretsOnPlay(entity);
+					break;
+				default:
+					_game.Player.CreateInSecret(entity, turn);
+					return;
 			}
 			Core.UpdatePlayerCards();
 			GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
@@ -1238,13 +1242,21 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentGet.Execute();
 		}
 
-		public void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, bool fromDeck, int otherId)
+		public void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, Zone fromZone, int otherId)
 		{
 			_game.OpponentSecretCount++;
-			if(fromDeck)
-				_game.Opponent.SecretPlayedFromDeck(entity, turn);
-			else
-				_game.Opponent.SecretPlayedFromHand(entity, turn);
+			switch(fromZone)
+			{
+				case Zone.DECK:
+					_game.Opponent.SecretPlayedFromDeck(entity, turn);
+					break;
+				case Zone.HAND:
+					_game.Opponent.SecretPlayedFromHand(entity, turn);
+					break;
+				default:
+					_game.Opponent.CreateInSecret(entity, turn);
+					break;
+			}
 
 			HeroClass heroClass;
 			var className = ((CardClass)entity.GetTag(CLASS)).ToString();
@@ -1314,7 +1326,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerBackToHand(Entity entity, string cardId, int turn) => HandlePlayerBackToHand(entity, cardId, turn);
 		void IGameHandler.HandlePlayerDraw(Entity entity, string cardId, int turn) => HandlePlayerDraw(entity, cardId, turn);
 		void IGameHandler.HandlePlayerMulligan(Entity entity, string cardId) => HandlePlayerMulligan(entity, cardId);
-		void IGameHandler.HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, bool fromDeck) => HandlePlayerSecretPlayed(entity, cardId, turn, fromDeck);
+		void IGameHandler.HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone) => HandlePlayerSecretPlayed(entity, cardId, turn, fromZone);
 		void IGameHandler.HandlePlayerHandDiscard(Entity entity, string cardId, int turn) => HandlePlayerHandDiscard(entity, cardId, turn);
 		void IGameHandler.HandlePlayerPlay(Entity entity, string cardId, int turn) => HandlePlayerPlay(entity, cardId, turn);
 		void IGameHandler.HandlePlayerDeckDiscard(Entity entity, string cardId, int turn) => HandlePlayerDeckDiscard(entity, cardId, turn);
@@ -1324,7 +1336,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentDraw(Entity entity, int turn) => HandlOpponentDraw(entity, turn);
 		void IGameHandler.HandleOpponentMulligan(Entity entity, int @from) => HandleOpponentMulligan(entity, @from);
 		void IGameHandler.HandleOpponentGet(Entity entity, int turn, int id) => HandleOpponentGet(entity, turn, id);
-		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string cardId, int @from, int turn, bool fromDeck, int otherId) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromDeck, otherId);
+		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string cardId, int @from, int turn, Zone fromZone, int otherId) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromZone, otherId);
 		void IGameHandler.HandleOpponentPlayToHand(Entity entity, string cardId, int turn, int id) => HandleOpponentPlayToHand(entity, cardId, turn, id);
 		void IGameHandler.HandleOpponentSecretTrigger(Entity entity, string cardId, int turn, int otherId) => HandleOpponentSecretTrigger(entity, cardId, turn, otherId);
 		void IGameHandler.HandleOpponentDeckDiscard(Entity entity, string cardId, int turn) => HandleOpponentDeckDiscard(entity, cardId, turn);

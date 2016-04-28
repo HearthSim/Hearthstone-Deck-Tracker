@@ -389,6 +389,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.ProposeKeyPoint(Obtain, id, ActivePlayer.Opponent);
 					}
 					break;
+				case Zone.SECRET:
+					if(controller == game.Player.Id)
+					{
+						gameState.GameHandler.HandlePlayerSecretPlayed(game.Entities[id], cardId, gameState.GetTurnNumber(), (Zone)prevValue);
+						gameState.ProposeKeyPoint(SecretPlayed, id, ActivePlayer.Player);
+					}
+					else if(controller == game.Opponent.Id)
+					{
+						gameState.GameHandler.HandleOpponentSecretPlayed(game.Entities[id], cardId, -1, gameState.GetTurnNumber(), (Zone)prevValue, id);
+						gameState.ProposeKeyPoint(SecretPlayed, id, ActivePlayer.Opponent);
+					}
+					break;
 				default:
 					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 					break;
@@ -507,13 +519,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case Zone.SECRET:
 					if(controller == game.Player.Id)
 					{
-						gameState.GameHandler.HandlePlayerSecretPlayed(game.Entities[id], cardId, gameState.GetTurnNumber(), false);
+						gameState.GameHandler.HandlePlayerSecretPlayed(game.Entities[id], cardId, gameState.GetTurnNumber(), (Zone)prevValue);
 						gameState.ProposeKeyPoint(SecretPlayed, id, ActivePlayer.Player);
 					}
 					else if(controller == game.Opponent.Id)
 					{
 						gameState.GameHandler.HandleOpponentSecretPlayed(game.Entities[id], cardId, game.Entities[id].GetTag(ZONE_POSITION),
-																		 gameState.GetTurnNumber(), false, id);
+																		 gameState.GetTurnNumber(), (Zone)prevValue, id);
 						gameState.ProposeKeyPoint(SecretPlayed, id, ActivePlayer.Opponent);
 					}
 					break;
@@ -599,12 +611,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case Zone.SECRET:
 					if(controller == game.Player.Id)
 					{
-						gameState.GameHandler.HandlePlayerSecretPlayed(game.Entities[id], cardId, gameState.GetTurnNumber(), true);
+						gameState.GameHandler.HandlePlayerSecretPlayed(game.Entities[id], cardId, gameState.GetTurnNumber(), (Zone)prevValue);
 						gameState.ProposeKeyPoint(SecretPlayed, id, ActivePlayer.Player);
 					}
 					else if(controller == game.Opponent.Id)
 					{
-						gameState.GameHandler.HandleOpponentSecretPlayed(game.Entities[id], cardId, -1, gameState.GetTurnNumber(), true, id);
+						gameState.GameHandler.HandleOpponentSecretPlayed(game.Entities[id], cardId, -1, gameState.GetTurnNumber(), (Zone)prevValue, id);
 						gameState.ProposeKeyPoint(SecretPlayed, id, ActivePlayer.Player);
 					}
 					break;

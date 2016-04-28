@@ -266,6 +266,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(entity);
 		}
 
+		public void CreateInSecret(Entity entity, int turn)
+		{
+			entity.Info.Created = true;
+			entity.Info.Turn = turn;
+			Log(entity);
+		}
+
 		public void RemoveFromDeck(Entity entity, int turn)
 		{
 			//Do not check for KnownCardIds here, this is how jousted cards get removed from the deck

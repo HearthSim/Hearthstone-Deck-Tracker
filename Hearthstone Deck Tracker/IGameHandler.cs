@@ -1,7 +1,7 @@
 #region
 
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 #endregion
@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerBackToHand(Entity entity, string cardId, int turn);
 		void HandlePlayerDraw(Entity entity, string cardId, int turn);
 		void HandlePlayerMulligan(Entity entity, string cardId);
-		void HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, bool fromDeck);
+		void HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone);
 		void HandlePlayerHandDiscard(Entity entity, string cardId, int turn);
 		void HandlePlayerPlay(Entity entity, string cardId, int turn);
 		void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn);
@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentDraw(Entity entity, int turn);
 		void HandleOpponentMulligan(Entity entity, int from);
 		void HandleOpponentGet(Entity entity, int turn, int id);
-		void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, bool fromDeck, int otherId);
+		void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, Zone fromZone, int otherId);
 		void HandleOpponentPlayToHand(Entity entity, string cardId, int turn, int id);
 		void HandleOpponentPlayToDeck(Entity entity, string cardId, int turn);
 		void HandleOpponentSecretTrigger(Entity entity, string cardId, int turn, int otherId);
