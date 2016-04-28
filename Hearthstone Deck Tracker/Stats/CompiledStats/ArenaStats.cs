@@ -30,6 +30,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountTgt => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.TheGrandTournament));
 
+		public int PacksCountWotog => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.WhispersOfTheOldGods));
+
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
 		public double PacksCountAveragePerRun
