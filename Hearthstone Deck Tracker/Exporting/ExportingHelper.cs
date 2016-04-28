@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		private static readonly Dictionary<string, string> ArtistDict = new Dictionary<string, string>
 		{
 			{"enUS", "artist"},
-			{"zhCN", "美术师"},
+			{"zhCN", "画家"},
 			{"zhTW", "畫家"},
 			{"enGB", "artist"},
 			{"frFR", "artiste"},
