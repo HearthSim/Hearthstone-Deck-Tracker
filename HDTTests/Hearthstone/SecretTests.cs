@@ -93,9 +93,9 @@ namespace HDTTests.Hearthstone
             _secretPaladin2 = CreateNewEntity("");
             _secretPaladin2.SetTag(GameTag.CLASS, (int)CardClass.PALADIN);
 
-            _gameEventHandler.HandleOpponentSecretPlayed(_secretHunter1, "", 0, 0, false, _secretHunter1.Id);
-            _gameEventHandler.HandleOpponentSecretPlayed(_secretMage1, "", 0, 0, false, _secretMage1.Id);
-            _gameEventHandler.HandleOpponentSecretPlayed(_secretPaladin1, "", 0, 0, false, _secretPaladin1.Id);
+            _gameEventHandler.HandleOpponentSecretPlayed(_secretHunter1, "", 0, 0, Zone.HAND, _secretHunter1.Id);
+            _gameEventHandler.HandleOpponentSecretPlayed(_secretMage1, "", 0, 0, Zone.HAND, _secretMage1.Id);
+            _gameEventHandler.HandleOpponentSecretPlayed(_secretPaladin1, "", 0, 0, Zone.HAND, _secretPaladin1.Id);
         }
 
         [TestMethod]
