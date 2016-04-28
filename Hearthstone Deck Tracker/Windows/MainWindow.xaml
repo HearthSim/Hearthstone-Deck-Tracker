@@ -591,7 +591,7 @@
                 <DockPanel Grid.Row="1" Grid.Column="0" Margin="0,2,0,6">
                     <Border Name="BorderConstructedCardLimits" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" DockPanel.Dock="Bottom" Margin="0,2,0,0" HorizontalAlignment="Left" Width="236">
                         <StackPanel>
-                            <CheckBox Name="CheckBoxIncludeWild" Content="Inlcude wild-only cards" IsChecked="{Binding CardDbIncludeWildOnlyCards, Source={StaticResource ConfigWrapper}}" Margin="2" Checked="CheckBoxIncludeWild_Changed" Unchecked="CheckBoxIncludeWild_Changed"/>
+                            <CheckBox Name="CheckBoxIncludeWild" Content="Include wild-only cards" IsChecked="{Binding CardDbIncludeWildOnlyCards, Source={StaticResource ConfigWrapper}}" Margin="2" Checked="CheckBoxIncludeWild_Changed" Unchecked="CheckBoxIncludeWild_Changed"/>
                             <CheckBox Name="CheckBoxConstructedCardLimits" Content="Constructed card limits" IsChecked="True" Margin="2"/>
                         </StackPanel>
                     </Border>
