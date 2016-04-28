@@ -727,8 +727,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						else
 							break;
 					}
-					DeckList.Instance.LastDeckClass.Add(new DeckInfo {Class = deck.Class, Name = deck.Name, Id = deck.DeckId});
-					DeckList.Save();
+					if(Core.Initialized)
+					{
+						DeckList.Instance.LastDeckClass.Add(new DeckInfo { Class = deck.Class, Name = deck.Name, Id = deck.DeckId });
+						DeckList.Save();
+					}
 
 					Log.Info("Switched to deck: " + deck.Name);
 

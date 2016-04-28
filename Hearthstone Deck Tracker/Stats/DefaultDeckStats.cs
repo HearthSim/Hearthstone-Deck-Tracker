@@ -12,23 +12,19 @@ namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class DefaultDeckStats
 	{
-		private static DefaultDeckStats _instance;
+		private static Lazy<DefaultDeckStats> _instance = new Lazy<DefaultDeckStats>(Load);
 		public List<DeckStats> DeckStats;
 
-		public DefaultDeckStats()
+		private DefaultDeckStats()
 		{
 			DeckStats = new List<DeckStats>();
 		}
 
-		public static DefaultDeckStats Instance
+		static DefaultDeckStats()
 		{
-			get
-			{
-				if(_instance == null)
-					Load();
-				return _instance ?? (_instance = new DefaultDeckStats());
-			}
 		}
+
+		public static DefaultDeckStats Instance => _instance.Value;
 
 		public DeckStats GetDeckStats(string hero)
 		{
@@ -42,15 +38,15 @@ namespace Hearthstone_Deck_Tracker.Stats
 			return ds;
 		}
 
-		public static void Load()
+		private static DefaultDeckStats Load()
 		{
 			SetupDefaultDeckStatsFile();
 			var file = Config.Instance.DataDir + "DefaultDeckStats.xml";
 			if(!File.Exists(file))
-				return;
+				return new DefaultDeckStats();
 			try
 			{
-				_instance = XmlManager<DefaultDeckStats>.Load(file);
+				return XmlManager<DefaultDeckStats>.Load(file);
 			}
 			catch(Exception ex)
 			{
@@ -76,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 					try
 					{
 						File.Copy(backup.FullName, file);
-						_instance = XmlManager<DefaultDeckStats>.Load(file);
+						return XmlManager<DefaultDeckStats>.Load(file);
 					}
 					catch(Exception ex2)
 					{
@@ -85,8 +81,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 							ex2);
 					}
 				}
-				else
-					throw new Exception("DefaultDeckStats.xml is corrupted.", ex);
+				throw new Exception("DefaultDeckStats.xml is corrupted.", ex);
 			}
 		}
 
@@ -136,5 +131,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 
 		public static void Save() => XmlManager<DefaultDeckStats>.Save(Config.Instance.DataDir + "DefaultDeckStats.xml", Instance);
+
+		internal static void Reload() => _instance = new Lazy<DefaultDeckStats>(Load);
 	}
 }

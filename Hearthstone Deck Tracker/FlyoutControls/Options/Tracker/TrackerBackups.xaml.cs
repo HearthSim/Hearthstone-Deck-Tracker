@@ -53,11 +53,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			archive.ExtractToDirectory(Config.Instance.DataDir, true);
 			Config.Load();
 			Config.Save();
-			DeckList.Load();
+			DeckList.Reload();
 			DeckList.Save();
-			DeckStatsList.Load();
+			DeckStatsList.Reload();
 			DeckStatsList.Save();
-			DefaultDeckStats.Load();
+			DefaultDeckStats.Reload();
 			DefaultDeckStats.Save();
 			Core.MainWindow.ShowMessage("Success", "Please restart HDT for this to take effect.").Forget();
 		}
