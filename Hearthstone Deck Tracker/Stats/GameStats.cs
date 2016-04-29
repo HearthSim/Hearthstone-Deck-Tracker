@@ -399,7 +399,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			PlayerCards.Clear();
 			foreach(var c in revealedCards)
-				PlayerCards.Add(new TrackedCard(c.Id, c.Count));
+			{
+				var card = PlayerCards.FirstOrDefault(x => x.Id == c.Id);
+				if(card != null)
+					card.Count++;
+				else
+					PlayerCards.Add(new TrackedCard(c.Id, c.Count));
+			}
 			if(deck != null)
 			{
 				foreach(var c in deck.Cards)
@@ -420,7 +426,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			OpponentCards.Clear();
 			foreach(var c in revealedCards)
-				OpponentCards.Add(new TrackedCard(c.Id, c.Count));
+			{
+				var card = OpponentCards.FirstOrDefault(x => x.Id == c.Id);
+				if(card != null)
+					card.Count++;
+				else
+					OpponentCards.Add(new TrackedCard(c.Id, c.Count));
+			}
 		}
 
 
