@@ -271,10 +271,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 				var games = GetFilteredGames(new[] {deck}, playerClass: false, oppClass: false).ToList();
 				if(deck.HasVersions)
 					yield return new ConstructedDeckDetails("All", games);
-				else
-					yield return new ConstructedDeckDetails("1.0", games);
-				foreach(var v in deck.Versions)
-					yield return new ConstructedDeckDetails(v.Version.ShortVersionString, games.Where(x => x.BelongsToDeckVerion(v)));
+				foreach(var v in deck.VersionsIncludingSelf)
+					yield return new ConstructedDeckDetails(v.ShortVersionString, games.Where(x => x.BelongsToDeckVerion(deck.GetVersion(v))));
 			}
 		} 
 
