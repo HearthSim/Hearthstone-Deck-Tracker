@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -35,6 +36,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			var deck = new Deck();
 			foreach(var c in cards)
 			{
+				var existing = deck.Cards.FirstOrDefault(x => x.Id == c.Id);
+				if(existing != null)
+				{
+					existing.Count++;
+					continue;
+				}
 				var card = Database.GetCardFromId(c.Id);
 				card.Count = c.Count;
 				deck.Cards.Add(card);
