@@ -418,8 +418,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HearthStatsSyncOnStart = false;
 
-		[DefaultValue("")]
-		public string HearthstoneDirectory = "";
+		[DefaultValue(@"C:\Program Files (x86)\Hearthstone")]
+		public string HearthstoneDirectory = @"C:\Program Files (x86)\Hearthstone";
 
 		[DefaultValue("Hearthstone")]
 		public string HearthstoneWindowName = "Hearthstone";
