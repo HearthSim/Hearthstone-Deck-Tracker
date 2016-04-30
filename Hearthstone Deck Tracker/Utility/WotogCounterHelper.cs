@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static bool ShowOpponentCthunCounter => !Core.Game.IsInMenu && (Config.Instance.OpponentCthunCounter == DisplayMode.Always
 					|| Config.Instance.OpponentCthunCounter == DisplayMode.Auto && OpponentSeenCthun);
 
-		public static bool ShowOpponentSpellsCounter => Core.Game.IsInMenu && Config.Instance.OpponentSpellsCounter == DisplayMode.Always;
+		public static bool ShowOpponentSpellsCounter => !Core.Game.IsInMenu && Config.Instance.OpponentSpellsCounter == DisplayMode.Always;
 
 		private static bool? DeckContains(string cardId) => DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId);
 	}
