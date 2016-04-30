@@ -593,6 +593,9 @@
                         <StackPanel>
                             <CheckBox Name="CheckBoxIncludeWild" Content="Include wild-only cards" IsChecked="{Binding CardDbIncludeWildOnlyCards, Source={StaticResource ConfigWrapper}}" Margin="2" Checked="CheckBoxIncludeWild_Changed" Unchecked="CheckBoxIncludeWild_Changed"/>
                             <CheckBox Name="CheckBoxConstructedCardLimits" Content="Constructed card limits" IsChecked="True" Margin="2"/>
+                            <Button Name="ButtonVersionHistory" Style="{StaticResource SquareButtonStyle}" Click="ButtonVersionHistory_OnClick">
+                                <TextBlock Name="TextBlockButtonVersionHistory" Text="SHOW VERSION HISTORY" />
+                            </Button>
                         </StackPanel>
                     </Border>
                     <ListView x:Name="ListViewDB" Foreground="White" Background="#696969"

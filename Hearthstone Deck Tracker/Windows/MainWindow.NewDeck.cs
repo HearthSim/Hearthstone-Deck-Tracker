@@ -355,19 +355,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void ExpandNewDeck()
 		{
-			const int widthWithHistoryPanel = 485;
 			const int widthWithoutHistoryPanel = 240;
 			if(GridNewDeck.Visibility != Visible)
 			{
 				GridNewDeck.Visibility = Visible;
 				MenuNewDeck.Visibility = Visible;
-				if(_newDeck != null && _newDeck.HasVersions)
-				{
-					PanelDeckHistory.Visibility = Visible;
-					GridNewDeck.Width = widthWithHistoryPanel;
-				}
-				else
-					GridNewDeck.Width = widthWithoutHistoryPanel;
+				ButtonVersionHistory.Visibility = _newDeck?.HasVersions ?? false ? Visible : Collapsed;
+				GridNewDeck.Width = widthWithoutHistoryPanel;
 				GridNewDeck.UpdateLayout();
 				Width += GridNewDeck.ActualWidth;
 				MinWidth += GridNewDeck.ActualWidth;
@@ -430,6 +424,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions ? Visible : Collapsed;
 			PanelCardCount.Visibility = Collapsed;
 			BtnStartHearthstone.Visibility = Core.Game.IsRunning ? Collapsed : Visible;
+			TextBlockButtonVersionHistory.Text = "SHOW VERSION HISTORY";
 
 			if(MovedLeft.HasValue)
 			{
@@ -692,5 +687,27 @@ namespace Hearthstone_Deck_Tracker.Windows
 		#endregion
 
 		private void CheckBoxIncludeWild_Changed(object sender, RoutedEventArgs e) => UpdateDbListView();
+
+		private void ButtonVersionHistory_OnClick(object sender, RoutedEventArgs e)
+		{
+			const int widthWithHistoryPanel = 485;
+			const int widthWithoutHistoryPanel = 240;
+			if(PanelDeckHistory.Visibility != Visible)
+			{
+				TextBlockButtonVersionHistory.Text = "HIDE VERSION HISTORY";
+				PanelDeckHistory.Visibility = Visible;
+				GridNewDeck.Width = widthWithHistoryPanel;
+				Width += widthWithHistoryPanel - widthWithoutHistoryPanel;
+				MinWidth += widthWithHistoryPanel - widthWithoutHistoryPanel;
+			}
+			else
+			{
+				TextBlockButtonVersionHistory.Text = "SHOW VERSION HISTORY";
+				PanelDeckHistory.Visibility = Collapsed;
+				GridNewDeck.Width = widthWithoutHistoryPanel;
+				MinWidth -= widthWithHistoryPanel - widthWithoutHistoryPanel;
+				Width -= widthWithHistoryPanel - widthWithoutHistoryPanel;
+			}
+		}
 	}
 }
