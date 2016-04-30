@@ -262,11 +262,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 	public class ArenaReward
 	{
+		private CardReward[] _cards = new CardReward[3];
 		public int Gold { get; set; }
 		public int Dust { get; set; }
 		public ArenaPaymentMethod PaymentMethod { get; set; }
 
-		public CardReward[] Cards { get; set; } = new CardReward[3];
+		public CardReward[] Cards
+		{
+			get { return _cards.Where(x => x?.CardId != Database.UnknownCardId).ToArray(); }
+			set { _cards = value; }
+		}
 
 		public ArenaRewardPacks[] Packs { get; set; } = new ArenaRewardPacks[2];
 
