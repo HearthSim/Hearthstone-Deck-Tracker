@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
@@ -55,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			get
 			{
 				if(double.IsNaN(WinRate) || !Config.Instance.ArenaStatsTextColoring)
-					return new SolidColorBrush(Config.Instance.StatsInWindow ? Colors.Black : Colors.White);
+					return new SolidColorBrush(Config.Instance.StatsInWindow && Config.Instance.AppTheme != MetroTheme.BaseDark ? Colors.Black : Colors.White);
 				return new SolidColorBrush(WinRate >= 0.5 ? Colors.Green : Colors.Red);
 			}
 		}
@@ -65,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			get
 			{
 				if(BestRun == null || !Config.Instance.ArenaStatsTextColoring)
-					return new SolidColorBrush(Config.Instance.StatsInWindow ? Colors.Black : Colors.White);
+					return new SolidColorBrush(Config.Instance.StatsInWindow && Config.Instance.AppTheme != MetroTheme.BaseDark ? Colors.Black : Colors.White);
 				return new SolidColorBrush(BestRun.Wins >= 3 ? Colors.Green : Colors.Red);
 			}
 		}

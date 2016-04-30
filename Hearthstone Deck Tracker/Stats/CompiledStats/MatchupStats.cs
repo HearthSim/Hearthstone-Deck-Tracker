@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			get
 			{
 				if(double.IsNaN(WinRate) || !Config.Instance.ArenaStatsTextColoring)
-					return new SolidColorBrush(Config.Instance.StatsInWindow ? Colors.Black : Colors.White);
+					return new SolidColorBrush(Config.Instance.StatsInWindow && Config.Instance.AppTheme != MetroTheme.BaseDark ? Colors.Black : Colors.White);
 				return new SolidColorBrush(WinRate >= 0.5 ? Colors.Green : Colors.Red);
 			}
 		}
