@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -40,7 +41,11 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 			var website = Websites.FirstOrDefault(x => url.Contains(x.Key));
 			if(website.Value != null)
-				return await website.Value.Invoke(url);
+			{
+				var deck = await website.Value.Invoke(url);
+				deck.Cards = new ObservableCollection<Card>(deck.Cards.Where(x => x.Id != Database.UnknownCardId));
+				return deck;
+			}
 
 			Log.Error("invalid url");
 			return null;

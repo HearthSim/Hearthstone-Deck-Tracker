@@ -72,5 +72,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static bool IsActualCard(Card card) => card != null && Cards.Collectible.ContainsKey(card.Id);
 
 		public static Card UnknownCard => new Card(Cards.All[HearthDb.CardIds.NonCollectible.Neutral.Noooooooooooo]);
+
+		public static string UnknownCardId => HearthDb.CardIds.NonCollectible.Neutral.Noooooooooooo;
 	}
 }
