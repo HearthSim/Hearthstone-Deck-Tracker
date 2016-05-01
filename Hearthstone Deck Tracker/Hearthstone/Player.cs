@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						return card;
 					});
 			var originalCardsInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Select(x => Enumerable.Repeat(x.Id, x.Count)).SelectMany(x => x).ToList();
-			var revealedNotInDeck = RevealedEntities.Where(x => !x.Info.Created && (x.IsSpell || x.IsWeapon || x.IsMinion) && (!x.IsInDeck || (x.Info.Stolen && x.Info.OriginalController == Id))).ToList();
+			var revealedNotInDeck = RevealedEntities.Where(x => !x.Info.Created && (x.IsSpell || x.IsWeapon || x.IsMinion) && ((!x.IsInDeck || x.Info.Stolen) && x.Info.OriginalController == Id)).ToList();
 			var removedFromDeck = new List<string>();
 			foreach(var e in revealedNotInDeck)
 			{
