@@ -175,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 				var games = GetFilteredGames().ToList();
 				var wins = games.Where(x => x.Result == GameResult.Win).ToList();
 				return wins.Count > 0
-						   ? wins.Select(x => new ChartStats {Name = "Wins", Value = Math.Round(100.0 * wins.Count() / games.Count, 1)})
+						   ? wins.Select(x => new ChartStats {Name = "Wins", Value = Math.Round(100.0 * wins.Count() / games.Count)})
 						   : EmptyChartStats("Wins");
 			}
 		}
@@ -191,7 +191,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 				var gamesNoCoin = games.Where(x => !x.Coin);
 				var winsNoCoin = wins.Where(x => !x.Coin).ToList();
 				var total = wins.Count > 0
-								? wins.Select(x => new ChartStats {Name = "Total", Value = Math.Round(100.0 * wins.Count() / games.Count, 1)})
+								? wins.Select(x => new ChartStats {Name = "Total", Value = Math.Round(100.0 * wins.Count() / games.Count)})
 								: EmptyChartStats("Wins");
 				var coin = winsCoin.Count > 0
 								? winsCoin.Select(x => new ChartStats {Name = "With Coin", Value = 100.0 * winsCoin.Count() / gamesCoin.Count()})
