@@ -181,6 +181,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Frozen";
 				if(HasTag(GameTag.ENRAGED))
 					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Enraged";
+				if(HasTag(GameTag.WINDFURY))
+					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Windfury";
 				return effects;
 			}
 		}
