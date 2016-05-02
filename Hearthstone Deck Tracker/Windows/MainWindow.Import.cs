@@ -50,24 +50,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private async Task<string> InputDeckURL()
 		{
 			var settings = new MessageDialogs.Settings();
-			var validUrls = new[]
-			{
-				"hearthstats",
-				"hss.io",
-				"hearthpwn",
-				"hearthhead",
-				"hearthstoneplayers",
-				"tempostorm",
-				"hearthstonetopdeck",
-				"hearthnews.fr",
-				"arenavalue",
-				"hearthstone-decks",
-				"heartharena",
-				"hearthstoneheroes",
-				"elitedecks",
-				"icy-veins",
-				"hearthbuilder"
-			};
+			var validUrls = DeckImporter.Websites.Keys.Select(x => x.Split('.')[0]).ToArray();
 			try
 			{
 				var clipboard = Clipboard.ContainsText() ? new string(Clipboard.GetText().Take(1000).ToArray()) : "";

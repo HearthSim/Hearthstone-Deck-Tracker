@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class DeckImporter
 	{
-		private static readonly Dictionary<string, Func<string, Task<Deck>>> Websites = new Dictionary<string, Func<string, Task<Deck>>>
+		internal static readonly Dictionary<string, Func<string, Task<Deck>>> Websites = new Dictionary<string, Func<string, Task<Deck>>>
 		{
 			{"hearthstats", Hearthstats.Import},
 			{"hss.io", Hearthstats.Import},
