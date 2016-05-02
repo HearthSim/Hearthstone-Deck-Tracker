@@ -168,21 +168,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		{
 			get
 			{
-				var effects = "";
+				var effects = string.Empty;
 				if(HasTag(GameTag.DIVINE_SHIELD))
 					effects += "Divine Shield";
 				if(HasTag(GameTag.TAUNT))
-					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Taunt";
+					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Taunt";
 				if(HasTag(GameTag.STEALTH))
-					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Stealth";
+					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Stealth";
 				if(HasTag(GameTag.SILENCED))
-					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Silenced";
+					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Silenced";
 				if(HasTag(GameTag.FROZEN))
-					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Frozen";
+					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Frozen";
 				if(HasTag(GameTag.ENRAGED))
-					effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Enraged";
-                if (HasTag(GameTag.WINDFURY))
-                    effects += (string.IsNullOrEmpty(effects) ? "" : "\n") + "Windfury";
+					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Enraged";
+				if (HasTag(GameTag.WINDFURY))
+					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Windfury";
 				return effects;
 			}
 		}
