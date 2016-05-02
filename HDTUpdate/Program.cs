@@ -11,6 +11,7 @@ namespace HDTUpdate
 {
 	internal class Program
 	{
+		private static UpdatingState _state;
 		private static void Main(string[] args)
 		{
 			Console.Title = "Hearthstone Deck Tracker Updater";
@@ -37,68 +38,111 @@ namespace HDTUpdate
 				return;
 			}
 
-
-			var update = Update(args[1]);
-			update.Wait();
-
-		}
-
-		private static async Task Update(string url)
-		{
 			try
 			{
-				var fileName = url.Split('/').LastOrDefault() ?? "tmp.zip";
-				var filePath = Path.Combine("temp", fileName);
-
-				Console.WriteLine("Creating temp file directory");
-				if(Directory.Exists("temp"))
-					Directory.Delete("temp", true);
-				Directory.CreateDirectory("temp");
-				
-				using(var wc = new WebClient())
-				{
-					var lockThis = new object();
-					Console.WriteLine("Downloading latest version... 0%");
-					wc.DownloadProgressChanged += (sender, e) =>
-						{
-							lock(lockThis)
-							{
-								Console.CursorLeft = 0;
-								Console.CursorTop = 1;
-								Console.WriteLine("Downloading latest version... {0}/{1}KB ({2}%)", e.BytesReceived / (1024), e.TotalBytesToReceive / (1024), e.ProgressPercentage);
-							}
-						};
-					await wc.DownloadFileTaskAsync(url, filePath);
-				}
-				File.Move(filePath, filePath.Replace("rar", "zip"));
-				Console.WriteLine("Extracting files...");
-				ZipFile.ExtractToDirectory(filePath, "temp");
-				const string newPath = "temp\\Hearthstone Deck Tracker\\";
-				CopyFiles("temp", newPath);
-
-				Process.Start("Hearthstone Deck Tracker.exe");
+				var update = Update(args[1]);
+				update.Wait();
 			}
-			catch
+			catch(Exception e)
 			{
-				Console.WriteLine("There was a problem updating to the latest version. Pressing any key will direct you to the manual download.");
-				Console.ReadKey();
-				Process.Start(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases");
+				Console.WriteLine(e);
+				switch(_state)
+				{
+					case UpdatingState.Preparation:
+						Console.WriteLine("Please delete the 'temp' directory and try to update again. Press any key to exit.");
+						Console.ReadKey();
+						break;
+					case UpdatingState.Downloading:
+						Console.WriteLine("There was an error downloading the latest update. Press any key to open the website for manual download.");
+						Console.ReadKey();
+						Process.Start(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases");
+						break;
+					case UpdatingState.Extracting:
+						Console.WriteLine("There was an error installing the latest update. Press any key to open the website for manual download.");
+						Console.ReadKey();
+						Process.Start(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases");
+						break;
+					case UpdatingState.Starting:
+						Console.WriteLine("There was an error re-starting HDT. You should be able to start it manually. Press any key to exit.");
+						Console.ReadKey();
+						break;
+				}
 			}
 			finally
 			{
 				try
 				{
 					Console.WriteLine("Cleaning up...");
-
 					if(Directory.Exists("temp"))
 						Directory.Delete("temp", true);
-
 					Console.WriteLine("Done!");
 				}
 				catch
 				{
 					Console.WriteLine("Failed to delete temp file directory");
 				}
+			}
+		}
+
+		private static async Task Update(string url)
+		{
+			var fileName = url.Split('/').LastOrDefault() ?? "tmp.zip";
+			var filePath = Path.Combine("temp", fileName);
+			try
+			{
+				Console.WriteLine("Creating temp file directory");
+				if(Directory.Exists("temp"))
+					Directory.Delete("temp", true);
+				Directory.CreateDirectory("temp");
+			}
+			catch(Exception e)
+			{
+				throw new Exception("Error creating/clearing the download directory.", e);
+			}
+			_state = UpdatingState.Downloading;
+			try
+			{
+				using(var wc = new WebClient())
+				{
+					var lockThis = new object();
+					Console.WriteLine("Downloading latest version... 0%");
+					wc.DownloadProgressChanged += (sender, e) =>
+					{
+						lock(lockThis)
+						{
+							Console.CursorLeft = 0;
+							Console.CursorTop = 1;
+							Console.WriteLine("Downloading latest version... {0}/{1}KB ({2}%)", e.BytesReceived / (1024), e.TotalBytesToReceive / (1024), e.ProgressPercentage);
+						}
+					};
+					await wc.DownloadFileTaskAsync(url, filePath);
+				}
+			}
+			catch(Exception e)
+			{
+				throw new Exception("Error download the file.", e);
+			}
+			_state = UpdatingState.Extracting;
+			try
+			{
+				File.Move(filePath, filePath.Replace("rar", "zip"));
+				Console.WriteLine("Extracting files...");
+				ZipFile.ExtractToDirectory(filePath, "temp");
+				const string newPath = "temp\\Hearthstone Deck Tracker\\";
+				CopyFiles("temp", newPath);
+			}
+			catch(Exception e)
+			{
+				throw new Exception("Error extracting the downloaded file.", e);
+			}
+			_state = UpdatingState.Starting;
+			try
+			{
+				Process.Start("Hearthstone Deck Tracker.exe");
+			}
+			catch(Exception e)
+			{
+				throw new Exception("Error restarting HDT.", e);
 			}
 		}
 
@@ -113,7 +157,6 @@ namespace HDTUpdate
 						Directory.CreateDirectory(newDir);
 
 					var newFilePath = file.Replace(newPath, string.Empty);
-					Console.WriteLine("Writing {0}", newFilePath);
 					if(file.Contains("HDTUpdate.exe"))
 						File.Copy(file, newFilePath.Replace("HDTUpdate.exe", "HDTUpdate_new.exe"));
 					else
@@ -122,5 +165,13 @@ namespace HDTUpdate
 				CopyFiles(subDir, newPath);
 			}
 		}
+	}
+
+	public enum UpdatingState
+	{
+		Preparation,
+		Downloading,
+		Extracting,
+		Starting
 	}
 }
