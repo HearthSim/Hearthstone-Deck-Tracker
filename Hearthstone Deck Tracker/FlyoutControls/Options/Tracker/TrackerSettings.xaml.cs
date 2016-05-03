@@ -1,13 +1,16 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using Microsoft.Win32;
 using Application = System.Windows.Application;
@@ -290,7 +293,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonOpenAppData_OnClick(object sender, RoutedEventArgs e)
 		{
-			Process.Start(Config.AppDataPath);
+			try
+			{
+				Process.Start(Config.AppDataPath);
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				ErrorManager.AddError("Could not open AppData folder.", "Manually navigate to '%AppData%/HearthstoneDeckTracker'.");
+			}
 		}
 
 		private void CheckboxStartWithWindows_Checked(object sender, RoutedEventArgs e)
