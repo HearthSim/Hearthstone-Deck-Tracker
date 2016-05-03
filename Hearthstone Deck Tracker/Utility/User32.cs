@@ -79,6 +79,9 @@ namespace Hearthstone_Deck_Tracker
 		[DllImport("user32.dll")]
 		public static extern bool PrintWindow(IntPtr hwnd, IntPtr hdcBlt, uint nFlags);
 
+		[DllImport("user32.dll")]
+		public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
 		public static void SetWindowExStyle(IntPtr hwnd, int style) => SetWindowLong(hwnd, GwlExstyle, GetWindowLong(hwnd, GwlExstyle) | style);
 
 		public static bool IsHearthstoneInForeground() => GetForegroundWindow() == GetHearthstoneWindow();
@@ -133,6 +136,22 @@ namespace Hearthstone_Deck_Tracker
 			}
 			_lastCheck = DateTime.Now;
 			return _hsWindow;
+		}
+
+		public static Process GetHearthstoneProc()
+		{
+			if(_hsWindow == IntPtr.Zero)
+				return null;
+			try
+			{
+				uint procId;
+				GetWindowThreadProcessId(_hsWindow, out procId);
+				return Process.GetProcessById((int)procId);
+			}
+			catch
+			{
+				return null;
+			}
 		}
 
 		public static Rectangle GetHearthstoneRect(bool dpiScaling)

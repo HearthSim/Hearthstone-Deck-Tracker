@@ -2,8 +2,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Handlers;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -51,12 +54,33 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			LogReaders.Add(new LogReader(FullScreenFxLogReaderInfo));
 		}
 
-		public static void Start(GameV2 game)
+		public static async Task Start(GameV2 game)
 		{
+			if(!Helper.HearthstoneDirExists)
+				await FindHearthstone();
 			InitializeGameState(game);
 			InitializeLogReaders();
 			_startingPoint = GetStartingPoint();
 			StartLogReaders();
+		}
+
+		private static async Task FindHearthstone()
+		{
+			Log.Warn("Hearthstone not found, waiting for process...");
+			Process proc;
+			while((proc = User32.GetHearthstoneProc()) == null)
+				await Task.Delay(500);
+			var dir = new FileInfo(proc.MainModule.FileName).Directory?.FullName;
+			if(dir == null)
+			{
+				const string msg = "Could not find Hearthstone installation";
+				Log.Error(msg);
+				ErrorManager.AddError(msg, "Please point HDT to your Hearthstone installation via 'options > tracker > settings > set hearthstone path'.");
+				return;
+			}
+			Log.Info($"Found Hearthstone at '{dir}'");
+			Config.Instance.HearthstoneDirectory = dir;
+			Config.Save();
 		}
 
 		private static async void StartLogReaders()

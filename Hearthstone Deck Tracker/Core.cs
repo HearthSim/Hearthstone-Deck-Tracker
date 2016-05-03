@@ -44,7 +44,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static OverlayWindow Overlay => _overlay ?? (_overlay = new OverlayWindow(Game));
 
-		internal static bool UpdateOverlay { get; set; }
+		internal static bool UpdateOverlay { get; set; } = true;
 		internal static bool Update { get; set; }
 		internal static bool CanShutdown { get; set; }
 
@@ -120,19 +120,14 @@ namespace Hearthstone_Deck_Tracker
 
 			UpdateOverlayAsync();
 
-			if(Helper.HearthstoneDirExists)
+			if(LogConfigUpdater.LogConfigUpdateFailed)
+				MainWindow.ShowLogConfigUpdateFailedMessage().Forget();
+			else if(LogConfigUpdater.LogConfigUpdated && Game.IsRunning)
 			{
-				if(LogConfigUpdater.LogConfigUpdateFailed)
-					MainWindow.ShowLogConfigUpdateFailedMessage().Forget();
-				else if(LogConfigUpdater.LogConfigUpdated && Game.IsRunning)
-				{
-					MainWindow.ShowMessageAsync("Hearthstone restart required", "The log.config file has been updated. HDT may not work properly until Hearthstone has been restarted.");
-					Overlay.ShowRestartRequiredWarning();
-				}
-				LogReaderManager.Start(Game);
+				MainWindow.ShowMessageAsync("Hearthstone restart required", "The log.config file has been updated. HDT may not work properly until Hearthstone has been restarted.");
+				Overlay.ShowRestartRequiredWarning();
 			}
-			else
-				MainWindow.ShowHsNotInstalledMessage().Forget();
+			LogReaderManager.Start(Game).Forget();
 
 			NewsUpdater.UpdateAsync();
 			HotKeyManager.Load();
@@ -151,7 +146,6 @@ namespace Hearthstone_Deck_Tracker
 				Updater.CheckForUpdates(true);
 			var hsForegroundChanged = false;
 			var useNoDeckMenuItem = TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
-			UpdateOverlay = Helper.HearthstoneDirExists;
 			while(UpdateOverlay)
 			{
 				if(User32.GetHearthstoneWindow() != IntPtr.Zero)

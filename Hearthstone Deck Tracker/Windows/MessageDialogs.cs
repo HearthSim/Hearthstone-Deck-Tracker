@@ -93,31 +93,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 		}
 
-		public static async Task ShowHsNotInstalledMessage(this MetroWindow window)
-		{
-			var settings = new Settings {AffirmativeButtonText = "Ok", NegativeButtonText = "Select manually"};
-			var result = await window.ShowMessageAsync("Hearthstone install directory not found",
-							"Hearthstone Deck Tracker will not work properly if Hearthstone is not installed on your machine (obviously).",
-							AffirmativeAndNegative, settings);
-			if(result == MessageDialogResult.Negative)
-			{
-				var dialog = new OpenFileDialog
-				{
-					Title = "Select Hearthstone.exe",
-					DefaultExt = "Hearthstone.exe",
-					Filter = "Hearthstone.exe|Hearthstone.exe"
-				};
-				var dialogResult = dialog.ShowDialog();
-
-				if(dialogResult == true)
-				{
-					Config.Instance.HearthstoneDirectory = Path.GetDirectoryName(dialog.FileName);
-					Config.Save();
-					Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this to take effect.").Forget();
-				}
-			}
-		}
-
 		public static async Task ShowLogConfigUpdateFailedMessage(this MetroWindow window)
 		{
 			var settings = new Settings {AffirmativeButtonText = "show instructions", NegativeButtonText = "close"};
