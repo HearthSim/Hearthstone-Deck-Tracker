@@ -487,6 +487,9 @@
     <Compile Include="Utility\HotKeys\KeyPressedEventArgs.cs" />
     <Compile Include="Utility\HotKeys\ModifierKeys.cs" />
     <Compile Include="Utility\HotKeys\PredefinedHotKeyActions.cs" />
+    <Compile Include="Windows\DeckScreenshotWindow.xaml.cs">
+      <DependentUpon>DeckScreenshotWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\GameResultNotificationWindow.xaml.cs">
       <DependentUpon>GameResultNotificationWindow.xaml</DependentUpon>
     </Compile>
@@ -928,6 +931,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\DeckScreenshotWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\GameResultNotificationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1179,6 +1186,8 @@
     <Resource Include="Images\icon-cthun-spells.png" />
     <Resource Include="Images\icon-cthun.png" />
     <Resource Include="Images\icon-spells.png" />
+    <Resource Include="Resources\embroidery.png" />
+    <Resource Include="Resources\tactile_noise.png" />
     <Content Include="Version.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

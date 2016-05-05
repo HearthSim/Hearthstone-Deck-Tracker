@@ -311,6 +311,7 @@
                     <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick" />
                     <MenuItem Name="MenuItemExportNames" Header="COPY _NAMES TO CLIPBOARD" Click="BtnClipboardNames_OnClick" />
                     <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click" />
+                    <MenuItem Name="MenuItemExportScreenshotWithInfo" Header="SCREENSHOT (WITH _INFO)" Click="BtnScreenhotWithInfo_Click" />
                 </MenuItem>
                 <MenuItem Header="_STATS">
                     <MenuItem.Icon>
