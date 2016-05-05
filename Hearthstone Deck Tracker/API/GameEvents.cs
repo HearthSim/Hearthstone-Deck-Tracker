@@ -19,6 +19,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public static readonly ActionList<Card> OnPlayerDeckDiscard = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerPlayToDeck = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerPlayToHand = new ActionList<Card>();
+		public static readonly ActionList<Card> OnPlayerPlayToGraveyard = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerCreateInDeck = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerCreateInPlay = new ActionList<Card>();
 		public static readonly ActionList<Card> OnPlayerJoustReveal = new ActionList<Card>();
@@ -41,6 +42,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public static readonly ActionList<Card> OnOpponentDeckDiscard = new ActionList<Card>();
 		public static readonly ActionList<Card> OnOpponentPlayToDeck = new ActionList<Card>();
 		public static readonly ActionList<Card> OnOpponentPlayToHand = new ActionList<Card>();
+		public static readonly ActionList<Card> OnOpponentPlayToGraveyard = new ActionList<Card>();
 		public static readonly ActionList<Card> OnOpponentSecretTriggered = new ActionList<Card>();
 		public static readonly ActionList<Card> OnOpponentCreateInDeck = new ActionList<Card>();
 		public static readonly ActionList<Card> OnOpponentCreateInPlay = new ActionList<Card>();

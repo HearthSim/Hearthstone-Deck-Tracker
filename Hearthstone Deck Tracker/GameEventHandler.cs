@@ -1048,12 +1048,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentRemoveFromPlay(Entity entity, int turn) => _game.Player.RemoveFromPlay(entity, turn);
 
-		public void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn) => _game.Player.PlayToGraveyard(entity, cardId, turn);
+		public void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn)
+		{
+			_game.Player.PlayToGraveyard(entity, cardId, turn);
+			GameEvents.OnPlayerPlayToGraveyard.Execute((Card)entity.Card.Clone());
+		}
 
 		public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)
 		{
 			_game.Opponent.PlayToGraveyard(entity, cardId, turn);
-
+			GameEvents.OnOpponentPlayToGraveyard.Execute((Card)entity.Card.Clone());
 			if(playersTurn && entity.IsMinion)
 				HandleOpponentMinionDeath(entity, turn);
 		}
