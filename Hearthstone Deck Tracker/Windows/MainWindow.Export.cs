@@ -62,13 +62,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private async void BtnScreenhot_Click(object sender, RoutedEventArgs e)
+		private void BtnScreenhot_Click(object sender, RoutedEventArgs e) => CaptureScreenshot(true);
+
+		private void BtnScreenhotWithInfo_Click(object sender, RoutedEventArgs e) => CaptureScreenshot(false);
+
+		private async void CaptureScreenshot(bool deckOnly)
 		{
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(selectedDeck == null)
 				return;
 			Log.Info("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo());
-			var screenShotWindow = new PlayerWindow(Core.Game, selectedDeck.GetSelectedDeckVersion().Cards.ToSortedCardList());
+			var screenShotWindow = new DeckScreenshotWindow(selectedDeck.GetSelectedDeckVersion(), deckOnly);
 			screenShotWindow.Show();
 			screenShotWindow.Top = 0;
 			screenShotWindow.Left = 0;
@@ -78,8 +82,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 
 			var deck = selectedDeck.GetSelectedDeckVersion();
-			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.ListViewPlayer.ItemsControl, 96, 96, deck.Name);
-			screenShotWindow.Shutdown();
+			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.StackPanelMain, 96, 96, deck.Name);
+			screenShotWindow.Close();
 			await SaveOrUploadScreenshot(pngEncoder, deck.Name);
 		}
 
