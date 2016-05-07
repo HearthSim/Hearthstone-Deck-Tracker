@@ -122,10 +122,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					
 				}
 			}
-			//if(format && Config.Instance.ConstructedStatsFormatFilter != Format.All)
-			//{
-			//	//TODO
-			//}
+			if(format && Config.Instance.ConstructedStatsFormatFilter != Format.All)
+				filtered = filtered.Where(x => x.Format == Config.Instance.ConstructedStatsFormatFilter);
 			if(turns)
 			{
 				if(Config.Instance.ConstructedStatsTurnsFilterMin > 0)
