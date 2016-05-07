@@ -306,12 +306,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateExpansionIcons()
 		{
-			RectIconOg.Visibility = _newDeck?.ContainsSet("Whispers of the Old Gods") ?? false ? Visible : Collapsed;
-			RectIconLoe.Visibility = _newDeck?.ContainsSet("League of Explorers") ?? false ? Visible : Collapsed;
-			RectIconTgt.Visibility = _newDeck?.ContainsSet("The Grand Tournament") ?? false ? Visible : Collapsed;
-			RectIconBrm.Visibility = _newDeck?.ContainsSet("Blackrock Mountain") ?? false ? Visible : Collapsed;
-			RectIconGvg.Visibility = _newDeck?.ContainsSet("Goblins vs Gnomes") ?? false ? Visible : Collapsed;
-			RectIconNaxx.Visibility = _newDeck?.ContainsSet("Curse of Naxxramas") ?? false ? Visible : Collapsed;
+			SetIcons.Update(_newDeck);
 		}
 
 		private void UpdateCardCount()
