@@ -167,6 +167,9 @@
     <Compile Include="Controls\DeckPicker\DeckPickerItemLayouts\DeckPickerItemLayoutMinimal.xaml.cs">
       <DependentUpon>DeckPickerItemLayoutMinimal.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeckSetIcons.xaml.cs">
+      <DependentUpon>DeckSetIcons.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DeckVersionChange.xaml.cs">
       <DependentUpon>DeckVersionChange.xaml</DependentUpon>
     </Compile>
@@ -706,6 +709,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeckPicker\DeckPickerItemLayouts\DeckPickerItemLayoutMinimal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DeckSetIcons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
