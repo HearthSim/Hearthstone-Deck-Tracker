@@ -292,6 +292,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool CanGetOpponentDeck => OpponentCards.Any();
 
 		[XmlIgnore]
+		public bool CanSelectDeck => DeckList.Instance.Decks.Any(d => d.DeckId == DeckId);
+
+		[XmlIgnore]
 		public BitmapImage OpponentHeroImage
 		{
 			get

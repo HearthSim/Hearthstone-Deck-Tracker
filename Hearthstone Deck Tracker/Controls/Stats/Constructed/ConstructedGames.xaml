@@ -169,6 +169,16 @@
                                     <TextBlock Text="OPP. DECK" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </Button>
+                            <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonSelectDeck_OnClick" IsEnabled="{Binding Path=CanSelectDeck}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="12">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{Binding OppDeckIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="SELECT DECK" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </Button>
                             <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonEdit_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <Rectangle Width="12">
