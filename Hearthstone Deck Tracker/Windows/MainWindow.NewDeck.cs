@@ -95,7 +95,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						continue;
 					if(selectedSet != "ALL" && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
 						continue;
-					if(!(CheckBoxIncludeWild.IsChecked ?? true) && Helper.WildOnlySets.Contains(card.Set))
+					if(!_newDeck.IsArenaDeck && !(CheckBoxIncludeWild.IsChecked ?? true) && Helper.WildOnlySets.Contains(card.Set))
 						continue;
 					switch(selectedNeutral)
 					{
