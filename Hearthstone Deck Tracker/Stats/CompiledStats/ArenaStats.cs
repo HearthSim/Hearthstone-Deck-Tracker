@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns(requirePackReward: true).Count();
+				var count = GetFilteredRuns(requireAnyReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * PacksCountTotal / count, 2);
 			}
 		}
@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns(requirePackReward: true).Count();
+				var count = GetFilteredRuns(requireAnyReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * GoldTotal / count, 2);
 			}
 		}
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns(requirePackReward: true).Count();
+				var count = GetFilteredRuns(requireAnyReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * DustTotal / count, 2);
 			}
 		}
@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns(requirePackReward: true).Count();
+				var count = GetFilteredRuns(requireAnyReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * CardCountTotal / count, 2);
 			}
 		}
@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var count = GetFilteredRuns(requirePackReward: true).Count();
+				var count = GetFilteredRuns(requireAnyReward: true).Count();
 				return count == 0 ? 0 : Math.Round(1.0 * CardCountGolden / count, 2);
 			}
 		}
@@ -243,11 +243,11 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		}
 
 		public IEnumerable<ArenaRun> GetFilteredRuns(bool archivedFilter = true, bool classFilter = true, bool regionFilter = true,
-		                                             bool timeframeFilter = true, bool requirePackReward = false)
+		                                             bool timeframeFilter = true, bool requireAnyReward = false)
 		{
 			var filtered = Runs;
-			if(requirePackReward)
-				filtered = filtered.Where(x => x.PackCount > 0);
+			if(requireAnyReward)
+				filtered = filtered.Where(x => x.PackCount > 0 || x.Gold > 0 || x.Dust > 0 || x.CardCount > 0);
 			if (archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
 				filtered = filtered.Where(x => !x.Deck.Archived);
 			if(classFilter && Config.Instance.ArenaStatsClassFilter != HeroClassStatsFilter.All)
