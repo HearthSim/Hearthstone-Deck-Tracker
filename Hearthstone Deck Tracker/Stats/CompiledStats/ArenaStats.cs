@@ -34,60 +34,25 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
-		public double PacksCountAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns(requireAnyReward: true).Count();
-				return count == 0 ? 0 : Math.Round(1.0 * PacksCountTotal / count, 2);
-			}
-		}
+		public double PacksCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Average(x => x.PackCount), 2);
 
 		public int GoldTotal => GetFilteredRuns().Sum(x => x.Gold);
 
-		public double GoldAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns(requireAnyReward: true).Count();
-				return count == 0 ? 0 : Math.Round(1.0 * GoldTotal / count, 2);
-			}
-		}
+		public double GoldAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Average(x => x.Gold), 2);
 
 		public int GoldSpent => GetFilteredRuns().Count(x => x.Deck.ArenaReward.PaymentMethod == ArenaPaymentMethod.Gold) * 150;
 
 		public int DustTotal => GetFilteredRuns().Sum(x => x.Dust);
 
-		public double DustAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns(requireAnyReward: true).Count();
-				return count == 0 ? 0 : Math.Round(1.0 * DustTotal / count, 2);
-			}
-		}
+		public double DustAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Average(x => x.Dust), 2);
 
 		public int CardCountTotal => GetFilteredRuns().Sum(x => x.CardCount);
 
-		public double CardCountAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns(requireAnyReward: true).Count();
-				return count == 0 ? 0 : Math.Round(1.0 * CardCountTotal / count, 2);
-			}
-		}
+		public double CardCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Average(x => x.CardCount), 2);
 
 		public int CardCountGolden => GetFilteredRuns().Sum(x => x.CardCountGolden);
 
-		public double CardCountGoldenAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns(requireAnyReward: true).Count();
-				return count == 0 ? 0 : Math.Round(1.0 * CardCountGolden / count, 2);
-			}
-		}
+		public double CardCountGoldenAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Average(x => x.CardCountGolden), 2);
 
 		public ClassStats ClassStatsBest => !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.WinRate).First();
 		public ClassStats ClassStatsWorst => !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.WinRate).First();
