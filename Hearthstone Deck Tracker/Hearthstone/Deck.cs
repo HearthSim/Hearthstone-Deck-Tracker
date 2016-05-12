@@ -560,6 +560,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void StatsUpdated()
 		{
 			OnPropertyChanged(nameof(StatsString));
+			OnPropertyChanged(nameof(LastPlayed));
+			OnPropertyChanged(nameof(LastPlayedNewFirst));
 			OnPropertyChanged(nameof(WinLossString));
 			OnPropertyChanged(nameof(WinPercent));
 			OnPropertyChanged(nameof(WinPercentString));
