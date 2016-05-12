@@ -1,7 +1,6 @@
-﻿using System.Drawing;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using AForge.Imaging.Filters;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Brushes = System.Windows.Media.Brushes;
@@ -24,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 				return;
 			var img = AForge.Imaging.Image.FromFile(cardFile);
 			new GaussianBlur(2, 8).ApplyInPlace(img);
-			DrawingGroup.Children.Add(new ImageDrawing(BitmapToImageSource(img), FrameRect));
+			DrawingGroup.Children.Add(new ImageDrawing(img.ToImageSource(), FrameRect));
 		}
 
 		protected override void AddCountBox()
@@ -46,21 +45,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 					default:
 						return Brushes.White;
 				}
-			}
-		}
-
-		private BitmapImage BitmapToImageSource(Bitmap bitmap)
-		{
-			using(var memory = new MemoryStream())
-			{
-				bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
-				memory.Position = 0;
-				var bitmapimage = new BitmapImage();
-				bitmapimage.BeginInit();
-				bitmapimage.StreamSource = memory;
-				bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-				bitmapimage.EndInit();
-				return bitmapimage;
 			}
 		}
 	}
