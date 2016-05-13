@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -143,18 +144,7 @@ namespace Hearthstone_Deck_Tracker
 
 		// A bug in the SerializableVersion.ToString() method causes this to load Version.xml incorrectly.
 		// The build and revision numbers are swapped (i.e. a Revision of 21 in Version.xml loads to Version.Build == 21).
-		public static Version GetCurrentVersion()
-		{
-			try
-			{
-				return _currentVersion ?? (_currentVersion = new Version(XmlManager<SerializableVersion>.Load("Version.xml").ToString()));
-			}
-			catch(Exception e)
-			{
-				Log.Error(e);
-				return null;
-			}
-		}
+		public static Version GetCurrentVersion() => Assembly.GetExecutingAssembly().GetName().Version;
 
 		public static bool IsNumeric(char c)
 		{

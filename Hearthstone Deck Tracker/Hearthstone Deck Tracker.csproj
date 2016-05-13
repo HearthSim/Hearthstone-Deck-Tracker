@@ -1188,10 +1188,6 @@
     <Resource Include="Images\icon-spells.png" />
     <Resource Include="Resources\embroidery.png" />
     <Resource Include="Resources\tactile_noise.png" />
-    <Content Include="Version.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -1255,7 +1251,6 @@
     xcopy /Y "MahApps.Metro.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "Newtonsoft.Json.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "System.Windows.Interactivity.dll" "..\Hearthstone Deck Tracker"
-    xcopy /Y "Version.xml" "..\Hearthstone Deck Tracker"
     xcopy /Y "..\..\..\HDTUpdate\bin\Release\HDTUpdate.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "..\..\..\HDTHelper\bin\Release\HDTHelper.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "..\..\..\HDTUninstaller\bin\Release\HDTUninstaller.exe" "..\Hearthstone Deck Tracker" )</PostBuildEvent>
