@@ -12,9 +12,9 @@ using System.Windows;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Hearthstone Deck Tracker")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Hearthstone Deck Tracker")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Epix")]
+[assembly: AssemblyCompany("HearthSim")]
 [assembly: AssemblyProduct("Hearthstone Deck Tracker")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
