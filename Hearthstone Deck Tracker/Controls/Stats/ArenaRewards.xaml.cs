@@ -269,7 +269,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public CardReward[] Cards
 		{
-			get { return _cards.Where(x => x?.CardId != Database.UnknownCardId).ToArray(); }
+			get
+			{
+				if(_cards.Length != 3 || _cards.Any(x => x?.CardId == Database.UnknownCardId))
+				{
+					var valid = _cards.Where(x => x?.CardId != Database.UnknownCardId).ToArray();
+					_cards = new CardReward[3];
+					for(var i = 0; i < valid.Length; i++)
+						_cards[i] = valid[i];
+				}
+				return _cards;
+			}
 			set { _cards = value; }
 		}
 
