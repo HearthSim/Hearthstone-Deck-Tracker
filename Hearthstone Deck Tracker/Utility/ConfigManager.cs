@@ -223,6 +223,20 @@ namespace Hearthstone_Deck_Tracker.Utility
 						converted = true;
 					}
 				}
+				if(configVersion <= new Version(0, 14, 7, 0))
+				{
+					if(File.Exists("Version.xml"))
+					{
+						try
+						{
+							File.Delete("Version.xml");
+						}
+						catch(Exception e)
+						{
+							Log.Error(e);
+						}
+					}
+				}
 			}
 
 			if(converted)
