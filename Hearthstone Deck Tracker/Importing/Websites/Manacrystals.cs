@@ -22,9 +22,9 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 				var deckRoot = doc.DocumentNode.SelectSingleNode("//div[@class='decklist-meta-data']");
 				var deckInfo = deckRoot.SelectNodes(".//div[@class='row']/div");
-				if(deckInfo.Count != 4)
+				if(deckInfo.Count != 3)
 				{
-					Log.Error("Wrong number of columns.", "Manacrystals.Import");
+					Log.Error("Wrong number of columns.");
 					return null;
 				}
 
@@ -43,8 +43,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					deck.Tags.Add(deckType);
 				}
 				// get cards
+				CardNodes(deckInfo[1], deck);
 				CardNodes(deckInfo[2], deck);
-				CardNodes(deckInfo[3], deck);
 
 				return deck;
 			}
@@ -61,11 +61,11 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			foreach (var cardNode in cardNodes)
 			{
 				var count = HttpUtility.HtmlDecode(
-					cardNode.SelectSingleNode(".//span[contains(@class,'quantity')]").InnerText.Trim());
+					cardNode.SelectSingleNode(".//div[contains(@class,'quantity')]").InnerText.Trim());
 				var name = HttpUtility.HtmlDecode(
-					cardNode.SelectSingleNode(".//span[contains(@class, 'card-name')]").InnerText.Trim());
+					cardNode.SelectSingleNode(".//div[contains(@class, 'card-name')]").InnerText.Trim());
 				var card = Database.GetCardFromName(name);
-				card.Count = count == "2x" ? 2 : 1;
+				card.Count = count == "2" ? 2 : 1;
 				deck.Cards.Add(card);
 				if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 					deck.Class = card.PlayerClass;
