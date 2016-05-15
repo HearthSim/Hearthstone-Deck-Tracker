@@ -1,0 +1,24 @@
+﻿<dialogs:CustomDialog x:Class="Hearthstone_Deck_Tracker.Windows.DeckTypeDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             mc:Ignorable="d" Title="Select Deck Type" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel>
+        <StackPanel Margin="0,20,0,0">
+            <RadioButton Name="RadioButtonConstructed" Content="Constructed" IsChecked="True" FontSize="16"/>
+            <RadioButton Name="RadioButtonArena" Content="Arena" FontSize="16"/>
+            <RadioButton Name="RadioButtonBrawl" Content="Tavern Brawl" FontSize="16"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Width="210" Margin="0,30,0,20" HorizontalAlignment="Right">
+            <Button Name="BtnOk" Height="37" Width="90" Style="{DynamicResource AccentedSquareButtonStyle}" Click="BtnOk_OnClick">
+                <TextBlock Text="Create Deck"/>
+            </Button>
+            <Button Name="BtnCancel" Content="Cancel" Height="37" Width="90" Margin="15,0,0,0" Click="BtnCancel_OnClick"/>
+        </StackPanel>
+        
+    </StackPanel>
+</dialogs:CustomDialog>
+

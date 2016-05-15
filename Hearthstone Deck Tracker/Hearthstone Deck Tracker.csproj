@@ -490,6 +490,9 @@
     <Compile Include="Windows\DeckScreenshotWindow.xaml.cs">
       <DependentUpon>DeckScreenshotWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\DeckTypeDialog.xaml.cs">
+      <DependentUpon>DeckTypeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\GameResultNotificationWindow.xaml.cs">
       <DependentUpon>GameResultNotificationWindow.xaml</DependentUpon>
     </Compile>
@@ -932,6 +935,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\DeckScreenshotWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DeckTypeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

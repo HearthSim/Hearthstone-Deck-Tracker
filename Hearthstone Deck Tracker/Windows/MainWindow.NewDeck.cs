@@ -474,15 +474,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private async void CreateNewDeck(string hero)
 		{
 			_newDeck = new Deck {Class = hero};
-
-			var result =
-				await
-				this.ShowMessageAsync("Deck type?", "Please select a deck type.", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary,
-				                      new MessageDialogs.Settings {AffirmativeButtonText = "constructed", NegativeButtonText = "arena run", FirstAuxiliaryButtonText = "cancel"});
-			if(result == MessageDialogResult.FirstAuxiliary)
+			var type = await this.ShowDeckTypeDialog();
+			if(type == null)
 				return;
-			if(result == MessageDialogResult.Negative)
+			if(type == DeckType.Arena)
 				_newDeck.IsArenaDeck = true;
+			else if(type == DeckType.Brawl)
+			{
+				if(!DeckList.Instance.AllTags.Contains("Brawl"))
+				{
+					DeckList.Instance.AllTags.Add("Brawl");
+					DeckList.Save();
+					Core.MainWindow?.ReloadTags();
+				}
+				_newDeck.Tags.Add("Brawl");
+			}
 
 			BorderConstructedCardLimits.Visibility = _newDeck.IsArenaDeck ? Collapsed : Visible;
 			CheckBoxConstructedCardLimits.IsChecked = true;
