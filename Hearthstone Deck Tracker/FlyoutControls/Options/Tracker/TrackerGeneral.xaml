@@ -25,7 +25,7 @@
                     <CheckBox x:Name="CheckboxSpectatorUseNoDeck"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Use no deck on Spectator mode" HorizontalAlignment="Left"
+                              Content="Use no deck in Spectator mode" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxSpectatorUseNoDeck_Checked"
                               Unchecked="CheckboxSpectatorUseNoDeck_Unchecked" />
