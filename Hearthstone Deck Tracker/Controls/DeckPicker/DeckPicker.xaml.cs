@@ -758,5 +758,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			if(e.Key == Key.Delete)
 				Core.MainWindow.BtnDeleteDeck_Click(sender, e);
 		}
+
+		private void ListViewDecks_OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+		{
+			if(!SelectedDecks.Any())
+				e.Handled = true;
+		}
 	}
 }

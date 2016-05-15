@@ -169,7 +169,7 @@
     </DockPanel>
     <ListView Name="ListViewDecks" VirtualizingPanel.IsVirtualizing="True" KeyUp="ListViewDecks_OnKeyUp"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged"
-              SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick">
+              SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick" PreviewMouseRightButtonUp="ListViewDecks_OnPreviewMouseRightButtonUp">
         <ListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">
                 <MenuItem Name="MenuItemUseDeck" Header="_USE DECK" Click="BtnUseDeck_Click"/>
