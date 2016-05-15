@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
+using static HearthDb.CardIds.Collectible.Neutral;
 using static Hearthstone_Deck_Tracker.Exporting.MouseActions;
 
 #endregion
@@ -51,6 +52,23 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			{"ruRU", "мана"},
 			{"esMX", "maná"},
 			{"esES", "maná"},
+		};
+		private static readonly Dictionary<string, string> AttackDict = new Dictionary<string, string>
+		{
+			{"enUS", "attack"},
+			{"zhCN", "攻击力"},
+			{"zhTW", "攻擊力"},
+			{"enGB", "attack"},
+			{"frFR", "attaque"},
+			{"deDE", "angriff"},
+			{"itIT", "attacco"},
+			{"jaJP", "攻撃"},
+			{"koKR", "공격력"},
+			{"plPL", "atak"},
+			{"ptBR", "ataque"},
+			{"ruRU", "атака"},
+			{"esMX", "ataque"},
+			{"esES", "ataque"},
 		};
 
 		public static async Task<bool> CardExists(IntPtr wndHandle, int posX, int posY, int width, int height)
@@ -129,40 +147,20 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			return "";
 		}
 
-		public static string GetSearchString(Card card)
-			=> $"{card.LocalizedName}{GetArtistSearchString(card.Artist)} {GetManaSearchString(card.Cost)}".ToLowerInvariant();
-
-		public static async Task<bool> CheckForSpecialCases(Card card, double cardPosX, double card2PosX, double cardPosY, IntPtr hsHandle)
+		public static string GetAttackSearchString(int atk)
 		{
-			if(card.Name == "Feugen")
-			{
-				if(Config.Instance.OwnsGoldenFeugen && Config.Instance.PrioritizeGolden)
-					await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
-				else
-					await ClickOnPoint(hsHandle, new Point((int)cardPosX, (int)cardPosY));
-				return true;
-			}
-			if(card.Name == "Stalagg")
-			{
-				var posX3 = cardPosX + (card2PosX - cardPosX) * 2;
-				var posX4 = cardPosX + (card2PosX - cardPosX) * 3;
-				if(Config.Instance.OwnsGoldenFeugen)
-				{
-					if(Config.Instance.OwnsGoldenStalagg && Config.Instance.PrioritizeGolden)
-						await ClickOnPoint(hsHandle, new Point((int)posX4, (int)cardPosY));
-					else
-						await ClickOnPoint(hsHandle, new Point((int)posX3, (int)cardPosY));
-				}
-				else
-				{
-					if(Config.Instance.OwnsGoldenStalagg && Config.Instance.PrioritizeGolden)
-						await ClickOnPoint(hsHandle, new Point((int)posX3, (int)cardPosY));
-					else
-						await ClickOnPoint(hsHandle, new Point((int)card2PosX, (int)cardPosY));
-				}
-				return true;
-			}
-			return false;
+			string atkStr;
+			if(AttackDict.TryGetValue(Config.Instance.SelectedLanguage, out atkStr))
+				return $" {atkStr}:{atk}";
+			return "";
+		}
+
+		public static string GetSearchString(Card card)
+		{
+			var searchString = $"{card.LocalizedName}{GetArtistSearchString(card.Artist)} {GetManaSearchString(card.Cost)}".ToLowerInvariant();
+			if(card.Id == Feugen || card.Id == Stalagg)
+				searchString += GetAttackSearchString(card.Attack);
+			return searchString;
 		}
 
 		public static async Task<bool> EnsureHearthstoneInForeground(IntPtr hsHandle)

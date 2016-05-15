@@ -100,9 +100,6 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			Log.Info("try to export card: " + card);
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
-			if(await CheckForSpecialCases(card, info.CardPosX + 50, info.Card2PosX + 50, info.CardPosY + 50, info.HsHandle))
-				return 0;
-
 			//Check if Card exist in collection
 			var cardExists = await CardExists(info.HsHandle, (int)info.CardPosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height);
 			if(cardExists)

@@ -626,12 +626,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool OverlaySecretToolTipsOnly = false;
 
-		[DefaultValue(false)]
-		public bool OwnsGoldenFeugen = false;
-
-		[DefaultValue(false)]
-		public bool OwnsGoldenStalagg = false;
-
 		[DefaultValue(new[] {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter"})]
 		public string[] PanelOrderOpponent = {"Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter"};
 

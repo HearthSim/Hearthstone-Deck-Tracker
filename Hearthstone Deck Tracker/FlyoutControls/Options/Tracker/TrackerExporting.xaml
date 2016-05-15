@@ -62,14 +62,6 @@
                               VerticalAlignment="Top"
                               Checked="CheckboxExportPasteClipboard_Checked"
                               Unchecked="CheckboxExportPasteClipboard_Unchecked" />
-                    <CheckBox x:Name="CheckboxGoldenFeugen" Content="Golden Feugen"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxGoldenFeugen_Checked"
-                              Unchecked="CheckboxGoldenFeugen_Unchecked" />
-                    <CheckBox x:Name="CheckboxGoldenStalagg" Content="Golden Stalagg"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxGoldenStalagg_Checked"
-                              Unchecked="CheckboxGoldenStalagg_Unchecked" />
                     <CheckBox x:Name="CheckboxShowDialog" Content="Show dialog before exporting"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxShowDialog_OnChecked"
