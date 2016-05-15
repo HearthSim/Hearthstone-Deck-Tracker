@@ -759,9 +759,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool? SaveDataInAppData = null;
 
 		[DefaultValue(true)]
-		public bool SaveHSLogIntoReplay = true;
-
-		[DefaultValue(true)]
 		public bool SaveInAppData = true;
 
 		[DefaultValue(15)]

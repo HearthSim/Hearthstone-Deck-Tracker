@@ -16,7 +16,6 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using Microsoft.Win32;
 using static System.StringComparison;
 using static MahApps.Metro.Controls.Dialogs.MessageDialogStyle;
 
@@ -40,6 +39,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 							new Settings {AffirmativeButtonText = "Show update notes", NegativeButtonText = "Close"});
 			if(result == MessageDialogResult.Affirmative)
 				Helper.TryOpenUrl(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases");
+		}
+
+		public static async void ShowRestartDialog()
+		{
+			var result =
+				await Core.MainWindow.ShowMessageAsync("Restart required.", "HDT needs to be restarted for the changes to take effect.",
+					MessageDialogStyle.AffirmativeAndNegative,
+					new MessageDialogs.Settings() { AffirmativeButtonText = "Restart Now", NegativeButtonText = "Later" });
+			if(result == MessageDialogResult.Affirmative)
+				Core.MainWindow.Restart();
 		}
 
 		public static async Task ShowMessage(this MetroWindow window, string title, string message) => await window.ShowMessageAsync(title, message);

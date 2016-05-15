@@ -4,12 +4,72 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
     <Grid>
         <GroupBox Header="General">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
+                    <GroupBox Header="Alerts">
+                        <StackPanel>
+                            <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
+                                  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"
+                                  Checked="CheckboxFlashHs_Checked"
+                                  Unchecked="CheckboxFlashHs_Unchecked" />
+                            <CheckBox x:Name="CheckboxBringHsToForegorund"
+                                  Content="Popup Hearthstone on turn start" HorizontalAlignment="Left"
+                                  Margin="10,5,0,0" VerticalAlignment="Top"
+                                  Checked="CheckboxBringHsToForegorund_Checked"
+                                  Unchecked="CheckboxBringHsToForegorund_Unchecked" />
+                            <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+                                <CheckBox x:Name="CheckboxTimerAlert"
+                                      HorizontalAlignment="Left" Margin="0,5,0,0"
+                                      ToolTip="Sound an alert and flash when you have X seconds remaining"
+                                      VerticalAlignment="Top" Checked="CheckboxTimerAlert_Checked"
+                                      Unchecked="CheckboxTimerAlert_Unchecked">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="Alert at" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                                        <TextBox x:Name="TextboxTimerAlert"
+                                         HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
+                                         Margin="10,0,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"
+                                         Width="60" TextChanged="TextboxTimerAlert_TextChanged"
+                                         PreviewTextInput="TextboxTimerAlert_PreviewTextInput" />
+                                        <Label Content="seconds." Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                                    </StackPanel>
+                                </CheckBox>
+                            </DockPanel>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Header="Card Language">
+                        <StackPanel>
+                            <DockPanel Margin="0,5,0,0">
+                                <Label Content="Primary:" HorizontalAlignment="Left"
+                                       VerticalAlignment="Top" />
+                                <ComboBox x:Name="ComboboxLanguages" HorizontalAlignment="Right"
+                                          VerticalAlignment="Top" Width="170"
+                                          SelectionChanged="ComboboxLanguages_SelectionChanged" />
+                            </DockPanel>
+                            <DockPanel Margin="0,5,0,0">
+                                <Label x:Name="___No_Name_" Content="Alternatives:" HorizontalAlignment="Left"
+                                       VerticalAlignment="Top"
+                                       ToolTip="Alternative languages are used in card search and tooltips" />
+                                <ListBox x:Name="ListBoxAlternativeLanguages" Height="120" Width="170"
+                                         HorizontalAlignment="Right" />
+                            </DockPanel>
+                            <CheckBox Name="CheckBoxDefaultFont" Content="Use default font for non-latin languages"
+                                      Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                                      Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                                      Margin="5,5,0,0" Checked="CheckBoxDefaultFont_OnChecked"
+                                      Unchecked="CheckBoxDefaultFont_OnUnchecked" />
+                            <Label x:Name="label" Content="Restart HDT to apply language changes" />
+                        </StackPanel>
+                    </GroupBox>
                     <CheckBox x:Name="CheckBoxAutoUse" Margin="10,5,0,0"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
@@ -25,34 +85,10 @@
                     <CheckBox x:Name="CheckboxSpectatorUseNoDeck"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Use no deck in Spectator mode" HorizontalAlignment="Left"
+                              Content="Use no-deck mode when spectating" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxSpectatorUseNoDeck_Checked"
                               Unchecked="CheckboxSpectatorUseNoDeck_Unchecked" />
-                    <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
-                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxFlashHs_Checked"
-                              Unchecked="CheckboxFlashHs_Unchecked" />
-                    <CheckBox x:Name="CheckboxBringHsToForegorund"
-                              Content="Popup Hearthstone on turn start" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxBringHsToForegorund_Checked"
-                              Unchecked="CheckboxBringHsToForegorund_Unchecked" />
-                    <DockPanel Margin="10,5,10,0"
-                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <CheckBox x:Name="CheckboxTimerAlert"
-                                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                                  Content="Alert at X seconds" HorizontalAlignment="Left" Margin="0,5,0,0"
-                                  ToolTip="Sound an alert and flash when you have X seconds remaining"
-                                  VerticalAlignment="Top" Checked="CheckboxTimerAlert_Checked"
-                                  Unchecked="CheckboxTimerAlert_Unchecked" />
-                        <TextBox x:Name="TextboxTimerAlert"
-                                 HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
-                                 Margin="10,0,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"
-                                 Width="60" TextChanged="TextboxTimerAlert_TextChanged"
-                                 PreviewTextInput="TextboxTimerAlert_PreviewTextInput" />
-                    </DockPanel>
-                    <Separator Margin="0,5,0,0" />
                     <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0"
                               Content="Card sorting: Class cards first"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
@@ -66,21 +102,40 @@
                     <CheckBox x:Name="CheckboxHideManaCurveMyDecks"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Show Manacurve" HorizontalAlignment="Left"
+                              Content="Show mana curve" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxManaCurveMyDecks_Checked"
                               Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
                     <CheckBox x:Name="CheckboxFullTextSearch"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Full text search in New Deck" HorizontalAlignment="Left"
+                              Content="Full text search in deck builder" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxFullTextSearch_Checked"
                               Unchecked="CheckboxFullTextSearch_Unchecked" />
                     <Separator Margin="0,5,0,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-                    <TextBlock Text="* Neither 75s not 90s are quite correct. The base time is 75s but it's extended to up to ~100s, depending on animations playing."
-                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                               TextWrapping="Wrap" Margin="10,5,10,0" FontStyle="Italic" />
+                    <CheckBox x:Name="CheckboxDeckPickerCaps" Content="Use upper case deck names"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckboxDeckPickerCaps_Checked"
+                              Unchecked="CheckboxDeckPickerCaps_Unchecked"
+                              ToolTip="Uncheck to use normal case in Deck Picker." />
+                    <CheckBox x:Name="CheckBoxShowLastPlayedDate" Content="Show last played date on decks"
+                              HorizontalAlignment="Left" Margin="10,5,0,0"
+                              VerticalAlignment="Top" Checked="CheckBoxShowLastPlayedDate_Checked"
+                              Unchecked="CheckBoxShowLastPlayedDate_Unchecked" />
+                    <DockPanel Margin="35,5,10,0" Visibility="{Binding Path=IsChecked, ElementName=CheckBoxShowLastPlayedDate, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <ComboBox DockPanel.Dock="Right" Name="ComboBoxLastPlayedDateFormat"  Margin="5,0,0,0" Width="150" HorizontalAlignment="Left"
+                              SelectionChanged="ComboBoxLastPlayedDateFormat_OnSelectionChanged" >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Label Content="Format:"/>
+                    </DockPanel>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

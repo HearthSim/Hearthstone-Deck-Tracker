@@ -44,7 +44,7 @@ namespace Hearthstone_Deck_Tracker
 			};
 			_notifyIcon.ContextMenu.MenuItems.Add(startHearthstonMenuItem);
 
-			var useNoDeckMenuItem = new MenuItem("Use no deck", (sender, args) => UseNoDeckContextMenu()) {Name = UseNoDeckMenuItemName};
+			var useNoDeckMenuItem = new MenuItem("No-deck mode", (sender, args) => UseNoDeckContextMenu()) {Name = UseNoDeckMenuItemName};
 			_notifyIcon.ContextMenu.MenuItems.Add(useNoDeckMenuItem);
 
 			var autoSelectDeckMenuItem = new MenuItem("Autoselect deck", (sender, args) => AutoDeckDetectionContextMenu())

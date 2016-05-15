@@ -119,16 +119,9 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxRecordReplays_Checked"
                               Unchecked="CheckboxRecordReplays_Unchecked" />
-                    <CheckBox x:Name="CheckboxSaveHSLogIntoReplayFile"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Save original HS log into replay"
-                              HorizontalAlignment="Left" Margin="35,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxSaveHSLogIntoReplayFile_Checked"
-                              Unchecked="CheckboxSaveHSLogIntoReplayFile_Unchecked" />
-
                     <CheckBox x:Name="CheckboxDeleteDeckKeepStats"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Content="Keep stats when deleting a deck*"
                               ToolTip="This will move stats to the 'class default deck' (the same matches in no-deck mode are saved to). That means, runs in the arena statistics will be lost when deleting arena decks!"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"

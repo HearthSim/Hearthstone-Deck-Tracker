@@ -73,19 +73,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 					using(var archive = new ZipArchive(ms, ZipArchiveMode.Create, true))
 					{
 						var json = archive.CreateEntry("replay.json");
-
 						using(var stream = json.Open())
 						using(var sw = new StreamWriter(stream))
 							sw.Write(JsonConvert.SerializeObject(Points));
 
-						if(Config.Instance.SaveHSLogIntoReplay)
-						{
-							var hsLog = archive.CreateEntry("output_log.txt");
-
-							using(var logStream = hsLog.Open())
-							using(var swLog = new StreamWriter(logStream))
-								powerLog?.ForEach(swLog.WriteLine);
-						}
+						var hsLog = archive.CreateEntry("output_log.txt");
+						using(var logStream = hsLog.Open())
+						using(var swLog = new StreamWriter(logStream))
+							powerLog?.ForEach(swLog.WriteLine);
 					}
 
 					using(var fileStream = new FileStream(path, FileMode.Create))

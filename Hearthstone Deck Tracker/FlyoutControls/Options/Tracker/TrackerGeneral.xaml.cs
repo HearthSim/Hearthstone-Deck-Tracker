@@ -1,9 +1,12 @@
 ﻿#region
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -35,6 +38,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			TextboxTimerAlert.Text = Config.Instance.TimerAlertSeconds.ToString();
+			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)");
+			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
+			ComboBoxLastPlayedDateFormat.ItemsSource = Enum.GetValues(typeof(LastPlayedDateFormat));
+			CheckBoxShowLastPlayedDate.IsChecked = Config.Instance.ShowLastPlayedDateOnDeck;
+			ComboBoxLastPlayedDateFormat.SelectedItem = Config.Instance.LastPlayedDateFormat;
+
+			if(Config.Instance.NonLatinUseDefaultFont == null)
+			{
+				Config.Instance.NonLatinUseDefaultFont = Helper.IsWindows10();
+				Config.Save();
+			}
+			CheckBoxDefaultFont.IsChecked = Config.Instance.NonLatinUseDefaultFont;
+
+
+			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
+				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
 			_initialized = true;
 		}
 
@@ -79,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = true;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
+			MessageDialogs.ShowRestartDialog();
 		}
 
 		private void CheckboxTrackerCardToolTips_Unchecked(object sender, RoutedEventArgs e)
@@ -89,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.TrackerCardToolTips = false;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
+			MessageDialogs.ShowRestartDialog();
 		}
 
 		private void CheckboxFullTextSearch_Checked(object sender, RoutedEventArgs e)
@@ -194,7 +213,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AutoUseDeck = true;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
+			MessageDialogs.ShowRestartDialog();
 		}
 
 		private void CheckBoxAutoUse_OnUnchecked(object sender, RoutedEventArgs e)
@@ -203,7 +222,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AutoUseDeck = false;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.").Forget();
+			MessageDialogs.ShowRestartDialog();
 		}
 
 		private void CheckboxSpectatorUseNoDeck_Checked(object sender, RoutedEventArgs e)
@@ -225,6 +244,115 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void CheckBoxClassCardsFirst_Checked(object sender, RoutedEventArgs e) => Core.MainWindow.SortClassCardsFirst(true);
 
 		private void CheckBoxClassCardsFirst_Unchecked(object sender, RoutedEventArgs e) => Core.MainWindow.SortClassCardsFirst(false);
+
+		private void CheckBoxDefaultFont_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NonLatinUseDefaultFont = true;
+			Config.Save();
+		}
+
+		private void CheckBoxDefaultFont_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.NonLatinUseDefaultFont = false;
+			Config.Save();
+		}
+
+		private void CheckBoxShowLastPlayedDate_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowLastPlayedDateOnDeck = true;
+			Config.Save();
+			MessageDialogs.ShowRestartDialog();
+		}
+
+		private void CheckBoxShowLastPlayedDate_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowLastPlayedDateOnDeck = false;
+			Config.Save();
+			MessageDialogs.ShowRestartDialog();
+		}
+
+		private void ComboBoxLastPlayedDateFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.LastPlayedDateFormat = (LastPlayedDateFormat)ComboBoxLastPlayedDateFormat.SelectedItem;
+			Config.Save();
+		}
+
+		private void CheckboxDeckPickerCaps_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DeckPickerCaps = true;
+			Config.Save();
+			MessageDialogs.ShowRestartDialog();
+		}
+
+		private void CheckboxDeckPickerCaps_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DeckPickerCaps = false;
+			Config.Save();
+			MessageDialogs.ShowRestartDialog();
+		}
+
+		private void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var language = ComboboxLanguages.SelectedValue.ToString();
+			UpdateAlternativeLanguageList(language);
+
+			if(!_initialized)
+				return;
+
+			var selectedLanguage = Helper.LanguageDict[language];
+
+			Config.Instance.SelectedLanguage = selectedLanguage;
+			Config.Save();
+		}
+
+		private void UpdateAlternativeLanguageList(string primaryLanguage)
+		{
+			ListBoxAlternativeLanguages.Items.Clear();
+			foreach(var pair in Helper.LanguageDict.Where(x => x.Key != "English (Great Britain)"))
+			{
+				var box = new CheckBox();
+				box.Content = pair.Key;
+				if(pair.Key == primaryLanguage)
+					box.IsEnabled = false;
+				else
+				{
+					box.IsChecked = Config.Instance.AlternativeLanguages.Contains(pair.Value);
+					box.Unchecked += CheckboxAlternativeLanguageToggled;
+					box.Checked += CheckboxAlternativeLanguageToggled;
+				}
+				ListBoxAlternativeLanguages.Items.Add(box);
+			}
+		}
+
+		private void CheckboxAlternativeLanguageToggled(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+
+			var languages = new List<string>();
+			foreach(CheckBox box in ListBoxAlternativeLanguages.Items)
+			{
+				var language = (string)box.Content;
+				if(box.IsChecked == true)
+					languages.Add(Helper.LanguageDict[language]);
+			}
+			Config.Instance.AlternativeLanguages = languages;
+			Config.Save();
+		}
 
 	}
 }

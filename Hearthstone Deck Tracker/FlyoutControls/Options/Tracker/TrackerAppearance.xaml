@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="300">
+             d:DesignHeight="700" d:DesignWidth="300">
     <UserControl.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
@@ -43,11 +43,24 @@
                         </ComboBox>
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0">
-                        <Label Content="Icon set:" HorizontalAlignment="Left"
+                        <Label Content="Class Icons:" HorizontalAlignment="Left"
                                VerticalAlignment="Top" />
                         <ComboBox x:Name="ComboBoxIconSet" HorizontalAlignment="Right"
                                   VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboboxIconSet_SelectionChanged" />
+                    </DockPanel>
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="Class colors:" HorizontalAlignment="Left"
+                               VerticalAlignment="Top" />
+                        <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
+                                  VerticalAlignment="Top" Width="150"
+                                  SelectionChanged="ComboBoxClassColors_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0">
                         <Label Content="Card theme:" HorizontalAlignment="Left"
@@ -57,18 +70,17 @@
                                   SelectionChanged="ComboBoxCardTheme_SelectionChanged" />
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0">
-                        <Label Content="Class colors:" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxClassColors_SelectionChanged" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
                         <Label Content="Deck layout:" HorizontalAlignment="Left"
                                VerticalAlignment="Top" />
                         <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
                                   VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboboxDeckLayout_SelectionChanged" />
+                                  SelectionChanged="ComboboxDeckLayout_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </DockPanel>
                     <CheckBox x:Name="CheckboxCardFrameRarity" Content="Rarity-colored card frames"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
@@ -84,26 +96,6 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckBoxArenaStatsTextColoring_Checked"
                               Unchecked="CheckBoxArenaStatsTextColoring_Unchecked" />
-                    <CheckBox x:Name="CheckboxDeckPickerCaps" Content="Use upper case deck names"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxDeckPickerCaps_Checked"
-                              Unchecked="CheckboxDeckPickerCaps_Unchecked"
-                              ToolTip="Uncheck to use normal case in Deck Picker." />
-                    <CheckBox x:Name="CheckBoxShowLastPlayedDate" Content="Show last played date on decks"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckBoxShowLastPlayedDate_Checked"
-                              Unchecked="CheckBoxShowLastPlayedDate_Unchecked" />
-                    <DockPanel Margin="35,5,10,0" Visibility="{Binding Path=IsChecked, ElementName=CheckBoxShowLastPlayedDate, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <ComboBox DockPanel.Dock="Right" Name="ComboBoxLastPlayedDateFormat"  Margin="5,0,0,0" Width="150" HorizontalAlignment="Left"
-                              SelectionChanged="ComboBoxLastPlayedDateFormat_OnSelectionChanged" >
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Label Content="Format:"/>
-                    </DockPanel>
                     <CheckBox x:Name="CheckboxUseAnimations" Content="Use metro animations"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
@@ -112,30 +104,6 @@
                               Unchecked="CheckboxUseAnimations_Unchecked"
                               ToolTip="Uncheck to disable most animations for popup dialogs and flyouts"
                               Checked="CheckboxUseAnimations_Checked" />
-                    <GroupBox Header="Card Language" Margin="10,10,10,0">
-                        <StackPanel>
-                            <DockPanel Margin="0,5,0,0">
-                                <Label Content="Primary:" HorizontalAlignment="Left"
-                                       VerticalAlignment="Top" />
-                                <ComboBox x:Name="ComboboxLanguages" HorizontalAlignment="Right"
-                                          VerticalAlignment="Top" Width="170"
-                                          SelectionChanged="ComboboxLanguages_SelectionChanged" />
-                            </DockPanel>
-                            <DockPanel Margin="0,5,0,0">
-                                <Label x:Name="___No_Name_" Content="Alternatives:" HorizontalAlignment="Left"
-                                       VerticalAlignment="Top"
-                                       ToolTip="Alternative languages are used in card search and tooltips" />
-                                <ListBox x:Name="ListBoxAlternativeLanguages" Height="120" Width="170"
-                                         HorizontalAlignment="Right" />
-                            </DockPanel>
-                            <CheckBox Name="CheckBoxDefaultFont" Content="Use default font for non-latin languages"
-                                      Margin="5,5,0,0" Checked="CheckBoxDefaultFont_OnChecked"
-                                      Unchecked="CheckBoxDefaultFont_OnUnchecked" />
-                            <Label x:Name="label" Content="Restart HDT to apply language changes" />
-                        </StackPanel>
-                    </GroupBox>
-                    <Button Name="ButtonRestart" Margin="10,15,10,0" Content="restart hdt"
-                            Click="ButtonRestart_OnClick" />
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

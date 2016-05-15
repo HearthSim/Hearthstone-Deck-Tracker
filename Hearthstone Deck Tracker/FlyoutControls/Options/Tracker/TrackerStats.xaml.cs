@@ -39,7 +39,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxAskBeforeDiscarding.IsEnabled = Config.Instance.DiscardGameIfIncorrectDeck;
 			CheckboxRecordSpectator.IsChecked = Config.Instance.RecordSpectator;
 			CheckboxDiscardZeroTurnGame.IsChecked = Config.Instance.DiscardZeroTurnGame;
-			CheckboxSaveHSLogIntoReplayFile.IsChecked = Config.Instance.SaveHSLogIntoReplay;
 			CheckboxDeleteDeckKeepStats.IsChecked = Config.Instance.KeepStatsWhenDeletingDeck;
 			CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
 			CheckboxReplays.IsChecked = Config.Instance.RecordReplays;
@@ -214,22 +213,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.RecordSpectator = false;
-			Config.Save();
-		}
-
-		private void CheckboxSaveHSLogIntoReplayFile_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SaveHSLogIntoReplay = true;
-			Config.Save();
-		}
-
-		private void CheckboxSaveHSLogIntoReplayFile_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SaveHSLogIntoReplay = false;
 			Config.Save();
 		}
 
