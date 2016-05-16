@@ -416,6 +416,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public bool ShowToolTip => Config.Instance.TrackerCardToolTips;
 		
+		public Visibility IntroductionLabelVisibility => DeckList.Instance.Decks.Any() ? Collapsed : Visible;
+
 		public string LastSync
 		{
 			get

@@ -459,6 +459,9 @@
             <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                        Grid.Row="2" Panel.ZIndex="1"
                        Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
+            <Label Content="ADD NEW DECKS BY CLICKING 'NEW' OR 'IMPORT'" Foreground="DarkGray" 
+                   FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" 
+                   Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
             <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
                 <MenuItem Header="SAVE" Name="MenuItemSave" SubmenuOpened="MenuItem_OnSubmenuOpened">
                     <MenuItem.Icon>
