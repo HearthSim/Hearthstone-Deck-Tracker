@@ -18,7 +18,7 @@
                 <StackPanel>
                     <GroupBox Header="Alerts">
                         <StackPanel>
-                            <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on turn start"
+                            <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on your turn start"
                                   HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"
                                   Checked="CheckboxFlashHs_Checked"
                                   Unchecked="CheckboxFlashHs_Unchecked" />
@@ -33,7 +33,7 @@
                                       ToolTip="Sound an alert and flash when you have X seconds remaining"
                                       VerticalAlignment="Top" Checked="CheckboxTimerAlert_Checked"
                                       Unchecked="CheckboxTimerAlert_Unchecked">
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
                                         <Label Content="Alert at" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
                                         <TextBox x:Name="TextboxTimerAlert"
                                          HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
@@ -56,9 +56,10 @@
                                           SelectionChanged="ComboboxLanguages_SelectionChanged" />
                             </DockPanel>
                             <DockPanel Margin="0,5,0,0">
-                                <Label x:Name="___No_Name_" Content="Alternatives:" HorizontalAlignment="Left"
-                                       VerticalAlignment="Top"
-                                       ToolTip="Alternative languages are used in card search and tooltips" />
+                                <StackPanel>
+                                    <Label Content="Secondary:" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                    <Label Content="(tooltips)" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                </StackPanel>
                                 <ListBox x:Name="ListBoxAlternativeLanguages" Height="120" Width="170"
                                          HorizontalAlignment="Right" />
                             </DockPanel>
@@ -67,7 +68,7 @@
                                       Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                                       Margin="5,5,0,0" Checked="CheckBoxDefaultFont_OnChecked"
                                       Unchecked="CheckBoxDefaultFont_OnUnchecked" />
-                            <Label x:Name="label" Content="Restart HDT to apply language changes" />
+                            <Label Visibility="{Binding RestartLabelVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="Red" Content="Restart to apply language changes." />
                         </StackPanel>
                     </GroupBox>
                     <CheckBox x:Name="CheckBoxAutoUse" Margin="10,5,0,0"
@@ -95,7 +96,7 @@
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Checked="CheckBoxClassCardsFirst_Checked"
                               Unchecked="CheckBoxClassCardsFirst_Unchecked" />
-                    <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Card tooltips"
+                    <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Show card tooltips"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxTrackerCardToolTips_Checked"
                               Unchecked="CheckboxTrackerCardToolTips_Unchecked" />

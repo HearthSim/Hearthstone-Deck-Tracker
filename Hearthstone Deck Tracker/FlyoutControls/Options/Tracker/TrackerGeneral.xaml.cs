@@ -2,10 +2,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Windows;
 
@@ -16,9 +19,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	/// <summary>
 	/// Interaction logic for TrackerGeneral.xaml
 	/// </summary>
-	public partial class TrackerGeneral : UserControl
+	public partial class TrackerGeneral : INotifyPropertyChanged
 	{
 		private bool _initialized;
+		private Visibility _restartLabelVisibility = Visibility.Collapsed;
 
 		public TrackerGeneral()
 		{
@@ -317,6 +321,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			Config.Instance.SelectedLanguage = selectedLanguage;
 			Config.Save();
+			RestartLabelVisibility = Visibility.Visible;
 		}
 
 		private void UpdateAlternativeLanguageList(string primaryLanguage)
@@ -352,7 +357,27 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 			Config.Instance.AlternativeLanguages = languages;
 			Config.Save();
+			RestartLabelVisibility = Visibility.Visible;
 		}
 
+		public Visibility RestartLabelVisibility
+		{
+			get { return _restartLabelVisibility; }
+			set
+			{
+				if(_restartLabelVisibility == value)
+					return;
+				_restartLabelVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }
