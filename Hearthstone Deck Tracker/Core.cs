@@ -120,6 +120,12 @@ namespace Hearthstone_Deck_Tracker
 
 			UpdateOverlayAsync();
 
+			if(Config.Instance.ShowCapturableOverlay)
+			{
+				Windows.CapturableOverlay = new CapturableOverlayWindow();
+				Windows.CapturableOverlay.Show();
+			}
+
 			if(LogConfigUpdater.LogConfigUpdateFailed)
 				MainWindow.ShowLogConfigUpdateFailedMessage().Forget();
 			else if(LogConfigUpdater.LogConfigUpdated && Game.IsRunning)
@@ -166,7 +172,11 @@ namespace Hearthstone_Deck_Tracker
 						Updater.CheckForUpdates();
 
 					if(!Game.IsRunning)
+					{
 						Overlay.Update(true);
+						Windows.CapturableOverlay?.ForceWindowState(WindowState.Normal);
+						Windows.CapturableOverlay?.UpdateContentVisibility();
+					}
 
 					MainWindow.BtnStartHearthstone.Visibility = Visibility.Collapsed;
 					TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = false;
@@ -200,26 +210,25 @@ namespace Hearthstone_Deck_Tracker
 						hsForegroundChanged = true;
 					}
 				}
-				else
+				else if(Game.IsRunning)
 				{
-					Overlay.ShowOverlay(false);
-					if(Game.IsRunning)
-					{
-						Log.Info("Exited game");
-						Game.CurrentRegion = Region.UNKNOWN;
-						Log.Info("Reset region");
-						await Reset();
-						Game.IsInMenu = true;
-						Overlay.HideRestartRequiredWarning();
-						TurnTimer.Instance.Stop();
-
-						MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
-						TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
-
-						if(Config.Instance.CloseWithHearthstone)
-							MainWindow.Close();
-					}
 					Game.IsRunning = false;
+					Overlay.ShowOverlay(false);
+					Windows.CapturableOverlay?.ForceWindowState(WindowState.Minimized);
+					Windows.CapturableOverlay?.UpdateContentVisibility();
+					Log.Info("Exited game");
+					Game.CurrentRegion = Region.UNKNOWN;
+					Log.Info("Reset region");
+					await Reset();
+					Game.IsInMenu = true;
+					Overlay.HideRestartRequiredWarning();
+					TurnTimer.Instance.Stop();
+
+					MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
+					TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
+
+					if(Config.Instance.CloseWithHearthstone)
+						MainWindow.Close();
 				}
 
 				if(Config.Instance.NetDeckClipboardCheck.HasValue && Config.Instance.NetDeckClipboardCheck.Value && Initialized
@@ -293,6 +302,7 @@ namespace Hearthstone_Deck_Tracker
 			public static OpponentWindow OpponentWindow => _opponentWindow ?? (_opponentWindow = new OpponentWindow(Game));
 			public static TimerWindow TimerWindow => _timerWindow ?? (_timerWindow = new TimerWindow(Config.Instance));
 			public static StatsWindow StatsWindow => _statsWindow ?? (_statsWindow = new StatsWindow());
+			public static CapturableOverlayWindow CapturableOverlay;
 		}
 	}
 }

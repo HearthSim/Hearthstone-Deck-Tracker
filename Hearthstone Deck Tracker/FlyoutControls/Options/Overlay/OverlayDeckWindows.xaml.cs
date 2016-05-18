@@ -172,7 +172,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized || ComboboxWindowBackground.SelectedItem.ToString() != "Custom")
 				return;
-			var background = BackgroundFromHex();
+			var background = Helper.BrushFromHex(TextboxCustomBackground.Text);
 			if(background != null)
 			{
 				UpdateAdditionalWindowsBackground(background);
@@ -255,7 +255,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			}
 			if(background == null)
 			{
-				var hexBackground = BackgroundFromHex();
+				var hexBackground = Helper.BrushFromHex(TextboxCustomBackground.Text);
 				if(hexBackground != null)
 				{
 					Core.Windows.PlayerWindow.Background = hexBackground;
@@ -269,20 +269,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				Core.Windows.OpponentWindow.Background = background;
 				Core.Windows.TimerWindow.Background = background;
 			}
-		}
-
-		private SolidColorBrush BackgroundFromHex()
-		{
-			SolidColorBrush brush = null;
-			var hex = TextboxCustomBackground.Text;
-			if(hex.StartsWith("#"))
-				hex = hex.Remove(0, 1);
-			if(!string.IsNullOrEmpty(hex) && hex.Length == 6 && Helper.IsHex(hex))
-			{
-				var color = ColorTranslator.FromHtml("#" + hex);
-				brush = new SolidColorBrush(Color.FromRgb(color.R, color.G, color.B));
-			}
-			return brush;
 		}
 	}
 }

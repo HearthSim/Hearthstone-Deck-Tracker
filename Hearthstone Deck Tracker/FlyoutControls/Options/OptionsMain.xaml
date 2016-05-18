@@ -20,6 +20,7 @@
                         <TreeViewItem Name="TreeViewItemOverlayPlayer" Header="Player" Selected="TreeViewItemOverlayPlayer_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayOpponent" Header="Opponent" Selected="TreeViewItemOverlayOpponent_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayInteractivity" Header="Interactivity" Selected="TreeViewItemOverlayInteractivity_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                        <TreeViewItem Name="TreeViewItemOverlayStreaming" Header="Streaming" Selected="TreeViewItemOverlayStreaming_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                     </TreeViewItem>
                     <TreeViewItem Header="Tracker">
                         <TreeViewItem Name="TreeViewItemTrackerGeneral" Header="General" Selected="TreeViewItemTrackerGeneral_OnSelected"/>

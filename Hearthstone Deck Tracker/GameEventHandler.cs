@@ -143,6 +143,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.HideSecrets();
 			Core.Overlay.Update(true);
 			DeckManager.ResetIgnoredDeckId();
+			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 
 			Log.Info("Waiting for game mode detection...");
 			await _game.GameModeDetection();
@@ -563,6 +564,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else if(selectedDeck != null)
 				_game.IsUsingPremade = true;
+			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 			GameEvents.OnGameStart.Execute();
 		}
 #pragma warning disable 4014

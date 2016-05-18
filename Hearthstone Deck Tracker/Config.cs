@@ -821,6 +821,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowBatteryLifePercent = false;
 
+		[DefaultValue(false)]
+		public bool ShowCapturableOverlay = false;
+
 		[DefaultValue(true)]
 		public bool ShowConstructedImportMessage = true;
 
@@ -916,6 +919,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(510)]
 		public int StatsWindowWidth = 510;
+
+		[DefaultValue("#FF00FF")]
+		public string StreamingOverlayBackground = "#FF00FF";
 
 		[DefaultValue(true)]
 		public bool TagDecksOnImport = true;

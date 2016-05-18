@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly OverlayInteractivity OptionsOverlayInteractivity = new OverlayInteractivity();
 		public readonly OverlayOpponent OptionsOverlayOpponent = new OverlayOpponent();
 		public readonly OverlayPlayer OptionsOverlayPlayer = new OverlayPlayer();
+		public readonly OverlayStreaming OptionsOverlayStreaming = new OverlayStreaming();
 		public readonly TrackerAppearance OptionsTrackerAppearance = new TrackerAppearance();
 		public readonly TrackerBackups OptionsTrackerBackups = new TrackerBackups();
 		public readonly TrackerExporting OptionsTrackerExporting = new TrackerExporting();
@@ -89,5 +90,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private void TreeViewItemTrackerHotKeys_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerHotKeys;
 		private void TreeViewItemTrackerNotifications_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerNotifications;
 		private void TreeViewItemSearch_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsSearch;
+		private void TreeViewItemOverlayStreaming_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayStreaming;
 	}
 }

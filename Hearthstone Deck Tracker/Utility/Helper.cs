@@ -764,5 +764,15 @@ namespace Hearthstone_Deck_Tracker
 			Log.Warn("Unknown IP: " + ip);
 			return Region.UNKNOWN;
 		}
+
+		public static SolidColorBrush BrushFromHex(string hex)
+		{
+			if(hex.StartsWith("#"))
+				hex = hex.Remove(0, 1);
+			if(string.IsNullOrEmpty(hex) || hex.Length != 6 || !Helper.IsHex(hex))
+				return null;
+			var color = ColorTranslator.FromHtml("#" + hex);
+			return new SolidColorBrush(MediaColor.FromRgb(color.R, color.G, color.B));
+		}
 	}
 }
