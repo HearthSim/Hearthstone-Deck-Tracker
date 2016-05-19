@@ -418,6 +418,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		
 		public Visibility IntroductionLabelVisibility => DeckList.Instance.Decks.Any() ? Collapsed : Visible;
 
+		public void UpdateIntroLabelVisibility() => OnPropertyChanged(nameof(IntroductionLabelVisibility));
+
 		public string LastSync
 		{
 			get

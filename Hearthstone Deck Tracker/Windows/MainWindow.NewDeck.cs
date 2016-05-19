@@ -423,7 +423,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Left += MovedLeft.Value;
 				MovedLeft = null;
 			}
-			OnPropertyChanged(nameof(IntroductionLabelVisibility));
+			UpdateIntroLabelVisibility();
 		}
 
 		private void EnableMenuItems(bool enable)

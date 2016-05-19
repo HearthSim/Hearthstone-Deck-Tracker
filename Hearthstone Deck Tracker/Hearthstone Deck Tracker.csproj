@@ -82,6 +82,10 @@
     <Reference Include="HearthDb">
       <HintPath>..\lib\HearthDb.dll</HintPath>
     </Reference>
+    <Reference Include="HearthMirror, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\HearthMirror.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -150,6 +154,9 @@
     </Compile>
     <Compile Include="Controls\ChartWinsByClass.xaml.cs">
       <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DeckImportingControl.xaml.cs">
+      <DependentUpon>DeckImportingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\DateConverter.cs" />
     <Compile Include="Controls\DeckPicker\DeckPickerClassItem.xaml.cs">
@@ -295,6 +302,7 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="Importing\Game\ImportOptions\ExistingDeck.cs" />
     <Compile Include="Exporting\ExportingActions.cs" />
     <Compile Include="Exporting\ExportingHelper.cs" />
     <Compile Include="Exporting\ExportingInfo.cs" />
@@ -315,8 +323,11 @@
     <Compile Include="DeckManager.cs" />
     <Compile Include="Hearthstone\DeckState.cs" />
     <Compile Include="Hearthstone\PredictedCard.cs" />
+    <Compile Include="Importing\Game\ImportOptions\IImportOption.cs" />
     <Compile Include="Importing\Websites\Manacrystals.cs" />
     <Compile Include="LogReader\Handlers\FullScreenFxHandler.cs" />
+    <Compile Include="Importing\Game\ImportOptions\NewDeck.cs" />
+    <Compile Include="Importing\Game\ImportedDeck.cs" />
     <Compile Include="Stats\CompiledStats\ConstructedDeckDetails.cs" />
     <Compile Include="Stats\CompiledStats\ConstructedDeckStats.cs" />
     <Compile Include="Stats\CompiledStats\ConstructedMatchup.cs" />
@@ -703,6 +714,10 @@
     <Page Include="Controls\ChartWinsByClass.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\DeckImportingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeckPicker\DeckPickerClassItem.xaml">
       <SubType>Designer</SubType>
@@ -1271,6 +1286,7 @@
     xcopy /Y "HtmlAgilityPack.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "MahApps.Metro.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "Newtonsoft.Json.dll" "..\Hearthstone Deck Tracker"
+    xcopy /Y "HearthMirror.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "System.Windows.Interactivity.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "..\..\..\HDTUpdate\bin\Release\HDTUpdate.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "..\..\..\HDTHelper\bin\Release\HDTHelper.exe" "..\Hearthstone Deck Tracker"

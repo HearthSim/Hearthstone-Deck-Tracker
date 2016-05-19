@@ -15,9 +15,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	public class LoadingScreenHandler
 	{
-		public void Handle(string logLine, IHsGameState gameState, IGame game)
+		public void Handle(LogLineItem logLine, IHsGameState gameState, IGame game)
 		{
-			var match = HsLogReaderConstants.GameModeRegex.Match(logLine);
+			var match = HsLogReaderConstants.GameModeRegex.Match(logLine.Line);
 			if(!match.Success)
 				return;
 			game.CurrentMode = GetMode(match.Groups["curr"].Value);

@@ -15,6 +15,9 @@ using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Point = System.Drawing.Point;
 using HearthDb.Enums;
+using HearthMirror;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 #endregion
 
@@ -419,7 +422,26 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ActivateWindow();
 		}
 
-		private void BtnConstructed_Click(object sender, RoutedEventArgs e) => ImportConstructedDeck().Forget();
+		private async void BtnConstructed_Click(object sender, RoutedEventArgs e)
+		{
+			DeckImportingFlyout.Reset();
+			FlyoutDeckImporting.IsOpen = true;
+			if(!Core.Game.IsRunning)
+			{
+				Log.Info("Waiting for game...");
+				while(!Core.Game.IsRunning)
+					await Task.Delay(500);
+			}
+			DeckImportingFlyout.StartedGame();
+			if(Core.Game.CurrentMode != Mode.TOURNAMENT)
+			{
+				Log.Info("Waiting for tournament screen...");
+				while(Core.Game.CurrentMode != Mode.TOURNAMENT)
+					await Task.Delay(500);
+			}
+			var decks = DeckImporter.FromConstructed();
+			DeckImportingFlyout.SetDecks(decks);
+		}
 
 		public async Task ImportConstructedDeck()
 		{

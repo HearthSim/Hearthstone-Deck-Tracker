@@ -136,6 +136,9 @@
             <controls:Flyout x:Name="FlyoutUpdateNotes" Header="Update Notes" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <flyoutControls:UpdateNotes x:Name="UpdateNotesControl"/>
             </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckImporting" Header="Deck Importing" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <controls1:DeckImportingControl x:Name="DeckImportingFlyout"/>
+            </controls:Flyout>
             <controls:Flyout x:Name="FlyoutStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls:Flyout.HeaderTemplate>
                     <DataTemplate>
@@ -291,7 +294,7 @@
                     </MenuItem.Icon>
                     <MenuItem Header="FROM _WEB" Click="BtnWeb_Click" />
                     <MenuItem Header="FROM GAME: _ARENA" Click="BtnArena_Click" Name="MenuItemImportArena" ToolTip="Instructions can be found in options > importing"/>
-                    <MenuItem Header="FROM GAME: _CONSTRUCTED (UNSTABLE)" Click="BtnConstructed_Click" Name="MenuItemImportConstructed" ToolTip="Instructions can be found in options > importing" />
+                    <MenuItem Header="FROM GAME: _CONSTRUCTED" Click="BtnConstructed_Click" Name="MenuItemImportConstructed" />
                     <MenuItem Header="FROM _FILE" Click="BtnFile_Click" />
                     <MenuItem Header="FROM _ID STRING" Click="BtnIdString_Click" />
                     <MenuItem Header="FROM CLIPBOARD: _CARD NAMES" Click="BtnClipboardText_Click" />
