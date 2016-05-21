@@ -9,6 +9,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class CapturableOverlayWindow : INotifyPropertyChanged
 	{
+		private bool _activated;
+		private bool _initialized;
+
 		public CapturableOverlayWindow()
 		{
 			InitializeComponent();
@@ -21,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public Visibility ContentVisibility => Core.Game.IsRunning ? Visibility.Visible : Visibility.Hidden;
 
-		public WindowState? ForcedWindowState { get; private set; }
+		public WindowState? ForcedWindowState { get; internal set; } = WindowState.Minimized;
 
 		public Visual Visual => Core.Overlay.CanvasInfo;
 
@@ -29,11 +32,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public void ForceWindowState(WindowState? state)
+		public void Update()
 		{
+			var state = Helper.GameWindowState;
+			if(_activated && state != WindowState.Minimized)
+			{
+				_activated = false;
+				User32.BringHsToForeground();
+			}
+			if(ForcedWindowState == state)
+				return;
 			ForcedWindowState = state;
-			if(state.HasValue)
-				WindowState = state.Value;
+			if(!_initialized)
+			{
+				_initialized = true;
+				UpdateSize();
+				UpdatePosition();
+			}
+			if(WindowState != state)
+				WindowState = state;
 		}
 
 		private void UpdatePosition()
@@ -66,6 +83,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WindowState = ForcedWindowState.Value;
 		}
 
-		private void CapturableOverlayWindow_OnActivated(object sender, EventArgs e) => User32.BringHsToForeground();
+		private void CapturableOverlayWindow_OnActivated(object sender, EventArgs e) => _activated = true;
 	}
 }

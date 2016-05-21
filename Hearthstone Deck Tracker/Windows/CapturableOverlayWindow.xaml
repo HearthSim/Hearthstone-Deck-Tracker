@@ -7,7 +7,7 @@
         Title="HDT - Capturable Overlay" WindowStyle="None"
         StateChanged="CapturableOverlayWindow_OnStateChanged"
         Icon="{StaticResource AppIcon}" ResizeMode="NoResize"
-        Activated="CapturableOverlayWindow_OnActivated"
+        Activated="CapturableOverlayWindow_OnActivated" WindowState="Minimized"
         Topmost="False" d:DesignWidth="400" d:DesignHeight="300">
     <Grid Name="ContentGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding ContentVisibility}">
         <Grid.Background>

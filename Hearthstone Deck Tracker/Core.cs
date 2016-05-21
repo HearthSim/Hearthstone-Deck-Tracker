@@ -174,7 +174,6 @@ namespace Hearthstone_Deck_Tracker
 					if(!Game.IsRunning)
 					{
 						Overlay.Update(true);
-						Windows.CapturableOverlay?.ForceWindowState(WindowState.Normal);
 						Windows.CapturableOverlay?.UpdateContentVisibility();
 					}
 
@@ -182,12 +181,13 @@ namespace Hearthstone_Deck_Tracker
 					TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = false;
 
 					Game.IsRunning = true;
-					if(User32.IsHearthstoneInForeground())
+
+					Helper.GameWindowState = User32.GetHearthstoneWindowState();
+					Windows.CapturableOverlay?.Update();
+					if(User32.IsHearthstoneInForeground() && Helper.GameWindowState != WindowState.Minimized)
 					{
 						if(hsForegroundChanged)
 						{
-							Helper.GameWindowState = WindowState.Normal;
-							Windows.CapturableOverlay?.ForceWindowState(WindowState.Normal);
 							Overlay.Update(true);
 							if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
 							{
@@ -203,11 +203,6 @@ namespace Hearthstone_Deck_Tracker
 					}
 					else if(!hsForegroundChanged)
 					{
-						if(User32.GetHearthstoneWindowState() == WindowState.Minimized)
-						{
-							Helper.GameWindowState = WindowState.Minimized;
-							Windows.CapturableOverlay?.ForceWindowState(WindowState.Minimized);
-						}
 						if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
 						{
 							Windows.PlayerWindow.Topmost = false;
@@ -221,8 +216,13 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Game.IsRunning = false;
 					Overlay.ShowOverlay(false);
-					Windows.CapturableOverlay?.ForceWindowState(WindowState.Minimized);
-					Windows.CapturableOverlay?.UpdateContentVisibility();
+					if(Windows.CapturableOverlay != null)
+					{
+						Windows.CapturableOverlay.UpdateContentVisibility();
+						await Task.Delay(100);
+						Windows.CapturableOverlay.ForcedWindowState = WindowState.Minimized;
+						Windows.CapturableOverlay.WindowState = WindowState.Minimized;
+					}
 					Log.Info("Exited game");
 					Game.CurrentRegion = Region.UNKNOWN;
 					Log.Info("Reset region");
