@@ -60,8 +60,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => StepChange(gameState, game);
 				case TURN:
 					return () => TurnChange(gameState, game);
+				case STATE:
+					return () => StateChange(value, gameState);
 			}
 			return null;
+		}
+
+		private void StateChange(int value, IHsGameState gameState)
+		{
+			if(value != (int)State.COMPLETE)
+				return;
+			gameState.GameHandler.HandleGameEnd();
+			gameState.GameEnded = true;
 		}
 
 		private void TurnChange(IHsGameState gameState, IGame game)
@@ -247,19 +257,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case WON:
 					gameState.GameEndKeyPoint(true, id);
 					gameState.GameHandler.HandleWin();
-					gameState.GameHandler.HandleGameEnd();
-					gameState.GameEnded = true;
 					break;
 				case LOST:
 					gameState.GameEndKeyPoint(false, id);
 					gameState.GameHandler.HandleLoss();
-					gameState.GameHandler.HandleGameEnd();
-					gameState.GameEnded = true;
 					break;
 				case TIED:
 					gameState.GameEndKeyPoint(false, id);
 					gameState.GameHandler.HandleTied();
-					gameState.GameHandler.HandleGameEnd();
 					break;
 			}
 		}

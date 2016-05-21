@@ -24,6 +24,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 					return (int)ParseEnum<CardType>(rawValue);
 				case CLASS:
 					return (int)ParseEnum<CardClass>(rawValue);
+				case STATE:
+					return (int)ParseEnum<State>(rawValue);
 				default:
 					int value;
 					int.TryParse(rawValue, out value);
