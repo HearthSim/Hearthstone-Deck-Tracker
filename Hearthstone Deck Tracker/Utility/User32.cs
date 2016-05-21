@@ -205,7 +205,8 @@ namespace Hearthstone_Deck_Tracker
 			var hsHandle = GetHearthstoneWindow();
 			if(hsHandle == IntPtr.Zero)
 				return;
-			ActivateWindow(hsHandle);
+			if(Helper.GameWindowState == WindowState.Minimized)
+				ActivateWindow(hsHandle);
 			SetForegroundWindow(hsHandle);
 		}
 
