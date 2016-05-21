@@ -110,12 +110,12 @@ namespace Hearthstone_Deck_Tracker.LogReader
 					}
 					powerLines = _gameStatePowerLogReader.Collect();
 				});
-				ProcessNewLines();
 				if(powerLines.Any())
 				{
 					Core.Game.PowerLog.AddRange(powerLines.Select(x => x.Line));
 					powerLines.Clear();
 				}
+				ProcessNewLines();
 				await Task.Delay(UpdateDelay);
 			}
 			_running = false;
