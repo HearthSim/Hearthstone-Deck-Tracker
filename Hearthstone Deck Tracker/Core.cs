@@ -187,6 +187,7 @@ namespace Hearthstone_Deck_Tracker
 						if(hsForegroundChanged)
 						{
 							Helper.GameWindowState = WindowState.Normal;
+							Windows.CapturableOverlay?.ForceWindowState(WindowState.Normal);
 							Overlay.Update(true);
 							if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
 							{
@@ -203,7 +204,10 @@ namespace Hearthstone_Deck_Tracker
 					else if(!hsForegroundChanged)
 					{
 						if(User32.GetHearthstoneWindowState() == WindowState.Minimized)
+						{
 							Helper.GameWindowState = WindowState.Minimized;
+							Windows.CapturableOverlay?.ForceWindowState(WindowState.Minimized);
+						}
 						if(Config.Instance.WindowsTopmostIfHsForeground && Config.Instance.WindowsTopmost)
 						{
 							Windows.PlayerWindow.Topmost = false;
