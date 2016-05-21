@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows;
+using Point = System.Drawing.Point;
 
 #endregion
 
@@ -25,6 +27,9 @@ namespace Hearthstone_Deck_Tracker
 		public const int WsExTransparent = 0x00000020;
 		public const int WsExToolWindow = 0x00000080;
 		private const int GwlExstyle = (-20);
+		private const int GwlStyle = -16;
+		private const int WsMinimize = 0x20000000;
+		private const int WsMaximize = 0x1000000;
 		public const int SwRestore = 9;
 		private const int Alt = 0xA4;
 		private const int ExtendedKey = 0x1;
@@ -95,6 +100,17 @@ namespace Hearthstone_Deck_Tracker
 			MousePoint p;
 			GetCursorPos(out p);
 			return new Point(p.X, p.Y);
+		}
+
+		public static WindowState GetHearthstoneWindowState()
+		{
+			var hsWindow = GetHearthstoneWindow();
+			var state = GetWindowLong(hsWindow, GwlStyle);
+			if((state & WsMaximize) == WsMaximize)
+				return WindowState.Maximized;
+			if((state & WsMinimize) == WsMinimize)
+				return WindowState.Minimized;
+			return WindowState.Normal;
 		}
 
 		public static IntPtr GetHearthstoneWindow()

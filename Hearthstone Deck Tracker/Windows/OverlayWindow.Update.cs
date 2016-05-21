@@ -194,7 +194,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ShowOverlay(
 						!((Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
 						  || (Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator) || Config.Instance.HideOverlay
-						  || ForceHidden));
+						  || ForceHidden || Helper.GameWindowState == WindowState.Minimized));
 
 
 			var hsRect = User32.GetHearthstoneRect(true);
