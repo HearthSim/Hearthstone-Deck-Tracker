@@ -15,6 +15,7 @@
         <themes:ThemeManager x:Key="ThemeManager"/>
     </Window.Resources>
     <Grid Name="GridMain">
+        <Border BorderThickness="1" BorderBrush="Transparent">
         <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
             <StackPanel Orientation="Horizontal" Canvas.Right="0" Visibility="{Binding Path=BatteryStatusVisualVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                 <Rectangle Width="39" Height="20" Margin="5">
@@ -171,6 +172,7 @@
             <overlay:WotogCounter x:Name="WotogIconsPlayer" Canvas.Top="200" Canvas.Left="450"/>
             <overlay:WotogCounter x:Name="WotogIconsOpponent" Canvas.Top="300" Canvas.Left="450"/>
         </Canvas>
+        </Border>
 
     </Grid>
 </Window>
