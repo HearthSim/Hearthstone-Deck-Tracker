@@ -54,34 +54,56 @@ namespace Hearthstone_Deck_Tracker.Importing
 			return null;
 		}
 
+		private const int BrawlDeckType = 6;
 		public static List<ImportedDeck> FromConstructed()
 		{
 			try
 			{
-				var decks = Reflection.GetDecks().Where(x => x.Cards.Sum(c => c.Count) == 30).ToList();
+				var decks = Reflection.GetDecks().Where(x => x.Cards.Sum(c => c.Count) == 30 && x.Type != BrawlDeckType).ToList();
 				Log.Info($"Found {decks.Count} new decks");
-				var modifiedDecks = new List<ImportedDeck>();
-				foreach(var deck in decks)
-				{
-					var existing = DeckList.Instance.Decks.Select(x =>
-						new
-						{
-							IdMatch = x.HsId == deck.Id,
-							CardMatch = deck.Cards.All(c => x.VersionsIncludingSelf.Select(x.GetVersion).Any(v => v.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))),
-							Deck = x
-						}).Where(x => x.IdMatch || x.CardMatch).ToList();
-					if(!existing.Any())
-						modifiedDecks.Add(new ImportedDeck(deck, null));
-					else if(existing.Any(x => x.IdMatch ^ x.CardMatch))
-						modifiedDecks.Add(new ImportedDeck(deck, existing.Select(x => x.Deck).ToList()));
-				}
-				return modifiedDecks;
+				return GetImportedDecks(decks);
 			}
 			catch(Exception e)
 			{
 				Log.Error(e);
 			}
 			return new List<ImportedDeck>();
+		}
+
+		public static List<ImportedDeck> FromBrawl()
+		{
+			try
+			{
+				var decks = Reflection.GetDecks().Where(x => x.Type == BrawlDeckType).ToList();
+				Log.Info($"Found {decks.Count} new decks");
+				return GetImportedDecks(decks);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
+			return new List<ImportedDeck>();
+		}
+
+		private static List<ImportedDeck> GetImportedDecks(IEnumerable<HearthMirror.Objects.Deck> decks)
+		{
+			var importedDecks = new List<ImportedDeck>();
+			foreach (var deck in decks)
+			{
+				var existing = DeckList.Instance.Decks.Select(x =>
+					new
+					{
+						Deck = x,
+						IdMatch = x.HsId == deck.Id,
+						CardMatch = deck.Cards.All(c => x.VersionsIncludingSelf.Select(x.GetVersion)
+														 .Any(v => v.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
+					}).Where(x => x.IdMatch || x.CardMatch).ToList();
+				if (!existing.Any())
+					importedDecks.Add(new ImportedDeck(deck, null));
+				else if (existing.Any(x => x.IdMatch ^ x.CardMatch))
+					importedDecks.Add(new ImportedDeck(deck, existing.Select(x => x.Deck).ToList()));
+			}
+			return importedDecks;
 		}
 	}
 }

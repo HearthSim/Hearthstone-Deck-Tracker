@@ -16,6 +16,7 @@ using Microsoft.Win32;
 using Point = System.Drawing.Point;
 using HearthDb.Enums;
 using HearthMirror;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
@@ -422,9 +423,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ActivateWindow();
 		}
 
-		private async void BtnConstructed_Click(object sender, RoutedEventArgs e)
+		private void BtnConstructed_Click(object sender, RoutedEventArgs e) => ShowImportDialog(false);
+
+		private void BtnBrawl_Click(object sender, RoutedEventArgs e) => ShowImportDialog(true);
+
+		private async void ShowImportDialog(bool brawl)
 		{
-			DeckImportingFlyout.Reset();
+			DeckImportingFlyout.Reset(brawl);
 			FlyoutDeckImporting.IsOpen = true;
 			if(!Core.Game.IsRunning)
 			{
@@ -433,13 +438,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 					await Task.Delay(500);
 			}
 			DeckImportingFlyout.StartedGame();
-			if(Core.Game.CurrentMode != Mode.TOURNAMENT)
+			var mode = brawl ? Mode.TAVERN_BRAWL : Mode.TOURNAMENT;
+			if(Core.Game.CurrentMode != mode)
 			{
-				Log.Info("Waiting for tournament screen...");
-				while(Core.Game.CurrentMode != Mode.TOURNAMENT)
+				Log.Info($"Waiting for {mode} screen...");
+				while(Core.Game.CurrentMode != mode)
 					await Task.Delay(500);
 			}
-			var decks = DeckImporter.FromConstructed();
+			var decks = brawl ? DeckImporter.FromBrawl() : DeckImporter.FromConstructed();
 			DeckImportingFlyout.SetDecks(decks);
 		}
 

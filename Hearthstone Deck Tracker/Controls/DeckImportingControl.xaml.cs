@@ -18,14 +18,21 @@ namespace Hearthstone_Deck_Tracker.Controls
 {
 	public partial class DeckImportingControl : INotifyPropertyChanged
 	{
-		private const string StartText = "Start Hearthstone and enter the 'Play' menu.";
-		private const string StartTextGameRunning = "Enter the 'Play' menu.";
+		private const string StartTextConstructed = "Start Hearthstone and enter the 'Play' menu.";
+		private const string StartTextConstructedGameRunning = "Enter the 'Play' menu.";
+		private const string StartTextBrawl = "Start Hearthstone and enter the 'Tavern Brawl' menu.";
+		private const string StartTextBrawlGameRunning = "Enter the 'Tavern Brawl' menu.";
 		private const string NoDecksFoundText = "No new decks found.";
 		private const string StartHearthstoneText = "START LAUNCHER / HEARTHSTONE";
 		private const string StartHearthstoneWaitingText = "WAITING FOR HEARTHSTONE...";
 
+		private string StartText => _brawl ? StartTextBrawl : StartTextConstructed;
+		private string StartTextGameRunning => _brawl ? StartTextBrawlGameRunning : StartTextConstructedGameRunning;
+
+
+		private bool _brawl;
 		private bool _ready;
-		private string _text = StartText;
+		private string _text;
 
 		public DeckImportingControl()
 		{
@@ -66,8 +73,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public void Reset()
+		public void Reset(bool brawl)
 		{
+			_brawl = brawl;
 			_ready = false;
 			Text = Core.Game.IsRunning ? StartTextGameRunning : StartText;
 			UpdateContent();
@@ -117,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				if(deck.SelectedImportOption is NewDeck)
 				{
 					Log.Info($"Saving {deck.Deck.Name} as new deck.");
-					DeckList.Instance.Decks.Add(new Deck
+					var newDeck = new Deck
 					{
 						Class = deck.Class,
 						Name = deck.Deck.Name,
@@ -129,7 +137,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 							return card;
 						})),
 						IsArenaDeck = false
-					});
+					};
+					if(_brawl)
+						newDeck.Tags.Add("Brawl");
+					DeckList.Instance.Decks.Add(newDeck);
 				}
 				else
 				{
@@ -138,6 +149,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 						return;
 					var target = existing.Deck;
 					target.HsId = deck.Deck.Id;
+					if(_brawl && !target.Tags.Any(x => x.ToUpper().Contains("BRAWL")))
+						target.Tags.Add("Brawl");
 					if(existing.NewVersion.Major == 0)
 						Log.Info($"Assinging id to existing deck: {deck.Deck.Name}.");
 					else
