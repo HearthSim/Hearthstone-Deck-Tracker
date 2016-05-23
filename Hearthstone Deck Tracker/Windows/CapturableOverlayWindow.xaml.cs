@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public WindowState? ForcedWindowState { get; internal set; } = WindowState.Minimized;
 
-		public Visual Visual => Core.Overlay.CanvasInfo;
+		public Visual Visual => Core.Overlay.GridMain;
 
 		public SolidColorBrush BackgroundColor => Helper.BrushFromHex(Config.Instance.StreamingOverlayBackground);
 
@@ -35,6 +35,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void Update()
 		{
 			var state = Helper.GameWindowState;
+			if(state == WindowState.Maximized)
+				state = WindowState.Normal;
 			if(_activated && state != WindowState.Minimized)
 			{
 				_activated = false;
