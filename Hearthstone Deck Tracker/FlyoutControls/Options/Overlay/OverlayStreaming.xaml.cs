@@ -16,6 +16,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			InitializeComponent();
 			CheckBoxShowCapOverlay.IsChecked = Config.Instance.ShowCapturableOverlay;
+			CheckBoxDisableOpacityTransition.IsChecked = !Config.Instance.OverlayCardAnimationsOpacity;
 			_initialized = true;
 		}
 
@@ -64,5 +65,21 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private void Hyperlink_OnClick(object sender, RoutedEventArgs e) 
 			=> Helper.TryOpenUrl("https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Streaming-Instructions");
+
+		private void CheckBoxDisableOpacityTransition_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlayCardAnimationsOpacity = false;
+			Config.Save();
+		}
+
+		private void CheckBoxDisableOpacityTransition_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlayCardAnimationsOpacity = true;
+			Config.Save();
+		}
 	}
 }

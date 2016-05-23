@@ -47,7 +47,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxBatteryStatusText.IsChecked = Config.Instance.ShowBatteryLifePercent;
 			CheckBoxFlavorText.IsChecked = Config.Instance.ShowFlavorText;
 			CheckBoxOverlayUseAnimations.IsChecked = Config.Instance.OverlayCardAnimations;
-			CheckBoxOverlayUseAnimationsOpacity.IsChecked = Config.Instance.OverlayCardAnimationsOpacity;
 			_initialized = true;
 		}
 
@@ -441,22 +440,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.OverlayCardAnimations = false;
-			Config.Save();
-		}
-
-		private void CheckBoxOverlayUseAnimationsOpacity_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OverlayCardAnimationsOpacity = true;
-			Config.Save();
-		}
-
-		private void CheckBoxOverlayUseAnimationsOpacityy_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OverlayCardAnimationsOpacity = false;
 			Config.Save();
 		}
 	}

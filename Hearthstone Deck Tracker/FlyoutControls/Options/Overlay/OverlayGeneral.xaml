@@ -73,15 +73,6 @@
                               Checked="CheckboxOverlayUseAnimations_Checked"
                               Unchecked="CheckboxOverlayUseAnimations_Unchecked"
                               HorizontalAlignment="Left" />
-                    <CheckBox x:Name="CheckBoxOverlayUseAnimationsOpacity"
-                              ToolTip="Disable this if you want to capture and chromakey the deck windows."
-                              Content="Transition opacity" Margin="30,5,0,0"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              VerticalAlignment="Top"
-                              Checked="CheckBoxOverlayUseAnimationsOpacity_Checked"
-                              Unchecked="CheckBoxOverlayUseAnimationsOpacityy_Unchecked"
-                              HorizontalAlignment="Left" />
                     <CheckBox x:Name="CheckboxOverlayCardMarkToolTips" Content="Card mark tooltips"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

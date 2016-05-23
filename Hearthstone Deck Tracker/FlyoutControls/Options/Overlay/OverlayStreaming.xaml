@@ -9,6 +9,8 @@
         <StackPanel>
             <CheckBox Margin="5,5,0,0" Name="CheckBoxShowCapOverlay" Content="Show capturable overlay window" 
                       Checked="CheckBoxShowCapOverlay_OnChecked" Unchecked="CheckBoxShowCapOverlay_OnUnchecked"/>
+            <CheckBox Margin="5,5,0,0" Name="CheckBoxDisableOpacityTransition" Content="Disable card opacity transitions (recommended)" 
+                              Checked="CheckBoxDisableOpacityTransition_Checked" Unchecked="CheckBoxDisableOpacityTransition_Unchecked" />
             <DockPanel Margin="0,5,0,0">
                 <Label Content="Background:" DockPanel.Dock="Left" />
                 <Border Width="26" Height="26" Background="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType=UserControl}}" 
@@ -18,7 +20,7 @@
                                  TextWrapping="Wrap" Text="#FF00FF" VerticalAlignment="Top"
                                  Width="127" TextChanged="TextboxBackground_TextChanged" />
             </DockPanel>
-            <TextBlock Margin="5,10,5,5" TextWrapping="Wrap">
+            <TextBlock Margin="5,15,5,5" TextWrapping="Wrap">
                 <Run>This will add a chroma-key-able copy of the overlay behind your Hearthstone window.</Run>
                 <LineBreak/>
                 <LineBreak/>
@@ -26,7 +28,7 @@
             </TextBlock>
             <TextBlock Margin="5,5,0,0" FontWeight="SemiBold">
                 <Hyperlink Click="Hyperlink_OnClick">
-                    Show instructions for getting started on the wiki
+                    Show instructions for getting started (opens wiki)
                 </Hyperlink>
             </TextBlock>
         </StackPanel>
