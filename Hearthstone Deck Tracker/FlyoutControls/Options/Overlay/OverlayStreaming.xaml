@@ -18,7 +18,13 @@
                                  TextWrapping="Wrap" Text="#FF00FF" VerticalAlignment="Top"
                                  Width="127" TextChanged="TextboxBackground_TextChanged" />
             </DockPanel>
-            <TextBlock Margin="5,10,0,0" FontWeight="SemiBold">
+            <TextBlock Margin="5,10,5,5" TextWrapping="Wrap">
+                <Run>This will add a chroma-key-able copy of the overlay behind your Hearthstone window.</Run>
+                <LineBreak/>
+                <LineBreak/>
+                <Run>Note: The overlay copy may show up in front Hearthstone once. Clicking it will hide it for the rest of the session.</Run>
+            </TextBlock>
+            <TextBlock Margin="5,5,0,0" FontWeight="SemiBold">
                 <Hyperlink Click="Hyperlink_OnClick">
                     Show instructions for getting started on the wiki
                 </Hyperlink>
