@@ -293,13 +293,17 @@
                         </Rectangle>
                     </MenuItem.Icon>
                     <MenuItem Header="FROM _WEB" Click="BtnWeb_Click" />
-                    <MenuItem Header="FROM GAME: _ARENA" Click="BtnArena_Click" Name="MenuItemImportArena" ToolTip="Instructions can be found in options > importing"/>
+                    <Separator/>
                     <MenuItem Header="FROM GAME: _CONSTRUCTED" Click="BtnConstructed_Click" Name="MenuItemImportConstructed" />
+                    <MenuItem Header="FROM GAME: _ARENA" Click="BtnArena_Click" Name="MenuItemImportArena" />
                     <MenuItem Header="FROM GAME: _TAVERN BRAWL" Click="BtnBrawl_Click" Name="MenuItemImportBrawl" />
-                    <MenuItem Header="FROM _FILE" Click="BtnFile_Click" />
-                    <MenuItem Header="FROM _ID STRING" Click="BtnIdString_Click" />
-                    <MenuItem Header="FROM CLIPBOARD: _CARD NAMES" Click="BtnClipboardText_Click" />
-                    <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click" />
+                    <Separator/>
+                    <MenuItem Header="OTHER">
+                        <MenuItem Header="FROM _FILE" Click="BtnFile_Click" />
+                        <MenuItem Header="FROM _ID STRING" Click="BtnIdString_Click" />
+                        <MenuItem Header="FROM CLIPBOARD: _CARD NAMES" Click="BtnClipboardText_Click" />
+                        <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click" />
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="E_XPORT" Name="MenuItemExport">
                     <MenuItem.Icon>
