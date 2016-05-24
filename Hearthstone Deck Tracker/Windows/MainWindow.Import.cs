@@ -459,7 +459,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BtnBrawl_Click(object sender, RoutedEventArgs e) => ShowImportDialog(true);
 
-		private async void ShowImportDialog(bool brawl)
+		internal async void ShowImportDialog(bool brawl)
 		{
 			DeckImportingFlyout.Reset(brawl);
 			FlyoutDeckImporting.IsOpen = true;
@@ -479,58 +479,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			var decks = brawl ? DeckImporter.FromBrawl() : DeckImporter.FromConstructed();
 			DeckImportingFlyout.SetDecks(decks);
-		}
-
-		public async Task ImportConstructedDeck()
-		{
-			if(Config.Instance.ShowConstructedImportMessage || Core.Game.PossibleConstructedCards.Count < 10)
-			{
-				if(Config.Instance.ShowConstructedImportMessage)
-				{
-					var result =
-						await
-						this.ShowMessageAsync("Setting up",
-						                      "This functionality requires a quick semi-automatic setup. HDT needs to know whichs cards on the first page for each class exist as golden and normal.\n\nYou may have to run the setup again if those cards change: 'options > tracker > importing'",
-						                      MessageDialogStyle.AffirmativeAndNegative,
-						                      new MessageDialogs.Settings {AffirmativeButtonText = "start", NegativeButtonText = "cancel"});
-					if(result != MessageDialogResult.Affirmative)
-						return;
-					await Helper.SetupConstructedImporting(Core.Game);
-					Config.Instance.ShowConstructedImportMessage = false;
-					Config.Save();
-				}
-				await
-					this.ShowMessageAsync("How this works:",
-					                      "0) Build your deck\n\n1) Go to the main menu (always start from here)\n\n2) Open \"My Collection\" and open the deck you want to import (do not edit the deck at this point)\n\n3) Go straight back to the main menu\n\n4) Press \"IMPORT > FROM GAME: CONSTRUCTED\"\n\n5) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. Depening on what requires less clicks, non-legendary cards will default to 1 or 2. There may issues importing druid cards that exist as normal and golden on your first page.\n\nYou can see this information again in 'options > tracker > importing'");
-				if(Core.Game.PossibleConstructedCards.Count(c => c.PlayerClass == "Druid" || c.PlayerClass == null) < 10
-				   && Core.Game.PossibleConstructedCards.Count(c => c.PlayerClass != "Druid") < 10)
-					return;
-			}
-
-
-			var deck = new Deck();
-			var lastNonNeutralCard = Core.Game.PossibleConstructedCards.LastOrDefault(c => !string.IsNullOrEmpty(c.PlayerClass));
-			if(lastNonNeutralCard == null)
-				return;
-			deck.Class = lastNonNeutralCard.PlayerClass;
-
-			var legendary = Core.Game.PossibleConstructedCards.Where(c => c.Rarity == Rarity.LEGENDARY).ToList();
-			var remaining =
-				Core.Game.PossibleConstructedCards.Where(
-				                                         c =>
-				                                         c.Rarity != Rarity.LEGENDARY
-				                                         && (string.IsNullOrEmpty(c.PlayerClass) || c.PlayerClass == deck.Class)).ToList();
-			var count = Math.Abs(30 - (2 * remaining.Count + legendary.Count)) < Math.Abs(30 - (remaining.Count + legendary.Count)) ? 2 : 1;
-			foreach(var card in Core.Game.PossibleConstructedCards)
-			{
-				if(!string.IsNullOrEmpty(card.PlayerClass) && card.PlayerClass != deck.Class)
-					continue;
-				card.Count = card.Rarity == Rarity.LEGENDARY ? 1 : count;
-				deck.Cards.Add(card);
-				if(deck.Class == null && card.GetPlayerClass != "Neutral")
-					deck.Class = card.GetPlayerClass;
-			}
-			SetNewDeck(deck);
 		}
 	}
 }

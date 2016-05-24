@@ -8,9 +8,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 {
 	public static class HsLogReaderConstants
 	{
-		public static readonly Regex CardAlreadyInCacheRegex =
-			new Regex(@"somehow\ the\ card\ def\ for\ (?<id>(\w+_\w+))\ was\ already\ in\ the\ cache...");
-
 		public static readonly Regex GoldProgressRegex = new Regex(@"(?<wins>(\d))/3 wins towards 10 gold");
 		public static readonly Regex GoldRewardRegex = new Regex(@"GoldRewardData: Amount=(?<amount>(\d+))");
 		public static readonly Regex DustRewardRegex = new Regex(@"ArcaneDustRewardData: Amount=(?<amount>(\d+))");
@@ -20,8 +17,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public static readonly Regex CardMovementRegex =
 			new Regex(@"\w*(cardId=(?<Id>(\w*))).*(zone\ from\ (?<from>((\w*)\s*)*))((\ )*->\ (?<to>(\w*\s*)*))*.*");
 
-		public static readonly Regex ExistingHeroRegex = new Regex(@"Draft Deck ID: .*, Hero Card = (?<id>(HERO_\w+))");
-		public static readonly Regex ExistingCardRegex = new Regex(@"Draft deck contains card (?<id>(\w+))");
 		public static readonly Regex NewChoiceRegex = new Regex(@"Client chooses: .* \((?<id>(.+))\)");
 		public static readonly Regex GameModeRegex = new Regex(@"prevMode=(?<prev>(\w+)).*currMode=(?<curr>(\w+))");
 		public static readonly Regex ConnectionRegex = new Regex(@"ConnectAPI\.GotoGameServer -- address=(?<address>(.*)), game=(?<game>(.*)), client=(?<client>(.*)), spectateKey=(?<spectateKey>(.*)),? reconn");
@@ -35,7 +30,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			ContainsFilters = new[] {"Begin Spectating", "Start Spectator", "End Spectator"}
 		};
 
-		public static LogReaderInfo AssetLogReaderInfo => new LogReaderInfo {Name = "Asset"};
 		public static LogReaderInfo BobLogReaderInfo => new LogReaderInfo {Name = "Bob"};
 		public static LogReaderInfo RachelleLogReaderInfo => new LogReaderInfo {Name = "Rachelle"};
 		public static LogReaderInfo ArenaLogReaderInfo => new LogReaderInfo {Name = "Arena"};

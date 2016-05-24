@@ -24,7 +24,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private static readonly List<LogReader> LogReaders = new List<LogReader>();
 		private static readonly PowerHandler PowerLineHandler = new PowerHandler();
 		private static readonly RachelleHandler RachelleHandler = new RachelleHandler();
-		private static readonly AssetHandler AssetHandler = new AssetHandler();
 		private static readonly BobHandler BobHandler = new BobHandler();
 		private static readonly ArenaHandler ArenaHandler = new ArenaHandler();
 		private static readonly NetHandler NetHandler = new NetHandler();
@@ -48,7 +47,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			LogReaders.Add(_netLogReader);
 			LogReaders.Add(new LogReader(BobLogReaderInfo));
 			LogReaders.Add(new LogReader(RachelleLogReaderInfo));
-			LogReaders.Add(new LogReader(AssetLogReaderInfo));
 			LogReaders.Add(new LogReader(ArenaLogReaderInfo));
 			LogReaders.Add(new LogReader(LoadingScreenLogReaderInfo));
 			LogReaders.Add(new LogReader(FullScreenFxLogReaderInfo));
@@ -167,7 +165,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_game = game;
 			_gameState = new HsGameState(game);
 			_gameState.GameHandler = new GameEventHandler(game);
-			_gameState.GameHandler.ResetConstructedImporting();
 			_gameState.Reset();
 		}
 
@@ -187,10 +184,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						case "Power":
 							PowerLineHandler.Handle(line.Line, _gameState, _game);
 							OnPowerLogLine.Execute(line.Line);
-							break;
-						case "Asset":
-							AssetHandler.Handle(line.Line, _gameState, _game);
-							OnAssetLogLine.Execute(line.Line);
 							break;
 						case "Bob":
 							BobHandler.Handle(line.Line, _gameState, _game);

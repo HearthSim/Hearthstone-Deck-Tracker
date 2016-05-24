@@ -28,13 +28,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				game.CurrentGameMode = newMode.Value;
 			if(game.PreviousMode == Mode.GAMEPLAY)
 				gameState.GameHandler.HandleInMenu();
-			switch(game.CurrentMode)
-			{
-				case Mode.COLLECTIONMANAGER:
-				case Mode.TAVERN_BRAWL:
-					gameState.GameHandler.ResetConstructedImporting();
-					break;
-			}
 		}
 
 		private GameMode? GetGameMode(Mode mode)

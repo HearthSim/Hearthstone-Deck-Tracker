@@ -34,7 +34,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Opponent = new Player(this, false);
 			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
-			PossibleConstructedCards = new List<Card>();
 			OpponentSecrets = new OpponentSecrets(this);
 			Reset();
 		}
@@ -60,7 +59,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public GameStats CurrentGameStats { get; set; }
 		public OpponentSecrets OpponentSecrets { get; set; }
 		public List<Card> DrawnLastGame { get; set; }
-		public List<Card> PossibleConstructedCards { get; set; }
 		public Dictionary<int, Entity> Entities { get; } = new Dictionary<int, Entity>();
 		public GameMetaData MetaData { get; } = new GameMetaData();
 		internal List<Tuple<string, List<string>>> StoredPowerLogs { get; } = new List<Tuple<string, List<string>>>();
@@ -159,8 +157,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Core.UpdateOpponentCards(true);
 			}
 		}
-
-		public void ResetConstructedCards() => PossibleConstructedCards.Clear();
 
 		public async Task GameModeDetection(int timeoutInSeconds = 300)
 		{

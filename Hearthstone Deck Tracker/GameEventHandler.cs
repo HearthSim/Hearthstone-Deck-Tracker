@@ -31,7 +31,6 @@ namespace Hearthstone_Deck_Tracker
 {
 	public class GameEventHandler : IGameHandler
 	{
-		private const int MaxCardsOnCollectionPage = 8;
 		private const int MaxRankDetectionTries = 2;
 		private const int AvengeDelay = 50;
 		private readonly GameV2 _game;
@@ -45,7 +44,6 @@ namespace Hearthstone_Deck_Tracker
 		private Entity _defendingEntity;
 		private bool _doneImportingConstructed;
 		private bool _handledGameEnd;
-		private List<string> _ignoreCachedIds;
 		private GameStats _lastGame;
 		private DateTime _lastGameStart;
 		private int _lastManaCost;
@@ -77,48 +75,6 @@ namespace Hearthstone_Deck_Tracker
 			_doneImportingConstructed = false;
 			_lastManaCost = 0;
 			_unloadedCardCount = 0;
-			_ignoreCachedIds = new List<string>(Config.Instance.ConstructedImportingIgnoreCachedIds);
-			_game.ResetConstructedCards();
-		}
-
-		public void HandlePossibleConstructedCard(string id, bool canBeDoneImporting)
-		{
-			if(_doneImportingConstructed)
-				return;
-			var card = Database.GetCardFromId(id);
-			if(card == null || !Database.IsActualCard(card))
-				return;
-			if(canBeDoneImporting)
-			{
-				_unloadedCardCount++;
-				var containsOtherThanDruid =
-					_game.PossibleConstructedCards.Any(c => !string.IsNullOrEmpty(c.PlayerClass) && c.PlayerClass != "Druid");
-				var cardCount =
-					_game.PossibleConstructedCards.Where(c => !Config.Instance.ConstructedImportingIgnoreCachedIds.Contains(c.Id))
-					     .Count(c => (!containsOtherThanDruid || c.PlayerClass != "Druid"));
-				if(_unloadedCardCount > MaxCardsOnCollectionPage && card.Cost < _lastManaCost && cardCount > 10)
-				{
-					_doneImportingConstructed = true;
-					return;
-				}
-				_lastManaCost = card.Cost;
-			}
-			else
-			{
-				if(Helper.SettingUpConstructedImporting)
-				{
-					if(!_game.PossibleConstructedCards.Contains(card))
-						_game.PossibleConstructedCards.Add(card);
-					return;
-				}
-				if(_ignoreCachedIds.Contains(card.Id))
-				{
-					_ignoreCachedIds.Remove(card.Id);
-					return;
-				}
-			}
-			if(!_game.PossibleConstructedCards.Contains(card))
-				_game.PossibleConstructedCards.Add(card);
 		}
 
 		public async void HandleInMenu()

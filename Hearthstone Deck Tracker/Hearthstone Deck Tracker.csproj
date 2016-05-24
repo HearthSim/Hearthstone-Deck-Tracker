@@ -453,7 +453,6 @@
     <Compile Include="Hearthstone\Mechanic.cs" />
     <Compile Include="Hearthstone\Player.cs" />
     <Compile Include="LogReader\Handlers\ArenaHandler.cs" />
-    <Compile Include="LogReader\Handlers\AssetHandler.cs" />
     <Compile Include="LogReader\Handlers\BobHandler.cs" />
     <Compile Include="LogReader\Handlers\PowerHandler.cs" />
     <Compile Include="LogReader\HsGameState.cs" />

@@ -376,22 +376,6 @@ namespace Hearthstone_Deck_Tracker
 			return long.TryParse(unixTime, out time) ? FromUnixTime(time) : DateTime.Now;
 		}
 
-		public static async Task SetupConstructedImporting(GameV2 game)
-		{
-			var settings = new MessageDialogs.Settings {AffirmativeButtonText = "continue"};
-			if(!game.IsRunning)
-				await Core.MainWindow.ShowMessageAsync("Step 0:", "Start Hearthstone", settings: settings);
-			await Core.MainWindow.ShowMessageAsync("Step 1:", "Go to the main menu", settings: settings);
-			SettingUpConstructedImporting = true;
-			await
-				Core.MainWindow.ShowMessageAsync("Step 2:",
-												 "Open \"My Collection\" and click each class icon at the top once.\n\n- Do not click on neutral\n- Do not open any decks\n- Do not flip the pages.",
-												 settings: new MessageDialogs.Settings {AffirmativeButtonText = "done"});
-			Config.Instance.ConstructedImportingIgnoreCachedIds = game.PossibleConstructedCards.Select(c => c.Id).ToArray();
-			Config.Save();
-			SettingUpConstructedImporting = false;
-		}
-
 		public static Rectangle GetHearthstoneRect(bool dpiScaling) => User32.GetHearthstoneRect(dpiScaling);
 
 		public static string ParseDeckNameTemplate(string template) => ParseDeckNameTemplate(template, null);

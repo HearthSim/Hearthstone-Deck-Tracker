@@ -27,12 +27,6 @@
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </DockPanel>
-                            <CheckBox Name="CheckboxUseOldArenaImporting" Content="Use old arena importing method"
-                                      Margin="10,5,0,0" Checked="CheckboxUseOldArenaImporting_OnChecked"
-                                      Unchecked="CheckboxUseOldArenaImporting_OnUnchecked" />
-                            <Button Name="BtnArenaHowTo" Margin="10,5,10,0" HorizontalAlignment="Stretch"
-                                    Content="SHOW ARENA IMPORTING HOW-TO" Click="ButtonArenaHowTo_OnClick"
-                                    IsEnabled="False" />
                             <GroupBox Header="Arena deck name template">
                                 <DockPanel>
                                     <TextBlock Text="Templates: {Class}, {Date FORMAT}" DockPanel.Dock="Bottom"
@@ -66,10 +60,6 @@
                             Download NetDeck (Chrome ext.)
                         </Hyperlink>
                     </TextBlock>
-                    <Button Margin="10,5,10,0" HorizontalAlignment="Stretch"
-                            Content="SHOW CONSTRUCTED IMPORTING HOW-TO" Click="ButtonConstructedHowTo_OnClick" />
-                    <Button Margin="10,5,10,0" HorizontalAlignment="Stretch" Content="SET UP CONSTRUCTED IMPORTING"
-                            Click="ButtonSetUpConstructed_OnClick" />
                     <Button Margin="10,10,10,0" HorizontalAlignment="Stretch" Content="ACTIVATE HDT PROTOCOL"
                             Click="ButtonActivateHdtProtocol_OnClick" />
                 </StackPanel>
