@@ -21,13 +21,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class GameV2 : IGame
 	{
-		public readonly List<Deck> IgnoredArenaDecks = new List<Deck>();
-		private bool _awaitingMainWindowOpen;
+		public readonly List<long> IgnoredArenaDecks = new List<long>();
 		private GameMode _currentGameMode;
 		private bool _gameModeDetectionComplete;
 
 		private bool _gameModeDetectionRunning;
-		public Deck TempArenaDeck = new Deck();
 		private Mode _currentMode;
 
 		public GameV2()
@@ -36,7 +34,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Opponent = new Player(this, false);
 			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
-			PossibleArenaCards = new List<Card>();
 			PossibleConstructedCards = new List<Card>();
 			OpponentSecrets = new OpponentSecrets(this);
 			Reset();
@@ -63,7 +60,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public GameStats CurrentGameStats { get; set; }
 		public OpponentSecrets OpponentSecrets { get; set; }
 		public List<Card> DrawnLastGame { get; set; }
-		public List<Card> PossibleArenaCards { get; set; }
 		public List<Card> PossibleConstructedCards { get; set; }
 		public Dictionary<int, Entity> Entities { get; } = new Dictionary<int, Entity>();
 		public GameMetaData MetaData { get; } = new GameMetaData();
@@ -164,8 +160,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public void ResetArenaCards() => PossibleArenaCards.Clear();
-
 		public void ResetConstructedCards() => PossibleConstructedCards.Clear();
 
 		public async Task GameModeDetection(int timeoutInSeconds = 300)
@@ -216,94 +210,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			StoredPowerLogs.Clear();
 			StoredPlayerNames.Clear();
 			StoredGameStats = null;
-		}
-
-		public void NewArenaDeck(string heroId)
-		{
-			TempArenaDeck = new Deck
-			{
-				IsArenaDeck = true,
-				Class = Database.GetHeroNameFromId(heroId)
-			};
-			TempArenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, TempArenaDeck);
-			Log.Info("Created new arena deck: " + TempArenaDeck.Class);
-		}
-
-		public void NewArenaCard(string cardId)
-		{
-			if(TempArenaDeck == null || string.IsNullOrEmpty(cardId))
-				return;
-			var existingCard = TempArenaDeck.Cards.FirstOrDefault(c => c.Id == cardId);
-			if(existingCard != null)
-				existingCard.Count++;
-			else
-				TempArenaDeck.Cards.Add((Card)Database.GetCardFromId(cardId).Clone());
-			var numCards = TempArenaDeck.Cards.Sum(c => c.Count);
-			Log.Info($"Added new card to arena deck: {cardId} ({numCards}/30)");
-			if(numCards == 30)
-			{
-				Log.Info("Found complete arena deck!");
-				if(!Config.Instance.SelectedArenaImportingBehaviour.HasValue)
-				{
-					Log.Info("...but we are using the old importing method.");
-					return;
-				}
-				var recentArenaDecks = DeckList.Instance.Decks.Where(d => d.IsArenaDeck).OrderByDescending(d => d.LastPlayedNewFirst).Take(15);
-				if(recentArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
-				{
-					Log.Info("...but we already have that one. Discarding.");
-					TempArenaDeck.Cards.Clear();
-					return;
-				}
-				if(IgnoredArenaDecks.Any(d => d.Cards.All(c => TempArenaDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
-				{
-					Log.Info("...but it was already discarded by the user. No automatic action taken.");
-					return;
-				}
-				if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoImportSave)
-				{
-					Log.Info("...auto saving new arena deck.");
-					Core.MainWindow.SetNewDeck(TempArenaDeck);
-					Core.MainWindow.SaveDeck(false, TempArenaDeck.Version);
-					TempArenaDeck.Cards.Clear();
-				}
-				else if(Config.Instance.SelectedArenaImportingBehaviour.Value == ArenaImportingBehaviour.AutoAsk)
-				{
-					ShowNewArenaDeckMessageAsync((Deck)TempArenaDeck.Clone());
-					TempArenaDeck.Cards.Clear();
-				}
-			}
-		}
-
-		private async void ShowNewArenaDeckMessageAsync(Deck deck)
-		{
-			if(_awaitingMainWindowOpen)
-				return;
-			_awaitingMainWindowOpen = true;
-
-			if(Core.MainWindow.WindowState == WindowState.Minimized)
-				Core.TrayIcon.ShowMessage("New arena deck detected!");
-
-			while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
-				await Task.Delay(100);
-
-			var result =
-				await
-				Core.MainWindow.ShowMessageAsync("New arena deck detected!",
-												 "You can change this behaviour to \"auto save&import\" or \"manual\" in [options > tracker > importing]",
-												 MessageDialogStyle.AffirmativeAndNegative,
-												 new MessageDialogs.Settings {AffirmativeButtonText = "import", NegativeButtonText = "cancel"});
-
-			if(result == MessageDialogResult.Affirmative)
-			{
-				Log.Info("...saving new arena deck.");
-				Core.MainWindow.SetNewDeck(deck);
-				Core.MainWindow.ActivateWindow();
-			}
-			else
-				Log.Info("...discarded by user.");
-			IgnoredArenaDecks.Add(deck);
-			_awaitingMainWindowOpen = false;
 		}
 
 		#region Database - Obsolete

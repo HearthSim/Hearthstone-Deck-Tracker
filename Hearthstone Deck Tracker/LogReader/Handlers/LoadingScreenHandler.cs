@@ -34,9 +34,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case Mode.TAVERN_BRAWL:
 					gameState.GameHandler.ResetConstructedImporting();
 					break;
-				case Mode.DRAFT:
-					game.ResetArenaCards();
-					break;
 			}
 		}
 

@@ -30,7 +30,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleTied();
 		void ResetConstructedImporting();
 		void HandlePossibleConstructedCard(string id, bool canBeDoneImporting);
-		void HandlePossibleArenaCard(string id);
 		void SetGameMode(GameMode mode);
 		void HandleInMenu();
 		void HandleConcede();

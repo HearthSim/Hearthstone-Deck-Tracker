@@ -1,9 +1,12 @@
 #region
 
 using System;
+using System.Linq;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Windows;
 using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
 
 #endregion
@@ -12,59 +15,25 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	public class ArenaHandler
 	{
-		private DateTime _lastChoice = DateTime.MinValue;
-		private string _lastChoiceId = "";
-
-		public void Handle(string logLine, IHsGameState gameState, IGame game)
+		public void Handle(LogLineItem logLine, IHsGameState gameState, IGame game)
 		{
-			var match = ExistingHeroRegex.Match(logLine);
-			if(match.Success)
-				game.NewArenaDeck(match.Groups["id"].Value);
-			else
+			if(!logLine.Line.Contains("SetDraftMode - ACTIVE_DRAFT_DECK") || (DateTime.Now - logLine.Time).TotalSeconds > 5)
+				return;
+			var deck = HearthMirror.Reflection.GetArenaDeck();
+			if(deck?.Deck.Cards.Sum(x => x.Count) != 30)
+				return;
+			Log.Info($"Found new {deck.Deck.Hero} arena deck!");
+			var recentArenaDecks = DeckList.Instance.Decks.Where(d => d.IsArenaDeck && d.Cards.Sum(x => x.Count) == 30).OrderByDescending(d => d.LastPlayedNewFirst).Take(15);
+			if(recentArenaDecks.Any(d => d.Cards.All(c => deck.Deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
+				Log.Info("...but we already have that one. Discarding.");
+			else if(Core.Game.IgnoredArenaDecks.Contains(deck.Deck.Id))
+				Log.Info("...but it was already discarded by the user. No automatic action taken.");
+			else if(Config.Instance.SelectedArenaImportingBehaviour == ArenaImportingBehaviour.AutoAsk)
+				Core.MainWindow.ShowNewArenaDeckMessageAsync(deck.Deck);
+			else if(Config.Instance.SelectedArenaImportingBehaviour == ArenaImportingBehaviour.AutoImportSave)
 			{
-				match = ExistingCardRegex.Match(logLine);
-				if(match.Success)
-				{
-					try
-					{
-						game.NewArenaCard(match.Groups["id"].Value);
-					}
-					catch(Exception ex)
-					{
-						Log.Error("Error adding arena card: " + ex);
-					}
-				}
-				else
-				{
-					match = NewChoiceRegex.Match(logLine);
-					if(!match.Success)
-						return;
-					if(Database.GetHeroNameFromId(match.Groups["id"].Value, false) != null)
-						game.NewArenaDeck(match.Groups["id"].Value);
-					else
-					{
-						var cardId = match.Groups["id"].Value;
-							var timeSinceLastChoice = DateTime.Now.Subtract(_lastChoice).TotalMilliseconds;
-
-						if(_lastChoiceId == cardId && timeSinceLastChoice < 1000)
-						{
-							Log.Warn($"Card with the same ID ({cardId}) was chosen less {timeSinceLastChoice} ms ago. Ignoring.");
-							return;
-						}
-
-						try
-						{
-							game.NewArenaCard(cardId);
-						}
-						catch(Exception ex)
-						{
-							Log.Error("Error adding arena card: " + ex);
-						}
-
-						_lastChoice = DateTime.Now;
-						_lastChoiceId = cardId;
-					}
-				}
+				Log.Info("...auto saving new arena deck.");
+				Core.MainWindow.ImportArenaDeck(deck.Deck);
 			}
 		}
 	}

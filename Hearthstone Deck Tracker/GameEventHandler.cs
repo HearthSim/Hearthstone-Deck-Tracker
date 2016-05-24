@@ -121,15 +121,6 @@ namespace Hearthstone_Deck_Tracker
 				_game.PossibleConstructedCards.Add(card);
 		}
 
-		public void HandlePossibleArenaCard(string id)
-		{
-			var card = Database.GetCardFromId(id);
-			if(!Database.IsActualCard(card))
-				return;
-			if(!_game.PossibleArenaCards.Contains(card))
-				_game.PossibleArenaCards.Add(card);
-		}
-
 		public async void HandleInMenu()
 		{
 			if(_game.IsInMenu)

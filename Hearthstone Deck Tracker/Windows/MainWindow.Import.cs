@@ -1,11 +1,13 @@
 ﻿#region
 
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility;
@@ -18,6 +20,7 @@ using HearthDb.Enums;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Importing.Game;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 #endregion
@@ -264,54 +267,83 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SetNewDeck(deck);
 		}
 
-		private async void BtnArena_Click(object sender, RoutedEventArgs e)
+		private void BtnArena_Click(object sender, RoutedEventArgs e) => StartArenaImporting().Forget();
+
+		public async Task StartArenaImporting()
 		{
-			if(Config.Instance.UseOldArenaImporting)
+			ProgressDialogController controller = null;
+			if(!Core.Game.IsRunning)
 			{
-				if(Config.Instance.ShowArenaImportMessage || Core.Game.PossibleArenaCards.Count < 10)
+				Log.Info("Waiting for game...");
+				var result = await this.ShowMessageAsync("Importing arena deck", "Start Hearthstone and enter the 'Arena' screen.",
+					MessageDialogStyle.AffirmativeAndNegative,
+					new MessageDialogs.Settings() {AffirmativeButtonText = "Start Hearthstone", NegativeButtonText = "Cancel"});
+				if(result == MessageDialogResult.Negative)
+					return;
+				Helper.StartHearthstoneAsync().Forget();
+				controller = await this.ShowProgressAsync("Importing arena deck", "Waiting for Hearthstone...", true);
+				while(!Core.Game.IsRunning)
 				{
-					await
-						this.ShowMessageAsync("How this works:",
-						                      "1) Build your arena deck (or enter the arena screen if you're done already)\n\n2) Leave the arena screen (go back to the main menu)\n\n3) Press \"IMPORT > FROM GAME: ARENA\"\n\n4) Adjust the numbers\n\nWhy the last step? Because this is not perfect. It is only detectable which cards are in the deck but NOT how many of each. You can increase the count of a card by just right clicking it.\n\nYou can see this information again in 'options > tracker > importing'");
-
-					if(Config.Instance.ShowArenaImportMessage)
+					if(controller.IsCanceled)
 					{
-						Config.Instance.ShowArenaImportMessage = false;
-						Config.Save();
-					}
-					if(Core.Game.PossibleArenaCards.Count < 10)
+						await controller.CloseAsync();
 						return;
+					}
+					await Task.Delay(500);
 				}
-
-				var deck = new Deck {IsArenaDeck = true};
-				foreach(var card in Core.Game.PossibleArenaCards.OrderBy(x => x.Cost).ThenBy(x => x.Type).ThenBy(x => x.LocalizedName))
-				{
-					deck.Cards.Add(card);
-					if(deck.Class == null && card.GetPlayerClass != "Neutral")
-						deck.Class = card.GetPlayerClass;
-				}
-				deck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, deck);
-				if(Config.Instance.DeckImportAutoDetectCardCount)
-				{
-					await
-						this.ShowMessageAsync("Arena cards found!",
-						                      "[WORK IN PROGRESS] Please enter the arena screen, then click ok. Wait until HDT has loaded the deck.\n\nPlease don't move your mouse.\n\nNote: For right now, this can currently only detect if a card has 1 or more than 1 copy (sets count to 2). Cards with more than 2 copies still have to be manually adjusted.");
-					var controller = await this.ShowProgressAsync("Please wait...", "Detecting card counts...");
-					await GetCardCounts(deck);
-					await controller.CloseAsync();
-				}
-				SetNewDeck(deck);
 			}
-			else
+			if(Core.Game.CurrentMode != Mode.DRAFT)
 			{
-				if(!Core.Game.TempArenaDeck.Cards.Any())
-					await this.ShowMessageAsync("No arena deck found", "Please enter the arena screen (and build your deck).");
-				else
+				if(controller == null)
+					controller = await this.ShowProgressAsync("Importing arena deck", "", true);
+				controller.SetMessage("Enter the 'Arena' screen.");
+				Log.Info("Waiting for DRAFT screen...");
+				while(Core.Game.CurrentMode != Mode.DRAFT)
 				{
-					SetNewDeck(Core.Game.TempArenaDeck);
-					Core.Game.IgnoredArenaDecks.Add(Core.Game.TempArenaDeck);
+					if(controller.IsCanceled)
+					{
+						await controller.CloseAsync();
+						return;
+					}
+					await Task.Delay(500);
 				}
 			}
+			var deck = DeckImporter.FromArena()?.Deck;
+			while(deck == null || deck.Cards.Sum(x => x.Count) < 30)
+			{
+				if(controller == null)
+					controller = await this.ShowProgressAsync("Importing arena deck", "", true);
+				if(controller.IsCanceled)
+				{
+					await controller.CloseAsync();
+					return;
+				}
+				controller.SetMessage($"Waiting for complete deck ({deck?.Cards.Sum(x => x.Count) ?? 0}/30 cards)...");
+				await Task.Delay(1000);
+				deck = DeckImporter.FromArena(false)?.Deck;
+			}
+			if(controller != null)
+				await controller.CloseAsync();
+			ImportArenaDeck(deck);
+		}
+
+		public void ImportArenaDeck(HearthMirror.Objects.Deck deck)
+		{
+			var arenaDeck = new Deck {
+				Class = Database.GetCardFromId(deck.Hero).PlayerClass,
+				HsId = deck.Id,
+				Cards = new ObservableCollection<Card>(deck.Cards.Select(x =>
+				{
+					var card = Database.GetCardFromId(x.Id);
+					card.Count = x.Count;
+					return card;
+				})),
+				IsArenaDeck = true
+			};
+			arenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, arenaDeck);
+			DeckList.Instance.Decks.Add(arenaDeck);
+			DeckPickerList.UpdateDecks();
+			SelectDeck(arenaDeck, true);
 		}
 
 		public async Task GetCardCounts(Deck deck)

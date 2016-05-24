@@ -6,10 +6,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthMirror;
+using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing.Game;
 using Hearthstone_Deck_Tracker.Importing.Websites;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
+using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 #endregion
 
@@ -104,6 +107,24 @@ namespace Hearthstone_Deck_Tracker.Importing
 					importedDecks.Add(new ImportedDeck(deck, existing.Select(x => x.Deck).ToList()));
 			}
 			return importedDecks;
+		}
+
+		public static ArenaInfo FromArena(bool log = true)
+		{
+			try
+			{
+				var deck = Reflection.GetArenaDeck();
+				if(deck != null && log)
+					Log.Info($"Found new {deck.Wins}-{deck.Losses} arena deck: hero={deck.Deck.Hero}, cards={deck.Deck.Cards.Count}");
+				else if(log)
+					Log.Info($"Found no arena deck");
+				return deck;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
+			return null;
 		}
 	}
 }

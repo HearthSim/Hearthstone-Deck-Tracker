@@ -201,7 +201,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							OnRachelleLogLine.Execute(line.Line);
 							break;
 						case "Arena":
-							ArenaHandler.Handle(line.Line, _gameState, _game);
+							ArenaHandler.Handle(line, _gameState, _game);
 							OnArenaLogLine.Execute(line.Line);
 							break;
 						case "LoadingScreen":

@@ -20,9 +20,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(CardAlreadyInCacheRegex.IsMatch(logLine))
 			{
 				var id = CardAlreadyInCacheRegex.Match(logLine).Groups["id"].Value;
-				if(game.CurrentGameMode == GameMode.Arena)
-					gameState.GameHandler.HandlePossibleArenaCard(id);
-				else
+				if(game.CurrentGameMode != GameMode.Arena)
 					gameState.GameHandler.HandlePossibleConstructedCard(id, false);
 			}
 			else if(GoldProgressRegex.IsMatch(logLine) && (DateTime.Now - gameState.LastGameStart) > TimeSpan.FromSeconds(10)
