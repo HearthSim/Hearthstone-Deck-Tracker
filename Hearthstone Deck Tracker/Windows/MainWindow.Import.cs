@@ -324,6 +324,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			if(controller != null)
 				await controller.CloseAsync();
+			var recentArenaDecks = DeckList.Instance.Decks.Where(d => d.IsArenaDeck && d.Cards.Sum(x => x.Count) == 30).OrderByDescending(d => d.LastPlayedNewFirst).Take(15);
+			var existing = recentArenaDecks.FirstOrDefault(d => d.Cards.All(c => deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)));
+			if(existing != null)
+			{
+				var result = await this.ShowMessageAsync("Deck already exists", "You seem to already have this deck.",
+					MessageDialogStyle.AffirmativeAndNegative,
+					new MessageDialogs.Settings() { AffirmativeButtonText = "Use existing", NegativeButtonText = "Import anyway" });
+				if(result == MessageDialogResult.Affirmative)
+				{
+					SelectDeck(existing, true);
+					return;
+				}
+			}
 			ImportArenaDeck(deck);
 		}
 
