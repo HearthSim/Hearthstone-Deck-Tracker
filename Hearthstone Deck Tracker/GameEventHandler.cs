@@ -428,6 +428,7 @@ namespace Hearthstone_Deck_Tracker
 				GameEvents.OnGameEnd.Execute();
 				return;
 			}
+			_game.CurrentGameStats.GameMode = _game.CurrentGameMode;
 			if(_game.CurrentGameMode == Ranked || _game.CurrentGameMode == Casual)
 			{
 				_game.CurrentGameStats.Format = _game.CurrentFormat;
