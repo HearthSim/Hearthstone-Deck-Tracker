@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker
 			_unloadedCardCount = 0;
 		}
 
-		public async void HandleInMenu()
+		public void HandleInMenu()
 		{
 			if(_game.IsInMenu)
 				return;
@@ -91,10 +91,6 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.Update(true);
 			DeckManager.ResetIgnoredDeckId();
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
-
-			Log.Info("Waiting for game mode detection...");
-			await _game.GameModeDetection();
-			Log.Info("Detected game mode, continuing.");
 
 			if(_game.CurrentGameStats != null)
 			{
@@ -147,8 +143,6 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!Config.Instance.KeepDecksVisible)
 				Core.Reset().Forget();
-			if(_game.CurrentGameMode == Spectator)
-				SetGameMode(None);
 			GameEvents.OnInMenu.Execute();
 		}
 
@@ -419,7 +413,6 @@ namespace Hearthstone_Deck_Tracker
 			if(match.Success)
 			{
 				Log.Info($"Rank detection successful! Player={match.Player}, Opponent={match.Opponent}");
-				SetGameMode(Ranked);
 				if(_game.CurrentGameStats != null)
 				{
 					_game.CurrentGameStats.GameMode = Ranked;
@@ -438,7 +431,6 @@ namespace Hearthstone_Deck_Tracker
 			if(match.OpponentSuccess)
 			{
 				Log.Info($"Player rank detection failed. Using opponent rank instead. Player={match.Player}, Opponent={match.Opponent}");
-				SetGameMode(Ranked);
 				if(_game.CurrentGameStats != null)
 				{
 					_game.CurrentGameStats.GameMode = Ranked;
@@ -649,9 +641,6 @@ namespace Hearthstone_Deck_Tracker
 
 				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
 				{
-					Log.Info("Waiting for game mode detection...");
-					await _game.GameModeDetection();
-					Log.Info("Detected game mode, continuing.");
 					Log.Info("Waiting for game mode to be saved to game...");
 					await GameModeSaved(15);
 					Log.Info("Game mode was saved, continuing.");
@@ -723,14 +712,11 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnGameTied.Execute();
 		}
 
-		public void SetGameMode(GameMode mode) => _game.CurrentGameMode = mode;
-
 		private void SaveAndUpdateStats()
 		{
 			if(RecordCurrentGameMode)
 			{
-				if(Config.Instance.ShowGameResultNotifications
-				   && (!Config.Instance.GameResultNotificationsUnexpectedOnly || UnexpectedCasualGame()))
+				if(Config.Instance.ShowGameResultNotifications && !Config.Instance.GameResultNotificationsUnexpectedOnly)
 				{
 					var deckName = _assignedDeck == null ? "No deck - " + _game.CurrentGameStats.PlayerHero : _assignedDeck.NameAndVersion;
 					new GameResultNotificationWindow(deckName, _game.CurrentGameStats).Show();
@@ -791,25 +777,6 @@ namespace Hearthstone_Deck_Tracker
 					Log.Info($"Gamemode {_game.CurrentGameMode} is not supposed to be saved. Removed game from default {_game.Player.Class}.");
 				}
 			}
-		}
-
-		private bool UnexpectedCasualGame()
-		{
-			if(_game.CurrentGameMode != Casual)
-				return false;
-			var games = new List<GameStats>();
-			if(_assignedDeck == null)
-			{
-				var defaultStats = DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class);
-				if(defaultStats != null)
-					games = defaultStats.Games;
-			}
-			else
-				games = _assignedDeck.DeckStats.Games;
-			games = games.Where(x => x.StartTime > DateTime.Now - TimeSpan.FromHours(1)).ToList();
-			if(games.Count < 2)
-				return false;
-			return games.OrderByDescending(x => x.StartTime).Skip(1).First().GameMode == Ranked;
 		}
 
 		public void HandlePlayerHeroPower(string cardId, int turn)
@@ -1305,7 +1272,6 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerGet(Entity entity, string cardId, int turn) => HandlePlayerGet(entity, cardId, turn);
 		void IGameHandler.HandlePlayerPlayToDeck(Entity entity, string cardId, int turn) => HandlePlayerPlayToDeck(entity, cardId, turn);
 		void IGameHandler.HandleOpponentPlayToDeck(Entity entity, string cardId, int turn) => HandleOpponentPlayToDeck(entity, cardId, turn);
-		void IGameHandler.SetGameMode(GameMode mode) => SetGameMode(mode);
 		void IGameHandler.HandlePlayerFatigue(int currentDamage) => HandlePlayerFatigue(currentDamage);
 		void IGameHandler.HandleOpponentFatigue(int currentDamage) => HandleOpponentFatigue(currentDamage);
 

@@ -1,8 +1,10 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
 
@@ -57,6 +59,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			string str;
 			SetDict.TryGetValue((int)set, out str);
 			return str;
+		}
+
+		public static GameMode GetGameMode(GameType gameType)
+		{
+			switch(gameType)
+			{
+				case GameType.GT_VS_AI:
+					return GameMode.Practice;
+				case GameType.GT_VS_FRIEND:
+					return GameMode.Friendly;
+				case GameType.GT_ARENA:
+					return GameMode.Arena;
+				case GameType.GT_RANKED:
+					return GameMode.Ranked;
+				case GameType.GT_UNRANKED:
+					return GameMode.Casual;
+				case GameType.GT_TAVERNBRAWL:
+				case GameType.GT_TB_2P_COOP:
+					return GameMode.Brawl;
+				default:
+					return GameMode.None;
+			}
 		}
 	}
 }

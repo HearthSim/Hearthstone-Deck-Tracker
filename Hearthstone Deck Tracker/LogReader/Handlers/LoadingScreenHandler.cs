@@ -23,30 +23,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			game.CurrentMode = GetMode(match.Groups["curr"].Value);
 			game.PreviousMode = GetMode(match.Groups["prev"].Value);
 
-			var newMode = GetGameMode(game.CurrentMode) ?? GetGameMode(game.PreviousMode);
-			if(newMode.HasValue && !(game.CurrentGameMode == Ranked && newMode.Value == Casual))
-				game.CurrentGameMode = newMode.Value;
 			if(game.PreviousMode == Mode.GAMEPLAY)
 				gameState.GameHandler.HandleInMenu();
-		}
-
-		private GameMode? GetGameMode(Mode mode)
-		{
-			switch(mode)
-			{
-				case Mode.TOURNAMENT:
-					return Casual;
-				case Mode.FRIENDLY:
-					return Friendly;
-				case Mode.DRAFT:
-					return Arena;
-				case Mode.ADVENTURE:
-					return Practice;
-				case Mode.TAVERN_BRAWL:
-					return Brawl;
-				default:
-					return null;
-			}
 		}
 
 		private Mode GetMode(string modeString)

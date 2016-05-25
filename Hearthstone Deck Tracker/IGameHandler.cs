@@ -28,7 +28,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleLoss();
 		void HandleWin();
 		void HandleTied();
-		void SetGameMode(GameMode mode);
 		void HandleInMenu();
 		void HandleConcede();
 		void HandlePlayerFatigue(int currentDamage);

@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		int OpponentSecretCount { get; set; }
 		bool IsRunning { get; set; }
 		Region CurrentRegion { get; set; }
-		GameMode CurrentGameMode { get; set; }
+		GameMode CurrentGameMode { get; }
 		GameStats CurrentGameStats { get; set; }
 		OpponentSecrets OpponentSecrets { get; set; }
 		List<Card> DrawnLastGame { get; set; }
@@ -35,7 +35,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Mode PreviousMode { get; set; }
 		GameTime GameTime { get; }
 		void Reset(bool resetStats = true);
-		Task GameModeDetection(int timeout);
 		void StoreGameState();
 		string GetStoredPlayerName(int id);
 	}

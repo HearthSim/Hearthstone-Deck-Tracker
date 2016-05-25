@@ -22,17 +22,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class GameV2 : IGame
 	{
 		public readonly List<long> IgnoredArenaDecks = new List<long>();
-		private GameMode _currentGameMode;
-		private bool _gameModeDetectionComplete;
+		private GameMode _currentGameMode = GameMode.None;
 
-		private bool _gameModeDetectionRunning;
 		private Mode _currentMode;
 
 		public GameV2()
 		{
 			Player = new Player(this, true);
 			Opponent = new Player(this, false);
-			CurrentGameMode = GameMode.None;
 			IsInMenu = true;
 			OpponentSecrets = new OpponentSecrets(this);
 			Reset();
@@ -113,16 +110,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		private bool? _spectator;
+
+		public bool Spectator => _spectator ?? (bool)(_spectator = HearthMirror.Reflection.IsSpectating());
+
 		public GameMode CurrentGameMode
 		{
-			get { return _currentGameMode; }
-			set
+			get
 			{
-				if(_currentGameMode != value)
-				{
-					_currentGameMode = value;
-					Log.Info("Set CurrentGameMode to " + value);
-				}
+				if(Spectator)
+					return GameMode.Spectator;
+				if(_currentGameMode == GameMode.None)
+					_currentGameMode = HearthDbConverter.GetGameMode((GameType)HearthMirror.Reflection.GetGameType());
+				return _currentGameMode;
 			}
 		}
 
@@ -133,22 +133,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ReplayMaker.Reset();
 			Player.Reset();
 			Opponent.Reset();
-
 			Entities.Clear();
 			SavedReplay = false;
 			OpponentSecretCount = 0;
 			OpponentSecrets.ClearSecrets();
-
+			_spectator = null;
+			_currentGameMode = GameMode.None;
 			if(!IsInMenu && resetStats)
-			{
-				if(CurrentGameMode == GameMode.Ranked)
-				{
-					Log.Info("Resetting gamemode to casual");
-					CurrentGameMode = GameMode.Casual;
-				}
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
-				_gameModeDetectionComplete = false;
-			}
 			PowerLog.Clear();
 
 			if(Core.Game != null && Core.Overlay != null)
@@ -156,28 +148,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Core.UpdatePlayerCards(true);
 				Core.UpdateOpponentCards(true);
 			}
-		}
-
-		public async Task GameModeDetection(int timeoutInSeconds = 300)
-		{
-			if(_gameModeDetectionRunning || _gameModeDetectionComplete)
-			{
-				while(!_gameModeDetectionComplete)
-					await Task.Delay(100);
-				return;
-			}
-			_gameModeDetectionRunning = true;
-			var startTime = DateTime.Now;
-			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
-			while(CurrentGameMode == GameMode.None && (DateTime.Now - startTime) < timeout)
-				await Task.Delay(100);
-			if(CurrentGameStats != null && CurrentGameMode != GameMode.None)
-			{
-				CurrentGameStats.GameMode = CurrentGameMode;
-				Log.Info("Detected gamemode, set CurrentGameStats.GameMode=" + CurrentGameMode);
-			}
-			_gameModeDetectionComplete = true;
-			_gameModeDetectionRunning = false;
 		}
 
 		public void StoreGameState()

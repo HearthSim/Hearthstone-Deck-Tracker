@@ -201,19 +201,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				setup = true;
 				creationTag = true;
 			}
-			else if((logLine.Contains("Begin Spectating") || logLine.Contains("Start Spectator")) && game.IsInMenu)
-				gameState.GameHandler.SetGameMode(GameMode.Spectator);
-			else if(logLine.Contains("End Spectator"))
-			{
-				gameState.GameHandler.SetGameMode(GameMode.Spectator);
+			if(logLine.Contains("End Spectator"))
 				gameState.GameHandler.HandleGameEnd();
-			}
 			else if(BlockStartRegex.IsMatch(logLine))
 			{
 				var playerEntity =
-					game.Entities.FirstOrDefault(e => e.Value.HasTag(GameTag.PLAYER_ID) && e.Value.GetTag(GameTag.PLAYER_ID) == game.Player.Id);
+					game.Entities.FirstOrDefault(
+						e => e.Value.HasTag(GameTag.PLAYER_ID) && e.Value.GetTag(GameTag.PLAYER_ID) == game.Player.Id);
 				var opponentEntity =
-					game.Entities.FirstOrDefault(e => e.Value.HasTag(GameTag.PLAYER_ID) && e.Value.GetTag(GameTag.PLAYER_ID) == game.Opponent.Id);
+					game.Entities.FirstOrDefault(
+						e => e.Value.HasTag(GameTag.PLAYER_ID) && e.Value.GetTag(GameTag.PLAYER_ID) == game.Opponent.Id);
 
 				var match = BlockStartRegex.Match(logLine);
 				var actionStartingCardId = match.Groups["cardId"].Value.Trim();
@@ -275,9 +272,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							AddKnownCardId(gameState, game, NonCollectible.Neutral.Cthun);
 							break;
 						default:
-							if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1 && !gameState.PlayerUsedHeroPower
-							   || opponentEntity.Value != null && opponentEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
-							   && !gameState.OpponentUsedHeroPower)
+							if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
+								&& !gameState.PlayerUsedHeroPower
+								|| opponentEntity.Value != null && opponentEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
+								&& !gameState.OpponentUsedHeroPower)
 							{
 								var card = Database.GetCardFromId(actionStartingCardId);
 								if(card.Type == "Hero Power")
