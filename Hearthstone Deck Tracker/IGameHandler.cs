@@ -32,9 +32,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleConcede();
 		void HandlePlayerFatigue(int currentDamage);
 		void HandleOpponentFatigue(int currentDamage);
-		void SetRank(int rank);
-		void HandleDustReward(int amount);
-		void HandleGoldReward(int amount);
 
 		void HandleOpponentJoust(Entity entity, string cardId, int turn);
 		void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn);

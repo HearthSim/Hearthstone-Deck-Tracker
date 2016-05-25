@@ -453,7 +453,6 @@
     <Compile Include="Hearthstone\Mechanic.cs" />
     <Compile Include="Hearthstone\Player.cs" />
     <Compile Include="LogReader\Handlers\ArenaHandler.cs" />
-    <Compile Include="LogReader\Handlers\BobHandler.cs" />
     <Compile Include="LogReader\Handlers\PowerHandler.cs" />
     <Compile Include="LogReader\HsGameState.cs" />
     <Compile Include="LogReader\HsLogReaderConstants.cs" />
@@ -477,7 +476,6 @@
     <Compile Include="Replay\TurnViewItem.cs" />
     <Compile Include="Stats\CompiledStats\ArenaStats.cs" />
     <Compile Include="Utility\ConfigWrapper.cs" />
-    <Compile Include="Utility\RankDetection.cs" />
     <Compile Include="Utility\ScreenCapture.cs" />
     <Compile Include="Utility\Themes\CardTextImageBuilder.cs" />
     <Compile Include="Utility\Themes\ClassicImageBuilder.cs" />
@@ -1118,31 +1116,6 @@
     <Resource Include="Images\gold_progress_frame_center.png" />
     <Resource Include="Images\gold_progress_frame_left.png" />
     <Resource Include="Images\gold_progress_frame_right.png" />
-    <Resource Include="Resources\Ranks\1.bmp" />
-    <Resource Include="Resources\Ranks\10.bmp" />
-    <Resource Include="Resources\Ranks\11.bmp" />
-    <Resource Include="Resources\Ranks\12.bmp" />
-    <Resource Include="Resources\Ranks\13.bmp" />
-    <Resource Include="Resources\Ranks\14.bmp" />
-    <Resource Include="Resources\Ranks\15.bmp" />
-    <Resource Include="Resources\Ranks\16.bmp" />
-    <Resource Include="Resources\Ranks\17.bmp" />
-    <Resource Include="Resources\Ranks\18.bmp" />
-    <Resource Include="Resources\Ranks\19.bmp" />
-    <Resource Include="Resources\Ranks\2.bmp" />
-    <Resource Include="Resources\Ranks\20.bmp" />
-    <Resource Include="Resources\Ranks\21.bmp" />
-    <Resource Include="Resources\Ranks\22.bmp" />
-    <Resource Include="Resources\Ranks\23.bmp" />
-    <Resource Include="Resources\Ranks\24.bmp" />
-    <Resource Include="Resources\Ranks\25.bmp" />
-    <Resource Include="Resources\Ranks\3.bmp" />
-    <Resource Include="Resources\Ranks\4.bmp" />
-    <Resource Include="Resources\Ranks\5.bmp" />
-    <Resource Include="Resources\Ranks\6.bmp" />
-    <Resource Include="Resources\Ranks\7.bmp" />
-    <Resource Include="Resources\Ranks\8.bmp" />
-    <Resource Include="Resources\Ranks\9.bmp" />
     <Content Include="Images\HearthstoneDeckTracker.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

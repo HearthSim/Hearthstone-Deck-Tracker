@@ -29,18 +29,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						UpdateGoldProgress(wins, game, timeZone);
 				}
 			}
-			else if(DustRewardRegex.IsMatch(logLine))
-			{
-				int amount;
-				if(int.TryParse(DustRewardRegex.Match(logLine).Groups["amount"].Value, out amount))
-					gameState.GameHandler.HandleDustReward(amount);
-			}
-			else if(GoldRewardRegex.IsMatch(logLine))
-			{
-				int amount;
-				if(int.TryParse(GoldRewardRegex.Match(logLine).Groups["amount"].Value, out amount))
-					gameState.GameHandler.HandleGoldReward(amount);
-			}
 		}
 
 		private TimeZoneInfo GetTimeZoneInfo(Region region)

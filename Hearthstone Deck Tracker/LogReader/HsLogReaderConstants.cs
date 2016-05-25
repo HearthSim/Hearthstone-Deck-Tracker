@@ -9,8 +9,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 	public static class HsLogReaderConstants
 	{
 		public static readonly Regex GoldProgressRegex = new Regex(@"(?<wins>(\d))/3 wins towards 10 gold");
-		public static readonly Regex GoldRewardRegex = new Regex(@"GoldRewardData: Amount=(?<amount>(\d+))");
-		public static readonly Regex DustRewardRegex = new Regex(@"ArcaneDustRewardData: Amount=(?<amount>(\d+))");
 		public static readonly Regex UnloadCardRegex = new Regex(@"unloading\ name=(?<id>(\w+_\w+))\ family=CardPrefab\ persistent=False");
 		public static readonly Regex UnloadBrawlAsset = new Regex(@"unloading name=Tavern_Brawl\ ");
 
@@ -30,7 +28,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			ContainsFilters = new[] {"Begin Spectating", "Start Spectator", "End Spectator"}
 		};
 
-		public static LogReaderInfo BobLogReaderInfo => new LogReaderInfo {Name = "Bob"};
 		public static LogReaderInfo RachelleLogReaderInfo => new LogReaderInfo {Name = "Rachelle"};
 		public static LogReaderInfo ArenaLogReaderInfo => new LogReaderInfo {Name = "Arena"};
 		public static LogReaderInfo LoadingScreenLogReaderInfo => new LogReaderInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded"}};

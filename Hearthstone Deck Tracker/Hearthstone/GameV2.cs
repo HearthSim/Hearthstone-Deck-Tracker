@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using HearthDb.Enums;
+using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -23,7 +24,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public readonly List<long> IgnoredArenaDecks = new List<long>();
 		private GameMode _currentGameMode = GameMode.None;
-
+		private bool? _spectator;
+		private MatchInfo _matchInfo;
 		private Mode _currentMode;
 
 		public GameV2()
@@ -110,8 +112,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		private bool? _spectator;
-
 		public bool Spectator => _spectator ?? (bool)(_spectator = HearthMirror.Reflection.IsSpectating());
 
 		public GameMode CurrentGameMode
@@ -126,6 +126,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		public MatchInfo MatchInfo => _matchInfo ?? (_matchInfo = HearthMirror.Reflection.GetMatchInfo());
+
 		public void Reset(bool resetStats = true)
 		{
 			Log.Info("-------- Reset ---------");
@@ -139,6 +141,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OpponentSecrets.ClearSecrets();
 			_spectator = null;
 			_currentGameMode = GameMode.None;
+			_matchInfo = null;
 			if(!IsInMenu && resetStats)
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			PowerLog.Clear();

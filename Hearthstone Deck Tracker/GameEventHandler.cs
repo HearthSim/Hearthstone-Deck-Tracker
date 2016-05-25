@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -17,7 +16,6 @@ using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -31,7 +29,6 @@ namespace Hearthstone_Deck_Tracker
 {
 	public class GameEventHandler : IGameHandler
 	{
-		private const int MaxRankDetectionTries = 2;
 		private const int AvengeDelay = 50;
 		private readonly GameV2 _game;
 		private ArenaRewardDialog _arenaRewardDialog;
@@ -42,18 +39,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private bool _awaitingAvenge;
 		private Entity _defendingEntity;
-		private bool _doneImportingConstructed;
 		private bool _handledGameEnd;
 		private GameStats _lastGame;
 		private DateTime _lastGameStart;
-		private int _lastManaCost;
-		private int _rankDetectionOverlayToggles;
 
 
-		private bool _rankDetectionRunning;
-		private int _rankDetectionTries;
 		private bool _showedNoteDialog;
-		private int _unloadedCardCount;
 
 		public GameEventHandler(GameV2 game)
 		{
@@ -68,14 +59,6 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Friendly && Config.Instance.RecordFriendly
 											 || _game.CurrentGameMode == Casual && Config.Instance.RecordCasual
 											 || _game.CurrentGameMode == Spectator && Config.Instance.RecordSpectator;
-
-		public void ResetConstructedImporting()
-		{
-			Log.Info("Reset constructed importing");
-			_doneImportingConstructed = false;
-			_lastManaCost = 0;
-			_unloadedCardCount = 0;
-		}
 
 		public void HandleInMenu()
 		{
@@ -100,12 +83,6 @@ namespace Hearthstone_Deck_Tracker
 
 				if(_game.StoredGameStats != null)
 					_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
-
-				if(_usePostGameLegendRank)
-				{
-					_game.CurrentGameStats.LegendRank = _game.MetaData.LegendRank;
-					_usePostGameLegendRank = false;
-				}
 
 			}
 
@@ -319,8 +296,6 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnTurnStart.Execute(player);
 			if(_turnQueue.Count > 0)
 				return;
-			if(_game.CurrentGameMode == Casual || _game.CurrentGameMode == None)
-				DetectRanks();
 			TurnTimer.Instance.SetPlayer(player);
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
 			{
@@ -344,102 +319,6 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.Entities.TryGetValue(impFavor.GetTag(ATTACHED), out entity))
 					entity.Info.CostReduction++;
 			}
-		}
-
-		private async void DetectRanks()
-		{
-			if(_rankDetectionRunning)
-				return;
-			_rankDetectionRunning = true;
-			Log.Info($"Trying to detect ranks... (tries={_rankDetectionTries}, overlaytoggles={_rankDetectionOverlayToggles})");
-			if(!User32.IsHearthstoneInForeground())
-			{
-				Log.Info("Hearthstone in background. Waiting for it to be in foreground...");
-				while(!User32.IsHearthstoneInForeground())
-					await Task.Delay(500);
-			}
-			var rect = Helper.GetHearthstoneRect(false);
-			var reEnableOverlay = false;
-			if(!Config.Instance.AlternativeScreenCapture && Core.Overlay.IsRankConvered())
-			{
-				if(_rankDetectionTries >= MaxRankDetectionTries)
-				{
-					Log.Info($"Not toggling overlay, exceeded max rank detection tries ({MaxRankDetectionTries}).");
-					_rankDetectionRunning = false;
-					return;
-				}
-				_rankDetectionOverlayToggles++;
-				Log.Info("Toggling overlay...");
-				Core.Overlay.ShowOverlay(false);
-				reEnableOverlay = true;
-			}
-			if(await Helper.FriendsListOpen())
-			{
-				Log.Info("Waiting for friendslist to close...");
-				do
-				{
-					if(_rankDetectionTries >= MaxRankDetectionTries)
-						await Task.Delay(300);
-					else
-						Core.Overlay.ShowFriendsListWarning(true);
-				} while(await Helper.FriendsListOpen());
-			}
-			Core.Overlay.ShowFriendsListWarning(false);
-			var capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height);
-			if(reEnableOverlay)
-				Core.Overlay.ShowOverlay(true);
-			var success = await FindRanks(capture);
-			if(!success && !Config.Instance.AlternativeScreenCapture && _rankDetectionTries < 3)
-			{
-				Log.Info("ScreenCapture rank detection failed. Trying window capture.");
-				capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, altScreenCapture: true);
-				success = await FindRanks(capture);
-				if(success)
-				{
-
-					Log.Info("WindowCapture rank detection was successful! Setting AlternativeScreenCapture=true.");
-					Config.Instance.AlternativeScreenCapture = true;
-					Config.Save();
-				}
-			}
-			_rankDetectionTries++;
-			_rankDetectionRunning = false;
-		}
-
-		private bool _usePostGameLegendRank;
-		private async Task<bool> FindRanks(Bitmap capture)
-		{
-			var match = await RankDetection.Match(capture);
-			if(match.Success)
-			{
-				Log.Info($"Rank detection successful! Player={match.Player}, Opponent={match.Opponent}");
-				if(_game.CurrentGameStats != null)
-				{
-					_game.CurrentGameStats.GameMode = Ranked;
-					_game.CurrentGameStats.Rank = match.Player;
-					if(match.PlayerIsLegendRank)
-					{
-						_game.CurrentGameStats.LegendRank = _game.MetaData.LegendRank;
-						if(_game.MetaData.LegendRank == 0)
-							_usePostGameLegendRank = true;
-					}
-					if(match.Opponent >= 0)
-						_game.CurrentGameStats.OpponentRank = match.Opponent;
-				}
-				return true;
-			}
-			if(match.OpponentSuccess)
-			{
-				Log.Info($"Player rank detection failed. Using opponent rank instead. Player={match.Player}, Opponent={match.Opponent}");
-				if(_game.CurrentGameStats != null)
-				{
-					_game.CurrentGameStats.GameMode = Ranked;
-					_game.CurrentGameStats.Rank = match.Opponent;
-				}
-				return true;
-			}
-			Log.Info("No ranks were detected.");
-			return false;
 		}
 
 		public async void HandleAvengeAsync(int deathRattleCount)
@@ -482,8 +361,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 			_arenaRewardDialog = null;
 			_showedNoteDialog = false;
-			_rankDetectionTries = 0;
-			_rankDetectionOverlayToggles = 0;
 			_game.IsInMenu = false;
 			_game.Reset();
 			TurnTimer.Instance.Start(_game).Forget();
@@ -514,9 +391,6 @@ namespace Hearthstone_Deck_Tracker
 				Log.Warn("HandleGameEnd was already called.");
 				return;
 			}
-			//deal with instant concedes
-			if(_game.CurrentGameMode == Casual || _game.CurrentGameMode == None)
-				DetectRanks();
 			_handledGameEnd = true;
 			TurnTimer.Instance.Stop();
 			Core.Overlay.HideTimers();
@@ -558,6 +432,15 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.CurrentGameStats.Format = _game.CurrentFormat;
 				Log.Info("Format: " + _game.CurrentGameStats.Format);
+				if(_game.CurrentGameMode == Ranked)
+				{
+					var wild = _game.CurrentFormat == Format.Wild;
+					_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
+					_game.CurrentGameStats.OpponentRank = wild ? _game.MatchInfo.OpposingPlayer.WildRank : _game.MatchInfo.OpposingPlayer.StandardRank;
+					_game.CurrentGameStats.LegendRank = wild ? _game.MatchInfo.LocalPlayer.WildLegendRank : _game.MatchInfo.LocalPlayer.StandardLegendRank;
+					_game.CurrentGameStats.OpponentLegendRank = wild ? _game.MatchInfo.OpposingPlayer.WildLegendRank : _game.MatchInfo.OpposingPlayer.StandardLegendRank;
+					_game.CurrentGameStats.Stars = wild ? _game.MatchInfo.LocalPlayer.WildStars : _game.MatchInfo.LocalPlayer.StandardStars;
+				}
 			}
 			_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.ToList());
 			_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList.Where(x => !x.IsCreated).ToList());
@@ -1071,52 +954,6 @@ namespace Hearthstone_Deck_Tracker
 				Core.UpdateOpponentCards();
 				GameEvents.OnOpponentSecretTriggered.Execute(Database.GetCardFromId(cardId));
 			}
-		}
-
-		public void HandleDustReward(int amount)
-		{
-			/*if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
-            {
-                if (!DeckList.Instance.ActiveDeck.DustReward.HasValue)
-                {
-                    DeckList.Instance.ActiveDeck.DustReward = amount;
-                    _lastArenaReward = DateTime.Now;
-                }
-                //All rewards are logged as soon as the run is over.
-                //This makes sure no "old" data is added (in case hdt is restarted after an arena run)
-                else if ((DateTime.Now - _lastArenaReward).TotalSeconds < 5)
-                {
-                    DeckList.Instance.ActiveDeck.DustReward += amount;
-                    _lastArenaReward = DateTime.Now;
-                }
-            }*/
-		}
-
-		public void HandleGoldReward(int amount)
-		{
-			/*if (DeckList.Instance.ActiveDeck != null && DeckList.Instance.ActiveDeck.IsArenaDeck)
-            {
-                if (!DeckList.Instance.ActiveDeck.GoldReward.HasValue)
-                {
-                    DeckList.Instance.ActiveDeck.GoldReward = amount;
-                    _lastArenaReward = DateTime.Now;
-                }
-                //All rewards are logged as soon as the run is over.
-                //This makes sure no "old" data is added (in case hdt is restarted after an arena run)
-                else if ((DateTime.Now - _lastArenaReward).TotalSeconds < 5)
-                {
-                    DeckList.Instance.ActiveDeck.GoldReward += amount;
-                    _lastArenaReward = DateTime.Now;
-                }
-            }*/
-		}
-
-		public void SetRank(int rank)
-		{
-			if(_game.CurrentGameStats == null)
-				return;
-			_game.CurrentGameStats.Rank = rank;
-			Log.Info("set rank to " + rank);
 		}
 
 		public void HandleOpponentPlay(Entity entity, string cardId, int from, int turn)

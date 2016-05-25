@@ -41,8 +41,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private string _playerName;
 		private string _opponentName;
 		private int _rank;
+		private int _stars;
 		private int _legendRank;
 		private Region _region;
+		private int _opponentLegendRank;
 
 		public GameStats()
 		{
@@ -157,9 +159,21 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int Rank
 		{
 			get { return _rank; }
-			set { _rank = value;
+			set
+			{
+				_rank = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(RankString));
+			}
+		}
+
+		public int Stars
+		{
+			get { return _stars; }
+			set
+			{
+				_stars = value;
+				OnPropertyChanged();
 			}
 		}
 
@@ -169,6 +183,16 @@ namespace Hearthstone_Deck_Tracker.Stats
 			set { _legendRank = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(RankString));
+			}
+		}
+
+		public int OpponentLegendRank
+		{
+			get { return _opponentLegendRank; }
+			set
+			{
+				_opponentLegendRank = value;
+				OnPropertyChanged();
 			}
 		}
 
@@ -444,8 +468,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializePlayerCards() => PlayerCards.Any();
 		public bool ShouldSerializeOpponentCards() => OpponentCards.Any();
 		public bool ShouldSerializeRank() => Rank > 0;
+		public bool ShouldSerializeStars() => Stars > 0;
 		public bool ShouldSerializeLegendRank() => LegendRank > 0;
 		public bool ShouldSerializeOpponentRank() => OpponentRank > 0;
+		public bool ShouldSerializeOpponentLegendRank() => OpponentLegendRank > 0;
 		public bool ShouldSerializeRegion() => Region != Region.UNKNOWN;
 		public bool ShouldSerializeIsClone() => IsClone;
 

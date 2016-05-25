@@ -24,7 +24,6 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 		{
 			new LogConfigItem("Achievements", Console),
 			new LogConfigItem("Arena", Console),
-			new LogConfigItem("Bob", Console),
 			new LogConfigItem("FullScreenFX", Console), 
 			new LogConfigItem("LoadingScreen", Console),
 			new LogConfigItem("Net", Console),

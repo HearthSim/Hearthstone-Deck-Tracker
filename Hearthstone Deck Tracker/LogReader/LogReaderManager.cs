@@ -24,7 +24,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private static readonly List<LogReader> LogReaders = new List<LogReader>();
 		private static readonly PowerHandler PowerLineHandler = new PowerHandler();
 		private static readonly RachelleHandler RachelleHandler = new RachelleHandler();
-		private static readonly BobHandler BobHandler = new BobHandler();
 		private static readonly ArenaHandler ArenaHandler = new ArenaHandler();
 		private static readonly NetHandler NetHandler = new NetHandler();
 		private static readonly LoadingScreenHandler LoadingScreenHandler = new LoadingScreenHandler();
@@ -45,7 +44,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_netLogReader = new LogReader(NetLogReaderInfo);
 			LogReaders.Add(_powerLogReader);
 			LogReaders.Add(_netLogReader);
-			LogReaders.Add(new LogReader(BobLogReaderInfo));
 			LogReaders.Add(new LogReader(RachelleLogReaderInfo));
 			LogReaders.Add(new LogReader(ArenaLogReaderInfo));
 			LogReaders.Add(new LogReader(LoadingScreenLogReaderInfo));
@@ -184,10 +182,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 						case "Power":
 							PowerLineHandler.Handle(line.Line, _gameState, _game);
 							OnPowerLogLine.Execute(line.Line);
-							break;
-						case "Bob":
-							BobHandler.Handle(line.Line, _gameState, _game);
-							OnBobLogLine.Execute(line.Line);
 							break;
 						case "Rachelle":
 							RachelleHandler.Handle(line.Line, _gameState, _game);
