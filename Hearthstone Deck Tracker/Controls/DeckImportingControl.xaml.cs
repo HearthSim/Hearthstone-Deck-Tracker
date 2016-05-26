@@ -7,11 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing.Game;
-using Hearthstone_Deck_Tracker.Importing.Game.ImportOptions;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 
 namespace Hearthstone_Deck_Tracker.Controls
@@ -120,68 +117,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private void ImportDecks()
 		{
-			foreach(var deck in Decks.Where(x => x.Import))
-			{
-				if(deck.SelectedImportOption is NewDeck)
-				{
-					Log.Info($"Saving {deck.Deck.Name} as new deck.");
-					var newDeck = new Deck
-					{
-						Class = deck.Class,
-						Name = deck.Deck.Name,
-						HsId = deck.Deck.Id,
-						Cards = new ObservableCollection<Hearthstone.Card>(deck.Deck.Cards.Select(x =>
-						{
-							var card = Database.GetCardFromId(x.Id);
-							card.Count = x.Count;
-							return card;
-						})),
-						IsArenaDeck = false
-					};
-					if(_brawl)
-						newDeck.Tags.Add("Brawl");
-					DeckList.Instance.Decks.Add(newDeck);
-				}
-				else
-				{
-					var existing = deck.SelectedImportOption as ExistingDeck;
-					if(existing == null)
-						return;
-					var target = existing.Deck;
-					target.HsId = deck.Deck.Id;
-					if(_brawl && !target.Tags.Any(x => x.ToUpper().Contains("BRAWL")))
-						target.Tags.Add("Brawl");
-					if(existing.NewVersion.Major == 0)
-						Log.Info($"Assinging id to existing deck: {deck.Deck.Name}.");
-					else
-					{
-						Log.Info($"Saving {deck.Deck.Name} as {existing.NewVersion.ShortVersionString} (prev={target.Version.ShortVersionString}).");
-						DeckList.Instance.Decks.Remove(target);
-						var oldDeck = (Deck)target.Clone();
-						oldDeck.Versions = new List<Deck>();
-						target.Name = deck.Deck.Name;
-						target.LastEdited = DateTime.Now;
-						target.Versions.Add(oldDeck);
-						target.Version = existing.NewVersion;
-						target.SelectedVersion = existing.NewVersion;
-						target.HearthStatsDeckVersionId = "";
-						target.Cards.Clear();
-						var cards = deck.Deck.Cards.Select(x =>
-						{
-							var card = Database.GetCardFromId(x.Id);
-							card.Count = x.Count;
-							return card;
-						});
-						foreach(var card in cards)
-							target.Cards.Add(card);
-						DeckList.Instance.Decks.Add((Deck)target.Clone());
-					}
-				}
-			}
-			DeckList.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
-			Core.MainWindow.UpdateIntroLabelVisibility();
-			Core.UpdatePlayerCards(true);
+			DeckManager.ImportDecks(Decks.Where(x => x.Import), _brawl);
 			Core.MainWindow.FlyoutDeckImporting.IsOpen = false;
 		}
 

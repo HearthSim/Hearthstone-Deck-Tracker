@@ -237,6 +237,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 						}
 					}
 				}
+				if(configVersion <= new Version(0, 14, 9, 0))
+				{
+					Config.Instance.ConstructedAutoImportNew = false;
+					Config.Instance.ConstructedAutoUpdate = false;
+					converted = true;
+				}
 			}
 
 			if(converted)

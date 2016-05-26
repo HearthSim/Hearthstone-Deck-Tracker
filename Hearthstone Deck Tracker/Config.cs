@@ -142,6 +142,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool CardDbIncludeWildOnlyCards = true;
 
+		[DefaultValue(true)]
+		public bool ConstructedAutoImportNew = true;
+
+		[DefaultValue(true)]
+		public bool ConstructedAutoUpdate = true;
+
 		[DefaultValue(false)]
 		public bool ConstructedStatsAsPercent = false;
 

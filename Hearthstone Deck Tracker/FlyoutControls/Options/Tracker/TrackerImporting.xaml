@@ -13,6 +13,14 @@
         <GroupBox Header="Importing">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
+                    <GroupBox Header="Constructed">
+                        <StackPanel>
+                            <CheckBox x:Name="CheckBoxConstructedImportNew" Content="Auto import new decks" Margin="10,5,0,0"
+                                      Checked="CheckBoxConstructedImportNew_Checked" Unchecked="CheckBoxConstructedImportNew_Unchecked" />
+                            <CheckBox x:Name="CheckBoxConstrucedUpdate" Content="Auto update existing decks" Margin="10,5,0,5"
+                                      Checked="CheckBoxConstrucedUpdate_Checked" Unchecked="CheckBoxConstrucedUpdate_Unchecked" />
+                        </StackPanel>
+                    </GroupBox>
                     <GroupBox Header="Arena">
                         <StackPanel>
                             <DockPanel Margin="10,5,10,0">

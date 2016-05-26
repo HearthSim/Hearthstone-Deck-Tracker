@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Importing.Game;
+using Hearthstone_Deck_Tracker.Importing.Game.ImportOptions;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -139,5 +142,80 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public static void ResetIgnoredDeckId() => IgnoredDeckId = Guid.Empty;
+
+		public static void ImportDecks(IEnumerable<ImportedDeck> decks, bool brawl, bool importNew = true, bool updateExisting = true, bool select = true)
+		{
+			Deck toSelect = null;
+			foreach(var deck in decks)
+			{
+				if(deck.SelectedImportOption is NewDeck)
+				{
+					if(!importNew)
+						continue;
+					Log.Info($"Saving {deck.Deck.Name} as new deck.");
+					var newDeck = new Deck {
+						Class = deck.Class,
+						Name = deck.Deck.Name,
+						HsId = deck.Deck.Id,
+						Cards = new ObservableCollection<Card>(deck.Deck.Cards.Select(x =>
+						{
+							var card = Database.GetCardFromId(x.Id);
+							card.Count = x.Count;
+							return card;
+						})),
+						IsArenaDeck = false
+					};
+					if(brawl)
+						newDeck.Tags.Add("Brawl");
+					DeckList.Instance.Decks.Add(newDeck);
+					toSelect = newDeck;
+				}
+				else
+				{
+					if(!updateExisting)
+						continue;
+					var existing = deck.SelectedImportOption as ExistingDeck;
+					if(existing == null)
+						continue;
+					var target = existing.Deck;
+					target.HsId = deck.Deck.Id;
+					if(brawl && !target.Tags.Any(x => x.ToUpper().Contains("BRAWL")))
+						target.Tags.Add("Brawl");
+					if(existing.NewVersion.Major == 0)
+						Log.Info($"Assinging id to existing deck: {deck.Deck.Name}.");
+					else
+					{
+						Log.Info($"Saving {deck.Deck.Name} as {existing.NewVersion.ShortVersionString} (prev={target.Version.ShortVersionString}).");
+						DeckList.Instance.Decks.Remove(target);
+						var oldDeck = (Deck)target.Clone();
+						oldDeck.Versions = new List<Deck>();
+						target.Name = deck.Deck.Name;
+						target.LastEdited = DateTime.Now;
+						target.Versions.Add(oldDeck);
+						target.Version = existing.NewVersion;
+						target.SelectedVersion = existing.NewVersion;
+						target.HearthStatsDeckVersionId = "";
+						target.Cards.Clear();
+						var cards = deck.Deck.Cards.Select(x =>
+						{
+							var card = Database.GetCardFromId(x.Id);
+							card.Count = x.Count;
+							return card;
+						});
+						foreach(var card in cards)
+							target.Cards.Add(card);
+						var clone = (Deck)target.Clone();
+						DeckList.Instance.Decks.Add(clone);
+						toSelect = clone;
+					}
+				}
+			}
+			DeckList.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+			Core.MainWindow.UpdateIntroLabelVisibility();
+			if(select && toSelect != null)
+				Core.MainWindow.SelectDeck(toSelect, true);
+			Core.UpdatePlayerCards(true);
+		}
 	}
 }

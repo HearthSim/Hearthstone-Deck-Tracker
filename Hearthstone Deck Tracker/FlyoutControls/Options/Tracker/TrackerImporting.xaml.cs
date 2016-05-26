@@ -39,6 +39,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
 			CheckboxAutoSaveOnImport.IsChecked = Config.Instance.AutoSaveOnImport;
 			TextBoxArenaTemplate.Text = Config.Instance.ArenaDeckNameTemplate;
+			CheckBoxConstructedImportNew.IsChecked = Config.Instance.ConstructedAutoImportNew;
+			CheckBoxConstrucedUpdate.IsChecked = Config.Instance.ConstructedAutoUpdate;
 			_initialized = true;
 		}
 
@@ -124,6 +126,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Config.Instance.SelectedArenaImportingBehaviour = selected;
 				Config.Save();
 			}
+		}
+
+		private void CheckBoxConstructedImportNew_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ConstructedAutoImportNew = true;
+			Config.Save();
+		}
+
+		private void CheckBoxConstructedImportNew_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ConstructedAutoImportNew = false;
+			Config.Save();
+		}
+
+		private void CheckBoxConstrucedUpdate_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ConstructedAutoUpdate= true;
+			Config.Save();
+		}
+
+		private void CheckBoxConstrucedUpdate_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ConstructedAutoUpdate = false;
+			Config.Save();
 		}
 	}
 }

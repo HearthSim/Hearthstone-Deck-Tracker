@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			try
 			{
 				var decks = Reflection.GetDecks().Where(x => x.Cards.Sum(c => c.Count) == 30 && x.Type != BrawlDeckType).ToList();
-				Log.Info($"Found {decks.Count} new decks");
+				Log.Info($"Found {decks.Count} decks");
 				return GetImportedDecks(decks);
 			}
 			catch(Exception e)
@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			try
 			{
 				var decks = Reflection.GetDecks().Where(x => x.Type == BrawlDeckType).ToList();
-				Log.Info($"Found {decks.Count} new decks");
+				Log.Info($"Found {decks.Count} decks");
 				return GetImportedDecks(decks);
 			}
 			catch(Exception e)

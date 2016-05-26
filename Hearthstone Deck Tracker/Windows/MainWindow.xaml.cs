@@ -415,7 +415,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public int StatusBarNewsHeight => 20;
 
 		public bool ShowToolTip => Config.Instance.TrackerCardToolTips;
-		
+
+		public string IntroductionLabelText
+			=> Config.Instance.ConstructedAutoImportNew ? "ENTER THE 'PLAY' MENU TO AUTOMATICALLY IMPORT YOUR DECKS" : "ADD NEW DECKS BY CLICKING 'NEW' OR 'IMPORT'";
+
 		public Visibility IntroductionLabelVisibility => DeckList.Instance.Decks.Any() ? Collapsed : Visible;
 
 		public void UpdateIntroLabelVisibility() => OnPropertyChanged(nameof(IntroductionLabelVisibility));
