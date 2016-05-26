@@ -57,21 +57,14 @@ namespace Hearthstone_Deck_Tracker
 			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived).ToList();
 			if(currentDeck != null)
 				validDecks.Remove(currentDeck);
-			if(mode == GameMode.Arena)
-				validDecks = validDecks.Where(x => x.IsArenaDeck && x.IsArenaRunCompleted != true).ToList();
-			else if(mode != GameMode.None)
-			{
-				validDecks = validDecks.Where(x => !x.IsArenaDeck).ToList();
-				if(currentFormat == Format.Standard)
-					validDecks = validDecks.Where(x => x.StandardViable).ToList();
-
-			}
+			validDecks = validDecks.FilterByMode(mode, currentFormat);
 			if(validDecks.Count > 1 && cardEntites != null)
 				validDecks = validDecks.Where(x => cardEntites.All(ce => x.GetSelectedDeckVersion().Cards.Any(c => c.Id == ce.Key && c.Count >= ce.Count()))).ToList();
 			if(validDecks.Count == 0)
 			{
 				Log.Info("Could not find matching deck.");
-				ShowDeckSelectionDialog(validDecks);
+				if(cardEntites == null || !AutoSelectDeckVersion(heroClass, mode, currentFormat, cardEntites))
+					ShowDeckSelectionDialog(validDecks);
 				return;
 			}
 			if(validDecks.Count == 1)
@@ -92,7 +85,28 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 			}
-			ShowDeckSelectionDialog(validDecks);
+			if(cardEntites == null || !AutoSelectDeckVersion(heroClass, mode, currentFormat, cardEntites))
+				ShowDeckSelectionDialog(validDecks);
+		}
+
+		private static bool AutoSelectDeckVersion(string heroClass, GameMode mode, Format? format, List<IGrouping<string, Entity>> cardEntites)
+		{
+			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived).ToList();
+			validDecks = validDecks.FilterByMode(mode, format);
+			foreach(var deck in validDecks)
+			{
+				foreach(var version in deck.Versions)
+				{
+					if(!cardEntites.All(ce => version.Cards.Any(c => c.Id == ce.Key && c.Count >= ce.Count())))
+						continue;
+					Log.Info($"Found matching version on {deck.Name}: {version.Version.ShortVersionString}.");
+					deck.SelectVersion(version);
+					Core.MainWindow.SelectDeck(deck, true);
+					return true;
+				}
+			}
+			Log.Info("Found no matching version.");
+			return false;
 		}
 
 		private static void ShowDeckSelectionDialog(List<Deck> decks)
@@ -219,6 +233,23 @@ namespace Hearthstone_Deck_Tracker
 			if(select && toSelect != null)
 				Core.MainWindow.SelectDeck(toSelect, true);
 			Core.UpdatePlayerCards(true);
+		}
+	}
+
+	public static class DeckListExtensions
+	{
+		public static List<Deck> FilterByMode(this List<Deck> decks, GameMode mode, Format? format)
+		{
+			var filtered = new List<Deck>(decks);
+			if(mode == GameMode.Arena)
+				filtered = filtered.Where(x => x.IsArenaDeck && x.IsArenaRunCompleted != true).ToList();
+			else if(mode != GameMode.None)
+			{
+				filtered = filtered.Where(x => !x.IsArenaDeck).ToList();
+				if(format == Format.Standard)
+					filtered = filtered.Where(x => x.StandardViable).ToList();
+			}
+			return filtered;
 		}
 	}
 }

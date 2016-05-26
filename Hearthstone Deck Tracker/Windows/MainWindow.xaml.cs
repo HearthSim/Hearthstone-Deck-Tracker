@@ -740,7 +740,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						DeckList.Save();
 					}
 
-					Log.Info("Switched to deck: " + deck.Name);
+					Log.Info($"Switched to deck: {deck.Name} ({deck.SelectedVersion.ShortVersionString})");
 
 					int useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
 					Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
