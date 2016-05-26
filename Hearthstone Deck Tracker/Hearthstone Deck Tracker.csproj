@@ -1230,12 +1230,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HDTHelper\HDTHelper.csproj">
-      <Project>{a2a7984f-d059-4259-bcb7-b63828f03c50}</Project>
-      <Name>HDTHelper</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -1261,7 +1255,6 @@
     xcopy /Y "HearthMirror.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "System.Windows.Interactivity.dll" "..\Hearthstone Deck Tracker"
     xcopy /Y "..\..\..\HDTUpdate\bin\Release\HDTUpdate.exe" "..\Hearthstone Deck Tracker"
-    xcopy /Y "..\..\..\HDTHelper\bin\Release\HDTHelper.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "..\..\..\HDTUninstaller\bin\Release\HDTUninstaller.exe" "..\Hearthstone Deck Tracker" )</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
