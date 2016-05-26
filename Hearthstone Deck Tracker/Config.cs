@@ -776,8 +776,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(5)]
 		public double SecretsTop = 5;
 
-		[DefaultValue(ArenaImportingBehaviour.AutoAsk)]
-		public ArenaImportingBehaviour? SelectedArenaImportingBehaviour = ArenaImportingBehaviour.AutoAsk;
+		[DefaultValue(ArenaImportingBehaviour.AutoImportSave)]
+		public ArenaImportingBehaviour? SelectedArenaImportingBehaviour = ArenaImportingBehaviour.AutoImportSave;
 
 		[DefaultValue(new[] {HeroClassAll.All})]
 		public HeroClassAll[] SelectedDeckPickerClasses = {HeroClassAll.All};
