@@ -62,8 +62,8 @@ namespace Hearthstone_Deck_Tracker
 			else if(mode != GameMode.None)
 			{
 				validDecks = validDecks.Where(x => !x.IsArenaDeck).ToList();
-				if(currentFormat == Format.Wild)
-					validDecks = validDecks.Where(x => !x.StandardViable).ToList();
+				if(currentFormat == Format.Standard)
+					validDecks = validDecks.Where(x => x.StandardViable).ToList();
 
 			}
 			if(validDecks.Count > 1 && cardEntites != null)
