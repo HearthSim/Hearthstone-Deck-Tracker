@@ -52,24 +52,27 @@
                             </GroupBox>
                         </StackPanel>
                     </GroupBox>
-                    <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
+                    <GroupBox Header="Web">
+                        <StackPanel>
+
+                            <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
                               Unchecked="CheckboxTagOnImport_Unchecked" />
-                    <CheckBox Name="CheckboxAutoSaveOnImport" Content="Auto save deck on import" Margin="10,5,0,0"
+                            <CheckBox Name="CheckboxAutoSaveOnImport" Content="Auto save deck on import" Margin="10,5,0,0"
                               Checked="CheckboxAutoSaveOnImport_OnChecked"
                               Unchecked="CheckboxAutoSaveOnImport_OnUnchecked" />
-                    <CheckBox Name="CheckboxImportNetDeck" Content="Auto import via NetDeck" Margin="10,5,0,0"
+                            <CheckBox Name="CheckboxImportNetDeck" Content="Auto import via NetDeck" Margin="10,5,0,0"
                               Checked="CheckboxImportNetDeck_OnChecked" Unchecked="CheckboxImportNetDeck_OnUnchecked" />
-                    <TextBlock Margin="10,2,0,0">
+                            <TextBlock Margin="10,2,0,0">
                         <Hyperlink
                             NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
                             RequestNavigate="Hyperlink_RequestNavigate">
                             Download NetDeck (Chrome ext.)
                         </Hyperlink>
-                    </TextBlock>
-                    <Button Margin="10,10,10,0" HorizontalAlignment="Stretch" Content="ACTIVATE HDT PROTOCOL"
-                            Click="ButtonActivateHdtProtocol_OnClick" />
+                            </TextBlock>
+                        </StackPanel>
+                    </GroupBox>
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>
