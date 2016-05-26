@@ -271,8 +271,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(GameMode.All)]
 		public GameMode DisplayedMode = GameMode.All;
 
-		[DefaultValue(DisplayedStats.Selected)]
-		public DisplayedStats DisplayedStats = DisplayedStats.Selected;
+		[DefaultValue(DisplayedStats.All)]
+		public DisplayedStats DisplayedStats = DisplayedStats.All;
 
 		[DefaultValue(DisplayedTimeFrame.AllTime)]
 		public DisplayedTimeFrame DisplayedTimeFrame = DisplayedTimeFrame.AllTime;
