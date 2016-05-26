@@ -492,6 +492,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			var decks = brawl ? DeckImporter.FromBrawl() : DeckImporter.FromConstructed();
 			DeckImportingFlyout.SetDecks(decks);
+			Core.MainWindow.ActivateWindow();
 		}
 	}
 }
