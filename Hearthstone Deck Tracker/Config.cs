@@ -118,6 +118,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Arena {Date dd-MM hh:mm}")]
 		public string ArenaDeckNameTemplate = "Arena {Date dd-MM hh:mm}";
 
+		[DefaultValue("Brawl {Date dd-MM hh:mm}")]
+		public string BrawlDeckNameTemplate = "Brawl {Date dd-MM hh:mm}";
+
 		[DefaultValue(false)]
 		public bool BringHsToForeground = false;
 

@@ -63,8 +63,9 @@ namespace Hearthstone_Deck_Tracker.Importing
 			try
 			{
 				var decks = Reflection.GetDecks().Where(x => x.Cards.Sum(c => c.Count) == 30 && x.Type != BrawlDeckType).ToList();
-				Log.Info($"Found {decks.Count} decks");
-				return GetImportedDecks(decks);
+				var newDecks = GetImportedDecks(decks);
+				Log.Info($"Found {decks.Count} decks, {newDecks.Count} new");
+				return newDecks;
 			}
 			catch(Exception e)
 			{

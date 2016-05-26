@@ -166,7 +166,10 @@ namespace Hearthstone_Deck_Tracker
 						IsArenaDeck = false
 					};
 					if(brawl)
+					{
 						newDeck.Tags.Add("Brawl");
+						newDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.BrawlDeckNameTemplate, newDeck);
+					}
 					DeckList.Instance.Decks.Add(newDeck);
 					toSelect = newDeck;
 				}
