@@ -41,6 +41,29 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{"manacrystals", Manacrystals.Import}
 		};
 
+		private const int BrawlDeckType = 6;
+		private static List<HearthMirror.Objects.Deck> _constructedDecksCahe;
+		private static List<HearthMirror.Objects.Deck> _brawlDecksCache;
+		private static ArenaInfo _arenaInfoCache;
+
+		public static List<HearthMirror.Objects.Deck> ConstructedDecksCache
+		{
+			get { return _constructedDecksCahe ?? (_constructedDecksCahe = GetConstructedDecks()); }
+			set { _constructedDecksCahe = value; }
+		}
+
+		public static ArenaInfo ArenaInfoCache
+		{
+			get { return _arenaInfoCache ?? (_arenaInfoCache = Reflection.GetArenaDeck()); }
+			set { _arenaInfoCache = value; }
+		}
+
+		public static List<HearthMirror.Objects.Deck> BrawlDecksCache
+		{
+			get { return _brawlDecksCache ?? (_brawlDecksCache = GetBrawlDecks()); }
+			set { _brawlDecksCache = value; }
+		}
+
 		public static async Task<Deck> Import(string url)
 		{
 			Log.Info("Importing deck from " + url);
@@ -57,14 +80,13 @@ namespace Hearthstone_Deck_Tracker.Importing
 			return null;
 		}
 
-		private const int BrawlDeckType = 6;
 		public static List<ImportedDeck> FromConstructed()
 		{
 			try
 			{
-				var decks = Reflection.GetDecks().Where(x => x.Cards.Sum(c => c.Count) == 30 && x.Type != BrawlDeckType).ToList();
-				var newDecks = GetImportedDecks(decks);
-				Log.Info($"Found {decks.Count} decks, {newDecks.Count} new");
+				ConstructedDecksCache = GetConstructedDecks();
+				var newDecks = GetImportedDecks(ConstructedDecksCache);
+				Log.Info($"Found {ConstructedDecksCache.Count} decks, {newDecks.Count} new");
 				return newDecks;
 			}
 			catch(Exception e)
@@ -74,13 +96,16 @@ namespace Hearthstone_Deck_Tracker.Importing
 			return new List<ImportedDeck>();
 		}
 
+		private static List<HearthMirror.Objects.Deck> GetConstructedDecks()
+			=> Reflection.GetDecks().Where(x => x.Cards.Sum(c => c.Count) == 30 && x.Type != BrawlDeckType).ToList();
+
 		public static List<ImportedDeck> FromBrawl()
 		{
 			try
 			{
-				var decks = Reflection.GetDecks().Where(x => x.Type == BrawlDeckType).ToList();
-				Log.Info($"Found {decks.Count} decks");
-				return GetImportedDecks(decks);
+				BrawlDecksCache = GetBrawlDecks();
+				Log.Info($"Found {BrawlDecksCache.Count} decks");
+				return GetImportedDecks(BrawlDecksCache);
 			}
 			catch(Exception e)
 			{
@@ -88,6 +113,9 @@ namespace Hearthstone_Deck_Tracker.Importing
 			}
 			return new List<ImportedDeck>();
 		}
+
+		private static List<HearthMirror.Objects.Deck> GetBrawlDecks()
+			=> Reflection.GetDecks().Where(x => x.Type == BrawlDeckType).ToList();
 
 		private static List<ImportedDeck> GetImportedDecks(IEnumerable<HearthMirror.Objects.Deck> decks)
 		{
@@ -114,12 +142,12 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			try
 			{
-				var deck = Reflection.GetArenaDeck();
-				if(deck != null && log)
-					Log.Info($"Found new {deck.Wins}-{deck.Losses} arena deck: hero={deck.Deck.Hero}, cards={deck.Deck.Cards.Count}");
+				ArenaInfoCache = Reflection.GetArenaDeck();
+				if(ArenaInfoCache != null && log)
+					Log.Info($"Found new {ArenaInfoCache.Wins}-{ArenaInfoCache.Losses} arena deck: hero={ArenaInfoCache.Deck.Hero}, cards={ArenaInfoCache.Deck.Cards.Count}");
 				else if(log)
-					Log.Info($"Found no arena deck");
-				return deck;
+					Log.Info("Found no arena deck");
+				return ArenaInfoCache;
 			}
 			catch(Exception e)
 			{
