@@ -13,10 +13,15 @@
             </Button>
         </StackPanel>
         <DockPanel Visibility="{Binding ContentVisibility}">
-            <Button Name="ButtonImport" Width="120" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,10,0,30"
-                Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonImport_OnClick">
-                <TextBlock Text="Import"/>
-            </Button>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="0,10,0,30">
+                <Button Name="ButtonImport" Width="150" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonImport_OnClick">
+                    <TextBlock Text="Import"/>
+                </Button>
+                <Button Name="ButtonAutoImport" Width="150" Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Click="ButtonAutoImport_OnClick"
+                        Visibility="{Binding AutoImportingVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <TextBlock Text="Enable auto importing"/>
+                </Button>
+            </StackPanel>
             <Label Content="Select decks to import:" DockPanel.Dock="Top" FontSize="18" HorizontalAlignment="Center" Foreground="White"/>
             <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" Margin="5">
                 <DockPanel Margin="0,0,0,5">

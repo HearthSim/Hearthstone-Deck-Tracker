@@ -15,9 +15,10 @@
                 <StackPanel>
                     <GroupBox Header="Constructed">
                         <StackPanel>
+                            <TextBlock TextWrapping="Wrap" Text="This will check for new and/or modified decks each time you enter the 'Play' menu." Margin="5,0,5,0"/>
                             <CheckBox x:Name="CheckBoxConstructedImportNew" Content="Auto import new decks" Margin="10,5,0,0"
                                       Checked="CheckBoxConstructedImportNew_Checked" Unchecked="CheckBoxConstructedImportNew_Unchecked" />
-                            <CheckBox x:Name="CheckBoxConstrucedUpdate" Content="Auto update existing decks" Margin="10,5,0,5"
+                            <CheckBox x:Name="CheckBoxConstrucedUpdate" Content="Auto update modified decks" Margin="10,5,0,5"
                                       Checked="CheckBoxConstrucedUpdate_Checked" Unchecked="CheckBoxConstrucedUpdate_Unchecked" />
                         </StackPanel>
                     </GroupBox>

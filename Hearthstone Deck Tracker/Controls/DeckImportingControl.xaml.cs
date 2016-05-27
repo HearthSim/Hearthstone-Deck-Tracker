@@ -40,6 +40,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public Visibility TextVisibility => _ready ? Collapsed : Visible;
 		public Visibility ContentVisibility => _ready ? Visible : Collapsed;
 		public Visibility StartButtonVisibility => Core.Game.IsRunning ? Collapsed : Visible;
+		public Visibility AutoImportingVisibility => _brawl || Config.Instance.ConstructedAutoImportNew ? Collapsed : Visible;
 
 		public string Text
 		{
@@ -128,6 +129,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 			Helper.StartHearthstoneAsync().Forget();
 			await Task.Delay(5000);
 			BtnStartHearthstone.IsEnabled = true;
+		}
+
+		private void ButtonAutoImport_OnClick(object sender, RoutedEventArgs e)
+		{
+			Core.MainWindow.Options.TreeViewItemTrackerImporting.IsSelected = true;
+			Core.MainWindow.FlyoutOptions.IsOpen = true;
 		}
 	}
 }
