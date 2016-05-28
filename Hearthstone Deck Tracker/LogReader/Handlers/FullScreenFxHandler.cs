@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return;
 				_lastQueueTime = logLine.Time;
 				if(game.CurrentMode == Mode.TOURNAMENT)
-					AutoSelectDeckById();
+					AutoSelectDeckById(true);
 				else if(game.CurrentMode == Mode.DRAFT)
 					AutoSelectArenaDeck();
 			}
@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			Core.MainWindow.SelectDeck(selectedDeck, true);
 		}
 
-		private static void AutoSelectDeckById()
+		private static void AutoSelectDeckById(bool import)
 		{
 			var selectedDeckId = Reflection.GetSelectedDeckInMenu();
 			if(selectedDeckId <= 0)
@@ -56,6 +56,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var selectedDeck = DeckList.Instance.Decks.FirstOrDefault(x => x.HsId == selectedDeckId);
 			if(selectedDeck == null)
 			{
+				if(import && DeckManager.AutoImportConstructed(true))
+				{
+					AutoSelectDeckById(false);
+					return;
+				}
 				Log.Warn($"No deck with id={selectedDeckId} found");
 				return;
 			}
@@ -70,7 +75,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					Log.Info("Switching to version: " + version.Version.ShortVersionString);
 				}
 				else
+				{
+					if(import && DeckManager.AutoImportConstructed(true))
+					{
+						AutoSelectDeckById(false);
+						return;
+					}
 					Log.Warn("Could not find deck with matching cards.");
+				}
 			}
 			else if(Equals(selectedDeck, DeckList.Instance.ActiveDeck))
 			{

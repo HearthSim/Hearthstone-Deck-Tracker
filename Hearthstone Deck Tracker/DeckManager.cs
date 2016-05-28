@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Importing.Game;
 using Hearthstone_Deck_Tracker.Importing.Game.ImportOptions;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -41,6 +42,7 @@ namespace Hearthstone_Deck_Tracker
 			var notFound = cardEntites.Where(x => !deck.GetSelectedDeckVersion().Cards.Any(c => c.Id == x.Key && c.Count >= x.Count())).ToList();
 			if(notFound.Any())
 			{
+				AutoImport(false);
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
 				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
 				if(Config.Instance.AutoDeckDetection)
@@ -245,6 +247,60 @@ namespace Hearthstone_Deck_Tracker
 			if(select && toSelect != null)
 				Core.MainWindow.SelectDeck(toSelect, true);
 			Core.UpdatePlayerCards(true);
+		}
+
+		public static bool AutoImport(bool select)
+		{
+			switch(Core.Game.CurrentGameMode)
+			{
+				case GameMode.Ranked:
+				case GameMode.Casual:
+				case GameMode.Friendly:
+				case GameMode.Practice:
+					return AutoImportConstructed(select);
+				case GameMode.Arena:
+					AutoImportArena(ArenaImportingBehaviour.AutoImportSave);
+					break;
+			}
+			return false;
+		}
+
+		public static bool AutoImportConstructed(bool select)
+		{
+			var decks = DeckImporter.FromConstructed();
+			if(decks.Any() && (Config.Instance.ConstructedAutoImportNew || Config.Instance.ConstructedAutoUpdate))
+			{
+				ImportDecks(decks, false, Config.Instance.ConstructedAutoImportNew, Config.Instance.ConstructedAutoUpdate, select);
+				return true;
+			}
+			return false;
+		}
+
+		public static bool AutoImportArena(ArenaImportingBehaviour behaviour)
+		{
+			var deck = HearthMirror.Reflection.GetArenaDeck();
+			if(deck?.Deck.Cards.Sum(x => x.Count) != 30)
+				return false;
+			Log.Info($"Found new {deck.Deck.Hero} arena deck!");
+			var recentArenaDecks =
+				DeckList.Instance.Decks.Where(d => d.IsArenaDeck && d.Cards.Sum(x => x.Count) == 30).OrderByDescending(
+					d => d.LastPlayedNewFirst).Take(15);
+			if(recentArenaDecks.Any(d => d.Cards.All(c => deck.Deck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count))))
+				Log.Info("...but we already have that one. Discarding.");
+			else if(Core.Game.IgnoredArenaDecks.Contains(deck.Deck.Id))
+				Log.Info("...but it was already discarded by the user. No automatic action taken.");
+			else if(behaviour == ArenaImportingBehaviour.AutoAsk)
+			{
+				Core.MainWindow.ShowNewArenaDeckMessageAsync(deck.Deck);
+				return true;
+			}
+			else if(behaviour == ArenaImportingBehaviour.AutoImportSave)
+			{
+				Log.Info("...auto saving new arena deck.");
+				Core.MainWindow.ImportArenaDeck(deck.Deck);
+				return true;
+			}
+			return false;
 		}
 	}
 
