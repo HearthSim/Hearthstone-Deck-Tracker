@@ -61,7 +61,7 @@ namespace Hearthstone_Deck_Tracker
 			if(currentDeck != null)
 				validDecks.Remove(currentDeck);
 			validDecks = validDecks.FilterByMode(mode, currentFormat);
-			if(validDecks.Count > 1 && cardEntites != null)
+			if(cardEntites != null)
 				validDecks = validDecks.Where(x => cardEntites.All(ce => x.GetSelectedDeckVersion().Cards.Any(c => c.Id == ce.Key && c.Count >= ce.Count()))).ToList();
 			if(_autoSelectCount > 1)
 			{
