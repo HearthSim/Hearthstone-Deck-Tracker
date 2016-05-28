@@ -394,6 +394,7 @@ namespace Hearthstone_Deck_Tracker
 			_handledGameEnd = true;
 			TurnTimer.Instance.Stop();
 			Core.Overlay.HideTimers();
+			DeckManager.ResetAutoSelectCount();
 			Log.Info("Game ended...");
 			if(_game.CurrentGameMode == Spectator && !Config.Instance.RecordSpectator)
 			{

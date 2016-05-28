@@ -19,8 +19,11 @@ namespace Hearthstone_Deck_Tracker
 		private static bool _waitingForClass;
 		private static bool _waitingForUserInput;
 		private static int _waitingForDraws;
+		private static int _autoSelectCount;
 		public static Guid IgnoredDeckId;
 		public static List<Card> NotFoundCards { get; set; } = new List<Card>(); 
+
+		internal static void ResetAutoSelectCount() => _autoSelectCount = 0;
 
 		public static async Task DetectCurrentDeck()
 		{
@@ -60,6 +63,12 @@ namespace Hearthstone_Deck_Tracker
 			validDecks = validDecks.FilterByMode(mode, currentFormat);
 			if(validDecks.Count > 1 && cardEntites != null)
 				validDecks = validDecks.Where(x => cardEntites.All(ce => x.GetSelectedDeckVersion().Cards.Any(c => c.Id == ce.Key && c.Count >= ce.Count()))).ToList();
+			if(_autoSelectCount > 1)
+			{
+				Log.Info("Too many auto selects. Showing dialog.");
+				ShowDeckSelectionDialog(validDecks);
+				return;
+			}
 			if(validDecks.Count == 0)
 			{
 				Log.Info("Could not find matching deck.");
@@ -72,6 +81,7 @@ namespace Hearthstone_Deck_Tracker
 				var deck = validDecks.Single();
 				Log.Info("Found one matching deck: " + deck);
 				Core.MainWindow.SelectDeck(deck, true);
+				_autoSelectCount++;
 				return;
 			}
 			var lastUsed = DeckList.Instance.LastDeckClass.FirstOrDefault(x => x.Class == heroClass);
@@ -82,6 +92,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Log.Info($"Last used {heroClass} deck matches!");
 					Core.MainWindow.SelectDeck(deck, true);
+					_autoSelectCount++;
 					return;
 				}
 			}
@@ -102,6 +113,7 @@ namespace Hearthstone_Deck_Tracker
 					Log.Info($"Found matching version on {deck.Name}: {version.Version.ShortVersionString}.");
 					deck.SelectVersion(version);
 					Core.MainWindow.SelectDeck(deck, true);
+					_autoSelectCount++;
 					return true;
 				}
 			}
