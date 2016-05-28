@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker
 			validDecks = validDecks.FilterByMode(mode, format);
 			foreach(var deck in validDecks)
 			{
-				foreach(var version in deck.Versions)
+				foreach(var version in deck.VersionsIncludingSelf.Where(x => x != deck.SelectedVersion).Select(deck.GetVersion))
 				{
 					if(!cardEntites.All(ce => version.Cards.Any(c => c.Id == ce.Key && c.Count >= ce.Count())))
 						continue;
