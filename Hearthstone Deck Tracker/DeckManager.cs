@@ -42,7 +42,16 @@ namespace Hearthstone_Deck_Tracker
 			var notFound = cardEntites.Where(x => !deck.GetSelectedDeckVersion().Cards.Any(c => c.Id == x.Key && c.Count >= x.Count())).ToList();
 			if(notFound.Any())
 			{
+				var activeVersion = deck.Version;
 				AutoImport(false);
+				if(activeVersion != deck.Version && cardEntites.All(ce => deck.GetSelectedDeckVersion().Cards.Any(c => c.Id == ce.Key && c.Count >= ce.Count())))
+				{
+					//if autoimport finds a new version of the selected deck, the new version will be set as selected, but not active.
+					//We are still using the old one for these checks AND exclude the selected version from possible targets to switch to,
+					//so if the newly imported version matches all existing entites, use that one.
+					Core.MainWindow.SelectDeck(deck, true);
+					return;
+				}	
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
 				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
 				if(Config.Instance.AutoDeckDetection)
