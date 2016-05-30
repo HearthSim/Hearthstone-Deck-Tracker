@@ -34,19 +34,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var export = true;
 			if(Config.Instance.ShowExportingDialog)
 			{
-				var message =
-					$"1) create a new {deck.Class} deck{(Config.Instance.AutoClearDeck ? " (or open an existing one to be cleared automatically)" : "")}.\n\n2) leave the deck creation screen open.\n\n3) do not move your mouse or type after clicking \"export\".";
-
-				if(deck.GetSelectedDeckVersion().Cards.Any(c => c.Name == "Stalagg" || c.Name == "Feugen"))
-				{
-					message +=
-						"\n\nIMPORTANT: If you own golden versions of Feugen or Stalagg please make sure to configure\nOptions > Other > Exporting";
-				}
-
+				var message = $"1) Create a new (or open an existing) {deck.Class} deck.\n\n2) Leave the deck creation screen open.\n\n3) Click 'Export' and do not move your mouse or type until done.";
 				var settings = new MessageDialogs.Settings {AffirmativeButtonText = "Export"};
-				var result =
-					await
-					this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone", message, MessageDialogStyle.AffirmativeAndNegative, settings);
+				var result = await this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone", message, MessageDialogStyle.AffirmativeAndNegative, settings);
 				export = result == MessageDialogResult.Affirmative;
 			}
 			if(export)
@@ -54,8 +44,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
 				Topmost = false;
 				await Task.Delay(500);
-				await DeckExporter.Export(deck);
+				var success = await DeckExporter.Export(deck);
 				await controller.CloseAsync();
+
+				if(success)
+				{
+					var hsDeck = HearthMirror.Reflection.GetEditedDeck();
+					if(hsDeck != null)
+					{
+						var existingHsId = DeckList.Instance.Decks.Where(x => x.DeckId != deck.DeckId).FirstOrDefault(x => x.HsId == hsDeck.Id);
+						if(existingHsId != null)
+							existingHsId.HsId = 0;
+						deck.HsId = hsDeck.Id;
+						DeckList.Save();
+					}
+				}
 
 				if(deck.MissingCards.Any())
 					this.ShowMissingCardsMessage(deck);

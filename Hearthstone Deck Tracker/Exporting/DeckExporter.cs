@@ -13,10 +13,10 @@ namespace Hearthstone_Deck_Tracker.Exporting
 {
 	public static class DeckExporter
 	{
-		public static async Task Export(Deck deck)
+		public static async Task<bool> Export(Deck deck)
 		{
 			if(deck == null)
-				return;
+				return false;
 			var currentClipboard = "";
 			var altScreenCapture = Config.Instance.AlternativeScreenCapture;
 			try
@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 				var inForeground = await ExportingHelper.EnsureHearthstoneInForeground(info.HsHandle);
 				if(!inForeground)
-					return;
+					return false;
 				Log.Info($"Waiting for {Config.Instance.ExportStartDelay} seconds before starting the export process");
 				await Task.Delay(Config.Instance.ExportStartDelay * 1000);
 				if(!altScreenCapture)
@@ -41,16 +41,18 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				await ClearFilters(info);
 				var lostFocus = await CreateDeck(deck, info);
 				if(lostFocus)
-					return;
+					return false;
 				await ClearSearchBox(info.HsHandle, info.SearchBoxPos);
 
 				if(Config.Instance.ExportPasteClipboard)
 					Clipboard.Clear();
 				Log.Info("Success exporting deck.");
+				return true;
 			}
 			catch(Exception e)
 			{
 				Log.Error("Error exporting deck: " + e);
+				return false;
 			}
 			finally
 			{
