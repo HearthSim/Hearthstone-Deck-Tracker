@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using HearthMirror.Enums;
 using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Controls.Information;
@@ -164,6 +165,15 @@ namespace Hearthstone_Deck_Tracker
 						{
 							BackupManager.Run();
 							Game.MetaData.HearthstoneBuild = null;
+						}
+						var status = HearthMirror.Status.GetStatus();
+						if(status.MirrorStatus == MirrorStatus.Error)
+						{
+							Log.Error(status.Exception);
+							LogReaderManager.Stop(true).Forget();
+							await MainWindow.ShowMessage("Uneven permissions",
+									"It appears that Hearthstone (Battle.net) and HDT do not have the same permissions.\n\nPlease run both as administrator or local user.\n\nIf you don't know what any of this means, just run HDT as administrator.");
+							return;
 						}
 					}
 					Overlay.UpdatePosition();
