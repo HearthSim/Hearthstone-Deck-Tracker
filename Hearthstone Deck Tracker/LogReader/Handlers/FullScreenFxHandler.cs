@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void AutoSelectArenaDeck()
 		{
-			var hsDeck = DeckImporter.ArenaInfoCache.Deck;
+			var hsDeck = DeckImporter.ArenaInfoCache?.Deck;
 			if(hsDeck == null)
 				return;
 			var selectedDeck = DeckList.Instance.Decks.FirstOrDefault(x => x.HsId == hsDeck.Id);
