@@ -72,6 +72,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 			if(website.Value != null)
 			{
 				var deck = await website.Value.Invoke(url);
+				if(deck == null)
+					return null;
 				deck.Cards = new ObservableCollection<Card>(deck.Cards.Where(x => x.Id != Database.UnknownCardId));
 				return deck;
 			}
