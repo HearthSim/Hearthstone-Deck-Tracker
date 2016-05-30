@@ -17,12 +17,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		[XmlArray(ElementName = "DeckStats")]
 		[XmlArrayItem(ElementName = "Deck")]
-		public List<DeckStats> DeckStats;
-
-		public DeckStatsList()
-		{
-			DeckStats = new List<DeckStats>();
-		}
+		public List<DeckStats> DeckStats = new List<DeckStats>();
 
 		public static DeckStatsList Instance => _instance.Value;
 
@@ -71,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				if(instance == null)
 					throw new Exception("DeckStats.xml is corrupted.");
 			}
-			instance.DeckStats = instance.DeckStats.Where(x => x.Games.Any()).ToList();
+			instance.DeckStats = instance.DeckStats.Where(x => x?.Games.Any() ?? false).ToList();
 			return instance;
 		}
 
