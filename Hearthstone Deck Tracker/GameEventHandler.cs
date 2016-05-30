@@ -434,7 +434,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.CurrentGameStats.Format = _game.CurrentFormat;
 				Log.Info("Format: " + _game.CurrentGameStats.Format);
-				if(_game.CurrentGameMode == Ranked)
+				if(_game.CurrentGameMode == Ranked && _game.MatchInfo != null)
 				{
 					var wild = _game.CurrentFormat == Format.Wild;
 					_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
