@@ -7,7 +7,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Exporting;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -75,19 +77,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(selectedDeck == null)
 				return;
 			Log.Info("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo());
-			var screenShotWindow = new DeckScreenshotWindow(selectedDeck.GetSelectedDeckVersion(), deckOnly);
-			screenShotWindow.Show();
-			screenShotWindow.Top = 0;
-			screenShotWindow.Left = 0;
-			await Task.Delay(100);
-			var source = PresentationSource.FromVisual(screenShotWindow);
-			if(source == null)
-				return;
 
 			var deck = selectedDeck.GetSelectedDeckVersion();
-			var pngEncoder = Helper.ScreenshotDeck(screenShotWindow.StackPanelMain, 96, 96, deck.Name);
-			screenShotWindow.Close();
-			await SaveOrUploadScreenshot(pngEncoder, deck.Name);
+			var cards = 35 * deck.Cards.Count;
+			var height = (deckOnly ? 0 : 124) + cards;
+			var width = 219;
+
+			DeckView control = new DeckView(deck, deckOnly);
+			control.Measure(new Size(width, height));
+			control.Arrange(new Rect(new Size(width, height)));
+			control.UpdateLayout();
+			Log.Debug($"Screenshot: {control.ActualWidth} x {control.ActualHeight}");
+
+			RenderTargetBitmap bmp = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
+			bmp.Render(control);
+			var encoder = new PngBitmapEncoder();
+			encoder.Frames.Add(BitmapFrame.Create(bmp));
+
+			await SaveOrUploadScreenshot(encoder, deck.Name);
 		}
 
 		public async Task SaveOrUploadScreenshot(PngBitmapEncoder pngEncoder, string proposedFileName)

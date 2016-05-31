@@ -9,13 +9,13 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.CardIds.Collectible;
 using static System.Windows.Visibility;
 
-namespace Hearthstone_Deck_Tracker.Windows
+namespace Hearthstone_Deck_Tracker.Controls
 {
-	public partial class DeckScreenshotWindow
+	public partial class DeckView
 	{
 		private readonly string _allTags;
 
-		public DeckScreenshotWindow(Deck deck, bool deckOnly = false)
+		public DeckView(Deck deck, bool deckOnly = false)
 		{
 			InitializeComponent();
 			_allTags = deck.TagList.ToLowerInvariant().Replace("-", "");

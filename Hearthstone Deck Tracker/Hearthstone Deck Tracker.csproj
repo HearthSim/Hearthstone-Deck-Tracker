@@ -498,8 +498,8 @@
     <Compile Include="Windows\CapturableOverlayWindow.xaml.cs">
       <DependentUpon>CapturableOverlayWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\DeckScreenshotWindow.xaml.cs">
-      <DependentUpon>DeckScreenshotWindow.xaml</DependentUpon>
+    <Compile Include="Controls\DeckView.xaml.cs">
+      <DependentUpon>DeckView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\DeckTypeDialog.xaml.cs">
       <DependentUpon>DeckTypeDialog.xaml</DependentUpon>
@@ -956,7 +956,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\DeckScreenshotWindow.xaml">
+    <Page Include="Controls\DeckView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
