@@ -82,13 +82,72 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Core.Overlay.UpdatePosition();
 		}
 
-		[PredefinedHotKeyAction("Toggle overlay: timers", "Turns the timers on the overlay on or off (if the game is running).")]
+		[PredefinedHotKeyAction("Toggle overlay: timers", "Cycling on or off on the timers on the overlay (if the game is running).")]
 		public static void ToggleOverlayTimer()
 		{
 			if(!Core.Game.IsRunning)
 				return;
-			Config.Instance.HideTimers = !Config.Instance.HideTimers;
-			Config.Save();
+
+            /* cycling around the 3 Timers
+             * 
+             *      A(1)
+             * C(4)
+             *      B(2)
+             *      
+             *  0 <-> hiden
+             *  7 <-> all visible
+             */
+
+            switch (Config.Instance.HideTimerCycle)
+            {
+                case 0://--- -> A
+                    Config.Instance.HideOpponentTimer = false;
+                    Config.Instance.HidePlayerTimer = true;
+                    Config.Instance.HideTurnTimer = true;
+                    break;
+                case 1:// A -> B
+                    Config.Instance.HideOpponentTimer = true;
+                    Config.Instance.HidePlayerTimer = false;
+                    Config.Instance.HideTurnTimer = true;
+                    break;
+                case 2:// B -> C
+                    Config.Instance.HideOpponentTimer = true;
+                    Config.Instance.HidePlayerTimer = true;
+                    Config.Instance.HideTurnTimer = false;
+                    break;
+                case 3:// C -> AB
+                    Config.Instance.HideOpponentTimer = false;
+                    Config.Instance.HidePlayerTimer = false;
+                    Config.Instance.HideTurnTimer = true;
+                    break;
+                case 4:// AB -> AC
+                    Config.Instance.HideOpponentTimer = false;
+                    Config.Instance.HidePlayerTimer = true;
+                    Config.Instance.HideTurnTimer = false;
+                    break;
+                case 5:// AC -> BC
+                    Config.Instance.HideOpponentTimer = true;
+                    Config.Instance.HidePlayerTimer = false;
+                    Config.Instance.HideTurnTimer = false;
+                    break;
+                case 6:// BC -> ABC
+                    Config.Instance.HideOpponentTimer = false;
+                    Config.Instance.HidePlayerTimer = false;
+                    Config.Instance.HideTurnTimer = false;
+                    break;
+                case 7:// ABC -> ---
+                    Config.Instance.HideOpponentTimer = true;
+                    Config.Instance.HidePlayerTimer = true;
+                    Config.Instance.HideTurnTimer = true;
+                    break;
+                default:
+                    break;
+            }
+            if (Config.Instance.HideTimerCycle == 7) Config.Instance.HideTimerCycle = 0;
+            else Config.Instance.HideTimerCycle++;
+
+
+            Config.Save();
 			Core.Overlay.UpdatePosition();
 		}
 

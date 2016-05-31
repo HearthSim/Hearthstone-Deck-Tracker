@@ -32,10 +32,18 @@
                               VerticalAlignment="Top"
                               Checked="CheckboxHideDecksInOverlay_Checked"
                               Unchecked="CheckboxHideDecksInOverlay_Unchecked" />
-                    <CheckBox x:Name="CheckboxHideTimers" Content="Hide timers"
+                    <CheckBox x:Name="CheckboxHideTimers" Content="Hide turn timer"
                               HorizontalAlignment="Left"
-                              VerticalAlignment="Top" Checked="CheckboxHideTimers_Checked"
-                              Unchecked="CheckboxHideTimers_Unchecked" Margin="10,5,0,0" />
+                              VerticalAlignment="Top" Checked="CheckboxHideTurnTimer_Checked"
+                              Unchecked="CheckboxHideTurnTimer_Unchecked" Margin="10,5,0,0" />
+                    <CheckBox x:Name="CheckboxHideTimersPlayer" Content="Hide player timer"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top" Checked="CheckboxHidePlayerTimer_Checked"
+                              Unchecked="CheckboxHidePlayerTimer_Unchecked" Margin="10,5,0,0" />
+                    <CheckBox x:Name="CheckboxHideTimersOpponent" Content="Hide opponent timer"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top" Checked="CheckboxHideOpponentTimer_Checked"
+                              Unchecked="CheckboxHideOpponentTimer_Unchecked" Margin="10,5,0,0" />
                     <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="Hide card-age"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxHideOpponentCardAge_Checked"

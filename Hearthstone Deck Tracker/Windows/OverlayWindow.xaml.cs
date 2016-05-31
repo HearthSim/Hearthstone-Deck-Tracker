@@ -143,11 +143,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void HideTimers() => LblPlayerTurnTime.Visibility = LblOpponentTurnTime.Visibility = LblTurnTime.Visibility = Hidden;
 
 		public void ShowTimers()
-			=>
-				LblPlayerTurnTime.Visibility =
-				LblOpponentTurnTime.Visibility = LblTurnTime.Visibility = Config.Instance.HideTimers ? Hidden : Visible;
+        {
+            LblPlayerTurnTime.Visibility = Config.Instance.HidePlayerTimer ? Hidden : Visible;
+            LblOpponentTurnTime.Visibility = Config.Instance.HideOpponentTimer ? Hidden : Visible;
+            LblTurnTime.Visibility = Config.Instance.HideTurnTimer ? Hidden : Visible;
+        }
 
-		public void ShowSecrets(bool force = false, HeroClass? heroClass = null)
+        public void ShowSecrets(bool force = false, HeroClass? heroClass = null)
 		{
 			if(Config.Instance.HideSecrets && !force)
 				return;

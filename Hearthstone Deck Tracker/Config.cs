@@ -500,9 +500,18 @@ namespace Hearthstone_Deck_Tracker
 		public bool HideSecrets = false;
 
 		[DefaultValue(false)]
-		public bool HideTimers = false;
+		public bool HideTurnTimer = false;
 
-		[DefaultValue(false)]
+        [DefaultValue(false)]
+        public bool HidePlayerTimer = false;
+
+        [DefaultValue(false)]
+        public bool HideOpponentTimer = false;
+
+        [DefaultValue(7)]
+        public int HideTimerCycle = 7;
+
+        [DefaultValue(false)]
 		public bool HighlightCardsInHand = false;
 
 		[DefaultValue(false)]
