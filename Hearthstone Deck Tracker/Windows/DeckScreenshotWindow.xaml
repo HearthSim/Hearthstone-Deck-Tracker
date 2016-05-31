@@ -91,21 +91,6 @@
                 <TextBlock x:Name="LblDeckFormat" Margin="0,0,2,0" FontSize="14" Height="20" Foreground="White">Wild</TextBlock>
                 <TextBlock x:Name="LblDeckTag" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="4,0" FontSize="14" Height="20" Foreground="White">MidRange</TextBlock>
             </DockPanel>
-            <!-- Sets/Dust Panel -->
-            <DockPanel Height="34"  Width="217" Margin="0,2,0,0" x:Name="SetDustPanel" DockPanel.Dock="Bottom">
-                <DockPanel.Background>
-                    <ImageBrush ImageSource="pack://application:,,,/Resources/tactile_noise.png" 
-                                Stretch="None" ViewboxUnits="Absolute" AlignmentX="Left" AlignmentY="Top"
-                                Viewport="0,0,48,48" TileMode="Tile" ViewportUnits="Absolute"/>
-                </DockPanel.Background>
-                <!-- Set Icons -->
-                <controls1:DeckSetIcons x:Name="SetIcons" Fill="White" Margin="4,0" />
-                <!-- Dust Info -->
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="4,0">
-                    <Image Source="pack://application:,,,/Resources/dust.png" Height="20" Width="20"/>
-                    <TextBlock x:Name="LblDustCost" Margin="2,0" FontSize="14" Foreground="White" VerticalAlignment="Center">12800</TextBlock>
-                </StackPanel>
-            </DockPanel>
             <!-- hsdecktracker -->
             <Border BorderBrush="White" BorderThickness="0,1,0,0" Height="24" Width="217" x:Name="BrandContainer" DockPanel.Dock="Bottom">
                 <StackPanel Orientation="Horizontal" Height="24" Width="217">
@@ -121,6 +106,21 @@
                     <TextBlock Margin="4,0" FontSize="14" Height="20" Foreground="White">hsdecktracker.net</TextBlock>
                 </StackPanel>
             </Border>
+            <!-- Sets/Dust Panel -->
+            <DockPanel Height="34"  Width="217" Margin="0,2,0,0" x:Name="SetDustPanel" DockPanel.Dock="Bottom">
+                <DockPanel.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Resources/tactile_noise.png" 
+                                Stretch="None" ViewboxUnits="Absolute" AlignmentX="Left" AlignmentY="Top"
+                                Viewport="0,0,48,48" TileMode="Tile" ViewportUnits="Absolute"/>
+                </DockPanel.Background>
+                <!-- Set Icons -->
+                <controls1:DeckSetIcons x:Name="SetIcons" Fill="White" Margin="4,0" />
+                <!-- Dust Info -->
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="4,0">
+                    <Image Source="pack://application:,,,/Resources/dust.png" Height="20" Width="20"/>
+                    <TextBlock x:Name="LblDustCost" Margin="2,0" FontSize="14" Foreground="White" VerticalAlignment="Center">12800</TextBlock>
+                </StackPanel>
+            </DockPanel>
             <!-- Card List -->
             <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill">
                 <controls1:AnimatedCardList x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
