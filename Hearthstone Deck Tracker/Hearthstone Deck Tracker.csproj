@@ -470,9 +470,6 @@
     <Compile Include="Plugins\PluginSettings.cs" />
     <Compile Include="Plugins\PluginWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Protocol\JsonCard.cs" />
-    <Compile Include="Protocol\JsonDeck.cs" />
-    <Compile Include="Protocol\JsonDecksWrapper.cs" />
     <Compile Include="Replay\TurnViewItem.cs" />
     <Compile Include="Stats\CompiledStats\ArenaStats.cs" />
     <Compile Include="Utility\ConfigWrapper.cs" />
@@ -515,7 +512,6 @@
     </Compile>
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Utility\BackupManager.cs" />
-    <Compile Include="Protocol\PipeServer.cs" />
     <Compile Include="Utility\ConfigManager.cs" />
     <Compile Include="Utility\DataIssueResolver.cs" />
     <Compile Include="Utility\ImageCache.cs" />
