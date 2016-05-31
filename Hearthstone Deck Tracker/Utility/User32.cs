@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker
 		private const int WsMinimize = 0x20000000;
 		private const int WsMaximize = 0x1000000;
 		public const int SwRestore = 9;
+		public const int SwShow = 5;
 		private const int Alt = 0xA4;
 		private const int ExtendedKey = 0x1;
 		private const int KeyUp = 0x2;
@@ -205,8 +206,7 @@ namespace Hearthstone_Deck_Tracker
 			var hsHandle = GetHearthstoneWindow();
 			if(hsHandle == IntPtr.Zero)
 				return;
-			if(Helper.GameWindowState == WindowState.Minimized)
-				ActivateWindow(hsHandle);
+			ActivateWindow(hsHandle);
 			SetForegroundWindow(hsHandle);
 		}
 
@@ -220,7 +220,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			// Show window maximized.
-			ShowWindow(mainWindowHandle, SwRestore);
+			ShowWindow(mainWindowHandle, GetHearthstoneWindowState() == WindowState.Minimized ? SwRestore : SwShow);
 
 			// Simulate an "ALT" key press.
 			keybd_event(Alt, 0x45, ExtendedKey | 0, 0);
