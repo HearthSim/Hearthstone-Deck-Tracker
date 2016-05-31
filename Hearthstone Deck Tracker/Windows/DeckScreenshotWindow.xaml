@@ -7,8 +7,8 @@
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
                       Title="Screenshot" Height="440" Width="230" MinWidth="226" MaxWidth="230"
-                      Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"                      
-                      Icon="{StaticResource AppIcon}">
+                      Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                      SizeToContent="Height" Icon="{StaticResource AppIcon}">
     <controls:MetroWindow.Resources>
         <SolidColorBrush x:Key="StandardColor" Color="White"></SolidColorBrush>
         <LinearGradientBrush x:Key="WildColorGrad" StartPoint="0,0" EndPoint="1,1" >
@@ -47,15 +47,15 @@
         </DataTemplate>
     </controls:MetroWindow.IconTemplate>
     <Grid Name="WindowGrid">
-        <StackPanel Name="StackPanelMain">
+        <DockPanel Name="StackPanelMain">
             <!-- Deck Title/Header -->
-            <Border BorderBrush="Black" BorderThickness="1" Height="40" Width="217" x:Name="DeckTitleContainer">
+            <Border BorderBrush="Black" BorderThickness="1" Height="40" Width="217" x:Name="DeckTitleContainer" DockPanel.Dock="Top">
                 <DockPanel Name="DeckTitlePanel" Height="40" Width="217" LastChildFill="True">
                     <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Margin="4,2" Text="Deck title" TextAlignment="Left" VerticalAlignment="Bottom"/>
                 </DockPanel>
             </Border>
             <!-- Format/Tags -->
-            <DockPanel x:Name="DeckFormatPanel" Height="24" Width="217">
+            <DockPanel x:Name="DeckFormatPanel" Height="24" Width="217" DockPanel.Dock="Top">
                 <DockPanel.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Resources/tactile_noise.png" 
                                 Stretch="None" ViewboxUnits="Absolute" AlignmentX="Left" AlignmentY="Top"
@@ -91,22 +91,8 @@
                 <TextBlock x:Name="LblDeckFormat" Margin="0,0,2,0" FontSize="14" Height="20" Foreground="White">Wild</TextBlock>
                 <TextBlock x:Name="LblDeckTag" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="4,0" FontSize="14" Height="20" Foreground="White">MidRange</TextBlock>
             </DockPanel>
-            <!-- Card List -->
-            <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill" 
-                     MaxHeight="{Binding DeckMaxHeight, RelativeSource={RelativeSource AncestorType=windows:DeckScreenshotWindow}}">
-                <controls1:AnimatedCardList x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
-                                    ScrollViewer.CanContentScroll="False">
-                    <controls1:AnimatedCardList.ItemContainerStyle>
-                        <Style TargetType="controls1:AnimatedCard">
-                            <Setter Property="Margin" Value="0,1,0,0"/>
-                        </Style>
-                    </controls1:AnimatedCardList.ItemContainerStyle>
-                </controls1:AnimatedCardList>
-            </Viewbox>
             <!-- Sets/Dust Panel -->
-            <DockPanel Height="34"  Width="217" Margin="0,2,0,0" x:Name="SetDustPanel">
+            <DockPanel Height="34"  Width="217" Margin="0,2,0,0" x:Name="SetDustPanel" DockPanel.Dock="Bottom">
                 <DockPanel.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Resources/tactile_noise.png" 
                                 Stretch="None" ViewboxUnits="Absolute" AlignmentX="Left" AlignmentY="Top"
@@ -121,7 +107,7 @@
                 </StackPanel>
             </DockPanel>
             <!-- hsdecktracker -->
-            <Border BorderBrush="White" BorderThickness="0,1,0,0" Height="24" Width="217" x:Name="BrandContainer">
+            <Border BorderBrush="White" BorderThickness="0,1,0,0" Height="24" Width="217" x:Name="BrandContainer" DockPanel.Dock="Bottom">
                 <StackPanel Orientation="Horizontal" Height="24" Width="217">
                     <StackPanel.Background>
                         <ImageBrush ImageSource="pack://application:,,,/Resources/embroidery.png" 
@@ -135,6 +121,19 @@
                     <TextBlock Margin="4,0" FontSize="14" Height="20" Foreground="White">hsdecktracker.net</TextBlock>
                 </StackPanel>
             </Border>
-        </StackPanel>
+            <!-- Card List -->
+            <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill">
+                <controls1:AnimatedCardList x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
+                                    ScrollViewer.CanContentScroll="False">
+                    <controls1:AnimatedCardList.ItemContainerStyle>
+                        <Style TargetType="controls1:AnimatedCard">
+                            <Setter Property="Margin" Value="0,1,0,0"/>
+                        </Style>
+                    </controls1:AnimatedCardList.ItemContainerStyle>
+                </controls1:AnimatedCardList>
+            </Viewbox>
+        </DockPanel>
     </Grid>
 </controls:MetroWindow>

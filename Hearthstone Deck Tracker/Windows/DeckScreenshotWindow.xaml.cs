@@ -13,7 +13,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class DeckScreenshotWindow
 	{
-		private const int EXTRAS_HEIGHT = 40 + 24 + 34 + 24;
 		private readonly string _allTags;
 
 		public DeckScreenshotWindow(Deck deck, bool deckOnly = false)
@@ -39,16 +38,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ShowFormatIcon(deck);
 				SetIcons.Update(deck);
 			}
-
-			Height = 35 * ListViewPlayer.Items.Count + (deckOnly ? 0 : EXTRAS_HEIGHT);
 		}
-
-		public double DeckMaxHeight => ActualHeight - LabelsHeight;
-
-		public double LabelsHeight => DeckTitleContainer.ActualHeight + DeckFormatPanel.ActualHeight
-			+ SetDustPanel.ActualHeight + BrandContainer.ActualHeight + 42;
-
-		public void UpdateWindowHeight() => Height = StackPanelMain.ActualHeight + 42;
 
 		private ImageBrush DeckHeaderBackground(string deckClass)
 		{
