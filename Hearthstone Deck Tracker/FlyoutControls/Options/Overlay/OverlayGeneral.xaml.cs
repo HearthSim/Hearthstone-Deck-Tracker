@@ -227,8 +227,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HideTurnTimer = true;
-            Config.Instance.HideTimerCycle = Config.Instance.HideTimerCycle - 4;
-            SaveConfig(true);
+			SaveConfig(true);
 		}
 
 		private void CheckboxHideTurnTimer_Unchecked(object sender, RoutedEventArgs e)
@@ -236,54 +235,49 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HideTurnTimer = false;
-            Config.Instance.HideTimerCycle = Config.Instance.HideTimerCycle + 4;
-            SaveConfig(true);
+			SaveConfig(true);
 		}
 
-        private void CheckboxHidePlayerTimer_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized)
-                return;
-            Config.Instance.HidePlayerTimer = true;
-            Config.Instance.HideTimerCycle = Config.Instance.HideTimerCycle - 2;
-            SaveConfig(true);
-        }
+		private void CheckboxHidePlayerTimer_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerTimer = true;
+			SaveConfig(true);
+		}
 
-        private void CheckboxHidePlayerTimer_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized)
-                return;
-            Config.Instance.HidePlayerTimer = false;
-            Config.Instance.HideTimerCycle = Config.Instance.HideTimerCycle + 2;
-            SaveConfig(true);
-        }
+		private void CheckboxHidePlayerTimer_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HidePlayerTimer = false;
+			SaveConfig(true);
+		}
 
 
-        private void CheckboxHideOpponentTimer_Checked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized)
-                return;
-            Config.Instance.HideOpponentTimer = true;
-            Config.Instance.HideTimerCycle = Config.Instance.HideTimerCycle - 1;
-            SaveConfig(true);
-        }
+		private void CheckboxHideOpponentTimer_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentTimer = true;
+			SaveConfig(true);
+		}
 
-        private void CheckboxHideOpponentTimer_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (!_initialized)
-                return;
-            Config.Instance.HideOpponentTimer = false;
-            Config.Instance.HideTimerCycle = Config.Instance.HideTimerCycle + 1;
-            SaveConfig(true);
-        }
+		private void CheckboxHideOpponentTimer_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentTimer = false;
+			SaveConfig(true);
+		}
 
 
-        private void SliderOverlayOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		private void SliderOverlayOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 			if(!_initialized)
 				return;
 			Config.Instance.OverlayOpacity = SliderOverlayOpacity.Value;
-            SaveConfig(true);
+			SaveConfig(true);
 		}
 
 		private void CheckboxHideOverlay_Checked(object sender, RoutedEventArgs e)
