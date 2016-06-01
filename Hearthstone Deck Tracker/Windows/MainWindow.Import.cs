@@ -351,6 +351,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					card.Count = x.Count;
 					return card;
 				})),
+				LastEdited = DateTime.Now,
 				IsArenaDeck = true
 			};
 			arenaDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, arenaDeck);
