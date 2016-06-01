@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 			if(mode && Config.Instance.ConstructedStatsModeFilter != GameMode.All)
 				filtered = filtered.Where(x => x.GameMode == Config.Instance.ConstructedStatsModeFilter);
-			if(rank)
+			if(rank && Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked)
 			{
 				var min = Config.Instance.ConstructedStatsRankFilterMin;
 				if(min != "L1")
