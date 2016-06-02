@@ -48,9 +48,9 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public TimeSpan TotalDuration => TimeSpan.FromMinutes(_games?.Sum(x => (x.EndTime - x.StartTime).Minutes) ?? 0);
 
-		public TimeSpan AverageDuration => TimeSpan.FromMinutes(_games?.Average(x => (x.EndTime - x.StartTime).Minutes) ?? 0);
+		public TimeSpan AverageDuration => TimeSpan.FromMinutes(_games?.Where(x => x.EndTime > x.StartTime).Select(x => (x.EndTime - x.StartTime).Minutes).DefaultIfEmpty(0).Average() ?? 0);
 
-		public double AverageTurns => Math.Round(_games?.Average(x => x.Turns) ?? 0, 1);
+		public double AverageTurns => Math.Round(_games?.Where(x => x.Turns > 0).Select(x => x.Turns).DefaultIfEmpty(0).Average() ?? 0, 1);
 
 		public SolidColorBrush WinRateTextBrush
 		{
