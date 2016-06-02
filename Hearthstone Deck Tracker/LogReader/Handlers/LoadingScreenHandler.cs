@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,6 +56,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(status.MirrorStatus != MirrorStatus.Error)
 				return;
 			Log.Error(status.Exception);
+			if(!(status.Exception is Win32Exception))
+			{
+				Log.Info("Not a Win32Exception - Process probably exited. Checking again later.");
+				_checkedMirrorStatus = false;
+				return;
+			}
 			LogReaderManager.Stop(true).Forget();
 			Core.MainWindow.ActivateWindow();
 			while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
