@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(game.PreviousMode == Mode.GAMEPLAY)
 				gameState.GameHandler.HandleInMenu();
 
-			if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus)
+			if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus && (DateTime.Now - logLine.Time).TotalSeconds < 5)
 				CheckMirrorStatus();
 		}
 
