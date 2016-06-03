@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HearthMirror;
 using HearthMirror.Objects;
@@ -89,6 +90,12 @@ namespace Hearthstone_Deck_Tracker.Importing
 				ConstructedDecksCache = GetConstructedDecks();
 				var newDecks = GetImportedDecks(ConstructedDecksCache);
 				Log.Info($"Found {ConstructedDecksCache.Count} decks, {newDecks.Count} new");
+				foreach(var deck in newDecks)
+				{
+					var match = Regex.Match(deck.Deck.Name, @"(.*)(v\d+\.\d+)$");
+					if(match.Success)
+						deck.Deck.Name = match.Groups[1].Value;
+				}
 				return newDecks;
 			}
 			catch(Exception e)
