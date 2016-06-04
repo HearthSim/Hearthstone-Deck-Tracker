@@ -582,7 +582,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			if(_ignoreSelectionChange || !Core.Initialized)
 				return;
 			var deckType = DeckType.All;
-			if(e.AddedItems.Count >= 0)
+			if(e.AddedItems.Count > 0)
 			{
 				var item = e.AddedItems[0] as string;
 				if(item != null)
@@ -607,6 +607,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				}
 				UpdateDecks();
 			}
+			else
+				ListViewDeckType.SelectedIndex = 0;
 		}
 
 		public void SelectDeckType(DeckType selectedDeckType, bool ignoreSelectionChange = false)
