@@ -94,6 +94,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(67.5)]
 		public double AttackIconOpponentHorizontalPosition = 67.5;
 
+		[DefaultValue(false)]
+		public bool AutoArchiveArenaDecks = false;
+
 		[DefaultValue(true)]
 		public bool AutoClearDeck = true;
 

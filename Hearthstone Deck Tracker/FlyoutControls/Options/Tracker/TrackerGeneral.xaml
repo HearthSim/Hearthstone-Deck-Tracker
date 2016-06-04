@@ -126,6 +126,11 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckBoxShowLastPlayedDate_Checked"
                               Unchecked="CheckBoxShowLastPlayedDate_Unchecked" />
+                    <Separator Margin="0,5,0,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+                    <CheckBox x:Name="CheckBoxAutoArchiveArenaDecks" Content="Archive Arena decks when run is over"
+							  HorizontalAlignment="Left" Margin="10,5,0,0"
+							  VerticalAlignment="Top" Checked="CheckBoxAutoArchiveArenaDecks_Checked"
+							  Unchecked="CheckBoxAutoArchiveArenaDecks_Unchecked"/>
                     <DockPanel Margin="35,5,10,0" Visibility="{Binding Path=IsChecked, ElementName=CheckBoxShowLastPlayedDate, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ComboBox DockPanel.Dock="Right" Name="ComboBoxLastPlayedDateFormat"  Margin="5,0,0,0" Width="150" HorizontalAlignment="Left"
                               SelectionChanged="ComboBoxLastPlayedDateFormat_OnSelectionChanged" >

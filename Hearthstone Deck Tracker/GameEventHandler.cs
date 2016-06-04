@@ -506,7 +506,9 @@ namespace Hearthstone_Deck_Tracker
 
 				_lastGame = _game.CurrentGameStats;
 				selectedDeck.DeckStats.AddGameResult(_lastGame);
-				if(Config.Instance.ArenaRewardDialog && selectedDeck.IsArenaRunCompleted.HasValue && selectedDeck.IsArenaRunCompleted.Value)
+
+				var isArenaRunCompleted = selectedDeck.IsArenaRunCompleted.HasValue && selectedDeck.IsArenaRunCompleted.Value;
+				if(Config.Instance.ArenaRewardDialog && isArenaRunCompleted)
 					_arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
 
 				if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
@@ -523,6 +525,9 @@ namespace Hearthstone_Deck_Tracker
 					Log.Info("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game");
 					Core.MainWindow.ArchiveDeck(_assignedDeck, false);
 				}
+
+				if (Config.Instance.AutoArchiveArenaDecks && isArenaRunCompleted)
+					Core.MainWindow.ArchiveDeck(selectedDeck, true);
 
 				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
 				{
