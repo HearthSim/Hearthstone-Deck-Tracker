@@ -283,6 +283,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			MessageDialogs.ShowRestartDialog();
 		}
 
+		private void CheckBoxAutoArchiveArenaDecks_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.AutoArchiveArenaDecks = true;
+			Config.Save();
+		}
+
+		private void CheckBoxAutoArchiveArenaDecks_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.AutoArchiveArenaDecks = false;
+			Config.Save();
+		}
+
 		private void ComboBoxLastPlayedDateFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
