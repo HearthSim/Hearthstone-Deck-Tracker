@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.HotKeys;
 using Hearthstone_Deck_Tracker.Utility.LogConfig;
@@ -144,7 +145,7 @@ namespace Hearthstone_Deck_Tracker
 
 			Initialized = true;
 
-			Analytics.Analytics.TrackPageView($"/app/v{Helper.GetCurrentVersion().ToVersionString()}/{loginType.ToString().ToLower()}{(newUser ? "/new" : "")}", "");
+			Influx.OnAppStart(Helper.GetCurrentVersion(), loginType, newUser);
 		}
 
 		private static async void UpdateOverlayAsync()

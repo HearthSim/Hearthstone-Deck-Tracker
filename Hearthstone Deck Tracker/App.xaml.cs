@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using Garlic;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
@@ -45,7 +46,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_createdReport = true;
 				var stackTrace = e.Exception.StackTrace.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-				Analytics.Analytics.TrackEvent(e.Exception.GetType().ToString().Split('.').Last(), stackTrace.Length > 0 ? stackTrace[0] : "", stackTrace.Length > 1 ? stackTrace[1] : "");
+				Google.TrackEvent(e.Exception.GetType().ToString().Split('.').Last(), stackTrace.Length > 0 ? stackTrace[0] : "", stackTrace.Length > 1 ? stackTrace[1] : "");
 #if(!DEBUG)
 				var date = DateTime.Now;
 				var fileName = "Crash Reports\\" + $"Crash report {date.Day}{date.Month}{date.Year}-{date.Hour}{date.Minute}";

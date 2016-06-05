@@ -6,9 +6,9 @@ using Garlic;
 
 //using Garlic;
 
-namespace Hearthstone_Deck_Tracker.Analytics
+namespace Hearthstone_Deck_Tracker.Utility.Analytics
 {
-	internal class Analytics
+	internal class Google
 	{
 		private const string Domain = "app.hsdecktracker.net";
 		private const string GACode = "UA-68659282-3";

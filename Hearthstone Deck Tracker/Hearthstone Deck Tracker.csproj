@@ -332,6 +332,9 @@
     <Compile Include="Stats\CompiledStats\ConstructedDeckStats.cs" />
     <Compile Include="Stats\CompiledStats\ConstructedMatchup.cs" />
     <Compile Include="Stats\TrackedCard.cs" />
+    <Compile Include="Utility\Analytics\Influx.cs" />
+    <Compile Include="Utility\Analytics\InfluxPoint.cs" />
+    <Compile Include="Utility\Analytics\InfluxPointBuilder.cs" />
     <Compile Include="Utility\Extensions\BitmapExtensions.cs" />
     <Compile Include="Utility\Extensions\GroupingExtensions.cs" />
     <Compile Include="Utility\Extensions\RectExtensions.cs" />
@@ -486,7 +489,7 @@
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
       <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utility\Analytics.cs" />
+    <Compile Include="Utility\Analytics\Google.cs" />
     <Compile Include="Utility\HotKeys\HotKey.cs" />
     <Compile Include="Utility\HotKeys\PredefinedHotKeyActionAttribute.cs" />
     <Compile Include="Utility\HotKeys\HotKeyConfig.cs" />
