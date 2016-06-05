@@ -34,8 +34,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{"icy-veins", Icyveins.Import},
 			{"hearthbuilder", Hearthbuilder.Import},
 			{"manacrystals", Manacrystals.Import},
-            {"powned", Powned.Import}
-        };
+			{"powned", Powned.Import}
+		};
 
 		public static async Task<Deck> Import(string url)
 		{
