@@ -39,7 +39,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{"elitedecks", Elitedecks.Import},
 			{"icy-veins", Icyveins.Import},
 			{"hearthbuilder", Hearthbuilder.Import},
-			{"manacrystals", Manacrystals.Import}
+			{"manacrystals", Manacrystals.Import},
+			{"powned", Powned.Import}
 		};
 
 		private const int BrawlDeckType = 6;
