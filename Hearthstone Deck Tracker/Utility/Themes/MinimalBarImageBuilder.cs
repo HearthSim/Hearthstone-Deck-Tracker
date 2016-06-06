@@ -1,7 +1,7 @@
 ﻿using System.IO;
+﻿using System.Drawing;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
-using AForge.Imaging.Filters;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
@@ -21,8 +21,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var cardFile = Path.Combine(BarImageDir, Card.Id + ".png");
 			if(!File.Exists(cardFile))
 				return;
-			var img = AForge.Imaging.Image.FromFile(cardFile);
-			new GaussianBlur(2, 8).ApplyInPlace(img);
+			var img = new GaussianBlur((Bitmap)Image.FromFile(cardFile)).Process(2);
 			DrawingGroup.Children.Add(new ImageDrawing(img.ToImageSource(), FrameRect));
 		}
 
