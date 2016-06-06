@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -282,9 +283,9 @@ namespace Hearthstone_Deck_Tracker
 			_updateRequestsPlayer--;
 			if(_updateRequestsPlayer > 0)
 				return;
-			var cards = Game.Player.PlayerCardList;
-			Overlay.UpdatePlayerCards(cards, reset);
-			Windows.PlayerWindow.UpdatePlayerCards(cards, reset);
+			Overlay.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset);
+			if(Windows.PlayerWindow.IsVisible)
+				Windows.PlayerWindow.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset);
 		}
 
 		internal static async void UpdateOpponentCards(bool reset = false)
@@ -294,9 +295,9 @@ namespace Hearthstone_Deck_Tracker
 			_updateRequestsOpponent--;
 			if(_updateRequestsOpponent > 0)
 				return;
-			var cards = Game.Opponent.OpponentCardList;
-			Overlay.UpdateOpponentCards(cards, reset);
-			Windows.OpponentWindow.UpdateOpponentCards(cards, reset);
+			Overlay.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), reset);
+			if(Windows.OpponentWindow.IsVisible)
+				Windows.OpponentWindow.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), reset);
 		}
 
 
