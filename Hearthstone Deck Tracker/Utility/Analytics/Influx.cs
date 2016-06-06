@@ -16,7 +16,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
-			Google.TrackPageView($"/app/v{version.ToVersionString()}/{loginType.ToString().ToLower()}{(isNew ? "/new" : "")}", "");
 			WritePoint(new InfluxPointBuilder("hdt_app_start").Tag("version", version.ToVersionString()).Tag("login_type", loginType).Tag("new", isNew).Build());
 		}
 

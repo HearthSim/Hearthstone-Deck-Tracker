@@ -87,6 +87,10 @@
     </Reference>
     <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="ReachFramework" />
+    <Reference Include="SharpRaven, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpRaven.2.1.0\lib\net45\SharpRaven.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -324,6 +328,9 @@
     <Compile Include="Utility\Analytics\Influx.cs" />
     <Compile Include="Utility\Analytics\InfluxPoint.cs" />
     <Compile Include="Utility\Analytics\InfluxPointBuilder.cs" />
+    <Compile Include="Windows\CrashDialog.xaml.cs">
+      <DependentUpon>CrashDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Extensions\BitmapExtensions.cs" />
     <Compile Include="Utility\Extensions\GroupingExtensions.cs" />
     <Compile Include="Utility\Extensions\RectExtensions.cs" />
@@ -476,7 +483,7 @@
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
       <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utility\Analytics\Google.cs" />
+    <Compile Include="Utility\Analytics\Sentry.cs" />
     <Compile Include="Utility\HotKeys\HotKey.cs" />
     <Compile Include="Utility\HotKeys\PredefinedHotKeyActionAttribute.cs" />
     <Compile Include="Utility\HotKeys\HotKeyConfig.cs" />
@@ -931,6 +938,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="FlyoutControls\UpdateNotes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CrashDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

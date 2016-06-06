@@ -10,12 +10,12 @@
         <GroupBox Header="Settings">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <GroupBox Header="Google Analytics">
+                    <GroupBox Header="Analytics">
                         <StackPanel>
                             <CheckBox Name="CheckBoxAnalytics" Content="Submit anonymous data"
                                       Checked="CheckBoxAnalytics_OnChecked" Unchecked="CheckBoxAnalytics_OnUnchecked" />
                             <TextBlock
-                                Text="This only tracks two things: App starts, where the version number and login mode is submitted, as well as information about crashes."
+                                Text="This only tracks very basic information to help us improve HDT, like app and match starts."
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </GroupBox>

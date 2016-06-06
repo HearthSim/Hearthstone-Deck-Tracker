@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -45,8 +46,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_createdReport)
 			{
 				_createdReport = true;
-				var stackTrace = e.Exception.StackTrace.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-				Google.TrackEvent(e.Exception.GetType().ToString().Split('.').Last(), stackTrace.Length > 0 ? stackTrace[0] : "", stackTrace.Length > 1 ? stackTrace[1] : "");
+				new CrashDialog(e.Exception).ShowDialog();
 #if(!DEBUG)
 				var date = DateTime.Now;
 				var fileName = "Crash Reports\\" + $"Crash report {date.Day}{date.Month}{date.Year}-{date.Hour}{date.Minute}";
@@ -60,14 +60,11 @@ namespace Hearthstone_Deck_Tracker
 					sr.WriteLine(e.Exception);
 					sr.WriteLine(Core.MainWindow.Options.OptionsTrackerLogging.TextBoxLog.Text);
 				}
-
-				MessageBox.Show(e.Exception.Message + "\n\n" + "A crash report file was created at:\n\"" + Environment.CurrentDirectory + "\\" + fileName
-								+ ".txt\"\n\nPlease \na) create an issue on github (https://github.com/HearthSim/Hearthstone-Deck-Tracker) \nor \nb) send an email to support@hsdecktracker.net.\n\nPlease include the generated crash report(s) and a short explanation of what lead to the crash.",
-								"Oops! Something went wrong.", MessageBoxButton.OK, MessageBoxImage.Error);
 #endif
+				e.Handled = true;
+				Shutdown();
 			}
 			e.Handled = true;
-			Shutdown();
 		}
 
 		private void App_OnStartup(object sender, StartupEventArgs e)
