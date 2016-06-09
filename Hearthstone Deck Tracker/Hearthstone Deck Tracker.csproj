@@ -437,9 +437,6 @@
     <Compile Include="FlyoutControls\UpdateNotes.xaml.cs">
       <DependentUpon>UpdateNotes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HearthStats\Controls\DuplicateMatchesWindow.xaml.cs">
-      <DependentUpon>DuplicateMatchesWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Hearthstone\Database.cs" />
     <Compile Include="Hearthstone\GameV2.cs" />
     <Compile Include="Hearthstone\IGame.cs" />
@@ -934,10 +931,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="FlyoutControls\UpdateNotes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HearthStats\Controls\DuplicateMatchesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

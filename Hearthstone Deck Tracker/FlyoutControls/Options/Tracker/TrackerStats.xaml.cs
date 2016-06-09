@@ -325,28 +325,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AskBeforeDiscardingGame = false;
 			Config.Save();
 		}
-
-		private void ButtonCheckForDuplicateMatches_OnClick(object sender, RoutedEventArgs e)
-		{
-			DataIssueResolver.RemoveDuplicateMatches(true);
-		}
-
-		private async void ButtonCheckOppClassName_OnClick(object sender, RoutedEventArgs e)
-		{
-			var games =
-				DeckStatsList.Instance.DeckStats.Concat(DefaultDeckStats.Instance.DeckStats)
-				             .SelectMany(d => d.Games)
-				             .Where(g => g.HasReplayFile)
-				             .ToList();
-			var controller =
-				await
-				Core.MainWindow.ShowProgressAsync("Fixing incorrect stats!",
-												  $"Checking {games.Count} replays, this may take a moment...\r\n\r\nNote: This will not work for matches that don't have replay files.", true);
-			var fixCount = await DataIssueResolver.FixOppNameAndClass(games, controller);
-			await controller.CloseAsync();
-			await
-				Core.MainWindow.ShowMessageAsync("Done.",
-				                                 fixCount > 0 ? "Fixed names/classes for " + fixCount + " matches." : "No incorrect stats found.");
-		}
 	}
 }

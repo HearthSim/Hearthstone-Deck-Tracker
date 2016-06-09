@@ -370,9 +370,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ExtraFeaturesSecrets = false;
 
-		[DefaultValue(false)]
-		public bool FixedDuplicateMatches = false;
-
 		[DefaultValue(true)]
 		public bool FlashHsOnTurnStart = true;
 
@@ -707,9 +704,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
 
-		[DefaultValue(false)]
-		public bool RemovedNoteUrls = false;
-
 		[DefaultValue(true)]
 		public bool ReplayViewerShowAttack = true;
 
@@ -747,16 +741,7 @@ namespace Hearthstone_Deck_Tracker
 		public int ReplayWindowWidth = 1250;
 
 		[DefaultValue(false)]
-		public bool ResolvedDeckStatsIds = false;
-
-		[DefaultValue(false)]
 		public bool ReselectLastDeckUsed = false;
-
-		[DefaultValue(false)]
-		public bool ResolvedDeckStatsIssue = false;
-
-		[DefaultValue(false)]
-		public bool ResolvedOpponentNames = false;
 
 		//updating from <= 0.5.1: 
 		//SaveConfigInAppData and SaveDataInAppData are set to SaveInAppData AFTER the config isloaded

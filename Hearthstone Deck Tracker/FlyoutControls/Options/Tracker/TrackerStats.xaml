@@ -134,12 +134,6 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxStatsInWindow_Checked"
                               Unchecked="CheckboxStatsInWindow_Unchecked" />
-                    <Button Content="check for duplicate matches" Margin="10,10,10,0"
-                            Click="ButtonCheckForDuplicateMatches_OnClick"
-                            Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-                    <Button Content="check for wrong opp. classes/names" Margin="10,5,10,0"
-                            Click="ButtonCheckOppClassName_OnClick"
-                            Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>
