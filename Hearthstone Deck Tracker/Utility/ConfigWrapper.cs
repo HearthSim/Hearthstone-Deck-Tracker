@@ -212,7 +212,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get { return Config.Instance.ConstructedStatsRankFilterMin; }
 			set
 			{
-				Config.Instance.ConstructedStatsRankFilterMin = ValidateRank(value);
+				Config.Instance.ConstructedStatsRankFilterMin = ValidateRank(value, false);
 				Config.Save();
 			}
 		}
@@ -221,7 +221,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get { return Config.Instance.ConstructedStatsRankFilterMax; }
 			set
 			{
-				Config.Instance.ConstructedStatsRankFilterMax = ValidateRank(value);
+				Config.Instance.ConstructedStatsRankFilterMax = ValidateRank(value, true);
 				Config.Save();
 			}
 		}
@@ -277,8 +277,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return season;
 		}
 
-		private static string ValidateRank(string value)
+		private static string ValidateRank(string value, bool allowEmpty)
 		{
+			if(allowEmpty && string.IsNullOrEmpty(value))
+				return value;
 			var match = Regex.Match(value, @"(?<legend>([lL]))?(?<rank>(\d+))");
 			if(!match.Success)
 				throw new ApplicationException("Invalid rank");

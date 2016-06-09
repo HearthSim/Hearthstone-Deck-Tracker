@@ -102,14 +102,14 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					if(min.StartsWith("L"))
 					{
 						if(int.TryParse(min.Substring(1), out minValue))
-							filtered = filtered.Where(x => !x.HasLegendRank ||  x.LegendRank >= minValue);
+							filtered = filtered.Where(x => !x.HasLegendRank || x.LegendRank >= minValue);
 					}
 					else if(int.TryParse(min, out minValue))
-						filtered = filtered.Where(x => !x.HasLegendRank && x.HasRank && x.Rank >= minValue);
+						filtered = filtered.Where(x => !x.HasLegendRank && (!x.HasRank || x.Rank >= minValue));
 					
 				}
 				var max = Config.Instance.ConstructedStatsRankFilterMax;
-				if(max != "25")
+				if(!string.IsNullOrEmpty(max))
 				{
 					int maxValue;
 					if(max.StartsWith("L"))
