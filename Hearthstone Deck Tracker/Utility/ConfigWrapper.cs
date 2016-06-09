@@ -231,7 +231,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get { return Config.Instance.ConstructedStatsCustomSeasonMin.ToString(); }
 			set
 			{
-				Config.Instance.ConstructedStatsCustomSeasonMin = ValidateSeason(value);
+				Config.Instance.ConstructedStatsCustomSeasonMin = ValidateSeason(value, false) ?? 1;
 				Config.Save();
 			}
 		}
@@ -240,7 +240,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get { return Config.Instance.ConstructedStatsCustomSeasonMax.ToString(); }
 			set
 			{
-				Config.Instance.ConstructedStatsCustomSeasonMax = ValidateSeason(value);
+				Config.Instance.ConstructedStatsCustomSeasonMax = ValidateSeason(value, true);
 				Config.Save();
 			}
 		}
@@ -250,7 +250,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get { return Config.Instance.ArenaStatsCustomSeasonMin.ToString(); }
 			set
 			{
-				Config.Instance.ArenaStatsCustomSeasonMin = ValidateSeason(value);
+				Config.Instance.ArenaStatsCustomSeasonMin = ValidateSeason(value, false) ?? 1;
 				Config.Save();
 			}
 		}
@@ -259,13 +259,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get { return Config.Instance.ArenaStatsCustomSeasonMax.ToString(); }
 			set
 			{
-				Config.Instance.ArenaStatsCustomSeasonMax = ValidateSeason(value);
+				Config.Instance.ArenaStatsCustomSeasonMax = ValidateSeason(value, true);
 				Config.Save();
 			}
 		}
 
-		private static int ValidateSeason(string value)
+		private static int? ValidateSeason(string value, bool allowEmpty)
 		{
+			if(allowEmpty && string.IsNullOrEmpty(value))
+				return null;
 			int season;
 			if(!int.TryParse(value, out season))
 				throw new ApplicationException("Invalid season");
