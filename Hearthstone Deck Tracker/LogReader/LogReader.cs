@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,9 +18,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 	{
 		private readonly string _filePath;
 		internal readonly LogReaderInfo Info;
-		private readonly List<LogLineItem> _lines = new List<LogLineItem>();
-		private readonly object _sync = new object();
-		private bool _collected;
+		private ConcurrentQueue<LogLineItem> _lines = new ConcurrentQueue<LogLineItem>();
 		private long _offset;
 		private bool _running;
 		private DateTime _startingPoint;
@@ -93,17 +92,19 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_stop = true;
 			while(_running || _thread == null || _thread.ThreadState == ThreadState.Unstarted)
 				await Task.Delay(50);
-			_lines.Clear();
+			_lines = new ConcurrentQueue<LogLineItem>();
 			await Task.Factory.StartNew(() => _thread?.Join());
 			Log.Debug(Info.Name + " stopped.");
 		}
 
-		public List<LogLineItem> Collect()
+		public IEnumerable<LogLineItem> Collect()
 		{
-			lock(_sync)
+			var count = _lines.Count;
+			for(var i = 0; i < count; i++)
 			{
-				_collected = true;
-				return _lines.ToList();
+				LogLineItem line;
+				if(_lines.TryDequeue(out line))
+					yield return line;
 			}
 		}
 
@@ -113,45 +114,37 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			FindInitialOffset();
 			while(!_stop)
 			{
-				lock(_sync)
+				var fileInfo = new FileInfo(_filePath);
+				if(fileInfo.Exists)
 				{
-					if(_collected)
+					if(!_logFileExists)
 					{
-						_lines.Clear();
-						_collected = false;
+						_logFileExists = true;
+						Log.Info($"Found {Info.Name}.log.");
 					}
-					var fileInfo = new FileInfo(_filePath);
-					if(fileInfo.Exists)
+					using(var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 					{
-						if(!_logFileExists)
+						fs.Seek(_offset, SeekOrigin.Begin);
+						if(fs.Length == _offset)
 						{
-							_logFileExists = true;
-							Log.Info($"Found {Info.Name}.log.");
+							Thread.Sleep(LogReaderManager.UpdateDelay);
+							continue;
 						}
-						using(var fs = new FileStream(_filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+						using(var sr = new StreamReader(fs))
 						{
-							fs.Seek(_offset, SeekOrigin.Begin);
-							if(fs.Length == _offset)
+							string line;
+							while(!sr.EndOfStream && (line = sr.ReadLine()) != null)
 							{
-								Thread.Sleep(LogReaderManager.UpdateDelay);
-								continue;
-							}
-							using(var sr = new StreamReader(fs))
-							{
-								string line;
-								while(!sr.EndOfStream && (line = sr.ReadLine()) != null)
+								if(!line.StartsWith("D ") || (!sr.EndOfStream && sr.Peek() != 'D'))
+									break;
+								if(!Info.HasFilters || (Info.StartsWithFilters?.Any(x => line.Substring(19).StartsWith(x)) ?? false)
+									|| (Info.ContainsFilters?.Any(x => line.Substring(19).Contains(x)) ?? false))
 								{
-									if(!line.StartsWith("D ") || (!sr.EndOfStream && sr.Peek() != 'D'))
-										break;
-									if(!Info.HasFilters || (Info.StartsWithFilters?.Any(x => line.Substring(19).StartsWith(x)) ?? false)
-									   || (Info.ContainsFilters?.Any(x => line.Substring(19).Contains(x)) ?? false))
-									{
-										var logLine = new LogLineItem(Info.Name, line);
-										if(logLine.Time >= _startingPoint)
-											_lines.Add(logLine);
-									}
-									_offset += Encoding.UTF8.GetByteCount(line + Environment.NewLine);
+									var logLine = new LogLineItem(Info.Name, line);
+									if(logLine.Time >= _startingPoint)
+										_lines.Enqueue(logLine);
 								}
+								_offset += Encoding.UTF8.GetByteCount(line + Environment.NewLine);
 							}
 						}
 					}

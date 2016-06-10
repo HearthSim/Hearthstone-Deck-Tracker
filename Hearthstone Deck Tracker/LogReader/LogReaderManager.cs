@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							logLines.Add(line);
 						}
 					}
-					powerLines = _gameStatePowerLogReader.Collect();
+					powerLines = _gameStatePowerLogReader.Collect().ToList();
 				});
 				ProcessNewLines();
 				if(powerLines.Any())
