@@ -198,6 +198,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int OpponentRank { get; set; }
 
+		public int PlayerCardbackId { get; set; }
+
+		public int OpponentCardbackId { get; set; }
+
+		public int FriendlyPlayerId { get; set; }
+
+		public int ScenarioId { get; set; }
+
 		public Region Region
 		{
 			get { return _region; }
@@ -474,6 +482,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeOpponentLegendRank() => OpponentLegendRank > 0;
 		public bool ShouldSerializeRegion() => Region != Region.UNKNOWN;
 		public bool ShouldSerializeIsClone() => IsClone;
+		public bool ShouldSerializePlayerCardbackId() => PlayerCardbackId > 0;
+		public bool ShouldSerializeOpponentCardbackId() => OpponentCardbackId > 0;
+		public bool ShouldSerializeFriendlyPlayerId() => FriendlyPlayerId > 0;
+		public bool ShouldSerializeScenarioId() => ScenarioId > 0;
 
 		#region Obsolete
 
