@@ -357,7 +357,7 @@
     <Compile Include="Utility\BoardDamage\PlayerBoard.cs" />
     <Compile Include="Importing\ImportingHelper.cs" />
     <Compile Include="Importing\Websites\Arenavalue.cs" />
-    <Compile Include="Importing\Websites\Elitedecks.cs" />
+    <Compile Include="Importing\Websites\EliteHearthstone.cs" />
     <Compile Include="Importing\Websites\Heartharena.cs" />
     <Compile Include="Importing\Websites\Hearthbuilder.cs" />
     <Compile Include="Importing\Websites\Hearthhead.cs" />

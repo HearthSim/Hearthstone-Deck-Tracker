@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 				return deck;
 			}
-			catch (Exception e)
+			catch(Exception e)
 			{
 				Log.Error(e);
 				return null;
