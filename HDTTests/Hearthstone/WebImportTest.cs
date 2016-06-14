@@ -107,10 +107,10 @@ namespace HDTTests.Hearthstone
 		}
 
 		[TestMethod]
-		public void EliteDecks()
+		public void EliteHearthstone()
 		{
 			Deck expected = CreateDeck("Inner Rage;2", "Loot Hoarder;2", "Cruel Taskmaster;0", "Gnomish Inventor;0");
-			Deck found = DeckImporter.Import(@"http://www.elitedecks.net/deck-7918-patron-warrior").Result;
+			Deck found = DeckImporter.Import(@"http://www.elitehearthstone.net/deck-7918-patron-warrior").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
