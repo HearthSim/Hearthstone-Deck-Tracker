@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{"hearthstone-decks", Hearthstonedecks.Import},
 			{"heartharena", Heartharena.Import},
 			{"hearthstoneheroes", Hearthstoneheroes.Import},
-			{"elitedecks", Elitedecks.Import},
+			{"elitehearthstone", EliteHearthstone.Import},
 			{"icy-veins", Icyveins.Import},
 			{"hearthbuilder", Hearthbuilder.Import},
 			{"manacrystals", Manacrystals.Import},
