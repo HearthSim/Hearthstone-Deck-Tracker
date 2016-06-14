@@ -122,7 +122,8 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(!fastOnly)
 				{
-					SetZeroOlder(CardIds.Secrets.Hunter.BearTrap, stopIndex);
+					if(Game.OpponentMinionCount < 7)
+						SetZeroOlder(CardIds.Secrets.Hunter.BearTrap, stopIndex);
 					SetZeroOlder(CardIds.Secrets.Mage.IceBarrier, stopIndex);
 				}
 
