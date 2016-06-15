@@ -24,14 +24,14 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 				var cardNodes = doc.DocumentNode.SelectNodes("//ul[@class='listado mazo-cartas']/li");
 
-				foreach (var cardNode in cardNodes)
+				foreach(var cardNode in cardNodes)
 				{
 					var count = int.Parse(cardNode.SelectSingleNode(".//span[@class='cantidad']").InnerText);
 					var name = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//span[@class='nombreCarta']").InnerText);
 					var card = Database.GetCardFromName(name);
 					card.Count = count;
 					deck.Cards.Add(card);
-					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 				}
 
