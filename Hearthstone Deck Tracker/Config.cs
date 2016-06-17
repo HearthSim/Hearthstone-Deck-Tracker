@@ -428,7 +428,7 @@ namespace Hearthstone_Deck_Tracker
 		public string HearthstoneDirectory = @"C:\Program Files (x86)\Hearthstone";
 
 		[DefaultValue("Logs")]
-		public string HearthstoneLogsDirectory = "Logs";
+		public string HearthstoneLogsDirectoryName = "Logs";
 
 		[DefaultValue("Hearthstone")]
 		public string HearthstoneWindowName = "Hearthstone";
