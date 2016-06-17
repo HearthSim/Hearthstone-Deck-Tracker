@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			Info = info;
 			_filePath = string.IsNullOrEmpty(info.FilePath)
-				            ? Path.Combine(Config.Instance.HearthstoneDirectory, $"Logs/{Info.Name}.log") : info.FilePath;
+				            ? Path.Combine(Config.Instance.HearthstoneDirectory, Config.Instance.HearthstoneLogsDirectory, $"{Info.Name}.log") : info.FilePath;
 		}
 
 		public void Start(DateTime startingPoint)
