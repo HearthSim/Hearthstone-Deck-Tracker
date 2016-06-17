@@ -111,9 +111,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		{
 			if(SelectedGame == null)
 				return;
-			Core.MainWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
-			Core.MainWindow.FlyoutDeck.Header = "Opponent";
-			Core.MainWindow.FlyoutDeck.IsOpen = true;
+			if(Config.Instance.StatsInWindow)
+			{
+				Core.Windows.StatsWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
+				Core.Windows.StatsWindow.FlyoutDeck.IsOpen = true;
+			}
+			else
+			{
+				Core.MainWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
+				Core.MainWindow.FlyoutDeck.IsOpen = true;
+			}
 		}
 
 		//http://stackoverflow.com/questions/3498686/wpf-remove-scrollviewer-from-treeview

@@ -2,10 +2,19 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
+        xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
         Icon="{StaticResource AppIcon}"
         BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
         SaveWindowPosition="True"
         Title="STATS" Height="820" Width="1150">
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl Margin="{Binding TitleBarMargin, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
+            <controls:Flyout x:Name="FlyoutDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="Opponent Deck">
+                <flyoutControls:DeckPanel x:Name="DeckFlyout" />
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
     <controls:MetroWindow.IconTemplate>
         <DataTemplate>
             <Rectangle Margin="2" Opacity="0.7">

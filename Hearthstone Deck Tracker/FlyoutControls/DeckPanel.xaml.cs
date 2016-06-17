@@ -29,6 +29,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			Core.MainWindow.SetNewDeck(_deck);
 			Core.MainWindow.FlyoutStats.IsOpen = false;
 			Core.MainWindow.FlyoutDeck.IsOpen = false;
+			if(Config.Instance.StatsInWindow)
+				Core.MainWindow.ActivateWindow();
 		}
 
 		public void SetDeck(IEnumerable<TrackedCard> cards, bool showImportButton = true)

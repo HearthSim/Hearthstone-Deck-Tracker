@@ -23,6 +23,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Top = Config.Instance.StatsWindowTop.Value;
 		}
 
+		public Thickness TitleBarMargin => new Thickness(0, TitlebarHeight, 0, 0);
+
 		private void BtnSwitchToMainWindow_OnClick(object sender, RoutedEventArgs e)
 		{
 			Config.Instance.StatsInWindow = false;
