@@ -531,8 +531,8 @@ namespace Hearthstone_Deck_Tracker
 						cardName = match.Groups["cardname"].Value.Trim();
 					}
 
-					var card = Database.GetCardFromName(cardName, localizedNames);
-					if(string.IsNullOrEmpty(card?.Name))
+					var card = Database.GetCardFromName(cardName.Replace("’", "'"), localizedNames);
+					if(string.IsNullOrEmpty(card?.Name) || card.Id == Database.UnknownCardId)
 						continue;
 					card.Count = count;
 
