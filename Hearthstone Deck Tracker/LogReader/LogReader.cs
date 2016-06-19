@@ -135,15 +135,20 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							string line;
 							while(!sr.EndOfStream && (line = sr.ReadLine()) != null)
 							{
-								if(!line.StartsWith("D ") || (!sr.EndOfStream && sr.Peek() != 'D'))
-									break;
-								if(!Info.HasFilters || (Info.StartsWithFilters?.Any(x => line.Substring(19).StartsWith(x)) ?? false)
-									|| (Info.ContainsFilters?.Any(x => line.Substring(19).Contains(x)) ?? false))
+								if(line.StartsWith("D "))
 								{
-									var logLine = new LogLineItem(Info.Name, line);
-									if(logLine.Time >= _startingPoint)
-										_lines.Enqueue(logLine);
+									if(!sr.EndOfStream && sr.Peek() != 'D')
+										break;
+									if(!Info.HasFilters || (Info.StartsWithFilters?.Any(x => line.Substring(19).StartsWith(x)) ?? false)
+										|| (Info.ContainsFilters?.Any(x => line.Substring(19).Contains(x)) ?? false))
+									{
+										var logLine = new LogLineItem(Info.Name, line);
+										if(logLine.Time >= _startingPoint)
+											_lines.Enqueue(logLine);
+									}
 								}
+								else
+									Log.Warn("Ignored line: " + line);
 								_offset += Encoding.UTF8.GetByteCount(line + Environment.NewLine);
 							}
 						}
