@@ -310,15 +310,15 @@ namespace Hearthstone_Deck_Tracker
 
 		private void HandleThaurissanCostReduction()
 		{
-			var thaurissan = _game.Opponent.Board.FirstOrDefault(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan);
-			if(thaurissan == null || thaurissan.HasTag(SILENCED))
+			var thaurissans = _game.Opponent.Board.Where(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan && !x.HasTag(SILENCED)).ToList();
+			if(!thaurissans.Any())
 				return;
 
 			foreach(var impFavor in _game.Opponent.Board.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.EmperorThaurissan_ImperialFavorEnchantment))
 			{
 				Entity entity;
 				if(_game.Entities.TryGetValue(impFavor.GetTag(ATTACHED), out entity))
-					entity.Info.CostReduction++;
+					entity.Info.CostReduction += thaurissans.Count;
 			}
 		}
 
