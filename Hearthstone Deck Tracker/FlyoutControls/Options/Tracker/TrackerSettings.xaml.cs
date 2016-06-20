@@ -415,5 +415,32 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AlternativeScreenCapture = false;
 			Config.Save();
 		}
+
+		private async void ButtonHearthstoneLogsDirectory_Click(object sender, RoutedEventArgs e)
+		{
+			var dialog = new FolderBrowserDialog();
+			dialog.SelectedPath = Config.Instance.HearthstoneDirectory;
+			var dialogResult = dialog.ShowDialog();
+
+			if (dialogResult == DialogResult.OK)
+			{
+				//Logs directory needs to be a child directory in Hearthstone directory
+				if (!dialog.SelectedPath.StartsWith(Config.Instance.HearthstoneDirectory + @"\"))
+				{
+					await Core.MainWindow.ShowMessage("Invalid argument", "Selected directory not in Hearthstone directory!");
+					return;
+				}
+
+				//Check if same path selected (no restart required)
+				if (Config.Instance.HearthstoneLogsDirectoryName.Equals(dialog.SelectedPath))
+					return;
+
+				Config.Instance.HearthstoneLogsDirectoryName = dialog.SelectedPath.Remove(0, Config.Instance.HearthstoneDirectory.Length + 1);
+				Config.Save();
+
+				await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
+				Core.MainWindow.Restart();
+			}
+		}
 	}
 }
