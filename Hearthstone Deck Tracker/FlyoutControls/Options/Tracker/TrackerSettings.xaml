@@ -124,6 +124,10 @@
                             Click="SelectSaveDataPath_Click"
                             Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                             Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+                    <Button Name="ButtonHearthstoneLogsDirectory" Margin="10,5,10,0" Content="set hearthstone log directory" 
+                            Click="ButtonHearthstoneLogsDirectory_Click"
+                            Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                            Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
                     <Button Name="ButtonRestart" Margin="10,15,10,0" Content="restart hdt"
                             Click="ButtonRestart_OnClick" />
                 </StackPanel>
