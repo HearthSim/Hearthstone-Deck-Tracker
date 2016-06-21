@@ -123,6 +123,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public MatchInfo MatchInfo => _matchInfo ?? (_matchInfo = HearthMirror.Reflection.GetMatchInfo());
+		private bool _matchInfoCacheInvalid = true;
+
+		internal async void CacheMatchInfo()
+		{
+			if(!_matchInfoCacheInvalid)
+				return;
+			_matchInfoCacheInvalid = false;
+			MatchInfo matchInfo;
+			while((matchInfo = HearthMirror.Reflection.GetMatchInfo()) == null || matchInfo.LocalPlayer == null || matchInfo.OpposingPlayer == null)
+				await Task.Delay(1000);
+			Log.Info($"{matchInfo.LocalPlayer.Name} vs {matchInfo.OpposingPlayer.Name}");
+			_matchInfo = matchInfo;
+		}
+
+		internal void InvalidateMatchInfoCache() => _matchInfoCacheInvalid = true;
 
 		public void Reset(bool resetStats = true)
 		{
@@ -138,7 +153,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_spectator = null;
 			_currentGameMode = GameMode.None;
 			_currentFormat = null;
-			_matchInfo = null;
 			if(!IsInMenu && resetStats)
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			PowerLog.Clear();

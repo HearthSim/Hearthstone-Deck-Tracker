@@ -364,6 +364,7 @@ namespace Hearthstone_Deck_Tracker
 			_showedNoteDialog = false;
 			_game.IsInMenu = false;
 			_game.Reset();
+			_game.CacheMatchInfo();
 			TurnTimer.Instance.Start(_game).Forget();
 
 			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
@@ -397,6 +398,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.HideTimers();
 			DeckManager.ResetAutoSelectCount();
 			Log.Info("Game ended...");
+			_game.InvalidateMatchInfoCache();
 			if(_game.CurrentGameMode == Spectator && !Config.Instance.RecordSpectator)
 			{
 				if(Config.Instance.ReselectLastDeckUsed && DeckList.Instance.ActiveDeck == null)
