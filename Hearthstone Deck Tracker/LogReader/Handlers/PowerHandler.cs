@@ -202,7 +202,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				creationTag = true;
 			}
 			if(logLine.Contains("End Spectator"))
-				gameState.GameHandler.HandleGameEnd();
+			{
+				try
+				{
+					gameState.GameHandler.HandleGameEnd();
+				}
+				catch(Exception ex)
+				{
+					Log.Error(ex);
+				}
+			}
 			else if(BlockStartRegex.IsMatch(logLine))
 			{
 				var playerEntity =
