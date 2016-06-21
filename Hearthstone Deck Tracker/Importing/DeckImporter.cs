@@ -154,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{
 				ArenaInfoCache = Reflection.GetArenaDeck();
 				if(ArenaInfoCache != null && log)
-					Log.Info($"Found new {ArenaInfoCache.Wins}-{ArenaInfoCache.Losses} arena deck: hero={ArenaInfoCache.Deck.Hero}, cards={ArenaInfoCache.Deck.Cards.Count}");
+					Log.Info($"Found new {ArenaInfoCache.Wins}-{ArenaInfoCache.Losses} arena deck: hero={ArenaInfoCache.Deck.Hero}, cards={ArenaInfoCache.Deck.Cards.Sum(x => x.Count)}");
 				else if(log)
 					Log.Info("Found no arena deck");
 				return ArenaInfoCache;

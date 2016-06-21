@@ -288,10 +288,10 @@ namespace Hearthstone_Deck_Tracker
 
 		public static bool AutoImportArena(ArenaImportingBehaviour behaviour)
 		{
-			var deck = HearthMirror.Reflection.GetArenaDeck();
+			var deck = DeckImporter.FromArena();
 			if(deck?.Deck.Cards.Sum(x => x.Count) != 30)
 				return false;
-			Log.Info($"Found new {deck.Deck.Hero} arena deck!");
+			Log.Info($"Found new complete {deck.Deck.Hero} arena deck!");
 			var recentArenaDecks =
 				DeckList.Instance.Decks.Where(d => d.IsArenaDeck && d.Cards.Sum(x => x.Count) == 30).OrderByDescending(
 					d => d.LastPlayedNewFirst).Take(15);
