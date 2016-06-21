@@ -388,188 +388,195 @@ namespace Hearthstone_Deck_Tracker
 #pragma warning disable 4014
 		public async void HandleGameEnd()
 		{
-			if(_game.CurrentGameStats == null || _handledGameEnd)
+			try
 			{
-				Log.Warn("HandleGameEnd was already called.");
-				return;
-			}
-			_handledGameEnd = true;
-			TurnTimer.Instance.Stop();
-			Core.Overlay.HideTimers();
-			DeckManager.ResetAutoSelectCount();
-			Log.Info("Game ended...");
-			_game.InvalidateMatchInfoCache();
-			if(_game.CurrentGameMode == Spectator && !Config.Instance.RecordSpectator)
-			{
-				if(Config.Instance.ReselectLastDeckUsed && DeckList.Instance.ActiveDeck == null)
+				if(_game.CurrentGameStats == null || _handledGameEnd)
+				{
+					Log.Warn("HandleGameEnd was already called.");
+					return;
+				}
+				_handledGameEnd = true;
+				TurnTimer.Instance.Stop();
+				Core.Overlay.HideTimers();
+				DeckManager.ResetAutoSelectCount();
+				Log.Info("Game ended...");
+				_game.InvalidateMatchInfoCache();
+				if(_game.CurrentGameMode == Spectator && !Config.Instance.RecordSpectator)
+				{
+					if(Config.Instance.ReselectLastDeckUsed && DeckList.Instance.ActiveDeck == null)
+					{
+						Core.MainWindow.SelectLastUsedDeck();
+						Config.Instance.ReselectLastDeckUsed = false;
+						Log.Info("ReselectLastUsedDeck set to false");
+						Config.Save();
+					}
+					Log.Info("Game is in Spectator mode, discarded. (Record Spectator disabled)");
+					_assignedDeck = null;
+					return;
+				}
+				var player = _game.Entities.FirstOrDefault(e => e.Value?.IsPlayer ?? false).Value;
+				var opponent = _game.Entities.FirstOrDefault(e => e.Value != null && e.Value.HasTag(PLAYER_ID) && !e.Value.IsPlayer).Value;
+				if(player != null)
+				{
+					_game.CurrentGameStats.PlayerName = player.Name;
+					_game.CurrentGameStats.Coin = !player.HasTag(FIRST_PLAYER);
+				}
+				if(opponent != null && CardIds.HeroIdDict.ContainsValue(_game.CurrentGameStats.OpponentHero))
+					_game.CurrentGameStats.OpponentName = opponent.Name;
+				else
+					_game.CurrentGameStats.OpponentName = _game.CurrentGameStats.OpponentHero;
+
+				_game.CurrentGameStats.Turns = LogReaderManager.GetTurnNumber();
+				if(Config.Instance.DiscardZeroTurnGame && _game.CurrentGameStats.Turns < 1)
+				{
+					Log.Info("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
+					_assignedDeck = null;
+					GameEvents.OnGameEnd.Execute();
+					return;
+				}
+				_game.CurrentGameStats.GameMode = _game.CurrentGameMode;
+				if(_game.CurrentGameMode == Ranked || _game.CurrentGameMode == Casual)
+				{
+					_game.CurrentGameStats.Format = _game.CurrentFormat;
+					Log.Info("Format: " + _game.CurrentGameStats.Format);
+					if(_game.CurrentGameMode == Ranked && _game.MatchInfo != null)
+					{
+						var wild = _game.CurrentFormat == Format.Wild;
+						_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
+						_game.CurrentGameStats.OpponentRank = wild ? _game.MatchInfo.OpposingPlayer.WildRank : _game.MatchInfo.OpposingPlayer.StandardRank;
+						_game.CurrentGameStats.LegendRank = wild ? _game.MatchInfo.LocalPlayer.WildLegendRank : _game.MatchInfo.LocalPlayer.StandardLegendRank;
+						_game.CurrentGameStats.OpponentLegendRank = wild ? _game.MatchInfo.OpposingPlayer.WildLegendRank : _game.MatchInfo.OpposingPlayer.StandardLegendRank;
+						_game.CurrentGameStats.Stars = wild ? _game.MatchInfo.LocalPlayer.WildStars : _game.MatchInfo.LocalPlayer.StandardStars;
+					}
+				}
+				_game.CurrentGameStats.PlayerCardbackId = _game.MatchInfo?.LocalPlayer.CardBackId ?? 0;
+				_game.CurrentGameStats.OpponentCardbackId = _game.MatchInfo?.OpposingPlayer.CardBackId ?? 0;
+				_game.CurrentGameStats.FriendlyPlayerId = _game.MatchInfo?.LocalPlayer.Id ?? 0;
+				_game.CurrentGameStats.ScenarioId = _game.MatchInfo?.MissionId ?? 0;
+				_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.ToList());
+				_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList.Where(x => !x.IsCreated).ToList());
+				_game.CurrentGameStats.GameEnd();
+				GameEvents.OnGameEnd.Execute();
+				Influx.OnGameEnd(HearthDbConverter.GetGameType(_game.CurrentGameStats.GameMode, _game.CurrentGameStats.Format));
+				var selectedDeck = DeckList.Instance.ActiveDeck;
+				if(selectedDeck != null)
+				{
+					var revealed = _game.Player.RevealedEntities.Where(x => x != null).ToList();
+					if(Config.Instance.DiscardGameIfIncorrectDeck
+					   && !revealed.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen)
+					   .GroupBy(x => x.CardId).All(x => selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => x.Key == c2.Id && x.Count() <= c2.Count)))
+					{
+						if(Config.Instance.AskBeforeDiscardingGame)
+						{
+							var discardDialog = new DiscardGameDialog(_game.CurrentGameStats) {Topmost = true};
+							discardDialog.ShowDialog();
+							if(discardDialog.Result == DiscardGameDialogResult.Discard)
+							{
+								Log.Info("Assigned current game to NO deck - selected deck does not match cards played (dialogresult: discard)");
+								_game.CurrentGameStats.DeleteGameFile();
+								_assignedDeck = null;
+								return;
+							}
+							if(discardDialog.Result == DiscardGameDialogResult.MoveToOther)
+							{
+								var moveDialog = new MoveGameDialog(DeckList.Instance.Decks.Where(d => d.Class == _game.CurrentGameStats.PlayerHero))
+								{
+									Topmost = true
+								};
+								moveDialog.ShowDialog();
+								var targetDeck = moveDialog.SelectedDeck;
+								if(targetDeck != null)
+								{
+									selectedDeck = targetDeck;
+									_game.CurrentGameStats.PlayerDeckVersion = moveDialog.SelectedVersion;
+									_game.CurrentGameStats.HearthStatsDeckVersionId = targetDeck.GetVersion(moveDialog.SelectedVersion).HearthStatsDeckVersionId;
+									//...continue as normal
+								}
+								else
+								{
+									Log.Info("No deck selected in move game dialog after discard dialog, discarding game");
+									_game.CurrentGameStats.DeleteGameFile();
+									_assignedDeck = null;
+									return;
+								}
+							}
+						}
+						else
+						{
+							Log.Info("Assigned current game to NO deck - selected deck does not match cards played (no dialog)");
+							_game.CurrentGameStats.DeleteGameFile();
+							_assignedDeck = null;
+							return;
+						}
+					}
+					else
+					{
+						_game.CurrentGameStats.PlayerDeckVersion = selectedDeck.GetSelectedDeckVersion().Version;
+						_game.CurrentGameStats.HearthStatsDeckVersionId = selectedDeck.GetSelectedDeckVersion().HearthStatsDeckVersionId;
+					}
+
+					_lastGame = _game.CurrentGameStats;
+					selectedDeck.DeckStats.AddGameResult(_lastGame);
+
+					var isArenaRunCompleted = selectedDeck.IsArenaRunCompleted.HasValue && selectedDeck.IsArenaRunCompleted.Value;
+					if(Config.Instance.ArenaRewardDialog && isArenaRunCompleted)
+						_arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
+
+					if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
+					{
+						_showedNoteDialog = true;
+						new NoteDialog(_game.CurrentGameStats);
+					}
+					Log.Info("Assigned current game to deck: " + selectedDeck.Name);
+					_assignedDeck = selectedDeck;
+
+					// Unarchive the active deck after we have played a game with it
+					if(_assignedDeck.Archived)
+					{
+						Log.Info("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game");
+						Core.MainWindow.ArchiveDeck(_assignedDeck, false);
+					}
+
+					if (Config.Instance.AutoArchiveArenaDecks && isArenaRunCompleted)
+						Core.MainWindow.ArchiveDeck(selectedDeck, true);
+
+					if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
+					{
+						Log.Info("Waiting for game mode to be saved to game...");
+						await GameModeSaved(15);
+						Log.Info("Game mode was saved, continuing.");
+						if(_game.CurrentGameMode == Arena)
+							HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
+						else if(_game.CurrentGameMode != Brawl)
+							HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
+					}
+					_lastGame = null;
+				}
+				else
+				{
+					try
+					{
+						DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class).AddGameResult(_game.CurrentGameStats);
+						Log.Info($"Assigned current deck to default {_game.Player.Class} deck.");
+					}
+					catch(Exception ex)
+					{
+						Log.Error("Error saving to DefaultDeckStats: " + ex);
+					}
+					_assignedDeck = null;
+				}
+
+				if(Config.Instance.ReselectLastDeckUsed && selectedDeck == null)
 				{
 					Core.MainWindow.SelectLastUsedDeck();
 					Config.Instance.ReselectLastDeckUsed = false;
 					Log.Info("ReselectLastUsedDeck set to false");
 					Config.Save();
 				}
-				Log.Info("Game is in Spectator mode, discarded. (Record Spectator disabled)");
-				_assignedDeck = null;
-				return;
 			}
-			var player = _game.Entities.FirstOrDefault(e => e.Value?.IsPlayer ?? false).Value;
-			var opponent = _game.Entities.FirstOrDefault(e => e.Value != null && e.Value.HasTag(PLAYER_ID) && !e.Value.IsPlayer).Value;
-			if(player != null)
+			catch(Exception ex)
 			{
-				_game.CurrentGameStats.PlayerName = player.Name;
-				_game.CurrentGameStats.Coin = !player.HasTag(FIRST_PLAYER);
-			}
-			if(opponent != null && CardIds.HeroIdDict.ContainsValue(_game.CurrentGameStats.OpponentHero))
-				_game.CurrentGameStats.OpponentName = opponent.Name;
-			else
-				_game.CurrentGameStats.OpponentName = _game.CurrentGameStats.OpponentHero;
-
-			_game.CurrentGameStats.Turns = LogReaderManager.GetTurnNumber();
-			if(Config.Instance.DiscardZeroTurnGame && _game.CurrentGameStats.Turns < 1)
-			{
-				Log.Info("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
-				_assignedDeck = null;
-				GameEvents.OnGameEnd.Execute();
-				return;
-			}
-			_game.CurrentGameStats.GameMode = _game.CurrentGameMode;
-			if(_game.CurrentGameMode == Ranked || _game.CurrentGameMode == Casual)
-			{
-				_game.CurrentGameStats.Format = _game.CurrentFormat;
-				Log.Info("Format: " + _game.CurrentGameStats.Format);
-				if(_game.CurrentGameMode == Ranked && _game.MatchInfo != null)
-				{
-					var wild = _game.CurrentFormat == Format.Wild;
-					_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
-					_game.CurrentGameStats.OpponentRank = wild ? _game.MatchInfo.OpposingPlayer.WildRank : _game.MatchInfo.OpposingPlayer.StandardRank;
-					_game.CurrentGameStats.LegendRank = wild ? _game.MatchInfo.LocalPlayer.WildLegendRank : _game.MatchInfo.LocalPlayer.StandardLegendRank;
-					_game.CurrentGameStats.OpponentLegendRank = wild ? _game.MatchInfo.OpposingPlayer.WildLegendRank : _game.MatchInfo.OpposingPlayer.StandardLegendRank;
-					_game.CurrentGameStats.Stars = wild ? _game.MatchInfo.LocalPlayer.WildStars : _game.MatchInfo.LocalPlayer.StandardStars;
-				}
-			}
-			_game.CurrentGameStats.PlayerCardbackId = _game.MatchInfo?.LocalPlayer.CardBackId ?? 0;
-			_game.CurrentGameStats.OpponentCardbackId = _game.MatchInfo?.OpposingPlayer.CardBackId ?? 0;
-			_game.CurrentGameStats.FriendlyPlayerId = _game.MatchInfo?.LocalPlayer.Id ?? 0;
-			_game.CurrentGameStats.ScenarioId = _game.MatchInfo?.MissionId ?? 0;
-			_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.ToList());
-			_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList.Where(x => !x.IsCreated).ToList());
-			_game.CurrentGameStats.GameEnd();
-			GameEvents.OnGameEnd.Execute();
-			Influx.OnGameEnd(HearthDbConverter.GetGameType(_game.CurrentGameStats.GameMode, _game.CurrentGameStats.Format));
-			var selectedDeck = DeckList.Instance.ActiveDeck;
-			if(selectedDeck != null)
-			{
-				var revealed = _game.Player.RevealedEntities.Where(x => x != null).ToList();
-				if(Config.Instance.DiscardGameIfIncorrectDeck
-				   && !revealed.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen)
-				   .GroupBy(x => x.CardId).All(x => selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => x.Key == c2.Id && x.Count() <= c2.Count)))
-				{
-					if(Config.Instance.AskBeforeDiscardingGame)
-					{
-						var discardDialog = new DiscardGameDialog(_game.CurrentGameStats) {Topmost = true};
-						discardDialog.ShowDialog();
-						if(discardDialog.Result == DiscardGameDialogResult.Discard)
-						{
-							Log.Info("Assigned current game to NO deck - selected deck does not match cards played (dialogresult: discard)");
-							_game.CurrentGameStats.DeleteGameFile();
-							_assignedDeck = null;
-							return;
-						}
-						if(discardDialog.Result == DiscardGameDialogResult.MoveToOther)
-						{
-							var moveDialog = new MoveGameDialog(DeckList.Instance.Decks.Where(d => d.Class == _game.CurrentGameStats.PlayerHero))
-							{
-								Topmost = true
-							};
-							moveDialog.ShowDialog();
-							var targetDeck = moveDialog.SelectedDeck;
-							if(targetDeck != null)
-							{
-								selectedDeck = targetDeck;
-								_game.CurrentGameStats.PlayerDeckVersion = moveDialog.SelectedVersion;
-								_game.CurrentGameStats.HearthStatsDeckVersionId = targetDeck.GetVersion(moveDialog.SelectedVersion).HearthStatsDeckVersionId;
-								//...continue as normal
-							}
-							else
-							{
-								Log.Info("No deck selected in move game dialog after discard dialog, discarding game");
-								_game.CurrentGameStats.DeleteGameFile();
-								_assignedDeck = null;
-								return;
-							}
-						}
-					}
-					else
-					{
-						Log.Info("Assigned current game to NO deck - selected deck does not match cards played (no dialog)");
-						_game.CurrentGameStats.DeleteGameFile();
-						_assignedDeck = null;
-						return;
-					}
-				}
-				else
-				{
-					_game.CurrentGameStats.PlayerDeckVersion = selectedDeck.GetSelectedDeckVersion().Version;
-					_game.CurrentGameStats.HearthStatsDeckVersionId = selectedDeck.GetSelectedDeckVersion().HearthStatsDeckVersionId;
-				}
-
-				_lastGame = _game.CurrentGameStats;
-				selectedDeck.DeckStats.AddGameResult(_lastGame);
-
-				var isArenaRunCompleted = selectedDeck.IsArenaRunCompleted.HasValue && selectedDeck.IsArenaRunCompleted.Value;
-				if(Config.Instance.ArenaRewardDialog && isArenaRunCompleted)
-					_arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
-
-				if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
-				{
-					_showedNoteDialog = true;
-					new NoteDialog(_game.CurrentGameStats);
-				}
-				Log.Info("Assigned current game to deck: " + selectedDeck.Name);
-				_assignedDeck = selectedDeck;
-
-				// Unarchive the active deck after we have played a game with it
-				if(_assignedDeck.Archived)
-				{
-					Log.Info("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game");
-					Core.MainWindow.ArchiveDeck(_assignedDeck, false);
-				}
-
-				if (Config.Instance.AutoArchiveArenaDecks && isArenaRunCompleted)
-					Core.MainWindow.ArchiveDeck(selectedDeck, true);
-
-				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
-				{
-					Log.Info("Waiting for game mode to be saved to game...");
-					await GameModeSaved(15);
-					Log.Info("Game mode was saved, continuing.");
-					if(_game.CurrentGameMode == Arena)
-						HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
-					else if(_game.CurrentGameMode != Brawl)
-						HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
-				}
-				_lastGame = null;
-			}
-			else
-			{
-				try
-				{
-					DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class).AddGameResult(_game.CurrentGameStats);
-					Log.Info($"Assigned current deck to default {_game.Player.Class} deck.");
-				}
-				catch(Exception ex)
-				{
-					Log.Error("Error saving to DefaultDeckStats: " + ex);
-				}
-				_assignedDeck = null;
-			}
-
-			if(Config.Instance.ReselectLastDeckUsed && selectedDeck == null)
-			{
-				Core.MainWindow.SelectLastUsedDeck();
-				Config.Instance.ReselectLastDeckUsed = false;
-				Log.Info("ReselectLastUsedDeck set to false");
-				Config.Save();
+				Log.Error(ex);
 			}
 		}
 #pragma warning restore 4014
