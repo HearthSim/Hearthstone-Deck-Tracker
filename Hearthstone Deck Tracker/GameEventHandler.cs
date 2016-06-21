@@ -507,8 +507,8 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else
 				{
-					_game.CurrentGameStats.PlayerDeckVersion = DeckList.Instance.ActiveDeckVersion.Version;
-					_game.CurrentGameStats.HearthStatsDeckVersionId = DeckList.Instance.ActiveDeckVersion.HearthStatsDeckVersionId;
+					_game.CurrentGameStats.PlayerDeckVersion = selectedDeck.GetSelectedDeckVersion().Version;
+					_game.CurrentGameStats.HearthStatsDeckVersionId = selectedDeck.GetSelectedDeckVersion().HearthStatsDeckVersionId;
 				}
 
 				_lastGame = _game.CurrentGameStats;
