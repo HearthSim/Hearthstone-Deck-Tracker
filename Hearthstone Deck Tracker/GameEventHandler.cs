@@ -410,15 +410,15 @@ namespace Hearthstone_Deck_Tracker
 				_assignedDeck = null;
 				return;
 			}
-			var player = _game.Entities.FirstOrDefault(e => e.Value.IsPlayer).Value;
-			var opponent = _game.Entities.FirstOrDefault(e => e.Value.HasTag(PLAYER_ID) && !e.Value.IsPlayer);
+			var player = _game.Entities.FirstOrDefault(e => e.Value?.IsPlayer ?? false).Value;
+			var opponent = _game.Entities.FirstOrDefault(e => e.Value != null && e.Value.HasTag(PLAYER_ID) && !e.Value.IsPlayer).Value;
 			if(player != null)
 			{
 				_game.CurrentGameStats.PlayerName = player.Name;
 				_game.CurrentGameStats.Coin = !player.HasTag(FIRST_PLAYER);
 			}
-			if(opponent.Value != null && CardIds.HeroIdDict.ContainsValue(_game.CurrentGameStats.OpponentHero))
-				_game.CurrentGameStats.OpponentName = opponent.Value.Name;
+			if(opponent != null && CardIds.HeroIdDict.ContainsValue(_game.CurrentGameStats.OpponentHero))
+				_game.CurrentGameStats.OpponentName = opponent.Name;
 			else
 				_game.CurrentGameStats.OpponentName = _game.CurrentGameStats.OpponentHero;
 
@@ -457,8 +457,9 @@ namespace Hearthstone_Deck_Tracker
 			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if(selectedDeck != null)
 			{
+				var revealed = _game.Player.RevealedEntities.Where(x => x != null).ToList();
 				if(Config.Instance.DiscardGameIfIncorrectDeck
-				   && !_game.Player.RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen)
+				   && !revealed.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen)
 				   .GroupBy(x => x.CardId).All(x => selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => x.Key == c2.Id && x.Count() <= c2.Count)))
 				{
 					if(Config.Instance.AskBeforeDiscardingGame)
