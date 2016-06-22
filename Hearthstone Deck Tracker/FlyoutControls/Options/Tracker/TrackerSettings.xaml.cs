@@ -3,9 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Stats;
@@ -33,9 +31,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
-			ComboboxKeyPressGameStart.ItemsSource = Helper.EventKeys;
-			ComboboxKeyPressGameEnd.ItemsSource = Helper.EventKeys;
-
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
 			CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
@@ -51,14 +46,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
 			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;
 			CheckboxAlternativeScreenCapture.IsChecked = Config.Instance.AlternativeScreenCapture;
-
-			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
-				Config.Instance.KeyPressOnGameStart = "None";
-			ComboboxKeyPressGameStart.SelectedValue = Config.Instance.KeyPressOnGameStart;
-
-			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
-				Config.Instance.KeyPressOnGameEnd = "None";
-			ComboboxKeyPressGameEnd.SelectedValue = Config.Instance.KeyPressOnGameEnd;
 
 			_initialized = true;
 		}
@@ -88,23 +75,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.MinimizeToTray = false;
-			SaveConfig(false);
-		}
-
-
-		private void ComboboxKeyPressGameStart_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.KeyPressOnGameStart = ComboboxKeyPressGameStart.SelectedValue.ToString();
-			SaveConfig(false);
-		}
-
-		private void ComboboxKeyPressGameEnd_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.KeyPressOnGameEnd = ComboboxKeyPressGameEnd.SelectedValue.ToString();
 			SaveConfig(false);
 		}
 

@@ -523,12 +523,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool KeepStatsWhenDeletingDeck = true;
 
-		[DefaultValue("None")]
-		public string KeyPressOnGameEnd = "None";
-
-		[DefaultValue("None")]
-		public string KeyPressOnGameStart = "None";
-
 		[Obsolete]
 		[DefaultValue("")]
 		public string LastDeck = "";

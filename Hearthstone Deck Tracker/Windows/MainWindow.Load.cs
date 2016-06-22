@@ -77,12 +77,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SortFilterDecksFlyout.ComboboxDeckSortingArena.SelectedItem = Config.Instance.SelectedDeckSortingArena;
 			SortFilterDecksFlyout.CheckBoxSortByClassArena.IsChecked = Config.Instance.SortDecksByClassArena;
 
-			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
-				Config.Instance.KeyPressOnGameStart = "None";
-
-			if(!Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
-				Config.Instance.KeyPressOnGameEnd = "None";
-
 			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
 
 			Core.TrayIcon.SetContextMenuProperty("classCardsFirst", "Checked", Config.Instance.CardSortingClassFirst);

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Enums;
@@ -104,11 +103,6 @@ namespace Hearthstone_Deck_Tracker
 				ArenaStats.Instance.UpdateArenaStatsHighlights();
 			}
 
-			if(Config.Instance.KeyPressOnGameEnd != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameEnd))
-			{
-				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameEnd + "}");
-				Log.Info("Sent keypress: " + Config.Instance.KeyPressOnGameEnd);
-			}
 			if(!_game.IsUsingPremade)
 				_game.DrawnLastGame =
 					new List<Card>(_game.Player.RevealedEntities.Where(x => !x.Info.Created && !x.Info.Stolen && x.Card.Collectible 
@@ -355,11 +349,6 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.BringHsToForeground)
 				User32.BringHsToForeground();
 
-			if(Config.Instance.KeyPressOnGameStart != "None" && Helper.EventKeys.Contains(Config.Instance.KeyPressOnGameStart))
-			{
-				SendKeys.SendWait("{" + Config.Instance.KeyPressOnGameStart + "}");
-				Log.Info("Sent keypress: " + Config.Instance.KeyPressOnGameStart);
-			}
 			_arenaRewardDialog = null;
 			_showedNoteDialog = false;
 			_game.IsInMenu = false;

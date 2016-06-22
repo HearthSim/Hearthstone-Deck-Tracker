@@ -19,24 +19,6 @@
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </GroupBox>
-                    <DockPanel Margin="10,5,10,0"
-                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="Key on game start:" HorizontalAlignment="Right"
-                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboboxKeyPressGameStart" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboboxKeyPressGameStart_SelectionChanged" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0"
-                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="Key on game end:" HorizontalAlignment="Left"
-                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboboxKeyPressGameEnd" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboboxKeyPressGameEnd_SelectionChanged" />
-                    </DockPanel>
                     <CheckBox x:Name="CheckboxConfigSaveAppData" Content="Save config in AppData"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

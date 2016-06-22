@@ -50,8 +50,6 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static double DpiScalingX = 1.0, DpiScalingY = 1.0;
 
-		public static readonly string[] EventKeys = {"None", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"};
-
 		public static readonly Dictionary<string, string> LanguageDict = new Dictionary<string, string>
 		{
 			{"English", "enUS"},
