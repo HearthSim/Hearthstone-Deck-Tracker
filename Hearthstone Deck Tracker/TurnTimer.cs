@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker
 
 	internal class TurnTimer
 	{
-		private readonly Timer _timer = new Timer(1000) {AutoReset = true};
+		private readonly Timer _timer = new Timer(3000) {AutoReset = true};
 		private GameV2 _game;
 
 		private TurnTimer()
