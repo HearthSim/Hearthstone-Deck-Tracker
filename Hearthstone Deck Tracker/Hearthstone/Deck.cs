@@ -343,19 +343,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public BitmapImage HeroImage => ClassImage;
 
-		public DeckStats DeckStats
-		{
-			get
-			{
-				var list = new List<DeckStats>(DeckStatsList.Instance.DeckStats);
-				var deckStats = list.FirstOrDefault(ds => ds?.BelongsToDeck(this) ?? false);
-				if(deckStats != null)
-					return deckStats;
-				deckStats = new DeckStats(this);
-				DeckStatsList.Instance.DeckStats.Add(deckStats);
-				return deckStats;
-			}
-		}
+		public DeckStats DeckStats => DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(this)) ?? DeckStatsList.Instance.Add(this);
 
 		[XmlIgnore]
 		public bool HasVersions => Versions != null && Versions.Count > 0;
