@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					return;
 				}
 			}
-			Process.Start(pluginDir);
+			Helper.TryOpenUrl(pluginDir);
 		}
 	}
 }
