@@ -22,8 +22,8 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <TextBlock Name="TextBlockManaCurveMechanics" Text="MECHANICS" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
-                           FontWeight="SemiBold"/>
+                    <TextBlock Name="TextBlockManaCurveMechanics" Text="{StaticResource MECHANICS}" Margin="0,4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
+                           FontWeight="SemiBold" Width="98" TextAlignment="Center"/>
                 </Grid>
             </Border>
 
@@ -38,67 +38,67 @@
             </ComboBox>
 
         </DockPanel>
-        
+
         <Border BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="0,2,0,0">
             <Grid>
                 <Grid Name="GridManaCurve" Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Rectangle Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Grid.Row="1"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Rectangle Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Grid.Row="1"
                            Grid.ColumnSpan="8" Margin="1" />
-                <local:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0" />
-                <TextBlock Text="0" FontSize="14" Grid.Column="0" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
+                    <local:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0" />
+                    <TextBlock Text="0" FontSize="14" Grid.Column="0" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar1" Width="auto" Height="auto" Grid.Column="1" Grid.Row="0"
+                    <local:ManaCostBar x:Name="ManaCostBar1" Width="auto" Height="auto" Grid.Column="1" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
 
-                <TextBlock Text="1" FontSize="14" Grid.Column="1" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
+                    <TextBlock Text="1" FontSize="14" Grid.Column="1" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar2" Width="auto" Height="auto" Grid.Column="2" Grid.Row="0"
+                    <local:ManaCostBar x:Name="ManaCostBar2" Width="auto" Height="auto" Grid.Column="2" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="2" FontSize="14" Grid.Column="2" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
+                    <TextBlock Text="2" FontSize="14" Grid.Column="2" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar3" Width="auto" Height="auto" Grid.Column="3" Grid.Row="0"
+                    <local:ManaCostBar x:Name="ManaCostBar3" Width="auto" Height="auto" Grid.Column="3" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="3" FontSize="14" Grid.Column="3" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
+                    <TextBlock Text="3" FontSize="14" Grid.Column="3" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar4" Width="auto" Height="auto" Grid.Column="4" Grid.Row="0"
+                    <local:ManaCostBar x:Name="ManaCostBar4" Width="auto" Height="auto" Grid.Column="4" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="4" FontSize="14" Grid.Column="4" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
+                    <TextBlock Text="4" FontSize="14" Grid.Column="4" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar5" Width="auto" Height="auto" Grid.Column="5" Grid.Row="0"
+                    <local:ManaCostBar x:Name="ManaCostBar5" Width="auto" Height="auto" Grid.Column="5" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="5" FontSize="14" Grid.Column="5" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
+                    <TextBlock Text="5" FontSize="14" Grid.Column="5" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar6" Width="auto" Height="auto" Grid.Column="6" Grid.Row="0"
+                    <local:ManaCostBar x:Name="ManaCostBar6" Width="auto" Height="auto" Grid.Column="6" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="6" FontSize="14" Grid.Column="6" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
+                    <TextBlock Text="6" FontSize="14" Grid.Column="6" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar7" Width="auto" Height="auto" Grid.Column="7" Grid.Row="0"
+                    <local:ManaCostBar x:Name="ManaCostBar7" Width="auto" Height="auto" Grid.Column="7" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
-                <TextBlock Text="7" FontSize="14" Grid.Column="7" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
+                    <TextBlock Text="7" FontSize="14" Grid.Column="7" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
-                <TextBlock Text="+" Margin="14,0,4,0" FontSize="16" Grid.Column="7" Grid.Row="1" Foreground="Black" />
-            </Grid>
+                    <TextBlock Text="+" Margin="14,0,4,0" FontSize="16" Grid.Column="7" Grid.Row="1" Foreground="Black" />
+                </Grid>
 
                 <Border Name="BorderMechanics" Margin="10" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" BorderBrush="{DynamicResource TextBrush}" BorderThickness="1" Visibility="Collapsed">
                     <Grid>

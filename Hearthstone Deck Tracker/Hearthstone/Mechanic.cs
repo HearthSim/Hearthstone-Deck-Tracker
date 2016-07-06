@@ -4,7 +4,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public Mechanic(string name, Deck deck)
 		{
-			Name = name;
+			Name = Helper.GetLocalText(name);
 			Count = deck.GetMechanicCount(name);
 		}
 

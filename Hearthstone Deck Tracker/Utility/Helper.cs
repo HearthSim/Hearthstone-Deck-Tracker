@@ -368,7 +368,7 @@ namespace Hearthstone_Deck_Tracker
 					Process.Start("battlenet://");
 
 					var foundBnetWindow = false;
-					Core.MainWindow.TextBlockBtnStartHearthstone.Text = "STARTING LAUNCHER...";
+					Core.MainWindow.TextBlockBtnStartHearthstone.Text = Helper.GetLocalText("STARTING LAUNCHER...");
 					for(var i = 0; i < 20; i++)
 					{
 						bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault();
@@ -377,12 +377,12 @@ namespace Hearthstone_Deck_Tracker
 							foundBnetWindow = true;
 							break;
 						}
-						await Task.Delay(500);
+						await Task.Delay(1000);
 					}
-					Core.MainWindow.TextBlockBtnStartHearthstone.Text = "START LAUNCHER / HEARTHSTONE";
+					Core.MainWindow.TextBlockBtnStartHearthstone.Text = Helper.GetLocalText("START LAUNCHER / HEARTHSTONE");
 					if(!foundBnetWindow)
 					{
-						Core.MainWindow.ShowMessageAsync("Error starting battle.net launcher", "Could not find or start the battle.net launcher.").Forget();
+						Core.MainWindow.ShowMessageAsync(Helper.GetLocalText("Error starting battle.net launcher"), Helper.GetLocalText("Could not find or start the battle.net launcher.")).Forget();
 						Core.MainWindow.BtnStartHearthstone.IsEnabled = true;
 						return;
 					}
@@ -708,5 +708,16 @@ namespace Hearthstone_Deck_Tracker
 			var color = ColorTranslator.FromHtml("#" + hex);
 			return new SolidColorBrush(MediaColor.FromRgb(color.R, color.G, color.B));
 		}
-	}
+
+        public static string GetLocalText(string key)
+        {
+            string text = key ?? "";
+            object obj = Application.Current.TryFindResource(text);
+            if (obj != null)
+            {
+                text = obj.ToString();
+            }
+            return text;
+        }
+    }
 }

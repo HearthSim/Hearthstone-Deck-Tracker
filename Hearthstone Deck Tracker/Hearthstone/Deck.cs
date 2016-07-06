@@ -37,8 +37,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"Secret",
 			"Spellpower",
 			"Taunt",
-			"Windfury"
-		};
+			"Windfury",
+            "Stealth"
+        };
 
 		private bool _archived;
 
@@ -289,7 +290,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public string StatsString => GetRelevantGames().Any() ? $"{WinPercentString} | {WinLossString}" : "NO STATS";
+		public string StatsString => GetRelevantGames().Any() ? $"{WinPercentString} | {WinLossString}" : Helper.GetLocalText("NO STATS");
 
 		[XmlIgnore]
 		public DateTime LastPlayed => !DeckStats.Games.Any() ? DateTime.MinValue : DeckStats.Games.Max(g => g.StartTime);
@@ -345,7 +346,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public DeckStats DeckStats => DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(this)) ?? DeckStatsList.Instance.Add(this);
 
-		[XmlIgnore]
+        [XmlIgnore]
 		public bool HasVersions => Versions != null && Versions.Count > 0;
 
 		public bool HasHearthStatsArenaId => !string.IsNullOrEmpty(HearthStatsArenaId);
@@ -490,9 +491,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int GetNumDeathrattle() => GetMechanicCount("Deathrattle");
 		public int GetNumWindfury() => GetMechanicCount("Windfury");
 		public int GetNumDivineShield() => GetMechanicCount("Divine Shield");
-		public int GetNumCombo() => GetMechanicCount("Combo");
+        public int GetNumCombo() => GetMechanicCount("Combo");
+        public int GetNumStealth() => GetMechanicCount("Stealth");
 
-		public bool ContainsSet(string set) => Cards.Any(card => card.Set == set);
+        public bool ContainsSet(string set) => Cards.Any(card => card.Set == set);
 
 		public override string ToString() => $"{Name} ({Class})";
 

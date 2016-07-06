@@ -184,12 +184,12 @@ namespace Hearthstone_Deck_Tracker
 			if(BorderMechanics.Visibility != Visible)
 			{
 				BorderMechanics.Visibility = Visible;
-				TextBlockManaCurveMechanics.Text = "HIDE";
+				TextBlockManaCurveMechanics.Text = Helper.GetLocalText("HIDE");
 			}
 			else
 			{
 				BorderMechanics.Visibility = Collapsed;
-				TextBlockManaCurveMechanics.Text = "MECHANICS";
+				TextBlockManaCurveMechanics.Text = Helper.GetLocalText("MECHANICS");
 			}
 			TextBlockNoMechanics.Visibility = _deck != null && _deck.Mechanics.Any() ? Collapsed : Visible;
 		}
@@ -199,6 +199,6 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public StatType StatType { get; set; }
 
-		public string DisplayName => StatType.ToString().ToUpper();
+		public string DisplayName => Helper.GetLocalText(StatType.ToString()).ToUpper();
 	}
 }
