@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
 		private readonly ObservableCollection<DeckPickerItem> _displayedDecks;
 		private bool _clearingClasses;
-		private ObservableCollection<string> _deckTypeItems;
+		private ObservableCollection<DeckTypesWrapper> _deckTypeItems;
 		private bool _ignoreSelectionChange;
 		private DateTime _lastActiveDeckPanelClick = DateTime.MinValue;
 		private bool _reselectingClasses;
@@ -50,7 +50,15 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private bool _searchBarVisibile;
 		private bool _archivedClassVisible;
 
-		public DeckPicker()
+        private readonly string[] _deckTypes =
+        {
+            "ALL",
+            "ARENA",
+            "STANDARD",
+            "WILD"
+        };
+
+        public DeckPicker()
 		{
 			InitializeComponent();
 			_classItems =
@@ -62,10 +70,10 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			SelectedClasses = new ObservableCollection<HeroClassAll>();
 			_displayedDecks = new ObservableCollection<DeckPickerItem>();
 			ListViewDecks.ItemsSource = _displayedDecks;
-			DeckTypeItems = new ObservableCollection<string> {"ALL", "ARENA", "STANDARD", "WILD"};
-		}
+            DeckTypeItems = new ObservableCollection<DeckTypesWrapper>(_deckTypes.Select(e => new DeckTypesWrapper() { Value = e }));
+        }
 
-		public List<Deck> SelectedDecks
+        public List<Deck> SelectedDecks
 		{
 			get { return ListViewDecks.SelectedItems.Cast<DeckPickerItem>().Select(x => x.Deck).ToList(); }
 		}
@@ -99,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Visibility VisibilitySearchBar => SearchBarVisibile ? Visible : Collapsed;
 
-		public ObservableCollection<string> DeckTypeItems
+		public ObservableCollection<DeckTypesWrapper> DeckTypeItems
 		{
 			get { return _deckTypeItems; }
 			set
@@ -584,10 +592,10 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			var deckType = DeckType.All;
 			if(e.AddedItems.Count > 0)
 			{
-				var item = e.AddedItems[0] as string;
+				var item = e.AddedItems[0] as DeckTypesWrapper;
 				if(item != null)
 				{
-					switch(item)
+					switch(item.Value)
 					{
 						case "ARENA":
 							deckType = DeckType.Arena;
@@ -766,5 +774,12 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			if(!SelectedDecks.Any())
 				e.Handled = true;
 		}
-	}
+
+        public class DeckTypesWrapper
+        {
+            public string Value { get; set; }
+
+            public string DisplayName => Helper.GetLocalText(Value).ToUpper();
+        }
+    }
 }

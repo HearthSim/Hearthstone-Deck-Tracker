@@ -22,6 +22,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using Hearthstone_Deck_Tracker.Utility.Themes;
+using System.Linq;
 
 #endregion
 
@@ -53,7 +54,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void Initialize()
 		{
-			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+            LoadLang();
+            Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			var newUser = !Directory.Exists(Config.AppDataPath);
 			Config.Load();
 			Log.Initialize();
@@ -149,7 +151,7 @@ namespace Hearthstone_Deck_Tracker
 			Influx.OnAppStart(Helper.GetCurrentVersion(), loginType, newUser);
 		}
 
-		private static async void UpdateOverlayAsync()
+        private static async void UpdateOverlayAsync()
 		{
 			if(Config.Instance.CheckForUpdates)
 				Updater.CheckForUpdates(true);
@@ -314,5 +316,35 @@ namespace Hearthstone_Deck_Tracker
 			public static StatsWindow StatsWindow => _statsWindow ?? (_statsWindow = new StatsWindow());
 			public static CapturableOverlayWindow CapturableOverlay;
 		}
-	}
+
+
+        private static void LoadLang()
+        {
+            UpdateLanguage(System.Globalization.CultureInfo.CurrentCulture.Name);
+        }
+
+        public static void UpdateLanguage(string strCulture)
+        {
+            List<ResourceDictionary> dictionaryList = new List<ResourceDictionary>();
+            foreach (ResourceDictionary dictionary in Application.Current.Resources.MergedDictionaries)
+            {
+                dictionaryList.Add(dictionary);
+            }
+            string requestedCulture = string.Format(@"Resources\Languages\StringResource.{0}.xaml", strCulture);
+            ResourceDictionary resourceDictionary = dictionaryList.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Equals(requestedCulture));
+            if (resourceDictionary == null)
+            {
+                requestedCulture = @"Resources\Languages\StringResource.xaml";
+                resourceDictionary = dictionaryList.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Equals(requestedCulture));
+            }
+            if (resourceDictionary != null)
+            {
+                foreach (var item in dictionaryList.Where(d => d.Source != null && d.Source.OriginalString.Contains(@"Resources\Languages\")))
+                {
+                    Application.Current.Resources.MergedDictionaries.Remove(item);
+                }
+                Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
+            }
+        }
+    }
 }

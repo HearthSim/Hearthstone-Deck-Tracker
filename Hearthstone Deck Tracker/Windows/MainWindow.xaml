@@ -194,7 +194,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Menu Grid.Row="1" Grid.ColumnSpan="3">
-                <MenuItem Header="_NEW">
+                <MenuItem Header="{StaticResource _NEW}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -202,53 +202,53 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_DRUID" Click="BtnNewDeckDruid_Click">
+                    <MenuItem Header="{StaticResource _DRUID}" Click="BtnNewDeckDruid_Click">
                         <MenuItem.Icon>
                             <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/druid.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_HUNTER" Click="BtnNewDeckHunter_Click">
+                    <MenuItem Header="{StaticResource _HUNTER}" Click="BtnNewDeckHunter_Click">
                         <MenuItem.Icon>
                             <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/hunter.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_MAGE" Click="BtnNewDeckMage_Click">
+                    <MenuItem Header="{StaticResource _MAGE}" Click="BtnNewDeckMage_Click">
                         <MenuItem.Icon>
                             <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/mage.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant"/>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_PRIEST" Click="BtnNewDeckPriest_Click">
+                    <MenuItem Header="{StaticResource _PRIEST}" Click="BtnNewDeckPriest_Click">
                         <MenuItem.Icon>
                             <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/priest.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_PALADIN" Click="BtnNewDeckPaladin_Click">
+                    <MenuItem Header="{StaticResource _PALADIN}" Click="BtnNewDeckPaladin_Click">
                         <MenuItem.Icon>
                             <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/paladin.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_ROGUE" Click="BtnNewDeckRogue_Click">
+                    <MenuItem Header="{StaticResource _ROGUE}" Click="BtnNewDeckRogue_Click">
                         <MenuItem.Icon>
                             <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/rogue.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_SHAMAN" Click="BtnNewDeckShaman_Click">
+                    <MenuItem Header="{StaticResource _SHAMAN}" Click="BtnNewDeckShaman_Click">
                         <MenuItem.Icon>
                             <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/shaman.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_WARLOCK" Click="BtnNewDeckWarlock_Click">
+                    <MenuItem Header="{StaticResource _WARLOCK}" Click="BtnNewDeckWarlock_Click">
                         <MenuItem.Icon>
                             <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/warlock.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_WARRIOR" Click="BtnNewDeckWarrior_Click">
+                    <MenuItem Header="{StaticResource _WARRIOR}" Click="BtnNewDeckWarrior_Click">
                         <MenuItem.Icon>
                             <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/warrior.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_DECK" Name="MenuItemEdit">
+                <MenuItem Header="{StaticResource _DECK}" Name="MenuItemEdit">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -256,35 +256,35 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
-                    <MenuItem Header="EDIT NA_ME" Click="BtnName_Click" />
-                    <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />
-                    <MenuItem Header="EDIT _TAGS" Click="BtnTags_Click" />
-                    <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
+                    <MenuItem Header="{StaticResource EDIT _DECK}" Click="BtnEditDeck_Click" />
+                    <MenuItem Header="{StaticResource EDIT NA_ME}" Click="BtnName_Click" />
+                    <MenuItem Header="{StaticResource EDIT _NOTES}" Click="BtnNotes_Click" />
+                    <MenuItem Header="{StaticResource EDIT _TAGS}" Click="BtnTags_Click" />
+                    <MenuItem Name="MenuItemQuickSetTag" Header="{StaticResource _QUICK SET TAG}">
                         <MenuItem.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" />
                             </DataTemplate>
                         </MenuItem.ItemTemplate>
                     </MenuItem>
-                    <MenuItem Name="MenuItemMoveDecktoArena" Header="MOVE TO ARENA" Click="BtnMoveDeckToArena_Click" Visibility="Collapsed"/>
-                    <MenuItem Name="MenuItemMoveDeckToConstructed" Header="MOVE TO CONSTRUCTED" Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed"/>
+                    <MenuItem Name="MenuItemMoveDecktoArena" Header="{StaticResource MOVE TO ARENA}" Click="BtnMoveDeckToArena_Click" Visibility="Collapsed"/>
+                    <MenuItem Name="MenuItemMoveDeckToConstructed" Header="{StaticResource MOVE TO CONSTRUCTED}" Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed"/>
                     <Separator Name="SeparatorDeck1"/>
-                    <MenuItem Name="MenuItemMissingCards" Header="SHOW _MISSING CARDS" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
-                    <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
-                    <MenuItem Name="MenuItemSetDeckUrl" Header="" Click="BtnSetDeckUrl_Click" />
-                    <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
-                    <MenuItem Name="MenuItemOpenHearthStats" Header="OPEN _HEARTHSTATS" Click="BtnOpenHearthStats_Click" />
+                    <MenuItem Name="MenuItemMissingCards" Header="{StaticResource SHOW _MISSING CARDS}" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
+                    <MenuItem Name="MenuItemUpdateDeck" Header="{StaticResource _UPDATE (WEB)}" Click="BtnUpdateDeck_Click" />
+                    <MenuItem Name="MenuItemSetDeckUrl" Header="{StaticResource _Set Deck Url}" Click="BtnSetDeckUrl_Click" />
+                    <MenuItem Name="MenuItemOpenUrl" Header="{StaticResource OPEN _WEBSITE}" Click="BtnOpenDeckUrl_Click" />
+                    <MenuItem Name="MenuItemOpenHearthStats" Header="{StaticResource OPEN _HEARTHSTATS}" Click="BtnOpenHearthStats_Click" />
                     <Separator />
-                    <MenuItem Header="_ARCHIVE" Name="MenuItemArchive" Click="BtnArchiveDeck_Click" />
-                    <MenuItem Header="UN_ARCHIVE" Name="MenuItemUnarchive" Click="BtnUnarchiveDeck_Click" />
-                    <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click" />
-                    <MenuItem Header="CLONE">
-                        <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />
-                        <MenuItem Header="SELECTED VERSION" Click="BtnCloneSelectedVersion_Click" />
+                    <MenuItem Header="{StaticResource _ARCHIVE}" Name="MenuItemArchive" Click="BtnArchiveDeck_Click" />
+                    <MenuItem Header="{StaticResource UN_ARCHIVE}" Name="MenuItemUnarchive" Click="BtnUnarchiveDeck_Click" />
+                    <MenuItem Header="{StaticResource DELETE}" Click="BtnDeleteDeck_Click" />
+                    <MenuItem Header="{StaticResource CLONE}">
+                        <MenuItem Header="{StaticResource ENTIRE DECK}" Click="BtnCloneDeck_Click" />
+                        <MenuItem Header="{StaticResource SELECTED VERSION}" Click="BtnCloneSelectedVersion_Click" />
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_IMPORT">
+                <MenuItem Header="{StaticResource _IMPORT}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16"  Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -292,20 +292,20 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="FROM _WEB" Click="BtnWeb_Click" />
+                    <MenuItem Header="{StaticResource FROM _WEB}" Click="BtnWeb_Click" />
                     <Separator/>
-                    <MenuItem Header="FROM GAME: _CONSTRUCTED" Click="BtnConstructed_Click" Name="MenuItemImportConstructed" />
-                    <MenuItem Header="FROM GAME: _ARENA" Click="BtnArena_Click" Name="MenuItemImportArena" />
-                    <MenuItem Header="FROM GAME: _TAVERN BRAWL" Click="BtnBrawl_Click" Name="MenuItemImportBrawl" />
+                    <MenuItem Header="{StaticResource FROM GAME: _CONSTRUCTED}" Click="BtnConstructed_Click" Name="MenuItemImportConstructed" />
+                    <MenuItem Header="{StaticResource FROM GAME: _ARENA}" Click="BtnArena_Click" Name="MenuItemImportArena" />
+                    <MenuItem Header="{StaticResource FROM GAME: _TAVERN BRAWL}" Click="BtnBrawl_Click" Name="MenuItemImportBrawl" />
                     <Separator/>
-                    <MenuItem Header="OTHER">
-                        <MenuItem Header="FROM _FILE" Click="BtnFile_Click" />
-                        <MenuItem Header="FROM _ID STRING" Click="BtnIdString_Click" />
-                        <MenuItem Header="FROM CLIPBOARD: _CARD NAMES" Click="BtnClipboardText_Click" />
-                        <MenuItem Header="FROM LAST _GAME" Click="BtnLastGame_Click" />
+                    <MenuItem Header="{StaticResource OTHER}">
+                        <MenuItem Header="{StaticResource FROM _FILE}" Click="BtnFile_Click" />
+                        <MenuItem Header="{StaticResource FROM _ID STRING}" Click="BtnIdString_Click" />
+                        <MenuItem Header="{StaticResource FROM CLIPBOARD: _CARD NAMES}" Click="BtnClipboardText_Click" />
+                        <MenuItem Header="{StaticResource FROM LAST _GAME}" Click="BtnLastGame_Click" />
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="E_XPORT" Name="MenuItemExport">
+                <MenuItem Header="{StaticResource E_XPORT}" Name="MenuItemExport">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -313,15 +313,15 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Name="MenuItemExportToHs" Header="TO _HEARTHSTONE" Click="BtnExport_Click" />
-                    <MenuItem Header="TO HEARTHSTONE FROM _WEB" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck." />
-                    <MenuItem Name="MenuItemExportXml" Header="SAVE AS _XML" Click="BtnSaveToFile_OnClick" />
-                    <MenuItem Name="MenuItemExportIds" Header="COPY IDS TO _CLIPBOARD" Click="BtnClipboard_OnClick" />
-                    <MenuItem Name="MenuItemExportNames" Header="COPY _NAMES TO CLIPBOARD" Click="BtnClipboardNames_OnClick" />
-                    <MenuItem Name="MenuItemExportScreenshot" Header="_SCREENSHOT" Click="BtnScreenhot_Click" />
-                    <MenuItem Name="MenuItemExportScreenshotWithInfo" Header="SCREENSHOT (WITH _INFO)" Click="BtnScreenhotWithInfo_Click" />
+                    <MenuItem Name="MenuItemExportToHs" Header="{StaticResource TO _HEARTHSTONE}" Click="BtnExport_Click" />
+                    <MenuItem Header="{StaticResource TO HEARTHSTONE FROM _WEB}" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck." />
+                    <MenuItem Name="MenuItemExportXml" Header="{StaticResource SAVE AS _XML}" Click="BtnSaveToFile_OnClick" />
+                    <MenuItem Name="MenuItemExportIds" Header="{StaticResource COPY IDS TO _CLIPBOARD}" Click="BtnClipboard_OnClick" />
+                    <MenuItem Name="MenuItemExportNames" Header="{StaticResource COPY _NAMES TO CLIPBOARD}" Click="BtnClipboardNames_OnClick" />
+                    <MenuItem Name="MenuItemExportScreenshot" Header="{StaticResource _SCREENSHOT}" Click="BtnScreenhot_Click" />
+                    <MenuItem Name="MenuItemExportScreenshotWithInfo" Header="{StaticResource SCREENSHOT (WITH _INFO)}" Click="BtnScreenhotWithInfo_Click" />
                 </MenuItem>
-                <MenuItem Header="_STATS">
+                <MenuItem Header="{StaticResource _STATS}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -329,14 +329,14 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Header="_ARENA"  Click="BtnArenaStats_Click"/>
-                    <MenuItem Header="_CONSTRUCTED"  Click="BtnConstructedStats_Click"/>
+                    <MenuItem Header="{StaticResource _ARENA}"  Click="BtnArenaStats_Click"/>
+                    <MenuItem Header="{StaticResource _CONSTRUCTED}"  Click="BtnConstructedStats_Click"/>
                     <Separator/>
-                    <MenuItem Header="_LATEST REPLAY" Click="MenuItemReplayLastGame_OnClick"/>
-                    <MenuItem Header="_SELECT REPLAY" Click="MenuItemReplaySelectGame_OnClick" />
-                    <MenuItem Header="LOAD REPLAY FROM _FILE" Click="MenuItemReplayFromFile_OnClick"/>
+                    <MenuItem Header="{StaticResource _LATEST REPLAY}" Click="MenuItemReplayLastGame_OnClick"/>
+                    <MenuItem Header="{StaticResource _SELECT REPLAY}" Click="MenuItemReplaySelectGame_OnClick" />
+                    <MenuItem Header="{StaticResource LOAD REPLAY FROM _FILE}" Click="MenuItemReplayFromFile_OnClick"/>
                 </MenuItem>
-                <MenuItem Header="_HEARTHSTATS" SubmenuOpened="MenuItemHearthStats_OnSubmenuOpened">
+                <MenuItem Header="{StaticResource _HEARTHSTATS}" SubmenuOpened="MenuItemHearthStats_OnSubmenuOpened">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -344,32 +344,32 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
-                    <MenuItem Name="MenuItemLogin" Header="LOGIN" Click="MenuItemLogin_OnClick"/>
-                    <MenuItem Name="MenuItemDashboard" Header="DASHBOARD (WEB)" Click="MenuItemDashboard_OnClick"/>
+                    <MenuItem Name="MenuItemLogin" Header="{StaticResource LOGIN}" Click="MenuItemLogin_OnClick"/>
+                    <MenuItem Name="MenuItemDashboard" Header="{StaticResource DASHBOARD (WEB)}" Click="MenuItemDashboard_OnClick"/>
                     <MenuItem Name="MenuItemHearthStatsSync" Click="MenuItemHearthStatsSync_OnClick">
                         <MenuItem.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="SYNC NOW"/>
+                                <TextBlock Text="{StaticResource SYNC NOW}"/>
                                 <TextBlock Foreground="DimGray" Margin="10,0,0,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}, Path=LastSync, StringFormat='(LAST: {0})'}"/>
                             </StackPanel>
                         </MenuItem.Header>
                     </MenuItem>
-                    <MenuItem Name="MenuItemHearthStatsForceFullSync"  Header="FORCE FULL SYNC" Click="MenuItemHearthStatsForceFullSync_OnClick"/>
+                    <MenuItem Name="MenuItemHearthStatsForceFullSync"  Header="{StaticResource FORCE FULL SYNC}" Click="MenuItemHearthStatsForceFullSync_OnClick"/>
                     <Separator/>
-                    <CheckBox Name="MenuItemCheckBoxSyncOnStart" Content="SYNC ON START" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxSyncOnStart_OnChecked" Unchecked="MenuItemCheckBoxSyncOnStart_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="AUTO UPLOAD NEW DECKS" ToolTip="also applies to changes made to decks and new versions" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadDecks_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="AUTO UPLOAD GAMES" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadGames_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadGames_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoDeleteDecks" Content="AUTO DELETE DECKS" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoDeleteDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoDeleteDecks_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoDeleteGames" Content="AUTO DELETE GAMES" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoDeleteGames_OnChecked" Unchecked="MenuItemCheckBoxAutoDeleteGames_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoSyncBackground" Content="AUTO SYNC IN BACKGROUND*" ToolTip="Will perform 'SYNC NOW' every 5 minutes in the background. Unless you are running HDT on multiple PCs at the same time there you don't really need this." Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoSyncBackground_OnChecked" Unchecked="MenuItemCheckBoxAutoSyncBackground_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxSyncOnStart" Content="{StaticResource SYNC ON START}" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxSyncOnStart_OnChecked" Unchecked="MenuItemCheckBoxSyncOnStart_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="{StaticResource AUTO UPLOAD NEW DECKS}" ToolTip="also applies to changes made to decks and new versions" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadDecks_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="{StaticResource AUTO UPLOAD GAMES}" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadGames_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadGames_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoDeleteDecks" Content="{StaticResource AUTO DELETE DECKS}" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoDeleteDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoDeleteDecks_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoDeleteGames" Content="{StaticResource AUTO DELETE GAMES}" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoDeleteGames_OnChecked" Unchecked="MenuItemCheckBoxAutoDeleteGames_OnUnchecked"/>
+                    <CheckBox Name="MenuItemCheckBoxAutoSyncBackground" Content="{StaticResource AUTO SYNC IN BACKGROUND*}" ToolTip="Will perform 'SYNC NOW' every 5 minutes in the background. Unless you are running HDT on multiple PCs at the same time there you don't really need this." Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoSyncBackground_OnChecked" Unchecked="MenuItemCheckBoxAutoSyncBackground_OnUnchecked"/>
                     <Separator/>
-                    <MenuItem Name="MenuItemDeleteHearthStatsDeck" Header="DELETE SELECTED DECKS" ToolTip="This will try to delete the selected decks and all matches on HearthStats as well as remove all stored IDs. The local decks will stay untouched!" Click="MenuItemDeleteHearthStatsDeck_OnClick"/>
+                    <MenuItem Name="MenuItemDeleteHearthStatsDeck" Header="{StaticResource DELETE SELECTED DECKS}" ToolTip="This will try to delete the selected decks and all matches on HearthStats as well as remove all stored IDs. The local decks will stay untouched!" Click="MenuItemDeleteHearthStatsDeck_OnClick"/>
                     <Separator Name="SeparatorLogout" Visibility="Collapsed"/>
-                    <MenuItem Name="MenuItemLogout" Header="LOGOUT" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>
+                    <MenuItem Name="MenuItemLogout" Header="{StaticResource LOGOUT}" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>
                 </MenuItem>
                 <!--<MenuItem Header="MENUITEM">
                 </MenuItem>-->
-                <MenuItem Header="_PLUGINS" Name="MenuItemPlugins">
+                <MenuItem Header="{StaticResource _PLUGINS}" Name="MenuItemPlugins">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
@@ -389,11 +389,11 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="10,6,10,-4" Grid.Row="0" Visibility="Visible" Style="{StaticResource AccentedSquareButtonStyle}">
-                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="START LAUNCHER / HEARTHSTONE" />
+                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="{StaticResource START LAUNCHER / HEARTHSTONE}" />
                 </Button>
                 <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="1" Visibility="Collapsed">
                     <DockPanel>
-                        <TextBlock Text="SELECTED VERSION:" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        <TextBlock Text="{StaticResource SELECTED VERSION:}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
                         <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>

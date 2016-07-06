@@ -11,7 +11,7 @@
         <Border
             Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
             BorderThickness="1" DockPanel.Dock="Top" Margin="0,0,0,2" BorderBrush="{DynamicResource TextBrush}">
-            <TextBox Name="TextBoxSearchBar" controls1:TextBoxHelper.Watermark="Search..."
+            <TextBox Name="TextBoxSearchBar" controls1:TextBoxHelper.Watermark="{StaticResource Search...}"
                      controls1:TextBoxHelper.IsWaitingForData="True" PreviewKeyDown="TextBoxSearchBar_OnPreviewKeyDown" />
         </Border>
         <Border BorderThickness="1"
@@ -81,7 +81,7 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
+                    <TextBlock Text="{Binding DisplayName}" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
                                HorizontalAlignment="Center" />
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -115,7 +115,7 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <TextBlock Text="NO-DECK MODE"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
+                <TextBlock Text="{StaticResource NO-DECK MODE}"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
                            Foreground="{Binding BorderDeckModeTextBrush, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"/>
             </Grid>
         </Border>
@@ -131,20 +131,20 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <TextBlock Text="AUTO"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
+                <TextBlock Text="{StaticResource AUTO}"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
                            Foreground="{Binding BorderAutoSelectTextBrush, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}" ToolTip="Auto deck selection. Requires an active deck."/>
             </Grid>
         </Border>
         <Border BorderThickness="1" Margin="0,2,0,0" BorderBrush="{DynamicResource TextBrush}"
             PreviewMouseDown="ActiveDeckPanel_OnPreviewMouseDown" Height="26">
             <DockPanel>
-                <TextBlock Name="TextBlockLabelActiveDeck" Text="ACTIVE DECK: " FontWeight="SemiBold" FontSize="14"
+                <TextBlock Name="TextBlockLabelActiveDeck" Text="{StaticResource ACTIVE DECK: }" FontWeight="SemiBold" FontSize="14"
                        VerticalAlignment="Center" Margin="5,0,0,0" DockPanel.Dock="Left" />
                 <Image
                 Source="{Binding ActiveDeck.ClassImage, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                 DockPanel.Dock="Left" Margin="5,1" RenderOptions.BitmapScalingMode="Fant" />
                 <Grid Margin="0,0,5,0">
-                    <TextBlock Text="NONE   -   CLICK &quot;USE&quot; ON DECK TO ACTIVATE" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                    <TextBlock Text="{StaticResource NONE - CLICK USE ON DECK TO ACTIVATE}" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                            HorizontalAlignment="Left" Visibility="{Binding VisibilityNoDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                                ToolTip="CLICK &quot;USE&quot; ON DECK TO ACTIVATE"/>
                     <DockPanel>
@@ -172,37 +172,37 @@
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick" PreviewMouseRightButtonUp="ListViewDecks_OnPreviewMouseRightButtonUp">
         <ListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">
-                <MenuItem Name="MenuItemUseDeck" Header="_USE DECK" Click="BtnUseDeck_Click"/>
+                <MenuItem Name="MenuItemUseDeck" Header="{StaticResource _USE DECK}" Click="BtnUseDeck_Click"/>
                 <Separator Name="SeparatorUseDeck" />
-                <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
-                <MenuItem Header="EDIT NA_ME" Click="BtnName_Click" />
-                <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />
-                <MenuItem Header="EDIT _TAGS" Click="BtnTags_Click" />
-                <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
+                <MenuItem Header="{StaticResource EDIT _DECK}" Click="BtnEditDeck_Click" />
+                <MenuItem Header="{StaticResource EDIT NA_ME}" Click="BtnName_Click" />
+                <MenuItem Header="{StaticResource EDIT _NOTES}" Click="BtnNotes_Click" />
+                <MenuItem Header="{StaticResource EDIT _TAGS}" Click="BtnTags_Click" />
+                <MenuItem Name="MenuItemQuickSetTag" Header="{StaticResource _QUICK SET TAG}">
                     <MenuItem.ItemTemplate>
                         <DataTemplate>
                             <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" />
                         </DataTemplate>
                     </MenuItem.ItemTemplate>
                 </MenuItem>
-                <MenuItem Name="MenuItemMoveDecktoArena" Header="MOVE TO ARENA" Click="BtnMoveDeckToArena_Click"
+                <MenuItem Name="MenuItemMoveDecktoArena" Header="{StaticResource MOVE TO ARENA}" Click="BtnMoveDeckToArena_Click"
                           Visibility="Collapsed" />
-                <MenuItem Name="MenuItemMoveDeckToConstructed" Header="MOVE TO CONSTRUCTED"
+                <MenuItem Name="MenuItemMoveDeckToConstructed" Header="{StaticResource MOVE TO CONSTRUCTED}"
                           Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed" />
                 <Separator Name="SeparatorDeck1" />
-                <MenuItem Name="MenuItemMissingCards" Header="SHOW _MISSING CARDS"
+                <MenuItem Name="MenuItemMissingCards" Header="{StaticResource SHOW _MISSING CARDS}"
                           ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick" />
-                <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
+                <MenuItem Name="MenuItemUpdateDeck" Header="{StaticResource _UPDATE (WEB)}" Click="BtnUpdateDeck_Click" />
                 <MenuItem Name="MenuItemSetDeckUrl" Header="" Click="BtnSetDeckUrl_Click" />
-                <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
-                <MenuItem Name="MenuItemOpenHearthStats" Header="OPEN _HEARTHSTATS" Click="BtnOpenHearthStats_Click" />
+                <MenuItem Name="MenuItemOpenUrl" Header="{StaticResource OPEN _WEBSITE}" Click="BtnOpenDeckUrl_Click" />
+                <MenuItem Name="MenuItemOpenHearthStats" Header="{StaticResource OPEN _HEARTHSTATS}" Click="BtnOpenHearthStats_Click" />
                 <Separator />
-                <MenuItem Name="MenuItemArchive" Header="_ARCHIVE" Click="BtnArchiveDeck_Click" />
-                <MenuItem Name="MenuItemUnarchive" Header="UN_ARCHIVE" Click="BtnUnarchiveDeck_Click" />
-                <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click" />
-                <MenuItem Header="CLONE">
-                    <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />
-                    <MenuItem Header="SELECTED VERSION" Click="BtnCloneSelectedVersion_Click" />
+                <MenuItem Name="MenuItemArchive" Header="{StaticResource _ARCHIVE}" Click="BtnArchiveDeck_Click" />
+                <MenuItem Name="MenuItemUnarchive" Header="{StaticResource UN_ARCHIVE}" Click="BtnUnarchiveDeck_Click" />
+                <MenuItem Header="{StaticResource DELETE}" Click="BtnDeleteDeck_Click" />
+                <MenuItem Header="{StaticResource CLONE}">
+                    <MenuItem Header="{StaticResource ENTIRE DECK}" Click="BtnCloneDeck_Click" />
+                    <MenuItem Header="{StaticResource SELECTED VERSION}" Click="BtnCloneSelectedVersion_Click" />
                 </MenuItem>
             </ContextMenu>
         </ListView.ContextMenu>

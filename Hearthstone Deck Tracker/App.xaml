@@ -26,6 +26,8 @@
                 <ResourceDictionary>
                     <utility:ConfigWrapper x:Key="ConfigWrapper"/>
                 </ResourceDictionary>
+                <ResourceDictionary Source="Resources\Languages\StringResource.xaml" />
+                <ResourceDictionary Source="Resources\Languages\StringResource.zh-CN.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
