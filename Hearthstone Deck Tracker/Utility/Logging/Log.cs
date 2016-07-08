@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
@@ -58,22 +59,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 				}
 				catch(Exception)
 				{
-					try
-					{
-						var errLogFile = Path.Combine(logDir, "hdt_log_err.txt");
-						using(var writer = new StreamWriter(errLogFile, true))
-							writer.WriteLine("[{0}]: {1}", DateTime.Now.ToLongTimeString(), "Another instance of HDT is already running.");
-						MessageBox.Show("Another instance of Hearthstone Deck Tracker is already running.", "Error starting Hearthstone Deck Tracker",
-										MessageBoxButton.OK, MessageBoxImage.Error);
-					}
-					catch(Exception)
-					{
-					}
+					MessageBox.Show("Another instance of Hearthstone Deck Tracker is already running.", 
+						"Error starting Hearthstone Deck Tracker", MessageBoxButton.OK, MessageBoxImage.Error);
 					Application.Current.Shutdown();
 					return;
 				}
 			}
-			Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));
+			try
+			{
+				Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));	
+			}
+			catch (Exception ex)
+			{
+				ErrorManager.AddError("Can not access log file.", ex.ToString());
+			}
 		}
 
 		public static void WriteLine(string msg, LogType type, [CallerMemberName] string memberName = "",
