@@ -54,7 +54,9 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -67,6 +69,7 @@
     <Compile Include="BoardDamage\EntityHelperTest.cs" />
     <Compile Include="HearthStats\ApiTest.cs" />
     <Compile Include="Hearthstone\GameTimeTest.cs" />
+    <Compile Include="Hearthstone\ParseCardStringTest.cs" />
     <Compile Include="Hearthstone\SecretTests.cs" />
     <Compile Include="Hearthstone\WebImportTest.cs" />
     <Compile Include="Hearthstone\DeckTest.cs" />
