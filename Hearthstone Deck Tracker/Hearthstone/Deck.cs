@@ -38,8 +38,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"Spellpower",
 			"Taunt",
 			"Windfury",
-            "Stealth"
-        };
+	            	"Stealth"
+	        };
 
 		private bool _archived;
 
