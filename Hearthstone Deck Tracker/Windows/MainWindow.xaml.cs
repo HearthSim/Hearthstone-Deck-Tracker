@@ -521,6 +521,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			try
 			{
+				Log.Info("Shutting down...");
 				if(HearthStatsManager.SyncInProgress && !_closeAnyway)
 				{
 					e.Cancel = true;
