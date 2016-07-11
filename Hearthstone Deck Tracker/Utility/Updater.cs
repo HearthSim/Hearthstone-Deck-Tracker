@@ -11,6 +11,9 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
+#if(SQUIRREL)
+	using Squirrel;
+#endif
 
 #endregion
 
@@ -26,6 +29,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static async void CheckForUpdates(bool force = false)
 		{
+#if(SQUIRREL)
+			using(var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Epix37/HDT-Releases", prerelease: Config.Instance.CheckForBetaUpdates))
+			{
+				var release = await mgr.UpdateApp();
+				if(release != null)
+					StatusBar.Visibility = Visibility.Visible;
+			}
+#else
 			if(!force)
 			{
 				if(!Config.Instance.CheckForUpdates || TempUpdateCheckDisabled || Core.Game.IsRunning || _showingUpdateMessage
@@ -45,6 +56,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 				if(_release != null)
 					ShowNewUpdateMessage(true);
 			}
+#endif
+
 		}
 
 		private static async void ShowNewUpdateMessage(bool beta)
@@ -87,6 +100,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		internal static async void StartUpdate()
 		{
+#if(SQUIRREL)
+			UpdateManager.RestartApp();
+#else
 			Log.Info("Starting update...");
 			if(_release == null || (DateTime.Now - _lastUpdateCheck) > new TimeSpan(0, 10, 0))
 				_release = await GetLatestRelease(Config.Instance.CheckForBetaUpdates);
@@ -106,8 +122,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Log.Error("Error starting updater\n" + ex);
 				Helper.TryOpenUrl($"{_release.Assets[0].Url}");
 			}
+#endif
 		}
 
+#if(!SQUIRREL)
 		public static void Cleanup()
 		{
 			try
@@ -142,6 +160,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				return null;
 			return await GitHub.CheckForUpdate("HearthSim", "Hearthstone-Deck-Tracker", currentVersion, beta);
 		}
+#endif
 	}
 
 	public class StatusBarHelper : INotifyPropertyChanged

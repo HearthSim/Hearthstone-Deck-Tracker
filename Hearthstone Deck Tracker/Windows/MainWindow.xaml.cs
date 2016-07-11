@@ -29,6 +29,9 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
+#if(SQUIRREL)
+	using Squirrel;
+#endif
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -397,7 +400,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.Windows.StatsWindow.Activate();
 		}
 
-		#region Properties
+#region Properties
 
 		[Obsolete("Use API.Core.OverlayWindow", true)] //for plugin compatibility
 		public OverlayWindow Overlay => Core.Overlay;
@@ -448,9 +451,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MenuItemHearthStats_OnSubmenuOpened(object sender, RoutedEventArgs e) => OnPropertyChanged(nameof(LastSync));
 
-		#endregion
+#endregion
 
-		#region Constructor
+#region Constructor
 
 		public MainWindow()
 		{
@@ -505,9 +508,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public Thickness TitleBarMargin => new Thickness(0, TitlebarHeight, 0, 0);
 
-		#endregion
+#endregion
 
-		#region GENERAL GUI
+#region GENERAL GUI
 
 		private bool _closeAnyway;
 
@@ -620,9 +623,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void BtnPaypal_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
 		private void BtnPatreon_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://www.patreon.com/HearthstoneDeckTracker");
 
-		#endregion
+#endregion
 
-		#region GENERAL METHODS
+#region GENERAL METHODS
 		
 		private void MinimizeToTray()
 		{
@@ -635,10 +638,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void Restart()
 		{
+#if(SQUIRREL)
+			UpdateManager.RestartApp();
+#else
 			Close();
 			Process.Start(Application.ResourceAssembly.Location);
 			if(Application.Current != null)
 				Application.Current.Shutdown();
+#endif
 		}
 
 		public void ActivateWindow()
@@ -656,9 +663,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		#endregion
+#endregion
 
-		#region MY DECKS - GUI
+#region MY DECKS - GUI
 
 		private void BtnArenaStats_Click(object sender, RoutedEventArgs e) => ShowStats(true, false);
 
@@ -796,9 +803,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PanelVersionComboBox.Visibility = deck != null && deck.HasVersions ? Visible : Collapsed;
 		}
 
-		#endregion
+#endregion
 
-		#region Errors
+#region Errors
 
 		public ObservableCollection<Error> Errors => ErrorManager.Errors;
 
@@ -815,7 +822,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(ErrorCount));
 		}
 
-		#endregion
+#endregion
 
 		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e) => Updater.StartUpdate();
 	}

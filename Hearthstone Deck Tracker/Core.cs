@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using HearthMirror.Enums;
@@ -22,6 +24,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using Hearthstone_Deck_Tracker.Utility.Themes;
+using Squirrel;
 
 #endregion
 
@@ -51,19 +54,23 @@ namespace Hearthstone_Deck_Tracker
 		internal static bool Update { get; set; }
 		internal static bool CanShutdown { get; set; }
 
-		public static void Initialize()
+		public static async void Initialize()
 		{
+			Config.Load();
+			var splashScreenWindow = new SplashScreenWindow();
+			splashScreenWindow.ShowConditional();
+#if(SQUIRREL)
+			if(Config.Instance.CheckForUpdates)
+				await CheckForUpdates(splashScreenWindow);
+#endif
+			Log.Initialize();
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			var newUser = !Directory.Exists(Config.AppDataPath);
-			Config.Load();
-			Log.Initialize();
 			ConfigManager.Run();
 			LogConfigUpdater.Run().Forget();
 			LogConfigWatcher.Start();
 			Helper.UpdateAppTheme();
 			ThemeManager.Run();
-			var splashScreenWindow = new SplashScreenWindow();
-			splashScreenWindow.ShowConditional();
 			Game = new GameV2();
 			LoginType loginType;
 			var loggedIn = HearthStatsAPI.LoadCredentials();
@@ -96,7 +103,9 @@ namespace Hearthstone_Deck_Tracker
 
 			if(ConfigManager.UpdatedVersion != null)
 			{
+#if(!SQUIRREL)
 				Updater.Cleanup();
+#endif
 				MainWindow.FlyoutUpdateNotes.IsOpen = true;
 				MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
 				MainWindow.UpdateNotesControl.LoadUpdateNotes();
@@ -149,10 +158,37 @@ namespace Hearthstone_Deck_Tracker
 			Influx.OnAppStart(Helper.GetCurrentVersion(), loginType, newUser);
 		}
 
+#if(SQUIRREL)
+		private static async Task CheckForUpdates(SplashScreenWindow splashScreenWindow)
+		{
+			try
+			{
+				bool restart;
+				using(var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Epix37/HDT-Releases", prerelease: Config.Instance.CheckForBetaUpdates))
+				{
+					SquirrelAwareApp.HandleEvents(
+						v => mgr.CreateShortcutForThisExe(),
+						v => mgr.CreateShortcutForThisExe(),
+						onAppUninstall: v => mgr.RemoveShortcutForThisExe()
+						);
+					restart = await mgr.UpdateApp(splashScreenWindow.Updating) != null;
+				}
+				if(restart)
+					UpdateManager.RestartApp();
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+			}
+		}
+#endif
+
 		private static async void UpdateOverlayAsync()
 		{
+#if(!SQUIRREL)
 			if(Config.Instance.CheckForUpdates)
 				Updater.CheckForUpdates(true);
+#endif
 			var hsForegroundChanged = false;
 			var useNoDeckMenuItem = TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
 			while(UpdateOverlay)

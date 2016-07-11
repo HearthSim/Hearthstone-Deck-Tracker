@@ -59,3 +59,5 @@ using System.Windows;
 [assembly: AssemblyVersion("0.15.13.0")]
 [assembly: AssemblyFileVersion("0.15.13.0")]
 [assembly: NeutralResourcesLanguage("en")]
+
+[assembly: AssemblyMetadata("SquirrelAwareVersion", "1")]
