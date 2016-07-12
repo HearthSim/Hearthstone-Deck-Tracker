@@ -26,24 +26,32 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		public void Handle(LogLineItem logLine, IHsGameState gameState, IGame game)
 		{
 			var match = HsLogReaderConstants.GameModeRegex.Match(logLine.Line);
-			if(!match.Success)
-				return;
-			game.CurrentMode = GetMode(match.Groups["curr"].Value);
-			game.PreviousMode = GetMode(match.Groups["prev"].Value);
-
-			if((DateTime.Now - logLine.Time).TotalSeconds < 5 && _lastAutoImport < logLine.Time && game.CurrentMode == Mode.TOURNAMENT)
+			if(match.Success)
 			{
-				_lastAutoImport = logLine.Time;
-				var decks = DeckImporter.FromConstructed();
-				if(decks.Any() && (Config.Instance.ConstructedAutoImportNew || Config.Instance.ConstructedAutoUpdate))
-					DeckManager.ImportDecks(decks, false, Config.Instance.ConstructedAutoImportNew, Config.Instance.ConstructedAutoUpdate);
+				game.CurrentMode = GetMode(match.Groups["curr"].Value);
+				game.PreviousMode = GetMode(match.Groups["prev"].Value);
+
+				if((DateTime.Now - logLine.Time).TotalSeconds < 5 && _lastAutoImport < logLine.Time
+					&& game.CurrentMode == Mode.TOURNAMENT)
+				{
+					_lastAutoImport = logLine.Time;
+					var decks = DeckImporter.FromConstructed();
+					if(decks.Any() && (Config.Instance.ConstructedAutoImportNew || Config.Instance.ConstructedAutoUpdate))
+						DeckManager.ImportDecks(decks, false, Config.Instance.ConstructedAutoImportNew,
+							Config.Instance.ConstructedAutoUpdate);
+				}
+
+				if(game.PreviousMode == Mode.GAMEPLAY)
+					gameState.GameHandler.HandleInMenu();
+
+				if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus && (DateTime.Now - logLine.Time).TotalSeconds < 5)
+					CheckMirrorStatus();
 			}
-
-			if(game.PreviousMode == Mode.GAMEPLAY)
-				gameState.GameHandler.HandleInMenu();
-
-			if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus && (DateTime.Now - logLine.Time).TotalSeconds < 5)
-				CheckMirrorStatus();
+			else if(logLine.Line.Contains("Gameplay.Start"))
+			{
+				gameState.Reset();
+				gameState.GameHandler.HandleGameStart();
+			}
 		}
 
 		private async void CheckMirrorStatus()

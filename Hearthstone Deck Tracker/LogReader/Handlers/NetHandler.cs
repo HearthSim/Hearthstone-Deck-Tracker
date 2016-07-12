@@ -32,8 +32,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				//just to make sure this still works in case the typo gets fixed
 				if(logLine.Line.ToLower().Contains("reconncting=true") || logLine.Line.ToLower().Contains("reconnecting=true"))
 					game.StoreGameState();
-				gameState.Reset();
-				gameState.GameHandler.HandleGameStart();
+				//gameState.Reset();
+				//gameState.GameHandler.HandleGameStart();
 			}
 		}
 	}
