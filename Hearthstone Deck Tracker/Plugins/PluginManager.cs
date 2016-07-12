@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				try
 				{
 					var destFile = destFiles.FirstOrDefault(x => x.Name == file.Name);
-					if(destFile != null && destFile.CreationTimeUtc >= file.CreationTimeUtc)
+					if(destFile != null && destFile.LastWriteTimeUtc >= file.LastWriteTimeUtc)
 						continue;
 					var destPath = Path.Combine(destDir.FullName, file.Name);
 					Log.Info($"{(destFile == null ? "Adding" : "Updating")} {((destFile?.FullName) ?? Path.Combine(destDir.FullName, file.Name)).Substring(baseDir.FullName.Length + 1)}");
