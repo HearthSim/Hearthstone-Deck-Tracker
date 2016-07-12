@@ -16,7 +16,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class Player : INotifyPropertyChanged
 	{
 		public const int DeckSize = 30;
-		private string _name;
 		private readonly GameV2 _game;
 
 		public Player(GameV2 game, bool isLocalPlayer)
@@ -25,16 +24,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsLocalPlayer = isLocalPlayer;
 		}
 
-		public string Name
-		{
-			get { return _name; }
-			set
-			{
-				_name = value;
-				Log(value);
-			}
-		}
-
+		public string Name { get; set; }
 		public string Class { get; set; }
 		public int Id { get; set; }
 		public bool GoingFirst { get; set; }

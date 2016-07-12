@@ -19,8 +19,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	public class PowerHandler
 	{
-		private DateTime _lastDeterminePlayersWarning1 = DateTime.MinValue;
-		private DateTime _lastDeterminePlayersWarning2 = DateTime.MinValue;
 		private readonly TagChangeHandler _tagChangeHandler = new TagChangeHandler();
 		private readonly List<Entity> _tmpEntities = new List<Entity>();
 
@@ -77,7 +75,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							Log.Info("Updating UNKNOWN HUMAN PLAYER");
 							entity = unknownHumanPlayer;
-							SetPlayerName(game, entity.Value.GetTag(GameTag.PLAYER_ID), rawEntity);
 						}
 
 						//while the id is unknown, store in tmp entities
@@ -99,7 +96,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							entity.Value.Name = tmpEntity.Name;
 							foreach(var t in tmpEntity.Tags)
 								_tagChangeHandler.TagChange(gameState, t.Key, entity.Key, t.Value, game);
-							SetPlayerName(game, entity.Value.GetTag(GameTag.PLAYER_ID), tmpEntity.Name);
 							_tmpEntities.Remove(tmpEntity);
 							_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, entity.Key, match.Groups["value"].Value, game);
 						}
@@ -123,14 +119,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					else
 						_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, entity.Key, match.Groups["value"].Value, game);
-				}
-
-				if(EntityNameRegex.IsMatch(logLine))
-				{
-					match = EntityNameRegex.Match(logLine);
-					var name = match.Groups["name"].Value;
-					var player = int.Parse(match.Groups["value"].Value);
-					SetPlayerName(game, player, name);
 				}
 			}
 			else if(CreationRegex.IsMatch(logLine))
@@ -314,30 +302,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				_tagChangeHandler.InvokeQueuedActions(game);
 			if(!creationTag)
 				gameState.ResetCurrentEntity();
-			if(!gameState.DeterminedPlayers && gameState.SetupDone)
-			{
-				if((DateTime.Now - _lastDeterminePlayersWarning1).TotalSeconds > 5)
-				{
-					Log.Warn("Could not determine players by checking for opponent hand.");
-					_lastDeterminePlayersWarning1 = DateTime.Now;
-				}
-				var playerCard = game.Entities.FirstOrDefault(x => x.Value.IsInHand && !string.IsNullOrEmpty(x.Value.CardId)).Value;
-				if(playerCard != null)
-					_tagChangeHandler.DeterminePlayers(gameState, game, playerCard.GetTag(GameTag.CONTROLLER), false);
-				else if((DateTime.Now - _lastDeterminePlayersWarning2).TotalSeconds > 5)
-				{
-					Log.Warn("Could not determine players by checking for player hand either... waiting for draws...");
-					_lastDeterminePlayersWarning2 = DateTime.Now;
-				}
-			}
-		}
-
-		private static void SetPlayerName(IGame game, int playerId, string name)
-		{
-			if(playerId == game.Player.Id)
-				game.Player.Name = name;
-			else if(playerId == game.Opponent.Id)
-				game.Opponent.Name = name;
 		}
 
 		private static void AddTargetAsKnownCardId(IHsGameState gameState, IGame game, Match match, int count = 1)

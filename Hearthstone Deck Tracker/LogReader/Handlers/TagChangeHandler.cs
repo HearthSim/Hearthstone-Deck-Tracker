@@ -8,7 +8,6 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Replay;
-using static HearthDb.Enums.GameTag;
 
 #endregion
 
@@ -42,13 +41,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.ContainsKey(id))
 				game.Entities.Add(id, new Entity(id));
 
-			if(!gameState.DeterminedPlayers)
-			{
-				var entity = game.Entities[id];
-				if(tag == CONTROLLER && entity.IsInHand && string.IsNullOrEmpty(entity.CardId))
-					DeterminePlayers(gameState, game, value);
-			}
-
 			var prevValue = game.Entities[id].GetTag(tag);
 			game.Entities[id].SetTag(tag, value);
 
@@ -77,32 +69,5 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public void ClearQueuedActions() => _creationTagActionQueue.Clear();
 
-		internal void DeterminePlayers(IHsGameState gameState, IGame game, int playerId, bool isOpponentId = true)
-		{
-			if(isOpponentId)
-			{
-				game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 1).Value?.SetPlayer(playerId != 1);
-				game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 2).Value?.SetPlayer(playerId == 1);
-				game.Player.Id = playerId % 2 + 1;
-				game.Opponent.Id = playerId;
-			}
-			else
-			{
-				game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 1).Value?.SetPlayer(playerId == 1);
-				game.Entities.FirstOrDefault(e => e.Value.GetTag(PLAYER_ID) == 2).Value?.SetPlayer(playerId != 1);
-				game.Player.Id = playerId;
-				game.Opponent.Id = playerId % 2 + 1;
-			}
-			if(gameState.WasInProgress)
-			{
-				var playerName = game.GetStoredPlayerName(game.Player.Id);
-				if(!string.IsNullOrEmpty(playerName))
-					game.Player.Name = playerName;
-				var opponentName = game.GetStoredPlayerName(game.Opponent.Id);
-				if(!string.IsNullOrEmpty(opponentName))
-					game.Opponent.Name = opponentName;
-			}
-			gameState.DeterminedPlayers = game.PlayerEntity != null;
-		}
 	}
 }

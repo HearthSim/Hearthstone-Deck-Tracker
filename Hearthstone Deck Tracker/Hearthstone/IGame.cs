@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -31,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Dictionary<int, Entity> Entities { get; }
 		bool SavedReplay { get; set; }
 		GameMetaData MetaData { get; }
+		MatchInfo MatchInfo { get; }
 		Mode CurrentMode { get; set; }
 		Mode PreviousMode { get; set; }
 		GameTime GameTime { get; }

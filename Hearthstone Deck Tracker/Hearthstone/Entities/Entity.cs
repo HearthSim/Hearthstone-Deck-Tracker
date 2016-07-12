@@ -41,9 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		/// <Summary>
 		/// This is player entity, NOT the player hero.
 		/// </Summary>
-		public bool IsPlayer { get; set; }
-
-		internal void SetPlayer(bool isPlayer) => IsPlayer = isPlayer;
+		public bool IsPlayer => GetTag(GameTag.PLAYER_ID) == Core.Game.Player.Id;
 
 		[JsonIgnore]
 		public bool IsHero => GetTag(GameTag.CARDTYPE) == (int)CardType.HERO;

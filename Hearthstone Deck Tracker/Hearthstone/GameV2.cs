@@ -135,6 +135,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				await Task.Delay(1000);
 			Log.Info($"{matchInfo.LocalPlayer.Name} vs {matchInfo.OpposingPlayer.Name}");
 			_matchInfo = matchInfo;
+			Player.Name = matchInfo.LocalPlayer.Name;
+			Opponent.Name = matchInfo.OpposingPlayer.Name;
+			Player.Id = matchInfo.LocalPlayer.Id;
+			Opponent.Id = matchInfo.OpposingPlayer.Id;
 		}
 
 		internal void InvalidateMatchInfoCache() => _matchInfoCacheInvalid = true;

@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool SetupDone { get; set; }
 		public int GameTriggerCount { get; set; }
 		public Zone CurrentEntityZone { get; set; }
-		public bool DeterminedPlayers { get; set; }
+		public bool DeterminedPlayers => _game.Player.Id > 0 && _game.Opponent.Id > 0;
 
 		public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
 		{
@@ -75,7 +75,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			MaxId = 0;
 			WasInProgress = false;
 			SetupDone = false;
-			DeterminedPlayers = false;
 			CurrentEntityId = 0;
 			GameTriggerCount = 0;
 		}
