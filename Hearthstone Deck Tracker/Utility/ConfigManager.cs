@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.CreatedByVersion = currentVersion.ToString();
 				converted = true;
 			}
-			else
+			else if(currentVersion > configVersion)
 			{
 				if(configVersion <= v0_3_21)
 				{
