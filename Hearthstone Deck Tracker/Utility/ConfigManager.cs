@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -242,6 +243,34 @@ namespace Hearthstone_Deck_Tracker.Utility
 					Config.Instance.ConstructedAutoImportNew = false;
 					Config.Instance.ConstructedAutoUpdate = false;
 					converted = true;
+				}
+				if(configVersion <= new Version(0, 15, 6, 0))
+				{
+					var targetDir = PluginManager.PluginDirectory;
+					var sourceDir = PluginManager.LocalPluginDirectory;
+					if(sourceDir.Exists)
+					{
+						if(targetDir.Exists)
+						{
+							try
+							{
+								targetDir.Delete(true);
+							}
+							catch(Exception ex)
+							{
+								Log.Error(ex);
+							}
+						}
+						try
+						{
+							targetDir.Create();
+							Helper.CopyFolder(sourceDir.FullName, targetDir.FullName);
+						}
+						catch(Exception ex)
+						{
+							Log.Error(ex);
+						}
+					}
 				}
 				if(configVersion == new Version(0, 15, 9, 0))
 					DataIssueResolver.RunDeckStatsFix = true;
