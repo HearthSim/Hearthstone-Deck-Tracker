@@ -28,6 +28,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		int LastCardPlayed { get; set; }
 		bool WasInProgress { get; set; }
 		bool SetupDone { get; set; }
+		int GameTriggerCount { get; set; }
 		Zone CurrentEntityZone { get; set; }
 		bool DeterminedPlayers { get; set; }
 		void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player);

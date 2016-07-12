@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int LastCardPlayed { get; set; }
 		public bool WasInProgress { get; set; }
 		public bool SetupDone { get; set; }
+		public int GameTriggerCount { get; set; }
 		public Zone CurrentEntityZone { get; set; }
 		public bool DeterminedPlayers { get; set; }
 
@@ -76,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			SetupDone = false;
 			DeterminedPlayers = false;
 			CurrentEntityId = 0;
+			GameTriggerCount = 0;
 		}
 
 		public void SetCurrentEntity(int id)

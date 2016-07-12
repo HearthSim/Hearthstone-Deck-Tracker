@@ -26,7 +26,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
-			var setup = false;
 			var creationTag = false;
 			if(GameEntityRegex.IsMatch(logLine))
 			{
@@ -198,7 +197,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				var match = CreationTagRegex.Match(logLine);
 				_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, gameState.CurrentEntityId, match.Groups["value"].Value, game, true);
-				setup = true;
 				creationTag = true;
 			}
 			if(logLine.Contains("End Spectator"))
@@ -299,9 +297,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			else if(logLine.Contains("BlockType=JOUST"))
 				gameState.JoustReveals = 2;
 			else if(logLine.Contains("CREATE_GAME"))
-			{
-				setup = true;
 				_tagChangeHandler.ClearQueuedActions();
+			else if(gameState.GameTriggerCount == 0 && logLine.Contains("BLOCK_START BlockType=TRIGGER Entity=GameEntity"))
+				gameState.GameTriggerCount++;
+			else if(gameState.GameTriggerCount == 1 && logLine.Contains("BLOCK_END"))
+			{
+				gameState.GameTriggerCount++;
+				_tagChangeHandler.InvokeQueuedActions(game);
+				gameState.SetupDone = true;
 			}
 
 
@@ -327,8 +330,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					_lastDeterminePlayersWarning2 = DateTime.Now;
 				}
 			}
-			if(!setup)
-				gameState.SetupDone = true;
 		}
 
 		private static void SetPlayerName(IGame game, int playerId, string name)
