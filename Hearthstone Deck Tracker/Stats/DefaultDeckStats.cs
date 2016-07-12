@@ -41,8 +41,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		private static DefaultDeckStats Load()
 		{
+#if(!SQUIRREL)
 			SetupDefaultDeckStatsFile();
-			var file = Config.Instance.DataDir + "DefaultDeckStats.xml";
+#endif
+			var file = Path.Combine(Config.Instance.DataDir, "DefaultDeckStats.xml");
 			if(!File.Exists(file))
 				return new DefaultDeckStats();
 			try
@@ -64,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
-
+#if(!SQUIRREL)
 		internal static void SetupDefaultDeckStatsFile()
 		{
 			if(Config.Instance.SaveDataInAppData == null)
@@ -98,16 +100,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 				File.Move(appDataPath, dataDirPath);
 				Log.Info("Moved DefaultDeckStats to local");
 			}
-
-			var filePath = Config.Instance.DataDir + "DefaultDeckStats.xml";
-			//create if it does not exist
-			if(!File.Exists(filePath))
-			{
-				using(var sr = new StreamWriter(filePath, false))
-					sr.WriteLine("<DefaultDeckStats></DefaultDeckStats>");
-			}
 		}
-
+#endif
 
 		public static void Save() => XmlManager<DefaultDeckStats>.Save(Config.Instance.DataDir + "DefaultDeckStats.xml", Instance);
 

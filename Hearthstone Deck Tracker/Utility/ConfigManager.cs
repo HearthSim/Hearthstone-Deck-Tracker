@@ -34,8 +34,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(Config.Instance.SelectedTags.Count == 0)
 				Config.Instance.SelectedTags.Add("All");
 
+#if(!SQUIRREL)
 			if(!Directory.Exists(Config.Instance.DataDir))
 				Config.Instance.Reset(nameof(Config.DataDirPath));
+#endif
 		}
 
 		// Logic for dealing with legacy config file semantics
@@ -118,14 +120,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 				}
 
 
+#if(!SQUIRREL)
 				if(configVersion <= new Version(0, 5, 1, 0))
 				{
-#pragma warning disable 612
 					Config.Instance.SaveConfigInAppData = Config.Instance.SaveInAppData;
 					Config.Instance.SaveDataInAppData = Config.Instance.SaveInAppData;
 					converted = true;
-#pragma warning restore 612
 				}
+#endif
 				if(configVersion <= new Version(0, 6, 6, 0))
 				{
 					if(Config.Instance.ExportClearX == 0.86)

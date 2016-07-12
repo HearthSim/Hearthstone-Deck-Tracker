@@ -27,6 +27,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public TrackerSettings()
 		{
 			InitializeComponent();
+#if(SQUIRREL)
+			CheckboxConfigSaveAppData.Visibility = Visibility.Collapsed;
+			CheckboxDataSaveAppData.Visibility = Visibility.Collapsed;
+			SelectSaveDataPath.Visibility = Visibility.Collapsed;
+#endif
 		}
 
 		public void Load()
@@ -37,15 +42,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxCheckForBetaUpdates.IsChecked = Config.Instance.CheckForBetaUpdates;
 			CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
 			CheckboxStartHearthstoneWithHDT.IsChecked = Config.Instance.StartHearthstoneWithHDT;
-			CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
-			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
 			CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
 			CheckBoxShowLoginDialog.IsChecked = Config.Instance.ShowLoginDialog;
 			CheckBoxShowSplashScreen.IsChecked = Config.Instance.ShowSplashScreen;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
 			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;
+
 			CheckboxAlternativeScreenCapture.IsChecked = Config.Instance.AlternativeScreenCapture;
+#if(!SQUIRREL)
+			CheckboxConfigSaveAppData.IsChecked = Config.Instance.SaveConfigInAppData;
+			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
+#endif
 
 			_initialized = true;
 		}
@@ -144,6 +152,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private async void CheckboxConfigSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
+#if(!SQUIRREL)
 			if(!_initialized)
 				return;
 			var path = Config.Instance.ConfigPath;
@@ -151,10 +160,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			XmlManager<Config>.Save(path, Config.Instance);
 			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Core.MainWindow.Restart();
+#endif
 		}
 
 		private async void CheckboxConfigSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
+#if(!SQUIRREL)
 			if(!_initialized)
 				return;
 			var path = Config.Instance.ConfigPath;
@@ -162,26 +173,31 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			XmlManager<Config>.Save(path, Config.Instance);
 			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Core.MainWindow.Restart();
+#endif
 		}
 
 		private async void CheckboxDataSaveAppData_Checked(object sender, RoutedEventArgs e)
 		{
+#if(!SQUIRREL)
 			if(!_initialized)
 				return;
 			Config.Instance.SaveDataInAppData = true;
 			Config.Save();
 			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Core.MainWindow.Restart();
+#endif
 		}
 
 		private async void CheckboxDataSaveAppData_Unchecked(object sender, RoutedEventArgs e)
 		{
+#if(!SQUIRREL)
 			if(!_initialized)
 				return;
 			Config.Instance.SaveDataInAppData = false;
 			Config.Save();
 			await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 			Core.MainWindow.Restart();
+#endif
 		}
 
 		private void CheckboxAdvancedWindowSearch_Checked(object sender, RoutedEventArgs e)
@@ -233,6 +249,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private async void SelectSaveDataPath_Click(object sender, RoutedEventArgs e)
 		{
+#if(!SQUIRREL)
 			var dialog = new FolderBrowserDialog();
 			var dialogResult = dialog.ShowDialog();
 
@@ -259,6 +276,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					Core.MainWindow.Restart();
 				}
 			}
+#endif
 		}
 
 		private void ButtonOpenAppData_OnClick(object sender, RoutedEventArgs e)

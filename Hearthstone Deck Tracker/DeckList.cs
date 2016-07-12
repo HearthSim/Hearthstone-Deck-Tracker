@@ -71,7 +71,9 @@ namespace Hearthstone_Deck_Tracker
 
 		private static DeckList Load()
 		{
+#if(!SQUIRREL)
 			SetupDeckListFile();
+#endif
 			var file = Config.Instance.DataDir + "PlayerDecks.xml";
 			if(!File.Exists(file))
 				return new DeckList();
@@ -120,12 +122,13 @@ namespace Hearthstone_Deck_Tracker
 			return instance;
 		}
 
+#if(!SQUIRREL)
 		internal static void SetupDeckListFile()
 		{
 			if(Config.Instance.SaveDataInAppData == null)
 				return;
-			var appDataPath = Config.AppDataPath + @"\PlayerDecks.xml";
-			var dataDirPath = Config.Instance.DataDirPath + @"\PlayerDecks.xml";
+			var appDataPath = Path.Combine(Config.AppDataPath, "PlayerDecks.xml");
+			var dataDirPath = Path.Combine(Config.Instance.DataDirPath, "PlayerDecks.xml");
 			if(Config.Instance.SaveDataInAppData.Value)
 			{
 				if(File.Exists(dataDirPath))
@@ -145,16 +148,9 @@ namespace Hearthstone_Deck_Tracker
 				File.Move(appDataPath, dataDirPath);
 				Log.Info("Moved decks to local");
 			}
-
-			//create file if it doesn't exist
-			var path = Path.Combine(Config.Instance.DataDir, "PlayerDecks.xml");
-			if(!File.Exists(path))
-			{
-				using(var sr = new StreamWriter(path, false))
-					sr.WriteLine("<Decks></Decks>");
-			}
 		}
 
+#endif
 		private static void Save(DeckList instance) => XmlManager<DeckList>.Save(Config.Instance.DataDir + "PlayerDecks.xml", instance);
 		public static void Save() => Save(Instance);
 

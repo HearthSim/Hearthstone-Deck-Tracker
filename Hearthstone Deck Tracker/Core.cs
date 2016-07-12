@@ -113,7 +113,9 @@ namespace Hearthstone_Deck_Tracker
 			NetDeck.CheckForChromeExtention();
 			DataIssueResolver.Run();
 
+#if(!SQUIRREL)
 			Helper.CopyReplayFiles();
+#endif
 			BackupManager.Run();
 
 			if(Config.Instance.PlayerWindowOnStart)

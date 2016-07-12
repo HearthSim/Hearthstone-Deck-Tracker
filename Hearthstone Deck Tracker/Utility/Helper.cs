@@ -507,6 +507,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 
+#if(!SQUIRREL)
 		public static void CopyReplayFiles()
 		{
 			if(Config.Instance.SaveDataInAppData == null)
@@ -550,6 +551,7 @@ namespace Hearthstone_Deck_Tracker
 				Log.Info("Moved replays to appdata");
 			}
 		}
+#endif
 
 		public static void UpdateAppTheme()
 		{
