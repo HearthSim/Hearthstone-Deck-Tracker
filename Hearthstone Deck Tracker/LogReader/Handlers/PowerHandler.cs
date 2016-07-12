@@ -102,18 +102,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if(_tmpEntities.Contains(tmpEntity))
 						{
 							tmpEntity.SetTag(tag, value);
-							if(tmpEntity.HasTag(GameTag.ENTITY_ID))
+							var player = game.Player.Name == tmpEntity.Name ? game.Player 
+										: (game.Opponent.Name == tmpEntity.Name ? game.Opponent : null);
+							if(player != null)
 							{
-								var id = tmpEntity.GetTag(GameTag.ENTITY_ID);
-								if(game.Entities.ContainsKey(id))
+								var playerEntity = game.Entities.FirstOrDefault(x => x.Value.GetTag(GameTag.PLAYER_ID) == player.Id).Value;
+								if(playerEntity != null)
 								{
-									game.Entities[id].Name = tmpEntity.Name;
+									playerEntity.Name = tmpEntity.Name;
 									foreach(var t in tmpEntity.Tags)
-										_tagChangeHandler.TagChange(gameState, t.Key, id, t.Value, game);
+										_tagChangeHandler.TagChange(gameState, t.Key, playerEntity.Id, t.Value, game);
 									_tmpEntities.Remove(tmpEntity);
 								}
-								else
-									Log.Warn("TMP ENTITY (" + rawEntity + ") NOW HAS A KEY, BUT GAME.ENTITIES DOES NOT CONTAIN THIS KEY");
 							}
 						}
 					}
