@@ -9,6 +9,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
 	public class ThemeManager
 	{
+		private static string CustomThemeDir => Path.Combine(Config.AppDataPath, @"Themes\Bars");
 		private const string ThemeDir = @"Images\Themes\Bars";
 		private const string ThemeRegex = @"[a-zA-Z]+";
 
@@ -18,24 +19,28 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		public static void Run()
 		{
-			var dirs = Directory.GetDirectories(ThemeDir);
-			foreach(var d in dirs)
+			LoadThemes(CustomThemeDir);
+			LoadThemes(ThemeDir);
+			CurrentTheme = FindTheme(Config.Instance.CardBarTheme) ?? Themes.FirstOrDefault();
+		}
+
+		private static void LoadThemes(string dir)
+		{
+			var dirInfo = new DirectoryInfo(dir);
+			if(!dirInfo.Exists)
+				return;
+			foreach(var di in dirInfo.GetDirectories())
 			{
-				var di = new DirectoryInfo(d);
 				if(Regex.IsMatch(di.Name, ThemeRegex))
 				{
-					Themes.Add(
-						new Theme(
-							di.Name,
-							di.FullName,
-							GetBuilderType(di.Name)));
+					Logging.Log.Warn($"Found theme: {di.Name}");
+					Themes.Add(new Theme(di.Name, di.FullName, GetBuilderType(di.Name)));
 				}
 				else
 				{
 					Logging.Log.Warn($"Invalid theme directory name {di.Name}");
 				}
 			}
-			CurrentTheme = FindTheme(Config.Instance.CardBarTheme) ?? Themes.FirstOrDefault();
 		}
 
 		public static Theme FindTheme(string name)

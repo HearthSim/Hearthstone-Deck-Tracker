@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -31,7 +32,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			Name = name.ToLowerInvariant();
 			Directory = dir;
 			BuildType = buildType;
-			OverlayTheme = new OverlayTheme(Name);
+			var overlayDir = new DirectoryInfo(dir).Parent?.GetDirectories().FirstOrDefault(x => x.Name == "Overlay");
+			OverlayTheme = new OverlayTheme(Name, overlayDir?.FullName);
 		}
 
 		public override string ToString() => Name.Substring(0, 1).ToUpperInvariant() + (Name.Length > 1 ? Name.Substring(1) : "");
@@ -39,12 +41,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 	public class OverlayTheme
 	{
-		public OverlayTheme(string name)
+		public OverlayTheme(string name, string dir = null)
 		{
 			Name = name;
+			Directory = dir ?? LocalDirectory;
 		}
+
+		public string Directory { get; }
 		public string Name { get; }
-		public const string Directory = @"Images\Themes\Overlay";
+		public const string LocalDirectory = @"Images\Themes\Overlay";
+
 		private ImageBrush _cardCounterFrame;
 		private ImageBrush _playerChanceFrame;
 		private ImageBrush _opponentChangeFrame;
@@ -52,9 +58,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		public ImageBrush PlayerChanceFrame => _playerChanceFrame ?? (_playerChanceFrame = GetOverlayImage(Name, "player-chance-frame.png"));
 		public ImageBrush OpponentChanceFrame => _opponentChangeFrame ?? (_opponentChangeFrame = GetOverlayImage(Name, "opponent-chance-frame.png"));
 
-		private ImageBrush GetOverlayImage(string name, string image)
+		private ImageBrush GetOverlayImage(string name, string image, bool forceLocal = false)
 		{
-			var file = Path.Combine(Directory, name, image);
+			var file = Path.Combine(forceLocal ? LocalDirectory : Directory, name, image);
 			if(File.Exists(file))
 				return new ImageBrush(new BitmapImage(new Uri(file, UriKind.Relative)));
 			if(name != "default")
