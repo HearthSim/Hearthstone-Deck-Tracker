@@ -45,21 +45,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
 		{
-			var pluginDir = Path.Combine(Environment.CurrentDirectory, "Plugins");
-			if(!Directory.Exists(pluginDir))
+			var dir = PluginManager.PluginDirectory;
+			if(!dir.Exists)
 			{
 				try
 				{
-					Directory.CreateDirectory(pluginDir);
+					dir.Create();
 				}
 				catch(Exception)
 				{
 					Core.MainWindow.ShowMessage("Error",
-					                            "Plugins directory not found and can not be created. Please manually create it in the Hearthstone Deck Tracker folder.").Forget();
-					return;
+												$"Plugins directory was not found and can not be created. Please manually create a folder called 'Plugins' under {dir}.").Forget();
 				}
 			}
-			Helper.TryOpenUrl(pluginDir);
+			Helper.TryOpenUrl(dir.FullName);
 		}
 	}
 }
