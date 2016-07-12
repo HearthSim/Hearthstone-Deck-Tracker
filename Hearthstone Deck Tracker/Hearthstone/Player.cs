@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}).ToList();
 
 		public IEnumerable<Card> RevealedCards
-			=> RevealedEntities.Where(x => !x.Info.Created && (x.IsMinion || x.IsSpell || x.IsWeapon)
+			=> RevealedEntities.Where(x => !string.IsNullOrEmpty(x?.CardId) && !x.Info.Created && (x.IsMinion || x.IsSpell || x.IsWeapon)
 									   && ((!x.IsInDeck && (!x.Info.Stolen || x.Info.OriginalController == Id)) || (x.Info.Stolen && x.Info.OriginalController == Id)))
 								.GroupBy(x => new {x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id})
 								.Select(x =>
@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									return card;
 								});
 
-		public IEnumerable<Card> CreatedCardsInHand => Hand.Where(x => (x.Info.Created || x.Info.Stolen)).GroupBy(x => x.CardId).Select(x =>
+		public IEnumerable<Card> CreatedCardsInHand => Hand.Where(x => !string.IsNullOrEmpty(x?.CardId) && (x.Info.Created || x.Info.Stolen)).GroupBy(x => x.CardId).Select(x =>
 		{
 			var card = Database.GetCardFromId(x.Key);
 			card.Count = x.Count();
