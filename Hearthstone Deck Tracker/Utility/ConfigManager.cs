@@ -271,6 +271,41 @@ namespace Hearthstone_Deck_Tracker.Utility
 							Log.Error(ex);
 						}
 					}
+
+					var bars = new[] { "classic", "dark", "frost", "minimal" };
+					var overlays = new[] { "classic", "default", "frost" };
+					try
+					{
+						foreach(var folder in new DirectoryInfo("Images\\Themes\\Bars").GetDirectories().Where(x => !bars.Contains(x.Name)))
+						{
+							try
+							{
+								Helper.CopyFolder(folder.FullName, Path.Combine(Config.AppDataPath, "Themes\\Bars", folder.Name));
+								folder.Delete(true);
+							}
+							catch(Exception ex)
+							{
+								Log.Error(ex);
+							}
+						}
+
+						foreach(var folder in new DirectoryInfo("Images\\Themes\\Overlay").GetDirectories().Where(x => !overlays.Contains(x.Name)))
+						{
+							try
+							{
+								Helper.CopyFolder(folder.FullName, Path.Combine(Config.AppDataPath, "Themes\\Overlay", folder.Name));
+								folder.Delete(true);
+							}
+							catch(Exception ex)
+							{
+								Log.Error(ex);
+							}
+						}
+					}
+					catch(Exception ex)
+					{
+						Log.Error(ex);
+					}
 				}
 				if(configVersion == new Version(0, 15, 9, 0))
 					DataIssueResolver.RunDeckStatsFix = true;
