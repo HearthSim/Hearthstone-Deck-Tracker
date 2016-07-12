@@ -10,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 {
 	internal class Influx
 	{
-		private const string Url = "http://dev.hearthsim.net:8086/write?db=hsreplaynet&precision=s&u=hdt&p=GPPHbmJQtC87FAAR";
+		private const string Url = "https://metrics.hearthsim.net:8086/write?db=hsreplaynet&precision=s&u=hdt&p=GPPHbmJQtC87FAAR";
 
 		public static void OnAppStart(Version version, LoginType loginType, bool isNew)
 		{
