@@ -344,7 +344,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public BitmapImage HeroImage => ClassImage;
 
-		public DeckStats DeckStats => DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(this)) ?? DeckStatsList.Instance.Add(this);
+		public DeckStats DeckStats => DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds != null && ds.BelongsToDeck(this)) ?? DeckStatsList.Instance.Add(this);
 
 		[XmlIgnore]
 		public bool HasVersions => Versions != null && Versions.Count > 0;
