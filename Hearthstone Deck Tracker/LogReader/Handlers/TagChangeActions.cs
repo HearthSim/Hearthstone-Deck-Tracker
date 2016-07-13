@@ -271,6 +271,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void ZoneChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
 		{
+			if(id <= 3)
+				return;
 			var entity = game.Entities[id];
 			if(!entity.Info.OriginalZone.HasValue)
 			{
