@@ -231,6 +231,7 @@ namespace Hearthstone_Deck_Tracker
 					Log.Info("Reset region");
 					await Reset();
 					Game.IsInMenu = true;
+					Game.InvalidateMatchInfoCache();
 					Overlay.HideRestartRequiredWarning();
 					TurnTimer.Instance.Stop();
 
