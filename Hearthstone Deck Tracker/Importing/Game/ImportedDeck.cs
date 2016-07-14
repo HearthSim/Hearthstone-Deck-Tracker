@@ -5,6 +5,7 @@ using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing.Game.ImportOptions;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Importing.Game
 {
@@ -14,8 +15,13 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 		{
 			Deck = deck;
 			candidates = candidates ?? new List<Deck>();
-			var hero = HearthDb.Cards.All[deck.Hero];
-			Class = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(hero.Class.ToString().ToLower());
+			var hero = Database.GetCardFromId(deck.Hero);
+			if(string.IsNullOrEmpty(hero?.PlayerClass) || hero.Id == Database.UnknownCardId)
+			{
+				Log.Error("No hero found for id " + deck.Hero);
+				return;
+			}
+			Class = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(hero.PlayerClass.ToLower());
 			ImportOptions =
 				New.Concat(candidates.Concat(DeckList.Instance.Decks.Where(x => x.Class == Class && !x.Archived && !x.IsArenaDeck)).Distinct()
 					.Select(x => new ExistingDeck(x, deck)).OrderByDescending(x => x.MatchingCards).ThenByDescending(x => x.Deck.LastPlayed));

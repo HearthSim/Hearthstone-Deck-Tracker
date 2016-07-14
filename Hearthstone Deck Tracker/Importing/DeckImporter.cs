@@ -140,10 +140,18 @@ namespace Hearthstone_Deck_Tracker.Importing
 						CardMatch = x.VersionsIncludingSelf.Select(x.GetVersion).Where(v => v.Cards.Sum(c => c.Count) == 30)
 														 .Any(v => deck.Cards.All(c => v.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
 					}).Where(x => x.IdMatch || x.CardMatch).ToList();
-				if (!existing.Any())
-					importedDecks.Add(new ImportedDeck(deck, null));
+				if(!existing.Any())
+				{
+					var iDeck = new ImportedDeck(deck, null);
+					if(!string.IsNullOrEmpty(iDeck.Class))
+						importedDecks.Add(iDeck);
+				}
 				else if(!existing.Any(x => x.IdMatch && x.CardMatch) && existing.Any(x => x.IdMatch ^ x.CardMatch))
-					importedDecks.Add(new ImportedDeck(deck, existing.Select(x => x.Deck).ToList()));
+				{
+					var iDeck = new ImportedDeck(deck, existing.Select(x => x.Deck).ToList());
+					if(!string.IsNullOrEmpty(iDeck.Class))
+						importedDecks.Add(iDeck);
+				}
 			}
 			return importedDecks;
 		}
