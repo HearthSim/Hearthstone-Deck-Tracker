@@ -259,8 +259,12 @@ namespace Hearthstone_Deck_Tracker
 			Core.UpdatePlayerCards(true);
 		}
 
+		private static DateTime _lastAutoImport;
 		public static bool AutoImport(bool select)
 		{
+			if((DateTime.UtcNow - _lastAutoImport).TotalSeconds < 5)
+				return false;
+			_lastAutoImport = DateTime.UtcNow;
 			switch(Core.Game.CurrentGameMode)
 			{
 				case GameMode.Ranked:
