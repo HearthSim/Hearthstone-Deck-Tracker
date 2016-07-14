@@ -71,6 +71,10 @@
                     <TextBlock VerticalAlignment="Center" Text="The Grand Tournament: "/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountTgt, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="Whispers of the Old Gods: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountWotog, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>

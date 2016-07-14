@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			using(var archive = new ZipArchive(fs, ZipArchiveMode.Read))
 			using(var sr = new StreamReader(archive.GetEntry(jsonFile).Open()))
 				json = sr.ReadToEnd();
+			json = json.Replace("EQUIPPED_WEAPON", "WEAPON"); //legacy enum name
 
 			return (List<ReplayKeyPoint>)JsonConvert.DeserializeObject(json, typeof(List<ReplayKeyPoint>));
 		}

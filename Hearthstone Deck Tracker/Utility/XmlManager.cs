@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -12,7 +13,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static T Load(string path)
 		{
-			Logger.WriteLine("Loading file: " + path, "XmlManager", 1);
+			Log.Debug("Loading file: " + path);
 			T instance;
 			using(TextReader reader = new StreamReader(path))
 			{
@@ -20,7 +21,7 @@ namespace Hearthstone_Deck_Tracker
 				instance = (T)xml.Deserialize(reader);
 			}
 
-			Logger.WriteLine("File loaded: " + path, "XmlManager", 1);
+			Log.Debug("File loaded: " + path);
 			return instance;
 		}
 
@@ -45,11 +46,20 @@ namespace Hearthstone_Deck_Tracker
 			while(File.Exists(backupPath))
 				backupPath = path.Replace(".xml", "_backup" + i++ + ".xml");
 
-			Logger.WriteLine("Saving file: " + path, "XmlManager", 1);
+			Log.Debug("Saving file: " + path);
 
 			//create backup
 			if(File.Exists(path))
-				File.Copy(path, backupPath);
+			{
+				try
+				{
+					File.Copy(path, backupPath);
+				}
+				catch(IOException ex)
+				{
+					Log.Error($"Error copying file: {backupPath}\n{ex}");
+				}
+			}
 			try
 			{
 				//standard serialization
@@ -58,11 +68,11 @@ namespace Hearthstone_Deck_Tracker
 					var xml = new XmlSerializer(typeof(T));
 					xml.Serialize(writer, obj);
 				}
-				Logger.WriteLine("File saved: " + path, "XmlManager", 1);
+				Log.Debug("File saved: " + path);
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("Error saving file: " + path + "\n" + e, "XmlManager", 1);
+				Log.Error("Error saving file: " + path + "\n" + e);
 				try
 				{
 					//restore backup
@@ -74,7 +84,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					//restoring failed 
 					deleteBackup = false;
-					Logger.WriteLine("Error restoring backup for: " + path + "\n" + e2, "XmlManager", 1);
+					Log.Error("Error restoring backup for: " + path + "\n" + e2);
 				}
 			}
 			finally

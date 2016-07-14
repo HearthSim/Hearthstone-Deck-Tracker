@@ -2,11 +2,12 @@
 
 using System;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using static System.Windows.Visibility;
+using static Hearthstone_Deck_Tracker.Enums.StatType;
 
 #endregion
 
@@ -17,6 +18,10 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class ManaCurve
 	{
+		private const string Weapon = "Weapon";
+		private const string Enchantment = "Enchantment";
+		private const string Spell = "Spell";
+		private const string Minion = "Minion";
 		private readonly ManaCostBar[] _manaCostBars;
 		private Deck _deck;
 
@@ -45,14 +50,14 @@ namespace Hearthstone_Deck_Tracker
 			if(deck == null)
 			{
 				ClearDeck();
-				TextBlockNoMechanics.Visibility = Visibility.Visible;
+				TextBlockNoMechanics.Visibility = Visible;
 				return;
 			}
 			_deck = deck;
 			deck.GetSelectedDeckVersion().Cards.CollectionChanged += (sender, args) => UpdateValues();
 			UpdateValues();
 			ItemsControlMechanics.ItemsSource = deck.Mechanics;
-			TextBlockNoMechanics.Visibility = deck.Mechanics.Any() ? Visibility.Collapsed : Visibility.Visible;
+			TextBlockNoMechanics.Visibility = deck.Mechanics.Any() ? Collapsed : Visible;
 		}
 
 		public void ClearDeck()
@@ -79,16 +84,16 @@ namespace Hearthstone_Deck_Tracker
 				var statValue = -1;
 				switch(Config.Instance.ManaCurveFilter)
 				{
-					case StatType.Mana:
+					case Mana:
 						statValue = card.Cost;
 						break;
-					case StatType.Health:
+					case Health:
 						statValue = card.Health;
 						break;
-					case StatType.Attack:
+					case Attack:
 						statValue = card.Attack;
 						break;
-					case StatType.Overload:
+					case Overload:
 						statValue = card.Overload;
 						break;
 				}
@@ -98,14 +103,14 @@ namespace Hearthstone_Deck_Tracker
 				{
 					switch(card.Type)
 					{
-						case "Weapon":
+						case Weapon:
 							weapons[7] += card.Count;
 							break;
-						case "Enchantment":
-						case "Spell":
+						case Enchantment:
+						case Spell:
 							spells[7] += card.Count;
 							break;
-						case "Minion":
+						case Minion:
 							minions[7] += card.Count;
 							break;
 					}
@@ -113,24 +118,24 @@ namespace Hearthstone_Deck_Tracker
 				}
 				else
 				{
-					if(Config.Instance.ManaCurveFilter == StatType.Mana || Config.Instance.ManaCurveFilter == StatType.Overload)
+					if(Config.Instance.ManaCurveFilter == Mana || Config.Instance.ManaCurveFilter == Overload)
 					{
 						switch(card.Type)
 						{
-							case "Weapon":
+							case Weapon:
 								weapons[statValue] += card.Count;
 								break;
-							case "Enchantment":
-							case "Spell":
+							case Enchantment:
+							case Spell:
 								spells[statValue] += card.Count;
 								break;
-							case "Minion":
+							case Minion:
 								minions[statValue] += card.Count;
 								break;
 						}
 						counts[statValue] += card.Count;
 					}
-					else if(card.Type == "Minion")
+					else if(card.Type == Minion)
 					{
 						minions[statValue] += card.Count;
 						counts[statValue] += card.Count;
@@ -165,25 +170,28 @@ namespace Hearthstone_Deck_Tracker
 			var selected = ComboBoxStatType.SelectedItem as StatTypeWrapper;
 			if(selected != null)
 			{
-				Config.Instance.ManaCurveFilter = selected.StatType;
-				Config.Save();
+				if(Config.Instance.ManaCurveFilter != selected.StatType)
+				{
+					Config.Instance.ManaCurveFilter = selected.StatType;
+					Config.Save();
+				}
 				UpdateValues();
 			}
 		}
 
 		private void ManaCurveMechanics_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-			if(BorderMechanics.Visibility != Visibility.Visible)
+			if(BorderMechanics.Visibility != Visible)
 			{
-				BorderMechanics.Visibility = Visibility.Visible;
+				BorderMechanics.Visibility = Visible;
 				TextBlockManaCurveMechanics.Text = "HIDE";
 			}
 			else
 			{
-				BorderMechanics.Visibility = Visibility.Collapsed;
+				BorderMechanics.Visibility = Collapsed;
 				TextBlockManaCurveMechanics.Text = "MECHANICS";
 			}
-			TextBlockNoMechanics.Visibility = _deck != null && _deck.Mechanics.Any() ? Visibility.Collapsed : Visibility.Visible;
+			TextBlockNoMechanics.Visibility = _deck != null && _deck.Mechanics.Any() ? Collapsed : Visible;
 		}
 	}
 
@@ -191,9 +199,6 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public StatType StatType { get; set; }
 
-		public string DisplayName
-		{
-			get { return StatType.ToString().ToUpper(); }
-		}
+		public string DisplayName => StatType.ToString().ToUpper();
 	}
 }

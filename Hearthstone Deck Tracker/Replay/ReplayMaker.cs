@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json;
 
 #endregion
@@ -19,17 +20,11 @@ namespace Hearthstone_Deck_Tracker.Replay
 	{
 		private static readonly List<ReplayKeyPoint> Points = new List<ReplayKeyPoint>();
 
-		public static void Reset()
-		{
-			Points.Clear();
-		}
+		public static void Reset() => Points.Clear();
 
-		public static void Generate(KeyPointType type, int id, ActivePlayer player, IGame game)
-		{
-			Points.Add(new ReplayKeyPoint(game.Entities.Values.ToArray(), type, id, player));
-		}
+		public static void Generate(KeyPointType type, int id, ActivePlayer player, IGame game) => Points.Add(new ReplayKeyPoint(game.Entities.Values.ToArray(), type, id, player));
 
-		public static string SaveToDisk()
+		public static string SaveToDisk(List<string> powerLog)
 		{
 			try
 			{
@@ -40,15 +35,18 @@ namespace Hearthstone_Deck_Tracker.Replay
 				RemoveObsoletePlays();
 
 				var player = Points.Last().Data.First(x => x.IsPlayer);
-				var opponent = Points.Last().Data.First(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
-				var playerHero = Points.Last().Data.First(x => x.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO
-					                  && x.IsControlledBy(player.GetTag(GAME_TAG.CONTROLLER)));
+				var opponent = Points.Last().Data.First(x => x.HasTag(GameTag.PLAYER_ID) && !x.IsPlayer);
+				var playerHero =
+					Points.Last()
+					      .Data.First(
+					                  x =>
+					                  x.GetTag(GameTag.CARDTYPE) == (int)CardType.HERO && x.IsControlledBy(player.GetTag(GameTag.CONTROLLER)));
 				var opponentHero =
 					Points.Last()
 					      .Data.FirstOrDefault(
 					                           x =>
-											   x.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.HERO
-											   && x.IsControlledBy(opponent.GetTag(GAME_TAG.CONTROLLER)));
+					                           x.GetTag(GameTag.CARDTYPE) == (int)CardType.HERO
+					                           && x.IsControlledBy(opponent.GetTag(GameTag.CONTROLLER)));
 				if(opponentHero == null)
 				{
 					//adventure bosses
@@ -63,8 +61,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 					ResolveOpponentName(Database.GetHeroNameFromId(opponentHero.CardId));
 				}
 
-				var fileName = string.Format("{0}({1}) vs {2}({3}) {4}", player.Name, Database.GetHeroNameFromId(playerHero.CardId), opponent.Name,
-                                             Database.GetHeroNameFromId(opponentHero.CardId), DateTime.Now.ToString("HHmm-ddMMyy"));
+				var fileName =
+					$"{player.Name}({Database.GetHeroNameFromId(playerHero.CardId)}) vs {opponent.Name}({Database.GetHeroNameFromId(opponentHero.CardId)}) {DateTime.Now.ToString("HHmm-ddMMyy")}";
 
 
 				if(!Directory.Exists(Config.Instance.ReplayDir))
@@ -75,19 +73,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 					using(var archive = new ZipArchive(ms, ZipArchiveMode.Create, true))
 					{
 						var json = archive.CreateEntry("replay.json");
-
 						using(var stream = json.Open())
 						using(var sw = new StreamWriter(stream))
 							sw.Write(JsonConvert.SerializeObject(Points));
 
-						if(Config.Instance.SaveHSLogIntoReplay)
-						{
-							var hsLog = archive.CreateEntry("output_log.txt");
-
-							using(var logStream = hsLog.Open())
-							using(var swLog = new StreamWriter(logStream))
-                                GameV2.HSLogLines.ForEach(swLog.WriteLine);
-						}
+						var hsLog = archive.CreateEntry("output_log.txt");
+						using(var logStream = hsLog.Open())
+						using(var swLog = new StreamWriter(logStream))
+							powerLog?.ForEach(swLog.WriteLine);
 					}
 
 					using(var fileStream = new FileStream(path, FileMode.Create))
@@ -100,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "ReplayMaker");
+				Log.Error(e);
 				return null;
 			}
 		}
@@ -111,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				return;
 			foreach(var kp in Points)
 			{
-				var opponent = kp.Data.FirstOrDefault(x => x.HasTag(GAME_TAG.PLAYER_ID) && !x.IsPlayer);
+				var opponent = kp.Data.FirstOrDefault(x => x.HasTag(GameTag.PLAYER_ID) && !x.IsPlayer);
 				if(opponent != null)
 					opponent.Name = opponentName;
 			}
@@ -147,7 +140,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			{
 				if(kp.Type == KeyPointType.HandPos)
 				{
-					var pos = kp.Data.First(x => x.Id == kp.Id).GetTag(GAME_TAG.ZONE_POSITION);
+					var pos = kp.Data.First(x => x.Id == kp.Id).GetTag(GameTag.ZONE_POSITION);
 					if(!handPos.ContainsKey(kp.Id))
 						handPos.Add(kp.Id, pos);
 					else
@@ -155,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 				}
 				else if(kp.Type == KeyPointType.BoardPos)
 				{
-					var pos = kp.Data.First(x => x.Id == kp.Id).GetTag(GAME_TAG.ZONE_POSITION);
+					var pos = kp.Data.First(x => x.Id == kp.Id).GetTag(GameTag.ZONE_POSITION);
 					if(!boardPos.ContainsKey(kp.Id))
 						boardPos.Add(kp.Id, pos);
 					else
@@ -166,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 					int zp;
 					if(handPos.TryGetValue(kp.Id, out zp))
 					{
-						kp.Data.First(x => x.Id == kp.Id).SetTag(GAME_TAG.ZONE_POSITION, zp);
+						kp.Data.First(x => x.Id == kp.Id).SetTag(GameTag.ZONE_POSITION, zp);
 						handPos.Remove(zp);
 					}
 				}
@@ -175,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 					int zp;
 					if(boardPos.TryGetValue(kp.Id, out zp))
 					{
-						kp.Data.First(x => x.Id == kp.Id).SetTag(GAME_TAG.ZONE_POSITION, zp);
+						kp.Data.First(x => x.Id == kp.Id).SetTag(GameTag.ZONE_POSITION, zp);
 						boardPos.Remove(zp);
 					}
 				}
@@ -191,17 +184,17 @@ namespace Hearthstone_Deck_Tracker.Replay
 			foreach(var kp in Points)
 			{
 				var currentEntity = kp.Data.FirstOrDefault(x => x.Id == kp.Id);
-				if(currentEntity == null || !currentEntity.HasTag(GAME_TAG.ZONE_POSITION))
+				if(currentEntity == null || !currentEntity.HasTag(GameTag.ZONE_POSITION))
 					continue;
 
 				occupiedZonePos.Clear();
 				noUniqueZonePos.Clear();
 				noUniqueZonePos.Add(currentEntity);
-				foreach(var entity in kp.Data.Where(x => x.Id != kp.Id && x.HasTag(GAME_TAG.ZONE_POSITION)))
+				foreach(var entity in kp.Data.Where(x => x.Id != kp.Id && x.HasTag(GameTag.ZONE_POSITION)))
 				{
-					var zonePos = entity.GetTag(GAME_TAG.ZONE_POSITION);
-					if(entity.GetTag(GAME_TAG.ZONE) == currentEntity.GetTag(GAME_TAG.ZONE)
-					   && entity.GetTag(GAME_TAG.CONTROLLER) == currentEntity.GetTag(GAME_TAG.CONTROLLER))
+					var zonePos = entity.GetTag(GameTag.ZONE_POSITION);
+					if(entity.GetTag(GameTag.ZONE) == currentEntity.GetTag(GameTag.ZONE)
+					   && entity.GetTag(GameTag.CONTROLLER) == currentEntity.GetTag(GameTag.CONTROLLER))
 					{
 						if(!occupiedZonePos.Contains(zonePos))
 							occupiedZonePos.Add(zonePos);
@@ -211,14 +204,14 @@ namespace Hearthstone_Deck_Tracker.Replay
 				}
 				foreach(var entity in noUniqueZonePos)
 				{
-					if(occupiedZonePos.Contains(entity.GetTag(GAME_TAG.ZONE_POSITION)))
+					if(occupiedZonePos.Contains(entity.GetTag(GameTag.ZONE_POSITION)))
 					{
 						var targetPos = occupiedZonePos.Max() + 1;
-						currentEntity.SetTag(GAME_TAG.ZONE_POSITION, targetPos);
+						currentEntity.SetTag(GameTag.ZONE_POSITION, targetPos);
 						occupiedZonePos.Add(targetPos);
 					}
 					else
-						occupiedZonePos.Add(entity.GetTag(GAME_TAG.ZONE_POSITION));
+						occupiedZonePos.Add(entity.GetTag(GameTag.ZONE_POSITION));
 				}
 			}
 
@@ -228,12 +221,12 @@ namespace Hearthstone_Deck_Tracker.Replay
 				var currentBoard =
 					kp.Data.Where(
 					              x =>
-					              x.IsInZone(TAG_ZONE.PLAY) && x.HasTag(GAME_TAG.HEALTH) && !string.IsNullOrEmpty(x.CardId)
+					              x.IsInZone(Zone.PLAY) && x.HasTag(GameTag.HEALTH) && !string.IsNullOrEmpty(x.CardId)
 					              && !x.CardId.Contains("HERO")).ToList();
 				if(onBoard.All(e => currentBoard.Any(e2 => e2.Id == e.Id)) && currentBoard.All(e => onBoard.Any(e2 => e2.Id == e.Id)))
 				{
 					foreach(var entity in currentBoard)
-						entity.SetTag(GAME_TAG.ZONE_POSITION, onBoard.First(e => e.Id == entity.Id).GetTag(GAME_TAG.ZONE_POSITION));
+						entity.SetTag(GameTag.ZONE_POSITION, onBoard.First(e => e.Id == entity.Id).GetTag(GameTag.ZONE_POSITION));
 				}
 				else
 					onBoard = new List<Entity>(currentBoard);

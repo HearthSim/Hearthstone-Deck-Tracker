@@ -1,12 +1,8 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Windows;
@@ -31,36 +27,23 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public void Load()
 		{
 			ComboboxAccent.ItemsSource = ThemeManager.Accents;
-			ComboboxTheme.ItemsSource = ThemeManager.AppThemes;
-			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys;
+			ComboboxTheme.ItemsSource = Enum.GetValues(typeof(MetroTheme));
 			ComboBoxDeckLayout.ItemsSource = Enum.GetValues(typeof(DeckLayout));
-			ComboBoxIconSet.ItemsSource = Enum.GetValues(typeof(IconStyle));
+			ComboBoxIconSet.ItemsSource = new[] {IconStyle.Round, IconStyle.Square};
 			ComboBoxClassColors.ItemsSource = Enum.GetValues(typeof(ClassColorScheme));
-			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
 			CheckboxUseAnimations.IsChecked = Config.Instance.UseAnimations;
+			ComboBoxCardTheme.ItemsSource = Utility.Themes.ThemeManager.Themes;
 
-			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
-				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
-
-			var theme = string.IsNullOrEmpty(Config.Instance.ThemeName)
-				            ? ThemeManager.DetectAppStyle().Item1 : ThemeManager.AppThemes.First(t => t.Name == Config.Instance.ThemeName);
-			var accent = string.IsNullOrEmpty(Config.Instance.AccentName)
-				             ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
-			ComboboxTheme.SelectedItem = theme;
-			ComboboxAccent.SelectedItem = accent;
+			ComboboxTheme.SelectedItem = Config.Instance.AppTheme;
+			ComboboxAccent.SelectedItem = Helper.GetAppAccent();
 
 			ComboBoxIconSet.SelectedItem = Config.Instance.ClassIconStyle;
 			ComboBoxDeckLayout.SelectedItem = Config.Instance.DeckPickerItemLayout;
 			ComboBoxClassColors.SelectedItem = Config.Instance.ClassColorScheme;
 			CheckBoxArenaStatsTextColoring.IsChecked = Config.Instance.ArenaStatsTextColoring;
-
-			if(Config.Instance.NonLatinUseDefaultFont == null)
-			{
-				Config.Instance.NonLatinUseDefaultFont = Helper.IsWindows10();
-				Config.Save();
-			}
-			CheckBoxDefaultFont.IsChecked = Config.Instance.NonLatinUseDefaultFont;
-
+			ComboBoxCardTheme.SelectedItem = Utility.Themes.ThemeManager.FindTheme(Config.Instance.CardBarTheme);
+			CheckboxCardFrameRarity.IsChecked = Config.Instance.RarityCardFrames;
+			CheckboxCardGemRarity.IsChecked = Config.Instance.RarityCardGems;
 			_initialized = true;
 		}
 
@@ -81,65 +64,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			var theme = ComboboxTheme.SelectedItem as AppTheme;
-			if(theme != null)
-			{
-				ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.DetectAppStyle().Item2, theme);
-				Config.Instance.ThemeName = theme.Name;
-				Application.Current.Resources["GrayTextColorBrush"] = theme.Name == "BaseLight"
-					                                                      ? new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor1"])
-					                                                      : new SolidColorBrush((Color)Application.Current.Resources["GrayTextColor2"]);
-				Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();
-				Config.Save();
-			}
-		}
-
-		private void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			var language = ComboboxLanguages.SelectedValue.ToString();
-			UpdateAlternativeLanguageList(language);
-
-			if (!_initialized)
-				return;	
-			
-			var selectedLanguage = Helper.LanguageDict[language];
-
-			Config.Instance.SelectedLanguage = selectedLanguage;
+			Config.Instance.AppTheme = (MetroTheme)ComboboxTheme.SelectedItem;
 			Config.Save();
-		}
-
-		private void UpdateAlternativeLanguageList(string primaryLanguage)
-		{
-			ListBoxAlternativeLanguages.Items.Clear();
-			foreach (var pair in Helper.LanguageDict)
-			{
-				var box = new CheckBox();
-				box.Content = pair.Key;
-				if (pair.Key == primaryLanguage) {
-					box.IsEnabled = false;
-				} else {
-					box.IsChecked =	Config.Instance.AlternativeLanguages.Contains(pair.Value);
-					box.Unchecked += CheckboxAlternativeLanguageToggled;
-					box.Checked += CheckboxAlternativeLanguageToggled;
-                }
-				ListBoxAlternativeLanguages.Items.Add(box);
-			}
-		}
-
-		private void CheckboxAlternativeLanguageToggled(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-
-			var languages = new List<string>();
-			foreach (CheckBox box in ListBoxAlternativeLanguages.Items)
-			{
-				string language = (string)box.Content;
-				if (box.IsChecked == true)
-					languages.Add(Helper.LanguageDict[language]);
-			}			 
-			Config.Instance.AlternativeLanguages = languages;
-			Config.Save();
+			Helper.UpdateAppTheme();
+			Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();
 		}
 
 		private void ComboboxIconSet_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -148,7 +76,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ClassIconStyle = (IconStyle)ComboBoxIconSet.SelectedItem;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new iconset to be loaded.");
+			MessageDialogs.ShowRestartDialog();
+		}
+
+		private void ComboBoxCardTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.CardBarTheme = ComboBoxCardTheme.SelectedItem.ToString().ToLowerInvariant();
+			Config.Save();
+			Utility.Themes.ThemeManager.SetTheme(Config.Instance.CardBarTheme);
 		}
 
 		private void ComboboxDeckLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -157,31 +94,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DeckPickerItemLayout = (DeckLayout)ComboBoxDeckLayout.SelectedItem;
 			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for the new layout to be loaded.");
+			MessageDialogs.ShowRestartDialog();
 		}
 
-		private void ButtonRestart_OnClick(object sender, RoutedEventArgs e)
-		{
-			Core.MainWindow.Restart();
-		}
-
-		private void CheckboxDeckPickerCaps_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.DeckPickerCaps = true;
-			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
-		}
-
-		private void CheckboxDeckPickerCaps_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.DeckPickerCaps = false;
-			Config.Save();
-			Core.MainWindow.ShowMessage("Restart required.", "Please restart HDT for this setting to take effect.");
-		}
 
 		private void CheckboxUseAnimations_Unchecked(object sender, RoutedEventArgs e)
 		{
@@ -227,20 +142,40 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ArenaStats.Instance.UpdateArenaStatsHighlights();
 		}
 
-		private void CheckBoxDefaultFont_OnChecked(object sender, RoutedEventArgs e)
+		private void CheckboxCardFrameRarity_OnChecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.NonLatinUseDefaultFont = true;
+			Config.Instance.RarityCardFrames = true;
 			Config.Save();
+			Utility.Themes.ThemeManager.UpdateCards();
 		}
 
-		private void CheckBoxDefaultFont_OnUnchecked(object sender, RoutedEventArgs e)
+		private void CheckboxCardFrameRarity_OnUnchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.NonLatinUseDefaultFont = false;
+			Config.Instance.RarityCardFrames = false;
 			Config.Save();
+			Utility.Themes.ThemeManager.UpdateCards();
+		}
+
+		private void CheckboxCardGemRarity_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardGems = true;
+			Config.Save();
+			Utility.Themes.ThemeManager.UpdateCards();
+		}
+
+		private void CheckboxCardGemRarity_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RarityCardGems = false;
+			Config.Save();
+			Utility.Themes.ThemeManager.UpdateCards();
 		}
 	}
 }

@@ -1,7 +1,9 @@
 ﻿#region
 
 using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -12,12 +14,14 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
-	public partial class GameResultNotificationWindow
+	public partial class GameResultNotificationWindow : INotifyPropertyChanged
 	{
 		private const int ExpandedHeight = 100;
 		private const int ExpandedWidth = 350;
@@ -33,8 +37,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			InitializeComponent();
 			DeckName = deckName;
 			_game = game;
-			ComboBoxOpponentClass.ItemsSource = Enum.GetValues(typeof(HeroClass)).Cast<HeroClass>().Select(x => new HeroClassWrapper(x));
-			ComboBoxResult.ItemsSource = new[] {GameResult.Win, GameResult.Loss};
+			ComboBoxResult.ItemsSource = new[] { GameResult.Win, GameResult.Loss };
+			ComboBoxFormat.ItemsSource = new[] { Enums.Format.Standard, Enums.Format.Wild };
 			ComboBoxGameMode.ItemsSource = new[]
 			{
 				GameMode.Arena,
@@ -48,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdatePosition();
 			_startUpTime = DateTime.UtcNow;
 			CloseAsync();
-			Logger.WriteLine("Now showing", "GameResultNotification");
+			Log.Info("Now showing");
 			Activate();
 		}
 
@@ -69,27 +73,32 @@ namespace Hearthstone_Deck_Tracker.Windows
 			get
 			{
 				HeroClass heroClass;
-				if(Enum.TryParse(_game.OpponentHero, out heroClass))
-					return new HeroClassWrapper(heroClass);
-				return null;
+				return Enum.TryParse(_game.OpponentHero, out heroClass) ? new HeroClassWrapper(heroClass) : null;
 			}
 			set
 			{
-				if(value != null)
-				{
-					HeroClass heroClass;
-					if(Enum.TryParse(value.Class, out heroClass))
-					{
-						_game.OpponentHero = heroClass.ToString();
-						_edited = true;
-					}
-				}
+				if(value == null)
+					return;
+				HeroClass heroClass;
+				if(!Enum.TryParse(value.Class, out heroClass))
+					return;
+				_game.OpponentHero = heroClass.ToString();
+				_edited = true;
 			}
 		}
 
-		public BitmapImage PlayerClassImage
+		public BitmapImage PlayerClassImage => ImageCache.GetClassIcon(_game.PlayerHero);
+
+		public bool FormatSelectionEnabled => Mode == GameMode.Casual || Mode == GameMode.Ranked;
+
+		public Format? Format
 		{
-			get { return ImageCache.GetClassIcon(_game.PlayerHero); }
+			get { return _game.Format; }
+			set
+			{
+				_game.Format = value;
+				_edited = true;
+			}
 		}
 
 		public GameMode Mode
@@ -99,6 +108,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				_game.GameMode = value;
 				_edited = true;
+				OnPropertyChanged(nameof(FormatSelectionEnabled));
 			}
 		}
 
@@ -113,13 +123,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			while(DateTime.UtcNow - _startUpTime < TimeSpan.FromSeconds(Config.Instance.NotificationFadeOutDelay + FadeInDuration))
 			{
 				await Task.Delay(100);
-				if(IsMouseOver)
-				{
-					Expand();
-					_startUpTime = DateTime.UtcNow - TimeSpan.FromSeconds(FadeOutSpeedup);
-					CloseAsync();
-					return;
-				}
+				if(!IsMouseOver)
+					continue;
+				Expand();
+				_startUpTime = DateTime.UtcNow - TimeSpan.FromSeconds(FadeOutSpeedup);
+				CloseAsync();
+				return;
 			}
 			((Storyboard)FindResource("StoryboardFadeOut")).Begin(this);
 		}
@@ -128,6 +137,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(_edited)
 			{
+				DeckStatsList.Save();
 				if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
 				{
 					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == _game.DeckId);
@@ -143,9 +153,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 						else
 						{
 							if(_game.GameMode == GameMode.Arena)
-								HearthStatsManager.UploadArenaMatchAsync(_game, deck, true, true);
+								HearthStatsManager.UploadArenaMatchAsync(_game, deck, true, true).Forget();
 							else
-								HearthStatsManager.UploadMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true);
+								HearthStatsManager.UploadMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true).Forget();
 						}
 					}
 				}
@@ -175,22 +185,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public class HeroClassWrapper
 		{
-			private readonly string _heroClass;
-
 			public HeroClassWrapper(HeroClass heroClass)
 			{
-				_heroClass = heroClass.ToString();
+				Class = heroClass.ToString();
 			}
 
-			public BitmapImage ClassImage
-			{
-				get { return ImageCache.GetClassIcon(_heroClass); }
-			}
+			public BitmapImage ClassImage => ImageCache.GetClassIcon(Class);
 
-			public string Class
-			{
-				get { return _heroClass; }
-			}
+			public string Class { get; }
 
 			public override bool Equals(object obj)
 			{
@@ -198,15 +200,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return hcw != null && Equals(hcw);
 			}
 
-			protected bool Equals(HeroClassWrapper other)
-			{
-				return string.Equals(_heroClass, other._heroClass);
-			}
+			protected bool Equals(HeroClassWrapper other) => string.Equals(Class, other.Class);
 
-			public override int GetHashCode()
-			{
-				return (_heroClass != null ? _heroClass.GetHashCode() : 0);
-			}
+			public override int GetHashCode() => Class?.GetHashCode() ?? 0;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

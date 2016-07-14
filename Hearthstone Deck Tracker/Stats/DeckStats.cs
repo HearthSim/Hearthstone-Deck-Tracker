@@ -19,7 +19,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public List<GameStats> Games;
 
 		public string HearthStatsDeckId;
-		//public string HearthStatsDeckVersionId;
 		public string Name;
 
 		public DeckStats()
@@ -31,40 +30,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			Name = deck.Name;
 			Games = new List<GameStats>();
-			//HearthStatsDeckVersionId = deck.HearthStatsDeckVersionId;
 			HearthStatsDeckId = deck.HearthStatsId;
 			DeckId = deck.DeckId;
 		}
 
 		[XmlIgnore]
-		public bool HasHearthStatsDeckId
-		{
-			get { return !string.IsNullOrEmpty(HearthStatsDeckId); }
-		}
+		public bool HasHearthStatsDeckId => !string.IsNullOrEmpty(HearthStatsDeckId);
 
-		//[XmlIgnore]
-		//public bool HasHearthStatsDeckVersionId
-		//{
-		//	get { return !string.IsNullOrEmpty(HearthStatsDeckVersionId); }
-		//}
+		public void AddGameResult(GameResult result, string opponentHero, string playerHero) => Games.Add(new GameStats(result, opponentHero, playerHero));
 
-		public void AddGameResult(GameResult result, string opponentHero, string playerHero)
-		{
-			Games.Add(new GameStats(result, opponentHero, playerHero));
-		}
+		public void AddGameResult(GameStats gameStats) => Games.Add(gameStats);
 
-		public void AddGameResult(GameStats gameStats)
-		{
-			Games.Add(gameStats);
-		}
-
-		public bool BelongsToDeck(Deck deck)
-		{
-			if(HasHearthStatsDeckId && deck.HasHearthStatsId)
-				return HearthStatsDeckId.Equals(deck.HearthStatsIdForUploading);
-			//if(HasHearthStatsDeckId && deck.HasHearthStatsId && HasHearthStatsDeckVersionId && deck.HasHearthStatsDeckVersionId)
-			//	return HearthStatsDeckId.Equals(deck.HearthStatsId) && HearthStatsDeckVersionId.Equals(deck.HearthStatsDeckVersionId);
-			return DeckId == deck.DeckId;
-		}
+		public bool BelongsToDeck(Deck deck) => HasHearthStatsDeckId && deck.HasHearthStatsId
+													? HearthStatsDeckId.Equals(deck.HearthStatsIdForUploading) : DeckId == deck.DeckId;
 	}
 }

@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -29,10 +30,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			_inizialized = true;
 		}
 
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			Process.Start(e.Uri.AbsoluteUri);
-		}
+		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 
 		private async void BtnLogin_Click(object sender, RoutedEventArgs e)
 		{
@@ -57,13 +55,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 				Core.MainWindow.MenuItemLogin.Visibility = Visibility.Collapsed;
 				Core.MainWindow.MenuItemLogout.Visibility = Visibility.Visible;
 				Core.MainWindow.SeparatorLogout.Visibility = Visibility.Visible;
-				Core.MainWindow.MenuItemLogout.Header = string.Format("LOGOUT ({0})", HearthStatsAPI.LoggedInAs);
+				Core.MainWindow.MenuItemLogout.Header = $"LOGOUT ({HearthStatsAPI.LoggedInAs})";
 
 				var dialogResult =
 					await
 					Core.MainWindow.ShowMessageAsync("Sync now?", "Do you want to sync with HearthStats now?",
-					                                   MessageDialogStyle.AffirmativeAndNegative,
-					                                   new MessageDialogs.Settings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
+					                                 MessageDialogStyle.AffirmativeAndNegative,
+					                                 new MessageDialogs.Settings {AffirmativeButtonText = "sync now", NegativeButtonText = "later"});
 				if(dialogResult == MessageDialogResult.Affirmative)
 					HearthStatsManager.SyncAsync();
 			}
@@ -99,7 +97,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error deleting hearthstats credentials file\n" + ex, "HearthStatsAPI");
+				Log.Error("Error deleting hearthstats credentials file\n" + ex);
 			}
 		}
 	}

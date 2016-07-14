@@ -4,6 +4,10 @@
 	{
 		All,
 		Arena,
-		Constructed
+		Standard,
+		Wild,
+
+		//obsolete - to avoid breaking things when loading this from config
+		Constructed = Wild
 	}
 }

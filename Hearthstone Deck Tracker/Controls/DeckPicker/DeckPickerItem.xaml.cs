@@ -38,84 +38,48 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Deck Deck { get; set; }
 
-		public FontWeight FontWeightActiveDeck
-		{
-			get { return Equals(Deck, DeckList.Instance.ActiveDeck) ? FontWeights.Bold : FontWeights.Regular; }
-		}
+		public FontWeight FontWeightActiveDeck => Equals(Deck, DeckList.Instance.ActiveDeck) ? FontWeights.Bold : FontWeights.Regular;
 
-		public FontWeight FontWeightSelected
-		{
-			get
-			{
-				return Equals(Deck, DeckList.Instance.ActiveDeck)
-					       ? FontWeights.Bold
-					       : (Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
-			}
-		}
+		public FontWeight FontWeightSelected => Equals(Deck, DeckList.Instance.ActiveDeck)
+													? FontWeights.Bold
+													: (Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
 
-		public string TextUseButton
-		{
-			get { return Deck.Equals(DeckList.Instance.ActiveDeck) ? "ACTIVE" : "USE"; }
-		}
+		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? "ACTIVE" : "USE";
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public void SetLayout()
-		{
-			Content = Activator.CreateInstance(_deckPickerItem);
-		}
+		public void SetLayout() => Content = Activator.CreateInstance(_deckPickerItem);
 
 		public void RefreshProperties()
 		{
-			OnPropertyChanged("FontWeightSelected");
-			OnPropertyChanged("FontWeightActiveDeck");
-			OnPropertyChanged("TextUseButton");
+			OnPropertyChanged(nameof(FontWeightSelected));
+			OnPropertyChanged(nameof(FontWeightActiveDeck));
+			OnPropertyChanged(nameof(TextUseButton));
+			OnPropertyChanged(nameof(LastPlayed));
+			Deck.UpdateStandardIndicatorVisibility();
 		}
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#region sorting properties
 
-		public string Class
-		{
-			get { return Deck.GetClass; }
-		}
+		public string Class => Deck.GetClass;
 
-		public DateTime LastEdited
-		{
-			get { return Deck.LastEdited; }
-		}
+		public DateTime LastEdited => Deck.LastEdited;
 
-		public DateTime LastPlayed
-		{
-			get { return Deck.LastPlayed; }
-		}
+		public DateTime LastPlayed => Deck.LastPlayed;
 
-		public DateTime LastPlayedNewFirst
-		{
-			get { return Deck.LastPlayedNewFirst; }
-		}
+		public DateTime LastPlayedNewFirst => Deck.LastPlayedNewFirst;
 
-		public double WinPercent
-		{
-			get { return Deck.WinPercent; }
-		}
+		public double WinPercent => Deck.WinPercent;
 
-		public string DeckName
-		{
-			get { return Deck.Name; }
-		}
+		public string DeckName => Deck.Name;
 
-		public string TagList
-		{
-			get { return Deck.TagList; }
-		}
+		public string TagList => Deck.TagList;
 
 		#endregion
 	}
@@ -129,16 +93,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			_action = action;
 		}
 
-		public bool CanExecute(object parameter)
-		{
-			return _action != null;
-		}
+		public bool CanExecute(object parameter) => _action != null;
 
-		public void Execute(object parameter)
-		{
-			_action.Invoke();
-		}
-
+		public void Execute(object parameter) => _action.Invoke();
+#pragma warning disable 0067
 		public event EventHandler CanExecuteChanged;
+#pragma warning restore 0067
 	}
 }

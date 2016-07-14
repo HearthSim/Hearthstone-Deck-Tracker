@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API.Objects;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json;
 
 #endregion
@@ -22,7 +23,6 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 {
 	public class HearthStatsAPI
 	{
-		private static string _baseUrl = "http://api.hearthstats.net/api/v3";
 #if DEBUG
 		static HearthStatsAPI()
 		{
@@ -35,26 +35,19 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		}
 #endif
 
-		private static string BaseUrl
-		{
-			get { return _baseUrl; }
-			set { _baseUrl = value; }
-		}
+		private static string BaseUrl { get; } = "http://api.hearthstats.net/api/v3";
 
 		#region authentication
 
 		private static string _authToken;
 
-		public static bool IsLoggedIn
-		{
-			get { return !string.IsNullOrEmpty(_authToken); }
-		}
+		public static bool IsLoggedIn => !string.IsNullOrEmpty(_authToken);
 
 		public static string LoggedInAs { get; private set; }
 
 		public static bool Logout()
 		{
-			Logger.WriteLine("Logged out.", "HearthStatsAPI");
+			Log.Info("Logged out.");
 			_authToken = "";
 			try
 			{
@@ -64,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error deleting hearthstats credentials file\n" + ex, "HearthStatsAPI");
+				Log.Error("Error deleting hearthstats credentials file\n" + ex);
 				return false;
 			}
 		}
@@ -75,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				try
 				{
-					Logger.WriteLine("Loading stored credentials...", "HearthStatsAPI");
+					Log.Info("Loading stored credentials...");
 					using(var reader = new StreamReader(Config.Instance.HearthStatsFilePath))
 					{
 						dynamic content = JsonConvert.DeserializeObject(reader.ReadToEnd());
@@ -86,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				}
 				catch(Exception e)
 				{
-					Logger.WriteLine("Error loading credentials\n" + e, "HearthStatsAPI");
+					Log.Error("Error loading credentials\n" + e);
 					return false;
 				}
 			}
@@ -97,14 +90,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			try
 			{
-				Logger.WriteLine("Logging in...", "HearthStatsAPI");
+				Log.Info("Logging in...");
 				var url = BaseUrl + "/users/sign_in";
 				var data = JsonConvert.SerializeObject(new {user_login = new {email, password}});
 				var json = await PostAsync(url, Encoding.UTF8.GetBytes(data));
 				dynamic response = JsonConvert.DeserializeObject(json);
 				if((bool)response.success)
 				{
-					Logger.WriteLine("Successfully logged in.", "HearthStatsAPI");
+					Log.Info("Successfully logged in.");
 					_authToken = response.auth_token;
 					LoggedInAs = response.email;
 					if(Config.Instance.RememberHearthStatsLogin)
@@ -114,12 +107,12 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					}
 					return new LoginResult(true);
 				}
-				Logger.WriteLine("Error logging in...", "HearthStatsAPI");
+				Log.Error("Error logging in...");
 				return new LoginResult(false, response.ToString());
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return new LoginResult(false, e.Message);
 			}
 		}
@@ -139,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return new LoginResult(false, e.Message);
 			}
 		}
@@ -151,7 +144,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		private static async Task<string> PostAsync(string url, string data)
 		{
 #if DEBUG
-			Logger.WriteLine("> " + data, "HearthStatsAPI");
+			Log.Debug("> " + data);
 #endif
 			return await PostAsync(url, Encoding.UTF8.GetBytes(data));
 		}
@@ -169,14 +162,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				{
 					var response = reader.ReadToEnd();
 #if DEBUG
-					Logger.WriteLine("< " + response, "HearthStatsAPI");
+					Log.Debug("< " + response);
 #endif
 					return response;
 				}
 			}
 			catch(WebException e)
 			{
-				if(Helper.MainWindow != null)
+				if(Core.MainWindow != null)
 					ErrorManager.AddError(new Error("HearthStats", e.Message));
 				throw;
 			}
@@ -206,7 +199,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static async Task<List<Deck>> GetDecksAsync(long unixTime)
 		{
-			Logger.WriteLine("getting decks since " + unixTime, "HearthStatsAPI");
+			Log.Info("getting decks since " + unixTime);
 			var url = BaseUrl + "/decks/after_date?auth_token=" + _authToken;
 			var data = JsonConvert.SerializeObject(new {date = unixTime.ToString()});
 			try
@@ -217,20 +210,20 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(obj.status == "200")
 				{
 					return
-						obj.data.Where(dw => dw != null && dw.deck != null && dw.cards != null).Select(dw => dw.ToDeck()).Where(d => d != null).ToList();
+						obj.data.Where(dw => dw?.deck != null && dw.cards != null).Select(dw => dw.ToDeck()).Where(d => d != null).ToList();
 				}
 				return new List<Deck>();
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return new List<Deck>();
 			}
 		}
 
 		public static async Task<List<GameStats>> GetGamesAsync(long unixTime)
 		{
-			Logger.WriteLine("getting games since " + unixTime, "HearthStatsAPI");
+			Log.Info("getting games since " + unixTime);
 			var url = BaseUrl + "/matches/after_date?auth_token=" + _authToken;
 			var data = JsonConvert.SerializeObject(new {date = unixTime.ToString()});
 			try
@@ -243,7 +236,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return new List<GameStats>();
 			}
 		}
@@ -252,20 +245,20 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			if(deck == null)
 			{
-				Logger.WriteLine("deck is null", "HearthStatsAPI");
+				Log.Warn("deck is null");
 				return PostResult.Failed;
 			}
 			if(deck.IsArenaDeck)
 			{
-				Logger.WriteLine("deck is an arena deck", "HearthStatsAPI");
+				Log.Warn("deck is an arena deck");
 				return PostResult.Failed;
 			}
 			if(deck.HasHearthStatsId)
 			{
-				Logger.WriteLine("deck already posted", "HearthStatsAPI");
+				Log.Warn("deck already posted");
 				return PostResult.Failed;
 			}
-			Logger.WriteLine("uploading deck: " + deck, "HearthStatsAPI");
+			Log.Info("uploading deck: " + deck);
 
 			var name = masterDeck == null ? deck.Name : masterDeck.Name;
 			var tags = masterDeck == null ? deck.Tags : masterDeck.Tags;
@@ -285,15 +278,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					deck.HearthStatsDeckVersionId = json.data.deck_versions[0].id;
 					//deck.DeckStats.HearthStatsDeckVersionId = json.data.deck_versions[0].id;
 					deck.SyncWithHearthStats = true;
-					Logger.WriteLine("HearthStatsId assigned to deck: " + deck.HearthStatsId, "HearthStatsAPI");
-					Logger.WriteLine("HearthStatsDeckVersionId assigned to deck: " + deck.HearthStatsDeckVersionId, "HearthStatsAPI");
+					Log.Info("HearthStatsId assigned to deck: " + deck.HearthStatsId);
+					Log.Info("HearthStatsDeckVersionId assigned to deck: " + deck.HearthStatsDeckVersionId);
 					return PostResult.WasSuccess;
 				}
 				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -302,16 +295,16 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			if(deck == null)
 			{
-				Logger.WriteLine("version(deck) is null", "HearthStatsAPI");
+				Log.Warn("version(deck) is null");
 				return PostResult.Failed;
 			}
 			if(deck.HasHearthStatsDeckVersionId)
 			{
-				Logger.WriteLine("version(deck) already posted", "HearthStatsAPI");
+				Log.Warn("version(deck) already posted");
 				return PostResult.Failed;
 			}
 			var version = deck.Version.ToString("{M}.{m}");
-			Logger.WriteLine("uploading version " + version + " of " + deck, "HearthStatsAPI");
+			Log.Info("uploading version " + version + " of " + deck);
 			var url = BaseUrl + "/decks/create_version?auth_token=" + _authToken;
 			var cards = deck.Cards.Where(Database.IsActualCard).Select(x => new CardObject(x));
 			var data = JsonConvert.SerializeObject(new {deck_id = hearthStatsId, version, cards});
@@ -323,14 +316,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				{
 					deck.HearthStatsDeckVersionId = json.data.id;
 					deck.HearthStatsIdForUploading = hearthStatsId;
-					Logger.WriteLine("assigned id to version: " + deck.HearthStatsDeckVersionId, "HearthStatsAPI");
+					Log.Info("assigned id to version: " + deck.HearthStatsDeckVersionId);
 					return PostResult.WasSuccess;
 				}
 				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -341,16 +334,16 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				return PostResult.Failed;
 			if(!deck.HasHearthStatsId)
 			{
-				Logger.WriteLine("can not upload game, deck has no hearthstats id", "HearthStatsAPI");
+				Log.Warn("can not upload game, deck has no hearthstats id");
 				return PostResult.Failed;
 			}
 			long versionId;
 			if(!long.TryParse(deck.HearthStatsDeckVersionId, out versionId))
 			{
-				Logger.WriteLine("error: invalid HearthStatsDeckVersionId", "HearthStatsAPI");
+				Log.Error("invalid HearthStatsDeckVersionId");
 				return PostResult.Failed;
 			}
-			Logger.WriteLine("uploading match: " + game, "HearthStatsAPI");
+			Log.Info("uploading match: " + game);
 			var url = BaseUrl + "/matches?auth_token=" + _authToken;
 
 			dynamic gameObj = new ExpandoObject();
@@ -370,9 +363,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				gameObj.notes = game.Note;
 			if(game.GameMode == GameMode.Ranked && game.HasRank)
 				gameObj.ranklvl = game.Rank.ToString();
-			var opponentCards = game.GetOpponentDeck().Cards;
-			if(opponentCards.Where(Database.IsActualCard).Any())
-				gameObj.oppcards = opponentCards.Where(Database.IsActualCard).Select(c => new {id = c.Id, count = c.Count}).ToArray();
+			var opponentCards = game.OpponentCards;
+			if(opponentCards.Any())
+				gameObj.oppcards = opponentCards.Select(c => new {id = c.Id, count = c.Count}).ToArray();
 			gameObj.created_at = game.StartTime.ToUniversalTime().ToString("s");
 
 			var data = JsonConvert.SerializeObject(gameObj);
@@ -384,7 +377,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "200")
 				{
 					game.HearthStatsId = json.data.id;
-					Logger.WriteLine("assigned id to match: " + game.HearthStatsId, "HearthStatsAPI");
+					Log.Info("assigned id to match: " + game.HearthStatsId);
 					return PostResult.WasSuccess;
 				}
 				if(json.status.ToString() == "fail" && json.message.ToString().Contains("Deck could not be found"))
@@ -399,7 +392,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -410,7 +403,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			long versionId;
 			if(!long.TryParse(deck.HearthStatsDeckVersionId, out versionId))
 			{
-				Logger.WriteLine("error: invalid HearthStatsDeckVersionId", "HearthStatsAPI");
+				Log.Error("invalid HearthStatsDeckVersionId");
 				return PostResult.Failed;
 			}
 
@@ -435,9 +428,9 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					gameObjs[i].notes = validGames[i].Note;
 				if(validGames[i].GameMode == GameMode.Ranked && validGames[i].HasRank)
 					gameObjs[i].ranklvl = validGames[i].Rank.ToString();
-				var opponentCards = validGames[i].GetOpponentDeck().Cards;
-				if(opponentCards.Where(Database.IsActualCard).Any())
-					gameObjs[i].oppcards = opponentCards.Where(Database.IsActualCard).Select(c => new {id = c.Id, count = c.Count}).ToArray();
+				var opponentCards = validGames[i].OpponentCards;
+				if(opponentCards.Any())
+					gameObjs[i].oppcards = opponentCards.Select(c => new {id = c.Id, count = c.Count}).ToArray();
 				gameObjs[i].created_at = validGames[i].StartTime.ToUniversalTime().ToString("s");
 			}
 
@@ -458,23 +451,23 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 					return PostResult.Failed;
 				}
 				if(json.status.ToString() != "200")
-					Logger.WriteLine("Some error occoured, main status=" + json.status.ToString());
+					Log.Error($"{json.message.ToString()} (Status code: {json.status.ToString()})");
 
 				for(int i = 0; i < validGames.Count; i++)
 				{
 					if(json.data[i].status == "200")
 					{
 						validGames[i].HearthStatsId = json.data[i].data.id;
-						Logger.WriteLine("assigned id to match: " + validGames[i].HearthStatsId, "HearthStatsAPI");
+						Log.Info("assigned id to match: " + validGames[i].HearthStatsId);
 					}
 					else
-						Logger.WriteLine(string.Format("Error uploading match {0}: {1}", validGames[i], json.data[i].status), "HearthStatsAPI");
+						Log.Error($"Error uploading match {validGames[i]}: {json.data[i].status}");
 				}
 				return PostResult.WasSuccess;
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -490,19 +483,19 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var noId = filtered.Where(d => !d.HasHearthStatsId).ToList();
 			foreach(var deck in noId)
 			{
-				Logger.WriteLine("error: deck " + deck.Name + " has no HearthStatsId", "HearthStatsAPI");
+				Log.Error($"deck {deck.Name} has no HearthStatsId");
 				filtered.Remove(deck);
 			}
 			var invalidId = filtered.Where(d => !Regex.IsMatch(d.HearthStatsId, @"^\d+$")).ToList();
 			foreach(var deck in invalidId)
 			{
-				Logger.WriteLine("error: deck " + deck.Name + " has no valid HearthStatsId", "HearthStatsAPI");
+				Log.Error("deck " + deck.Name + " has no valid HearthStatsId");
 				filtered.Remove(deck);
 			}
 			if(!filtered.Any())
 				return PostResult.Failed;
 
-			Logger.WriteLine("deleting decks: " + filtered.Select(d => d.Name).Aggregate((c, n) => c + ", " + n), "HearthStatsAPI");
+			Log.Info("deleting decks: " + filtered.Select(d => d.Name).Aggregate((c, n) => c + ", " + n));
 
 			var ids = filtered.Select(d => long.Parse(d.HearthStatsId)).ToArray();
 
@@ -514,15 +507,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				dynamic json = JsonConvert.DeserializeObject(response);
 				if(json.status.ToString() == "200")
 				{
-					Logger.WriteLine("deleted decks", "HearthStatsAPI");
+					Log.Info("deleted decks");
 					return PostResult.WasSuccess;
 				}
-				Logger.WriteLine("error: " + response, "HearthStatsAPI");
+				Log.Error(response);
 				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -532,7 +525,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var validGames = games.Where(g => g != null).ToList();
 			if(!validGames.Any())
 			{
-				Logger.WriteLine("error: all games null", "HearthStatsAPI");
+				Log.Error("all games are null");
 				return PostResult.Failed;
 			}
 			var noHearthStatsId = games.Where(g => !g.HasHearthStatsId).ToList();
@@ -540,7 +533,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			{
 				foreach(var game in noHearthStatsId)
 				{
-					Logger.WriteLine("error: game has no HearthStatsId " + game, "HearthStatsAPI");
+					Log.Error("game has no HearthStatsId " + game);
 					validGames.Remove(game);
 				}
 				if(!validGames.Any())
@@ -555,13 +548,13 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			foreach(var game in invalidHearthStatsId)
 			{
-				Logger.WriteLine("error: game has no valid HearthStatsId " + game, "HearthStatsAPI");
+				Log.Error("game has no valid HearthStatsId " + game);
 				validGames.Remove(game);
 			}
 			if(!validGames.Any())
 				return PostResult.Failed;
 
-			Logger.WriteLine("deleting games: " + validGames.Select(g => g.ToString()).Aggregate((c, n) => c + ", " + n), "HearthStatsAPI");
+			Log.Info("deleting games: " + validGames.Select(g => g.ToString()).Aggregate((c, n) => c + ", " + n));
 
 			var url = BaseUrl + "/matches/delete?auth_token=" + _authToken;
 			var data = JsonConvert.SerializeObject(new {match_id = validGames.Select(g => long.Parse(g.HearthStatsId))});
@@ -571,15 +564,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				dynamic json = JsonConvert.DeserializeObject(response);
 				if(json.status.ToString() == "200")
 				{
-					Logger.WriteLine("deleted game", "HearthStatsAPI");
+					Log.Info("deleted game");
 					return PostResult.WasSuccess;
 				}
-				Logger.WriteLine("error: " + response, "HearthStatsAPI");
+				Log.Error(response);
 				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -588,38 +581,38 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			if(game == null)
 			{
-				Logger.WriteLine("error: game is null", "HearthStatsAPI");
+				Log.Error("game is null");
 				return PostResult.Failed;
 			}
 			if(!game.HasHearthStatsId)
 			{
-				Logger.WriteLine("error: game has no HearthStatsId", "HearthStatsAPI");
+				Log.Error("game has no HearthStatsId");
 				return PostResult.Failed;
 			}
 			if(newDeck == null)
 			{
-				Logger.WriteLine("error: deck is null", "HearthStatsAPI");
+				Log.Error("deck is null");
 				return PostResult.Failed;
 			}
 			if(!newDeck.HasHearthStatsId)
 			{
-				Logger.WriteLine("error: deck has no HearthStatsId", "HearthStatsAPI");
+				Log.Error("deck has no HearthStatsId");
 				return PostResult.Failed;
 			}
 			long deckId;
 			if(!long.TryParse(newDeck.HearthStatsId, out deckId))
 			{
-				Logger.WriteLine("error: deck has invalid HearthStatsId", "HearthStatsAPI");
+				Log.Info("deck has invalid HearthStatsId");
 				return PostResult.Failed;
 			}
 
 			long gameId;
 			if(!long.TryParse(game.HearthStatsId, out gameId))
 			{
-				Logger.WriteLine("error: game has invalid HearthStatsId", "HearthStatsAPI");
+				Log.Error("error: game has invalid HearthStatsId");
 				return PostResult.Failed;
 			}
-			Logger.WriteLine("moving game: " + game, "HearthStatsAPI");
+			Log.Info("moving game: " + game);
 
 			var url = BaseUrl + "/matches/move?auth_token=" + _authToken;
 			var data = JsonConvert.SerializeObject(new {match_id = new[] {gameId}, deck_id = deckId});
@@ -629,15 +622,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				dynamic json = JsonConvert.DeserializeObject(response);
 				if(json.status.ToString() == "200")
 				{
-					Logger.WriteLine("moved game", "HearthStatsAPI");
+					Log.Info("moved game");
 					return PostResult.WasSuccess;
 				}
-				Logger.WriteLine("error: " + response, "HearthStatsAPI");
+				Log.Error(response);
 				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -646,15 +639,15 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			if(editedDeck == null)
 			{
-				Logger.WriteLine("deck is null", "HearthStatsAPI");
+				Log.Error("deck is null");
 				return PostResult.Failed;
 			}
 			if(!editedDeck.HasHearthStatsId)
 			{
-				Logger.WriteLine("deck does not exist yet, uploading", "HearthStatsAPI");
+				Log.Info("deck does not exist yet, uploading");
 				return await PostDeckAsync(editedDeck);
 			}
-			Logger.WriteLine("editing deck: " + editedDeck, "HearthStatsAPI");
+			Log.Info("editing deck: " + editedDeck);
 			var url = BaseUrl + "/decks/edit?auth_token=" + _authToken;
 			var cards = editedDeck.Cards.Where(Database.IsActualCard).Select(x => new CardObject(x));
 			var data =
@@ -677,7 +670,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -686,45 +679,45 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 		{
 			if(deck == null)
 			{
-				Logger.WriteLine("deck is null", "HearthStatsAPI");
+				Log.Error("deck is null");
 				return PostResult.Failed;
 			}
 			if(deck.IsArenaDeck == false)
 			{
-				Logger.WriteLine("deck is not a viable arena deck", "HearthStatsAPI");
+				Log.Error("deck is not a viable arena deck");
 				return PostResult.Failed;
 			}
 			if(deck.HasHearthStatsArenaId)
 			{
-				Logger.WriteLine("arena deck already posted", "HearthStatsAPI");
+				Log.Warn("arena deck already posted");
 				return PostResult.Failed;
 			}
 			if(deck.HasVersions)
 			{
-				Logger.WriteLine("arena deck cannot have versions", "HearthStatsAPI");
+				Log.Error("arena deck cannot have versions");
 				return PostResult.Failed;
 			}
 			if(deck.HasHearthStatsId)
 			{
 				if(deck.CheckIfArenaDeck() == false)
 				{
-					Logger.WriteLine("deck has non-arena games", "HearthStatsAPI");
+					Log.Error("deck has non-arena games");
 					return PostResult.Failed;
 				}
 				if(deck.DeckStats.Games.Count <= 1)
 				{
-					Logger.WriteLine("deck has hearthstats id but no arena id. deleting and uploading as arena deck.", "HearthStatsAPI");
+					Log.Warn("deck has hearthstats id but no arena id. deleting and uploading as arena deck.");
 					await DeleteDeckAsync(deck);
 					deck.HearthStatsId = "";
 					deck.HearthStatsDeckVersionId = "";
 				}
 				else
 				{
-					Logger.WriteLine("deck already has games but no arena id. cannot upload deck.", "HearthStatsAPI");
+					Log.Error("deck already has games but no arena id. cannot upload deck.");
 					return PostResult.Failed;
 				}
 			}
-			Logger.WriteLine("creating new arena run: " + deck, "HearthStatsAPI");
+			Log.Info("creating new arena run: " + deck);
 
 			var url = BaseUrl + "/arena_runs/new?auth_token=" + _authToken;
 			var cards = deck.Cards.Where(Database.IsActualCard).Select(x => new CardObject(x));
@@ -736,14 +729,14 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				if(json.status.ToString() == "200")
 				{
 					deck.HearthStatsArenaId = json.data.id;
-					Logger.WriteLine("assigned arena id to deck: " + deck.HearthStatsArenaId, "HearthStatsAPI");
+					Log.Info("assigned arena id to deck: " + deck.HearthStatsArenaId);
 					return PostResult.WasSuccess;
 				}
 				return PostResult.Failed;
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -754,10 +747,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 				return PostResult.Failed;
 			if(!deck.HasHearthStatsArenaId)
 			{
-				Logger.WriteLine("can not upload game, deck has no HearthStatsArenaId", "HearthStatsAPI");
+				Log.Error("can not upload game, deck has no HearthStatsArenaId");
 				return PostResult.Failed;
 			}
-			Logger.WriteLine("uploading arena match: " + game, "HearthStatsAPI");
+			Log.Info("uploading arena match: " + game);
 
 			var url = BaseUrl + "/matches?auth_token=" + _authToken;
 
@@ -786,7 +779,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "HearthStatsAPI");
+				Log.Error(e);
 				return PostResult.Failed;
 			}
 		}
@@ -802,27 +795,27 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var baseMsg = "Game " + game + " is not valid ({0})";
 			if(game == null)
 			{
-				Logger.WriteLine(string.Format(baseMsg, "null"), "HearthStatsAPI");
+				Log.Warn(string.Format(baseMsg, "null"));
 				return false;
 			}
 			if(game.IsClone)
 			{
-				Logger.WriteLine(string.Format(baseMsg, "IsClone"), "HearthStatsAPI");
+				Log.Warn(string.Format(baseMsg, "IsClone"));
 				return false;
 			}
 			if(ValidGameModes.All(mode => game.GameMode != mode))
 			{
-				Logger.WriteLine(string.Format(baseMsg, "invalid game mode: " + game.GameMode), "HearthStatsAPI");
+				Log.Warn(string.Format(baseMsg, "invalid game mode: " + game.GameMode));
 				return false;
 			}
 			if(game.Result == GameResult.None)
 			{
-				Logger.WriteLine(string.Format(baseMsg, "invalid result: none"), "HearthStatsAPI");
+				Log.Warn(string.Format(baseMsg, "invalid result: none"));
 				return false;
 			}
 			if(game.HasHearthStatsId)
 			{
-				Logger.WriteLine(string.Format(baseMsg, "already submitted"), "HearthStatsAPI");
+				Log.Warn(string.Format(baseMsg, "already submitted"));
 				return false;
 			}
 			return true;
@@ -833,22 +826,22 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 			var baseMsg = "Game " + game + " is no valid arena game ({0})";
 			if(game == null)
 			{
-				Logger.WriteLine(string.Format(baseMsg, "null"), "HearthStatsAPI");
+				Log.Warn(string.Format(baseMsg, "null"));
 				return false;
 			}
 			if(game.IsClone)
 			{
-				Logger.WriteLine(string.Format(baseMsg, "IsClone"), "HearthStatsAPI");
+				Log.Warn(string.Format(baseMsg, "IsClone"));
 				return false;
 			}
 			if(game.GameMode != GameMode.Arena)
 			{
-				Logger.WriteLine(string.Format(baseMsg, "invalid game mode: " + game.GameMode), "HearthStatsAPI");
+				Log.Warn(string.Format(baseMsg, "invalid game mode: " + game.GameMode));
 				return false;
 			}
 			if(game.HasHearthStatsId)
 			{
-				Logger.WriteLine(string.Format(baseMsg, "already submitted"), "HearthStatsAPI");
+				Log.Warn(string.Format(baseMsg, "already submitted"));
 				return false;
 			}
 			return true;

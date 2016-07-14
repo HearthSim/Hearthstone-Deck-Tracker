@@ -1,10 +1,15 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -14,36 +19,31 @@ namespace Hearthstone_Deck_Tracker
 		{
 			const string url = @"https://api.imgur.com/3/upload";
 
-			WebClient web = new WebClient();
+			var web = new WebClient();
 			web.Headers.Add("Authorization", "Client-ID " + clientId);
 
-			NameValueCollection Keys = new NameValueCollection();
-			try 
+			var keys = new NameValueCollection();
+			try
 			{
 				var imgBase64 = Convert.ToBase64String(image.GetBuffer());
-				Keys.Add("image", imgBase64);
-				if (name != null)
-					Keys.Add("name", name);
+				keys.Add("image", imgBase64);
+				if(name != null)
+					keys.Add("name", name);
 
-				byte[] responseArray = await web.UploadValuesTaskAsync(url, Keys);
+				var responseArray = await web.UploadValuesTaskAsync(url, keys);
 
 				var reader = new StreamReader(new MemoryStream(responseArray), Encoding.Default);
 				var json = reader.ReadToEnd();
 				var resp = JsonConvert.DeserializeObject<ImgurResponse>(json);
 
-				Logger.WriteLine("Response (" + resp.status + ") " +  resp.data.link, "Imgur");
-				if (resp.success && resp.status == 200)
-				{
+				Log.Info("Response (" + resp.status + ") " + resp.data.link);
+				if(resp.success && resp.status == 200)
 					return resp.data.link;
-				}
-				else
-				{
-					throw new Exception("response code " + resp.status);
-				}
+				throw new Exception("response code " + resp.status);
 			}
-			catch (Exception s) 
-			{ 
-				Logger.WriteLine("Upload to imgur failed: " + s.Message); 
+			catch(Exception ex)
+			{
+				Log.Error(ex);
 			}
 			return null;
 		}
@@ -63,6 +63,5 @@ namespace Hearthstone_Deck_Tracker
 				public string link { get; set; }
 			}
 		}
-
 	}
 }

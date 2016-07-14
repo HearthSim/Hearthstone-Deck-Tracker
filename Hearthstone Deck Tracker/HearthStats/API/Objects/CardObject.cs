@@ -2,6 +2,7 @@
 
 using System;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -35,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API.Objects
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine("error converting CardObject: " + e, "HearthStatsAPI");
+				Log.Error("(HearthStatsAPI) error converting CardObject: " + e);
 				return null;
 			}
 		}

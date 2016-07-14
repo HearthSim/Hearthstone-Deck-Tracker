@@ -221,14 +221,14 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding OpponentAttackVisibility}"/>
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentAttack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" Visibility="{Binding OpponentAttackVisibility}"/>
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentAttack}" Width="35" Height="35" Grid.Column="0" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,2,0,0" Visibility="{Binding OpponentAttackVisibility}"/>
                             <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentHealth}" Grid.Column="1" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Fill="{Binding OpponentHealthTextColor}"/>
+                             <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentHealth}" Width="35" Height="35" Grid.Column="1" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="2,2,0,0" Fill="{Binding OpponentHealthTextColor}"/>
                             <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding OpponentArmorVisibility}"/>
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentArmor}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Visibility="{Binding OpponentArmorVisibility}"/>
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentArmor}" Width="35" Height="35" Grid.Column="2" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="2,2,0,0" Visibility="{Binding OpponentArmorVisibility}"/>
                             <Grid HorizontalAlignment="Right" Grid.Column="3">
-                                <Image Source="../Resources/mana.png" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentMana}" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
+                            <Image Source="../Resources/mana.png" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding OpponentMana}" Width="35" Height="35" FontSize="24" TextAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
                             </Grid>
                                 </Grid>
                             </Border>
@@ -284,15 +284,15 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PlayerAttackVisibility}"/>
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerAttack}" Grid.Column="0" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,2,0,0" Visibility="{Binding PlayerAttackVisibility}"/>
-                            <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerHealth}" Grid.Column="1" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Fill="{Binding PlayerHealthTextColor}"/>
-                            <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PlayerArmorVisibility}"/>
-                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerArmor}" Grid.Column="2" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0" Visibility="{Binding PlayerArmorVisibility}"/>
-                            <Grid Grid.Column="3" HorizontalAlignment="Right">
+                                <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PlayerAttackVisibility}"/>
+                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerAttack}" Width="35" Height="35" Grid.Column="0" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="5,2,0,0" Visibility="{Binding PlayerAttackVisibility}"/>
+                                <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerHealth}" Width="35" Height="35" Grid.Column="1" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="2,2,0,0" Fill="{Binding PlayerHealthTextColor}"/>
+                                <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PlayerArmorVisibility}"/>
+                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerArmor}" Width="35" Height="35" Grid.Column="2" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="2,2,0,0" Visibility="{Binding PlayerArmorVisibility}"/>
+                                <Grid Grid.Column="3" HorizontalAlignment="Right">
                                 <Image Source="../Resources/mana.png" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerMana}" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2,2,0,0"/>
+                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding PlayerMana}" Width="35" Height="35" FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Margin="2,2,0,0"/>
                             </Grid>
                                 </Grid>
                             </Border>

@@ -6,12 +6,15 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Information;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using Newtonsoft.Json;
 
@@ -34,16 +37,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			_fullReleaseNotes = new List<GithubRelease>();
 		}
 
-		private SerializableVersion CurrentVersion
+		public void SetHighlight(Version previousVersion)
 		{
-			get { return new SerializableVersion(Helper.GetCurrentVersion()); }
+			if(previousVersion == null)
+				return;
+			UserControl infoControl = null;
+			if(previousVersion < new Version(0, 13, 18))
+				infoControl = new CardThemesInfo();
+			if(infoControl == null)
+				return;
+			ContentControlHighlight.Content = infoControl;
+			TabControl.SelectedIndex = 1;
 		}
+
+		private SerializableVersion CurrentVersion => new SerializableVersion(Helper.GetCurrentVersion());
 
 		public List<GithubRelease> ReleaseNotes
 		{
 			get
-			{ 
-				var upToInstalled =_fullReleaseNotes.SkipWhile(r => r.GetVersion() != CurrentVersion).ToList();
+			{
+				var upToInstalled = _fullReleaseNotes.SkipWhile(r => r.GetVersion() != CurrentVersion).ToList();
 				return (upToInstalled.Any() ? upToInstalled : _fullReleaseNotes).Take(_numVersions).ToList();
 			}
 		}
@@ -52,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		public async void LoadUpdateNotes()
 		{
-			const string latestReleaseRequestUrl = @"https://api.github.com/repos/Epix37/Hearthstone-Deck-Tracker/releases";
+			const string latestReleaseRequestUrl = @"https://api.github.com/repos/HearthSim/Hearthstone-Deck-Tracker/releases";
 
 			try
 			{
@@ -63,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 					versionStr = await wc.DownloadStringTaskAsync(latestReleaseRequestUrl);
 				}
 				_fullReleaseNotes = JsonConvert.DeserializeObject<GithubRelease[]>(versionStr).ToList();
-				OnPropertyChanged("ReleaseNotes");
+				OnPropertyChanged(nameof(ReleaseNotes));
 			}
 			catch(Exception)
 			{
@@ -73,9 +86,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		private void ScrollViewer_OnScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -86,22 +97,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			if(Math.Abs(ScrollViewerNotes.VerticalOffset - ScrollViewerNotes.ScrollableHeight) < 5)
 			{
 				_numVersions += 2;
-				OnPropertyChanged("ReleaseNotes");
+				OnPropertyChanged(nameof(ReleaseNotes));
 				_lastExpand = DateTime.Now;
 			}
 		}
 
 		private void ButtonShowGithub_OnClick(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				Process.Start("https://github.com/Epix37/Hearthstone-Deck-Tracker/releases");
-			}
-			catch
-			{
-				Core.MainWindow.ShowMessage("Could not start browser",
-				                              "You can find the releases at \"https://github.com/Epix37/Hearthstone-Deck-Tracker/releases\"");
-			}
+			const string url = "https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases";
+			if (!Helper.TryOpenUrl(url))
+				Core.MainWindow.ShowMessage("Could not start browser", $"You can find the releases at \"{url}\"").Forget();
 		}
 
 		private void FlowDocumentScrollViewer_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
@@ -116,31 +121,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			{
 				new GithubRelease {Name = "Loading...", Body = "Loading...", TagName = CurrentVersion.ToString(true)}
 			};
-			OnPropertyChanged("ReleaseNotes");
+			OnPropertyChanged(nameof(ReleaseNotes));
 		}
 
 		private void ButtonPaypal_Click(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
-			}
-			catch(Exception)
-			{
-				Core.MainWindow.ShowMessage("Could not start browser", "You can also find a link at the bottom of the GitHub page!");
-			}
+			if (!Helper.TryOpenUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ"))
+				Core.MainWindow.ShowMessage("Could not start browser", "You can also find a link at the bottom of the GitHub page!").Forget();
 		}
 
 		private void ButtonPatreon_Click(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				Process.Start("https://www.patreon.com/HearthstoneDeckTracker");
-			}
-			catch
-			{
-
-			}
+			const string url = "https://www.patreon.com/HearthstoneDeckTracker";
+			if (!Helper.TryOpenUrl(url))
+				Core.MainWindow.ShowMessage("Could not start browser", "You can find the patreon page here: " + url).Forget();
 		}
 
 		private void ButtonClose_Click(object sender, RoutedEventArgs e)
@@ -165,14 +159,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				set
 				{
 					_body = Regex.Replace(value, "\r\n", "\r\n\n");
-					_body = Regex.Replace(_body, "#(\\d+)", "[#$1](https://github.com/Epix37/Hearthstone-Deck-Tracker/issues/$1)");
+					_body = Regex.Replace(_body, "#(\\d+)", "[#$1](https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues/$1)");
 				}
 			}
 
-			public SerializableVersion GetVersion()
-			{
-				return SerializableVersion.ParseOrDefault(TagName);
-			}
+			public SerializableVersion GetVersion() => SerializableVersion.ParseOrDefault(TagName);
 		}
+
+		private void ButtonContinue_OnClick(object sender, RoutedEventArgs e) => TabControl.SelectedIndex = 0;
 	}
 }

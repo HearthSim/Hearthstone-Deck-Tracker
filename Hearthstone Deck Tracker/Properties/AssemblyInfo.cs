@@ -12,11 +12,11 @@ using System.Windows;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Hearthstone Deck Tracker")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Hearthstone Deck Tracker")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Epix")]
+[assembly: AssemblyCompany("HearthSim")]
 [assembly: AssemblyProduct("Hearthstone Deck Tracker")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("Copyright © HearthSim")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -56,6 +56,6 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.15.8.0")]
+[assembly: AssemblyFileVersion("0.15.8.0")]
 [assembly: NeutralResourcesLanguage("en")]

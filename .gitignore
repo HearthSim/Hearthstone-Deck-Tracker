@@ -155,3 +155,5 @@ $RECYCLE.BIN/
 # Mac desktop service store files
 .DS_Store
 Hearthstone Deck Tracker.sln.ide/*
+packages/*
+!packages/repositories.config

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Converters
 {

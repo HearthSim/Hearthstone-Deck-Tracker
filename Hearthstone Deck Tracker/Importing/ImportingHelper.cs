@@ -14,10 +14,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class ImportingHelper
 	{
-		public static async Task<HtmlDocument> GetHtmlDoc(string url)
-		{
-			return await GetHtmlDoc(url, null, null);
-		}
+		public static async Task<HtmlDocument> GetHtmlDoc(string url) => await GetHtmlDoc(url, null, null);
 
 		public static async Task<HtmlDocument> GetHtmlDocGzip(string url)
 		{
@@ -57,14 +54,23 @@ namespace Hearthstone_Deck_Tracker.Importing
 			}
 		}
 
-		public static async Task<string> PostJson(string url, string jsonData)
+		public static async Task<string> PostJson(string url, string data)
+		{
+			return await JsonRequest(url, data);
+		}
+
+		public static async Task<string> JsonRequest(string url, string data = null)
 		{
 			using(var wc = new WebClient())
 			{
 				wc.Encoding = Encoding.UTF8;
 				wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
-				var response = await wc.UploadStringTaskAsync(new Uri(url), jsonData);
+				var response = "";
+				if(string.IsNullOrWhiteSpace(data))
+					response = await wc.DownloadStringTaskAsync(new Uri(url));
+				else
+					response = await wc.UploadStringTaskAsync(new Uri(url), data);
 
 				return response;
 			}
@@ -94,8 +100,9 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			protected override WebRequest GetWebRequest(Uri address)
 			{
-				HttpWebRequest request = (HttpWebRequest)base.GetWebRequest(address);
-				request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+				var request = (HttpWebRequest)base.GetWebRequest(address);
+				if(request != null)
+					request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 				return request;
 			}
 		}

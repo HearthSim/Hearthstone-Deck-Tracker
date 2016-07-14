@@ -9,15 +9,10 @@
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="800">
-    <UserControl.Resources>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
-        <converters:CustomTimeframeVisibilityConverter x:Key="CustomTimeframeVisibilityConverter" />
-        <utility:ConfigWrapper x:Key="ConfigWrapper" />
-    </UserControl.Resources>
     <DockPanel>
         <DockPanel>
             <GroupBox Header="MENU" DockPanel.Dock="Top">
-                <TreeView Name="TreeViewStats" Height="175">
+                <TreeView Name="TreeViewStats" Height="200" SelectedItemChanged="TreeViewStats_OnSelectedItemChanged">
                     <TreeViewItem Name="TreeViewItemArenaRuns" IsExpanded="True"
                                   Selected="TreeViewItemArenaRuns_OnSelected" Header="Arena Runs"
                                   DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}">
@@ -31,83 +26,47 @@
                         <TreeViewItem Name="TreeViewItemArenaRunsAdvanced"
                                       Selected="TreeViewItemArenaRunsAdvanced_OnSelected" Header="Advanced charts"
                                       DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                        <TreeViewItem Header="[more coming soon]" IsEnabled="False"/>
                     </TreeViewItem>
-                    <TreeViewItem Header="Constructed" IsExpanded="True" IsEnabled="False">
-                        <TreeViewItem Header="[coming soon]" />
-                        <!--<TreeViewItem Header="Overall" IsExpanded="False">
-                            <TreeViewItem Header="Overview"/>
-                            <TreeViewItem Header="Games"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="Active Deck" IsExpanded="False">
-                            <TreeViewItem Header="Overview"/>
-                            <TreeViewItem Header="Games"/>
-                        </TreeViewItem>-->
+                    <TreeViewItem Name="TreeViewItemConstructed" Header="Constructed" IsExpanded="True"
+                                      Selected="TreeViewItemConstructedSummary_OnSelected"
+                                      DataContext="{Binding ConstructedSummary, RelativeSource={RelativeSource AncestorType=UserControl}}" >
+                        <TreeViewItem Name="TreeViewItemConstructedSummary" 
+                                      Selected="TreeViewItemConstructedSummary_OnSelected" Header="Summary"
+                                      DataContext="{Binding ConstructedSummary, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                        <TreeViewItem Name="TreeViewItemConstructedGames" 
+                                      Selected="TreeViewItemConstructedGames_OnSelected" Header="Matches"
+                                      DataContext="{Binding ConstructedGames, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                        <TreeViewItem Name="TreeViewItemConstructedCharts" 
+                                      Selected="TreeViewItemConstructedCharts_OnSelected" Header="Charts"
+                                      DataContext="{Binding ConstructedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                     </TreeViewItem>
                 </TreeView>
             </GroupBox>
-            <GroupBox Header="Filters" Width="180">
+            <GroupBox Width="180">
+                <GroupBox.Header>
+                    <DockPanel>
+                        <Button Name="ButtonMore" Style="{DynamicResource MetroCircleButtonStyle}" Content="..." Foreground="White" 
+                                Width="32" Height="32" Margin="5, -9, -7, -9" Click="ButtonMore_OnClick" DockPanel.Dock="Right">
+                            <Button.ContextMenu>
+                                <ContextMenu Name="ButtonMoreContextMenu">
+                                    <CheckBox Name="CheckBoxPercent" DockPanel.Dock="Right" Content="AUTO REFRESH" Margin="-25,0,5,0" Foreground="{DynamicResource TextBrush}" 
+                                  IsChecked="{Binding Path=StatsAutoRefresh, Source={StaticResource ConfigWrapper}}"/>
+                                    <MenuItem Header="RESET" Click="MenuItemReset_OnClick"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="32" Height="32" Margin="-9" Click="ButtonRefresh_OnClick" DockPanel.Dock="Right">
+                            <Rectangle Width="12" Height="14">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{DynamicResource appbar_refresh_white}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Button>
+                        <TextBlock Text="FILTERS" Foreground="White"/>
+                    </DockPanel>
+                </GroupBox.Header>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Time:" Grid.Column="0" Grid.Row="0"/>
-                        <ComboBox Name="ComboBoxTimeframe" SelectedIndex="3" Grid.Column="1" Grid.Row="0"
-                              SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <StackPanel Margin="0,5,0,0"  Grid.Column="1" Grid.Row="1"
-                                Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
-                            <Label Content="Start" />
-                            <DatePicker Name="DatePickerCustomTimeFrameStart" DockPanel.Dock="Right"
-                                    SelectedDate="{Binding Path=ArenaStatsTimeFrameCustomStart, Source={StaticResource ConfigWrapper}}"
-                                    SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
-                            <Label Content="End" />
-                            <DatePicker Name="DatePickerCustomTimeFrameEnd" DockPanel.Dock="Right"
-                                    SelectedDate="{Binding Path=ArenaStatsTimeFrameCustomEnd, Source={StaticResource ConfigWrapper}}"
-                                    SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
-                        </StackPanel>
-                        <Label Content="Class:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="2"/>
-                        <ComboBox Name="ComboBoxClass"  Margin="0,5,0,0" SelectedIndex="0" Grid.Column="1" Grid.Row="2"
-                              SelectionChanged="ComboBoxClass_OnSelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Height="24">
-                                        <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24"
-                                           RenderOptions.BitmapScalingMode="Fant" Margin="0,0,3,0"
-                                           Visibility="{Binding ImageVisibility}" />
-                                        <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Label Content="Region:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="3"/>
-                        <ComboBox Name="ComboBoxRegion" SelectedIndex="0" Margin="0,5,0,0" Grid.Column="1" Grid.Row="3"
-                              SelectionChanged="ComboBoxRegion_OnSelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Label Content="Archived:" Margin="0,5,0,0" Grid.Column="0" Grid.Row="4"/>
-                        <CheckBox Name="CheckBoxArchived" Content="Include" Margin="0,5,0,0" Grid.Column="1" Grid.Row="4"
-                              IsChecked="{Binding Path=ArenaStatsIncludeArchived, Source={StaticResource ConfigWrapper}}"
-                              Checked="CheckBoxArchived_OnChecked" Unchecked="CheckBoxArchived_OnUnchecked" />
-                    </Grid>
+                    <ContentControl Name="ContentControlFilter"/>
                 </ScrollViewer>
             </GroupBox>
         </DockPanel>

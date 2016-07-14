@@ -1,0 +1,50 @@
+﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.CrashDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d" BorderBrush="{DynamicResource AccentColorBrush}"
+        Title="Crash Report" Height="350" Width="600">
+    <DockPanel Margin="5">
+        <Label Content="Hearthstone Deck Tracker has crashed :(." FontWeight="SemiBold" DockPanel.Dock="Top"/>
+        <DockPanel DockPanel.Dock="Top">
+            <DockPanel.Resources>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+            </DockPanel.Resources>
+            <Label Content="Error:" DockPanel.Dock="Left"/>
+            <Button Name="ButtonShowStacktrace" Content="Show Stacktrace" Width="130" DockPanel.Dock="Right" Margin="5,0,0,0" Click="ButtonShowStacktrace_OnClick" />
+            <TextBlock Text="{Binding ExceptionMessage, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}, Mode=OneWay}" TextTrimming="WordEllipsis" VerticalAlignment="Center"/>
+        </DockPanel>
+        <TextBox Name="TextBoxStackTrace" DockPanel.Dock="Top" Height="0" IsReadOnly="True" Margin="0,5,0,0" Visibility="Collapsed"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                 Text="{Binding FullExceptionText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}, Mode=OneWay}">
+            <TextBox.Resources>
+                <Storyboard x:Key="ShowStackTraceStoryboard" TargetName="TextBoxStackTrace">
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                    <DoubleAnimation To="120" Duration="0:0:0.3" Storyboard.TargetProperty="Height"/>
+                </Storyboard>
+                <Storyboard x:Key="HideStackTraceStoryboard">
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="TextBoxStackTrace">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                    <DoubleAnimation To="0" Duration="0:0:0.3" Storyboard.TargetProperty="Height" Storyboard.TargetName="TextBoxStackTrace"/>
+                </Storyboard>
+            </TextBox.Resources>
+        </TextBox>
+        <TextBlock Text="To help us find a solution for this issue, please attach a description of what you were doing just before this crash occoured, as well as any other helpful information you can think of." 
+                   Margin="5,5,0,0" TextWrapping="Wrap"  DockPanel.Dock="Top"/>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0" >
+            <Button Name="ButtonSend" Width="120" Click="ButtonSend_Click" Style="{StaticResource AccentedSquareButtonStyle}">
+                <TextBlock Text="Send Report"/>
+            </Button>
+            <Button Name="ButtonClose" Width="120" Margin="5,0,0,0" Click="ButtonClose_Click" Style="{StaticResource SquareButtonStyle}">
+                <TextBlock Text="Close"/>
+            </Button>
+        </StackPanel>
+        <TextBox Name="TextBoxDescription" controls:TextBoxHelper.Watermark="Additional information (optional)" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,5,0,0"/>
+    </DockPanel>
+</controls:MetroWindow>
+

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HDTTests.Hearthstone
@@ -32,7 +30,7 @@ namespace HDTTests.Hearthstone
 		public void Hearthpwn()
 		{
 			Deck expected = CreateDeck();
-			Deck found = DeckImporter.Import(@"http://www.hearthpwn.com/decks/274631-senfglas-1-legend-grim-patron-warrior-1074").Result;
+			Deck found = DeckImporter.Import(@"http://www.hearthpwn.com/decks/267064-grim-patron-senfglas").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
@@ -109,10 +107,10 @@ namespace HDTTests.Hearthstone
 		}
 
 		[TestMethod]
-		public void EliteDecks()
+		public void EliteHearthstone()
 		{
 			Deck expected = CreateDeck("Inner Rage;2", "Loot Hoarder;2", "Cruel Taskmaster;0", "Gnomish Inventor;0");
-			Deck found = DeckImporter.Import(@"http://www.elitedecks.net/deck-7918-patron-warrior").Result;
+			Deck found = DeckImporter.Import(@"http://www.elitehearthstone.net/deck-7918-patron-warrior").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
@@ -128,7 +126,7 @@ namespace HDTTests.Hearthstone
 		public void HearthstoneTopDeck()
 		{
 			Deck expected = CreateDeck();
-			Deck found = DeckImporter.Import(@"http://www.hearthstonetopdeck.com/deck/4700/current/otk-patron-senfglas-lifecoach").Result;
+			Deck found = DeckImporter.Import(@"http://www.hearthstonetopdeck.com/deck/wild/4700/otk-patron-senfglas-lifecoach").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}				
 
@@ -137,6 +135,15 @@ namespace HDTTests.Hearthstone
 		{
 			Deck found = DeckImporter.Import(@"http://www.heartharena.com/arena-run/i2s8ht").Result;
 			Assert.IsTrue(AreDecksEqual(arena, found));
+		}
+
+		[TestMethod]
+		public void ManaCrystals()
+		{
+			Deck expected = CreateDeck("Inner Rage;2", "Shield Slam;2", "Grommash Hellscream;1", "Piloted Shredder;2",
+				"Dr. Boom;1", "Warsong Commander;0", "Slam;0", "Gnomish Inventor;0", "Emperor Thaurissan;0");
+			Deck found = DeckImporter.Import(@"https://manacrystals.com/decklists/172-zalae-s-patron-warrior").Result;
+			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
 		/* WebBrowser causes test to hang, for some reason */
@@ -178,7 +185,9 @@ namespace HDTTests.Hearthstone
 				"Grim Patron;2",				
 				"Emperor Thaurissan;1",
 				"Grommash Hellscream;0",
-				"Dr. Boom;0"
+				"Dr. Boom;0",
+				"Piloted Shredder;0",
+				"Shield Slam;0"
 			};
 
 			cardList = DefaultDeck(cardNames);

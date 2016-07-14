@@ -14,8 +14,8 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			Brightness = brightness;
 		}
 
-		public double Hue { get; private set; }
-		public double Brightness { get; private set; }
+		public double Hue { get; }
+		public double Brightness { get; }
 
 		public static HueAndBrightness GetAverage(Bitmap bmp, double saturationThreshold = 0.05)
 		{

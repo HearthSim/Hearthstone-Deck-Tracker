@@ -16,7 +16,7 @@
     </UserControl.Resources>
     <ScrollViewer Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <DockPanel>
-            <Expander IsExpanded="True" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+            <Expander Name="ExpanderCharts" IsExpanded="{Binding ArenaSummaryChartsExpanded, Source={StaticResource ConfigWrapper}}" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="CHARTS" Foreground="White"/>

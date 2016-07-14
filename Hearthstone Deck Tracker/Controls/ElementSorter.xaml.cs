@@ -19,10 +19,7 @@ namespace Hearthstone_Deck_Tracker
 			InitializeComponent();
 		}
 
-		public void AddItem(ElementSorterItem item)
-		{
-			StackPanel.Children.Add(item);
-		}
+		public void AddItem(ElementSorterItem item) => StackPanel.Children.Add(item);
 
 		public void MoveItem(ElementSorterItem item, SortDirection direction)
 		{

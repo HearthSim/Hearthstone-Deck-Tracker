@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts;
-using Hearthstone_Deck_Tracker.HearthStats.API;
-using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Windows;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
@@ -19,13 +14,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 	/// </summary>
 	public partial class ArenaRuns : INotifyPropertyChanged
 	{
-		private readonly bool _initialized;
 		private object _chartWinsControl = new ChartWins();
 
 		public ArenaRuns()
 		{
 			InitializeComponent();
-			_initialized = true;
 		}
 
 		public object ChartWinsControl
@@ -33,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			get { return _chartWinsControl; }
 			set
 			{
-				_chartWinsControl = value; 
+				_chartWinsControl = value;
 				OnPropertyChanged();
 			}
 		}
@@ -44,9 +37,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

@@ -2,9 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-             xmlns:Hearthstone_Deck_Tracker="clr-namespace:Hearthstone_Deck_Tracker" x:Class="Hearthstone_Deck_Tracker.Controls.CardMarker"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             x:Class="Hearthstone_Deck_Tracker.Controls.CardMarker"
              mc:Ignorable="d" 
              d:DesignHeight="34" d:DesignWidth="36">
     <Canvas>
@@ -12,9 +12,9 @@
             <Canvas.Background>
                <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/card-marker.png"/>
             </Canvas.Background>
-            <Hearthstone_Deck_Tracker:HearthstoneTextBlock x:Name="CardAge" FontSize="20" Text="0" Canvas.Left="0" Width="32" Canvas.Top="2" TextAlignment="Center" />
+            <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="CardAge" FontSize="18" Text="0" Canvas.Left="0" Width="32" Height="32" Canvas.Top="0" TextAlignment="Center" />
         </Canvas>
         <Image x:Name="CardIcon" Width="16" Height="16" Canvas.Left="20" Canvas.Top="18" Source="/HearthstoneDeckTracker;component/Images/card-icon-coin.png" />
-
+        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="TextCostReduction" Fill="DodgerBlue" FontSize="13" Text="-1" Canvas.Left="17" Canvas.Top="-2"  Width="16" Height="16" TextAlignment="Right"/>
     </Canvas>
 </UserControl>

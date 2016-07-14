@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -22,29 +23,17 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			Plugins = new List<PluginWrapper>();
 		}
 
-		public static int MaxPluginExecutionTime
-		{
-			get { return 2000; }
-		}
+		public static int MaxPluginExecutionTime => 2000;
 
-		public List<PluginWrapper> Plugins { get; private set; }
+		public List<PluginWrapper> Plugins { get; }
 
-		public static PluginManager Instance
-		{
-			get { return _instance ?? (_instance = new PluginManager()); }
-		}
+		public static PluginManager Instance => _instance ?? (_instance = new PluginManager());
 
-		private static string PluginSettingsFile
-		{
-			get { return Path.Combine(Config.Instance.ConfigDir, "plugins.xml"); }
-		}
+		private static string PluginSettingsFile => Path.Combine(Config.Instance.ConfigDir, "plugins.xml");
 
-		public static int MaxExceptions { get { return 100; } }
+		public static int MaxExceptions => 100;
 
-		public void LoadPlugins()
-		{
-			LoadPlugins(DefaultPath, true);
-		}
+		public void LoadPlugins() => LoadPlugins(DefaultPath, true);
 
 		public void LoadPlugins(string pluginPath, bool checkSubDirs)
 		{
@@ -72,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 						Plugins.Add(p);
 				}
 			}
-			Logger.WriteLine("Loading Plugins...", "PluginManager");
+			Log.Info("Loading Plugins...");
 			LoadPluginSettings();
 		}
 
@@ -97,13 +86,13 @@ namespace Hearthstone_Deck_Tracker.Plugins
 					}
 					catch(Exception ex)
 					{
-						Logger.WriteLine("Error Loading " + pFileName + ":\n" + ex, "PluginManager");
+						Log.Error("Error loading " + pFileName + ":\n" + ex);
 					}
 				}
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error Loading " + pFileName + ":\n" + ex, "PluginManager");
+				Log.Error("Error loading " + pFileName + ":\n" + ex);
 			}
 			return plugins;
 		}
@@ -134,10 +123,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
-		public void StopUpdate()
-		{
-			_update = false;
-		}
+		public void StopUpdate() => _update = false;
 
 		private void LoadPluginSettings()
 		{
@@ -155,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error loading plugin settings:\n" + ex, "PluginManager");
+				Log.Error("Error loading plugin settings:\n" + ex);
 			}
 		}
 
@@ -168,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error saving plugin settings:\n" + ex, "PluginManager");
+				Log.Error("Error saving plugin settings:\n" + ex);
 			}
 		}
 	}

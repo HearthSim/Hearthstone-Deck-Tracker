@@ -1,0 +1,226 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.ConstructedFilters"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <UserControl.Resources>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+        <converters:CustomTimeframeVisibilityConverter x:Key="CustomTimeframeVisibilityConverter" />
+        <converters:CustomTimeframeSeasonVisibilityConverter x:Key="CustomTimeframeSeasonVisibilityConverter" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </UserControl.Resources>
+    <StackPanel>
+        <CheckBox Name="CheckBoxDecks" Content="Active deck only" Margin="5"
+                  IsChecked="{Binding Path=ConstructedStatsActiveDeckOnly, Source={StaticResource ConfigWrapper}}"
+                  IsEnabled="{Binding ActiveDeckOnlyIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                  ToolTip="{Binding ActiveDeckOnlyToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                  Checked="CheckBoxDecks_OnCheckedChanged" Unchecked="CheckBoxDecks_OnCheckedChanged" ToolTipService.ShowOnDisabled="True" />
+        <Separator/>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Time:" Width="60"/>
+            <ComboBox Name="ComboBoxTimeframe" SelectedIndex="3" SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
+            <Label Content="Start:" Margin="10,0,0,0" Width="50"/>
+            <DatePicker Name="DatePickerCustomTimeFrameStart" DockPanel.Dock="Right"
+                                    SelectedDate="{Binding Path=ConstructedStatsTimeFrameCustomStart, Source={StaticResource ConfigWrapper}}"
+                                    SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
+            <Label Content="End:" Margin="10,0,0,0" Width="50"/>
+            <DatePicker Name="DatePickerCustomTimeFrameEnd" DockPanel.Dock="Right"
+                                    SelectedDate="{Binding Path=ConstructedStatsTimeFrameCustomEnd, Source={StaticResource ConfigWrapper}}"
+                                    SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeSeasonVisibilityConverter}}">
+            <Label Content="Seasons:" Width="60"/>
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="22*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="TextBoxCustomSeasonMin" Height="26" TextAlignment="Center" Grid.Column="0" Grid.Row="0" LostFocus="TextBoxCustomSeasonMin_OnLostFocus"
+                         PreviewTextInput="TextBox_OnPreviewTextInput_DigitsOnly" PreviewKeyUp="TextBox_OnEnter">
+                    <TextBox.Text>
+                        <Binding Path="ConstructedStatsCustomSeasonMin" Source="{StaticResource ConfigWrapper}">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Label Content="to" Grid.Column="1" Grid.Row="0"/>
+                <TextBox Name="TextBoxCustomSeasonMax" Height="26" TextAlignment="Center" Grid.Column="2" Grid.Row="0" LostFocus="TextBoxCustomSeasonMax_OnLostFocus"
+                         PreviewTextInput="TextBox_OnPreviewTextInput_DigitsOnly" PreviewKeyUp="TextBox_OnEnter">
+                    <TextBox.Text>
+                        <Binding Path="ConstructedStatsCustomSeasonMax" Source="{StaticResource ConfigWrapper}">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Class:" Width="60"/>
+            <ComboBox Name="ComboBoxClass" SelectedIndex="0" SelectionChanged="ComboBoxClass_OnSelectionChanged"
+                      IsEnabled="{Binding IsChecked, ElementName=CheckBoxDecks, Converter={StaticResource InverseBooleanConverter}}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Height="24">
+                            <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24" RenderOptions.BitmapScalingMode="Fant" 
+                                   Margin="0,0,3,0" Visibility="{Binding ImageVisibility}" />
+                            <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="VS:" Width="60"/>
+            <ComboBox Name="ComboBoxOpponentClass" SelectionChanged="ComboBoxOpponentClass_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Height="24">
+                            <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24"
+                                           RenderOptions.BitmapScalingMode="Fant" Margin="0,0,3,0"
+                                           Visibility="{Binding ImageVisibility}" />
+                            <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Mode:" Width="60"/>
+            <ComboBox Name="ComboBoxMode" SelectedIndex="0" SelectionChanged="ComboBoxMode_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding RankFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Label Content="Rank:" Width="60"/>
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="22*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="TextBoxRankMin" Height="26" TextAlignment="Center" Grid.Column="0" Grid.Row="0" LostFocus="TextBoxRankMin_OnLostFocus" PreviewKeyUp="TextBox_OnEnter">
+                    <TextBox.Text>
+                        <Binding Path="ConstructedStatsRankFilterMin" Source="{StaticResource ConfigWrapper}">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Label Content="to" Grid.Column="1" Grid.Row="0"/>
+                <TextBox Name="TextBoxRankMax" Height="26" TextAlignment="Center" Grid.Column="2" Grid.Row="0" LostFocus="TextBoxRankMax_OnLostFocus" PreviewKeyUp="TextBox_OnEnter">
+                    <TextBox.Text>
+                        <Binding Path="ConstructedStatsRankFilterMax" Source="{StaticResource ConfigWrapper}">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding FormatFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Label Content="Format:" Width="60"/>
+            <ComboBox Name="ComboBoxFormat" SelectedIndex="0" SelectionChanged="ComboBoxFormat_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Result:" Width="60"/>
+            <ComboBox Name="ComboBoxResult" SelectionChanged="ComboBoxResult_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Turns:" Width="60"/>
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="22*"/>
+                    <RowDefinition Height="9*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="TextBoxTurnsMin" Height="26" Text="0" TextAlignment="Center" Grid.Column="0" Grid.Row="0" MaxLength="3"
+                     PreviewTextInput="TextBox_OnPreviewTextInput_DigitsOnly" LostFocus="TextBoxTurnsMin_OnLostFocus" PreviewKeyUp="TextBox_OnEnter"/>
+                <Label Content="to" Grid.Column="1" Grid.Row="0"/>
+                <TextBox Name="TextBoxTurnsMax" Height="26" Text="99" TextAlignment="Center" Grid.Column="2" Grid.Row="0" MaxLength="3"
+                     PreviewTextInput="TextBox_OnPreviewTextInput_DigitsOnly" LostFocus="TextBoxTurnsMax_OnLostFocus" PreviewKeyUp="TextBox_OnEnter"/>
+            </Grid>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Coin:" Width="60"/>
+            <ComboBox Name="ComboBoxCoin" SelectedIndex="0" SelectionChanged="ComboBoxCoin_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="Region:" Width="60"/>
+            <ComboBox Name="ComboBoxRegion" SelectedIndex="0" SelectionChanged="ComboBoxRegion_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <TextBox Name="TextBoxOpponentName" controls:TextBoxHelper.Watermark="Opponent name..." Margin="0,5,0,0" 
+                 LostFocus="TextBoxOpponentName_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
+        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="Notes..." Margin="0,5,0,0" 
+                 LostFocus="TextBoxNote_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
+        <CheckBox Name="CheckBoxArchived" Content="Include archived decks" Margin="5,5,0,0" 
+                  IsChecked="{Binding Path=ConstructedStatsIncludeArchived, Source={StaticResource ConfigWrapper}}"
+                  IsEnabled="{Binding IsChecked, ElementName=CheckBoxDecks, Converter={StaticResource InverseBooleanConverter}}"
+                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" />
+        <CheckBox Name="CheckBoxTags" Content="Apply tag filters" Margin="5,5,0,0" 
+                  ToolTip="Apply tag filteres currently set in 'DeckPicker' > 'Sort/Filter Decks' (double arrow button)."
+                  IsChecked="{Binding Path=ConstructedStatsApplyTagFilters, Source={StaticResource ConfigWrapper}}"
+                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" />
+    </StackPanel>
+</UserControl>

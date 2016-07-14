@@ -2,10 +2,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
@@ -17,23 +20,72 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayOpponent : INotifyPropertyChanged
 	{
-	    private GameV2 _game;
-	    private bool _initialized;
+		private GameV2 _game;
+		private bool _initialized;
 
 		public OverlayOpponent()
 		{
-		    
-		    InitializeComponent();
+			InitializeComponent();
 		}
 
-	    public void Load(GameV2 game)
+
+		public double OpponentScaling
 		{
-            _game = game;
-            CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
+			get { return Config.Instance.OverlayOpponentScaling; }
+			set
+			{
+				if(!_initialized)
+					return;
+				value = Math.Round(value);
+				if(value < SliderOverlayOpponentScaling.Minimum)
+					value = SliderOverlayOpponentScaling.Minimum;
+				else if(value > SliderOverlayOpponentScaling.Maximum)
+					value = SliderOverlayOpponentScaling.Maximum;
+				Config.Instance.OverlayOpponentScaling = value;
+				Config.Save();
+				Core.Overlay.UpdateScaling();
+				if(Config.Instance.UseSameScaling && Config.Instance.OverlayPlayerScaling != value)
+					Helper.OptionsMain.OptionsOverlayPlayer.PlayerScaling = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public double SecretScaling
+		{
+			get { return Config.Instance.SecretsPanelScaling * 100; }
+			set
+			{
+				if(!_initialized)
+					return;
+				value = Math.Round(value);
+				if(value < SliderOverlaySecretScaling.Minimum)
+					value = SliderOverlaySecretScaling.Minimum;
+				else if(value > SliderOverlaySecretScaling.Maximum)
+					value = SliderOverlaySecretScaling.Maximum;
+				Config.Instance.SecretsPanelScaling = value / 100;
+				Config.Save();
+				Core.Overlay.UpdateScaling();
+				OnPropertyChanged();
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public void Load(GameV2 game)
+		{
+			_game = game;
+			CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
 			SliderOverlayOpponentScaling.Value = Config.Instance.OverlayOpponentScaling;
 			CheckboxSameScaling.IsChecked = Config.Instance.UseSameScaling;
-		    SliderSecretOpacity.Value = Config.Instance.SecretsOpacity;
+			SliderSecretOpacity.Value = Config.Instance.SecretsOpacity;
+			CheckBoxCenterDeckVertically.IsChecked = Config.Instance.OverlayCenterOpponentStackPanel;
+			CheckboxIncludeCreated.IsChecked = Config.Instance.OpponentIncludeCreated;
+			CheckBoxAttack.IsChecked = !Config.Instance.HideOpponentAttackIcon;
+			ComboBoxCthun.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
+			ComboBoxCthun.SelectedItem = Config.Instance.OpponentCthunCounter;
+			ComboBoxSpells.ItemsSource = new[] {DisplayMode.Always, DisplayMode.Never};
+			ComboBoxSpells.SelectedItem = Config.Instance.OpponentSpellsCounter;
 
 			ElementSorterOpponent.IsPlayer = false;
 			foreach(var itemName in Config.Instance.PanelOrderOpponent)
@@ -125,63 +177,83 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Save();
 		}
 
-
-		public double OpponentScaling
-		{
-			get { return Config.Instance.OverlayOpponentScaling; }
-			set
-			{
-
-				if(!_initialized)
-					return;
-				value = Math.Round(value);
-				if(value < SliderOverlayOpponentScaling.Minimum)
-					value = SliderOverlayOpponentScaling.Minimum;
-				else if(value > SliderOverlayOpponentScaling.Maximum)
-					value = SliderOverlayOpponentScaling.Maximum;
-				Config.Instance.OverlayOpponentScaling = value;
-				Config.Save();
-				Core.Overlay.UpdateScaling();
-				if(Config.Instance.UseSameScaling && Config.Instance.OverlayPlayerScaling != value)
-					Helper.OptionsMain.OptionsOverlayPlayer.PlayerScaling = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public double SecretScaling
-		{
-			get { return Config.Instance.SecretsPanelScaling * 100; }
-			set
-			{
-
-				if(!_initialized)
-					return;
-				value = Math.Round(value);
-				if(value < SliderOverlaySecretScaling.Minimum)
-					value = SliderOverlaySecretScaling.Minimum;
-				else if(value > SliderOverlaySecretScaling.Maximum)
-					value = SliderOverlaySecretScaling.Maximum;
-				Config.Instance.SecretsPanelScaling = value / 100;
-				Config.Save();
-				Core.Overlay.UpdateScaling();
-				OnPropertyChanged();
-			}
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		private void TextBoxScaling_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
 			if(!char.IsDigit(e.Text, e.Text.Length - 1))
 				e.Handled = true;
+		}
+
+		private void CheckBoxCenterDeckVertically_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlayCenterOpponentStackPanel = true;
+			Config.Save();
+			Core.Overlay.UpdateStackPanelAlignment();
+		}
+
+		private void CheckBoxCenterDeckVertically_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlayCenterOpponentStackPanel = false;
+			Config.Save();
+			Core.Overlay.UpdateStackPanelAlignment();
+		}
+
+		private void CheckboxIncludeCreated_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OpponentIncludeCreated = true;
+			Config.Save();
+		}
+
+		private void CheckboxIncludeCreated_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OpponentIncludeCreated = false;
+			Config.Save();
+		}
+
+		private void ComboBoxCthun_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OpponentCthunCounter = (DisplayMode)ComboBoxCthun.SelectedItem;
+			Config.Save();
+		}
+
+		private void ComboBoxSpells_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OpponentSpellsCounter = (DisplayMode)ComboBoxSpells.SelectedItem;
+			Config.Save();
+		}
+
+		private void CheckBoxAttack_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentAttackIcon = false;
+			Config.Save();
+		}
+
+		private void CheckBoxAttack_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.HideOpponentAttackIcon = true;
+			Config.Save();
 		}
 	}
 }

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Exporting;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using Clipboard = System.Windows.Clipboard;
 
@@ -58,7 +60,8 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Core.Overlay.UpdatePosition();
 		}
 
-		[PredefinedHotKeyAction("Toggle overlay: card marks", "Turns the card marks and age on the overlay on or off (if the game is running).")]
+		[PredefinedHotKeyAction("Toggle overlay: card marks",
+			"Turns the card marks and age on the overlay on or off (if the game is running).")]
 		public static void ToggleOverlayCardMarks()
 		{
 			if(!Core.Game.IsRunning)
@@ -88,8 +91,9 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Config.Save();
 			Core.Overlay.UpdatePosition();
 		}
-		
-		[PredefinedHotKeyAction("Toggle overlay: attack icons", "Turns both attack icons on the overlay on or off (if the game is running).")]
+
+		[PredefinedHotKeyAction("Toggle overlay: attack icons", "Turns both attack icons on the overlay on or off (if the game is running).")
+		]
 		public static void ToggleOverlayAttack()
 		{
 			if(!Core.Game.IsRunning)
@@ -99,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Config.Save();
 			Core.Overlay.UpdatePosition();
 		}
-		
+
 		[PredefinedHotKeyAction("Toggle no deck mode", "Activates \"no deck mode\" (use no deck) or selects the last used deck.")]
 		public static void ToggleNoDeckMode()
 		{
@@ -114,24 +118,30 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void ExportDeck()
 		{
 			if(DeckList.Instance.ActiveDeck != null && Core.Game.IsInMenu)
-				DeckExporter.Export(DeckList.Instance.ActiveDeckVersion);
+				DeckExporter.Export(DeckList.Instance.ActiveDeckVersion).Forget();
+		}
+
+		[PredefinedHotKeyAction("Edit active deck", "Opens the edit dialog for the active deck (if any) and brings HDT to foreground.")]
+		public static void EditDeck()
+		{
+			if(DeckList.Instance.ActiveDeck == null)
+				return;
+			Core.MainWindow.SetNewDeck(DeckList.Instance.ActiveDeck, true);
+			Core.MainWindow.ActivateWindow();
 		}
 
 		[PredefinedHotKeyAction("Import from game: arena", "Starts the webimport process with all dialogs.")]
-		public static async void ImportFromArena()
+		public static void ImportFromArena()
 		{
-			if(!Core.Game.TempArenaDeck.Cards.Any())
-				await Core.MainWindow.ShowMessageAsync("No arena deck found", "Please enter the arena screen (and build your deck).");
-			else
-				Core.MainWindow.SetNewDeck(Core.Game.TempArenaDeck);
+			Core.MainWindow.StartArenaImporting().Forget();
 			Core.MainWindow.ActivateWindow();
 		}
 
 		[PredefinedHotKeyAction("Import from game: constructed", "Starts the webimport process with all dialogs.")]
 		public static void ImportFromConstructed()
 		{
-			Core.MainWindow.ImportDeck();
-			Core.MainWindow.ImportConstructedDeck();
+			Core.MainWindow.ShowImportDialog(false);
+			Core.MainWindow.ActivateWindow();
 		}
 
 		[PredefinedHotKeyAction("Import from web", "Starts the webimport process with all dialogs.")]
@@ -170,13 +180,44 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			if(handle == IntPtr.Zero)
 				return;
 			var rect = User32.GetHearthstoneRect(false);
-			var bmp = Helper.CaptureHearthstone(new Point(0, 0), rect.Width, rect.Height, handle, false);
-			var encoder = new PngBitmapEncoder();
-			var mem = new MemoryStream();
-			bmp.Save(mem, ImageFormat.Png);
-			encoder.Frames.Add(BitmapFrame.Create(mem));
-			await Core.MainWindow.SaveOrUploadScreenshot(encoder, "Hearthstone " + DateTime.Now.ToString("MM-dd-yy hh-mm-ss"));
-			mem.Dispose();
+			var bmp = await ScreenCapture.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, handle, false, false);
+			if(bmp == null)
+			{
+				Log.Error("There was an error capturing hearthstone.");
+				return;
+			}
+			using(var mem = new MemoryStream())
+			{
+				var encoder = new PngBitmapEncoder();
+				bmp.Save(mem, ImageFormat.Png);
+				encoder.Frames.Add(BitmapFrame.Create(mem));
+				await Core.MainWindow.SaveOrUploadScreenshot(encoder, "Hearthstone " + DateTime.Now.ToString("MM-dd-yy hh-mm-ss"));
+			}
+			Core.MainWindow.ActivateWindow();
+		}
+
+		[PredefinedHotKeyAction("Game Screenshot",
+			"Creates a screenshot of the game only. Comes with an option to automatically upload to imgur."
+			)]
+		public static async void GameScreenshot()
+		{
+			var handle = User32.GetHearthstoneWindow();
+			if(handle == IntPtr.Zero)
+				return;
+			var rect = User32.GetHearthstoneRect(false);
+			var bmp = await ScreenCapture.CaptureHearthstoneAsync(new Point(0, 0), rect.Width, rect.Height, handle, false, true);
+			if(bmp == null)
+			{
+				Log.Error("There was an error capturing hearthstone.");
+				return;
+			}
+			using(var mem = new MemoryStream())
+			{
+				var encoder = new PngBitmapEncoder();
+				bmp.Save(mem, ImageFormat.Png);
+				encoder.Frames.Add(BitmapFrame.Create(mem));
+				await Core.MainWindow.SaveOrUploadScreenshot(encoder, "Hearthstone " + DateTime.Now.ToString("MM-dd-yy hh-mm-ss"));
+			}
 			Core.MainWindow.ActivateWindow();
 		}
 
@@ -191,7 +232,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void StartHearthstone()
 		{
 			if(Core.MainWindow.BtnStartHearthstone.IsEnabled)
-				Helper.StartHearthstoneAsync();
+				Helper.StartHearthstoneAsync().Forget();
 		}
 
 		[PredefinedHotKeyAction("Show main window", "Brings up the main window.")]
@@ -203,11 +244,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		[PredefinedHotKeyAction("Show stats", "Brings up the stats window or flyout.")]
 		public static void ShowStats()
 		{
-			Core.MainWindow.ShowStats();
-			if(Config.Instance.StatsInWindow)
-				Core.Windows.StatsWindow.Activate();
-			else
-				Core.MainWindow.ActivateWindow();
+			Core.MainWindow.ShowStats(false, false);
 		}
 
 		[PredefinedHotKeyAction("Reload deck", "Resets HDT to last game start.")]

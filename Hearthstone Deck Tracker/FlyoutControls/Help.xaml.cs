@@ -1,6 +1,5 @@
 ﻿#region
 
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -18,10 +17,7 @@ namespace Hearthstone_Deck_Tracker
 			InitializeComponent();
 		}
 
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			Process.Start(e.Uri.AbsoluteUri);
-		}
+		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 
 		private void ButtonUpdateNotes_OnClick(object sender, RoutedEventArgs e)
 		{

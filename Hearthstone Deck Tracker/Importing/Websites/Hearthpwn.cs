@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -37,7 +38,6 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 				var cardNameNodes =
 					doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]//a[contains(@href,'/cards/') and contains(@class,'rarity')]");
-				var cardCountNodes = doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]");
 				//<span class="deck-type">Midrange</span>
 				var decktype = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'deck-type')]").InnerText;
 				if(decktype != "None" && Config.Instance.TagDecksOnImport)
@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 
 				var cardNames = cardNameNodes.Select(cardNameNode => HttpUtility.HtmlDecode(cardNameNode.InnerText));
-				var cardCosts = cardCountNodes.Select(countNode => int.Parse(Regex.Match(countNode.LastChild.InnerText, @"\d+").Value));
+				var cardCosts = cardNameNodes.Select(cardNameNode => int.Parse(cardNameNode.Attributes["data-Count"].Value));
 
 				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
 				foreach(var info in cardInfo)
@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "DeckImporter");
+				Log.Error(e);
 				return null;
 			}
 		}
@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "DeckImporter");
+				Log.Error(e);
 				return null;
 			}
 		}

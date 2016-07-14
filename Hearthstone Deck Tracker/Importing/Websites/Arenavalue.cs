@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using HtmlAgilityPack;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 
@@ -20,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 		{
 			try
 			{
-				var deck = new Deck {Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate), IsArenaDeck = true};
+				var deck = new Deck {IsArenaDeck = true};
 
 				const string baseUrl = @"http://www.arenavalue.com/deckpopout.php?id=";
 				var newUrl = baseUrl + url.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Last();
@@ -66,8 +67,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 					var text = HttpUtility.HtmlDecode(node.InnerText).Trim();
 
-					var pattern = @"^\d+\s*(.+?)\s*(x \d+)?$";
-					var match = Regex.Match(text, pattern);
+					var match = Regex.Match(text, @"^\d+\s*(.+?)\s*(x \d+)?$");
 
 					var name = "";
 					if(match.Success && match.Groups.Count == 3)
@@ -82,11 +82,12 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 				}
+				deck.Name = Helper.ParseDeckNameTemplate(Config.Instance.ArenaDeckNameTemplate, deck);
 				return deck;
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "DeckImporter");
+				Log.Error(e);
 				return null;
 			}
 		}

@@ -20,7 +20,7 @@
                 <GroupBox Header="FAQ">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                         <Hyperlink
-                            NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ"
+                            NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/FAQ"
                             RequestNavigate="Hyperlink_RequestNavigate">
                             Go to the FAQ.
                         </Hyperlink>
@@ -103,7 +103,7 @@
                         </GroupBox>
                         <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                             <Hyperlink
-                                NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Overlay"
+                                NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Overlay"
                                 RequestNavigate="Hyperlink_RequestNavigate">
                                 Additional information can be found here.
                             </Hyperlink>
@@ -117,14 +117,14 @@
                         <LineBreak />
                         <Run Text="1) Check out the" />
                         <Hyperlink
-                            NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/issues?state=open"
+                            NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues?state=open"
                             RequestNavigate="Hyperlink_RequestNavigate">
                             issues on GitHub.
                         </Hyperlink>
                         <Run
                             Text="If there's no issue on the topic feel free to open a new one and/or even fix it yourself and create a pull request. For some futher information on what you might want to include in the issue " />
                         <Hyperlink
-                            NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Reporting-Issues"
+                            NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Reporting-Issues"
                             RequestNavigate="Hyperlink_RequestNavigate">
                             click here.
                         </Hyperlink>
@@ -136,14 +136,14 @@
                     <StackPanel>
                         <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
                             <Run Text="The project can be found" />
-                            <Hyperlink NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/"
+                            <Hyperlink NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/"
                                        RequestNavigate="Hyperlink_RequestNavigate">
                                 here.
                             </Hyperlink>
                             <LineBreak />
                             <Run Text="The" />
                             <Hyperlink
-                                NavigateUri="https://github.com/Epix37/Hearthstone-Deck-Tracker/blob/master/README.md"
+                                NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/blob/master/README.md"
                                 RequestNavigate="Hyperlink_RequestNavigate">
                                 readme
                             </Hyperlink>

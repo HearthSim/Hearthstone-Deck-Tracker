@@ -16,244 +16,81 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 {
 	public class ArenaStats : INotifyPropertyChanged
 	{
-		private static readonly ArenaStats _instance = new ArenaStats();
+		public static ArenaStats Instance { get; } = new ArenaStats();
 
-		public static ArenaStats Instance
-		{
-			get { return _instance; }
-		}
+		private IEnumerable<Deck> ArenaDecks => !Core.Initialized ? new List<Deck>() : DeckList.Instance.Decks.Where(x => x != null && x.IsArenaDeck);
 
-		private IEnumerable<Deck> ArenaDecks
-		{
-			get
-			{
-				if(!Core.Initialized)
-					return new List<Deck>();
-				return DeckList.Instance.Decks.Where(x => x != null && x.IsArenaDeck);
-			}
-		}
+		public IEnumerable<ArenaRun> Runs => ArenaDecks.Select(x => new ArenaRun(x)).OrderByDescending(x => x.StartTime);
 
-		public IEnumerable<ArenaRun> Runs
-		{
-			get { return ArenaDecks.Select(x => new ArenaRun(x)).OrderByDescending(x => x.StartTime); }
-		}
+		public IEnumerable<ClassStats> ClassStats => GetFilteredRuns(classFilter: false).GroupBy(x => x.Class).Select(x => new ClassStats(x.Key, x)).OrderBy(x => x.Class);
 
-		public IEnumerable<ClassStats> ClassStats
-		{
-			get
-			{
-				return GetFilteredRuns(classFilter: false).GroupBy(x => x.Class).Select(x => new ClassStats(x.Key, x)).OrderBy(x => x.Class);
-			}
-		}
+		public int PacksCountClassic => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.Classic));
 
-		public int PacksCountClassic
-		{
-			get { return GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.Classic)); }
-		}
+		public int PacksCountGvg => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.GoblinsVsGnomes));
 
-		public int PacksCountGvg
-		{
-			get { return GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.GoblinsVsGnomes)); }
-		}
+		public int PacksCountTgt => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.TheGrandTournament));
 
-		public int PacksCountTgt
-		{
-			get { return GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.TheGrandTournament)); }
-		}
+		public int PacksCountWotog => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.WhispersOfTheOldGods));
 
-		public int PacksCountTotal
-		{
-			get { return GetFilteredRuns().Sum(x => x.PackCount); }
-		}
+		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
-		public double PacksCountAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns().Count();
-				return count == 0 ? 0 : Math.Round(1.0 * PacksCountTotal / GetFilteredRuns().Count(), 2);
-			}
-		}
+		public double PacksCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.PackCount).DefaultIfEmpty(0).Average(), 2);
 
-		public int GoldTotal
-		{
-			get { return GetFilteredRuns().Sum(x => x.Gold); }
-		}
+		public int GoldTotal => GetFilteredRuns().Sum(x => x.Gold);
 
-		public double GoldAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns().Count();
-				return count == 0 ? 0 : Math.Round(1.0 * GoldTotal / GetFilteredRuns().Count(), 2);
-			}
-		}
+		public double GoldAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.Gold).DefaultIfEmpty(0).Average(), 2);
 
-		public int GoldSpent
-		{
-			get {return GetFilteredRuns().Count(x => x.Deck.ArenaReward.PaymentMethod == ArenaPaymentMethod.Gold) * 150; }
-		}
+		public int GoldSpent => GetFilteredRuns().Count(x => x.Deck.ArenaReward.PaymentMethod == ArenaPaymentMethod.Gold) * 150;
 
-		public int DustTotal
-		{
-			get { return GetFilteredRuns().Sum(x => x.Dust); }
-		}
+		public int DustTotal => GetFilteredRuns().Sum(x => x.Dust);
 
-		public double DustAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns().Count();
-				return count == 0 ? 0 : Math.Round(1.0 * DustTotal / count, 2);
-			}
-		}
+		public double DustAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.Dust).DefaultIfEmpty(0).Average(), 2);
 
-		public int CardCountTotal
-		{
-			get { return GetFilteredRuns().Sum(x => x.CardCount); }
-		}
+		public int CardCountTotal => GetFilteredRuns().Sum(x => x.CardCount);
 
-		public double CardCountAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns().Count();
-				return count == 0 ? 0 : Math.Round(1.0 * CardCountTotal / GetFilteredRuns().Count(), 2);
-			}
-		}
+		public double CardCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.CardCount).DefaultIfEmpty(0).Average(), 2);
 
-		public int CardCountGolden
-		{
-			get { return GetFilteredRuns().Sum(x => x.CardCountGolden); }
-		}
+		public int CardCountGolden => GetFilteredRuns().Sum(x => x.CardCountGolden);
 
-		public double CardCountGoldenAveragePerRun
-		{
-			get
-			{
-				var count = GetFilteredRuns().Count();
-				return count == 0 ? 0 : Math.Round(1.0 * CardCountGolden / GetFilteredRuns().Count(), 2);
-			}
-		}
+		public double CardCountGoldenAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.CardCountGolden).DefaultIfEmpty(0).Average(), 2);
 
-		public ClassStats ClassStatsBest
-		{
-			get { return !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.WinRate).First(); }
-		}
+		public ClassStats ClassStatsBest => !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.WinRate).First();
+		public ClassStats ClassStatsWorst => !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.WinRate).First();
+		public ClassStats ClassStatsMostPicked => !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.Runs).First();
+		public ClassStats ClassStatsLeastPicked => !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.Runs).First();
 
-		public ClassStats ClassStatsWorst
-		{
-			get { return !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.WinRate).First(); }
-		}
+		public ClassStats ClassStatsDruid => GetClassStats("Druid");
+		public ClassStats ClassStatsHunter => GetClassStats("Hunter");
+		public ClassStats ClassStatsMage => GetClassStats("Mage");
+		public ClassStats ClassStatsPaladin => GetClassStats("Paladin");
+		public ClassStats ClassStatsPriest => GetClassStats("Priest");
+		public ClassStats ClassStatsRogue => GetClassStats("Rogue");
+		public ClassStats ClassStatsShaman => GetClassStats("Shaman");
+		public ClassStats ClassStatsWarlock => GetClassStats("Warlock");
+		public ClassStats ClassStatsWarrior => GetClassStats("Warrior");
 
-		public ClassStats ClassStatsMostPicked
-		{
-			get { return !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.Runs).First(); }
-		}
+		public ClassStats ClassStatsAll => GetFilteredRuns(classFilter: false).GroupBy(x => true).Select(x => new ClassStats("All", x)).FirstOrDefault();
 
-		public ClassStats ClassStatsLeastPicked
-		{
-			get { return !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.Runs).First(); }
-		}
+		public int RunsCount => GetFilteredRuns().Count();
+		public int GamesCountTotal => GetFilteredRuns().Sum(x => x.Games.Count());
+		public int GamesCountWon => GetFilteredRuns().Sum(x => x.Games.Count(g => g.Result == GameResult.Win));
+		public int GamesCountLost => GetFilteredRuns().Sum(x => x.Games.Count(g => g.Result == GameResult.Loss));
 
-		public ClassStats ClassStatsDruid
-		{
-			get { return GetClassStats("Druid"); }
-		}
+		public double AverageWinsPerRun => (double)GamesCountWon / GetFilteredRuns().Count();
 
-		public ClassStats ClassStatsHunter
-		{
-			get { return GetClassStats("Hunter"); }
-		}
+		public IEnumerable<ArenaRun> FilteredRuns => GetFilteredRuns();
 
-		public ClassStats ClassStatsMage
-		{
-			get { return GetClassStats("Mage"); }
-		}
-
-		public ClassStats ClassStatsPaladin
-		{
-			get { return GetClassStats("Paladin"); }
-		}
-
-		public ClassStats ClassStatsPriest
-		{
-			get { return GetClassStats("Priest"); }
-		}
-
-		public ClassStats ClassStatsRogue
-		{
-			get { return GetClassStats("Rogue"); }
-		}
-
-		public ClassStats ClassStatsShaman
-		{
-			get { return GetClassStats("Shaman"); }
-		}
-
-		public ClassStats ClassStatsWarlock
-		{
-			get { return GetClassStats("Warlock"); }
-		}
-
-		public ClassStats ClassStatsWarrior
-		{
-			get { return GetClassStats("Warrior"); }
-		}
-
-		public ClassStats ClassStatsAll
-		{
-			get { return GetFilteredRuns(classFilter: false).GroupBy(x => true).Select(x => new ClassStats("All", x)).FirstOrDefault(); }
-		}
-
-		public int RunsCount
-		{
-			get { return GetFilteredRuns().Count(); }
-		}
-
-		public int GamesCountTotal
-		{
-			get { return GetFilteredRuns().Sum(x => x.Games.Count()); }
-		}
-
-		public int GamesCountWon
-		{
-			get { return GetFilteredRuns().Sum(x => x.Games.Count(g => g.Result == GameResult.Win)); }
-		}
-
-		public int GamesCountLost
-		{
-			get { return GetFilteredRuns().Sum(x => x.Games.Count(g => g.Result == GameResult.Loss)); }
-		}
-
-		public double AverageWinsPerRun
-		{
-			get { return (double)GamesCountWon / GetFilteredRuns().Count(); }
-		}
-
-		public IEnumerable<ArenaRun> FilteredRuns
-		{
-			get { return GetFilteredRuns(); }
-		}
-
-		public IEnumerable<ChartStats> PlayedClassesPercent
-		{
-			get
-			{
-				return
-					GetFilteredRuns()
-						.GroupBy(x => x.Class)
-						.OrderBy(x => x.Key)
-						.Select(
-						        x =>
-						        new ChartStats
-						        {
-							        Name = x.Key + " (" + Math.Round(100.0 * x.Count() / ArenaDecks.Count()) + "%)",
-							        Value = x.Count(),
-							        Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
-						        });
-			}
-		}
+		public IEnumerable<ChartStats> PlayedClassesPercent => GetFilteredRuns()
+			.GroupBy(x => x.Class)
+			.OrderBy(x => x.Key)
+			.Select(
+				    x =>
+					new ChartStats
+					{
+						Name = x.Key + " (" + Math.Round(100.0 * x.Count() / ArenaDecks.Count()) + "%)",
+						Value = x.Count(),
+						Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
+					});
 
 		public IEnumerable<ChartStats> OpponentClassesPercent
 		{
@@ -367,16 +204,16 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		public ClassStats GetClassStats(string @class)
 		{
 			var runs = GetFilteredRuns(classFilter: false).Where(x => x.Class == @class).ToList();
-			if(!runs.Any())
-				return null;
-			return new ClassStats(@class, runs);
+			return !runs.Any() ? null : new ClassStats(@class, runs);
 		}
 
 		public IEnumerable<ArenaRun> GetFilteredRuns(bool archivedFilter = true, bool classFilter = true, bool regionFilter = true,
-		                                             bool timeframeFilter = true)
+		                                             bool timeframeFilter = true, bool requireAnyReward = false)
 		{
 			var filtered = Runs;
-			if(archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
+			if(requireAnyReward)
+				filtered = filtered.Where(x => x.PackCount > 0 || x.Gold > 0 || x.Dust > 0 || x.CardCount > 0);
+			if (archivedFilter && !Config.Instance.ArenaStatsIncludeArchived)
 				filtered = filtered.Where(x => !x.Deck.Archived);
 			if(classFilter && Config.Instance.ArenaStatsClassFilter != HeroClassStatsFilter.All)
 				filtered = filtered.Where(x => x.Class == Config.Instance.ArenaStatsClassFilter.ToString());
@@ -392,7 +229,21 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					case DisplayedTimeFrame.AllTime:
 						break;
 					case DisplayedTimeFrame.CurrentSeason:
-						filtered = filtered.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+						filtered = filtered.Where(g => g.StartTime >= new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+						break;
+					case DisplayedTimeFrame.LastSeason:
+						filtered = filtered.Where(g => g.StartTime >= new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-1)
+													&& g.StartTime < new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+						break;
+					case DisplayedTimeFrame.CustomSeason:
+						var current = Helper.CurrentSeason;
+						filtered = filtered.Where(g => g.StartTime >= new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+																		.AddMonths(Config.Instance.ArenaStatsCustomSeasonMin - current));
+						if(Config.Instance.ArenaStatsCustomSeasonMax.HasValue)
+						{
+							filtered = filtered.Where(g => g.StartTime < new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+																		.AddMonths(Config.Instance.ArenaStatsCustomSeasonMax.Value - current + 1));
+						}
 						break;
 					case DisplayedTimeFrame.ThisWeek:
 						filtered = filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
@@ -413,9 +264,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public void OnPropertyChanged(string[] properties)
@@ -426,61 +275,62 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public void UpdateArenaStats()
 		{
-			OnPropertyChanged("Runs");
-			OnPropertyChanged("OpponentClassesPercent");
-			OnPropertyChanged("PlayedClassesPercent");
-			OnPropertyChanged("Wins");
-			OnPropertyChanged("AvgWinsPerClass");
-			OnPropertyChanged("FilteredRuns");
+			OnPropertyChanged(nameof(Runs));
+			OnPropertyChanged(nameof(OpponentClassesPercent));
+			OnPropertyChanged(nameof(PlayedClassesPercent));
+			OnPropertyChanged(nameof(Wins));
+			OnPropertyChanged(nameof(AvgWinsPerClass));
+			OnPropertyChanged(nameof(FilteredRuns));
 		}
 
 		public void UpdateArenaStatsHighlights()
 		{
-			OnPropertyChanged("ClassStats");
-			OnPropertyChanged("ClassStatsDruid");
-			OnPropertyChanged("ClassStatsHunter");
-			OnPropertyChanged("ClassStatsMage");
-			OnPropertyChanged("ClassStatsPaladin");
-			OnPropertyChanged("ClassStatsPriest");
-			OnPropertyChanged("ClassStatsRogue");
-			OnPropertyChanged("ClassStatsShaman");
-			OnPropertyChanged("ClassStatsWarlock");
-			OnPropertyChanged("ClassStatsWarrior");
-			OnPropertyChanged("ClassStatsAll");
-			OnPropertyChanged("ClassStatsBest");
-			OnPropertyChanged("ClassStatsWorst");
-			OnPropertyChanged("ClassStatsMostPicked");
-			OnPropertyChanged("ClassStatsLeastPicked");
+			OnPropertyChanged(nameof(ClassStats));
+			OnPropertyChanged(nameof(ClassStatsDruid));
+			OnPropertyChanged(nameof(ClassStatsHunter));
+			OnPropertyChanged(nameof(ClassStatsMage));
+			OnPropertyChanged(nameof(ClassStatsPaladin));
+			OnPropertyChanged(nameof(ClassStatsPriest));
+			OnPropertyChanged(nameof(ClassStatsRogue));
+			OnPropertyChanged(nameof(ClassStatsShaman));
+			OnPropertyChanged(nameof(ClassStatsWarlock));
+			OnPropertyChanged(nameof(ClassStatsWarrior));
+			OnPropertyChanged(nameof(ClassStatsAll));
+			OnPropertyChanged(nameof(ClassStatsBest));
+			OnPropertyChanged(nameof(ClassStatsWorst));
+			OnPropertyChanged(nameof(ClassStatsMostPicked));
+			OnPropertyChanged(nameof(ClassStatsLeastPicked));
 		}
 
 		public void UpdateArenaRewards()
 		{
-			OnPropertyChanged("GoldTotal");
-			OnPropertyChanged("GoldAveragePerRun");
-			OnPropertyChanged("GoldSpent");
-			OnPropertyChanged("DustTotal");
-			OnPropertyChanged("DustAveragePerRun");
-			OnPropertyChanged("PacksCountClassic");
-			OnPropertyChanged("PacksCountGvg");
-			OnPropertyChanged("PacksCountTgt");
-			OnPropertyChanged("PacksCountTotal");
-			OnPropertyChanged("PacksCountAveragePerRun");
-			OnPropertyChanged("CardCountTotal");
-			OnPropertyChanged("CardCountGolden");
-			OnPropertyChanged("CardCountAveragePerRun");
-			OnPropertyChanged("CardCountGoldenAveragePerRun");
+			OnPropertyChanged(nameof(GoldTotal));
+			OnPropertyChanged(nameof(GoldAveragePerRun));
+			OnPropertyChanged(nameof(GoldSpent));
+			OnPropertyChanged(nameof(DustTotal));
+			OnPropertyChanged(nameof(DustAveragePerRun));
+			OnPropertyChanged(nameof(PacksCountClassic));
+			OnPropertyChanged(nameof(PacksCountGvg));
+			OnPropertyChanged(nameof(PacksCountTgt));
+			OnPropertyChanged(nameof(PacksCountWotog));
+			OnPropertyChanged(nameof(PacksCountTotal));
+			OnPropertyChanged(nameof(PacksCountAveragePerRun));
+			OnPropertyChanged(nameof(CardCountTotal));
+			OnPropertyChanged(nameof(CardCountGolden));
+			OnPropertyChanged(nameof(CardCountAveragePerRun));
+			OnPropertyChanged(nameof(CardCountGoldenAveragePerRun));
 		}
 
 		public void UpdateArenaRuns()
 		{
-			OnPropertyChanged("Runs");
-			OnPropertyChanged("FilteredRuns");
+			OnPropertyChanged(nameof(Runs));
+			OnPropertyChanged(nameof(FilteredRuns));
 		}
 
 		public void UpdateExpensiveArenaStats()
 		{
-			OnPropertyChanged("WinLossVsClass");
-			OnPropertyChanged("WinsByClass");
+			OnPropertyChanged(nameof(WinLossVsClass));
+			OnPropertyChanged(nameof(WinsByClass));
 		}
 	}
 }

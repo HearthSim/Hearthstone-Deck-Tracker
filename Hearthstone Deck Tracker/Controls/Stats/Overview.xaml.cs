@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Controls.Stats.Constructed;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
-using Hearthstone_Deck_Tracker.Utility;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats
 {
@@ -25,88 +16,58 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	/// </summary>
 	public partial class Overview : UserControl
 	{
-		private readonly ArenaRuns _arenaRuns = new ArenaRuns();
 		private readonly ArenaAdvancedCharts _arenaAdvancedCharts = new ArenaAdvancedCharts();
-		private readonly ArenaStatsSummary _arenaStatsSummary = new ArenaStatsSummary();
 		private readonly bool _initialized;
 
 		public Overview()
 		{
 			InitializeComponent();
-			ComboBoxTimeframe.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));
-			ComboBoxTimeframe.SelectedItem = Config.Instance.ArenaStatsTimeFrameFilter;
-			ComboBoxClass.ItemsSource = Enum.GetValues(typeof(HeroClassStatsFilter)).Cast<HeroClassStatsFilter>().Select(x => new HeroClassStatsFilterWrapper(x));
-			ComboBoxClass.SelectedItem = new HeroClassStatsFilterWrapper(Config.Instance.ArenaStatsClassFilter);
-			ComboBoxRegion.ItemsSource = Enum.GetValues(typeof(RegionAll));
-			ComboBoxRegion.SelectedItem = Config.Instance.ArenaStatsRegionFilter;
+			ArenaFilters.SetUpdateCallback(UpdateCallBack);
+			ConstructedFilters.SetUpdateCallback(UpdateCallBack);
+			ConstructedFilters.CheckBoxDecks.Checked += (sender, args) => ConstructedSummary.UpdateContent();
+			ConstructedFilters.CheckBoxDecks.Unchecked += (sender, args) => ConstructedSummary.UpdateContent();
 			_initialized = true;
 		}
 
-		public ArenaStatsSummary ArenaStatsSummary
-		{
-			get { return _arenaStatsSummary; }
-		}
+		public ArenaStatsSummary ArenaStatsSummary { get; } = new ArenaStatsSummary();
 
-		public ArenaRuns ArenaRuns
-		{
-			get { return _arenaRuns; }
-		}
+		public ArenaRuns ArenaRuns { get; } = new ArenaRuns();
 
-		public object ArenaAdvancedCharts
-		{
-			get { return _arenaAdvancedCharts; }
-		}
+		public ConstructedGames ConstructedGames { get; } = new ConstructedGames();
 
-		private void ComboBoxTimeframe_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ArenaStatsTimeFrameFilter = (DisplayedTimeFrame)ComboBoxTimeframe.SelectedItem;
-			Config.Save();
-			UpdateStats();
-		}
+		public ConstructedSummary ConstructedSummary { get; } = new ConstructedSummary();
 
-		private void ComboBoxClass_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
-			Config.Save();
-			UpdateStats();
-		}
+		public ConstructedCharts ConstructedCharts { get; } = new ConstructedCharts();
 
-		private void DatePickerCustomTimeFrame_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			UpdateStats();
-		}
+		public ConstructedFilters ConstructedFilters { get; private set; } = new ConstructedFilters();
 
-		private void ComboBoxRegion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ArenaStatsRegionFilter = (RegionAll)ComboBoxRegion.SelectedItem;
-			Config.Save();
-			UpdateStats();
-		}
+		public ArenaFilters ArenaFilters { get; private set; } = new ArenaFilters();
 
-		private void CheckBoxArchived_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			UpdateStats();
-		}
+		public object ArenaAdvancedCharts => _arenaAdvancedCharts;
 
-		private void CheckBoxArchived_OnUnchecked(object sender, RoutedEventArgs e)
+		private void UpdateCallBack()
 		{
-			if(!_initialized)
-				return;
-			UpdateStats();
+			if(Config.Instance.StatsAutoRefresh)
+				UpdateStats();
 		}
 
 		public void UpdateStats()
 		{
+			if(TreeViewItemConstructedGames.IsSelected)
+			{
+				ConstructedStats.Instance.UpdateGames();
+				return;
+			}
+			if(TreeViewItemConstructedSummary.IsSelected || TreeViewItemConstructed.IsSelected)
+			{
+				ConstructedStats.Instance.UpdateConstructedStats();
+				return;
+			}
+			if(TreeViewItemConstructedCharts.IsSelected)
+			{
+				ConstructedStats.Instance.UpdateConstructedCharts();
+				return;
+			}
 			ArenaStats.Instance.UpdateArenaStats();
 			if(TreeViewItemArenaRunsSummary.IsSelected || TreeViewItemArenaRuns.IsSelected)
 			{
@@ -142,36 +103,69 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			UpdateStats();
 		}
-	}
 
-	public class HeroClassStatsFilterWrapper
-	{
-		public HeroClassStatsFilterWrapper(HeroClassStatsFilter heroClass)
+		private void TreeViewItemConstructedGames_OnSelected(object sender, RoutedEventArgs e)
 		{
-			HeroClass = heroClass;
+			if(!_initialized)
+				return;
+			UpdateStats();
 		}
 
-		public HeroClassStatsFilter HeroClass { get; private set; }
-
-		public BitmapImage ClassImage
+		private void TreeViewItemConstructedSummary_OnSelected(object sender, RoutedEventArgs e)
 		{
-			get { return ImageCache.GetClassIcon(HeroClass.ToString()); }
+			if(!_initialized)
+				return;
+			UpdateStats();
 		}
 
-		public Visibility ImageVisibility
+		private void TreeViewItemConstructedCharts_OnSelected(object sender, RoutedEventArgs e)
 		{
-			get { return HeroClass == HeroClassStatsFilter.All ? Visibility.Collapsed : Visibility.Visible; }
+			if(!_initialized)
+				return;
+			UpdateStats();
 		}
 
-		public override bool Equals(object obj)
+		private void TreeViewStats_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
 		{
-			var wrapper = obj as HeroClassStatsFilterWrapper;
-			return wrapper != null && HeroClass.Equals(wrapper.HeroClass);
+			var selected = TreeViewStats.SelectedItem as TreeViewItem;
+			if(selected == null)
+				return;
+			if(selected.Equals(TreeViewItemArenaRuns)
+			   || (Helper.GetVisualParent<TreeViewItem>(selected)?.Equals(TreeViewItemArenaRuns) ?? false))
+				ContentControlFilter.Content = ArenaFilters;
+			else if(selected.Equals(TreeViewItemConstructed)
+					|| (Helper.GetVisualParent<TreeViewItem>(selected)?.Equals(TreeViewItemConstructed) ?? false))
+				ContentControlFilter.Content = ConstructedFilters;
 		}
 
-		public override int GetHashCode()
+		private void ButtonRefresh_OnClick(object sender, RoutedEventArgs e) => UpdateStats();
+
+		private void ButtonMore_OnClick(object sender, RoutedEventArgs e)
 		{
-			return HeroClass.GetHashCode();
+			ButtonMoreContextMenu.Placement = PlacementMode.Bottom;
+			ButtonMoreContextMenu.PlacementTarget = ButtonMore;
+			ButtonMoreContextMenu.IsOpen = true;
+		}
+
+		private void MenuItemReset_OnClick(object sender, RoutedEventArgs e)
+		{
+			if(ContentControlFilter.Content is ArenaFilters)
+			{
+				ArenaFilters.Reset();
+				ArenaFilters = new ArenaFilters(UpdateCallBack);
+				ContentControlFilter.Content = ArenaFilters;
+			}
+			else if(ContentControlFilter.Content is ConstructedFilters)
+			{
+				ConstructedFilters.Reset();
+				ConstructedFilters = new ConstructedFilters(UpdateCallBack);
+				ContentControlFilter.Content = ConstructedFilters;
+				ConstructedFilters.CheckBoxDecks.Checked += (s, args) => ConstructedSummary.UpdateContent();
+				ConstructedFilters.CheckBoxDecks.Unchecked += (s, args) => ConstructedSummary.UpdateContent();
+			}
+			else
+				return;
+			UpdateStats();
 		}
 	}
 }

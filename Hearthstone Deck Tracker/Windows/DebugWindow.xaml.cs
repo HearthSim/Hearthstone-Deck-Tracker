@@ -3,16 +3,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 
 #endregion
@@ -25,9 +23,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public partial class DebugWindow : Window
 	{
 		private readonly GameV2 _game;
+		private readonly List<string> _expanded = new List<string>();
 		private List<object> _previous = new List<object>();
 		private bool _update;
-		private List<string> _expanded = new List<string>();
 
 		public DebugWindow(GameV2 game)
 		{
@@ -43,13 +41,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			while(_update)
 			{
 				if(TabControlDebug.SelectedIndex == 0)
-				{
 					UpdateCards();
-				}
 				else if(TabControlDebug.SelectedIndex == 2)
-				{
 					UpdateBoardDamage();
-				}
 				else
 				{
 					switch((string)ComboBoxData.SelectedValue)
@@ -76,13 +70,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				new CollectionItem(_game.Player.Deck, "Player Deck"),
 				new CollectionItem(_game.Player.Graveyard, "Player Graveyard"),
 				new CollectionItem(_game.Player.Secrets, "Player Secrets"),
-				new CollectionItem(_game.Player.RevealedCards, "Player RevealedCards"),
+				new CollectionItem(_game.Player.RevealedEntities, "Player RevealedEntities"),
 				new CollectionItem(_game.Opponent.Hand, "Opponent Hand"),
 				new CollectionItem(_game.Opponent.Board, "Opponent Board"),
 				new CollectionItem(_game.Opponent.Deck, "Opponent Deck"),
 				new CollectionItem(_game.Opponent.Graveyard, "Opponent Graveyard"),
 				new CollectionItem(_game.Opponent.Secrets, "Opponent Secrets"),
-				new CollectionItem(_game.Opponent.RevealedCards, "Opponent RevealedCards")
+				new CollectionItem(_game.Opponent.RevealedEntities, "Opponent RevealedEntities")
 			};
 			foreach(var collection in collections)
 			{
@@ -92,32 +86,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 				tvi.Expanded += OnItemExpanded;
 				tvi.Collapsed += OnItemCollapsed;
 				foreach(var item in collection.Collection)
-				{
 					tvi.Items.Add(item.ToString());
-				}
 				TreeViewCards.Items.Add(tvi);
 			}
 		}
 
 		private void UpdateBoardDamage()
 		{
+			if(Core.Game.Entities.Count < 67)
+				return;
 			var board = new BoardState();
 			PlayerDataGrid.ItemsSource = board.Player.Cards;
 			OpponentDataGrid.ItemsSource = board.Opponent.Cards;
-			PlayerHeader.Text = "Player " + board.Player.ToString();
-			OpponentHeader.Text = "Opponent " + board.Opponent.ToString();
+			PlayerHeader.Text = "Player " + board.Player;
+			OpponentHeader.Text = "Opponent " + board.Opponent;
 			DamageView.UpdateLayout();
-		}
-
-		public class CollectionItem
-		{
-			public CollectionItem(List<CardEntity> collection, string name)
-			{
-				Collection = collection;
-				Name = name;
-			}
-			public List<CardEntity> Collection { get; set; }
-			public string Name { get; set; }
 		}
 
 		private void FilterEntities()
@@ -148,22 +131,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private string GetTagKeyValue(KeyValuePair<GAME_TAG, int> pair)
+		private string GetTagKeyValue(KeyValuePair<GameTag, int> pair)
 		{
 			string value = pair.Value.ToString();
 			switch(pair.Key)
 			{
-				case GAME_TAG.ZONE:
-					value = Enum.Parse(typeof(TAG_ZONE), value).ToString();
+				case GameTag.ZONE:
+					value = Enum.Parse(typeof(Zone), value).ToString();
 					break;
-				case GAME_TAG.CARDTYPE:
-					value = Enum.Parse(typeof(TAG_CARDTYPE), value).ToString();
+				case GameTag.CARDTYPE:
+					value = Enum.Parse(typeof(CardType), value).ToString();
 					break;
-				case GAME_TAG.MULLIGAN_STATE:
-					value = Enum.Parse(typeof(TAG_MULLIGAN), value).ToString();
+				case GameTag.MULLIGAN_STATE:
+					value = Enum.Parse(typeof(Mulligan), value).ToString();
 					break;
-				case GAME_TAG.PLAYSTATE:
-					value = Enum.Parse(typeof(TAG_PLAYSTATE), value).ToString();
+				case GameTag.PLAYSTATE:
+					value = Enum.Parse(typeof(PlayState), value).ToString();
 					break;
 			}
 			return pair.Key + ":" + value;
@@ -248,6 +231,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var tvi = item as TreeViewItem;
 				tvi.IsExpanded = false;
 			}
+		}
+
+		public class CollectionItem
+		{
+			public CollectionItem(IEnumerable<Entity> collection, string name)
+			{
+				Collection = collection;
+				Name = name;
+			}
+
+			public IEnumerable<Entity> Collection { get; set; }
+			public string Name { get; set; }
 		}
 	}
 }

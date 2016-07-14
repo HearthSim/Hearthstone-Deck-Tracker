@@ -25,13 +25,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxExportName.IsChecked = Config.Instance.ExportSetDeckName;
 			CheckboxPrioGolden.IsChecked = Config.Instance.PrioritizeGolden;
 			CheckboxExportPasteClipboard.IsChecked = Config.Instance.ExportPasteClipboard;
-			CheckboxGoldenFeugen.IsChecked = Config.Instance.OwnsGoldenFeugen;
-			CheckboxGoldenStalagg.IsChecked = Config.Instance.OwnsGoldenStalagg;
 			CheckboxAutoClear.IsChecked = Config.Instance.AutoClearDeck;
 			CheckboxAutoClearFilters.IsChecked = Config.Instance.EnableExportAutoFilter;
 			TextboxExportDelay.Text = Config.Instance.ExportStartDelay.ToString();
 			CheckboxShowDialog.IsChecked = Config.Instance.ShowExportingDialog;
 			CheckboxExportAddVersion.IsChecked = Config.Instance.ExportAddDeckVersionToName;
+			CheckboxForceClear.IsChecked = Config.Instance.ExportForceClear;
 
 			var delay = Config.Instance.DeckExportDelay;
 			ComboboxExportSpeed.SelectedIndex = delay < 40 ? 0 : delay < 60 ? 1 : delay < 100 ? 2 : delay < 150 ? 3 : 4;
@@ -112,38 +111,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ExportPasteClipboard = false;
-			Config.Save();
-		}
-
-		private void CheckboxGoldenFeugen_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OwnsGoldenFeugen = true;
-			Config.Save();
-		}
-
-		private void CheckboxGoldenFeugen_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OwnsGoldenFeugen = false;
-			Config.Save();
-		}
-
-		private void CheckboxGoldenStalagg_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OwnsGoldenStalagg = true;
-			Config.Save();
-		}
-
-		private void CheckboxGoldenStalagg_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.OwnsGoldenStalagg = false;
 			Config.Save();
 		}
 
@@ -238,6 +205,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ExportAddDeckVersionToName = false;
+			Config.Save();
+		}
+
+		private void CheckboxForceClear_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ExportForceClear = true;
+			Config.Save();
+		}
+
+		private void CheckboxForceClear_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ExportForceClear = false;
 			Config.Save();
 		}
 	}

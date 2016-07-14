@@ -20,36 +20,26 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public IEnumerable<GameStats> Games { get; set; }
 
-		public int Wins
-		{
-			get { return Games.Count(x => x.Result == GameResult.Win); }
-		}
+		public int Wins => Games.Count(x => x.Result == GameResult.Win);
 
-		public int Losses
-		{
-			get { return Games.Count(x => x.Result == GameResult.Loss); }
-		}
+		public int Losses => Games.Count(x => x.Result == GameResult.Loss);
 
-		public double WinRate
-		{
-			get { return (double)Wins / (Wins + Losses); }
-		}
+		public double WinRate => (double)Wins / (Wins + Losses);
 
 		public string Class { get; set; }
 
-		public double WinRatePercent
-		{
-			get { return Math.Round(WinRate * 100); }
-		}
+		public double WinRatePercent => Math.Round(WinRate * 100);
 
 		public SolidColorBrush WinRateTextBrush
 		{
 			get
 			{
 				if(double.IsNaN(WinRate) || !Config.Instance.ArenaStatsTextColoring)
-					return new SolidColorBrush(Config.Instance.StatsInWindow ? Colors.Black : Colors.White);
+					return new SolidColorBrush(Config.Instance.StatsInWindow && Config.Instance.AppTheme != MetroTheme.BaseDark ? Colors.Black : Colors.White);
 				return new SolidColorBrush(WinRate >= 0.5 ? Colors.Green : Colors.Red);
 			}
 		}
+
+		public string Summary => Config.Instance.ConstructedStatsAsPercent ? (double.IsNaN(WinRate) ? "-" : $" {WinRatePercent}%") : $"{Wins} - {Losses}";
 	}
 }

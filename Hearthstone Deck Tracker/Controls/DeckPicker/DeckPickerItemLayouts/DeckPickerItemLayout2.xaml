@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
@@ -12,13 +11,23 @@
     <Border BorderBrush="{DynamicResource MenuItemDisabledBrush}" BorderThickness="0,1,0,1">
         <DockPanel>
             <Grid Width="46" Height="46" Margin="5,1,10,0">
-                <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}"
-                       RenderOptions.BitmapScalingMode="Fant" />
+                <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}" RenderOptions.BitmapScalingMode="Fant" />
+                <hearthstoneDeckTracker:HearthstoneTextBlock Text="s" FontSize="14" Fill="LimeGreen" Width="10" Height="18" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,2,0" Visibility="{Binding StandardViableVisibility}"
+                                                             ToolTip="This deck can be used in 'Standard' mode."/>
             </Grid>
             <Viewbox DockPanel.Dock="Right" Width="70" StretchDirection="DownOnly" Stretch="Fill"
                      HorizontalAlignment="Right" Margin="0,0,2,0">
-                <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <deckPicker:DateConverter x:Key="DateConverter"></deckPicker:DateConverter>
+                    </StackPanel.Resources>
+                    <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="14" />
+                    <TextBlock Text="{Binding LastPlayed, Converter={StaticResource DateConverter}}" HorizontalAlignment="Right"
+                           Foreground="{DynamicResource GrayTextColorBrush}" FontSize="11" Margin="0, 3, 0, 0"
+                           Visibility="{Binding Source={x:Static utility:ConfigWrapper.ShowLastPlayedDateOnDeckVisibility}}"
+                               ToolTip="Last time played" />
+                </StackPanel>
             </Viewbox>
             <StackPanel Margin="0,5">
                 <DockPanel>
@@ -42,7 +51,7 @@
                 </DockPanel>
                 <DockPanel Margin="0,-2,0,0" Height="19">
                     <Border DockPanel.Dock="Left" PreviewMouseDown="UseButton_OnPreviewMouseDown"
-                            Background="#01000000" Visibility="{Binding Source={ x:Static hearthstoneDeckTracker:Helper.UseButtonVisiblity}}"
+                            Background="#01000000" Visibility="{Binding Source={ x:Static utility:ConfigWrapper.UseButtonVisiblity}}"
                             Width="50">
                         <Border.Style>
                             <Style>

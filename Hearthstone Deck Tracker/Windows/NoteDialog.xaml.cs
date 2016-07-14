@@ -28,10 +28,7 @@ namespace Hearthstone_Deck_Tracker
 			_initialized = true;
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
-		{
-			SaveAndClose();
-		}
+		private void Button_Click(object sender, RoutedEventArgs e) => SaveAndClose();
 
 		private void SaveAndClose()
 		{
@@ -39,7 +36,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.Note = TextBoxNote.Text;
 				DeckStatsList.Save();
-				(Config.Instance.StatsInWindow ? Core.Windows.StatsWindow.StatsControl : Core.MainWindow.DeckStatsFlyout).Refresh();
 			}
 			Close();
 		}

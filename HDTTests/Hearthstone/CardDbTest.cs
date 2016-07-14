@@ -8,14 +8,6 @@ namespace HDTTests.Hearthstone
 	[TestClass]
 	public class CardDBTest
 	{
-		// Test collectable card count
-		[TestMethod]
-		public void TestTotalCollectableCards()
-		{
-			// 4.0.0.10833 - LOE
-			Assert.AreEqual(743, Database.GetActualCards().Count);
-		}
-
 		// Dreadscale card has unusual id ending in 't', some tests to check it is recognized
 		[TestMethod]
 		public void TestDreadscaleFromId()
@@ -23,6 +15,7 @@ namespace HDTTests.Hearthstone
 			var card = Database.GetCardFromId("AT_063t");
 			Assert.AreEqual("Dreadscale", card.Name);
 		}
+
 		[TestMethod]
 		public void TestMurlocTinyFinInGetActual()
 		{
@@ -30,6 +23,7 @@ namespace HDTTests.Hearthstone
 			var found = db.Any<Card>(c => c.LocalizedName.ToLowerInvariant().Contains("murloc tinyfin"));
 			Assert.IsTrue(found);
 		}
+
 		[TestMethod]
 		public void TestDreadscaleInGetActual()
 		{
@@ -37,11 +31,26 @@ namespace HDTTests.Hearthstone
 			var found = db.Any<Card>(c => c.LocalizedName.ToLowerInvariant().Contains("dreadscale"));
 			Assert.IsTrue(found);
 		}
+
 		[TestMethod]
 		public void TestDreadscaleIsActual()
 		{
 			Card c = new Card { Id = "AT_063t", Name = "Dreadscale", Type = "Minion" };
 			Assert.IsTrue(Database.IsActualCard(c));
+		}
+
+		[TestMethod]
+		public void GetFromName_CollectibleByDefault()
+		{
+			var card = Database.GetCardFromName("Baron Geddon");
+			Assert.AreEqual("EX1_249", card.Id);
+		}
+
+		[TestMethod]
+		public void GetFromName_AllWithParam()
+		{
+			var card = Database.GetCardFromName("Baron Geddon", collectible: false);
+			Assert.IsTrue(card.Id.Contains("BRMA05"));
 		}
 
 		[TestMethod]
@@ -65,12 +74,10 @@ namespace HDTTests.Hearthstone
 		}
 
 		[TestMethod]
-		public void TestCardImages()
+		public void TestCardBarImages()
 		{
 			foreach(var card in Database.GetActualCards())
-			{
-				Assert.IsTrue(File.Exists("Images/" + card.CardFileName + ".png"), card.Name);
-			}
+				Assert.IsTrue(File.Exists("../../../Hearthstone Deck Tracker/Images/Bars/" + card.Id + ".png"), card.Name);
 		}
 	}
 }

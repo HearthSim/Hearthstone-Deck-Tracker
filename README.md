@@ -7,30 +7,35 @@ Installation
 - Requirements:
   - Windows Vista or higher
   - .NET Framework 4.5 or higher
-- [__Download__](https://github.com/Epix37/Hearthstone-Deck-Tracker/releases) the `Hearthstone.Deck.Tracker-vx.xx.xx.zip` archive.
+- [__Download__](https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases) the `Hearthstone.Deck.Tracker-vx.xx.xx.zip` archive.
 - Extract the archive.
 - Run the "Hearthstone Deck Tracker.exe"
  
 
 FAQ
 =========
-[Go to the FAQ.](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ)
+- You can find the [FAQ here](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/FAQ).
+
+
+Contributing
+=========
+- Please read the [coding style and Commit/Pull Request guidelines](https://github.com/HearthSim/Hearthstone-Deck-Tracker/blob/master/CONTRIBUTING.md).
 
 
 Community
 =========
-- **Gitter**: [![Join the chat at https://gitter.im/Epix37/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Epix37/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
-- **HearthSim**: Hearthstone Deck Tracker is a [HearthSim](http://hearthsim.info) project. Come join us in #hearthsim on chat.freenode.net.
+- **Gitter**: [![Join the chat at https://gitter.im/HearthSim/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/HearthSim/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+- **HearthSim**: Hearthstone Deck Tracker is a [HearthSim](https://hearthsim.info) project. Come join us in #hearthsim on chat.freenode.net.
 
 Features
 =========
 An in-game overlay:
 
-![Overlay](http://i.imgur.com/EWd6Ung.jpg "The overlay")
+![Overlay](https://github.com/HearthSim/Hearthstone-Deck-Tracker/raw/master/raw-assets/readme/overlay.png "Overlay")
 
 The app: 
 
-![Tracker](http://i.imgur.com/FE7Xwxl.png "The tracker")
+![Tracker](https://github.com/HearthSim/Hearthstone-Deck-Tracker/raw/master/raw-assets/readme/hdt-ui.png "HDT UI")
 
 - **Tracks**:
   - Cards left in your deck or cards drawn from your deck.
@@ -63,5 +68,6 @@ The app:
 ![Stats](http://i.imgur.com/tuxOFmg.png "Deck stats")
 
 
-Donations are always appreciated
-[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ)
+## License
+
+Copyright © HearthSim. All Rights Reserved.

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         ShowInTaskbar="False"
         WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Topmost="True"
-        Height="34" Width="250" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+        Height="34" Width="280" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
     <Window.Resources>
         <Storyboard x:Key="StoryboardFadeOut" Completed="StoryboardFadeOut_OnCompleted">
             <DoubleAnimation Duration="0:0:0.4" From="1" To="0" Storyboard.TargetProperty="Opacity"/>
@@ -31,7 +31,9 @@
                 <Image Source="{Binding Opponent.ClassImage, RelativeSource={RelativeSource AncestorType=Window}}" RenderOptions.BitmapScalingMode="Fant" Margin="2"/>
                 <TextBlock Text="-" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" Margin="5,0"/>
                 <TextBlock Text="{Binding Result, RelativeSource={RelativeSource AncestorType=Window}}" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                <TextBlock Text="{Binding Mode, RelativeSource={RelativeSource AncestorType=Window}, StringFormat='({0})'}"  FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                <TextBlock Text="-" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" Margin="5,0"/>
+                <TextBlock Text="{Binding Mode, RelativeSource={RelativeSource AncestorType=Window}, StringFormat='{}{0}'}"  FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                <TextBlock Text="{Binding Format, RelativeSource={RelativeSource AncestorType=Window}, StringFormat='{}{0}'}"  FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
             </StackPanel>
             </DockPanel>
         <DockPanel Name="PanelDetailHeader" DockPanel.Dock="Top" Background="{DynamicResource AccentColorBrush}" Height="32" Visibility="Collapsed">
@@ -40,8 +42,7 @@
                         <Style>
                             <Style.Triggers>
                                 <Trigger Property="Rectangle.IsMouseOver" Value="False">
-                                    <Setter Property="Rectangle.Opacity" Value="0.5">
-                                    </Setter>
+                                    <Setter Property="Rectangle.Opacity" Value="0.5" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -51,22 +52,13 @@
                     </Rectangle.Fill>
                 </Rectangle>
             <Image Source="{Binding PlayerClassImage, RelativeSource={RelativeSource AncestorType=Window}}" DockPanel.Dock="Left" RenderOptions.BitmapScalingMode="Fant" Margin="2"/>
-            <TextBlock Text="{Binding DeckName, RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"  Foreground="White"></TextBlock>
+            <TextBlock Text="{Binding DeckName, RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold"  Foreground="White" />
         </DockPanel>
         <StackPanel Name="PanelDetailBody" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Margin="10" Height="48" Visibility="Collapsed">
-            <ComboBox Name="ComboBoxGameMode" SelectedItem="{Binding Mode, RelativeSource={RelativeSource AncestorType=Window}}" Width="100" Height="34"/>
+            <ComboBox Name="ComboBoxFormat" SelectedItem="{Binding Format, RelativeSource={RelativeSource AncestorType=Window}}" Width="100" Height="34"
+                      IsEnabled="{Binding FormatSelectionEnabled, RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <ComboBox Name="ComboBoxGameMode" SelectedItem="{Binding Mode, RelativeSource={RelativeSource AncestorType=Window}}"  Width="100" Height="34" Margin="5,0,0,0"/>
             <ComboBox Name="ComboBoxResult" SelectedItem="{Binding Result, RelativeSource={RelativeSource AncestorType=Window}}" Width="70" Height="34" Margin="5,0,0,0"/>
-            <TextBlock Text="VS" Margin="8,0,0,0" VerticalAlignment="Center"/>
-                <ComboBox Name="ComboBoxOpponentClass" Margin="8,0,0,0" SelectedItem="{Binding Opponent, RelativeSource={RelativeSource AncestorType=Window}}" Height="34" Width="120">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding ClassImage}" Height="28" RenderOptions.BitmapScalingMode="Fant" Margin="0,2"/>
-                            <TextBlock Text="{Binding Class}" VerticalAlignment="Center" Margin="5,0"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
         </StackPanel>
     </DockPanel>
 </Window>

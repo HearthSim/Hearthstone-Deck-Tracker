@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -38,21 +38,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonSettings_OnClick(object sender, RoutedEventArgs e)
 		{
-			var selected = ListBoxPlugins.SelectedItem as PluginWrapper;
-			if(selected == null)
-				return;
-			selected.OnButtonPress();
+			(ListBoxPlugins.SelectedItem as PluginWrapper)?.OnButtonPress();
 		}
 
-		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-		{
-			Process.Start(e.Uri.AbsoluteUri);
-		}
-
-		private void ButtonAvailablePlugins_OnClick(object sender, RoutedEventArgs e)
-		{
-			Process.Start(@"https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
-		}
+		private void ButtonAvailablePlugins_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
 
 		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -66,11 +55,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				catch(Exception)
 				{
 					Core.MainWindow.ShowMessage("Error",
-					                              "Plugins directory not found and can not be created. Please manually create it in the Hearthstone Deck Tracker folder.");
+					                            "Plugins directory not found and can not be created. Please manually create it in the Hearthstone Deck Tracker folder.").Forget();
 					return;
 				}
 			}
-            Process.Start(pluginDir);
+			Helper.TryOpenUrl(pluginDir);
 		}
 	}
 }

@@ -1,21 +1,28 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 {
 	public class TextToFlowDocumentConverter : DependencyObject, IValueConverter
 	{
-		public global::Hearthstone_Deck_Tracker.Utility.Markdown.Xaml.Markdown Markdown
+		// Using a DependencyProperty as the backing store for Markdown.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty MarkdownProperty = DependencyProperty.Register("Markdown", typeof(Markdown),
+		                                                                                         typeof(TextToFlowDocumentConverter),
+		                                                                                         new PropertyMetadata(null));
+
+		private readonly Lazy<Markdown> mMarkdown = new Lazy<Markdown>(() => new Markdown());
+
+		public Markdown Markdown
 		{
-			get { return (global::Hearthstone_Deck_Tracker.Utility.Markdown.Xaml.Markdown)GetValue(MarkdownProperty); }
+			get { return (Markdown)GetValue(MarkdownProperty); }
 			set { SetValue(MarkdownProperty, value); }
 		}
-
-		// Using a DependencyProperty as the backing store for Markdown.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty MarkdownProperty =
-			DependencyProperty.Register("Markdown", typeof(global::Hearthstone_Deck_Tracker.Utility.Markdown.Xaml.Markdown), typeof(TextToFlowDocumentConverter), new PropertyMetadata(null));
 
 		/// <summary>
 		/// Converts a value. 
@@ -30,9 +37,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			if(value == null)
-			{
 				return null;
-			}
 
 			var text = (string)value;
 
@@ -55,8 +60,5 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 		{
 			throw new NotImplementedException();
 		}
-
-		private Lazy<global::Hearthstone_Deck_Tracker.Utility.Markdown.Xaml.Markdown> mMarkdown
-			= new Lazy<global::Hearthstone_Deck_Tracker.Utility.Markdown.Xaml.Markdown>(() => new global::Hearthstone_Deck_Tracker.Utility.Markdown.Xaml.Markdown());
 	}
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -41,14 +42,13 @@ namespace Hearthstone_Deck_Tracker.API
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine(string.Format("Error invoking action{0}:\n{1}", GetInfo(plugin), ex), "ActionListExecution");
+					Log.Error($"Error invoking action{GetInfo(plugin)}:\n{ex}");
 				}
 				if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 				{
-					Logger.WriteLine(string.Format("Warning: Invoking action{0} took {1} ms.", GetInfo(plugin), sw.ElapsedMilliseconds),
-					                 "ActionListExecution");
+					Log.Warn($"Warning: Invoking action{GetInfo(plugin)} took {sw.ElapsedMilliseconds} ms.");
 #if(!DEBUG)
-					//remove.Add(action);
+	//remove.Add(action);
 #endif
 				}
 			}
@@ -56,10 +56,7 @@ namespace Hearthstone_Deck_Tracker.API
 				_actions.Remove(action);
 		}
 
-		private string GetInfo(PluginWrapper p)
-		{
-			return p != null ? string.Format(" (Plugin: {0})", p.Name) : "";
-		}
+		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : "";
 	}
 
 	public class ActionList
@@ -93,14 +90,13 @@ namespace Hearthstone_Deck_Tracker.API
 				}
 				catch(Exception ex)
 				{
-					Logger.WriteLine(string.Format("Error invoking action{0}:\n{1}", GetInfo(plugin), ex), "ActionListExecution");
+					Log.Error($"Error invoking action{GetInfo(plugin)}:\n{ex}");
 				}
 				if(sw.ElapsedMilliseconds > PluginManager.MaxPluginExecutionTime)
 				{
-					Logger.WriteLine(string.Format("Warning: Invoking action{0} took {1} ms.", GetInfo(plugin), sw.ElapsedMilliseconds),
-					                 "ActionListExecution");
+					Log.Warn($"Invoking action{GetInfo(plugin)} took {sw.ElapsedMilliseconds} ms.");
 #if(!DEBUG)
-					//remove.Add(action);
+	//remove.Add(action);
 #endif
 				}
 			}
@@ -108,9 +104,6 @@ namespace Hearthstone_Deck_Tracker.API
 				_actions.Remove(action);
 		}
 
-		private string GetInfo(PluginWrapper p)
-		{
-			return p != null ? string.Format(" (Plugin: {0})", p.Name) : "";
-		}
+		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : "";
 	}
 }

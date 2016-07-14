@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Brushes = System.Windows.Media.Brushes;
 
 #endregion
 
@@ -46,12 +48,15 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public void Update(TimerEventArgs timerEventArgs)
+		internal void Update(TimerState timerState)
 		{
-			LblTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.Seconds / 60) % 60, timerEventArgs.Seconds % 60);
-			LblPlayerTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.PlayerSeconds / 60) % 60, timerEventArgs.PlayerSeconds % 60);
-			LblOpponentTurnTime.Text = string.Format("{0:00}:{1:00}", (timerEventArgs.OpponentSeconds / 60) % 60,
-			                                         timerEventArgs.OpponentSeconds % 60);
+			if((timerState.PlayerSeconds <= 0 && timerState.OpponentSeconds <= 0) || Core.Game.CurrentMode != Mode.GAMEPLAY)
+				return;
+			var seconds = (int)Math.Abs(timerState.Seconds);
+			LblTurnTime.Text = double.IsPositiveInfinity(timerState.Seconds) ? "\u221E" : $"{(seconds / 60) % 60:00}:{seconds % 60:00}";
+			LblTurnTime.Fill = timerState.Seconds < 0 ? Brushes.LimeGreen : Brushes.White;
+			LblPlayerTurnTime.Text = $"{timerState.PlayerSeconds / 60 % 60:00}:{timerState.PlayerSeconds % 60:00}";
+			LblOpponentTurnTime.Text = $"{timerState.OpponentSeconds / 60 % 60:00}:{timerState.OpponentSeconds % 60:00}";
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -68,10 +73,7 @@ namespace Hearthstone_Deck_Tracker
 			Close();
 		}
 
-		private void MetroWindow_Activated(object sender, EventArgs e)
-		{
-			Topmost = true;
-		}
+		private void MetroWindow_Activated(object sender, EventArgs e) => Topmost = true;
 
 		private void MetroWindow_Deactivated(object sender, EventArgs e)
 		{

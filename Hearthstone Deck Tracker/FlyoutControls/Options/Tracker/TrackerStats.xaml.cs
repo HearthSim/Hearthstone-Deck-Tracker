@@ -39,7 +39,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxAskBeforeDiscarding.IsEnabled = Config.Instance.DiscardGameIfIncorrectDeck;
 			CheckboxRecordSpectator.IsChecked = Config.Instance.RecordSpectator;
 			CheckboxDiscardZeroTurnGame.IsChecked = Config.Instance.DiscardZeroTurnGame;
-			CheckboxSaveHSLogIntoReplayFile.IsChecked = Config.Instance.SaveHSLogIntoReplay;
 			CheckboxDeleteDeckKeepStats.IsChecked = Config.Instance.KeepStatsWhenDeletingDeck;
 			CheckboxStatsInWindow.IsChecked = Config.Instance.StatsInWindow;
 			CheckboxReplays.IsChecked = Config.Instance.RecordReplays;
@@ -181,7 +180,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.DiscardGameIfIncorrectDeck = false;
-            CheckboxAskBeforeDiscarding.IsEnabled = false;
+			CheckboxAskBeforeDiscarding.IsEnabled = false;
 			Config.Save();
 		}
 
@@ -214,22 +213,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.RecordSpectator = false;
-			Config.Save();
-		}
-
-		private void CheckboxSaveHSLogIntoReplayFile_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SaveHSLogIntoReplay = true;
-			Config.Save();
-		}
-
-		private void CheckboxSaveHSLogIntoReplayFile_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SaveHSLogIntoReplay = false;
 			Config.Save();
 		}
 
@@ -287,7 +270,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedStats = (DisplayedStats)ComboboxDisplayedStats.SelectedItem;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			foreach(var deck in DeckList.Instance.Decks)
+				deck.StatsUpdated();
 			Core.Overlay.Update(true);
 		}
 
@@ -297,7 +281,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedMode = (GameMode)ComboboxDisplayedMode.SelectedItem;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			foreach(var deck in DeckList.Instance.Decks)
+				deck.StatsUpdated();
 			Core.Overlay.Update(true);
 		}
 
@@ -307,7 +292,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DisplayedTimeFrame = (DisplayedTimeFrame)ComboboxDisplayedTimeFrame.SelectedItem;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			foreach(var deck in DeckList.Instance.Decks)
+				deck.StatsUpdated();
 			Core.Overlay.Update(true);
 			PanelCustomTimeFrame.Visibility = Config.Instance.DisplayedTimeFrame == DisplayedTimeFrame.Custom
 				                                  ? Visibility.Visible : Visibility.Collapsed;
@@ -319,7 +305,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.CustomDisplayedTimeFrame = DatePickerCustomTimeFrame.SelectedDate;
 			Config.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
+			foreach(var deck in DeckList.Instance.Decks)
+				deck.StatsUpdated();
 			Core.Overlay.Update(true);
 		}
 
@@ -337,31 +324,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AskBeforeDiscardingGame = false;
 			Config.Save();
-		}
-
-		private void ButtonCheckForDuplicateMatches_OnClick(object sender, RoutedEventArgs e)
-		{
-			DataIssueResolver.RemoveDuplicateMatches(true);
-		}
-
-		private async void ButtonCheckOppClassName_OnClick(object sender, RoutedEventArgs e)
-		{
-			var games =
-				DeckStatsList.Instance.DeckStats.Concat(DefaultDeckStats.Instance.DeckStats)
-				             .SelectMany(d => d.Games)
-				             .Where(g => g.HasReplayFile)
-				             .ToList();
-			var controller =
-				await
-				Core.MainWindow.ShowProgressAsync("Fixing incorrect stats!",
-				                                  string.Format(
-				                                                "Checking {0} replays, this may take a moment...\r\n\r\nNote: This will not work for matches that don't have replay files.",
-				                                                games.Count), true);
-			var fixCount = await DataIssueResolver.FixOppNameAndClass(games, controller);
-			await controller.CloseAsync();
-			await
-				Core.MainWindow.ShowMessageAsync("Done.",
-				                                 fixCount > 0 ? "Fixed names/classes for " + fixCount + " matches." : "No incorrect stats found.");
 		}
 	}
 }

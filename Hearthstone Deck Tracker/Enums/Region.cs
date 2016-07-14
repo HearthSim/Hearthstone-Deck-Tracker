@@ -1,6 +1,8 @@
-﻿// ReSharper disable InconsistentNaming
+﻿#region
 
 using System.ComponentModel;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Enums
 {
@@ -17,14 +19,19 @@ namespace Hearthstone_Deck_Tracker.Enums
 	{
 		[Description("All")]
 		ALL = -1,
+
 		[Description("Unknown")]
 		UNKNOWN = 0,
+
 		[Description("US")]
 		US = 1,
+
 		[Description("EU")]
 		EU = 2,
+
 		[Description("Asia")]
 		ASIA = 3,
+
 		[Description("China")]
 		CHINA = 5
 	}

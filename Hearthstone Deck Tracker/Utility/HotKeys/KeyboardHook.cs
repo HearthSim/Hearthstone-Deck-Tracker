@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -12,14 +11,6 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 	//http://stackoverflow.com/questions/2450373/set-global-hotkeys-using-c-sharp
 	public sealed class KeyboardHook : IDisposable
 	{
-		// Registers a hot key with Windows.
-		[DllImport("user32.dll")]
-		private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-
-		// Unregisters the hot key with Windows.
-		[DllImport("user32.dll")]
-		private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
 		private readonly Window _window = new Window();
 		private int _currentId;
 
@@ -28,10 +19,17 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			// register the event of the inner native window.
 			_window.KeyPressed += delegate(object sender, KeyPressedEventArgs args)
 			{
-				if(KeyPressed != null)
-					KeyPressed(this, args);
+				KeyPressed?.Invoke(this, args);
 			};
 		}
+
+		// Registers a hot key with Windows.
+		[DllImport("user32.dll")]
+		private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+		// Unregisters the hot key with Windows.
+		[DllImport("user32.dll")]
+		private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
 		/// <summary>
 		/// Registers a hot key in the system.
@@ -50,10 +48,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			return _currentId;
 		}
 
-		public void UnRegisterHotKey(int id)
-		{
-			UnregisterHotKey(_window.Handle, id);
-		}
+		public void UnRegisterHotKey(int id) => UnregisterHotKey(_window.Handle, id);
 
 		/// <summary>
 		/// A hot key has been pressed.
@@ -75,10 +70,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 
 			#region IDisposable Members
 
-			public void Dispose()
-			{
-				DestroyHandle();
-			}
+			public void Dispose() => DestroyHandle();
 
 			#endregion
 
@@ -94,12 +86,11 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 				if(m.Msg == WM_HOTKEY)
 				{
 					// get the keys.
-					Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-					ModifierKeys modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
+					var key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
+					var modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
 
 					// invoke the event to notify the parent.
-					if(KeyPressed != null)
-						KeyPressed(this, new KeyPressedEventArgs(modifier, key));
+					KeyPressed?.Invoke(this, new KeyPressedEventArgs(modifier, key));
 				}
 			}
 
@@ -115,7 +106,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			if(_disposed)
 				return;
 			// unregister all the registered hot keys.
-			for(int i = _currentId; i > 0; i--)
+			for(var i = _currentId; i > 0; i--)
 				UnregisterHotKey(_window.Handle, i);
 
 			// dispose the inner native window.

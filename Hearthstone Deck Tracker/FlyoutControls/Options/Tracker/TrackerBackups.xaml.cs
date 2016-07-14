@@ -8,6 +8,8 @@ using System.Linq;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -31,40 +33,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(dirInfo.Exists)
 			{
 				foreach(var file in dirInfo.GetFiles("Backup*.zip").OrderBy(x => x.CreationTime))
-					ListBoxBackups.Items.Add(new BackupFile { FileInfo = file });
+					ListBoxBackups.Items.Add(new BackupFile {FileInfo = file});
 			}
 		}
 
 		private async void ButtonRestore_Click(object sender, RoutedEventArgs e)
 		{
 			var selected = ListBoxBackups.SelectedItem as BackupFile;
-			if(selected != null)
-			{
-				var result =
-					await
-					Core.MainWindow.ShowMessageAsync("Restore backup " + selected.DisplayName,
-					                                   "This can not be undone! Make sure you have a current backup (if necessary). To create one, CANCEL and click \"CREATE NEW\".",
-					                                   MessageDialogStyle.AffirmativeAndNegative);
-				if(result == MessageDialogResult.Affirmative)
-				{
-					var archive = new ZipArchive(selected.FileInfo.OpenRead(), ZipArchiveMode.Read);
-					archive.ExtractToDirectory(Config.Instance.DataDir, true);
-					Config.Load();
-					Config.Save();
-					DeckList.Load();
-					DeckList.Save();
-					DeckStatsList.Load();
-					DeckStatsList.Save();
-					DefaultDeckStats.Load();
-					DefaultDeckStats.Save();
-					Core.MainWindow.ShowMessage("Success", "Please restart HDT for this to take effect.");
-				}
-			}
+			if(selected == null)
+				return;
+			var result =
+				await
+				Core.MainWindow.ShowMessageAsync("Restore backup " + selected.DisplayName,
+												 "This can not be undone! Make sure you have a current backup (if necessary). To create one, CANCEL and click \"CREATE NEW\".",
+												 MessageDialogStyle.AffirmativeAndNegative);
+			if(result != MessageDialogResult.Affirmative)
+				return;
+			var archive = new ZipArchive(selected.FileInfo.OpenRead(), ZipArchiveMode.Read);
+			archive.ExtractToDirectory(Config.Instance.DataDir, true);
+			Config.Load();
+			Config.Save();
+			DeckList.Reload();
+			DeckList.Save();
+			DeckStatsList.Reload();
+			DeckStatsList.Save();
+			DefaultDeckStats.Reload();
+			DefaultDeckStats.Save();
+			Core.MainWindow.ShowMessage("Success", "Please restart HDT for this to take effect.").Forget();
 		}
 
 		private void ButtonCreateNew_Click(object sender, RoutedEventArgs e)
 		{
-			BackupManager.CreateBackup(string.Format("BackupManual_{0}.zip", DateTime.Today.ToString("ddMMyyyy")));
+			BackupManager.CreateBackup($"BackupManual_{DateTime.Today.ToString("ddMMyyyy")}.zip");
 			ListBoxBackups.Items.Clear();
 			Load();
 		}
@@ -86,9 +86,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					{
 						File.Delete(backupFile.FileInfo.FullName);
 					}
-					catch(Exception ex)
+					catch(Exception)
 					{
-						Logger.WriteLine("Error deleting backup: " + backupFile.FileInfo.FullName);
+						Log.Error("Error deleting backup: " + backupFile.FileInfo.FullName);
 					}
 				}
 				ListBoxBackups.Items.Clear();
@@ -104,17 +104,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 			catch(Exception ex)
 			{
-				Logger.WriteLine("Error opening backup dir:\n" + ex);
-			}
-		}
-
-		public class BackupFile
-		{
-			public FileInfo FileInfo { get; set; }
-
-			public string DisplayName
-			{
-				get { return FileInfo.CreationTime + " " + (FileInfo.Name.StartsWith("Backup_") ? "(auto)" : "(manual)"); }
+				Log.Error(ex);
 			}
 		}
 
@@ -122,6 +112,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			ListBoxBackups.Items.Clear();
 			Load();
+		}
+
+		public class BackupFile
+		{
+			public FileInfo FileInfo { get; set; }
+
+			public string DisplayName => FileInfo.CreationTime + " " + (FileInfo.Name.StartsWith("Backup_") ? "(auto)" : "(manual)");
 		}
 	}
 }

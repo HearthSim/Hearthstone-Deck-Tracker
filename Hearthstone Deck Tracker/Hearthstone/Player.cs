@@ -1,190 +1,181 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Deployment.Application;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.TextFormatting;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Player : INotifyPropertyChanged
 	{
-		public string Name
+		public const int DeckSize = 30;
+		private readonly GameV2 _game;
+
+		public Player(GameV2 game, bool isLocalPlayer)
 		{
-			get { return _name; }
-			set
-			{
-				_name = value;
-				Log(value, "Name");
-			}
+			_game = game;
+			IsLocalPlayer = isLocalPlayer;
 		}
 
+		public string Name { get; set; }
 		public string Class { get; set; }
 		public int Id { get; set; }
 		public bool GoingFirst { get; set; }
 		public int Fatigue { get; set; }
-		public bool DrawnCardsMatchDeck { get; set; }
-		public bool IsLocalPlayer { get; private set; }
-		public bool HasCoin
+		public bool IsLocalPlayer { get; }
+		public int SpellsPlayedCount { get; private set; }
+
+		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin);
+		public int HandCount => Hand.Count(x => x.IsControlledBy(Id));
+		public int DeckCount => Deck.Count(x => x.IsControlledBy(Id));
+
+		public IEnumerable<Entity> PlayerEntities => _game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && x.IsControlledBy(Id));
+		public IEnumerable<Entity> RevealedEntities => _game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && (x.IsControlledBy(Id) || x.Info.OriginalController == Id)).Where(x => x.HasCardId);
+		public IEnumerable<Entity> Hand => PlayerEntities.Where(x => x.IsInHand);
+		public IEnumerable<Entity> Board => PlayerEntities.Where(x => x.IsInPlay);
+		public IEnumerable<Entity> Deck => PlayerEntities.Where(x => x.IsInDeck);
+		public IEnumerable<Entity> Graveyard => PlayerEntities.Where(x => x.IsInGraveyard);
+		public IEnumerable<Entity> Secrets => PlayerEntities.Where(x => x.IsInSecret);
+		public IEnumerable<Entity> SetAside => PlayerEntities.Where(x => x.IsInSetAside);
+
+		public List<PredictedCard> InDeckPrecitions { get; } = new List<PredictedCard>();
+
+		private DeckState GetDeckState()
 		{
-			get { return Hand.Any(ce => ce.CardId == "GAME_005" || (ce.Entity != null && ce.Entity.CardId == "GAME_005")); }
-		}
-
-		public int HandCount { get { return Hand.Count; } }
-		public int DeckCount { get { return Deck.Count; } }
-		public List<CardEntity> RevealedCards { get; private set; }
-
-		public List<CardEntity> Hand { get; private set; }
-		public List<CardEntity> Board { get; private set; }
-		public List<CardEntity> Deck { get; private set; }
-		public List<CardEntity> Graveyard { get; private set; }
-		public List<CardEntity> Secrets { get; private set; }
-		public List<CardEntity> Removed { get; private set; } 
-		public List<string> DrawnCardIds { get; private set; }
-		public List<string> DrawnCardIdsTotal { get; private set; }
-		public List<string> CreatedInHandCardIds { get; private set; } 
-
-		public List<Card> DrawnCards
-		{
-			get
-			{
-				return DrawnCardIds.Where(x => !string.IsNullOrEmpty(x)).GroupBy(x => x).Select(g =>
-				{
-					var card = Database.GetCardFromId(g.Key);
-					card.Count = g.Count();
-					return card;
-				}).Where(x => x.Name != "UNKNOWN").ToList();
-			}
-		}
-
-		public const int DeckSize = 30;
-
-		private readonly Queue<string> _hightlightedCards = new Queue<string>();
-		private string _name;
-
-		public List<Card> DisplayCards
-		{
-			//TODO: this may need some refactoring :)
-			get
-			{
-				var createdInHand = Config.Instance.ShowPlayerGet ? CreatedInHandCardIds.GroupBy(x => x).Select(x =>
-				{
-					var card = Database.GetCardFromId(x.Key);
-					card.Count = x.Count();
-					card.IsCreated = true;
-					card.HighlightInHand = Hand.Any(ce => ce.CardId == card.Id);
-					return card;
-				}).ToList() : new List<Card>();
-
-				if(DeckList.Instance.ActiveDeck == null)
-					return DrawnCards.Concat(createdInHand).ToSortedCardList();
-
-				var stillInDeck =
-					Deck.Where(ce => !string.IsNullOrEmpty(ce.CardId)).GroupBy(ce => new {ce.CardId, ce.CardMark, ce.Discarded}).Select(g =>
+			var createdCardsInDeck =
+				Deck.Where(x => x.HasCardId && (x.Info.Created || x.Info.Stolen))
+					.GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded})
+					.Select(g =>
 					{
 						var card = Database.GetCardFromId(g.Key.CardId);
 						card.Count = g.Count();
-						card.IsCreated = g.Key.CardMark == CardMark.Created;
-						card.HighlightDraw = _hightlightedCards.Contains(g.Key.CardId);
+						card.IsCreated = g.Key.Created;
 						card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
 						return card;
-					}).ToList();
-				if(Config.Instance.RemoveCardsFromDeck)
-				{
-					if(Config.Instance.HighlightLastDrawn)
-					{
-						var drawHighlight =
-							DeckList.Instance.ActiveDeck.Cards.Where(c => _hightlightedCards.Contains(c.Id) && stillInDeck.All(c2 => c2.Id != c.Id))
-							        .Select(c =>
-							        {
-								        var card = (Card)c.Clone();
-								        card.Count = 0;
-								        card.HighlightDraw = true;
-								        return card;
-							        });
-						stillInDeck = stillInDeck.Concat(drawHighlight).ToList();
-					}
-					if(Config.Instance.HighlightCardsInHand)
-					{
-						var inHand =
-							DeckList.Instance.ActiveDeck.Cards.Where(c => stillInDeck.All(c2 => c2.Id != c.Id) && Hand.Any(ce => c.Id == ce.CardId))
-							        .Select(c =>
-							        {
-								        var card = (Card)c.Clone();
-								        card.Count = 0;
-								        card.HighlightInHand = true;
-								        if(IsLocalPlayer && card.Id == HearthDb.CardIds.Collectible.Neutral.RenoJackson
-									        && Deck.Where(x => !string.IsNullOrEmpty(x.CardId)).Select(x => x.CardId).GroupBy(x => x).All(x => x.Count() <= 1))
-									        card.HighlightFrame = true;
-								        return card;
-							        });
-						;
-						stillInDeck = stillInDeck.Concat(inHand).ToList();
-					}
-					return stillInDeck.Concat(createdInHand).ToSortedCardList();
-				}
-				var notInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Where(c => Deck.All(ce => ce.CardId != c.Id)).Select(c =>
-				{
-					var card = (Card)c.Clone();
-					card.Count = 0;
-					card.HighlightDraw = _hightlightedCards.Contains(c.Id);
-					if(Hand.Any(ce => ce.CardId == c.Id))
-					{
-						card.HighlightInHand = true;
-						if(IsLocalPlayer && card.Id == HearthDb.CardIds.Collectible.Neutral.RenoJackson
-							&& Deck.Where(x => !string.IsNullOrEmpty(x.CardId)).Select(x => x.CardId).GroupBy(x => x).All(x => x.Count() <= 1))
-							card.HighlightFrame = true;
-					}
-					return card;
-				});
-				return stillInDeck.Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
+					});
+			var originalCardsInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Select(x => Enumerable.Repeat(x.Id, x.Count)).SelectMany(x => x).ToList();
+			var revealedNotInDeck = RevealedEntities.Where(x => !x.Info.Created && (x.IsSpell || x.IsWeapon || x.IsMinion) && ((!x.IsInDeck || x.Info.Stolen) && x.Info.OriginalController == Id)).ToList();
+			var removedFromDeck = new List<string>();
+			foreach(var e in revealedNotInDeck)
+			{
+				originalCardsInDeck.Remove(e.CardId);
+				if(!e.Info.Stolen || e.Info.OriginalController == Id)
+					removedFromDeck.Add(e.CardId);
 			}
+			return new DeckState(createdCardsInDeck.Concat(originalCardsInDeck.GroupBy(x => x).Select(x =>
+			{
+				var card = Database.GetCardFromId(x.Key);
+				card.Count = x.Count();
+				if(Hand.Any(e => e.CardId == x.Key))
+					card.HighlightInHand = true;
+				return card;
+			})), removedFromDeck.GroupBy(x => x).Select(c =>
+			{
+				var card = Database.GetCardFromId(c.Key);
+				card.Count = 0;
+				if(Hand.Any(e => e.CardId == c.Key))
+					card.HighlightInHand = true;
+				return card;
+			}));
 		}
 
-		public List<Card> DisplayRevealedCards
+		public IEnumerable<Card> PredictedCardsInDeck => InDeckPrecitions.Select(x =>
 		{
+			var card = Database.GetCardFromId(x.CardId);
+			card.Jousted = true;
+			return card;
+		});
 
+		public IEnumerable<Card> KnownCardsInDeck
+			=> Deck.Where(x => x.HasCardId).GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen)}).Select(g =>
+			{
+				var card = Database.GetCardFromId(g.Key.CardId);
+				card.Count = g.Count();
+				card.IsCreated = g.Key.Created;
+				card.Jousted = true;
+				return card;
+			}).ToList();
+
+		public IEnumerable<Card> RevealedCards
+			=> RevealedEntities.Where(x => !string.IsNullOrEmpty(x?.CardId) && !x.Info.Created && (x.IsMinion || x.IsSpell || x.IsWeapon)
+									   && ((!x.IsInDeck && (!x.Info.Stolen || x.Info.OriginalController == Id)) || (x.Info.Stolen && x.Info.OriginalController == Id)))
+								.GroupBy(x => new {x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id})
+								.Select(x =>
+								{
+									var card = Database.GetCardFromId(x.Key.CardId);
+									card.Count = x.Count();
+									card.IsCreated = x.Key.Stolen;
+									card.HighlightInHand = x.Any(c => c.IsInHand && c.IsControlledBy(Id));
+									return card;
+								});
+
+		public IEnumerable<Card> CreatedCardsInHand => Hand.Where(x => !string.IsNullOrEmpty(x?.CardId) && (x.Info.Created || x.Info.Stolen)).GroupBy(x => x.CardId).Select(x =>
+		{
+			var card = Database.GetCardFromId(x.Key);
+			card.Count = x.Count();
+			card.IsCreated = true;
+			card.HighlightInHand = true;
+			return card;
+		});
+
+		public IEnumerable<Card> GetHighlightedCardsInHand(List<Card> cardsInDeck)
+			=> DeckList.Instance.ActiveDeckVersion.Cards.Where(c => cardsInDeck.All(c2 => c2.Id != c.Id) && Hand.Any(ce => c.Id == ce.CardId))
+						.Select(c =>
+						{
+							var card = (Card)c.Clone();
+							card.Count = 0;
+							card.HighlightInHand = true;
+							return card;
+						});
+
+		public List<Card> PlayerCardList
+		{
 			get
 			{
-				return
-					RevealedCards.Where(ce => !string.IsNullOrEmpty(ce.CardId))
-					             .GroupBy(ce => new {ce.CardId, Hidden = (ce.InHand || ce.InDeck), ce.Created, Discarded = ce.Discarded && Config.Instance.HighlightDiscarded})
-					             .Select(g =>
-								 {
-									 var card = Database.GetCardFromId(g.Key.CardId);
-									 card.Count = g.Count();
-									 card.Jousted = g.Key.Hidden;
-									 card.IsCreated = g.Key.Created;
-									 card.WasDiscarded = g.Key.Discarded;
-                                     return card;
-					             })
-					             .ToSortedCardList();
+				var createdInHand = Config.Instance.ShowPlayerGet ? CreatedCardsInHand : new List<Card>();
+				if(DeckList.Instance.ActiveDeck == null)
+					return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(PredictedCardsInDeck).ToSortedCardList();
+				var deckState = GetDeckState();
+				var inDeck = deckState.RemainingInDeck.ToList();
+				var notInDeck = deckState.RemovedFromDeck.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
+				if(!Config.Instance.RemoveCardsFromDeck)
+					return inDeck.Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
+				if(Config.Instance.HighlightCardsInHand)
+					return inDeck.Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand).ToSortedCardList();
+				return inDeck.Concat(createdInHand).ToSortedCardList();
 			}
 		}
 
-		public Player(bool isLocalPlayer)
-		{
-			Hand = new List<CardEntity>();
-			Board = new List<CardEntity>();
-			Deck = new List<CardEntity>();
-			Graveyard = new List<CardEntity>();
-			Secrets = new List<CardEntity>();
-			RevealedCards = new List<CardEntity>();
-			DrawnCardIds = new List<string>();
-			DrawnCardIdsTotal = new List<string>();
-			CreatedInHandCardIds = new List<string>();
-			Removed = new List<CardEntity>();
-			IsLocalPlayer = isLocalPlayer;
-		}
+		public List<Card> OpponentCardList
+			=> RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon || !x.HasTag(GameTag.CARDTYPE))
+										&& (x.GetTag(GameTag.CREATOR) == 1 || ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
+											&& x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck) && !(x.Info.Created && x.IsInSetAside))
+								.GroupBy(e => new {	e.CardId, Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
+													Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
+													Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded})
+								.Select(g =>
+								{
+									var card = Database.GetCardFromId(g.Key.CardId);
+									card.Count = g.Count();
+									card.Jousted = g.Key.Hidden;
+									card.IsCreated = g.Key.Created;
+									card.WasDiscarded = g.Key.Discarded;
+									return card;
+								}).Concat(InDeckPrecitions.Select(x =>
+								{
+									var card = Database.GetCardFromId(x.CardId);
+									card.Jousted = true;
+									return card;
+								})).ToSortedCardList();
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void Reset()
 		{
@@ -193,437 +184,192 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Id = -1;
 			GoingFirst = false;
 			Fatigue = 0;
-			DrawnCardsMatchDeck = true;
-			Hand.Clear();
-			Board.Clear();
-			Deck.Clear();
-			Graveyard.Clear();
-			Secrets.Clear();
-			DrawnCardIds.Clear();
-			DrawnCardIdsTotal.Clear();
-			RevealedCards.Clear();
-			CreatedInHandCardIds.Clear();
-			Removed.Clear();
-
-			for(var i = 0; i < DeckSize; i++)
-				Deck.Add(new CardEntity(null));
-
-		}
-
-		private CardEntity GetEntityFromCollection(List<CardEntity> collection, Entity entity)
-		{
-			var cardEntity = collection.FirstOrDefault(ce => ce.Entity == entity);
-			if(cardEntity == null)
-			{
-				cardEntity = collection.FirstOrDefault(ce => !string.IsNullOrEmpty(ce.CardId) && ce.CardId == entity.CardId)
-				             ?? collection.FirstOrDefault(ce => string.IsNullOrEmpty(ce.CardId) && ce.Entity == null);
-			}
-			if(cardEntity != null)
-				cardEntity.Update(entity);
-			return cardEntity;
-		}
-
-		private CardEntity MoveCardEntity(Entity entity, List<CardEntity> @from, List<CardEntity> to, int turn)
-		{
-			var cardEntity = GetEntityFromCollection(from, entity);
-			if(cardEntity != null)
-			{
-				from.Remove(cardEntity);
-			}
-			else
-			{
-				cardEntity = @from.FirstOrDefault(ce => string.IsNullOrEmpty(ce.CardId) && ce.Entity == null);
-				if(cardEntity != null)
-				{
-					from.Remove(cardEntity);
-					cardEntity.Update(entity);
-				}
-				else
-				{
-					cardEntity = new CardEntity(entity) { Turn = turn };
-				}
-			}
-			to.Add(cardEntity);
-			to.Sort(ZonePosComparison);
-			cardEntity.Turn = turn;
-			return cardEntity;
-		}
-
-		public class MoveCardResult
-		{
-			public bool CreatedCard { get; set; }	
-			public CardEntity Entity { get; set; }
-		}
-
-		private int ZonePosComparison(CardEntity ce1, CardEntity ce2)
-		{
-			var v1 = (ce1.Entity != null ? ce1.Entity.GetTag(GAME_TAG.ZONE_POSITION) : 10);
-			var v2 = (ce2.Entity != null ? ce2.Entity.GetTag(GAME_TAG.ZONE_POSITION) : 10);
-			return v1.CompareTo(v2);
+			InDeckPrecitions.Clear();
+			SpellsPlayedCount = 0;
 		}
 
 		public void Draw(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Deck, Hand, turn);
 			if(IsLocalPlayer)
-				Highlight(entity.CardId);
-			else
-				ce.Reset();
-
-			if(!string.IsNullOrEmpty(entity.CardId) && ce.CardMark != CardMark.Created && ce.CardMark != CardMark.Returned && !ce.Created)
+				UpdateKnownEntitesInDeck(entity.CardId);
+			if(!IsLocalPlayer)
 			{
-				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
-					DrawnCardsMatchDeck = false;
-				DrawnCardIds.Add(entity.CardId);
-				DrawnCardIdsTotal.Add(entity.CardId);
+				if(_game.OpponentEntity?.GetTag(GameTag.MULLIGAN_STATE) == (int)HearthDb.Enums.Mulligan.DEALING)
+					entity.Info.Mulliganed = true;
+				else
+					entity.Info.Hidden = true;
 			}
-			Log("Draw", ce);
-		}
-
-		private static bool CardMatchesActiveDeck(string cardId)
-		{
-			return string.IsNullOrEmpty(cardId) || DeckList.Instance.ActiveDeck == null
-			       || DeckList.Instance.ActiveDeckVersion.Cards.Any(c => c.Id == cardId);
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
 
-		private void Log(string action, CardEntity ce)
-		{
-			Log(ce.ToString(), action);
-		}
+		private void Log(Entity entity, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") 
+			=> Log(entity.ToString(), memberName, sourceFilePath);
 
-		private void Log(string msg, string category)
-		{
-			var player = IsLocalPlayer ? "Player " : "Opponent ";
-			Logger.WriteLine(msg, player + category);
-		}
-
-		private async void Highlight(string cardId)
-		{
-			_hightlightedCards.Enqueue(cardId);
-			Helper.UpdatePlayerCards();
-			await Task.Delay(3000);
-			_hightlightedCards.Dequeue();
-			Helper.UpdatePlayerCards();
-		}
+		private void Log(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") 
+			=> Utility.Logging.Log.Info((IsLocalPlayer ? "[Player] "  : "[Opponent] ") + msg, memberName, sourceFilePath);
 
 		public void Play(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Hand, entity.IsSecret ? Secrets : Board, turn);
-			if(entity.GetTag(GAME_TAG.CARDTYPE) == (int)TAG_CARDTYPE.TOKEN)
+			if(!IsLocalPlayer)
+				UpdateKnownEntitesInDeck(entity.CardId, entity.Info.Turn);
+			switch(entity.GetTag(GameTag.CARDTYPE))
 			{
-				ce.CardMark = CardMark.Created;
-				ce.Created = true;
+				case (int)CardType.TOKEN:
+					entity.Info.Created = true;
+					break;
+				case (int)CardType.SPELL:
+					SpellsPlayedCount++;
+					break;
 			}
-			UpdateRevealedEntity(ce, turn);
-			Log("Play", ce);
+			entity.Info.Hidden = false;
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
 		public void DeckToPlay(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Deck, Board, turn);
-			UpdateRevealedEntity(ce, turn);
-			if(!string.IsNullOrEmpty(entity.CardId) && ce.CardMark != CardMark.Created && ce.CardMark != CardMark.Returned)
-			{
-				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
-					DrawnCardsMatchDeck = false;
-				DrawnCardIds.Add(entity.CardId);
-				DrawnCardIdsTotal.Add(entity.CardId);
-			}
-			Log("DeckToPlay", ce);
-		}
-
-		private void UpdateRevealedEntity(CardEntity entity, int turn, bool? discarded = null, CardMark? cardMark = null)
-		{
-			var revealed = RevealedCards.FirstOrDefault(ce => ce.Entity == entity.Entity || (ce.CardId == entity.CardId && ce.Entity == null && ce.Turn <= entity.PrevTurn));
-			if(revealed != null)
-			{
-				revealed.Update(entity.Entity);
-			}
-			else
-			{
-				revealed = new CardEntity(entity.Entity) {Turn = turn, Created = entity.Created, Discarded = entity.Discarded};
-				var cardType = entity.Entity.GetTag(GAME_TAG.CARDTYPE);
-				if(cardType != (int)TAG_CARDTYPE.HERO && cardType != (int)TAG_CARDTYPE.ENCHANTMENT && cardType != (int)TAG_CARDTYPE.HERO_POWER
-					&& cardType != (int)TAG_CARDTYPE.PLAYER)
-					RevealedCards.Add(revealed);
-			}
-			if(discarded.HasValue)
-				revealed.Discarded = discarded.Value;
-			if(cardMark.HasValue)
-				revealed.CardMark = cardMark.Value;
+			UpdateKnownEntitesInDeck(entity.CardId);
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
 		public void CreateInHand(Entity entity, int turn)
 		{
-			var ce = new CardEntity(entity) {Turn = turn, CardMark = CardMark.Created, Created = true};
-			if(entity != null
-			   && (entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin
-			       || entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.GallywixsCoinToken))
-				ce.CardMark = CardMark.Coin;
-			Hand.Add(ce);
-			if(IsLocalPlayer)
-				CreatedInHandCardIds.Add(entity.CardId);
-			Log("CreateInHand", ce);
+			entity.Info.Created = true;
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
 		public void CreateInDeck(Entity entity, int turn)
 		{
-			CardEntity ce;
-			if(IsLocalPlayer)
-			{
-				ce = new CardEntity(entity) { Turn = turn };
-				Deck.Add(ce);
-				RevealedCards.Add(new CardEntity(entity) {Turn = turn});
-			}
-			else
-			{
-				Deck.Add(new CardEntity(null));
-				RevealDeckCard(entity.CardId, turn);
-				ce = new CardEntity(entity.CardId, null) { Turn = turn };
-				RevealedCards.Add(ce);
-			}
-			Log("CreateInDeck", ce);
+			entity.Info.Created |= turn > 1;
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
 		public void CreateInPlay(Entity entity, int turn)
 		{
-			var ce = new CardEntity(entity) {Turn = turn, Created = true};
-            Board.Add(ce);
-			Log("CreateInPlay", ce);
+			entity.Info.Created = true;
+			entity.Info.Turn = turn;
+			Log(entity);
+		}
+
+		public void CreateInSecret(Entity entity, int turn)
+		{
+			entity.Info.Created = true;
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
 		public void RemoveFromDeck(Entity entity, int turn)
 		{
-			var revealed = RevealedCards.FirstOrDefault(r => r.Entity == entity);
-			if(revealed != null)
-			{
-				RevealedCards.Remove(revealed);
-			}
-			var ce = MoveCardEntity(entity, Deck, Removed, turn);
-			Log("RemoveFromDeck", ce);
+			//Do not check for KnownCardIds here, this is how jousted cards get removed from the deck
+			entity.Info.Turn = turn;
+			entity.Info.Discarded = true;
+			Log(entity);
 		}
 
-		public void Mulligan(Entity entity)
-		{
-			var ce = MoveCardEntity(entity, Hand, Deck, 0);
-
-			//new cards are drawn first
-			var newCard = Hand.FirstOrDefault(x => x.Entity.GetTag(GAME_TAG.ZONE_POSITION) == entity.GetTag(GAME_TAG.ZONE_POSITION));
-			if(newCard != null)
-				newCard.CardMark = CardMark.Mulliganed;
-			if(!string.IsNullOrEmpty(entity.CardId) && DrawnCardIds.Contains(entity.CardId))
-				DrawnCardIds.Remove(entity.CardId);
-			Log("Mulligan", ce);
-		}
+		public void Mulligan(Entity entity) => Log(entity);
 
 		public void HandDiscard(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Hand, Graveyard, turn);
-			UpdateRevealedEntity(ce, turn, true);
-			Log("HandDiscard", ce);
+			if(!IsLocalPlayer)
+				UpdateKnownEntitesInDeck(entity.CardId, entity.Info.Turn);
+			entity.Info.Turn = turn;
+			entity.Info.Discarded = true;
+			Log(entity);
 		}
 
 		public void DeckDiscard(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Deck, Graveyard, turn);
-			UpdateRevealedEntity(ce, turn, true);
-			if(!string.IsNullOrEmpty(entity.CardId) && ce.CardMark != CardMark.Created && ce.CardMark != CardMark.Returned)
-			{
-				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
-					DrawnCardsMatchDeck = false;
-				DrawnCardIds.Add(entity.CardId);
-				DrawnCardIdsTotal.Add(entity.CardId);
-			}
-			Log("DeckDiscard", ce);
+			UpdateKnownEntitesInDeck(entity.CardId);
+			entity.Info.Turn = turn;
+			entity.Info.Discarded = true;
+			Log(entity);
 		}
 
 		public void BoardToDeck(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Board, Deck, turn);
-			UpdateRevealedEntity(ce, turn);
-			if(!string.IsNullOrEmpty(entity.CardId) && DrawnCardIds.Contains(entity.CardId))
-				DrawnCardIds.Remove(entity.CardId);
-			Log("BoardToDeck", ce);
+			entity.Info.Turn = turn;
+			entity.Info.Returned = true;
+			Log(entity);
 		}
 
 		public void BoardToHand(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Board, Hand, turn);
-			ce.CardMark = CardMark.Returned;
-			UpdateRevealedEntity(ce, turn, cardMark: CardMark.Returned);
-			Log("BoardToHand", ce);
+			entity.Info.Turn = turn;
+			entity.Info.Returned = true;
+			Log(entity);
 		}
 
 		public void JoustReveal(Entity entity, int turn)
 		{
-			if(Deck.Where(ce => ce.InDeck).All(ce => ce.CardId != entity.CardId))
-			{
-				RevealDeckCard(entity.CardId, turn);
-				var ce = new CardEntity(entity.CardId, null) {Turn = turn};
-                RevealedCards.Add(ce);
-				Log("JoustReveal", ce);
-			}
+			entity.Info.Turn = turn;
+			var card = InDeckPrecitions.FirstOrDefault(x => x.CardId == entity.CardId);
+			if(card != null)
+				card.Turn = turn;
+			else
+				InDeckPrecitions.Add(new PredictedCard(entity.CardId, turn));
+			Log(entity);
+		}
+
+		private void UpdateKnownEntitesInDeck(string cardId, int turn = int.MaxValue)
+		{
+			var card = InDeckPrecitions.FirstOrDefault(x => x.CardId == cardId && turn >= x.Turn);
+			if(card != null)
+				InDeckPrecitions.Remove(card);
 		}
 
 		public void SecretTriggered(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Secrets, Graveyard, turn);
-			UpdateRevealedEntity(ce, turn);
-			Log("SecretTriggered", ce);
-		}
-
-		public void RevealDeckCard(string cardId, int turn)
-		{
-			var cardEntity = Deck.FirstOrDefault(ce => ce.Unknown);
-			if(cardEntity != null)
-			{
-				cardEntity.CardId = cardId;
-				cardEntity.Turn = turn;
-			}
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
 		public void SecretPlayedFromDeck(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Deck, Secrets, turn);
-			UpdateRevealedEntity(ce, turn);
-			if(!string.IsNullOrEmpty(entity.CardId))
-			{
-				if(IsLocalPlayer && !CardMatchesActiveDeck(entity.CardId))
-					DrawnCardsMatchDeck = false;
-				DrawnCardIds.Add(entity.CardId);
-				DrawnCardIdsTotal.Add(entity.CardId);
-			}
-			Log("SecretPlayedFromDeck", ce);
+			UpdateKnownEntitesInDeck(entity.CardId);
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
 		public void SecretPlayedFromHand(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Hand, Secrets, turn);
-			Log("SecretPlayedFromHand", ce);
+			entity.Info.Turn = turn;
+			SpellsPlayedCount++;
+			Log(entity);
 		}
 
 		public void PlayToGraveyard(Entity entity, string cardId, int turn)
 		{
-			var ce = MoveCardEntity(entity, Board, Graveyard, turn);
-			Log("PlayToGraveyard", ce);
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public void RemoveFromPlay(Entity entity, int turn)
+		{
+			entity.Info.Turn = turn;
+			Log(entity);
+		}
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
-			var handler = PropertyChanged;
-			if(handler != null)
-				handler(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		public void UpdateZonePos(TAG_ZONE zone, int turn)
-		{
-			switch(zone)
-			{
-				case TAG_ZONE.HAND:
-					Hand.Sort(ZonePosComparison);
-					if(!IsLocalPlayer && turn == 0 && Hand.Count == 5 && Hand[4].Entity.Id > 67)
-					{
-						Hand[4].CardMark = CardMark.Coin;
-						Hand[4].Created = true;
-						Deck.Add(new CardEntity(null));
-						Log("Coin", Hand[4]);
-					}
-					break;
-				case TAG_ZONE.PLAY:
-					Board.Sort(ZonePosComparison);
-					break;
-			}
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public void StolenByOpponent(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Board, Removed, turn);
-			UpdateRevealedEntity(ce, turn);
-			Log("StolenByOpponent", ce);
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 
 		public void StolenFromOpponent(Entity entity, int turn)
 		{
-			var ce = MoveCardEntity(entity, Removed, Board, turn);
-			ce.Created = true;
-			UpdateRevealedEntity(ce, turn);
-			Log("StolenFromOpponent", ce);
-		}
-	}
-
-
-
-	public class CardEntity
-	{
-		public CardEntity(Entity entity) : this(null, entity)
-		{
-			
-		}
-
-		public CardEntity(string cardId, Entity entity)
-		{
-			CardId = (string.IsNullOrEmpty(cardId) && entity != null) ? entity.CardId : cardId;
-			Entity = entity;
-			Turn = -1;
-			CardMark = (entity != null && entity.Id > 68) ? CardMark.Created : CardMark.None;
-		}
-		public string CardId { get; set; }
-		public Entity Entity { get; set; }
-
-		private int _turn;
-		public int Turn
-		{
-			get { return _turn; }
-			set
-			{
-				PrevTurn = _turn;
-				_turn = value;
-			}
-		}
-
-		public int PrevTurn { get; private set; }
-		public CardMark CardMark { get; set; }
-		public bool Discarded { get; set; }
-		public bool InHand { get { return (Entity != null && Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.HAND); } }
-		public bool InDeck { get { return (Entity == null || Entity.GetTag(GAME_TAG.ZONE) == (int)TAG_ZONE.DECK); } }
-		public bool Unknown { get { return string.IsNullOrEmpty(CardId) && Entity == null; } }
-		public bool Created { get; set; }
-
-		public void Update(Entity entity = null)
-		{
-			if(entity == null)
-				return;
-			if(Entity == null)
-				Entity = entity;
-			if(string.IsNullOrEmpty(CardId))
-				CardId = entity.CardId;
-		}
-
-		public override string ToString()
-		{
-			var sb = new StringBuilder();
-			sb.Append(Entity);
-			if(Entity == null)
-				sb.Append("cardId=" + CardId);
-			sb.Append(", turn=" + Turn);
-			if(CardMark != CardMark.None)
-				sb.Append(", mark=" + CardMark);
-			if(Discarded)
-				sb.Append(", discarded=true");
-			if(Created)
-				sb.Append(", created=true");
-			return sb.ToString();
-		}
-
-		public void Reset()
-		{
-			CardMark = CardMark.None;
-			Created = false;
-			CardId = string.Empty;
+			entity.Info.Turn = turn;
+			Log(entity);
 		}
 	}
 }

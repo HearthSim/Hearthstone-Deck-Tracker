@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using Hearthstone_Deck_Tracker.Enums;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Converters
 {
@@ -18,11 +18,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Converters
 				return Visibility.Collapsed;
 			DisplayedTimeFrame timeFrame;
 			if(Enum.TryParse(value.ToString(), out timeFrame))
-			{
 				return timeFrame == DisplayedTimeFrame.Custom ? Visibility.Visible : Visibility.Collapsed;
-			}
 			return Visibility.Collapsed;
-
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

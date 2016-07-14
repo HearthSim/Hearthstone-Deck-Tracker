@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -31,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					var name = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-name']").InnerText);
 					var count = int.Parse(HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-count']").InnerText));
 
-					var card = Database.GetCardFromName(name);
+					var card = Database.GetCardFromName(name.Replace("’", "'"));
 					card.Count = count;
 					deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
@@ -42,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "DeckImporter");
+				Log.Error(e);
 				return null;
 			}
 		}

@@ -41,31 +41,19 @@ namespace Hearthstone_Deck_Tracker
 				pickerItem.RefreshProperties();
 			}
 			foreach(var item in e.RemovedItems)
-			{
-				var pickerItem = item as DeckPickerItem;
-				if(pickerItem == null)
-					continue;
-				pickerItem.RefreshProperties();
-			}
+				(item as DeckPickerItem)?.RefreshProperties();
 			var dpi = ListViewDecks.SelectedItem as DeckPickerItem;
-			if(dpi != null)
-			{
-				SelectedDeck = dpi.Deck;
-				ComboBoxVersions.Items.Clear();
-				foreach(var version in SelectedDeck.VersionsIncludingSelf)
-					ComboBoxVersions.Items.Add(version);
-				ComboBoxVersions.SelectedItem = SelectedDeck.SelectedVersion;
-			}
+			if(dpi == null)
+				return;
+			SelectedDeck = dpi.Deck;
+			ComboBoxVersions.Items.Clear();
+			foreach(var version in SelectedDeck.VersionsIncludingSelf)
+				ComboBoxVersions.Items.Add(version);
+			ComboBoxVersions.SelectedItem = SelectedDeck.SelectedVersion;
 		}
 
-		private void ComboBoxVersions_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			SelectedVersion = ComboBoxVersions.SelectedItem as SerializableVersion;
-		}
+		private void ComboBoxVersions_OnSelectionChanged(object sender, SelectionChangedEventArgs e) => SelectedVersion = ComboBoxVersions.SelectedItem as SerializableVersion;
 
-		private void ButtonMoveToSelected_OnClick(object sender, RoutedEventArgs e)
-		{
-			Close();
-		}
+		private void ButtonMoveToSelected_OnClick(object sender, RoutedEventArgs e) => Close();
 	}
 }

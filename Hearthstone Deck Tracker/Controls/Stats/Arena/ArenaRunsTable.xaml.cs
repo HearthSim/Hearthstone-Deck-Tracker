@@ -1,25 +1,20 @@
-﻿using System;
+﻿#region
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
-using Control = System.Windows.Controls.Control;
-using UserControl = System.Windows.Controls.UserControl;
+
+#endregion
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 {
@@ -29,6 +24,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 	public partial class ArenaRunsTable : UserControl
 	{
 		private ArenaRun _selectedRun;
+
+		public ArenaRunsTable()
+		{
+			InitializeComponent();
+		}
 
 		public ArenaRun SelectedRun
 		{
@@ -42,17 +42,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		public GameStats SelectedGame { get; set; }
 
-		public ArenaRunsTable()
-		{
-			InitializeComponent();
-        }
-
 		private void ButtonEditRewards_OnClick(object sender, RoutedEventArgs e)
 		{
 			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
 			if(run == null)
 				return;
-			var rewardDialog = new ArenaRewardDialog(run.Deck) { WindowStartupLocation = WindowStartupLocation.CenterOwner };
+			var rewardDialog = new ArenaRewardDialog(run.Deck) {WindowStartupLocation = WindowStartupLocation.CenterOwner};
 			rewardDialog.ShowDialog();
 		}
 
@@ -95,10 +90,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			{
 				SelectedGame.DeleteGameFile();
 				run.Deck.DeckStats.Games.Remove(SelectedGame);
-				Logger.WriteLine("Deleted game " + SelectedGame, "Runs.ButtonDeleteGame");
+				Log.Info("Deleted game " + SelectedGame);
 			}
 			if(HearthStatsAPI.IsLoggedIn && SelectedGame.HasHearthStatsId && await window.ShowCheckHearthStatsMatchDeletionDialog())
-				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> { SelectedGame });
+				HearthStatsManager.DeleteMatchesAsync(new List<GameStats> {SelectedGame}).Forget();
 			DeckStatsList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks();
 			ArenaStats.Instance.UpdateArenaStats();
@@ -116,28 +111,30 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		{
 			if(SelectedGame == null)
 				return;
-			Core.MainWindow.DeckFlyout.SetDeck(SelectedGame.GetOpponentDeck());
-			Core.MainWindow.FlyoutDeck.Header = "Opponent";
-			Core.MainWindow.FlyoutDeck.IsOpen = true;
+			if(Config.Instance.StatsInWindow)
+			{
+				Core.Windows.StatsWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
+				Core.Windows.StatsWindow.FlyoutDeck.IsOpen = true;
+			}
+			else
+			{
+				Core.MainWindow.DeckFlyout.SetDeck(SelectedGame.OpponentCards);
+				Core.MainWindow.FlyoutDeck.IsOpen = true;
+			}
 		}
 
 		//http://stackoverflow.com/questions/3498686/wpf-remove-scrollviewer-from-treeview
 		private void ForwardScrollEvent(object sender, MouseWheelEventArgs e)
 		{
-			if(!e.Handled)
-			{
-				e.Handled = true;
-				var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) { RoutedEvent = MouseWheelEvent, Source = sender };
-				var parent = ((Control)sender).Parent as UIElement;
-				if(parent != null)
-					parent.RaiseEvent(eventArg);
-			}
+			if(e.Handled)
+				return;
+			e.Handled = true;
+			var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta) {RoutedEvent = MouseWheelEvent, Source = sender};
+			var parent = ((Control)sender).Parent as UIElement;
+			parent?.RaiseEvent(eventArg);
 		}
 
-		private void DataGridArenaRuns_OnTargetUpdated(object sender, DataTransferEventArgs e)
-		{
-			DataGridArenaRuns.SelectedItem = SelectedRun;
-		}
+		private void DataGridArenaRuns_OnTargetUpdated(object sender, DataTransferEventArgs e) => DataGridArenaRuns.SelectedItem = SelectedRun;
 
 		private void ButtonShowDeck_OnClick(object sender, RoutedEventArgs e)
 		{

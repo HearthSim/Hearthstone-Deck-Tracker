@@ -4,6 +4,9 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Utility.Logging;
+using static Hearthstone_Deck_Tracker.User32;
+using static Hearthstone_Deck_Tracker.User32.MouseEventFlags;
 
 #endregion
 
@@ -13,23 +16,24 @@ namespace Hearthstone_Deck_Tracker.Exporting
 	{
 		public static async Task ClickOnPoint(IntPtr wndHandle, Point clientPoint)
 		{
-			User32.ClientToScreen(wndHandle, ref clientPoint);
+			ClientToScreen(wndHandle, ref clientPoint);
 
 			Cursor.Position = new Point(clientPoint.X, clientPoint.Y);
+			Log.Debug("Clicking " + Cursor.Position);
 
 			//mouse down
 			if(SystemInformation.MouseButtonsSwapped)
-				User32.mouse_event((uint)User32.MouseEventFlags.RightDown, 0, 0, 0, UIntPtr.Zero);
+				mouse_event((uint)RightDown, 0, 0, 0, UIntPtr.Zero);
 			else
-				User32.mouse_event((uint)User32.MouseEventFlags.LeftDown, 0, 0, 0, UIntPtr.Zero);
+				mouse_event((uint)LeftDown, 0, 0, 0, UIntPtr.Zero);
 
 			await Task.Delay(Config.Instance.DeckExportDelay);
 
 			//mouse up
 			if(SystemInformation.MouseButtonsSwapped)
-				User32.mouse_event((uint)User32.MouseEventFlags.RightUp, 0, 0, 0, UIntPtr.Zero);
+				mouse_event((uint)RightUp, 0, 0, 0, UIntPtr.Zero);
 			else
-				User32.mouse_event((uint)User32.MouseEventFlags.LeftUp, 0, 0, 0, UIntPtr.Zero);
+				mouse_event((uint)LeftUp, 0, 0, 0, UIntPtr.Zero);
 
 			await Task.Delay(Config.Instance.DeckExportDelay);
 		}

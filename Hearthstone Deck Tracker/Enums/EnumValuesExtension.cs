@@ -22,9 +22,6 @@ namespace Hearthstone_Deck_Tracker.Enums
 			_enumType = enumType;
 		}
 
-		public override object ProvideValue(IServiceProvider serviceProvider)
-		{
-			return Enum.GetValues(_enumType);
-		}
+		public override object ProvideValue(IServiceProvider serviceProvider) => Enum.GetValues(_enumType);
 	}
 }

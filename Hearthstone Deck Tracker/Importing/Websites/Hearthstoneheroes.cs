@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -22,13 +23,13 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 						HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header[@class='panel-heading']/h1[@class='panel-title']").InnerText)
 						           .Trim()
 				};
-				var nodes = doc.DocumentNode.SelectNodes("//table[@class='table table-bordered table-hover table-db']/tbody/tr");
+				var nodes = doc.DocumentNode.SelectNodes("//*[@id='list']/div/table/tbody/tr");
 
 				foreach(var cardNode in nodes)
 				{
 					var name = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a").Attributes[3].Value);
 
-					var temp = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/small").InnerText[0].ToString());
+					var temp = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//span[@class='text-muted']").InnerText[0].ToString());
 					var count = int.Parse(temp);
 
 					var card = Database.GetCardFromName(name);
@@ -42,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			}
 			catch(Exception e)
 			{
-				Logger.WriteLine(e.ToString(), "DeckImporter");
+				Log.Error(e);
 				return null;
 			}
 		}
