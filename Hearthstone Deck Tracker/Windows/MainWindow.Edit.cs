@@ -58,8 +58,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(deck == null)
 				return;
 
-			var deckStats = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(deck));
-			if(deckStats != null)
+			DeckStats deckStats;
+			if(DeckStatsList.Instance.DeckStats.TryGetValue(deck.DeckId, out deckStats))
 			{
 				if(deckStats.Games.Any())
 				{
@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						}
 					}
 				}
-				DeckStatsList.Instance.DeckStats.Remove(deckStats);
+				DeckStatsList.Instance.DeckStats.TryRemove(deckStats.DeckId, out deckStats);
 				if(saveAndUpdate)
 					DeckStatsList.Save();
 				Log.Info("Removed deckstats from deck: " + deck.Name);
@@ -199,11 +199,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckList.Instance.Decks.Add(clone);
 			DeckList.Save();
 
-			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
-			if(newStatsEntry == null)
+			DeckStats newStatsEntry;
+			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out newStatsEntry))
 			{
 				newStatsEntry = new DeckStats(clone);
-				DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
+				DeckStatsList.Instance.DeckStats.TryAdd(clone.DeckId, newStatsEntry);
 			}
 
 			if(cloneStats)
@@ -250,12 +250,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckList.Instance.Decks.Add(clone);
 			DeckPickerList.UpdateDecks();
 			DeckList.Save();
-
-			var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(clone));
-			if(newStatsEntry == null)
+			
+			DeckStats newStatsEntry;
+			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out newStatsEntry))
 			{
 				newStatsEntry = new DeckStats(clone);
-				DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
+				DeckStatsList.Instance.DeckStats.TryAdd(clone.DeckId, newStatsEntry);
 			}
 
 			//clone game stats

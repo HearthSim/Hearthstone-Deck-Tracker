@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			var options = new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount };
 			await Task.Run(() =>
 			{
-				var games = DeckStatsList.Instance.DeckStats.SelectMany(x => x.Games).Concat(DefaultDeckStats.Instance.DeckStats.SelectMany(x => x.Games)).ToList();
+				var games = DeckStatsList.Instance.DeckStats.Values.SelectMany(x => x.Games).Concat(DefaultDeckStats.Instance.DeckStats.SelectMany(x => x.Games)).ToList();
 				gamesCount = games.Count;
 				Parallel.ForEach(games, options, (game, loopState) =>
 				{

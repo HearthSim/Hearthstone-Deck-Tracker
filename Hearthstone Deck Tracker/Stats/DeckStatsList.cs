@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,7 +19,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		[XmlArray(ElementName = "DeckStats")]
 		[XmlArrayItem(ElementName = "Deck")]
-		public List<DeckStats> DeckStats = new List<DeckStats>();
+		public List<DeckStats> SerializableDeckStats = new List<DeckStats>();
+
+		private ConcurrentDictionary<Guid, DeckStats> _deckStats;
+		[XmlIgnore]
+		public ConcurrentDictionary<Guid, DeckStats> DeckStats => _deckStats ?? (_deckStats =
+																	new ConcurrentDictionary<Guid, DeckStats>(
+																		SerializableDeckStats.GroupBy(x => x.DeckId).Select(x => new KeyValuePair<Guid, DeckStats>(x.First().DeckId, x.First()))));
 
 		public static DeckStatsList Instance => _instance.Value;
 
@@ -138,14 +145,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 
-		public static void Save() => XmlManager<DeckStatsList>.Save(Config.Instance.DataDir + "DeckStats.xml", Instance);
+		public static void Save()
+		{
+			Instance.SerializableDeckStats = Instance.DeckStats.Values.ToList();
+			XmlManager<DeckStatsList>.Save(Config.Instance.DataDir + "DeckStats.xml", Instance);
+		}
 
 		internal static void Reload() => _instance = new Lazy<DeckStatsList>(Load);
 
 		internal DeckStats Add(Deck deck)
 		{
 			var ds = new DeckStats(deck);
-			Instance.DeckStats.Add(ds);
+			Instance.DeckStats.TryAdd(deck.DeckId, ds);
 			return ds;
 		}
 	}

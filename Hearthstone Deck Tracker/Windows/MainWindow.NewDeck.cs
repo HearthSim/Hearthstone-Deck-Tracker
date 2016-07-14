@@ -179,8 +179,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				TagControlEdit.SetSelectedTags(new List<string>());
 				if(deckName != oldDeckName)
 				{
-					var statsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(_newDeck));
-					if(statsEntry != null)
+					DeckStats statsEntry;
+					if(DeckStatsList.Instance.DeckStats.TryGetValue(_newDeck.DeckId, out statsEntry))
 					{
 						if(overwrite)
 						{
@@ -191,11 +191,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						}
 						else
 						{
-							var newStatsEntry = DeckStatsList.Instance.DeckStats.FirstOrDefault(ds => ds.BelongsToDeck(_newDeck));
-							if(newStatsEntry == null)
+							DeckStats newStatsEntry;
+							if(DeckStatsList.Instance.DeckStats.TryGetValue(_newDeck.DeckId, out newStatsEntry))
 							{
 								newStatsEntry = new DeckStats(_newDeck);
-								DeckStatsList.Instance.DeckStats.Add(newStatsEntry);
+								DeckStatsList.Instance.DeckStats.TryAdd(_newDeck.DeckId, newStatsEntry);
 							}
 							foreach(var game in statsEntry.Games)
 								newStatsEntry.AddGameResult(game.CloneWithNewId());
