@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private static readonly FullScreenFxHandler FullScreenFxHandler = new FullScreenFxHandler();
 		private static LogReader _gameStatePowerLogReader;
 		private static LogReader _powerLogReader;
-		private static LogReader _netLogReader;
+		private static LogReader _loadingScreenLogReader;
 		private static HsGameState _gameState;
 		private static GameV2 _game;
 		private static DateTime _startingPoint;
@@ -41,12 +41,12 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			_gameStatePowerLogReader = new LogReader(GameStatePowerLogReaderInfo);
 			_powerLogReader = new LogReader(PowerLogReaderInfo);
-			_netLogReader = new LogReader(NetLogReaderInfo);
+			_loadingScreenLogReader = new LogReader(LoadingScreenLogReaderInfo);
 			LogReaders.Add(_powerLogReader);
-			LogReaders.Add(_netLogReader);
+			LogReaders.Add(_loadingScreenLogReader);
+			LogReaders.Add(new LogReader(NetLogReaderInfo));
 			LogReaders.Add(new LogReader(RachelleLogReaderInfo));
 			LogReaders.Add(new LogReader(ArenaLogReaderInfo));
-			LogReaders.Add(new LogReader(LoadingScreenLogReaderInfo));
 			LogReaders.Add(new LogReader(FullScreenFxLogReaderInfo));
 		}
 
@@ -121,8 +121,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			var powerEntry =
 				_powerLogReader.FindEntryPoint(new[] {"tag=GOLD_REWARD_STATE", "End Spectator"});
-			var netEntry = _netLogReader.FindEntryPoint("ConnectAPI.GotoGameServer");
-			return netEntry > powerEntry ? netEntry : powerEntry;
+			var lsEntry = _loadingScreenLogReader.FindEntryPoint("Gameplay.Start");
+			return lsEntry > powerEntry ? lsEntry : powerEntry;
 		}
 
 		public static int GetTurnNumber() => _gameState.GetTurnNumber();
