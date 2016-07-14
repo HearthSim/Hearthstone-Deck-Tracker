@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ReplayMaker.Reset();
 			Player.Reset();
 			Opponent.Reset();
-			if(!_matchInfoCacheInvalid)
+			if(!_matchInfoCacheInvalid && MatchInfo?.LocalPlayer != null && MatchInfo.OpposingPlayer != null)
 			{
 				Player.Name = MatchInfo.LocalPlayer.Name;
 				Opponent.Name = MatchInfo.OpposingPlayer.Name;
