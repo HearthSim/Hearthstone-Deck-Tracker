@@ -79,12 +79,12 @@ namespace Hearthstone_Deck_Tracker.Replay
 
 		private Entity PlayerEntity
 		{
-			get { return _currentGameState?.Data.First(x => x.IsPlayer); }
+			get { return _currentGameState?.Data.First(x => x.HasTag(PLAYER_ID)); }
 		}
 
 		private Entity OpponentEntity
 		{
-			get { return _currentGameState?.Data.First(x => x.HasTag(PLAYER_ID) && !x.IsPlayer); }
+			get { return _currentGameState?.Data.Last(x => x.HasTag(PLAYER_ID)); }
 		}
 
 		private IEnumerable<BoardEntity> BoardEntites => new[]
