@@ -48,11 +48,9 @@ namespace HDTTests.Hearthstone
 
             _heroPlayer = CreateNewEntity("HERO_01");
             _heroPlayer.SetTag(GameTag.CARDTYPE, (int)CardType.HERO);
-            _heroPlayer.IsPlayer = true;
             _heroOpponent = CreateNewEntity("HERO_02");
             _heroOpponent.SetTag(GameTag.CARDTYPE, (int) CardType.HERO);
             _heroOpponent.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
-            _heroOpponent.IsPlayer = false;
 
             _game.Entities.Add(0, _heroPlayer);
             _game.Player.Id = _heroPlayer.Id;

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,14 +14,19 @@ namespace HDTTests.BoardDamage
 		private List<Entity> _player;
 		private List<Entity> _opponent;
 		private Dictionary<int, Entity> _entities;
+		private GameV2 _game;
 
 		[TestInitialize]
 		public void Setup()
 		{
+			Core.Game = null;
+			_game = new GameV2();
+			Core.Game = _game;
+			_game.Player.Id = 0;
+
 			_entities = new Dictionary<int, Entity>();
 			_entities[0] = new Entity(0);
 			_entities[0].SetTag(GameTag.FIRST_PLAYER, 1);
-			_entities[0].IsPlayer = true;
 			_entities[1] = new Entity(1);
 			_entities[1].Name = "GameEntity";
 			_entities[1].SetTag(GameTag.TURN, 11);
