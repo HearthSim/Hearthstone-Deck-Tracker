@@ -89,9 +89,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool SavedReplay { get; set; }
 
-		public Entity PlayerEntity => Entities.FirstOrDefault(x => x.Value.IsPlayer).Value;
+		public Entity PlayerEntity => Entities.FirstOrDefault(x => x.Value?.IsPlayer ?? false).Value;
 
-		public Entity OpponentEntity => Entities.FirstOrDefault(x => x.Value.HasTag(GameTag.PLAYER_ID) && !x.Value.IsPlayer).Value;
+		public Entity OpponentEntity => Entities.FirstOrDefault(x => x.Value != null && x.Value.HasTag(GameTag.PLAYER_ID) && !x.Value.IsPlayer).Value;
 
 		public Entity GameEntity => Entities.FirstOrDefault(x => x.Value?.Name == "GameEntity").Value;
 
@@ -150,6 +150,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ReplayMaker.Reset();
 			Player.Reset();
 			Opponent.Reset();
+			if(!_matchInfoCacheInvalid)
+			{
+				Player.Name = MatchInfo.LocalPlayer.Name;
+				Opponent.Name = MatchInfo.OpposingPlayer.Name;
+				Player.Id = MatchInfo.LocalPlayer.Id;
+				Opponent.Id = MatchInfo.OpposingPlayer.Id;
+			}
 			Entities.Clear();
 			SavedReplay = false;
 			OpponentSecretCount = 0;
