@@ -23,10 +23,36 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public static class DataIssueResolver
 	{
+		internal static bool RunDeckStatsFix;
 		public static void Run()
 		{
 			if(Directory.Exists(GamesDir))
 				InitiateGameFilesCleanup();
+			if(RunDeckStatsFix)
+				FixDeckStats();
+		}
+
+		//https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues/2675
+		private static void FixDeckStats()
+		{
+			var save = false;
+			foreach(var d in DeckList.Instance.Decks.Where(d => d.DeckStats.DeckId != d.DeckId))
+			{
+				DeckStats deckStats;
+				if(!DeckStatsList.Instance.DeckStats.TryGetValue(d.DeckId, out deckStats))
+					continue;
+				foreach(var game in deckStats.Games.ToList())
+				{
+					deckStats.Games.Remove(game);
+					d.DeckStats.Games.Add(game);
+				}
+				save = true;
+			}
+			if(save)
+			{
+				DeckStatsList.Save();
+				Core.MainWindow.DeckPickerList.UpdateDecks();
+			}
 		}
 
 		private static async void InitiateGameFilesCleanup()

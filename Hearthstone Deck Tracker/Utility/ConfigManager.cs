@@ -243,6 +243,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 					Config.Instance.ConstructedAutoUpdate = false;
 					converted = true;
 				}
+				if(configVersion == new Version(0, 15, 9, 0))
+					DataIssueResolver.RunDeckStatsFix = true;
 			}
 
 			if(converted)
