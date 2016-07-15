@@ -34,8 +34,10 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			{
 				var offset = firstPlayer.IsPlayer ? 0 : 1;
 				var gameRoot = entities.FirstOrDefault(e => e.Value != null && e.Value.Name == "GameEntity").Value;
-				if(gameRoot != null)
-					return (gameRoot.Tags[TURN] + offset) % 2 == 1;
+				if(gameRoot == null)
+					return false;
+				var turn = gameRoot.GetTag(TURN);
+				return turn > 0 && ((turn + offset)%2 == 1);
 			}
 			return false;
 		}
