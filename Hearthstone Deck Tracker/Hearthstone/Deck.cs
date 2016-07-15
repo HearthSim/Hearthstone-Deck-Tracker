@@ -348,8 +348,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				DeckStats deckStats;
-				return !DeckStatsList.Instance.DeckStats.TryGetValue(DeckId, out deckStats) ? DeckStatsList.Instance.Add(this) : deckStats;
+				var enumerator = DeckStatsList.Instance.DeckStats.GetEnumerator();
+				while(enumerator.MoveNext())
+				{
+					if(enumerator.Current.Value.BelongsToDeck(this))
+						return enumerator.Current.Value;
+				}
+				return DeckStatsList.Instance.Add(this);
 			}
 		}
 
