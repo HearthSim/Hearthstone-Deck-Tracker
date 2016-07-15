@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlIgnore]
 		public ConcurrentDictionary<Guid, DeckStats> DeckStats => _deckStats ?? (_deckStats =
 																	new ConcurrentDictionary<Guid, DeckStats>(
-																		SerializableDeckStats.GroupBy(x => x.DeckId).Select(x => new KeyValuePair<Guid, DeckStats>(x.First().DeckId, x.First()))));
+																		SerializableDeckStats.Where(x => x != null).GroupBy(x => x.DeckId).Select(x => new KeyValuePair<Guid, DeckStats>(x.First().DeckId, x.First()))));
 
 		public static DeckStatsList Instance => _instance.Value;
 
