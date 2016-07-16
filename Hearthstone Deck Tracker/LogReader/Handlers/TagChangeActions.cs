@@ -627,6 +627,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					break;
 				case SETASIDE:
 				case REMOVEDFROMGAME:
+					if(!gameState.SetupDone)
+					{
+						entity.Info.Created = true;
+						return;
+					}
 					if(controller == game.Player.Id)
 					{
 						if(gameState.JoustReveals > 0)

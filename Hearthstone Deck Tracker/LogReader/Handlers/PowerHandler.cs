@@ -288,9 +288,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				_tagChangeHandler.ClearQueuedActions();
 			else if(gameState.GameTriggerCount == 0 && logLine.Contains("BLOCK_START BlockType=TRIGGER Entity=GameEntity"))
 				gameState.GameTriggerCount++;
-			else if(gameState.GameTriggerCount == 1 && logLine.Contains("BLOCK_END"))
+			else if(gameState.GameTriggerCount < 10 && logLine.Contains("BLOCK_END") && game.GameEntity.HasTag(GameTag.TURN))
 			{
-				gameState.GameTriggerCount++;
+				gameState.GameTriggerCount += 10;
 				_tagChangeHandler.InvokeQueuedActions(game);
 				gameState.SetupDone = true;
 			}
