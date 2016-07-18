@@ -358,7 +358,6 @@
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="Hearthstone\GameMetaData.cs" />
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
-    <Compile Include="LogReader\Handlers\NetHandler.cs" />
     <Compile Include="Enums\Hearthstone\Mode.cs" />
     <Compile Include="LogReader\Handlers\TagChangeActions.cs" />
     <Compile Include="LogReader\LogReaderHelper.cs" />
