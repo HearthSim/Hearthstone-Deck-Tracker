@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using HearthDb.Enums;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -354,6 +355,7 @@ namespace Hearthstone_Deck_Tracker
 			_game.IsInMenu = false;
 			_game.Reset();
 			_game.CacheMatchInfo();
+			_game.MetaData.ServerInfo = Reflection.GetServerInfo();
 			TurnTimer.Instance.Start(_game).Forget();
 
 			var selectedDeck = DeckList.Instance.ActiveDeckVersion;

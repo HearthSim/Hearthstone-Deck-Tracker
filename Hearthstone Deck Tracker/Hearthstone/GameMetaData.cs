@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HearthMirror.Objects;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class GameMetaData
 	{
 		private int? _hearthstoneBuild;
-		public string ServerAddress { get; set; }
-		public string ClientId { get; set; }
-		public string GameId { get; set; }
-		public string SpectateKey { get; set; }
+		public GameServerInfo ServerInfo;
 		public DateTime EnqueueTime { get; set; }
 
 		public int? HearthstoneBuild
@@ -28,6 +26,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public override string ToString() 
-			=> $"HearthstoneBuild={HearthstoneBuild}, ServerAddress={ServerAddress}, ClientId={ClientId}, GameId={GameId}, SpectateKey={SpectateKey}, EnqueueTime={EnqueueTime}";
+			=> $"HearthstoneBuild={HearthstoneBuild}, ServerAddress={ServerInfo?.Address}, ClientId={ServerInfo?.ClientHandle}, GameId={ServerInfo?.GameHandle}, EnqueueTime={EnqueueTime}";
 	}
 }
