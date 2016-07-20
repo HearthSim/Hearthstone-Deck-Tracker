@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		private PluginManager()
 		{
 			Plugins = new List<PluginWrapper>();
-			SyncPlugins(LocalPluginDirectory, PluginDirectory, LocalPluginDirectory);
+			SyncPlugins(PluginDirectory, LocalPluginDirectory, LocalPluginDirectory);
 		}
 
 		private void SyncPlugins(DirectoryInfo sourceDir, DirectoryInfo destDir, DirectoryInfo baseDir)
