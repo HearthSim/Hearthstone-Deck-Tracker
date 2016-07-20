@@ -173,7 +173,7 @@ namespace Hearthstone_Deck_Tracker
 						v => mgr.CreateShortcutForThisExe(),
 						onAppUninstall: v => mgr.RemoveShortcutForThisExe()
 						);
-					restart = await mgr.UpdateApp(splashScreenWindow.Updating) != null;
+					restart = await SquirrelUpdate(splashScreenWindow, mgr);
 				}
 				if(restart)
 					UpdateManager.RestartApp();
@@ -181,6 +181,26 @@ namespace Hearthstone_Deck_Tracker
 			catch(Exception ex)
 			{
 				Log.Error(ex);
+			}
+		}
+
+		private static async Task<bool> SquirrelUpdate(SplashScreenWindow splashScreenWindow, UpdateManager mgr, bool ignoreDelta = false)
+		{
+			try
+			{
+				var updateInfo = await mgr.CheckForUpdate(ignoreDelta);
+				if(!updateInfo.ReleasesToApply.Any())
+					return false;
+				await mgr.DownloadReleases(updateInfo.ReleasesToApply, splashScreenWindow.Updating);
+				await mgr.ApplyReleases(updateInfo);
+				await mgr.CreateUninstallerRegistryEntry();
+				return true;
+			}
+			catch(Exception)
+			{
+				if(!ignoreDelta)
+					return await SquirrelUpdate(splashScreenWindow, mgr, true);
+				return false;
 			}
 		}
 #endif
