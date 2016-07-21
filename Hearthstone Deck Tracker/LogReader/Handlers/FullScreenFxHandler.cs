@@ -26,6 +26,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if((DateTime.Now - logLine.Time).TotalSeconds > 5 || !game.IsInMenu || logLine.Time <= _lastQueueTime)
 					return;
 				_lastQueueTime = logLine.Time;
+				if(!Config.Instance.AutoSelectDetectedDeck)
+					return;
 				if(game.CurrentMode == Mode.TOURNAMENT)
 					AutoSelectDeckById(true);
 				else if(game.CurrentMode == Mode.DRAFT)
