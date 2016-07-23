@@ -191,6 +191,8 @@ namespace Hearthstone_Deck_Tracker
 				var updateInfo = await mgr.CheckForUpdate(ignoreDelta);
 				if(!updateInfo.ReleasesToApply.Any())
 					return false;
+				if(updateInfo.ReleasesToApply.LastOrDefault()?.Version <= mgr.CurrentlyInstalledVersion())
+					return false;
 				await mgr.DownloadReleases(updateInfo.ReleasesToApply, splashScreenWindow.Updating);
 				await mgr.ApplyReleases(updateInfo);
 				await mgr.CreateUninstallerRegistryEntry();
