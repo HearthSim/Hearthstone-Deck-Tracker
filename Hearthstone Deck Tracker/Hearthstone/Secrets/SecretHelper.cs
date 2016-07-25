@@ -1,7 +1,6 @@
 #region
 
 using System.Collections.Generic;
-using System.Linq;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
@@ -26,6 +25,18 @@ namespace Hearthstone_Deck_Tracker
 		public int TurnPlayed { get; private set; }
 		public HeroClass HeroClass { get; private set; }
 		public Dictionary<string, bool> PossibleSecrets { get; set; }
+
+		public void TrySetSecret(string cardId, bool active)
+		{
+			if(PossibleSecrets.ContainsKey(cardId))
+				PossibleSecrets[cardId] = active;
+		}
+
+		public bool TryGetSecret(string cardId)
+		{
+			bool active;
+			return PossibleSecrets.TryGetValue(cardId, out active) && active;
+		}
 
 
 		public static int GetMaxSecretCount(HeroClass heroClass)

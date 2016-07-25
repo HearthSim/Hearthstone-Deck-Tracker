@@ -20,10 +20,10 @@ namespace Hearthstone_Deck_Tracker
 			Game = game;
 		}
 
-		public List<SecretHelper> Secrets { get; private set; }
+		public List<SecretHelper> Secrets { get; }
 		public int ProposedAttackerEntityId { get; set; }
 		public int ProposedDefenderEntityId { get; set; }
-		public GameV2 Game { get; private set; }
+		public GameV2 Game { get; }
 
 		public List<HeroClass> DisplayedClasses
 		{
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void Trigger(string cardId)
 		{
-			if(Secrets.Any(s => s.PossibleSecrets[cardId]))
+			if(Secrets.Any(s => s.TryGetSecret(cardId)))
 				SetZero(cardId);
 			else
 				SetMax(cardId);
@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker
 			if(knownCardId != null)
 			{
 				foreach(var cardId in SecretHelper.GetSecretIds(heroClass))
-					helper.PossibleSecrets[cardId] = cardId == knownCardId;
+					helper.TrySetSecret(cardId, cardId == knownCardId);
 			}
 			Secrets.Add(helper);
 			Log.Info("Added secret with id:" + id);
@@ -162,7 +162,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			foreach(var secret in Secrets)
-				secret.PossibleSecrets[cardId] = true;
+				secret.TrySetSecret(cardId, true);
 		}
 
 		public void SetZero(string cardId)
@@ -177,7 +177,7 @@ namespace Hearthstone_Deck_Tracker
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			for(var index = 0; index < stopIndex; index++)
-				Secrets[index].PossibleSecrets[cardId] = false;
+				Secrets[index].TrySetSecret(cardId, false);
 			if(stopIndex > 0)
 				Log.Info("Set secret to zero: " + Database.GetCardFromId(cardId));
 		}
@@ -190,12 +190,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				foreach(var possible in secret.PossibleSecrets)
 				{
-					if(possible.Value)
-					{
-						var s = returnThis.FirstOrDefault(x => x.CardId == possible.Key);
-						if(s != null)
-							s.Count++;
-					}
+					if(!possible.Value)
+						continue;
+					var s = returnThis.FirstOrDefault(x => x.CardId == possible.Key);
+					if(s != null)
+						s.Count++;
 				}
 			}
 
