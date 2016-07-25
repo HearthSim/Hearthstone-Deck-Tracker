@@ -225,6 +225,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			entity.Info.Hidden = false;
 			entity.Info.Turn = turn;
+			entity.Info.CostReduction = 0;
 			Log(entity);
 		}
 
