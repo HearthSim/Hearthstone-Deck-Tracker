@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Importing.Game;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static System.Windows.Visibility;
+using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
@@ -97,6 +98,20 @@ namespace Hearthstone_Deck_Tracker.Controls
 			OnPropertyChanged(nameof(ContentVisibility));
 			OnPropertyChanged(nameof(StartButtonVisibility));
 		}
+
+        private void onImportAll_Modified(object sender, RoutedEventArgs e)
+        {
+            if (ItemsControl != null)
+            {
+                for (int i = 0; i < ItemsControl.Items.Count; i++)
+                {
+                    ContentPresenter c = (ContentPresenter)ItemsControl.ItemContainerGenerator.ContainerFromItem(ItemsControl.Items[i]);
+                    CheckBox chk = c.ContentTemplate.FindName("CheckBoxImport", c) as CheckBox;
+                    chk.IsChecked = (bool)ImportAllChk.IsChecked;
+
+                }
+            }
+        }
 
 		public void StartedGame()
 		{
