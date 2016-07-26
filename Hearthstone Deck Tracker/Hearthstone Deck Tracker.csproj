@@ -85,13 +85,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\De.TorstenMandelkow.MetroChart.dll</HintPath>
     </Reference>
-    <Reference Include="HearthDb">
-      <HintPath>..\lib\HearthDb.dll</HintPath>
-    </Reference>
-    <Reference Include="HearthMirror, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\HearthMirror.dll</HintPath>
-    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -1240,7 +1233,16 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj">
+      <Project>{7ed14243-e02b-4b94-af00-a67a62c282f0}</Project>
+      <Name>HearthDb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HearthMirror\HearthMirror\HearthMirror.csproj">
+      <Project>{1694a2f8-645a-4263-a6ab-fc26323fd675}</Project>
+      <Name>HearthMirror</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if "$(ConfigurationName)" == "Release" (
@@ -1258,10 +1260,22 @@
     xcopy /Y "..\..\..\..\HDTUninstaller\bin\Release\HDTUninstaller.exe" "..\Hearthstone Deck Tracker" )</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>mkdir "$(TargetDir)\Images\Bars"
+    <PreBuildEvent>if exist $(SolutionDir)HearthDb (
+  git -C $(SolutionDir)HearthDb fetch
+  git -C $(SolutionDir)HearthDb reset --hard origin/master
+) else (
+  git clone https://github.com/HearthSim/HearthDb.git $(SolutionDir)HearthDb
+)
+if exist $(SolutionDir)HearthMirror (
+  git -C $(SolutionDir)HearthMirror fetch
+  git -C $(SolutionDir)HearthMirror reset --hard origin/master
+) else (
+  git clone https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror 
+)
+mkdir "$(TargetDir)\Images\Bars"
 mkdir "$(TargetDir)\Images\Themes"
-xcopy /E /Y "$(ProjectDir)Images\Bars" "$(TargetDir)\Images\Bars"
-xcopy /E /Y "$(ProjectDir)Images\Themes" "$(TargetDir)\Images\Themes"</PreBuildEvent>
+xcopy /E /Y /Q "$(ProjectDir)Images\Bars" "$(TargetDir)\Images\Bars"
+xcopy /E /Y /Q "$(ProjectDir)Images\Themes" "$(TargetDir)\Images\Themes"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
