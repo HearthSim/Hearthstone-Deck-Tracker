@@ -112,6 +112,31 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
+		private void CheckBoxImport_OnChecked(object sender, RoutedEventArgs e)
+		{
+			int modifiedCount = 0;
+
+			if (ItemsControl == null)
+				return;
+
+			foreach(var item in ItemsControl.Items)
+			{
+				var c = (ContentPresenter)ItemsControl.ItemContainerGenerator.ContainerFromItem(item);
+				var chk = (CheckBox)c.ContentTemplate.FindName("CheckBoxImport", c);
+                if (chk.IsChecked.Value == true)
+					modifiedCount++;
+			}
+
+            if (modifiedCount == ItemsControl.Items.Count)
+                CheckBoxImportAll.IsChecked = true;
+
+		}
+
+        private void CheckBoxImport_OnUnchecked(object sender, RoutedEventArgs e)
+        {
+                CheckBoxImportAll.IsChecked = false;
+        }
+
 		public void StartedGame()
 		{
 			Text = StartTextGameRunning;
