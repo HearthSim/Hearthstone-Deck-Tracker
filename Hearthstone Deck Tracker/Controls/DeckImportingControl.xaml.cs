@@ -99,19 +99,17 @@ namespace Hearthstone_Deck_Tracker.Controls
 			OnPropertyChanged(nameof(StartButtonVisibility));
 		}
 
-        private void onImportAll_Modified(object sender, RoutedEventArgs e)
-        {
-            if (ItemsControl != null)
-            {
-                for (int i = 0; i < ItemsControl.Items.Count; i++)
-                {
-                    ContentPresenter c = (ContentPresenter)ItemsControl.ItemContainerGenerator.ContainerFromItem(ItemsControl.Items[i]);
-                    CheckBox chk = c.ContentTemplate.FindName("CheckBoxImport", c) as CheckBox;
-                    chk.IsChecked = (bool)ImportAllChk.IsChecked;
+		private void CheckBoxImportAll_OnModified(object sender, RoutedEventArgs e)
+		{
+			if (ItemsControl == null) return;
 
-                }
-            }
-        }
+			foreach (var item in ItemsControl.Items)
+			{
+				var c = (ContentPresenter)ItemsControl.ItemContainerGenerator.ContainerFromItem(item);
+				var chk = (CheckBox) c.ContentTemplate.FindName("CheckBoxImport", c);
+				chk.IsChecked = CheckBoxImportAll.IsChecked.HasValue && CheckBoxImportAll.IsChecked.Value;
+			}
+		}
 
 		public void StartedGame()
 		{

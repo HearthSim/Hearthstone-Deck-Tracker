@@ -26,7 +26,7 @@
             <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" Margin="5">
                 <DockPanel Margin="0,0,0,5">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                        <CheckBox Name="ImportAllChk" IsChecked="True" Margin="5,0,0,0" Unchecked="onImportAll_Modified" Checked="onImportAll_Modified"/>
+                        <CheckBox Name="CheckBoxImportAll" IsChecked="True" Margin="5,0,0,0" Unchecked="CheckBoxImportAll_OnModified" Checked="CheckBoxImportAll_OnModified"/>
                         <Label Content="DECK" Margin="120,0,0,0" FontWeight="SemiBold"/>
                         <Label Content="SAVE TO" Margin="160,0,0,0" FontWeight="SemiBold"/>
                     </StackPanel>
