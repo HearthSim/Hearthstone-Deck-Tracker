@@ -11,14 +11,14 @@ namespace HDTTests.Hearthstone
 	public class WebImportTest
 	{
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void InvalidUrlTest()
 		{
 			var found = DeckImporter.Import(@"http://hsdecktracker.net").Result;
 			Assert.IsNull(found);
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void Hearthstats()
 		{
 			Deck expected = CreateDeck();
@@ -26,7 +26,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void Hearthpwn()
 		{
 			Deck expected = CreateDeck();
@@ -34,7 +34,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void HearthpwnDeckBuilder()
 		{
 			Deck expected = CreateDeck();
@@ -42,7 +42,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void IcyVeins()
 		{
 			Deck expected = CreateDeck("Inner Rage;2", "Fiery War Axe;1", "Shield Block;2", "Dread Corsair;0", "Cruel Taskmaster;0");
@@ -50,7 +50,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void Hearthhead()
 		{
 			Deck expected = CreateDeck("Inner Rage;0", "Commanding Shout;1", "Cruel Taskmaster;2", "Dread Corsair;2", "Armorsmith;0");
@@ -58,7 +58,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void HearthstonePlayers()
 		{
 			Deck expected = CreateDeck();
@@ -66,7 +66,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void HearthstoneTopDecks()
 		{
 			Deck expected = CreateDeck();
@@ -74,7 +74,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void HearthnewsFR()
 		{
 			Deck expected = CreateDeck("Inner Rage;0", "Commanding Shout;1", "Cruel Taskmaster;2", "Dread Corsair;2", "Armorsmith;0");
@@ -82,7 +82,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void HearthBuilder()
 		{
 			Deck expected = CreateDeck("Inner Rage;0", "Commanding Shout;1", "Cruel Taskmaster;2", "Dread Corsair;2", "Armorsmith;0");
@@ -90,7 +90,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}		
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void HearthstoneDecksFR()
 		{
 			Deck expected = CreateDeck("Inner Rage;0", "Cruel Taskmaster;2", "Slam;0", "Grommash Hellscream;1", "Loot Hoarder;2", "Unstable Ghoul;0", "Dr. Boom;1");
@@ -98,7 +98,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void HearthstoneHerosDE()
 		{
 			Deck expected = CreateDeck("Commanding Shout;1", "Unstable Ghoul;1", "Gnomish Inventor;1", "Dread Corsair;2");
@@ -106,7 +106,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void EliteHearthstone()
 		{
 			Deck expected = CreateDeck("Inner Rage;2", "Loot Hoarder;2", "Cruel Taskmaster;0", "Gnomish Inventor;0");
@@ -114,7 +114,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void TempoStorm()
 		{
 			Deck expected = CreateDeck();
@@ -122,7 +122,7 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void HearthstoneTopDeck()
 		{
 			Deck expected = CreateDeck();
@@ -130,14 +130,14 @@ namespace HDTTests.Hearthstone
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}				
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void HearthArena()
 		{
 			Deck found = DeckImporter.Import(@"http://www.heartharena.com/arena-run/i2s8ht").Result;
 			Assert.IsTrue(AreDecksEqual(arena, found));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void ManaCrystals()
 		{
 			Deck expected = CreateDeck("Inner Rage;2", "Shield Slam;2", "Grommash Hellscream;1", "Piloted Shredder;2",

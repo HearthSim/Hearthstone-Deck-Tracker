@@ -95,7 +95,7 @@ namespace HDTTests.HearthStats
 			_match3.Turns = 10;
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("Web")]
 		public void DeckLifeCycle()
 		{
 			CreateDeck();
