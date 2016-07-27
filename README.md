@@ -1,5 +1,7 @@
 Hearthstone-Deck-Tracker
 ========================
+[![Build status](https://ci.appveyor.com/api/projects/status/3wow545sjaq9ybji/branch/master?svg=true)](https://ci.appveyor.com/project/Epix37/hearthstone-deck-tracker/branch/master)
+
 HDT is an automatic deck tracker and manager for Hearthstone.
 
 Installation
