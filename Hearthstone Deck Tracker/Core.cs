@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker
 			HotKeyManager.Load();
 
 			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
-				Helper.StartHearthstoneAsync();
+				Helper.StartHearthstoneAsync().Forget();
 
 			Initialized = true;
 

@@ -23,7 +23,6 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private readonly GameV2 _game;
 		private bool _appIsClosing;
-		private int _updateRequests;
 
 		public PlayerWindow(GameV2 game, List<Card> forScreenshot = null)
 		{

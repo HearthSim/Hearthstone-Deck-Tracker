@@ -25,7 +25,6 @@ namespace Hearthstone_Deck_Tracker
 	{
 		private readonly GameV2 _game;
 		private bool _appIsClosing;
-		private int _updateRequests;
 
 		public OpponentWindow(GameV2 game)
 		{
