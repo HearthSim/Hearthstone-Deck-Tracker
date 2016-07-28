@@ -103,5 +103,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return BGT_UNKNOWN;
 			}
 		}
+
+		public static Format? GetFormat(FormatType format)
+		{
+			switch(format)
+			{
+				case FormatType.FT_WILD:
+					return Format.Wild;
+				case FormatType.FT_STANDARD:
+					return Format.Standard;
+				default:
+					return null;
+			}
+		}
 	}
 }
