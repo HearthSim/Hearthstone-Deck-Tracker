@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
@@ -97,6 +98,59 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Log.Error("Error showing new update message\n" + e);
 			}
 		}
+
+#if(SQUIRREL)
+		public static async Task StartupUpdateCheck(SplashScreenWindow splashScreenWindow)
+		{
+			try
+			{
+				bool updated;
+				using(var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Epix37/HDT-Releases", prerelease: Config.Instance.CheckForBetaUpdates))
+				{
+					SquirrelAwareApp.HandleEvents(
+						v => mgr.CreateShortcutForThisExe(),
+						v => mgr.CreateShortcutForThisExe(),
+						onAppUninstall: v => mgr.RemoveShortcutForThisExe()
+						);
+					updated = await SquirrelUpdate(splashScreenWindow, mgr);
+				}
+				if(updated)
+				{
+					if(splashScreenWindow.SkipWasPressed)
+						StatusBar.Visibility = Visibility.Visible;
+					else
+						UpdateManager.RestartApp();
+				}
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+			}
+		}
+
+		private static async Task<bool> SquirrelUpdate(SplashScreenWindow splashScreenWindow, UpdateManager mgr, bool ignoreDelta = false)
+		{
+			try
+			{
+				splashScreenWindow.StartSkipTimer();
+				var updateInfo = await mgr.CheckForUpdate(ignoreDelta);
+				if(!updateInfo.ReleasesToApply.Any())
+					return false;
+				if(updateInfo.ReleasesToApply.LastOrDefault()?.Version <= mgr.CurrentlyInstalledVersion())
+					return false;
+				await mgr.DownloadReleases(updateInfo.ReleasesToApply, splashScreenWindow.Updating);
+				await mgr.ApplyReleases(updateInfo, splashScreenWindow.Installing);
+				await mgr.CreateUninstallerRegistryEntry();
+				return true;
+			}
+			catch(Exception)
+			{
+				if(!ignoreDelta)
+					return await SquirrelUpdate(splashScreenWindow, mgr, true);
+				return false;
+			}
+		}
+#endif
 
 		internal static async void StartUpdate()
 		{

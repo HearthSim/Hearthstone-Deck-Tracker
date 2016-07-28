@@ -61,7 +61,15 @@ namespace Hearthstone_Deck_Tracker
 			splashScreenWindow.ShowConditional();
 #if(SQUIRREL)
 			if(Config.Instance.CheckForUpdates)
-				await CheckForUpdates(splashScreenWindow);
+			{
+				var updateCheck = Updater.StartupUpdateCheck(splashScreenWindow);
+				while(!updateCheck.IsCompleted)
+				{
+					await Task.Delay(500);
+					if(splashScreenWindow.SkipWasPressed)
+						break;
+				}
+			}
 #endif
 			Log.Initialize();
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
@@ -159,53 +167,6 @@ namespace Hearthstone_Deck_Tracker
 
 			Influx.OnAppStart(Helper.GetCurrentVersion(), loginType, newUser);
 		}
-
-#if(SQUIRREL)
-		private static async Task CheckForUpdates(SplashScreenWindow splashScreenWindow)
-		{
-			try
-			{
-				bool restart;
-				using(var mgr = await UpdateManager.GitHubUpdateManager("https://github.com/Epix37/HDT-Releases", prerelease: Config.Instance.CheckForBetaUpdates))
-				{
-					SquirrelAwareApp.HandleEvents(
-						v => mgr.CreateShortcutForThisExe(),
-						v => mgr.CreateShortcutForThisExe(),
-						onAppUninstall: v => mgr.RemoveShortcutForThisExe()
-						);
-					restart = await SquirrelUpdate(splashScreenWindow, mgr);
-				}
-				if(restart)
-					UpdateManager.RestartApp();
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
-			}
-		}
-
-		private static async Task<bool> SquirrelUpdate(SplashScreenWindow splashScreenWindow, UpdateManager mgr, bool ignoreDelta = false)
-		{
-			try
-			{
-				var updateInfo = await mgr.CheckForUpdate(ignoreDelta);
-				if(!updateInfo.ReleasesToApply.Any())
-					return false;
-				if(updateInfo.ReleasesToApply.LastOrDefault()?.Version <= mgr.CurrentlyInstalledVersion())
-					return false;
-				await mgr.DownloadReleases(updateInfo.ReleasesToApply, splashScreenWindow.Updating);
-				await mgr.ApplyReleases(updateInfo);
-				await mgr.CreateUninstallerRegistryEntry();
-				return true;
-			}
-			catch(Exception)
-			{
-				if(!ignoreDelta)
-					return await SquirrelUpdate(splashScreenWindow, mgr, true);
-				return false;
-			}
-		}
-#endif
 
 		private static async void UpdateOverlayAsync()
 		{
