@@ -435,19 +435,16 @@ namespace Hearthstone_Deck_Tracker
 					return;
 				}
 				_game.CurrentGameStats.GameMode = _game.CurrentGameMode;
-				if(_game.CurrentGameMode == Ranked || _game.CurrentGameMode == Casual)
+				_game.CurrentGameStats.Format = _game.CurrentFormat;
+				Log.Info("Format: " + _game.CurrentGameStats.Format);
+				if(_game.CurrentGameMode == Ranked && _game.MatchInfo != null)
 				{
-					_game.CurrentGameStats.Format = _game.CurrentFormat;
-					Log.Info("Format: " + _game.CurrentGameStats.Format);
-					if(_game.CurrentGameMode == Ranked && _game.MatchInfo != null)
-					{
-						var wild = _game.CurrentFormat == Format.Wild;
-						_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
-						_game.CurrentGameStats.OpponentRank = wild ? _game.MatchInfo.OpposingPlayer.WildRank : _game.MatchInfo.OpposingPlayer.StandardRank;
-						_game.CurrentGameStats.LegendRank = wild ? _game.MatchInfo.LocalPlayer.WildLegendRank : _game.MatchInfo.LocalPlayer.StandardLegendRank;
-						_game.CurrentGameStats.OpponentLegendRank = wild ? _game.MatchInfo.OpposingPlayer.WildLegendRank : _game.MatchInfo.OpposingPlayer.StandardLegendRank;
-						_game.CurrentGameStats.Stars = wild ? _game.MatchInfo.LocalPlayer.WildStars : _game.MatchInfo.LocalPlayer.StandardStars;
-					}
+					var wild = _game.CurrentFormat == Format.Wild;
+					_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
+					_game.CurrentGameStats.OpponentRank = wild ? _game.MatchInfo.OpposingPlayer.WildRank : _game.MatchInfo.OpposingPlayer.StandardRank;
+					_game.CurrentGameStats.LegendRank = wild ? _game.MatchInfo.LocalPlayer.WildLegendRank : _game.MatchInfo.LocalPlayer.StandardLegendRank;
+					_game.CurrentGameStats.OpponentLegendRank = wild ? _game.MatchInfo.OpposingPlayer.WildLegendRank : _game.MatchInfo.OpposingPlayer.StandardLegendRank;
+					_game.CurrentGameStats.Stars = wild ? _game.MatchInfo.LocalPlayer.WildStars : _game.MatchInfo.LocalPlayer.StandardStars;
 				}
 				_game.CurrentGameStats.ServerInfo = _game.MetaData.ServerInfo;
 				_game.CurrentGameStats.PlayerCardbackId = _game.MatchInfo?.LocalPlayer.CardBackId ?? 0;
