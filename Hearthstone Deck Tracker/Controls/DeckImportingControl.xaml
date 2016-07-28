@@ -26,7 +26,7 @@
             <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" Margin="5">
                 <DockPanel Margin="0,0,0,5">
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                        <CheckBox Name="CheckBoxImportAll" IsChecked="True" Margin="5,0,0,0" Unchecked="CheckBoxImportAll_OnModified" Checked="CheckBoxImportAll_OnModified"/>
+                        <CheckBox Name="CheckBoxImportAll" IsChecked="True" Margin="5,0,0,0" Click="CheckBoxImportAll_OnClicked"/>
                         <Label Content="DECK" Margin="90,0,0,0" FontWeight="SemiBold"/>
                         <Label Content="SAVE TO" Margin="160,0,0,0" FontWeight="SemiBold"/>
                     </StackPanel>
@@ -35,7 +35,7 @@
                         <ItemsControl Name="ItemsControl" ItemsSource="{Binding Decks}" Margin="0,0,5,0">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <CheckBox Name="CheckBoxImport" IsChecked="{Binding Import}" Margin="5,0,0,0">
+                                    <CheckBox Name="CheckBoxImport" IsChecked="{Binding Import}" Margin="5,0,0,0" Unchecked="CheckBoxImport_OnUnchecked" Checked="CheckBoxImport_OnChecked">
                                         <DockPanel Height="30" IsEnabled="{Binding IsChecked, ElementName=CheckBoxImport}" >
                                             <Image Source="{Binding ClassImage}" Width="32" Height="32" RenderOptions.BitmapScalingMode="Fant"/>
                                             <TextBlock Text="{Binding Deck.Name}" VerticalAlignment="Center" Margin="5,0,0,0" FontWeight="SemiBold" FontSize="16" Width="200" TextTrimming="CharacterEllipsis"/>

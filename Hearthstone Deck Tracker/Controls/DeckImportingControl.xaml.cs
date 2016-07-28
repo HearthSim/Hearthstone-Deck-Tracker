@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			get { return _text; }
 			set
 			{
-				if(_text == value)
+				if (_text == value)
 					return;
 				_text = value;
 				OnPropertyChanged();
@@ -60,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			get { return _text; }
 			set
 			{
-				if(_text == value)
+				if (_text == value)
 					return;
 				_text = value;
 				OnPropertyChanged();
@@ -85,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public void SetDecks(List<ImportedDeck> decks)
 		{
 			Decks.Clear();
-			foreach(var deck in decks)
+			foreach (var deck in decks)
 				Decks.Add(deck);
 			_ready = decks.Any();
 			Text = NoDecksFoundText;
@@ -99,18 +99,44 @@ namespace Hearthstone_Deck_Tracker.Controls
 			OnPropertyChanged(nameof(StartButtonVisibility));
 		}
 
-		private void CheckBoxImportAll_OnModified(object sender, RoutedEventArgs e)
+		private CheckBox getImportCheckbox(object item)
 		{
-			if(ItemsControl == null)
+			var c = (ContentPresenter)ItemsControl.ItemContainerGenerator.ContainerFromItem(item);
+			return (CheckBox)c.ContentTemplate.FindName("CheckBoxImport", c);
+		}
+
+		private void CheckBoxImportAll_OnClicked(object sender, RoutedEventArgs e)
+		{
+			if (ItemsControl == null)
 				return;
 
-			foreach(var item in ItemsControl.Items)
+			foreach (var item in ItemsControl.Items)
 			{
-				var c = (ContentPresenter)ItemsControl.ItemContainerGenerator.ContainerFromItem(item);
-				var chk = (CheckBox)c.ContentTemplate.FindName("CheckBoxImport", c);
+				var chk = getImportCheckbox(item);
 				chk.IsChecked = CheckBoxImportAll.IsChecked.HasValue && CheckBoxImportAll.IsChecked.Value;
 			}
 		}
+
+		private void CheckBoxImport_OnChecked(object sender, RoutedEventArgs e)
+		{
+			var modifiedCount = 0;
+
+			if (ItemsControl == null)
+				return;
+
+			foreach (var item in ItemsControl.Items)
+			{
+				var chk = getImportCheckbox(item);
+				if (chk.IsChecked == true)
+					modifiedCount++;
+			}
+
+			if (modifiedCount == ItemsControl.Items.Count)
+				CheckBoxImportAll.IsChecked = true;
+
+		}
+
+		private void CheckBoxImport_OnUnchecked(object sender, RoutedEventArgs e) => CheckBoxImportAll.IsChecked = false;
 
 		public void StartedGame()
 		{
