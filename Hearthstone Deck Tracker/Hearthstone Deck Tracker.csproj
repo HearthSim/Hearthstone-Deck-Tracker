@@ -403,6 +403,8 @@
     <Compile Include="Utility\Analytics\Influx.cs" />
     <Compile Include="Utility\Analytics\InfluxPoint.cs" />
     <Compile Include="Utility\Analytics\InfluxPointBuilder.cs" />
+    <Compile Include="Utility\Updating\ReleaseUrls.cs" />
+    <Compile Include="Utility\Updating\StatusBarHelper.cs" />
     <Compile Include="Windows\CrashDialog.xaml.cs">
       <DependentUpon>CrashDialog.xaml</DependentUpon>
     </Compile>
@@ -591,7 +593,7 @@
     <Compile Include="Utility\Markdown.Xaml\TextToFlowDocumentConverter.cs" />
     <Compile Include="Utility\NetDeck.cs" />
     <Compile Include="Utility\NewsUpdater.cs" />
-    <Compile Include="Utility\Updater.cs" />
+    <Compile Include="Utility\Updating\Updater.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
     </Compile>
@@ -1170,6 +1172,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
+    <Compile Include="Utility\Updating\Updater.Default.cs" />
     <Resource Include="Resources\Chunkfive.otf" />
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
     <Resource Include="Resources\SplashScreen.png" />

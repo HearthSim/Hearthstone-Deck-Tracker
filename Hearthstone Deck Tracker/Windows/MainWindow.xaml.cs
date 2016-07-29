@@ -13,7 +13,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
-using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
@@ -28,13 +27,13 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 using MahApps.Metro.Controls.Dialogs;
 #if(SQUIRREL)
 	using Squirrel;
 #endif
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
-using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 
 #endregion
 

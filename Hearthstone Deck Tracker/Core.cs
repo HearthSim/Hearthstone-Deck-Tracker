@@ -24,6 +24,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 using Hearthstone_Deck_Tracker.Utility.Themes;
+using Hearthstone_Deck_Tracker.Utility.Updating;
 using Squirrel;
 
 #endregion
