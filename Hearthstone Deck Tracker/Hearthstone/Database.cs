@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true, bool collectible = true)
 		{
-			var lang = Language.enUS;
+			var lang = Locale.enUS;
 			if(localized)
 				Enum.TryParse(Config.Instance.SelectedLanguage, out lang);
 			try

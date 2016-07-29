@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return GameMode.Arena;
 				case GameType.GT_RANKED:
 					return GameMode.Ranked;
-				case GameType.GT_UNRANKED:
+				case GameType.GT_CASUAL:
 					return GameMode.Casual;
 				case GameType.GT_TAVERNBRAWL:
 				case GameType.GT_TB_2P_COOP:
