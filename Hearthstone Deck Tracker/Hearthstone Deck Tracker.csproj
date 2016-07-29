@@ -327,6 +327,7 @@
     <Compile Include="Hearthstone\DeckState.cs" />
     <Compile Include="Hearthstone\PredictedCard.cs" />
     <Compile Include="Importing\Game\ImportOptions\IImportOption.cs" />
+    <Compile Include="Importing\Websites\Marduktv.cs" />
     <Compile Include="Importing\Websites\Manacrystals.cs" />
     <Compile Include="Importing\Websites\Powned.cs" />
     <Compile Include="LogReader\Handlers\FullScreenFxHandler.cs" />
