@@ -25,41 +25,23 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			try
 			{
 				var doc = await ImportingHelper.GetHtmlDoc(url);
-				var deck = new Deck();
+                var titleNode = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'header__title internal')]/div[contains(@class,'container')]/h1");
+                var cardNodes =	doc.DocumentNode.SelectNodes("//ul[contains(@class,'list-unstyled cartas_list')]/li");
 
-				var deckName =
-					HttpUtility.HtmlDecode(
-					                       doc.DocumentNode.SelectSingleNode(
-					                                                         "//section[contains(@class,'deck-info')]/h2[contains(@class,'deck-title')]")
-					                          .InnerText);
-				deck.Name = deckName;
-
-				var cardNameNodes =
-					doc.DocumentNode.SelectNodes("//td[contains(@class,'col-name')]//a[contains(@href,'/cards/') and contains(@class,'rarity')]");
-				//<span class="deck-type">Midrange</span>
-				var decktype = doc.DocumentNode.SelectSingleNode("//span[contains(@class,'deck-type')]").InnerText;
-				if(decktype != "None" && Config.Instance.TagDecksOnImport)
+                var deck = new Deck();
+                deck.Name = HttpUtility.HtmlDecode(titleNode.ChildNodes.FirstOrDefault(x => x.Name == "#text").InnerText);
+                foreach (var node in cardNodes)
 				{
-					if(!DeckList.Instance.AllTags.Contains(decktype))
-					{
-						DeckList.Instance.AllTags.Add(decktype);
-						DeckList.Save();
-						if(Core.MainWindow != null) // to avoid errors when running tests
-							Core.MainWindow.ReloadTags();
-					}
-					deck.Tags.Add(decktype);
-				}
+                    var nameNode = node.SelectSingleNode("span[contains(@class,'cartas__name')]/a");
+                    var countNode = node.SelectSingleNode("span[contains(@class,'cartas__qtd')]");
+                    var validChild = countNode?.ChildNodes.SingleOrDefault(c => c.Name == "#text");
 
+                    var id = nameNode.Attributes.FirstOrDefault(a => a.Name == "data-hcfw-card-id").Value;
+                    var count = validChild != null ? int.Parse(countNode.InnerText) : 1;
 
-				var cardNames = cardNameNodes.Select(cardNameNode => HttpUtility.HtmlDecode(cardNameNode.InnerText));
-				var cardCosts = cardNameNodes.Select(cardNameNode => int.Parse(cardNameNode.Attributes["data-Count"].Value));
-
-				var cardInfo = cardNames.Zip(cardCosts, (n, c) => new {Name = n, Count = c});
-				foreach(var info in cardInfo)
-				{
-					var card = Database.GetCardFromName(info.Name.Trim());
-					card.Count = info.Count;
-					deck.Cards.Add(card);
+                    var card = Database.GetCardFromId(id);
+					card.Count = count;
+                    deck.Cards.Add(card);
 					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
 				}
