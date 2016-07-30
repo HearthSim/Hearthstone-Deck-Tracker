@@ -15,6 +15,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 	internal class PluginManager
 	{
 		private const string DefaultPath = "Plugins";
+		private const string NoticeFileName = "READ THIS.txt";
 		private static PluginManager _instance;
 		private bool _update;
 		public static DirectoryInfo LocalPluginDirectory => new DirectoryInfo(DefaultPath);
@@ -24,6 +25,29 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		{
 			Plugins = new List<PluginWrapper>();
 			SyncPlugins(PluginDirectory, LocalPluginDirectory, LocalPluginDirectory);
+			CreateNoticeFile();
+		}
+
+
+		private void CreateNoticeFile()
+		{
+			var file = Path.Combine(LocalPluginDirectory.FullName, NoticeFileName);
+			if(File.Exists(file))
+				return;
+			try
+			{
+				using(var sw = new StreamWriter(file))
+				{
+					sw.WriteLine("PLUGINS INSTALLED TO THIS DIRECTORY WILL BE REMOVED!");
+					sw.WriteLine("");
+					sw.WriteLine("Please install your new plugins to '%AppData%/HearthstoneDeckTracker'.");
+					sw.WriteLine("'options > tracker > plugins > plugins folder' will open that directory for you.");
+				}
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+			}
 		}
 
 		private void SyncPlugins(DirectoryInfo sourceDir, DirectoryInfo destDir, DirectoryInfo baseDir)
@@ -54,6 +78,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			{
 				try
 				{
+					if(file.Name == NoticeFileName)
+						continue;
 					Log.Info($"Deleting {file.FullName.Substring(baseDir.FullName.Length + 1)}");
 					file.Delete();
 				}
