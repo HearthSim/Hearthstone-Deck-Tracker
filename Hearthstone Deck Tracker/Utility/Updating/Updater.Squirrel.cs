@@ -1,5 +1,6 @@
 ﻿#if(SQUIRREL)
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -48,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			string fileContent;
 			try
 			{
+				Log.Info("Downloading releases file");
 				using(var wc = new WebClient())
 					await wc.DownloadFileTaskAsync("https://hsdecktracker.net/releases.json", file);
 			}
@@ -57,13 +59,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 			using(var sr = new StreamReader(file))
 				fileContent = sr.ReadToEnd();
-			return _releaseUrl = JsonConvert.DeserializeObject<ReleaseUrls>(fileContent).GetReleaseUrl(release);
+			_releaseUrl = JsonConvert.DeserializeObject<ReleaseUrls>(fileContent).GetReleaseUrl(release);
+			Log.Info($"using '{release}' release: {_releaseUrl}");
+			return _releaseUrl;
 		}
 
 		public static async Task StartupUpdateCheck(SplashScreenWindow splashScreenWindow)
 		{
 			try
 			{
+				Log.Info("Checking for updates");
 				bool updated;
 				using(var mgr = await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("hsreplay"), prerelease: Config.Instance.CheckForBetaUpdates))
 				{
@@ -77,9 +82,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				if(updated)
 				{
 					if(splashScreenWindow.SkipWasPressed)
+					{
+						Log.Info("Update complete, showing update bar");
 						StatusBar.Visibility = Visibility.Visible;
+					}
 					else
+					{
+						Log.Info("Update complete, restarting");
 						UpdateManager.RestartApp();
+					}
 				}
 			}
 			catch(Exception ex)
@@ -88,31 +99,48 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static async Task<bool> SquirrelUpdate(SplashScreenWindow splashScreenWindow, UpdateManager mgr,
-			bool ignoreDelta = false)
+		private static async Task<bool> SquirrelUpdate(SplashScreenWindow splashScreenWindow, UpdateManager mgr, bool ignoreDelta = false)
 		{
 			try
 			{
+				Log.Info($"Checking for updates (ignoreDelta={ignoreDelta})");
 				splashScreenWindow.StartSkipTimer();
 				var updateInfo = await mgr.CheckForUpdate(ignoreDelta);
 				if(!updateInfo.ReleasesToApply.Any())
+				{
+					Log.Info("No new updated available");
 					return false;
-				if(updateInfo.ReleasesToApply.LastOrDefault()?.Version <= mgr.CurrentlyInstalledVersion())
+				}
+				var latest = updateInfo.ReleasesToApply.LastOrDefault()?.Version;
+				var current = mgr.CurrentlyInstalledVersion();
+				if(latest <= current)
+				{
+					Log.Info($"Installed version ({current}) is greater than latest release found ({latest}). Not downloading updates.");
 					return false;
+				}
+				Log.Info($"Downloading {updateInfo.ReleasesToApply.Count} {(ignoreDelta ? "" : "delta ")}releases, latest={latest?.Version}");
 				await mgr.DownloadReleases(updateInfo.ReleasesToApply, splashScreenWindow.Updating);
+				Log.Info("Applying releases");
 				await mgr.ApplyReleases(updateInfo, splashScreenWindow.Installing);
 				await mgr.CreateUninstallerRegistryEntry();
+				Log.Info("Done");
 				return true;
 			}
-			catch(Exception)
+			catch(Exception ex)
 			{
-				if(!ignoreDelta)
-					return await SquirrelUpdate(splashScreenWindow, mgr, true);
-				return false;
+				if(ignoreDelta)
+					return false;
+				if(ex is Win32Exception)
+					Log.Info("Not able to apply deltas, downloading full release");
+				return await SquirrelUpdate(splashScreenWindow, mgr, true);
 			}
 		}
 
-		internal static void StartUpdate() => UpdateManager.RestartApp();
+		internal static void StartUpdate()
+		{
+			Log.Info("Restarting...");
+			UpdateManager.RestartApp();
+		}
 	}
 }
 

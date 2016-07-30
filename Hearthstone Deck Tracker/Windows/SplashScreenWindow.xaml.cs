@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -70,7 +71,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void ShowConditional()
 		{
 			if(Config.Instance.ShowSplashScreen)
+			{
+				Log.Info("Showing splashscreen...");
 				Show();
+			}
 		}
 
 		public void Updating(int percentage)
@@ -97,11 +101,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private void SkipBorder_OnMouseDown(object sender, MouseButtonEventArgs e) => SkipWasPressed = true;
+		private void SkipBorder_OnMouseDown(object sender, MouseButtonEventArgs e)
+		{
+			Log.Info("Skip was pressed");
+			SkipWasPressed = true;
+		}
 
 		public async void StartSkipTimer()
 		{
 			await Task.Delay(10000);
+			if(IsVisible)
+				Log.Info("Showing skip button");
 			SkipVisibility = Visibility.Visible;
 		}
 
