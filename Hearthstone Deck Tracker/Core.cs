@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using HearthMirror.Enums;
@@ -57,6 +58,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async void Initialize()
 		{
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 			Config.Load();
 			var splashScreenWindow = new SplashScreenWindow();
 			splashScreenWindow.ShowConditional();
