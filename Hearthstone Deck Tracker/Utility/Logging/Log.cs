@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -18,9 +19,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 	{
 		private const int MaxLogFileAge = 2;
 		private const int KeepOldLogs = 25;
+		private static readonly Queue<string> LogQueue = new Queue<string>();
+		public static bool Initialized { get; private set; }
 
 		internal static void Initialize()
 		{
+			if(Initialized)
+				return;
 			Trace.AutoFlush = true;
 			var logDir = Path.Combine(Config.Instance.DataDir, "Logs");
 			var logFile = Path.Combine(logDir, "hdt_log.txt");
@@ -73,6 +78,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 			{
 				ErrorManager.AddError("Can not access log file.", ex.ToString());
 			}
+			Initialized = true;
+			foreach(var line in LogQueue)
+				Trace.WriteLine(line);
 		}
 
 		public static void WriteLine(string msg, LogType type, [CallerMemberName] string memberName = "",
@@ -83,7 +91,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 				return;
 #endif
 			var file = sourceFilePath?.Split('/', '\\').LastOrDefault()?.Split('.').FirstOrDefault();
-			Trace.WriteLine($"{DateTime.Now.ToLongTimeString()}|{type}|{file}.{memberName} >> {msg}");
+			var line = $"{DateTime.Now.ToLongTimeString()}|{type}|{file}.{memberName} >> {msg}";
+			if(Initialized)
+				Trace.WriteLine(line);
+			else
+				LogQueue.Enqueue(line);
 		}
 
 		public static void Debug(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
