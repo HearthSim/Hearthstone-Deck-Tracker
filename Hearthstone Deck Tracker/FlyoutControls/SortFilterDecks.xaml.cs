@@ -256,6 +256,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void FixTagOrder()
 		{
+			if(DeckList.Instance.AllTags.Count == 0)
+				return;
 			var changed = false;
 			if(DeckList.Instance.AllTags.IndexOf("All") != 0)
 			{
