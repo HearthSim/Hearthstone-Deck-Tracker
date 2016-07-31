@@ -19,6 +19,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		private static readonly RavenClient Client = new RavenClient("https://0a6c07cee8d141f0bee6916104a02af4:883b339db7b040158cdfc42287e6a791@app.getsentry.com/80405");
 
-		public static string CaptureException(Exception ex) => Client.Capture(new SentryEvent(ex));
+		public static string CaptureException(Exception ex)
+		{
+			var exception = new SentryEvent(ex);
+#if(SENTRY)
+			exception.Tags.Add("squirrel", "true");
+#else
+			exception.Tags.Add("squirrel", "false");
+#endif
+			return Client.Capture(exception);
+		}
 	}
 }
