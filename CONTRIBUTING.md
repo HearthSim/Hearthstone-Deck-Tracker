@@ -21,6 +21,7 @@ Keep the commit log as healthy as the code. It is one of the first places new co
 
 1. No more than one change per commit. There should be no changes in a commit which are unrelated to its message.
 2. Follow [these conventions](http://chris.beams.io/posts/git-commit/) when writing the commit message.
+3. Keep the diffs as clean as possible. Avoid unnecessary line changes.
 
 When filing a Pull Request, make sure it is rebased on top of most recent master.
 If you need to modify it or amend it in some way, you should always appropriately 
