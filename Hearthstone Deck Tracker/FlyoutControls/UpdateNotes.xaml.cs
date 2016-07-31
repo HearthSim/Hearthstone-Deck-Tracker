@@ -12,10 +12,12 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Information;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro.Controls;
 using Newtonsoft.Json;
 
 #endregion
@@ -30,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private List<GithubRelease> _fullReleaseNotes;
 		private DateTime _lastExpand = DateTime.MinValue;
 		private int _numVersions = 3;
+		private bool _continueToHighlight;
 
 		public UpdateNotes()
 		{
@@ -44,6 +47,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			UserControl infoControl = null;
 			if(previousVersion < new Version(0, 13, 18))
 				infoControl = new CardThemesInfo();
+#if(!SQUIRREL)
+			if(previousVersion < new Version(0, 15, 14) && Config.Instance.SaveConfigInAppData != false && Config.Instance.SaveDataInAppData != false)
+			{
+				ContentControlHighlight.Content = new SquirrelInfo();
+				ButtonContinue.Visibility = Visibility.Collapsed;
+				_continueToHighlight = true;
+				return;
+			}
+#endif
 			if(infoControl == null)
 				return;
 			ContentControlHighlight.Content = infoControl;
@@ -139,7 +151,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void ButtonClose_Click(object sender, RoutedEventArgs e)
 		{
-			Core.MainWindow.FlyoutUpdateNotes.IsOpen = false;
+			if(_continueToHighlight)
+			{
+				TabControl.SelectedIndex = 1;
+				Core.MainWindow.FlyoutUpdateNotes.Header = null;
+				Core.MainWindow.FlyoutUpdateNotes.HeaderTemplate = null;
+				Core.MainWindow.FlyoutUpdateNotes.BeginAnimation(HeightProperty,
+					new DoubleAnimation(Core.MainWindow.FlyoutUpdateNotes.ActualHeight, 400, TimeSpan.FromMilliseconds(250)));
+			}
+			else
+				Core.MainWindow.FlyoutUpdateNotes.IsOpen = false;
 		}
 
 		public class GithubRelease

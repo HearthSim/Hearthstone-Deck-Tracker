@@ -254,6 +254,9 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Controls\Information\SquirrelInfo.xaml.cs">
+      <DependentUpon>SquirrelInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\WotogCounter.xaml.cs">
       <DependentUpon>WotogCounter.xaml</DependentUpon>
     </Compile>
@@ -818,6 +821,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ElementSorterItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Information\SquirrelInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
