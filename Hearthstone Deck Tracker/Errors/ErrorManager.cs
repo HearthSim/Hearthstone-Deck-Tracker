@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Error
 
 		public static ObservableCollection<Error> Errors { get; } = new ObservableCollection<Error>();
 
-		public static async void AddError(Error error)
+		public static async void AddError(Error error, bool showFlyout = false)
 		{
 			if(Errors.Contains(error))
 				return;
@@ -25,9 +25,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Error
 			while(!Core.Initialized)
 				await Task.Delay(500);
 			Core.MainWindow.ErrorsPropertyChanged();
+			if(showFlyout)
+				Core.MainWindow.FlyoutErrors.IsOpen = true;
 		}
 
-		public static void AddError(string header, string text) => AddError(new Error(header, text));
+		public static void AddError(string header, string text, bool showFlyout = false) => AddError(new Error(header, text), showFlyout);
 
 		public static void RemoveError(Error error)
 		{

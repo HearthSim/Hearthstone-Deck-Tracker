@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -40,39 +41,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 			{
 				instance = XmlManager<DeckStatsList>.Load(file);
 			}
-			catch(Exception)
+			catch(Exception ex)
 			{
-				//failed loading deckstats 
-				var corruptedFile = Helper.GetValidFilePath(Config.Instance.DataDir, "DeckStats_corrupted", "xml");
+				Log.Error(ex);
 				try
 				{
-					File.Move(file, corruptedFile);
+					File.Move(file, Helper.GetValidFilePath(Config.Instance.DataDir, "DeckStats_corrupted", "xml"));
 				}
-				catch(Exception)
+				catch(Exception ex1)
 				{
-					throw new Exception(
-						"Can not load or move DeckStats.xml file. Please manually delete the file in \"%appdata\\HearthstoneDeckTracker\".");
+					Log.Error(ex1);
 				}
-
-				//get latest backup file
-				var backup =
-					new DirectoryInfo(Config.Instance.DataDir).GetFiles("DeckStats_backup*").OrderByDescending(x => x.CreationTime).FirstOrDefault();
-				if(backup != null)
-				{
-					try
-					{
-						File.Copy(backup.FullName, file);
-						instance = XmlManager<DeckStatsList>.Load(file);
-					}
-					catch(Exception ex)
-					{
-						throw new Exception(
-							"Error restoring DeckStats backup. Please manually rename \"DeckStats_backup.xml\" to \"DeckStats.xml\" in \"%appdata\\HearthstoneDeckTracker\".",
-							ex);
-					}
-				}
-				if(instance == null)
-					throw new Exception("DeckStats.xml is corrupted.");
+				instance = BackupManager.TryRestore<DeckStatsList>("DeckStats.xml");
 			}
 			return instance;
 		}

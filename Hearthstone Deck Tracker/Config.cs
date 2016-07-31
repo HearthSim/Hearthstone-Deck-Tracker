@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -1115,12 +1116,25 @@ namespace Hearthstone_Deck_Tracker
 					//save locally if appdata doesn't exist (when e.g. not on C)
 					Instance.SaveConfigInAppData = false;
 			}
-			catch(Exception e)
+			catch(Exception ex)
 			{
-				MessageBox.Show(
-				                e.Message + "\n\n" + e.InnerException + "\n\n If you don't know how to fix this, please delete "
-				                + Instance.ConfigPath, "Error loading config.xml");
-				Application.Current.Shutdown();
+				Log.Error(ex);
+				try
+				{
+					if(File.Exists("config.xml"))
+					{
+						File.Move("config.xml", Helper.GetValidFilePath(".", "config_corrupted", "xml"));
+					}
+					else if(File.Exists(AppDataPath + @"\config.xml"))
+					{
+						File.Move(AppDataPath + @"\config.xml", Helper.GetValidFilePath(AppDataPath, "config_corrupted", "xml"));
+					}
+				}
+				catch(Exception ex1)
+				{
+					Log.Error(ex1);
+				}
+				_config = BackupManager.TryRestore<Config>("config.xml");
 			}
 
 			if(!foundConfig)
