@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			_lastUpdateCheck = DateTime.Now;
 			try
 			{
-				using(var mgr = await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("hsreplay"), prerelease: Config.Instance.CheckForBetaUpdates))
+				using(var mgr = await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("live"), prerelease: Config.Instance.CheckForBetaUpdates))
 				{
 					var release = await mgr.UpdateApp();
 					if(release != null)
@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			{
 				Log.Info("Checking for updates");
 				bool updated;
-				using(var mgr = await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("hsreplay"), prerelease: Config.Instance.CheckForBetaUpdates))
+				using(var mgr = await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("live"), prerelease: Config.Instance.CheckForBetaUpdates))
 				{
 					SquirrelAwareApp.HandleEvents(
 						v => mgr.CreateShortcutForThisExe(),
