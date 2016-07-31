@@ -246,7 +246,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					Config.Instance.ConstructedAutoUpdate = false;
 					converted = true;
 				}
-				if(configVersion <= new Version(0, 15, 6, 0))
+				if(configVersion <= new Version(0, 15, 13, 0))
 				{
 					var targetDir = PluginManager.PluginDirectory;
 					var sourceDir = PluginManager.LocalPluginDirectory;
