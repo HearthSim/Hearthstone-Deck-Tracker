@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		public static string CaptureException(Exception ex)
 		{
 			var exception = new SentryEvent(ex);
-#if(SENTRY)
+#if(SQUIRREL)
 			exception.Tags.Add("squirrel", "true");
 #else
 			exception.Tags.Add("squirrel", "false");
