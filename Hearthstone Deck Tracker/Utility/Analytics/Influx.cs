@@ -16,7 +16,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
-			WritePoint(new InfluxPointBuilder("hdt_app_start").Tag("version", version.ToVersionString()).Tag("login_type", loginType).Tag("new", isNew).Build());
+			var point = new InfluxPointBuilder("hdt_app_start").Tag("version", version.ToVersionString()).Tag("login_type", loginType).Tag("new", isNew);
+#if(SQUIRREL)
+			point.Tag("squirrel", true);
+#else
+			point.Tag("squirrel", false);
+#endif
+			WritePoint(point.Build());
 		}
 
 
