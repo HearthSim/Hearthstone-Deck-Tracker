@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			Decks = new ObservableCollection<Deck>();
 			AllTags = new List<string>();
+			LastDeckClass = new List<DeckInfo>();
 		}
 
 		[XmlIgnore]
