@@ -26,8 +26,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{"hearthstats", Hearthstats.Import},
 			{"hss.io", Hearthstats.Import},
 			{"hearthpwn", Hearthpwn.Import},
-            {"marduktv", Marduktv.Import},
-            {"hearthhead", Hearthhead.Import},
+			{"marduktv", Marduktv.Import},
+			{"hearthhead", Hearthhead.Import},
 			{"hearthstoneplayers", Hearthstoneplayers.Import},
 			{"tempostorm", Tempostorm.Import},
 			{"hearthstonetopdecks", Hearthstonetopdecks.Import},
@@ -72,10 +72,10 @@ namespace Hearthstone_Deck_Tracker.Importing
 			Log.Info("Importing deck from " + url);
 
 			var website = Websites.FirstOrDefault(x => url.Contains(x.Key));
-			if(website.Value != null)
+			if (website.Value != null)
 			{
 				var deck = await website.Value.Invoke(url);
-				if(deck == null)
+				if (deck == null)
 					return null;
 				deck.Cards = new ObservableCollection<Card>(deck.Cards.Where(x => x.Id != Database.UnknownCardId));
 				return deck;
@@ -92,15 +92,15 @@ namespace Hearthstone_Deck_Tracker.Importing
 				ConstructedDecksCache = GetConstructedDecks();
 				var newDecks = GetImportedDecks(ConstructedDecksCache);
 				Log.Info($"Found {ConstructedDecksCache.Count} decks, {newDecks.Count} new");
-				foreach(var deck in newDecks)
+				foreach (var deck in newDecks)
 				{
 					var match = Regex.Match(deck.Deck.Name, @"(.*)(v\d+\.\d+)$");
-					if(match.Success)
+					if (match.Success)
 						deck.Deck.Name = match.Groups[1].Value;
 				}
 				return newDecks;
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				Log.Error(e);
 			}
@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 				Log.Info($"Found {BrawlDecksCache.Count} decks");
 				return GetImportedDecks(BrawlDecksCache);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				Log.Error(e);
 			}
@@ -141,16 +141,16 @@ namespace Hearthstone_Deck_Tracker.Importing
 						CardMatch = x.VersionsIncludingSelf.Select(x.GetVersion).Where(v => v.Cards.Sum(c => c.Count) == 30)
 														 .Any(v => deck.Cards.All(c => v.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
 					}).Where(x => x.IdMatch || x.CardMatch).ToList();
-				if(!existing.Any())
+				if (!existing.Any())
 				{
 					var iDeck = new ImportedDeck(deck, null);
-					if(!string.IsNullOrEmpty(iDeck.Class))
+					if (!string.IsNullOrEmpty(iDeck.Class))
 						importedDecks.Add(iDeck);
 				}
-				else if(!existing.Any(x => x.IdMatch && x.CardMatch) && existing.Any(x => x.IdMatch ^ x.CardMatch))
+				else if (!existing.Any(x => x.IdMatch && x.CardMatch) && existing.Any(x => x.IdMatch ^ x.CardMatch))
 				{
 					var iDeck = new ImportedDeck(deck, existing.Select(x => x.Deck).ToList());
-					if(!string.IsNullOrEmpty(iDeck.Class))
+					if (!string.IsNullOrEmpty(iDeck.Class))
 						importedDecks.Add(iDeck);
 				}
 			}
@@ -162,13 +162,13 @@ namespace Hearthstone_Deck_Tracker.Importing
 			try
 			{
 				ArenaInfoCache = Reflection.GetArenaDeck();
-				if(ArenaInfoCache != null && log)
+				if (ArenaInfoCache != null && log)
 					Log.Info($"Found new {ArenaInfoCache.Wins}-{ArenaInfoCache.Losses} arena deck: hero={ArenaInfoCache.Deck.Hero}, cards={ArenaInfoCache.Deck.Cards.Sum(x => x.Count)}");
-				else if(log)
+				else if (log)
 					Log.Info("Found no arena deck");
 				return ArenaInfoCache;
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				Log.Error(e);
 			}
