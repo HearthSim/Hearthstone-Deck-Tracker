@@ -31,7 +31,19 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		private void CreateNoticeFile()
 		{
-			var file = Path.Combine(LocalPluginDirectory.FullName, NoticeFileName);
+			var file = Path.Combine(PluginDirectory.FullName, NoticeFileName);
+			if(File.Exists(file))
+			{
+				try
+				{
+					File.Delete(file);
+				}
+				catch(Exception ex)
+				{
+					Log.Error(ex);
+				}
+			}
+			file = Path.Combine(LocalPluginDirectory.FullName, NoticeFileName);
 			if(File.Exists(file))
 				return;
 			try
