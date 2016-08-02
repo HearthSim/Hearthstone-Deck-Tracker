@@ -75,7 +75,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					SquirrelAwareApp.HandleEvents(
 						v => mgr.CreateShortcutForThisExe(),
 						v => mgr.CreateShortcutForThisExe(),
-						onAppUninstall: v => mgr.RemoveShortcutForThisExe()
+						onAppUninstall: v => mgr.RemoveShortcutForThisExe(),
+						onFirstRun: CleanUpInstallerFile
 						);
 					updated = await SquirrelUpdate(splashScreenWindow, mgr);
 				}
@@ -92,6 +93,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						UpdateManager.RestartApp();
 					}
 				}
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+			}
+		}
+
+		private static void CleanUpInstallerFile()
+		{
+			try
+			{
+				var file = Path.Combine(Config.AppDataPath, "HDT-Installer.exe");
+				if(File.Exists(file))
+					File.Delete(file);
 			}
 			catch(Exception ex)
 			{
