@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 						continue;
 					var destPath = Path.Combine(destDir.FullName, file.Name);
 					Log.Info($"{(destFile == null ? "Adding" : "Updating")} {((destFile?.FullName) ?? Path.Combine(destDir.FullName, file.Name)).Substring(baseDir.FullName.Length + 1)}");
-					File.Copy(file.FullName, destPath);
+					File.Copy(file.FullName, destPath, true);
 				}
 				catch(Exception ex)
 				{
