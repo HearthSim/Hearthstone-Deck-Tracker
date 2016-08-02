@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{"hearthstats", Hearthstats.Import},
 			{"hss.io", Hearthstats.Import},
 			{"hearthpwn", Hearthpwn.Import},
+			{"marduktv", Marduktv.Import},
 			{"hearthhead", Hearthhead.Import},
 			{"hearthstoneplayers", Hearthstoneplayers.Import},
 			{"tempostorm", Tempostorm.Import},
