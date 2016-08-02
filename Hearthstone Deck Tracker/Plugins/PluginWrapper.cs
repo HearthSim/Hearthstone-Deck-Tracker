@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 	internal class PluginWrapper
 	{
 		private int _exceptions;
+		private int _unhandledExceptions;
 		private bool _isEnabled;
 		private bool _loaded;
 
@@ -153,5 +154,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 					Core.MainWindow.MenuItemPluginsEmpty.Visibility = Visibility.Visible;
 			}
 		}
+
+		internal bool UnhandledException() => ++_unhandledExceptions > PluginManager.MaxExceptions / 10;
 	}
 }

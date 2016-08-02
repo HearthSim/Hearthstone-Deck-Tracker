@@ -29,18 +29,30 @@ namespace Hearthstone_Deck_Tracker
 
 		private void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
 		{
-			if(e.Exception is MissingMethodException || e.Exception is MissingFieldException || e.Exception is MissingMemberException || e.Exception is TypeLoadException)
+			var plugin = PluginManager.Instance.Plugins.FirstOrDefault(p => new FileInfo(p.FileName).Name.Replace(".dll", "") == e.Exception.Source);
+			if(plugin != null)
 			{
-				var plugin =
-					PluginManager.Instance.Plugins.FirstOrDefault(p => new FileInfo(p.FileName).Name.Replace(".dll", "") == e.Exception.Source);
-				if(plugin != null)
+				var incompatibleExceptions = new[]
+				{
+					typeof(MissingMethodException), typeof(MissingFieldException),
+					typeof(MissingMemberException), typeof(TypeLoadException)
+				};
+				string header;
+				if(incompatibleExceptions.Any(x => e.Exception.GetType() == x))
 				{
 					plugin.IsEnabled = false;
-					var header = $"{plugin.NameAndVersion} is not compatible with HDT {Helper.GetCurrentVersion().ToVersionString()}.";
-					ErrorManager.AddError(header, "Make sure you are using the latest version of the Plugin and HDT.\n\n" + e.Exception);
-					e.Handled = true;
-					return;
+					header = $"{plugin.NameAndVersion} is not compatible with HDT {Helper.GetCurrentVersion().ToVersionString()}.";
 				}
+				else if(plugin.UnhandledException())
+				{
+					plugin.IsEnabled = false;
+					header = $"{plugin.NameAndVersion} threw too many exceptions and has been disabled.";
+				}
+				else
+					header = $"{plugin.NameAndVersion} threw an exception.";
+				ErrorManager.AddError(header, "Make sure you are using the latest version of the Plugin and HDT.\n\n" + e.Exception);
+				e.Handled = true;
+				return;
 			}
 			if(!_createdReport)
 			{
