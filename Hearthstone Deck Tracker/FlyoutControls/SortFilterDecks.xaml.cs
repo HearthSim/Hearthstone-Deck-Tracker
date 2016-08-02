@@ -137,6 +137,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void MoveTag(string tagName, int from, int to)
 		{
+			if(from < 0 || from >= DeckList.Instance.AllTags.Count)
+				return;
 			DeckList.Instance.AllTags.RemoveAt(from);
 			DeckList.Instance.AllTags.Insert(to, tagName);
 			DeckList.Save();
