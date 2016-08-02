@@ -133,31 +133,48 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		internal static T TryRestore<T>(string file)
 		{
-			ErrorManager.AddError(file + " was corrupted but restored from the latest backup.",
-				"This is likely due to an unexpected shutdown." + Environment.NewLine
-				+ "Backups are generated on the first start of each day, so there may be lost data." + Environment.NewLine 
-				+ "We are very sorry for the inconvenience. :(", true);
-			Log.Info("Restoring latest backup...");
-			var filePath = Path.Combine(Config.Instance.DataDir, file);
-			RestoreFromLatest(false, 0, file);
+			var restored = false;
 			try
 			{
-				return XmlManager<T>.Load(filePath);
-			}
-			catch(Exception ex2)
-			{
-				Log.Error(ex2);
-				Log.Info("Restoring second to latest backup...");
-				RestoreFromLatest(false, 1, file);
+				Log.Info($"Restoring latest backup for {file}...");
+				var filePath = Path.Combine(Config.Instance.DataDir, file);
+				if(!(restored = RestoreFromLatest(false, 0, file)))
+					return default(T);
 				try
 				{
 					return XmlManager<T>.Load(filePath);
 				}
-				catch(Exception ex3)
+				catch(Exception ex2)
 				{
-					Log.Error(ex3);
-					Log.Info("Could not restore backup.");
-					throw new Exception(file + " is corrupted. Could not automatically restore backup.", ex3);
+					Log.Error(ex2);
+					Log.Info($"Restoring second to latest backup for {file}...");
+					if(!(restored = RestoreFromLatest(false, 1, file)))
+						return default(T);
+					try
+					{
+						return XmlManager<T>.Load(filePath);
+					}
+					catch(Exception ex3)
+					{
+						Log.Error(ex3);
+						return default(T);
+					}
+				}
+			}
+			finally
+			{
+				if(restored)
+				{
+					ErrorManager.AddError(file + " was corrupted but restored from the latest backup.",
+						"This is likely due to an unexpected shutdown." + Environment.NewLine
+						+ "Backups are generated on the first start of each day, so there may be lost data." + Environment.NewLine
+						+ "We are very sorry for the inconvenience. :(", true);
+				}
+				else
+				{
+					ErrorManager.AddError(file + " was corrupted and could not be restored from a backup.",
+						"This is likely due to an unexpected shutdown." + Environment.NewLine
+						+ "We are very sorry for any data that was lost. :(", true);
 				}
 			}
 		}

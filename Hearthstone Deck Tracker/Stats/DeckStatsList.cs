@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				{
 					Log.Error(ex1);
 				}
-				instance = BackupManager.TryRestore<DeckStatsList>("DeckStats.xml");
+				instance = BackupManager.TryRestore<DeckStatsList>("DeckStats.xml") ?? new DeckStatsList();
 			}
 			return instance;
 		}

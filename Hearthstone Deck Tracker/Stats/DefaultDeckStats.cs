@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				{
 					Log.Error(ex1);
 				}
-				return BackupManager.TryRestore<DefaultDeckStats>("DefaultDeckStats.xml");
+				return BackupManager.TryRestore<DefaultDeckStats>("DefaultDeckStats.xml") ?? new DefaultDeckStats();
 			}
 		}
 

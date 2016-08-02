@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					Log.Error(ex1);
 				}
-				instance = BackupManager.TryRestore<DeckList>("PlayerDecks.xml");
+				instance = BackupManager.TryRestore<DeckList>("PlayerDecks.xml") ?? new DeckList();
 			}
 
 			var save = false;
