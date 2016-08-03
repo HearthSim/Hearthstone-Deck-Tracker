@@ -44,14 +44,14 @@ namespace Hearthstone_Deck_Tracker.Importing
 		};
 
 		private const int BrawlDeckType = 6;
-		private static List<HearthMirror.Objects.Deck> _constructedDecksCahe;
+		private static List<HearthMirror.Objects.Deck> _constructedDecksCache;
 		private static List<HearthMirror.Objects.Deck> _brawlDecksCache;
 		private static ArenaInfo _arenaInfoCache;
 
 		public static List<HearthMirror.Objects.Deck> ConstructedDecksCache
 		{
-			get { return _constructedDecksCahe ?? (_constructedDecksCahe = GetConstructedDecks()); }
-			set { _constructedDecksCahe = value; }
+			get { return _constructedDecksCache ?? (_constructedDecksCache = GetConstructedDecks()); }
+			set { _constructedDecksCache = value; }
 		}
 
 		public static ArenaInfo ArenaInfoCache
