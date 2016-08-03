@@ -50,7 +50,7 @@ The app:
 - The cards and timer can either be displayed in an overlay (see screenshot) or in **extra windows** (Options > General > Additional Windows)  
 - **Deck Manager**:
   - **Import** decks from websites: arenavalue, hearthstats, hearthpwn, hearthhead, hearthstoneplayers, tempostorm, hearthstonetopdeck and hearthnews  
-  - Circumvent the 9 deck limit: Saved decks can be **exported to Hearthstone**. (My Decks > More...)   
+  - Circumvent the 18 deck limit: Saved decks can be **exported to Hearthstone**. (My Decks > More...)
   - Decks can be filtered by custom **tags** and sorted by name, date and tags.  
   - Set **notes** for each deck (My Decks > More...)  
   - Create **screenshots** of decks (My Decks > More...)  
