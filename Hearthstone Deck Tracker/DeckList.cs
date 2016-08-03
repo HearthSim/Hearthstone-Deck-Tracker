@@ -76,25 +76,28 @@ namespace Hearthstone_Deck_Tracker
 			SetupDeckListFile();
 #endif
 			var file = Config.Instance.DataDir + "PlayerDecks.xml";
-			if(!File.Exists(file))
-				return new DeckList();
 			DeckList instance;
-			try
+			if(!File.Exists(file))
+				instance = new DeckList();
+			else
 			{
-				instance = XmlManager<DeckList>.Load(file);
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
 				try
 				{
-					File.Move(file, Helper.GetValidFilePath(Config.Instance.DataDir, "PlayerDecks_corrupted", "xml"));
+					instance = XmlManager<DeckList>.Load(file);
 				}
-				catch(Exception ex1)
+				catch(Exception ex)
 				{
-					Log.Error(ex1);
+					Log.Error(ex);
+					try
+					{
+						File.Move(file, Helper.GetValidFilePath(Config.Instance.DataDir, "PlayerDecks_corrupted", "xml"));
+					}
+					catch(Exception ex1)
+					{
+						Log.Error(ex1);
+					}
+					instance = BackupManager.TryRestore<DeckList>("PlayerDecks.xml") ?? new DeckList();
 				}
-				instance = BackupManager.TryRestore<DeckList>("PlayerDecks.xml") ?? new DeckList();
 			}
 
 			var save = false;
