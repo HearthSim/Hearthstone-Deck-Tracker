@@ -16,6 +16,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 	public partial class SquirrelInfo : INotifyPropertyChanged
 	{
 		private int _progress;
+		private bool _inProgress;
 		public readonly string InstallerFile = Path.Combine(Config.AppDataPath, "HDT-Installer.exe");
 
 		public SquirrelInfo()
@@ -62,6 +63,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		private async void ButtonUpgrade_OnClick(object sender, RoutedEventArgs e)
 		{
 #if(!SQUIRREL)
+			if(_inProgress)
+			{
+				TabControl.SelectedIndex = 1;
+				return;
+			}
+			_inProgress = true;
 			if(File.Exists(InstallerFile))
 			{
 				try
@@ -70,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 				}
 				catch(Exception)
 				{
+					_inProgress = false;
 					ErrorManager.AddError("Installer file already exists.", $"Please delete '{InstallerFile}' and try again.");
 					return;
 				}
@@ -94,6 +102,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 			}
 			catch(Exception ex)
 			{
+				_inProgress = false;
 				Log.Error(ex);
 				ErrorManager.AddError("Could not download new installer.", "Please manually download it from 'https://hsdecktracker.net/download'.");
 				if(File.Exists(InstallerFile))
