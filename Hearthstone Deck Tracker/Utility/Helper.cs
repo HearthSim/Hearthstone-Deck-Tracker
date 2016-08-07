@@ -588,11 +588,17 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private static int? _hearthstoneBuild;
 		public static int? GetHearthstoneBuild()
 		{
+			if(_hearthstoneBuild.HasValue)
+				return _hearthstoneBuild;
 			var exe = Path.Combine(Config.Instance.HearthstoneDirectory, "Hearthstone.exe");
-			return !File.Exists(exe) ? (int?)null : FileVersionInfo.GetVersionInfo(exe).FilePrivatePart;
+			_hearthstoneBuild = !File.Exists(exe) ? (int?)null : FileVersionInfo.GetVersionInfo(exe).FilePrivatePart;
+			return _hearthstoneBuild;
 		}
+
+		internal static void ClearCachedHearthstoneBuild() => _hearthstoneBuild = null;
 
 		public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
 		{

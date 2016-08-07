@@ -257,6 +257,7 @@ namespace Hearthstone_Deck_Tracker
 					Game.IsInMenu = true;
 					Game.InvalidateMatchInfoCache();
 					Overlay.HideRestartRequiredWarning();
+					Helper.ClearCachedHearthstoneBuild();
 					TurnTimer.Instance.Stop();
 
 					MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
