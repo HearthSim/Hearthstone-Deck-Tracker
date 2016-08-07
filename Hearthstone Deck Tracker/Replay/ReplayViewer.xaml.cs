@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 		private int _playerController;
 		public List<ReplayKeyPoint> Replay;
 
-		public ReplayViewer()
+		public ReplayViewer(bool showHsReplayWarning)
 		{
 			InitializeComponent();
 			Height = Config.Instance.ReplayWindowHeight;
@@ -74,6 +74,8 @@ namespace Hearthstone_Deck_Tracker.Replay
 			CheckBoxPlay.IsChecked = Config.Instance.ReplayViewerShowPlay;
 			CheckBoxSecret.IsChecked = Config.Instance.ReplayViewerShowSecret;
 			CheckBoxSummon.IsChecked = Config.Instance.ReplayViewerShowSummon;
+			if(showHsReplayWarning)
+				StatusBar.Visibility = Visible;
 			_initialized = true;
 		}
 
