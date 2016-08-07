@@ -79,12 +79,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			_checkingForAccountUpdate = false;
 		}
 
-		private void ButtonUnclaimAccount_OnClick(object sender, RoutedEventArgs e)
-		{
-			Account.DeleteCacheFile();
-			CheckForAccountUpdateAsync(Anonymous).Forget();
-		}
-
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
