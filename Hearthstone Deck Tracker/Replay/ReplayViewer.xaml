@@ -110,7 +110,7 @@
         <controls:Arrow x:Name="AttackArrow" Stroke="Red" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1" />
         <controls:Arrow x:Name="PlayArrow" Stroke="Black" StrokeThickness="2.5" HeadHeight="10" HeadWidth="12" Visibility="Collapsed" Panel.ZIndex="1" />
         <DockPanel>
-            <StatusBar DockPanel.Dock="Top" Height="24" Background="Red" Name="StatusBar">
+            <StatusBar DockPanel.Dock="Top" Height="24" Background="Red" Name="StatusBar" Visibility="Collapsed">
                 <StatusBar.ItemsPanel>
                     <ItemsPanelTemplate>
                         <DockPanel/>
