@@ -33,10 +33,6 @@
                     <Button Name="ButtonClaimAccount" Content="Claim Account" Margin="0,2,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Click="ButtonClaimAccount_OnClick"/>
                     <TextBlock Text="Log in with your Battle.net credentials on HSReplay.net to claim your existing replays. This will open your web browser." TextWrapping="Wrap"
                            Margin="0,5,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                    <Button Name="ButtonUnclaimAccount" Content="Unclaim Account" Margin="0,2,0,0" 
-                            Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                            Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                            IsEnabled="{Binding TextUnclaimIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Click="ButtonUnclaimAccount_OnClick"/>
                 </StackPanel>
             </GroupBox>
             <CheckBox Content="Use local replay viewer by default (not maintained)" Margin="5,5,0,0"
