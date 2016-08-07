@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using HearthMirror.Objects;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
@@ -12,6 +8,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private int? _hearthstoneBuild;
 		public GameServerInfo ServerInfo;
 		public DateTime EnqueueTime { get; set; }
+		public bool Reconnected { get; set; }
 
 		public int? HearthstoneBuild
 		{

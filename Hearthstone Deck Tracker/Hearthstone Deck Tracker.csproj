@@ -376,6 +376,7 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="HsReplay\API\TimeStampParser.cs" />
     <Compile Include="Importing\Game\ImportOptions\ExistingDeck.cs" />
     <Compile Include="Exporting\ExportingActions.cs" />
     <Compile Include="Exporting\ExportingHelper.cs" />
@@ -399,9 +400,11 @@
     <Compile Include="Hearthstone\PredictedCard.cs" />
     <Compile Include="Importing\Game\ImportOptions\IImportOption.cs" />
     <Compile Include="Importing\MetaTagImporter.cs" />
+    <Compile Include="HsReplay\API\UploadMetaData.cs" />
     <Compile Include="Importing\Websites\Manacrystals.cs" />
     <Compile Include="Importing\Websites\Marduktv.cs" />
     <Compile Include="Importing\Websites\Powned.cs" />
+    <Compile Include="HsReplay\Account.cs" />
     <Compile Include="LogReader\Handlers\FullScreenFxHandler.cs" />
     <Compile Include="Importing\Game\ImportOptions\NewDeck.cs" />
     <Compile Include="Importing\Game\ImportedDeck.cs" />
@@ -424,9 +427,24 @@
     <Compile Include="Utility\Extensions\RectExtensions.cs" />
     <Compile Include="Utility\GaussianBlur.cs" />
     <Compile Include="Utility\Themes\CardBarImageBuilder.cs" />
+    <Compile Include="FlyoutControls\Options\Tracker\TrackerReplays.xaml.cs">
+      <DependentUpon>TrackerReplays.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Hearthstone\GameTime.cs" />
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="Hearthstone\GameMetaData.cs" />
+    <Compile Include="HsReplay\Constants.cs" />
+    <Compile Include="HsReplay\API\ApiManager.cs" />
+    <Compile Include="HsReplay\API\Header.cs" />
+    <Compile Include="HsReplay\Enums\AccountStatus.cs" />
+    <Compile Include="HsReplay\API\UploadResult.cs" />
+    <Compile Include="HsReplay\API\Web.cs" />
+    <Compile Include="HsReplay\Converter\BuildDates.cs" />
+    <Compile Include="HsReplay\Converter\LogValidator.cs" />
+    <Compile Include="HsReplay\Enums\Privacy.cs" />
+    <Compile Include="HsReplay\HsReplayInfo.cs" />
+    <Compile Include="HsReplay\HsReplayManager.cs" />
+    <Compile Include="HsReplay\API\LogUploader.cs" />
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
     <Compile Include="Enums\Hearthstone\Mode.cs" />
     <Compile Include="LogReader\Handlers\TagChangeActions.cs" />
@@ -567,7 +585,25 @@
     <Compile Include="Utility\Themes\DarkBarImageBuilder.cs" />
     <Compile Include="Utility\Themes\Theme.cs" />
     <Compile Include="Utility\Themes\ThemeManager.cs" />
+    <Compile Include="Utility\Toasts\ToastControls\ProgressIndicator.xaml.cs">
+      <DependentUpon>ProgressIndicator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\WotogCounterHelper.cs" />
+    <Compile Include="Utility\Toasts\ToastControls\GameResultToast.xaml.cs">
+      <DependentUpon>GameResultToast.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Toasts\ToastControls\ReplayProgress.cs" />
+    <Compile Include="Utility\Toasts\ToastControls\ReplayProgressToast.xaml.cs">
+      <DependentUpon>ReplayProgressToast.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Toasts\ToastControls\ReplayToast.xaml.cs">
+      <DependentUpon>ReplayToast.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Toasts\ToastHelper.cs" />
+    <Compile Include="Utility\Toasts\ToastManager.cs" />
+    <Compile Include="Utility\Toasts\ToastWindow.xaml.cs">
+      <DependentUpon>ToastWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ArenaRewardDialog.xaml.cs">
       <DependentUpon>ArenaRewardDialog.xaml</DependentUpon>
     </Compile>
@@ -588,9 +624,6 @@
     </Compile>
     <Compile Include="Windows\DeckTypeDialog.xaml.cs">
       <DependentUpon>DeckTypeDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\GameResultNotificationWindow.xaml.cs">
-      <DependentUpon>GameResultNotificationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
@@ -1001,6 +1034,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="FlyoutControls\Options\Tracker\TrackerReplays.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FlyoutControls\Options\Tracker\TrackerStats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1037,7 +1074,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\ArenaRewardDialog.xaml">
+    <Page Include="Utility\Toasts\ToastControls\GameResultToast.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\Toasts\ToastControls\ProgressIndicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1053,7 +1094,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\GameResultNotificationWindow.xaml">
+    <Page Include="Utility\Toasts\ToastControls\ReplayProgressToast.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\Toasts\ToastControls\ReplayToast.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\Toasts\ToastWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ArenaRewardDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

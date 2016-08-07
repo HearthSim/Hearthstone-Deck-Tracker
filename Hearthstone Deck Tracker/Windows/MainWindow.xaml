@@ -1,4 +1,4 @@
-﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.MainWindow"
+<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.MainWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -10,6 +10,8 @@
                       xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
                       xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility.Updating"
+                      xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
+                      xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
                       Title="Hearthstone Deck Tracker" Height="603" Width="720"
                       MinHeight="584" MinWidth="720"
                       Closing="Window_Closing"
@@ -330,10 +332,51 @@
                     </MenuItem.Icon>
                     <MenuItem Header="_ARENA"  Click="BtnArenaStats_Click"/>
                     <MenuItem Header="_CONSTRUCTED"  Click="BtnConstructedStats_Click"/>
-                    <Separator/>
-                    <MenuItem Header="_LATEST REPLAY" Click="MenuItemReplayLastGame_OnClick"/>
-                    <MenuItem Header="_SELECT REPLAY" Click="MenuItemReplaySelectGame_OnClick" />
-                    <MenuItem Header="LOAD REPLAY FROM _FILE" Click="MenuItemReplayFromFile_OnClick"/>
+                </MenuItem>
+                <MenuItem Header="_REPLAYS" SubmenuOpened="MenuItemReplays_OnSubmenuOpened">
+                    <MenuItem.Icon>
+                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_chevron_right}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </MenuItem.Icon>
+                    <MenuItem Header="_LATEST REPLAYS" Click="MenuItemLastGamesReplay_OnClick">
+                        <MenuItem.Resources>
+                            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
+                        </MenuItem.Resources>
+                        <MenuItem.ItemsSource>
+                            <CompositeCollection>
+                                <CollectionContainer Collection="{Binding Source={x:Static stats:LastGames.Instance}, Path=Games}"/>
+                                <MenuItem Header="EMPTY..." IsEnabled="False" Visibility="{Binding Source={x:Static stats:LastGames.Instance}, Path=HasGames, Converter={StaticResource InverseBoolToVisibilityConverter}}"></MenuItem>
+                            </CompositeCollection>
+                        </MenuItem.ItemsSource>
+                        <MenuItem.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </MenuItem.ItemTemplate>
+                    </MenuItem>
+                    <MenuItem Header="_SELECT FROM STATS" Click="MenuItemReplaySelectGame_OnClick" />
+                    <MenuItem Header="LOAD FROM _FILE" Click="MenuItemReplayFromFile_OnClick"/>
+                    <MenuItem StaysOpenOnClick="True" Click="MenuItemHsReplay_OnClick">
+                        <MenuItem.Header>
+                            <Grid Margin="-10,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Separator Grid.Column="0"/>
+                                <TextBlock Grid.Column="1" Text="HSREPLAY.NET" IsEnabled="False" Margin="5,0"/>
+                                <Separator Grid.Column="2"/>
+                            </Grid>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Header="CLAIM ACCOUNT" Click="MenuItemReplayClaimAccount_OnClick" 
+                              Visibility="{Binding MenuItemReplayClaimAccountVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
+                    <MenuItem Header="MY ACCOUNT" Click="MenuItemReplayMyAccount_OnClick"
+                              Visibility="{Binding MenuItemReplayMyAccountVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
                 </MenuItem>
                 <MenuItem Header="_HEARTHSTATS" SubmenuOpened="MenuItemHearthStats_OnSubmenuOpened">
                     <MenuItem.Icon>

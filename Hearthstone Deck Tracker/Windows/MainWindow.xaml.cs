@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,11 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Replay;
@@ -28,12 +31,14 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Updating;
+using Hearthstone_Deck_Tracker.Utility.Toasts;
 using MahApps.Metro.Controls.Dialogs;
 #if(SQUIRREL)
 	using Squirrel;
 #endif
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
+using MenuItem = System.Windows.Controls.MenuItem;
 
 #endregion
 
@@ -143,21 +148,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.TrayIcon.SetContextMenuProperty(TrayIcon.ClassCardsFirstMenuItemName, TrayIcon.CheckedProperty, classFirst);
 		}
 
-		private void MenuItemReplayLastGame_OnClick(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				var newest =
-					Directory.GetFiles(Config.Instance.ReplayDir).Select(x => new FileInfo(x)).OrderByDescending(x => x.CreationTime).FirstOrDefault();
-				if(newest != null)
-					ReplayReader.LaunchReplayViewer(newest.FullName);
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
-			}
-		}
-
 		private void MenuItemReplayFromFile_OnClick(object sender, RoutedEventArgs e)
 		{
 			try
@@ -171,7 +161,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				};
 				var dialogResult = dialog.ShowDialog();
 				if(dialogResult == System.Windows.Forms.DialogResult.OK)
-					ReplayReader.LaunchReplayViewer(dialog.FileName);
+					HsReplayManager.ShowReplay(dialog.FileName, true);
 			}
 			catch(Exception ex)
 			{
@@ -422,6 +412,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			=> Config.Instance.ConstructedAutoImportNew ? "ENTER THE 'PLAY' MENU TO AUTOMATICALLY IMPORT YOUR DECKS" : "ADD NEW DECKS BY CLICKING 'NEW' OR 'IMPORT'";
 
 		public Visibility IntroductionLabelVisibility => DeckList.Instance.Decks.Any() ? Collapsed : Visible;
+
+		public Visibility MenuItemReplayClaimAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Visible : Collapsed;
+		public Visibility MenuItemReplayMyAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Collapsed : Visible;
 
 		public void UpdateIntroLabelVisibility() => OnPropertyChanged(nameof(IntroductionLabelVisibility));
 
@@ -824,5 +817,30 @@ namespace Hearthstone_Deck_Tracker.Windows
 #endregion
 
 		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e) => Updater.StartUpdate();
+
+		private async void MenuItemLastGamesReplay_OnClick(object sender, RoutedEventArgs e)
+		{
+			var game = (e.OriginalSource as MenuItem)?.DataContext as GameStats;
+			if(game == null)
+				return;
+			await HsReplayManager.ShowReplay(game, true);
+		}
+
+		private void MenuItemReplayClaimAccount_OnClick(object sender, RoutedEventArgs e)
+		{
+			Options.TreeViewItemTrackerReplays.IsSelected = true;
+			FlyoutOptions.IsOpen = true;
+		}
+
+		private void MenuItemReplayMyAccount_OnClick(object sender, RoutedEventArgs e)
+			=> Helper.TryOpenUrl("https://hsreplay.net/games/mine/");
+
+		private void MenuItemReplays_OnSubmenuOpened(object sender, RoutedEventArgs e)
+		{
+			OnPropertyChanged(nameof(MenuItemReplayClaimAccountVisibility));
+			OnPropertyChanged(nameof(MenuItemReplayMyAccountVisibility));
+		}
+
+		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net");
 	}
 }

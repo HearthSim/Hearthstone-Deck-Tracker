@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -872,5 +872,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 			_showAllTurns.Remove(tvi.Turn.Value);
 			ReloadKeypoints();
 		}
+
+		private void BtnCloseStatusBar_OnClick(object sender, RoutedEventArgs e) => StatusBar.Visibility = Collapsed;
 	}
 }
