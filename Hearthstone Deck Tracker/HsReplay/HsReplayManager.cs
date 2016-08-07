@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				return false;
 			if(Config.Instance.ForceLocalReplayViewer)
 			{
-				ReplayReader.LaunchReplayViewer(game.ReplayFile);
+				ReplayReader.LaunchReplayViewer(game.ReplayFile, false);
 				return true;
 			}
 			Action<ReplayProgress> setToastStatus = null;
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			else if(game.HasReplayFile)
 			{
 				setToastStatus?.Invoke(ReplayProgress.Error);
-				ReplayReader.LaunchReplayViewer(game.ReplayFile);
+				ReplayReader.LaunchReplayViewer(game.ReplayFile, true);
 			}
 			else
 			{
@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			if(Config.Instance.ForceLocalReplayViewer)
 			{
-				ReplayReader.LaunchReplayViewer(fileName);
+				ReplayReader.LaunchReplayViewer(fileName, false);
 				return;
 			}
 			Action<ReplayProgress> setToastStatus = null;
@@ -111,10 +111,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(result.Success)
 					Helper.TryOpenUrl(new HsReplayInfo(result.ReplayId).Url);
 				else
-					ReplayReader.LaunchReplayViewer(fileName);
+					ReplayReader.LaunchReplayViewer(fileName, true);
 			}
 			else
-				ReplayReader.LaunchReplayViewer(fileName);
+				ReplayReader.LaunchReplayViewer(fileName, true);
 			setToastStatus?.Invoke(ReplayProgress.Complete);
 		}
 	}
