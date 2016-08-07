@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using HearthDb.Enums;
@@ -95,24 +94,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return GameMode.None;
 			}
 		}
+
 		public static BnetGameType GetGameType(GameMode mode, Format? format)
 		{
 			switch(mode)
 			{
-			case GameMode.Arena:
-				return BGT_ARENA;
-			case GameMode.Ranked:
-				return format == Format.Standard ? BGT_RANKED_STANDARD : BGT_RANKED_WILD;
-			case GameMode.Casual:
-				return format == Format.Standard ? BGT_CASUAL_STANDARD : BGT_CASUAL_WILD;
-			case GameMode.Brawl:
-				return BGT_TAVERNBRAWL_PVP;
-			case GameMode.Friendly:
-				return BGT_FRIENDS;
-			case GameMode.Practice:
-				return BGT_VS_AI;
-			default:
-				return BGT_UNKNOWN;
+				case GameMode.Arena:
+					return BGT_ARENA;
+				case GameMode.Ranked:
+					return format == Format.Standard ? BGT_RANKED_STANDARD : BGT_RANKED_WILD;
+				case GameMode.Casual:
+					return format == Format.Standard ? BGT_CASUAL_STANDARD : BGT_CASUAL_WILD;
+				case GameMode.Brawl:
+					return BGT_TAVERNBRAWL_PVP;
+				case GameMode.Friendly:
+					return BGT_FRIENDS;
+				case GameMode.Practice:
+					return BGT_VS_AI;
+				default:
+					return BGT_UNKNOWN;
 			}
 		}
 
@@ -127,6 +127,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				default:
 					return null;
 			}
+		}
+
+		public static FormatType GetFormatType(Format? format)
+		{
+			if(format == null)
+				return FormatType.FT_UNKNOWN;
+			switch(format.Value)
+			{
+				case Format.Standard:
+					return FormatType.FT_STANDARD;
+				case Format.Wild:
+					return FormatType.FT_STANDARD;
+			}
+			return FormatType.FT_UNKNOWN;
 		}
 	}
 }

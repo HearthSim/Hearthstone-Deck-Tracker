@@ -318,7 +318,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Save();
 			}
 
-			if(configVersion != null && currentVersion > configVersion)
+			if(configVersion != null && new Version(currentVersion.Major, currentVersion.Minor, currentVersion.Build) > new Version(configVersion.Major, configVersion.Minor, configVersion.Build))
 				UpdatedVersion = currentVersion;
 		}
 	}

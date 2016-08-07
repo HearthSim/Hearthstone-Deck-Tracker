@@ -69,6 +69,9 @@
     <Canvas x:Key="appbar_chevron_right_white" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
         <Path Width="25.3333" Height="28.5" Canvas.Left="25.1849" Canvas.Top="23.3542" Stretch="Fill" Fill="White" Data="F1 M 39.8307,37.6042L 36.6641,34.4375L 25.1849,23.3542L 35.4766,23.3542L 50.5182,37.6042L 35.4766,51.8542L 25.1849,51.8542L 36.6641,40.7708L 39.8307,37.6042 Z "/>
     </Canvas>
+    <Canvas x:Key="appbar_chevron_right" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="25.3333" Height="28.5" Canvas.Left="25.1849" Canvas.Top="23.3542" Stretch="Fill" Fill="{DynamicResource TextBrush}" Data="F1 M 39.8307,37.6042L 36.6641,34.4375L 25.1849,23.3542L 35.4766,23.3542L 50.5182,37.6042L 35.4766,51.8542L 25.1849,51.8542L 36.6641,40.7708L 39.8307,37.6042 Z "/>
+    </Canvas>
     <Canvas x:Key="appbar_chevron_left_white" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
         <Path Width="25.3333" Height="28.5" Canvas.Left="25.1849" Canvas.Top="23.3542" Stretch="Fill" Fill="White" Data="F1 M 35.8724,37.6042L 39.0391,40.7708L 50.5182,51.8542L 40.2266,51.8542L 25.1849,37.6041L 40.2266,23.3542L 50.5182,23.3542L 39.0391,34.4375L 35.8724,37.6042 Z "/>
     </Canvas>
@@ -197,5 +200,8 @@
     </Canvas>
     <Canvas x:Key="appbar_layer_black" Width="76.0106" Height="76.0106" Clip="F1 M 0,0L 76.0106,0L 76.0106,76.0106L 0,76.0106L 0,0">
         <Path Width="38.0053" Height="38.0053" Canvas.Left="19.0026" Canvas.Top="19.0027" Stretch="Fill" Fill="Black" Data="F1 M 57.0079,38.0053L 38.0053,47.5066L 19.0027,38.0053L 25.3369,34.8382L 38.0053,41.1724L 50.6737,34.8382L 57.0079,38.0053 Z M 38.0053,19.0027L 57.0079,28.504L 38.0053,38.0053L 19.0026,28.504L 38.0053,19.0027 Z M 57.0079,47.5066L 38.0053,57.008L 19.0026,47.5066L 25.3369,44.3395L 38.0053,50.6737L 50.6737,44.3395L 57.0079,47.5066 Z " />
+    </Canvas>
+    <Canvas x:Key="appbar_check_green" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="37.9998" Height="31.6665" Canvas.Left="19.0001" Canvas.Top="22.1668" Stretch="Fill" Fill="Lime" Data="F1 M 23.7501,33.25L 34.8334,44.3333L 52.2499,22.1668L 56.9999,26.9168L 34.8334,53.8333L 19.0001,38L 23.7501,33.25 Z "/>
     </Canvas>
 </ResourceDictionary>
