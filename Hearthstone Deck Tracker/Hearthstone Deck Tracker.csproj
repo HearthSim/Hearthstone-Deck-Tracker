@@ -1393,6 +1393,7 @@ xcopy /E /Y /Q "$(ProjectDir)Images\Themes" "$(TargetDir)\Images\Themes"</PreBui
         <Regex>(\d+)\.(\d+)\.(\d+)(\.[1-9]\d*)?</Regex>
         <Version>$([System.Text.RegularExpressions.Regex]::Match(%(myAssemblyInfo.Version), $(Regex)))</Version>
     </PropertyGroup>
+    <Exec Command="if not exist Releases mkdir Releases" />
     <Exec Command="cd bin/x86 &amp; zip -9 -r -q ../../Releases/Hearthstone.Deck.Tracker-v$(Version).zip &quot;Hearthstone Deck Tracker&quot;" />
   </Target>
 </Project>
