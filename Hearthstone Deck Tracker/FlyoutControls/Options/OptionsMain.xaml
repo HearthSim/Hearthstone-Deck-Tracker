@@ -25,6 +25,7 @@
                     <TreeViewItem Header="Tracker">
                         <TreeViewItem Name="TreeViewItemTrackerGeneral" Header="General" Selected="TreeViewItemTrackerGeneral_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerStats" Header="Stats" Selected="TreeViewItemTrackerStats_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerReplays" Header="Replays" Selected="TreeViewItemTrackerReplays_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerExporting" Header="Exporting" Selected="TreeViewItemTrackerExporting_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerImporting" Header="Importing" Selected="TreeViewItemTrackerImporting_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerNotifications" Header="Notifications" Selected="TreeViewItemTrackerNotifications_OnSelected"/>

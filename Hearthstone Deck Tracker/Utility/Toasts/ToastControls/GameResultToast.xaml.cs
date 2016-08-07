@@ -1,39 +1,37 @@
-﻿#region
+#region
 
 using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.Windows
+namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 {
-	public partial class GameResultNotificationWindow : INotifyPropertyChanged
+	/// <summary>
+	/// Interaction logic for GameResultToast.xaml
+	/// </summary>
+	public partial class GameResultToast : UserControl
 	{
-		private const int ExpandedHeight = 100;
+		private const int ExpandedHeight = 141;
 		private const int ExpandedWidth = 350;
-		private const double FadeInDuration = 0.4;
-		private const int FadeOutSpeedup = 2;
 		private readonly GameStats _game;
 		private bool _edited;
 		private bool _expanded;
-		private DateTime _startUpTime;
 
-		public GameResultNotificationWindow(string deckName, [NotNull] GameStats game)
+		public GameResultToast(string deckName, [NotNull] GameStats game)
 		{
+			InitializeComponent();
 			InitializeComponent();
 			DeckName = deckName;
 			_game = game;
@@ -49,24 +47,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				GameMode.Ranked,
 				GameMode.Spectator
 			};
-			UpdatePosition();
-			_startUpTime = DateTime.UtcNow;
-			CloseAsync();
-			Log.Info("Now showing");
-			Activate();
 		}
 
 		public string DeckName { get; set; }
-
-		public GameResult Result
-		{
-			get { return _game.Result; }
-			set
-			{
-				_game.Result = value;
-				_edited = true;
-			}
-		}
 
 		public HeroClassWrapper Opponent
 		{
@@ -86,8 +69,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_edited = true;
 			}
 		}
-
-		public BitmapImage PlayerClassImage => ImageCache.GetClassIcon(_game.PlayerHero);
 
 		public bool FormatSelectionEnabled => Mode == GameMode.Casual || Mode == GameMode.Ranked;
 
@@ -112,56 +93,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void UpdatePosition()
+		public GameResult Result
 		{
-			Top = SystemParameters.WorkArea.Bottom - Height - 5;
-			Left = SystemParameters.WorkArea.Right - Width - 5;
+			get { return _game.Result; }
+			set
+			{
+				_game.Result = value;
+				_edited = true;
+			}
 		}
 
-		private async void CloseAsync()
-		{
-			while(DateTime.UtcNow - _startUpTime < TimeSpan.FromSeconds(Config.Instance.NotificationFadeOutDelay + FadeInDuration))
-			{
-				await Task.Delay(100);
-				if(!IsMouseOver)
-					continue;
-				Expand();
-				_startUpTime = DateTime.UtcNow - TimeSpan.FromSeconds(FadeOutSpeedup);
-				CloseAsync();
-				return;
-			}
-			((Storyboard)FindResource("StoryboardFadeOut")).Begin(this);
-		}
-
-		private void StoryboardFadeOut_OnCompleted(object sender, EventArgs e)
-		{
-			if(_edited)
-			{
-				DeckStatsList.Save();
-				if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
-				{
-					var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == _game.DeckId);
-					if(deck != null)
-					{
-						if(_game.HasHearthStatsId)
-						{
-							if(_game.GameMode == GameMode.Arena)
-								HearthStatsManager.UpdateArenaMatchAsync(_game, deck, true, true);
-							else
-								HearthStatsManager.UpdateMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true);
-						}
-						else
-						{
-							if(_game.GameMode == GameMode.Arena)
-								HearthStatsManager.UploadArenaMatchAsync(_game, deck, true, true).Forget();
-							else
-								HearthStatsManager.UploadMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true).Forget();
-						}
-					}
-				}
-			}
-			Close();
-		}
+		public BitmapImage PlayerClassImage => ImageCache.GetClassIcon(_game.PlayerHero);
 
 		private void RectangleSettings_OnMouseDown(object sender, MouseButtonEventArgs e)
 		{
@@ -169,6 +111,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.MainWindow.Options.TreeViewItemTrackerNotifications.IsSelected = true;
 			Core.MainWindow.ActivateWindow();
 		}
+
+		private void PanelSummary_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => Expand();
 
 		private void Expand()
 		{
@@ -180,8 +124,47 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PanelDetailBody.Visibility = Visibility.Visible;
 			Height = ExpandedHeight;
 			Width = ExpandedWidth;
-			UpdatePosition();
 		}
+
+		private void GameResultToast_OnUnloaded(object sender, RoutedEventArgs e)
+		{
+			if(!_edited)
+				return;
+			DeckStatsList.Save();
+			if(!Config.Instance.HearthStatsAutoUploadNewGames || !HearthStatsAPI.IsLoggedIn)
+				return;
+			var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == _game.DeckId);
+			if(deck == null)
+				return;
+			if(_game.HasHearthStatsId)
+			{
+				if(_game.GameMode == GameMode.Arena)
+					HearthStatsManager.UpdateArenaMatchAsync(_game, deck, true, true);
+				else
+					HearthStatsManager.UpdateMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true);
+			}
+			else
+			{
+				if(_game.GameMode == GameMode.Arena)
+					HearthStatsManager.UploadArenaMatchAsync(_game, deck, true, true).Forget();
+				else
+					HearthStatsManager.UploadMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true).Forget();
+			}
+		}
+
+		private void GameResultToast_OnMouseEnter(object sender, MouseEventArgs e)
+		{
+			if(!_expanded && Cursor != Cursors.Wait)
+				Cursor = Cursors.Hand;
+		}
+
+		private void GameResultToast_OnMouseLeave(object sender, MouseEventArgs e)
+		{
+			if(Cursor != Cursors.Wait)
+				Cursor = Cursors.Arrow;
+		}
+
+		private void RectangleClose_OnMouseDown(object sender, MouseButtonEventArgs e) => ToastManager.ForceCloseToast(this);
 
 		public class HeroClassWrapper
 		{

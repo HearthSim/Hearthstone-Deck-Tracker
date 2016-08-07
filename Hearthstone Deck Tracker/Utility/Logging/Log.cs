@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -73,6 +73,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 			try
 			{
 				Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));	
+				Info(Helper.GetCurrentVersion().ToString());
 			}
 			catch (Exception ex)
 			{

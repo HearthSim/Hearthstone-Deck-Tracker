@@ -1,0 +1,48 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerReplays"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <GroupBox Header="REPLAYS">
+        <StackPanel>
+            <GroupBox Header="HSREPLAY.NET">
+                <StackPanel>
+                    <CheckBox Name="CheckBoxAutoUpload" Content="Upload replays automatically" Margin="5,5,0,0" IsChecked="{Binding HsReplayAutoUpload, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Content="Ranked" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadRanked, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="Casual" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadCasual, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="Arena" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadArena, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="Brawl" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadBrawl, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="Friendly" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadFriendly, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="Adventure/Practice" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadPractice, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="Spectator" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadSpectator, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <Separator Margin="0,5"/>
+                    <DockPanel>
+                        <Label Content="Account Status:" DockPanel.Dock="Left"/>
+                        <Label Content="{Binding AccountStatus, RelativeSource={RelativeSource AncestorType=UserControl}}" DockPanel.Dock="Left"/>
+                        <controls:ProgressRing Name="ProgressRing" IsActive="False" DockPanel.Dock="Right" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding ProgressRingVisibility}" Width="16" Height="16"/>
+                        <TextBlock VerticalAlignment="Center">
+                            <Hyperlink Click="HyperlinkBattleTag_OnClick">
+                                <Run Text="{Binding BattleTag, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"/>
+                            </Hyperlink>
+                        </TextBlock>
+                    </DockPanel>
+                    <Button Name="ButtonClaimAccount" Content="Claim Account" Margin="0,2,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Click="ButtonClaimAccount_OnClick"/>
+                    <TextBlock Text="Log in with your Battle.net credentials on HSReplay.net to claim your existing replays. This will open your web browser." TextWrapping="Wrap"
+                           Margin="0,5,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    <Button Name="ButtonUnclaimAccount" Content="Unclaim Account" Margin="0,2,0,0" 
+                            Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                            Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                            IsEnabled="{Binding TextUnclaimIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}" Click="ButtonUnclaimAccount_OnClick"/>
+                </StackPanel>
+            </GroupBox>
+            <CheckBox Content="Use local replay viewer by default (not maintained)" Margin="5,5,0,0"
+                              IsChecked="{Binding ForceLocalReplayViewer, Source={StaticResource ConfigWrapper}}"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+        </StackPanel>
+    </GroupBox>
+</UserControl>

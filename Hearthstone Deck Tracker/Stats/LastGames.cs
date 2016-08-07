@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -54,13 +54,18 @@ namespace Hearthstone_Deck_Tracker.Stats
 			var games = new List<GameStats>();
 			foreach(var gi in GameInfos)
 			{
-				var deckstats = gi.DeckId == Guid.Empty ? DefaultDeckStats.Instance.DeckStats : DeckStatsList.Instance.DeckStats;
-				var deck = deckstats.FirstOrDefault(x => x.DeckId == gi.DeckId);
-				if(deck == null)
+				DeckStats stats;
+				if(gi.DeckId != Guid.Empty)
+					DeckStatsList.Instance.DeckStats.TryGetValue(gi.DeckId, out stats);
+				else if(!string.IsNullOrEmpty(gi.Hero))
+					stats = DefaultDeckStats.Instance.GetDeckStats(gi.Hero);
+				else
+					stats = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(x => x.Games.Any(g => g.GameId == gi.GameId));
+				if(stats == null)
 					remove.Add(gi);
 				else
 				{
-					var game = deck.Games.FirstOrDefault(x => x.GameId == gi.GameId);
+					var game = stats.Games.FirstOrDefault(x => x.GameId == gi.GameId);
 					if(game?.HasReplayFile ?? false)
 						games.Add(game);
 					else
@@ -74,11 +79,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 			return games;
 		} 
 
-		public void Add(GameStats game) => Add(game.DeckId, game.GameId);
+		public void Add(GameStats game) => Add(game.DeckId, game.GameId, game.PlayerHero);
 
-		public void Add(Guid deckId, Guid gameId)
+		public void Add(Guid deckId, Guid gameId, string hero)
 		{
-			GameInfos.Insert(0, new GameInfo(deckId, gameId));
+			GameInfos.Insert(0, new GameInfo(deckId, gameId, hero));
 			if(GameInfos.Count > MaxGamesCount)
 				GameInfos.RemoveAt(MaxGamesCount);
 			OnPropertyChanged(nameof(Games));
@@ -123,7 +128,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private static List<GameInfo> Load()
 		{
 			if(!File.Exists(FilePath))
-				return new List<GameInfo>();
+			{
+				var games = new List<GameStats>();
+				var enumerator = DeckStatsList.Instance.DeckStats.GetEnumerator();
+				while(enumerator.MoveNext())
+					games.AddRange(enumerator.Current.Value.Games.Where(x => x.HasReplayFile));
+				return games.OrderByDescending(x => x.StartTime).Take(10).Select(
+						x => new GameInfo { DeckId = x.DeckId, GameId = x.GameId }).ToList();
+			}
 			try
 			{
 				return XmlManager<List<GameInfo>>.Load(FilePath);
@@ -150,10 +162,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 		}
 
-		public GameInfo(Guid deckId, Guid gameId)
+		public GameInfo(Guid deckId, Guid gameId, string hero = null)
 		{
 			DeckId = deckId;
 			GameId = gameId;
+			if(DeckId == Guid.Empty)
+				Hero = hero;
 		}
 
 		[XmlAttribute("deckId")]
@@ -161,5 +175,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		[XmlAttribute("gameId")]
 		public Guid GameId { get; set; }
+
+		[XmlAttribute("hero")]
+		public string Hero { get; set; }
 	}
 }

@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -374,6 +375,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public bool HasHearthStatsDeckId => !string.IsNullOrEmpty(HearthStatsDeckId) && int.Parse(HearthStatsDeckId) > 0;
 
+		public HsReplayInfo HsReplay { get; set; } = new HsReplayInfo();
+
+		public string ReplayState => !HasReplayFile ? "N/A" : HsReplay.Uploaded ? "Uploaded" : HsReplay.Unsupported ? "Unsupported" : "-";
+
+		public void UpdateReplayState() => OnPropertyChanged(nameof(ReplayState));
+
 		public bool BelongsToDeckVerion(Deck deck) => PlayerDeckVersion == deck.Version
 													  || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId)
 													  || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId == deck.HearthStatsId)
@@ -394,6 +401,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				WasConceded = WasConceded,
 				PlayerDeckVersion = PlayerDeckVersion,
 				HearthstoneBuild = HearthstoneBuild,
+				HsReplay = HsReplay,
 				IsClone = true
 			};
 			return newGame;
@@ -420,7 +428,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Log.Info("Current Game ended after " + Turns + " turns");
 		}
 
-		public override string ToString() => Result + " vs " + OpponentHero + ", " + StartTime;
+		public override string ToString() => $"[{GameMode}] {Result} VS. {OpponentName} ({OpponentHero}), {StartTime.ToString("g")}";
 
 		public void ResetHearthstatsIds()
 		{
@@ -428,6 +436,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 			HearthStatsDeckVersionId = null;
 			HearthStatsId = null;
 		}
+
+		public long HsDeckId { get; set; }
 
 		[XmlArray(ElementName = "PlayerCards")]
 		[XmlArrayItem(ElementName = "Card")]
@@ -493,6 +503,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeFriendlyPlayerId() => FriendlyPlayerId > 0;
 		public bool ShouldSerializeScenarioId() => ScenarioId > 0;
 		public bool ShouldSerializeServerInfo() => ServerInfo != null;
+		public bool ShouldSerializeHsReplay() => HsReplay.UploadTries > 0 || HsReplay.Uploaded;
+		public bool ShouldSerializeHsDeckId() => HsDeckId > 0;
 
 		#region Obsolete
 
