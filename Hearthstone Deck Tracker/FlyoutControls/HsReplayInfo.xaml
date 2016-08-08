@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.HsReplayInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="600">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Hyperlink}">
+            <Setter Property="Foreground" Value="DodgerBlue"/>
+        </Style>
+    </UserControl.Resources>
+    <DockPanel Margin="0,10">
+        <Label Content="Welcome to the Replay beta!" FontWeight="SemiBold" DockPanel.Dock="Top" 
+               FontSize="18" HorizontalAlignment="Center"/>
+        <Separator DockPanel.Dock="Top"/>
+        <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200" Click="ButtonContinue_OnClick" DockPanel.Dock="Bottom">
+            <TextBlock>Continue</TextBlock>
+        </Button>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="10" Width="510">
+            <StackPanel>
+                <TextBlock TextWrapping="Wrap" FontSize="15">
+                    As part of the revamped replay functionality, HDT now has the ability to
+                    save replays online. You can now easily view your games from everywhere 
+                    and share them with your friends.
+                </TextBlock>
+                <TextBlock Margin="0,10,0,0" HorizontalAlignment="Center" TextAlignment="Center">
+                    <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://hsreplay.net/replay/vZEz7JoNnfgVo34HJUHhEF">
+                        <Image Source="{StaticResource JoustScreenshot}" Width="400" RenderOptions.BitmapScalingMode="Fant"/>
+                    </Hyperlink>
+                    <LineBreak/>
+                    (click to show demo)
+                </TextBlock>
+                <Label Content="How it works" FontWeight="SemiBold" DockPanel.Dock="Top" FontSize="18" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                <TextBlock TextWrapping="Wrap" FontSize="15" >
+                    Whenever you complete a game, the game data will automatically be uploaded to
+                    <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://hsreplay.net">HSReplay.net</Hyperlink>. 
+                    Your games are unlisted, but you can share the links with anyone!
+                    <LineBreak/><LineBreak/>
+
+                    An anonymous account has been created for you. You can claim the account and
+                    link it to your BattleTag by going to the <Italic>REPLAYS</Italic> menu item and 
+                    clicking on <Italic>Claim Account</Italic>.
+                    <LineBreak/><LineBreak/>
+
+                    Replay uploads can be disabled entirely or for specific game modes in
+                    <Italic>options > tracker > replays</Italic>.
+                    <LineBreak/><LineBreak/>
+
+                    Tweet your feedback to <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://twitter.com/hsdecktracker">@HSDeckTracker</Hyperlink> 
+                    or <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://twitter.com/hsreplaynet">@HSReplayNet</Hyperlink> on twitter, or join us
+                    on IRC in #HSReplay on <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://freenode.net/">Freenode.net</Hyperlink>.
+                </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>
