@@ -258,6 +258,9 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="FlyoutControls\HsReplayInfo.xaml.cs">
+      <DependentUpon>HsReplayInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Information\SquirrelInfo.xaml.cs">
       <DependentUpon>SquirrelInfo.xaml</DependentUpon>
     </Compile>
@@ -866,6 +869,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\HsReplayInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Information\SquirrelInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1243,6 +1250,7 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\joust-screenshot.jpg" />
     <Resource Include="Resources\Chunkfive.otf" />
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
     <Resource Include="Resources\SplashScreen.png" />
@@ -1433,8 +1441,8 @@ xcopy /E /Y /Q "$(ProjectDir)Images\Themes" "$(TargetDir)\Images\Themes"</PreBui
   </Target>
   -->
   <Target Name="AfterBuild">
-    <CallTarget Condition=" '$(Configuration)' == 'Squirrel'" Targets="SquirrelAfterBuild"/>
-    <CallTarget Condition=" '$(Configuration)' == 'Release'" Targets="ReleaseAfterBuild"/>
+    <CallTarget Condition=" '$(Configuration)' == 'Squirrel'" Targets="SquirrelAfterBuild" />
+    <CallTarget Condition=" '$(Configuration)' == 'Release'" Targets="ReleaseAfterBuild" />
   </Target>
   <Target Name="SquirrelAfterBuild">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
@@ -1448,8 +1456,8 @@ xcopy /E /Y /Q "$(ProjectDir)Images\Themes" "$(TargetDir)\Images\Themes"</PreBui
       <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
     </GetAssemblyIdentity>
     <PropertyGroup>
-        <Regex>(\d+)\.(\d+)\.(\d+)(\.[1-9]\d*)?</Regex>
-        <Version>$([System.Text.RegularExpressions.Regex]::Match(%(myAssemblyInfo.Version), $(Regex)))</Version>
+      <Regex>(\d+)\.(\d+)\.(\d+)(\.[1-9]\d*)?</Regex>
+      <Version>$([System.Text.RegularExpressions.Regex]::Match(%(myAssemblyInfo.Version), $(Regex)))</Version>
     </PropertyGroup>
     <Exec Command="if not exist Releases mkdir Releases" />
     <Exec Command="cd bin/x86 &amp; zip -9 -r -q ../../Releases/Hearthstone.Deck.Tracker-v$(Version).zip &quot;Hearthstone Deck Tracker&quot;" />

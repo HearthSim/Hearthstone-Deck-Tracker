@@ -137,6 +137,12 @@
             <controls:Flyout x:Name="FlyoutUpdateNotes" Header="Update Notes" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <flyoutControls:UpdateNotes x:Name="UpdateNotesControl"/>
             </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHsReplayNote" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="0" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <controls:Flyout.HeaderTemplate>
+                    <DataTemplate/>
+                </controls:Flyout.HeaderTemplate>
+                <flyoutControls:HsReplayInfo x:Name="HsReplayInfoFlyout"/>
+            </controls:Flyout>
             <controls:Flyout x:Name="FlyoutDeckImporting" Header="Deck Importing" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls1:DeckImportingControl x:Name="DeckImportingFlyout"/>
             </controls:Flyout>
