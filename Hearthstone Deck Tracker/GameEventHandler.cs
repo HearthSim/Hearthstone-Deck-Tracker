@@ -832,6 +832,7 @@ namespace Hearthstone_Deck_Tracker
 					Entity target;
 					if(entity.HasTag(CARD_TARGET) && _game.Entities.TryGetValue(entity.GetTag(CARD_TARGET), out target) && target.IsMinion)
 						_game.OpponentSecrets.SetZero(Mage.Spellbender);
+					_game.OpponentSecrets.SetZero(Hunter.CatTrick);
 				}
 
 				if(Core.MainWindow != null)
