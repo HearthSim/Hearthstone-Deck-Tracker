@@ -226,6 +226,14 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.ShowSecrets();
 		}
 
+
+		public void HandleEntityPredamage(Entity entity, int value)
+		{
+			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
+				HandleOpponentDamage(entity);
+			GameEvents.OnEntityWillTakeDamage.Execute(new PredamageInfo(entity, value));
+		}
+
 		public void HandleOpponentDamage(Entity entity)
 		{
 			if(!Config.Instance.AutoGrayoutSecrets)

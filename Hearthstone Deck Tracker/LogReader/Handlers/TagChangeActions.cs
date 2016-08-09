@@ -132,8 +132,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			Entity entity;
 			if(!game.Entities.TryGetValue(id, out entity))
 				return;
-			if(game.PlayerEntity?.IsCurrentPlayer ?? false)
-				gameState.GameHandler.HandleOpponentDamage(entity);
+			gameState.GameHandler.HandleEntityPredamage(entity, value);
 		}
 
 		private void NumTurnsInPlayChange(IHsGameState gameState, int id, IGame game, int value)

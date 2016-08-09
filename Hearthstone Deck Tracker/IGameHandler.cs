@@ -76,5 +76,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentGetToDeck(Entity entity, int turn);
 
 		#endregion OpponentHandlers
+
+		void HandleEntityPredamage(Entity entity, int value);
 	}
 }

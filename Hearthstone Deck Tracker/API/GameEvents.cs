@@ -2,6 +2,7 @@
 
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 #endregion
 
@@ -53,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public static readonly ActionList<Card> OnOpponentMinionMouseOver = new ActionList<Card>();
 		public static readonly ActionList<AttackInfo> OnOpponentMinionAttack = new ActionList<AttackInfo>();
 
+		public static readonly ActionList<PredamageInfo> OnEntityWillTakeDamage = new ActionList<PredamageInfo>();
 		#endregion
 
 		#region Game
