@@ -131,9 +131,11 @@ namespace Hearthstone_Deck_Tracker.Importing
 		private static List<ImportedDeck> GetImportedDecks(IEnumerable<HearthMirror.Objects.Deck> decks)
 		{
 			var importedDecks = new List<ImportedDeck>();
-			foreach (var deck in decks)
+			var hsDecks = decks.ToList();
+			foreach (var deck in hsDecks)
 			{
-				var existing = DeckList.Instance.Decks.Select(x =>
+				var otherDecks = hsDecks.Except(new[] {deck});
+				var existing = DeckList.Instance.Decks.Where(x => otherDecks.All(d => d.Id != x.HsId)).Select(x =>
 					new
 					{
 						Deck = x,
