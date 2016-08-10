@@ -147,7 +147,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				else
 					totalDust += card.DustCost * card.Count;
 			}
-			message += $"\n\nYou need {totalDust} dust {string.Join("", sets)}to craft the missing cards.";
+			message += $"\n\nYou need {totalDust} dust {string.Join("", sets.Distinct())}to craft the missing cards.";
 			await window.ShowMessageAsync("Export incomplete", message, Affirmative, new Settings {AffirmativeButtonText = "OK"});
 		}
 
