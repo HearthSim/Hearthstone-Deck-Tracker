@@ -25,6 +25,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public void Update(Deck deck)
 		{
+			RectIconKara.Visibility = deck?.ContainsSet("One Night in Karazhan") ?? false ? Visible : Collapsed;
 			RectIconOg.Visibility = deck?.ContainsSet("Whispers of the Old Gods") ?? false ? Visible : Collapsed;
 			RectIconLoe.Visibility = deck?.ContainsSet("League of Explorers") ?? false ? Visible : Collapsed;
 			RectIconTgt.Visibility = deck?.ContainsSet("The Grand Tournament") ?? false ? Visible : Collapsed;
