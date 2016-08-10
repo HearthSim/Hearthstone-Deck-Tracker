@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 		public class Player
 		{
 			[JsonProperty("rank", NullValueHandling = NullValueHandling.Ignore)]
-			public int? Rank{ get; set; }
+			public int? Rank { get; set; }
 
 			[JsonProperty("legendrank", NullValueHandling = NullValueHandling.Ignore)]
 			public int? LegendRank { get; set; }
@@ -123,8 +123,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay.API
 				friendly.Stars = _game.Stars;
 			if(_game?.PlayerCards.Sum(x => x.Count) == 30 && _game?.PlayerCards.Sum(x => x.Unconfirmed) <= 24)
 			{
-				friendly.DeckList = _game?.PlayerCards.SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
-				friendly.DeckId = _game?.HsDeckId;
+				friendly.DeckList = _game.PlayerCards.SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
+				if(_game.HsDeckId > 0)
+					friendly.DeckId = _game.HsDeckId;
 			}
 
 			if(_game?.OpponentRank > 0)
