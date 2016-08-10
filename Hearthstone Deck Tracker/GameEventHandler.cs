@@ -133,6 +133,9 @@ namespace Hearthstone_Deck_Tracker
 					powerLog.AddRange(stored.Item2);
 				powerLog.AddRange(_game.PowerLog);
 
+				var createGameCount = 0;
+				powerLog = powerLog.TakeWhile(x => !(x.Contains("CREATE_GAME") && createGameCount++ == 1)).ToList();
+
 				if(Config.Instance.RecordReplays && RecordCurrentGameMode && _game.Entities.Count > 0 && !_game.SavedReplay
 					&& _game.CurrentGameStats.ReplayFile == null)
 					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(powerLog);
@@ -144,7 +147,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private async Task LogIsComplete()
 		{
-			if(LogContainsGoldRewardState)
+			if(LogContainsGoldRewardState || _game.CurrentGameMode == Practice && LogContainsStateComplete)
 				return;
 			Log.Info("GOLD_REWARD_STATE not found");
 			await Task.Delay(500);
@@ -161,10 +164,10 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private bool LogContainsGoldRewardState
-			=> _game?.PowerLog?.Skip(Math.Max(0, _game.PowerLog.Count - 10)).Count(x => x.Contains("tag=GOLD_REWARD_STATE value=1")) == 2;
+			=> _game?.PowerLog?.Count(x => x.Contains("tag=GOLD_REWARD_STATE value=1")) == 2;
 
 		private bool LogContainsStateComplete
-			=> _game?.PowerLog?.Skip(Math.Max(0, _game.PowerLog.Count - 10)).Any(x => x.Contains("tag=STATE value=COMPLETE")) ?? false;
+			=> _game?.PowerLog?.Any(x => x.Contains("tag=STATE value=COMPLETE")) ?? false;
 
 		public void HandleConcede()
 		{
