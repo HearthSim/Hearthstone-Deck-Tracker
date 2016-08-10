@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							Config.Instance.ConstructedAutoUpdate);
 				}
 
-				if(game.PreviousMode == Mode.GAMEPLAY)
+				if(game.PreviousMode == Mode.GAMEPLAY && game.CurrentMode != Mode.GAMEPLAY)
 					gameState.GameHandler.HandleInMenu();
 
 				if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus && (DateTime.Now - logLine.Time).TotalSeconds < 5)
@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			else if(logLine.Line.Contains("Gameplay.Start"))
 			{
 				gameState.Reset();
-				gameState.GameHandler.HandleGameStart();
+				gameState.GameHandler.HandleGameStart(logLine.Time);
 			}
 		}
 

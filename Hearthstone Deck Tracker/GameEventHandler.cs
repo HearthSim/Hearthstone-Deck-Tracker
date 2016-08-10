@@ -345,8 +345,13 @@ namespace Hearthstone_Deck_Tracker
 			_avengeDeathRattleCount = 0;
 		}
 
-		public void HandleGameStart()
+		private DateTime _lastGameStartTimestamp = DateTime.MinValue;
+		public void HandleGameStart(DateTime timestamp)
 		{
+			if(_game.CurrentGameMode == Practice && !_game.IsInMenu && !_handledGameEnd
+				&& _lastGameStartTimestamp  > DateTime.MinValue && timestamp > _lastGameStartTimestamp)
+				HandleAdventureRestart();
+			_lastGameStartTimestamp = timestamp;
 			if(DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started
 				return;
 			_handledGameEnd = false;
@@ -393,6 +398,17 @@ namespace Hearthstone_Deck_Tracker
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 			GameEvents.OnGameStart.Execute();
 		}
+
+		private void HandleAdventureRestart()
+		{
+			//The game end is not logged in PowerTaskList
+			Log.Info("Adventure was restarted. Simulating game end.");
+			HandleConcede();
+			HandleLoss();
+			HandleGameEnd();
+			HandleInMenu();
+		}
+
 #pragma warning disable 4014
 		public async void HandleGameEnd()
 		{
@@ -1132,7 +1148,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.SetPlayerHero(string hero) => SetPlayerHero(hero);
 		void IGameHandler.HandleOpponentHeroPower(string cardId, int turn) => HandleOpponentHeroPower(cardId, turn);
 		void IGameHandler.TurnStart(ActivePlayer player, int turnNumber) => TurnStart(player, turnNumber);
-		void IGameHandler.HandleGameStart() => HandleGameStart();
+		void IGameHandler.HandleGameStart(DateTime timestamp) => HandleGameStart(timestamp);
 		void IGameHandler.HandleGameEnd() => HandleGameEnd();
 		void IGameHandler.HandleLoss() => HandleLoss();
 		void IGameHandler.HandleWin() => HandleWin();
