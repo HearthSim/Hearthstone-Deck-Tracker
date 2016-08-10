@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.CardIds.Collectible;
@@ -109,12 +110,14 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private int TotalDust(Deck deck)
 		{
-			var nonCraftableSets = new List<string>() {
-				"Curse of Naxxramas",
-				"Blackrock Mountain",
-				"League of Explorers",
-				"Basic"
-			};
+			var nonCraftableSets = new[]
+			{
+				CardSet.KARA,
+				CardSet.NAXX,
+				CardSet.BRM,
+				CardSet.LOE,
+				CardSet.CORE
+			}.Select(HearthDbConverter.SetConverter).ToList();
 			var nonCraftableCards = new List<string>() {
 				Neutral.Cthun,
 				Neutral.BeckonerOfEvil
