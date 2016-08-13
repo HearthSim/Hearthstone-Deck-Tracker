@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 		{
 			ToastManager.ForceCloseToast(this);
 			await Task.Delay(500);
-			HsReplayManager.ShowReplay(_game, true).Forget();
+			ReplayLauncher.ShowReplay(_game, true).Forget();
 		}
 
 		private void BorderReplay_OnMouseEnter(object sender, MouseEventArgs e)

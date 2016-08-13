@@ -1,4 +1,4 @@
-namespace Hearthstone_Deck_Tracker.HsReplay
+namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 {
 	public class HsReplayInfo
 	{
@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public bool Uploaded => !string.IsNullOrEmpty(UploadId);
 
-		public string Url => $"{Constants.BaseUrl}/uploads/upload/{UploadId}";
+		public string Url => $"https://hsreplay.net/uploads/upload/{UploadId}";
 
 		public void UploadTry() => UploadTries++;
 	}

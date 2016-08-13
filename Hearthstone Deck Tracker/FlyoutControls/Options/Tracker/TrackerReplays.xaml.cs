@@ -9,7 +9,6 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.HsReplay;
-using Hearthstone_Deck_Tracker.HsReplay.API;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -49,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			ButtonClaimAccount.Content = ButtonTextWaiting;
 			ButtonClaimAccount.IsEnabled = false;
-			ApiManager.ClaimAccount().Forget();
+			ApiWrapper.ClaimAccount().Forget();
 			await Task.Delay(3000);
 			ButtonClaimAccount.IsEnabled = true;
 			await CheckForAccountUpdateAsync(Registered);
@@ -66,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			for(var i = 0; i < 10; i++)
 			{
 				Log.Debug($"Checking account info... try #{i+1}");
-				await ApiManager.UpdateAccountStatus();
+				await ApiWrapper.UpdateAccountStatus();
 				if(targetStatus == null || Account.Instance.Status == targetStatus)
 				{
 					Log.Debug("Found updated account status");

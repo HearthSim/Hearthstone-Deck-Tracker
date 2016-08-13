@@ -8,6 +8,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 {
 	internal sealed class Account
 	{
+		public static string CacheFilePath => Path.Combine(Config.Instance.DataDir, "hsreplay.cache");
+
 		private static readonly Lazy<Account> Lazy = new Lazy<Account>(Load);
 
 		private Account()
@@ -27,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var json = JsonConvert.SerializeObject(Instance);
 			try
 			{
-				using(var sw = new StreamWriter(Constants.CacheFilePath))
+				using(var sw = new StreamWriter(CacheFilePath))
 					sw.WriteLine(json);
 				return true;
 			}
@@ -41,11 +43,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static void DeleteCacheFile()
 		{
-			if(!File.Exists(Constants.CacheFilePath))
+			if(!File.Exists(CacheFilePath))
 				return;
 			try
 			{
-				File.Delete(Constants.CacheFilePath);
+				File.Delete(CacheFilePath);
 			}
 			catch(Exception e)
 			{
@@ -55,11 +57,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		private static Account Load()
 		{
-			if(!File.Exists(Constants.CacheFilePath))
+			if(!File.Exists(CacheFilePath))
 				return new Account();
 			try
 			{
-				using(var sr = new StreamReader(Constants.CacheFilePath))
+				using(var sr = new StreamReader(CacheFilePath))
 					return JsonConvert.DeserializeObject<Account>(sr.ReadToEnd());
 			}
 			catch(Exception ex)
