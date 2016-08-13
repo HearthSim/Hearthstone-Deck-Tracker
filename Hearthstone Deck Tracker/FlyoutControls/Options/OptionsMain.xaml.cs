@@ -8,7 +8,6 @@ using Hearthstone_Deck_Tracker.FlyoutControls.Options;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HsReplay.API;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 

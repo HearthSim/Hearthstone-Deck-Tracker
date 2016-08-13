@@ -11,7 +11,6 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.HsReplay;
-using Hearthstone_Deck_Tracker.HsReplay.API;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility;
@@ -169,7 +168,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.StartHearthstoneAsync().Forget();
 
 			if((DateTime.Now - Account.Instance.LastUpdated).TotalDays >= 7)
-				ApiManager.UpdateAccountStatus().Forget();
+				ApiWrapper.UpdateAccountStatus().Forget();
 
 			Initialized = true;
 
