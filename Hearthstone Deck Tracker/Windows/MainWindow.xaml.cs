@@ -161,7 +161,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				};
 				var dialogResult = dialog.ShowDialog();
 				if(dialogResult == System.Windows.Forms.DialogResult.OK)
-					HsReplayManager.ShowReplay(dialog.FileName, true);
+					ReplayLauncher.ShowReplay(dialog.FileName, true);
 			}
 			catch(Exception ex)
 			{
@@ -823,7 +823,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var game = (e.OriginalSource as MenuItem)?.DataContext as GameStats;
 			if(game == null)
 				return;
-			await HsReplayManager.ShowReplay(game, true);
+			await ReplayLauncher.ShowReplay(game, true);
 		}
 
 		private void MenuItemReplayClaimAccount_OnClick(object sender, RoutedEventArgs e)

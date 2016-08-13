@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		private async void ButtonShowReplay_OnClick(object sender, RoutedEventArgs e)
 		{
 			var game = SelectedGame;
-			await HsReplayManager.ShowReplay(game, true);
+			await ReplayLauncher.ShowReplay(game, true);
 			game.UpdateReplayState();
 		}
 

@@ -379,7 +379,8 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
-    <Compile Include="HsReplay\API\TimeStampParser.cs" />
+    <Compile Include="HsReplay\Utility\TimeStampParser.cs" />
+    <Compile Include="HsReplay\UploadMetaDataGenerator.cs" />
     <Compile Include="Importing\Game\ImportOptions\ExistingDeck.cs" />
     <Compile Include="Exporting\ExportingActions.cs" />
     <Compile Include="Exporting\ExportingHelper.cs" />
@@ -403,7 +404,6 @@
     <Compile Include="Hearthstone\PredictedCard.cs" />
     <Compile Include="Importing\Game\ImportOptions\IImportOption.cs" />
     <Compile Include="Importing\MetaTagImporter.cs" />
-    <Compile Include="HsReplay\API\UploadMetaData.cs" />
     <Compile Include="Importing\Websites\Manacrystals.cs" />
     <Compile Include="Importing\Websites\Marduktv.cs" />
     <Compile Include="Importing\Websites\Powned.cs" />
@@ -436,18 +436,12 @@
     <Compile Include="Hearthstone\GameTime.cs" />
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="Hearthstone\GameMetaData.cs" />
-    <Compile Include="HsReplay\Constants.cs" />
-    <Compile Include="HsReplay\API\ApiManager.cs" />
-    <Compile Include="HsReplay\API\Header.cs" />
+    <Compile Include="HsReplay\ApiWrapper.cs" />
     <Compile Include="HsReplay\Enums\AccountStatus.cs" />
-    <Compile Include="HsReplay\API\UploadResult.cs" />
-    <Compile Include="HsReplay\API\Web.cs" />
-    <Compile Include="HsReplay\Converter\BuildDates.cs" />
-    <Compile Include="HsReplay\Converter\LogValidator.cs" />
-    <Compile Include="HsReplay\Enums\Privacy.cs" />
-    <Compile Include="HsReplay\HsReplayInfo.cs" />
-    <Compile Include="HsReplay\HsReplayManager.cs" />
-    <Compile Include="HsReplay\API\LogUploader.cs" />
+    <Compile Include="HsReplay\Utility\BuildDates.cs" />
+    <Compile Include="HsReplay\Utility\HsReplayInfo.cs" />
+    <Compile Include="HsReplay\ReplayLauncher.cs" />
+    <Compile Include="HsReplay\LogUploader.cs" />
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
     <Compile Include="Enums\Hearthstone\Mode.cs" />
     <Compile Include="LogReader\Handlers\TagChangeActions.cs" />
@@ -1387,6 +1381,10 @@
       <Project>{1694a2f8-645a-4263-a6ab-fc26323fd675}</Project>
       <Name>HearthMirror</Name>
     </ProjectReference>
+    <ProjectReference Include="..\HSReplay-Api\HSReplay\HSReplay.csproj">
+      <Project>{a6264074-8a96-417c-9673-5ee7e9820b1f}</Project>
+      <Name>HSReplay</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
@@ -1427,6 +1425,12 @@ if exist $(SolutionDir)HearthMirror (
   git -C $(SolutionDir)HearthMirror reset --hard origin/master
 ) else (
   git clone https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror 
+)
+if exist $(SolutionDir)HSReplay-Api (
+  git -C $(SolutionDir)HSReplay-Api fetch
+  git -C $(SolutionDir)HSReplay-Api reset --hard origin/master
+) else (
+  git clone https://github.com/HearthSim/HSReplay-API-Client.git $(SolutionDir)HSReplay-Api
 )
 mkdir "$(TargetDir)\Images\Bars"
 mkdir "$(TargetDir)\Images\Themes"

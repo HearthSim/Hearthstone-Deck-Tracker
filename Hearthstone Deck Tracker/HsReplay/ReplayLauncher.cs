@@ -6,21 +6,20 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HsReplay.API;
-using Hearthstone_Deck_Tracker.HsReplay.Converter;
+using Hearthstone_Deck_Tracker.HsReplay.Utility;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Toasts;
 using Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls;
+using HSReplay.LogValidation;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
-	internal class HsReplayManager
+	internal class ReplayLauncher
 	{
 		public static async Task<bool> ShowReplay(GameStats game, bool showToast)
 		{
@@ -36,16 +35,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			{
 				if(showToast)
 					setToastStatus = ToastManager.ShowReplayProgressToast();
-				var log = GetLogFromHdtReplay(game.ReplayFile);
+				var log = GetLogFromHdtReplay(game.ReplayFile).ToArray();
 				var validationResult = LogValidator.Validate(log);
-				if(validationResult.Valid)
-				{
-					var result = await LogUploader.Upload(log.ToArray(), null, game);
-					if(result.Success)
-						game.HsReplay = new HsReplayInfo(result.ReplayId);
-				}
+				if(validationResult.IsValid)
+					await LogUploader.Upload(log, null, game);
 				else
+				{
+					Log.Error("Invalid log: " + validationResult.Reason);
 					game.HsReplay.Unsupported = true;
+				}
 				if(DefaultDeckStats.Instance.DeckStats.Any(x => x.DeckId == game.DeckId))
 					DefaultDeckStats.Save();
 				else
@@ -96,9 +94,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				return;
 			}
 			Action<ReplayProgress> setToastStatus = null;
-			var log = GetLogFromHdtReplay(fileName);
+			var log = GetLogFromHdtReplay(fileName).ToArray();
 			var validationResult = LogValidator.Validate(log);
-			if(validationResult.Valid)
+			if(validationResult.IsValid)
 			{
 				if(showToast)
 					setToastStatus = ToastManager.ShowReplayProgressToast();
@@ -107,14 +105,17 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				var hsBuild = BuildDates.GetByDate(file.LastWriteTime);
 				var metaData = hsBuild != null ? new GameMetaData() {HearthstoneBuild = hsBuild} : null;
 				var gameStats = hsBuild != null ? new GameStats() {StartTime = file.LastWriteTime} : null;
-				var result = await LogUploader.Upload(log.ToArray(), metaData, gameStats);
-				if(result.Success)
-					Helper.TryOpenUrl(new HsReplayInfo(result.ReplayId).Url);
+				var success = await LogUploader.Upload(log.ToArray(), metaData, gameStats);
+				if(success)
+					Helper.TryOpenUrl(gameStats?.HsReplay?.Url);
 				else
 					ReplayReader.LaunchReplayViewer(fileName, true);
 			}
 			else
+			{
+				Log.Error("Invalid log: " + validationResult.Reason);
 				ReplayReader.LaunchReplayViewer(fileName, true);
+			}
 			setToastStatus?.Invoke(ReplayProgress.Complete);
 		}
 	}

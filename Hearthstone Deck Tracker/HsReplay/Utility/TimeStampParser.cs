@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace Hearthstone_Deck_Tracker.HsReplay.API
+namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 {
 	internal class TimeStampParser
 	{

@@ -12,8 +12,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.HearthStats.API;
-using Hearthstone_Deck_Tracker.HsReplay.API;
-using Hearthstone_Deck_Tracker.HsReplay.Converter;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -23,6 +22,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Toasts;
 using Hearthstone_Deck_Tracker.Windows;
+using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
@@ -140,8 +140,15 @@ namespace Hearthstone_Deck_Tracker
 					&& _game.CurrentGameStats.ReplayFile == null)
 					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(powerLog);
 
-				if(Config.Instance.HsReplayAutoUpload && UploadCurrentGameMode && LogValidator.Validate(powerLog).Valid)
-					LogUploader.Upload(powerLog.ToArray(), _game.MetaData, _game.CurrentGameStats).Forget();
+				if(Config.Instance.HsReplayAutoUpload && UploadCurrentGameMode)
+				{
+					var log = powerLog.ToArray();
+					var validationResult = LogValidator.Validate(log);
+					if(validationResult.IsValid)
+						LogUploader.Upload(log, _game.MetaData, _game.CurrentGameStats).Forget();
+					else 
+						Log.Error("Invalid log: " + validationResult.Reason);
+				}
 			}
 		}
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.HsReplay.Converter
+namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 {
 	internal static class BuildDates
 	{
