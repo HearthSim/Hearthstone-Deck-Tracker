@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay.Utility;
@@ -34,6 +35,30 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var success = false;
 			try
 			{
+				success = await TryUpload(logLines, gameMetaData, game);
+				if(!success)
+				{
+					Log.Info($"{item.Hash} failed. Re-trying in 3 seconds...");
+					await Task.Delay(3000);
+					success = await TryUpload(logLines, gameMetaData, game);
+				}
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				Influx.OnGameUploadFailed();
+			}
+			Log.Info($"{item.Hash} complete. Success={success}");
+			foreach(var waiting in InProgress.Where(x => x.Hash == item.Hash))
+				waiting.Complete(success);
+			InProgress.RemoveAll(x => x.Hash == item.Hash);
+			return success;
+		}
+
+		private static async Task<bool> TryUpload(string[] logLines, GameMetaData gameMetaData, GameStats game)
+		{
+			try
+			{
 				game?.HsReplay.UploadTry();
 				Influx.OnGameUpload(game?.HsReplay.UploadTries ?? 1);
 				//var tsParser = new TimeStampParser(game?.StartTime ?? DateTime.MinValue);
@@ -43,24 +68,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				await ApiWrapper.UploadLog(uploadRequest, logLines);
 				if(game != null)
 				{
-					game.HsReplay = new HsReplayInfo(uploadRequest.ShortId);
+					game.HsReplay.UploadId = uploadRequest.ShortId;
 					if(DefaultDeckStats.Instance.DeckStats.Any(x => x.DeckId == game.DeckId))
 						DefaultDeckStats.Save();
 					else
 						DeckStatsList.Save();
 				}
-				success = true;
+				return true;
 			}
-			catch(Exception e)
+			catch(WebException ex)
 			{
-				Log.Error(e);
-				Influx.OnGameUploadFailed();
+				Log.Error(ex);
+				Influx.OnGameUploadFailed(ex.Status);
+				return false;
 			}
-			Log.Info($"{item.Hash} upload complete. Success={success}");
-			foreach(var waiting in InProgress.Where(x => x.Hash == item.Hash))
-				waiting.Complete(success);
-			InProgress.RemoveAll(x => x.Hash == item.Hash);
-			return success;
 		}
 
 		public static async Task<bool> FromFile(string filePath)
