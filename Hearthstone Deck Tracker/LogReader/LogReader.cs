@@ -137,7 +137,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							{
 								if(line.StartsWith("D "))
 								{
-									if(!sr.EndOfStream && sr.Peek() != 'D')
+									var next = sr.Peek();
+									if(!sr.EndOfStream && !(next == 'D' || next == 'W'))
 										break;
 									if(!Info.HasFilters || (Info.StartsWithFilters?.Any(x => line.Substring(19).StartsWith(x)) ?? false)
 										|| (Info.ContainsFilters?.Any(x => line.Substring(19).Contains(x)) ?? false))
