@@ -92,5 +92,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_hsreplay_upload_failed_counter").Tag("status", status).Build());
 		}
+
+		public static void OnEndOfGameUploadError(string reason)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_end_of_game_upload_error").Tag("reason", Regex.Escape(reason)).Build());
+		}
 	}
 }
