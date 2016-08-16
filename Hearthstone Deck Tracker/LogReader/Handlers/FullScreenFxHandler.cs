@@ -3,10 +3,10 @@
 using System;
 using System.Linq;
 using HearthMirror;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using static Hearthstone_Deck_Tracker.Enums.Hearthstone.Mode;
 
 #endregion
 
@@ -18,8 +18,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		public void Handle(LogLineItem logLine, IGame game)
 		{
 			var match = HsLogReaderConstants.BeginBlurRegex.Match(logLine.Line);
-			if(match.Success && game.IsInMenu
-			   && (game.CurrentMode == Mode.TAVERN_BRAWL || game.CurrentMode == Mode.TOURNAMENT || game.CurrentMode == Mode.DRAFT))
+			if(match.Success && game.IsInMenu && new[] {TAVERN_BRAWL, TOURNAMENT, DRAFT, FRIENDLY}.Contains(game.CurrentMode))
 			{
 				game.MetaData.EnqueueTime = logLine.Time;
 				Log.Info($"Now in queue ({logLine.Time})");
@@ -28,9 +27,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				_lastQueueTime = logLine.Time;
 				if(!Config.Instance.AutoSelectDetectedDeck)
 					return;
-				if(game.CurrentMode == Mode.TOURNAMENT)
+				if(game.CurrentMode == TOURNAMENT || game.CurrentMode == FRIENDLY)
 					AutoSelectDeckById(true);
-				else if(game.CurrentMode == Mode.DRAFT)
+				else if(game.CurrentMode == DRAFT)
 					AutoSelectArenaDeck();
 			}
 		}
