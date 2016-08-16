@@ -147,7 +147,10 @@ namespace Hearthstone_Deck_Tracker
 					if(validationResult.IsValid)
 						LogUploader.Upload(log, _game.MetaData, _game.CurrentGameStats).Forget();
 					else 
+					{
 						Log.Error("Invalid log: " + validationResult.Reason);
+						Influx.OnEndOfGameUploadError(validationResult.Reason);
+					}
 				}
 			}
 		}
