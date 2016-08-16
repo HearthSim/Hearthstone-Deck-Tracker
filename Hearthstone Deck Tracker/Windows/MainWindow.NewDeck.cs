@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var selectedClass = _newDeck.Class;
 			string selectedNeutral;
 			string selectedManaCost;
+			string selectedTribe;
 			string selectedSet;
 			try
 			{
@@ -55,6 +56,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			catch(Exception)
 			{
 				selectedManaCost = "ALL";
+			}
+			try
+			{
+				selectedTribe = MenuFilterTribe.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
+			}
+			catch(Exception)
+			{
+				selectedTribe = "ALL";
 			}
 			try
 			{
@@ -92,6 +101,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 					// mana filter
 					if(selectedManaCost != "ALL" && ((selectedManaCost != "9+" || card.Cost < 9) && (selectedManaCost != card.Cost.ToString())))
+						continue;
+					if(selectedTribe != "ALL" && !string.Equals(selectedTribe, card.Race, StringComparison.InvariantCultureIgnoreCase))
 						continue;
 					if(selectedSet != "ALL" && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
 						continue;

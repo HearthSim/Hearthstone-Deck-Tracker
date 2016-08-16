@@ -523,6 +523,17 @@
                         <RadioButton Content="CLASS ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="NEUTRAL ONLY" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
+                    <MenuItem Name="MenuFilterTribe" Header="TRIBE">
+                        <RadioButton Content="ALL" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
+                                     FontSize="14" />
+                        <RadioButton Content="BEAST" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="DEMON" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="DRAGON" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="MECH" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="MURLOC" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="PIRATE" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="TOTEM" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                    </MenuItem>
                     <MenuItem Name="MenuFilterSet" Header="SET">
                         <RadioButton Content="ALL" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="BASIC" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
