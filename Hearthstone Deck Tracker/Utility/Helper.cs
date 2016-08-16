@@ -254,7 +254,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Core.Overlay.IsVisible || Core.Windows.CapturableOverlay != null)
 				Core.Overlay.Update(false);
 
-			var gameStarted = !game.IsInMenu && game.Entities.Count >= 67;
+			var gameStarted = !game.IsInMenu && game.Entities.Count >= 67 && game.Player.PlayerEntities.Any();
 			if(Core.Windows.PlayerWindow.IsVisible)
 				Core.Windows.PlayerWindow.SetCardCount(game.Player.HandCount, !gameStarted ? 30 : game.Player.DeckCount);
 
