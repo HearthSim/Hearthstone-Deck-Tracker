@@ -844,8 +844,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowLastPlayedDateOnDeck = false;
 		
-		[DefaultValue(true)]
-		public bool ShowLoginDialog = true;
+		[DefaultValue(false)]
+		public bool ShowLoginDialog = false;
 
 		[DefaultValue(true)]
 		public bool ShowSplashScreen = true;
