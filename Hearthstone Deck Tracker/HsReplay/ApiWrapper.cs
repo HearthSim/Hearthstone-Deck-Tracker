@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 {
 	internal class ApiWrapper
 	{
-		private static readonly HsReplayClient Client = new HsReplayClient("089b2bc6-3c26-4aab-adbe-bcfd5bb48671");
+		private static readonly HsReplayClient Client = new HsReplayClient("089b2bc6-3c26-4aab-adbe-bcfd5bb48671", "HDT/" + Helper.GetCurrentVersion());
 
 		private static async Task<string> GetUploadToken()
 		{
