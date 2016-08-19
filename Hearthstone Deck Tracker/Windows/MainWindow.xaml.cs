@@ -833,7 +833,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private void MenuItemReplayMyAccount_OnClick(object sender, RoutedEventArgs e)
-			=> Helper.TryOpenUrl("https://hsreplay.net/games/mine/");
+			=> Helper.TryOpenUrl("https://hsreplay.net/games/mine/?utm_source=hdt");
 
 		private void MenuItemReplays_OnSubmenuOpened(object sender, RoutedEventArgs e)
 		{
@@ -841,6 +841,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(MenuItemReplayMyAccountVisibility));
 		}
 
-		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net");
+		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt");
 	}
 }
