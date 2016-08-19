@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 
 		public bool Uploaded => !string.IsNullOrEmpty(UploadId);
 
-		public string Url => $"https://hsreplay.net/uploads/upload/{UploadId}";
+		public string Url => $"https://hsreplay.net/uploads/upload/{UploadId}/?utm_source=hdt";
 
 		public void UploadTry() => UploadTries++;
 	}
