@@ -13,13 +13,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 	{
 		private const string Url = "https://metrics.hearthsim.net:8086/write?db=hsreplaynet&precision=s&u=hdt&p=GPPHbmJQtC87FAAR";
 
-		public static void OnAppStart(Version version, LoginType loginType, bool isNew)
+		public static void OnAppStart(Version version, LoginType loginType, bool isNew, int startupDuration)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			var point = new InfluxPointBuilder("hdt_app_start")
 				.Tag("version", version.ToVersionString()).Tag("login_type", loginType).Tag("new", isNew)
-				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload).Tag("id", Config.Instance.Id);
+				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload).Tag("id", Config.Instance.Id)
+				.Field("startup_duration", startupDuration);
 #if(SQUIRREL)
 			point.Tag("squirrel", true);
 #else
