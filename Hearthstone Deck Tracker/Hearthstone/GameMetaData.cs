@@ -3,7 +3,7 @@ using HearthMirror.Objects;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-	public class GameMetaData
+	public class GameMetaData : ICloneable
 	{
 		private int? _hearthstoneBuild;
 		public GameServerInfo ServerInfo;
@@ -24,5 +24,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public override string ToString() 
 			=> $"HearthstoneBuild={HearthstoneBuild}, ServerAddress={ServerInfo?.Address}, ClientId={ServerInfo?.ClientHandle}, GameId={ServerInfo?.GameHandle}, EnqueueTime={EnqueueTime}";
+
+		public object Clone() => new GameMetaData
+		{
+			_hearthstoneBuild = _hearthstoneBuild,
+			EnqueueTime = EnqueueTime,
+			HearthstoneBuild = HearthstoneBuild,
+			Reconnected = Reconnected,
+			ServerInfo = ServerInfo
+		};
 	}
 }
