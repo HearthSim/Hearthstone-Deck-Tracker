@@ -166,8 +166,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
 				Helper.StartHearthstoneAsync().Forget();
 
-			if((DateTime.Now - Account.Instance.LastUpdated).TotalDays >= 7)
-				ApiWrapper.UpdateAccountStatus().Forget();
+			ApiWrapper.UpdateAccountStatus().Forget();
 
 			Initialized = true;
 
