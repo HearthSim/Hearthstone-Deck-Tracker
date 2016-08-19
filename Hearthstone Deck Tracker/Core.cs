@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker
 		private static Overview _statsOverview;
 		private static int _updateRequestsPlayer;
 		private static int _updateRequestsOpponent;
+		private static DateTime _startUpTime;
 		public static Version Version { get; set; }
 		public static GameV2 Game { get; set; }
 		public static MainWindow MainWindow { get; set; }
@@ -54,6 +55,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async void Initialize()
 		{
+			_startUpTime = DateTime.UtcNow;
 			Log.Info($"Operating System: {Helper.GetWindowsVersion()}, .NET Framework: {Helper.GetInstalledDotNetVersion()}");
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
@@ -171,7 +173,7 @@ namespace Hearthstone_Deck_Tracker
 
 			Initialized = true;
 
-			Influx.OnAppStart(Helper.GetCurrentVersion(), loginType, newUser);
+			Influx.OnAppStart(Helper.GetCurrentVersion(), loginType, newUser, (int)(DateTime.UtcNow - _startUpTime).TotalSeconds);
 		}
 
 		private static async void UpdateOverlayAsync()
