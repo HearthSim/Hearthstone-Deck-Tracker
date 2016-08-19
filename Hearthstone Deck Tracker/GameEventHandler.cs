@@ -145,7 +145,7 @@ namespace Hearthstone_Deck_Tracker
 					var log = powerLog.ToArray();
 					var validationResult = LogValidator.Validate(log);
 					if(validationResult.IsValid)
-						LogUploader.Upload(log, _game.MetaData, _game.CurrentGameStats).Forget();
+						LogUploader.Upload(log, (GameMetaData)_game.MetaData.Clone(), _game.CurrentGameStats).Forget();
 					else 
 					{
 						Log.Error("Invalid log: " + validationResult.Reason);
