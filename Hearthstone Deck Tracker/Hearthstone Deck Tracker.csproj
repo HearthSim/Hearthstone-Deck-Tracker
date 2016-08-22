@@ -489,7 +489,6 @@
     <Compile Include="Utility\LogConfig\LogConfig.cs" />
     <Compile Include="Utility\LogConfig\LogConfigUpdater.cs" />
     <Compile Include="Utility\LogConfig\LogConfigWatcher.cs" />
-    <Compile Include="Utility\LogConfig\RequiredValueAttribute.cs" />
     <Compile Include="Utility\Logging\Log.cs" />
     <Compile Include="Utility\Logging\LogType.cs" />
     <Compile Include="Utility\MouseActions.cs" />
