@@ -285,9 +285,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool DiscardZeroTurnGame = false;
 
-		[DefaultValue(true)]
-		public bool DisplayNetDeckAd = true;
-
 		[DefaultValue(GameMode.All)]
 		public GameMode DisplayedMode = GameMode.All;
 

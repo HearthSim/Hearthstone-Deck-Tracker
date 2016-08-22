@@ -70,53 +70,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return null;
 			}
 
-			if(Config.Instance.DisplayNetDeckAd)
-			{
-				var result =
-					await
-					this.ShowMessageAsync("NetDeck",
-					                      "For easier (one-click!) web importing check out the NetDeck Chrome Extension!\n\n(This message will not be displayed again, no worries.)",
-					                      MessageDialogStyle.AffirmativeAndNegative,
-					                      new MessageDialogs.Settings {AffirmativeButtonText = "Show me!", NegativeButtonText = "No thanks"});
-
-				if(result == MessageDialogResult.Affirmative)
-				{
-					Helper.TryOpenUrl("https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel");
-					var enableOptionResult =
-						await
-						this.ShowMessageAsync("Enable one-click importing?",
-						                      "Would you like to enable one-click importing via NetDeck?\n(options > other > importing)",
-						                      MessageDialogStyle.AffirmativeAndNegative,
-						                      new MessageDialogs.Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"});
-					if(enableOptionResult == MessageDialogResult.Affirmative)
-					{
-						Options.OptionsTrackerImporting.CheckboxImportNetDeck.IsChecked = true;
-						Config.Instance.NetDeckClipboardCheck = true;
-						Config.Save();
-					}
-				}
-
-				Config.Instance.DisplayNetDeckAd = false;
-				Config.Save();
-			}
-
-
-			//import dialog
-			var url =
-				await this.ShowInputAsync("Import deck", "Supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), settings);
-			return url;
+			return await this.ShowInputAsync("Import deck", "Supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), settings);
 		}
 
 		private async Task<Deck> ImportDeckFromURL(string url)
 		{
 			var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
-
-			//var deck = await this._deckImporter.Import(url);
 			var deck = await DeckImporter.Import(url);
-
 			if(deck != null)
 				deck.Url = url;
-
 			await controller.CloseAsync();
 			return deck;
 		}
