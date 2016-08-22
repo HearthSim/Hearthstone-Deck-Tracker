@@ -211,9 +211,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void DeckPickerList_OnOnDoubleClick(DeckPicker sender, Deck deck)
 		{
-			if(deck == null)
+			if(deck?.Equals(DeckList.Instance.ActiveDeck) ?? true)
 				return;
-			SetNewDeck(deck, true);
+			SelectDeck(deck, true);
 		}
 
 		private void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
