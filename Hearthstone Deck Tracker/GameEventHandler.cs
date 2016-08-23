@@ -894,6 +894,10 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentRemoveFromPlay(Entity entity, int turn) => _game.Player.RemoveFromPlay(entity, turn);
 
+		public void HandlePlayerCreateInSetAside(Entity entity, int turn) => _game.Player.CreateInSetAside(entity, turn);
+
+		public void HandleOpponentCreateInSetAside(Entity entity, int turn) => _game.Opponent.CreateInSetAside(entity, turn);
+
 		public void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn)
 		{
 			_game.Player.PlayToGraveyard(entity, cardId, turn);

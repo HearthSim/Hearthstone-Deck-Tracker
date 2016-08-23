@@ -450,6 +450,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.ProposeKeyPoint(SecretPlayed, id, ActivePlayer.Opponent);
 					}
 					break;
+				case SETASIDE:
+					if(controller == game.Player.Id)
+						gameState.GameHandler.HandlePlayerCreateInSetAside(entity, gameState.GetTurnNumber());
+					if(controller == game.Opponent.Id)
+						gameState.GameHandler.HandleOpponentCreateInSetAside(entity, gameState.GetTurnNumber());
+					break;
 				default:
 					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
 					break;
