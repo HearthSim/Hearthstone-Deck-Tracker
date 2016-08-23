@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{
 				if(Regex.IsMatch(di.Name, ThemeRegex))
 				{
-					Logging.Log.Warn($"Found theme: {di.Name}");
+					Logging.Log.Info($"Found theme: {di.Name}");
 					Themes.Add(new Theme(di.Name, di.FullName, GetBuilderType(di.Name)));
 				}
 				else
