@@ -58,8 +58,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				//var tsParser = new TimeStampParser(game?.StartTime ?? DateTime.MinValue);
 				//logLines = logLines.Select(tsParser.Parse).ToArray();
 				var metaData = UploadMetaDataGenerator.Generate(logLines, gameMetaData, game);
+				Log.Info("Creating upload request...");
 				var uploadRequest = await ApiWrapper.CreateUploadRequest(metaData);
+				Log.Info("Upload Id: " + uploadRequest.ShortId);
 				await ApiWrapper.UploadLog(uploadRequest, logLines);
+				Log.Info("Upload complete");
 				if(game != null)
 				{
 					game.HsReplay.UploadId = uploadRequest.ShortId;
