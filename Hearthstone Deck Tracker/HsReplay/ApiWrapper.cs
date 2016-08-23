@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task<LogUploadRequest> CreateUploadRequest(HSReplay.UploadMetaData metaData) 
+		public static async Task<LogUploadRequest> CreateUploadRequest(UploadMetaData metaData) 
 			=> await Client.CreateUploadRequest(metaData, await GetUploadToken());
 
 
