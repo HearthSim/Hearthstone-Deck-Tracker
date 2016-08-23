@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Text.RegularExpressions;
 
 #endregion
 
@@ -12,14 +13,27 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			Namespace = ns;
 			Line = line;
-			DateTime time;
-			Time = (line.Length > 20 && DateTime.TryParse(Line.Substring(2, 16), out time)) ? DateTime.Today.Add(time.TimeOfDay) : DateTime.Now;
-			if(Time > DateTime.Now)
-				Time = Time.AddDays(-1);
+			var regex = new Regex("^(D|W) (?<ts>([\\d:.]+)) (?<line>(.*))$");
+			var match = regex.Match(line);
+			if(match.Success)
+			{
+				DateTime time;
+				var ts = match.Groups["ts"].Value;
+				if(DateTime.TryParse(ts, out time))
+				{
+					Time = DateTime.Today.Add(time.TimeOfDay);
+					if(Time > DateTime.Now)
+						Time = Time.AddDays(-1);
+
+				}
+				LineContent = match.Groups["line"].Value;
+			}
+			
 		}
 
 		public string Namespace { get; set; }
-		public DateTime Time { get; }
+		public DateTime Time { get; } = DateTime.Now;
 		public string Line { get; set; }
+		public string LineContent { get; set; }
 	}
 }

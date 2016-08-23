@@ -140,13 +140,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
 									var next = sr.Peek();
 									if(!sr.EndOfStream && !(next == 'D' || next == 'W'))
 										break;
-									if(!Info.HasFilters || (Info.StartsWithFilters?.Any(x => line.Substring(19).StartsWith(x)) ?? false)
-										|| (Info.ContainsFilters?.Any(x => line.Substring(19).Contains(x)) ?? false))
-									{
-										var logLine = new LogLineItem(Info.Name, line);
-										if(logLine.Time >= _startingPoint)
-											_lines.Enqueue(logLine);
-									}
+									var logLine = new LogLineItem(Info.Name, line);
+									if((!Info.HasFilters || (Info.StartsWithFilters?.Any(x => logLine.LineContent.StartsWith(x)) ?? false)
+										|| (Info.ContainsFilters?.Any(x => logLine.LineContent.Contains(x)) ?? false))
+										&& logLine.Time >= _startingPoint)
+										_lines.Enqueue(logLine);
 								}
 								else
 									Log.Warn("Ignored line: " + line);
