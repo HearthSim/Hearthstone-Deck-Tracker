@@ -138,7 +138,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				case Format.Standard:
 					return FormatType.FT_STANDARD;
 				case Format.Wild:
-					return FormatType.FT_STANDARD;
+					return FormatType.FT_WILD;
 			}
 			return FormatType.FT_UNKNOWN;
 		}
