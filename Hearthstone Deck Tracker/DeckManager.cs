@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker
 					await Task.Delay(100);
 				_waitingForClass = false;
 			}
-			var cardEntites = Core.Game.Player.RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen).GroupBy(x => x.CardId).ToList();
+			var cardEntites = Core.Game.Player.RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen && x.Card.Collectible).GroupBy(x => x.CardId).ToList();
 			var notFound = cardEntites.Where(x => !deck.GetSelectedDeckVersion().Cards.Any(c => c.Id == x.Key && c.Count >= x.Count())).ToList();
 			if(notFound.Any())
 			{

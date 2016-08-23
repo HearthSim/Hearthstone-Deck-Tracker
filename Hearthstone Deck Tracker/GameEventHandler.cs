@@ -475,7 +475,7 @@ namespace Hearthstone_Deck_Tracker
 				_game.CurrentGameStats.OpponentCardbackId = _game.MatchInfo?.OpposingPlayer.CardBackId ?? 0;
 				_game.CurrentGameStats.FriendlyPlayerId = _game.MatchInfo?.LocalPlayer.Id ?? 0;
 				_game.CurrentGameStats.ScenarioId = _game.MatchInfo?.MissionId ?? 0;
-				_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.ToList());
+				_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.Where(x => x.Collectible).ToList());
 				_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList.Where(x => !x.IsCreated).ToList());
 				_game.CurrentGameStats.GameEnd();
 				GameEvents.OnGameEnd.Execute();
@@ -485,7 +485,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					var revealed = _game.Player.RevealedEntities.Where(x => x != null).ToList();
 					if(Config.Instance.DiscardGameIfIncorrectDeck
-					   && !revealed.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen)
+					   && !revealed.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon) && !x.Info.Created && !x.Info.Stolen && x.Card.Collectible)
 					   .GroupBy(x => x.CardId).All(x => selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => x.Key == c2.Id && x.Count() <= c2.Count)))
 					{
 						if(Config.Instance.AskBeforeDiscardingGame)
