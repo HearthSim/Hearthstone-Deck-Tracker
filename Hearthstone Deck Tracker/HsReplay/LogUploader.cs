@@ -35,13 +35,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var success = false;
 			try
 			{
-				success = await TryUpload(logLines, gameMetaData, game, false);
-				if(!success)
-				{
-					Log.Info($"{item.Hash} failed. Re-trying in 3 seconds...");
-					await Task.Delay(3000);
-					success = await TryUpload(logLines, gameMetaData, game, true);
-				}
+				success = await TryUpload(logLines, gameMetaData, game, true);
 			}
 			catch(Exception ex)
 			{
