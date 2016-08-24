@@ -143,5 +143,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			return FormatType.FT_UNKNOWN;
 		}
+
+		public static BnetGameType GetBnetGameType(GameType gameType, Format? format)
+		{
+			switch(gameType)
+			{
+				case GameType.GT_UNKNOWN:
+					return BGT_UNKNOWN;
+				case GameType.GT_VS_AI:
+					return BGT_VS_AI;
+				case GameType.GT_VS_FRIEND:
+					return BGT_FRIENDS;
+				case GameType.GT_TUTORIAL:
+					return BGT_TUTORIAL;
+				case GameType.GT_ARENA:
+					return BGT_ARENA;
+				case GameType.GT_TEST:
+					return BGT_TEST1;
+				case GameType.GT_RANKED:
+					return format == Format.Standard ? BGT_RANKED_STANDARD : BGT_RANKED_WILD;
+				case GameType.GT_CASUAL:
+					return format == Format.Standard ? BGT_CASUAL_STANDARD : BGT_CASUAL_WILD;
+				case GameType.GT_TAVERNBRAWL:
+					return BGT_TAVERNBRAWL_PVP;
+				case GameType.GT_TB_1P_VS_AI:
+					return BGT_TAVERNBRAWL_1P_VERSUS_AI;
+				case GameType.GT_TB_2P_COOP:
+					return BGT_TAVERNBRAWL_2P_COOP;
+				case GameType.GT_LAST:
+					return BGT_LAST;
+				default:
+					return BGT_UNKNOWN;
+			}
+		}
 	}
 }
