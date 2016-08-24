@@ -50,7 +50,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 			if(configVersion == null) // Config was created prior to version tracking being introduced (v0.3.20)
 			{
-				Config.Instance.ResetAll();
 				Config.Instance.CreatedByVersion = currentVersion.ToString();
 				converted = true;
 			}
