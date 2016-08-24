@@ -87,9 +87,10 @@ namespace Hearthstone_Deck_Tracker
 			DeckManager.ResetIgnoredDeckId();
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 
-			SaveReplays();
-
 			SaveAndUpdateStats();
+
+			if(Config.Instance.AutoArchiveArenaDecks && (DeckList.Instance.ActiveDeck?.IsArenaRunCompleted ?? false))
+				Core.MainWindow.ArchiveDeck(DeckList.Instance.ActiveDeck, true);
 
 			_game.ResetStoredGameState();
 
@@ -161,13 +162,13 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			Log.Info("GOLD_REWARD_STATE not found");
 			await Task.Delay(500);
-			if(LogContainsStateComplete)
+			if(LogContainsStateComplete || _game.IsInMenu)
 				return;
 			Log.Info("STATE COMPLETE not found");
 			for(var i = 0; i < 5; i++)
 			{
 				await Task.Delay(1000);
-				if(LogContainsStateComplete)
+				if(LogContainsStateComplete || _game.IsInMenu)
 					break;
 				Log.Info($"Waiting for STATE COMPLETE... ({i})");
 			}
@@ -617,8 +618,7 @@ namespace Hearthstone_Deck_Tracker
 					_lastGame = _game.CurrentGameStats;
 					selectedDeck.DeckStats.AddGameResult(_lastGame);
 
-					var isArenaRunCompleted = selectedDeck.IsArenaRunCompleted.HasValue && selectedDeck.IsArenaRunCompleted.Value;
-					if(Config.Instance.ArenaRewardDialog && isArenaRunCompleted)
+					if(Config.Instance.ArenaRewardDialog && (selectedDeck.IsArenaRunCompleted ?? false))
 						_arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
 
 					if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
@@ -635,9 +635,6 @@ namespace Hearthstone_Deck_Tracker
 						Log.Info("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game");
 						Core.MainWindow.ArchiveDeck(_assignedDeck, false);
 					}
-
-					if (Config.Instance.AutoArchiveArenaDecks && isArenaRunCompleted)
-						Core.MainWindow.ArchiveDeck(selectedDeck, true);
 
 					UploadHearthStatsAsync(selectedDeck).Forget();
 					_lastGame = null;
@@ -656,10 +653,10 @@ namespace Hearthstone_Deck_Tracker
 					_assignedDeck = null;
 				}
 
-			if(_game.StoredGameStats != null)
-				_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
+				if(_game.StoredGameStats != null)
+					_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
 
-			SaveReplays();
+				SaveReplays();
 
 				if(Config.Instance.ReselectLastDeckUsed && selectedDeck == null)
 				{
