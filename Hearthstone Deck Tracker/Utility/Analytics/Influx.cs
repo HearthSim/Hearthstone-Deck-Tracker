@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -31,6 +32,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_played_game_counter").Tag("game_type", gameType).Build());
+		}
+
+		public static void OnHighMemoryUsage(long mem)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_memory_usage", false).Tag("os", Regex.Escape(Helper.GetWindowsVersion()))
+				.Tag("net", Helper.GetInstalledDotNetVersion()).Field("MB", mem).Build());
 		}
 
 		private static async void WritePoint(InfluxPoint point)

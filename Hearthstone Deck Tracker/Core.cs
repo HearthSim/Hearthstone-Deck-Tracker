@@ -58,6 +58,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async void Initialize()
 		{
+			Log.Info($"Operating System: {Helper.GetWindowsVersion()}, .NET Framework: {Helper.GetInstalledDotNetVersion()}");
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			var newUser = !Directory.Exists(Config.AppDataPath);
@@ -82,6 +83,7 @@ namespace Hearthstone_Deck_Tracker
 			LogConfigWatcher.Start();
 			Helper.UpdateAppTheme();
 			ThemeManager.Run();
+			ResourceMonitor.Run();
 			Game = new GameV2();
 			LoginType loginType;
 			var loggedIn = HearthStatsAPI.LoadCredentials();

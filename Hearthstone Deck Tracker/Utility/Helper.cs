@@ -709,5 +709,35 @@ namespace Hearthstone_Deck_Tracker
 			var color = ColorTranslator.FromHtml("#" + hex);
 			return new SolidColorBrush(MediaColor.FromRgb(color.R, color.G, color.B));
 		}
+
+		//See https://msdn.microsoft.com/en-us/library/hh925568(v=vs.110).aspx for value conversion
+		public static int GetInstalledDotNetVersion()
+		{
+			try
+			{
+				const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
+				using(var ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(subkey))
+					return (int)(ndpKey?.GetValue("Release") ?? -1);
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				return -1;
+			}
+		}
+
+		public static string GetWindowsVersion()
+		{
+			try
+			{
+				var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+				return reg == null ? "Unknown" : $"{reg.GetValue("ProductName")} {reg.GetValue("CurrentBuild")}";
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				return "Unknown";
+			}
+		}
 	}
 }
