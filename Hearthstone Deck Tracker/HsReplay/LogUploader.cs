@@ -64,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(game != null)
 				{
 					game.HsReplay.UploadId = uploadRequest.ShortId;
+					game.HsReplay.ReplayUrl = uploadRequest.ReplayUrl;
 					if(DefaultDeckStats.Instance.DeckStats.Any(x => x.DeckId == game.DeckId))
 						DefaultDeckStats.Save();
 					else
