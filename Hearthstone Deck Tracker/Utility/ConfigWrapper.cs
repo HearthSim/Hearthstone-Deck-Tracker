@@ -356,6 +356,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public bool HsReplayShareToast
+		{
+			get { return Config.Instance.ShowReplayShareToast; }
+			set
+			{
+				Config.Instance.ShowReplayShareToast = value;
+				Config.Save();
+			}
+		}
+
 		private static int? ValidateSeason(string value, bool allowEmpty)
 		{
 			if(allowEmpty && string.IsNullOrEmpty(value))

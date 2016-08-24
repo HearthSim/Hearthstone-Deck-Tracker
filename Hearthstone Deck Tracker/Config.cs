@@ -892,6 +892,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowWinRateAgainst = false;
 
 		[DefaultValue(true)]
+		public bool ShowReplayShareToast = true;
+
+		[DefaultValue(true)]
 		public bool SortDecksByClass = true;
 
 		[DefaultValue(false)]
