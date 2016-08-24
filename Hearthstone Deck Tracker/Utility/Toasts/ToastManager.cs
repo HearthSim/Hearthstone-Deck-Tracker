@@ -21,10 +21,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 			if(game == null)
 				return;
 			var result = new ToastHelper(new GameResultToast(deckName, game));
-			var replay = new ToastHelper(new ReplayToast(game));
-			GameResultToasts.Add(replay, result);
-			ShowToast(result);
-			ShowToast(replay);
+			if(Config.Instance.ShowReplayShareToast)
+			{
+				var replay = new ToastHelper(new ReplayToast(game));
+				GameResultToasts.Add(replay, result);
+				ShowToast(result);
+				ShowToast(replay);
+			}
+			else
+				ShowToast(result);
 		}
 
 		internal static Action<ReplayProgress> ShowReplayProgressToast()

@@ -11,6 +11,8 @@
         <StackPanel>
             <GroupBox Header="HSREPLAY.NET">
                 <StackPanel>
+                    <CheckBox Name="CheckBoxShowToast" Content="Show share notification" Margin="5,5,0,0" IsChecked="{Binding HsReplayShareToast, Source={StaticResource ConfigWrapper}}"/>
+                    <Separator Margin="0,5,0,0"/>
                     <CheckBox Name="CheckBoxAutoUpload" Content="Upload replays automatically" Margin="5,5,0,0" IsChecked="{Binding HsReplayAutoUpload, Source={StaticResource ConfigWrapper}}"/>
                     <CheckBox Content="Ranked" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadRanked, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
                     <CheckBox Content="Casual" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadCasual, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
@@ -19,7 +21,7 @@
                     <CheckBox Content="Friendly" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadFriendly, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
                     <CheckBox Content="Adventure/Practice" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadPractice, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
                     <CheckBox Content="Spectator" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadSpectator, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
-                    <Separator Margin="0,5"/>
+                    <Separator Margin="0,5,0,0"/>
                     <DockPanel>
                         <Label Content="Account Status:" DockPanel.Dock="Left"/>
                         <Label Content="{Binding AccountStatus, RelativeSource={RelativeSource AncestorType=UserControl}}" DockPanel.Dock="Left"/>
