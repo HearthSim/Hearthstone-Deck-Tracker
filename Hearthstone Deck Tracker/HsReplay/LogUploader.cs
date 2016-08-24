@@ -55,8 +55,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			{
 				game?.HsReplay.UploadTry();
 				Influx.OnGameUpload(game?.HsReplay.UploadTries ?? 1);
-				//var tsParser = new TimeStampParser(game?.StartTime ?? DateTime.MinValue);
-				//logLines = logLines.Select(tsParser.Parse).ToArray();
 				var metaData = UploadMetaDataGenerator.Generate(logLines, gameMetaData, game);
 				Log.Info("Creating upload request...");
 				var uploadRequest = await ApiWrapper.CreateUploadRequest(metaData);
