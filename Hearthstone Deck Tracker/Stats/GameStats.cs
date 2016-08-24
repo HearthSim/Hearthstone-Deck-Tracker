@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
@@ -212,6 +213,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int ScenarioId { get; set; }
 
 		public GameServerInfo ServerInfo { get; set; }
+
+		public GameType GameType { get; set; }
 
 		public Region Region
 		{
@@ -506,6 +509,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeServerInfo() => ServerInfo != null;
 		public bool ShouldSerializeHsReplay() => HsReplay.UploadTries > 0 || HsReplay.Uploaded;
 		public bool ShouldSerializeHsDeckId() => HsDeckId > 0;
+		public bool ShouldSerializeGameType() => GameType != GameType.GT_UNKNOWN;
 
 		#region Obsolete
 

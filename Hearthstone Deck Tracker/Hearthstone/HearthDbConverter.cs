@@ -89,6 +89,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return GameMode.Casual;
 				case GameType.GT_TAVERNBRAWL:
 				case GameType.GT_TB_2P_COOP:
+				case GameType.GT_TB_1P_VS_AI:
 					return GameMode.Brawl;
 				default:
 					return GameMode.None;
