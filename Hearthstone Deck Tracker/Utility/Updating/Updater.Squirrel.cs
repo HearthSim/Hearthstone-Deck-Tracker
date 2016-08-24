@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				}
 				if(updated)
 				{
-					if(splashScreenWindow.SkipWasPressed)
+					if(splashScreenWindow.SkipUpdate)
 					{
 						Log.Info("Update complete, showing update bar");
 						StatusBar.Visibility = Visibility.Visible;
@@ -132,6 +132,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					Log.Info($"Installed version ({current}) is greater than latest release found ({latest}). Not downloading updates.");
 					return false;
 				}
+				if(IsRevisionIncrement(current?.Version, latest?.Version))
+				{
+					Log.Info($"Latest update ({latest}) is revision increment. Updating in background.");
+					splashScreenWindow.SkipUpdate = true;
+				}
 				Log.Info($"Downloading {updateInfo.ReleasesToApply.Count} {(ignoreDelta ? "" : "delta ")}releases, latest={latest?.Version}");
 				await mgr.DownloadReleases(updateInfo.ReleasesToApply, splashScreenWindow.Updating);
 				Log.Info("Applying releases");
@@ -148,6 +153,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 					Log.Info("Not able to apply deltas, downloading full release");
 				return await SquirrelUpdate(splashScreenWindow, mgr, true);
 			}
+		}
+
+		private static bool IsRevisionIncrement(Version current, Version latest)
+		{
+			if(current == null || latest == null)
+				return false;
+			return current.Major == latest.Major && current.Minor == latest.Minor && current.Build == latest.Build
+					&& current.Revision < latest.Revision;
 		}
 
 		internal static void StartUpdate()

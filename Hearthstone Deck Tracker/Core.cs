@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker
 				while(!updateCheck.IsCompleted)
 				{
 					await Task.Delay(500);
-					if(splashScreenWindow.SkipWasPressed)
+					if(splashScreenWindow.SkipUpdate)
 						break;
 				}
 			}

@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		public bool SkipWasPressed { get; set; }
+		public bool SkipUpdate { get; set; }
 
 		public void ShowConditional()
 		{
@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void Updating(int percentage)
 		{
-			if(SkipWasPressed)
+			if(SkipUpdate)
 				return;
 			LoadingString = "Updating...";
 			VersionString = percentage + "%";
@@ -87,7 +87,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void Installing(int percentage)
 		{
-			if(SkipWasPressed)
+			if(SkipUpdate)
 				return;
 			LoadingString = "Installing...";
 			VersionString = percentage + "%";
@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void SkipBorder_OnMouseDown(object sender, MouseButtonEventArgs e)
 		{
 			Log.Info("Skip was pressed");
-			SkipWasPressed = true;
+			SkipUpdate = true;
 		}
 
 		public async void StartSkipTimer()
