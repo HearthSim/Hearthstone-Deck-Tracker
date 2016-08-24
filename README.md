@@ -9,9 +9,7 @@ Installation
 - Requirements:
   - Windows Vista or higher
   - .NET Framework 4.5 or higher
-- [__Download__](https://github.com/HearthSim/Hearthstone-Deck-Tracker/releases) the `Hearthstone.Deck.Tracker-vx.xx.xx.zip` archive.
-- Extract the archive.
-- Run the "Hearthstone Deck Tracker.exe"
+- [Download and run the installer](https://hsdecktracker.net/download/).
  
 
 FAQ
