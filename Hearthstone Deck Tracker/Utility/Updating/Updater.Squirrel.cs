@@ -18,8 +18,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		private static string _releaseUrl;
 
 		private static bool ShouldCheckForUpdates()
-			=> Config.Instance.CheckForUpdates && !Core.Game.IsRunning
-				&& DateTime.Now - _lastUpdateCheck >= new TimeSpan(0, 10, 0);
+			=> Config.Instance.CheckForUpdates && DateTime.Now - _lastUpdateCheck >= new TimeSpan(0, 10, 0);
 
 		public static async void CheckForUpdates(bool force = false)
 		{
