@@ -80,7 +80,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!gameState.SetupDone || game.PlayerEntity == null)
 				return;
 			var activePlayer = game.PlayerEntity.HasTag(CURRENT_PLAYER) ? ActivePlayer.Player : ActivePlayer.Opponent;
-			gameState.GameHandler.TurnStart(activePlayer, gameState.GetTurnNumber());
 			if(activePlayer == ActivePlayer.Player)
 				gameState.PlayerUsedHeroPower = false;
 			else
@@ -142,8 +141,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			Entity entity;
 			if(!game.Entities.TryGetValue(id, out entity))
 				return;
-			if(game.OpponentEntity?.IsCurrentPlayer ?? false)
-				gameState.GameHandler.HandleOpponentTurnStart(entity);
+			gameState.GameHandler.HandleTurnsInPlayChange(entity, gameState.GetTurnNumber());
 		}
 
 		private void FatigueChange(IHsGameState gameState, int value, IGame game, int id)

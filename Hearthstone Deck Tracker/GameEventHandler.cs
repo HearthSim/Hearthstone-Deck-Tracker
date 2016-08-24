@@ -245,12 +245,25 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.ShowSecrets();
 		}
 
-		public void HandleOpponentTurnStart(Entity entity)
+		private int _lastCompetitiveSpiritCheck;
+		private readonly int[] _lastTurnStart = new int[2];
+		public void HandleTurnsInPlayChange(Entity entity, int turn)
 		{
-			if(!Config.Instance.AutoGrayoutSecrets)
+			if(_game.OpponentEntity == null)
 				return;
-			if(!entity.IsMinion)
+			if(entity.IsHero)
+			{
+				var player = _game.OpponentEntity.IsCurrentPlayer ? ActivePlayer.Opponent : ActivePlayer.Player;
+				if(_lastTurnStart[(int)player] >= turn)
+					return;
+				_lastTurnStart[(int)player] = turn;
+				TurnStart(player, turn);
 				return;
+			}
+			if(turn <= _lastCompetitiveSpiritCheck || !Config.Instance.AutoGrayoutSecrets || !entity.IsMinion 
+				|| !entity.IsControlledBy(_game.Opponent.Id) || !_game.OpponentEntity.IsCurrentPlayer)
+				return;
+			_lastCompetitiveSpiritCheck = turn;
 			_game.OpponentSecrets.SetZero(Paladin.CompetitiveSpirit);
 			if(Core.MainWindow != null)
 				Core.Overlay.ShowSecrets();
@@ -362,7 +375,8 @@ namespace Hearthstone_Deck_Tracker
 				User32.FlashHs();
 			if(Config.Instance.BringHsToForeground)
 				User32.BringHsToForeground();
-
+			_lastTurnStart[0] = _lastTurnStart[1] = 0;
+			_lastCompetitiveSpiritCheck = 0;
 			_arenaRewardDialog = null;
 			_showedNoteDialog = false;
 			_game.IsInMenu = false;

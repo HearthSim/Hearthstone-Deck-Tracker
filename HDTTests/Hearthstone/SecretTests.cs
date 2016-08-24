@@ -31,7 +31,8 @@ namespace HDTTests.Hearthstone
             _secretMage1,
             _secretMage2,
             _secretPaladin1,
-            _secretPaladin2;
+            _secretPaladin2,
+            _opponentEntity;
 
         private Entity CreateNewEntity(string cardId)
         {
@@ -46,16 +47,21 @@ namespace HDTTests.Hearthstone
 	        Core.Game = _game;
             _gameEventHandler = new GameEventHandler(_game);
 
+
+            //Player_IDs are currently not quite representative of an actual game
             _heroPlayer = CreateNewEntity("HERO_01");
             _heroPlayer.SetTag(GameTag.CARDTYPE, (int)CardType.HERO);
             _heroOpponent = CreateNewEntity("HERO_02");
             _heroOpponent.SetTag(GameTag.CARDTYPE, (int) CardType.HERO);
             _heroOpponent.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
+            _opponentEntity = CreateNewEntity("");
+            _opponentEntity.SetTag(GameTag.PLAYER_ID, _heroOpponent.Id);
 
             _game.Entities.Add(0, _heroPlayer);
             _game.Player.Id = _heroPlayer.Id;
             _game.Entities.Add(1, _heroOpponent);
             _game.Opponent.Id = _heroOpponent.Id;
+            _game.Entities.Add(5, _opponentEntity);
 
             _playerMinion1 = CreateNewEntity("EX1_010");
             _playerMinion1.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
@@ -204,7 +210,8 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_MinionInPlay_OpponentTurnStart()
         {
-            _gameEventHandler.HandleOpponentTurnStart(_opponentMinion1);
+            _opponentEntity.SetTag(GameTag.CURRENT_PLAYER, 1);
+            _gameEventHandler.HandleTurnsInPlayChange(_opponentMinion1, 1);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.CompetitiveSpirit);
@@ -213,7 +220,7 @@ namespace HDTTests.Hearthstone
         [TestMethod]
         public void SingleSecret_NoMinionInPlay_OpponentTurnStart()
         {
-            _gameEventHandler.HandleOpponentTurnStart(_heroOpponent);
+            _gameEventHandler.HandleTurnsInPlayChange(_heroOpponent, 1);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All);
