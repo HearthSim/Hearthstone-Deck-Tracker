@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_memory_usage", false).Tag("os", Regex.Escape(Helper.GetWindowsVersion()))
-				.Tag("net", Helper.GetInstalledDotNetVersion()).Field("MB", mem).Build());
+				.Tag("net", Helper.GetInstalledDotNetVersion()).Field("MB", mem).Field("id", Config.Instance.Id).Build());
 		}
 
 		private static async void WritePoint(InfluxPoint point)
