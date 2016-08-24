@@ -545,6 +545,7 @@ namespace Hearthstone_Deck_Tracker
 					_game.CurrentGameStats.OpponentLegendRank = wild ? _game.MatchInfo.OpposingPlayer.WildLegendRank : _game.MatchInfo.OpposingPlayer.StandardLegendRank;
 					_game.CurrentGameStats.Stars = wild ? _game.MatchInfo.LocalPlayer.WildStars : _game.MatchInfo.LocalPlayer.StandardStars;
 				}
+				_game.CurrentGameStats.GameType = _game.CurrentGameType;
 				_game.CurrentGameStats.ServerInfo = _game.MetaData.ServerInfo;
 				_game.CurrentGameStats.PlayerCardbackId = _game.MatchInfo?.LocalPlayer.CardBackId ?? 0;
 				_game.CurrentGameStats.OpponentCardbackId = _game.MatchInfo?.OpposingPlayer.CardBackId ?? 0;
