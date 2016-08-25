@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				ErrorManager.AddError("Error retrieving HSReplay account status", ex.ToString());
+				ErrorManager.AddError("Error retrieving HSReplay account status", ex.Message);
 			}
 		}
 
