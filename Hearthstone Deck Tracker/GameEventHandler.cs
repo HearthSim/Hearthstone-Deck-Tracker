@@ -552,6 +552,7 @@ namespace Hearthstone_Deck_Tracker
 				_game.CurrentGameStats.OpponentCardbackId = _game.MatchInfo?.OpposingPlayer.CardBackId ?? 0;
 				_game.CurrentGameStats.FriendlyPlayerId = _game.MatchInfo?.LocalPlayer.Id ?? 0;
 				_game.CurrentGameStats.ScenarioId = _game.MatchInfo?.MissionId ?? 0;
+				_game.CurrentGameStats.BrawlSeasonId = _game.MatchInfo?.BrawlSeasonId ?? 0;
 				_game.CurrentGameStats.HsDeckId = DeckList.Instance.ActiveDeckVersion?.HsId ?? 0;
 				_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.Where(x => x.Collectible).ToList());
 				_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList.Where(x => !x.IsCreated).ToList());
