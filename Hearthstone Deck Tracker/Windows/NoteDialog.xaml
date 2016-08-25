@@ -2,13 +2,64 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="NOTE FOR THIS GAME" Height="205" Width="439" Topmost="True" WindowStyle="ToolWindow"
+                      Title="NOTE FOR THIS GAME" Height="240" Width="440" Topmost="True" WindowStyle="ToolWindow"
                       Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1"
                       WindowStartupLocation="CenterScreen">
     <Grid>
-        <Button Content="Set" Margin="10,140,158,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="Note..." Height="125" Margin="10,10,10,0"  PreviewKeyDown="TextBoxNote_OnPreviewKeyDown" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <CheckBox Name="CheckBoxEnterToSave" Content="Save with ENTER" HorizontalAlignment="Right" Margin="0,0,10,10" Width="123" Checked="CheckBoxEnterToSave_OnChecked" Unchecked="CheckBoxEnterToSave_OnUnchecked" VerticalAlignment="Bottom"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="TextBoxNote" Text=""
+                 Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                 Margin="10,10,10,0"
+                 TextWrapping="Wrap"
+                 controls:TextBoxHelper.Watermark="Note..."
+                 PreviewKeyDown="TextBoxNote_OnPreviewKeyDown" />
+
+        <Border x:Name="DeckListContainer" Visibility="Collapsed" 
+                Grid.Column="3" Grid.Row="0"
+                Margin="0,10,10,0"
+                BorderThickness="1" BorderBrush="Black">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ItemsControl x:Name="DeckList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="4,2">
+                                <TextBlock DockPanel.Dock="Right"
+                                           Text="{Binding CountText}" Foreground="{Binding TextColor}" />
+                                <TextBlock Text="{Binding Name}" Foreground="{Binding TextColor}" />
+                            </DockPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+        
+        <Button x:Name="BtnSave" Content="Set"
+                Grid.Row="1" Grid.Column="0"
+                VerticalAlignment="Center"
+                Click="Button_Click" Margin="10,10,0,10" />
+
+        <CheckBox Name="CheckBoxEnterToSave"
+                  Grid.Row="1" Grid.Column="1"
+                  Content="Save with ENTER"
+                  HorizontalAlignment="Left"
+                  Checked="CheckBoxEnterToSave_OnChecked"
+                  Unchecked="CheckBoxEnterToSave_OnUnchecked"
+                  VerticalAlignment="Center" Margin="10,0,0,0" />
+
+        <Button x:Name="BtnDeck" Content="SHOW OPP DECK"
+                Grid.Row="1" Grid.Column="3"
+                Margin="0,10,10,10"
+                VerticalAlignment="Center"
+                Click="BtnDeck_Click" />
     </Grid>
 </controls:MetroWindow>
