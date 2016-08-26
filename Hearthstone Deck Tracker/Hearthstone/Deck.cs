@@ -514,6 +514,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var deck = obj as Deck;
 			if(deck == null)
 				return false;
+			if(!Version.Equals(deck.Version))
+				return false;
 			if(deck.HasHearthStatsId && HasHearthStatsId)
 				return HearthStatsId.Equals(deck.HearthStatsId);
 			return DeckId.Equals(deck.DeckId);
