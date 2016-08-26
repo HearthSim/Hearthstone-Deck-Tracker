@@ -91,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All => new List<string> {BearTrap, DartTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap};
+				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap};
 				public static string BearTrap => HearthDb.CardIds.Collectible.Hunter.BearTrap;
 				public static string CatTrick => HearthDb.CardIds.Collectible.Hunter.CatTrick;
 				public static string DartTrap => HearthDb.CardIds.Collectible.Hunter.DartTrap;
