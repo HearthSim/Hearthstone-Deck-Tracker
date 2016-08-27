@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using HearthDb.Enums;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -59,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelAdditionalTooltips.Visibility = Visible;
 		}
 
-		private async Task UpdateCardTooltip()
+		private void UpdateCardTooltip()
 		{
 			var pos = User32.GetMousePos();
 			var relativePlayerDeckPos = ViewBoxPlayer.PointFromScreen(new Point(pos.X, pos.Y));
@@ -198,7 +199,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						if(_mouseInput == null)
 							HookMouse();
 					}
-					else if(_mouseInput != null && !((_isFriendsListOpen.HasValue && _isFriendsListOpen.Value) || await Helper.FriendsListOpen()))
+					else if(_mouseInput != null && !((_isFriendsListOpen.HasValue && _isFriendsListOpen.Value) || Reflection.IsFriendsListVisible()))
 						UnHookMouse();
 				}
 				else if(_mouseInput != null)

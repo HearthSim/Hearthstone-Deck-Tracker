@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -382,8 +383,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					checkForFriendsList = false;
 				if(!checkForFriendsList)
 					continue;
-				if (_isFriendsListOpen == null)
-					_isFriendsListOpen = await Helper.FriendsListOpen();
+				if(_isFriendsListOpen == null)
+				{
+					await Task.Delay(500);
+					_isFriendsListOpen = Reflection.IsFriendsListVisible();
+				}
 				if (_isFriendsListOpen.Value)
 				{
 					var childPanel = Helper.FindVisualChildren<StackPanel>(panel).FirstOrDefault();

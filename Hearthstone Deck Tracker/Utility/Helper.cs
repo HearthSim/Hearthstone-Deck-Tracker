@@ -209,46 +209,6 @@ namespace Hearthstone_Deck_Tracker
 		public static string DeckToIdString(Deck deck)
 			=> deck.GetSelectedDeckVersion().Cards.Aggregate("", (current, card) => current + (card.Id + ":" + card.Count + ";"));
 
-		public static async Task<bool> FriendsListOpen()
-		{
-			//wait for friendslist to open/close
-			await Task.Delay(300);
-
-			var rect = User32.GetHearthstoneRect(false);
-			var capture = await ScreenCapture.CaptureHearthstoneAsync(new Point(0, (int)(rect.Height * 0.85)), (int)(rect.Width * 0.1), (int)(rect.Height * 0.15));
-			if(capture == null)
-				return false;
-
-			for(var y = 0; y < capture.Height; y++)
-			{
-				for(var x = 0; x < capture.Width; x++)
-				{
-					if(!IsYellowPixel(capture.GetPixel(x, y)))
-						continue;
-					var foundFriendsList = true;
-
-					//check for a straight yellow line (left side of add button)
-					for(var i = 0; i < 5; i++)
-					{
-						if(x + i >= capture.Width || !IsYellowPixel(capture.GetPixel(x + i, y)))
-							foundFriendsList = false;
-					}
-					if(foundFriendsList)
-						return true;
-				}
-			}
-			return false;
-		}
-
-		private static bool IsYellowPixel(Color pixel)
-		{
-			const int red = 216;
-			const int green = 174;
-			const int blue = 10;
-			const int deviation = 10;
-			return Math.Abs(pixel.R - red) <= deviation && Math.Abs(pixel.G - green) <= deviation && Math.Abs(pixel.B - blue) <= deviation;
-		}
-
 		public static void UpdateEverything(GameV2 game)
 		{
 			if(Core.Overlay.IsVisible || Core.Windows.CapturableOverlay != null)
