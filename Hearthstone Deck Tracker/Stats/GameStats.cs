@@ -218,6 +218,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int BrawlSeasonId { get; set; }
 
+		public int RankedSeasonId { get; set; }
+
 		public Region Region
 		{
 			get { return _region; }
@@ -512,7 +514,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeHsReplay() => HsReplay.UploadTries > 0 || HsReplay.Uploaded;
 		public bool ShouldSerializeHsDeckId() => HsDeckId > 0;
 		public bool ShouldSerializeGameType() => GameType != GameType.GT_UNKNOWN;
-		public bool ShouldSerializeBrawlSeasonId => BrawlSeasonId > 0;
+		public bool ShouldSerializeBrawlSeasonId() => BrawlSeasonId > 0;
+		public bool ShouldSerializeRankedSeasonId() => RankedSeasonId > 0;
 
 		#region Obsolete
 
