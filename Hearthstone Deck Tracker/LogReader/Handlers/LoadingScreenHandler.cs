@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -70,6 +71,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				_checkedMirrorStatus = false;
 				return;
 			}
+			Influx.OnUnevenPermissions();
 			LogReaderManager.Stop(true).Forget();
 			Core.MainWindow.ActivateWindow();
 			while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
