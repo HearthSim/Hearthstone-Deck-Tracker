@@ -51,6 +51,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("net", Helper.GetInstalledDotNetVersion()).Field("MB", mem).Field("id", Config.Instance.Id).Build());
 		}
 
+		public static void OnUnevenPermissions()
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_uneven_permissions", false).Tag("os", Regex.Escape(Helper.GetWindowsVersion()))
+				.Tag("net", Helper.GetInstalledDotNetVersion()).Field("id", Config.Instance.Id).Build());
+		}
+
 		private static async void WritePoint(InfluxPoint point)
 		{
 			try
