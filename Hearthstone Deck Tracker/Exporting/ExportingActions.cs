@@ -1,17 +1,21 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
+using static Hearthstone_Deck_Tracker.Exporting.ExportingActions.CardPosition;
 using static Hearthstone_Deck_Tracker.Exporting.ExportingHelper;
-using static Hearthstone_Deck_Tracker.Exporting.MouseActions;
 
 #endregion
 
@@ -19,30 +23,59 @@ namespace Hearthstone_Deck_Tracker.Exporting
 {
 	public class ExportingActions
 	{
+		private int _cardCount;
+		private readonly ExportingInfo _info;
+		private readonly Deck _deck;
+		private readonly MouseActions _mouse;
+		private readonly Point _clearCardPoint;
+		private readonly Point _deckNamePoint;
+		private readonly Point _card1Point;
+		private readonly Point _card2Point;
+		private readonly Point _zeroManaCrystalPoint;
+		private readonly Point _setFilterMenuPoint;
+		private readonly Point _setFilterAllPoint;
 		private const int MaxLengthDeckName = 24;
+		private const int CardPosOffset = 50;
 
-		public static async Task SetDeckName(Deck deck, ExportingInfo info)
+		public ExportingActions(ExportingInfo info, Deck deck, Func<Task<bool>> onInterrupt)
 		{
-			if(Config.Instance.ExportSetDeckName && !deck.TagList.ToLower().Contains("brawl"))
+			_info = info;
+			_deck = deck;
+			_mouse = new MouseActions(info, onInterrupt);
+			_clearCardPoint = new Point(GetScaledXPos(Config.Instance.ExportClearX), GetYPos(Config.Instance.ExportClearY));
+			_deckNamePoint = new Point(GetScaledXPos(Config.Instance.ExportNameDeckX), GetYPos(Config.Instance.ExportNameDeckY));
+			_card1Point = new Point((int)_info.CardPosX + CardPosOffset, (int)_info.CardPosY + CardPosOffset);
+			_card2Point = new Point((int)_info.Card2PosX + CardPosOffset, (int)_info.CardPosY + CardPosOffset);
+			_zeroManaCrystalPoint = new Point(GetScaledXPos(Config.Instance.ExportZeroButtonX), GetYPos(Config.Instance.ExportZeroButtonY));
+			_setFilterMenuPoint = new Point(GetScaledXPos(Config.Instance.ExportSetsButtonX), GetYPos(Config.Instance.ExportSetsButtonY));
+			_setFilterAllPoint = new Point(GetScaledXPos(Config.Instance.ExportAllSetsButtonX), GetYPos(Config.Instance.ExportStandardSetButtonY));
+		}
+
+		public async Task SetDeckName()
+		{
+			if(Config.Instance.ExportSetDeckName && !_deck.TagList.ToLower().Contains("brawl"))
 			{
-				var name = Regex.Replace(deck.Name, @"[\(\)\{\}]", "");
-				if(name != deck.Name)
+				var name = Regex.Replace(_deck.Name, @"[\(\)\{\}]", "");
+				if(name != _deck.Name)
 					Log.Info("Removed parenthesis/braces from deck name. New name: " + name);
+				if(Reflection.GetEditedDeck()?.Name == _deck.Name)
+				{
+					Log.Info("Deck already has the correct name");
+					return;
+				}
 				if(Config.Instance.ExportAddDeckVersionToName)
 				{
-					var version = " " + deck.SelectedVersion.ShortVersionString;
+					var version = " " + _deck.SelectedVersion.ShortVersionString;
 					if(name.Length + version.Length > MaxLengthDeckName)
 						name = name.Substring(0, MaxLengthDeckName - version.Length);
 					name += version;
 				}
 
 				Log.Info("Setting deck name...");
-				var nameDeckPos = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportNameDeckX, info.HsRect.Width, info.Ratio),
-				                            (int)(Config.Instance.ExportNameDeckY * info.HsRect.Height));
-				await ClickOnPoint(info.HsHandle, nameDeckPos);
+				await _mouse.ClickOnPoint(_deckNamePoint);
 				//send enter and second click to make sure the current name gets selected
 				SendKeys.SendWait("{ENTER}");
-				await ClickOnPoint(info.HsHandle, nameDeckPos);
+				await _mouse.ClickOnPoint(_deckNamePoint);
 				if(Config.Instance.ExportPasteClipboard)
 				{
 					Clipboard.SetText(name);
@@ -54,39 +87,36 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			}
 		}
 
-		public static async Task ClearDeck(ExportingInfo info)
+		public async Task ClearDeck()
 		{
 			if(!Config.Instance.AutoClearDeck)
 				return;
-			var count = 0;
-			Log.Info("Clearing deck...");
-			while(!await IsDeckEmpty(info.HsHandle, info.HsRect.Width, info.HsRect.Height, info.Ratio))
+			var count = Reflection.GetEditedDeck()?.Cards.Sum(x => x.Count) ?? 30;
+			Log.Info($"Clearing {count} cards from the deck...");
+			for(var i = 0; i < count; i++)
+				await _mouse.ClickOnPoint(_clearCardPoint);
+			while(Reflection.GetEditedDeck()?.Cards.Sum(x => x.Count) > 0)
 			{
-				await
-					ClickOnPoint(info.HsHandle,
-					                          new Point((int)Helper.GetScaledXPos(Config.Instance.ExportClearX, info.HsRect.Width, info.Ratio),
-					                                    (int)(Config.Instance.ExportClearY * info.HsRect.Height)));
-				if(count++ > 35)
-					break;
+				await _mouse.ClickOnPoint(_clearCardPoint);
+				await Task.Delay(100);
 			}
 		}
 
-		///<summary>
-		/// Returns -1 if Hearthstone loses focus
-		/// </summary>
-		public static async Task<int> AddCardToDeck(Card card, ExportingInfo info)
+		private int GetScaledXPos(double x) => (int)Helper.GetScaledXPos(x, _info.HsRect.Width, _info.Ratio);
+		private int GetYPos(double y) => (int)(y*_info.HsRect.Height);
+
+		public async Task<int> AddCardToDeck(Card card, List<HearthMirror.Objects.Card> collection)
 		{
-			if(!User32.IsHearthstoneInForeground())
-			{
-				Core.MainWindow.ShowMessage("Exporting aborted", "Hearthstone window lost focus.").Forget();
-				Log.Info("Exporting aborted, window lost focus");
-				return -1;
-			}
+			var inCollection = collection.Where(x => x.Id == card.Id).ToList();
+			if(!inCollection.Any())
+				return card.Count;
+			var golden = inCollection.FirstOrDefault(x => x.Premium)?.Count ?? 0;
+			var normal = inCollection.FirstOrDefault(x => !x.Premium)?.Count ?? 0;
 
 			if(Config.Instance.ExportForceClear)
-				await ClearSearchBox(info.HsHandle, info.SearchBoxPos);
+				await ClearSearchBox();
 
-			await ClickOnPoint(info.HsHandle, info.SearchBoxPos);
+			await _mouse.ClickOnPoint(_info.SearchBoxPos);
 
 			if(Config.Instance.ExportPasteClipboard || !Helper.LatinLanguages.Contains(Config.Instance.SelectedLanguage))
 			{
@@ -97,135 +127,122 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				SendKeys.SendWait(GetSearchString(card));
 			SendKeys.SendWait("{ENTER}");
 
-			Log.Info("try to export card: " + card);
+			Log.Info($"Adding {card}, in collection: {normal} normal, {golden} golden");
 			await Task.Delay(Config.Instance.DeckExportDelay * 2);
 
-			//Check if Card exist in collection
-			var cardExists = await CardExists(info.HsHandle, (int)info.CardPosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height);
-			if(cardExists)
+			if(Config.Instance.PrioritizeGolden && golden > 0)
 			{
-				//Check if a golden exist
-				if(Config.Instance.PrioritizeGolden
-				   && await CardExists(info.HsHandle, (int)info.Card2PosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height))
-				{
-					await ClickOnPoint(info.HsHandle, new Point((int)info.Card2PosX + 50, (int)info.CardPosY + 50));
-
-					if(card.Count == 2)
-					{
-						await ClickOnPoint(info.HsHandle, new Point((int)info.Card2PosX + 50, (int)info.CardPosY + 50));
-						await ClickOnPoint(info.HsHandle, new Point((int)info.CardPosX + 50, (int)info.CardPosY + 50));
-					}
-				}
+				if(normal > 0)
+					await ClickOnCard(Right);
 				else
+					await ClickOnCard(Left);
+				if(card.Count == 2)
 				{
-					await ClickOnPoint(info.HsHandle, new Point((int)info.CardPosX + 50, (int)info.CardPosY + 50));
-
-					if(card.Count == 2)
-					{
-						//Check if two card are not available 
-						await Task.Delay(200 - Config.Instance.DeckExportDelay);
-						if(await CardHasLock(info.HsHandle, (int)(info.CardPosX + info.HsRect.Width * 0.048),
-						                               (int)(info.CardPosY + info.HsRect.Height * 0.287), info.HsRect.Width, info.HsRect.Height))
-						{
-							var card2Exists = await CardExists(info.HsHandle, (int)info.Card2PosX, (int)info.CardPosY, info.HsRect.Width, info.HsRect.Height);
-							if(card2Exists)
-							{
-								await ClickOnPoint(info.HsHandle, new Point((int)info.Card2PosX + 50, (int)info.CardPosY + 50));
-								return 0;
-							}
-							Log.Info("Only one copy found: " + card.Name);
-							return 1;
-						}
-
-						await ClickOnPoint(info.HsHandle, new Point((int)info.CardPosX + 50, (int)info.CardPosY + 50));
-					}
+					if(golden > 1 && normal > 1)
+						await ClickOnCard(Right);
+					else
+						await ClickOnCard(Left);
 				}
 			}
 			else
-				return card.Count;
+			{
+				await ClickOnCard(Left);
+				if(card.Count == 2)
+				{
+					if(normal + golden < 2)
+						return 1;
+					if(normal == 1)
+						await ClickOnCard(Right);
+					else
+						await ClickOnCard(Left);
+				}
+			}
 			return 0;
 		}
 
-		/// <summary>
-		/// Returns true if Hearthstone lost focus in the process
-		/// </summary>
-		public static async Task<bool> CreateDeck(Deck deck, ExportingInfo info)
+		public async Task ClickOnCard(CardPosition pos)
+		{
+			int? count = null;
+			for(var i = 0; i < 2; i++)
+			{
+				if(pos == Left)
+					await _mouse.ClickOnPoint(_card1Point);
+				else
+					await _mouse.ClickOnPoint(_card2Point);
+				if((count = Reflection.GetEditedDeck()?.Cards.Sum(x => x.Count)) > _cardCount)
+					break;
+			}
+			if(count != null)
+				_cardCount = count.Value;
+		}
+
+		public async Task CreateDeck()
 		{
 			Log.Info("Creating deck...");
-			deck.MissingCards.Clear();
-			foreach(var card in deck.GetSelectedDeckVersion().Cards.ToSortedCardList())
+			_cardCount = 0;
+			_deck.MissingCards.Clear();
+			var collection = Reflection.GetCollection();
+			foreach(var card in _deck.GetSelectedDeckVersion().Cards.ToSortedCardList())
 			{
-				var missingCardsCount = await AddCardToDeck(card, info);
-				if(missingCardsCount < 0)
-					return true;
+				var missingCardsCount = await AddCardToDeck(card, collection);
 				if(missingCardsCount > 0)
 				{
 					var missingCard = (Card)card.Clone();
 					missingCard.Count = missingCardsCount;
-					deck.MissingCards.Add(missingCard);
+					_deck.MissingCards.Add(missingCard);
 				}
 			}
-			Log.Info(deck.MissingCards.Count + " missing cards");
-			if(deck.MissingCards.Any())
+			Log.Info(_deck.MissingCards.Count + " missing cards");
+			if(_deck.MissingCards.Any())
 				DeckList.Save();
-			return false;
 		}
 
-		public static async Task ClearFilters(ExportingInfo info)
+		public async Task ClearFilters()
 		{
 			if(!Config.Instance.EnableExportAutoFilter)
 				return;
-			await ClearManaFilter(info);
-			await ClearSetsFilter(info);
+			await ClearManaFilter();
+			await ClearSetsFilter();
 		}
 
-		public static async Task ClearManaFilter(ExportingInfo info)
+		public async Task ClearManaFilter()
 		{
-			Log.Info("Clearing \"Zero\" crystal...");
-
-			// First, ensure mana filters are cleared
-			var crystalPoint = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportZeroButtonX, info.HsRect.Width, info.Ratio),
-			                             (int)(Config.Instance.ExportZeroButtonY * info.HsRect.Height));
-
-			if(await IsZeroCrystalSelected(info.HsHandle, info.Ratio, info.HsRect.Width, info.HsRect.Height))
+			if(Reflection.GetCurrentManaFilter() == -1)
 			{
-				// deselect it
-				await ClickOnPoint(info.HsHandle, crystalPoint);
+				Log.Info("No mana filter set");
+				return;
 			}
-			else
-			{
-				// select it and then unselect it (in case other crystals are on)
-				await ClickOnPoint(info.HsHandle, crystalPoint);
-				await ClickOnPoint(info.HsHandle, crystalPoint);
-			}
+			Log.Info("Clearing mana filter");
+			await _mouse.ClickOnPoint(_zeroManaCrystalPoint);
+			await Task.Delay(500);
+			if(Reflection.GetCurrentManaFilter() == 0)
+				await _mouse.ClickOnPoint(_zeroManaCrystalPoint);
 		}
 
-		public static async Task ClearSetsFilter(ExportingInfo info)
+		public async Task ClearSetsFilter()
 		{
+			var setFilter = Reflection.GetCurrentSetFilter();
+			if(setFilter.IsAllStandard || setFilter.IsWild)
+				return;
 			Log.Info("Clearing set filter...");
-			// Then ensure "All Sets" is selected
-			var setsPoint = new Point((int)Helper.GetScaledXPos(Config.Instance.ExportSetsButtonX, info.HsRect.Width, info.Ratio),
-			                          (int)(Config.Instance.ExportSetsButtonY * info.HsRect.Height));
-
-			// open sets menu
-			await ClickOnPoint(info.HsHandle, setsPoint);
-			await Task.Delay(100);
-			// select "All Sets"
-			await
-				ClickOnPoint(info.HsHandle,
-				                          new Point(
-					                          (int)Helper.GetScaledXPos(Config.Instance.ExportAllSetsButtonX, info.HsRect.Width, info.Ratio),
-					                          (int)(Config.Instance.ExportStandardSetButtonY * info.HsRect.Height)));
-			await Task.Delay(100);
-			// close sets menu
-			await ClickOnPoint(info.HsHandle, setsPoint);
+			await _mouse.ClickOnPoint(_setFilterMenuPoint);
+			await Task.Delay(500);
+			await _mouse.ClickOnPoint(_setFilterAllPoint);
+			await Task.Delay(500);
+			await _mouse.ClickOnPoint(_setFilterMenuPoint);
 		}
 
-		public static async Task ClearSearchBox(IntPtr hsHandle, Point searchBoxPos)
+		public async Task ClearSearchBox()
 		{
-			await ClickOnPoint(hsHandle, searchBoxPos);
+			await _mouse.ClickOnPoint(_info.SearchBoxPos);
 			SendKeys.SendWait("{DELETE}");
 			SendKeys.SendWait("{ENTER}");
+		}
+
+		public enum CardPosition
+		{
+			Left,
+			Right
 		}
 	}
 }

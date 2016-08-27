@@ -133,7 +133,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static int CurrentSeason => (DateTime.Now.Year - 2014) * 12 - 3 + DateTime.Now.Month;
 
-		public static WindowState GameWindowState { get; internal set; } = WindowState.Normal;
+		public static WindowState GameWindowState { get; internal set; } = User32.GetHearthstoneWindowState();
 
 		public static Version GetCurrentVersion() => Assembly.GetExecutingAssembly().GetName().Version;
 

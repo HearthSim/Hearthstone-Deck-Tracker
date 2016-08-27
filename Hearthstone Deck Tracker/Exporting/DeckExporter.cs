@@ -4,6 +4,8 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Exceptions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.Exporting.ExportingActions;
 
@@ -13,41 +15,39 @@ namespace Hearthstone_Deck_Tracker.Exporting
 {
 	public static class DeckExporter
 	{
-		public static async Task<bool> Export(Deck deck)
+		public static async Task<bool> Export(Deck deck, Func<Task<bool>> onInterrupt)
 		{
 			if(deck == null)
 				return false;
 			var currentClipboard = "";
-			var altScreenCapture = Config.Instance.AlternativeScreenCapture;
 			try
 			{
 				Log.Info("Exporting " + deck.GetDeckInfo());
 				if(Config.Instance.ExportPasteClipboard && Clipboard.ContainsText())
 					currentClipboard = Clipboard.GetText();
-
 				var info = new ExportingInfo();
 				LogDebugInfo(info);
-
-				var inForeground = await ExportingHelper.EnsureHearthstoneInForeground(info.HsHandle);
-				if(!inForeground)
+				info = await ExportingHelper.EnsureHearthstoneInForeground(info);
+				if(info == null)
 					return false;
+				LogDebugInfo(info);
 				Log.Info($"Waiting for {Config.Instance.ExportStartDelay} seconds before starting the export process");
-				await Task.Delay(Config.Instance.ExportStartDelay * 1000);
-				if(!altScreenCapture)
-					Core.Overlay.ForceHide(true);
-
-				await ClearDeck(info);
-				await SetDeckName(deck, info);
-				await ClearFilters(info);
-				var lostFocus = await CreateDeck(deck, info);
-				if(lostFocus)
-					return false;
-				await ClearSearchBox(info.HsHandle, info.SearchBoxPos);
-
+				await Task.Delay(Config.Instance.ExportStartDelay*1000);
+				var exporter = new ExportingActions(info, deck, onInterrupt);
+				await exporter.ClearDeck();
+				await exporter.SetDeckName();
+				await exporter.ClearFilters();
+				await exporter.CreateDeck();
+				await exporter.ClearSearchBox();
 				if(Config.Instance.ExportPasteClipboard)
 					Clipboard.Clear();
 				Log.Info("Success exporting deck.");
 				return true;
+			}
+			catch(ExportingInterruptedException e)
+			{
+				Log.Warn(e.Message);
+				return false;
 			}
 			catch(Exception e)
 			{
@@ -56,8 +56,6 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			}
 			finally
 			{
-				if(!altScreenCapture)
-					Core.Overlay.ForceHide(false);
 				try
 				{
 					if(Config.Instance.ExportPasteClipboard && currentClipboard != "")

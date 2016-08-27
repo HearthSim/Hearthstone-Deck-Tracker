@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void ExportDeck()
 		{
 			if(DeckList.Instance.ActiveDeck != null && Core.Game.IsInMenu)
-				DeckExporter.Export(DeckList.Instance.ActiveDeckVersion).Forget();
+				DeckExporter.Export(DeckList.Instance.ActiveDeckVersion, null).Forget();
 		}
 
 		[PredefinedHotKeyAction("Edit active deck", "Opens the edit dialog for the active deck (if any) and brings HDT to foreground.")]
