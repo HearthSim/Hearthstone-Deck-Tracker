@@ -35,12 +35,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private async void ExportDeck(Deck deck)
 		{
-			var export = true;
 			if(Config.Instance.ShowExportingDialog)
 			{
 				var message = $"1) Create a new (or open an existing) {deck.Class} deck.\n\n2) Leave the deck creation screen open.\n\n3) Click 'Export' and do not move your mouse or type until done.";
 				var result = await this.ShowMessageAsync("Export " + deck.Name + " to Hearthstone", message, AffirmativeAndNegative, new MessageDialogs.Settings { AffirmativeButtonText = "Export" });
-				export = result == MessageDialogResult.Affirmative;
+				if(result == MessageDialogResult.Negative)
+					return;
 			}
 			HearthMirror.Objects.Deck openDeck;
 			var settings = new MessageDialogs.Settings() {AffirmativeButtonText = "Continue", NegativeButtonText = "Cancel"};
@@ -65,41 +65,36 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 				openDeck = Reflection.GetEditedDeck();
 			}
-			if(export)
+			var controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
+			Topmost = false;
+			await Task.Delay(500);
+			var success = await DeckExporter.Export(deck, async () =>
 			{
-				var controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
-				Topmost = false;
-				await Task.Delay(500);
-				var success = await DeckExporter.Export(deck, async () =>
-				{
-					if(controller != null)
-						await controller.CloseAsync();
-					ActivateWindow();
-					var result = await this.ShowMessageAsync("Importing interrupted", "Continue?", AffirmativeAndNegative, 
-						new MessageDialogs.Settings() { AffirmativeButtonText = "Continue", NegativeButtonText = "Cancel" });
-					if(result == MessageDialogResult.Affirmative)
-						controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
-					return result == MessageDialogResult.Affirmative;
-				});
-				if(controller.IsOpen)
+				if(controller != null)
 					await controller.CloseAsync();
-
-				if(success)
+				ActivateWindow();
+				var result = await this.ShowMessageAsync("Importing interrupted", "Continue?", AffirmativeAndNegative,
+					new MessageDialogs.Settings() { AffirmativeButtonText = "Continue", NegativeButtonText = "Cancel" });
+				if(result == MessageDialogResult.Affirmative)
+					controller = await this.ShowProgressAsync("Creating Deck", "Please do not move your mouse or type.");
+				return result == MessageDialogResult.Affirmative;
+			});
+			if(controller.IsOpen)
+				await controller.CloseAsync();
+			if(success)
+			{
+				var hsDeck = Reflection.GetEditedDeck();
+				if(hsDeck != null)
 				{
-					var hsDeck = Reflection.GetEditedDeck();
-					if(hsDeck != null)
-					{
-						var existingHsId = DeckList.Instance.Decks.Where(x => x.DeckId != deck.DeckId).FirstOrDefault(x => x.HsId == hsDeck.Id);
-						if(existingHsId != null)
-							existingHsId.HsId = 0;
-						deck.HsId = hsDeck.Id;
-						DeckList.Save();
-					}
+					var existingHsId = DeckList.Instance.Decks.Where(x => x.DeckId != deck.DeckId).FirstOrDefault(x => x.HsId == hsDeck.Id);
+					if(existingHsId != null)
+						existingHsId.HsId = 0;
+					deck.HsId = hsDeck.Id;
+					DeckList.Save();
 				}
-
-				if(deck.MissingCards.Any())
-					this.ShowMissingCardsMessage(deck);
 			}
+			if(deck.MissingCards.Any())
+				this.ShowMissingCardsMessage(deck);
 		}
 
 		private void BtnScreenhot_Click(object sender, RoutedEventArgs e) => CaptureScreenshot(true);
@@ -267,14 +262,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)
 		{
-			var url = await InputDeckUrl();
-			if(url == null)
+			var result = await ImportDeckFromUrl();
+			if(result.WasCancelled)
 				return;
-			var deck = await ImportDeckFromUrl(url);
-			if(deck != null)
-				ExportDeck(deck);
+			if(result.Deck != null)
+				ExportDeck(result.Deck);
 			else
-				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+				await this.ShowMessageAsync("No deck found", "Could not find a deck on" + Environment.NewLine + result.Url);
 		}
 
 		internal void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)

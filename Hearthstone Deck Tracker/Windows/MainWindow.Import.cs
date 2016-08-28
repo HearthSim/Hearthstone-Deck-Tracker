@@ -31,7 +31,35 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		private void BtnWeb_Click(object sender, RoutedEventArgs e) => ImportDeck();
 
-		public async void ImportDeck(string url = null, bool checkClipboard = true)
+		public async void ImportDeck(string url = null)
+		{
+			var result = await ImportDeckFromUrl(url);
+			if(result.WasCancelled)
+				return;
+			if(result.Deck != null)
+			{
+				var reimport = EditingDeck && _newDeck != null && _newDeck.Url == result.Deck.Url;
+
+				if(reimport) //keep old notes
+					result.Deck.Note = _newDeck.Note;
+
+				SetNewDeck(result.Deck, reimport);
+				TagControlEdit.SetSelectedTags(result.Deck.Tags);
+				if(Config.Instance.AutoSaveOnImport)
+					SaveDeckWithOverwriteCheck();
+			}
+			else
+				await this.ShowMessageAsync("No deck found", "Could not find a deck on" + Environment.NewLine + result.Url);
+		}
+
+		public class ImportingResult
+		{
+			public Deck Deck { get; set; }
+			public string Url { get; set; }
+			public bool WasCancelled { get; set; }
+		}
+
+		private async Task<ImportingResult> ImportDeckFromUrl(string url = null, bool checkClipboard = true)
 		{
 			var fromClipboard = false;
 			if(url == null)
@@ -56,27 +84,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 					url = await InputDeckUrl();
 			}
 			if(url == null)
-				return;
-			var deck = await ImportDeckFromUrl(url);
+				return new ImportingResult {WasCancelled = true};
+			var controller = await this.ShowProgressAsync("Loading Deck", "Please wait...");
+			var deck = await DeckImporter.Import(url);
+			if(deck != null && string.IsNullOrEmpty(deck.Url))
+				deck.Url = url;
+			await controller.CloseAsync();
 			if(deck == null && fromClipboard)
-			{
-				ImportDeck(checkClipboard: false);
-				return;
-			}
-			if(deck != null)
-			{
-				var reimport = EditingDeck && _newDeck != null && _newDeck.Url == deck.Url;
-
-				if(reimport) //keep old notes
-					deck.Note = _newDeck.Note;
-
-				SetNewDeck(deck, reimport);
-				TagControlEdit.SetSelectedTags(deck.Tags);
-				if(Config.Instance.AutoSaveOnImport)
-					SaveDeckWithOverwriteCheck();
-			}
-			else
-				await this.ShowMessageAsync("No deck found", "Could not find a deck on " + Environment.NewLine + url);
+				return await ImportDeckFromUrl(checkClipboard: false);
+			return new ImportingResult {Deck = deck, Url = url};
 		}
 
 		private async Task<string> InputDeckUrl()
@@ -91,16 +107,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Log.Error(e);
 				return null;
 			}
-		}
-
-		private async Task<Deck> ImportDeckFromUrl(string url)
-		{
-			var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
-			var deck = await DeckImporter.Import(url);
-			if(deck != null)
-				deck.Url = url;
-			await controller.CloseAsync();
-			return deck;
 		}
 
 		private async void BtnIdString_Click(object sender, RoutedEventArgs e)
