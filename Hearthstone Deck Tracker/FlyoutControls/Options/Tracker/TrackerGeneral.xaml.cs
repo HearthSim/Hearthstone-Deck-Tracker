@@ -38,7 +38,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
 			CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
-			CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			TextboxTimerAlert.Text = Config.Instance.TimerAlertSeconds.ToString();
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)");
@@ -210,22 +209,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AutoUseDeck = false;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
-		}
-
-		private void CheckboxSpectatorUseNoDeck_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SpectatorUseNoDeck = true;
-			Config.Save();
-		}
-
-		private void CheckboxSpectatorUseNoDeck_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SpectatorUseNoDeck = false;
-			Config.Save();
 		}
 
 		private void CheckBoxClassCardsFirst_Checked(object sender, RoutedEventArgs e) => Core.MainWindow.SortClassCardsFirst(true);

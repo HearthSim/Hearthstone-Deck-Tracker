@@ -895,9 +895,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool SortDecksByClassArena = false;
 
 		[DefaultValue(false)]
-		public bool SpectatorUseNoDeck = false;
-
-		[DefaultValue(false)]
 		public bool StartMinimized = false;
 
 		[DefaultValue(false)]
