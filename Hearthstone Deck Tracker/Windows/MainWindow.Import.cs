@@ -34,10 +34,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public async void ImportDeck(string url = null)
 		{
 			if(url == null)
-				url = await InputDeckURL();
+				url = await InputDeckUrl();
 			if(url == null)
 				return;
-			var deck = await ImportDeckFromURL(url);
+			var deck = await ImportDeckFromUrl(url);
 			if(deck != null)
 			{
 				var reimport = EditingDeck && _newDeck != null && _newDeck.Url == deck.Url;
@@ -54,26 +54,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
 		}
 
-		private async Task<string> InputDeckURL()
+		private async Task<string> InputDeckUrl()
 		{
-			var settings = new MessageDialogs.Settings();
-			var validUrls = DeckImporter.Websites.Keys.Select(x => x.Split('.')[0]).ToArray();
 			try
 			{
 				var clipboard = Clipboard.ContainsText() ? new string(Clipboard.GetText().Take(1000).ToArray()) : "";
-				if(validUrls.Any(clipboard.Contains))
-					settings.DefaultText = clipboard;
+				if(Helper.IsValidUrl(clipboard))
+					return clipboard;
 			}
 			catch(Exception e)
 			{
 				Log.Error(e);
-				return null;
 			}
-
-			return await this.ShowInputAsync("Import deck", "Supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), settings);
+			var validUrls = DeckImporter.Websites.Keys.Select(x => x.Split('.')[0]).ToArray();
+			return await this.ShowInputAsync("Import deck", "Some supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), new MessageDialogs.Settings());
 		}
 
-		private async Task<Deck> ImportDeckFromURL(string url)
+		private async Task<Deck> ImportDeckFromUrl(string url)
 		{
 			var controller = await this.ShowProgressAsync("Loading Deck...", "please wait");
 			var deck = await DeckImporter.Import(url);

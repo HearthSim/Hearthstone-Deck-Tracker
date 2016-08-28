@@ -267,10 +267,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)
 		{
-			var url = await InputDeckURL();
+			var url = await InputDeckUrl();
 			if(url == null)
 				return;
-			var deck = await ImportDeckFromURL(url);
+			var deck = await ImportDeckFromUrl(url);
 			if(deck != null)
 				ExportDeck(deck);
 			else

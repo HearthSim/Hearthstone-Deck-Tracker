@@ -326,7 +326,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (selectedDeck == null)
 				return;
 
-			var url = await InputDeckURL();
+			var url = await InputDeckUrl();
 			if (string.IsNullOrEmpty(url))
 				return;
 

@@ -70,7 +70,6 @@ namespace Hearthstone_Deck_Tracker.Importing
 		public static async Task<Deck> Import(string url)
 		{
 			Log.Info("Importing deck from " + url);
-
 			var website = Websites.FirstOrDefault(x => url.Contains(x.Key));
 			if(website.Value != null)
 			{
@@ -80,9 +79,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 				deck.Cards = new ObservableCollection<Card>(deck.Cards.Where(x => x.Id != Database.UnknownCardId));
 				return deck;
 			}
-
-			Log.Error("invalid url");
-			return null;
+			return await MetaTagImporter.TryFindDeck(url);
 		}
 
 		public static List<ImportedDeck> FromConstructed()
