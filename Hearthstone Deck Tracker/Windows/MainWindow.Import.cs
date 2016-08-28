@@ -31,13 +31,38 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		private void BtnWeb_Click(object sender, RoutedEventArgs e) => ImportDeck();
 
-		public async void ImportDeck(string url = null)
+		public async void ImportDeck(string url = null, bool checkClipboard = true)
 		{
+			var fromClipboard = false;
 			if(url == null)
-				url = await InputDeckUrl();
+			{
+				if(checkClipboard)
+				{
+					try
+					{
+						var clipboard = Clipboard.ContainsText() ? new string(Clipboard.GetText().Take(1000).ToArray()) : "";
+						if(Helper.IsValidUrl(clipboard))
+						{
+							url = clipboard;
+							fromClipboard = true;
+						}
+					}
+					catch(Exception e)
+					{
+						Log.Error(e);
+					}
+				}
+				if(url == null)
+					url = await InputDeckUrl();
+			}
 			if(url == null)
 				return;
 			var deck = await ImportDeckFromUrl(url);
+			if(deck == null && fromClipboard)
+			{
+				ImportDeck(checkClipboard: false);
+				return;
+			}
 			if(deck != null)
 			{
 				var reimport = EditingDeck && _newDeck != null && _newDeck.Url == deck.Url;
@@ -51,23 +76,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 					SaveDeckWithOverwriteCheck();
 			}
 			else
-				await this.ShowMessageAsync("Error", "Could not load deck from specified url");
+				await this.ShowMessageAsync("No deck found", "Could not find a deck on " + Environment.NewLine + url);
 		}
 
 		private async Task<string> InputDeckUrl()
 		{
 			try
 			{
-				var clipboard = Clipboard.ContainsText() ? new string(Clipboard.GetText().Take(1000).ToArray()) : "";
-				if(Helper.IsValidUrl(clipboard))
-					return clipboard;
+				var validUrls = DeckImporter.Websites.Keys.Select(x => x.Split('.')[0]).ToArray();
+				return await this.ShowInputAsync("Import deck", "Some supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), new MessageDialogs.Settings());
 			}
 			catch(Exception e)
 			{
 				Log.Error(e);
+				return null;
 			}
-			var validUrls = DeckImporter.Websites.Keys.Select(x => x.Split('.')[0]).ToArray();
-			return await this.ShowInputAsync("Import deck", "Some supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), new MessageDialogs.Settings());
 		}
 
 		private async Task<Deck> ImportDeckFromUrl(string url)
