@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using HearthMirror;
 using HearthMirror.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -47,6 +48,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 				if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus && (DateTime.Now - logLine.Time).TotalSeconds < 5)
 					CheckMirrorStatus();
+
+				if(game.CurrentMode == Mode.PACKOPENING)
+					PackOpeningWatcher.Instance.Run();
+				else
+					PackOpeningWatcher.Instance.Stop();
 			}
 			else if(logLine.Line.Contains("Gameplay.Start"))
 			{
@@ -58,8 +64,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		private async void CheckMirrorStatus()
 		{
 			_checkedMirrorStatus = true;
-			HearthMirror.Status status;
-			while((status = HearthMirror.Status.GetStatus()).MirrorStatus == MirrorStatus.ProcNotFound)
+			Status status;
+			while((status = Status.GetStatus()).MirrorStatus == MirrorStatus.ProcNotFound)
 				await Task.Delay(1000);
 			Log.Info($"Mirror status: {status.MirrorStatus}");
 			if(status.MirrorStatus != MirrorStatus.Error)
