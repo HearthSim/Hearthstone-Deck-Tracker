@@ -76,13 +76,6 @@
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Content="Automatically &quot;USE&quot; decks. (disables button on decks)"
                               Checked="CheckBoxAutoUse_OnChecked" Unchecked="CheckBoxAutoUse_OnUnchecked" />
-                    <CheckBox x:Name="CheckboxSpectatorUseNoDeck"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Use no-deck mode when spectating" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxSpectatorUseNoDeck_Checked"
-                              Unchecked="CheckboxSpectatorUseNoDeck_Unchecked" />
                     <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0"
                               Content="Card sorting: Class cards first"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"

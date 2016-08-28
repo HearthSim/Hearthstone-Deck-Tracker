@@ -445,6 +445,8 @@ namespace Hearthstone_Deck_Tracker
 			_savedReplay = false;
 			_game.Reset();
 			_game.CacheMatchInfo();
+			_game.CacheGameType();
+			_game.CacheSpectator();
 			_game.MetaData.ServerInfo = Reflection.GetServerInfo();
 			if(!string.IsNullOrEmpty(_game.MetaData.ServerInfo?.Address))
 			{
@@ -459,9 +461,9 @@ namespace Hearthstone_Deck_Tracker
 
 			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 
-			if(Config.Instance.SpectatorUseNoDeck && _game.CurrentGameMode == Spectator)
+			if(_game.CurrentGameMode == Spectator)
 			{
-				Log.Info("SpectatorUseNoDeck is enabled");
+				Log.Info("Spectating, using no-deck mode");
 				Core.MainWindow.SelectDeck(null, true);
 			}
 			else if(selectedDeck != null)
@@ -496,10 +498,9 @@ namespace Hearthstone_Deck_Tracker
 				DeckManager.ResetAutoSelectCount();
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
-				if(_game.CurrentGameMode == Spectator && !Config.Instance.RecordSpectator)
+				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
 				{
-					Log.Info("Game is in Spectator mode, discarded. (Record Spectator disabled)");
-					_assignedDeck = null;
+					Log.Info("Game was spectator mode without a game result. Probably exited spectator mode early.");
 					return;
 				}
 				var player = _game.Entities.FirstOrDefault(e => e.Value?.IsPlayer ?? false).Value;

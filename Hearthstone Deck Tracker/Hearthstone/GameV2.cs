@@ -144,6 +144,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Opponent.Id = matchInfo.OpposingPlayer.Id;
 		}
 
+		internal async void CacheGameType()
+		{
+			while((_currentGameType = (GameType)HearthMirror.Reflection.GetGameType()) == GameType.GT_UNKNOWN)
+				await Task.Delay(1000);
+		}
+
+		internal void CacheSpectator() => _spectator = HearthMirror.Reflection.IsSpectating();
+
 		internal void InvalidateMatchInfoCache() => _matchInfoCacheInvalid = true;
 
 		public void Reset(bool resetStats = true)
