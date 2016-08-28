@@ -76,13 +76,6 @@
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Content="Automatically &quot;USE&quot; decks. (disables button on decks)"
                               Checked="CheckBoxAutoUse_OnChecked" Unchecked="CheckBoxAutoUse_OnUnchecked" />
-                    <CheckBox x:Name="CheckboxAutoSelectDeck"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Autoselect deck if only one possible" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxAutoSelectDeck_Checked"
-                              Unchecked="CheckboxAutoSelectDeck_Unchecked" />
                     <CheckBox x:Name="CheckboxSpectatorUseNoDeck"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

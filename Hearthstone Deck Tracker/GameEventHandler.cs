@@ -462,12 +462,6 @@ namespace Hearthstone_Deck_Tracker
 			if(Config.Instance.SpectatorUseNoDeck && _game.CurrentGameMode == Spectator)
 			{
 				Log.Info("SpectatorUseNoDeck is enabled");
-				if(selectedDeck != null)
-				{
-					Config.Instance.ReselectLastDeckUsed = true;
-					Log.Info("ReselectLastUsedDeck set to true");
-					Config.Save();
-				}
 				Core.MainWindow.SelectDeck(null, true);
 			}
 			else if(selectedDeck != null)
@@ -504,13 +498,6 @@ namespace Hearthstone_Deck_Tracker
 				_game.InvalidateMatchInfoCache();
 				if(_game.CurrentGameMode == Spectator && !Config.Instance.RecordSpectator)
 				{
-					if(Config.Instance.ReselectLastDeckUsed && DeckList.Instance.ActiveDeck == null)
-					{
-						Core.MainWindow.SelectLastUsedDeck();
-						Config.Instance.ReselectLastDeckUsed = false;
-						Log.Info("ReselectLastUsedDeck set to false");
-						Config.Save();
-					}
 					Log.Info("Game is in Spectator mode, discarded. (Record Spectator disabled)");
 					_assignedDeck = null;
 					return;
@@ -665,14 +652,6 @@ namespace Hearthstone_Deck_Tracker
 					_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
 
 				SaveReplays();
-
-				if(Config.Instance.ReselectLastDeckUsed && selectedDeck == null)
-				{
-					Core.MainWindow.SelectLastUsedDeck();
-					Config.Instance.ReselectLastDeckUsed = false;
-					Log.Info("ReselectLastUsedDeck set to false");
-					Config.Save();
-				}
 			}
 			catch(Exception ex)
 			{

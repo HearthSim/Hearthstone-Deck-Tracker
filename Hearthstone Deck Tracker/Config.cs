@@ -134,9 +134,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool DeckPickerCaps = true;
 
-		[DefaultValue(true)]
-		public bool AutoSelectDetectedDeck = true;
-
 		[DefaultValue("Arena {Date dd-MM hh:mm}")]
 		public string ArenaDeckNameTemplate = "Arena {Date dd-MM hh:mm}";
 
@@ -782,9 +779,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(1250)]
 		public int ReplayWindowWidth = 1250;
-
-		[DefaultValue(false)]
-		public bool ReselectLastDeckUsed = false;
 
 		[DefaultValue(15)]
 		public double SecretsLeft = 15;
