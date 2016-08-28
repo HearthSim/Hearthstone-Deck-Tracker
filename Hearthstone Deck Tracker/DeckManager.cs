@@ -82,9 +82,11 @@ namespace Hearthstone_Deck_Tracker
 			}
 			if(validDecks.Count == 0)
 			{
-				Log.Info("Could not find matching deck.");
 				if(cardEntites == null || !AutoSelectDeckVersion(heroClass, mode, currentFormat, cardEntites))
-					ShowDeckSelectionDialog(validDecks);
+				{
+					Log.Info("No matching deck found, using no-deck mode");
+					Core.MainWindow.SelectDeck(null, true);
+				}
 				return;
 			}
 			if(validDecks.Count == 1)
