@@ -63,7 +63,6 @@ namespace Hearthstone_Deck_Tracker
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			Config.Load();
 			var splashScreenWindow = new SplashScreenWindow();
-			splashScreenWindow.ShowConditional();
 #if(SQUIRREL)
 			if(Config.Instance.CheckForUpdates)
 			{
@@ -76,6 +75,7 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 #endif
+			splashScreenWindow.ShowConditional();
 			Log.Initialize();
 			ConfigManager.Run();
 			var newUser = ConfigManager.PreviousVersion == null;
@@ -183,6 +183,8 @@ namespace Hearthstone_Deck_Tracker
 			var useNoDeckMenuItem = TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
 			while(UpdateOverlay)
 			{
+				if(Config.Instance.CheckForUpdates)
+					Updater.CheckForUpdates();
 				if(User32.GetHearthstoneWindow() != IntPtr.Zero)
 				{
 					if(Game.CurrentRegion == Region.UNKNOWN)
@@ -196,9 +198,6 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 					Overlay.UpdatePosition();
-
-					if(Config.Instance.CheckForUpdates)
-						Updater.CheckForUpdates();
 
 					if(!Game.IsRunning)
 					{
