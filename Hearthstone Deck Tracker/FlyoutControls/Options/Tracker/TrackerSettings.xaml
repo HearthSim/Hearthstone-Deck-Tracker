@@ -43,10 +43,6 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
                               Unchecked="CheckboxMinimizeTray_Unchecked" />
-                    <CheckBox x:Name="CheckBoxShowLoginDialog" Content="Show login dialog"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxShowLoginDialog_Checked"
-                              Unchecked="CheckboxShowLoginDialog_Unchecked" />
                     <CheckBox x:Name="CheckBoxShowSplashScreen" Content="Show the loading splash screen"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
@@ -54,11 +50,15 @@
                               VerticalAlignment="Top" Checked="CheckboxShowSplashScreen_Checked"
                               Unchecked="CheckboxShowSplashScreen_Unchecked" />
                     <CheckBox x:Name="CheckboxCloseWithHearthstone"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Content="Close with Hearthstone" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxCloseWithHearthstone_Checked"
                               Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
                     <CheckBox x:Name="CheckboxStartHearthstoneWithHDT"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Content="Start Hearthstone with HDT" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxStartHearthstoneWithHDT_Checked"
@@ -98,10 +98,10 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxLogTab_Checked"
                               Unchecked="CheckboxLogTab_Unchecked" />
-                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content="set hearthstone path"
-                            Click="ButtonGamePath_OnClick" />
-                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content="open appdata folder"
-                            Click="ButtonOpenAppData_OnClick" />
+                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content="set hearthstone path" Click="ButtonGamePath_OnClick"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content="open appdata folder" Click="ButtonOpenAppData_OnClick" 
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
                     <Button Name="SelectSaveDataPath" Margin="10,5,10,0" Content="set data path"
                             Click="SelectSaveDataPath_Click"
                             Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
@@ -110,8 +110,6 @@
                             Click="ButtonHearthstoneLogsDirectory_Click"
                             Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                             Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-                    <Button Name="ButtonRestart" Margin="10,15,10,0" Content="restart hdt"
-                            Click="ButtonRestart_OnClick" />
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>

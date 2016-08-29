@@ -44,7 +44,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxStartHearthstoneWithHDT.IsChecked = Config.Instance.StartHearthstoneWithHDT;
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
 			CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
-			CheckBoxShowLoginDialog.IsChecked = Config.Instance.ShowLoginDialog;
 			CheckBoxShowSplashScreen.IsChecked = Config.Instance.ShowSplashScreen;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
 			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;
@@ -328,22 +327,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private void CheckboxShowLoginDialog_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowLoginDialog = true;
-			Config.Save();
-		}
-
-		private void CheckboxShowLoginDialog_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowLoginDialog = false;
-			Config.Save();
-		}
-
 		private void CheckboxShowSplashScreen_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -358,11 +341,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ShowSplashScreen = false;
 			Config.Save();
-		}
-
-		private void ButtonRestart_OnClick(object sender, RoutedEventArgs e)
-		{
-			Core.MainWindow.Restart();
 		}
 
 		private void CheckBoxAnalytics_OnChecked(object sender, RoutedEventArgs e)

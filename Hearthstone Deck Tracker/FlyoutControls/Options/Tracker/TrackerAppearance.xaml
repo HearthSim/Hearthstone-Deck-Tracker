@@ -42,16 +42,16 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="Class Icons:" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
+                    <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+                        <Label Content="Class Icons:" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <ComboBox x:Name="ComboBoxIconSet" HorizontalAlignment="Right"
                                   VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboboxIconSet_SelectionChanged" />
                     </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="Class colors:" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
+                    <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+                        <Label Content="Class colors:" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
                                   VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboBoxClassColors_SelectionChanged">
@@ -69,9 +69,9 @@
                                   VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboBoxCardTheme_SelectionChanged" />
                     </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="Deck layout:" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
+                    <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+                        <Label Content="Deck layout:" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" />
                         <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
                                   VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboboxDeckLayout_SelectionChanged">
