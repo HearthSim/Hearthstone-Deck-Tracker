@@ -20,11 +20,6 @@
                     <CheckBox Name="CheckBoxShowNotifications" Content="Show notifications"
                               Checked="CheckBoxShowNotifications_OnChecked"
                               Unchecked="CheckBoxShowNotifications_OnUnchecked" />
-                    <CheckBox Name="CheckBoxUnexpectedOnly" Content="Only show for unexpected casual games*"
-                              ToolTip="In case HDT likely failed to detect gamemode as ranked (previous game was ranked)"
-                              IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxShowNotifications}"
-                              Margin="0,5,0,0" Checked="CheckBoxUnexpectedOnly_OnChecked"
-                              Unchecked="CheckBoxUnexpectedOnly_OnUnchecked" />
                     <StackPanel Orientation="Horizontal" Margin="0,5,0,0"
                                 IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxShowNotifications}">
                         <TextBlock Text="Show for" VerticalAlignment="Center" />
