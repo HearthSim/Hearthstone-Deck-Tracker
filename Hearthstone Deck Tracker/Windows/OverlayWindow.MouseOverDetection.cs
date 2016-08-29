@@ -47,10 +47,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					CanvasInfo.Children.Remove(lbl);
 				_debugBoardObjects.Clear();
 			}
+			var isGameOver = IsGameOver;
 			for(var i = 0; i < MaxBoardSize; i++)
 			{
-				_oppBoard[i].Visibility = oppBoard.Count > i && !_game.IsInMenu ? Visibility.Visible : Visibility.Collapsed;
-				_playerBoard[i].Visibility = playerBoard.Count > i && !_game.IsInMenu ? Visibility.Visible : Visibility.Collapsed;
+				_oppBoard[i].Visibility = oppBoard.Count > i && !isGameOver ? Visibility.Visible : Visibility.Collapsed;
+				_playerBoard[i].Visibility = playerBoard.Count > i && !isGameOver ? Visibility.Visible : Visibility.Collapsed;
 				if(Config.Instance.Debug && !_game.IsInMenu)
 				{
 					if(i < oppBoard.Count)
@@ -62,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var playerHandCount = _game.Player.HandCount;
 			for(var i = 0; i < MaxHandSize; i++)
 			{
-				if(_game.IsInMenu)
+				if(isGameOver)
 				{
 					_playerHand[i].Visibility = Visibility.Collapsed;
 					continue;
@@ -80,6 +81,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 					AddCardDebugOverlay(_playerHand[i], GetPlayerCardPosition(i, playerHandCount));
 			}
 		}
+
+		private bool IsGameOver => _game.IsInMenu || _game.GameEntity == null || _game.GameEntity.GetTag(GameTag.STATE) == (int)State.COMPLETE;
 
 		private double GetCardAngle(int playerHandCount, System.Windows.Point pos, int i)
 		{
@@ -129,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void DetectMouseOver(List<Entity> playerBoard, List<Entity> oppBoard)
 		{
-			if(playerBoard.Count == 0 && oppBoard.Count == 0 && _game.Player.HandCount == 0)
+			if(playerBoard.Count == 0 && oppBoard.Count == 0 && _game.Player.HandCount == 0 || IsGameOver)
 			{
 				FlavorTextVisibility = Visibility.Collapsed;
 				return;
