@@ -117,6 +117,7 @@ namespace Hearthstone_Deck_Tracker.Exporting
 				await ClearSearchBox();
 
 			await _mouse.ClickOnPoint(_info.SearchBoxPos);
+			await Task.Delay(Config.Instance.DeckExportDelay);
 
 			if(Config.Instance.ExportPasteClipboard || !Helper.LatinLanguages.Contains(Config.Instance.SelectedLanguage))
 			{
