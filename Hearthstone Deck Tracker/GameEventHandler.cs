@@ -124,7 +124,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private bool _savedReplay;
-		private async void SaveReplays()
+		private async Task SaveReplays()
 		{
 			if(!_savedReplay && _game.CurrentGameStats != null)
 			{
@@ -652,7 +652,13 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.StoredGameStats != null)
 					_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
 
-				SaveReplays();
+				await SaveReplays();
+
+				if(Config.Instance.ShowGameResultNotifications && RecordCurrentGameMode)
+				{
+					var deckName = _assignedDeck == null ? "No deck - " + _game.CurrentGameStats.PlayerHero : _assignedDeck.NameAndVersion;
+					ToastManager.ShowGameResultToast(deckName, _game.CurrentGameStats);
+				}
 			}
 			catch(Exception ex)
 			{
@@ -716,11 +722,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(RecordCurrentGameMode)
 			{
-				if(Config.Instance.ShowGameResultNotifications && !Config.Instance.GameResultNotificationsUnexpectedOnly)
-				{
-					var deckName = _assignedDeck == null ? "No deck - " + _game.CurrentGameStats.PlayerHero : _assignedDeck.NameAndVersion;
-					ToastManager.ShowGameResultToast(deckName, _game.CurrentGameStats);
-				}
 				if(Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 				{
 					_showedNoteDialog = true;

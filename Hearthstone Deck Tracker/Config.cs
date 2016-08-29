@@ -392,9 +392,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
 
-		[DefaultValue(false)]
-		public bool GameResultNotificationsUnexpectedOnly = false;
-
 		[DefaultValue(0.075)]
 		public double GoldProgessX = 0.76;
 
