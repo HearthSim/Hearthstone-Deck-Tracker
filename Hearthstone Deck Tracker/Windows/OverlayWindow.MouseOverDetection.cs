@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var playerHandCount = _game.Player.HandCount;
 			for(var i = 0; i < MaxHandSize; i++)
 			{
-				if(_game.IsInMenu)
+				if(_game.IsInMenu || _game.GameEntity == null || _game.GameEntity.GetTag(GameTag.STATE) == (int)State.COMPLETE)
 				{
 					_playerHand[i].Visibility = Visibility.Collapsed;
 					continue;
