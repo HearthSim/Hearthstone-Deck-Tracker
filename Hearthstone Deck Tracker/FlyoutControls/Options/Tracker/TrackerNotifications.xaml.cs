@@ -23,7 +23,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public void Load()
 		{
 			CheckBoxShowNotifications.IsChecked = Config.Instance.ShowGameResultNotifications;
-			CheckBoxUnexpectedOnly.IsChecked = Config.Instance.GameResultNotificationsUnexpectedOnly;
 			CheckboxNoteDialog.IsChecked = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
 			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
@@ -74,22 +73,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ShowGameResultNotifications = false;
-			Config.Save();
-		}
-
-		private void CheckBoxUnexpectedOnly_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.GameResultNotificationsUnexpectedOnly = true;
-			Config.Save();
-		}
-
-		private void CheckBoxUnexpectedOnly_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.GameResultNotificationsUnexpectedOnly = false;
 			Config.Save();
 		}
 
