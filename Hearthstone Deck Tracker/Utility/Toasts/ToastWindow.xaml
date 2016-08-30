@@ -7,7 +7,7 @@
         mc:Ignorable="d" ShowInTaskbar="False"
         WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Topmost="True"
         BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
-        SizeToContent="WidthAndHeight"
+        SizeToContent="WidthAndHeight" SourceInitialized="Window_SourceInitialized" 
         Width="10" Height="10"
         Title="ToastWindow">
     <Window.Resources>

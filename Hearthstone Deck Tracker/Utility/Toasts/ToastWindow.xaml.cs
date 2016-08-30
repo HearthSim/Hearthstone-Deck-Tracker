@@ -1,18 +1,17 @@
 #region
 
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media.Animation;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Utility.Toasts
 {
-	/// <summary>
-	/// Interaction logic for ToastWindow.xaml
-	/// </summary>
-	public partial class ToastWindow : Window
+	public partial class ToastWindow
 	{
 		private readonly TaskCompletionSource<object> _tcs = new TaskCompletionSource<object>();
 
@@ -32,6 +31,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 			};
 			sb.Begin(this);
 			return _tcs.Task;
+		}
+
+		private void Window_SourceInitialized(object sender, EventArgs e)
+		{
+			var hwnd = new WindowInteropHelper(this).Handle;
+			User32.SetWindowExStyle(hwnd, User32.WsExToolWindow);
 		}
 	}
 }
