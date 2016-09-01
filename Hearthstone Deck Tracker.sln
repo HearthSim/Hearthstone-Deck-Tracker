@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthMirror", "HearthMirro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HSReplay", "HSReplay-Api\HSReplay\HSReplay.csproj", "{A6264074-8A96-417C-9673-5EE7E9820B1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthWatcher", "HearthWatcher\HearthWatcher.csproj", "{02E1843D-3F5D-45E0-9B16-1F28209EED82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthWatcher.Test", "HearthWatcher.Test\HearthWatcher.Test.csproj", "{D081BCA4-14FD-4FBC-B92A-82574AB0478B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -72,6 +76,18 @@ Global
 		{A6264074-8A96-417C-9673-5EE7E9820B1F}.Release|x86.Build.0 = Release|x86
 		{A6264074-8A96-417C-9673-5EE7E9820B1F}.Squirrel|x86.ActiveCfg = Release|x86
 		{A6264074-8A96-417C-9673-5EE7E9820B1F}.Squirrel|x86.Build.0 = Release|x86
+		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Debug|x86.ActiveCfg = Debug|x86
+		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Debug|x86.Build.0 = Debug|x86
+		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Release|x86.ActiveCfg = Release|x86
+		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Release|x86.Build.0 = Release|x86
+		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Squirrel|x86.ActiveCfg = Release|x86
+		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Squirrel|x86.Build.0 = Release|x86
+		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Debug|x86.ActiveCfg = Debug|x86
+		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Debug|x86.Build.0 = Debug|x86
+		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Release|x86.ActiveCfg = Release|x86
+		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Release|x86.Build.0 = Release|x86
+		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Squirrel|x86.ActiveCfg = Release|x86
+		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Squirrel|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
