@@ -46,16 +46,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		}
 
 		public Hearthstone.Card Card => Database.GetCardFromId(CardIds.Collectible.Neutral.RagnarosTheFirelord);
-		public ImageBrush ClassicCard => GetCardImage("classic");
-		public ImageBrush MinimalCard => GetCardImage("minimal");
-		public ImageBrush DarkCard => GetCardImage("dark");
-		public ImageBrush FrostCard => GetCardImage("frost");
+		public DrawingBrush ClassicCard => GetCardImage("classic");
+		public DrawingBrush MinimalCard => GetCardImage("minimal");
+		public DrawingBrush DarkCard => GetCardImage("dark");
+		public DrawingBrush FrostCard => GetCardImage("frost");
 
-		public ImageBrush GetCardImage(string themeName)
+		public DrawingBrush GetCardImage(string themeName)
 		{
 			var theme = ThemeManager.Themes.FirstOrDefault(x => x.Name == themeName);
 			if(theme == null)
-				return new ImageBrush();
+				return new DrawingBrush();
 			var buildType = theme.BuildType ?? typeof(DefaultBarImageBuilder);
 			return ((CardBarImageBuilder)Activator.CreateInstance(buildType, Card, theme.Directory)).Build();
 		}

@@ -87,12 +87,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			HasAllOptionalCountBoxes = OptionalCountBoxes.All(x => File.Exists(Path.Combine(ThemeDir, x.Value.FileName)));
 		}
 
-		public virtual ImageBrush Build()
+		public virtual DrawingBrush Build()
 		{
-			DrawingGroup.Children.Clear();
+			DrawingGroup = new DrawingGroup();
 
 			if(!HasAllRequired)
-				return new ImageBrush();
+				return new DrawingBrush();
 
 			AddCardImage();
 			AddFadeOverlay();
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			if(Card.Count <= 0 || Card.Jousted)
 				AddDarken();
 
-			return new ImageBrush { ImageSource = new DrawingImage(DrawingGroup) };
+			return new DrawingBrush(DrawingGroup);
 		}
 
 		protected virtual void AddCardImage() => AddCardImage(ImageRect, false);
