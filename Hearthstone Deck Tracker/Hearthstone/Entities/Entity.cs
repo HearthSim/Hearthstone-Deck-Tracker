@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		}
 
 		[JsonIgnore]
-		public ImageBrush Background => Card.Background;
+		public DrawingBrush Background => Card.Background;
 
 		[JsonIgnore]
 		public FontFamily Font
