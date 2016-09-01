@@ -379,6 +379,7 @@
     <Compile Include="Enums\TagFilterOperation.cs" />
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
+    <Compile Include="Hearthstone\Watchers.cs" />
     <Compile Include="HsReplay\UploadMetaDataGenerator.cs" />
     <Compile Include="Importing\Game\ImportOptions\ExistingDeck.cs" />
     <Compile Include="Exporting\ExportingActions.cs" />
@@ -1379,6 +1380,10 @@
     <ProjectReference Include="..\HearthMirror\HearthMirror\HearthMirror.csproj">
       <Project>{1694a2f8-645a-4263-a6ab-fc26323fd675}</Project>
       <Name>HearthMirror</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HearthWatcher\HearthWatcher.csproj">
+      <Project>{02e1843d-3f5d-45e0-9b16-1f28209eed82}</Project>
+      <Name>HearthWatcher</Name>
     </ProjectReference>
     <ProjectReference Include="..\HSReplay-Api\HSReplay\HSReplay.csproj">
       <Project>{a6264074-8a96-417c-9673-5ee7e9820b1f}</Project>

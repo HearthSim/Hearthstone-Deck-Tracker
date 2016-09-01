@@ -49,6 +49,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus && (DateTime.Now - logLine.Time).TotalSeconds < 5)
 					CheckMirrorStatus();
 
+				if(game.CurrentMode == Mode.DRAFT)
+					Watchers.ArenaWatcher.Run();
+				else
+					Watchers.ArenaWatcher.Stop();
+
 				if(game.CurrentMode == Mode.PACKOPENING)
 					PackOpeningWatcher.Instance.Run();
 				else
