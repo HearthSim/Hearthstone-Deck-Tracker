@@ -76,6 +76,7 @@ namespace Hearthstone_Deck_Tracker
 			splashScreenWindow.ShowConditional();
 			Log.Initialize();
 			ConfigManager.Run();
+			Helper.UpdateCultureInfo();
 			var newUser = ConfigManager.PreviousVersion == null;
 			LogConfigUpdater.Run().Forget();
 			LogConfigWatcher.Start();

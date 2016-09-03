@@ -34,6 +34,7 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using WPFLocalizeExtension.Engine;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Color = System.Drawing.Color;
@@ -711,6 +712,12 @@ namespace Hearthstone_Deck_Tracker
 			Uri result;
 			return Uri.TryCreate(url, UriKind.Absolute, out result)
 				&& (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps);
+		}
+
+		public static void UpdateCultureInfo()
+		{
+			var locStr = Config.Instance.Localization.ToString().Insert(2, "-");
+			LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(locStr);
 		}
 	}
 }

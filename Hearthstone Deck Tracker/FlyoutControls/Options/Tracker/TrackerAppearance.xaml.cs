@@ -1,12 +1,14 @@
 ﻿#region
 
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
+using WPFLocalizeExtension.Engine;
 
 #endregion
 
@@ -28,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			ComboboxAccent.ItemsSource = ThemeManager.Accents;
 			ComboboxTheme.ItemsSource = Enum.GetValues(typeof(MetroTheme));
+			ComboBoxLanguage.ItemsSource = Enum.GetValues(typeof(Language));
 			ComboBoxDeckLayout.ItemsSource = Enum.GetValues(typeof(DeckLayout));
 			ComboBoxIconSet.ItemsSource = new[] {IconStyle.Round, IconStyle.Square};
 			ComboBoxClassColors.ItemsSource = Enum.GetValues(typeof(ClassColorScheme));
@@ -36,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			ComboboxTheme.SelectedItem = Config.Instance.AppTheme;
 			ComboboxAccent.SelectedItem = Helper.GetAppAccent();
+			ComboBoxLanguage.SelectedItem = Config.Instance.Localization;
 
 			ComboBoxIconSet.SelectedItem = Config.Instance.ClassIconStyle;
 			ComboBoxDeckLayout.SelectedItem = Config.Instance.DeckPickerItemLayout;
@@ -176,6 +180,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.RarityCardGems = false;
 			Config.Save();
 			Utility.Themes.ThemeManager.UpdateCards();
+		}
+
+		private void ComboBoxLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.Localization = (Language)ComboBoxLanguage.SelectedItem;
+			Config.Save();
+			Helper.UpdateCultureInfo();
 		}
 	}
 }
