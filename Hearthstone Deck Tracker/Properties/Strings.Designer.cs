@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Hearthstone_Deck_Tracker.Properties
-{
+namespace Hearthstone_Deck_Tracker.Properties {
     using System;
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,807 +22,1949 @@ namespace Hearthstone_Deck_Tracker.Properties
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Strings
-    {
+    public class Strings {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Strings()
-        {
+        internal Strings() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Hearthstone_Deck_Tracker.Properties.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secret scaling:.
+        /// </summary>
+        public static string _ {
+            get {
+                return ResourceManager.GetString("\\", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Launcher / Hearthstone.
+        /// </summary>
+        public static string MainWindow_Button_StartHearthstone {
+            get {
+                return ResourceManager.GetString("MainWindow_Button_StartHearthstone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Button_Cancel {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Button_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Button_Filter {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Button_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Button_Save {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Button_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (current).
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Button_Save_Current {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Button_Save_Current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save as new.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Button_Save_New {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Button_Save_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show version history.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Button_VerionHistory {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Button_VerionHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Constructed card limits.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_CheckBox_CardLimit {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_CheckBox_CardLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include wild-only cards.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_CheckBox_IncludeWild {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_CheckBox_IncludeWild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cost.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Cost {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Cost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Cost_All {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Cost_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_All {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Basic {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Basic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blackrock Mountain.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Brm {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Brm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classic.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Classic {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Classic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Goblins vs Gnomes.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Gvg {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Gvg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to League of Explorers.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Loe {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Loe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Curse of Naxxramas.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Naxx {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Naxx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One Night in Karazhan.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Onik {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Onik", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promotion.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Promo {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Promo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Grand Tournament.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Tgt {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Tgt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whispers of the old Gods.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Set_Wotog {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Set_Wotog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Type {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Type_All {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Type_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Class only.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Type_Class {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Type_Class", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Neutral only.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Filter_Type_Neutral {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Filter_Type_Neutral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deck History:.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_History_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_History_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cards:.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Label_Cards {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Label_Cards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name....
+        /// </summary>
+        public static string MainWindow_DeckBuilder_TextBox_Name_Watermark {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_TextBox_Name_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name already exists.
+        /// </summary>
+        public static string MainWindow_DeckBuilder_Warning_ToolTip_NameAlreadyExists {
+            get {
+                return ResourceManager.GetString("MainWindow_DeckBuilder_Warning_ToolTip_NameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deck Importing.
+        /// </summary>
+        public static string MainWindow_Flyout_DeckImporting_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_DeckImporting_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Errors.
+        /// </summary>
+        public static string MainWindow_Flyout_Errors_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_Errors_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string MainWindow_Flyout_Help_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_Help_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        public static string MainWindow_Flyout_Notes_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_Notes_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opponent Deck.
+        /// </summary>
+        public static string MainWindow_Flyout_OpponentDeck_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_OpponentDeck_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string MainWindow_Flyout_Options_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_Options_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Tags.
+        /// </summary>
+        public static string MainWindow_Flyout_SetTags_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_SetTags_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort / Filter Decks.
+        /// </summary>
+        public static string MainWindow_Flyout_SortFilter_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_SortFilter_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stats.
+        /// </summary>
+        public static string MainWindow_Flyout_Stats_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_Stats_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to new window.
+        /// </summary>
+        public static string MainWindow_Flyout_Stats_Move {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_Stats_Move", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update Notes.
+        /// </summary>
+        public static string MainWindow_Flyout_UpdateNotes_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_Flyout_UpdateNotes_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected version:.
+        /// </summary>
+        public static string MainWindow_Label_SelectedVersion {
+            get {
+                return ResourceManager.GetString("MainWindow_Label_SelectedVersion", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to _Druid.
         /// </summary>
-        public static string MainWindow_Menu_Class_Druid
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Class_Druid", resourceCulture);
+        public static string MainWindow_Menu_Class_Druid {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Class_Druid", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Hunter.
         /// </summary>
-        public static string MainWindow_Menu_Class_Hunter
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Class_Hunter", resourceCulture);
+        public static string MainWindow_Menu_Class_Hunter {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Class_Hunter", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Mage.
         /// </summary>
-        public static string MainWindow_Menu_Class_Mage
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Class_Mage", resourceCulture);
+        public static string MainWindow_Menu_Class_Mage {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Class_Mage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to P_aladin.
         /// </summary>
-        public static string MainWindow_Menu_Class_Paladin
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Class_Paladin", resourceCulture);
+        public static string MainWindow_Menu_Class_Paladin {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Class_Paladin", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Priest.
         /// </summary>
-        public static string MainWindow_Menu_Class_Priest
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Class_Priest", resourceCulture);
+        public static string MainWindow_Menu_Class_Priest {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Class_Priest", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Rogue.
         /// </summary>
-        public static string MainWindow_Menu_Class_Rogue
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Class_Rogue", resourceCulture);
+        public static string MainWindow_Menu_Class_Rogue {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Class_Rogue", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Shaman.
         /// </summary>
-        public static string MainWindow_Menu_Class_Shaman
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Class_Shaman", resourceCulture);
+        public static string MainWindow_Menu_Class_Shaman {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Class_Shaman", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Warlock.
         /// </summary>
-        public static string MainWindow_Menu_Class_Warlock
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Class_Warlock", resourceCulture);
+        public static string MainWindow_Menu_Class_Warlock {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Class_Warlock", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Wa_rrior.
         /// </summary>
-        public static string MainWindow_Menu_Class_Warrior
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Class_Warrior", resourceCulture);
+        public static string MainWindow_Menu_Class_Warrior {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Class_Warrior", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Deck.
         /// </summary>
-        public static string MainWindow_Menu_Deck
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck", resourceCulture);
+        public static string MainWindow_Menu_Deck {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Archive.
         /// </summary>
-        public static string MainWindow_Menu_Deck_Archive
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_Archive", resourceCulture);
+        public static string MainWindow_Menu_Deck_Archive {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_Archive", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Clone.
         /// </summary>
-        public static string MainWindow_Menu_Deck_Clone
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_Clone", resourceCulture);
+        public static string MainWindow_Menu_Deck_Clone {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_Clone", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Entire deck.
         /// </summary>
-        public static string MainWindow_Menu_Deck_Clone_EntireDeck
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_Clone_EntireDeck", resourceCulture);
+        public static string MainWindow_Menu_Deck_Clone_EntireDeck {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_Clone_EntireDeck", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Selected version.
         /// </summary>
-        public static string MainWindow_Menu_Deck_Clone_Version
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_Clone_Version", resourceCulture);
+        public static string MainWindow_Menu_Deck_Clone_Version {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_Clone_Version", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Delete.
         /// </summary>
-        public static string MainWindow_Menu_Deck_DeleteDeck
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_DeleteDeck", resourceCulture);
+        public static string MainWindow_Menu_Deck_DeleteDeck {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_DeleteDeck", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit _deck.
         /// </summary>
-        public static string MainWindow_Menu_Deck_EditDeck
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_EditDeck", resourceCulture);
+        public static string MainWindow_Menu_Deck_EditDeck {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_EditDeck", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit na_me.
         /// </summary>
-        public static string MainWindow_Menu_Deck_EditName
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_EditName", resourceCulture);
+        public static string MainWindow_Menu_Deck_EditName {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_EditName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit _notes.
         /// </summary>
-        public static string MainWindow_Menu_Deck_EditNotes
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_EditNotes", resourceCulture);
+        public static string MainWindow_Menu_Deck_EditNotes {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_EditNotes", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Edit _tags.
         /// </summary>
-        public static string MainWindow_Menu_Deck_EditTags
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_EditTags", resourceCulture);
+        public static string MainWindow_Menu_Deck_EditTags {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_EditTags", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Show _missing cards.
         /// </summary>
-        public static string MainWindow_Menu_Deck_MissingCards
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_MissingCards", resourceCulture);
+        public static string MainWindow_Menu_Deck_MissingCards {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_MissingCards", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Move to arena.
         /// </summary>
-        public static string MainWindow_Menu_Deck_MoveToArena
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_MoveToArena", resourceCulture);
+        public static string MainWindow_Menu_Deck_MoveToArena {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_MoveToArena", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Move to constructed.
         /// </summary>
-        public static string MainWindow_Menu_Deck_MoveToContrstucted
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_MoveToContrstucted", resourceCulture);
+        public static string MainWindow_Menu_Deck_MoveToContrstucted {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_MoveToContrstucted", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open HearthStats.
         /// </summary>
-        public static string MainWindow_Menu_Deck_OpenHearthStats
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_OpenHearthStats", resourceCulture);
+        public static string MainWindow_Menu_Deck_OpenHearthStats {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_OpenHearthStats", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Open _website.
         /// </summary>
-        public static string MainWindow_Menu_Deck_OpenWebsite
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_OpenWebsite", resourceCulture);
+        public static string MainWindow_Menu_Deck_OpenWebsite {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_OpenWebsite", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Quick set tag.
         /// </summary>
-        public static string MainWindow_Menu_Deck_QuickSetTag
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_QuickSetTag", resourceCulture);
+        public static string MainWindow_Menu_Deck_QuickSetTag {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_QuickSetTag", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Unarchive.
         /// </summary>
-        public static string MainWindow_Menu_Deck_Unarchive
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_Unarchive", resourceCulture);
+        public static string MainWindow_Menu_Deck_Unarchive {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_Unarchive", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Update (web).
         /// </summary>
-        public static string MainWindow_Menu_Deck_UpdateWeb
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Deck_UpdateWeb", resourceCulture);
+        public static string MainWindow_Menu_Deck_UpdateWeb {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_UpdateWeb", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to E_xport.
         /// </summary>
-        public static string MainWindow_Menu_Export
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Export", resourceCulture);
+        public static string MainWindow_Menu_Export {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Export", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy _names to clipboard.
         /// </summary>
-        public static string MainWindow_Menu_Export_Clpiboard
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Export_Clpiboard", resourceCulture);
+        public static string MainWindow_Menu_Export_Clpiboard {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Export_Clpiboard", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to To _Hearthstone.
         /// </summary>
-        public static string MainWindow_Menu_Export_Hearthstone
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Export_Hearthstone", resourceCulture);
+        public static string MainWindow_Menu_Export_Hearthstone {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Export_Hearthstone", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to To Hearthstone from _Web.
         /// </summary>
-        public static string MainWindow_Menu_Export_Hearthstone_FromWeb
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Export_Hearthstone_FromWeb", resourceCulture);
+        public static string MainWindow_Menu_Export_Hearthstone_FromWeb {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Export_Hearthstone_FromWeb", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Copy IDs to _clipboard.
         /// </summary>
-        public static string MainWindow_Menu_Export_Ids
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Export_Ids", resourceCulture);
+        public static string MainWindow_Menu_Export_Ids {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Export_Ids", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Screenshot.
         /// </summary>
-        public static string MainWindow_Menu_Export_Screenshot
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Export_Screenshot", resourceCulture);
+        public static string MainWindow_Menu_Export_Screenshot {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Export_Screenshot", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Screenshot (with info).
         /// </summary>
-        public static string MainWindow_Menu_Export_Screenshot_Info
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Export_Screenshot_Info", resourceCulture);
+        public static string MainWindow_Menu_Export_Screenshot_Info {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Export_Screenshot_Info", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Save as _Xml.
         /// </summary>
-        public static string MainWindow_Menu_Export_Xml
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Export_Xml", resourceCulture);
+        public static string MainWindow_Menu_Export_Xml {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Export_Xml", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Dashboard (web).
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_Dashboard
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_Dashboard", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_Dashboard {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_Dashboard", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Auto delete decks.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_DeleteDecks
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_DeleteDecks", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_DeleteDecks {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_DeleteDecks", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Auto delete games.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_DeleteGames
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_DeleteGames", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_DeleteGames {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_DeleteGames", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Delete selected decks.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_DeleteSelected
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_DeleteSelected", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_DeleteSelected {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_DeleteSelected", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Force full sync.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_ForceSync
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_ForceSync", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_ForceSync {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_ForceSync", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Login.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_Login
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_Login", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_Login {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_Login", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Logout.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_Logout
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_Logout", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_Logout {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_Logout", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Sync now.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_Sync
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_Sync", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_Sync {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_Sync", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Auto Sync in background.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_SyncInBackground
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_SyncInBackground", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_SyncInBackground {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_SyncInBackground", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Sync on start.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_SyncOnStart
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_SyncOnStart", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_SyncOnStart {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_SyncOnStart", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Auto upload new decks.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_UploadDecks
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_UploadDecks", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_UploadDecks {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_UploadDecks", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Auto upload games.
         /// </summary>
-        public static string MainWindow_Menu_HearthStats_UploadGames
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_HearthStats_UploadGames", resourceCulture);
+        public static string MainWindow_Menu_HearthStats_UploadGames {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_HearthStats_UploadGames", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Import.
         /// </summary>
-        public static string MainWindow_Menu_Import
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import", resourceCulture);
+        public static string MainWindow_Menu_Import {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to From _Arena.
         /// </summary>
-        public static string MainWindow_Menu_Import_Arena
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import_Arena", resourceCulture);
+        public static string MainWindow_Menu_Import_Arena {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import_Arena", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to From _Tavern Brawl.
         /// </summary>
-        public static string MainWindow_Menu_Import_Brawl
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import_Brawl", resourceCulture);
+        public static string MainWindow_Menu_Import_Brawl {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import_Brawl", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to From _Constructed.
         /// </summary>
-        public static string MainWindow_Menu_Import_Constructed
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import_Constructed", resourceCulture);
+        public static string MainWindow_Menu_Import_Constructed {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import_Constructed", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Other.
         /// </summary>
-        public static string MainWindow_Menu_Import_Other
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import_Other", resourceCulture);
+        public static string MainWindow_Menu_Import_Other {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import_Other", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to From clipboard.
         /// </summary>
-        public static string MainWindow_Menu_Import_Other_Clipboard
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import_Other_Clipboard", resourceCulture);
+        public static string MainWindow_Menu_Import_Other_Clipboard {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import_Other_Clipboard", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to From file.
         /// </summary>
-        public static string MainWindow_Menu_Import_Other_File
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import_Other_File", resourceCulture);
+        public static string MainWindow_Menu_Import_Other_File {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import_Other_File", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to From ids.
         /// </summary>
-        public static string MainWindow_Menu_Import_Other_Ids
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import_Other_Ids", resourceCulture);
+        public static string MainWindow_Menu_Import_Other_Ids {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import_Other_Ids", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to From last game.
         /// </summary>
-        public static string MainWindow_Menu_Import_Other_LastGame
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import_Other_LastGame", resourceCulture);
+        public static string MainWindow_Menu_Import_Other_LastGame {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import_Other_LastGame", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to From _web.
         /// </summary>
-        public static string MainWindow_Menu_Import_Web
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Import_Web", resourceCulture);
+        public static string MainWindow_Menu_Import_Web {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Import_Web", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _New.
         /// </summary>
-        public static string MainWindow_Menu_New
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_New", resourceCulture);
+        public static string MainWindow_Menu_New {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_New", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to _Plugins.
         /// </summary>
-        public static string MainWindow_Menu_Plugins
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Plugins", resourceCulture);
+        public static string MainWindow_Menu_Plugins {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Plugins", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Empty....
         /// </summary>
-        public static string MainWindow_Menu_Plugins_Empty
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Plugins_Empty", resourceCulture);
+        public static string MainWindow_Menu_Plugins_Empty {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Plugins_Empty", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Replays.
         /// </summary>
-        public static string MainWindow_Menu_Replays
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Replays", resourceCulture);
+        public static string MainWindow_Menu_Replays {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Replays", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Claim account.
         /// </summary>
-        public static string MainWindow_Menu_Replays_ClaimAccount
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Replays_ClaimAccount", resourceCulture);
+        public static string MainWindow_Menu_Replays_ClaimAccount {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Replays_ClaimAccount", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Load from _file.
         /// </summary>
-        public static string MainWindow_Menu_Replays_File
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Replays_File", resourceCulture);
+        public static string MainWindow_Menu_Replays_File {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Replays_File", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Latest replays.
         /// </summary>
-        public static string MainWindow_Menu_Replays_Latest
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Replays_Latest", resourceCulture);
+        public static string MainWindow_Menu_Replays_Latest {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Replays_Latest", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to My account.
         /// </summary>
-        public static string MainWindow_Menu_Replays_MyAccount
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Replays_MyAccount", resourceCulture);
+        public static string MainWindow_Menu_Replays_MyAccount {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Replays_MyAccount", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Select from stats.
         /// </summary>
-        public static string MainWindow_Menu_Replays_Stats
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Replays_Stats", resourceCulture);
+        public static string MainWindow_Menu_Replays_Stats {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Replays_Stats", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Stats.
         /// </summary>
-        public static string MainWindow_Menu_Stats
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Stats", resourceCulture);
+        public static string MainWindow_Menu_Stats {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Stats", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Arena.
         /// </summary>
-        public static string MainWindow_Menu_Stats_Arena
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Stats_Arena", resourceCulture);
+        public static string MainWindow_Menu_Stats_Arena {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Stats_Arena", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to _Constructed.
         /// </summary>
-        public static string MainWindow_Menu_Stats_Constructed
-        {
-            get
-            {
-                return ResourceManager.GetString("Menu_Stats_Constructed", resourceCulture);
+        public static string MainWindow_Menu_Stats_Constructed {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Stats_Constructed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News:.
+        /// </summary>
+        public static string MainWindow_NewsBar_Header {
+            get {
+                return ResourceManager.GetString("MainWindow_NewsBar_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to update now.
+        /// </summary>
+        public static string MainWindow_StatusBarUpdate_ClickToUpdate {
+            get {
+                return ResourceManager.GetString("MainWindow_StatusBarUpdate_ClickToUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A new update is available.
+        /// </summary>
+        public static string MainWindow_StatusBarUpdate_NewUpdateAvailable {
+            get {
+                return ResourceManager.GetString("MainWindow_StatusBarUpdate_NewUpdateAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donate.
+        /// </summary>
+        public static string MainWindow_TitleBar_Donate {
+            get {
+                return ResourceManager.GetString("MainWindow_TitleBar_Donate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help.
+        /// </summary>
+        public static string MainWindow_TitleBar_Help {
+            get {
+                return ResourceManager.GetString("MainWindow_TitleBar_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string MainWindow_TitleBar_Options {
+            get {
+                return ResourceManager.GetString("MainWindow_TitleBar_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced options.
+        /// </summary>
+        public static string Options_CheckBoxAdvanced {
+            get {
+                return ResourceManager.GetString("Options_CheckBoxAdvanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card tooltips.
+        /// </summary>
+        public static string Options_DeckWindows_CheckBox_CardTooltips {
+            get {
+                return ResourceManager.GetString("Options_DeckWindows_CheckBox_CardTooltips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only if HS in foreground.
+        /// </summary>
+        public static string Options_DeckWindows_CheckBox_HsForeground {
+            get {
+                return ResourceManager.GetString("Options_DeckWindows_CheckBox_HsForeground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opponent.
+        /// </summary>
+        public static string Options_DeckWindows_CheckBox_Opponent {
+            get {
+                return ResourceManager.GetString("Options_DeckWindows_CheckBox_Opponent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player.
+        /// </summary>
+        public static string Options_DeckWindows_CheckBox_Player {
+            get {
+                return ResourceManager.GetString("Options_DeckWindows_CheckBox_Player", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timer.
+        /// </summary>
+        public static string Options_DeckWindows_CheckBox_Timer {
+            get {
+                return ResourceManager.GetString("Options_DeckWindows_CheckBox_Timer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Topmost.
+        /// </summary>
+        public static string Options_DeckWindows_CheckBox_Topmost {
+            get {
+                return ResourceManager.GetString("Options_DeckWindows_CheckBox_Topmost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background:.
+        /// </summary>
+        public static string Options_DeckWindows_Label_Background {
+            get {
+                return ResourceManager.GetString("Options_DeckWindows_Label_Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom hex:.
+        /// </summary>
+        public static string Options_DeckWindows_Label_CustomHex {
+            get {
+                return ResourceManager.GetString("Options_DeckWindows_Label_CustomHex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Options_Overlay_General_Button_Reset {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_Button_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unlock overlay.
+        /// </summary>
+        public static string Options_Overlay_General_Button_UnlockOverlay {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_Button_UnlockOverlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additional card tooltips.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_AdditionalCardTooltips {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_AdditionalCardTooltips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show battery status.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_BatteryStatus {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_BatteryStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show percent.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_BatteryStatus_Percent {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_BatteryStatus_Percent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use card animations.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_CardAnimations {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_CardAnimations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card mark tooltips.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_CardMarkTooltips {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_CardMarkTooltips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card tooltips.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_CardTooltips {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_CardTooltips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show card flavor text on mouseover (board/hand).
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_FlavorText {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_FlavorText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gold progress always visible (in menu).
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_GoldProgress {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_GoldProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide card-age.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_HideCardAge {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_HideCardAge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide card-marks.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_HideCardMarks {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_HideCardMarks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide (completely).
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_HideCompletely {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_HideCompletely", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide decks.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_HideDecks {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_HideDecks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide if HS in background.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_HideInBackground {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_HideInBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide in menu.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_HideInMenu {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_HideInMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide in spectator.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_HideInSpectator {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_HideInSpectator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide secrets.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_HideSecrets {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_HideSecrets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide timers.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_HideTimers {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_HideTimers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t reset decks after a game.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_NoResetAfterGame {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_NoResetAfterGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically gray out secrets.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_Secrets {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_Secrets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For secrets only.
+        /// </summary>
+        public static string Options_Overlay_General_CheckBox_SecretsOnly {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_CheckBox_SecretsOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string Options_Overlay_General_Header {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move/resize objects:.
+        /// </summary>
+        public static string Options_Overlay_General_Label_MoveResize {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_Label_MoveResize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opacity:.
+        /// </summary>
+        public static string Options_Overlay_General_Label_Opacity {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_Label_Opacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset positions:.
+        /// </summary>
+        public static string Options_Overlay_General_Label_Reset {
+            get {
+                return ResourceManager.GetString("Options_Overlay_General_Label_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overlay.
+        /// </summary>
+        public static string Options_Overlay_Header {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force on (don&apos;t use this unless you need to).
+        /// </summary>
+        public static string Options_Overlay_Interactivity_CheckBox_ForceOn {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_CheckBox_ForceOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide deck when friendslist is open.
+        /// </summary>
+        public static string Options_Overlay_Interactivity_CheckBox_FriendsList {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_CheckBox_FriendsList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click secrets to gray out.
+        /// </summary>
+        public static string Options_Overlay_Interactivity_CheckBoxSecrets {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_CheckBoxSecrets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interactivity.
+        /// </summary>
+        public static string Options_Overlay_Interactivity_Header {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Features:.
+        /// </summary>
+        public static string Options_Overlay_Interactivity_Label_Features {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_Label_Features", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to May cause the cursor to freeze occasionally.
+        /// </summary>
+        public static string Options_Overlay_Interactivity_Label_Freezing {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_Label_Freezing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOTE: May not work correctly if &amp;quot;options &gt; overlay &gt; general &gt; automatically gray out secrets&amp;quot; is enabled..
+        /// </summary>
+        public static string Options_Overlay_Interactivity_Label_Note {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_Label_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning:.
+        /// </summary>
+        public static string Options_Overlay_Interactivity_Label_Warning {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_Label_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string Options_Overlay_Interactivity_Switch_Disabled {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_Switch_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Options_Overlay_Interactivity_Switch_Enabled {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Interactivity_Switch_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show board attack counter.
+        /// </summary>
+        public static string Options_Overlay_Opponent_CheckBox_Attack {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_CheckBox_Attack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Center deck vertically.
+        /// </summary>
+        public static string Options_Overlay_Opponent_CheckBox_CenterVertically {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_CheckBox_CenterVertically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include created cards.
+        /// </summary>
+        public static string Options_Overlay_Opponent_CheckBox_CreatedCards {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_CheckBox_CreatedCards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Highlight discarded from deck.
+        /// </summary>
+        public static string Options_Overlay_Opponent_CheckBox_DiscardedCards {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_CheckBox_DiscardedCards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use same scaling for player/opponent.
+        /// </summary>
+        public static string Options_Overlay_Opponent_CheckBox_SameScaling {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_CheckBox_SameScaling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opponent.
+        /// </summary>
+        public static string Options_Overlay_Opponent_Header {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show C&apos;Thun counter:.
+        /// </summary>
+        public static string Options_Overlay_Opponent_Label_Cthun {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_Label_Cthun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opacity:.
+        /// </summary>
+        public static string Options_Overlay_Opponent_Label_Opacity {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_Label_Opacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scaling:.
+        /// </summary>
+        public static string Options_Overlay_Opponent_Label_Scaling {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_Label_Scaling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Yogg-Saron counter:.
+        /// </summary>
+        public static string Options_Overlay_Opponent_Label_Yogg {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_Label_Yogg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secret opacity:.
+        /// </summary>
+        public static string Options_Overlay_Opponent_LabelSecretOpacity {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_LabelSecretOpacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show board attack counter.
+        /// </summary>
+        public static string Options_Overlay_Player_CheckBox_Attack {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_CheckBox_Attack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Center deck vertically.
+        /// </summary>
+        public static string Options_Overlay_Player_CheckBox_CenterVertically {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_CheckBox_CenterVertically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Highlight last drawn card.
+        /// </summary>
+        public static string Options_Overlay_Player_CheckBox_HighlightDrawn {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_CheckBox_HighlightDrawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Highlight cards in hand.
+        /// </summary>
+        public static string Options_Overlay_Player_CheckBox_HighlightHand {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_CheckBox_HighlightHand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include cards created in hand (e.g. The Coin).
+        /// </summary>
+        public static string Options_Overlay_Player_CheckBox_IncludeCreated {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_CheckBox_IncludeCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove cards if none remaining.
+        /// </summary>
+        public static string Options_Overlay_Player_CheckBox_RemoveZero {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_CheckBox_RemoveZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use same scaling for player/opponent.
+        /// </summary>
+        public static string Options_Overlay_Player_CheckBox_SameScaling {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_CheckBox_SameScaling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player.
+        /// </summary>
+        public static string Options_Overlay_Player_Header {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show C&apos;Thun counter:.
+        /// </summary>
+        public static string Options_Overlay_Player_Label_Cthun {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_Label_Cthun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opacity:.
+        /// </summary>
+        public static string Options_Overlay_Player_Label_Opacity {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_Label_Opacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scaling:.
+        /// </summary>
+        public static string Options_Overlay_Player_Label_Scaling {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_Label_Scaling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Yogg-Saron counter:.
+        /// </summary>
+        public static string Options_Overlay_Player_Label_Yogg {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Player_Label_Yogg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable card opacity transitions (recommended).
+        /// </summary>
+        public static string Options_Overlay_Streaming_CheckBox_DisableTransitions {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Streaming_CheckBox_DisableTransitions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show capturable overlay window.
+        /// </summary>
+        public static string Options_Overlay_Streaming_CheckBox_Show {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Streaming_CheckBox_Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Streaming.
+        /// </summary>
+        public static string Options_Overlay_Streaming_Header {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Streaming_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show instructions for getting started (opens wiki).
+        /// </summary>
+        public static string Options_Overlay_Streaming_Hyperlink_Wiki {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Streaming_Hyperlink_Wiki", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Background:.
+        /// </summary>
+        public static string Options_Overlay_Streaming_Label_Background {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Streaming_Label_Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will add a chroma-key-able copy of the overlay behind your Hearthstone window..
+        /// </summary>
+        public static string Options_Overlay_Streaming_Text1 {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Streaming_Text1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: The overlay copy may show up in front Hearthstone once. Clicking it will hide it for the rest of the session..
+        /// </summary>
+        public static string Options_Overlay_Streaming_Text2 {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Streaming_Text2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows.
+        /// </summary>
+        public static string Options_Overlay_Windows_Header {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Windows_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Options_Search_Header {
+            get {
+                return ResourceManager.GetString("Options_Search_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Options_Search_SearchButton {
+            get {
+                return ResourceManager.GetString("Options_Search_SearchButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checkbox name/description....
+        /// </summary>
+        public static string Options_Search_TextBox_Watermark {
+            get {
+                return ResourceManager.GetString("Options_Search_TextBox_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Appearance.
+        /// </summary>
+        public static string Options_Tracker_Appearance_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Backups.
+        /// </summary>
+        public static string Options_Tracker_Backups_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Backups_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exporting.
+        /// </summary>
+        public static string Options_Tracker_Exporting_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string Options_Tracker_General_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracker.
+        /// </summary>
+        public static string Options_Tracker_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hotkeys.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importing.
+        /// </summary>
+        public static string Options_Tracker_Importing_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logging.
+        /// </summary>
+        public static string Options_Tracker_Logging_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Logging_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string Options_Tracker_Notifications_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Notifications_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        public static string Options_Tracker_Plugins_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Plugins_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replays.
+        /// </summary>
+        public static string Options_Tracker_Replays_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Options_Tracker_Settings_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stats.
+        /// </summary>
+        public static string Options_Tracker_Stats_Header {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_Header", resourceCulture);
             }
         }
     }
