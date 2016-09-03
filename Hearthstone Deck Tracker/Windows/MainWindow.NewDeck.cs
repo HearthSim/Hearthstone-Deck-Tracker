@@ -147,6 +147,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 			}
 
+			if(EditingDeck && overwrite)
+				DeckList.Instance.Decks.Remove(_newDeck);
+
 			var previousVersion = _newDeck.Version;
 			if(overwrite && (_newDeck.Version != newVersion))
 			{
@@ -155,9 +158,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_newDeck.SelectedVersion = newVersion;
 				_newDeck.HearthStatsDeckVersionId = "";
 			}
-
-			if(EditingDeck && overwrite)
-				DeckList.Instance.Decks.Remove(_newDeck);
 
 			var oldDeckName = _newDeck.Name;
 
