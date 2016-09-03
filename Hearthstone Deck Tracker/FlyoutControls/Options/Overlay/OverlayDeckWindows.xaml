@@ -1,58 +1,60 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayDeckWindows"
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayDeckWindows"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="Deck Windows">
+        <GroupBox Header="{lex:Loc Options_Overlay_Windows_Header}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <CheckBox x:Name="CheckboxPlayerWindowOpenAutomatically"
-                              Content="Player" HorizontalAlignment="Left"
+                              Content="{lex:Loc Options_DeckWindows_CheckBox_Player}" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxPlayerWindowOpenAutomatically_Checked"
                               Unchecked="CheckboxPlayerWindowOpenAutomatically_Unchecked" />
                     <CheckBox x:Name="CheckboxOpponentWindowOpenAutomatically"
-                              Content="Opponent" HorizontalAlignment="Left"
+                              Content="{lex:Loc Options_DeckWindows_CheckBox_Opponent}" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxOpponentWindowOpenAutomatically_Checked"
                               Unchecked="CheckboxOpponentWindowOpenAutomatically_Unchecked" />
-                    <CheckBox x:Name="CheckboxWindowsTopmost" Content="Topmost"
+                    <CheckBox x:Name="CheckboxWindowsTopmost" Content="{lex:Loc Options_DeckWindows_CheckBox_Topmost}"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxWindowsTopmost_Checked"
                               Unchecked="CheckboxWindowsTopmost_Unchecked" />
                     <CheckBox x:Name="CheckboxWinTopmostHsForeground"
-                              Content="Only if Hearthstone is in foreground" HorizontalAlignment="Left"
+                              Content="{lex:Loc Options_DeckWindows_CheckBox_HsForeground}" HorizontalAlignment="Left"
                               Margin="30,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxWinTopmostHsForeground_Checked"
                               Unchecked="CheckboxWinTopmostHsForeground_Unchecked" />
-                    <CheckBox x:Name="CheckboxWindowCardToolTips" Content="Card tooltips"
+                    <CheckBox x:Name="CheckboxWindowCardToolTips" Content="{lex:Loc Options_DeckWindows_CheckBox_CardTooltips}"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxWindowCardToolTips_Checked"
                               Unchecked="CheckboxWindowCardToolTips_Unchecked" />
                     <Separator Margin="0,5,0,0" />
                     <CheckBox x:Name="CheckboxTimerWindow"
-                              Content="Timer" HorizontalAlignment="Left"
+                              Content="{lex:Loc Options_DeckWindows_CheckBox_Timer}" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxTimerWindow_Checked"
                               Unchecked="CheckboxTimerWindow_Unchecked" />
-
-
-                    <CheckBox x:Name="CheckboxTimerTopmost" Content="Topmost"
+                    <CheckBox x:Name="CheckboxTimerTopmost" Content="{lex:Loc Options_DeckWindows_CheckBox_Topmost}"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxTimerTopmost_Checked"
                               Unchecked="CheckboxTimerTopmost_Unchecked" />
                     <CheckBox x:Name="CheckboxTimerTopmostHsForeground"
-                              Content="Only if HS in foreground" HorizontalAlignment="Left"
+                              Content="{lex:Loc Options_DeckWindows_CheckBox_HsForeground}" HorizontalAlignment="Left"
                               Margin="30,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxTimerTopmostHsForeground_Checked"
                               Unchecked="CheckboxTimerTopmostHsForeground_Unchecked" />
                     <Separator Margin="0,5,0,0" />
                     <DockPanel Margin="5,5,5,0">
-                        <Label Content="Background:" HorizontalAlignment="Left"
+                        <Label Content="{lex:Loc Options_DeckWindows_Label_Background}" HorizontalAlignment="Left"
                                VerticalAlignment="Top" />
                         <ComboBox x:Name="ComboboxWindowBackground" HorizontalAlignment="Right"
                                   Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
@@ -64,7 +66,7 @@
                         </ComboBox>
                     </DockPanel>
                     <DockPanel Margin="5,5,5,0">
-                        <Label Content="Custom hex:" HorizontalAlignment="Left"
+                        <Label Content="{lex:Loc Options_DeckWindows_Label_CustomHex}" HorizontalAlignment="Left"
                                VerticalAlignment="Top" />
                         <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Right"
                                  Height="23" HorizontalContentAlignment="Center" Margin="10,0,0,0"
