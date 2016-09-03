@@ -421,6 +421,11 @@
     <Compile Include="Importing\Game\ImportOptions\NewDeck.cs" />
     <Compile Include="Importing\Game\ImportedDeck.cs" />
     <Compile Include="Hearthstone\PackOpeningWatcher.cs" />
+    <Compile Include="Properties\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Stats\CompiledStats\ConstructedDeckDetails.cs" />
     <Compile Include="Stats\CompiledStats\ConstructedDeckStats.cs" />
     <Compile Include="Stats\CompiledStats\ConstructedMatchup.cs" />
@@ -1253,6 +1258,14 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <EmbeddedResource Include="Properties\Strings.de-DE.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <Resource Include="Resources\joust-screenshot.jpg" />
     <Resource Include="Resources\Chunkfive.otf" />
     <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
@@ -1348,7 +1361,7 @@
     <Resource Include="Resources\embroidery.png" />
     <Resource Include="Resources\tactile_noise.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
