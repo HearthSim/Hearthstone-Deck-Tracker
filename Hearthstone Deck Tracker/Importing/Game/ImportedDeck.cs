@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 			Class = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(hero.PlayerClass.ToLower());
 			ImportOptions =
 				New.Concat(candidates.Concat(DeckList.Instance.Decks.Where(x => x.Class == Class && !x.Archived && !x.IsArenaDeck)).Distinct()
-					.Select(x => new ExistingDeck(x, deck)).OrderByDescending(x => x.MatchingCards).ThenByDescending(x => x.Deck.LastPlayed));
+					.Select(x => new ExistingDeck(x, deck)).OrderByDescending(x => x.Deck.HsId == deck.Id).ThenByDescending(x => x.MatchingCards).ThenByDescending(x => x.Deck.LastPlayed));
 			SelectedIndex = candidates.Any() ? 1 : 0;
 		}
 
