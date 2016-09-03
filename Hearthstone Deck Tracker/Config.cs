@@ -576,6 +576,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(LastPlayedDateFormat.DayMonthYear)]
 		public LastPlayedDateFormat LastPlayedDateFormat = LastPlayedDateFormat.DayMonthYear;
 
+		[DefaultValue(Language.enUS)]
+		public Language Localization = Language.enUS;
+
 		[DefaultValue(false)]
 		public bool LogConfigConsolePrinting = false;
 
