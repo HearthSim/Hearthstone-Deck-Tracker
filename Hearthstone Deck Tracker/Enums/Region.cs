@@ -1,9 +1,3 @@
-﻿#region
-
-using System.ComponentModel;
-
-#endregion
-
 namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum Region
@@ -17,22 +11,22 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 	public enum RegionAll
 	{
-		[Description("All")]
+		[LocDescription("Enum_Region_All")]
 		ALL = -1,
 
-		[Description("Unknown")]
+		[LocDescription("Enum_Region_Unknown")]
 		UNKNOWN = 0,
 
-		[Description("US")]
+		[LocDescription("Enum_Region_US")]
 		US = 1,
 
-		[Description("EU")]
+		[LocDescription("Enum_Region_EU")]
 		EU = 2,
 
-		[Description("Asia")]
+		[LocDescription("Enum_Region_Asia")]
 		ASIA = 3,
 
-		[Description("China")]
+		[LocDescription("Enum_Region_China")]
 		CHINA = 5
 	}
 }

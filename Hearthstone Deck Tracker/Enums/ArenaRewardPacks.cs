@@ -1,26 +1,20 @@
-﻿#region
-
-using System.ComponentModel;
-
-#endregion
-
 namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum ArenaRewardPacks
 	{
-		[Description("None")]
+		[LocDescription("Enum_ArenaRewardPacks_None")]
 		None,
 
-		[Description("Classic")]
+		[LocDescription("Enum_ArenaRewardPacks_Classic")]
 		Classic,
 
-		[Description("Goblins vs Gnomes")]
+		[LocDescription("Enum_ArenaRewardPacks_GoblinsVsGnomes")]
 		GoblinsVsGnomes,
 
-		[Description("The Grand Tournament")]
+		[LocDescription("Enum_ArenaRewardPacks_TheGrandTournament")]
 		TheGrandTournament,
 
-		[Description("Whispers of the Old Gods")]
+		[LocDescription("Enum_ArenaRewardPacks_WhispersOfTheOldGods")]
 		WhispersOfTheOldGods
 	}
 }

@@ -1,12 +1,10 @@
-﻿using System.ComponentModel;
-
 namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum ClassColorScheme
 	{
-		[Description("Classic")]
+		[LocDescription("Enum_ClassColorScheme_Classic")]
 		Classic,
-		[Description("Alternative")]
+		[LocDescription("Enum_ClassColorScheme_Alternative")]
 		HearthStats
 	}
 }
