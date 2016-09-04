@@ -49,6 +49,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 	/// </summary>
 	public partial class MainWindow : INotifyPropertyChanged
 	{
+		private const string LocLink = "MainWindow_Menu_Deck_LinkUrl";
+		private const string LocLinkNew = "MainWindow_Menu_Deck_LinkNewUrl";
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public async void UseDeck(Deck selected)
@@ -67,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visible : Collapsed;
 			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visible : Collapsed;
 			MenuItemSetDeckUrl.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
-			MenuItemSetDeckUrl.Header = string.IsNullOrEmpty(deck.Url) ? "LINK TO UR_L" : "LINK TO NEW UR_L";
+			MenuItemSetDeckUrl.Header = string.IsNullOrEmpty(deck.Url) ? LocUtil.Get(LocLink, true) : LocUtil.Get(LocLinkNew, true);
 			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Collapsed : Visible;
 			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Collapsed : Visible;
 			MenuItemArchive.Visibility = DeckPickerList.SelectedDecks.Any(d => !d.Archived) ? Visible : Collapsed;

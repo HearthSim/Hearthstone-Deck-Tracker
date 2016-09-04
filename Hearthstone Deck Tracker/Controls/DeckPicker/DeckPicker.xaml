@@ -1,17 +1,21 @@
-﻿<DockPanel x:Class="Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPicker"
+<DockPanel x:Class="Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPicker"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
            xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
            xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
+           xmlns:lex="http://wpflocalizeextension.codeplex.com"
+           lex:LocalizeDictionary.DesignCulture="en"
+           lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+           lex:ResxLocalizationProvider.DefaultDictionary="Strings"
            mc:Ignorable="d"
            d:DesignHeight="500" d:DesignWidth="300">
     <DockPanel DockPanel.Dock="Top">
         <Border
             Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
             BorderThickness="1" DockPanel.Dock="Top" Margin="0,0,0,2" BorderBrush="{DynamicResource TextBrush}">
-            <TextBox Name="TextBoxSearchBar" controls1:TextBoxHelper.Watermark="Search..."
+            <TextBox Name="TextBoxSearchBar" controls1:TextBoxHelper.Watermark="{lex:Loc DeckPicker_Text_Search_Watermark}"
                      controls1:TextBoxHelper.IsWaitingForData="True" PreviewKeyDown="TextBoxSearchBar_OnPreviewKeyDown" />
         </Border>
         <Border BorderThickness="1"
@@ -172,37 +176,37 @@
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick" PreviewMouseRightButtonUp="ListViewDecks_OnPreviewMouseRightButtonUp">
         <ListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">
-                <MenuItem Name="MenuItemUseDeck" Header="_USE DECK" Click="BtnUseDeck_Click"/>
+                <MenuItem Name="MenuItemUseDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Use}" Click="BtnUseDeck_Click"/>
                 <Separator Name="SeparatorUseDeck" />
-                <MenuItem Header="EDIT _DECK" Click="BtnEditDeck_Click" />
-                <MenuItem Header="EDIT NA_ME" Click="BtnName_Click" />
-                <MenuItem Header="EDIT _NOTES" Click="BtnNotes_Click" />
-                <MenuItem Header="EDIT _TAGS" Click="BtnTags_Click" />
-                <MenuItem Name="MenuItemQuickSetTag" Header="_QUICK SET TAG">
+                <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Deck}" Click="BtnEditDeck_Click" />
+                <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Name}" Click="BtnName_Click" />
+                <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Notes}" Click="BtnNotes_Click" />
+                <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Tags}" Click="BtnTags_Click" />
+                <MenuItem Name="MenuItemQuickSetTag" Header="{lex:LocTextUpper DeckPicker_ContextMenu_QuickSetTags}">
                     <MenuItem.ItemTemplate>
                         <DataTemplate>
                             <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" />
                         </DataTemplate>
                     </MenuItem.ItemTemplate>
                 </MenuItem>
-                <MenuItem Name="MenuItemMoveDecktoArena" Header="MOVE TO ARENA" Click="BtnMoveDeckToArena_Click"
+                <MenuItem Name="MenuItemMoveDecktoArena" Header="{lex:LocTextUpper DeckPicker_ContextMenu_MoveToArena}" Click="BtnMoveDeckToArena_Click"
                           Visibility="Collapsed" />
-                <MenuItem Name="MenuItemMoveDeckToConstructed" Header="MOVE TO CONSTRUCTED"
+                <MenuItem Name="MenuItemMoveDeckToConstructed" Header="{lex:LocTextUpper DeckPicker_ContextMenu_MoveToConstructed}"
                           Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed" />
                 <Separator Name="SeparatorDeck1" />
-                <MenuItem Name="MenuItemMissingCards" Header="SHOW _MISSING CARDS"
+                <MenuItem Name="MenuItemMissingCards" Header="{lex:LocTextUpper DeckPicker_ContextMenu_MissingCards}"
                           ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick" />
-                <MenuItem Name="MenuItemUpdateDeck" Header="_UPDATE (WEB)" Click="BtnUpdateDeck_Click" />
+                <MenuItem Name="MenuItemUpdateDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Update}" Click="BtnUpdateDeck_Click" />
                 <MenuItem Name="MenuItemSetDeckUrl" Header="" Click="BtnSetDeckUrl_Click" />
-                <MenuItem Name="MenuItemOpenUrl" Header="OPEN _WEBSITE" Click="BtnOpenDeckUrl_Click" />
-                <MenuItem Name="MenuItemOpenHearthStats" Header="OPEN _HEARTHSTATS" Click="BtnOpenHearthStats_Click" />
+                <MenuItem Name="MenuItemOpenUrl" Header="{lex:LocTextUpper DeckPicker_ContextMenu_OpenWebsite}" Click="BtnOpenDeckUrl_Click" />
+                <MenuItem Name="MenuItemOpenHearthStats" Header="{lex:LocTextUpper DeckPicker_ContextMenu_OpenHearthstats}" Click="BtnOpenHearthStats_Click" />
                 <Separator />
-                <MenuItem Name="MenuItemArchive" Header="_ARCHIVE" Click="BtnArchiveDeck_Click" />
-                <MenuItem Name="MenuItemUnarchive" Header="UN_ARCHIVE" Click="BtnUnarchiveDeck_Click" />
-                <MenuItem Header="DELETE" Click="BtnDeleteDeck_Click" />
-                <MenuItem Header="CLONE">
-                    <MenuItem Header="ENTIRE DECK" Click="BtnCloneDeck_Click" />
-                    <MenuItem Header="SELECTED VERSION" Click="BtnCloneSelectedVersion_Click" />
+                <MenuItem Name="MenuItemArchive" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Archive}" Click="BtnArchiveDeck_Click" />
+                <MenuItem Name="MenuItemUnarchive" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Unarchive}" Click="BtnUnarchiveDeck_Click" />
+                <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Delete}" Click="BtnDeleteDeck_Click" />
+                <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Clone}">
+                    <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Clone_Deck}" Click="BtnCloneDeck_Click" />
+                    <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Clone_Version}" Click="BtnCloneSelectedVersion_Click" />
                 </MenuItem>
             </ContextMenu>
         </ListView.ContextMenu>
