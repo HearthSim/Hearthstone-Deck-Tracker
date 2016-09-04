@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.ComponentModel;
@@ -34,6 +34,9 @@ namespace Hearthstone_Deck_Tracker.Enums
 			var memInfo = type.GetMember(en.ToString());
 			if(memInfo.Length > 0)
 			{
+				var locAttr = memInfo[0].GetCustomAttributes(typeof(LocDescriptionAttribute), false);
+				if(locAttr.Length > 0)
+					return ((LocDescriptionAttribute)locAttr[0]).LocDescription;
 				var attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
 				if(attrs.Length > 0)
 					return ((DescriptionAttribute)attrs[0]).Description;
