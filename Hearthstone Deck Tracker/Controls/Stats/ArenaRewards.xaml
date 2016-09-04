@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
-             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300">
     <UserControl.Resources>
@@ -15,14 +16,14 @@
     </UserControl.Resources>
     <StackPanel>
         <UniformGrid Rows="1">
-            <GroupBox Header="Gold">
-                <TextBox Name="TextBoxGold" ToolTip="You can enter values as e.g. 50+125" TextChanged="TextBoxGold_OnTextChanged"/>
+            <GroupBox Header="{lex:Loc ArenaRewards_Label_Gold}">
+                <TextBox Name="TextBoxGold" ToolTip="{lex:Loc ArenaRewards_Label_Gold_Tooltip}" TextChanged="TextBoxGold_OnTextChanged"/>
             </GroupBox>
-            <GroupBox Header="Dust">
+            <GroupBox Header="{lex:Loc ArenaRewards_Label_Dust}">
                 <TextBox Name="TextBoxDust" TextChanged="TextBoxDust_OnTextChanged"/>
             </GroupBox>
         </UniformGrid>
-        <GroupBox Header="Packs">
+        <GroupBox Header="{lex:Loc ArenaRewards_Label_Packs}">
             <StackPanel>
             <DockPanel>
                 <Label Content="#1:"/>
@@ -46,35 +47,35 @@
                 </DockPanel>
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="Cards">
+        <GroupBox Header="{lex:Loc ArenaRewards_Label_Cards}">
             <StackPanel>
                 <DockPanel Margin="0,2,0,0">
                     <Label Content="#1:" DockPanel.Dock="Left"/>
-                    <CheckBox Name="CheckBoxGolden1" Content="Golden" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
-                    <TextBox Name="TextBoxCard1" controls:TextBoxHelper.Watermark="None" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                    <CheckBox Name="CheckBoxGolden1" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard1" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
                 </DockPanel>
                 <DockPanel Margin="0,2,0,0">
                     <Label Content="#2:" DockPanel.Dock="Left"/>
-                    <CheckBox Name="CheckBoxGolden2" Content="Golden" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
-                    <TextBox Name="TextBoxCard2" controls:TextBoxHelper.Watermark="None" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                    <CheckBox Name="CheckBoxGolden2" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard2" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
                 </DockPanel>
                 <DockPanel Margin="0,2,0,0">
                     <Label Content="#3:" DockPanel.Dock="Left"/>
-                    <CheckBox Name="CheckBoxGolden3" Content="Golden" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
-                    <TextBox Name="TextBoxCard3" controls:TextBoxHelper.Watermark="None" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                    <CheckBox Name="CheckBoxGolden3" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard3" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
                 </DockPanel>
             </StackPanel>
         </GroupBox>
         <UniformGrid>
-            <GroupBox Header="Payment method">
+            <GroupBox Header="{lex:Loc ArenaRewards_Label_PaymentMethod}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <RadioButton Name="RadioButtonPaymentGold" Content="Gold" IsChecked="True" Checked="RadioButtonPaymentGold_OnChecked"/>
-                    <RadioButton Name="RadioButtonPaymentMoney" Content="Money" Margin="10,0,0,0" Checked="RadioButtonPaymentMoney_OnChecked"/>
+                    <RadioButton Name="RadioButtonPaymentGold" Content="{lex:Loc ArenaRewards_Payment_Label_Gold}" IsChecked="True" Checked="RadioButtonPaymentGold_OnChecked"/>
+                    <RadioButton Name="RadioButtonPaymentMoney" Content="{lex:Loc ArenaRewards_Payment_Label_Money}" Margin="10,0,0,0" Checked="RadioButtonPaymentMoney_OnChecked"/>
                 </StackPanel>
             </GroupBox>
             <StackPanel VerticalAlignment="Center">
-                <CheckBox Name="CheckBoxShowAutomatically" Content="Show automatically" HorizontalAlignment="Center" IsChecked="{Binding Path=ArenaRewardDialog, Source={StaticResource ConfigWrapper}}"/>
-                <Button Style="{DynamicResource AccentedSquareButtonStyle}" Margin="5,5,5,0" Content="Save" Click="ButtonSave_OnClick"/>
+                <CheckBox Name="CheckBoxShowAutomatically" Content="{lex:Loc ArenaRewards_Label_ShowAuto}" HorizontalAlignment="Center" IsChecked="{Binding Path=ArenaRewardDialog, Source={StaticResource ConfigWrapper}}"/>
+                <Button Style="{DynamicResource AccentedSquareButtonStyle}" Margin="5,5,5,0" Content="{lex:Loc ArenaRewards_Label_Save}" Click="ButtonSave_OnClick"/>
             </StackPanel>
             <Grid/>
         </UniformGrid>

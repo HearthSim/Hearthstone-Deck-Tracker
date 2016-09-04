@@ -6,12 +6,16 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Constructed"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <DataGrid Name="DataGridMatchups" ItemsSource="{Binding Path=Matchups, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True, NotifyOnTargetUpdated=True}" 
                AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True" CanUserSortColumns="False" CanUserResizeColumns="False" CanUserReorderColumns="False">
         <DataGrid.Columns>
-            <DataGridTemplateColumn Header="YOU \ VS" SortMemberPath="Class">
+            <DataGridTemplateColumn Header="{lex:Loc Stats_Constructed_MatchupTable_Label}" SortMemberPath="Class">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <Grid>
@@ -139,7 +143,7 @@
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-            <DataGridTextColumn Header="Total" Binding="{Binding Total.Summary}" MinWidth="47">
+            <DataGridTextColumn Header="{lex:Loc Stats_Constructed_MatchupTable_Total}" Binding="{Binding Total.Summary}" MinWidth="47">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />

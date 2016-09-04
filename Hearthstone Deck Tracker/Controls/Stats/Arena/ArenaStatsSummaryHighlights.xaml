@@ -3,14 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
              xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena"
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
     <StackPanel Orientation="Horizontal">
         <DockPanel>
-            <Label DockPanel.Dock="Top" Content="Total" FontSize="16" Margin="10,0,0,0"/>
+            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Arena_Summary_Highlights_Total}" FontSize="16" Margin="10,0,0,0"/>
             <DockPanel>
                 <Image Width="68" Height="68" Source="/HearthstoneDeckTracker;component/Resources/lightforgekey.png" RenderOptions.BitmapScalingMode="Fant" Margin="-5,0,0,0"/>
                 <arena:ArenaClassStats ImageVisiblity="Collapsed" DataContext="{Binding Path=ClassStatsAll, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}" Margin="0,0,-63,0"/>
@@ -18,22 +21,22 @@
         </DockPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <DockPanel>
-            <Label DockPanel.Dock="Top" Content="Best" FontSize="16" Margin="10,0,0,0"/>
+            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Arena_Summary_Highlights_Best}" FontSize="16" Margin="10,0,0,0"/>
             <arena:ArenaClassStats DataContext="{Binding Path=ClassStatsBest, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         </DockPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <DockPanel>
-            <Label DockPanel.Dock="Top" Content="Worst" FontSize="16" Margin="10,0,0,0"/>
+            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Arena_Summary_Highlights_Worst}" FontSize="16" Margin="10,0,0,0"/>
             <arena:ArenaClassStats DataContext="{Binding Path=ClassStatsWorst, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         </DockPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <DockPanel>
-            <Label DockPanel.Dock="Top" Content="Most picked" FontSize="16" Margin="10,0,0,0"/>
+            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Arena_Summary_Highlights_MostPicked}" FontSize="16" Margin="10,0,0,0"/>
             <arena:ArenaClassStats DataContext="{Binding Path=ClassStatsMostPicked, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         </DockPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
         <DockPanel>
-            <Label DockPanel.Dock="Top" Content="Least picked" FontSize="16" Margin="10,0,0,0"/>
+            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Arena_Summary_Highlights_LeastPicked}" FontSize="16" Margin="10,0,0,0"/>
             <arena:ArenaClassStats DataContext="{Binding Path=ClassStatsLeastPicked, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         </DockPanel>
     </StackPanel>
