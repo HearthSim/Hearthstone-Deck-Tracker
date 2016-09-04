@@ -1,9 +1,13 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.DeckSetIcons"
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.DeckSetIcons"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="20" d:DesignWidth="200">
     <UserControl.Resources>
@@ -52,37 +56,37 @@
         </Canvas>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
-        <Rectangle Name="RectIconNaxx" Width="16" Height="16" Margin="2,0" ToolTip="Deck contains cards from the Curse of Naxxramas expansion.">
+        <Rectangle Name="RectIconNaxx" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Naxx}">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_naxx}" />
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Name="RectIconGvg" Width="16" Height="16" Margin="2,0" ToolTip="Deck contains cards from the Goblins vs Gnomes expansion.">
+        <Rectangle Name="RectIconGvg" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Gvg}">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_gvg}" />
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Name="RectIconBrm" Width="16" Height="16" Margin="2,0" ToolTip="Deck contains cards from the Blackrock Mountain expansion.">
+        <Rectangle Name="RectIconBrm" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Brm}">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_brm}" />
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Name="RectIconTgt" Width="16" Height="16" Margin="2,0" ToolTip="Deck contains cards from The Grand Tournament expansion.">
+        <Rectangle Name="RectIconTgt" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Tgt}">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_tgt}" />
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Name="RectIconLoe" Width="16" Height="16" Margin="2,0" ToolTip="Deck contains cards from the League of Explorers expansion.">
+        <Rectangle Name="RectIconLoe" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Loe}">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_loe}" />
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Name="RectIconOg" Width="16" Height="16" Margin="2,0" ToolTip="Deck contains cards from the Whispers of the Old Gods expansion.">
+        <Rectangle Name="RectIconOg" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Wotog}">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_og}" />
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Name="RectIconKara" Width="16" Height="16" Margin="2,0" ToolTip="Deck contains cards from the One Night in Karazhan expansion.">
+        <Rectangle Name="RectIconKara" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Onik}">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_kara}" />
             </Rectangle.Fill>
