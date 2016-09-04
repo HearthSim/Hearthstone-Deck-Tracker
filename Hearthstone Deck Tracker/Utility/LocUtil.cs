@@ -14,7 +14,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static string Get(string key, bool upper = false)
 		{
 			var str = LocalizeDictionary.Instance.GetLocalizedObject("HearthstoneDeckTracker", "Strings", key,
-				LocalizeDictionary.Instance.Culture).ToString();
+				LocalizeDictionary.Instance.Culture)?.ToString();
+			if(str == null)
+				return string.Empty;
 			return upper ? str.ToUpper(LocalizeDictionary.Instance.Culture) : str;
 		}
 	}
