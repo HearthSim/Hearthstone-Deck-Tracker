@@ -1260,6 +1260,10 @@
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
     <EmbeddedResource Include="Resources\CHANGELOG.md" />
+    <EmbeddedResource Include="Properties\Strings.zh-CN.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Strings.de-DE.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Strings.resx</DependentUpon>
