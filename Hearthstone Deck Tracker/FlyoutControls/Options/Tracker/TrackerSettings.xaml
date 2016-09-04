@@ -4,46 +4,50 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300" Loaded="TrackerSettings_Loaded">
     <Grid>
-        <GroupBox Header="Settings">
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Settings_Header}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <GroupBox Header="Analytics">
+                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Settings_Label_Analytics}">
                         <StackPanel>
-                            <CheckBox Name="CheckBoxAnalytics" Content="Submit anonymous data"
+                            <CheckBox Name="CheckBoxAnalytics" Content="{lex:Loc Options_Tracker_Settings_Label_SubmitData}"
                                       Checked="CheckBoxAnalytics_OnChecked" Unchecked="CheckBoxAnalytics_OnUnchecked" />
                             <TextBlock
-                                Text="This only tracks very basic information to help us improve HDT, like app and match starts."
+                                Text="{lex:Loc Options_Tracker_Settings_Analytics_Description}"
                                 TextWrapping="Wrap" />
                         </StackPanel>
                     </GroupBox>
-                    <CheckBox x:Name="CheckboxConfigSaveAppData" Content="Save config in AppData"
+                    <CheckBox x:Name="CheckboxConfigSaveAppData" Content="{lex:Loc Options_Tracker_Settings_CheckBox_SaveConfigAppData}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxConfigSaveAppData_Checked"
                               Unchecked="CheckboxConfigSaveAppData_Unchecked" />
-                    <CheckBox x:Name="CheckboxDataSaveAppData" Content="Save data in AppData"
+                    <CheckBox x:Name="CheckboxDataSaveAppData" Content="{lex:Loc Options_Tracker_Settings_CheckBox_SaveDataAppData}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxDataSaveAppData_Checked"
                               Unchecked="CheckboxDataSaveAppData_Unchecked" />
-                    <CheckBox x:Name="CheckboxStartWithWindows" Content="Start with windows"
+                    <CheckBox x:Name="CheckboxStartWithWindows" Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartWithWindows}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxStartWithWindows_Checked"
                               Unchecked="CheckboxStartWithWindows_Unchecked" />
-                    <CheckBox x:Name="CheckboxStartMinimized" Content="Start minimized"
+                    <CheckBox x:Name="CheckboxStartMinimized" Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartMinimized}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxStartMinimized_Checked"
                               Unchecked="CheckboxStartMinimized_Unchecked" />
-                    <CheckBox x:Name="CheckboxMinimizeTray" Content="Minimize to tray"
+                    <CheckBox x:Name="CheckboxMinimizeTray" Content="{lex:Loc Options_Tracker_Settings_CheckBox_MinimizeToTray}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxMinimizeTray_Checked"
                               Unchecked="CheckboxMinimizeTray_Unchecked" />
-                    <CheckBox x:Name="CheckBoxShowSplashScreen" Content="Show the loading splash screen"
+                    <CheckBox x:Name="CheckBoxShowSplashScreen" Content="{lex:Loc Options_Tracker_Settings_CheckBox_Splashscreen}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
@@ -52,61 +56,61 @@
                     <CheckBox x:Name="CheckboxCloseWithHearthstone"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Close with Hearthstone" HorizontalAlignment="Left"
+                              Content="{lex:Loc Options_Tracker_Settings_CheckBox_CloseWithHearthstone}" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxCloseWithHearthstone_Checked"
                               Unchecked="CheckboxCloseWithHearthstone_Unchecked" />
                     <CheckBox x:Name="CheckboxStartHearthstoneWithHDT"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Start Hearthstone with HDT" HorizontalAlignment="Left"
+                              Content="{lex:Loc Options_Tracker_Settings_CheckBox_StartHearthstone}" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxStartHearthstoneWithHDT_Checked"
                               Unchecked="CheckboxStartHearthstoneWithHDT_Unchecked" />
-                    <CheckBox x:Name="CheckboxCheckForUpdates" Content="Check for updates"
+                    <CheckBox x:Name="CheckboxCheckForUpdates" Content="{lex:Loc Options_Tracker_Settings_CheckBox_Updates}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxCheckForUpdates_Checked"
                               Unchecked="CheckboxCheckForUpdates_Unchecked" />
-                    <CheckBox x:Name="CheckboxCheckForBetaUpdates" Content="Check for BETA updates"
+                    <CheckBox x:Name="CheckboxCheckForBetaUpdates" Content="{lex:Loc Options_Tracker_Settings_CheckBox_BetaUpdates}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxCheckForBetaUpdates_Checked"
                               Unchecked="CheckboxCheckForBetaUpdates_Unchecked" />
-                    <CheckBox x:Name="CheckboxAdvancedWindowSearch" Content="Advanced window search"
+                    <CheckBox x:Name="CheckboxAdvancedWindowSearch" Content="{lex:Loc Options_Tracker_Settings_CheckBox_AdvancedWindowSearch}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxAdvancedWindowSearch_Checked"
                               Unchecked="CheckboxAdvancedWindowSearch_Unchecked"
                               ToolTip="This can be turned off if the overlay shows up in non-Hearthstone windows." />
-                    <CheckBox x:Name="CheckboxAlternativeScreenCapture" Content="Alternative screen capture"
+                    <CheckBox x:Name="CheckboxAlternativeScreenCapture" Content="{lex:Loc Options_Tracker_Settings_CheckBox_AltScreenCapture}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxAlternativeScreenCapture_Checked"
                               Unchecked="CheckboxAlternativeScreenCapture_Unchecked"
                               ToolTip="Try enabling this if you are having trouble with rank(ed) detection." />
-                    <CheckBox x:Name="CheckboxShowNewsBar" Content="Show news bar"
+                    <CheckBox x:Name="CheckboxShowNewsBar" Content="{lex:Loc Options_Tracker_Settings_CheckBox_Newsbar}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Click="CheckboxShowNewsBar_OnClick" />
-                    <CheckBox x:Name="CheckboxLogTab" Content="Show Log"
+                    <CheckBox x:Name="CheckboxLogTab" Content="{lex:Loc Options_Tracker_Settings_CheckBox_Log}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxLogTab_Checked"
                               Unchecked="CheckboxLogTab_Unchecked" />
-                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content="set hearthstone path" Click="ButtonGamePath_OnClick"
+                    <Button Name="ButtonGamePath" Margin="10,5,10,0" Content="{lex:Loc Options_Tracker_Settings_Button_HearthstonePath}" Click="ButtonGamePath_OnClick"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content="open appdata folder" Click="ButtonOpenAppData_OnClick" 
+                    <Button Name="ButtonOpenAppData" Margin="10,5,10,0" Content="{lex:Loc Options_Tracker_Settings_Button_AppData}" Click="ButtonOpenAppData_OnClick" 
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-                    <Button Name="SelectSaveDataPath" Margin="10,5,10,0" Content="set data path"
+                    <Button Name="SelectSaveDataPath" Margin="10,5,10,0" Content="{lex:Loc Options_Tracker_Settings_Button_DataPath}"
                             Click="SelectSaveDataPath_Click"
                             Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                             Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-                    <Button Name="ButtonHearthstoneLogsDirectory" Margin="10,5,10,0" Content="set hearthstone log directory" 
+                    <Button Name="ButtonHearthstoneLogsDirectory" Margin="10,5,10,0" Content="{lex:Loc Options_Tracker_Settings_Button_LogDirectory}" 
                             Click="ButtonHearthstoneLogsDirectory_Click"
                             Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                             Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
