@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System.ComponentModel;
 
@@ -8,61 +8,61 @@ namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum TimeFrame
 	{
-		[Description("Today")]
+		[LocDescription("Enum_TimeFrame_Today")]
 		Today,
 
-		[Description("Yesterday")]
+		[LocDescription("Enum_TimeFrame_Yesterday")]
 		Yesterday,
 
-		[Description("Last 24 Hours")]
+		[LocDescription("Enum_TimeFrame_Last24Hours")]
 		Last24Hours,
 
-		[Description("This Week")]
+		[LocDescription("Enum_TimeFrame_ThisWeek")]
 		ThisWeek,
 
-		[Description("Previous Week")]
+		[LocDescription("Enum_TimeFrame_PreviousWeek")]
 		PreviousWeek,
 
-		[Description("Last 7 Days")]
+		[LocDescription("Enum_TimeFrame_Last7Days")]
 		Last7Days,
 
-		[Description("This Month")]
+		[LocDescription("Enum_TimeFrame_ThisMonth")]
 		ThisMonth,
 
-		[Description("Previous Month")]
+		[LocDescription("Enum_TimeFrame_PreviousMonth")]
 		PreviousMonth,
 
-		[Description("This Year")]
+		[LocDescription("Enum_TimeFrame_ThisYear")]
 		ThisYear,
 
-		[Description("Previous Year")]
+		[LocDescription("Enum_TimeFrame_PreviousYear")]
 		PreviousYear,
 
-		[Description("All Time")]
+		[LocDescription("Enum_TimeFrame_AllTime")]
 		AllTime
 	}
 
 	public enum DisplayedTimeFrame
 	{
-		[Description("Today")]
+		[LocDescription("Enum_DisplayedTimeFrame_Today")]
 		Today,
 
-		[Description("Week")]
+		[LocDescription("Enum_DisplayedTimeFrame_ThisWeek")]
 		ThisWeek,
 
-		[Description("Season")]
+		[LocDescription("Enum_DisplayedTimeFrame_CurrentSeason")]
 		CurrentSeason,
 
-		[Description("Last Season")]
+		[LocDescription("Enum_DisplayedTimeFrame_LastSeason")]
 		LastSeason,
 
-		[Description("Custom Season")]
+		[LocDescription("Enum_DisplayedTimeFrame_CustomSeason")]
 		CustomSeason,
 
-		[Description("All Time")]
+		[LocDescription("Enum_DisplayedTimeFrame_AllTime")]
 		AllTime,
 
-		[Description("Custom")]
+		[LocDescription("Enum_DisplayedTimeFrame_Custom")]
 		Custom
 	}
 }

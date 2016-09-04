@@ -1,20 +1,14 @@
-﻿#region
-
-using System.ComponentModel;
-
-#endregion
-
 namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum ArenaImportingBehaviour
 	{
-		[Description("Auto import&save")]
+		[LocDescription("Enum_ArenaImportingBehaviour_AutoImportSave")]
 		AutoImportSave,
 
-		[Description("Auto ask to import")]
+		[LocDescription("Enum_ArenaImportingBehaviour_AutoAsk")]
 		AutoAsk,
 
-		[Description("Manual")]
+		[LocDescription("Enum_ArenaImportingBehaviour_Manual")]
 		Manual
 	}
 }
