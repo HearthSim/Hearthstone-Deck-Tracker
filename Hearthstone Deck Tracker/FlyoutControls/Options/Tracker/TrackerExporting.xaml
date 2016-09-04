@@ -1,17 +1,21 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerExporting"
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerExporting"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="Exporting to Hearthstone">
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Exporting_Header}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <DockPanel Margin="10,5,10,0">
-                        <Label Content="Speed:" />
+                        <Label Content="{lex:Loc Options_Tracker_Exporting_Label_Speed}" />
                         <ComboBox Name="ComboboxExportSpeed" SelectedIndex="1"
                                   HorizontalAlignment="Right" Width="150"
                                   SelectionChanged="ComboboxExportSpeed_SelectionChanged">
@@ -23,46 +27,46 @@
                         </ComboBox>
                     </DockPanel>
                     <StackPanel Orientation="Horizontal" Margin="10,5,0,0">
-                        <Label Content="Wait" />
+                        <Label Content="{lex:Loc Options_Tracker_Exporting_Label_Wait}" />
                         <TextBox x:Name="TextboxExportDelay"
                                  HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
                                  TextWrapping="Wrap" Text="0" VerticalAlignment="Top"
                                  Width="27" TextChanged="TextboxExportDelay_TextChanged"
                                  PreviewTextInput="TextboxExportDelay_PreviewTextInput" />
-                        <Label Content="seconds before starting" />
+                        <Label Content="{lex:Loc Options_Tracker_Exporting_Label_Wait2}" />
                     </StackPanel>
-                    <CheckBox x:Name="CheckboxPrioGolden" Content="Prioritize golden cards"
+                    <CheckBox x:Name="CheckboxPrioGolden" Content="{lex:Loc Options_Tracker_Exporting_CheckBox_Golden}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxPrioGolden_Checked"
                               Unchecked="CheckboxPrioGolden_Unchecked" />
-                    <CheckBox x:Name="CheckboxExportName" Content="Set deck name"
+                    <CheckBox x:Name="CheckboxExportName" Content="{lex:Loc Options_Tracker_Exporting_CheckBox_DeckName}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxExportName_Checked"
                               Unchecked="CheckboxExportName_Unchecked" />
-                    <CheckBox x:Name="CheckboxExportAddVersion" Content="Include version number in name"
+                    <CheckBox x:Name="CheckboxExportAddVersion" Content="{lex:Loc Options_Tracker_Exporting_CheckBox_Version}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxExportAddVersion_Checked"
                               Unchecked="CheckboxExportAddVersion_Unchecked" />
-                    <CheckBox x:Name="CheckboxAutoClear" Content="Auto clear cards"
+                    <CheckBox x:Name="CheckboxAutoClear" Content="{lex:Loc Options_Tracker_Exporting_CheckBox_ClearCards}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxAutoClear_Checked"
                               Unchecked="CheckboxAutoClear_Unchecked" />
-                    <CheckBox x:Name="CheckboxAutoClearFilters" Content="Auto clear filters"
+                    <CheckBox x:Name="CheckboxAutoClearFilters" Content="{lex:Loc Options_Tracker_Exporting_CheckBox_ClearFilters}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxAutoClearFilters_Checked"
                               Unchecked="CheckboxAutoClearFilters_Unchecked" />
-                    <CheckBox x:Name="CheckboxForceClear" Content="Force clear searchbox between cards"
+                    <CheckBox x:Name="CheckboxForceClear" Content="{lex:Loc Options_Tracker_Exporting_CheckBox_ClearSearchbox}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxForceClear_Checked"
                               Unchecked="CheckboxForceClear_Unchecked" />
                     <CheckBox x:Name="CheckboxExportPasteClipboard"
-                              Content="Paste names from clipboard"
+                              Content="{lex:Loc Options_Tracker_Exporting_CheckBox_Clipbard}"
                               ToolTip="Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top"
                               Checked="CheckboxExportPasteClipboard_Checked"
                               Unchecked="CheckboxExportPasteClipboard_Unchecked" />
-                    <CheckBox x:Name="CheckboxShowDialog" Content="Show dialog before exporting"
+                    <CheckBox x:Name="CheckboxShowDialog" Content="{lex:Loc Options_Tracker_Exporting_CheckBox_Dialog}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxShowDialog_OnChecked"
                               Unchecked="CheckboxShowDialog_OnUnchecked" />

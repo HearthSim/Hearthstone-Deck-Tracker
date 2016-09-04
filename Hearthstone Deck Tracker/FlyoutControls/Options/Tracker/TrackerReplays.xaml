@@ -5,25 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
-    <GroupBox Header="REPLAYS">
+    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Replays_Header}">
         <StackPanel>
             <GroupBox Header="HSREPLAY.NET">
                 <StackPanel>
-                    <CheckBox Name="CheckBoxShowToast" Content="Show share notification" Margin="5,5,0,0" IsChecked="{Binding HsReplayShareToast, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Name="CheckBoxShowToast" Content="{lex:Loc Options_Tracker_Replays_CheckBox_ShareNotification}" Margin="5,5,0,0" IsChecked="{Binding HsReplayShareToast, Source={StaticResource ConfigWrapper}}"/>
                     <Separator Margin="0,5,0,0"/>
-                    <CheckBox Name="CheckBoxAutoUpload" Content="Upload replays automatically" Margin="5,5,0,0" IsChecked="{Binding HsReplayAutoUpload, Source={StaticResource ConfigWrapper}}"/>
-                    <CheckBox Content="Ranked" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadRanked, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
-                    <CheckBox Content="Casual" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadCasual, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
-                    <CheckBox Content="Arena" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadArena, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
-                    <CheckBox Content="Brawl" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadBrawl, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
-                    <CheckBox Content="Friendly" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadFriendly, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
-                    <CheckBox Content="Adventure/Practice" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadPractice, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
-                    <CheckBox Content="Spectator" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadSpectator, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Name="CheckBoxAutoUpload" Content="{lex:Loc Options_Tracker_Replays_CheckBox_Upload}" Margin="5,5,0,0" IsChecked="{Binding HsReplayAutoUpload, Source={StaticResource ConfigWrapper}}"/>
+                    <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Ranked}" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadRanked, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Casual}" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadCasual, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Arena}" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadArena, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Brawl}" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadBrawl, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Friendly}" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadFriendly, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_AdventurePractice}" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadPractice, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+                    <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Spectator}" Margin="25,5,0,0" IsChecked="{Binding HsReplayUploadSpectator, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
                     <Separator Margin="0,5,0,0"/>
                     <DockPanel>
-                        <Label Content="Account Status:" DockPanel.Dock="Left"/>
+                        <Label Content="{lex:Loc Options_Tracker_Replays_Label_AccountStatus}" DockPanel.Dock="Left"/>
                         <Label Content="{Binding AccountStatus, RelativeSource={RelativeSource AncestorType=UserControl}}" DockPanel.Dock="Left"/>
                         <controls:ProgressRing Name="ProgressRing" IsActive="False" DockPanel.Dock="Right" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding ProgressRingVisibility}" Width="16" Height="16"/>
                         <TextBlock VerticalAlignment="Center">
@@ -32,8 +36,8 @@
                             </Hyperlink>
                         </TextBlock>
                     </DockPanel>
-                    <Button Name="ButtonClaimAccount" Content="Claim Account" Margin="0,2,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Click="ButtonClaimAccount_OnClick"/>
-                    <TextBlock Text="Log in with your Battle.net credentials on HSReplay.net to claim your existing replays. This will open your web browser." TextWrapping="Wrap"
+                    <Button Name="ButtonClaimAccount" Content="{lex:Loc Options_Tracker_Replays_Button_Claim}" Margin="0,2,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Click="ButtonClaimAccount_OnClick"/>
+                    <TextBlock Text="{lex:Loc Options_Tracker_Replays_Claim_Description}" TextWrapping="Wrap"
                            Margin="0,5,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                     <StackPanel Visibility="{Binding ClaimErrorVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
                         <TextBlock Text="Could not launch the browser. Please click below to copy your claiming URL to clipboard. Do not share this URL with anyone." TextWrapping="Wrap"
@@ -42,7 +46,7 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
-            <CheckBox Content="Use local replay viewer by default (not maintained)" Margin="5,5,0,0"
+            <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_LocalViewer}" Margin="5,5,0,0"
                               IsChecked="{Binding ForceLocalReplayViewer, Source={StaticResource ConfigWrapper}}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
