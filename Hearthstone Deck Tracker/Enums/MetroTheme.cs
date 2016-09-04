@@ -1,12 +1,10 @@
-using System.ComponentModel;
-
 namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum MetroTheme
 	{
-		[Description("Light")]
+		[LocDescription("Enum_MetroTheme_BaseLight")]
 		BaseLight,
-		[Description("Dark")]
+		[LocDescription("Enum_MetroTheme_BaseDark")]
 		BaseDark
 	}
 }
