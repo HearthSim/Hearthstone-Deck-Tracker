@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.ComponentModel.ListSortDirection;
 using static System.Windows.Visibility;
@@ -33,6 +34,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 	/// </summary>
 	public partial class DeckPicker : INotifyPropertyChanged
 	{
+		private const string LocLink = "DeckPicker_ContextMenu_LinkUrl";
+		private const string LocLinkNew = "DeckPicker_ContextMenu_LinkNewUrl";
+
 		public delegate void DoubleClickHandler(DeckPicker sender, Deck deck);
 
 		public delegate void SelectedDeckHandler(DeckPicker sender, Deck deck);
@@ -661,7 +665,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			MenuItemMoveDeckToConstructed.Visibility = selectedDecks.First().IsArenaDeck ? Visible : Collapsed;
 			MenuItemMissingCards.Visibility = selectedDecks.First().MissingCards.Any() ? Visible : Collapsed;
 			MenuItemSetDeckUrl.Visibility = selectedDecks.First().IsArenaDeck ? Collapsed : Visible;
-			MenuItemSetDeckUrl.Header = string.IsNullOrEmpty(selectedDecks.First().Url) ? "LINK TO UR_L" : "LINK TO NEW UR_L";
+			MenuItemSetDeckUrl.Header = string.IsNullOrEmpty(selectedDecks.First().Url) ? LocUtil.Get(LocLink, true) : LocUtil.Get(LocLinkNew, true);
 			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(selectedDecks.First().Url) ? Collapsed : Visible;
 			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(selectedDecks.First().Url) ? Collapsed : Visible;
 			MenuItemArchive.Visibility = selectedDecks.Any(d => !d.Archived) ? Visible : Collapsed;
