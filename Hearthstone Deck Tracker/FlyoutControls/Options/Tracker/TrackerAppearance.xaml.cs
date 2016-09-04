@@ -1,14 +1,13 @@
-﻿#region
+#region
 
 using System;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
-using WPFLocalizeExtension.Engine;
 
 #endregion
 
@@ -188,7 +187,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.Localization = (Language)ComboBoxLanguage.SelectedItem;
 			Config.Save();
-			Helper.UpdateCultureInfo();
+			LocUtil.UpdateCultureInfo();
 		}
 	}
 }

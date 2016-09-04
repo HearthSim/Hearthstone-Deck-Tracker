@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections;
@@ -712,12 +712,6 @@ namespace Hearthstone_Deck_Tracker
 			Uri result;
 			return Uri.TryCreate(url, UriKind.Absolute, out result)
 				&& (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps);
-		}
-
-		public static void UpdateCultureInfo()
-		{
-			var locStr = Config.Instance.Localization.ToString().Insert(2, "-");
-			LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(locStr);
 		}
 	}
 }
