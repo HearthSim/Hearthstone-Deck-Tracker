@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker
 			splashScreenWindow.ShowConditional();
 			Log.Initialize();
 			ConfigManager.Run();
-			Helper.UpdateCultureInfo();
+			LocUtil.UpdateCultureInfo();
 			var newUser = ConfigManager.PreviousVersion == null;
 			LogConfigUpdater.Run().Forget();
 			LogConfigWatcher.Start();
