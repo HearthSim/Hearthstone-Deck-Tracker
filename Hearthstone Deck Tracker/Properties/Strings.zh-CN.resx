@@ -172,10 +172,10 @@
     <value>显示丢失卡牌(_M)</value>
   </data>
   <data name="MainWindow_Menu_Deck_UpdateWeb" xml:space="preserve">
-    <value>更新(网站)(_U)</value>
+    <value>更新(网页)(_U)</value>
   </data>
   <data name="MainWindow_Menu_Deck_OpenWebsite" xml:space="preserve">
-    <value>打开网站(_W)</value>
+    <value>打开网页(_W)</value>
   </data>
   <data name="MainWindow_Menu_Deck_OpenHearthStats" xml:space="preserve">
     <value>打开HEARTHSTATS</value>
@@ -1196,10 +1196,10 @@
     <value>显示丢失卡牌(_M)</value>
   </data>
   <data name="DeckPicker_ContextMenu_Update" xml:space="preserve">
-    <value>更新(网站)(_U)</value>
+    <value>更新(网页)(_U)</value>
   </data>
   <data name="DeckPicker_ContextMenu_OpenWebsite" xml:space="preserve">
-    <value>打开网站(_W)</value>
+    <value>打开网页(_W)</value>
   </data>
   <data name="DeckPicker_ContextMenu_OpenHearthstats" xml:space="preserve">
     <value>打开HEARTHSTATS</value>
@@ -1223,15 +1223,15 @@
     <value>已选版本</value>
   </data>
   <data name="DeckPicker_ContextMenu_LinkUrl" xml:space="preserve">
-    <value>来自网页(_L)</value>
+    <value>链接到网页(_L)</value>
   </data>
   <data name="DeckPicker_ContextMenu_LinkNewUrl" xml:space="preserve">
-    <value>来自新网页(_L)</value>
+    <value>链接到新网页(_L)</value>
   </data>
   <data name="MainWindow_Menu_Deck_LinkUrl" xml:space="preserve">
-    <value>来自网页(_L)</value>
+    <value>链接到网页(_L)</value>
   </data>
   <data name="MainWindow_Menu_Deck_LinkNewUrl" xml:space="preserve">
-    <value>来自新网页(_L)</value>
+    <value>链接到新网页(_L)</value>
   </data>
 </root>
