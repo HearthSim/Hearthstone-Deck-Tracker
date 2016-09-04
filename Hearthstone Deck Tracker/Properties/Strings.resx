@@ -1818,6 +1818,78 @@
   <data name="Stats_Overview_Label_Filters" xml:space="preserve">
     <value>Filters</value>
   </data>
+  <data name="Importing_Constructed_Label_Title" xml:space="preserve">
+    <value>Select decks to import:</value>
+  </data>
+  <data name="Importing_Constructed_Button_Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Importing_Constructed_Button_AutoImporting" xml:space="preserve">
+    <value>Enable auto importing</value>
+  </data>
+  <data name="Importing_Constructed_Label_Deck" xml:space="preserve">
+    <value>Deck</value>
+  </data>
+  <data name="Importing_Constructed_Label_SaveTo" xml:space="preserve">
+    <value>Save to</value>
+  </data>
+  <data name="Importing_Constructed_Text_StartHearthstonePlay" xml:space="preserve">
+    <value>Start Hearthstone and enter the 'Play' menu.</value>
+  </data>
+  <data name="Importing_Constructed_Text_EnterPlay" xml:space="preserve">
+    <value>Enter the 'Play' menu.</value>
+  </data>
+  <data name="Importing_Constructed_Text_StartHearthstoneBrawl" xml:space="preserve">
+    <value>Start Hearthstone and enter the 'Tavern Brawl' menu.</value>
+  </data>
+  <data name="Importing_Constructed_Text_EnterBrawl" xml:space="preserve">
+    <value>Enter the 'Tavern Brawl' menu.</value>
+  </data>
+  <data name="Importing_Constructed_Text_NoDecksFound" xml:space="preserve">
+    <value>No new decks found.</value>
+  </data>
+  <data name="Importing_Constructed_Button_StartHearthstone" xml:space="preserve">
+    <value>Start Launcher / Hearthstone</value>
+  </data>
+  <data name="Importing_Constructed_Button_Waiting" xml:space="preserve">
+    <value>Waiting for Hearthstone...</value>
+  </data>
+  <data name="DeckSetIcons_Tooltip_Naxx" xml:space="preserve">
+    <value>Deck contains cards from the Curse of Naxxramas expansion.</value>
+  </data>
+  <data name="DeckSetIcons_Tooltip_Gvg" xml:space="preserve">
+    <value>Deck contains cards from the Goblins vs Gnomes expansion.</value>
+  </data>
+  <data name="DeckSetIcons_Tooltip_Brm" xml:space="preserve">
+    <value>Deck contains cards from the Blackrock Mountain expansion.</value>
+  </data>
+  <data name="DeckSetIcons_Tooltip_Tgt" xml:space="preserve">
+    <value>Deck contains cards from The Grand Tournament expansion.</value>
+  </data>
+  <data name="DeckSetIcons_Tooltip_Loe" xml:space="preserve">
+    <value>Deck contains cards from the League of Explorers expansion.</value>
+  </data>
+  <data name="DeckSetIcons_Tooltip_Wotog" xml:space="preserve">
+    <value>Deck contains cards from the Whispers of the Old Gods expansion.</value>
+  </data>
+  <data name="DeckSetIcons_Tooltip_Onik" xml:space="preserve">
+    <value>Deck contains cards from the One Night in Karazhan expansion.</value>
+  </data>
+  <data name="ManaCurve_Tooltip_Label_Weapons" xml:space="preserve">
+    <value>Weapons</value>
+  </data>
+  <data name="ManaCurve_Tooltip_Label_Spells" xml:space="preserve">
+    <value>Spells</value>
+  </data>
+  <data name="ManaCurve_Tooltip_Label_Minions" xml:space="preserve">
+    <value>Minions</value>
+  </data>
+  <data name="ManaCurve_Button_Mechanics" xml:space="preserve">
+    <value>Mechanics</value>
+  </data>
+  <data name="ManaCurve_Button_Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
   <data name="Enum_StatType_Mana" xml:space="preserve">
     <value>Mana</value>
   </data>

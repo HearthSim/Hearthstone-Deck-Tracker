@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -11,21 +11,22 @@ using Hearthstone_Deck_Tracker.Importing.Game;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static System.Windows.Visibility;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
 	public partial class DeckImportingControl : INotifyPropertyChanged
 	{
-		private const string StartTextConstructed = "Start Hearthstone and enter the 'Play' menu.";
-		private const string StartTextConstructedGameRunning = "Enter the 'Play' menu.";
-		private const string StartTextBrawl = "Start Hearthstone and enter the 'Tavern Brawl' menu.";
-		private const string StartTextBrawlGameRunning = "Enter the 'Tavern Brawl' menu.";
-		private const string NoDecksFoundText = "No new decks found.";
-		private const string StartHearthstoneText = "START LAUNCHER / HEARTHSTONE";
-		private const string StartHearthstoneWaitingText = "WAITING FOR HEARTHSTONE...";
+		private const string StartTextConstructed = "Importing_Constructed_Text_StartHearthstonePlay";
+		private const string StartTextConstructedGameRunning = "Importing_Constructed_Text_EnterPlay";
+		private const string StartTextBrawl = "Importing_Constructed_Text_StartHearthstoneBrawl";
+		private const string StartTextBrawlGameRunning = "Importing_Constructed_Text_EnterBrawl";
+		private const string NoDecksFoundText = "Importing_Constructed_Text_NoDecksFound";
+		private const string StartHearthstoneText = "Importing_Constructed_Button_StartHearthstone";
+		private const string StartHearthstoneWaitingText = "Importing_Constructed_Button_Waiting";
 
-		private string StartText => _brawl ? StartTextBrawl : StartTextConstructed;
-		private string StartTextGameRunning => _brawl ? StartTextBrawlGameRunning : StartTextConstructedGameRunning;
+		private string StartText => LocUtil.Get(_brawl ? StartTextBrawl : StartTextConstructed);
+		private string StartTextGameRunning => LocUtil.Get(_brawl ? StartTextBrawlGameRunning : StartTextConstructedGameRunning);
 
 
 		private bool _brawl;
@@ -79,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			Text = Core.Game.IsRunning ? StartTextGameRunning : StartText;
 			UpdateContent();
 			ButtonImport.IsEnabled = true;
-			ButtonStartHearthstoneText = StartHearthstoneText;
+			ButtonStartHearthstoneText = LocUtil.Get(StartHearthstoneText, true);
 		}
 
 		public void SetDecks(List<ImportedDeck> decks)
@@ -88,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			foreach(var deck in decks)
 				Decks.Add(deck);
 			_ready = decks.Any();
-			Text = NoDecksFoundText;
+			Text = LocUtil.Get(NoDecksFoundText);
 			UpdateContent();
 		}
 
@@ -153,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private async void BtnStartHearthstone_Click(object sender, RoutedEventArgs e)
 		{
 			BtnStartHearthstone.IsEnabled = false;
-			ButtonStartHearthstoneText = StartHearthstoneWaitingText;
+			ButtonStartHearthstoneText = LocUtil.Get(StartHearthstoneWaitingText, true);
 			Helper.StartHearthstoneAsync().Forget();
 			await Task.Delay(5000);
 			BtnStartHearthstone.IsEnabled = true;

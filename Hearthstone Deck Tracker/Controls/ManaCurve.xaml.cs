@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Linq;
@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using static System.Windows.Visibility;
 using static Hearthstone_Deck_Tracker.Enums.StatType;
 
@@ -22,6 +23,8 @@ namespace Hearthstone_Deck_Tracker
 		private const string Enchantment = "Enchantment";
 		private const string Spell = "Spell";
 		private const string Minion = "Minion";
+		private const string LocMechanics = "ManaCurve_Button_Mechanics";
+		private const string LocHide = "ManaCurve_Button_Hide";
 		private readonly ManaCostBar[] _manaCostBars;
 		private Deck _deck;
 
@@ -184,12 +187,12 @@ namespace Hearthstone_Deck_Tracker
 			if(BorderMechanics.Visibility != Visible)
 			{
 				BorderMechanics.Visibility = Visible;
-				TextBlockManaCurveMechanics.Text = "HIDE";
+				TextBlockManaCurveMechanics.Text = LocUtil.Get(LocHide, true);
 			}
 			else
 			{
 				BorderMechanics.Visibility = Collapsed;
-				TextBlockManaCurveMechanics.Text = "MECHANICS";
+				TextBlockManaCurveMechanics.Text = LocUtil.Get(LocMechanics, true);
 			}
 			TextBlockNoMechanics.Visibility = _deck != null && _deck.Mechanics.Any() ? Collapsed : Visible;
 		}
@@ -199,6 +202,6 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public StatType StatType { get; set; }
 
-		public string DisplayName => StatType.ToString().ToUpper();
+		public string DisplayName => EnumDescriptionConverter.GetDescription(StatType);
 	}
 }
