@@ -86,7 +86,7 @@
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_og}" />
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Name="RectIconKara" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Onik}">
+        <Rectangle Name="RectIconKara" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Kara}">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_kara}" />
             </Rectangle.Fill>

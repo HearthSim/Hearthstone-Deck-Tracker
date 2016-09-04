@@ -589,7 +589,7 @@
                         <RadioButton Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Tgt}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Loe}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Wotog}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Onik}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Kara}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
                 </MenuItem>
             </Menu>

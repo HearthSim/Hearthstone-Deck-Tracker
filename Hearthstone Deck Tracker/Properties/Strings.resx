@@ -447,7 +447,7 @@
   <data name="MainWindow_DeckBuilder_Filter_Set_Wotog" xml:space="preserve">
     <value>Whispers of the old Gods</value>
   </data>
-  <data name="MainWindow_DeckBuilder_Filter_Set_Onik" xml:space="preserve">
+  <data name="MainWindow_DeckBuilder_Filter_Set_Kara" xml:space="preserve">
     <value>One Night in Karazhan</value>
   </data>
   <data name="MainWindow_DeckBuilder_TextBox_Name_Watermark" xml:space="preserve">
@@ -1872,7 +1872,7 @@
   <data name="DeckSetIcons_Tooltip_Wotog" xml:space="preserve">
     <value>Deck contains cards from the Whispers of the Old Gods expansion.</value>
   </data>
-  <data name="DeckSetIcons_Tooltip_Onik" xml:space="preserve">
+  <data name="DeckSetIcons_Tooltip_Kara" xml:space="preserve">
     <value>Deck contains cards from the One Night in Karazhan expansion.</value>
   </data>
   <data name="ManaCurve_Tooltip_Label_Weapons" xml:space="preserve">
