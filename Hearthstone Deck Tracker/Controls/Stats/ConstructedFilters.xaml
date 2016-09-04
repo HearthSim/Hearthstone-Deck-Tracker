@@ -6,6 +6,10 @@
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
     <UserControl.Resources>
@@ -15,14 +19,14 @@
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     </UserControl.Resources>
     <StackPanel>
-        <CheckBox Name="CheckBoxDecks" Content="Active deck only" Margin="5"
+        <CheckBox Name="CheckBoxDecks" Content="{lex:Loc Stats_Constructed_Filters_CheckBox_ActiveOnly}" Margin="5"
                   IsChecked="{Binding Path=ConstructedStatsActiveDeckOnly, Source={StaticResource ConfigWrapper}}"
                   IsEnabled="{Binding ActiveDeckOnlyIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
                   ToolTip="{Binding ActiveDeckOnlyToolTip, RelativeSource={RelativeSource AncestorType=UserControl}}"
                   Checked="CheckBoxDecks_OnCheckedChanged" Unchecked="CheckBoxDecks_OnCheckedChanged" ToolTipService.ShowOnDisabled="True" />
         <Separator/>
         <DockPanel Margin="0,5,0,0">
-            <Label Content="Time:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Time}" Width="60"/>
             <ComboBox Name="ComboBoxTimeframe" SelectedIndex="3" SelectionChanged="ComboBoxTimeframe_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -32,19 +36,19 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
-            <Label Content="Start:" Margin="10,0,0,0" Width="50"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Start}" Margin="10,0,0,0" Width="50"/>
             <DatePicker Name="DatePickerCustomTimeFrameStart" DockPanel.Dock="Right"
                                     SelectedDate="{Binding Path=ConstructedStatsTimeFrameCustomStart, Source={StaticResource ConfigWrapper}}"
                                     SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
         </DockPanel>
         <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeVisibilityConverter}}">
-            <Label Content="End:" Margin="10,0,0,0" Width="50"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_End}" Margin="10,0,0,0" Width="50"/>
             <DatePicker Name="DatePickerCustomTimeFrameEnd" DockPanel.Dock="Right"
                                     SelectedDate="{Binding Path=ConstructedStatsTimeFrameCustomEnd, Source={StaticResource ConfigWrapper}}"
                                     SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
         </DockPanel>
         <DockPanel Margin="0,5,0,0" Visibility="{Binding ElementName=ComboBoxTimeframe, Path=SelectedItem, Converter={StaticResource CustomTimeframeSeasonVisibilityConverter}}">
-            <Label Content="Seasons:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Seasons}" Width="60"/>
             <Grid VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="22*"/>
@@ -65,7 +69,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <Label Content="to" Grid.Column="1" Grid.Row="0"/>
+                <Label Content="{lex:Loc Stats_Constructed_Filters_Label_SeasonTo}" Grid.Column="1" Grid.Row="0"/>
                 <TextBox Name="TextBoxCustomSeasonMax" Height="26" TextAlignment="Center" Grid.Column="2" Grid.Row="0" LostFocus="TextBoxCustomSeasonMax_OnLostFocus"
                          PreviewTextInput="TextBox_OnPreviewTextInput_DigitsOnly" PreviewKeyUp="TextBox_OnEnter">
                     <TextBox.Text>
@@ -79,7 +83,7 @@
             </Grid>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
-            <Label Content="Class:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Class}" Width="60"/>
             <ComboBox Name="ComboBoxClass" SelectedIndex="0" SelectionChanged="ComboBoxClass_OnSelectionChanged"
                       IsEnabled="{Binding IsChecked, ElementName=CheckBoxDecks, Converter={StaticResource InverseBooleanConverter}}">
                 <ComboBox.ItemTemplate>
@@ -94,7 +98,7 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
-            <Label Content="VS:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_V}" Width="60"/>
             <ComboBox Name="ComboBoxOpponentClass" SelectionChanged="ComboBoxOpponentClass_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -109,7 +113,7 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
-            <Label Content="Mode:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Mode}" Width="60"/>
             <ComboBox Name="ComboBoxMode" SelectedIndex="0" SelectionChanged="ComboBoxMode_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -119,7 +123,7 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,5,0,0" Visibility="{Binding RankFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
-            <Label Content="Rank:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Rank}" Width="60"/>
             <Grid VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="22*"/>
@@ -139,7 +143,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <Label Content="to" Grid.Column="1" Grid.Row="0"/>
+                <Label Content="{lex:Loc Stats_Constructed_Filters_Label_RankTo}" Grid.Column="1" Grid.Row="0"/>
                 <TextBox Name="TextBoxRankMax" Height="26" TextAlignment="Center" Grid.Column="2" Grid.Row="0" LostFocus="TextBoxRankMax_OnLostFocus" PreviewKeyUp="TextBox_OnEnter">
                     <TextBox.Text>
                         <Binding Path="ConstructedStatsRankFilterMax" Source="{StaticResource ConfigWrapper}">
@@ -152,7 +156,7 @@
             </Grid>
         </DockPanel>
         <DockPanel Margin="0,5,0,0" Visibility="{Binding FormatFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
-            <Label Content="Format:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Format}" Width="60"/>
             <ComboBox Name="ComboBoxFormat" SelectedIndex="0" SelectionChanged="ComboBoxFormat_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -162,7 +166,7 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
-            <Label Content="Result:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Result}" Width="60"/>
             <ComboBox Name="ComboBoxResult" SelectionChanged="ComboBoxResult_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -172,7 +176,7 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
-            <Label Content="Turns:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Turns}" Width="60"/>
             <Grid VerticalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="22*"/>
@@ -185,13 +189,13 @@
                 </Grid.ColumnDefinitions>
                 <TextBox Name="TextBoxTurnsMin" Height="26" Text="0" TextAlignment="Center" Grid.Column="0" Grid.Row="0" MaxLength="3"
                      PreviewTextInput="TextBox_OnPreviewTextInput_DigitsOnly" LostFocus="TextBoxTurnsMin_OnLostFocus" PreviewKeyUp="TextBox_OnEnter"/>
-                <Label Content="to" Grid.Column="1" Grid.Row="0"/>
+                <Label Content="{lex:Loc Stats_Constructed_Filters_Label_TurnsTo}" Grid.Column="1" Grid.Row="0"/>
                 <TextBox Name="TextBoxTurnsMax" Height="26" Text="99" TextAlignment="Center" Grid.Column="2" Grid.Row="0" MaxLength="3"
                      PreviewTextInput="TextBox_OnPreviewTextInput_DigitsOnly" LostFocus="TextBoxTurnsMax_OnLostFocus" PreviewKeyUp="TextBox_OnEnter"/>
             </Grid>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
-            <Label Content="Coin:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Coin}" Width="60"/>
             <ComboBox Name="ComboBoxCoin" SelectedIndex="0" SelectionChanged="ComboBoxCoin_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -201,7 +205,7 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
-            <Label Content="Region:" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Region}" Width="60"/>
             <ComboBox Name="ComboBoxRegion" SelectedIndex="0" SelectionChanged="ComboBoxRegion_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -210,16 +214,16 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </DockPanel>
-        <TextBox Name="TextBoxOpponentName" controls:TextBoxHelper.Watermark="Opponent name..." Margin="0,5,0,0" 
+        <TextBox Name="TextBoxOpponentName" controls:TextBoxHelper.Watermark="{lex:Loc Stats_Constructed_Filters_Text_OpponentName_Watermark}" Margin="0,5,0,0" 
                  LostFocus="TextBoxOpponentName_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
-        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="Notes..." Margin="0,5,0,0" 
+        <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="{lex:Loc Stats_Constructed_Filters_Text_Notes_Watermark}" Margin="0,5,0,0" 
                  LostFocus="TextBoxNote_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
-        <CheckBox Name="CheckBoxArchived" Content="Include archived decks" Margin="5,5,0,0" 
+        <CheckBox Name="CheckBoxArchived" Content="{lex:Loc Stats_Constructed_Filters_CheckBox_Archived}" Margin="5,5,0,0" 
                   IsChecked="{Binding Path=ConstructedStatsIncludeArchived, Source={StaticResource ConfigWrapper}}"
                   IsEnabled="{Binding IsChecked, ElementName=CheckBoxDecks, Converter={StaticResource InverseBooleanConverter}}"
                   Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" />
-        <CheckBox Name="CheckBoxTags" Content="Apply tag filters" Margin="5,5,0,0" 
-                  ToolTip="Apply tag filteres currently set in 'DeckPicker' > 'Sort/Filter Decks' (double arrow button)."
+        <CheckBox Name="CheckBoxTags" Content="{lex:Loc Stats_Constructed_Filters_CheckBox_TagFilters}" Margin="5,5,0,0" 
+                  ToolTip="{lex:Loc Stats_Constructed_Filters_CheckBox_TagFilters_Tooltip}"
                   IsChecked="{Binding Path=ConstructedStatsApplyTagFilters, Source={StaticResource ConfigWrapper}}"
                   Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" />
     </StackPanel>

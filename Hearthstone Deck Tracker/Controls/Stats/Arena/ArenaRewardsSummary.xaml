@@ -4,25 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal">
         <StackPanel Margin="10" Width="120">
             <StackPanel Orientation="Horizontal" Height="48">
                 <Image Width="46" Height="46" Source="/HearthstoneDeckTracker;component/Resources/gold_2.png" RenderOptions.BitmapScalingMode="Fant"/>
-                <Label Content="Gold" FontSize="16" VerticalAlignment="Center"/>
+                <Label Content="{lex:Loc Stats_Arena_Rewards_Label_Gold}" FontSize="16" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel Margin="32,10,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Total: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Gold_Total, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=GoldTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Average: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Gold_Average, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=GoldAveragePerRun, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Spent: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Gold_Spent, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=GoldSpent, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
             </StackPanel>
@@ -31,15 +35,15 @@
         <StackPanel Margin="10" Width="120">
             <StackPanel Orientation="Horizontal">
                 <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/dust.png" RenderOptions.BitmapScalingMode="Fant"/>
-                <Label Content="Dust" FontSize="16" VerticalAlignment="Center"/>
+                <Label Content="{lex:Loc Stats_Arena_Rewards_Label_Dust}" FontSize="16" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel Margin="32,10,0,0">
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Total: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Dust_Total, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Text="{Binding Path=DustTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Average: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Dust_Average, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Text="{Binding Path=DustAveragePerRun, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
             </StackPanel>
                 </StackPanel>
@@ -48,31 +52,31 @@
         <StackPanel Margin="10" Width="260">
             <StackPanel Orientation="Horizontal">
                 <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/pack_stack.png" RenderOptions.BitmapScalingMode="Fant"/>
-                <Label Content="Packs" FontSize="16" VerticalAlignment="Center"/>
+                <Label Content="{lex:Loc Stats_Arena_Rewards_Label_Packs}" FontSize="16" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel Margin="32,10,0,0">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Total: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Total, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Average: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Average, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountAveragePerRun, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Classic: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Classic, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountClassic, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Goblins vs Gnomes: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Total, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountGvg, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="The Grand Tournament: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Tgt, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountTgt, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Whispers of the Old Gods: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Wotog, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountWotog, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
             </StackPanel>
@@ -81,24 +85,24 @@
         <StackPanel Margin="10" Width="120">
             <StackPanel Orientation="Horizontal">
                 <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/cards_2.png" RenderOptions.BitmapScalingMode="Fant"/>
-                <Label Content="Cards" FontSize="16" VerticalAlignment="Center"/>
+                <Label Content="{lex:Loc Stats_Arena_Rewards_Label_Cards}" FontSize="16" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel Margin="32,10,0,0">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Total: "/>
-                <TextBlock VerticalAlignment="Center" Text="{Binding Path=CardCountTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Average: "/>
-                <TextBlock VerticalAlignment="Center" Text="{Binding Path=CardCountAveragePerRun, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Cards_Total, Suffix=' '}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Path=CardCountTotal, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="Golden: "/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Cards_Average, Suffix=' '}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Path=CardCountAveragePerRun, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Cards_Golden, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=CardCountGolden, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Average: "/>
-                <TextBlock VerticalAlignment="Center" Text="{Binding Path=CardCountGoldenAveragePerRun, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Cards_Golden_Average, Suffix=' '}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Path=CardCountGoldenAveragePerRun, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

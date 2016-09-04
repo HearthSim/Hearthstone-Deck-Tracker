@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
              xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -15,49 +17,49 @@
     </UserControl.Resources>
     <DataGrid Name="DataGridArenaRuns" SelectedIndex="0" SelectedItem="{Binding SelectedRun, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource, IsAsync=True}" ItemsSource="{Binding Path=FilteredRuns, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True, NotifyOnTargetUpdated=True}" TargetUpdated="DataGridArenaRuns_OnTargetUpdated" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
         <DataGrid.Columns>
-            <DataGridTemplateColumn Header="Class" SortMemberPath="Class">
+            <DataGridTemplateColumn Header="{lex:Loc Stats_Arena_Runs_Table_Class}" SortMemberPath="Class">
                 <DataGridTemplateColumn.CellTemplate>
                     <DataTemplate>
                         <Image Source="{Binding ClassImage}" Width="30" Height="30" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding Class}" />
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
-            <DataGridTextColumn Header="Started" Binding="{Binding StartTimeString}" SortMemberPath="StartTime">
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Started}" Binding="{Binding StartTimeString}" SortMemberPath="StartTime">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-            <DataGridTextColumn Header="Wins" Binding="{Binding Wins}">
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Wins}" Binding="{Binding Wins}">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-            <DataGridTextColumn Header="Losses" Binding="{Binding Losses}">
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Losses}" Binding="{Binding Losses}">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-            <DataGridTextColumn Header="Gold" Binding="{Binding Gold}">
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Gold}" Binding="{Binding Gold}">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-            <DataGridTextColumn Header="Dust" Binding="{Binding Dust}">
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Dust}" Binding="{Binding Dust}">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-            <DataGridTextColumn Header="Packs" Binding="{Binding PackCount}">
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Packs}" Binding="{Binding PackCount}">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -65,7 +67,7 @@
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-            <DataGridTextColumn Header="Cards" Binding="{Binding CardCount}" >
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Cards}" Binding="{Binding CardCount}" >
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -73,14 +75,14 @@
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-            <DataGridTextColumn Header="Duration" Binding="{Binding DurationString}" SortMemberPath="Duration">
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Duration}" Binding="{Binding DurationString}" SortMemberPath="Duration">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />
                     </Style>
                 </DataGridTextColumn.ElementStyle>
             </DataGridTextColumn>
-            <DataGridTextColumn Header="Region" Binding="{Binding Region}">
+            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Region}" Binding="{Binding Region}">
                 <DataGridTextColumn.ElementStyle>
                     <Style TargetType="TextBlock">
                         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -108,32 +110,32 @@
                         <RowDefinition Height="16"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
-                        <Button Margin="4,0" Content="Edit rewards" Click="ButtonEditRewards_OnClick"/>
-                        <Button Margin="4,4,4,0" Content="Show own deck" Click="ButtonShowDeck_OnClick"/>
-                        <Button Margin="4,4,4,0" Content="Show opp. deck" Click="ButtonShowOppDeck_OnClick" IsEnabled="{Binding Path=SelectedItem.CanGetOpponentDeck, ElementName=DataGridGames}"/>
-                        <Button Margin="4,4,4,0" Content="Show replay" Click="ButtonShowReplay_OnClick"
+                        <Button Margin="4,0" Content="{lex:Loc Stats_Arena_Runs_Table_Button_EditRewards}" Click="ButtonEditRewards_OnClick"/>
+                        <Button Margin="4,4,4,0" Content="{lex:Loc Stats_Arena_Runs_Table_Button_Deck}" Click="ButtonShowDeck_OnClick"/>
+                        <Button Margin="4,4,4,0" Content="{lex:Loc Stats_Arena_Runs_Table_Button_OpponentDeck}" Click="ButtonShowOppDeck_OnClick" IsEnabled="{Binding Path=SelectedItem.CanGetOpponentDeck, ElementName=DataGridGames}"/>
+                        <Button Margin="4,4,4,0" Content="{lex:Loc Stats_Arena_Runs_Table_Button_Replay}" Click="ButtonShowReplay_OnClick"
                                 IsEnabled="{Binding Path=SelectedItem.HasReplayFile, ElementName=DataGridGames}" />
-                        <Button Margin="4,4,4,0" Content="Add game" Click="ButtonAddGame_OnClick"/>
-                        <Button Margin="4,4,4,0" Content="Edit game" Click="ButtonEditGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
-                        <Button Margin="4,4,4,4" Content="Delete game" Click="ButtonDeleteGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
+                        <Button Margin="4,4,4,0" Content="{lex:Loc Stats_Arena_Runs_Table_Button_AddGame}" Click="ButtonAddGame_OnClick"/>
+                        <Button Margin="4,4,4,0" Content="{lex:Loc Stats_Arena_Runs_Table_Button_EditGame}" Click="ButtonEditGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
+                        <Button Margin="4,4,4,4" Content="{lex:Loc Stats_Arena_Runs_Table_Button_DeleteGame}" Click="ButtonDeleteGame_OnClick" IsEnabled="{Binding Path=SelectedItem, ElementName=DataGridGames, Converter={StaticResource NotNullToBooleanConverter}}"/>
                     </StackPanel>
                     <DataGrid Name="DataGridGames" SelectedIndex="-1" SelectedItem="{Binding SelectedGame, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource}" ItemsSource="{Binding Source={StaticResource ArenaGamesViewSource}}" AutoGenerateColumns="False" Grid.Column="2"  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True" PreviewMouseWheel="ForwardScrollEvent">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
+                            <DataGridTemplateColumn Header="{lex:Loc Stats_Arena_Runs_Table_Game_Vs}" SortMemberPath="OpponentHero">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Image RenderOptions.BitmapScalingMode="Fant" Source="{Binding OpponentHeroImage}" Height="24" Width="24" ToolTip="{Binding OpponentHero}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Started" Binding="{Binding StartTime, StringFormat={}{0:dd MMM yyyy HH:mm}}" SortMemberPath="StartTime">
+                            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Game_Started}" Binding="{Binding StartTime, StringFormat={}{0:dd MMM yyyy HH:mm}}" SortMemberPath="StartTime">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Result" Binding="{Binding Result}">
+                            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Game_Result}" Binding="{Binding Result}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -141,42 +143,42 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Name" Binding="{Binding OpponentName}">
+                            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Game_Name}" Binding="{Binding OpponentName}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Turns" Binding="{Binding Turns}">
+                            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Game_Turns}" Binding="{Binding Turns}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}">
+                            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Game_Coin}" Binding="{Binding GotCoin}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Time" Binding="{Binding Duration}" SortMemberPath="SortableDuration">
+                            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Game_Time}" Binding="{Binding Duration}" SortMemberPath="SortableDuration">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Replay" Binding="{Binding ReplayState}">
+                            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Game_Replay}" Binding="{Binding ReplayState}">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="HorizontalAlignment" Value="Center" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Note" Binding="{Binding Note}" />
+                            <DataGridTextColumn Header="{lex:Loc Stats_Arena_Runs_Table_Game_Note}" Binding="{Binding Note}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>

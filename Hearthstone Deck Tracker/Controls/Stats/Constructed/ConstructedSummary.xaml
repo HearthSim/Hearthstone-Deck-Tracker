@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Constructed"
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="1600" d:DesignWidth="1200">
     <ScrollViewer Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -13,8 +17,8 @@
             <Expander Name="ExpanderCharts" IsExpanded="{Binding ConstructedSummaryChartsExpanded, Source={StaticResource ConfigWrapper}}" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="CHARTS" Foreground="White"/>
-                        <CheckBox Name="CheckBoxShowLegends" Content="show legends" Margin="20,0,0,0" Foreground="White" IsChecked="{Binding Path=ArenaStatsShowLegends, Source={StaticResource ConfigWrapper}}"/>
+                        <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Summary_Label_Charts}" Foreground="White"/>
+                        <CheckBox Name="CheckBoxShowLegends" Content="{lex:Loc Stats_Constructed_Summary_CheckBox_ShowLegends}" Margin="20,0,0,0" Foreground="White" IsChecked="{Binding Path=ArenaStatsShowLegends, Source={StaticResource ConfigWrapper}}"/>
                     </StackPanel>
                 </Expander.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
@@ -25,63 +29,60 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <DockPanel Height="300" MinWidth="300" Grid.Column="0">
-                            <TextBlock Text="Winrate" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <TextBlock Text="{lex:Loc Stats_Constructed_Summary_Label_Winrate}" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
                             <metroChart:RadialGaugeChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="Collapsed">
                                 <metroChart:RadialGaugeChart.Series>
-                                    <metroChart:ChartSeries SeriesTitle="Winrate" DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=Winrate, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
+                                    <metroChart:ChartSeries SeriesTitle="{lex:LocText Stats_Constructed_Summary_ChartTitle_Winrate}" DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=Winrate, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                                 </metroChart:RadialGaugeChart.Series>
                             </metroChart:RadialGaugeChart>
                         </DockPanel>
                         <DockPanel Height="300" MinWidth="300" Grid.Column="1">
-                            <TextBlock Text="Played" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <TextBlock Text="{lex:Loc Stats_Constructed_Summary_Label_Played}" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
                             <metroChart:DoughnutChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <metroChart:DoughnutChart.Series>
-                                    <metroChart:ChartSeries SeriesTitle="Played(%)" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=PlayedClassesPercent, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
+                                    <metroChart:ChartSeries SeriesTitle="{lex:Loc Stats_Constructed_Summary_ChartTitle_Played}" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=PlayedClassesPercent, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                                 </metroChart:DoughnutChart.Series>
                             </metroChart:DoughnutChart>
                         </DockPanel>
                         <DockPanel Height="300" MinWidth="300" Grid.Column="2">
-                            <TextBlock Text="Opponents" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <TextBlock Text="{lex:Loc Stats_Constructed_Summary_Label_Opponents}" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
                             <metroChart:DoughnutChart Background="Transparent" Margin="0,0,0,-10"  ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="{Binding ElementName=CheckBoxShowLegends, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <metroChart:DoughnutChart.Series>
-                                    <metroChart:ChartSeries SeriesTitle="Opponents" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=OpponentClassesPercent, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
+                                    <metroChart:ChartSeries SeriesTitle="{lex:Loc Stats_Constructed_Summary_ChartTitle_Opponents}" DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=OpponentClassesPercent, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                                 </metroChart:DoughnutChart.Series>
                             </metroChart:DoughnutChart>
                         </DockPanel>
                     </Grid>
                 </ScrollViewer>
             </Expander>
-            <GroupBox Header="Highlights" DockPanel.Dock="Top" PreviewMouseWheel="ForwardScrollEvent">
+            <GroupBox Header="{lex:Loc Stats_Constructed_Summary_Label_Highlights}" DockPanel.Dock="Top" PreviewMouseWheel="ForwardScrollEvent">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                     <StackPanel Orientation="Horizontal">
                         <DockPanel>
-                            <Label DockPanel.Dock="Top" Content="Total" FontSize="16" Margin="10,0,0,0"/>
+                            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Constructed_Summary_Label_Total}" FontSize="16" Margin="10,0,0,0"/>
                             <TextBlock DockPanel.Dock="Top" VerticalAlignment="Center" Margin="15,0,0,0">
-                                <TextBlock.Text>
-                                    <Binding Path="HighestRank" Source="{x:Static compiledStats:ConstructedStats.Instance}"
-                                             StringFormat="{}Highest Rank: {0}" />
-                                </TextBlock.Text>
+                                <Run Text="{lex:LocText Key=Stats_Constructed_Summary_Label_HighestRank}"/> <Run Text="{Binding HighestRank, Source={x:Static compiledStats:ConstructedStats.Instance}, Mode=OneWay}"/>
                             </TextBlock>
                             <local:ConstructedDeckHighlights Margin="15,0,0,0" Width="232" ImageVisiblity="Collapsed" DataContext="{Binding Path=DeckStatsTotal, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                         </DockPanel>
                         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
                         <DockPanel>
-                            <Label DockPanel.Dock="Top" Content="Most played deck" FontSize="16" Margin="10,0,0,0"/>
+                            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Constructed_Summary_Label_MostPlayedDeck}" FontSize="16" Margin="10,0,0,0"/>
                             <local:ConstructedDeckHighlights DataContext="{Binding Path=DeckStatsMostPlayed, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                         </DockPanel>
                         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
                         <DockPanel>
-                            <Label DockPanel.Dock="Top" Content="Best deck" FontSize="16" Margin="10,0,0,0"/>
+                            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Constructed_Summary_Label_BestDeck}" FontSize="16" Margin="10,0,0,0"/>
                             <local:ConstructedDeckHighlights DataContext="{Binding Path=DeckStatsBest, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                         </DockPanel>
                         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
                         <DockPanel>
-                            <Label DockPanel.Dock="Top" Content="Fastest deck" FontSize="16" Margin="10,0,0,0"/>
+                            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Constructed_Summary_Label_FastestDeck}" FontSize="16" Margin="10,0,0,0"/>
                             <local:ConstructedDeckHighlights DataContext="{Binding Path=DeckStatsFastest, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                         </DockPanel>
                         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
                         <DockPanel>
-                            <Label DockPanel.Dock="Top" Content="Slowest deck" FontSize="16" Margin="10,0,0,0"/>
+                            <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Constructed_Summary_Label_SlowestDeck}" FontSize="16" Margin="10,0,0,0"/>
                             <local:ConstructedDeckHighlights DataContext="{Binding Path=DeckStatsSlowest, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                         </DockPanel>
                     </StackPanel>
@@ -91,7 +92,7 @@
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding GroupBoxMatchupsHeader, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="White"/>
-                        <CheckBox Name="CheckBoxPercent" Content="show as percent" Margin="20,0,0,0" Foreground="White" 
+                        <CheckBox Name="CheckBoxPercent" Content="{lex:Loc Stats_Constructed_Summary_CheckBox_Percent}" Margin="20,0,0,0" Foreground="White" 
                                   IsChecked="{Binding Path=ConstructedStatsAsPercent, Source={StaticResource ConfigWrapper}}"
                                   Checked="CheckBoxPercent_OnCheckedChanged" Unchecked="CheckBoxPercent_OnCheckedChanged"/>
                     </StackPanel>
@@ -101,3 +102,4 @@
         </DockPanel>
     </ScrollViewer>
 </UserControl>
+

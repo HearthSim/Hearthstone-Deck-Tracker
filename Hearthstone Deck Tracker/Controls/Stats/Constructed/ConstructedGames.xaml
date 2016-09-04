@@ -5,8 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
              mc:Ignorable="d" Loaded="ConstructedGames_OnLoaded"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              d:DesignHeight="300" d:DesignWidth="800">
-    <GroupBox Header="MATCHES">
+    <GroupBox Header="{lex:LocTextUpper Stats_Constructed_Games_Label_Matches}">
         <DockPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" >
                 <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonAdd_OnClick" IsEnabled="{Binding ButtonAddGameIsEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -17,7 +21,7 @@
                                 <VisualBrush Visual="{Binding AddIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                             </Rectangle.Fill>
                         </Rectangle>
-                        <TextBlock Text="ADD NEW GAME TO ACTIVE DECK" Margin="4,0,0,0"/>
+                        <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Button_AddGame}" Margin="4,0,0,0"/>
                     </StackPanel>
                 </Button>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding MultiSelectPanelVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
@@ -29,7 +33,7 @@
                                     <VisualBrush Visual="{Binding MoveIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="MOVE SELECTED" Margin="4,0,0,0"/>
+                            <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Button_Move}" Margin="4,0,0,0"/>
                         </StackPanel>
                     </Button>
                     <Button Margin="4,4,0,4" MinWidth="120" Click="ButtonMultiDelete_OnClick" Background="Red">
@@ -39,7 +43,7 @@
                                     <VisualBrush Visual="{Binding DeleteIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Text="DELETE SELECTED" Margin="4,0,0,0"/>
+                            <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Button_Delete}" Margin="4,0,0,0"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -50,7 +54,7 @@
                       SelectionChanged="DataGridGames_OnSelectionChanged" TargetUpdated="DataGridGames_OnTargetUpdated" 
                       AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True" CanUserResizeColumns="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Deck" Binding="{Binding DeckNameAndVersion}" Width="75">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Deck}" Binding="{Binding DeckNameAndVersion}" Width="75">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
@@ -59,28 +63,28 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Class" SortMemberPath="PlayerHero">
+                    <DataGridTemplateColumn Header="{lex:Loc Stats_Constructed_Games_Table_Class}" SortMemberPath="PlayerHero">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding PlayerHeroImage}" Width="30" Height="30" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding PlayerHero}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="VS" SortMemberPath="OpponentHero">
+                    <DataGridTemplateColumn Header="{lex:Loc Stats_Constructed_Games_Table_Vs}" SortMemberPath="OpponentHero">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding OpponentHeroImage}" Width="30" Height="30" RenderOptions.BitmapScalingMode="Fant" ToolTip="{Binding OpponentHero}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Name" Binding="{Binding OpponentName}">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Name}" Binding="{Binding OpponentName}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Result" Binding="{Binding Result}">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Result}" Binding="{Binding Result}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -88,70 +92,70 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Mode" Binding="{Binding GameMode}">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Mode}" Binding="{Binding GameMode}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Format" Binding="{Binding Format}">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Format}" Binding="{Binding Format}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Rank" Binding="{Binding RankString}" SortMemberPath="SortableRank">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Rank}" Binding="{Binding RankString}" SortMemberPath="SortableRank">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Turns" Binding="{Binding Turns}">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Turns}" Binding="{Binding Turns}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Coin" Binding="{Binding GotCoin}">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Coin}" Binding="{Binding GotCoin}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Started" Binding="{Binding StartTime, StringFormat={}{0:dd MMM yyyy HH:mm}}" SortMemberPath="StartTime">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Started}" Binding="{Binding StartTime, StringFormat={}{0:dd MMM yyyy HH:mm}}" SortMemberPath="StartTime">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Duration" Binding="{Binding Duration}" SortMemberPath="Duration">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Duration}" Binding="{Binding Duration}" SortMemberPath="Duration">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Region" Binding="{Binding Region}">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Region}" Binding="{Binding Region}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Replay" Binding="{Binding ReplayState}">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Replay}" Binding="{Binding ReplayState}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Note" Binding="{Binding Note}" />
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Note}" Binding="{Binding Note}" />
                 </DataGrid.Columns>
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
@@ -163,7 +167,7 @@
                                             <VisualBrush Visual="{Binding ReplayIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="REPLAY" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Table_Button_Replay}" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </Button>
                             <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonShowOppDeck_OnClick" IsEnabled="{Binding Path=CanGetOpponentDeck}">
@@ -173,7 +177,7 @@
                                             <VisualBrush Visual="{Binding OppDeckIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="OPP. DECK" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Table_Button_OpponentDeck}" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </Button>
                             <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonSelectDeck_OnClick" IsEnabled="{Binding Path=CanSelectDeck}">
@@ -183,7 +187,7 @@
                                             <VisualBrush Visual="{Binding OppDeckIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="SELECT DECK" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Table_Button_SelectDeck}" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </Button>
                             <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonEdit_OnClick">
@@ -193,7 +197,7 @@
                                             <VisualBrush Visual="{Binding EditIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="EDIT" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Table_Button_Edit}" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </Button>
                             <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonEditNote_OnClick">
@@ -203,7 +207,7 @@
                                             <VisualBrush Visual="{Binding NoteIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="NOTE" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Table_Button_Note}" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </Button>
                             <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonMove_OnClick">
@@ -213,7 +217,7 @@
                                             <VisualBrush Visual="{Binding MoveIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="MOVE" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Table_Button_Move}" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </Button>
                             <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonDelete_OnClick" Background="Red">
@@ -223,7 +227,7 @@
                                             <VisualBrush Visual="{Binding DeleteIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <TextBlock Text="DELETE" Margin="4,0,0,0"/>
+                                    <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Table_Button_Delete}" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </Button>
                         </StackPanel>

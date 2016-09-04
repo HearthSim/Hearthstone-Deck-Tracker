@@ -9,6 +9,10 @@
              mc:Ignorable="d" Width="280" Name="UserControlArenaClassStats"
              d:DataContext="{Binding Path=ClassStatsBest, Source={x:Static compiledStats:ArenaStats.Instance}}"
              DataContextChanged="ArenaClassStats_OnDataContextChanged"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <converters:IsNullConverter x:Key="IsNullConverter" />
@@ -38,18 +42,13 @@
         </StackPanel>
         <StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Runs: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_Runs, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center">
-                    <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} ({1}% of total)" FallbackValue="0">
-                            <Binding Path="Runs"/>
-                            <Binding Path="PickedPercent"/>
-                        </MultiBinding>
-                    </TextBlock.Text>
+                    <Run Text="{Binding Runs, Mode=OneWay}"/> (<Run Text="{Binding PickedPercent, Mode=OneWay}"/> <Run Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_PercentTotal}"/>)
                 </TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Total games: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_TotalGames, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0} ({1}-{2})" FallbackValue="0">
@@ -61,7 +60,7 @@
                 </TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Hours played: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_HoursPlayed, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center">
                     <TextBlock.Text>
                         <Binding StringFormat="{}{0:0}" Path="Duration.TotalHours" FallbackValue="0"/>
@@ -69,13 +68,13 @@
                 </TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Average wins: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_AverageWins, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Text="{Binding AverageWins}" Foreground="{Binding WinRateTextBrush}"
                            Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}"/>
                 <TextBlock VerticalAlignment="Center" Text="-" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Win rate: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_Winrate, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Foreground="{Binding WinRateTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
                     <TextBlock.Text>
                         <Binding StringFormat="{}{0}%" Path="WinRatePercent"/>
@@ -84,7 +83,7 @@
                 <TextBlock VerticalAlignment="Center" Text="-" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Best run: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_BestRun, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Foreground="{Binding BestRunTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0} - {1}">
@@ -93,10 +92,10 @@
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <TextBlock VerticalAlignment="Center" Text="None" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_BestRunFallback, Suffix=' '}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Best matchup: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_BestMatchup, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Foreground="{Binding BestMatchup.WinRateTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0} ({1}-{2}, {3}%)">
@@ -107,10 +106,10 @@
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <TextBlock VerticalAlignment="Center" Text="None" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_BestMatchupFallback, Suffix=' '}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Worst matchup: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_WorstMatchup, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Foreground="{Binding WorstMatchup.WinRateTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0} ({1}-{2}, {3}%)">
@@ -121,7 +120,7 @@
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <TextBlock VerticalAlignment="Center" Text="None" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_WorstMatchupFallback, Suffix=' '}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
             </StackPanel>
         </StackPanel>
     </StackPanel>

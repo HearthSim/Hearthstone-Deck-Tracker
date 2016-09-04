@@ -5,11 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1500">
     <DockPanel>
         <DockPanel>
-            <GroupBox Header="ARENA RUNS">
+            <GroupBox Header="{lex:LocTextUpper Stats_Arena_Runs_Label}">
                 <arena:ArenaRunsTable x:Name="ArenaRunsTable"/>
             </GroupBox>
         </DockPanel>
