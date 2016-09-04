@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Hearthstone_Deck_Tracker.Enums
 {

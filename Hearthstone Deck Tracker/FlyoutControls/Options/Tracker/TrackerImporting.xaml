@@ -1,31 +1,35 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerImporting"
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerImporting"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <UserControl.Resources>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </UserControl.Resources>
     <Grid>
-        <GroupBox Header="Importing">
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Header}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <GroupBox Header="Constructed">
+                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Constructed}">
                         <StackPanel>
-                            <TextBlock TextWrapping="Wrap" Text="This will check for new and/or modified decks each time you enter the 'Play' menu." Margin="5,0,5,0"/>
-                            <CheckBox x:Name="CheckBoxConstructedImportNew" Content="Auto import new decks" Margin="10,5,0,0"
+                            <TextBlock TextWrapping="Wrap" Text="{lex:Loc Options_Tracker_Importing_Constructed_Description}" Margin="5,0,5,0"/>
+                            <CheckBox x:Name="CheckBoxConstructedImportNew" Content="{lex:Loc Options_Tracker_Importing_Constructed_CheckBox_Import}" Margin="10,5,0,0"
                                       Checked="CheckBoxConstructedImportNew_Checked" Unchecked="CheckBoxConstructedImportNew_Unchecked" />
-                            <CheckBox x:Name="CheckBoxConstrucedUpdate" Content="Auto update modified decks" Margin="10,5,0,5"
+                            <CheckBox x:Name="CheckBoxConstrucedUpdate" Content="{lex:Loc Options_Tracker_Importing_Constructed_CheckBox_Update}" Margin="10,5,0,5"
                                       Checked="CheckBoxConstrucedUpdate_Checked" Unchecked="CheckBoxConstrucedUpdate_Unchecked" />
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Header="Arena">
+                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Arena}">
                         <StackPanel>
                             <DockPanel Margin="10,5,10,0">
-                                <TextBlock DockPanel.Dock="Left" Text="Importing Behaviour:" VerticalAlignment="Center" />
+                                <TextBlock DockPanel.Dock="Left" Text="{lex:Loc Options_Tracker_Importing_Label_ArenaBehavior}" VerticalAlignment="Center" />
                                 <ComboBox Name="ComboboxArenaImportingBehaviour" Margin="5,0,0,0"
                                           SelectionChanged="ComboboxArenaImportingBehaviour_OnSelectionChanged">
                                     <ComboBox.ItemTemplate>
@@ -36,16 +40,16 @@
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </DockPanel>
-                            <GroupBox Header="Arena deck name template">
+                            <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_ArenaTemplates}">
                                 <DockPanel>
-                                    <TextBlock Text="Templates: {Class}, {Date FORMAT}" DockPanel.Dock="Bottom"
+                                    <TextBlock Text="{lex:LocText Key=Options_Tracker_Importing_Label_TemplatesFormat, Suffix=' \{Class}, {Date FORMAT}'}" DockPanel.Dock="Bottom"
                                                Margin="0,5,0,0" TextWrapping="Wrap"
                                                ToolTip="For more information on date formats google &quot;C# date format&quot;." />
                                     <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
-                                        <TextBlock Text="Preview:" />
+                                        <TextBlock Text="{lex:Loc Options_Tracker_Importing_Label_TemplatesPreview}" />
                                         <TextBlock Name="TextBlockNamePreview" Margin="5,0,0,0" />
                                     </DockPanel>
-                                    <Button Name="BtnEditTemplate" Content="EDIT" DockPanel.Dock="Right"
+                                    <Button Name="BtnEditTemplate" Content="{lex:Loc Options_Tracker_Importing_Button_Edit}" DockPanel.Dock="Right"
                                             Margin="5,0,0,0" Click="BtnEditTemplate_Click" />
                                     <TextBox Name="TextBoxArenaTemplate" IsEnabled="False"
                                              TextChanged="TextBoxArenaTemplate_OnTextChanged" />
@@ -53,23 +57,22 @@
                             </GroupBox>
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Header="Web">
+                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Web}">
                         <StackPanel>
-
-                            <CheckBox x:Name="CheckboxTagOnImport" Content="Tag decks on import"
+                            <CheckBox x:Name="CheckboxTagOnImport" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_Tags}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
                               Unchecked="CheckboxTagOnImport_Unchecked" />
-                            <CheckBox Name="CheckboxAutoSaveOnImport" Content="Auto save deck on import" Margin="10,5,0,0"
+                            <CheckBox Name="CheckboxAutoSaveOnImport" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_AutoSave}" Margin="10,5,0,0"
                               Checked="CheckboxAutoSaveOnImport_OnChecked"
                               Unchecked="CheckboxAutoSaveOnImport_OnUnchecked" />
-                            <CheckBox Name="CheckboxImportNetDeck" Content="Auto import via NetDeck" Margin="10,5,0,0"
+                            <CheckBox Name="CheckboxImportNetDeck" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_AutoSaveNetDeck}" Margin="10,5,0,0"
                               Checked="CheckboxImportNetDeck_OnChecked" Unchecked="CheckboxImportNetDeck_OnUnchecked" />
                             <TextBlock Margin="10,2,0,0">
                         <Hyperlink
                             NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
                             RequestNavigate="Hyperlink_RequestNavigate">
-                            Download NetDeck (Chrome ext.)
+                            <Run Text="{lex:Loc Options_Tracker_Importing_Web_Hyperlink_NetDeck}"/>
                         </Hyperlink>
                             </TextBlock>
                         </StackPanel>

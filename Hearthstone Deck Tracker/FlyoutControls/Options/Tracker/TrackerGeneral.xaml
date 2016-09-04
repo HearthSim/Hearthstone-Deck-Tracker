@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerGeneral"
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerGeneral"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,6 +6,10 @@
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="300">
     <UserControl.Resources>
@@ -13,17 +17,17 @@
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     </UserControl.Resources>
     <Grid>
-        <GroupBox Header="General">
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Header}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <StackPanel>
-                    <GroupBox Header="Alerts">
+                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_Alerts}">
                         <StackPanel>
-                            <CheckBox x:Name="CheckboxFlashHs" Content="Flash Hearthstone on your turn start"
+                            <CheckBox x:Name="CheckboxFlashHs" Content="{lex:Loc Options_Tracker_General_CheckBox_Flash}"
                                   HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"
                                   Checked="CheckboxFlashHs_Checked"
                                   Unchecked="CheckboxFlashHs_Unchecked" />
                             <CheckBox x:Name="CheckboxBringHsToForegorund"
-                                  Content="Popup Hearthstone on turn start" HorizontalAlignment="Left"
+                                  Content="{lex:Loc Options_Tracker_General_CheckBox_Popup}" HorizontalAlignment="Left"
                                   Margin="10,5,0,0" VerticalAlignment="Top"
                                   Checked="CheckboxBringHsToForegorund_Checked"
                                   Unchecked="CheckboxBringHsToForegorund_Unchecked" />
@@ -46,10 +50,10 @@
                             </DockPanel>
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Header="Card Language">
+                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_CardLanguage}">
                         <StackPanel>
                             <DockPanel Margin="0,5,0,0">
-                                <Label Content="Primary:" HorizontalAlignment="Left"
+                                <Label Content="{lex:Loc Options_Tracker_General_Label_Primary}" HorizontalAlignment="Left"
                                        VerticalAlignment="Top" />
                                 <ComboBox x:Name="ComboboxLanguages" HorizontalAlignment="Right"
                                           VerticalAlignment="Top" Width="170"
@@ -57,63 +61,63 @@
                             </DockPanel>
                             <DockPanel Margin="0,5,0,0">
                                 <StackPanel>
-                                    <Label Content="Secondary:" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                                    <Label Content="(tooltips)" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                    <Label Content="{lex:Loc Options_Tracker_General_Label_Secondary}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                                    <Label Content="{lex:Loc Options_Tracker_General_Label_Tooltips}" HorizontalAlignment="Left" VerticalAlignment="Top" />
                                 </StackPanel>
                                 <ListBox x:Name="ListBoxAlternativeLanguages" Height="120" Width="170"
                                          HorizontalAlignment="Right" />
                             </DockPanel>
-                            <CheckBox Name="CheckBoxDefaultFont" Content="Use default font for non-latin languages"
+                            <CheckBox Name="CheckBoxDefaultFont" Content="{lex:Loc Options_Tracker_General_CheckBox_Font}"
                                       Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                                       Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                                       Margin="5,5,0,0" Checked="CheckBoxDefaultFont_OnChecked"
                                       Unchecked="CheckBoxDefaultFont_OnUnchecked" />
-                            <Label Visibility="{Binding RestartLabelVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="Red" Content="Restart to apply language changes." />
+                            <Label Visibility="{Binding RestartLabelVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="Red" Content="{lex:Loc Options_Tracker_General_Label_Restart}" />
                         </StackPanel>
                     </GroupBox>
                     <CheckBox x:Name="CheckBoxAutoUse" Margin="10,5,0,0"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Automatically &quot;USE&quot; decks. (disables button on decks)"
+                              Content="{lex:Loc Options_Tracker_General_CheckBox_AutoUse}"
                               Checked="CheckBoxAutoUse_OnChecked" Unchecked="CheckBoxAutoUse_OnUnchecked" />
                     <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0"
-                              Content="Card sorting: Class cards first"
+                              Content="{lex:Loc Options_Tracker_General_CheckBox_Sorting}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Checked="CheckBoxClassCardsFirst_Checked"
                               Unchecked="CheckBoxClassCardsFirst_Unchecked" />
-                    <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="Show card tooltips"
+                    <CheckBox x:Name="CheckboxTrackerCardToolTips" Content="{lex:Loc Options_Tracker_General_CheckBox_CardTooltips}"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxTrackerCardToolTips_Checked"
                               Unchecked="CheckboxTrackerCardToolTips_Unchecked" />
                     <CheckBox x:Name="CheckboxHideManaCurveMyDecks"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Show mana curve" HorizontalAlignment="Left"
+                              Content="{lex:Loc Options_Tracker_General_CheckBox_ManaCurve}" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxManaCurveMyDecks_Checked"
                               Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
                     <CheckBox x:Name="CheckboxFullTextSearch"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="Full text search in deck builder" HorizontalAlignment="Left"
+                              Content="{lex:Loc Options_Tracker_General_CheckBox_FullTextSearch}" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxFullTextSearch_Checked"
                               Unchecked="CheckboxFullTextSearch_Unchecked" />
                     <Separator Margin="0,5,0,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-                    <CheckBox x:Name="CheckboxDeckPickerCaps" Content="Use upper case deck names"
+                    <CheckBox x:Name="CheckboxDeckPickerCaps" Content="{lex:Loc Options_Tracker_General_CheckBox_UpperCaseDeckNames}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxDeckPickerCaps_Checked"
                               Unchecked="CheckboxDeckPickerCaps_Unchecked"
                               ToolTip="Uncheck to use normal case in Deck Picker." />
-                    <CheckBox x:Name="CheckBoxShowLastPlayedDate" Content="Show last played date on decks"
+                    <CheckBox x:Name="CheckBoxShowLastPlayedDate" Content="{lex:Loc Options_Tracker_General_CheckBox_LastPlayedDate}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckBoxShowLastPlayedDate_Checked"
                               Unchecked="CheckBoxShowLastPlayedDate_Unchecked" />
                     <Separator Margin="0,5,0,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-                    <CheckBox x:Name="CheckBoxAutoArchiveArenaDecks" Content="Archive Arena decks when run is over"
+                    <CheckBox x:Name="CheckBoxAutoArchiveArenaDecks" Content="{lex:Loc Options_Tracker_General_CheckBox_AutoArchiveArena}"
 							  HorizontalAlignment="Left" Margin="10,5,0,0"
 							  VerticalAlignment="Top" Checked="CheckBoxAutoArchiveArenaDecks_Checked"
 							  Unchecked="CheckBoxAutoArchiveArenaDecks_Unchecked"/>
@@ -126,7 +130,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Label Content="Format:"/>
+                        <Label Content="{lex:Loc Options_Tracker_General_Label_Format}"/>
                     </DockPanel>
                 </StackPanel>
             </ScrollViewer>
