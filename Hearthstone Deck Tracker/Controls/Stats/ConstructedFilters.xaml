@@ -98,7 +98,7 @@
             </ComboBox>
         </DockPanel>
         <DockPanel Margin="0,5,0,0">
-            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_V}" Width="60"/>
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Vs}" Width="60"/>
             <ComboBox Name="ComboBoxOpponentClass" SelectionChanged="ComboBoxOpponentClass_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

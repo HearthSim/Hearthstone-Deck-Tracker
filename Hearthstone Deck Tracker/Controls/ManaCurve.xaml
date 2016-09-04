@@ -1,10 +1,13 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.ManaCurve"
+<UserControl x:Class="Hearthstone_Deck_Tracker.ManaCurve"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="300" Width="235">
     <DockPanel>
@@ -22,7 +25,7 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>
-                    <TextBlock Name="TextBlockManaCurveMechanics" Text="MECHANICS" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
+                    <TextBlock Name="TextBlockManaCurveMechanics" Text="{lex:LocTextUpper ManaCurve_Button_Mechanics}" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
                            FontWeight="SemiBold"/>
                 </Grid>
             </Border>
