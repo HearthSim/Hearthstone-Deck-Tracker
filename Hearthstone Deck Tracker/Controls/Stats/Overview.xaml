@@ -1,43 +1,43 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.Overview"
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.Overview"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
-             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="800">
     <DockPanel>
         <DockPanel>
-            <GroupBox Header="MENU" DockPanel.Dock="Top">
+            <GroupBox Header="{lex:LocTextUpper Stats_Overview_Label_Menu}" DockPanel.Dock="Top">
                 <TreeView Name="TreeViewStats" Height="200" SelectedItemChanged="TreeViewStats_OnSelectedItemChanged">
                     <TreeViewItem Name="TreeViewItemArenaRuns" IsExpanded="True"
-                                  Selected="TreeViewItemArenaRuns_OnSelected" Header="Arena Runs"
+                                  Selected="TreeViewItemArenaRuns_OnSelected" Header="{lex:Loc Stats_Overview_Tree_Label_Arena}"
                                   DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}">
                         <TreeViewItem Name="TreeViewItemArenaRunsSummary"
-                                      Selected="TreeViewItemArenaRunsSummary_OnSelected" Header="Summary"
+                                      Selected="TreeViewItemArenaRunsSummary_OnSelected" Header="{lex:Loc Stats_Overview_Tree_Label_Arena_Summary}"
                                       IsSelected="True"
                                       DataContext="{Binding ArenaStatsSummary, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         <TreeViewItem Name="TreeViewItemArenaRunsOverview"
-                                      Selected="TreeViewItemArenaRunsOverview_OnSelected" Header="Runs &amp; matches"
+                                      Selected="TreeViewItemArenaRunsOverview_OnSelected" Header="{lex:Loc Stats_Overview_Tree_Label_Arena_Runs}"
                                       DataContext="{Binding ArenaRuns, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         <TreeViewItem Name="TreeViewItemArenaRunsAdvanced"
-                                      Selected="TreeViewItemArenaRunsAdvanced_OnSelected" Header="Advanced charts"
+                                      Selected="TreeViewItemArenaRunsAdvanced_OnSelected" Header="{lex:Loc Stats_Overview_Tree_Label_Arena_Advanced}"
                                       DataContext="{Binding ArenaAdvancedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                     </TreeViewItem>
-                    <TreeViewItem Name="TreeViewItemConstructed" Header="Constructed" IsExpanded="True"
+                    <TreeViewItem Name="TreeViewItemConstructed" Header="{lex:Loc Stats_Overview_Tree_Label_Constructed}" IsExpanded="True"
                                       Selected="TreeViewItemConstructedSummary_OnSelected"
                                       DataContext="{Binding ConstructedSummary, RelativeSource={RelativeSource AncestorType=UserControl}}" >
                         <TreeViewItem Name="TreeViewItemConstructedSummary" 
-                                      Selected="TreeViewItemConstructedSummary_OnSelected" Header="Summary"
+                                      Selected="TreeViewItemConstructedSummary_OnSelected" Header="{lex:Loc Stats_Overview_Tree_Label_Constructed_Summary}"
                                       DataContext="{Binding ConstructedSummary, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         <TreeViewItem Name="TreeViewItemConstructedGames" 
-                                      Selected="TreeViewItemConstructedGames_OnSelected" Header="Matches"
+                                      Selected="TreeViewItemConstructedGames_OnSelected" Header="{lex:Loc Stats_Overview_Tree_Label_Constructed_Matches}"
                                       DataContext="{Binding ConstructedGames, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                         <TreeViewItem Name="TreeViewItemConstructedCharts" 
-                                      Selected="TreeViewItemConstructedCharts_OnSelected" Header="Charts"
+                                      Selected="TreeViewItemConstructedCharts_OnSelected" Header="{lex:Loc Stats_Overview_Tree_Label_Constructed_Charts}"
                                       DataContext="{Binding ConstructedCharts, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                     </TreeViewItem>
                 </TreeView>
@@ -49,9 +49,9 @@
                                 Width="32" Height="32" Margin="5, -9, -7, -9" Click="ButtonMore_OnClick" DockPanel.Dock="Right">
                             <Button.ContextMenu>
                                 <ContextMenu Name="ButtonMoreContextMenu">
-                                    <CheckBox Name="CheckBoxPercent" DockPanel.Dock="Right" Content="AUTO REFRESH" Margin="-25,0,5,0" Foreground="{DynamicResource TextBrush}" 
+                                    <CheckBox Name="CheckBoxPercent" DockPanel.Dock="Right" Content="{lex:LocTextUpper Stats_Overview_Filters_CheckBox_AutoRefresh}" Margin="-25,0,5,0" Foreground="{DynamicResource TextBrush}" 
                                   IsChecked="{Binding Path=StatsAutoRefresh, Source={StaticResource ConfigWrapper}}"/>
-                                    <MenuItem Header="RESET" Click="MenuItemReset_OnClick"/>
+                                    <MenuItem Header="{lex:LocTextUpper Stats_Overview_Filters_Label_Reset}" Click="MenuItemReset_OnClick"/>
                                 </ContextMenu>
                             </Button.ContextMenu>
                         </Button>
@@ -62,7 +62,7 @@
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Button>
-                        <TextBlock Text="FILTERS" Foreground="White"/>
+                        <TextBlock Text="{lex:LocTextUpper Stats_Overview_Label_Filters}" Foreground="White"/>
                     </DockPanel>
                 </GroupBox.Header>
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">

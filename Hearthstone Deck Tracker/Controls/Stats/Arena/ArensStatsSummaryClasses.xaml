@@ -3,29 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
              xmlns:arena="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Arena"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal">
-        <arena:ArenaClassStats Class="Druid" DataContext="{Binding Path=ClassStatsDruid, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+        <arena:ArenaClassStats Class="{lex:Loc Stats_Arena_Summary_Classes_Druid}" DataContext="{Binding Path=ClassStatsDruid, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <arena:ArenaClassStats Class="Hunter" DataContext="{Binding Path=ClassStatsHunter, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+        <arena:ArenaClassStats Class="{lex:Loc Stats_Arena_Summary_Classes_Hunter}" DataContext="{Binding Path=ClassStatsHunter, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <arena:ArenaClassStats Class="Mage" DataContext="{Binding Path=ClassStatsMage, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+        <arena:ArenaClassStats Class="{lex:Loc Stats_Arena_Summary_Classes_Mage}" DataContext="{Binding Path=ClassStatsMage, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <arena:ArenaClassStats Class="Paladin" DataContext="{Binding Path=ClassStatsPaladin, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+        <arena:ArenaClassStats Class="{lex:Loc Stats_Arena_Summary_Classes_Paladin}" DataContext="{Binding Path=ClassStatsPaladin, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <arena:ArenaClassStats Class="Priest" DataContext="{Binding Path=ClassStatsPriest, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+        <arena:ArenaClassStats Class="{lex:Loc Stats_Arena_Summary_Classes_Priest}" DataContext="{Binding Path=ClassStatsPriest, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <arena:ArenaClassStats Class="Rogue" DataContext="{Binding Path=ClassStatsRogue, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+        <arena:ArenaClassStats Class="{lex:Loc Stats_Arena_Summary_Classes_Rogue}" DataContext="{Binding Path=ClassStatsRogue, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <arena:ArenaClassStats Class="Shaman" DataContext="{Binding Path=ClassStatsShaman, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+        <arena:ArenaClassStats Class="{lex:Loc Stats_Arena_Summary_Classes_Shaman}" DataContext="{Binding Path=ClassStatsShaman, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <arena:ArenaClassStats Class="Warlock" DataContext="{Binding Path=ClassStatsWarlock, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+        <arena:ArenaClassStats Class="{lex:Loc Stats_Arena_Summary_Classes_Warlock}" DataContext="{Binding Path=ClassStatsWarlock, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <arena:ArenaClassStats Class="Warrior" DataContext="{Binding Path=ClassStatsWarrior, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+        <arena:ArenaClassStats Class="{lex:Loc Stats_Arena_Summary_Classes_Warrior}" DataContext="{Binding Path=ClassStatsWarrior, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
     </StackPanel>
 </UserControl>

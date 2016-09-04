@@ -61,11 +61,191 @@ namespace Hearthstone_Deck_Tracker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Secret scaling:.
+        ///   Looks up a localized string similar to _Archive.
         /// </summary>
-        public static string _ {
+        public static string DeckPicker_ContextMenu_Archive {
             get {
-                return ResourceManager.GetString("\\", resourceCulture);
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Archive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clone.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Clone {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Clone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entire deck.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Clone_Deck {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Clone_Deck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selected version.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Clone_Version {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Clone_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit _deck.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Deck {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Deck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Delete {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link to new ur_l.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_LinkNewUrl {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_LinkNewUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link to ur_l.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_LinkUrl {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_LinkUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show _Missing cards.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_MissingCards {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_MissingCards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to Arena.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_MoveToArena {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_MoveToArena", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move to Constructed.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_MoveToConstructed {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_MoveToConstructed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit na_me.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Name {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit _notes.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Notes {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Notes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open HearthStats.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_OpenHearthstats {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_OpenHearthstats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open _Website.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_OpenWebsite {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_OpenWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Quick set tag.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_QuickSetTags {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_QuickSetTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit _tags.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Tags {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unarchive.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Unarchive {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Unarchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Update (web).
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Update {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Use deck.
+        /// </summary>
+        public static string DeckPicker_ContextMenu_Use {
+            get {
+                return ResourceManager.GetString("DeckPicker_ContextMenu_Use", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search....
+        /// </summary>
+        public static string DeckPicker_Text_Search_Watermark {
+            get {
+                return ResourceManager.GetString("DeckPicker_Text_Search_Watermark", resourceCulture);
             }
         }
         
@@ -624,6 +804,24 @@ namespace Hearthstone_Deck_Tracker.Properties {
         public static string MainWindow_Menu_Deck_EditTags {
             get {
                 return ResourceManager.GetString("MainWindow_Menu_Deck_EditTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link to new ur_l.
+        /// </summary>
+        public static string MainWindow_Menu_Deck_LinkNewUrl {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_LinkNewUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link to ur_l.
+        /// </summary>
+        public static string MainWindow_Menu_Deck_LinkUrl {
+            get {
+                return ResourceManager.GetString("MainWindow_Menu_Deck_LinkUrl", resourceCulture);
             }
         }
         
@@ -1627,6 +1825,15 @@ namespace Hearthstone_Deck_Tracker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Secret scaling:.
+        /// </summary>
+        public static string Options_Overlay_Opponent_Label_SecretScaling {
+            get {
+                return ResourceManager.GetString("Options_Overlay_Opponent_Label_SecretScaling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Yogg-Saron counter:.
         /// </summary>
         public static string Options_Overlay_Opponent_Label_Yogg {
@@ -1852,11 +2059,137 @@ namespace Hearthstone_Deck_Tracker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use metro animations.
+        /// </summary>
+        public static string Options_Tracker_Appearance_CheckBox_Metro {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_CheckBox_Metro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rarity-colored card frames.
+        /// </summary>
+        public static string Options_Tracker_Appearance_CheckBox_RarityFrames {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_CheckBox_RarityFrames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rarity-colored card gems.
+        /// </summary>
+        public static string Options_Tracker_Appearance_CheckBox_RarityGems {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_CheckBox_RarityGems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red/green text color in stats summary.
+        /// </summary>
+        public static string Options_Tracker_Appearance_CheckBox_RedGreenStats {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_CheckBox_RedGreenStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Appearance.
         /// </summary>
         public static string Options_Tracker_Appearance_Header {
             get {
                 return ResourceManager.GetString("Options_Tracker_Appearance_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accent:.
+        /// </summary>
+        public static string Options_Tracker_Appearance_Label_Accent {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_Label_Accent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card theme:.
+        /// </summary>
+        public static string Options_Tracker_Appearance_Label_CardTheme {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_Label_CardTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Class Icons:.
+        /// </summary>
+        public static string Options_Tracker_Appearance_Label_ClassIcons {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_Label_ClassIcons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deck layout:.
+        /// </summary>
+        public static string Options_Tracker_Appearance_Label_DeckLayout {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_Label_DeckLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language:.
+        /// </summary>
+        public static string Options_Tracker_Appearance_Label_Language {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_Label_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Theme:.
+        /// </summary>
+        public static string Options_Tracker_Appearance_Label_Theme {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Appearance_Label_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Backup Directory.
+        /// </summary>
+        public static string Options_Tracker_Backups_Button_BackupDir {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Backups_Button_BackupDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new.
+        /// </summary>
+        public static string Options_Tracker_Backups_Button_Create {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Backups_Button_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete selected.
+        /// </summary>
+        public static string Options_Tracker_Backups_Button_Delete {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Backups_Button_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore selected.
+        /// </summary>
+        public static string Options_Tracker_Backups_Button_Restore {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Backups_Button_Restore", resourceCulture);
             }
         }
         
@@ -1870,11 +2203,218 @@ namespace Hearthstone_Deck_Tracker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Backups are created automatically on the first start of each day. They contain decks, games and the config. If there are more than 7 (autogenerated) backups, the oldest one(s) are deleted automatically, leaving you with at least the past week..
+        /// </summary>
+        public static string Options_Tracker_Backups_Text_Description {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Backups_Text_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto clear cards.
+        /// </summary>
+        public static string Options_Tracker_Exporting_CheckBox_ClearCards {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_CheckBox_ClearCards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto clear filters.
+        /// </summary>
+        public static string Options_Tracker_Exporting_CheckBox_ClearFilters {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_CheckBox_ClearFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force clear searchbox between cards.
+        /// </summary>
+        public static string Options_Tracker_Exporting_CheckBox_ClearSearchbox {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_CheckBox_ClearSearchbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste names from clipboard.
+        /// </summary>
+        public static string Options_Tracker_Exporting_CheckBox_Clipbard {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_CheckBox_Clipbard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set deck name.
+        /// </summary>
+        public static string Options_Tracker_Exporting_CheckBox_DeckName {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_CheckBox_DeckName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show dialog before exporting.
+        /// </summary>
+        public static string Options_Tracker_Exporting_CheckBox_Dialog {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_CheckBox_Dialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prioritize golden cards.
+        /// </summary>
+        public static string Options_Tracker_Exporting_CheckBox_Golden {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_CheckBox_Golden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include version number in name.
+        /// </summary>
+        public static string Options_Tracker_Exporting_CheckBox_Version {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_CheckBox_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exporting.
         /// </summary>
         public static string Options_Tracker_Exporting_Header {
             get {
                 return ResourceManager.GetString("Options_Tracker_Exporting_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Speed:.
+        /// </summary>
+        public static string Options_Tracker_Exporting_Label_Speed {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_Label_Speed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait.
+        /// </summary>
+        public static string Options_Tracker_Exporting_Label_Wait {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_Label_Wait", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to seconds before starting.
+        /// </summary>
+        public static string Options_Tracker_Exporting_Label_Wait2 {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Exporting_Label_Wait2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Archive Arena decks when run is over.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_AutoArchiveArena {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_AutoArchiveArena", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically &quot;USE&quot; decks. (disables button on decks).
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_AutoUse {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_AutoUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show card tooltips.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_CardTooltips {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_CardTooltips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flash Hearthstone on your turn start.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_Flash {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_Flash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use default font for non-latin languages.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_Font {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_Font", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full text search in deck builder.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_FullTextSearch {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_FullTextSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show last played date on decks.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_LastPlayedDate {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_LastPlayedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show mana curve.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_ManaCurve {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_ManaCurve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popup Hearthstone on turn start.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_Popup {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_Popup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card sorting: Class cards first.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_Sorting {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_Sorting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use upper case deck names.
+        /// </summary>
+        public static string Options_Tracker_General_CheckBox_UpperCaseDeckNames {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_CheckBox_UpperCaseDeckNames", resourceCulture);
             }
         }
         
@@ -1888,11 +2428,92 @@ namespace Hearthstone_Deck_Tracker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alerts.
+        /// </summary>
+        public static string Options_Tracker_General_Label_Alerts {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_Label_Alerts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Card Language.
+        /// </summary>
+        public static string Options_Tracker_General_Label_CardLanguage {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_Label_CardLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format:.
+        /// </summary>
+        public static string Options_Tracker_General_Label_Format {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_Label_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Primary:.
+        /// </summary>
+        public static string Options_Tracker_General_Label_Primary {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_Label_Primary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart to apply language changes..
+        /// </summary>
+        public static string Options_Tracker_General_Label_Restart {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_Label_Restart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secondary:.
+        /// </summary>
+        public static string Options_Tracker_General_Label_Secondary {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_Label_Secondary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (tooltips).
+        /// </summary>
+        public static string Options_Tracker_General_Label_Tooltips {
+            get {
+                return ResourceManager.GetString("Options_Tracker_General_Label_Tooltips", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tracker.
         /// </summary>
         public static string Options_Tracker_Header {
             get {
                 return ResourceManager.GetString("Options_Tracker_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add new.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Button_AddNew {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Button_AddNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete seleceted.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Button_Delete {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Button_Delete", resourceCulture);
             }
         }
         
@@ -1906,11 +2527,218 @@ namespace Hearthstone_Deck_Tracker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action:.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Label_Action {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Label_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key:.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Label_Key {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Label_Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod:.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Label_Mod {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Label_Mod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_LabelNew {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_LabelNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Table_Action {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Table_Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Table_Key {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Table_Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mod.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Table_Mod {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Table_Mod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press key.
+        /// </summary>
+        public static string Options_Tracker_Hotkeys_Text_Key_Watermark {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Hotkeys_Text_Key_Watermark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto save deck on import.
+        /// </summary>
+        public static string Options_Tracker_Importing_Button_Edit {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Button_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto import new decks.
+        /// </summary>
+        public static string Options_Tracker_Importing_Constructed_CheckBox_Import {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Constructed_CheckBox_Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto update modified decks.
+        /// </summary>
+        public static string Options_Tracker_Importing_Constructed_CheckBox_Update {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Constructed_CheckBox_Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will check for new and/or modified decks each time you enter the &apos;Play&apos; menu..
+        /// </summary>
+        public static string Options_Tracker_Importing_Constructed_Description {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Constructed_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Importing.
         /// </summary>
         public static string Options_Tracker_Importing_Header {
             get {
                 return ResourceManager.GetString("Options_Tracker_Importing_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arena.
+        /// </summary>
+        public static string Options_Tracker_Importing_Label_Arena {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Label_Arena", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importing Behavior:.
+        /// </summary>
+        public static string Options_Tracker_Importing_Label_ArenaBehavior {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Label_ArenaBehavior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arena deck name template.
+        /// </summary>
+        public static string Options_Tracker_Importing_Label_ArenaTemplates {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Label_ArenaTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Constructed.
+        /// </summary>
+        public static string Options_Tracker_Importing_Label_Constructed {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Label_Constructed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Templates:.
+        /// </summary>
+        public static string Options_Tracker_Importing_Label_TemplatesFormat {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Label_TemplatesFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview:.
+        /// </summary>
+        public static string Options_Tracker_Importing_Label_TemplatesPreview {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Label_TemplatesPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Web.
+        /// </summary>
+        public static string Options_Tracker_Importing_Label_Web {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Label_Web", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto save deck on import.
+        /// </summary>
+        public static string Options_Tracker_Importing_Web_CheckBox_AutoSave {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Web_CheckBox_AutoSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto import via NetDeck.
+        /// </summary>
+        public static string Options_Tracker_Importing_Web_CheckBox_AutoSaveNetDeck {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Web_CheckBox_AutoSaveNetDeck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tag decks on import.
+        /// </summary>
+        public static string Options_Tracker_Importing_Web_CheckBox_Tags {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Web_CheckBox_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download NetDeck (Chrome ext.).
+        /// </summary>
+        public static string Options_Tracker_Importing_Web_Hyperlink_NetDeck {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Importing_Web_Hyperlink_NetDeck", resourceCulture);
             }
         }
         
@@ -1933,11 +2761,227 @@ namespace Hearthstone_Deck_Tracker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show arena reward dialog when run is over.
+        /// </summary>
+        public static string Options_Tracker_Notifications_Label_ArenaReward {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Notifications_Label_ArenaReward", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show for.
+        /// </summary>
+        public static string Options_Tracker_Notifications_Label_Duration {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Notifications_Label_Duration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to seconds.
+        /// </summary>
+        public static string Options_Tracker_Notifications_Label_Duration2 {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Notifications_Label_Duration2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game result.
+        /// </summary>
+        public static string Options_Tracker_Notifications_Label_GameResult {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Notifications_Label_GameResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show note dialog after game.
+        /// </summary>
+        public static string Options_Tracker_Notifications_Label_NoteDialog {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Notifications_Label_NoteDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait until back in menu.
+        /// </summary>
+        public static string Options_Tracker_Notifications_Label_NoteDialog_WaitMenu {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Notifications_Label_NoteDialog_WaitMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show notifications.
+        /// </summary>
+        public static string Options_Tracker_Notifications_Label_ShowNotifications {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Notifications_Label_ShowNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available Plugins.
+        /// </summary>
+        public static string Options_Tracker_Plugins_Button_Avilable {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Plugins_Button_Avilable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins Folder.
+        /// </summary>
+        public static string Options_Tracker_Plugins_Button_Folder {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Plugins_Button_Folder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plugins.
         /// </summary>
         public static string Options_Tracker_Plugins_Header {
             get {
                 return ResourceManager.GetString("Options_Tracker_Plugins_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created by.
+        /// </summary>
+        public static string Options_Tracker_Plugins_Label_CreatedBy {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Plugins_Label_CreatedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disabled.
+        /// </summary>
+        public static string Options_Tracker_Plugins_Switch_Disabled {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Plugins_Switch_Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Options_Tracker_Plugins_Switch_Enabled {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Plugins_Switch_Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claim Account.
+        /// </summary>
+        public static string Options_Tracker_Replays_Button_Claim {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_Button_Claim", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adventure/Practice.
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_AdventurePractice {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_AdventurePractice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arena.
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_Arena {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_Arena", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brawl.
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_Brawl {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_Brawl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Casual.
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_Casual {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_Casual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friendly.
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_Friendly {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_Friendly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use local replay viewer by default (not maintained).
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_LocalViewer {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_LocalViewer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ranked.
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_Ranked {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_Ranked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show share notification.
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_ShareNotification {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_ShareNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spectator.
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_Spectator {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_Spectator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload replays automatically.
+        /// </summary>
+        public static string Options_Tracker_Replays_CheckBox_Upload {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_CheckBox_Upload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log in with your Battle.net credentials on HSReplay.net to claim your existing replays. This will open your web browser..
+        /// </summary>
+        public static string Options_Tracker_Replays_Claim_Description {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_Claim_Description", resourceCulture);
             }
         }
         
@@ -1951,6 +2995,186 @@ namespace Hearthstone_Deck_Tracker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account Status:.
+        /// </summary>
+        public static string Options_Tracker_Replays_Label_AccountStatus {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Replays_Label_AccountStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This only tracks very basic information to help us improve HDT, like app and match starts..
+        /// </summary>
+        public static string Options_Tracker_Settings_Analytics_Description {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_Analytics_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to open appdata folder.
+        /// </summary>
+        public static string Options_Tracker_Settings_Button_AppData {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_Button_AppData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to set data path.
+        /// </summary>
+        public static string Options_Tracker_Settings_Button_DataPath {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_Button_DataPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to set hearthstone path.
+        /// </summary>
+        public static string Options_Tracker_Settings_Button_HearthstonePath {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_Button_HearthstonePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to set hearthstone log directory.
+        /// </summary>
+        public static string Options_Tracker_Settings_Button_LogDirectory {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_Button_LogDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Advanced window search.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_AdvancedWindowSearch {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_AdvancedWindowSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alternative screen capture.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_AltScreenCapture {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_AltScreenCapture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for BETA updates.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_BetaUpdates {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_BetaUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close with Hearthstone.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_CloseWithHearthstone {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_CloseWithHearthstone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Log.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_Log {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_Log", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimize to tray.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_MinimizeToTray {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_MinimizeToTray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show news bar.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_Newsbar {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_Newsbar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save config in AppData.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_SaveConfigAppData {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_SaveConfigAppData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save data in AppData.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_SaveDataAppData {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_SaveDataAppData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the loading splash screen.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_Splashscreen {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_Splashscreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Hearthstone with HDT.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_StartHearthstone {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_StartHearthstone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start minimized.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_StartMinimized {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_StartMinimized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start with windows.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_StartWithWindows {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_StartWithWindows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates.
+        /// </summary>
+        public static string Options_Tracker_Settings_CheckBox_Updates {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_CheckBox_Updates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string Options_Tracker_Settings_Header {
@@ -1960,11 +3184,263 @@ namespace Hearthstone_Deck_Tracker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analytics.
+        /// </summary>
+        public static string Options_Tracker_Settings_Label_Analytics {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_Label_Analytics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit anonymous data.
+        /// </summary>
+        public static string Options_Tracker_Settings_Label_SubmitData {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Settings_Label_SubmitData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adventure / Practice.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_AdventurePractive {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_AdventurePractive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arena.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_Arena {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_Arena", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ask before discarding.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_AskDiscard {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_AskDiscard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brawl.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_Brawl {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_Brawl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Casual.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_Casual {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_Casual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard game if deck does not match cards.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_DiscardNoMatch {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_DiscardNoMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discard games with zero turns.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_DiscardZeroTurns {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_DiscardZeroTurns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Friendly.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_Friendly {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_Friendly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep stats when deleting a deck*.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_KeepStatsWhenDeleting {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_KeepStatsWhenDeleting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will move stats to the &apos;class default deck&apos; (the same matches in no-deck mode are saved to). That means, runs in the arena statistics will be lost when deleting arena decks!.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_KeepStatsWhenDeleting_Tooltip {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_KeepStatsWhenDeleting_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_Other {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ranked.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_Ranked {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_Ranked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record local replays.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_RecordLocalReplays {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_RecordLocalReplays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spectator.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_Spectator {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_Spectator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show deck stats in separate window.
+        /// </summary>
+        public static string Options_Tracker_Stats_CheckBox_StatsWindow {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_CheckBox_StatsWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stats.
         /// </summary>
         public static string Options_Tracker_Stats_Header {
             get {
                 return ResourceManager.GetString("Options_Tracker_Stats_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (on decks and in overlay).
+        /// </summary>
+        public static string Options_Tracker_Stats_Label_DecksOverlay {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_Label_DecksOverlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display.
+        /// </summary>
+        public static string Options_Tracker_Stats_Label_Display {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_Label_Display", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mode:.
+        /// </summary>
+        public static string Options_Tracker_Stats_Label_Mode {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_Label_Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Record.
+        /// </summary>
+        public static string Options_Tracker_Stats_Label_Record {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_Label_Record", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timeframe:.
+        /// </summary>
+        public static string Options_Tracker_Stats_Label_Timeframe {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_Label_Timeframe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Since:.
+        /// </summary>
+        public static string Options_Tracker_Stats_Label_Timeframe_Since {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_Label_Timeframe_Since", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version(s):.
+        /// </summary>
+        public static string Options_Tracker_Stats_Label_Versions {
+            get {
+                return ResourceManager.GetString("Options_Tracker_Stats_Label_Versions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Class distribution by wins.
+        /// </summary>
+        public static string Stats_Arena_Advanced_Label_Distribution {
+            get {
+                return ResourceManager.GetString("Stats_Arena_Advanced_Label_Distribution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        public static string Stats_Arena_Advanced_Label_Note {
+            get {
+                return ResourceManager.GetString("Stats_Arena_Advanced_Label_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Stats_Arena_Advanced_Label_WinLoss {
+            get {
+                return ResourceManager.GetString("Stats_Arena_Advanced_Label_WinLoss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These charts render a bit slow. Press refresh to update them..
+        /// </summary>
+        public static string Stats_Arena_Advanced_Warning {
+            get {
+                return ResourceManager.GetString("Stats_Arena_Advanced_Warning", resourceCulture);
             }
         }
     }

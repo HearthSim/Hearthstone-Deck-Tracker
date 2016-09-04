@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Constructed"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              DataContextChanged="ConstructedDeckHighlights_OnDataContextChanged"
              mc:Ignorable="d" Name="UserControlConstructedDeckHighlights"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              d:DesignHeight="300" d:DesignWidth="300" Width="280">
     <UserControl.Resources>
         <converters:IsNullConverter x:Key="IsNullConverter" />
@@ -36,14 +39,14 @@
         </StackPanel>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Visibility="{Binding Path=ImageVisiblity, RelativeSource={RelativeSource AncestorType=UserControl}}">
-                <TextBlock VerticalAlignment="Center" Text="Deck: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Stats_Constructed_DeckHightlights_Label_Deck, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}"
                            Text="{Binding DeckName}" TextTrimming="CharacterEllipsis">
                 </TextBlock>
                 <TextBlock VerticalAlignment="Center" Text="-" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Win rate: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Stats_Constructed_DeckHightlights_Label_Winrate, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Foreground="{Binding WinRateTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0}-{1} ({2}%)">
@@ -56,7 +59,7 @@
                 <TextBlock VerticalAlignment="Center" Text="-" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Time played: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Stats_Constructed_DeckHightlights_Label_TimePlayed, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center">
                     <TextBlock.Text>
                         <Binding StringFormat="{}{0:0.0} hours" Path="TotalDuration.TotalHours" FallbackValue="0"/>
@@ -64,7 +67,7 @@
                 </TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Average game: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Stats_Constructed_DeckHightlights_Label_AverageGame, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0:0.0} min, {1:0.0} turns">
@@ -75,7 +78,7 @@
                 </TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Best matchup: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Stats_Constructed_DeckHightlights_Label_BestMatchup, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Foreground="{Binding BestMatchup.WinRateTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0} ({1}-{2}, {3}%)">
@@ -86,10 +89,10 @@
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <TextBlock VerticalAlignment="Center" Text="None" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Stats_Constructed_DeckHightlights_Label_BestMatchupFallback, Suffix=' '}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="Worst matchup: "/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Stats_Constructed_DeckHightlights_Label_WorstMatchup, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center" Foreground="{Binding WorstMatchup.WinRateTextBrush}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNull}">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0} ({1}-{2}, {3}%)">
@@ -100,7 +103,7 @@
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <TextBlock VerticalAlignment="Center" Text="None" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
+                <TextBlock VerticalAlignment="Center" Text="{lex:LocText Stats_Constructed_DeckHightlights_Label_WorstMatchupFallback, Suffix=' '}" Style="{StaticResource StyleVisibilityCollapsedIfDataContextNotNull}"/>
             </StackPanel>
         </StackPanel>
     </StackPanel>
