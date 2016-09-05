@@ -1,15 +1,18 @@
-﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.MoveGameDialog"
+<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.MoveGameDialog"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      Title="Select target deck" Height="450" Width="280" Topmost="True" WindowStyle="ToolWindow"
+                      xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      lex:LocalizeDictionary.DesignCulture="en"
+                      lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+                      lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+                      Title="{lex:Loc MoveGameDialog_Title}" Height="450" Width="280" Topmost="True" WindowStyle="ToolWindow"
                       WindowStartupLocation="CenterScreen"
                       BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <DockPanel>
-        <Button DockPanel.Dock="Bottom" Margin="5,0,5,5" Content="MOVE TO SELECTED" Click="ButtonMoveToSelected_OnClick"/>
+        <Button DockPanel.Dock="Bottom" Margin="5,0,5,5" Content="{lex:Loc MoveGameDialog_Button_Move}" Click="ButtonMoveToSelected_OnClick"/>
         <DockPanel DockPanel.Dock="Bottom" >
-            <Label Content="VERSION:" VerticalAlignment="Center"/>
+            <Label Content="{lex:Loc MoveGameDialog_Label_Version}" VerticalAlignment="Center"/>
             <ComboBox Name="ComboBoxVersions" Margin="5" SelectionChanged="ComboBoxVersions_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Panel = System.Windows.Controls.Panel;
 using Point = System.Drawing.Point;
 
@@ -21,6 +22,7 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class PlayerWindow : INotifyPropertyChanged
 	{
+		private const string LocFatigue = "Overlay_DeckList_Label_Fatigue";
 		private readonly GameV2 _game;
 		private bool _appIsClosing;
 
@@ -131,7 +133,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(cardsLeftInDeck <= 0)
 			{
-				LblPlayerFatigue.Text = "Next draw fatigues for: " + (_game.Player.Fatigue + 1);
+				LblPlayerFatigue.Text = LocUtil.Get(LocFatigue) + " " + (_game.Player.Fatigue + 1);
 
 				LblDrawChance2.Text = "0%";
 				LblDrawChance1.Text = "0%";

@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Windows"
         xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
         mc:Ignorable="d" Background="Transparent" AllowsTransparency="True"
-        Title="SplashScreenWindow" Height="400" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Topmost="True" ShowInTaskbar="False">
+        lex:LocalizeDictionary.DesignCulture="en"
+        lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+        lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+        Title="SplashScreenWindow" Height="400" Width="400" ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen" WindowStyle="None" Topmost="True" ShowInTaskbar="False">
     <Grid>
         <Rectangle Width="300" Height="300">
             <Rectangle.Fill>
@@ -35,7 +40,7 @@
         <Border BorderThickness="5" BorderBrush="Black" Background="{Binding SkipBackground, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" CornerRadius="10" Margin="-275,200,0,0" Width="80" Height="30" 
                 Visibility="{Binding SkipVisibility, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" 
                 MouseDown="SkipBorder_OnMouseDown" MouseEnter="SkipBorder_OnMouseEnter" MouseLeave="SkipBorder_OnMouseLeave">
-            <hearthstoneDeckTracker:HearthstoneTextBlock Text="SKIP" Height="26" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:LocTextUpper SplashScreen_Button_Skip}" Height="26" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
         </Border>
     </Grid>
 </Window>

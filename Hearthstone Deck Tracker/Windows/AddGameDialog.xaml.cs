@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Linq;
@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using static System.Windows.Visibility;
@@ -24,15 +25,29 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 	/// </summary>
 	public partial class AddGameDialog : CustomDialog
 	{
+		private const string LocAddGame = "AddGameDialog_Button_AddGame";
+		private const string LocSaveGame = "AddGameDialog_Button_SaveGame";
+		private const string LocEditTitle = "AddGameDialog_Title_Edit";
 		private readonly Deck _deck;
 		private readonly bool _editing;
 		private readonly GameStats _game;
 		private readonly TaskCompletionSource<GameStats> _tcs;
 
-		public AddGameDialog(Deck deck)
+		private AddGameDialog()
 		{
 			InitializeComponent();
+			ComboBoxResult.ItemsSource = new[] { GameResult.Win, GameResult.Loss, GameResult.Draw};
+			ComboBoxOpponent.ItemsSource = Enum.GetValues(typeof(HeroClass));
+			ComboBoxMode.ItemsSource = new[] {Ranked, Casual, Arena, Brawl, Friendly, Practice};
+			ComboBoxFormat.ItemsSource = new[] {Format.Standard, Format.Wild};
+			ComboBoxRegion.ItemsSource = new[] { Region.US, Region.EU, Region.ASIA, Region.CHINA};
+			ComboBoxCoin.ItemsSource = Enum.GetValues(typeof(YesNo));
+			ComboBoxConceded.ItemsSource = Enum.GetValues(typeof(YesNo));
 			_tcs = new TaskCompletionSource<GameStats>();
+		}
+
+		public AddGameDialog(Deck deck) : this()
+		{
 			_editing = false;
 			var lastGame = deck.DeckStats.Games.LastOrDefault();
 			if(deck.IsArenaDeck)
@@ -66,14 +81,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 			_deck = deck;
 			_game = new GameStats();
-			BtnSave.Content = "add game";
+			BtnSave.Content = LocUtil.Get(LocAddGame);
 			Title = _deck.Name;
 		}
 
-		public AddGameDialog(GameStats game)
+		public AddGameDialog(GameStats game) : this()
 		{
-			InitializeComponent();
-			_tcs = new TaskCompletionSource<GameStats>();
 			_editing = true;
 			_game = game;
 			if(game == null)
@@ -100,8 +113,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			TextBoxNote.Text = game.Note;
 			TextBoxOppName.Text = game.OpponentName;
 			TextBoxPlayerName.Text = game.PlayerName;
-			BtnSave.Content = "save";
-			Title = "Edit game";
+			BtnSave.Content = LocUtil.Get(LocSaveGame);
+			Title = LocUtil.Get(LocEditTitle);
 		}
 
 		private void BtnSave_OnClick(object sender, RoutedEventArgs e)

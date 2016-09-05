@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 	// ReSharper disable once RedundantExtendsListEntry
 	public partial class OverlayWindow : Window, INotifyPropertyChanged
 	{
+		private const string LocFatigue = "Overlay_DeckList_Label_Fatigue";
 		private const int ChancePanelsMargins = 8;
 		private readonly Point[][] _cardMarkPos = new Point[MaxHandSize][];
 		private readonly List<CardMarker> _cardMarks = new List<CardMarker>();
@@ -184,8 +185,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
-
-		public void ShowFriendsListWarning(bool show) => StackPanelFriendsListWarning.Visibility = show ? Visible : Collapsed;
 
 		public void ShowRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Visible;
 
