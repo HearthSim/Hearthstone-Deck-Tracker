@@ -51,12 +51,6 @@
                                   Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboBoxSpells_SelectionChanged"/>
                     </DockPanel>
-                    <DockPanel Margin="5,5,5,0">
-                        <Label Content="Show Arcane Giant counter:" Width="155"/>
-                        <ComboBox x:Name="ComboBoxArcaneGiant" HorizontalAlignment="Right"
-                                  Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxArcaneGiant_SelectionChanged"/>
-                    </DockPanel>
                     <CheckBox x:Name="CheckBoxAttack"
                               Content="Show board attack counter" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"

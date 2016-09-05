@@ -132,7 +132,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if (Core.Windows.PlayerWindow.Visibility == Visible)
 				Core.Windows.PlayerWindow.Update();
-
 			if (Core.Windows.OpponentWindow.Visibility == Visible)
 				Core.Windows.OpponentWindow.Update();
 		}

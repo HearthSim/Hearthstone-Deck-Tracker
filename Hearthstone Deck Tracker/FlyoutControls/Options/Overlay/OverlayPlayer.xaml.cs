@@ -69,8 +69,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			ComboBoxCthun.SelectedItem = Config.Instance.PlayerCthunCounter;
 			ComboBoxSpells.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxSpells.SelectedItem = Config.Instance.PlayerSpellsCounter;
-		    ComboBoxArcaneGiant.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
-		    ComboBoxArcaneGiant.SelectedItem = Config.Instance.PlayerArcaneGiantCounter;
 
 			ElementSorterPlayer.IsPlayer = true;
 			foreach(var itemName in Config.Instance.PanelOrderPlayer)
@@ -256,15 +254,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Save();
 		}
 
-        private void ComboBoxArcaneGiant_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (!_initialized)
-                return;
-            Config.Instance.PlayerArcaneGiantCounter = (DisplayMode)ComboBoxArcaneGiant.SelectedItem;
-            Config.Save();
-        }
-
-        private void CheckBoxAttack_Checked(object sender, RoutedEventArgs e)
+		private void CheckBoxAttack_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
