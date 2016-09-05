@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if (cardsLeftInDeck <= 0)
 			{
-				LblOpponentFatigue.Text = "Next draw fatigues for: " + (_game.Opponent.Fatigue + 1);
+				LblOpponentFatigue.Text = LocUtil.Get(LocFatigue) + " " + (_game.Opponent.Fatigue + 1);
 
 				LblOpponentDrawChance2.Text = "0%";
 				LblOpponentDrawChance1.Text = "0%";
@@ -129,7 +129,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if (cardsLeftInDeck <= 0)
 			{
-				LblPlayerFatigue.Text = "Next draw fatigues for: " + (_game.Player.Fatigue + 1);
+				LblPlayerFatigue.Text = LocUtil.Get(LocFatigue) + " " + (_game.Player.Fatigue + 1);
 
 				LblDrawChance2.Text = "0%";
 				LblDrawChance1.Text = "0%";

@@ -6,11 +6,15 @@
            xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
            xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
            xmlns:lex="http://wpflocalizeextension.codeplex.com"
+           xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
            lex:LocalizeDictionary.DesignCulture="en"
            lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
            lex:ResxLocalizationProvider.DefaultDictionary="Strings"
            mc:Ignorable="d"
            d:DesignHeight="500" d:DesignWidth="300">
+    <DockPanel.Resources>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </DockPanel.Resources>
     <DockPanel DockPanel.Dock="Top">
         <Border
             Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
@@ -85,8 +89,8 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding}" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"
-                               HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"
+                               FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
@@ -119,7 +123,7 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <TextBlock Text="NO-DECK MODE"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
+                <TextBlock Text="{lex:LocTextUpper DeckPicker_Button_NoDeckMode}"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
                            Foreground="{Binding BorderDeckModeTextBrush, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"/>
             </Grid>
         </Border>
@@ -135,22 +139,22 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <TextBlock Text="AUTO"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
+                <TextBlock Text="{lex:LocTextUpper DeckPicker_Button_Auto}"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
                            Foreground="{Binding BorderAutoSelectTextBrush, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}" ToolTip="Auto deck selection. Requires an active deck."/>
             </Grid>
         </Border>
         <Border BorderThickness="1" Margin="0,2,0,0" BorderBrush="{DynamicResource TextBrush}"
             PreviewMouseDown="ActiveDeckPanel_OnPreviewMouseDown" Height="26">
             <DockPanel>
-                <TextBlock Name="TextBlockLabelActiveDeck" Text="ACTIVE DECK: " FontWeight="SemiBold" FontSize="14"
+                <TextBlock Name="TextBlockLabelActiveDeck" Text="{lex:LocTextUpper DeckPicker_Label_ActiveDeck}" FontWeight="SemiBold" FontSize="14"
                        VerticalAlignment="Center" Margin="5,0,0,0" DockPanel.Dock="Left" />
                 <Image
                 Source="{Binding ActiveDeck.ClassImage, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                 DockPanel.Dock="Left" Margin="5,1" RenderOptions.BitmapScalingMode="Fant" />
                 <Grid Margin="0,0,5,0">
-                    <TextBlock Text="NONE   -   CLICK &quot;USE&quot; ON DECK TO ACTIVATE" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                    <TextBlock Text="{lex:LocTextUpper DeckPicker_ActiveDeck_Label_None}" FontSize="14" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
                            HorizontalAlignment="Left" Visibility="{Binding VisibilityNoDeck, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
-                               ToolTip="CLICK &quot;USE&quot; ON DECK TO ACTIVATE"/>
+                               ToolTip="{lex:Loc DeckPicker_ActiveDeck_Label_None_Tooltip}"/>
                     <DockPanel>
                         <DockPanel.Resources>
                             <deckPicker:MarginConverterNegativeLeft x:Key="MarginConverterLeft" />

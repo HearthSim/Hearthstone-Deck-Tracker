@@ -3,7 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats"
-        Title="Arena Rewards" Height="416" Width="300" Topmost="True" WindowStyle="ToolWindow"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:LocalizeDictionary.DesignCulture="en"
+        lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+        lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+        Title="{lex:Loc ArenaRewardsDialog_Title}" Height="416" Width="300" Topmost="True" WindowStyle="ToolWindow"
         SaveWindowPosition="True"
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
     <StackPanel HorizontalAlignment="Center">

@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
 		private readonly ObservableCollection<DeckPickerItem> _displayedDecks;
 		private bool _clearingClasses;
-		private ObservableCollection<string> _deckTypeItems;
+		private ObservableCollection<DeckType> _deckTypeItems;
 		private bool _ignoreSelectionChange;
 		private DateTime _lastActiveDeckPanelClick = DateTime.MinValue;
 		private bool _reselectingClasses;
@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			SelectedClasses = new ObservableCollection<HeroClassAll>();
 			_displayedDecks = new ObservableCollection<DeckPickerItem>();
 			ListViewDecks.ItemsSource = _displayedDecks;
-			DeckTypeItems = new ObservableCollection<string> {"ALL", "ARENA", "STANDARD", "WILD"};
+			DeckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Take(4));
 		}
 
 		public List<Deck> SelectedDecks
@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Visibility VisibilitySearchBar => SearchBarVisibile ? Visible : Collapsed;
 
-		public ObservableCollection<string> DeckTypeItems
+		public ObservableCollection<DeckType> DeckTypeItems
 		{
 			get { return _deckTypeItems; }
 			set
@@ -585,28 +585,12 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			if(_ignoreSelectionChange || !Core.Initialized)
 				return;
-			var deckType = DeckType.All;
 			if(e.AddedItems.Count > 0)
 			{
-				var item = e.AddedItems[0] as string;
-				if(item != null)
+				var selected = (DeckType)ListViewDeckType.SelectedItem;
+				if(Config.Instance.SelectedDeckPickerDeckType != selected)
 				{
-					switch(item)
-					{
-						case "ARENA":
-							deckType = DeckType.Arena;
-							break;
-						case "STANDARD":
-							deckType = DeckType.Standard;
-							break;
-						case "WILD":
-							deckType = DeckType.Wild;
-							break;
-					}
-				}
-				if(Config.Instance.SelectedDeckPickerDeckType != deckType)
-				{
-					Config.Instance.SelectedDeckPickerDeckType = deckType;
+					Config.Instance.SelectedDeckPickerDeckType = selected;
 					Config.Save();
 				}
 				UpdateDecks();
