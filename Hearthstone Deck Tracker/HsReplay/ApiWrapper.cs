@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
@@ -11,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 {
 	internal class ApiWrapper
 	{
-		private static readonly HsReplayClient Client = new HsReplayClient("089b2bc6-3c26-4aab-adbe-bcfd5bb48671", "HDT/" + Helper.GetCurrentVersion());
+		private static readonly HsReplayClient Client = new HsReplayClient("089b2bc6-3c26-4aab-adbe-bcfd5bb48671", "HDT/" + Helper.GetCurrentVersion(), config: TryGetConfig());
 
 		private static async Task<string> GetUploadToken()
 		{
@@ -80,5 +81,22 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static async Task UploadLog(LogUploadRequest uploadRequest, string[] logLines) 
 			=> await Client.UploadLog(uploadRequest, logLines);
+
+		private static ClientConfig TryGetConfig()
+		{
+			var file = new FileInfo(Path.Combine(Config.AppDataPath, "hsreplaynet.xml"));
+			if(!file.Exists)
+				return null;
+			try
+			{
+				Log.Warn("Loading custom hsreplaynet config!");
+				return XmlManager<ClientConfig>.Load(file.FullName);
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				return null;
+			}
+		}
 	}
 }
