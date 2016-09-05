@@ -70,7 +70,7 @@
                                   SelectionChanged="ComboBoxCthun_SelectionChanged"/>
                     </DockPanel>
                     <DockPanel Margin="5,5,5,0">
-                        <Label Content="Show Yogg-Saron counter:" Width="155"/>
+                        <Label Content="Show Spell counter:" Width="155"/>
                         <ComboBox x:Name="ComboBoxSpells" HorizontalAlignment="Right"
                                   Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboBoxSpells_SelectionChanged"/>
