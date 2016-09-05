@@ -504,7 +504,10 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode PlayerSpellsCounter = DisplayMode.Auto;
 
-		[DefaultValue(false)]
+        [DefaultValue(DisplayMode.Auto)]
+        public DisplayMode PlayerArcaneGiantCounter = DisplayMode.Auto;
+
+        [DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
 
 		[DefaultValue(false)]
