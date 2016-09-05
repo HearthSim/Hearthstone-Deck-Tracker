@@ -26,14 +26,23 @@ namespace Hearthstone_Deck_Tracker.Enums
 	{
 		[LocDescription("Enum_HeroClass_All")]
 		All,
+		[LocDescription("Enum_HeroClass_Druid")]
 		Druid,
+		[LocDescription("Enum_HeroClass_Hunter")]
 		Hunter,
+		[LocDescription("Enum_HeroClass_Mage")]
 		Mage,
+		[LocDescription("Enum_HeroClass_Paladin")]
 		Paladin,
+		[LocDescription("Enum_HeroClass_Priest")]
 		Priest,
+		[LocDescription("Enum_HeroClass_Rogue")]
 		Rogue,
+		[LocDescription("Enum_HeroClass_Shaman")]
 		Shaman,
+		[LocDescription("Enum_HeroClass_Warlock")]
 		Warlock,
+		[LocDescription("Enum_HeroClass_Warrior")]
 		Warrior,
 		[LocDescription("Enum_HeroClass_Archived")]
 		Archived

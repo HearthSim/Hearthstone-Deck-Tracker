@@ -1,13 +1,17 @@
-﻿<UserControl
+<UserControl
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     x:Class="Hearthstone_Deck_Tracker.DeckNotes"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
+    lex:LocalizeDictionary.DesignCulture="en"
+    lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+    lex:ResxLocalizationProvider.DefaultDictionary="Strings"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
-        <Button Name="BtnSave" Content="Save" DockPanel.Dock="Bottom" Margin="5" ToolTip="Automatically saves when the dialog closes" IsEnabled="False" Click="BtnSave_Click"/>
+        <Button Name="BtnSave" Content="{lex:Loc DeckNotes_Button_Save}" DockPanel.Dock="Bottom" Margin="5" ToolTip="{lex:Loc DeckNotes_Button_Save_Tooltip}" IsEnabled="False" Click="BtnSave_Click"/>
         <TextBox x:Name="Textbox" Height="auto" Width="auto" TextChanged="Textbox_TextChanged" TextWrapping="Wrap"
                  AcceptsReturn="True" AcceptsTab="True" />
 

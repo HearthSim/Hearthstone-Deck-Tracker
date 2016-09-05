@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.ComponentModel;
@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -18,6 +19,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 	/// </summary>
 	public partial class DeckPickerItem : INotifyPropertyChanged
 	{
+		private const string LocUse = "DeckPicker_Deck_Label_Use";
+		private const string LocActive = "DeckPicker_Deck_Label_Active";
+
 		private static Type _deckPickerItem = typeof(DeckPickerItemLayout1);
 
 		public DeckPickerItem()
@@ -44,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 													? FontWeights.Bold
 													: (Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
 
-		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? "ACTIVE" : "USE";
+		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? LocUtil.Get(LocUse, true) : LocUtil.Get(LocActive, true);
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

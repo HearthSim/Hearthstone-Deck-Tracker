@@ -67,7 +67,7 @@
                                   SelectionChanged="ComboboxIconSet_SelectionChanged" />
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="Class colors:" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassColors}" HorizontalAlignment="Left" VerticalAlignment="Top" 
                                Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
                                   VerticalAlignment="Top" Width="150"

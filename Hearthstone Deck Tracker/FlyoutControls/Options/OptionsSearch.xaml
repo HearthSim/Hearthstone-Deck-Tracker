@@ -13,7 +13,7 @@
     <GroupBox Header="{lex:Loc Options_Search_Header}">
         <DockPanel>
             <DockPanel DockPanel.Dock="Top">
-                <Button Name="ButtonSearch" Content="{lex:Loc Options_Search_Button}" Width="100" Margin="5,0,0,0" IsDefault="True" Click="ButtonSearch_OnClick" DockPanel.Dock="Right"/>
+                <Button Name="ButtonSearch" Content="{lex:Loc Options_Search_SearchButton}" Width="100" Margin="5,0,0,0" IsDefault="True" Click="ButtonSearch_OnClick" DockPanel.Dock="Right"/>
                 <TextBox Name="TextBoxSearch" controls:TextBoxHelper.Watermark="{lex:Loc Options_Search_TextBox_Watermark}"/>
             </DockPanel>
             <ListBox Name="ListBoxSearchResult" Margin="0,5,0,0" MouseDoubleClick="ListBoxSearchResult_OnMouseDoubleClick"/>
