@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 
 		private List<Entity> Filter(List<Entity> cards)
 			=>
-				cards.Where(x => x != null && 
+				cards.Where(x => x != null && x.GetTag(CARDTYPE) != (int)CardType.PLAYER &&
 							x.GetTag(CARDTYPE) != (int)CardType.ENCHANTMENT && x.GetTag(CARDTYPE) != (int)CardType.HERO_POWER
 							&& x.GetTag(ZONE) != (int)Zone.SETASIDE && x.GetTag(ZONE) != (int)Zone.GRAVEYARD).ToList();
 	}
