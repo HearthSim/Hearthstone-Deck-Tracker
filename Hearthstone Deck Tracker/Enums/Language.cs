@@ -9,6 +9,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[Description("German")]
 		deDE,
 		[Description("中文（简体）")]
-		zhCN
+		zhCN,
+		[Description("French")]
+		frFR
 	}
 }
