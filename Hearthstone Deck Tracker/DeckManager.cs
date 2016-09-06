@@ -273,7 +273,7 @@ namespace Hearthstone_Deck_Tracker
 				case GameMode.Practice:
 					return AutoImportConstructed(select);
 				case GameMode.Arena:
-					AutoImportArena(ArenaImportingBehaviour.AutoImportSave);
+					AutoImportArena(Config.Instance.SelectedArenaImportingBehaviour ?? ArenaImportingBehaviour.AutoImportSave);
 					break;
 			}
 			return false;
