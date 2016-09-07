@@ -264,7 +264,10 @@ namespace Hearthstone_Deck_Tracker
 				|| !entity.IsControlledBy(_game.Opponent.Id) || !_game.OpponentEntity.IsCurrentPlayer)
 				return;
 			_lastCompetitiveSpiritCheck = turn;
-			_game.OpponentSecrets.SetZero(Paladin.CompetitiveSpirit);
+
+			if(_game.OpponentMinionCount > 0)
+				_game.OpponentSecrets.SetZero(Paladin.CompetitiveSpirit);
+
 			if(Core.MainWindow != null)
 				Core.Overlay.ShowSecrets();
 		}

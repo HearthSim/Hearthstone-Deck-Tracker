@@ -211,10 +211,19 @@ namespace HDTTests.Hearthstone
         public void SingleSecret_MinionInPlay_OpponentTurnStart()
         {
             _opponentEntity.SetTag(GameTag.CURRENT_PLAYER, 1);
+	        _opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
             _gameEventHandler.HandleTurnsInPlayChange(_opponentMinion1, 1);
+			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.INVALID);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.CompetitiveSpirit);
+        }
+
+        [TestMethod]
+        public void CompetitiveSpirit_NoMinionInPlay_OpponentTurnStart()
+        {
+            _gameEventHandler.HandleTurnsInPlayChange(_heroOpponent, 1);
+            VerifySecrets(2, PaladinSecrets.All);
         }
 
         [TestMethod]
