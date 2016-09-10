@@ -6,12 +6,16 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="400">
+    <UserControl.Resources>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
     <Grid>
         <GroupBox Header="{lex:LocText Options_Overlay_Opponent_Header}">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -71,13 +75,25 @@
                         <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Cthun}" Width="155"/>
                         <ComboBox x:Name="ComboBoxCthun" HorizontalAlignment="Right"
                                   Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxCthun_SelectionChanged"/>
+                                  SelectionChanged="ComboBoxCthun_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </DockPanel>
                     <DockPanel Margin="5,5,5,0">
                         <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Yogg}" Width="155"/>
                         <ComboBox x:Name="ComboBoxSpells" HorizontalAlignment="Right"
                                   Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxSpells_SelectionChanged"/>
+                                  SelectionChanged="ComboBoxSpells_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </DockPanel>
                     <CheckBox x:Name="CheckBoxAttack"
                               Content="{lex:LocText Options_Overlay_Opponent_CheckBox_Attack}" HorizontalAlignment="Left"
