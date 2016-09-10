@@ -54,8 +54,8 @@ namespace Hearthstone_Deck_Tracker
 		public static readonly Dictionary<string, string> LanguageDict = new Dictionary<string, string>
 		{
 			{"English", "enUS"},
-			{"Chinese (China)", "zhCN"},
-			{"Chinese (Taiwan)", "zhTW"},
+			{"简体中文", "zhCN"},
+			{"繁體中文", "zhTW"},
 			{"English (Great Britain)", "enGB"},
 			{"French", "frFR"},
 			{"German", "deDE"},
