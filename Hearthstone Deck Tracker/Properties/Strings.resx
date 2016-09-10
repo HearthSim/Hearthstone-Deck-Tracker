@@ -2664,4 +2664,25 @@
   <data name="SortFilter_Filter_CheckBoxIncludeStandard" xml:space="preserve">
     <value>Include 'Standard' decks in 'Wild'</value>
   </data>
+  <data name="Options_Overlay_SortedElement_DeckTitle" xml:space="preserve">
+    <value>Deck Title</value>
+  </data>
+  <data name="Options_Overlay_SortedElement_Cards" xml:space="preserve">
+    <value>Cards</value>
+  </data>
+  <data name="Options_Overlay_SortedElement_CardCount" xml:space="preserve">
+    <value>Card Counter</value>
+  </data>
+  <data name="Options_Overlay_SortedElement_FatigueCount" xml:space="preserve">
+    <value>Fatigue Counter</value>
+  </data>
+  <data name="Options_Overlay_SortedElement_DrawChances" xml:space="preserve">
+    <value>Draw Chances</value>
+  </data>
+  <data name="Options_Overlay_SortedElement_Wins" xml:space="preserve">
+    <value>Wins</value>
+  </data>
+  <data name="Options_Overlay_SortedElement_WinRate" xml:space="preserve">
+    <value>Win Rate</value>
+  </data>
 </root>
