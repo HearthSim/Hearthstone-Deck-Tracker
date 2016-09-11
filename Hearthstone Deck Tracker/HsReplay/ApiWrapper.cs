@@ -37,21 +37,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			return token;
 		}
 
-		public static async Task ClaimAccount()
+		public static async Task<string> GetClaimAccountUrl()
 		{
 			try
 			{
 				var token = await GetUploadToken();
 				Log.Info("Getting claim url...");
-				var url = await Client.GetClaimAccountUrl(token);
-				Log.Info("Opening browser to claim account...");
-				Process.Start($"https://hsreplay.net{url}");
+				return "https://hsreplay.net" + await Client.GetClaimAccountUrl(token);
 			}
 			catch(Exception e)
 			{
 				Log.Error(e);
 				ErrorManager.AddError("Error claiming account", e.Message);
 			}
+			return null;
 		}
 
 		public static async Task UpdateAccountStatus()

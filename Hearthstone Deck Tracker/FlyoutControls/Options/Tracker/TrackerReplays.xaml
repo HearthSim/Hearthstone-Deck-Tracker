@@ -35,6 +35,11 @@
                     <Button Name="ButtonClaimAccount" Content="Claim Account" Margin="0,2,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Click="ButtonClaimAccount_OnClick"/>
                     <TextBlock Text="Log in with your Battle.net credentials on HSReplay.net to claim your existing replays. This will open your web browser." TextWrapping="Wrap"
                            Margin="0,5,0,0" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    <StackPanel Visibility="{Binding ClaimErrorVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                        <TextBlock Text="Could not launch the browser. Please click below to copy your claiming URL to clipboard. Do not share this URL with anyone." TextWrapping="Wrap"
+                           Margin="0,5,0,0" Foreground="Red" Visibility="{Binding TextClaimVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <Button Name="ButtonCopyUrl" Content="Copy to clipboard" Margin="0,2,0,0" Click="ButtonCopyUrl_OnClick"/>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
             <CheckBox Content="Use local replay viewer by default (not maintained)" Margin="5,5,0,0"

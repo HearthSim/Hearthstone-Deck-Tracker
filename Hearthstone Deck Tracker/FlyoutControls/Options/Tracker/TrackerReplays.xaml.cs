@@ -30,11 +30,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		}
 
 		public Visibility TextClaimVisibility => Account.Instance.Status == Anonymous ? Visible : Collapsed;
+		public Visibility ClaimErrorVisibility => Account.Instance.Status == Anonymous && !string.IsNullOrEmpty(_claimUrl) ? Visible : Collapsed;
 		public bool TextUnclaimIsEnabled => Account.Instance.Status != Anonymous;
 		public AccountStatus AccountStatus => Account.Instance.Status;
 		public string BattleTag => Account.Instance.Status == Anonymous ? string.Empty : $"({Account.Instance.Username})";
 		private const string ButtonTextClaim = "Claim Account";
 		private const string ButtonTextWaiting = "Waiting for HSReplay.net...";
+		private string _claimUrl;
 
 		public void Update()
 		{
@@ -42,13 +44,21 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			OnPropertyChanged(nameof(TextUnclaimIsEnabled));
 			OnPropertyChanged(nameof(AccountStatus));
 			OnPropertyChanged(nameof(BattleTag));
+			OnPropertyChanged(nameof(ClaimErrorVisibility));
 		}
 
 		private async void ButtonClaimAccount_OnClick(object sender, RoutedEventArgs e)
 		{
 			ButtonClaimAccount.Content = ButtonTextWaiting;
 			ButtonClaimAccount.IsEnabled = false;
-			ApiWrapper.ClaimAccount().Forget();
+			var url = await ApiWrapper.GetClaimAccountUrl();
+			if(url == null)
+				return;
+			if(!Helper.TryOpenUrl(url))
+			{
+				_claimUrl = url;
+				OnPropertyChanged(nameof(ClaimErrorVisibility));
+			}
 			await Task.Delay(3000);
 			ButtonClaimAccount.IsEnabled = true;
 			await CheckForAccountUpdateAsync(Registered);
@@ -87,5 +97,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		}
 
 		private void HyperlinkBattleTag_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/account/");
+
+		private void ButtonCopyUrl_OnClick(object sender, RoutedEventArgs e)
+		{
+			if(string.IsNullOrEmpty(_claimUrl))
+				return;
+			try
+			{
+				Clipboard.SetText(_claimUrl);
+				ButtonCopyUrl.Content = "Copied!";
+			}
+			catch(Exception ex)
+			{
+				ErrorManager.AddError("Could not copy the URL to clipboard :(", "Here is the url: " + _claimUrl + Environment.NewLine + ex.Message);
+			}
+		}
 	}
 }
