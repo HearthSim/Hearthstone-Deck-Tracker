@@ -208,7 +208,7 @@
     <value>Depuis le _web</value>
   </data>
   <data name="MainWindow_Menu_Import_Constructed" xml:space="preserve">
-    <value>From _Constructed</value>
+    <value>De _Construit</value>
   </data>
   <data name="MainWindow_Menu_Import_Arena" xml:space="preserve">
     <value>Depuis l'_Arène</value>
@@ -223,7 +223,7 @@
     <value>Depuis un fichier</value>
   </data>
   <data name="MainWindow_Menu_Import_Other_Ids" xml:space="preserve">
-    <value>From ids</value>
+    <value>Depuis les ids</value>
   </data>
   <data name="MainWindow_Menu_Import_Other_Clipboard" xml:space="preserve">
     <value>Du presse-papier</value>
@@ -247,55 +247,55 @@
     <value>Copier les IDS dans le _presse-papier</value>
   </data>
   <data name="MainWindow_Menu_Export_Clpiboard" xml:space="preserve">
-    <value>Copy _names to clipboard</value>
+    <value>Copier les _noms dans le presse-papier</value>
   </data>
   <data name="MainWindow_Menu_Export_Screenshot" xml:space="preserve">
     <value>_Capture d'écran</value>
   </data>
   <data name="MainWindow_Menu_Export_Screenshot_Info" xml:space="preserve">
-    <value>Screenshot (with info)</value>
+    <value>Capture d'écran (avec info)</value>
   </data>
   <data name="MainWindow_Menu_Stats" xml:space="preserve">
     <value>_Stats</value>
   </data>
   <data name="MainWindow_Menu_Stats_Arena" xml:space="preserve">
-    <value>_Arena</value>
+    <value>_Arène</value>
   </data>
   <data name="MainWindow_Menu_Stats_Constructed" xml:space="preserve">
-    <value>_Constructed</value>
+    <value>_Construit</value>
   </data>
   <data name="MainWindow_Menu_Replays" xml:space="preserve">
     <value>_Replays</value>
   </data>
   <data name="MainWindow_Menu_Replays_Latest" xml:space="preserve">
-    <value>_Latest replays</value>
+    <value>_Derniers replays</value>
   </data>
   <data name="MainWindow_Menu_Replays_Stats" xml:space="preserve">
-    <value>_Select from stats</value>
+    <value>_Selectionner depuis les stats</value>
   </data>
   <data name="MainWindow_Menu_Replays_File" xml:space="preserve">
-    <value>Load from _file</value>
+    <value>Charger depuis un _fichier</value>
   </data>
   <data name="MainWindow_Menu_Replays_ClaimAccount" xml:space="preserve">
-    <value>Claim account</value>
+    <value>Réclamer son compte</value>
   </data>
   <data name="MainWindow_Menu_Replays_MyAccount" xml:space="preserve">
-    <value>My account</value>
+    <value>Mon compte</value>
   </data>
   <data name="MainWindow_Menu_HearthStats_Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Connexion</value>
   </data>
   <data name="MainWindow_Menu_HearthStats_Dashboard" xml:space="preserve">
     <value>Dashboard (web)</value>
   </data>
   <data name="MainWindow_Menu_HearthStats_Sync" xml:space="preserve">
-    <value>Sync now</value>
+    <value>Synchroniser maintenant</value>
   </data>
   <data name="MainWindow_Menu_HearthStats_ForceSync" xml:space="preserve">
-    <value>Force full sync</value>
+    <value>Force une synchronisation complète</value>
   </data>
   <data name="MainWindow_Menu_HearthStats_SyncOnStart" xml:space="preserve">
-    <value>Sync on start</value>
+    <value>Synchroniser au démarrage</value>
   </data>
   <data name="MainWindow_Menu_HearthStats_UploadDecks" xml:space="preserve">
     <value>Auto upload new decks</value>
@@ -316,88 +316,88 @@
     <value>Delete selected decks</value>
   </data>
   <data name="MainWindow_Menu_HearthStats_Logout" xml:space="preserve">
-    <value>Logout</value>
+    <value>Déconnexion</value>
   </data>
   <data name="MainWindow_Menu_Plugins" xml:space="preserve">
     <value>_Plugins</value>
   </data>
   <data name="MainWindow_Menu_Plugins_Empty" xml:space="preserve">
-    <value>Empty...</value>
+    <value>Vide...</value>
   </data>
   <data name="MainWindow_TitleBar_Options" xml:space="preserve">
     <value>Options</value>
   </data>
   <data name="MainWindow_TitleBar_Help" xml:space="preserve">
-    <value>Help</value>
+    <value>Aide</value>
   </data>
   <data name="MainWindow_TitleBar_Donate" xml:space="preserve">
-    <value>Donate</value>
+    <value>Donation</value>
   </data>
   <data name="MainWindow_Flyout_Options_Header" xml:space="preserve">
     <value>Options</value>
   </data>
   <data name="MainWindow_Flyout_Help_Header" xml:space="preserve">
-    <value>Help</value>
+    <value>Aide</value>
   </data>
   <data name="MainWindow_Flyout_OpponentDeck_Header" xml:space="preserve">
-    <value>Opponent Deck</value>
+    <value>Deck Adversaire</value>
   </data>
   <data name="MainWindow_Flyout_SortFilter_Header" xml:space="preserve">
-    <value>Sort / Filter Decks</value>
+    <value>Trier / Filtrer les Decks</value>
   </data>
   <data name="MainWindow_Flyout_Notes_Header" xml:space="preserve">
     <value>Notes</value>
   </data>
   <data name="MainWindow_Flyout_SetTags_Header" xml:space="preserve">
-    <value>Set Tags</value>
+    <value>Définir Tags</value>
   </data>
   <data name="MainWindow_Flyout_Errors_Header" xml:space="preserve">
-    <value>Errors</value>
+    <value>Erreurs</value>
   </data>
   <data name="MainWindow_Flyout_UpdateNotes_Header" xml:space="preserve">
-    <value>Update Notes</value>
+    <value>Mise à jour Notes</value>
   </data>
   <data name="MainWindow_Flyout_DeckImporting_Header" xml:space="preserve">
-    <value>Deck Importing</value>
+    <value>Import de deck</value>
   </data>
   <data name="MainWindow_Flyout_Stats_Move" xml:space="preserve">
-    <value>Move to new window</value>
+    <value>Déplacer dans une nouvelle fenêtre</value>
   </data>
   <data name="MainWindow_Flyout_Stats_Header" xml:space="preserve">
     <value>Stats</value>
   </data>
   <data name="MainWindow_StatusBarUpdate_NewUpdateAvailable" xml:space="preserve">
-    <value>A new update is available</value>
+    <value>Une nouvelle mise à jour est disponible</value>
   </data>
   <data name="MainWindow_StatusBarUpdate_ClickToUpdate" xml:space="preserve">
-    <value>Click here to update now</value>
+    <value>Cliquer ici pour mettre à jour</value>
   </data>
   <data name="MainWindow_Button_StartHearthstone" xml:space="preserve">
-    <value>Start Launcher / Hearthstone</value>
+    <value>Démarrer Launcher / Hearthstone</value>
   </data>
   <data name="MainWindow_Label_SelectedVersion" xml:space="preserve">
-    <value>Selected version:</value>
+    <value>Version sélectionnée:</value>
   </data>
   <data name="MainWindow_DeckBuilder_Label_Cards" xml:space="preserve">
-    <value>Cards:</value>
+    <value>Cartes:</value>
   </data>
   <data name="MainWindow_DeckBuilder_Button_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Enregistrer</value>
   </data>
   <data name="MainWindow_DeckBuilder_Button_Save_Current" xml:space="preserve">
-    <value>(current)</value>
+    <value>(actuel)</value>
   </data>
   <data name="MainWindow_DeckBuilder_Button_Save_New" xml:space="preserve">
-    <value>Save as new</value>
+    <value>Enregistrer en tant que nouveau</value>
   </data>
   <data name="MainWindow_DeckBuilder_Button_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annuler</value>
   </data>
   <data name="MainWindow_DeckBuilder_Button_Filter" xml:space="preserve">
-    <value>Filter</value>
+    <value>Filtrer</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Cost" xml:space="preserve">
-    <value>Cost</value>
+    <value>Coût</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Type" xml:space="preserve">
     <value>Type</value>
@@ -406,94 +406,94 @@
     <value>Set</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Cost_All" xml:space="preserve">
-    <value>All</value>
+    <value>Tous</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Type_All" xml:space="preserve">
-    <value>All</value>
+    <value>Tous</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Type_Class" xml:space="preserve">
-    <value>Class only</value>
+    <value>Classes seulement</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Type_Neutral" xml:space="preserve">
-    <value>Neutral only</value>
+    <value>Neutres seulement</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_All" xml:space="preserve">
-    <value>All</value>
+    <value>Tous</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Basic" xml:space="preserve">
-    <value>Basic</value>
+    <value>Base</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Classic" xml:space="preserve">
-    <value>Classic</value>
+    <value>Classique</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Promo" xml:space="preserve">
     <value>Promotion</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Naxx" xml:space="preserve">
-    <value>Curse of Naxxramas</value>
+    <value>La malédiction de Naxxramas</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Gvg" xml:space="preserve">
-    <value>Goblins vs Gnomes</value>
+    <value>Gobelins et Gnomes</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Brm" xml:space="preserve">
-    <value>Blackrock Mountain</value>
+    <value>Mont Rochenoire</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Tgt" xml:space="preserve">
-    <value>The Grand Tournament</value>
+    <value>Le Grand Tournoi</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Loe" xml:space="preserve">
-    <value>League of Explorers</value>
+    <value>Ligue Des Explorateurs</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Wotog" xml:space="preserve">
-    <value>Whispers of the old Gods</value>
+    <value>Les murmures des Dieux très anciens</value>
   </data>
   <data name="MainWindow_DeckBuilder_Filter_Set_Kara" xml:space="preserve">
-    <value>One Night in Karazhan</value>
+    <value>Une nuit à Karazhan</value>
   </data>
   <data name="MainWindow_DeckBuilder_TextBox_Name_Watermark" xml:space="preserve">
-    <value>Name...</value>
+    <value>Nom...</value>
   </data>
   <data name="MainWindow_DeckBuilder_Warning_ToolTip_NameAlreadyExists" xml:space="preserve">
-    <value>Name already exists</value>
+    <value>Ce nom existe déjà</value>
   </data>
   <data name="MainWindow_DeckBuilder_CheckBox_IncludeWild" xml:space="preserve">
-    <value>Include wild-only cards</value>
+    <value>Inclure uniquement les cartes "Libres"</value>
   </data>
   <data name="MainWindow_DeckBuilder_CheckBox_CardLimit" xml:space="preserve">
-    <value>Constructed card limits</value>
+    <value>Limite de cartes en construit</value>
   </data>
   <data name="MainWindow_DeckBuilder_Button_VerionHistory" xml:space="preserve">
-    <value>Show version history</value>
+    <value>Voir l'historique de versions</value>
   </data>
   <data name="MainWindow_DeckBuilder_History_Header" xml:space="preserve">
-    <value>Deck History:</value>
+    <value>Historique du Deck:</value>
   </data>
   <data name="MainWindow_NewsBar_Header" xml:space="preserve">
-    <value>News:</value>
+    <value>Nouveautés:</value>
   </data>
   <data name="Options_Search_Header" xml:space="preserve">
-    <value>Search</value>
+    <value>Rechercher</value>
   </data>
   <data name="Options_CheckBoxAdvanced" xml:space="preserve">
-    <value>Advanced options</value>
+    <value>Options avancées</value>
   </data>
   <data name="Options_Overlay_Header" xml:space="preserve">
     <value>Overlay</value>
   </data>
   <data name="Options_Overlay_General_Header" xml:space="preserve">
-    <value>General</value>
+    <value>Général</value>
   </data>
   <data name="Options_Overlay_Windows_Header" xml:space="preserve">
-    <value>Windows</value>
+    <value>Fenêtres</value>
   </data>
   <data name="Options_Overlay_Player_Header" xml:space="preserve">
-    <value>Player</value>
+    <value>Joueur</value>
   </data>
   <data name="Options_Overlay_Opponent_Header" xml:space="preserve">
-    <value>Opponent</value>
+    <value>Adversaire</value>
   </data>
   <data name="Options_Overlay_Interactivity_Header" xml:space="preserve">
-    <value>Interactivity</value>
+    <value>Interactivité</value>
   </data>
   <data name="Options_Overlay_Streaming_Header" xml:space="preserve">
     <value>Streaming</value>
@@ -502,7 +502,7 @@
     <value>Tracker</value>
   </data>
   <data name="Options_Tracker_General_Header" xml:space="preserve">
-    <value>General</value>
+    <value>Général</value>
   </data>
   <data name="Options_Tracker_Stats_Header" xml:space="preserve">
     <value>Stats</value>
@@ -511,10 +511,10 @@
     <value>Replays</value>
   </data>
   <data name="Options_Tracker_Exporting_Header" xml:space="preserve">
-    <value>Exporting</value>
+    <value>Export</value>
   </data>
   <data name="Options_Tracker_Importing_Header" xml:space="preserve">
-    <value>Importing</value>
+    <value>Import</value>
   </data>
   <data name="Options_Tracker_Notifications_Header" xml:space="preserve">
     <value>Notifications</value>
@@ -529,211 +529,211 @@
     <value>Backups</value>
   </data>
   <data name="Options_Tracker_Appearance_Header" xml:space="preserve">
-    <value>Appearance</value>
+    <value>Apparence</value>
   </data>
   <data name="Options_Tracker_Settings_Header" xml:space="preserve">
-    <value>Settings</value>
+    <value>Préférences</value>
   </data>
   <data name="Options_Tracker_Logging_Header" xml:space="preserve">
     <value>Logging</value>
   </data>
   <data name="Options_Search_TextBox_Watermark" xml:space="preserve">
-    <value>Checkbox name/description...</value>
+    <value>Nom/description case à cocher...</value>
   </data>
   <data name="Options_Search_SearchButton" xml:space="preserve">
-    <value>Search</value>
+    <value>Rechercher</value>
   </data>
   <data name="Options_DeckWindows_CheckBox_Player" xml:space="preserve">
-    <value>Player</value>
+    <value>Joueur</value>
   </data>
   <data name="Options_DeckWindows_CheckBox_Opponent" xml:space="preserve">
-    <value>Opponent</value>
+    <value>Adversaire</value>
   </data>
   <data name="Options_DeckWindows_CheckBox_Topmost" xml:space="preserve">
     <value>Topmost</value>
   </data>
   <data name="Options_DeckWindows_CheckBox_HsForeground" xml:space="preserve">
-    <value>Only if HS in foreground</value>
+    <value>Seulement si HS est au premier plan</value>
   </data>
   <data name="Options_DeckWindows_CheckBox_CardTooltips" xml:space="preserve">
-    <value>Card tooltips</value>
+    <value>Infobulle des cartes</value>
   </data>
   <data name="Options_DeckWindows_CheckBox_Timer" xml:space="preserve">
-    <value>Timer</value>
+    <value>Chronomètre</value>
   </data>
   <data name="Options_DeckWindows_Label_Background" xml:space="preserve">
-    <value>Background:</value>
+    <value>Fond:</value>
   </data>
   <data name="Options_DeckWindows_Label_CustomHex" xml:space="preserve">
-    <value>Custom hex:</value>
+    <value>Hex sur-mesure:</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_HideCompletely" xml:space="preserve">
-    <value>Hide (completely)</value>
+    <value>Cacher (complètement)</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_HideInMenu" xml:space="preserve">
-    <value>Hide in menu</value>
+    <value>Cacher dans les menus</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_HideInSpectator" xml:space="preserve">
-    <value>Hide in spectator</value>
+    <value>Cacher en spectateur</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_HideInBackground" xml:space="preserve">
-    <value>Hide if HS in background</value>
+    <value>Cacher si HS est en arrière-plan</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_HideDecks" xml:space="preserve">
-    <value>Hide decks</value>
+    <value>Cacher les decks</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_HideTimers" xml:space="preserve">
-    <value>Hide timers</value>
+    <value>Cacher les chronomètres</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_HideCardAge" xml:space="preserve">
-    <value>Hide card-age</value>
+    <value>Cacher l'âge des cartes</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_HideCardMarks" xml:space="preserve">
-    <value>Hide card-marks</value>
+    <value>Carcher les marques des cartes</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_HideSecrets" xml:space="preserve">
-    <value>Hide secrets</value>
+    <value>Cacher les secrets</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_CardTooltips" xml:space="preserve">
-    <value>Card tooltips</value>
+    <value>Infobulles des cartes</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_SecretsOnly" xml:space="preserve">
-    <value>For secrets only</value>
+    <value>Pour les secrets uniquement</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_AdditionalCardTooltips" xml:space="preserve">
-    <value>Additional card tooltips</value>
+    <value>Infobulles supplémentaires pour les cartes</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_CardAnimations" xml:space="preserve">
-    <value>Use card animations</value>
+    <value>Utiliser les animations de carte</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_CardMarkTooltips" xml:space="preserve">
-    <value>Card mark tooltips</value>
+    <value>Infobulles des marques de cartes</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_Secrets" xml:space="preserve">
-    <value>Automatically gray out secrets</value>
+    <value>Grise automatiquement les secrets</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_NoResetAfterGame" xml:space="preserve">
-    <value>Don't reset decks after a game</value>
+    <value>Ne pas réinitialiser les decks après un match</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_GoldProgress" xml:space="preserve">
-    <value>Gold progress always visible (in menu)</value>
+    <value>Progression de l'or toujours visible (dans les menus)</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_FlavorText" xml:space="preserve">
-    <value>Show card flavor text on mouseover (board/hand)</value>
+    <value>Voir le texte de la carte sous la souris (plateau/main)</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_BatteryStatus" xml:space="preserve">
-    <value>Show battery status</value>
+    <value>Voir l'état de la batterie</value>
   </data>
   <data name="Options_Overlay_General_CheckBox_BatteryStatus_Percent" xml:space="preserve">
-    <value>Show percent</value>
+    <value>Voir le pourcentage</value>
   </data>
   <data name="Options_Overlay_General_Label_Opacity" xml:space="preserve">
-    <value>Opacity:</value>
+    <value>Opacité:</value>
   </data>
   <data name="Options_Overlay_General_Label_MoveResize" xml:space="preserve">
-    <value>Move/resize objects:</value>
+    <value>Déplacer/redimmensionner les objets:</value>
   </data>
   <data name="Options_Overlay_General_Button_Reset" xml:space="preserve">
-    <value>Reset</value>
+    <value>Réinitialiser</value>
   </data>
   <data name="Options_Overlay_General_Label_Reset" xml:space="preserve">
-    <value>Reset positions:</value>
+    <value>Réinitialiser les positions:</value>
   </data>
   <data name="Options_Overlay_General_Button_UnlockOverlay" xml:space="preserve">
-    <value>Unlock overlay</value>
+    <value>Débloquer l'overlay</value>
   </data>
   <data name="Options_Overlay_Interactivity_Label_Warning" xml:space="preserve">
-    <value>Warning:</value>
+    <value>Attention:</value>
   </data>
   <data name="Options_Overlay_Interactivity_Label_Freezing" xml:space="preserve">
-    <value>May cause the cursor to freeze occasionally</value>
+    <value>Peut provoquer un saccadement du curseur occasionnellement</value>
   </data>
   <data name="Options_Overlay_Interactivity_CheckBox_ForceOn" xml:space="preserve">
     <value>Force on (don't use this unless you need to)</value>
   </data>
   <data name="Options_Overlay_Interactivity_Label_Features" xml:space="preserve">
-    <value>Features:</value>
+    <value>Caractéristiques:</value>
   </data>
   <data name="Options_Overlay_Interactivity_CheckBox_FriendsList" xml:space="preserve">
-    <value>Hide deck when friendslist is open</value>
+    <value>Cacher le deck quand la liste d'amis est ouverte</value>
   </data>
   <data name="Options_Overlay_Interactivity_CheckBoxSecrets" xml:space="preserve">
-    <value>Click secrets to gray out</value>
+    <value>Cliquer les secrets pour les griser</value>
   </data>
   <data name="Options_Overlay_Interactivity_Label_Note" xml:space="preserve">
-    <value>NOTE: May not work correctly if &amp;quot;options &gt; overlay &gt; general &gt; automatically gray out secrets&amp;quot; is enabled.</value>
+    <value>NOTE: Peut ne pas fonctionner correctement si &amp;quot;options &gt; overlay &gt; général &gt; grise automatiquement les secrets&amp;quot; est actif.</value>
   </data>
   <data name="Options_Overlay_Interactivity_Switch_Enabled" xml:space="preserve">
-    <value>Enabled</value>
+    <value>Actif</value>
   </data>
   <data name="Options_Overlay_Interactivity_Switch_Disabled" xml:space="preserve">
-    <value>Disabled</value>
+    <value>Désactivé</value>
   </data>
   <data name="Options_Overlay_Opponent_CheckBox_SameScaling" xml:space="preserve">
-    <value>Use same scaling for player/opponent</value>
+    <value>Utiliser le même redimensionnement pour joueur/adversaire</value>
   </data>
   <data name="Options_Overlay_Opponent_Label_Scaling" xml:space="preserve">
-    <value>Scaling:</value>
+    <value>Redimensionnement:</value>
   </data>
   <data name="Options_Overlay_Opponent_Label_Opacity" xml:space="preserve">
-    <value>Opacity:</value>
+    <value>Opacité:</value>
   </data>
   <data name="Options_Overlay_Opponent_Label_SecretScaling" xml:space="preserve">
-    <value>Secret scaling:</value>
+    <value>Redimensionnement des secrets:</value>
   </data>
   <data name="Options_Overlay_Opponent_LabelSecretOpacity" xml:space="preserve">
-    <value>Secret opacity:</value>
+    <value>Opacité des secrets:</value>
   </data>
   <data name="Options_Overlay_Opponent_Label_Cthun" xml:space="preserve">
-    <value>Show C'Thun counter:</value>
+    <value>Voir le compteur de C'Thun:</value>
   </data>
   <data name="Options_Overlay_Opponent_Label_Yogg" xml:space="preserve">
-    <value>Show Yogg-Saron counter:</value>
+    <value>Voir le compteur de Yogg-Saron:</value>
   </data>
   <data name="Options_Overlay_Opponent_CheckBox_Attack" xml:space="preserve">
-    <value>Show board attack counter</value>
+    <value>Voir le compteur d'attaque du plateau</value>
   </data>
   <data name="Options_Overlay_Opponent_CheckBox_CenterVertically" xml:space="preserve">
-    <value>Center deck vertically</value>
+    <value>Centrer le deck verticalement</value>
   </data>
   <data name="Options_Overlay_Opponent_CheckBox_CreatedCards" xml:space="preserve">
-    <value>Include created cards</value>
+    <value>Ajouter les cartes créées</value>
   </data>
   <data name="Options_Overlay_Opponent_CheckBox_DiscardedCards" xml:space="preserve">
-    <value>Highlight discarded from deck</value>
+    <value>Mise en avant des cartes défaussées</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_SameScaling" xml:space="preserve">
-    <value>Use same scaling for player/opponent</value>
+    <value>Utiliser le même redimensionnement pour joueur/adversaire</value>
   </data>
   <data name="Options_Overlay_Player_Label_Scaling" xml:space="preserve">
-    <value>Scaling:</value>
+    <value>Redimensionnement:</value>
   </data>
   <data name="Options_Overlay_Player_Label_Opacity" xml:space="preserve">
-    <value>Opacity:</value>
+    <value>Opacité:</value>
   </data>
   <data name="Options_Overlay_Player_Label_Cthun" xml:space="preserve">
-    <value>Show C'Thun counter:</value>
+    <value>Voir le compteur de C'Thun:</value>
   </data>
   <data name="Options_Overlay_Player_Label_Yogg" xml:space="preserve">
-    <value>Show Yogg-Saron counter:</value>
+    <value>Voir le compteur de Yogg-Saron:</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_Attack" xml:space="preserve">
-    <value>Show board attack counter</value>
+    <value>Voir le compteur d'attaque du plateau</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_CenterVertically" xml:space="preserve">
-    <value>Center deck vertically</value>
+    <value>Centrer le deck verticalement</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_HighlightHand" xml:space="preserve">
-    <value>Highlight cards in hand</value>
+    <value>Mise en avant des cartes en main</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_HighlightDrawn" xml:space="preserve">
-    <value>Highlight last drawn card</value>
+    <value>Mise en avant de la dernière carte piochée</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_RemoveZero" xml:space="preserve">
-    <value>Remove cards if none remaining</value>
+    <value>Retirer les cartes si aucune restante</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_IncludeCreated" xml:space="preserve">
-    <value>Include cards created in hand (e.g. The Coin)</value>
+    <value>Ajouter les cartes créées en main (ex: La Pièce)</value>
   </data>
   <data name="Options_Overlay_Streaming_CheckBox_Show" xml:space="preserve">
     <value>Show capturable overlay window</value>
@@ -742,7 +742,7 @@
     <value>Disable card opacity transitions (recommended)</value>
   </data>
   <data name="Options_Overlay_Streaming_Label_Background" xml:space="preserve">
-    <value>Background:</value>
+    <value>Arrière plan:</value>
   </data>
   <data name="Options_Overlay_Streaming_Text1" xml:space="preserve">
     <value>This will add a chroma-key-able copy of the overlay behind your Hearthstone window.</value>
@@ -754,85 +754,85 @@
     <value>Show instructions for getting started (opens wiki)</value>
   </data>
   <data name="Options_Tracker_Appearance_Label_Language" xml:space="preserve">
-    <value>Language:</value>
+    <value>Langue:</value>
   </data>
   <data name="Options_Tracker_Appearance_Label_Theme" xml:space="preserve">
-    <value>Theme:</value>
+    <value>Thème:</value>
   </data>
   <data name="Options_Tracker_Appearance_Label_Accent" xml:space="preserve">
     <value>Accent:</value>
   </data>
   <data name="Options_Tracker_Appearance_Label_ClassIcons" xml:space="preserve">
-    <value>Class Icons:</value>
+    <value>Icones de classe:</value>
   </data>
   <data name="Options_Tracker_Appearance_Label_CardTheme" xml:space="preserve">
-    <value>Card theme:</value>
+    <value>Thème des cartes:</value>
   </data>
   <data name="Options_Tracker_Appearance_Label_DeckLayout" xml:space="preserve">
-    <value>Deck layout:</value>
+    <value>Layout du deck:</value>
   </data>
   <data name="Options_Tracker_Appearance_CheckBox_RarityFrames" xml:space="preserve">
-    <value>Rarity-colored card frames</value>
+    <value>Cartes colorées selon la rareté</value>
   </data>
   <data name="Options_Tracker_Appearance_CheckBox_RarityGems" xml:space="preserve">
-    <value>Rarity-colored card gems</value>
+    <value>Gemmes colorées selon la rareté</value>
   </data>
   <data name="Options_Tracker_Appearance_CheckBox_RedGreenStats" xml:space="preserve">
-    <value>Red/green text color in stats summary</value>
+    <value>Couleur du texte rouge/vert dans le résumé des stats</value>
   </data>
   <data name="Options_Tracker_Appearance_CheckBox_Metro" xml:space="preserve">
-    <value>Use metro animations</value>
+    <value>Utiliser les animations metro</value>
   </data>
   <data name="Options_Tracker_Backups_Button_Restore" xml:space="preserve">
-    <value>Restore selected</value>
+    <value>Restaure la sélection</value>
   </data>
   <data name="Options_Tracker_Backups_Button_Create" xml:space="preserve">
-    <value>Create new</value>
+    <value>Créer nouveau</value>
   </data>
   <data name="Options_Tracker_Backups_Button_Delete" xml:space="preserve">
-    <value>Delete selected</value>
+    <value>Supprimer selectionné</value>
   </data>
   <data name="Options_Tracker_Backups_Text_Description" xml:space="preserve">
     <value>Backups are created automatically on the first start of each day. They contain decks, games and the config. If there are more than 7 (autogenerated) backups, the oldest one(s) are deleted automatically, leaving you with at least the past week.</value>
   </data>
   <data name="Options_Tracker_Backups_Button_BackupDir" xml:space="preserve">
-    <value>Show Backup Directory</value>
+    <value>Voir le répertoire de backup</value>
   </data>
   <data name="Options_Tracker_Exporting_Label_Speed" xml:space="preserve">
-    <value>Speed:</value>
+    <value>Vitesse:</value>
   </data>
   <data name="Options_Tracker_Exporting_Label_Wait" xml:space="preserve">
-    <value>Wait</value>
+    <value>Patientez</value>
   </data>
   <data name="Options_Tracker_Exporting_Label_Wait2" xml:space="preserve">
-    <value>seconds before starting</value>
+    <value>secondes avant le démarrage</value>
   </data>
   <data name="Options_Tracker_Exporting_CheckBox_Golden" xml:space="preserve">
-    <value>Prioritize golden cards</value>
+    <value>Priorité sur les cartes dorées</value>
   </data>
   <data name="Options_Tracker_Exporting_CheckBox_DeckName" xml:space="preserve">
-    <value>Set deck name</value>
+    <value>Définir le nom du deck</value>
   </data>
   <data name="Options_Tracker_Exporting_CheckBox_Version" xml:space="preserve">
-    <value>Include version number in name</value>
+    <value>Ajouter le numéro de version dans le nom</value>
   </data>
   <data name="Options_Tracker_Exporting_CheckBox_ClearCards" xml:space="preserve">
-    <value>Auto clear cards</value>
+    <value>Nettoyage auto des cartes</value>
   </data>
   <data name="Options_Tracker_Exporting_CheckBox_ClearFilters" xml:space="preserve">
-    <value>Auto clear filters</value>
+    <value>Nettoyage auto des filtres</value>
   </data>
   <data name="Options_Tracker_Exporting_CheckBox_ClearSearchbox" xml:space="preserve">
     <value>Force clear searchbox between cards</value>
   </data>
   <data name="Options_Tracker_Exporting_CheckBox_Clipbard" xml:space="preserve">
-    <value>Paste names from clipboard</value>
+    <value>Colle les noms depuis le presse-papier</value>
   </data>
   <data name="Options_Tracker_Exporting_CheckBox_Dialog" xml:space="preserve">
     <value>Show dialog before exporting</value>
   </data>
   <data name="Options_Tracker_General_Label_Alerts" xml:space="preserve">
-    <value>Alerts</value>
+    <value>Alertes</value>
   </data>
   <data name="Options_Tracker_General_CheckBox_Flash" xml:space="preserve">
     <value>Flash Hearthstone on your turn start</value>
@@ -2629,39 +2629,39 @@
     <value>Deck sorting: Arena</value>
   </data>
   <data name="SortFilter_Label_Filter" xml:space="preserve">
-    <value>Filter</value>
+    <value>Filtrer</value>
   </data>
   <data name="SortFilter_Filter_Button_Up" xml:space="preserve">
-    <value>Up</value>
+    <value>Monter</value>
   </data>
   <data name="SortFilter_Filter_Button_Down" xml:space="preserve">
-    <value>Down</value>
+    <value>Descendre</value>
   </data>
   <data name="SortFilter_Filter_Button_Top" xml:space="preserve">
-    <value>Top</value>
+    <value>Haut</value>
   </data>
   <data name="SortFilter_Filter_Button_Bottom" xml:space="preserve">
-    <value>Bottom</value>
+    <value>Bas</value>
   </data>
   <data name="SortFilter_Filter_Button_Delete" xml:space="preserve">
     <value>Delete Selected</value>
   </data>
   <data name="SortFilter_Filter_Text_NewTag_Watermark" xml:space="preserve">
-    <value>New tag</value>
+    <value>Nouveau tag</value>
   </data>
   <data name="SortFilter_Filter_Button_Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Ajouter</value>
   </data>
   <data name="SortFilter_Filter_Label_FilterOperation" xml:space="preserve">
     <value>Filter operation:</value>
   </data>
   <data name="SortFilter_Filter_SwitchLabel_And" xml:space="preserve">
-    <value>And</value>
+    <value>Et</value>
   </data>
   <data name="SortFilter_Filter_SwitchLabel_Or" xml:space="preserve">
-    <value>Or</value>
+    <value>Ou</value>
   </data>
   <data name="SortFilter_Filter_CheckBoxIncludeStandard" xml:space="preserve">
-    <value>Include 'Standard' decks in 'Wild'</value>
+    <value>Inclure les decks 'Standard' en 'Libre'</value>
   </data>
 </root>
