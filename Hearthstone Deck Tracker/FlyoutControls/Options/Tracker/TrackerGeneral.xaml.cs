@@ -35,11 +35,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
 			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
-			CheckboxAutoSelectDeck.IsChecked = Config.Instance.AutoSelectDetectedDeck;
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
 			CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
-			CheckboxSpectatorUseNoDeck.IsChecked = Config.Instance.SpectatorUseNoDeck;
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			TextboxTimerAlert.Text = Config.Instance.TimerAlertSeconds.ToString();
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)");
@@ -59,22 +57,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(Helper.LanguageDict.Values.Contains(Config.Instance.SelectedLanguage))
 				ComboboxLanguages.SelectedItem = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key;
 			_initialized = true;
-		}
-
-		private void CheckboxAutoSelectDeck_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AutoSelectDetectedDeck = true;
-			Config.Save();
-		}
-
-		private void CheckboxAutoSelectDeck_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AutoSelectDetectedDeck = false;
-			Config.Save();
 		}
 
 		private void CheckboxManaCurveMyDecks_Checked(object sender, RoutedEventArgs e)
@@ -227,22 +209,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AutoUseDeck = false;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
-		}
-
-		private void CheckboxSpectatorUseNoDeck_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SpectatorUseNoDeck = true;
-			Config.Save();
-		}
-
-		private void CheckboxSpectatorUseNoDeck_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.SpectatorUseNoDeck = false;
-			Config.Save();
 		}
 
 		private void CheckBoxClassCardsFirst_Checked(object sender, RoutedEventArgs e) => Core.MainWindow.SortClassCardsFirst(true);

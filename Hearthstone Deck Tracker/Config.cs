@@ -1,10 +1,9 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Utility;
@@ -134,9 +133,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool DeckPickerCaps = true;
-
-		[DefaultValue(true)]
-		public bool AutoSelectDetectedDeck = true;
 
 		[DefaultValue("Arena {Date dd-MM hh:mm}")]
 		public string ArenaDeckNameTemplate = "Arena {Date dd-MM hh:mm}";
@@ -285,6 +281,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool DiscardZeroTurnGame = false;
 
+		[DefaultValue(true)]
+		public bool DisplayHsReplayNote = true;
+
 		[DefaultValue(GameMode.All)]
 		public GameMode DisplayedMode = GameMode.All;
 
@@ -388,10 +387,10 @@ namespace Hearthstone_Deck_Tracker
 		public bool FlashHsOnTurnStart = true;
 
 		[DefaultValue(false)]
-		public bool ForceMouseHook = false;
+		public bool ForceLocalReplayViewer = false;
 
 		[DefaultValue(false)]
-		public bool GameResultNotificationsUnexpectedOnly = false;
+		public bool ForceMouseHook = false;
 
 		[DefaultValue(0.075)]
 		public double GoldProgessX = 0.76;
@@ -527,6 +526,33 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool HighlightLastDrawn = true;
+
+		[DefaultValue(true)]
+		public bool HsReplayAutoUpload = true;
+
+		[DefaultValue(true)]
+		public bool HsReplayUploadRanked = true;
+
+		[DefaultValue(true)]
+		public bool HsReplayUploadCasual = true;
+
+		[DefaultValue(true)]
+		public bool HsReplayUploadArena = true;
+
+		[DefaultValue(true)]
+		public bool HsReplayUploadBrawl = true;
+
+		[DefaultValue(true)]
+		public bool HsReplayUploadFriendly = true;
+
+		[DefaultValue(true)]
+		public bool HsReplayUploadPractice = true;
+
+		[DefaultValue(true)]
+		public bool HsReplayUploadSpectator = true;
+
+		[DefaultValue("00000000-0000-0000-0000-000000000000")]
+		public string Id = Guid.Empty.ToString();
 
 		[DefaultValue(-1)]
 		public int IgnoreNewsId = -1;
@@ -751,9 +777,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(1250)]
 		public int ReplayWindowWidth = 1250;
 
-		[DefaultValue(false)]
-		public bool ReselectLastDeckUsed = false;
-
 		[DefaultValue(15)]
 		public double SecretsLeft = 15;
 
@@ -860,13 +883,13 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowWinRateAgainst = false;
 
 		[DefaultValue(true)]
+		public bool ShowReplayShareToast = true;
+
+		[DefaultValue(true)]
 		public bool SortDecksByClass = true;
 
 		[DefaultValue(false)]
 		public bool SortDecksByClassArena = false;
-
-		[DefaultValue(false)]
-		public bool SpectatorUseNoDeck = false;
 
 		[DefaultValue(false)]
 		public bool StartMinimized = false;
@@ -1204,6 +1227,11 @@ namespace Hearthstone_Deck_Tracker
 				}
 			}
 #endif
+			if(Instance.Id == Guid.Empty.ToString())
+			{
+				Instance.Id = Guid.NewGuid().ToString();
+				Save();
+			}
 		}
 
 		public void ResetAll()

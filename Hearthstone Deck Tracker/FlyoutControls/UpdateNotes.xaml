@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.UpdateNotes"
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.UpdateNotes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -60,7 +60,8 @@
             <DockPanel>
                 <GroupBox DockPanel.Dock="Bottom" Header="Continue...">
                     <StackPanel Margin="5">
-                        <TextBlock Text="If you like my work please consider helping me justify the time I put into making this and support me by clicking one of the button belows or the little heart the title bar. Thank you!" Margin="10,5,10,10" FontWeight="SemiBold" TextWrapping="Wrap"/>
+                        <TextBlock Text="If you like my work please consider donating on Patreon or PayPal, using the buttons below. Thank you!" 
+                                   Margin="10,5,10,10" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Name="ButtonPatreon" Width="120" Height="30" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonPatreon_Click">
                                 <Button.Content>
@@ -82,8 +83,9 @@
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
-                            <Button Name="ButtonShowGithub" Content="Show Releases on GitHub" Margin="10,0,10,0" Width="160" Height="30" Click="ButtonShowGithub_OnClick" Style="{DynamicResource SquareButtonStyle}"/>
-                            <Button Name="ButtonClose" Content="close" Width="160" Height="30" Style="{DynamicResource SquareButtonStyle}" Click="ButtonClose_Click"/>
+                            <Button Name="ButtonClose" Width="160" Height="30"  Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Click="ButtonClose_Click">
+                                <TextBlock Text="Close"/>
+                            </Button>
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>

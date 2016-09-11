@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,8 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.HearthStats.API;
+using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
@@ -19,7 +21,9 @@ using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Toasts;
 using Hearthstone_Deck_Tracker.Windows;
+using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
@@ -61,6 +65,14 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Casual && Config.Instance.RecordCasual
 											 || _game.CurrentGameMode == Spectator && Config.Instance.RecordSpectator;
 
+		public bool UploadCurrentGameMode => _game.CurrentGameMode == Practice && Config.Instance.HsReplayUploadPractice
+											 || _game.CurrentGameMode == Arena && Config.Instance.HsReplayUploadArena
+											 || _game.CurrentGameMode == Brawl && Config.Instance.HsReplayUploadBrawl
+											 || _game.CurrentGameMode == Ranked && Config.Instance.HsReplayUploadRanked
+											 || _game.CurrentGameMode == Friendly && Config.Instance.HsReplayUploadFriendly
+											 || _game.CurrentGameMode == Casual && Config.Instance.HsReplayUploadCasual
+											 || _game.CurrentGameMode == Spectator && Config.Instance.HsReplayUploadSpectator;
+
 		public void HandleInMenu()
 		{
 			if(_game.IsInMenu)
@@ -76,18 +88,10 @@ namespace Hearthstone_Deck_Tracker
 			DeckManager.ResetIgnoredDeckId();
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 
-			if(_game.CurrentGameStats != null)
-			{
-				if(Config.Instance.RecordReplays && _game.Entities.Count > 0 && !_game.SavedReplay
-				   && _game.CurrentGameStats.ReplayFile == null && RecordCurrentGameMode)
-					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(_game.PowerLog);
-
-				if(_game.StoredGameStats != null)
-					_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
-
-			}
-
 			SaveAndUpdateStats();
+
+			if(Config.Instance.AutoArchiveArenaDecks && (DeckList.Instance.ActiveDeck?.IsArenaRunCompleted ?? false))
+				Core.MainWindow.ArchiveDeck(DeckList.Instance.ActiveDeck, true);
 
 			_game.ResetStoredGameState();
 
@@ -118,6 +122,64 @@ namespace Hearthstone_Deck_Tracker
 				Core.Reset().Forget();
 			GameEvents.OnInMenu.Execute();
 		}
+
+		private bool _savedReplay;
+		private async Task SaveReplays()
+		{
+			if(!_savedReplay && _game.CurrentGameStats != null)
+			{
+				_savedReplay = true;
+				await LogIsComplete();
+				var powerLog = new List<string>();
+				foreach(var stored in _game.StoredPowerLogs.Where(x => x.Item1 == _game.MetaData.ServerInfo.GameHandle))
+					powerLog.AddRange(stored.Item2);
+				powerLog.AddRange(_game.PowerLog);
+
+				var createGameCount = 0;
+				powerLog = powerLog.TakeWhile(x => !(x.Contains("CREATE_GAME") && createGameCount++ == 1)).ToList();
+
+				if(Config.Instance.RecordReplays && RecordCurrentGameMode && _game.Entities.Count > 0 && !_game.SavedReplay
+					&& _game.CurrentGameStats.ReplayFile == null)
+					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(powerLog);
+
+				if(Config.Instance.HsReplayAutoUpload && UploadCurrentGameMode)
+				{
+					var log = powerLog.ToArray();
+					var validationResult = LogValidator.Validate(log);
+					if(validationResult.IsValid)
+						LogUploader.Upload(log, (GameMetaData)_game.MetaData.Clone(), _game.CurrentGameStats).Forget();
+					else 
+					{
+						Log.Error("Invalid log: " + validationResult.Reason);
+						Influx.OnEndOfGameUploadError(validationResult.Reason);
+					}
+				}
+			}
+		}
+
+		private async Task LogIsComplete()
+		{
+			if(LogContainsGoldRewardState || _game.CurrentGameMode == Practice && LogContainsStateComplete)
+				return;
+			Log.Info("GOLD_REWARD_STATE not found");
+			await Task.Delay(500);
+			if(LogContainsStateComplete || _game.IsInMenu)
+				return;
+			Log.Info("STATE COMPLETE not found");
+			for(var i = 0; i < 5; i++)
+			{
+				await Task.Delay(1000);
+				if(LogContainsStateComplete || _game.IsInMenu)
+					break;
+				Log.Info($"Waiting for STATE COMPLETE... ({i})");
+			}
+		}
+
+		private bool LogContainsGoldRewardState
+			=> _game?.PowerLog?.Count(x => x.Contains("tag=GOLD_REWARD_STATE value=1")) == 2;
+
+		private bool LogContainsStateComplete
+			=> _game?.PowerLog?.Any(x => x.Contains("tag=STATE value=COMPLETE")) ?? false;
 
 		public void HandleConcede()
 		{
@@ -380,8 +442,11 @@ namespace Hearthstone_Deck_Tracker
 			_arenaRewardDialog = null;
 			_showedNoteDialog = false;
 			_game.IsInMenu = false;
+			_savedReplay = false;
 			_game.Reset();
 			_game.CacheMatchInfo();
+			_game.CacheGameType();
+			_game.CacheSpectator();
 			_game.MetaData.ServerInfo = Reflection.GetServerInfo();
 			if(!string.IsNullOrEmpty(_game.MetaData.ServerInfo?.Address))
 			{
@@ -396,15 +461,9 @@ namespace Hearthstone_Deck_Tracker
 
 			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 
-			if(Config.Instance.SpectatorUseNoDeck && _game.CurrentGameMode == Spectator)
+			if(_game.CurrentGameMode == Spectator)
 			{
-				Log.Info("SpectatorUseNoDeck is enabled");
-				if(selectedDeck != null)
-				{
-					Config.Instance.ReselectLastDeckUsed = true;
-					Log.Info("ReselectLastUsedDeck set to true");
-					Config.Save();
-				}
+				Log.Info("Spectating, using no-deck mode");
 				Core.MainWindow.SelectDeck(null, true);
 			}
 			else if(selectedDeck != null)
@@ -439,17 +498,9 @@ namespace Hearthstone_Deck_Tracker
 				DeckManager.ResetAutoSelectCount();
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
-				if(_game.CurrentGameMode == Spectator && !Config.Instance.RecordSpectator)
+				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
 				{
-					if(Config.Instance.ReselectLastDeckUsed && DeckList.Instance.ActiveDeck == null)
-					{
-						Core.MainWindow.SelectLastUsedDeck();
-						Config.Instance.ReselectLastDeckUsed = false;
-						Log.Info("ReselectLastUsedDeck set to false");
-						Config.Save();
-					}
-					Log.Info("Game is in Spectator mode, discarded. (Record Spectator disabled)");
-					_assignedDeck = null;
+					Log.Info("Game was spectator mode without a game result. Probably exited spectator mode early.");
 					return;
 				}
 				var player = _game.Entities.FirstOrDefault(e => e.Value?.IsPlayer ?? false).Value;
@@ -484,11 +535,20 @@ namespace Hearthstone_Deck_Tracker
 					_game.CurrentGameStats.OpponentLegendRank = wild ? _game.MatchInfo.OpposingPlayer.WildLegendRank : _game.MatchInfo.OpposingPlayer.StandardLegendRank;
 					_game.CurrentGameStats.Stars = wild ? _game.MatchInfo.LocalPlayer.WildStars : _game.MatchInfo.LocalPlayer.StandardStars;
 				}
+				else if(_game.CurrentGameMode == Arena)
+				{
+					_game.CurrentGameStats.ArenaWins = DeckImporter.ArenaInfoCache?.Wins ?? 0;
+					_game.CurrentGameStats.ArenaLosses = DeckImporter.ArenaInfoCache?.Losses ?? 0;
+				}
+				_game.CurrentGameStats.GameType = _game.CurrentGameType;
 				_game.CurrentGameStats.ServerInfo = _game.MetaData.ServerInfo;
 				_game.CurrentGameStats.PlayerCardbackId = _game.MatchInfo?.LocalPlayer.CardBackId ?? 0;
 				_game.CurrentGameStats.OpponentCardbackId = _game.MatchInfo?.OpposingPlayer.CardBackId ?? 0;
 				_game.CurrentGameStats.FriendlyPlayerId = _game.MatchInfo?.LocalPlayer.Id ?? 0;
 				_game.CurrentGameStats.ScenarioId = _game.MatchInfo?.MissionId ?? 0;
+				_game.CurrentGameStats.BrawlSeasonId = _game.MatchInfo?.BrawlSeasonId ?? 0;
+				_game.CurrentGameStats.RankedSeasonId = _game.MatchInfo?.RankedSeasonId ?? 0;
+				_game.CurrentGameStats.HsDeckId = DeckList.Instance.ActiveDeckVersion?.HsId ?? 0;
 				_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.Where(x => x.Collectible).ToList());
 				_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList.Where(x => !x.IsCreated).ToList());
 				_game.CurrentGameStats.GameEnd();
@@ -554,8 +614,7 @@ namespace Hearthstone_Deck_Tracker
 					_lastGame = _game.CurrentGameStats;
 					selectedDeck.DeckStats.AddGameResult(_lastGame);
 
-					var isArenaRunCompleted = selectedDeck.IsArenaRunCompleted.HasValue && selectedDeck.IsArenaRunCompleted.Value;
-					if(Config.Instance.ArenaRewardDialog && isArenaRunCompleted)
+					if(Config.Instance.ArenaRewardDialog && (selectedDeck.IsArenaRunCompleted ?? false))
 						_arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
 
 					if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
@@ -573,19 +632,7 @@ namespace Hearthstone_Deck_Tracker
 						Core.MainWindow.ArchiveDeck(_assignedDeck, false);
 					}
 
-					if (Config.Instance.AutoArchiveArenaDecks && isArenaRunCompleted)
-						Core.MainWindow.ArchiveDeck(selectedDeck, true);
-
-					if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
-					{
-						Log.Info("Waiting for game mode to be saved to game...");
-						await GameModeSaved(15);
-						Log.Info("Game mode was saved, continuing.");
-						if(_game.CurrentGameMode == Arena)
-							HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
-						else if(_game.CurrentGameMode != Brawl)
-							HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
-					}
+					UploadHearthStatsAsync(selectedDeck).Forget();
 					_lastGame = null;
 				}
 				else
@@ -602,17 +649,34 @@ namespace Hearthstone_Deck_Tracker
 					_assignedDeck = null;
 				}
 
-				if(Config.Instance.ReselectLastDeckUsed && selectedDeck == null)
+				if(_game.StoredGameStats != null)
+					_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
+
+				await SaveReplays();
+
+				if(Config.Instance.ShowGameResultNotifications && RecordCurrentGameMode)
 				{
-					Core.MainWindow.SelectLastUsedDeck();
-					Config.Instance.ReselectLastDeckUsed = false;
-					Log.Info("ReselectLastUsedDeck set to false");
-					Config.Save();
+					var deckName = _assignedDeck == null ? "No deck - " + _game.CurrentGameStats.PlayerHero : _assignedDeck.NameAndVersion;
+					ToastManager.ShowGameResultToast(deckName, _game.CurrentGameStats);
 				}
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
+			}
+		}
+
+		private async Task UploadHearthStatsAsync(Deck selectedDeck)
+		{
+			if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
+			{
+				Log.Info("Waiting for game mode to be saved to game...");
+				await GameModeSaved(15);
+				Log.Info("Game mode was saved, continuing.");
+				if(_game.CurrentGameMode == Arena)
+					HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
+				else if(_game.CurrentGameMode != Brawl)
+					HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
 			}
 		}
 #pragma warning restore 4014
@@ -658,11 +722,6 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(RecordCurrentGameMode)
 			{
-				if(Config.Instance.ShowGameResultNotifications && !Config.Instance.GameResultNotificationsUnexpectedOnly)
-				{
-					var deckName = _assignedDeck == null ? "No deck - " + _game.CurrentGameStats.PlayerHero : _assignedDeck.NameAndVersion;
-					new GameResultNotificationWindow(deckName, _game.CurrentGameStats).Show();
-				}
 				if(Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 				{
 					_showedNoteDialog = true;
@@ -703,6 +762,8 @@ namespace Hearthstone_Deck_Tracker
 					Log.Info("Saving DeckStats");
 					DeckStatsList.Save();
 				}
+				LastGames.Instance.Add(_game.CurrentGameStats);
+				LastGames.Save();
 			}
 			else if(_assignedDeck != null && _assignedDeck.DeckStats.Games.Contains(_game.CurrentGameStats))
 			{

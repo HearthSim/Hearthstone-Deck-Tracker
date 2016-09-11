@@ -25,10 +25,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if((DateTime.Now - logLine.Time).TotalSeconds > 5 || !game.IsInMenu || logLine.Time <= _lastQueueTime)
 					return;
 				_lastQueueTime = logLine.Time;
-				if(!Config.Instance.AutoSelectDetectedDeck)
+				if(!Config.Instance.AutoDeckDetection)
 					return;
-				if(new[] {TOURNAMENT, FRIENDLY, ADVENTURE}.Contains(game.CurrentMode))
-					AutoSelectDeckById(true);
+				if(new[] {TOURNAMENT, FRIENDLY, ADVENTURE, TAVERN_BRAWL}.Contains(game.CurrentMode))
+					AutoSelectDeckById();
 				else if(game.CurrentMode == DRAFT)
 					AutoSelectArenaDeck();
 			}
@@ -49,19 +49,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			Core.MainWindow.SelectDeck(selectedDeck, true);
 		}
 
-		private static void AutoSelectDeckById(bool import)
+		private static void AutoSelectDeckById()
 		{
 			var selectedDeckId = Reflection.GetSelectedDeckInMenu();
 			if(selectedDeckId <= 0)
+			{
+				Log.Info("No selected deck found, using no-deck mode");
+				Core.MainWindow.SelectDeck(null, true);
 				return;
+			}
+			DeckManager.AutoImportConstructed(false);
 			var selectedDeck = DeckList.Instance.Decks.FirstOrDefault(x => x.HsId == selectedDeckId);
 			if(selectedDeck == null)
 			{
-				if(import && DeckManager.AutoImportConstructed(true))
-				{
-					AutoSelectDeckById(false);
-					return;
-				}
 				Log.Warn($"No deck with id={selectedDeckId} found");
 				return;
 			}
@@ -75,22 +75,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					selectedDeck.SelectVersion(version);
 					Log.Info("Switching to version: " + version.Version.ShortVersionString);
 				}
-				else
-				{
-					if(import && DeckManager.AutoImportConstructed(true))
-					{
-						AutoSelectDeckById(false);
-						return;
-					}
-					Log.Warn("Could not find deck with matching cards.");
-				}
 			}
 			else if(Equals(selectedDeck, DeckList.Instance.ActiveDeck))
 			{
 				Log.Info("Already using the correct deck");
 				return;
 			}
-			Log.Info($"Switching to selected deck: {selectedDeck.Name} + {selectedDeck.Version.ShortVersionString}");
 			Core.MainWindow.SelectDeck(selectedDeck, true);
 		}
 	}

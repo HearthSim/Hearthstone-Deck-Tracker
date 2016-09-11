@@ -11,9 +11,12 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.HsReplay.Utility;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -59,6 +62,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			PlayerHero = playerHero;
 			StartTime = DateTime.Now;
 			GameId = Guid.NewGuid();
+			HearthstoneBuild = Helper.GetHearthstoneBuild();
 		}
 
 		//playerhero does not get loaded from xml for some reason
@@ -198,6 +202,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int OpponentRank { get; set; }
 
+		public int? HearthstoneBuild { get; set; }
+		
 		public int PlayerCardbackId { get; set; }
 
 		public int OpponentCardbackId { get; set; }
@@ -207,6 +213,16 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int ScenarioId { get; set; }
 
 		public GameServerInfo ServerInfo { get; set; }
+
+		public GameType GameType { get; set; }
+
+		public int BrawlSeasonId { get; set; }
+
+		public int RankedSeasonId { get; set; }
+
+		public int ArenaWins { get; set; }
+
+		public int ArenaLosses { get; set; }
 
 		public Region Region
 		{
@@ -371,6 +387,12 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public bool HasHearthStatsDeckId => !string.IsNullOrEmpty(HearthStatsDeckId) && int.Parse(HearthStatsDeckId) > 0;
 
+		public HsReplayInfo HsReplay { get; set; } = new HsReplayInfo();
+
+		public string ReplayState => !HasReplayFile ? "N/A" : HsReplay.Uploaded ? "Uploaded" : HsReplay.Unsupported ? "Unsupported" : "-";
+
+		public void UpdateReplayState() => OnPropertyChanged(nameof(ReplayState));
+
 		public bool BelongsToDeckVerion(Deck deck) => PlayerDeckVersion == deck.Version
 													  || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId)
 													  || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId == deck.HearthStatsId)
@@ -390,6 +412,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 				ReplayFile = ReplayFile,
 				WasConceded = WasConceded,
 				PlayerDeckVersion = PlayerDeckVersion,
+				HearthstoneBuild = HearthstoneBuild,
+				HsReplay = HsReplay,
 				IsClone = true
 			};
 			return newGame;
@@ -416,7 +440,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Log.Info("Current Game ended after " + Turns + " turns");
 		}
 
-		public override string ToString() => Result + " vs " + OpponentHero + ", " + StartTime;
+		public override string ToString() => $"[{GameMode}] {Result} VS. {OpponentName} ({OpponentHero}), {StartTime.ToString("g")}";
 
 		public void ResetHearthstatsIds()
 		{
@@ -424,6 +448,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 			HearthStatsDeckVersionId = null;
 			HearthStatsId = null;
 		}
+
+		public long HsDeckId { get; set; }
 
 		[XmlArray(ElementName = "PlayerCards")]
 		[XmlArrayItem(ElementName = "Card")]
@@ -489,6 +515,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeFriendlyPlayerId() => FriendlyPlayerId > 0;
 		public bool ShouldSerializeScenarioId() => ScenarioId > 0;
 		public bool ShouldSerializeServerInfo() => ServerInfo != null;
+		public bool ShouldSerializeHsReplay() => HsReplay.UploadTries > 0 || HsReplay.Uploaded;
+		public bool ShouldSerializeHsDeckId() => HsDeckId > 0;
+		public bool ShouldSerializeGameType() => GameType != GameType.GT_UNKNOWN;
+		public bool ShouldSerializeBrawlSeasonId() => BrawlSeasonId > 0;
+		public bool ShouldSerializeRankedSeasonId() => RankedSeasonId > 0;
+		public bool ShouldSerializeArenaWins() => ArenaWins > 0;
+		public bool ShouldSerializeArenaLosses() => ArenaLosses > 0;
 
 		#region Obsolete
 
@@ -513,6 +546,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			try
 			{
+				LastGames.Instance.Remove(GameId);
 				if(!File.Exists(GameFile))
 					return;
 				File.Delete(GameFile);
