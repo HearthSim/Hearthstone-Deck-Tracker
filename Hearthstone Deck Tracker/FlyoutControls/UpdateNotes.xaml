@@ -6,7 +6,7 @@
              xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
              xmlns:xaml="clr-namespace:Hearthstone_Deck_Tracker.Utility.Markdown.Xaml"
              xmlns:information="clr-namespace:Hearthstone_Deck_Tracker.Controls.Information"
-             mc:Ignorable="d" Loaded="UpdateNotes_OnLoaded"
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <Style TargetType="FlowDocument" x:Key="DocumentStyle">
@@ -88,17 +88,8 @@
                     </StackPanel>
                 </GroupBox>
                 <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Margin="5">
-                    <ScrollViewer Name="ScrollViewerNotes" ScrollChanged="ScrollViewer_OnScrollChanged">
-                        <ItemsControl ItemsSource="{Binding ReleaseNotes, RelativeSource={RelativeSource AncestorType=flyoutControls:UpdateNotes}}" Margin="-5">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <GroupBox Header="{Binding Name}">
-                                        <FlowDocumentScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" PreviewMouseWheel="FlowDocumentScrollViewer_OnPreviewMouseWheel" Margin="5" Document="{Binding Body, Converter={StaticResource TextToFlowDocumentConverter}}"/>
-                                    </GroupBox>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                    <FlowDocumentScrollViewer Document="{Binding ReleaseNotes, RelativeSource={RelativeSource AncestorType=flyoutControls:UpdateNotes}, Converter={StaticResource TextToFlowDocumentConverter}}"
+                                              Margin="5" />
                 </Border>
             </DockPanel>
         </TabItem>

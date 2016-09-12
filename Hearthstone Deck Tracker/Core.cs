@@ -121,7 +121,6 @@ namespace Hearthstone_Deck_Tracker
 #endif
 				MainWindow.FlyoutUpdateNotes.IsOpen = true;
 				MainWindow.UpdateNotesControl.SetHighlight(ConfigManager.PreviousVersion);
-				MainWindow.UpdateNotesControl.LoadUpdateNotes();
 			}
 			NetDeck.CheckForChromeExtention();
 			DataIssueResolver.Run();
