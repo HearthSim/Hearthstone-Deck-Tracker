@@ -721,7 +721,7 @@
     <value>显示场攻计数器</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_CenterVertically" xml:space="preserve">
-    <value>卡组水平居中</value>
+    <value>卡组垂直居中</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_HighlightHand" xml:space="preserve">
     <value>绿色标记手牌</value>
@@ -730,7 +730,7 @@
     <value>橙色标记抽牌</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_RemoveZero" xml:space="preserve">
-    <value>如果卡牌用过，不显示在卡组中</value>
+    <value>如果卡牌用光，不显示在卡组中</value>
   </data>
   <data name="Options_Overlay_Player_CheckBox_IncludeCreated" xml:space="preserve">
     <value>包括手牌创建的卡牌 (例如硬币)</value>
