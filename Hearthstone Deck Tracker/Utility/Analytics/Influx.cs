@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				return;
 			var point = new InfluxPointBuilder("hdt_app_start")
 				.Tag("version", version.ToVersionString()).Tag("login_type", loginType).Tag("new", isNew)
-				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload).Tag("id", Config.Instance.Id)
+				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload).Field("id", Config.Instance.Id)
 				.Field("startup_duration", startupDuration);
 #if(SQUIRREL)
 			point.Tag("squirrel", true);
