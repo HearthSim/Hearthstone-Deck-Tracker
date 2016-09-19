@@ -82,23 +82,23 @@ namespace Hearthstone_Deck_Tracker
 		public void UpdateOpponentLayout()
 		{
 			StackPanelMain.Children.Clear();
-			foreach(var item in Config.Instance.PanelOrderOpponent)
+			foreach(var item in Config.Instance.DeckPanelOrderOpponent)
 			{
 				switch(item)
 				{
-					case "Cards":
+					case DeckPanel.Cards:
 						StackPanelMain.Children.Add(ViewBoxOpponent);
 						break;
-					case "Draw Chances":
+					case DeckPanel.DrawChances:
 						StackPanelMain.Children.Add(CanvasOpponentChance);
 						break;
-					case "Card Counter":
+					case DeckPanel.CardCounter:
 						StackPanelMain.Children.Add(CanvasOpponentCount);
 						break;
-					case "Fatigue Counter":
+					case DeckPanel.Fatigue:
 						StackPanelMain.Children.Add(LblOpponentFatigue);
 						break;
-					case "Win Rate":
+					case DeckPanel.Winrate:
 						StackPanelMain.Children.Add(LblWinRateAgainst);
 						break;
 				}

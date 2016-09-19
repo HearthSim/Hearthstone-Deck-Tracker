@@ -2,6 +2,7 @@
 
 using System;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Enums;
 using static Hearthstone_Deck_Tracker.Enums.SortDirection;
 
 #endregion
@@ -16,13 +17,12 @@ namespace Hearthstone_Deck_Tracker
 		private readonly bool _initialized;
 		private readonly bool _isPlayerList;
 		private readonly Action<bool> _setConfigValue;
-		public readonly string ItemName;
+		public DeckPanel Panel { get; }
 
-		public ElementSorterItem(string name, bool isChecked, Action<bool> setConfigValue, bool isPlayerList)
+		public ElementSorterItem(DeckPanel panel, bool isChecked, Action<bool> setConfigValue, bool isPlayerList)
 		{
 			InitializeComponent();
-			CheckBox.Content = name;
-			ItemName = name;
+			Panel = panel;
 			CheckBox.IsChecked = isChecked;
 			_setConfigValue = setConfigValue;
 			_isPlayerList = isPlayerList;
