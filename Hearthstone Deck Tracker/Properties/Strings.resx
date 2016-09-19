@@ -944,7 +944,8 @@
   </data>
   <data name="Options_Tracker_Importing_Button_Edit" xml:space="preserve">
     <value>Auto save deck on import</value>
-  <comment>Auto save deck on import</comment></data>
+    <comment>Auto save deck on import</comment>
+  </data>
   <data name="Options_Tracker_Importing_Label_Web" xml:space="preserve">
     <value>Web</value>
   </data>
@@ -1929,7 +1930,7 @@
   <data name="Enum_ClassColorScheme_Classic" xml:space="preserve">
     <value>Classic</value>
   </data>
-  <data name="Enum_ClassColorScheme_HearthStats" xml:space="preserve">
+  <data name="Enum_ClassColorScheme_Alternative" xml:space="preserve">
     <value>Alternative</value>
   </data>
   <data name="Enum_DeckLayout_Layout1" xml:space="preserve">
