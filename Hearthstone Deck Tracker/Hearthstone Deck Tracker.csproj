@@ -266,6 +266,7 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Enums\DeckPanel.cs" />
     <Compile Include="Enums\LocDescriptionAttribute.cs" />
     <Compile Include="FlyoutControls\HsReplayInfo.xaml.cs">
       <DependentUpon>HsReplayInfo.xaml</DependentUpon>

@@ -2664,4 +2664,25 @@
   <data name="SortFilter_Filter_CheckBoxIncludeStandard" xml:space="preserve">
     <value>Include 'Standard' decks in 'Wild'</value>
   </data>
+  <data name="Enum_DeckPanel_Winrate" xml:space="preserve">
+    <value>Win rate</value>
+  </data>
+  <data name="Enum_DeckPanel_Cards" xml:space="preserve">
+    <value>Cards</value>
+  </data>
+  <data name="Enum_DeckPanel_CardCounter" xml:space="preserve">
+    <value>Card counter</value>
+  </data>
+  <data name="Enum_DeckPanel_DrawChances" xml:space="preserve">
+    <value>Draw chances</value>
+  </data>
+  <data name="Enum_DeckPanel_Fatigue" xml:space="preserve">
+    <value>Fatigue counter</value>
+  </data>
+  <data name="Enum_DeckPanel_DeckTitle" xml:space="preserve">
+    <value>Deck title</value>
+  </data>
+  <data name="Enum_DeckPanel_Wins" xml:space="preserve">
+    <value>Wins</value>
+  </data>
 </root>
