@@ -1479,6 +1479,22 @@ xcopy /Y /Q "$(SolutionDir)CHANGELOG.md" "$(ProjectDir)Resources"</PreBuildEvent
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="GenerateDesignerFiles">
+    <GenerateResource
+        Sources="Properties/Strings.resx"
+        StronglyTypedLanguage="C#"
+        StronglyTypedClassName="Strings"
+        StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties"
+        StronglyTypedFileName="Properties/Strings.Designer.cs"
+        OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources"
+        PublicClass="true"
+        >
+    </GenerateResource>
+    <Delete Files="Hearthstone_Deck_Tracker.Properties.Strings.resources"/>
+  </Target>
+  <Target Name="BeforeBuild">
+   <CallTarget Targets="GenerateDesignerFiles"/>
+  </Target>
   <Target Name="AfterBuild">
     <CallTarget Condition=" '$(Configuration)' == 'Squirrel'" Targets="SquirrelAfterBuild" />
     <CallTarget Condition=" '$(Configuration)' == 'Release'" Targets="ReleaseAfterBuild" />
