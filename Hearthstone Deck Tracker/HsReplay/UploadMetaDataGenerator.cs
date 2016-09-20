@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				friendly.Stars = game.Stars;
 			if(game?.PlayerCards.Sum(x => x.Count) == 30 && game?.PlayerCards.Sum(x => x.Unconfirmed) <= 24)
 			{
-				friendly.DeckList = game.PlayerCards.SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
+				friendly.DeckList = game.PlayerCards.Where(x => x.Id != Database.UnknownCardId).SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
 				if(game.HsDeckId > 0)
 					friendly.DeckId = game.HsDeckId;
 			}
