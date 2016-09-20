@@ -163,4 +163,5 @@ HearthDb/
 HearthMirror/
 
 HSReplay-Api/
-Hearthstone Deck Tracker/Properties/Strings.Designer.cs
+Hearthstone Deck Tracker/Properties/Strings.*
+HDT-Localization/
