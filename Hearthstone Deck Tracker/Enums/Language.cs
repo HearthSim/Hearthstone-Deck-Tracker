@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 
 namespace Hearthstone_Deck_Tracker.Enums
 {
@@ -8,6 +8,10 @@ namespace Hearthstone_Deck_Tracker.Enums
 		enUS,
 		[Description("German")]
 		deDE,
+		[Description("French")]
+		frFR,
+		[Description("Русский")]
+		ruRU,
 		[Description("中文（简体）")]
 		zhCN
 	}
