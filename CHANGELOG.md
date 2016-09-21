@@ -1,13 +1,17 @@
-## __Unreleased__
+## __Release v1.1.0 - 2016-09-21__
 
 __New__:
+- Greatly improved replays! More information after the update notes.
+- HDT is now translated into Chinese and Russian.
+  - You can change the language under `options > tracker > appearance`
+  - Other languages are coming soon! If you want to help with translation, there is a link next to the opion.
 - The (Yogg-Saron) counter `Auto` mode now also works for Arcane Giant.
 
 __Fixes__:
 - Fixed an issue where Competitive Spirit would sometimes incorrectly be greyed out.
 - Fixed an issue where Cat Trick was missing from the secrets list.
 - Fixed an issue where card images were missing occasionally in some cases.
-- Fixed a memory leak.
+- Fixed an issue where HDT would crash during exporting or when opening/closing the friendslist.
 
 __Changes__:
 - Made several further improvemets to auto deck importing.
