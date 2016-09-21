@@ -110,7 +110,7 @@ namespace Hearthstone_Deck_Tracker
 			MainWindow.Show();
 			splashScreenWindow.Close();
 
-			if(Config.Instance.DisplayHsReplayNote)
+			if(Config.Instance.DisplayHsReplayNoteLive)
 				MainWindow.FlyoutHsReplayNote.IsOpen = true;
 
 			if(ConfigManager.UpdatedVersion != null)

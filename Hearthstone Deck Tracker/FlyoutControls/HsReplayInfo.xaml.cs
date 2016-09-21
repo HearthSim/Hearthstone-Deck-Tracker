@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Navigation;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls
@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private void ButtonContinue_OnClick(object sender, RoutedEventArgs e)
 		{
 			Core.MainWindow.FlyoutHsReplayNote.IsOpen = false;
-			Config.Instance.DisplayHsReplayNote = false;
+			Config.Instance.DisplayHsReplayNoteLive = false;
 			Config.Save();
 		}
 
