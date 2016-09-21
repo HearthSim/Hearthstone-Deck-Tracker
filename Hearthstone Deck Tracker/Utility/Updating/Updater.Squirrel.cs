@@ -1,6 +1,7 @@
-﻿#if(SQUIRREL)
+#if(SQUIRREL)
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,6 +16,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 {
 	internal static partial class Updater
 	{
+
+		private static bool _useChinaMirror = CultureInfo.CurrentCulture.Name == "zh-CN";
 		private static string _releaseUrl;
 		private static TimeSpan _updateCheckDelay = new TimeSpan(0, 20, 0);
 		private static bool ShouldCheckForUpdates()
@@ -27,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			_lastUpdateCheck = DateTime.Now;
 			try
 			{
-				using(var mgr = await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("hsreplay"), prerelease: Config.Instance.CheckForBetaUpdates))
+				using(var mgr = await GetUpdateManager())
 				{
 					if(await SquirrelUpdate(mgr, null))
 					{
@@ -65,13 +68,19 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			return _releaseUrl;
 		}
 
+		private static async Task<UpdateManager> GetUpdateManager()
+		{
+			if(_useChinaMirror)
+				return new UpdateManager(await GetReleaseUrl("live-china"));
+			return await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("live"), prerelease: Config.Instance.CheckForBetaUpdates);
+		}
 		public static async Task StartupUpdateCheck(SplashScreenWindow splashScreenWindow)
 		{
 			try
 			{
 				Log.Info("Checking for updates");
 				bool updated;
-				using(var mgr = await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("hsreplay"), prerelease: Config.Instance.CheckForBetaUpdates))
+				using(var mgr = await GetUpdateManager())
 				{
 					SquirrelAwareApp.HandleEvents(
 						v => mgr.CreateShortcutForThisExe(),
@@ -156,6 +165,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				await mgr.CreateUninstallerRegistryEntry();
 				Log.Info("Done");
 				return true;
+			}
+			catch(WebException ex)
+			{
+				Log.Error(ex);
+				if(!_useChinaMirror)
+				{
+					_useChinaMirror = true;
+					Log.Warn("Now using china mirror");
+					return await SquirrelUpdate(mgr, splashScreenWindow, ignoreDelta);
+				}
+				return false;
 			}
 			catch(Exception ex)
 			{
