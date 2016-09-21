@@ -23,8 +23,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		public string ToLineProtocol()
 		{
 			var tags = string.Join(",", Tags.Select(x => $"{x.Key}={x.Value}"));
-			var fields = string.Join(",", Fields.Select(x => $"{x.Key}={x.Value}"));
+			var fields = string.Join(",", Fields.Select(x => $"{x.Key}={GetValueString(x.Value)}"));
 			return $"{Name}{(tags.Any() ? $",{tags}" : "")} {fields} {Timestamp.ToUnixTime()}";
+		}
+
+		public string GetValueString(object value)
+		{
+			int intValue;
+			if(int.TryParse(value.ToString(), out intValue))
+				return value.ToString();
+			return $"\"{value}\"";
 		}
 	}
 }
