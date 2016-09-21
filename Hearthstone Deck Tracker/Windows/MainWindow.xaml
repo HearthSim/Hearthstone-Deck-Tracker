@@ -184,7 +184,7 @@
             <StatusBarItem Margin="10,0,0,0" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" FontSize="14">
-                        <Run FontWeight="SemiBold" Text="{lex:LocTextUpper MainWindow_MainWindow_StatusBarUpdate_NewUpdateAvailable}"/>
+                        <Run FontWeight="SemiBold" Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_NewUpdateAvailable}"/>
                         <Run FontWeight="SemiBold">-</Run>
                         <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkUpdateNow_OnClick">
                             <Run Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_ClickToUpdate}"/>
