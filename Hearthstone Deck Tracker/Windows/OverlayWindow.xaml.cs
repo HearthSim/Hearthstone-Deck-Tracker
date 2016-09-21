@@ -107,7 +107,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void ShowOverlay(bool enable)
 		{
 			if(enable)
+			{
 				Show();
+				if(User32.GetForegroundWindow() == new WindowInteropHelper(this).Handle)
+					User32.BringHsToForeground();
+			}
 			else
 				Hide();
 		}
