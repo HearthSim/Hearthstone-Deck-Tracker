@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 													? FontWeights.Bold
 													: (Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
 
-		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? LocUtil.Get(LocUse, true) : LocUtil.Get(LocActive, true);
+		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? LocUtil.Get(LocActive, true) : LocUtil.Get(LocUse, true);
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
