@@ -1436,6 +1436,10 @@
     mkdir "..\Squirrel-Clean"
     mkdir "..\Squirrel-Clean/Images"
     xcopy /E /Y /Q "Images\*.*" "..\Squirrel-Clean\Images"
+    for /D %25%25a in (*-*) do (
+        mkdir "..\Squirrel-Clean\%25%25a"
+        xcopy "%25%25a\*.*" "..\Squirrel-Clean\%25%25a"
+    )
     xcopy /Y "HearthstoneDeckTracker.exe" "..\Squirrel-Clean"
     xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Squirrel-Clean"
     xcopy /Y "*.dll" "..\Squirrel-Clean"	
@@ -1445,6 +1449,10 @@ if "$(ConfigurationName)" == "Release" (
     mkdir "..\Hearthstone Deck Tracker"
     mkdir "..\Hearthstone Deck Tracker/Images"
     xcopy /E /Y /Q "Images\*.*" "..\Hearthstone Deck Tracker\Images"
+    for /D %25%25a in (*-*) do (
+        mkdir "..\Hearthstone Deck Tracker\%25%25a"
+        xcopy "%25%25a\*.*" "..\Hearthstone Deck Tracker\%25%25a"
+    )
     xcopy /Y "HearthstoneDeckTracker.exe" "..\Hearthstone Deck Tracker"
     xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Hearthstone Deck Tracker"
     ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe" "Hearthstone Deck Tracker.exe"
