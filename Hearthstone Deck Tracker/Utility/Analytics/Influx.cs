@@ -74,8 +74,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				}
 				try
 				{
-					var response = (HttpWebResponse)await request.GetResponseAsync();
-					Log.Debug(response.StatusCode.ToString());
+					using(var response = (HttpWebResponse)await request.GetResponseAsync())
+						Log.Debug(response.StatusCode.ToString());
 				}
 				catch(WebException e)
 				{
