@@ -1,7 +1,7 @@
 ## Creating Issues
-- Have a look at the [FAQ](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/FAQ).
+- Have a look at the [FAQ](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/FAQ).
 - Check if a similar issue already exists (use the search function).
-- In case of a bug/crash/problem: Add as much detail as possible, including crash reports/logs ([see here](https://github.com/Epix37/Hearthstone-Deck-Tracker/wiki/Reporting-Issues)).
+- In case of a bug/crash/problem: Add as much detail as possible, including crash reports/logs ([see here](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Reporting-Issues)).
 
 ## Contributing
 
@@ -29,6 +29,10 @@ If you need to modify it or amend it in some way, you should always appropriatel
 
 Also see: [Github Help: Using Pull Requests](https://help.github.com/articles/using-pull-requests/)
 
+### Translations
+
+Want to help translate the app? Take a look at the [HDT-Localization repository](https://github.com/HearthSim/HDT-Localization).
+
 ### Need help?
 
-You can always ask for help on [Gitter](https://gitter.im/Epix37/Hearthstone-Deck-Tracker) or the HearthSim IRC channel, `#Hearthsim` on [Freenode](https://freenode.net/).
+You can always ask for help on [Gitter](https://gitter.im/HearthSim/Hearthstone-Deck-Tracker) or the HearthSim IRC channel, `#Hearthsim` on [Freenode](https://freenode.net/).
