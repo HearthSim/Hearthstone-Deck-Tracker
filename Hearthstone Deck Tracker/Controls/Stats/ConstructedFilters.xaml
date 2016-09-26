@@ -89,9 +89,9 @@
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Height="24">
-                            <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24" RenderOptions.BitmapScalingMode="Fant" 
+                            <Image Source="{Binding  ClassImage}" MaxWidth="24" MaxHeight="24" RenderOptions.BitmapScalingMode="Fant" 
                                    Margin="0,0,3,0" Visibility="{Binding ImageVisibility}" />
-                            <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding HeroClass, Converter={StaticResource EnumDescriptionConverter}}" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
@@ -106,7 +106,7 @@
                             <Image Source="{Binding ClassImage}" MaxWidth="24" MaxHeight="24"
                                            RenderOptions.BitmapScalingMode="Fant" Margin="0,0,3,0"
                                            Visibility="{Binding ImageVisibility}" />
-                            <TextBlock Text="{Binding HeroClass}" VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding HeroClass, Converter={StaticResource EnumDescriptionConverter}}" VerticalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
