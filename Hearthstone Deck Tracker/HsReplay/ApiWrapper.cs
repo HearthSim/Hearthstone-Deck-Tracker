@@ -1,6 +1,6 @@
 using System;
-using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 	internal class ApiWrapper
 	{
 		private static readonly HsReplayClient Client = new HsReplayClient("089b2bc6-3c26-4aab-adbe-bcfd5bb48671", "HDT/" + Helper.GetCurrentVersion(), config: TryGetConfig());
+		private static bool _requestedNewToken;
 
 		private static async Task<string> GetUploadToken()
 		{
@@ -66,6 +67,19 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Account.Instance.LastUpdated = DateTime.Now;
 				Account.Save();
 				Log.Info($"Id={Account.Instance.Id}, Username={Account.Instance.Username}, Status={Account.Instance.Status}");
+			}
+			catch(WebException ex)
+			{
+				Log.Error(ex);
+				var response = ex.Response as HttpWebResponse;
+				if(response?.StatusCode == HttpStatusCode.NotFound && !_requestedNewToken)
+				{
+					_requestedNewToken = true;
+					Account.Instance.UploadToken = string.Empty;
+					await UpdateAccountStatus();
+					return;
+				}
+				ErrorManager.AddError("Error retrieving HSReplay account status", ex.Message);
 			}
 			catch(Exception ex)
 			{
