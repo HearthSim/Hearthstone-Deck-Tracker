@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				return;
 			var point = new InfluxPointBuilder("hdt_app_start")
 				.Tag("version", version.ToVersionString()).Tag("login_type", loginType).Tag("new", isNew)
-				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload).Field("user", Config.Instance.Id)
+				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
 				.Field("startup_duration", startupDuration);
 #if(SQUIRREL)
 			point.Tag("squirrel", true);
@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_memory_usage", false).Tag("os", Regex.Escape(Helper.GetWindowsVersion()))
-				.Tag("net", Helper.GetInstalledDotNetVersion()).Field("MB", mem).Field("user", Config.Instance.Id).Build());
+				.Tag("net", Helper.GetInstalledDotNetVersion()).Field("MB", mem).Build());
 		}
 
 		public static void OnUnevenPermissions()
@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_uneven_permissions", false).Tag("os", Regex.Escape(Helper.GetWindowsVersion()))
-				.Tag("net", Helper.GetInstalledDotNetVersion()).Field("user", Config.Instance.Id).Build());
+				.Tag("net", Helper.GetInstalledDotNetVersion()).Build());
 		}
 
 		private static async void WritePoint(InfluxPoint point)
