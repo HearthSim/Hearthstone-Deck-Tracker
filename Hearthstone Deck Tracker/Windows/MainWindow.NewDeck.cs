@@ -37,32 +37,35 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			var selectedClass = _newDeck.Class;
 			string selectedNeutral;
-			string selectedManaCost;
+			int selectedManaCost;
 			string selectedSet;
 			try
 			{
-				selectedNeutral = MenuFilterType.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
+				selectedNeutral = MenuFilterType.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Name.Substring(15);
 			}
 			catch(Exception)
 			{
-				selectedNeutral = "ALL";
+				selectedNeutral = "All";
 			}
 			try
 			{
-				selectedManaCost =
-					MenuFilterMana.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
+				if(!int.TryParse(MenuFilterMana.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString().Substring(0, 1),
+						out selectedManaCost))
+					selectedManaCost = -1;
 			}
 			catch(Exception)
 			{
-				selectedManaCost = "ALL";
+				selectedManaCost = -1;
 			}
 			try
 			{
-				selectedSet = MenuFilterSet.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Content.ToString();
+				int value;
+				int.TryParse(MenuFilterSet.Items.Cast<RadioButton>().First(x => x.IsChecked.HasValue && x.IsChecked.Value).Name.Substring(14), out value);
+				selectedSet = value > 0 ? HearthDbConverter.SetConverter((CardSet)value) : "All";
 			}
 			catch(Exception)
 			{
-				selectedSet = "ALL";
+				selectedSet = "All";
 			}
 			if(selectedClass == "Select a Class")
 				ListViewDB.Items.Clear();
@@ -91,23 +94,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 						continue;
 
 					// mana filter
-					if(selectedManaCost != "ALL" && ((selectedManaCost != "9+" || card.Cost < 9) && (selectedManaCost != card.Cost.ToString())))
+					if(selectedManaCost > -1 && ((selectedManaCost < 9 || card.Cost < 9) && (selectedManaCost != card.Cost)))
 						continue;
-					if(selectedSet != "ALL" && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
+					if(selectedSet != "All" && !string.Equals(selectedSet, card.Set, StringComparison.InvariantCultureIgnoreCase))
 						continue;
 					if(!_newDeck.IsArenaDeck && !_newDeck.IsBrawlDeck && !(CheckBoxIncludeWild.IsChecked ?? true) && Helper.WildOnlySets.Contains(card.Set))
 						continue;
 					switch(selectedNeutral)
 					{
-						case "ALL":
+						case "All":
 							if(card.GetPlayerClass == selectedClass || card.GetPlayerClass == "Neutral")
 								ListViewDB.Items.Add(card);
 							break;
-						case "CLASS ONLY":
+						case "Class":
 							if(card.GetPlayerClass == selectedClass)
 								ListViewDB.Items.Add(card);
 							break;
-						case "NEUTRAL ONLY":
+						case "Neutral":
 							if(card.GetPlayerClass == "Neutral")
 								ListViewDB.Items.Add(card);
 							break;
