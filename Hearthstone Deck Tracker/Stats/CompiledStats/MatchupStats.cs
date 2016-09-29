@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -12,11 +13,23 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 {
 	public class MatchupStats
 	{
-		public MatchupStats(string @class, IEnumerable<GameStats> games)
+		public MatchupStats(string @class, IEnumerable<GameStats> games):this(ConvertToEnum(@class), games)
 		{
-			Class = @class;
+			
+        }
+
+		public MatchupStats(HeroClassAll @class, IEnumerable<GameStats> games)
+		{
+			Class = EnumDescriptionConverter.GetDescription(@class);
 			Games = games;
 		}
+
+		private static HeroClassAll ConvertToEnum(string @class)
+		{
+			@class = @class == "Total" ? "All" : @class;
+			HeroClassAll heroClass = (HeroClassAll)Enum.Parse(typeof(HeroClassAll), @class, true);
+			return heroClass;
+        }
 
 		public IEnumerable<GameStats> Games { get; set; }
 
