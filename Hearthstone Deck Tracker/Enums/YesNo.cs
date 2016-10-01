@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 	{
 		[LocDescription("Enum_YesNoAll_All")]
 		All,
-		[LocDescription("Enum_YesNo_No")]
+		[LocDescription("Enum_YesNo_Yes")]
 		Yes,
 		[LocDescription("Enum_YesNo_No")]
 		No
