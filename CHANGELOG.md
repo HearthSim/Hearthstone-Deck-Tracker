@@ -1,3 +1,12 @@
+## __Release v1.1.1 - 2016-10-04__
+
+__Updated for 6.1.3.14830__
+
+__Fixes__:
+- Fixed an issue where the deck builder would not work properly with some UI languages.
+- Minor text changes.
+
+
 ## __Release v1.1.0 - 2016-09-21__
 
 __New__:
