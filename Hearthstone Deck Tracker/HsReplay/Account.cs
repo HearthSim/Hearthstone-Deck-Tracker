@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			try
 			{
 				using(var sr = new StreamReader(CacheFilePath))
-					return JsonConvert.DeserializeObject<Account>(sr.ReadToEnd());
+					return JsonConvert.DeserializeObject<Account>(sr.ReadToEnd()) ?? new Account();
 			}
 			catch(Exception ex)
 			{
