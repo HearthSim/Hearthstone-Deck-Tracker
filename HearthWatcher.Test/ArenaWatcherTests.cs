@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using HearthMirror.Objects;
+using HearthWatcher.Providers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HearthWatcher.Test

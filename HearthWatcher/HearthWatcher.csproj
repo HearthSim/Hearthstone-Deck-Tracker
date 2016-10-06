@@ -65,7 +65,10 @@
     <Compile Include="EventArgs\ChoicesChangedEventArgs.cs" />
     <Compile Include="EventArgs\CompleteDeckEventArgs.cs" />
     <Compile Include="EventArgs\RewardsEventArgs.cs" />
-    <Compile Include="IArenaProvider.cs" />
+    <Compile Include="Providers\IArenaProvider.cs" />
+    <Compile Include="Providers\IPackProvider.cs" />
+    <Compile Include="EventArgs\PackEventArgs.cs" />
+    <Compile Include="PackOpeningWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

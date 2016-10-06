@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.ComponentModel;
@@ -55,9 +55,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					Watchers.ArenaWatcher.Stop();
 
 				if(game.CurrentMode == Mode.PACKOPENING)
-					PackOpeningWatcher.Instance.Run();
+					Watchers.PackWatcher.Run();
 				else
-					PackOpeningWatcher.Instance.Stop();
+					Watchers.PackWatcher.Stop();
 			}
 			else if(logLine.Line.Contains("Gameplay.Start"))
 			{

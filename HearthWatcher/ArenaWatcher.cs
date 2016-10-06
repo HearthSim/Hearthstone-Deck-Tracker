@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HearthMirror.Objects;
 using HearthWatcher.EventArgs;
+using HearthWatcher.Providers;
 
 namespace HearthWatcher
 {

@@ -1,6 +1,6 @@
 using HearthMirror.Objects;
 
-namespace HearthWatcher
+namespace HearthWatcher.Providers
 {
 	public interface IArenaProvider
 	{

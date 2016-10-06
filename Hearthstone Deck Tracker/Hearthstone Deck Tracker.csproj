@@ -422,7 +422,6 @@
     <Compile Include="LogReader\Handlers\FullScreenFxHandler.cs" />
     <Compile Include="Importing\Game\ImportOptions\NewDeck.cs" />
     <Compile Include="Importing\Game\ImportedDeck.cs" />
-    <Compile Include="Hearthstone\PackOpeningWatcher.cs" />
     <Compile Include="Properties\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1503,20 +1502,12 @@ xcopy /Y /Q "$(SolutionDir)CHANGELOG.md" "$(ProjectDir)Resources"</PreBuildEvent
   </Target>
   -->
   <Target Name="GenerateDesignerFiles">
-    <GenerateResource
-        Sources="Properties/Strings.resx"
-        StronglyTypedLanguage="C#"
-        StronglyTypedClassName="Strings"
-        StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties"
-        StronglyTypedFileName="Properties/Strings.Designer.cs"
-        OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources"
-        PublicClass="true"
-        >
+    <GenerateResource Sources="Properties/Strings.resx" StronglyTypedLanguage="C#" StronglyTypedClassName="Strings" StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties" StronglyTypedFileName="Properties/Strings.Designer.cs" OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources" PublicClass="true">
     </GenerateResource>
-    <Delete Files="Hearthstone_Deck_Tracker.Properties.Strings.resources"/>
+    <Delete Files="Hearthstone_Deck_Tracker.Properties.Strings.resources" />
   </Target>
   <Target Name="BeforeBuild">
-   <CallTarget Targets="GenerateDesignerFiles"/>
+    <CallTarget Targets="GenerateDesignerFiles" />
   </Target>
   <Target Name="AfterBuild">
     <CallTarget Condition=" '$(Configuration)' == 'Squirrel'" Targets="SquirrelAfterBuild" />
