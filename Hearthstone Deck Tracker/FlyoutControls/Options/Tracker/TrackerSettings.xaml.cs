@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -407,6 +407,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 				Core.MainWindow.Restart();
 			}
+		}
+
+		private void CheckboxHearthStatsMenu_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowHearthStatsMenu = true;
+			Config.Save();
+			Core.MainWindow.UpdateHearthStatsMenuItem();
+		}
+
+		private void CheckboxHearthStatsMenu_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowHearthStatsMenu = false;
+			Config.Save();
+			Core.MainWindow.UpdateHearthStatsMenuItem();
 		}
 	}
 }

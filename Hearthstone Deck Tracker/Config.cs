@@ -855,6 +855,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowDeckWins = false;
 
+		[DefaultValue(false)]
+		public bool ShowHearthStatsMenu = false;
+
 		[DefaultValue(true)]
 		public bool ShowExportingDialog = true;
 

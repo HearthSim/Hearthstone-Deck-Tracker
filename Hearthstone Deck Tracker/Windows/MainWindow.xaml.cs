@@ -418,6 +418,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public Visibility MenuItemReplayClaimAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Visible : Collapsed;
 		public Visibility MenuItemReplayMyAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Collapsed : Visible;
+		public Visibility MenuItemHearthStatsVisibility => Config.Instance.ShowHearthStatsMenu || HearthStatsAPI.IsLoggedIn ? Visible : Collapsed;
 
 		public void UpdateIntroLabelVisibility() => OnPropertyChanged(nameof(IntroductionLabelVisibility));
 
@@ -843,6 +844,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(MenuItemReplayClaimAccountVisibility));
 			OnPropertyChanged(nameof(MenuItemReplayMyAccountVisibility));
 		}
+
+		public void UpdateHearthStatsMenuItem() => OnPropertyChanged(nameof(MenuItemHearthStatsVisibility));
 
 		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client");
 	}

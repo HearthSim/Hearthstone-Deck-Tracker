@@ -389,7 +389,8 @@
                     <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_MyAccount}" Click="MenuItemReplayMyAccount_OnClick"
                               Visibility="{Binding MenuItemReplayMyAccountVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
                 </MenuItem>
-                <MenuItem Header="_HEARTHSTATS" SubmenuOpened="MenuItemHearthStats_OnSubmenuOpened">
+                <MenuItem Header="_HEARTHSTATS" SubmenuOpened="MenuItemHearthStats_OnSubmenuOpened"
+                          Visibility="{Binding MenuItemHearthStatsVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
                             <Rectangle.Fill>
