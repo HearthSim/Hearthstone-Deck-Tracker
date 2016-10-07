@@ -37,6 +37,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public string NameAndVersion => Name + " " + (Plugin?.Version.ToString() ?? "");
 
+		public string RelativeFilePath => new Uri(AppDomain.CurrentDomain.BaseDirectory).MakeRelativeUri(new Uri(FileName)).ToString();
+
 		public bool IsEnabled
 		{
 			get { return _isEnabled; }

@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		internal PluginSettings(PluginWrapper p)
 		{
-			FileName = p.FileName;
+			FileName = p.RelativeFilePath;
 			Name = p.Name;
 			IsEnabled = p.IsEnabled;
 		}
