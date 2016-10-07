@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using HearthMirror;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Importing;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using HearthWatcher;
 using HearthWatcher.Providers;
 
@@ -15,8 +14,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		static Watchers()
 		{
 			ArenaWatcher.OnCompleteDeck += (sender, args) => DeckManager.AutoImportArena(Config.Instance.SelectedArenaImportingBehaviour ?? ArenaImportingBehaviour.AutoImportSave, args.Info);
-			PackWatcher.NewPackEventHandler += (sender, args) => Log.Debug($"New Pack! Id={args.PackId}, Cards=[{string.Join(", ", args.Cards.Select(x => x.Id + (x.Premium ? " (g)" : "")))}]");
+			PackWatcher.NewPackEventHandler += (sender, args) => PackUploader.UploadPack(args.PackId, args.Cards);
 		}
+
 		public static ArenaWatcher ArenaWatcher { get; } = new ArenaWatcher(new HearthMirrorArenaProvider());
 		public static PackOpeningWatcher PackWatcher { get; } = new PackOpeningWatcher(new HearthMirrorPackProvider());
 	}

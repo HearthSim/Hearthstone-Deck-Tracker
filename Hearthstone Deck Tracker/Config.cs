@@ -551,6 +551,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool HsReplayUploadSpectator = true;
 
+		[DefaultValue(null)]
+		public bool? HsReplayUploadPacks = null;
+
 		[DefaultValue("00000000-0000-0000-0000-000000000000")]
 		public string Id = Guid.Empty.ToString();
 

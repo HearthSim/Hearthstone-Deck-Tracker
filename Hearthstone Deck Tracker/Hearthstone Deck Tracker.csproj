@@ -391,6 +391,8 @@
     <Compile Include="Enums\YesNo.cs" />
     <Compile Include="Enums\Language.cs" />
     <Compile Include="Hearthstone\Watchers.cs" />
+    <Compile Include="HsReplay\PackDataGenerator.cs" />
+    <Compile Include="HsReplay\PackUploader.cs" />
     <Compile Include="HsReplay\UploadMetaDataGenerator.cs" />
     <Compile Include="Importing\Game\ImportOptions\ExistingDeck.cs" />
     <Compile Include="Exporting\ExportingActions.cs" />
