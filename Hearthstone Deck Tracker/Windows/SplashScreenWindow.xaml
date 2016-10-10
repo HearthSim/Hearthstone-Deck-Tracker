@@ -11,7 +11,7 @@
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
         Title="SplashScreenWindow" Height="400" Width="400" ResizeMode="NoResize" 
-        WindowStartupLocation="CenterScreen" WindowStyle="None" Topmost="True" ShowInTaskbar="False">
+        WindowStartupLocation="CenterScreen" WindowStyle="None" ShowInTaskbar="False">
     <Grid>
         <Rectangle Width="300" Height="300">
             <Rectangle.Fill>
