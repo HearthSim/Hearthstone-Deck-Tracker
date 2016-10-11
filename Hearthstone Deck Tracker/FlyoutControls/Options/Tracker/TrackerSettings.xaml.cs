@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -295,8 +296,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			var regKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-			regKey?.SetValue("Hearthstone Deck Tracker", Application.ResourceAssembly.Location);
+			RegistryHelper.SetRunKey();
 			Config.Instance.StartWithWindows = true;
 			Config.Save();
 		}
@@ -305,8 +305,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			var regKey = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-			regKey?.DeleteValue("Hearthstone Deck Tracker", false);
+			RegistryHelper.DeleteRunKey();
 			Config.Instance.StartWithWindows = false;
 			Config.Save();
 		}
