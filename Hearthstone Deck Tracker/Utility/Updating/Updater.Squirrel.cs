@@ -83,9 +83,24 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				using(var mgr = await GetUpdateManager())
 				{
 					SquirrelAwareApp.HandleEvents(
-						v => mgr.CreateShortcutForThisExe(),
-						v => mgr.CreateShortcutForThisExe(),
-						onAppUninstall: v => mgr.RemoveShortcutForThisExe(),
+						v =>
+						{
+							mgr.CreateShortcutForThisExe();
+							if(Config.Instance.StartWithWindows)
+								RegistryHelper.SetRunKey();
+						},
+						v =>
+						{
+							mgr.CreateShortcutForThisExe();
+							if(Config.Instance.StartWithWindows)
+								RegistryHelper.SetRunKey();
+						},
+						onAppUninstall: v =>
+						{
+							mgr.RemoveShortcutForThisExe();
+							if(Config.Instance.StartWithWindows)
+								RegistryHelper.DeleteRunKey();
+						},
 						onFirstRun: CleanUpInstallerFile
 						);
 					updated = await SquirrelUpdate(mgr, splashScreenWindow);
