@@ -82,6 +82,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				bool updated;
 				using(var mgr = await GetUpdateManager())
 				{
+					RegistryHelper.SetExecutablePath(Path.Combine(mgr.RootAppDirectory, "Update.exe"));
+					RegistryHelper.SetExecutableArgs("--processStart \"HearthstoneDeckTracker.exe\"");
 					SquirrelAwareApp.HandleEvents(
 						v =>
 						{
