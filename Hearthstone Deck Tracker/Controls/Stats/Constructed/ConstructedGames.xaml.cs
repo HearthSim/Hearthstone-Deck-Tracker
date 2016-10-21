@@ -174,13 +174,5 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			if(dialog != null && await dialog)
 				ConstructedStats.Instance.UpdateGames();
 		}
-
-		private void ButtonSelectDeck_OnClick(object sender, RoutedEventArgs e)
-		{
-			var deck = DeckList.Instance.Decks.FirstOrDefault(x => x.DeckId == SelectedGame.DeckId);
-			if(deck?.Equals(DeckList.Instance.ActiveDeck) ?? true)
-				return;
-			Core.MainWindow.SelectDeck(deck, true);
-		}
 	}
 }

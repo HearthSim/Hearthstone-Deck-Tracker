@@ -180,16 +180,6 @@
                                     <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Table_Button_OpponentDeck}" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </Button>
-                            <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonSelectDeck_OnClick" IsEnabled="{Binding Path=CanSelectDeck}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Rectangle Width="12">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Visual="{Binding OppDeckIconVisual, RelativeSource={RelativeSource AncestorType=UserControl}}"></VisualBrush>
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-                                    <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Games_Table_Button_SelectDeck}" Margin="4,0,0,0"/>
-                                </StackPanel>
-                            </Button>
                             <Button Margin="4,4,0,4" MinWidth="70" Click="ButtonEdit_OnClick">
                                 <StackPanel Orientation="Horizontal">
                                     <Rectangle Width="12">
