@@ -611,7 +611,7 @@
                      controls:TextBoxHelper.IsWaitingForData="True"/>
                     </Border>
 
-                    <Rectangle Name="DeckNameExistsWarning" Width="16" Height="16" ToolTip="{lex:LocText MainWindow_DeckBuilder_Warning_NameAlreadyExists}" Visibility="Collapsed" Margin="3,0,0,0">
+                    <Rectangle Name="DeckNameExistsWarning" Width="16" Height="16" ToolTip="{lex:LocText MainWindow_DeckBuilder_Warning_ToolTip_NameAlreadyExists}" Visibility="Collapsed" Margin="3,0,0,0">
                         <Rectangle.Fill>
                             <VisualBrush Visual="{StaticResource appbar_warning}" />
                         </Rectangle.Fill>
