@@ -615,8 +615,12 @@ namespace Hearthstone_Deck_Tracker
 					selectedDeck.DeckStats.AddGameResult(_lastGame);
 
 					if(Config.Instance.ArenaRewardDialog && (selectedDeck.IsArenaRunCompleted ?? false))
-						_arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
+					{
+						if (selectedDeck.ArenaReward.Packs[0] == ArenaRewardPacks.None)
+							selectedDeck.ArenaReward.Packs[0] = Enum.GetValues(typeof(ArenaRewardPacks)).OfType<ArenaRewardPacks>().Max();
 
+						_arenaRewardDialog = new ArenaRewardDialog(selectedDeck);
+					}
 					if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 					{
 						_showedNoteDialog = true;
