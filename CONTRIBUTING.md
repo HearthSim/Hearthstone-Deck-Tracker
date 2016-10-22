@@ -7,13 +7,14 @@
 
 ### Coding style
 
-1. Always use tabs. 
-2. Always place braces on new lines.
-3. Use [C# 6](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6) whenever possible. 
-4. Follow the [standard MS C# naming conventions](https://msdn.microsoft.com/en-us/library/ms229002(v=vs.110).aspx) 
+1. Always use tabs.
+2. Use LF line endings.
+3. Always place braces on new lines.
+4. Use [C# 6](https://github.com/dotnet/roslyn/wiki/New-Language-Features-in-C%23-6) whenever possible. 
+5. Follow the [standard MS C# naming conventions](https://msdn.microsoft.com/en-us/library/ms229002(v=vs.110).aspx) 
 ([short version](http://programmers.stackexchange.com/a/224910)). 
 Also see: [How to name things in programming](http://www.slideshare.net/pirhilton/how-to-name-things-the-hardest-problem-in-programming)
-5. Know when to make exceptions.
+6. Know when to make exceptions.
 
 ### Commits and Pull Requests
 
