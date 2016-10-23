@@ -86,9 +86,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private static bool? _hearthstoneDirExists;
 
-		private static readonly Regex CardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!-,]+)");
-		private static readonly Regex CardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!-,]+)(\s+(x\s*)(?<count>\d))(\s*)$");
-		private static readonly Regex CardLineRegexCountLast2 = new Regex(@"(?<cardname>[\w\s'\.:!-,]+)(\s+(?<count>\d))(\s*)$");
+		private static readonly Regex CardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!\-,]+)");
+		private static readonly Regex CardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!\-,]+?)(\s+(x\s*)?(?<count>\d))(\s*)$");
 
 		public static Dictionary<string, MediaColor> ClassicClassColors = new Dictionary<string, MediaColor>
 		{
@@ -430,8 +429,6 @@ namespace Hearthstone_Deck_Tracker
 						match = CardLineRegexCountFirst.Match(cardName);
 					else if(CardLineRegexCountLast.IsMatch(cardName))
 						match = CardLineRegexCountLast.Match(cardName);
-					else if(CardLineRegexCountLast2.IsMatch(cardName))
-						match = CardLineRegexCountLast2.Match(cardName);
 					if(match != null)
 					{
 						var tmpCount = match.Groups["count"];
