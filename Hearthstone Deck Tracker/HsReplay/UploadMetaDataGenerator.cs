@@ -78,10 +78,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(game.HsDeckId > 0)
 					friendly.DeckId = game.HsDeckId;
 			}
-			if(game?.ArenaWins > 0)
-				friendly.Wins = game.ArenaWins;
-			if(game?.ArenaLosses > 0)
-				friendly.Losses = game.ArenaLosses;
+			if(game?.GameMode == GameMode.Arena)
+			{
+				if(game.ArenaWins > 0)
+					friendly.Wins = game.ArenaWins;
+				if(game.ArenaLosses > 0)
+					friendly.Losses = game.ArenaLosses;
+			}
+			else if(game?.GameMode == GameMode.Brawl)
+			{
+				if(game.BrawlWins > 0)
+					friendly.Wins = game.BrawlWins;
+				if(game.BrawlLosses > 0)
+					friendly.Losses = game.BrawlLosses;
+			}
 
 			if(game?.OpponentRank > 0)
 				opposing.Rank = game.OpponentRank;

@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool? _spectator;
 		private MatchInfo _matchInfo;
 		private Mode _currentMode;
+		private BrawlInfo _brawlInfo;
 
 		public GameV2()
 		{
@@ -128,6 +129,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public MatchInfo MatchInfo => _matchInfo ?? (_matchInfo = HearthMirror.Reflection.GetMatchInfo());
 		private bool _matchInfoCacheInvalid = true;
 
+		public BrawlInfo BrawlInfo => _brawlInfo ?? (_brawlInfo = HearthMirror.Reflection.GetBrawlInfo());
+
 		internal async void CacheMatchInfo()
 		{
 			if(!_matchInfoCacheInvalid)
@@ -151,6 +154,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		internal void CacheSpectator() => _spectator = HearthMirror.Reflection.IsSpectating();
+
+		internal void CacheBrawlInfo() => _brawlInfo = HearthMirror.Reflection.GetBrawlInfo();
 
 		internal void InvalidateMatchInfoCache() => _matchInfoCacheInvalid = true;
 

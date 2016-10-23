@@ -224,6 +224,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int ArenaLosses { get; set; }
 
+		public int BrawlWins { get; set; }
+
+		public int BrawlLosses { get; set; }
+
 		public Region Region
 		{
 			get { return _region; }
@@ -522,6 +526,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeRankedSeasonId() => RankedSeasonId > 0;
 		public bool ShouldSerializeArenaWins() => ArenaWins > 0;
 		public bool ShouldSerializeArenaLosses() => ArenaLosses > 0;
+		public bool ShouldSerializeBrawlWins() => BrawlWins > 0;
+		public bool ShouldSerializeBrawlLosses() => BrawlLosses > 0;
 
 		#region Obsolete
 

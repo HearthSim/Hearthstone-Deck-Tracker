@@ -58,6 +58,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					Watchers.PackWatcher.Run();
 				else
 					Watchers.PackWatcher.Stop();
+
+				if(game.CurrentMode == Mode.TAVERN_BRAWL)
+					Core.Game.CacheBrawlInfo();
 			}
 			else if(logLine.Line.Contains("Gameplay.Start"))
 			{

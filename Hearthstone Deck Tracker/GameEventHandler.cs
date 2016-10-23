@@ -540,6 +540,11 @@ namespace Hearthstone_Deck_Tracker
 					_game.CurrentGameStats.ArenaWins = DeckImporter.ArenaInfoCache?.Wins ?? 0;
 					_game.CurrentGameStats.ArenaLosses = DeckImporter.ArenaInfoCache?.Losses ?? 0;
 				}
+				else if(_game.CurrentGameMode == Brawl && _game.BrawlInfo != null)
+				{
+					_game.CurrentGameStats.BrawlWins = _game.BrawlInfo.Wins;
+					_game.CurrentGameStats.BrawlLosses = _game.BrawlInfo.Losses;
+				}
 				_game.CurrentGameStats.GameType = _game.CurrentGameType;
 				_game.CurrentGameStats.ServerInfo = _game.MetaData.ServerInfo;
 				_game.CurrentGameStats.PlayerCardbackId = _game.MatchInfo?.LocalPlayer.CardBackId ?? 0;
