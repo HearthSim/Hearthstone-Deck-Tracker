@@ -419,7 +419,7 @@ namespace Hearthstone_Deck_Tracker
 			try
 			{
 				var deck = new Deck();
-				var lines = cards.Split('\n');
+				var lines = cards.Split(new [] {'\n', '|'}, StringSplitOptions.RemoveEmptyEntries);
 				foreach(var line in lines)
 				{
 					var count = 1;
