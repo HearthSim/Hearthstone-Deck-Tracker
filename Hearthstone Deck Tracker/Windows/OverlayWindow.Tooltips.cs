@@ -313,7 +313,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			try
 			{
-				if(!Config.Instance.ShowFlavorText || entity?.Card == null)
+				if(!Config.Instance.ShowFlavorText || string.IsNullOrEmpty(entity?.Card?.FormattedFlavorText))
 					return;
 				FlavorText = entity.Card.FormattedFlavorText;
 				FlavorTextCardName = entity.Card.LocalizedName;
