@@ -87,7 +87,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 				    x =>
 					new ChartStats
 					{
-						Name = x.Key + " (" + Math.Round(100.0 * x.Count() / ArenaDecks.Count()) + "%)",
+						Name = x.Key + " (" + Math.Round(100.0 * x.Count() / RunsCount) + "%)",
 						Value = x.Count(),
 						Brush = new SolidColorBrush(Helper.GetClassColor(x.Key, true))
 					});
