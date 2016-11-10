@@ -115,7 +115,7 @@
             <controls:Flyout x:Name="FlyoutDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="{lex:Loc MainWindow_Flyout_OpponentDeck_Header}">
                     <flyoutControls:DeckPanel x:Name="DeckFlyout" />
              </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutSortFilter" Header="{lex:Loc MainWindow_Flyout_OpponentDeck_Header}" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
+            <controls:Flyout x:Name="FlyoutSortFilter" Header="{lex:Loc MainWindow_Flyout_SortFilter_Header}" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
                 <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutNotes" Header="{lex:Loc MainWindow_Flyout_Notes_Header}" Position="Right" Width="255" Height="auto"
