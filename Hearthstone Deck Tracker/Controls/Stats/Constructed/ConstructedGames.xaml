@@ -134,7 +134,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Duration}" Binding="{Binding Duration}" SortMemberPath="Duration">
+                    <DataGridTextColumn Header="{lex:Loc Stats_Constructed_Games_Table_Duration}" Binding="{Binding Duration}" SortMemberPath="SortableDuration">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="HorizontalAlignment" Value="Center" />
