@@ -267,6 +267,7 @@
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
     <Compile Include="Enums\DeckPanel.cs" />
+    <Compile Include="Enums\ImportingChoice.cs" />
     <Compile Include="Enums\LocDescriptionAttribute.cs" />
     <Compile Include="FlyoutControls\HsReplayInfo.xaml.cs">
       <DependentUpon>HsReplayInfo.xaml</DependentUpon>
@@ -442,6 +443,7 @@
     <Compile Include="Utility\ResourceMonitor.cs" />
     <Compile Include="Utility\Updating\ReleaseUrls.cs" />
     <Compile Include="Utility\Updating\StatusBarHelper.cs" />
+    <Compile Include="Importing\ClipboardImporter.cs" />
     <Compile Include="Windows\CrashDialog.xaml.cs">
       <DependentUpon>CrashDialog.xaml</DependentUpon>
     </Compile>
@@ -638,9 +640,13 @@
     <Compile Include="Controls\DeckView.xaml.cs">
       <DependentUpon>DeckView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ImportingChoiceDialog.xaml.cs">
+      <DependentUpon>ImportingChoiceDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\DeckTypeDialog.xaml.cs">
       <DependentUpon>DeckTypeDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Importing\JsonDeckImporter.cs" />
     <Compile Include="Windows\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -1109,6 +1115,10 @@
     <Page Include="Controls\DeckView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ImportingChoiceDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\DeckTypeDialog.xaml">
       <SubType>Designer</SubType>

@@ -59,6 +59,16 @@
                     </GroupBox>
                     <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Web}">
                         <StackPanel>
+                            <DockPanel Margin="10,5,10,0" ToolTip="{lex:Loc Options_Tracker_Importing_Label_Tooltip_PasteBehavior}">
+                                <TextBlock DockPanel.Dock="Left" Text="{lex:Loc Options_Tracker_Importing_Label_PasteBehavior}" VerticalAlignment="Center" />
+                                <ComboBox Name="ComboboxPasteImporting" Margin="5,0,0,0" SelectionChanged="ComboboxPasteImporting_OnSelectionChanged">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DockPanel>
                             <CheckBox x:Name="CheckboxTagOnImport" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_Tags}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"

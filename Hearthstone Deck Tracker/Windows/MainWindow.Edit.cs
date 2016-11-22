@@ -1,9 +1,9 @@
-﻿#region
+#region
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -390,6 +390,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				MenuItemSave.IsSubmenuOpen = true;
 				MenuItemSave.Focus();
+			}
+			else if(e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
+			{
+				if(Keyboard.FocusedElement is TextBox)
+					return;
+				ImportFromClipboard();
 			}
 		}
 	}

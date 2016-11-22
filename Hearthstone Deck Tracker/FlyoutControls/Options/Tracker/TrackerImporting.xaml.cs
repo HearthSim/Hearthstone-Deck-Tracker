@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Diagnostics;
@@ -35,6 +35,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboboxArenaImportingBehaviour.ItemsSource = Enum.GetValues(typeof(ArenaImportingBehaviour));
 			if(Config.Instance.SelectedArenaImportingBehaviour.HasValue)
 				ComboboxArenaImportingBehaviour.SelectedItem = Config.Instance.SelectedArenaImportingBehaviour.Value;
+			ComboboxPasteImporting.ItemsSource = Enum.GetValues(typeof(ImportingChoice));
+			ComboboxPasteImporting.SelectedItem = Config.Instance.PasteImportingChoice;
 			CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
 			CheckboxImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
 			CheckboxAutoSaveOnImport.IsChecked = Config.Instance.AutoSaveOnImport;
@@ -152,6 +154,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ConstructedAutoUpdate = false;
+			Config.Save();
+		}
+
+		private void ComboboxPasteImporting_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.PasteImportingChoice = (ImportingChoice)ComboboxPasteImporting.SelectedItem;
 			Config.Save();
 		}
 	}

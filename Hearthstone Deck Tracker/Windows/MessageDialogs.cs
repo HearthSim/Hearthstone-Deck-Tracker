@@ -252,6 +252,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return type;
 		}
 
+		public static async Task<ImportingChoice?> ShowImportingChoiceDialog(this MetroWindow window)
+		{
+			var dialog = new ImportingChoiceDialog();
+			await window.ShowMetroDialogAsync(dialog);
+			var type = await dialog.WaitForButtonPressAsync();
+			await window.HideMetroDialogAsync(dialog);
+			return type;
+		}
+
 		public static async Task<bool> ShowEditGameDialog(this MetroWindow window, GameStats game)
 		{
 			if(game == null)

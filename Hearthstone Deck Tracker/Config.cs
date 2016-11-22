@@ -714,6 +714,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool PrioritizeGolden = true;
 
+		[DefaultValue(ImportingChoice.Manual)]
+		public ImportingChoice PasteImportingChoice = ImportingChoice.Manual;
+
 		[DefaultValue(false)]
 		public bool RarityCardFrames = false;
 
