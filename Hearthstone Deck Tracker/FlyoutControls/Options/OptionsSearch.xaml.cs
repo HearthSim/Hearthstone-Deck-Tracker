@@ -20,7 +20,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 		public OptionsSearch()
 		{
 			InitializeComponent();
-			TextBoxSearch.Loaded += TextBoxSearchLoaded;
 		}
 		
 		private void TextBoxSearchLoaded(object sender, RoutedEventArgs routedEventArgs)
