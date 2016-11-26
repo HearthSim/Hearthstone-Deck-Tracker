@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -29,7 +30,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 		private List<CheckBoxWrapper> CheckBoxWrappers => _checkBoxWrappers ?? (_checkBoxWrappers = LoadWrappers());
 
-		private void ButtonSearch_OnClick(object sender, RoutedEventArgs e) => UpdateSearchResult(TextBoxSearch.Text);
+        //Keep in mind TextBoxSearch_TextChanged will call this with its own eventargs if you decide to modify this
+        private void ButtonSearch_OnClick(object sender, RoutedEventArgs e) => UpdateSearchResult(TextBoxSearch.Text);
 
 		private List<CheckBoxWrapper> LoadWrappers()
 		{
@@ -103,5 +105,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			public UserControl UserControl { get; set; }
 			public string Name { get; set; }
 		}
-	}
+
+        private void TextBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TextBoxSearch.Text.Length < 3)
+                return;
+            ButtonSearch_OnClick(ButtonSearch, e);
+        }
+    }
 }
