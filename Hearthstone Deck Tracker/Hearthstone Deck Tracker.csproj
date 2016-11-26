@@ -1505,9 +1505,9 @@ if exist $(SolutionDir)HDT-Localization (
   git clone https://github.com/HearthSim/HDT-Localization.git $(SolutionDir)HDT-Localization
 )
 xcopy /Y "$(SolutionDir)HDT-Localization\*.resx" "$(ProjectDir)Properties\"
-mkdir "$(TargetDir)\Images\Bars"
+mkdir "$(TargetDir)\Images\Tiles"
 mkdir "$(TargetDir)\Images\Themes"
-xcopy /E /Y /Q "$(ProjectDir)Images\Bars" "$(TargetDir)\Images\Bars"
+xcopy /E /Y /Q "$(SolutionDir)Resources\Generated\Tiles" "$(TargetDir)\Images\Tiles"
 xcopy /E /Y /Q "$(ProjectDir)Images\Themes" "$(TargetDir)\Images\Themes"
 xcopy /Y /Q "$(SolutionDir)CHANGELOG.md" "$(ProjectDir)Resources"</PreBuildEvent>
   </PropertyGroup>

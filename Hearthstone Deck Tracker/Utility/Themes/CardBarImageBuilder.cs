@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -118,13 +118,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected virtual void AddCardImage() => AddCardImage(ImageRect, false);
 		protected void AddCardImage(Rect rect, bool offsetByCountBox)
 		{
-			var cardFile = Path.Combine(BarImageDir, Card.Id + ".png");
-			if(File.Exists(cardFile))
+			var bmp = ImageCache.GetCardImage(Card);
+			if(bmp != null)
 			{
 				if(offsetByCountBox && (Math.Abs(Card.Count) > 1 || Card.Rarity == Rarity.LEGENDARY))
-					AddChild(cardFile, rect.Move(ImageOffset, 0));
+					AddChild(bmp, rect.Move(ImageOffset, 0));
 				else
-					AddChild(cardFile, rect);
+					AddChild(bmp, rect);
 			}
 		}
 
@@ -260,6 +260,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		protected void AddChild(string uri, Rect rect)
 			=> DrawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(uri, UriKind.Relative)), rect));
+
+		protected void AddChild(BitmapImage bmp, Rect rect)
+			=> DrawingGroup.Children.Add(new ImageDrawing(bmp, rect));
 
 		protected void AddChild(ThemeElementInfo element)
 		{

@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -213,6 +213,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[XmlIgnore]
 		public string Set { get; set; }
+
+		public CardSet? CardSet => _dbCard?.Set;
 
 		[XmlIgnore]
 		public string Race { get; set; }

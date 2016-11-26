@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -30,6 +30,22 @@ namespace Hearthstone_Deck_Tracker.Utility
 				InitiateGameFilesCleanup();
 			if(RunDeckStatsFix)
 				FixDeckStats();
+			if(Directory.Exists("Images/Bars"))
+				CleanUpImageFiles();
+		}
+
+		private static void CleanUpImageFiles()
+		{
+			Log.Info("Cleaning up old card image files...");
+			try
+			{
+				Directory.Delete("Images/Bars", true);
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+			}
+			Log.Info("Cleanup complete.");
 		}
 
 		//https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues/2675
