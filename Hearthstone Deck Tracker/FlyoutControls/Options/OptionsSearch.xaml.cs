@@ -29,7 +29,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 		private List<CheckBoxWrapper> CheckBoxWrappers => _checkBoxWrappers ?? (_checkBoxWrappers = LoadWrappers());
 
-        //Keep in mind TextBoxSearch_TextChanged will call this with its own eventargs if you decide to modify this
         private void ButtonSearch_OnClick(object sender, RoutedEventArgs e) => UpdateSearchResult(TextBoxSearch.Text);
 
 		private List<CheckBoxWrapper> LoadWrappers()
@@ -109,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
         {
             if (TextBoxSearch.Text.Length < 3)
                 return;
-            ButtonSearch_OnClick(ButtonSearch, e);
+            UpdateSearchResult(TextBoxSearch.Text);
         }
     }
 }
