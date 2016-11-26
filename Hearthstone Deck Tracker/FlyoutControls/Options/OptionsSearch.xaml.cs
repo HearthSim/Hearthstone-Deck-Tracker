@@ -21,6 +21,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 		{
 			InitializeComponent();
 		}
+		
+		private void TextBoxSearchLoaded(object sender, RoutedEventArgs routedEventArgs)
+		{
+			((TextBox) sender).Focus();
+		}
 
 		private List<CheckBoxWrapper> CheckBoxWrappers => _checkBoxWrappers ?? (_checkBoxWrappers = LoadWrappers());
 
