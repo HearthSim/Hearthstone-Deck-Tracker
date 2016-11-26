@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.IO;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -77,7 +77,7 @@ namespace HDTTests.Hearthstone
 		public void TestCardBarImages()
 		{
 			foreach(var card in Database.GetActualCards())
-				Assert.IsTrue(File.Exists("../../../../Hearthstone Deck Tracker/Images/Bars/" + card.Id + ".png"), card.Name);
+				Assert.IsTrue(File.Exists("../../../../Resources/Tiles/" + card.Id + ".png"), card.Name);
 		}
 	}
 }
