@@ -103,5 +103,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			public UserControl UserControl { get; set; }
 			public string Name { get; set; }
 		}
+
+		private void TextBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (TextBoxSearch.Text.Length < 3)
+				return;
+			UpdateSearchResult(TextBoxSearch.Text);
+		}
 	}
 }
