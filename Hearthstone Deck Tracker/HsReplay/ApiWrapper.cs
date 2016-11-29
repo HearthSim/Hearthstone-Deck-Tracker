@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			{
 				var token = await GetUploadToken();
 				Log.Info("Getting claim url...");
-				return "https://hsreplay.net" + await Client.GetClaimAccountUrl(token);
+				return await Client.GetClaimAccountUrl(token);
 			}
 			catch(Exception e)
 			{
