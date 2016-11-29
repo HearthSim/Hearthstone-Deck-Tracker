@@ -64,9 +64,6 @@ The app:
 
 ![Stats](http://i.imgur.com/Wke3Cuw.png "Deck stats")
 
-- **Replays**:
-![Stats](http://i.imgur.com/tuxOFmg.png "Deck stats")
-
 
 ## License
 
