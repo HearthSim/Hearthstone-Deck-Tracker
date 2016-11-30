@@ -35,7 +35,10 @@ namespace Hearthstone_Deck_Tracker.API
 				var sw = Stopwatch.StartNew();
 				var plugin = action.Item1 as PluginWrapper;
 				if(plugin != null && !plugin.IsEnabled)
+				{
+					remove.Add(action);
 					continue;
+				}
 				try
 				{
 					action.Item2.Invoke(arg);
@@ -83,7 +86,10 @@ namespace Hearthstone_Deck_Tracker.API
 				var sw = Stopwatch.StartNew();
 				var plugin = action.Item1 as PluginWrapper;
 				if(plugin != null && !plugin.IsEnabled)
+				{
+					remove.Add(action);
 					continue;
+				}
 				try
 				{
 					action.Item2.Invoke();
