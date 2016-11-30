@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -91,12 +91,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, Misdirection, Snipe, SnakeTrap};
+				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, Snipe, SnakeTrap};
 				public static string BearTrap => HearthDb.CardIds.Collectible.Hunter.BearTrap;
 				public static string CatTrick => HearthDb.CardIds.Collectible.Hunter.CatTrick;
 				public static string DartTrap => HearthDb.CardIds.Collectible.Hunter.DartTrap;
 				public static string ExplosiveTrap => HearthDb.CardIds.Collectible.Hunter.ExplosiveTrap;
 				public static string FreezingTrap => HearthDb.CardIds.Collectible.Hunter.FreezingTrap;
+				public static string HiddenCache => HearthDb.CardIds.Collectible.Hunter.HiddenCache;
 				public static string Misdirection => HearthDb.CardIds.Collectible.Hunter.Misdirection;
 				public static string Snipe => HearthDb.CardIds.Collectible.Hunter.Snipe;
 				public static string SnakeTrap => HearthDb.CardIds.Collectible.Hunter.SnakeTrap;
@@ -107,13 +108,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Mage
 			{
-				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, IceBarrier, IceBlock, MirrorEntity, Spellbender, Vaporize};
+				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, IceBarrier, IceBlock, MirrorEntity, PotionOfPolymorph, Spellbender, Vaporize};
 				public static string Counterspell => HearthDb.CardIds.Collectible.Mage.Counterspell;
 				public static string Duplicate => HearthDb.CardIds.Collectible.Mage.Duplicate;
 				public static string Effigy => HearthDb.CardIds.Collectible.Mage.Effigy;
 				public static string IceBarrier => HearthDb.CardIds.Collectible.Mage.IceBarrier;
 				public static string IceBlock => HearthDb.CardIds.Collectible.Mage.IceBlock;
 				public static string MirrorEntity => HearthDb.CardIds.Collectible.Mage.MirrorEntity;
+				public static string PotionOfPolymorph => HearthDb.CardIds.Collectible.Mage.PotionOfPolymorph;
 				public static string Spellbender => HearthDb.CardIds.Collectible.Mage.Spellbender;
 				public static string Vaporize => HearthDb.CardIds.Collectible.Mage.Vaporize;
 
@@ -123,10 +125,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Paladin
 			{
-				public static List<string> All => new List<string> {Avenge, CompetitiveSpirit, EyeForAnEye, NobleSacrifice, Redemption, Repentance, SacredTrial};
+				public static List<string> All => new List<string> {Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, NobleSacrifice, Redemption, Repentance, SacredTrial};
 				public static string Avenge => HearthDb.CardIds.Collectible.Paladin.Avenge;
 				public static string CompetitiveSpirit => HearthDb.CardIds.Collectible.Paladin.CompetitiveSpirit;
 				public static string EyeForAnEye => HearthDb.CardIds.Collectible.Paladin.EyeForAnEye;
+				public static string GetawayKodo => HearthDb.CardIds.Collectible.Paladin.GetawayKodo;
 				public static string NobleSacrifice => HearthDb.CardIds.Collectible.Paladin.NobleSacrifice;
 				public static string Redemption => HearthDb.CardIds.Collectible.Paladin.Redemption;
 				public static string Repentance => HearthDb.CardIds.Collectible.Paladin.Repentance;

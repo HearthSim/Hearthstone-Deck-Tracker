@@ -221,8 +221,12 @@ namespace Hearthstone_Deck_Tracker
 			if(!Config.Instance.AutoGrayoutSecrets)
 				return;
 
+			//Hidden cache will only trigger if the opponent has a minion in hand. 
+			//We might not know this for certain - requires additional tracking logic.
+			//TODO: _game.OpponentSecrets.SetZero(Hunter.HiddenCache);
 			_game.OpponentSecrets.SetZero(Hunter.Snipe);
 			_game.OpponentSecrets.SetZero(Mage.MirrorEntity);
+			_game.OpponentSecrets.SetZero(Mage.PotionOfPolymorph);
 			_game.OpponentSecrets.SetZero(Paladin.Repentance);
 
 			if(Core.MainWindow != null)
@@ -235,7 +239,10 @@ namespace Hearthstone_Deck_Tracker
 				return;
 
 			if(_game.Opponent.HandCount < 10)
+			{
 				_game.OpponentSecrets.SetZero(Mage.Duplicate);
+				_game.OpponentSecrets.SetZero(Paladin.GetawayKodo);
+			}
 
 			var numDeathrattleMinions = 0;
 
