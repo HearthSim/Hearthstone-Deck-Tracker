@@ -1,3 +1,16 @@
+## __Release v1.1.2 - 2016-11-30__
+
+__Updated for 7.0.0.15590__
+- Known issue: The "Hidden Cache" Hunter secret does not automatically grey out.
+
+__Changes__:
+- You can now paste (ctrl-v) deck urls directly into HDT, rather than having to use the `IMPORT` menu.
+- The installation and update process should be faster now.
+
+__Fixes__:
+- Fixed an issue where games would not be sorted by duration properly.
+
+
 ## __Release v1.1.1 - 2016-10-04__
 
 __Updated for 6.1.3.14830__
