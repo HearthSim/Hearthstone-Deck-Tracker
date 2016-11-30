@@ -11,8 +11,8 @@
              mc:Ignorable="d" Title="{lex:Loc ImportingChoiceDialog_Title}" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
-        <TextBlock Text="{lex:Loc ImportingChoiceDialog_Label_Description}" Margin="0,10" FontSize="16"/>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Width="360" Margin="0,10,0,0" HorizontalAlignment="Right">
+        <TextBlock Text="{lex:Loc ImportingChoiceDialog_Label_Description}" Margin="0,35,0,15" FontSize="16"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Width="360" Margin="0,30,0,20" HorizontalAlignment="Right">
             <Button Name="BtnExport" Height="37" Width="150" Style="{DynamicResource AccentedSquareButtonStyle}" Click="BtnExport_OnClick">
                 <TextBlock Text="{lex:Loc ImportingChoiceDialogg_Button_Export}"/>
             </Button>
