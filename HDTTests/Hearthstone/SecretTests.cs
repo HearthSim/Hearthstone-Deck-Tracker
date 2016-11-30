@@ -155,7 +155,7 @@ namespace HDTTests.Hearthstone
             _gameEventHandler.HandleOpponentMinionDeath(_opponentMinion1, 2);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
-            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Redemption);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Redemption, PaladinSecrets.GetawayKodo);
         }
 
         [TestMethod]
@@ -166,7 +166,7 @@ namespace HDTTests.Hearthstone
             _game.GameTime.Time += TimeSpan.FromSeconds(1);
             VerifySecrets(0, HunterSecrets.All);
             VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
-            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Avenge, PaladinSecrets.Redemption);
+            VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Avenge, PaladinSecrets.Redemption, PaladinSecrets.GetawayKodo);
         }
 
         [TestMethod]
@@ -174,7 +174,7 @@ namespace HDTTests.Hearthstone
         {
             _gameEventHandler.HandlePlayerMinionPlayed();
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
-            VerifySecrets(1, MageSecrets.All, MageSecrets.MirrorEntity);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
         }
 
