@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -25,6 +25,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public void Update(Deck deck)
 		{
+			RectIconMsg.Visibility = deck?.ContainsSet("Mean Streets of Gadgetzan") ?? false ? Visible : Collapsed;
 			RectIconKara.Visibility = deck?.ContainsSet("One Night in Karazhan") ?? false ? Visible : Collapsed;
 			RectIconOg.Visibility = deck?.ContainsSet("Whispers of the Old Gods") ?? false ? Visible : Collapsed;
 			RectIconLoe.Visibility = deck?.ContainsSet("League of Explorers") ?? false ? Visible : Collapsed;

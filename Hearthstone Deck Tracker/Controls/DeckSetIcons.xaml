@@ -91,5 +91,10 @@
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_kara}" />
             </Rectangle.Fill>
         </Rectangle>
+        <Rectangle Name="RectIconMsg" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Msg}">
+            <Rectangle.Fill>
+                <VisualBrush Stretch="Uniform" Visual="{StaticResource set_classic}" />
+            </Rectangle.Fill>
+        </Rectangle>
     </StackPanel>
 </UserControl>

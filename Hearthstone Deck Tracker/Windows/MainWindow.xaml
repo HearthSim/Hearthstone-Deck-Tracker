@@ -590,6 +590,7 @@
                         <RadioButton Name="RadioButtonSet20" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Loe}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Name="RadioButtonSet21" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Wotog}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Name="RadioButtonSet23" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Kara}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Name="RadioButtonSet25" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Msg}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                     </MenuItem>
                 </MenuItem>
             </Menu>

@@ -15,6 +15,9 @@ namespace Hearthstone_Deck_Tracker.Enums
 		TheGrandTournament,
 
 		[LocDescription("Enum_ArenaRewardPacks_WhispersOfTheOldGods")]
-		WhispersOfTheOldGods
+		WhispersOfTheOldGods,
+
+		[LocDescription("Enum_ArenaRewardPacks_MeanStreetsOfGadgetzan")]
+		MeanStreetsOfGadgetzan
 	}
 }
