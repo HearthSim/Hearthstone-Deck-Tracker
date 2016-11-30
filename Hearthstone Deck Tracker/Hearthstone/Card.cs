@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -325,6 +326,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public string GetPlayerClass => PlayerClass ?? "Neutral";
+
+		public bool IsClass(string playerClass)
+		{
+			if(GetPlayerClass == playerClass)
+				return true;
+			var classGroup = _dbCard?.Entity.GetTag(GameTag.MULTI_CLASS_GROUP) ?? 0;
+			if(classGroup == 0)
+				return false;
+			return Helper.MultiClassGroups[(MultiClassGroup)classGroup]
+				.Any(x => string.Equals(x.ToString(), playerClass, StringComparison.CurrentCultureIgnoreCase));
+		}
 
 		public SolidColorBrush ColorPlayer
 		{

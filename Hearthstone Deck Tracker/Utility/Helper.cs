@@ -710,5 +710,12 @@ namespace Hearthstone_Deck_Tracker
 			return Uri.TryCreate(url, UriKind.Absolute, out result)
 				&& (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps);
 		}
+
+		public static readonly Dictionary<MultiClassGroup, CardClass[]> MultiClassGroups = new Dictionary<MultiClassGroup, CardClass[]>
+		{
+			{MultiClassGroup.GRIMY_GOONS, new[] {CardClass.HUNTER, CardClass.PALADIN, CardClass.WARRIOR}},
+			{MultiClassGroup.JADE_LOTUS, new[] {CardClass.DRUID, CardClass.ROGUE, CardClass.SHAMAN}},
+			{MultiClassGroup.KABAL, new[] {CardClass.MAGE, CardClass.PRIEST, CardClass.WARLOCK}}
+		};
 	}
 }

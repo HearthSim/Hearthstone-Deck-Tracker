@@ -103,11 +103,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					switch(selectedNeutral)
 					{
 						case "All":
-							if(card.GetPlayerClass == selectedClass || card.GetPlayerClass == "Neutral")
+							if(card.IsClass(selectedClass) || card.GetPlayerClass == "Neutral")
 								ListViewDB.Items.Add(card);
 							break;
 						case "Class":
-							if(card.GetPlayerClass == selectedClass)
+							if(card.IsClass(selectedClass))
 								ListViewDB.Items.Add(card);
 							break;
 						case "Neutral":
