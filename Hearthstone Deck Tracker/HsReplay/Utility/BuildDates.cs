@@ -11,6 +11,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 	{
 		private static readonly List<BuildDate> KnownBuildDates = new List<BuildDate>
 		{
+			{DateTime.Parse("Nov 29, 2016"), 15590},
+			{DateTime.Parse("Nov 8, 2016"), 15300},
 			{DateTime.Parse("Oct 20, 2016"), 15181},
 			{DateTime.Parse("Oct 3, 2016"), 14830},
 			{DateTime.Parse("Sep 15, 2016"), 14406},
