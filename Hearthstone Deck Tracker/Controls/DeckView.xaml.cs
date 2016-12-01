@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.CardIds.Collectible;
 using static System.Windows.Visibility;
@@ -45,8 +46,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			var heroId = ClassToID(deckClass);
 			var drawingGroup = new DrawingGroup();
-			drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(
-				$"Images/Bars/{heroId}.png", UriKind.Relative)), new Rect(54, 0, 130, 34)));
+			var img = ImageCache.GetCardImage(Database.GetCardFromId(heroId));
+			drawingGroup.Children.Add(new ImageDrawing(img, new Rect(54, 0, 130, 34)));
 			drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(
 				"Images/Themes/Bars/dark/fade.png", UriKind.Relative)), new Rect(0, 0, 183, 34)));
 
