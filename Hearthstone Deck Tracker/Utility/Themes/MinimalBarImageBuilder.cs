@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 ﻿using System.Drawing;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -18,10 +18,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		protected override void AddCardImage()
 		{
-			var cardFile = Path.Combine(BarImageDir, Card.Id + ".png");
-			if(!File.Exists(cardFile))
+			var bmp = ImageCache.GetCardBitmap(Card);
+			if(bmp == null)
 				return;
-			var img = new GaussianBlur((Bitmap)Image.FromFile(cardFile)).Process(2);
+			var img = new GaussianBlur(bmp).Process(2);
 			DrawingGroup.Children.Add(new ImageDrawing(img.ToImageSource(), FrameRect));
 		}
 

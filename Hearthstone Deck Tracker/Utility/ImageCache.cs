@@ -82,8 +82,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(bmp != null)
 				bmpImg = bmp.ToImageSource();
 			CardBitmapImages.Add(card.Id, bmpImg);
-			CardBitmaps.Remove(card.Id);
 			return bmpImg;
+		}
+
+		public static Bitmap GetCardBitmap(Card card)
+		{
+			Bitmap bmp;
+			if(!CardBitmaps.TryGetValue(card.Id, out bmp))
+				LoadResource(card, out bmp);
+			return bmp;
 		}
 
 		private static void LoadResource(Card card, out Bitmap bitmap)

@@ -13,8 +13,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
 	public abstract class CardBarImageBuilder
 	{
-		protected const string BarImageDir = "Images/Bars";
-
 		protected Card Card;
 		protected string ThemeDir;
 		protected DrawingGroup DrawingGroup = new DrawingGroup();
