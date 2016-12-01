@@ -399,12 +399,8 @@ namespace Hearthstone_Deck_Tracker
 			if(!thaurissans.Any())
 				return;
 
-			foreach(var impFavor in _game.Opponent.Board.Where(x => x.CardId == HearthDb.CardIds.NonCollectible.Neutral.EmperorThaurissan_ImperialFavorEnchantment))
-			{
-				Entity entity;
-				if(_game.Entities.TryGetValue(impFavor.GetTag(ATTACHED), out entity))
-					entity.Info.CostReduction += thaurissans.Count;
-			}
+			foreach(var card in _game.Opponent.Hand)
+				card.Info.CostReduction += thaurissans.Count;
 		}
 
 		public async void HandleAvengeAsync(int deathRattleCount)
