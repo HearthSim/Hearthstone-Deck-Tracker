@@ -26,6 +26,8 @@ namespace ResourceGenerator
 
 			foreach(var card in Cards.All)
 			{
+				if(card.Value.Set == CardSet.CHEAT)
+					continue;
 				var key = card.Value.Set + (card.Value.Collectible ? "" : "_NC");
 				if(!dict.ContainsKey(key))
 					dict[key] = new List<Card>();
@@ -41,7 +43,7 @@ namespace ResourceGenerator
 					foreach(var card in dict[set])
 					{
 						var img = new FileInfo($"{tilesDir}\\{card.Id}.png");
-						if(!img.Exists && card.Collectible && card.Type != CardType.HERO)
+						if(!img.Exists && (card.Collectible || card.Type == CardType.MINION || card.Type == CardType.SPELL || card.Type == CardType.WEAPON))
 						{
 							DownloadTile(card, img);
 							img = new FileInfo($"{tilesDir}\\{card.Id}.png");
