@@ -268,6 +268,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Druid.JadeIdol:
 								AddKnownCardId(gameState, Collectible.Druid.JadeIdol, 3);
 								break;
+							case Collectible.Shaman.WhiteEyes:
+								AddKnownCardId(gameState, NonCollectible.Shaman.WhiteEyes_TheStormGuardianToken);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
