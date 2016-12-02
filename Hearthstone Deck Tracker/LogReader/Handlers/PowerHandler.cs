@@ -233,7 +233,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						switch(actionStartingCardId)
 						{
 							case Collectible.Rogue.GangUp:
-								AddTargetAsKnownCardId(gameState, game, match, 3);
+								AddKnownCardId(gameState, game, GetTargetCardId(match), 3);
 								break;
 							case Collectible.Rogue.BeneathTheGrounds:
 								AddKnownCardId(gameState, game, NonCollectible.Rogue.BeneaththeGrounds_AmbushToken, 3);
@@ -242,7 +242,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, game, NonCollectible.Warrior.IronJuggernaut_BurrowingMineToken);
 								break;
 							case Collectible.Druid.Recycle:
-								AddTargetAsKnownCardId(gameState, game, match);
+								AddKnownCardId(gameState, game, GetTargetCardId(match));
 								break;
 							case Collectible.Mage.ForgottenTorch:
 								AddKnownCardId(gameState, game, NonCollectible.Mage.ForgottenTorch_RoaringTorchToken);
@@ -320,22 +320,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.ResetCurrentEntity();
 		}
 
-		private static void AddTargetAsKnownCardId(IHsGameState gameState, IGame game, Match match, int count = 1)
+		private static string GetTargetCardId(Match match)
 		{
 			var target = match.Groups["target"].Value.Trim();
 			if(!target.StartsWith("[") || !EntityRegex.IsMatch(target))
-				return;
+				return null;
 			var cardIdMatch = CardIdRegex.Match(target);
 			if(!cardIdMatch.Success)
-				return;
-			var targetCardId = cardIdMatch.Groups["cardId"].Value.Trim();
-			var blockId = gameState.CurrentBlock.Id;
-			for(var i = 0; i < count; i++)
-			{
-				if(!gameState.KnownCardIds.ContainsKey(blockId))
-					gameState.KnownCardIds[blockId] = new List<string>();
-				gameState.KnownCardIds[blockId].Add(targetCardId);
-			}
+				return null;
+			return cardIdMatch.Groups["cardId"].Value.Trim();
 		}
 
 		private static void AddKnownCardId(IHsGameState gameState, IGame game, string cardId, int count = 1)
