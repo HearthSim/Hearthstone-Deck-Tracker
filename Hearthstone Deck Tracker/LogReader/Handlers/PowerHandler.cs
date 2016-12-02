@@ -223,8 +223,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						switch(actionStartingCardId)
 						{
 							case Collectible.Rogue.TradePrinceGallywix:
-								AddKnownCardId(gameState, game, game.Entities[gameState.LastCardPlayed].CardId);
-								AddKnownCardId(gameState, game, NonCollectible.Neutral.TradePrinceGallywix_GallywixsCoinToken);
+								AddKnownCardId(gameState, game.Entities[gameState.LastCardPlayed].CardId);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TradePrinceGallywix_GallywixsCoinToken);
 								break;
 						}
 					}
@@ -233,40 +233,40 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						switch(actionStartingCardId)
 						{
 							case Collectible.Rogue.GangUp:
-								AddKnownCardId(gameState, game, GetTargetCardId(match), 3);
+								AddKnownCardId(gameState, GetTargetCardId(match), 3);
 								break;
 							case Collectible.Rogue.BeneathTheGrounds:
-								AddKnownCardId(gameState, game, NonCollectible.Rogue.BeneaththeGrounds_AmbushToken, 3);
+								AddKnownCardId(gameState, NonCollectible.Rogue.BeneaththeGrounds_AmbushToken, 3);
 								break;
 							case Collectible.Warrior.IronJuggernaut:
-								AddKnownCardId(gameState, game, NonCollectible.Warrior.IronJuggernaut_BurrowingMineToken);
+								AddKnownCardId(gameState, NonCollectible.Warrior.IronJuggernaut_BurrowingMineToken);
 								break;
 							case Collectible.Druid.Recycle:
-								AddKnownCardId(gameState, game, GetTargetCardId(match));
+								AddKnownCardId(gameState, GetTargetCardId(match));
 								break;
 							case Collectible.Mage.ForgottenTorch:
-								AddKnownCardId(gameState, game, NonCollectible.Mage.ForgottenTorch_RoaringTorchToken);
+								AddKnownCardId(gameState, NonCollectible.Mage.ForgottenTorch_RoaringTorchToken);
 								break;
 							case Collectible.Warlock.CurseOfRafaam:
-								AddKnownCardId(gameState, game, NonCollectible.Warlock.CurseofRafaam_CursedToken);
+								AddKnownCardId(gameState, NonCollectible.Warlock.CurseofRafaam_CursedToken);
 								break;
 							case Collectible.Neutral.AncientShade:
-								AddKnownCardId(gameState, game, NonCollectible.Neutral.AncientShade_AncientCurseToken);
+								AddKnownCardId(gameState, NonCollectible.Neutral.AncientShade_AncientCurseToken);
 								break;
 							case Collectible.Priest.ExcavatedEvil:
-								AddKnownCardId(gameState, game, Collectible.Priest.ExcavatedEvil);
+								AddKnownCardId(gameState, Collectible.Priest.ExcavatedEvil);
 								break;
 							case Collectible.Neutral.EliseStarseeker:
-								AddKnownCardId(gameState, game, NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken);
+								AddKnownCardId(gameState, NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken);
 								break;
 							case NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken:
-								AddKnownCardId(gameState, game, NonCollectible.Neutral.EliseStarseeker_GoldenMonkeyToken);
+								AddKnownCardId(gameState, NonCollectible.Neutral.EliseStarseeker_GoldenMonkeyToken);
 								break;
 							case Collectible.Neutral.Doomcaller:
-								AddKnownCardId(gameState, game, NonCollectible.Neutral.Cthun);
+								AddKnownCardId(gameState, NonCollectible.Neutral.Cthun);
 								break;
 							case Collectible.Druid.JadeIdol:
-								AddKnownCardId(gameState, game, Collectible.Druid.JadeIdol, 3);
+								AddKnownCardId(gameState, Collectible.Druid.JadeIdol, 3);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
@@ -331,7 +331,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			return cardIdMatch.Groups["cardId"].Value.Trim();
 		}
 
-		private static void AddKnownCardId(IHsGameState gameState, IGame game, string cardId, int count = 1)
+		private static void AddKnownCardId(IHsGameState gameState, string cardId, int count = 1)
 		{
 			var blockId = gameState.CurrentBlock.Id;
 			for(var i = 0; i < count; i++)
