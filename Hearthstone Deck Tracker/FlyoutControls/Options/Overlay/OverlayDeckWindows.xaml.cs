@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System.Drawing;
 using System.Windows;
@@ -241,7 +241,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			var background = brush;
 
-			switch(ComboboxWindowBackground.SelectedItem.ToString())
+			switch(ComboboxWindowBackground.SelectedItem?.ToString())
 			{
 				case "Theme":
 					background = Background;
