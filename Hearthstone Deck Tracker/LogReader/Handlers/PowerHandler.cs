@@ -265,6 +265,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.Doomcaller:
 								AddKnownCardId(gameState, game, NonCollectible.Neutral.Cthun);
 								break;
+							case Collectible.Druid.JadeIdol:
+								AddKnownCardId(gameState, game, Collectible.Druid.JadeIdol, 3);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
