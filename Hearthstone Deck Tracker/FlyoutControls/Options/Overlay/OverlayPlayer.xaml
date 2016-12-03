@@ -27,16 +27,14 @@
                               Margin="10,5,0,0" VerticalAlignment="Top" IsChecked="True"
                               Checked="CheckboxSameScaling_Checked"
                               Unchecked="CheckboxSameScaling_Unchecked" />
-                    <DockPanel Margin="10,5,10,0"
-                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:LocText Options_Overlay_Player_Label_Scaling}"
-                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" />
+                    <DockPanel Margin="10,5,10,0">
+                        <Label Content="{lex:LocText Options_Overlay_Player_Label_Scaling}" />
                         <TextBox Name="TextBoxScaling" PreviewTextInput="TextBoxScaling_OnPreviewTextInput"
                                  Text="{Binding PlayerScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayPlayer}}"
                                  DockPanel.Dock="Right" Margin="5,0,0,0" Width="50" />
                         <Slider x:Name="SliderOverlayPlayerScaling" HorizontalAlignment="Right"
                                 VerticalAlignment="Center" Width="150"
-                                Value="{Binding PlayerScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayPlayer}}"
+                                Value="{Binding PlayerScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayPlayer}, Delay=100}"
                                 Minimum="1" SmallChange="1" LargeChange="10" Maximum="200" />
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0"
