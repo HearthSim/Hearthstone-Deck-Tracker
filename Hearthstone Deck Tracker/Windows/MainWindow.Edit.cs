@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -15,6 +15,9 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.MessageBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 #endregion
 
@@ -422,9 +425,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			//etc
 			//
 			Dictionary<string, string> cardDictionary = new Dictionary<string, string>();
-			var CardIds = File.ReadAllLines("Resources/hearthpwn-card-map.tsv"); //need to reference the resource rather than file name, or init the dict at startup
-			var DeckUrl = "http://www.hearthpwn.com/deckbuilder/druid#"; // need to get class name from selected deck
-			foreach (var line in CardIds)
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			var cardIds = File.ReadAllLines("Resources/hearthpwn-card-map.tsv"); //need to reference the resource rather than file name, or init the dict at startup
+			var deckUrl = "http://www.hearthpwn.com/deckbuilder/" + deck.Class + "#";
+			foreach (var line in cardIds)
 			{
 				var cardDict = line.Split(' ');
 				string cardName = string.Join(" ", cardDict.Take(cardDict.Length - 1));
@@ -433,31 +437,38 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					cardDictionary.Add(cardName, cardDict.Last());
 				}
-				
 			}
-			var deck = File.ReadAllLines("deck.txt"); // Need to generate this from the selected deck
-			foreach (var line in deck)
+			foreach (var card in deck.Cards)
 			{
-				string count;
-				string line2;
-				if (line.Contains(" x 2"))
-				{
-					line2 = line.Replace(" x 2", "");
-					count = "2";
-				}
-				else
-				{
-					line2 = line;
-					count = "1";
-				}
-				var cardId = cardDictionary[line2];
-				DeckUrl = DeckUrl + cardId + ":" + count + ";";
+				var cardId = cardDictionary[card.Name];
+				deckUrl = deckUrl + cardId + ":" + card.Count + ";";
 			}
-			MessageBox.Show(DeckUrl);
+			MessageBox.Show(deckUrl);
 		}
 		internal void BtnExportDeck_Generic_Click(object sender, RoutedEventArgs e)
 		{
-			//File picker to save a txt file containing names of cards
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			SaveFileDialog MainDialog = new SaveFileDialog();
+			MainDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+			MainDialog.Title = "Save deck";
+			MainDialog.ShowDialog();
+			if (!string.IsNullOrEmpty(MainDialog.FileName))
+			{
+				StreamWriter SW = new StreamWriter(MainDialog.FileName);
+				foreach (var card in deck.Cards)
+				{
+					if (card.Count == 2)
+					{
+						SW.WriteLine(card.Name + " x 2");
+					}
+
+					else
+					{
+						SW.WriteLine(card.Name);
+					}
+				}
+				SW.Close();
+			}
 		}
 	}
 }
