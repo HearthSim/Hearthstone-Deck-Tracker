@@ -18,7 +18,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		IGameHandler GameHandler { get; set; }
 		DateTime LastGameStart { get; set; }
 		int LastId { get; set; }
-		int MaxId { get; set; }
 		bool OpponentUsedHeroPower { get; set; }
 		bool PlayerUsedHeroPower { get; set; }
 		ReplayKeyPoint ProposedKeyPoint { get; set; }

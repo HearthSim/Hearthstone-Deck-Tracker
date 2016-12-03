@@ -28,7 +28,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public IGameHandler GameHandler { get; set; }
 		public DateTime LastGameStart { get; set; }
 		public int LastId { get; set; }
-		public int MaxId { get; set; }
 		public bool OpponentUsedHeroPower { get; set; }
 		public bool PlayerUsedHeroPower { get; set; }
 		public ReplayKeyPoint ProposedKeyPoint { get; set; }
@@ -72,7 +71,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			JoustReveals = 0;
 			KnownCardIds.Clear();
 			LastGameStart = DateTime.Now;
-			MaxId = 0;
 			WasInProgress = false;
 			SetupDone = false;
 			CurrentEntityId = 0;
