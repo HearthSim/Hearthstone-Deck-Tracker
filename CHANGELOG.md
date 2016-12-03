@@ -1,3 +1,15 @@
+## __Release v1.1.3 - 2016-12-04__
+
+__Changes__:
+- Cards created by Jade Idol and White Eyes are now properly tracked.
+
+__Fixes__:
+- Fixed an issue where the secrets list would not disappear after all secrets were triggered.
+- Fixed an issue where importing decks from the game would not work in some cases.
+- Fixed an issue where the "Minimal" card theme would not display any images.
+- Fixed an issue where creating deck screenshots would crash HDT.
+
+
 ## __Release v1.1.2 - 2016-11-30__
 
 __Updated for 7.0.0.15590__
