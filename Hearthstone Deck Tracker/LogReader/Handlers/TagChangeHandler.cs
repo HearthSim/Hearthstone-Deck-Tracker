@@ -27,6 +27,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public void TagChange(IHsGameState gameState, GameTag tag, int id, int value, IGame game, bool isCreationTag = false)
 		{
+			if(!game.Entities.ContainsKey(id))
+				game.Entities.Add(id, new Entity(id));
+			var prevValue = game.Entities[id].GetTag(tag);
+			if(value == prevValue)
+				return;
 			if(gameState.LastId != id)
 			{
 				if(gameState.ProposedKeyPoint != null)
@@ -38,10 +43,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			gameState.LastId = id;
 			if(id > gameState.MaxId)
 				gameState.MaxId = id;
-			if(!game.Entities.ContainsKey(id))
-				game.Entities.Add(id, new Entity(id));
 
-			var prevValue = game.Entities[id].GetTag(tag);
 			game.Entities[id].SetTag(tag, value);
 
 			if(isCreationTag)
