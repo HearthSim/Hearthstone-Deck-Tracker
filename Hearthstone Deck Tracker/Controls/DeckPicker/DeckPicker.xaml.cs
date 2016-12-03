@@ -754,5 +754,30 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			if(!SelectedDecks.Any())
 				e.Handled = true;
 		}
+
+		private void BtnExportDeck_Hearthpwn_Click(object sender, RoutedEventArgs e)
+		{
+			//Hearthpwn logic.
+			//
+			//
+			//Open link to a url, structure:
+			//http://www.hearthpwn.com/deckbuilder/
+			//class name
+			//#
+			//cardid
+			//:
+			//number of that card in deck
+			//;
+			//cardid
+			//:
+			//number of that card in deck
+			//;
+			//etc
+		}
+
+		private void BtnExportDeck_Generic_Click(object sender, RoutedEventArgs e)
+		{
+			//File picker to save a txt file containing names of cards
+		}
 	}
 }
