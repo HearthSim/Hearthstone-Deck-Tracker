@@ -1371,6 +1371,9 @@
     <Resource Include="Resources\ClassIcons\General\BaseLight\all.png" />
     <Resource Include="Resources\ClassIcons\General\BaseLight\archived.png" />
     <Resource Include="Resources\ClassIcons\General\BaseDark\archived.png" />
+    <None Include="Resources\hearthpwn-card-map.tsv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\card-mark-coin.png" />
     <Resource Include="Utility\Markdown.Xaml\License.txt" />
     <Resource Include="Resources\cards.png" />

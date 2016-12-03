@@ -1,6 +1,8 @@
 #region
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -418,6 +420,40 @@ namespace Hearthstone_Deck_Tracker.Windows
 			//number of that card in deck
 			//;
 			//etc
+			//
+			Dictionary<string, string> cardDictionary = new Dictionary<string, string>();
+			var CardIds = File.ReadAllLines("Resources/hearthpwn-card-map.tsv"); //need to reference the resource rather than file name, or init the dict at startup
+			var DeckUrl = "http://www.hearthpwn.com/deckbuilder/druid#"; // need to get class name from selected deck
+			foreach (var line in CardIds)
+			{
+				var cardDict = line.Split(' ');
+				string cardName = string.Join(" ", cardDict.Take(cardDict.Length - 1));
+				//MessageBox.Show(cardName + " " + cardDict.Last());
+				if (!cardDictionary.ContainsKey(cardDict[0]))
+				{
+					cardDictionary.Add(cardName, cardDict.Last());
+				}
+				
+			}
+			var deck = File.ReadAllLines("deck.txt"); // Need to generate this from the selected deck
+			foreach (var line in deck)
+			{
+				string count;
+				string line2;
+				if (line.Contains(" x 2"))
+				{
+					line2 = line.Replace(" x 2", "");
+					count = "2";
+				}
+				else
+				{
+					line2 = line;
+					count = "1";
+				}
+				var cardId = cardDictionary[line2];
+				DeckUrl = DeckUrl + cardId + ":" + count + ";";
+			}
+			MessageBox.Show(DeckUrl);
 		}
 		internal void BtnExportDeck_Generic_Click(object sender, RoutedEventArgs e)
 		{
