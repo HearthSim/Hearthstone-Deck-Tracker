@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -18,7 +19,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Game.ImportOptions
 		{
 			Deck = deck;
 			var tmp = new Deck { Cards = new ObservableCollection<Card>(newDeck.Cards.Select(x => new Card { Id = x.Id, Count = x.Count })) };
-			MatchingCards = 30 - (deck - tmp).Count(x => x.Count > 0);
+			var diff = tmp - deck;
+			MatchingCards = 30 - Math.Max(diff.Count(x => x.Count > 0), diff.Count(x => x.Count < 0));
 			NewVersion = MatchingCards == 30 ? new SerializableVersion(0, 0)
 				: (MatchingCards < 26 ? SerializableVersion.IncreaseMajor(deck.Version)
 					: SerializableVersion.IncreaseMinor(deck.Version));
