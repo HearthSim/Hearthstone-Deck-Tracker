@@ -126,9 +126,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var match = CreationRegex.Match(logLine);
 				var id = int.Parse(match.Groups["id"].Value);
 				var cardId = match.Groups["cardId"].Value;
+				var zone = LogReaderHelper.ParseEnum<Zone>(match.Groups["zone"].Value);
 				if(!game.Entities.ContainsKey(id))
 				{
-					if(string.IsNullOrEmpty(cardId))
+					if(string.IsNullOrEmpty(cardId) && zone != Zone.SETASIDE)
 					{
 						var blockId = gameState.CurrentBlock?.Id;
 						if(blockId.HasValue && gameState.KnownCardIds.ContainsKey(blockId.Value))
@@ -147,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(gameState.DeterminedPlayers)
 					_tagChangeHandler.InvokeQueuedActions(game);
 				gameState.CurrentEntityHasCardId = !string.IsNullOrEmpty(cardId);
-				gameState.CurrentEntityZone = LogReaderHelper.ParseEnum<Zone>(match.Groups["zone"].Value);
+				gameState.CurrentEntityZone = zone;
 				return;
 			}
 			else if(UpdatingEntityRegex.IsMatch(logLine))
