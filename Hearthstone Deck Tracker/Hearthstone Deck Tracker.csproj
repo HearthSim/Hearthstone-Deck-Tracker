@@ -266,6 +266,9 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Controls\Information\HearthStatsLogoutInfo.xaml.cs">
+      <DependentUpon>HearthStatsLogoutInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\DeckPanel.cs" />
     <Compile Include="Enums\ImportingChoice.cs" />
     <Compile Include="Enums\LocDescriptionAttribute.cs" />
@@ -887,6 +890,10 @@
     <Page Include="Controls\ElementSorterItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Information\HearthStatsLogoutInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="FlyoutControls\HsReplayInfo.xaml">
       <SubType>Designer</SubType>

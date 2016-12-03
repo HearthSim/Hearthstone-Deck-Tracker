@@ -1,0 +1,31 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Information.HearthStatsLogoutInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <DockPanel>
+        <Label Name="LabelHeader" Content="You have been logged out of HearthStats" FontWeight="SemiBold" DockPanel.Dock="Top" FontSize="18" HorizontalAlignment="Center"/>
+        <Separator DockPanel.Dock="Top"/>
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock TextWrapping="Wrap" FontSize="15" HorizontalAlignment="Center" Width="420">
+                        <Run>HearthStats is currently (state 2016-12-04) not updated for the new expansion, and deck syncing appears to cause problems for local decks in some cases.</Run>
+                        <LineBreak/><LineBreak/>
+                        <Run>You can log back in by enabling 'Show HearthStats menu' under `options (advanced) > tracker > settings' or clicking the button below.</Run>
+            </TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200" Click="ButtonClose_OnClick">
+                    <TextBlock>Continue</TextBlock>
+                </Button>
+                <Button Style="{DynamicResource SquareButtonStyle}" Margin="10,0,0,0" Width="200" Click="ButtonEnableMenu_OnClick">
+                    <TextBlock>Enable HearthStats menu</TextBlock>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</UserControl>
+
+
+
