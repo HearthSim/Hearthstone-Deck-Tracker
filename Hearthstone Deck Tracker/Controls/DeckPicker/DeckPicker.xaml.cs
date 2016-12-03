@@ -670,6 +670,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void BtnSetDeckUrl_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnSetDeckUrl_Click(sender, e);
 		private void BtnUpdateDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnUpdateDeck_Click(sender, e);
 		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnOpenDeckUrl_Click(sender, e);
+		private void BtnExportDeck_Hearthpwn_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnExportDeck_Hearthpwn_Click(sender, e);
+		private void BtnExportDeck_Generic_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnExportDeck_Generic_Click(sender, e);
 		private void BtnArchiveDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnArchiveDeck_Click(sender, e);
 		private void BtnUnarchiveDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnUnarchiveDeck_Click(sender, e);
 		private void BtnDeleteDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnDeleteDeck_Click(sender, e);
@@ -753,31 +755,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			if(!SelectedDecks.Any())
 				e.Handled = true;
-		}
-
-		private void BtnExportDeck_Hearthpwn_Click(object sender, RoutedEventArgs e)
-		{
-			//Hearthpwn logic.
-			//
-			//
-			//Open link to a url, structure:
-			//http://www.hearthpwn.com/deckbuilder/
-			//class name
-			//#
-			//cardid
-			//:
-			//number of that card in deck
-			//;
-			//cardid
-			//:
-			//number of that card in deck
-			//;
-			//etc
-		}
-
-		private void BtnExportDeck_Generic_Click(object sender, RoutedEventArgs e)
-		{
-			//File picker to save a txt file containing names of cards
 		}
 	}
 }
