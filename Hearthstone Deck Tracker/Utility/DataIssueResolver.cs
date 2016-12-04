@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			while(!Core.MainWindow.IsLoaded || Core.MainWindow.WindowState == WindowState.Minimized || Core.MainWindow.FlyoutUpdateNotes.IsOpen)
 				await Task.Delay(500);
 			var result = await Core.MainWindow.ShowMessageAsync("Data maintenance required",
-														  "Some files need to be cleaned up, to help HDT run a bit better.\n\nThis should not talk too long, you can do just do it later though.",
+														  "Some files need to be cleaned up to help HDT run a bit better.\n\nThis shouldn't take too long, but you can also do it later.",
 														  MessageDialogStyle.AffirmativeAndNegative,
 														  new MetroDialogSettings() {AffirmativeButtonText = "start", NegativeButtonText = "ask again later"});
 			if(result == MessageDialogResult.Negative)
