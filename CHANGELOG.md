@@ -1,4 +1,4 @@
-## __Release v1.1.3 - 2016-12-04__
+## __Release v1.1.4 - 2016-12-04__
 
 __Changes__:
 - Cards created by Jade Idol and White Eyes are now properly tracked.
