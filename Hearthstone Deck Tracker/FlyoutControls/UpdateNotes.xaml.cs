@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 #endif
 
-			if(previousVersion <= new Version(1, 1, 2, 3) && ConfigManager.UpdatedVersion == new Version(1, 1, 3, 0))
+			if(previousVersion <= new Version(1, 1, 3, 1) && ConfigManager.UpdatedVersion == new Version(1, 1, 4, 0))
 			{
 				if(File.Exists(Config.Instance.HearthStatsFilePath) && HearthStatsAPI.Logout())
 				{
