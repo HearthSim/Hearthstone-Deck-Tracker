@@ -243,6 +243,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Warrior.IronJuggernaut_BurrowingMineToken);
 								break;
 							case Collectible.Druid.Recycle:
+							case Collectible.Mage.ManicSoulcaster:
 								AddKnownCardId(gameState, GetTargetCardId(match));
 								break;
 							case Collectible.Mage.ForgottenTorch:
