@@ -86,8 +86,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public void SetDecks(List<ImportedDeck> decks)
 		{
 			Decks.Clear();
+			var import = CheckBoxImportAll.IsChecked == true;
 			foreach(var deck in decks)
+			{
+				deck.Import = import;
 				Decks.Add(deck);
+			}
 			_ready = decks.Any();
 			Text = LocUtil.Get(NoDecksFoundText);
 			UpdateContent();
