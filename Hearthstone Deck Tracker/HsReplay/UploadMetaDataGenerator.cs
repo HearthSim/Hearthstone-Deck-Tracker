@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -13,10 +11,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 {
 	public static class UploadMetaDataGenerator
 	{
-		public static UploadMetaData Generate(string[] log, GameMetaData gameMetaData, GameStats game)
+		public static UploadMetaData Generate(GameMetaData gameMetaData, GameStats game)
 		{
 			var metaData = new UploadMetaData();
-			var playerInfo = GetPlayerInfo(log, game);
+			var playerInfo = GetPlayerInfo(game);
 			if(playerInfo != null)
 			{
 				metaData.Player1 = playerInfo.Player1;
@@ -59,70 +57,51 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			return metaData;
 		}
 
-		private static PlayerInfo GetPlayerInfo(string[] log, GameStats game)
+		private static PlayerInfo GetPlayerInfo(GameStats game)
 		{
+			if(game == null || game.FriendlyPlayerId == 0)
+				return null;
+
 			var friendly = new UploadMetaData.Player();
 			var opposing = new UploadMetaData.Player();
 
-			if(game?.Rank > 0)
+			if(game.Rank > 0)
 				friendly.Rank = game.Rank;
-			if(game?.LegendRank > 0)
+			if(game.LegendRank > 0)
 				friendly.LegendRank = game.LegendRank;
-			if(game?.PlayerCardbackId > 0)
+			if(game.PlayerCardbackId > 0)
 				friendly.Cardback = game.PlayerCardbackId;
-			if(game?.Stars > 0)
+			if(game.Stars > 0)
 				friendly.Stars = game.Stars;
-			if(game?.PlayerCards.Sum(x => x.Count) == 30 && game?.PlayerCards.Sum(x => x.Unconfirmed) <= 24)
+			if(game.PlayerCards.Sum(x => x.Count) == 30 && game?.PlayerCards.Sum(x => x.Unconfirmed) <= 24)
 			{
 				friendly.DeckList = game.PlayerCards.Where(x => x.Id != Database.UnknownCardId).SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
 				if(game.HsDeckId > 0)
 					friendly.DeckId = game.HsDeckId;
 			}
-			if(game?.GameMode == GameMode.Arena)
+			if(game.GameMode == GameMode.Arena)
 			{
 				if(game.ArenaWins > 0)
 					friendly.Wins = game.ArenaWins;
 				if(game.ArenaLosses > 0)
 					friendly.Losses = game.ArenaLosses;
 			}
-			else if(game?.GameMode == GameMode.Brawl)
+			else if(game.GameMode == GameMode.Brawl)
 			{
 				if(game.BrawlWins > 0)
 					friendly.Wins = game.BrawlWins;
 				if(game.BrawlLosses > 0)
 					friendly.Losses = game.BrawlLosses;
 			}
-
-			if(game?.OpponentRank > 0)
+			if(game.OpponentRank > 0)
 				opposing.Rank = game.OpponentRank;
-			if(game?.OpponentLegendRank > 0)
+			if(game.OpponentLegendRank > 0)
 				opposing.LegendRank = game.OpponentLegendRank;
-			if(game?.OpponentCardbackId > 0)
+			if(game.OpponentCardbackId > 0)
 				opposing.Cardback = game.OpponentCardbackId;
 
-			if(game?.FriendlyPlayerId > 0)
-			{
-				return new PlayerInfo(game.FriendlyPlayerId == 1 ? friendly : opposing,
-					game.FriendlyPlayerId == 2 ? friendly : opposing);
-			}
-			var player1Name = GetPlayer1Name(log);
-			if(player1Name == game?.PlayerName)
-				return new PlayerInfo(friendly, opposing, 1);
-			if(player1Name == game?.OpponentName)
-				return new PlayerInfo(opposing, friendly, 2);
-			return null;
-		}
-
-		private static string GetPlayer1Name(IEnumerable<string> log)
-		{
-			foreach(var line in log)
-			{
-				var match = Regex.Match(line, @"TAG_CHANGE Entity=(?<name>(.+)) tag=CONTROLLER value=1");
-				if(!match.Success)
-					continue;
-				return match.Groups["name"].Value;
-			}
-			return null;
+			return new PlayerInfo(game.FriendlyPlayerId == 1 ? friendly : opposing,
+				game.FriendlyPlayerId == 2 ? friendly : opposing);
 		}
 	}
 

@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				game?.HsReplay.UploadTry();
 				Influx.OnGameUpload(game?.HsReplay.UploadTries ?? 1);
 				var lines = logLines.SkipWhile(x => !x.Contains("CREATE_GAME")).ToArray();
-				var metaData = UploadMetaDataGenerator.Generate(lines, gameMetaData, game);
+				var metaData = UploadMetaDataGenerator.Generate(gameMetaData, game);
 				Log.Info("Creating upload request...");
 				var uploadRequest = await ApiWrapper.CreateUploadRequest(metaData);
 				Log.Info("Upload Id: " + uploadRequest.ShortId);
