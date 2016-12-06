@@ -227,6 +227,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, game.Entities[gameState.LastCardPlayed].CardId);
 								AddKnownCardId(gameState, NonCollectible.Neutral.TradePrinceGallywix_GallywixsCoinToken);
 								break;
+							case Collectible.Shaman.WhiteEyes:
+								AddKnownCardId(gameState, NonCollectible.Shaman.WhiteEyes_TheStormGuardianToken);
+								break;
 						}
 					}
 					else //POWER
@@ -269,9 +272,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Druid.JadeIdol:
 								AddKnownCardId(gameState, Collectible.Druid.JadeIdol, 3);
-								break;
-							case Collectible.Shaman.WhiteEyes:
-								AddKnownCardId(gameState, NonCollectible.Shaman.WhiteEyes_TheStormGuardianToken);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
