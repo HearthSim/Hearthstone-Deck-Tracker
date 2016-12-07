@@ -505,6 +505,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int GetNumWindfury() => GetMechanicCount("Windfury");
 		public int GetNumDivineShield() => GetMechanicCount("Divine Shield");
 		public int GetNumCombo() => GetMechanicCount("Combo");
+	        public int GetNumStealth() => GetMechanicCount("Stealth");
 
 		public bool ContainsSet(string set) => Cards.Any(card => card.Set == set);
 
