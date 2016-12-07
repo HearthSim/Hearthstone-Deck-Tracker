@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 						}
 						break;
 					case DisplayedTimeFrame.ThisWeek:
-						filtered = filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
+						filtered = filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + 1));
 						break;
 					case DisplayedTimeFrame.Today:
 						filtered = filtered.Where(g => g.StartTime > DateTime.Today);
