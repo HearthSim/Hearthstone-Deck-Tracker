@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using HearthMirror;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -28,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(!Config.Instance.AutoDeckDetection)
 					return;
 				if(new[] {TOURNAMENT, FRIENDLY, ADVENTURE, TAVERN_BRAWL}.Contains(game.CurrentMode))
-					AutoSelectDeckById();
+					AutoSelectDeckById(game.CurrentMode);
 				else if(game.CurrentMode == DRAFT)
 					AutoSelectArenaDeck();
 			}
@@ -49,16 +50,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			Core.MainWindow.SelectDeck(selectedDeck, true);
 		}
 
-		private static void AutoSelectDeckById()
+		private static void AutoSelectDeckById(Mode mode)
 		{
 			var selectedDeckId = Reflection.GetSelectedDeckInMenu();
 			if(selectedDeckId <= 0)
 			{
-				Log.Info("No selected deck found, using no-deck mode");
-				Core.MainWindow.SelectDeck(null, true);
-				return;
+				if(mode != TAVERN_BRAWL || (selectedDeckId = Reflection.GetEditedDeck().Id) == 0)
+				{
+					Log.Info("No selected deck found, using no-deck mode");
+					Core.MainWindow.SelectDeck(null, true);
+					return;
+				}
 			}
-			DeckManager.AutoImportConstructed(false);
+			DeckManager.AutoImportConstructed(false, mode == TAVERN_BRAWL);
 			var selectedDeck = DeckList.Instance.Decks.FirstOrDefault(x => x.HsId == selectedDeckId);
 			if(selectedDeck == null)
 			{
