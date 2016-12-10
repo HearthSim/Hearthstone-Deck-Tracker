@@ -235,7 +235,8 @@ namespace Hearthstone_Deck_Tracker
 						DeckList.Instance.Decks.Remove(target);
 						var oldDeck = (Deck)target.Clone();
 						oldDeck.Versions = new List<Deck>();
-						target.Name = deck.Deck.Name;
+						if(!brawl)
+							target.Name = deck.Deck.Name;
 						target.LastEdited = DateTime.Now;
 						target.Versions.Add(oldDeck);
 						target.Version = existing.NewVersion;
