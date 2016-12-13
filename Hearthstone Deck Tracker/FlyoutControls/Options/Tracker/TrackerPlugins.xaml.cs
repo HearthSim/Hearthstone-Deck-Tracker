@@ -61,9 +61,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Helper.TryOpenUrl(dir.FullName);
 		}
 
-		private void ButtonReloadPlugins_OnClick(object sender, RoutedEventArgs e)
-		{
-			Core.MainWindow.Restart();
-		}
+		private void ButtonReloadPlugins_OnClick(object sender, RoutedEventArgs e) => Core.MainWindow.Restart();
 	}
 }
