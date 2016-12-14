@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					int maxValue;
 					if(max.StartsWith("L"))
 					{
-						if(int.TryParse(min.Substring(1), out maxValue))
+						if(int.TryParse(max.Substring(1), out maxValue))
 							filtered = filtered.Where(x => x.HasLegendRank && x.LegendRank <= maxValue);
 					}
 					else if(int.TryParse(max, out maxValue))
