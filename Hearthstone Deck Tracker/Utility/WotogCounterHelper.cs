@@ -4,6 +4,7 @@ using System.Linq;
 using HearthDb;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using System;
 using static HearthDb.Enums.GameTag;
 
 #endregion
@@ -24,6 +25,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static bool? YoggInDeck => DeckContains(CardIds.Collectible.Neutral.YoggSaronHopesEnd);
 		public static bool? ArcaneGiantInDeck => DeckContains(CardIds.Collectible.Neutral.ArcaneGiant);
 
+		public static bool PlayerSeenJade => Core.Game.PlayerEntity?.HasTag(JADE_GOLEM) ?? false;
+		public static int PlayerNextJadeGolem => PlayerSeenJade ? Math.Min(Core.Game.PlayerEntity.GetTag(JADE_GOLEM) + 1, 30) : 1;
+
+		public static bool OpponentSeenJade => Core.Game.OpponentEntity?.HasTag(JADE_GOLEM) ?? false;
+		public static int OpponentNextJadeGolem => OpponentSeenJade ? Math.Min(Core.Game.PlayerEntity.GetTag(JADE_GOLEM) + 1, 30) : 1;
+
 		public static bool ShowPlayerCthunCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
 					|| Config.Instance.PlayerCthunCounter == DisplayMode.Auto && PlayerSeenCthun);
 
@@ -33,11 +40,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 				|| (Config.Instance.PlayerSpellsCounter == DisplayMode.Auto && ArcaneGiantInDeck.HasValue && (PlayerArcaneGiant != null || ArcaneGiantInDeck.Value))
 			);
 
+		public static bool ShowPlayerJadeCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerJadeCounter == DisplayMode.Always
+					|| Config.Instance.PlayerJadeCounter == DisplayMode.Auto && PlayerSeenJade);
+
 		public static bool ShowOpponentCthunCounter => !Core.Game.IsInMenu && (Config.Instance.OpponentCthunCounter == DisplayMode.Always
 					|| Config.Instance.OpponentCthunCounter == DisplayMode.Auto && OpponentSeenCthun);
 
 		public static bool ShowOpponentSpellsCounter => !Core.Game.IsInMenu && Config.Instance.OpponentSpellsCounter == DisplayMode.Always;
 
+		public static bool ShowOpponentJadeCounter => !Core.Game.IsInMenu && (Config.Instance.OpponentJadeCounter == DisplayMode.Always
+					|| Config.Instance.OpponentJadeCounter == DisplayMode.Auto && OpponentSeenJade);
+
 		private static bool? DeckContains(string cardId) => DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId);
+
 	}
 }
