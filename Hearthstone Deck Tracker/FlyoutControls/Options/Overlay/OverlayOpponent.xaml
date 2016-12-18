@@ -93,6 +93,18 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </DockPanel>
+                    <DockPanel Margin="5,5,5,0">
+                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Jade}" Width="155"/>
+                        <ComboBox x:Name="ComboBoxJade" HorizontalAlignment="Right"
+                                  Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                                  SelectionChanged="ComboBoxJade_SelectionChanged">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </DockPanel>
                     <CheckBox x:Name="CheckBoxAttack"
                               Content="{lex:LocText Options_Overlay_Opponent_CheckBox_Attack}" HorizontalAlignment="Left"
                               Margin="10,5,0,0" VerticalAlignment="Top"
