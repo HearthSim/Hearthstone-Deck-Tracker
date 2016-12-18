@@ -153,6 +153,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var showPlayerCthunCounter = WotogCounterHelper.ShowPlayerCthunCounter;
 			var showPlayerSpellsCounter = WotogCounterHelper.ShowPlayerSpellsCounter;
+			var showPlayerJadeCounter = WotogCounterHelper.ShowPlayerJadeCounter;
 			if(showPlayerCthunCounter)
 			{
 				var proxy = WotogCounterHelper.PlayerCthunProxy;
@@ -161,10 +162,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			if(showPlayerSpellsCounter)
 				WotogIconsPlayer.Spells = _game.Player.SpellsPlayedCount.ToString();
+			if(showPlayerJadeCounter)
+				WotogIconsPlayer.Jade = WotogCounterHelper.PlayerNextJadeGolem.ToString();
 			WotogIconsPlayer.WotogCounterStyle = showPlayerCthunCounter && showPlayerSpellsCounter ? Full : (showPlayerCthunCounter ? Cthun : (showPlayerSpellsCounter ? Spells : None));
+			WotogIconsPlayer.JadeCounterStyle = showPlayerJadeCounter ? Full : None;
 
 			var showOpponentCthunCounter = WotogCounterHelper.ShowOpponentCthunCounter;
 			var showOpponentSpellsCounter = WotogCounterHelper.ShowOpponentSpellsCounter;
+			var showOpponentJadeCounter = WotogCounterHelper.ShowOpponentJadeCounter;
 			if(showOpponentCthunCounter)
 			{
 				var proxy = WotogCounterHelper.OpponentCthunProxy;
@@ -173,7 +178,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			if(showOpponentSpellsCounter)
 				WotogIconsOpponent.Spells = _game.Opponent.SpellsPlayedCount.ToString();
+			if(showOpponentJadeCounter)
+				WotogIconsOpponent.Jade = WotogCounterHelper.OpponentNextJadeGolem.ToString();
 			WotogIconsOpponent.WotogCounterStyle = showOpponentCthunCounter && showOpponentSpellsCounter ? Full : (showOpponentCthunCounter ? Cthun : (showOpponentSpellsCounter ? Spells : None));
+			WotogIconsOpponent.JadeCounterStyle = showOpponentJadeCounter ? Full : None;
 
 		}
 
