@@ -17,6 +17,11 @@
         </Style>
     </UserControl.Resources>
     <Grid>
+        <Grid Visibility="{Binding JadeVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" Margin="-152,0,236.2,0">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-jade.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding Jade, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,15,24,40"/>
+            <TextBlock Text="{Binding Jade, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,53,24,2"/>
+        </Grid>
         <Grid Visibility="{Binding CthunVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center">
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-cthun.png" RenderOptions.BitmapScalingMode="Fant"/>
             <TextBlock Text="{Binding Attack, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,15,24,40"/>
