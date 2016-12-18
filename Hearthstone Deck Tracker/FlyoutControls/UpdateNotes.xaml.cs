@@ -49,23 +49,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				return;
 			}
 #endif
-
-			if(previousVersion <= new Version(1, 1, 3, 1) && ConfigManager.UpdatedVersion == new Version(1, 1, 4, 0))
-			{
-				if(File.Exists(Config.Instance.HearthStatsFilePath) && HearthStatsAPI.Logout())
-				{
-					ContentControlHighlight.Content = new HearthStatsLogoutInfo();
-					_continueToHighlight = true;
-					ButtonContinue.Visibility = Visibility.Collapsed;
-
-					Core.MainWindow.UpdateHearthStatsMenuItem();
-					Core.MainWindow.EnableHearthStatsMenu(false);
-					Core.MainWindow.MenuItemLogin.Visibility = Visibility.Visible;
-					Core.MainWindow.MenuItemLogout.Visibility = Visibility.Collapsed;
-					Config.Instance.ShowLoginDialog = false;
-					Config.Save();
-				}
-			}
 			if(infoControl == null)
 				return;
 			ContentControlHighlight.Content = infoControl;

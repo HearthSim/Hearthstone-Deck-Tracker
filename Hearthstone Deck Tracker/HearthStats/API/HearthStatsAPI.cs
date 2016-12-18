@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		private static string _authToken;
 
-		public static bool IsLoggedIn => !string.IsNullOrEmpty(_authToken);
+		public static bool IsLoggedIn => false;
 
 		public static string LoggedInAs { get; private set; }
 
@@ -64,25 +64,25 @@ namespace Hearthstone_Deck_Tracker.HearthStats.API
 
 		public static bool LoadCredentials()
 		{
-			if(File.Exists(Config.Instance.HearthStatsFilePath))
-			{
-				try
-				{
-					Log.Info("Loading stored credentials...");
-					using(var reader = new StreamReader(Config.Instance.HearthStatsFilePath))
-					{
-						dynamic content = JsonConvert.DeserializeObject(reader.ReadToEnd());
-						_authToken = content.auth_token;
-						LoggedInAs = content.email;
-					}
-					return true;
-				}
-				catch(Exception e)
-				{
-					Log.Error("Error loading credentials\n" + e);
-					return false;
-				}
-			}
+			//if(File.Exists(Config.Instance.HearthStatsFilePath))
+			//{
+			//	try
+			//	{
+			//		Log.Info("Loading stored credentials...");
+			//		using(var reader = new StreamReader(Config.Instance.HearthStatsFilePath))
+			//		{
+			//			dynamic content = JsonConvert.DeserializeObject(reader.ReadToEnd());
+			//			_authToken = content.auth_token;
+			//			LoggedInAs = content.email;
+			//		}
+			//		return true;
+			//	}
+			//	catch(Exception e)
+			//	{
+			//		Log.Error("Error loading credentials\n" + e);
+			//		return false;
+			//	}
+			//}
 			return false;
 		}
 

@@ -52,10 +52,10 @@ namespace Hearthstone_Deck_Tracker.HearthStats.Controls
 			{
 				Core.MainWindow.EnableHearthStatsMenu(true);
 				Core.MainWindow.FlyoutHearthStatsLogin.IsOpen = false;
-				Core.MainWindow.MenuItemLogin.Visibility = Visibility.Collapsed;
-				Core.MainWindow.MenuItemLogout.Visibility = Visibility.Visible;
-				Core.MainWindow.SeparatorLogout.Visibility = Visibility.Visible;
-				Core.MainWindow.MenuItemLogout.Header = $"LOGOUT ({HearthStatsAPI.LoggedInAs})";
+				//Core.MainWindow.MenuItemLogin.Visibility = Visibility.Collapsed;
+				//Core.MainWindow.MenuItemLogout.Visibility = Visibility.Visible;
+				//Core.MainWindow.SeparatorLogout.Visibility = Visibility.Visible;
+				//Core.MainWindow.MenuItemLogout.Header = $"LOGOUT ({HearthStatsAPI.LoggedInAs})";
 
 				var dialogResult =
 					await

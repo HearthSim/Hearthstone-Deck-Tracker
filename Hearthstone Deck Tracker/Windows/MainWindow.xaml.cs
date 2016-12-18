@@ -220,25 +220,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(HearthStatsAPI.IsLoggedIn)
 			{
-				MenuItemLogout.Header = $"LOGOUT ({HearthStatsAPI.LoggedInAs})";
-				MenuItemLogin.Visibility = Collapsed;
-				MenuItemLogout.Visibility = Visible;
-				SeparatorLogout.Visibility = Visible;
+				//MenuItemLogout.Header = $"LOGOUT ({HearthStatsAPI.LoggedInAs})";
+				//MenuItemLogin.Visibility = Collapsed;
+				//MenuItemLogout.Visibility = Visible;
+				//SeparatorLogout.Visibility = Visible;
 			}
 			EnableHearthStatsMenu(HearthStatsAPI.IsLoggedIn);
 		}
 
 		public void EnableHearthStatsMenu(bool enable)
 		{
-			MenuItemCheckBoxAutoSyncBackground.IsEnabled = enable;
-			MenuItemCheckBoxAutoUploadDecks.IsEnabled = enable;
-			MenuItemCheckBoxAutoUploadGames.IsEnabled = enable;
-			MenuItemCheckBoxSyncOnStart.IsEnabled = enable;
-			MenuItemHearthStatsForceFullSync.IsEnabled = enable;
-			MenuItemHearthStatsSync.IsEnabled = enable;
-			MenuItemCheckBoxAutoDeleteDecks.IsEnabled = enable;
-			MenuItemCheckBoxAutoDeleteGames.IsEnabled = enable;
-			MenuItemDeleteHearthStatsDeck.IsEnabled = enable;
+			//MenuItemCheckBoxAutoSyncBackground.IsEnabled = enable;
+			//MenuItemCheckBoxAutoUploadDecks.IsEnabled = enable;
+			//MenuItemCheckBoxAutoUploadGames.IsEnabled = enable;
+			//MenuItemCheckBoxSyncOnStart.IsEnabled = enable;
+			//MenuItemHearthStatsForceFullSync.IsEnabled = enable;
+			//MenuItemHearthStatsSync.IsEnabled = enable;
+			//MenuItemCheckBoxAutoDeleteDecks.IsEnabled = enable;
+			//MenuItemCheckBoxAutoDeleteGames.IsEnabled = enable;
+			//MenuItemDeleteHearthStatsDeck.IsEnabled = enable;
 		}
 
 		private void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e) => HearthStatsManager.SyncAsync();
@@ -346,7 +346,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				                      MessageDialogStyle.AffirmativeAndNegative,
 				                      new MessageDialogs.Settings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
 			Config.Instance.HearthStatsAutoDeleteDecks = dialogResult == MessageDialogResult.Affirmative;
-			MenuItemCheckBoxAutoDeleteDecks.IsChecked = Config.Instance.HearthStatsAutoDeleteDecks;
+			//MenuItemCheckBoxAutoDeleteDecks.IsChecked = Config.Instance.HearthStatsAutoDeleteDecks;
 			Config.Save();
 			return Config.Instance.HearthStatsAutoDeleteDecks != null && Config.Instance.HearthStatsAutoDeleteDecks.Value;
 		}
@@ -851,5 +851,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void UpdateHearthStatsMenuItem() => OnPropertyChanged(nameof(MenuItemHearthStatsVisibility));
 
 		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client");
+
+		private void MenuItemHearthStatsMoreInfo_OnClick(object sender, RoutedEventArgs e)
+		{
+			this.ShowMessage(
+				"HearthStats disabled",
+				@"HearthStats has not been updated for Mean Streets of Gadgetzan and will likely remain unmaintained.
+Syncing causes your local decks to lose their MSG cards.
+
+We are very sorry about the inconvenience and are working on a much improved replacement system!"
+			).Forget();
+		}
 	}
 }

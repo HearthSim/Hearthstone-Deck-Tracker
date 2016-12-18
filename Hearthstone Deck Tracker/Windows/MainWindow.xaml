@@ -398,6 +398,22 @@
                             </Rectangle.Fill>
                         </Rectangle>
                     </MenuItem.Icon>
+                    <MenuItem IsEnabled="False">
+                        <MenuItem.Header>
+                            <Grid Margin="-10,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Separator Grid.Column="0"/>
+                                <TextBlock Grid.Column="1" Text="DISABLED" IsEnabled="False" Margin="5,0"/>
+                                <Separator Grid.Column="2"/>
+                            </Grid>
+                        </MenuItem.Header>
+                    </MenuItem>
+                    <MenuItem Header="MORE INFO..." Click="MenuItemHearthStatsMoreInfo_OnClick"/>
+                    <!--
                     <MenuItem Name="MenuItemLogin" Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_Login}" Click="MenuItemLogin_OnClick"/>
                     <MenuItem Name="MenuItemDashboard" Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_Dashboard}" Click="MenuItemDashboard_OnClick"/>
                     <MenuItem Name="MenuItemHearthStatsSync" Click="MenuItemHearthStatsSync_OnClick">
@@ -419,10 +435,8 @@
                     <Separator/>
                     <MenuItem Name="MenuItemDeleteHearthStatsDeck" Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_DeleteSelected}" ToolTip="This will try to delete the selected decks and all matches on HearthStats as well as remove all stored IDs. The local decks will stay untouched!" Click="MenuItemDeleteHearthStatsDeck_OnClick"/>
                     <Separator Name="SeparatorLogout" Visibility="Collapsed"/>
-                    <MenuItem Name="MenuItemLogout" Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_Logout}" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>
+                    <MenuItem Name="MenuItemLogout" Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_Logout}" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>-->
                 </MenuItem>
-                <!--<MenuItem Header="MENUITEM">
-                </MenuItem>-->
                 <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins}" Name="MenuItemPlugins">
                     <MenuItem.Icon>
                         <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
