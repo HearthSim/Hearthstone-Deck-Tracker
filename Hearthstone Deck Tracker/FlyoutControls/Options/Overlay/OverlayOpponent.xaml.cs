@@ -86,6 +86,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			ComboBoxCthun.SelectedItem = Config.Instance.OpponentCthunCounter;
 			ComboBoxSpells.ItemsSource = new[] {DisplayMode.Always, DisplayMode.Never};
 			ComboBoxSpells.SelectedItem = Config.Instance.OpponentSpellsCounter;
+			ComboBoxJade.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
+			ComboBoxJade.SelectedItem = Config.Instance.OpponentJadeCounter;
 
 			ElementSorterOpponent.IsPlayer = false;
 			foreach(var panel in Config.Instance.DeckPanelOrderOpponent)
@@ -237,6 +239,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.OpponentSpellsCounter = (DisplayMode)ComboBoxSpells.SelectedItem;
+			Config.Save();
+		}
+
+		private void ComboBoxJade_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.OpponentJadeCounter = (DisplayMode)ComboBoxJade.SelectedItem;
 			Config.Save();
 		}
 
