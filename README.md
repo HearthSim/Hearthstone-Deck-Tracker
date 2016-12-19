@@ -24,7 +24,8 @@ Contributing
 
 Community
 =========
-- **Gitter**: [![Join the chat at https://gitter.im/HearthSim/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/HearthSim/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+- [![Join HearthSim #hdt](https://img.shields.io/badge/discord-join%20chat-blue.svg)](https://discord.gg/CBnAFhX)
+- [![Join the chat at https://gitter.im/HearthSim/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/HearthSim/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 - **HearthSim**: Hearthstone Deck Tracker is a [HearthSim](https://hearthsim.info) project. Come join us in #hearthsim on chat.freenode.net.
 
 Features
