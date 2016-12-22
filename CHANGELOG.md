@@ -1,3 +1,20 @@
+## __Release v1.1.5 - 2016-12-22__
+
+__New__:
+- Added Jade Golem counters.
+- Now translated into Traditional Chinese (zh-TW).
+
+__Changes__:
+- Fully disabled HearthStats integration to prevent deck corruption.
+- The arena rewards dialog now accepts and auto completes card names for selected secondary card languages.
+
+__Fixes__:
+- Fixed an issue where auto deck importing and selection would not work for brawl.
+- Fixed an issue where cards created by Manic Soulcaster and White Eyes would not be tracked.
+- Fixed an issue where the "this week" stats filter would not work properly.
+- Fixed an issue where the "max rank" stats filter would not recognize legend ranks.
+
+
 ## __Release v1.1.4 - 2016-12-04__
 
 __Changes__:
