@@ -27,18 +27,29 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true, bool collectible = true)
 		{
-			var lang = Locale.enUS;
+			var langs = new List<Locale> {Locale.enUS};
 			if(localized)
-				Enum.TryParse(Config.Instance.SelectedLanguage, out lang);
-			try
 			{
-				var card = Cards.GetFromName(name, lang, collectible);
-				if (card != null)
-					return new Card(card);
+				var selectedLangs = Config.Instance.AlternativeLanguages.Concat(new[] {Config.Instance.SelectedLanguage});
+				foreach(var selectedLang in selectedLangs)
+				{
+					Locale lang;
+					if(Enum.TryParse(selectedLang, out lang) && !langs.Contains(lang))
+						langs.Add(lang);
+				}
 			}
-			catch(Exception ex)
+			foreach(var lang in langs)
 			{
-				Log.Error(ex);
+				try
+				{
+					var card = Cards.GetFromName(name, lang, collectible);
+					if(card != null)
+						return new Card(card);
+				}
+				catch(Exception ex)
+				{
+					Log.Error(ex);
+				}
 			}
 			if(showErrorMessage)
 				Log.Warn("Could not get card from name: " + name);
