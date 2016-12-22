@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static int PlayerNextJadeGolem => PlayerSeenJade ? Math.Min(Core.Game.PlayerEntity.GetTag(JADE_GOLEM) + 1, 30) : 1;
 
 		public static bool OpponentSeenJade => Core.Game.OpponentEntity?.HasTag(JADE_GOLEM) ?? false;
-		public static int OpponentNextJadeGolem => OpponentSeenJade ? Math.Min(Core.Game.PlayerEntity.GetTag(JADE_GOLEM) + 1, 30) : 1;
+		public static int OpponentNextJadeGolem => OpponentSeenJade ? Math.Min(Core.Game.OpponentEntity.GetTag(JADE_GOLEM) + 1, 30) : 1;
 
 		public static bool ShowPlayerCthunCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
 					|| Config.Instance.PlayerCthunCounter == DisplayMode.Auto && PlayerSeenCthun);
