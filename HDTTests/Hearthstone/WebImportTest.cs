@@ -107,14 +107,6 @@ namespace HDTTests.Hearthstone
 		}
 
 		[TestMethod, TestCategory("Web")]
-		public void EliteHearthstone()
-		{
-			Deck expected = CreateDeck("Inner Rage;2", "Loot Hoarder;2", "Cruel Taskmaster;0", "Gnomish Inventor;0");
-			Deck found = DeckImporter.Import(@"http://www.elitehearthstone.net/deck-7918-patron-warrior").Result;
-			Assert.IsTrue(AreDecksEqual(expected, found));
-		}
-
-		[TestMethod, TestCategory("Web")]
 		public void TempoStorm()
 		{
 			Deck expected = CreateDeck();
