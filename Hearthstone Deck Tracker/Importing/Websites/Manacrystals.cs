@@ -58,6 +58,10 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 		private static void CardNodes(HtmlNode node, Deck deck)
 		{
 			var cardNodes = node.SelectNodes(".//ul/li");
+			if (cardNodes == null) 
+			{
+				return;
+			}
 			foreach (var cardNode in cardNodes)
 			{
 				var count = HttpUtility.HtmlDecode(
