@@ -298,13 +298,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						}
 					}
 				}
+				else if(logLine.Contains("BlockType=JOUST"))
+					gameState.JoustReveals = 2;
+				else if(gameState.GameTriggerCount == 0 && logLine.Contains("BLOCK_START BlockType=TRIGGER Entity=GameEntity"))
+					gameState.GameTriggerCount++;
 			}
-			else if(logLine.Contains("BlockType=JOUST"))
-				gameState.JoustReveals = 2;
 			else if(logLine.Contains("CREATE_GAME"))
 				_tagChangeHandler.ClearQueuedActions();
-			else if(gameState.GameTriggerCount == 0 && logLine.Contains("BLOCK_START BlockType=TRIGGER Entity=GameEntity"))
-				gameState.GameTriggerCount++;
 			else if(logLine.Contains("BLOCK_END"))
 			{
 				if(gameState.GameTriggerCount < 10 && (game.GameEntity?.HasTag(GameTag.TURN) ?? false))
