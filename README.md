@@ -25,7 +25,7 @@ Contributing
 
 Community
 =========
-- [![Join HearthSim #hdt](https://img.shields.io/badge/Discord-Community%20Server-blue.svg)](https://discord.gg/CBnAFhX)
+- [![Join HearthSim #hdt](https://img.shields.io/badge/Discord-Community%20Server-blue.svg)](https://discord.gg/gdYsV2y)
 - **HearthSim**: Hearthstone Deck Tracker is a [HearthSim](https://hearthsim.info) project. Come join us in #hearthsim on chat.freenode.net.
 
 Features
