@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var selectedDeckId = Reflection.GetSelectedDeckInMenu();
 			if(selectedDeckId <= 0)
 			{
-				if(mode != TAVERN_BRAWL || (selectedDeckId = Reflection.GetEditedDeck().Id) == 0)
+				if(mode != TAVERN_BRAWL || (selectedDeckId = Reflection.GetEditedDeck()?.Id ?? 0) == 0)
 				{
 					Log.Info("No selected deck found, using no-deck mode");
 					Core.MainWindow.SelectDeck(null, true);
