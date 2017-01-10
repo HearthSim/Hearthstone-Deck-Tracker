@@ -157,9 +157,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var secrets = heroClass == null ? _game.OpponentSecrets.GetSecrets() : _game.OpponentSecrets.GetDefaultSecrets(heroClass.Value);
 			foreach(var id in secrets)
 			{
-				var cardObj = new Controls.Card();
+				var count = id.AdjustedCount(_game);
+				if(count <= 0 && Config.Instance.RemoveSecretsFromList)
+					continue;
 				var card = Database.GetCardFromId(id.CardId);
-				card.Count = id.AdjustedCount(_game);
+				card.Count = count; 
+				var cardObj = new Controls.Card();
 				cardObj.SetValue(DataContextProperty, card);
 				StackPanelSecrets.Children.Add(cardObj);
 			}

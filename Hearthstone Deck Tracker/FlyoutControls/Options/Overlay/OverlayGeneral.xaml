@@ -92,6 +92,13 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxAutoGrayoutSecrets_Checked"
                               Unchecked="CheckboxAutoGrayoutSecrets_Unchecked" />
+                    <CheckBox x:Name="CheckBoxRemoveSecrets"
+                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                              Content="{lex:Loc Options_Overlay_General_CheckBox_RemoveSecrets}"
+                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                              Checked="CheckBoxRemoveSecrets_Checked"
+                              Unchecked="CheckBoxRemoveSecrets_Unchecked" />
                     <CheckBox x:Name="CheckboxKeepDecksVisible"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

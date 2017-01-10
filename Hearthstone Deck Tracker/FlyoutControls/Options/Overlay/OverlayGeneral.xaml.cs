@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Windows;
@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxBatteryStatusText.IsChecked = Config.Instance.ShowBatteryLifePercent;
 			CheckBoxFlavorText.IsChecked = Config.Instance.ShowFlavorText;
 			CheckBoxOverlayUseAnimations.IsChecked = Config.Instance.OverlayCardAnimations;
+			CheckBoxRemoveSecrets.IsChecked = Config.Instance.RemoveSecretsFromList;
 			_initialized = true;
 		}
 
@@ -452,6 +453,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.OverlayCardAnimations = false;
+			Config.Save();
+		}
+
+		private void CheckBoxRemoveSecrets_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RemoveSecretsFromList = true;
+			Config.Save();
+		}
+
+		private void CheckBoxRemoveSecrets_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RemoveSecretsFromList = false;
 			Config.Save();
 		}
 	}
