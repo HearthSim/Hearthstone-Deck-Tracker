@@ -464,12 +464,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
 
-			if(_game.CurrentGameMode == Spectator)
-			{
-				Log.Info("Spectating, using no-deck mode");
-				Core.MainWindow.SelectDeck(null, true);
-			}
-			else if(selectedDeck != null)
+			if(selectedDeck != null)
 				_game.IsUsingPremade = true;
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 			GameEvents.OnGameStart.Execute();
