@@ -1,3 +1,15 @@
+## __Release v1.1.6 - 2016-01-12__
+
+__New__:
+- Added an option to remove detected secrets instead of just greying them out.
+  - The option can be found under `options (advanced) > overlay > general`.
+
+__Fixes__:
+- Fixed an issue where cards revealed by Jousts would not be tracked.
+- Fixed an issue where HDT would crash when starting some brawls.
+- Fixed an issue where HDT would force no-deck mode when spectating.
+
+
 ## __Release v1.1.5 - 2016-12-22__
 
 __New__:
