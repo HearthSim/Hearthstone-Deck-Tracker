@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				foreach(var cardNode in cardNodes)
 				{
 					var name = HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-name']").InnerText);
-					var count = int.Parse(HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//a/span[@class='card-count']").InnerText));
+					var count = int.Parse(HttpUtility.HtmlDecode(cardNode.SelectSingleNode(".//span[@class='card-count']").InnerText));
 
 					var card = Database.GetCardFromName(name.Replace("’", "'"));
 					card.Count = count;
