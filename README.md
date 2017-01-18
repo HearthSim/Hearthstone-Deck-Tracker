@@ -20,7 +20,7 @@ FAQ
 Contributing
 =========
 - Please read the [coding style and Commit/Pull Request guidelines](https://github.com/HearthSim/Hearthstone-Deck-Tracker/blob/master/CONTRIBUTING.md).
-- [![joindeveloper#hdt](https://img.shields.io/badge/Discord-Developer%20Server-7289da.svg)](https://discord.gg/CMw965f)
+- [![joindeveloper#hdt](https://img.shields.io/badge/Discord-Developer%20Server-7289da.svg)](https://discord.gg/CBnAFhX)
 - [![Join the chat at https://gitter.im/HearthSim/Hearthstone-Deck-Tracker](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/HearthSim/Hearthstone-Deck-Tracker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 
 Community
