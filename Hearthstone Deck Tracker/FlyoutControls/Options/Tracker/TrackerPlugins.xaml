@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -17,6 +18,12 @@
                     <StackPanel DockPanel.Dock="Right" Margin="5,0,0,0">
                         <Button Click="ButtonAvailablePlugins_OnClick" Content="{lex:Loc Options_Tracker_Plugins_Button_Avilable}" />
                         <Button Click="ButtonOpenPluginsFolder_OnClick" Content="{lex:Loc Options_Tracker_Plugins_Button_Folder}" Margin="0,5,0,0" />
+                        <Button Click="ButtonReloadPlugins_OnClick" 
+                                Content="{lex:Loc Options_Tracker_Plugins_Button_Reload}" 
+                                Margin="0,5,0,0"
+                                Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                                Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                                />
                     </StackPanel>
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                         <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"
