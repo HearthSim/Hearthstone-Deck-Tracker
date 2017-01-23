@@ -76,8 +76,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					foreach(var pluginPath in droppedFiles)
 					{
 						if (!pluginPath.EndsWith(".dll")) continue;
-						if (File.Exists(dir + "\\" + Path.GetFileName(pluginPath))) continue;
-						File.Copy(pluginPath, dir + "\\" + Path.GetFileName(pluginPath));
+						File.Copy(pluginPath, dir + "\\" + Path.GetFileName(pluginPath), true);
 						plugins += 1;
 					}
 					if (plugins > 0)
