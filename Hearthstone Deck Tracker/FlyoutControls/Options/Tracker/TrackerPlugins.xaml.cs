@@ -7,7 +7,9 @@ using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
+using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
@@ -59,6 +61,42 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				}
 			}
 			Helper.TryOpenUrl(dir.FullName);
+		}
+
+		private async void GroupBox_Drop(object sender, DragEventArgs e)
+		{
+			var dir = PluginManager.PluginDirectory.FullName;
+			int plugins = 0;
+			try
+			{
+				if(e.Data.GetDataPresent(DataFormats.FileDrop))
+				{
+					string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+					if (droppedFiles == null) return;
+					foreach(var pluginPath in droppedFiles)
+					{
+						if (!pluginPath.EndsWith(".dll")) continue;
+						if (File.Exists(dir + "\\" + Path.GetFileName(pluginPath))) continue;
+						File.Copy(pluginPath, dir + "\\" + Path.GetFileName(pluginPath));
+						plugins += 1;
+					}
+					if (plugins > 0)
+					{
+						var result = await Core.MainWindow.ShowMessageAsync("Plugins installed",
+							$"Successfully installed {plugins} plugins. \n Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
+
+						if (result == MessageDialogResult.Affirmative)
+						{
+							Core.MainWindow.Restart();
+						}
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				Log.Error(ex);
+				Core.MainWindow.ShowMessage("Error Importing Plugin", $"Please import manually to {dir}.").Forget();
+			}
 		}
 	}
 }
