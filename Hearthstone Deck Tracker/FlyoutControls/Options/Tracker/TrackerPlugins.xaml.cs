@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					
 					var plugins = 0;
 					var droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
-					if (droppedFiles == null) 
+					if(droppedFiles == null) 
 						return;
 					foreach(var pluginPath in droppedFiles)
 					{
@@ -81,12 +81,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 						File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
 						plugins++;
 					}
-					if (plugins <= 0) 
+					if(plugins <= 0) 
 						return;
 					var result = await Core.MainWindow.ShowMessageAsync("Plugins installed",
 						$"Successfully installed {plugins} plugin(s). \n Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
 
-					if (result != MessageDialogResult.Affirmative)
+					if(result != MessageDialogResult.Affirmative)
 						return;
 					Core.MainWindow.Restart();
 				}
