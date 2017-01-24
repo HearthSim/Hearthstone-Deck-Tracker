@@ -3,6 +3,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -77,9 +79,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 						return;
 					foreach(var pluginPath in droppedFiles)
 					{
-						if (!pluginPath.EndsWith(".dll")) continue;
-						File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
-						plugins++;
+						if(pluginPath.EndsWith(".dll"))
+						{
+							File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
+							plugins++;
+						}
+						else if(pluginPath.EndsWith(".zip"))
+						{
+							ZipFile.ExtractToDirectory(pluginPath, Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath)));
+							plugins++;
+						}
 					}
 					if(plugins <= 0) 
 						return;
