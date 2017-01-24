@@ -66,29 +66,29 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private async void GroupBox_Drop(object sender, DragEventArgs e)
 		{
 			var dir = PluginManager.PluginDirectory.FullName;
-			int plugins = 0;
 			try
 			{
 				if(e.Data.GetDataPresent(DataFormats.FileDrop))
 				{
-					string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
-					if (droppedFiles == null) return;
+					
+					var plugins = 0;
+					var droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+					if (droppedFiles == null) 
+						return;
 					foreach(var pluginPath in droppedFiles)
 					{
 						if (!pluginPath.EndsWith(".dll")) continue;
-						File.Copy(pluginPath, dir + "\\" + Path.GetFileName(pluginPath), true);
-						plugins += 1;
+						File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
+						plugins++;
 					}
-					if (plugins > 0)
-					{
-						var result = await Core.MainWindow.ShowMessageAsync("Plugins installed",
-							$"Successfully installed {plugins} plugins. \n Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
+					if (plugins <= 0) 
+						return;
+					var result = await Core.MainWindow.ShowMessageAsync("Plugins installed",
+						$"Successfully installed {plugins} plugin(s). \n Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
 
-						if (result == MessageDialogResult.Affirmative)
-						{
-							Core.MainWindow.Restart();
-						}
-					}
+					if (result != MessageDialogResult.Affirmative)
+						return;
+					Core.MainWindow.Restart();
 				}
 			}
 			catch(Exception ex)
