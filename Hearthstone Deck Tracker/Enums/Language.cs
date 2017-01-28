@@ -17,6 +17,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[Description("Chinese (Simplified)")]
 		zhCN,
 		[Description("Chinese (Traditional)")]
-		zhTW
+		zhTW,
+        [Description("Japanese")]
+        jaJP
 	}
 }
