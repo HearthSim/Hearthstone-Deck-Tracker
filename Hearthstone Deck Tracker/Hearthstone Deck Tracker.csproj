@@ -394,6 +394,7 @@
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
     <Compile Include="Enums\Language.cs" />
+    <Compile Include="Importing\StringImporter.cs" />
     <Compile Include="Utility\RegistryHelper.cs" />
     <Compile Include="Hearthstone\Watchers.cs" />
     <Compile Include="HsReplay\PackDataGenerator.cs" />

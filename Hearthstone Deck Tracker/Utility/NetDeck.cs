@@ -1,10 +1,11 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -81,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 						}
 						clipboardLines.RemoveAt(0); //"netdeckimport" / "trackerimport"
 
-						var deck = Helper.ParseCardString(clipboardLines.Aggregate((c, n) => c + "\n" + n), localized);
+						var deck = StringImporter.Import(clipboardLines.Aggregate((c, n) => c + "\n" + n), localized);
 						if(deck != null)
 						{
 							if(tags.Any())

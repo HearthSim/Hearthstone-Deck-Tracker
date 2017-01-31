@@ -185,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 							Log.Error(ex);
 						}
 					}
-					var deck = Helper.ParseCardString(Clipboard.GetText(), !english);
+					var deck = StringImporter.Import(Clipboard.GetText(), !english);
 					if(deck != null)
 					{
 						SetNewDeck(deck);
@@ -217,7 +217,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						if(file.EndsWith(".txt"))
 						{
 							using(var sr = new StreamReader(file))
-								deck = Helper.ParseCardString(sr.ReadToEnd());
+								deck = StringImporter.Import(sr.ReadToEnd());
 						}
 						else if(file.EndsWith(".xml"))
 						{
