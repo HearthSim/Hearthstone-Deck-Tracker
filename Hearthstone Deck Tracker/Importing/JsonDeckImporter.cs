@@ -27,6 +27,15 @@ namespace Hearthstone_Deck_Tracker.Importing
 					card.Count = cardId.Count();
 					deck.Cards.Add(card);
 				}
+				if(!string.IsNullOrWhiteSpace(deck.Class))
+					return deck;
+				var classes = deck.Cards.Where(x => x.PlayerClass != null).GroupBy(x => x.PlayerClass).ToList();
+				if(classes.Count != 1)
+				{
+					Log.Warn("Could not identify a class for this deck. None was provided.");
+					return null;
+				}
+				deck.Class = classes.Single().Key;
 				return deck;
 			}
 			catch(JsonReaderException)
