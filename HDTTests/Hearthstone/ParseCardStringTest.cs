@@ -9,29 +9,36 @@ namespace HDTTests.Hearthstone
 	public class ParseCardStringTest
 	{
 		[TestMethod]
-		public void TestNoCount()
+		public void TestNeutralOnly()
 		{
 			var deck = StringImporter.Import("Ragnaros the firelord");
+			Assert.IsNull(deck);
+		}
+
+		[TestMethod]
+		public void TestNoCount()
+		{
+			var deck = StringImporter.Import("Ragnaros, Lightlord");
 			var card = deck.Cards.FirstOrDefault();
-			Assert.AreEqual("EX1_298", card.Id);
+			Assert.AreEqual("OG_229", card.Id);
 			Assert.AreEqual(1, card.Count);
 		}
 
 		[TestMethod]
 		public void TestOneCount()
 		{
-			var deck = StringImporter.Import("Ragnaros the firelord x1");
+			var deck = StringImporter.Import("Ragnaros, Lightlord x1");
 			var card = deck.Cards.FirstOrDefault();
-			Assert.AreEqual("EX1_298", card.Id);
+			Assert.AreEqual("OG_229", card.Id);
 			Assert.AreEqual(1, card.Count);
 		}
 
 		[TestMethod]
 		public void TestTwoCount()
 		{
-			var deck = StringImporter.Import("Ragnaros the firelord x2");
+			var deck = StringImporter.Import("Ragnaros, Lightlord x2");
 			var card = deck.Cards.FirstOrDefault();
-			Assert.AreEqual("EX1_298", card.Id);
+			Assert.AreEqual("OG_229", card.Id);
 			Assert.AreEqual(2, card.Count);
 		}
 
