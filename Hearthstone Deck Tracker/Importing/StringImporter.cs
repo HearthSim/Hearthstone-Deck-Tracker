@@ -46,9 +46,6 @@ namespace Hearthstone_Deck_Tracker.Importing
 						continue;
 					card.Count = count;
 
-					if(string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
-						deck.Class = card.PlayerClass;
-
 					if(deck.Cards.Contains(card))
 					{
 						var deckCard = deck.Cards.First(c => c.Equals(card));
@@ -59,6 +56,13 @@ namespace Hearthstone_Deck_Tracker.Importing
 					else
 						deck.Cards.Add(card);
 				}
+				var classes = deck.Cards.Where(x => x.PlayerClass != null).GroupBy(x => x.PlayerClass).ToList();
+				if(classes.Count != 1)
+				{
+					Log.Warn($"Could not identify a class for this deck. Found class cards for {classes.Count} classes.");
+					return null;
+				}
+				deck.Class = classes.Single().Key;
 				return deck;
 			}
 			catch(Exception ex)
