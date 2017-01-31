@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Linq;
-using Hearthstone_Deck_Tracker;
+using Hearthstone_Deck_Tracker.Importing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HDTTests.Hearthstone
@@ -11,7 +11,7 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestNoCount()
 		{
-			var deck = Helper.ParseCardString("Ragnaros the firelord");
+			var deck = StringImporter.Import("Ragnaros the firelord");
 			var card = deck.Cards.FirstOrDefault();
 			Assert.AreEqual("EX1_298", card.Id);
 			Assert.AreEqual(1, card.Count);
@@ -20,7 +20,7 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestOneCount()
 		{
-			var deck = Helper.ParseCardString("Ragnaros the firelord x1");
+			var deck = StringImporter.Import("Ragnaros the firelord x1");
 			var card = deck.Cards.FirstOrDefault();
 			Assert.AreEqual("EX1_298", card.Id);
 			Assert.AreEqual(1, card.Count);
@@ -29,7 +29,7 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestTwoCount()
 		{
-			var deck = Helper.ParseCardString("Ragnaros the firelord x2");
+			var deck = StringImporter.Import("Ragnaros the firelord x2");
 			var card = deck.Cards.FirstOrDefault();
 			Assert.AreEqual("EX1_298", card.Id);
 			Assert.AreEqual(2, card.Count);
@@ -38,7 +38,7 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestCommaNoCount()
 		{
-			var deck = Helper.ParseCardString("Ragnaros, Lightlord");
+			var deck = StringImporter.Import("Ragnaros, Lightlord");
 			var card = deck.Cards.FirstOrDefault();
 			Assert.AreEqual("OG_229", card.Id);
 			Assert.AreEqual(1, card.Count);
@@ -47,7 +47,7 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestCommaOneCount()
 		{
-			var deck = Helper.ParseCardString("Ragnaros, Lightlord x1");
+			var deck = StringImporter.Import("Ragnaros, Lightlord x1");
 			var card = deck.Cards.FirstOrDefault();
 			Assert.AreEqual("OG_229", card.Id);
 			Assert.AreEqual(1, card.Count);
@@ -56,7 +56,7 @@ namespace HDTTests.Hearthstone
 		[TestMethod]
 		public void TestCommaTwoCount()
 		{
-			var deck = Helper.ParseCardString("Ragnaros, Lightlord x2");
+			var deck = StringImporter.Import("Ragnaros, Lightlord x2");
 			var card = deck.Cards.FirstOrDefault();
 			Assert.AreEqual("OG_229", card.Id);
 			Assert.AreEqual(2, card.Count);
