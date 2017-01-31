@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Importing
 {
@@ -19,6 +18,10 @@ namespace Hearthstone_Deck_Tracker.Importing
 								&& (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
 				if(validUrl)
 					return await DeckImporter.Import(clipboard);
+
+				if(StringImporter.IsValidImportString(clipboard))
+					return StringImporter.Import(clipboard);
+
 				return JsonDeckImporter.Import(clipboard);
 
 			}
