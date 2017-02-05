@@ -315,6 +315,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			OnPropertyChanged(nameof(PacksCountGvg));
 			OnPropertyChanged(nameof(PacksCountTgt));
 			OnPropertyChanged(nameof(PacksCountWotog));
+			OnPropertyChanged(nameof(PacksCountMsg));
 			OnPropertyChanged(nameof(PacksCountTotal));
 			OnPropertyChanged(nameof(PacksCountAveragePerRun));
 			OnPropertyChanged(nameof(CardCountTotal));
