@@ -27,6 +27,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Region CurrentRegion { get; set; }
 		GameMode CurrentGameMode { get; }
 		GameStats CurrentGameStats { get; set; }
+		HearthMirror.Objects.Deck CurrentSelectedDeck { get; set; }
 		OpponentSecrets OpponentSecrets { get; set; }
 		List<Card> DrawnLastGame { get; set; }
 		Dictionary<int, Entity> Entities { get; }

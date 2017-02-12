@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Linq;
@@ -8,6 +8,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.Enums.Hearthstone.Mode;
+using Deck = HearthMirror.Objects.Deck;
 
 #endregion
 
@@ -26,6 +27,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if((DateTime.Now - logLine.Time).TotalSeconds > 5 || !game.IsInMenu || logLine.Time <= _lastQueueTime)
 					return;
 				_lastQueueTime = logLine.Time;
+				if(game.CurrentMode == DRAFT)
+					game.CurrentSelectedDeck = DeckImporter.ArenaInfoCache?.Deck;
+				else
+				{
+					var selectedId = GetSelectedDeckId(game.CurrentMode);
+					game.CurrentSelectedDeck = selectedId > 0 ? Reflection.GetDecks().FirstOrDefault(deck => deck.Id == selectedId) : null;
+				}
 				if(!Config.Instance.AutoDeckDetection)
 					return;
 				if(new[] {TOURNAMENT, FRIENDLY, ADVENTURE, TAVERN_BRAWL}.Contains(game.CurrentMode))
@@ -50,17 +58,24 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			Core.MainWindow.SelectDeck(selectedDeck, true);
 		}
 
-		private static void AutoSelectDeckById(Mode mode)
+		private static long GetSelectedDeckId(Mode mode)
 		{
 			var selectedDeckId = Reflection.GetSelectedDeckInMenu();
+			if(selectedDeckId > 0)
+				return selectedDeckId;
+			if(mode != TAVERN_BRAWL)
+				return 0;
+			return Reflection.GetEditedDeck()?.Id ?? 0;
+		}
+
+		private static void AutoSelectDeckById(Mode mode)
+		{
+			var selectedDeckId = GetSelectedDeckId(mode);
 			if(selectedDeckId <= 0)
 			{
-				if(mode != TAVERN_BRAWL || (selectedDeckId = Reflection.GetEditedDeck()?.Id ?? 0) == 0)
-				{
-					Log.Info("No selected deck found, using no-deck mode");
-					Core.MainWindow.SelectDeck(null, true);
-					return;
-				}
+				Log.Info("No selected deck found, using no-deck mode");
+				Core.MainWindow.SelectDeck(null, true);
+				return;
 			}
 			DeckManager.AutoImportConstructed(false, mode == TAVERN_BRAWL);
 			var selectedDeck = DeckList.Instance.Decks.FirstOrDefault(x => x.HsId == selectedDeckId);

@@ -551,12 +551,21 @@ namespace Hearthstone_Deck_Tracker
 				_game.CurrentGameStats.ScenarioId = _game.MatchInfo?.MissionId ?? 0;
 				_game.CurrentGameStats.BrawlSeasonId = _game.MatchInfo?.BrawlSeasonId ?? 0;
 				_game.CurrentGameStats.RankedSeasonId = _game.MatchInfo?.RankedSeasonId ?? 0;
-				_game.CurrentGameStats.HsDeckId = DeckList.Instance.ActiveDeckVersion?.HsId ?? 0;
-				_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.Where(x => x.Collectible).ToList());
+				if(_game.CurrentSelectedDeck != null && _game.CurrentSelectedDeck.Id > 0)
+				{
+					_game.CurrentGameStats.HsDeckId = _game.CurrentSelectedDeck.Id;
+					_game.CurrentGameStats.SetPlayerCards(_game.CurrentSelectedDeck, _game.Player.RevealedCards.Where(x => x.Collectible).ToList());
+				}
+				else
+				{
+					_game.CurrentGameStats.HsDeckId = DeckList.Instance.ActiveDeckVersion?.HsId ?? 0;
+					_game.CurrentGameStats.SetPlayerCards(DeckList.Instance.ActiveDeckVersion, _game.Player.RevealedCards.Where(x => x.Collectible).ToList());
+				}
 				_game.CurrentGameStats.SetOpponentCards(_game.Opponent.OpponentCardList.Where(x => !x.IsCreated).ToList());
 				_game.CurrentGameStats.GameEnd();
 				GameEvents.OnGameEnd.Execute();
 				Influx.OnGameEnd(HearthDbConverter.GetGameType(_game.CurrentGameStats.GameMode, _game.CurrentGameStats.Format));
+				_game.CurrentSelectedDeck = null;
 				var selectedDeck = DeckList.Instance.ActiveDeck;
 				if(selectedDeck != null)
 				{

@@ -57,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool IsRunning { get; set; }
 		public Region CurrentRegion { get; set; }
 		public GameStats CurrentGameStats { get; set; }
+		public HearthMirror.Objects.Deck CurrentSelectedDeck { get; set; }
 		public OpponentSecrets OpponentSecrets { get; set; }
 		public List<Card> DrawnLastGame { get; set; }
 		public Dictionary<int, Entity> Entities { get; } = new Dictionary<int, Entity>();

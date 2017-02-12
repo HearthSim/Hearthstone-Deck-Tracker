@@ -462,7 +462,15 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlArrayItem(ElementName = "Card")]
 		public List<TrackedCard> OpponentCards { get; set; } = new List<TrackedCard>();
 
-		public void SetPlayerCards(Deck deck, List<Card> revealedCards)
+		public void SetPlayerCards(Deck deck, List<Card> revealedCards) => SetPlayerCards(deck?.Cards, revealedCards);
+
+		public void SetPlayerCards(HearthMirror.Objects.Deck deck, List<Card> revealedCards)
+		{
+			var cards = deck?.Cards.Select(c => new Card {Id = c.Id, Count = c.Count});
+			SetPlayerCards(cards, revealedCards);
+		}
+
+		public void SetPlayerCards(IEnumerable<Card> deck, List<Card> revealedCards)
 		{
 			PlayerCards.Clear();
 			foreach(var c in revealedCards)
@@ -475,7 +483,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 			if(deck != null)
 			{
-				foreach(var c in deck.Cards)
+				foreach(var c in deck)
 				{
 					var e = PlayerCards.FirstOrDefault(x => x.Id == c.Id);
 					if(e == null)
