@@ -270,6 +270,7 @@
       <DependentUpon>HearthStatsLogoutInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\DeckPanel.cs" />
+    <Compile Include="Enums\ConfigWarning.cs" />
     <Compile Include="Enums\ImportingChoice.cs" />
     <Compile Include="Enums\LocDescriptionAttribute.cs" />
     <Compile Include="FlyoutControls\HsReplayInfo.xaml.cs">
@@ -394,6 +395,9 @@
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
     <Compile Include="Enums\Language.cs" />
+    <Compile Include="FlyoutControls\Warning.xaml.cs">
+      <DependentUpon>Warning.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Importing\StringImporter.cs" />
     <Compile Include="Utility\RegistryHelper.cs" />
     <Compile Include="Hearthstone\Watchers.cs" />
@@ -1102,6 +1106,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\Warning.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\CrashDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1307,6 +1315,7 @@
     <EmbeddedResource Include="Properties\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Resource Include="Resources\joust-screenshot.jpg" />
     <Resource Include="Resources\Chunkfive.otf" />

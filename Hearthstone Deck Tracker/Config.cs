@@ -563,6 +563,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("00000000-0000-0000-0000-000000000000")]
 		public string Id = Guid.Empty.ToString();
 
+		[DefaultValue(new ConfigWarning[] {})]
+		public ConfigWarning[] IgnoredConfigWarnings = {};
+
 		[DefaultValue(-1)]
 		public int IgnoreNewsId = -1;
 
@@ -1158,8 +1161,29 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Misc
 
+		public event Action<ConfigWarning> OnConfigWarning;
+
 		private Config()
 		{
+		}
+
+		public void CheckConfigWarnings()
+		{
+			var configWarnings = Enum.GetValues(typeof(ConfigWarning)).OfType<ConfigWarning>();
+			var fields = GetType().GetFields();
+			foreach(var warning in configWarnings)
+			{
+				var prop = fields.First(x => x.Name == warning.ToString());
+				var defaultValue = (DefaultValueAttribute)prop.GetCustomAttributes(typeof(DefaultValueAttribute), false).First();
+				var value = prop.GetValue(this);
+				if(!value.Equals(defaultValue.Value))
+				{
+					var ignored = IgnoredConfigWarnings.Contains(warning);
+					Log.Warn($"{warning}={value}, default={defaultValue.Value} ignored={ignored}");
+					if(!ignored)
+						OnConfigWarning?.Invoke(warning);
+				}
+			}
 		}
 
 		public static void Save() => XmlManager<Config>.Save(Instance.ConfigPath, Instance);

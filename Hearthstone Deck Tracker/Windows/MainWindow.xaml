@@ -104,6 +104,12 @@
     </controls:MetroWindow.RightWindowCommands>
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl Margin="{Binding TitleBarMargin, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+            <controls:Flyout x:Name="FlyoutWarnings" Position="Bottom" Panel.ZIndex="102" Width="auto" Height="auto">
+                <controls:Flyout.HeaderTemplate>
+                    <DataTemplate/>
+                </controls:Flyout.HeaderTemplate>
+                <flyoutControls:Warning x:Name="WarningFlyout" />
+            </controls:Flyout>
             <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="{lex:Loc MainWindow_Flyout_Options_Header}"
                          Width="515">
                 <flyoutControls:OptionsMain x:Name="Options"/>

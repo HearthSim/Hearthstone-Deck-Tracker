@@ -461,9 +461,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 			TagControlEdit.GroupBoxSortingArena.Visibility = Collapsed;
 			SortFilterDecksFlyout.HideStuffToCreateNewTag();
 			FlyoutNotes.ClosingFinished += (sender, args) => DeckNotesEditor.SaveDeck();
+			WarningFlyout.OnComplete += () =>
+			{
+				FlyoutWarnings.IsOpen = false;
+				Config.Instance.CheckConfigWarnings();
+			};
 #if(DEBUG)
 			Title += " [DEBUG]";
 #endif
+			Config.Instance.OnConfigWarning += warning =>
+			{
+				WarningFlyout.SetConfigWarning(warning);
+				FlyoutWarnings.IsOpen = true;
+			};
+			Config.Instance.CheckConfigWarnings();
 		}
 
 		public void LoadAndUpdateDecks()
