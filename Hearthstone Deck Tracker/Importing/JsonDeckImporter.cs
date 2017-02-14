@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -18,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 				var deck = new Deck
 				{
 					Name = jsonDeck.Name,
-					Class = jsonDeck.Class,
+					Class = new CultureInfo("en-US", false).TextInfo.ToTitleCase(jsonDeck.Class?.ToLower() ?? ""),
 					Url = jsonDeck.SourceUrl
 				};
 				foreach(var cardId in jsonDeck.CardIds.GroupBy(x => x))
