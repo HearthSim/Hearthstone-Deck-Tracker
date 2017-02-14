@@ -12,6 +12,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 		//frFR,
 		[Description("Japanese")]
 		jaJP,
+		[Description("Korean")]
+		koKR,
 		[Description("Portuguese")]
 		ptPT,
 		[Description("Russian")]
