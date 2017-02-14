@@ -136,7 +136,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			Config.Instance.AutoDeckDetection = enable;
 			Config.Save();
-			DeckPickerList.UpdateAutoSelectToggleButton();
+			Options.OptionsTrackerGeneral.CheckBoxAutoDeckDetection.IsChecked = enable;
 			Core.TrayIcon.SetContextMenuProperty(TrayIcon.AutoSelectDeckMenuItemName, TrayIcon.CheckedProperty, enable);
 		}
 

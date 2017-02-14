@@ -713,29 +713,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			UpdateDeckModeToggleButton();
 		}
 
-		private void BorderAutoSelect_PreviewLeftMouseButtonUp(object sender, MouseButtonEventArgs e)
-		{
-			Core.MainWindow.AutoDeckDetection(!Config.Instance.AutoDeckDetection);
-			UpdateAutoSelectToggleButton();
-		}
-
-		public void UpdateAutoSelectToggleButton()
-		{
-			OnPropertyChanged(nameof(BorderAutoSelectBackground));
-			OnPropertyChanged(nameof(BorderAutoSelectTextBrush));
-		}
-
 		public void UpdateDeckModeToggleButton()
 		{
 			OnPropertyChanged(nameof(BorderDeckModeBackground));
 			OnPropertyChanged(nameof(BorderDeckModeTextBrush));
 		}
-
-		public SolidColorBrush BorderAutoSelectBackground
-			=> Config.Instance.AutoDeckDetection ? (SolidColorBrush)FindResource("AccentColorBrush") : new SolidColorBrush(Colors.Transparent);
-
-		public SolidColorBrush BorderAutoSelectTextBrush
-			=> Config.Instance.AutoDeckDetection ? new SolidColorBrush(Colors.White) : (SolidColorBrush)FindResource("TextBrush");
 
 		public SolidColorBrush BorderDeckModeBackground
 			=> DeckList.Instance.ActiveDeck == null ? (SolidColorBrush)FindResource("AccentColorBrush") : new SolidColorBrush(Colors.Transparent);

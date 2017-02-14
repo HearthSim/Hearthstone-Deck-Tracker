@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System.Diagnostics;
 using System.Linq;
@@ -63,7 +63,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			DeckPickerList.SelectClasses(selectedClasses);
 			DeckPickerList.SelectDeckType(Config.Instance.SelectedDeckPickerDeckType, true);
-			DeckPickerList.UpdateAutoSelectToggleButton();
 
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
 

@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public void Load()
 		{
 			CheckBoxAutoUse.IsChecked = Config.Instance.AutoUseDeck;
+			CheckBoxAutoDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
 			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
@@ -360,6 +361,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private void CheckBoxAutoDeckDetecion_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoDeckDetection = true;
+			Config.Save();
+			Core.MainWindow.AutoDeckDetection(true);
+		}
+
+		private void CheckBoxAutoDeckDetection_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.AutoDeckDetection = false;
+			Config.Save();
+			Core.MainWindow.AutoDeckDetection(false);
 		}
 	}
 }
