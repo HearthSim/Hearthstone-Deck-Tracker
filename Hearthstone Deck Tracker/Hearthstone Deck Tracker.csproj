@@ -1320,6 +1320,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>Strings.resx</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Strings.uk.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
@@ -1486,7 +1490,7 @@
     )
     xcopy /Y "HearthstoneDeckTracker.exe" "..\Squirrel-Clean"
     xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Squirrel-Clean"
-    xcopy /Y "*.dll" "..\Squirrel-Clean"	
+    xcopy /Y "*.dll" "..\Squirrel-Clean"
 )
 if "$(ConfigurationName)" == "Release" (
     rmdir /S /Q "..\Hearthstone Deck Tracker"
@@ -1518,7 +1522,7 @@ if exist $(SolutionDir)HearthMirror (
   git -C $(SolutionDir)HearthMirror fetch
   git -C $(SolutionDir)HearthMirror reset --hard origin/master
 ) else (
-  git clone https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror 
+  git clone https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror
 )
 if exist $(SolutionDir)HSReplay-Api (
   git -C $(SolutionDir)HSReplay-Api fetch
@@ -1539,7 +1543,7 @@ xcopy /E /Y /Q "$(SolutionDir)Resources\Generated\Tiles" "$(TargetDir)\Images\Ti
 xcopy /E /Y /Q "$(ProjectDir)Images\Themes" "$(TargetDir)\Images\Themes"
 xcopy /Y /Q "$(SolutionDir)CHANGELOG.md" "$(ProjectDir)Resources"</PreBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
