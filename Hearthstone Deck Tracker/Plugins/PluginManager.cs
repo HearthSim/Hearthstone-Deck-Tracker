@@ -163,7 +163,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			var files = dirInfo.GetFiles().Select(f => f.FullName).ToList();
 			if(checkSubDirs)
 			{
-				foreach(var dir in dirInfo.GetDirectories("*", SearchOption.AllDirectories))
+				foreach(var dir in dirInfo.GetDirectories())
 					files.AddRange(dir.GetFiles().Select(f => f.FullName));
 			}
 

@@ -86,7 +86,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 						}
 						else if(pluginPath.EndsWith(".zip"))
 						{
-							ZipFile.ExtractToDirectory(pluginPath, Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath)));
+							var zip = ZipFile.OpenRead(pluginPath);
+							if (string.IsNullOrEmpty(zip.Entries[0].Name) && zip.Entries[1].FullName.Contains("/"))
+							{
+								ZipFile.ExtractToDirectory(pluginPath, dir);
+							}
+							else
+							{
+								ZipFile.ExtractToDirectory(pluginPath, Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath)));
+							}
 							plugins++;
 						}
 					}
