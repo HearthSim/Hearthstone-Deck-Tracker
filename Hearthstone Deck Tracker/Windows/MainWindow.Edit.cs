@@ -1,9 +1,12 @@
 #region
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -13,6 +16,9 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+using MessageBox = System.Windows.MessageBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 #endregion
 
@@ -33,14 +39,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(!decks.Any())
 				return;
 
-			var settings = new MessageDialogs.Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
+			var settings = new MessageDialogs.Settings { AffirmativeButtonText = "Yes", NegativeButtonText = "No" };
 			var keepStatsInfo = Config.Instance.KeepStatsWhenDeletingDeck
-				                    ? "The stats will be kept (can be changed in options)"
-				                    : "The stats will be deleted (can be changed in options)";
+				? "The stats will be kept (can be changed in options)"
+				: "The stats will be deleted (can be changed in options)";
 			var result =
 				await
-				this.ShowMessageAsync("Deleting " + (decks.Count == 1 ? decks.First().Name : decks.Count + " decks"),
-				                      "Are you Sure?\n" + keepStatsInfo, MessageDialogStyle.AffirmativeAndNegative, settings);
+					this.ShowMessageAsync("Deleting " + (decks.Count == 1 ? decks.First().Name : decks.Count + " decks"),
+						"Are you Sure?\n" + keepStatsInfo, MessageDialogStyle.AffirmativeAndNegative, settings);
 			if(result == MessageDialogResult.Negative)
 				return;
 			DeckManagerEvents.OnDeckDeleted.Execute(decks);
@@ -179,14 +185,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(deck == null)
 				return;
 			var cloneStats =
-				(await
-				 this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
-				                       MessageDialogStyle.AffirmativeAndNegative,
-				                       new MessageDialogs.Settings
-				                       {
-					                       AffirmativeButtonText = "clone history",
-					                       NegativeButtonText = "do not clone history"
-				                       })) == MessageDialogResult.Affirmative;
+			(await
+				this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
+					MessageDialogStyle.AffirmativeAndNegative,
+					new MessageDialogs.Settings
+					{
+						AffirmativeButtonText = "clone history",
+						NegativeButtonText = "do not clone history"
+					})) == MessageDialogResult.Affirmative;
 
 			var clone = (Deck)deck.CloneWithNewId(false);
 
@@ -230,14 +236,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			deck = deck.GetSelectedDeckVersion();
 
 			var cloneStats =
-				(await
-				 this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
-				                       MessageDialogStyle.AffirmativeAndNegative,
-				                       new MessageDialogs.Settings
-				                       {
-					                       AffirmativeButtonText = "clone history",
-					                       NegativeButtonText = "do not clone history"
-				                       })) == MessageDialogResult.Affirmative;
+			(await
+				this.ShowMessageAsync("Clone game history?", "(Cloned games do not count towards class or overall stats.)",
+					MessageDialogStyle.AffirmativeAndNegative,
+					new MessageDialogs.Settings
+					{
+						AffirmativeButtonText = "clone history",
+						NegativeButtonText = "do not clone history"
+					})) == MessageDialogResult.Affirmative;
 
 			var clone = (Deck)deck.CloneWithNewId(false);
 
@@ -250,7 +256,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckList.Instance.Decks.Add(clone);
 			DeckPickerList.UpdateDecks();
 			DeckList.Save();
-			
+
 			DeckStats newStatsEntry;
 			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out newStatsEntry))
 			{
@@ -300,7 +306,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			}
 			//this could be expanded to check against the last version of the deck that was not modified after downloading
-			if(deck.Cards.All(c1 => selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => c1.Name == c2.Name && c1.Count == c2.Count)))
+			if(
+				deck.Cards.All(
+					c1 => selectedDeck.GetSelectedDeckVersion().Cards.Any(c2 => c1.Name == c2.Name && c1.Count == c2.Count)))
 			{
 				await this.ShowMessageAsync("Already up to date.", "No changes found.");
 				return;
@@ -323,11 +331,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal async void BtnSetDeckUrl_Click(object sender, RoutedEventArgs e)
 		{
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			if (selectedDeck == null)
+			if(selectedDeck == null)
 				return;
 
 			var url = await InputDeckUrl();
-			if (string.IsNullOrEmpty(url))
+			if(string.IsNullOrEmpty(url))
 				return;
 
 			selectedDeck.Url = url;
@@ -365,7 +373,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
-			var settings = new MessageDialogs.Settings {AffirmativeButtonText = "set", NegativeButtonText = "cancel", DefaultText = deck.Name};
+			var settings = new MessageDialogs.Settings
+			{
+				AffirmativeButtonText = "set",
+				NegativeButtonText = "cancel",
+				DefaultText = deck.Name
+			};
 			var newName = await this.ShowInputAsync("Set deck name", "", settings);
 			if(string.IsNullOrEmpty(newName) || deck.Name == newName)
 				return;
@@ -396,6 +409,64 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(Keyboard.FocusedElement is TextBox)
 					return;
 				ImportFromClipboard();
+			}
+		}
+
+		internal async Task BtnExportDeck_Hearthpwn_Click(object sender, RoutedEventArgs e)
+		{
+			Dictionary<string, string> cardDictionary = new Dictionary<string, string>();
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			var cardIds = File.ReadAllLines("Resources/hearthpwn-card-map.tsv");
+			//need to reference the resource rather than file name, or init the dict at startup
+			var deckUrl = "http://www.hearthpwn.com/deckbuilder/" + deck.Class.ToLower() + "#";
+			foreach(var line in cardIds)
+			{
+				var cardDict = line.Split(' ');
+				string cardName = string.Join(" ", cardDict.Take(cardDict.Length - 1));
+				if(!cardDictionary.ContainsKey(cardDict[0]))
+					cardDictionary.Add(cardName, cardDict.Last());
+			}
+			foreach(var card in deck.Cards)
+			{
+				var cardId = cardDictionary[card.Name];
+				deckUrl = deckUrl + cardId + ":" + card.Count + ";";
+			}
+			System.Windows.Forms.Clipboard.SetText(deckUrl);
+			var dialogResult = await OpenClose();
+			if(dialogResult == MessageDialogResult.Affirmative)
+				Helper.TryOpenUrl(deckUrl);
+		}
+
+		private async Task<MessageDialogResult> OpenClose()
+		{
+			MetroDialogSettings messageSettings = new MetroDialogSettings();
+			messageSettings.AffirmativeButtonText = "Yes";
+			messageSettings.NegativeButtonText = "No";
+			return await this.ShowMessageAsync("Hearthpwn URL created", "Copied to clipboard successfully. \n \n Open URL now?", MessageDialogStyle.AffirmativeAndNegative, messageSettings);
+		}
+		internal void BtnExportDeck_Generic_Click(object sender, RoutedEventArgs e)
+		{
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			SaveFileDialog MainDialog = new SaveFileDialog();
+			MainDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+			MainDialog.Title = "Save deck";
+			MainDialog.ShowDialog();
+			if(!string.IsNullOrEmpty(MainDialog.FileName))
+			{
+				StreamWriter SW = new StreamWriter(MainDialog.FileName);
+				foreach(var card in deck.Cards)
+				{
+					if(card.Count == 2)
+					{
+						SW.WriteLine(card.Name + " x 2");
+					}
+
+					else
+					{
+						SW.WriteLine(card.Name);
+					}
+				}
+				SW.Close();
 			}
 		}
 	}
