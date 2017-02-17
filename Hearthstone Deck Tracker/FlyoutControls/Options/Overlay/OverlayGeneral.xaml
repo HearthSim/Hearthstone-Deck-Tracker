@@ -48,7 +48,7 @@
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxHideOpponentCardMarks_Checked"
                               Unchecked="CheckboxHideOpponentCardMarks_Unchecked"
-                              HorizontalAlignment="Left" Width="114" />
+                              HorizontalAlignment="Left" Width="200" />
                     <CheckBox x:Name="CheckboxHideSecrets" Content="{lex:Loc Options_Overlay_General_CheckBox_HideSecrets}"
                               HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0"
                               VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked"
@@ -57,7 +57,7 @@
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxOverlayCardToolTips_Checked"
                               Unchecked="CheckboxOverlayCardToolTips_Unchecked"
-                              HorizontalAlignment="Left" Width="114" />
+                              HorizontalAlignment="Left" Width="200" />
                     <CheckBox x:Name="CheckboxOverlaySecretToolTipsOnly"
                               Content="{lex:Loc Options_Overlay_General_CheckBox_SecretsOnly}" Margin="30,5,0,0"
                               VerticalAlignment="Top"
