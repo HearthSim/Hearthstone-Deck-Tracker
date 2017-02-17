@@ -81,7 +81,7 @@
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Margin="10,5,0,0" VerticalAlignment="Top"
-                              ToolTip="Displays the created/returned card, if the information is available."
+                              ToolTip="{lex:Loc Options_Overlay_General_CheckBox_CardMarkTooltips_Tooltip}"
                               Checked="CheckboxOverlayCardMarkToolTips_Checked"
                               Unchecked="CheckboxOverlayCardMarkToolTips_Unchecked"
                               HorizontalAlignment="Left" />
@@ -115,12 +115,12 @@
                               Unchecked="CheckboxAlwaysShowGoldProgress_Unchecked" />
                     <CheckBox Name="CheckBoxFlavorText" Content="{lex:Loc Options_Overlay_General_CheckBox_FlavorText}"
                               HorizontalAlignment="Left"
-                              ToolTip="Will only appear if the cursor stays still on a card for a short period of time."
+                              ToolTip="{lex:Loc Options_Overlay_General_CheckBox_FlavorText_Tooltip}"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckBoxFlavorText_Checked"
                               Unchecked="CheckBoxFlavorText_Unchecked" />
                     <CheckBox Name="CheckBoxBatteryStatus" Content="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus}" HorizontalAlignment="Left"
-                              ToolTip="Works for mobile devices (Laptop, Tablet, ...) only."
+                              ToolTip="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus_Tooltip}"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckBoxBatteryStatus_Checked"
                               Unchecked="CheckBoxBatteryStatus_Unchecked" />

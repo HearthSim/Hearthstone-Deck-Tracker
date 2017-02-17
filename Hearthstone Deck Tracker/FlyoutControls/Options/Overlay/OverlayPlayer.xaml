@@ -88,7 +88,7 @@
                               Unchecked="CheckBoxAttack_Unchecked" />
                     <CheckBox x:Name="CheckBoxCenterDeckVertically"
                               Content="{lex:LocText Options_Overlay_Player_CheckBox_CenterVertically}" HorizontalAlignment="Left"
-                              ToolTip="Center cards and information panels vertically within the selected region for the deck. Region can be changed via 'overlay > general > unlock'."
+                              ToolTip="{lex:LocText Options_Overlay_Player_CheckBox_CenterVertically_Tooltip}"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckBoxCenterDeckVertically_Checked"
                               Unchecked="CheckBoxCenterDeckVertically_Unchecked" />
