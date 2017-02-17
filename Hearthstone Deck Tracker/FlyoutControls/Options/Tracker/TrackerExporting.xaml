@@ -61,7 +61,7 @@
                               Unchecked="CheckboxForceClear_Unchecked" />
                     <CheckBox x:Name="CheckboxExportPasteClipboard"
                               Content="{lex:Loc Options_Tracker_Exporting_CheckBox_Clipbard}"
-                              ToolTip="Try this if you have problems exporting certain card/deck names - May not work with all keyboard layouts"
+                              ToolTip="{lex:Loc Options_Tracker_Exporting_CheckBox_Clipbard_Tooltip}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top"
                               Checked="CheckboxExportPasteClipboard_Checked"

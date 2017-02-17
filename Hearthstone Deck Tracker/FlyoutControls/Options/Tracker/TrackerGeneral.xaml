@@ -34,17 +34,17 @@
                             <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
                                 <CheckBox x:Name="CheckboxTimerAlert"
                                       HorizontalAlignment="Left" Margin="0,5,0,0"
-                                      ToolTip="Sound an alert and flash when you have X seconds remaining"
+                                      ToolTip="{lex:Loc Options_Tracker_General_Label_TimerAlert_Tooltip}"
                                       VerticalAlignment="Top" Checked="CheckboxTimerAlert_Checked"
                                       Unchecked="CheckboxTimerAlert_Unchecked">
                                     <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
-                                        <Label Content="Alert at" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                                        <Label Content="{lex:Loc Options_Tracker_General_Label_TimerAlert}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
                                         <TextBox x:Name="TextboxTimerAlert"
                                          HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
                                          Margin="10,0,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"
                                          Width="60" TextChanged="TextboxTimerAlert_TextChanged"
                                          PreviewTextInput="TextboxTimerAlert_PreviewTextInput" />
-                                        <Label Content="seconds." Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                                        <Label Content="{lex:Loc Options_Tracker_General_Label_TimerAlert2}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
                                     </StackPanel>
                                 </CheckBox>
                             </DockPanel>
@@ -116,7 +116,7 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckboxDeckPickerCaps_Checked"
                               Unchecked="CheckboxDeckPickerCaps_Unchecked"
-                              ToolTip="Uncheck to use normal case in Deck Picker." />
+                              ToolTip="{lex:Loc Options_Tracker_General_CheckBox_UpperCaseDeckNames_Tooltip}" />
                     <CheckBox x:Name="CheckBoxShowLastPlayedDate" Content="{lex:Loc Options_Tracker_General_CheckBox_LastPlayedDate}"
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top" Checked="CheckBoxShowLastPlayedDate_Checked"

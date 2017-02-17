@@ -69,14 +69,14 @@
                         </ComboBox>
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassIcons}" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassIcons}" HorizontalAlignment="Left" VerticalAlignment="Top"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <ComboBox x:Name="ComboBoxIconSet" HorizontalAlignment="Right"
                                   VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboboxIconSet_SelectionChanged" />
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassColors}" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassColors}" HorizontalAlignment="Left" VerticalAlignment="Top"
                                Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
                                   VerticalAlignment="Top" Width="150"
@@ -96,7 +96,7 @@
                                   SelectionChanged="ComboBoxCardTheme_SelectionChanged" />
                     </DockPanel>
                     <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_DeckLayout}" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_DeckLayout}" HorizontalAlignment="Left" VerticalAlignment="Top"
                                Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" />
                         <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
                                   VerticalAlignment="Top" Width="150"
@@ -128,7 +128,7 @@
                               HorizontalAlignment="Left" Margin="10,5,0,0"
                               VerticalAlignment="Top"
                               Unchecked="CheckboxUseAnimations_Unchecked"
-                              ToolTip="Uncheck to disable most animations for popup dialogs and flyouts"
+                              ToolTip="{lex:Loc Options_Tracker_Appearance_CheckBox_Metro_Tooltip}"
                               Checked="CheckboxUseAnimations_Checked" />
                 </StackPanel>
             </ScrollViewer>
