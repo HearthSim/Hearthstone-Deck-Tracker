@@ -7,7 +7,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		public static void UpdateCultureInfo()
 		{
-			var locStr = Config.Instance.Localization.ToString().Insert(2, "-");
+			var locStr = Config.Instance.Localization.ToString();
+			if(locStr.Length > 2)
+				locStr = locStr.Insert(2, "-");
 			LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo(locStr);
 		}
 
