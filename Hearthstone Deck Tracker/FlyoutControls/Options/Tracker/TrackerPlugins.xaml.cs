@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Printing;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -127,9 +128,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Log.Info("downloading plugin list.");
 			var pluginList = new List<Plugin>();
 			var wc = new WebClient();
-			wc.Headers["User-Agent"] = $"HDT hearthsim";
-			//wc.Headers.Add("client_id", "c632245f44ba297869b2");
-			//wc.Headers.Add("client_secret", "246cd4bfeb9e0514f733ac35767f8c10dbbe4604");
+			wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
 			var json = JObject.Parse(wc.DownloadString("https://raw.githubusercontent.com/HearthSim/HDT-Plugins/master/plugins.json"));
 			foreach (var plugin in json["data"])
 			{
@@ -155,13 +154,28 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		#region Available
 
-
-
-		#endregion
 		private void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
 		{
-			
+			try
+			{
+				var wc = new WebClient();
+				wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
+				var releaseUrl = (ListBoxAvailable.SelectedItem as Plugin).ReleaseUrl;
+				var json = JObject.Parse(wc.DownloadString(releaseUrl));
+				var downloadUrl = json["assets"].First["browser_download_url"].ToString();
+				var downloadFile = Path.Combine(Path.GetTempPath(), downloadUrl.Split('/').Last());
+				wc.DownloadFile(downloadUrl, downloadFile);
+				var stringList = new string[1] { downloadFile };
+				InstallPlugin(stringList);
+			}
+			catch(Exception ex)
+			{
+
+				Log.Error(ex);
+			}
 		}
+
+		#endregion
 
 
 	}
