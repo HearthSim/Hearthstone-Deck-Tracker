@@ -50,46 +50,46 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			(ListBoxPlugins.SelectedItem as PluginWrapper)?.OnButtonPress();
 		}
 
-		private async void GroupBox_Drop(object sender, DragEventArgs e)
+		private void GroupBox_Drop(object sender, DragEventArgs e)
+		{
+			if(!e.Data.GetDataPresent(DataFormats.FileDrop)) 
+				return;
+			InstallPlugin((string[])e.Data.GetData(DataFormats.FileDrop));
+		}
+
+		private async void InstallPlugin(string[] files)
 		{
 			var dir = PluginManager.PluginDirectory.FullName;
 			try
 			{
-				if(e.Data.GetDataPresent(DataFormats.FileDrop))
+				var plugins = 0;
+				foreach(var pluginPath in files)
 				{
-					
-					var plugins = 0;
-					var droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
-					if(droppedFiles == null) 
-						return;
-					foreach(var pluginPath in droppedFiles)
+					if(pluginPath.EndsWith(".dll"))
 					{
-						if(pluginPath.EndsWith(".dll"))
-						{
-							File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
-							plugins++;
-						}
-						else if(pluginPath.EndsWith(".zip"))
-						{
-							var path = Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath));
-							ZipFile.ExtractToDirectory(pluginPath, path);
-							if (Directory.GetDirectories(path).Length == 1 && Directory.GetFiles(path).Length == 0)
-							{
-								Directory.Delete(path, true);
-								ZipFile.ExtractToDirectory(pluginPath, dir);
-							}
-							plugins++;
-						}
+						File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
+						plugins++;
 					}
-					if(plugins <= 0) 
-						return;
-					var result = await Core.MainWindow.ShowMessageAsync("Plugins installed",
-						$"Successfully installed {plugins} plugin(s). \n Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
-
-					if(result != MessageDialogResult.Affirmative)
-						return;
-					Core.MainWindow.Restart();
+					else if(pluginPath.EndsWith(".zip"))
+					{
+						var path = Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath));
+						ZipFile.ExtractToDirectory(pluginPath, path);
+						if(Directory.GetDirectories(path).Length == 1 && Directory.GetFiles(path).Length == 0)
+						{
+							Directory.Delete(path, true);
+							ZipFile.ExtractToDirectory(pluginPath, dir);
+						}
+						plugins++;
+					}
 				}
+				if(plugins <= 0)
+					return;
+				var result = await Core.MainWindow.ShowMessageAsync("Plugins installed",
+					$"Successfully installed {plugins} plugin(s). \n Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
+
+				if(result != MessageDialogResult.Affirmative)
+					return;
+				Core.MainWindow.Restart();
 			}
 			catch(Exception ex)
 			{
