@@ -11,7 +11,7 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Plugins_Header}" AllowDrop="True" Drop="GroupBox_Drop">
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Plugins_Header}" AllowDrop="True" Drop="GroupBox_Drop" Loaded="GroupBox_Loaded">
             <TabControl>
                 <TabItem Header="Installed">
                     <DockPanel>
@@ -77,20 +77,20 @@
                                 <ListBox Name="ListBoxAvailable" SelectionMode="Single">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Path=Plugin.Name}" TextWrapping="Wrap" />
+                                            <TextBlock Text="{Binding Path=Name}" TextWrapping="Wrap" />
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                             </Border>
                         </DockPanel>
                         <GroupBox Name="GroupBoxAvailable"
-                          Header="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.NameAndVersion}"
+                          Header="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Name}"
                           Margin="0,10,0,0">
                             <DockPanel>
                                 <Separator DockPanel.Dock="Top" Margin="0,0,0,5" />
                                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
                                     <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
-                                    <TextBlock Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Plugin.Author}"
+                                    <TextBlock Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Author}"
                                        TextWrapping="Wrap" Margin="2,0,0,0" />
                                 </StackPanel>
                                 <Button Name="ButtonDownload"
@@ -98,7 +98,7 @@
                                 DockPanel.Dock="Bottom" Click="ButtonInstall_OnClick" Margin="0,2" />
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <TextBlock
-                                       Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Plugin.Description}"
+                                       Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Description}"
                                        TextWrapping="Wrap" />
                                 </ScrollViewer>
                             </DockPanel>

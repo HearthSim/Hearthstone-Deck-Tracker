@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -29,9 +30,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			InitializeComponent();
 		}
 
+		private bool Loaded;
+
+		private void GroupBox_Loaded(object sender, RoutedEventArgs e)
+		{
+			if(Loaded)
+				return;
+			try
+			{
+				ListBoxAvailable.ItemsSource = GetPlugins();
+			}
+			catch (Exception ex)
+			{
+				Log.Error(ex);
+				
+			}
+		}
+
 		#region Installed
 
-		
+
 		public void Load()
 		{
 			ListBoxPlugins.ItemsSource = PluginManager.Instance.Plugins;
@@ -104,22 +122,32 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		#region JSON functions
 
-		private string GetAuthor(string apiUrl)
+		private List<Plugin> GetPlugins()
 		{
+			Log.Info("downloading plugin list.");
+			var pluginList = new List<Plugin>();
 			var wc = new WebClient();
-			wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
-			var json = JObject.Parse(wc.DownloadString(apiUrl));
-			return json["owner"]["login"].ToString();
+			wc.Headers["User-Agent"] = $"HDT hearthsim";
+			//wc.Headers.Add("client_id", "c632245f44ba297869b2");
+			//wc.Headers.Add("client_secret", "246cd4bfeb9e0514f733ac35767f8c10dbbe4604");
+			var json = JObject.Parse(wc.DownloadString("https://raw.githubusercontent.com/HearthSim/HDT-Plugins/master/plugins.json"));
+			foreach (var plugin in json["data"])
+			{
+				var baseUrl = plugin["url"].ToString();
+				var releaseUrl = baseUrl + "/releases/latest";
+				var Plugin = new Plugin();
+				Plugin.Author = plugin["author"].ToString();
+				Plugin.Description = plugin["description"].ToString();
+				Plugin.Name = plugin["title"].ToString();
+				Plugin.ReleaseUrl = releaseUrl;
+				pluginList.Add(Plugin);
+			}
+			return pluginList;
 		}
 
-		private string GetVersion(string releaseUrl)
-		{
-			var wc = new WebClient();
-			wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
-			var json = JObject.Parse(wc.DownloadString(releaseUrl));
-			return json["tag_name"].ToString().Replace("v", "");
-		}
+		private string GetAuthor(string releaseData) => JObject.Parse(releaseData)["author"]["login"].ToString();
 
+		private string GetVersion(string releaseData) => JObject.Parse(releaseData)["tag_name"].ToString().Replace("v", "");
 
 		#endregion
 
@@ -134,14 +162,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			
 		}
+
+
 	}
 
 	public class Plugin
 	{
-		private string Name { get; set; }
-		private string NameAndVersion { get; set; }
-		private string Author { get; set; }
-		private string Description { get; set; }
-		private string ReleaseUrl { get; set; }
+		public string Name { get; set; }
+		public string Author { get; set; }
+		public string Description { get; set; }
+		public string ReleaseUrl { get; set; }
 	}
 }
