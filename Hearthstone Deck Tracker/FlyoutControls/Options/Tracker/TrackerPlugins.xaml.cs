@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -12,6 +13,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
+using Newtonsoft.Json.Linq;
 
 #endregion
 
@@ -27,6 +29,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			InitializeComponent();
 		}
 
+		#region Installed
+
+		
 		public void Load()
 		{
 			ListBoxPlugins.ItemsSource = PluginManager.Instance.Plugins;
@@ -43,26 +48,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void ButtonSettings_OnClick(object sender, RoutedEventArgs e)
 		{
 			(ListBoxPlugins.SelectedItem as PluginWrapper)?.OnButtonPress();
-		}
-
-		private void ButtonAvailablePlugins_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
-
-		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
-		{
-			var dir = PluginManager.PluginDirectory;
-			if(!dir.Exists)
-			{
-				try
-				{
-					dir.Create();
-				}
-				catch(Exception)
-				{
-					Core.MainWindow.ShowMessage("Error",
-												$"Plugins directory was not found and can not be created. Please manually create a folder called 'Plugins' under {dir}.").Forget();
-				}
-			}
-			Helper.TryOpenUrl(dir.FullName);
 		}
 
 		private async void GroupBox_Drop(object sender, DragEventArgs e)
@@ -112,5 +97,51 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Core.MainWindow.ShowMessage("Error Importing Plugin", $"Please import manually to {dir}.").Forget();
 			}
 		}
+
+		#endregion
+
+
+
+		#region JSON functions
+
+		private string GetAuthor(string apiUrl)
+		{
+			var wc = new WebClient();
+			wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
+			var json = JObject.Parse(wc.DownloadString(apiUrl));
+			return json["owner"]["login"].ToString();
+		}
+
+		private string GetVersion(string releaseUrl)
+		{
+			var wc = new WebClient();
+			wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
+			var json = JObject.Parse(wc.DownloadString(releaseUrl));
+			return json["tag_name"].ToString().Replace("v", "");
+		}
+
+
+		#endregion
+
+
+
+		#region Available
+
+
+
+		#endregion
+		private void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
+		{
+			
+		}
+	}
+
+	public class Plugin
+	{
+		private string Name { get; set; }
+		private string NameAndVersion { get; set; }
+		private string Author { get; set; }
+		private string Description { get; set; }
+		private string ReleaseUrl { get; set; }
 	}
 }
