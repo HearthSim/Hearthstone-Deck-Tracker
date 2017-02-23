@@ -144,6 +144,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Plugin.ReleaseUrl = releaseUrl;
 				pluginList.Add(Plugin);
 			}
+			wc.Dispose();
 			return pluginList;
 		}
 
@@ -155,6 +156,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			var wc = new WebClient();
 			var json = JObject.Parse(wc.DownloadString("https://api.github.com/rate_limit"));
+			wc.Dispose();
 			if(json["rate"]["remaining"].ToString() == "0")
 				return true;
 			return false;
@@ -179,6 +181,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				wc.DownloadFile(downloadUrl, downloadFile);
 				var stringList = new string[1] { downloadFile };
 				InstallPlugin(stringList);
+				wc.Dispose();
 			}
 			catch(Exception ex)
 			{
