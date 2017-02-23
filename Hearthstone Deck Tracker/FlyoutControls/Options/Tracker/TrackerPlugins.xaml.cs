@@ -42,6 +42,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			try
 			{
 				ListBoxAvailable.ItemsSource = GetPlugins();
+				Loaded = true;
 			}
 			catch(Exception ex)
 			{
