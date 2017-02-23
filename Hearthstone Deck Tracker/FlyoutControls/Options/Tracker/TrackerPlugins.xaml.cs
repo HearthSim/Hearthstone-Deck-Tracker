@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -8,6 +9,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Printing;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -41,10 +43,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				ListBoxAvailable.ItemsSource = GetPlugins();
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				Log.Error(ex);
-				
+
 			}
 		}
 
@@ -71,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void GroupBox_Drop(object sender, DragEventArgs e)
 		{
-			if(!e.Data.GetDataPresent(DataFormats.FileDrop)) 
+			if(!e.Data.GetDataPresent(DataFormats.FileDrop))
 				return;
 			InstallPlugin((string[])e.Data.GetData(DataFormats.FileDrop));
 		}
@@ -130,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			var wc = new WebClient();
 			wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
 			var json = JObject.Parse(wc.DownloadString("https://raw.githubusercontent.com/HearthSim/HDT-Plugins/master/plugins.json"));
-			foreach (var plugin in json["data"])
+			foreach(var plugin in json["data"])
 			{
 				var baseUrl = plugin["url"].ToString();
 				var releaseUrl = baseUrl + "/releases/latest";
@@ -147,6 +149,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private string GetAuthor(string releaseData) => JObject.Parse(releaseData)["author"]["login"].ToString();
 
 		private string GetVersion(string releaseData) => JObject.Parse(releaseData)["tag_name"].ToString().Replace("v", "");
+
+		private bool rateLimitHit()
+		{
+			var wc = new WebClient();
+			var json = JObject.Parse(wc.DownloadString("https://api.github.com/rate_limit"));
+			if(json["rate"]["remaining"].ToString() == "0")
+				return true;
+			return false;
+		}
 
 		#endregion
 
@@ -170,9 +181,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 			catch(Exception ex)
 			{
-
 				Log.Error(ex);
+				GithubUnavailable().Forget();
 			}
+		}
+
+		private async Task GithubUnavailable()
+		{
+			var messageText = "Unable to download plugin for an unknown reason. The error has been logged.";
+			if(rateLimitHit())
+			{
+				messageText = "You have hit Github's rate limit.";
+			}
+			var result = await Core.MainWindow.ShowMessageAsync("Unable to download plugin.",
+					$"{messageText}\nTry again later or manually drag-and-drop the plugin.\nGo to the manual download page now?", MessageDialogStyle.AffirmativeAndNegative);
+			if(result == MessageDialogResult.Negative)
+				return;
+			var releaseUrl = (ListBoxAvailable.SelectedItem as Plugin).ReleaseUrl.Replace("api.", "").Replace("/repos", "");
+			Helper.TryOpenUrl(releaseUrl);
 		}
 
 		#endregion
