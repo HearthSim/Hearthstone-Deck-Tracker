@@ -56,6 +56,15 @@
                                 Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}"
                                 IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}"
                                 DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick" Margin="0,2" />
+                                <Button Name="ButtonIssues"
+                                Content="Bugs/Issues"
+                                IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.RepoAvailable}"
+                                DockPanel.Dock="Bottom" Click="ButtonIssues_OnClick" Margin="0,2" />
+                                <Button Name="ButtonReadme"
+                                Content="Details"
+                                IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.RepoAvailable}"
+                                DockPanel.Dock="Bottom" Click="ButtonReadme_OnClick" Margin="0,2" />
+                                
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <TextBlock Name="TextBlockDescription"
                                        Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}"

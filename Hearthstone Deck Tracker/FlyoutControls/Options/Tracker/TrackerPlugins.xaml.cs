@@ -68,6 +68,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 		}
 
+		private void ButtonIssues_OnClick(object sender, RoutedEventArgs e)
+		{
+			var releases = (ListBoxPlugins.SelectedItem as PluginWrapper)?.Repourl + "/issues";
+			Helper.TryOpenUrl(releases);
+		}
+
+		private void ButtonReadme_OnClick(object sender, RoutedEventArgs e)
+		{
+			var releases = (ListBoxPlugins.SelectedItem as PluginWrapper)?.Repourl + "#readme";
+			Helper.TryOpenUrl(releases);
+		}
+
 		private void ButtonSettings_OnClick(object sender, RoutedEventArgs e)
 		{
 			(ListBoxPlugins.SelectedItem as PluginWrapper)?.OnButtonPress();

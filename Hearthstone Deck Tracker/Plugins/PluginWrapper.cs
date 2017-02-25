@@ -49,6 +49,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public string Repourl => Updatable != null ? Updatable.Repourl : "";
 
+		public bool RepoAvailable => !string.IsNullOrEmpty(Repourl);
+
 		public bool IsEnabled
 		{
 			get { return _isEnabled; }
