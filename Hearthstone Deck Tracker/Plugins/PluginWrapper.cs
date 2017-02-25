@@ -29,15 +29,25 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			Plugin = plugin;
 		}
 
+		public PluginWrapper(string fileName, IPlugin plugin, IUpdatable updatable)
+		{
+			FileName = fileName;
+			Plugin = plugin;
+			Updatable = updatable;
+		}
+
 		public string FileName { get; set; }
 		public IPlugin Plugin { get; set; }
 		private MenuItem MenuItem { get; set; }
+		public IUpdatable Updatable { get; set; }
 
 		public string Name => Plugin != null ? Plugin.Name : FileName;
 
 		public string NameAndVersion => Name + " " + (Plugin?.Version.ToString() ?? "");
 
 		public string RelativeFilePath => new Uri(AppDomain.CurrentDomain.BaseDirectory).MakeRelativeUri(new Uri(FileName)).ToString();
+
+		public string Repourl => Updatable != null ? Updatable.Repourl : "";
 
 		public bool IsEnabled
 		{
