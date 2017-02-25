@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			catch(Exception ex)
 			{
 				ErrorManager.AddError("Error loading Plugin \"" + Name + "\"",
-				                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
+									  "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 				Log.Error(Name + ":\n" + ex);
 				return false;
 			}
@@ -119,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				if(_exceptions > PluginManager.MaxExceptions)
 				{
 					ErrorManager.AddError(NameAndVersion + " threw too many exceptions, disabled Plugin.",
-					                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
+										  "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 					IsEnabled = false;
 				}
 			}

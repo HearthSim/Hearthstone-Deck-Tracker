@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				ListBoxAvailable.ItemsSource = GetPlugins();
 				_loaded = true;
-				ListBoxUpdates.ItemsSource =  GetUpdates();
+				ListBoxUpdates.ItemsSource = GetUpdates();
 			}
 			catch(Exception ex)
 			{
@@ -157,15 +157,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				Log.Info("Checking for updates to installed plugins.");
 				var updateList = new List<Plugin>();
-				if (ListBoxPlugins.Items.IsEmpty)
+				if(ListBoxPlugins.Items.IsEmpty)
 					return null;
 				var wc = new WebClient();
-				foreach (var p in ListBoxPlugins.Items)
+				foreach(var p in ListBoxPlugins.Items)
 				{
 					var plugin = p as PluginWrapper;
 					wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker @ Hearthsim";
 					//have to set header each time, due to some WebClient issue of cleaing UA header after the first request.
-					if (string.IsNullOrEmpty(plugin?.Repourl))
+					if(string.IsNullOrEmpty(plugin?.Repourl))
 					{
 						Log.Info($"{plugin.Name} cannot be checked for updates. Invalid repo url.");
 						continue;
@@ -173,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					var release = releaseUrl(plugin.Repourl);
 					var releaseData = wc.DownloadString(release);
 					var latestVersion = Version.Parse(GetVersion(releaseData));
-					if (plugin.Plugin.Version >= latestVersion)
+					if(plugin.Plugin.Version >= latestVersion)
 						continue;
 					var Plugin = new Plugin
 					{
@@ -187,15 +187,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				wc.Dispose();
 				return updateList;
 			}
-			catch (WebException)
+			catch(WebException)
 			{
-				if (rateLimitHit())
+				if(rateLimitHit())
 				{
 					Log.Info("User has hit github's rae limit.");
 				}
 				return null;
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				Log.Error(ex);
 				return null;
