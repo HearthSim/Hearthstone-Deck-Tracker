@@ -521,8 +521,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HideSecrets = false;
 
-		[DefaultValue(false)]
-		public bool HideTimers = false;
+		[DefaultValue(true)]
+		public bool HideTimers = true;
 
 		[DefaultValue(false)]
 		public bool HighlightCardsInHand = false;
