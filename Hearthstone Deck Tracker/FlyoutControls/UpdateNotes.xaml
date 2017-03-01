@@ -58,37 +58,9 @@
     <TabControl Name="TabControl">
         <TabItem>
             <DockPanel>
-                <GroupBox DockPanel.Dock="Bottom" Header="Continue...">
-                    <StackPanel Margin="5">
-                        <TextBlock Text="If you like my work please consider donating on Patreon or PayPal, using the buttons below. Thank you!" 
-                                   Margin="10,5,10,10" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Name="ButtonPatreon" Width="120" Height="30" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonPatreon_Click">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Image Source="/HearthstoneDeckTracker;component/Resources/patreon_logo.png" Width="18" RenderOptions.BitmapScalingMode="Fant"/>
-                                        <TextBlock Margin="10,0,0,0" Text="Patreon" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-                            <Button Name="ButtonPaypal" Width="120" Height="30" Margin="10,0,0,0" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonPaypal_Click">
-                                <Button.Content>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Rectangle Width="18" Height="18">
-                                            <Rectangle.Fill>
-                                                <VisualBrush Visual="{StaticResource appbar_paypal_white}"/>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                        <TextBlock Margin="10,0,0,0" Text="PayPal" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button.Content>
-                            </Button>
-                            <Button Name="ButtonClose" Width="160" Height="30"  Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Click="ButtonClose_Click">
-                                <TextBlock Text="Close"/>
-                            </Button>
-                        </StackPanel>
-                    </StackPanel>
-                </GroupBox>
+                <Button DockPanel.Dock="Bottom" Name="ButtonClose" Width="160" Height="30"  Margin="5" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonClose_Click">
+                    <TextBlock Text="Continue"/>
+                </Button>
                 <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Margin="5">
                     <FlowDocumentScrollViewer Document="{Binding ReleaseNotes, RelativeSource={RelativeSource AncestorType=flyoutControls:UpdateNotes}, Converter={StaticResource TextToFlowDocumentConverter}}"
                                               Margin="5" />

@@ -72,34 +72,6 @@
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:LocTextLower MainWindow_TitleBar_Help}" />
                 </StackPanel>
             </Button>
-            <Button Name="BtnDonate" Click="BtnDonate_OnClick">
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="16" Height="14">
-                        <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_heart}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:LocTextLower MainWindow_TitleBar_Donate}" />
-                </StackPanel>
-                <Button.ContextMenu>
-                    <ContextMenu Name="BtnDonateContextMenu">
-                        <MenuItem Header="Patreon" Click="BtnPatreon_OnClick">
-                            <MenuItem.Icon>
-                                <Image Source="/HearthstoneDeckTracker;component/Resources/patreon_logo.png" Width="18" RenderOptions.BitmapScalingMode="Fant" Margin="0,0,-5,0"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="PayPal" Click="BtnPaypal_OnClick">
-                            <MenuItem.Icon>
-                                <Rectangle Width="18" Height="18" Margin="0,0,-5,0">
-                                    <Rectangle.Fill>
-                                        <VisualBrush Visual="{StaticResource appbar_paypal_blue}"/>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     <controls:MetroWindow.Flyouts>
