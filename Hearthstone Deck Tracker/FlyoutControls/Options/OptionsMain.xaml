@@ -16,7 +16,7 @@
                 <Border DockPanel.Dock="Bottom" Margin="-1,0,-1,-1" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <CheckBox Content="{lex:LocText Options_CheckBoxAdvanced}" Margin="5" IsChecked="{Binding Show, Source={x:Static options:AdvancedOptions.Instance}}"/>
                 </Border>
-                <TreeView Name="TreeViewOptions" Width="150">
+                <TreeView Name="TreeViewOptions" MinWidth="150">
                     <TreeViewItem Name="TreeViewItemSearch" Header="{lex:LocText Options_Search_Header}" Selected="TreeViewItemSearch_OnSelected"></TreeViewItem>
                     <TreeViewItem Header="{lex:LocText Options_Overlay_Header}">
                         <TreeViewItem Name="TreeViewItemOverlayGeneral" Header="{lex:LocText Options_Overlay_General_Header}" Selected="TreeViewItemGeneralOverlay_OnSelected"/>

@@ -83,7 +83,7 @@
                 <flyoutControls:Warning x:Name="WarningFlyout" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="{lex:Loc MainWindow_Flyout_Options_Header}"
-                         Width="515">
+                         Width="600">
                 <flyoutControls:OptionsMain x:Name="Options"/>
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="{lex:Loc MainWindow_Flyout_Help_Header}"
