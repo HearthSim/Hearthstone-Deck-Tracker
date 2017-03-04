@@ -787,9 +787,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void SelectLastUsedDeck()
 		{
 			var lastSelected = DeckList.Instance.LastDeckClass.LastOrDefault();
-			if(lastSelected == null)
-				return;
-			var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastSelected.Id);
+			var deck = DeckList.Instance.Decks.FirstOrDefault(d => lastSelected == null || d.DeckId == lastSelected.Id);
 			if(deck == null)
 				return;
 			DeckPickerList.SelectDeck(deck);
