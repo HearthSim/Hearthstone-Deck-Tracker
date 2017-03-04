@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[Description("Portuguese")]
 		ptPT,
 		[Description("Ukrainian")]
-		uk,		
+		ukUA,		
 		[Description("Russian")]
 		ruRU,
 		[Description("Chinese (Simplified)")]

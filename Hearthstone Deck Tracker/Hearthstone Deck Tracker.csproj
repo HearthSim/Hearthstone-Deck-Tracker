@@ -1320,7 +1320,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>Strings.resx</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Strings.uk.resx">
+    <EmbeddedResource Include="Properties\Strings.uk-UA.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Strings.resx</DependentUpon>
     </EmbeddedResource>
