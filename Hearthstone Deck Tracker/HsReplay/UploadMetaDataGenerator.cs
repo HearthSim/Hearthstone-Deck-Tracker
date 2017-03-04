@@ -47,7 +47,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var scenarioId = game?.ScenarioId ?? gameMetaData?.ServerInfo?.Mission;
 			if(scenarioId > 0)
 				metaData.ScenarioId = scenarioId;
-			var build = gameMetaData?.HearthstoneBuild ?? game?.HearthstoneBuild ?? (game != null ? BuildDates.GetByDate(game.StartTime) : null);
+			var build = gameMetaData?.HearthstoneBuild;
+			if(build == null || build == 0)
+				build = game?.HearthstoneBuild;
+			if((build == null || build == 0) && game != null)
+				build = BuildDates.GetByDate(game.StartTime);
 			if(build > 0)
 				metaData.HearthstoneBuild = build;
 			if(game?.BrawlSeasonId > 0)

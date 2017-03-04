@@ -623,16 +623,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void BtnOptions_OnClick(object sender, RoutedEventArgs e) => FlyoutOptions.IsOpen = true;
 		private void BtnHelp_OnClick(object sender, RoutedEventArgs e) => FlyoutHelp.IsOpen = true;
 
-		private void BtnDonate_OnClick(object sender, RoutedEventArgs e)
-		{
-			BtnDonateContextMenu.Placement = PlacementMode.Bottom;
-			BtnDonateContextMenu.PlacementTarget = BtnDonate;
-			BtnDonateContextMenu.IsOpen = true;
-		}
-
-		private void BtnPaypal_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
-		private void BtnPatreon_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://www.patreon.com/HearthstoneDeckTracker");
-
 #endregion
 
 #region GENERAL METHODS

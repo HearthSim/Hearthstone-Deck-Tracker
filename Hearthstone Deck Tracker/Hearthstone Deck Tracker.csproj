@@ -1408,7 +1408,6 @@
     <Resource Include="Resources\lightforgekey.png" />
     <Resource Include="Resources\dust.png" />
     <Resource Include="Resources\gold.png" />
-    <Resource Include="Resources\patreon_logo.png" />
     <Resource Include="Resources\pack_stack.png" />
     <Resource Include="Resources\gold_2.png" />
     <Resource Include="Resources\cards_2.png" />
