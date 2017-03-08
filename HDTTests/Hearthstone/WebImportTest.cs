@@ -135,6 +135,20 @@ namespace HDTTests.Hearthstone
 			Deck expected = CreateDeck("Inner Rage;2", "Shield Slam;2", "Grommash Hellscream;1", "Piloted Shredder;2",
 				"Dr. Boom;1", "Warsong Commander;0", "Slam;0", "Gnomish Inventor;0", "Emperor Thaurissan;0");
 			Deck found = DeckImporter.Import(@"https://manacrystals.com/decklists/172-zalae-s-patron-warrior").Result;
+			
+			Assert.IsTrue(AreDecksEqual(expected, found));
+		}
+
+		[TestMethod, TestCategory("Web")]
+		public void Disguisedtoast()
+		{
+			Deck expected = CreateDeck("Inner Rage;0", "Armorsmith;0", "Battle Rage;0", "Frothing Berserker;0", "Warsong Commander;0", 
+				"Death's Bite;0", "Dread Corsair;0", "Gnomish Inventor;0", "Shield Slam;2", "Grim Patron;0", "Whirlwind;1", "Cruel Taskmaster;1",
+				"Execute;2", "Fiery War Axe;2", "Emperor Thaurissan;0", "Unstable Ghoul;0",
+				"Revenge;2", "Slam;1", "Sleep with the Fishes;2", "Bash;2", "Ravaging Ghoul;2", "Shield Block;2", "Alley Armorsmith;2",
+				"Brawl;2", "Gorehowl;1", "Grommash Hellscream;1", "Dirty Rat;2", "Acolyte of Pain;1", "Justicar Trueheart;1", "Deathwing;1"
+				);
+			Deck found = DeckImporter.Import(@"https://disguisedtoast.com/decklists/2122-fibonacci-s-legend-control-warrior").Result;
 			Assert.IsTrue(AreDecksEqual(expected, found));
 		}
 
@@ -179,7 +193,17 @@ namespace HDTTests.Hearthstone
 				"Grommash Hellscream;0",
 				"Dr. Boom;0",
 				"Piloted Shredder;0",
-				"Shield Slam;0"
+				"Shield Slam;0",
+				"Revenge;0",
+				"Sleep with the Fishes;0",
+				"Bash;0",
+				"Ravaging Ghoul;0",
+				"Alley Armorsmith;0",
+				"Brawl;0",
+				"Gorehowl;0",
+				"Dirty Rat;0",
+				"Justicar Trueheart;0",
+				"Deathwing;0"
 			};
 
 			cardList = DefaultDeck(cardNames);
