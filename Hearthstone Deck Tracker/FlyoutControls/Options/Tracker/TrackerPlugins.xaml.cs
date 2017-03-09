@@ -141,6 +141,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private List<Plugin> GetPlugins()
 		{
+			//Create list of repo URLS to compare to.
+			var repos = new List<string>();
+			foreach (var p in ListBoxPlugins.Items)
+			{
+				var plugin = p as PluginWrapper;
+				repos.Add(releaseUrl(plugin?.Repourl));
+			}
 			Log.Info("downloading available plugin list.");
 			var pluginList = new List<Plugin>();
 			var wc = new WebClient();
@@ -150,6 +157,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				var baseUrl = plugin["url"].ToString();
 				var releaseUrl = baseUrl + "/releases/latest";
+				if(repos.Contains(releaseUrl))
+					continue;
 				var Plugin = new Plugin
 				{
 					Author = plugin["author"].ToString(),
@@ -175,7 +184,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				foreach(var p in ListBoxPlugins.Items)
 				{
 					var plugin = p as PluginWrapper;
-					wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker @ Hearthsim";
+					wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
 					//have to set header each time, due to some WebClient issue of cleaing UA header after the first request.
 					if(string.IsNullOrEmpty(plugin?.Repourl))
 					{
