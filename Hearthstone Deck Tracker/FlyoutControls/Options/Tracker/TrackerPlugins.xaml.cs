@@ -52,6 +52,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 		}
 
+		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
+		{
+			var dir = PluginManager.PluginDirectory;
+			if(!dir.Exists)
+			{
+				try
+				{
+					dir.Create();
+				}
+				catch(Exception)
+				{
+					Core.MainWindow.ShowMessage("Error",
+												$"Plugins directory was not found and can not be created. Please manually create a folder called 'Plugins' under {dir}.").Forget();
+				}
+			}
+			Helper.TryOpenUrl(dir.FullName);
+		}
+
 		#region Installed
 
 
@@ -108,6 +126,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					else if(pluginPath.EndsWith(".zip"))
 					{
 						var path = Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath));
+						if(Directory.Exists(path))
+							Directory.Delete(path);
 						ZipFile.ExtractToDirectory(pluginPath, path);
 						if(Directory.GetDirectories(path).Length == 1 && Directory.GetFiles(path).Length == 0)
 						{
@@ -319,6 +339,48 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				Log.Error(ex);
 				GithubUnavailable().Forget();
+			}
+		}
+
+		
+		private void ButtonUninstall_OnClick(object sender, RoutedEventArgs e)
+		{
+			var plugin = ListBoxPlugins.SelectedItem as PluginWrapper;
+			var parent = Directory.GetParent(plugin.RelativeFilePath);
+			var PluginDirectory = PluginManager.PluginDirectory;
+
+			try
+			{
+				if(parent.Name == "Plugins")
+				{
+					Log.Info($"Removing plugin {plugin.Plugin.Name}");
+					//is our top-level plugins directory, used for single-dll plugins. Hopefully dependencies aren't directly in here.
+					plugin.Unload();
+					PluginManager.Instance.Plugins.Remove(plugin);
+					ListBoxPlugins.ItemsSource = PluginManager.Instance.Plugins;
+					File.SetAttributes(plugin.FileName, FileAttributes.Normal);
+					File.Delete(Path.Combine(PluginDirectory.FullName, plugin.RelativeFilePath.Split('/').Last()));
+					Core.MainWindow.ShowMessageAsync($"Deleted {plugin.Name}", "The plugin will be removed upon next restart.").Forget();
+				}
+				else
+				{
+					Log.Info($"Removing plugin {plugin.Plugin.Name}");
+					//Its own directory, remove dependencies too.
+					plugin.Unload();
+					PluginManager.Instance.Plugins.Remove(plugin);
+					ListBoxPlugins.ItemsSource = PluginManager.Instance.Plugins;
+					Directory.Delete(Path.Combine(PluginDirectory.FullName, parent.Name), true);
+					Core.MainWindow.ShowMessageAsync($"Deleted {plugin.Name}", "The plugin will be removed upon next restart.").Forget();
+				}
+			}
+			catch(Exception ex)
+			{
+
+				Log.Error(ex);
+				var result = Core.MainWindow.ShowMessageAsync($"Unable to delete {plugin.Name}", "Manually delete via the plugins folder.", MessageDialogStyle.AffirmativeAndNegative).Result;
+				if(result == MessageDialogResult.Negative)
+					return;
+				ButtonOpenPluginsFolder_OnClick(sender, e);
 			}
 		}
 	}
