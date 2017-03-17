@@ -1,6 +1,7 @@
 #region
 
 using System.Collections.Generic;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
@@ -46,7 +47,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static List<string> GetSecretIds(HeroClass heroClass)
 		{
-			var standardOnly = Core.Game.CurrentFormat == Format.Standard;
+			var standardOnly = Core.Game.CurrentFormat == Format.Standard || Core.Game.CurrentGameType == GameType.GT_ARENA;
 			switch(heroClass)
 			{
 				case HeroClass.Hunter:
