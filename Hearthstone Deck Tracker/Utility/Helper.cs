@@ -16,30 +16,22 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using WPFLocalizeExtension.Engine;
 using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
-using Color = System.Drawing.Color;
 using MediaColor = System.Windows.Media.Color;
-using Point = System.Drawing.Point;
 using Region = Hearthstone_Deck_Tracker.Enums.Region;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
@@ -356,21 +348,39 @@ namespace Hearthstone_Deck_Tracker
 			Core.MainWindow.BtnStartHearthstone.IsEnabled = true;
 		}
 
-		public static Region GetCurrentRegion()
+		public static async Task<Region> GetCurrentRegion()
 		{
 			try
 			{
+				for(var i = 0; i < 10; i++)
+				{
+					var accId = HearthMirror.Reflection.GetAccountId();
+					if(accId != null)
+					{
+						var region = (Region)((accId.Hi >> 32) & 0xFF);
+						Log.Info("Region: " + region);
+						return region;
+					}
+					await Task.Delay(2000);
+				}
+
 				var bnetAppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battle.net");
 				var files = new DirectoryInfo(bnetAppData).GetFiles();
 				var config = files.OrderByDescending(x => x.LastWriteTime).FirstOrDefault(x => Regex.IsMatch(x.Name, @"\w{8}\.config"));
 				if(config == null)
+				{
+					Log.Info("Bnet config not found, can't determine region.");
 					return Region.UNKNOWN;
+				}
+
 				string content;
 				using(var fs = new FileStream(config.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				using(var reader = new StreamReader(fs))
 					content = reader.ReadToEnd();
 				dynamic json = JsonConvert.DeserializeObject(content);
-				switch((string)json.User.Client.PlayScreen.GameFamily.WTCG.LastSelectedGameRegion)
+				var configRegion = (string)json.User.Client.PlayScreen.GameFamily.WTCG.LastSelectedGameRegion;
+				Log.Info("Region (from config): " + configRegion);
+				switch(configRegion)
 				{
 					case "EU":
 						return Region.EU;

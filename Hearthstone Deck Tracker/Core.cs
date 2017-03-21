@@ -190,7 +190,7 @@ namespace Hearthstone_Deck_Tracker
 					if(Game.CurrentRegion == Region.UNKNOWN)
 					{
 						//game started
-						Game.CurrentRegion = Helper.GetCurrentRegion();
+						Game.CurrentRegion = await Helper.GetCurrentRegion();
 						if(Game.CurrentRegion != Region.UNKNOWN)
 						{
 							BackupManager.Run();
