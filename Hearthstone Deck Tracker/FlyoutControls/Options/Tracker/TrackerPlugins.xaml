@@ -19,8 +19,7 @@
                             <StackPanel DockPanel.Dock="Right">
                             </StackPanel>
                             <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                                <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"
-                                 SelectionMode="Single">
+                                <ListBox Name="ListBoxPlugins" SelectionMode="Single">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Path=Plugin.Name}" TextWrapping="Wrap">
@@ -53,8 +52,6 @@
                                        TextWrapping="Wrap" Margin="2,0,0,0" />
                                     <TextBlock HorizontalAlignment="Right" Margin="0,0,3,0"><Hyperlink Click="ButtonOpenPluginsFolder_OnClick" Foreground="#FF47B1DF">Plugins Folder</Hyperlink></TextBlock>
                                 </DockPanel>
-                                
-                                
                                 <Button Name="ButtonSettings"
                                 Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}"
                                 IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}"
