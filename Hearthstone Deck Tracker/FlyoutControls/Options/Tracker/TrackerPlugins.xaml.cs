@@ -1,20 +1,13 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
-using Newtonsoft.Json.Linq;
 
 #endregion
 
@@ -23,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	/// <summary>
 	/// Interaction logic for TrackerPlugins.xaml
 	/// </summary>
-	public partial class TrackerPlugins : UserControl
+	public partial class TrackerPlugins
 	{
 		public TrackerPlugins()
 		{
@@ -38,9 +31,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			try
 			{
-				ListBoxAvailable.ItemsSource = GetPlugins();
+				ListBoxAvailable.ItemsSource = InstallUtils.GetPlugins(ListBoxPlugins);
 				_loaded = true;
-				ListBoxUpdates.ItemsSource = GetUpdates();
+				ListBoxUpdates.ItemsSource = InstallUtils.GetUpdates(ListBoxPlugins);
 			}
 			catch(Exception ex)
 			{
@@ -48,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 		}
 
-		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
+		private void PluginsFolder()
 		{
 			var dir = PluginManager.PluginDirectory;
 			if(!dir.Exists)
@@ -60,14 +53,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				catch(Exception)
 				{
 					Core.MainWindow.ShowMessage("Error",
-												$"Plugins directory was not found and can not be created. Please manually create a folder called 'Plugins' under {dir}.").Forget();
+						$"Plugins directory was not found and can not be created. Please manually create a folder called 'Plugins' under {dir}.").Forget();
 				}
 			}
 			Helper.TryOpenUrl(dir.FullName);
 		}
 
-		#region Installed
-
+		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
+		{
+			PluginsFolder();
+		}
 
 		public void Load()
 		{
@@ -95,201 +90,48 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			(ListBoxPlugins.SelectedItem as PluginWrapper)?.OnButtonPress();
 		}
 
-		private void GroupBox_Drop(object sender, DragEventArgs e)
+		private async void GroupBox_Drop(object sender, DragEventArgs e)
 		{
 			if(!e.Data.GetDataPresent(DataFormats.FileDrop))
 				return;
-			InstallPlugin((string[])e.Data.GetData(DataFormats.FileDrop));
-		}
-
-		private async void InstallPlugin(string[] files)
-		{
-			var dir = PluginManager.PluginDirectory.FullName;
-			try
+			if(InstallUtils.InstallPluginFile((string[])e.Data.GetData(DataFormats.FileDrop)))
 			{
-				var plugins = 0;
-				foreach(var pluginPath in files)
+				var result = await Core.MainWindow.ShowMessageAsync($"Successfully installed the plugin(s).", "Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
+				if(result == MessageDialogResult.Affirmative)
 				{
-					if(pluginPath.EndsWith(".dll"))
-					{
-						File.Copy(pluginPath, Path.Combine(dir, Path.GetFileName(pluginPath)), true);
-						plugins++;
-					}
-					else if(pluginPath.EndsWith(".zip"))
-					{
-						var path = Path.Combine(dir, Path.GetFileNameWithoutExtension(pluginPath));
-						if(Directory.Exists(path))
-							Directory.Delete(path, true);
-						ZipFile.ExtractToDirectory(pluginPath, path);
-						if(Directory.GetDirectories(path).Length == 1 && Directory.GetFiles(path).Length == 0)
-						{
-							Directory.Delete(path, true);
-							ZipFile.ExtractToDirectory(pluginPath, dir);
-						}
-						plugins++;
-					}
-				}
-				if(plugins <= 0)
-					return;
-				var result = await Core.MainWindow.ShowMessageAsync("Plugins installed",
-					$"Successfully installed {plugins} plugin(s). \n Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
-
-				if(result != MessageDialogResult.Affirmative)
-					return;
-				Core.MainWindow.Restart();
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
-				Core.MainWindow.ShowMessage("Error Importing Plugin", $"Please import manually to {dir}.").Forget();
-			}
-		}
-
-		#endregion
-
-
-
-		#region JSON functions
-
-		private List<Plugin> GetPlugins()
-		{
-			//Create list of repo URLS to compare to.
-			var repos = new List<string>();
-			foreach (var p in ListBoxPlugins.Items)
-			{
-				var plugin = p as PluginWrapper;
-				repos.Add(ReleaseUrl(plugin?.Repourl));
-			}
-			Log.Info("downloading available plugin list.");
-			var pluginList = new List<Plugin>();
-			using (var wc = new WebClient { Headers = { ["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim" } })
-			{
-				wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
-				var json = JObject.Parse(wc.DownloadString("https://raw.githubusercontent.com/HearthSim/HDT-Plugins/master/plugins.json"));
-				foreach(var jToken in json["data"])
-				{
-					var baseUrl = jToken["url"].ToString();
-					var releaseUrl = baseUrl + "/releases/latest";
-					if(repos.Contains(releaseUrl))
-						continue;
-					var plugin = new Plugin
-					{
-						Author = jToken["author"].ToString(),
-						Description = jToken["description"].ToString(),
-						Name = jToken["title"].ToString(),
-						ReleaseUrl = releaseUrl
-					};
-					pluginList.Add(plugin);
-				}
-				return pluginList;
-			}
-			
-		}
-
-		private List<Plugin> GetUpdates()
-		{
-			try
-			{
-				Log.Info("Checking for updates to installed plugins.");
-				var updateList = new List<Plugin>();
-				if(ListBoxPlugins.Items.IsEmpty)
-					return null;
-				var wc = new WebClient();
-				foreach(var p in ListBoxPlugins.Items)
-				{
-					var pluginItem = p as PluginWrapper;
-					wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
-					//have to set header each time, due to some WebClient issue of cleaing UA header after the first request.
-					if(string.IsNullOrEmpty(pluginItem?.Repourl))
-					{
-						if(pluginItem != null) Log.Info($"{pluginItem.Name} cannot be checked for updates. Invalid repo url.");
-						continue;
-					}
-					var release = ReleaseUrl(pluginItem.Repourl);
-					var releaseData = wc.DownloadString(release); 
-					var latestVersion = Version.Parse(getVersion(releaseData));
-					if(pluginItem.Plugin.Version >= latestVersion)
-						continue;
-					var plugin = new Plugin
-					{
-						Author = getAuthor(releaseData),
-						Description = getBody(releaseData),
-						Name = $"{pluginItem.Name} {latestVersion}",
-						ReleaseUrl = release
-					};
-					updateList.Add(plugin);
-				}
-				wc.Dispose();
-				return updateList;
-			}
-			catch(WebException)
-			{
-				if(rateLimitHit())
-				{
-					Log.Info("User has hit github's rae limit.");
-				}
-				return null;
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
-				return null;
-			}
-		}
-		private string getAuthor(string releaseData) => JObject.Parse(releaseData)["author"]["login"].ToString();
-
-		private string getVersion(string releaseData) => JObject.Parse(releaseData)["tag_name"].ToString().Replace("v", "");
-
-		private string getBody(string releaseData) => JObject.Parse(releaseData)["body"].ToString();
-
-
-		private bool rateLimitHit()
-		{
-			using(var wc = new WebClient { Headers = { ["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim" } })
-			{
-				var json = JObject.Parse(wc.DownloadString("https://api.github.com/rate_limit"));
-				return json["rate"]["remaining"].ToString() == "0";
-			}
-		}
-
-		private string ReleaseUrl(string repoUrl)
-		{
-			try
-			{
-				var strarray = repoUrl.Split('/');
-				strarray[2] = "api." + strarray[2];
-				strarray[3] = "repos/" + strarray[3];
-				return string.Join("/", strarray) + "/releases/latest";
-			}
-			catch(Exception)
-			{
-				return null;
-			}
-		}
-		#endregion
-
-
-		private void ButtonUpdate_OnClick(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				using(var wc = new WebClient { Headers = { ["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim" } })
-				{
-					var plugin = ListBoxUpdates.SelectedItem as Plugin;
-					if(plugin == null) throw new Exception("Update pressed without a plugin selected.");
-					var releaseUrl = plugin.ReleaseUrl;
-					var json = JObject.Parse(wc.DownloadString(releaseUrl));
-					var downloadUrl = json["assets"].First["browser_download_url"].ToString();
-					var downloadFile = Path.Combine(Path.GetTempPath(), downloadUrl.Split('/').Last());
-					wc.DownloadFile(downloadUrl, downloadFile);
-					var stringList = new[] { downloadFile };
-					InstallPlugin(stringList);
+					Core.MainWindow.Restart();
 				}
 			}
-			catch(Exception ex)
+			else
 			{
-				Log.Error(ex);
-				GithubUnavailable().Forget();
+				var result = await Core.MainWindow.ShowMessageAsync($"Unable to install the plugin(s).", "Manually install through the plugins folder?", MessageDialogStyle.AffirmativeAndNegative);
+				if(result == MessageDialogResult.Affirmative)
+				{
+					PluginsFolder();
+				}
+			}
+		}
+
+
+		private async void ButtonUpdate_OnClick(object sender, RoutedEventArgs e)
+		{
+			var plugin = ListBoxUpdates.SelectedItem as Plugin;
+			if(plugin == null)
+			{
+				Log.Error("Update pressed without a plugin selected.");
+				return;
+			}
+			if(InstallUtils.UpdatePlugin(plugin))
+			{
+				var result = await Core.MainWindow.ShowMessageAsync($"Successfully updated {plugin.Name}.", "Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
+				if(result == MessageDialogResult.Affirmative)
+				{
+					Core.MainWindow.Restart();
+				}
+			}
+			else
+			{
+				GithubUnavailable($"Unable to update {plugin.Name}", plugin).Forget();
 			}
 		}
 
@@ -297,83 +139,52 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void ButtonUninstall_OnClick(object sender, RoutedEventArgs e)
 		{
 			var plugin = ListBoxPlugins.SelectedItem as PluginWrapper;
-			var parent = Directory.GetParent(plugin.RelativeFilePath);
-			var pluginDirectory = PluginManager.PluginDirectory;
-
-			try
+			if(plugin == null)
+				return;
+			if(InstallUtils.UninstallPlugin(plugin))
 			{
-				if(parent.Name == "Plugins")
-				{
-					Log.Info($"Removing plugin {plugin.Plugin.Name}");
-					//is our top-level plugins directory, used for single-dll plugins. Hopefully dependencies aren't directly in here.
-					File.Delete(Path.Combine(pluginDirectory.FullName, plugin.RelativeFilePath.Split('/').Last()));
-					Core.MainWindow.ShowMessageAsync($"Deleted {plugin.Name}", "The plugin will be removed upon next restart.").Forget();
-				}
-				else
-				{
-					Log.Info($"Removing plugin {plugin.Plugin.Name}");
-					//Its own directory, remove dependencies too.
-					Directory.Delete(Path.Combine(pluginDirectory.FullName, parent.Name), true);
-					Core.MainWindow.ShowMessageAsync($"Deleted {plugin.Name}", "The plugin will be removed upon next restart.").Forget();
-				}
+				Core.MainWindow.ShowMessageAsync($"Deleted {plugin.Name}", "The plugin will be removed upon next restart.").Forget();
 			}
-			catch(Exception ex)
+			else
 			{
-
-				Log.Error(ex);
-				var result = Core.MainWindow.ShowMessageAsync($"Unable to delete {plugin.Name}", "Manually delete via the plugins folder.", MessageDialogStyle.AffirmativeAndNegative).Result;
+				var result = Core.MainWindow.ShowMessageAsync($"Unable to delete {plugin.Name}", "Open the plugins folder to manually delete?", MessageDialogStyle.AffirmativeAndNegative).Result;
 				if(result == MessageDialogResult.Negative)
 					return;
 				ButtonOpenPluginsFolder_OnClick(sender, e);
 			}
 		}
-	}
 
-	public partial class TrackerPlugins : UserControl
-	{
-		private void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
+		private async void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
 		{
-			try
+			var plugin = ListBoxAvailable.SelectedItem as Plugin;
+			if(plugin == null)
+				return;
+			if(InstallUtils.InstallRemote(plugin))
 			{
-				var wc = new WebClient();
-				wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
-				var releaseUrl = (ListBoxAvailable.SelectedItem as Plugin).ReleaseUrl;
-				var json = JObject.Parse(wc.DownloadString(releaseUrl));
-				var downloadUrl = json["assets"].First["browser_download_url"].ToString();
-				var downloadFile = Path.Combine(Path.GetTempPath(), downloadUrl.Split('/').Last());
-				wc.DownloadFile(downloadUrl, downloadFile);
-				var stringList = new string[] { downloadFile };
-				InstallPlugin(stringList);
-				wc.Dispose();
+				var result = await Core.MainWindow.ShowMessageAsync($"Successfully Installed {plugin.Name}.", "Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
+				if(result == MessageDialogResult.Affirmative)
+				{
+					Core.MainWindow.Restart();
+				}
 			}
-			catch(Exception ex)
+			else
 			{
-				Log.Error(ex);
-				GithubUnavailable().Forget();
+				GithubUnavailable($"Unable to install {plugin.Name}.", plugin).Forget();
 			}
 		}
 
-		private async Task GithubUnavailable()
+		private async Task GithubUnavailable(string messageText, Plugin plugin)
 		{
-			var messageText = "Unable to download plugin for an unknown reason. The error has been logged.";
-			if(rateLimitHit())
+			if(InstallUtils.RateLimitHit())
 			{
-				messageText = "You have hit Github's rate limit.";
+				messageText = "You have hit GitHub's rate limit.";
 			}
 			var result = await Core.MainWindow.ShowMessageAsync("Unable to download plugin.",
 					$"{messageText}\nTry again later or manually drag-and-drop the plugin.\nGo to the manual download page now?", MessageDialogStyle.AffirmativeAndNegative);
-			if(result == MessageDialogResult.Negative)
+			if(result == MessageDialogResult.Negative || plugin == null)
 				return;
-			var releaseUrl = (ListBoxAvailable.SelectedItem as Plugin).ReleaseUrl.Replace("api.", "").Replace("/repos", "");
+			var releaseUrl = plugin.ReleaseUrl.Replace("api.", "").Replace("/repos", "");
 			Helper.TryOpenUrl(releaseUrl);
 		}
-	}
-
-	public class Plugin
-	{
-		public string Name { get; set; }
-		public string Author { get; set; }
-		public string Description { get; set; }
-		public string ReleaseUrl { get; set; }
 	}
 }

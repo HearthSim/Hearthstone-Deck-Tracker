@@ -399,6 +399,7 @@
       <DependentUpon>Warning.xaml</DependentUpon>
     </Compile>
     <Compile Include="Importing\StringImporter.cs" />
+    <Compile Include="Plugins\InstallUtils.cs" />
     <Compile Include="Utility\RegistryHelper.cs" />
     <Compile Include="Hearthstone\Watchers.cs" />
     <Compile Include="HsReplay\PackDataGenerator.cs" />
