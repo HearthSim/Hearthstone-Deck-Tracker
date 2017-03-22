@@ -1422,38 +1422,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if "$(ConfigurationName)" == "Squirrel" (
-    rmdir /S /Q "..\Squirrel-Clean"
-    mkdir "..\SquirrelNu"
-    mkdir "..\Squirrel-Clean"
-    mkdir "..\Squirrel-Clean/Images"
-    xcopy /E /Y /Q "Images\*.*" "..\Squirrel-Clean\Images"
-    for /D %25%25a in (*-*) do (
-        mkdir "..\Squirrel-Clean\%25%25a"
-        xcopy "%25%25a\*.*" "..\Squirrel-Clean\%25%25a"
-    )
-    xcopy /Y "HearthstoneDeckTracker.exe" "..\Squirrel-Clean"
-    xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Squirrel-Clean"
-    xcopy /Y "*.dll" "..\Squirrel-Clean"
-)
-if "$(ConfigurationName)" == "Release" (
-    rmdir /S /Q "..\Hearthstone Deck Tracker"
-    mkdir "..\Hearthstone Deck Tracker"
-    mkdir "..\Hearthstone Deck Tracker/Images"
-    xcopy /E /Y /Q "Images\*.*" "..\Hearthstone Deck Tracker\Images"
-    for /D %25%25a in (*-*) do (
-        mkdir "..\Hearthstone Deck Tracker\%25%25a"
-        xcopy "%25%25a\*.*" "..\Hearthstone Deck Tracker\%25%25a"
-    )
-    xcopy /Y "HearthstoneDeckTracker.exe" "..\Hearthstone Deck Tracker"
-    xcopy /Y "HearthstoneDeckTracker.exe.config" "..\Hearthstone Deck Tracker"
-    ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe" "Hearthstone Deck Tracker.exe"
-    ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe.config" "Hearthstone Deck Tracker.exe.config"
-    xcopy /Y "*.dll" "..\Hearthstone Deck Tracker"
-    xcopy /Y "..\..\..\..\HDTUpdate\bin\Release\HDTUpdate.exe" "..\Hearthstone Deck Tracker"
-    xcopy /Y "..\..\..\..\HDTUninstaller\bin\Release\HDTUninstaller.exe" "..\Hearthstone Deck Tracker"
-    signtool sign /tr http://timestamp.digicert.com /a /f "..\..\..\HearthSimCodeSigningCert.pfx" /p %25HearthSimCert%25 "..\Hearthstone Deck Tracker/\*.exe"
-)</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>if exist $(SolutionDir)HearthDb (
@@ -1501,27 +1471,5 @@ xcopy /Y /Q "$(SolutionDir)CHANGELOG.md" "$(ProjectDir)Resources"</PreBuildEvent
   </Target>
   <Target Name="BeforeBuild">
     <CallTarget Targets="GenerateDesignerFiles" />
-  </Target>
-  <Target Name="AfterBuild">
-    <CallTarget Condition=" '$(Configuration)' == 'Squirrel'" Targets="SquirrelAfterBuild" />
-    <CallTarget Condition=" '$(Configuration)' == 'Release'" Targets="ReleaseAfterBuild" />
-  </Target>
-  <Target Name="SquirrelAfterBuild">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
-    </GetAssemblyIdentity>
-    <Exec Command="nuget pack hdt.nuspec -Version %(myAssemblyInfo.Version) -Properties Configuration=Release -OutputDirectory ./bin/x86/SquirrelNu/" />
-    <Exec Command="Squirrel --releasify ./bin/x86/SquirrelNu/HearthstoneDeckTracker.%(myAssemblyInfo.Version).nupkg --setupIcon=bin\x86\Squirrel\Images\HearthstoneDeckTracker.ico --icon=bin\x86\Squirrel\Images\HearthstoneDeckTracker.ico --no-msi -n &quot;/tr http://timestamp.digicert.com /a /f HearthSimCodeSigningCert.pfx /p %HearthSimCert%&quot;" />
-  </Target>
-  <Target Name="ReleaseAfterBuild">
-    <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">
-      <Output TaskParameter="Assemblies" ItemName="myAssemblyInfo" />
-    </GetAssemblyIdentity>
-    <PropertyGroup>
-      <Regex>(\d+)\.(\d+)\.(\d+)(\.[1-9]\d*)?</Regex>
-      <Version>$([System.Text.RegularExpressions.Regex]::Match(%(myAssemblyInfo.Version), $(Regex)))</Version>
-    </PropertyGroup>
-    <Exec Command="if not exist Releases mkdir Releases" />
-    <Exec Command="cd bin/x86 &amp; zip -9 -r -q ../../Releases/Hearthstone.Deck.Tracker-v$(Version).zip &quot;Hearthstone Deck Tracker&quot;" />
   </Target>
 </Project>
