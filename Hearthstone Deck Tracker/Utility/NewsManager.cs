@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,40 +9,40 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Newtonsoft.Json;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Utility
 {
-	internal static class NewsUpdater
+	internal static class NewsManager
 	{
-		private const int NewsCheckInterval = 300;
-		private const int NewsTickerUpdateInterval = 30;
+		private const int NewsTickerUpdateInterval = 15;
 		private static string _currentNewsLine;
-		private static DateTime _lastNewsCheck;
-		private static DateTime _lastNewsUpdate;
-		private static bool _update;
-		private static string[] _news;
+		private static DateTime _lastNewsUpdate = DateTime.MinValue;
 		private static int _newsLine;
-		public static int CurrentNewsId { get; set; }
+		private static NewsData _news;
+		private static bool _updating;
 
 		private static void UpdateNews(int newsLine)
 		{
-			if(newsLine < _news.Length && _currentNewsLine != _news[newsLine])
+			if(_news == null || _news.Data.Length == 0)
+				return;
+			if(newsLine < _news.Data.Length && _currentNewsLine != _news.Data[newsLine])
 			{
-				_currentNewsLine = _news[newsLine];
+				_currentNewsLine = _news.Data[newsLine];
 				Core.MainWindow.NewsContentControl.Content = StringToTextBlock(_currentNewsLine);
 			}
-			Core.MainWindow.StatusBarItemNewsIndex.Content = $"({_newsLine + 1}/{_news.Length})";
+			Core.MainWindow.StatusBarItemNewsIndex.Content = $"({_newsLine + 1}/{_news.Data.Length})";
 			_lastNewsUpdate = DateTime.Now;
 		}
 
 		private static void UpdateNews()
 		{
-			if(_news == null || _news.Length == 0)
+			if(_news == null || _news.Data.Length == 0)
 				return;
 			_newsLine++;
-			if(_newsLine > _news.Length - 1)
+			if(_newsLine > _news.Data.Length - 1)
 				_newsLine = 0;
 			UpdateNews(_newsLine);
 		}
@@ -65,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				tb.Inlines.Add(rest[0]);
 			else
 			{
-				for(int restIndex = 0, urlIndex = 0; restIndex < rest.Length; restIndex += 2, urlIndex++)
+				for(var restIndex = 0; restIndex < rest.Length; restIndex += 2)
 				{
 					ParseMarkup(rest[restIndex], tb);
 					var link = new Hyperlink();
@@ -83,14 +82,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 		{
 			_newsLine--;
 			if(_newsLine < 0)
-				_newsLine = _news.Length - 1;
+				_newsLine = _news.Data.Length - 1;
 			UpdateNews(_newsLine);
 		}
 
 		public static void NextNewsItem()
 		{
 			_newsLine++;
-			if(_newsLine > _news.Length - 1)
+			if(_newsLine > _news.Data.Length - 1)
 				_newsLine = 0;
 			UpdateNews(_newsLine);
 		}
@@ -101,11 +100,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 			{
 				Config.Instance.IgnoreNewsId = -1;
 				Config.Save();
-				UpdateAsync();
+				ShowNewsBar();
+				if(!_updating)
+					UpdateNewsAsync();
 			}
 			else
 			{
-				Config.Instance.IgnoreNewsId = CurrentNewsId;
+				Config.Instance.IgnoreNewsId = _news?.Id ?? 0;
 				Config.Save();
 				Core.MainWindow.StatusBarNews.Visibility = Visibility.Collapsed;
 				Core.MainWindow.MinHeight -= Core.MainWindow.StatusBarNewsHeight;
@@ -113,54 +114,55 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
-		internal static async void UpdateAsync()
+		internal static async void LoadNews()
 		{
-			const string url = "https://raw.githubusercontent.com/Epix37/HDT-Data/master/news";
-			_update = true;
-			_lastNewsCheck = DateTime.MinValue;
-			_lastNewsUpdate = DateTime.MinValue;
-			CurrentNewsId = Config.Instance.IgnoreNewsId;
-			while(_update)
+			try
 			{
-				if((DateTime.Now - _lastNewsCheck) > TimeSpan.FromSeconds(NewsCheckInterval))
+				using(var client = new WebClient())
 				{
-					try
+					var json = await client.DownloadStringTaskAsync("https://hsdecktracker.net/news.json");
+					_news = JsonConvert.DeserializeObject<NewsData>(json);
+					if(_news.Id > Config.Instance.IgnoreNewsId)
 					{
-						var oldNewsId = CurrentNewsId;
-						using(var client = new WebClient())
-						{
-							var raw = await client.DownloadStringTaskAsync(url);
-							var content = raw.Split(new[] {'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToArray();
-							try
-							{
-								CurrentNewsId = int.Parse(content[0].Split(':')[1].Trim());
-							}
-							catch(Exception)
-							{
-								CurrentNewsId = 0;
-							}
-							_news = content.Skip(1).ToArray();
-						}
-						if(CurrentNewsId > oldNewsId
-						   || Core.MainWindow.StatusBarNews.Visibility == Visibility.Collapsed && CurrentNewsId > Config.Instance.IgnoreNewsId)
-						{
-							Core.MainWindow.TopRow.Height = new GridLength(26);
-							Core.MainWindow.StatusBarNews.Visibility = Visibility.Visible;
-							Core.MainWindow.MinHeight += Core.MainWindow.StatusBarNewsHeight;
-							UpdateNews(0);
-						}
+						ShowNewsBar();
+						UpdateNewsAsync();
 					}
-					catch(Exception e)
-					{
-						Log.Error("Error loading news: " + e);
-					}
-					_lastNewsCheck = DateTime.Now;
 				}
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
+		}
+
+		private static async void UpdateNewsAsync()
+		{
+			if(_news != null && _news.Data.Length <= 1)
+				return;
+			_updating = true;
+			while(true)
+			{
+				await Task.Delay(10000);
 				if((DateTime.Now - _lastNewsUpdate) > TimeSpan.FromSeconds(NewsTickerUpdateInterval))
 					UpdateNews();
-
-				await Task.Delay(1000);
 			}
+		}
+
+		private static void ShowNewsBar()
+		{
+			Core.MainWindow.TopRow.Height = new GridLength(26);
+			Core.MainWindow.StatusBarNews.Visibility = Visibility.Visible;
+			Core.MainWindow.MinHeight += Core.MainWindow.StatusBarNewsHeight;
+			UpdateNews(0);
+		}
+
+		internal class NewsData
+		{
+			[JsonProperty("id")]
+			public int Id { get; set; }
+
+			[JsonProperty("data")]
+			public string[] Data { get; set; }
 		}
 	}
 }

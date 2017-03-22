@@ -652,7 +652,7 @@
     <Compile Include="Utility\Markdown.Xaml\Markdown.cs" />
     <Compile Include="Utility\Markdown.Xaml\TextToFlowDocumentConverter.cs" />
     <Compile Include="Utility\NetDeck.cs" />
-    <Compile Include="Utility\NewsUpdater.cs" />
+    <Compile Include="Utility\NewsManager.cs" />
     <Compile Include="Utility\Updating\Updater.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>

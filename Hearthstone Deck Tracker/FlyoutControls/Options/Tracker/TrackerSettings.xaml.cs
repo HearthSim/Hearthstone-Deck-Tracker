@@ -360,7 +360,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!_initialized)
 				return;
-			Utility.NewsUpdater.ToggleNewsVisibility();
+			Utility.NewsManager.ToggleNewsVisibility();
 		}
 
 		private void CheckboxAlternativeScreenCapture_Checked(object sender, RoutedEventArgs e)

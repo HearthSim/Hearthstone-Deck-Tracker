@@ -202,11 +202,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SelectDeck(deck, true);
 		}
 
-		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e) => NewsUpdater.ToggleNewsVisibility();
+		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e) => NewsManager.ToggleNewsVisibility();
 
-		private void BtnNewsPrevious_OnClick(object sender, RoutedEventArgs e) => NewsUpdater.PreviousNewsItem();
+		private void BtnNewsPrevious_OnClick(object sender, RoutedEventArgs e) => NewsManager.PreviousNewsItem();
 
-		private void BtnNewsNext_OnClick(object sender, RoutedEventArgs e) => NewsUpdater.NextNewsItem();
+		private void BtnNewsNext_OnClick(object sender, RoutedEventArgs e) => NewsManager.NextNewsItem();
 
 		private void MetroWindow_LocationChanged(object sender, EventArgs e) => MovedLeft = null;
 
