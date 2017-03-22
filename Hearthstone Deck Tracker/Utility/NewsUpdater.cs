@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -10,7 +9,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -21,9 +19,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		private const int NewsCheckInterval = 300;
 		private const int NewsTickerUpdateInterval = 30;
-		private const int HearthStatsAutoSyncInterval = 300;
 		private static string _currentNewsLine;
-		private static DateTime _lastHearthStatsSync;
 		private static DateTime _lastNewsCheck;
 		private static DateTime _lastNewsUpdate;
 		private static bool _update;
@@ -124,7 +120,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			_lastNewsCheck = DateTime.MinValue;
 			_lastNewsUpdate = DateTime.MinValue;
 			CurrentNewsId = Config.Instance.IgnoreNewsId;
-			_lastHearthStatsSync = DateTime.Now;
 			while(_update)
 			{
 				if((DateTime.Now - _lastNewsCheck) > TimeSpan.FromSeconds(NewsCheckInterval))
@@ -164,12 +159,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 				if((DateTime.Now - _lastNewsUpdate) > TimeSpan.FromSeconds(NewsTickerUpdateInterval))
 					UpdateNews();
 
-				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoSyncInBackground
-				   && (DateTime.Now - _lastHearthStatsSync) > TimeSpan.FromSeconds(HearthStatsAutoSyncInterval))
-				{
-					_lastHearthStatsSync = DateTime.Now;
-					HearthStatsManager.SyncAsync(background: true);
-				}
 				await Task.Delay(1000);
 			}
 		}

@@ -12,14 +12,11 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using static System.StringComparison;
 using static MahApps.Metro.Controls.Dialogs.MessageDialogStyle;
 
 #endregion
@@ -231,13 +228,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(game == null)
 				return false;
 			deck.DeckStats.AddGameResult(game);
-			if(Config.Instance.HearthStatsAutoUploadNewGames)
-			{
-				if(game.GameMode == GameMode.Arena)
-					HearthStatsManager.UploadArenaMatchAsync(game, deck, true, true).Forget();
-				else
-					HearthStatsManager.UploadMatchAsync(game, deck.GetSelectedDeckVersion(), true, true).Forget();
-			}
 			DeckStatsList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] {deck});
 			return true;
@@ -271,35 +261,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			await window.HideMetroDialogAsync(dialog);
 			if(result == null)
 				return false;
-			if(Config.Instance.HearthStatsAutoUploadNewGames && HearthStatsAPI.IsLoggedIn)
-			{
-				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == game.DeckId);
-				if(deck != null)
-				{
-					if(game.GameMode == GameMode.Arena)
-						HearthStatsManager.UpdateArenaMatchAsync(game, deck, true, true);
-					else
-						HearthStatsManager.UpdateMatchAsync(game, deck.GetVersion(game.PlayerDeckVersion), true, true);
-				}
-			}
 			DeckStatsList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks();
 			return true;
-		}
-
-		public static async Task<bool> ShowCheckHearthStatsMatchDeletionDialog(this MetroWindow window)
-		{
-			if(Config.Instance.HearthStatsAutoDeleteMatches.HasValue)
-				return Config.Instance.HearthStatsAutoDeleteMatches.Value;
-			var dialogResult =
-				await
-				window.ShowMessageAsync("Delete match(es) on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
-				                        AffirmativeAndNegative,
-				                        new MetroDialogSettings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
-			Config.Instance.HearthStatsAutoDeleteMatches = dialogResult == MessageDialogResult.Affirmative;
-			//Core.MainWindow.MenuItemCheckBoxAutoDeleteGames.IsChecked = Config.Instance.HearthStatsAutoDeleteMatches;
-			Config.Save();
-			return Config.Instance.HearthStatsAutoDeleteMatches != null && Config.Instance.HearthStatsAutoDeleteMatches.Value;
 		}
 
 		public static async Task<bool> ShowLanguageSelectionDialog(this MetroWindow window)

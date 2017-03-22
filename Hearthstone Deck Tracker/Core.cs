@@ -10,7 +10,6 @@ using System.Windows;
 using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -87,24 +86,6 @@ namespace Hearthstone_Deck_Tracker
 			ThemeManager.Run();
 			ResourceMonitor.Run();
 			Game = new GameV2();
-			//LoginType loginType;
-			//var loggedIn = HearthStatsAPI.LoadCredentials();
-			//if(!loggedIn && Config.Instance.ShowLoginDialog)
-			//{
-			//	var loginWindow = new LoginWindow();
-			//	splashScreenWindow.Close();
-			//	loginWindow.ShowDialog();
-			//	if(loginWindow.LoginResult == LoginType.None)
-			//	{
-			//		Application.Current.Shutdown();
-			//		return;
-			//	}
-			//	loginType = loginWindow.LoginResult;
-			//	splashScreenWindow = new SplashScreenWindow();
-			//	splashScreenWindow.ShowConditional();
-			//}
-			//else
-			//	loginType = loggedIn ? LoginType.AutoLogin : LoginType.AutoGuest;
 			MainWindow = new MainWindow();
 			MainWindow.LoadConfigSettings();
 			MainWindow.Show();
@@ -135,9 +116,6 @@ namespace Hearthstone_Deck_Tracker
 				Windows.OpponentWindow.Show();
 			if(Config.Instance.TimerWindowOnStartup)
 				Windows.TimerWindow.Show();
-
-			if(Config.Instance.HearthStatsSyncOnStart && HearthStatsAPI.IsLoggedIn)
-				HearthStatsManager.SyncAsync(background: true);
 
 			PluginManager.Instance.LoadPlugins();
 			MainWindow.Options.OptionsTrackerPlugins.Load();
@@ -170,7 +148,7 @@ namespace Hearthstone_Deck_Tracker
 
 			Initialized = true;
 
-			Influx.OnAppStart(Helper.GetCurrentVersion(), LoginType.AutoGuest, newUser, (int)(DateTime.UtcNow - _startUpTime).TotalSeconds);
+			Influx.OnAppStart(Helper.GetCurrentVersion(), newUser, (int)(DateTime.UtcNow - _startUpTime).TotalSeconds);
 		}
 
 		private static async void UpdateOverlayAsync()

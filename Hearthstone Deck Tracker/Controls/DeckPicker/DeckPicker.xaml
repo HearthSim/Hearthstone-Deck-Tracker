@@ -187,7 +187,6 @@
                 <MenuItem Name="MenuItemUpdateDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Update}" Click="BtnUpdateDeck_Click" />
                 <MenuItem Name="MenuItemSetDeckUrl" Header="" Click="BtnSetDeckUrl_Click" />
                 <MenuItem Name="MenuItemOpenUrl" Header="{lex:LocTextUpper DeckPicker_ContextMenu_OpenWebsite}" Click="BtnOpenDeckUrl_Click" />
-                <MenuItem Name="MenuItemOpenHearthStats" Header="{lex:LocTextUpper DeckPicker_ContextMenu_OpenHearthstats}" Click="BtnOpenHearthStats_Click" />
                 <Separator />
                 <MenuItem Name="MenuItemArchive" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Archive}" Click="BtnArchiveDeck_Click" />
                 <MenuItem Name="MenuItemUnarchive" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Unarchive}" Click="BtnUnarchiveDeck_Click" />

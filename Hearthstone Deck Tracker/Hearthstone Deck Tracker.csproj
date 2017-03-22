@@ -260,9 +260,6 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
-    <Compile Include="Controls\Information\HearthStatsLogoutInfo.xaml.cs">
-      <DependentUpon>HearthStatsLogoutInfo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Enums\DeckPanel.cs" />
     <Compile Include="Enums\ConfigWarning.cs" />
     <Compile Include="Enums\ImportingChoice.cs" />
@@ -357,7 +354,6 @@
     <Compile Include="Enums\Format.cs" />
     <Compile Include="Enums\IconStyle.cs" />
     <Compile Include="Enums\LastPlayedDateFormat.cs" />
-    <Compile Include="Enums\LoginType.cs" />
     <Compile Include="Enums\MetroTheme.cs" />
     <Compile Include="Errors\ErrorItem.xaml.cs">
       <DependentUpon>ErrorItem.xaml</DependentUpon>
@@ -647,9 +643,6 @@
       <DependentUpon>DeckTypeDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Importing\JsonDeckImporter.cs" />
-    <Compile Include="Windows\LoginWindow.xaml.cs">
-      <DependentUpon>LoginWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TrayIcon.cs" />
     <Compile Include="Utility\BackupManager.cs" />
     <Compile Include="Utility\ConfigManager.cs" />
@@ -668,27 +661,6 @@
       <DependentUpon>Help.xaml</DependentUpon>
     </Compile>
     <Compile Include="GameEventHandler.cs" />
-    <Compile Include="HearthStats\API\Objects\CardObject.cs" />
-    <Compile Include="HearthStats\API\Objects\DeckObject.cs" />
-    <Compile Include="HearthStats\API\Objects\DeckObjectWrapper.cs" />
-    <Compile Include="HearthStats\API\Dictionaries.cs" />
-    <Compile Include="HearthStats\API\Objects\DeckVersion.cs" />
-    <Compile Include="HearthStats\API\Objects\GameStatsObject.cs" />
-    <Compile Include="HearthStats\API\Objects\GameStatsObjectWrapper.cs" />
-    <Compile Include="HearthStats\API\HearthStatsAPI.cs" />
-    <Compile Include="HearthStats\API\HearthStatsManager.cs" />
-    <Compile Include="HearthStats\API\PostResult.cs" />
-    <Compile Include="HearthStats\API\Objects\ResponseWrapper.cs" />
-    <Compile Include="HearthStats\Controls\DownloadDecksControl.xaml.cs">
-      <DependentUpon>DownloadDecksControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HearthStats\Controls\UploadDecksControl.xaml.cs">
-      <DependentUpon>UploadDecksControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HearthStats\Controls\LoginControl.xaml.cs">
-      <DependentUpon>LoginControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="HearthStats\API\LoginResult.cs" />
     <Compile Include="Hearthstone\Card.cs" />
     <Compile Include="Controls\CardToolTip.xaml.cs">
       <DependentUpon>CardToolTip.xaml</DependentUpon>
@@ -887,10 +859,6 @@
     <Page Include="Controls\ElementSorterItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Information\HearthStatsLogoutInfo.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="FlyoutControls\HsReplayInfo.xaml">
       <SubType>Designer</SubType>
@@ -1148,10 +1116,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\LoginWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\AddGameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1177,18 +1141,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\SortFilterDecks.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HearthStats\Controls\DownloadDecksControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HearthStats\Controls\UploadDecksControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="HearthStats\Controls\LoginControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1325,7 +1277,6 @@
     </EmbeddedResource>
     <Resource Include="Resources\joust-screenshot.jpg" />
     <Resource Include="Resources\Chunkfive.otf" />
-    <Resource Include="HearthStats\Resources\hearthstats_logo.png" />
     <Resource Include="Resources\SplashScreen.png" />
     <Resource Include="Images\card-icon-coin.png" />
     <Resource Include="Images\card-icon-created.png" />

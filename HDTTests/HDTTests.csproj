@@ -35,7 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Squirrel|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Squirrel|AnyCPU'">
     <OutputPath>bin\Squirrel\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
@@ -101,7 +101,6 @@
     <Compile Include="BoardDamage\PlayerBoardTest.cs" />
     <Compile Include="BoardDamage\BoardStateTest.cs" />
     <Compile Include="BoardDamage\EntityHelperTest.cs" />
-    <Compile Include="HearthStats\ApiTest.cs" />
     <Compile Include="Hearthstone\GameTimeTest.cs" />
     <Compile Include="Hearthstone\ParseCardStringTest.cs" />
     <Compile Include="Hearthstone\SecretTests.cs" />

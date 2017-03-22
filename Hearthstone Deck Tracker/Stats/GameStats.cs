@@ -32,7 +32,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private string _deckName;
 		private string _deckNameAndVersion;
 		public Guid GameId;
-		public string HearthStatsId;
 		private Format _format = Enums.Format.Standard;
 		private string _note;
 		private string _playerHero;
@@ -331,7 +330,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public SerializableVersion PlayerDeckVersion { get; set; }
 
-		public bool IsAssociatedWithDeckVersion => PlayerDeckVersion != null || !string.IsNullOrEmpty(HearthStatsDeckVersionId);
+		public bool IsAssociatedWithDeckVersion => PlayerDeckVersion != null;
 
 		[XmlIgnore]
 		public string PlayerDeckVersionString => PlayerDeckVersion != null ? PlayerDeckVersion.ToString("v{M}.{m}") : SerializableVersion.Default.ToString("v{M}.{m}");
@@ -381,16 +380,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 			set { Coin = value.ToLower() == "Yes"; }
 		}
 
-		[XmlIgnore]
-		public bool HasHearthStatsId => !string.IsNullOrEmpty(HearthStatsId);
-
-		public string HearthStatsDeckId { get; set; }
-		public string HearthStatsDeckVersionId { get; set; }
-
-		public bool HasHearthStatsDeckVersionId => !string.IsNullOrEmpty(HearthStatsDeckVersionId) && int.Parse(HearthStatsDeckVersionId) > 0;
-
-		public bool HasHearthStatsDeckId => !string.IsNullOrEmpty(HearthStatsDeckId) && int.Parse(HearthStatsDeckId) > 0;
-
 		public HsReplayInfo HsReplay { get; set; } = new HsReplayInfo();
 
 		public string ReplayState => !HasReplayFile ? "N/A" : HsReplay.Uploaded ? "Uploaded" : HsReplay.Unsupported ? "Unsupported" : "-";
@@ -398,8 +387,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public void UpdateReplayState() => OnPropertyChanged(nameof(ReplayState));
 
 		public bool BelongsToDeckVerion(Deck deck) => PlayerDeckVersion == deck.Version
-													  || (HasHearthStatsDeckVersionId && HearthStatsDeckVersionId == deck.HearthStatsDeckVersionId)
-													  || (!HasHearthStatsDeckVersionId && HasHearthStatsDeckId && HearthStatsDeckId == deck.HearthStatsId)
 													  || !IsAssociatedWithDeckVersion && deck.Version == new SerializableVersion(1, 0);
 
 		public GameStats CloneWithNewId()
@@ -445,13 +432,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		public override string ToString() => $"[{GameMode}] {Result} VS. {OpponentName} ({OpponentHero}), {StartTime.ToString("g")}";
-
-		public void ResetHearthstatsIds()
-		{
-			HearthStatsDeckId = null;
-			HearthStatsDeckVersionId = null;
-			HearthStatsId = null;
-		}
 
 		public long HsDeckId { get; set; }
 
