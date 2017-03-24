@@ -579,7 +579,6 @@
     <Compile Include="LogReader\Interfaces\IHSLogReader.cs" />
     <Compile Include="LogReader\LogWatcherManager.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
-    <Compile Include="Hearthstone\CardDb.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Plugins\PluginSettings.cs" />
     <Compile Include="Plugins\PluginWrapper.cs" />
