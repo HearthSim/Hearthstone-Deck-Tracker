@@ -583,7 +583,6 @@
     <Compile Include="Plugins\PluginSettings.cs" />
     <Compile Include="Plugins\PluginWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Replay\TurnViewItem.cs" />
     <Compile Include="Stats\CompiledStats\ArenaStats.cs" />
     <Compile Include="Utility\ConfigWrapper.cs" />
     <Compile Include="Utility\ScreenCapture.cs" />
@@ -688,20 +687,7 @@
     <Compile Include="IGameHandler.cs" />
     <Compile Include="Hearthstone\Secrets\OpponentSecrets.cs" />
     <Compile Include="Hearthstone\Secrets\Secret.cs" />
-    <Compile Include="Replay\Controls\Arrow.cs" />
-    <Compile Include="Replay\Controls\BoardEntity.xaml.cs">
-      <DependentUpon>BoardEntity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Replay\Controls\CardEntity.xaml.cs">
-      <DependentUpon>CardEntity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Replay\Enums\KeyPointType.cs" />
-    <Compile Include="Replay\ReplayKeyPoint.cs" />
     <Compile Include="Replay\ReplayMaker.cs" />
-    <Compile Include="Replay\ReplayReader.cs" />
-    <Compile Include="Replay\ReplayViewer.xaml.cs">
-      <DependentUpon>ReplayViewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Stats\DeckStatsList.cs" />
     <Compile Include="Stats\DefaultDeckStats.cs" />
     <Compile Include="Enums\PlayType.cs" />
@@ -1148,18 +1134,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Config.cs" />
-    <Page Include="Replay\Controls\BoardEntity.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Replay\Controls\CardEntity.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Replay\ReplayViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1313,10 +1287,6 @@
     <Resource Include="Resources\ClassIcons\Square\warlock.png" />
     <Resource Include="Resources\ClassIcons\Square\warrior.png" />
     <Resource Include="Resources\archived_marker.png" />
-    <Page Include="Resources\ReplayViewIcons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Resource Include="Resources\ClassIcons\Round\deathknight.png" />
     <Resource Include="Resources\ClassIcons\Round\druid.png" />
     <Resource Include="Resources\ClassIcons\Round\hunter.png" />

@@ -181,16 +181,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
-		public static bool ForceLocalReplayViewer
-		{
-			get { return Config.Instance.ForceLocalReplayViewer; }
-			set
-			{
-				Config.Instance.ForceLocalReplayViewer = value;
-				Config.Save();
-			}
-		}
-
 		public static bool HsReplayAutoUpload
 		{
 			get { return Config.Instance.HsReplayAutoUpload; }

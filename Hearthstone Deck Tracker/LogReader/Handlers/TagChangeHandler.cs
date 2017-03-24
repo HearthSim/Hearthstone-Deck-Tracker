@@ -32,15 +32,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var prevValue = game.Entities[id].GetTag(tag);
 			if(value == prevValue)
 				return;
-			if(gameState.LastId != id)
-			{
-				if(gameState.ProposedKeyPoint != null)
-				{
-					ReplayMaker.Generate(gameState.ProposedKeyPoint.Type, gameState.ProposedKeyPoint.Id, gameState.ProposedKeyPoint.Player, game);
-					gameState.ProposedKeyPoint = null;
-				}
-			}
-			gameState.LastId = id;
 
 			game.Entities[id].SetTag(tag, value);
 

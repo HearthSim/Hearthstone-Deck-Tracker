@@ -387,9 +387,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool FlashHsOnTurnStart = true;
 
 		[DefaultValue(false)]
-		public bool ForceLocalReplayViewer = false;
-
-		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
 
 		[DefaultValue(0.075)]
@@ -740,30 +737,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool RemoveSecretsFromList = false;
-
-		[DefaultValue(true)]
-		public bool ReplayViewerShowAttack = true;
-
-		[DefaultValue(true)]
-		public bool ReplayViewerShowDeath = true;
-
-		[DefaultValue(true)]
-		public bool ReplayViewerShowDiscard = true;
-
-		[DefaultValue(true)]
-		public bool ReplayViewerShowDraw = true;
-
-		[DefaultValue(true)]
-		public bool ReplayViewerShowHeroPower = true;
-
-		[DefaultValue(true)]
-		public bool ReplayViewerShowPlay = true;
-
-		[DefaultValue(true)]
-		public bool ReplayViewerShowSecret = true;
-
-		[DefaultValue(true)]
-		public bool ReplayViewerShowSummon = true;
 
 		[DefaultValue(660)]
 		public int ReplayWindowHeight = 660;

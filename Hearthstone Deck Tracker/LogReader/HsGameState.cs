@@ -30,7 +30,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int LastId { get; set; }
 		public bool OpponentUsedHeroPower { get; set; }
 		public bool PlayerUsedHeroPower { get; set; }
-		public ReplayKeyPoint ProposedKeyPoint { get; set; }
 		public bool FoundSpectatorStart { get; set; }
 		public int JoustReveals { get; set; }
 		public Dictionary<int, IList<string>> KnownCardIds { get; set; }
@@ -41,28 +40,11 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public Zone CurrentEntityZone { get; set; }
 		public bool DeterminedPlayers => _game.Player.Id > 0 && _game.Opponent.Id > 0;
 
-		public void ProposeKeyPoint(KeyPointType type, int id, ActivePlayer player)
-		{
-			if(ProposedKeyPoint != null)
-				ReplayMaker.Generate(ProposedKeyPoint.Type, ProposedKeyPoint.Id, ProposedKeyPoint.Player, _game);
-			ProposedKeyPoint = new ReplayKeyPoint(null, type, id, player);
-		}
-
 		public int GetTurnNumber()
 		{
 			if(!_game.IsMulliganDone)
 				return 0;
 			return (_game.GameEntity?.GetTag(GameTag.TURN) + 1) / 2 ?? 0;
-		}
-
-		public void GameEndKeyPoint(bool victory, int id)
-		{
-			if(ProposedKeyPoint != null)
-			{
-				ReplayMaker.Generate(ProposedKeyPoint.Type, ProposedKeyPoint.Id, ProposedKeyPoint.Player, _game);
-				ProposedKeyPoint = null;
-			}
-			ReplayMaker.Generate(victory ? KeyPointType.Victory : KeyPointType.Defeat, id, ActivePlayer.Player, _game);
 		}
 
 		public void Reset()

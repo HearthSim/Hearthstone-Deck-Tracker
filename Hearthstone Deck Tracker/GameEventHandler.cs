@@ -139,7 +139,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(Config.Instance.RecordReplays && RecordCurrentGameMode && _game.Entities.Count > 0 && !_game.SavedReplay
 					&& _game.CurrentGameStats.ReplayFile == null)
-					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(powerLog);
+					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(_game.CurrentGameStats, powerLog);
 
 				if(Config.Instance.HsReplayAutoUpload && UploadCurrentGameMode)
 				{
