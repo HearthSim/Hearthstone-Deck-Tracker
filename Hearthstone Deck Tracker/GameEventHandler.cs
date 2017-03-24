@@ -580,7 +580,6 @@ namespace Hearthstone_Deck_Tracker
 							if(discardDialog.Result == DiscardGameDialogResult.Discard)
 							{
 								Log.Info("Assigned current game to NO deck - selected deck does not match cards played (dialogresult: discard)");
-								_game.CurrentGameStats.DeleteGameFile();
 								_assignedDeck = null;
 								return;
 							}
@@ -601,7 +600,6 @@ namespace Hearthstone_Deck_Tracker
 								else
 								{
 									Log.Info("No deck selected in move game dialog after discard dialog, discarding game");
-									_game.CurrentGameStats.DeleteGameFile();
 									_assignedDeck = null;
 									return;
 								}
@@ -610,7 +608,6 @@ namespace Hearthstone_Deck_Tracker
 						else
 						{
 							Log.Info("Assigned current game to NO deck - selected deck does not match cards played (no dialog)");
-							_game.CurrentGameStats.DeleteGameFile();
 							_assignedDeck = null;
 							return;
 						}
