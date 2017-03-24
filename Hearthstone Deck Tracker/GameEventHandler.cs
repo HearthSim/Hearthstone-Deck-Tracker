@@ -11,7 +11,6 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.LogReader;
@@ -597,7 +596,6 @@ namespace Hearthstone_Deck_Tracker
 								{
 									selectedDeck = targetDeck;
 									_game.CurrentGameStats.PlayerDeckVersion = moveDialog.SelectedVersion;
-									_game.CurrentGameStats.HearthStatsDeckVersionId = targetDeck.GetVersion(moveDialog.SelectedVersion).HearthStatsDeckVersionId;
 									//...continue as normal
 								}
 								else
@@ -618,10 +616,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 					else
-					{
 						_game.CurrentGameStats.PlayerDeckVersion = selectedDeck.GetSelectedDeckVersion().Version;
-						_game.CurrentGameStats.HearthStatsDeckVersionId = selectedDeck.GetSelectedDeckVersion().HearthStatsDeckVersionId;
-					}
 
 					_lastGame = _game.CurrentGameStats;
 					selectedDeck.DeckStats.AddGameResult(_lastGame);
@@ -647,8 +642,6 @@ namespace Hearthstone_Deck_Tracker
 						Log.Info("Automatically unarchiving deck " + selectedDeck.Name + " after assigning current game");
 						Core.MainWindow.ArchiveDeck(_assignedDeck, false);
 					}
-
-					UploadHearthStatsAsync(selectedDeck).Forget();
 					_lastGame = null;
 				}
 				else
@@ -682,19 +675,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private async Task UploadHearthStatsAsync(Deck selectedDeck)
-		{
-			if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
-			{
-				Log.Info("Waiting for game mode to be saved to game...");
-				await GameModeSaved(15);
-				Log.Info("Game mode was saved, continuing.");
-				if(_game.CurrentGameMode == Arena)
-					HearthStatsManager.UploadArenaMatchAsync(_lastGame, selectedDeck, background: true);
-				else if(_game.CurrentGameMode != Brawl)
-					HearthStatsManager.UploadMatchAsync(_lastGame, selectedDeck, background: true);
-			}
-		}
 #pragma warning restore 4014
 		private async Task GameModeSaved(int timeoutInSeconds)
 		{

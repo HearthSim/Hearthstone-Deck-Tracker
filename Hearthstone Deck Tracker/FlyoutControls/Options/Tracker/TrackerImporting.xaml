@@ -44,7 +44,7 @@
                                 <DockPanel>
                                     <TextBlock Text="{lex:LocText Key=Options_Tracker_Importing_Label_TemplatesFormat, Suffix=' \{Class}, {Date FORMAT}'}" DockPanel.Dock="Bottom"
                                                Margin="0,5,0,0" TextWrapping="Wrap"
-                                               ToolTip="For more information on date formats google &quot;C# date format&quot;." />
+                                               ToolTip="{lex:Loc Options_Tracker_Importing_Label_ArenaTemplatesFormat_Tooltip}" />
                                     <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
                                         <TextBlock Text="{lex:Loc Options_Tracker_Importing_Label_TemplatesPreview}" />
                                         <TextBlock Name="TextBlockNamePreview" Margin="5,0,0,0" />

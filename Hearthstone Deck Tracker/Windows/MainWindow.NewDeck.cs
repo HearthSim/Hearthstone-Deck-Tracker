@@ -10,9 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using static System.Windows.Visibility;
@@ -153,13 +151,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(EditingDeck && overwrite)
 				DeckList.Instance.Decks.Remove(_newDeck);
 
-			var previousVersion = _newDeck.Version;
 			if(overwrite && (_newDeck.Version != newVersion))
 			{
 				AddDeckHistory();
 				_newDeck.Version = newVersion;
 				_newDeck.SelectedVersion = newVersion;
-				_newDeck.HearthStatsDeckVersionId = "";
 			}
 
 			var oldDeckName = _newDeck.Name;
@@ -209,26 +205,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
-
-			if(Config.Instance.HearthStatsAutoUploadNewDecks && HearthStatsAPI.IsLoggedIn)
-			{
-				Log.Info("auto uploading new/edited deck");
-				if(EditingDeck)
-				{
-					if(previousVersion != newVersion)
-						HearthStatsManager.UploadVersionAsync(newDeckClone, _originalDeck.HearthStatsIdForUploading, background: true).Forget();
-					else
-						HearthStatsManager.UpdateDeckAsync(newDeckClone, background: true).Forget();
-				}
-				else
-					HearthStatsManager.UploadDeckAsync(newDeckClone, background: true).Forget();
-			}
-
 			if(EditingDeck)
 				DeckManagerEvents.OnDeckUpdated.Execute(newDeckClone);
 			else
 				DeckManagerEvents.OnDeckCreated.Execute(newDeckClone);
-
 
 			EditingDeck = false;
 
@@ -462,8 +442,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void MenuItemDashboard_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl(@"http://hearthstats.net/dashboards");
-
 		#region UI
 
 		private void BtnNewDeckDruid_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Druid");
@@ -552,7 +530,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				EditingDeck = false;
 				_newDeck.ResetVersions();
-				_newDeck.ResetHearthstatsIds();
 				_newDeck.DeckId = Guid.NewGuid();
 				_newDeck.Archived = false;
 			}

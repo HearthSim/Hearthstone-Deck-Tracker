@@ -278,13 +278,5 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			this.ShowMissingCardsMessage(deck);
 		}
-
-		public void BtnOpenHearthStats_Click(object sender, RoutedEventArgs e)
-		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			if(deck == null || !deck.HasHearthStatsId)
-				return;
-			Helper.TryOpenUrl(deck.HearthStatsUrl);
-		}
 	}
 }

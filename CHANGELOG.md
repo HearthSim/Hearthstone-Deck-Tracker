@@ -1,4 +1,19 @@
-## __Release v1.1.6 - 2016-01-12__
+## __Release v1.1.7 - 2017-03-01__
+
+__Updated for 7.1.0.17720__
+
+__New__:
+- HDT will now notify you if important options (automatic importing and deck selection) are disabled.
+- Added Korean and Japanese translations.
+
+__Changes__:
+- Trying to start Battle.net/Hearthstone should now time out later.
+
+__Fixes__:
+- Drag and drop installing should now work for all plugins.
+
+
+## __Release v1.1.6 - 2017-01-12__
 
 __New__:
 - Added an option to remove detected secrets instead of just greying them out.

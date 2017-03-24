@@ -24,7 +24,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class Deck : ICloneable, INotifyPropertyChanged
 	{
 		private const string LocNoStats = "Deck_StatsString_NoStats";
-		private const string BaseHearthStatsUrl = @"http://hss.io/d/";
 
 		private readonly string[] _relevantMechanics =
 		{
@@ -47,7 +46,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private ArenaReward _arenaReward = new ArenaReward();
 		private List<GameStats> _cachedGames;
 		private Guid _deckId;
-		private string _hearthStatsIdClone;
 		private bool? _isArenaDeck;
 		private bool _isSelectedInGui;
 		private DateTime _lastCacheUpdate = DateTime.MinValue;
@@ -61,9 +59,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public ObservableCollection<Card> Cards;
 
 		public string Class;
-		public string HearthStatsArenaId;
-		public string HearthStatsDeckVersionId;
-		public string HearthStatsId;
 		public DateTime LastEdited;
 
 		[XmlArray(ElementName = "MissingCards")]
@@ -86,8 +81,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Url = string.Empty;
 			Name = string.Empty;
 			Archived = false;
-			SyncWithHearthStats = null;
-			HearthStatsId = string.Empty;
 			Version = SerializableVersion.Default;
 			Versions = new List<Deck>();
 			DeckId = Guid.NewGuid();
@@ -95,8 +88,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
 		            DateTime lastEdited, bool archived, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
-		            bool? syncWithHearthStats, string hearthStatsId, Guid deckId, string hearthStatsDeckVersionId, long hsId = 0,
-		            string hearthStatsIdClone = null, SerializableVersion selectedVersion = null, bool? isArenaDeck = null,
+		            Guid deckId, long hsId = 0, SerializableVersion selectedVersion = null, bool? isArenaDeck = null,
 		            ArenaReward reward = null)
 
 		{
@@ -112,16 +104,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LastEdited = lastEdited;
 			Archived = archived;
 			Version = version;
-			SyncWithHearthStats = syncWithHearthStats;
-			HearthStatsId = hearthStatsId;
 			SelectedVersion = selectedVersion ?? version;
 			Versions = new List<Deck>();
 			DeckId = deckId;
-			if(hearthStatsIdClone != null)
-				HearthStatsIdForUploading = hearthStatsIdClone;
 			if(isArenaDeck.HasValue)
 				IsArenaDeck = isArenaDeck.Value;
-			HearthStatsDeckVersionId = hearthStatsDeckVersionId;
 			if(versions != null)
 			{
 				foreach(var d in versions)
@@ -167,8 +154,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OnPropertyChanged(nameof(StandardViableVisibility));
 			}
 		}
-
-		public bool HearthStatsIdsAlreadyReset { get; set; }
 
 		[XmlIgnore]
 		public bool IsSelectedInGui
@@ -219,18 +204,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				OnPropertyChanged(nameof(NameAndVersion));
 			}
 		}
-
-		public bool? SyncWithHearthStats { get; set; }
-
-		[XmlIgnore]
-		public bool HasHearthStatsId => !string.IsNullOrEmpty(HearthStatsId) || !string.IsNullOrEmpty(_hearthStatsIdClone);
-
-		[XmlIgnore]
-		public string HearthStatsUrl => HasHearthStatsId
-											? BaseHearthStatsUrl + HearthStatsId : (HasHearthStatsArenaId ? BaseHearthStatsUrl + HearthStatsArenaId : "");
-
-		[XmlIgnore]
-		public bool HasHearthStatsDeckVersionId => !string.IsNullOrEmpty(HearthStatsDeckVersionId);
 
 		[XmlIgnore]
 		public List<SerializableVersion> VersionsIncludingSelf => Versions.Select(x => x.Version).Concat(new[] {Version}).ToList();
@@ -362,15 +335,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool HasVersions => Versions != null && Versions.Count > 0;
 
-		public bool HasHearthStatsArenaId => !string.IsNullOrEmpty(HearthStatsArenaId);
-
-		//I don't know why I need this but I apparently can't serialize anything if versions of a deck have the same hearthstatsid
-
-		public string HearthStatsIdForUploading
-		{
-			get { return !string.IsNullOrEmpty(HearthStatsId) ? HearthStatsId : _hearthStatsIdClone; }
-			set { _hearthStatsIdClone = value; }
-		}
 
 		public Visibility VisibilityStats => GetRelevantGames().Any() ? Visibility.Visible : Visibility.Collapsed;
 
@@ -391,9 +355,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public List<Mechanic> Mechanics => _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList();
 
-		public object Clone() => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats,
-										  HearthStatsId, DeckId, HearthStatsDeckVersionId, HsId, HearthStatsIdForUploading, SelectedVersion, _isArenaDeck,
-										  ArenaReward);
+		public object Clone() => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
+										  DeckId, HsId, SelectedVersion, _isArenaDeck, ArenaReward);
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -452,15 +415,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return filtered;
 		}
 
-		public void ResetHearthstatsIds()
-		{
-			HearthStatsArenaId = null;
-			HearthStatsDeckVersionId = null;
-			HearthStatsId = null;
-			_hearthStatsIdClone = null;
-			HearthStatsIdsAlreadyReset = true;
-		}
-
 		public bool? CheckIfArenaDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
 
 		public Deck GetVersion(int major, int minor) => GetVersion(new SerializableVersion(major, minor));
@@ -469,8 +423,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool HasVersion(SerializableVersion version) => Version == version || Versions.Any(v => v.Version == version);
 
-		public object CloneWithNewId(bool isVersion) => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions, SyncWithHearthStats, "",
-																 Guid.NewGuid(), HearthStatsDeckVersionId, HsId, isVersion ? HearthStatsIdForUploading : "", SelectedVersion, _isArenaDeck);
+		public object CloneWithNewId(bool isVersion) => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
+																 Guid.NewGuid(), HsId, SelectedVersion, _isArenaDeck);
 
 		public void ResetVersions()
 		{
@@ -517,12 +471,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return false;
 			if(!Version.Equals(deck.Version))
 				return false;
-			if(deck.HasHearthStatsId && HasHearthStatsId)
-				return HearthStatsId.Equals(deck.HearthStatsId);
 			return DeckId.Equals(deck.DeckId);
 		}
 
-		public override int GetHashCode() => HasHearthStatsId ? HasHearthStatsId.GetHashCode() : DeckId.GetHashCode();
+		public override int GetHashCode() => DeckId.GetHashCode();
 
 		public static List<Card> operator -(Deck first, Deck second)
 		{

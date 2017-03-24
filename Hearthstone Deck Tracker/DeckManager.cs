@@ -140,11 +140,11 @@ namespace Hearthstone_Deck_Tracker
 		private static void ShowDeckSelectionDialog(List<Deck> decks)
 		{
 			decks.Add(new Deck("Use no deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false, new List<Card>(),
-								   SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
+								   SerializableVersion.Default, new List<Deck>(), Guid.Empty));
 			if(decks.Count == 1 && DeckList.Instance.ActiveDeck != null)
 			{
 				decks.Add(new Deck("No match - Keep using active deck", "", new List<Card>(), new List<string>(), "", "", DateTime.Now, false,
-								   new List<Card>(), SerializableVersion.Default, new List<Deck>(), false, "", Guid.Empty, ""));
+								   new List<Card>(), SerializableVersion.Default, new List<Deck>(), Guid.Empty));
 			}
 			_waitingForUserInput = true;
 			Log.Info("Waiting for user input...");
@@ -241,7 +241,6 @@ namespace Hearthstone_Deck_Tracker
 						target.Versions.Add(oldDeck);
 						target.Version = existing.NewVersion;
 						target.SelectedVersion = existing.NewVersion;
-						target.HearthStatsDeckVersionId = "";
 						target.Cards.Clear();
 						var cards = deck.Deck.Cards.Select(x =>
 						{

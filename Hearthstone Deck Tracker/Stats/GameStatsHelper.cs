@@ -5,9 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
@@ -60,12 +58,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 					deck?.DeckStats.Games.Remove(game);
 				}
 				game.PlayerDeckVersion = targetVersion;
-				game.HearthStatsDeckVersionId = targetDeck.GetVersion(targetVersion).HearthStatsDeckVersionId;
 				game.DeckId = targetDeck.DeckId;
 				game.DeckName = targetDeck.Name;
 				targetDeck.DeckStats.Games.Add(game);
-				if(HearthStatsAPI.IsLoggedIn && Config.Instance.HearthStatsAutoUploadNewGames)
-					HearthStatsManager.MoveMatchAsync(game, targetDeck, background: true).Forget();
 			}
 			DeckStatsList.Save();
 			DeckList.Save();
@@ -84,10 +79,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 				return;
 			if(games.Length > 1 && await window.ShowDeleteMultipleGameStatsMessage(games.Length) != MessageDialogResult.Affirmative)
 				return;
-			await DeleteGamesWithoutConfirmation(games);
+			DeleteGamesWithoutConfirmation(games);
 		}
 
-		internal static async Task DeleteGamesWithoutConfirmation(params GameStats[] games)
+		internal static void DeleteGamesWithoutConfirmation(params GameStats[] games)
 		{
 			games = games.Where(x => x != null).ToArray();
 			if(games.Length == 0)
@@ -120,9 +115,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 				}
 			}
 
-			if(HearthStatsAPI.IsLoggedIn && games.Any(g => g.HasHearthStatsId)
-			   && await Core.MainWindow.ShowCheckHearthStatsMatchDeletionDialog())
-				HearthStatsManager.DeleteMatchesAsync(games.ToList()).Forget();
 			if(saveDeckStats)
 				DeckStatsList.Save();
 			if(saveDefaultDeckStats)

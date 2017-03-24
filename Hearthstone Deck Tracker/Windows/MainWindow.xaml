@@ -4,7 +4,6 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-                      xmlns:hearthStats="clr-namespace:Hearthstone_Deck_Tracker.HearthStats.Controls"
                       xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
                       xmlns:error="clr-namespace:Hearthstone_Deck_Tracker.Controls.Error"
                       xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
@@ -41,7 +40,6 @@
     </controls:MetroWindow.IconTemplate>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <controls:ProgressRing Name="ProgressRingTitleBar" Foreground="White" Width="16" Height="16" ToolTip="syncing with HearthStats..."/>
             <Button Click="BtnErrors_OnClick" Visibility="{Binding ErrorIconVisibility, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16" Height="16">
@@ -72,34 +70,6 @@
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:LocTextLower MainWindow_TitleBar_Help}" />
                 </StackPanel>
             </Button>
-            <Button Name="BtnDonate" Click="BtnDonate_OnClick">
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="16" Height="14">
-                        <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_heart}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:LocTextLower MainWindow_TitleBar_Donate}" />
-                </StackPanel>
-                <Button.ContextMenu>
-                    <ContextMenu Name="BtnDonateContextMenu">
-                        <MenuItem Header="Patreon" Click="BtnPatreon_OnClick">
-                            <MenuItem.Icon>
-                                <Image Source="/HearthstoneDeckTracker;component/Resources/patreon_logo.png" Width="18" RenderOptions.BitmapScalingMode="Fant" Margin="0,0,-5,0"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem Header="PayPal" Click="BtnPaypal_OnClick">
-                            <MenuItem.Icon>
-                                <Rectangle Width="18" Height="18" Margin="0,0,-5,0">
-                                    <Rectangle.Fill>
-                                        <VisualBrush Visual="{StaticResource appbar_paypal_blue}"/>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
     <controls:MetroWindow.Flyouts>
@@ -111,7 +81,7 @@
                 <flyoutControls:Warning x:Name="WarningFlyout" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="{lex:Loc MainWindow_Flyout_Options_Header}"
-                         Width="515">
+                         Width="600">
                 <flyoutControls:OptionsMain x:Name="Options"/>
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="{lex:Loc MainWindow_Flyout_Help_Header}"
@@ -131,15 +101,6 @@
             <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="{lex:Loc MainWindow_Flyout_SetTags_Header}" Position="Right" Width="255"
                          Height="auto" Panel.ZIndex="100">
                 <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
-            </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutHearthStatsLogin" Position="Top" Panel.ZIndex="1" Margin="0,50,0,0" CloseButtonVisibility="Collapsed">
-                <hearthStats:LoginControl x:Name="HearthstatsLoginControl" Margin="0,32,0,32"/>
-            </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutHearthStatsDownload" Header="Download decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
-                <hearthStats:DownloadDecksControl x:Name="HearthStatsDownloadDecksControl"/>
-            </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutHearthStatsUpload" Header="Upload decks" Position="Left" CloseButtonVisibility="Collapsed" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
-                <hearthStats:UploadDecksControl x:Name="HearthStatsUploadDecksControl"/>
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutErrors" Position="Top" Header="{lex:Loc MainWindow_Flyout_Errors_Header}">
                 <error:ErrorList DataContext="{Binding Errors, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}" VerticalAlignment="Center" MaxHeight="400"/>
@@ -292,7 +253,6 @@
                     <MenuItem Name="MenuItemUpdateDeck" Header="{lex:LocTextUpper MainWindow_Menu_Deck_UpdateWeb}" Click="BtnUpdateDeck_Click" />
                     <MenuItem Name="MenuItemSetDeckUrl" Header="" Click="BtnSetDeckUrl_Click" />
                     <MenuItem Name="MenuItemOpenUrl" Header="{lex:LocTextUpper MainWindow_Menu_Deck_OpenWebsite}" Click="BtnOpenDeckUrl_Click" />
-                    <MenuItem Name="MenuItemOpenHearthStats" Header="{lex:LocTextUpper MainWindow_Menu_Deck_OpenHearthStats}" Click="BtnOpenHearthStats_Click" />
                     <Separator />
                     <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Archive}" Name="MenuItemArchive" Click="BtnArchiveDeck_Click" />
                     <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Unarchive}" Name="MenuItemUnarchive" Click="BtnUnarchiveDeck_Click" />
@@ -394,54 +354,6 @@
                               Visibility="{Binding MenuItemReplayClaimAccountVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
                     <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_MyAccount}" Click="MenuItemReplayMyAccount_OnClick"
                               Visibility="{Binding MenuItemReplayMyAccountVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
-                </MenuItem>
-                <MenuItem Header="_HEARTHSTATS" SubmenuOpened="MenuItemHearthStats_OnSubmenuOpened"
-                          Visibility="{Binding MenuItemHearthStatsVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource hearthstats}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem IsEnabled="False">
-                        <MenuItem.Header>
-                            <Grid Margin="-10,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Separator Grid.Column="0"/>
-                                <TextBlock Grid.Column="1" Text="DISABLED" IsEnabled="False" Margin="5,0"/>
-                                <Separator Grid.Column="2"/>
-                            </Grid>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <MenuItem Header="MORE INFO..." Click="MenuItemHearthStatsMoreInfo_OnClick"/>
-                    <!--
-                    <MenuItem Name="MenuItemLogin" Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_Login}" Click="MenuItemLogin_OnClick"/>
-                    <MenuItem Name="MenuItemDashboard" Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_Dashboard}" Click="MenuItemDashboard_OnClick"/>
-                    <MenuItem Name="MenuItemHearthStatsSync" Click="MenuItemHearthStatsSync_OnClick">
-                        <MenuItem.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{lex:LocTextUpper MainWindow_Menu_HearthStats_Sync}"/>
-                                <TextBlock Foreground="DimGray" Margin="10,0,0,0" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}, Path=LastSync, StringFormat='(LAST: {0})'}"/>
-                            </StackPanel>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <MenuItem Name="MenuItemHearthStatsForceFullSync"  Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_ForceSync}" Click="MenuItemHearthStatsForceFullSync_OnClick"/>
-                    <Separator/>
-                    <CheckBox Name="MenuItemCheckBoxSyncOnStart" Content="{lex:LocTextUpper MainWindow_Menu_HearthStats_SyncOnStart}" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxSyncOnStart_OnChecked" Unchecked="MenuItemCheckBoxSyncOnStart_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoUploadDecks" Content="{lex:LocTextUpper MainWindow_Menu_HearthStats_UploadDecks}" ToolTip="also applies to changes made to decks and new versions" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadDecks_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoUploadGames" Content="{lex:LocTextUpper MainWindow_Menu_HearthStats_UploadGames}" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoUploadGames_OnChecked" Unchecked="MenuItemCheckBoxAutoUploadGames_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoDeleteDecks" Content="{lex:LocTextUpper MainWindow_Menu_HearthStats_DeleteDecks}" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoDeleteDecks_OnChecked" Unchecked="MenuItemCheckBoxAutoDeleteDecks_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoDeleteGames" Content="{lex:LocTextUpper MainWindow_Menu_HearthStats_DeleteGames}" Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoDeleteGames_OnChecked" Unchecked="MenuItemCheckBoxAutoDeleteGames_OnUnchecked"/>
-                    <CheckBox Name="MenuItemCheckBoxAutoSyncBackground" Content="{lex:LocTextUpper MainWindow_Menu_HearthStats_SyncInBackground}" ToolTip="Will perform 'SYNC NOW' every 5 minutes in the background. Unless you are running HDT on multiple PCs at the same time there you don't really need this." Margin="-24,0,0,0" FontSize="14" Checked="MenuItemCheckBoxAutoSyncBackground_OnChecked" Unchecked="MenuItemCheckBoxAutoSyncBackground_OnUnchecked"/>
-                    <Separator/>
-                    <MenuItem Name="MenuItemDeleteHearthStatsDeck" Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_DeleteSelected}" ToolTip="This will try to delete the selected decks and all matches on HearthStats as well as remove all stored IDs. The local decks will stay untouched!" Click="MenuItemDeleteHearthStatsDeck_OnClick"/>
-                    <Separator Name="SeparatorLogout" Visibility="Collapsed"/>
-                    <MenuItem Name="MenuItemLogout" Header="{lex:LocTextUpper MainWindow_Menu_HearthStats_Logout}" Click="MenuItemLogout_OnClick" Visibility="Collapsed"/>-->
                 </MenuItem>
                 <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins}" Name="MenuItemPlugins">
                     <MenuItem.Icon>

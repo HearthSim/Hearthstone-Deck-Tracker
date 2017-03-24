@@ -655,7 +655,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			MenuItemArchive.Visibility = selectedDecks.Any(d => !d.Archived) ? Visible : Collapsed;
 			MenuItemUnarchive.Visibility = selectedDecks.Any(d => d.Archived) ? Visible : Collapsed;
 			SeparatorDeck1.Visibility = selectedDecks.First().IsArenaDeck ? Collapsed : Visible;
-			MenuItemOpenHearthStats.Visibility = selectedDecks.First().HasHearthStatsId ? Visible : Collapsed;
 			MenuItemUseDeck.Visibility =
 				SeparatorUseDeck.Visibility =
 				selectedDecks.First().Equals(DeckList.Instance.ActiveDeck) ? Collapsed : Visible;
@@ -676,7 +675,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void BtnCloneDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnCloneDeck_Click(sender, e);
 		private void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnCloneSelectedVersion_Click(sender, e);
 		private void BtnName_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnName_Click(sender, e);
-		private void BtnOpenHearthStats_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnOpenHearthStats_Click(sender, e);
 
 		private void ActiveDeckPanel_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{

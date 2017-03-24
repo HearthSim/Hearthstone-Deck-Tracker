@@ -419,24 +419,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool GoogleAnalytics = true;
 
-		[DefaultValue(null)]
-		public bool? HearthStatsAutoDeleteDecks = null;
-
-		[DefaultValue(null)]
-		public bool? HearthStatsAutoDeleteMatches = null;
-
-		[DefaultValue(false)]
-		public bool HearthStatsAutoSyncInBackground = false;
-
-		[DefaultValue(true)]
-		public bool HearthStatsAutoUploadNewDecks = true;
-
-		[DefaultValue(true)]
-		public bool HearthStatsAutoUploadNewGames = true;
-
-		[DefaultValue(false)]
-		public bool HearthStatsSyncOnStart = false;
-
 		[DefaultValue(@"C:\Program Files (x86)\Hearthstone")]
 		public string HearthstoneDirectory = @"C:\Program Files (x86)\Hearthstone";
 
@@ -578,12 +560,6 @@ namespace Hearthstone_Deck_Tracker
 		[Obsolete]
 		[DefaultValue("")]
 		public string LastDeck = "";
-
-		[DefaultValue(0L)]
-		public long LastHearthStatsDecksSync = 0L;
-
-		[DefaultValue(0L)]
-		public long LastHearthStatsGamesSync = 0L;
 
 		[DefaultValue(LastPlayedDateFormat.DayMonthYear)]
 		public LastPlayedDateFormat LastPlayedDateFormat = LastPlayedDateFormat.DayMonthYear;
@@ -759,9 +735,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool RecordSpectator = false;
 
-		[DefaultValue(true)]
-		public bool RememberHearthStatsLogin = true;
-
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;
 
@@ -873,9 +846,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowDeckWins = false;
 
-		[DefaultValue(false)]
-		public bool ShowHearthStatsMenu = false;
-
 		[DefaultValue(true)]
 		public bool ShowExportingDialog = true;
 
@@ -893,9 +863,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ShowLastPlayedDateOnDeck = false;
-		
-		[DefaultValue(false)]
-		public bool ShowLoginDialog = false;
 
 		[DefaultValue(true)]
 		public bool ShowSplashScreen = true;
@@ -1140,8 +1107,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public string ReplayDir => Path.Combine(DataDir, "Replays");
-
-		public string HearthStatsFilePath => Path.Combine(DataDir, "hearthstatsauth");
 
 		public static Config Instance
 		{

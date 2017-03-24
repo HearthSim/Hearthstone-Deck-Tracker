@@ -10,9 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -128,28 +126,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		private void GameResultToast_OnUnloaded(object sender, RoutedEventArgs e)
 		{
-			if(!_edited)
-				return;
-			DeckStatsList.Save();
-			if(!Config.Instance.HearthStatsAutoUploadNewGames || !HearthStatsAPI.IsLoggedIn)
-				return;
-			var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == _game.DeckId);
-			if(deck == null)
-				return;
-			if(_game.HasHearthStatsId)
-			{
-				if(_game.GameMode == GameMode.Arena)
-					HearthStatsManager.UpdateArenaMatchAsync(_game, deck, true, true);
-				else
-					HearthStatsManager.UpdateMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true);
-			}
-			else
-			{
-				if(_game.GameMode == GameMode.Arena)
-					HearthStatsManager.UploadArenaMatchAsync(_game, deck, true, true).Forget();
-				else
-					HearthStatsManager.UploadMatchAsync(_game, deck.GetVersion(_game.PlayerDeckVersion), true, true).Forget();
-			}
+			if(_edited)
+				DeckStatsList.Save();
 		}
 
 		private void GameResultToast_OnMouseEnter(object sender, MouseEventArgs e)

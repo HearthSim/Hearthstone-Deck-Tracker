@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HtmlAgilityPack;
@@ -42,6 +43,6 @@ namespace Hearthstone_Deck_Tracker.Importing
 		}
 
 		private static string GetMetaProperty(HtmlNodeCollection nodes, string prop) 
-			=> nodes.FirstOrDefault(x => x.Attributes["property"]?.Value == prop)?.Attributes["content"]?.Value;
+			=> HttpUtility.HtmlDecode(nodes.FirstOrDefault(x => x.Attributes["property"]?.Value == prop)?.Attributes["content"]?.Value);
 	}
 }

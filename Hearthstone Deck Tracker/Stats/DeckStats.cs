@@ -18,7 +18,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlArrayItem(ElementName = "Game")]
 		public List<GameStats> Games;
 
-		public string HearthStatsDeckId;
 		public string Name;
 
 		public DeckStats()
@@ -30,18 +29,13 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			Name = deck.Name;
 			Games = new List<GameStats>();
-			HearthStatsDeckId = deck.HearthStatsId;
 			DeckId = deck.DeckId;
 		}
-
-		[XmlIgnore]
-		public bool HasHearthStatsDeckId => !string.IsNullOrEmpty(HearthStatsDeckId);
 
 		public void AddGameResult(GameResult result, string opponentHero, string playerHero) => Games.Add(new GameStats(result, opponentHero, playerHero));
 
 		public void AddGameResult(GameStats gameStats) => Games.Add(gameStats);
 
-		public bool BelongsToDeck(Deck deck) => HasHearthStatsDeckId && deck.HasHearthStatsId
-													? HearthStatsDeckId.Equals(deck.HearthStatsIdForUploading) : DeckId == deck.DeckId;
+		public bool BelongsToDeck(Deck deck) => DeckId == deck.DeckId;
 	}
 }

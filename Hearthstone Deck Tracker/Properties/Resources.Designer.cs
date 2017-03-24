@@ -103,16 +103,6 @@ namespace Hearthstone_Deck_Tracker.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap hearthstats_logo {
-            get {
-                object obj = ResourceManager.GetObject("hearthstats_logo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap hunter_small {
             get {
                 object obj = ResourceManager.GetObject("hunter_small", resourceCulture);

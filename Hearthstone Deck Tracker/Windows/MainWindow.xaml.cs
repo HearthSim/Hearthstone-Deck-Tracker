@@ -1,26 +1,21 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HearthStats.API;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.LogReader;
@@ -31,7 +26,6 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Updating;
-using Hearthstone_Deck_Tracker.Utility.Toasts;
 using MahApps.Metro.Controls.Dialogs;
 #if(SQUIRREL)
 	using Squirrel;
@@ -76,7 +70,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			MenuItemArchive.Visibility = DeckPickerList.SelectedDecks.Any(d => !d.Archived) ? Visible : Collapsed;
 			MenuItemUnarchive.Visibility = DeckPickerList.SelectedDecks.Any(d => d.Archived) ? Visible : Collapsed;
 			SeparatorDeck1.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
-			MenuItemOpenHearthStats.Visibility = deck.HasHearthStatsId ? Visible : Collapsed;
 		}
 
 		public void UpdateDeckList(Deck selected)
@@ -209,161 +202,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SelectDeck(deck, true);
 		}
 
-		private void MenuItemLogin_OnClick(object sender, RoutedEventArgs e)
-		{
-			Config.Instance.ShowLoginDialog = true;
-			Config.Save();
-			Restart();
-		}
+		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e) => NewsManager.ToggleNewsVisibility();
 
-		public void LoadHearthStatsMenu()
-		{
-			if(HearthStatsAPI.IsLoggedIn)
-			{
-				//MenuItemLogout.Header = $"LOGOUT ({HearthStatsAPI.LoggedInAs})";
-				//MenuItemLogin.Visibility = Collapsed;
-				//MenuItemLogout.Visibility = Visible;
-				//SeparatorLogout.Visibility = Visible;
-			}
-			EnableHearthStatsMenu(HearthStatsAPI.IsLoggedIn);
-		}
+		private void BtnNewsPrevious_OnClick(object sender, RoutedEventArgs e) => NewsManager.PreviousNewsItem();
 
-		public void EnableHearthStatsMenu(bool enable)
-		{
-			//MenuItemCheckBoxAutoSyncBackground.IsEnabled = enable;
-			//MenuItemCheckBoxAutoUploadDecks.IsEnabled = enable;
-			//MenuItemCheckBoxAutoUploadGames.IsEnabled = enable;
-			//MenuItemCheckBoxSyncOnStart.IsEnabled = enable;
-			//MenuItemHearthStatsForceFullSync.IsEnabled = enable;
-			//MenuItemHearthStatsSync.IsEnabled = enable;
-			//MenuItemCheckBoxAutoDeleteDecks.IsEnabled = enable;
-			//MenuItemCheckBoxAutoDeleteGames.IsEnabled = enable;
-			//MenuItemDeleteHearthStatsDeck.IsEnabled = enable;
-		}
-
-		private void MenuItemHearthStatsSync_OnClick(object sender, RoutedEventArgs e) => HearthStatsManager.SyncAsync();
-
-		private void SaveConfig(Action action)
-		{
-			if(!_initialized)
-				return;
-			action.Invoke();
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxSyncOnStart_OnChecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsSyncOnStart = true);
-		private void MenuItemCheckBoxSyncOnStart_OnUnchecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsSyncOnStart = false);
-		private void MenuItemCheckBoxAutoUploadDecks_OnChecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoUploadNewDecks = true);
-		private void MenuItemCheckBoxAutoUploadDecks_OnUnchecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoUploadNewDecks = false);
-		private void MenuItemCheckBoxAutoUploadGames_OnChecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoUploadNewGames = true);
-		private void MenuItemCheckBoxAutoUploadGames_OnUnchecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoUploadNewGames = false);
-		private void MenuItemCheckBoxAutoSyncBackground_OnChecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoSyncInBackground = true);
-		private void MenuItemCheckBoxAutoSyncBackground_OnUnchecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoSyncInBackground = false);
-
-		private void BtnCloseNews_OnClick(object sender, RoutedEventArgs e) => NewsUpdater.ToggleNewsVisibility();
-
-		private void BtnNewsPrevious_OnClick(object sender, RoutedEventArgs e) => NewsUpdater.PreviousNewsItem();
-
-		private void BtnNewsNext_OnClick(object sender, RoutedEventArgs e) => NewsUpdater.NextNewsItem();
-
-
-		private async void MenuItemHearthStatsForceFullSync_OnClick(object sender, RoutedEventArgs e)
-		{
-			var result =
-				await
-				this.ShowMessageAsync("Full sync", "This may take a while, are you sure?", MessageDialogStyle.AffirmativeAndNegative,
-				                      new MessageDialogs.Settings {AffirmativeButtonText = "start full sync", NegativeButtonText = "cancel"});
-			if(result == MessageDialogResult.Affirmative)
-				HearthStatsManager.SyncAsync(true);
-		}
-
-		private async void MenuItemLogout_OnClick(object sender, RoutedEventArgs e)
-		{
-			var result =
-				await
-				this.ShowMessageAsync("Logout?", "Are you sure you want to logout?", MessageDialogStyle.AffirmativeAndNegative,
-				                      new MessageDialogs.Settings {AffirmativeButtonText = "logout", NegativeButtonText = "cancel"});
-			if(result != MessageDialogResult.Affirmative)
-				return;
-			if (!HearthStatsAPI.Logout())
-			{
-				await
-					this.ShowMessageAsync("Error deleting stored credentials",
-										  "You will be logged in automatically on the next start. To avoid this manually delete the \"hearthstats\" file at "
-										  + Config.Instance.HearthStatsFilePath);
-			}
-			Restart();
-		}
-
-		private async void MenuItemDeleteHearthStatsDeck_OnClick(object sender, RoutedEventArgs e)
-		{
-			var decks = DeckPickerList.SelectedDecks;
-			if(!decks.Any(d => d.HasHearthStatsId))
-			{
-				await this.ShowMessageAsync("None synced", "None of the selected decks have HearthStats ids.");
-				return;
-			}
-			var dialogResult =
-				await
-				this.ShowMessageAsync("Delete " + decks.Count + " deck(s) on HearthStats?",
-				                      "This will delete the deck(s) and all associated games ON HEARTHSTATS, as well as reset all stored IDs. The decks or games in the tracker (this) will NOT be deleted.\n\n Are you sure?",
-				                      MessageDialogStyle.AffirmativeAndNegative,
-				                      new MessageDialogs.Settings {AffirmativeButtonText = "delete", NegativeButtonText = "cancel"});
-
-			if(dialogResult != MessageDialogResult.Affirmative)
-				return;
-			var controller = await this.ShowProgressAsync("Deleting decks...", "");
-			var deleteSuccessful = await HearthStatsManager.DeleteDeckAsync(decks);
-			await controller.CloseAsync();
-			if(!deleteSuccessful)
-			{
-				await
-					this.ShowMessageAsync("Problem deleting decks",
-										  "There was a problem deleting the deck. All local IDs will be reset anyway, you can manually delete the deck online.");
-			}
-			foreach(var deck in decks)
-			{
-				deck.ResetHearthstatsIds();
-				deck.DeckStats.HearthStatsDeckId = null;
-				deck.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
-				deck.Versions.ForEach(v =>
-				{
-					v.DeckStats.HearthStatsDeckId = null;
-					v.DeckStats.Games.ForEach(g => g.ResetHearthstatsIds());
-					v.ResetHearthstatsIds();
-				});
-			}
-			DeckList.Save();
-		}
-
-		public async Task<bool> CheckHearthStatsDeckDeletion()
-		{
-			if(Config.Instance.HearthStatsAutoDeleteDecks.HasValue)
-				return Config.Instance.HearthStatsAutoDeleteDecks.Value;
-			var dialogResult =
-				await
-				this.ShowMessageAsync("Delete deck on HearthStats?", "You can change this setting at any time in the HearthStats menu.",
-				                      MessageDialogStyle.AffirmativeAndNegative,
-				                      new MessageDialogs.Settings {AffirmativeButtonText = "yes (always)", NegativeButtonText = "no (never)"});
-			Config.Instance.HearthStatsAutoDeleteDecks = dialogResult == MessageDialogResult.Affirmative;
-			//MenuItemCheckBoxAutoDeleteDecks.IsChecked = Config.Instance.HearthStatsAutoDeleteDecks;
-			Config.Save();
-			return Config.Instance.HearthStatsAutoDeleteDecks != null && Config.Instance.HearthStatsAutoDeleteDecks.Value;
-		}
-
-		private void MenuItemCheckBoxAutoDeleteDecks_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.HearthStatsAutoDeleteDecks = true;
-			Config.Save();
-		}
-
-		private void MenuItemCheckBoxAutoDeleteDecks_OnUnchecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoDeleteDecks = false);
-
-		private void MenuItemCheckBoxAutoDeleteGames_OnChecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoDeleteMatches = true);
-
-		private void MenuItemCheckBoxAutoDeleteGames_OnUnchecked(object sender, RoutedEventArgs e) => SaveConfig(() => Config.Instance.HearthStatsAutoDeleteMatches = false);
+		private void BtnNewsNext_OnClick(object sender, RoutedEventArgs e) => NewsManager.NextNewsItem();
 
 		private void MetroWindow_LocationChanged(object sender, EventArgs e) => MovedLeft = null;
 
@@ -418,34 +261,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public Visibility MenuItemReplayClaimAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Visible : Collapsed;
 		public Visibility MenuItemReplayMyAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Collapsed : Visible;
-		public Visibility MenuItemHearthStatsVisibility => Config.Instance.ShowHearthStatsMenu || HearthStatsAPI.IsLoggedIn ? Visible : Collapsed;
 
 		public void UpdateIntroLabelVisibility() => OnPropertyChanged(nameof(IntroductionLabelVisibility));
-
-		public string LastSync
-		{
-			get
-			{
-				if(Config.Instance.LastHearthStatsGamesSync == 0)
-					return "NEVER";
-				var time = HearthStatsManager.TimeSinceLastSync;
-				if(time.TotalDays > 7)
-					return "> 1 WEEK AGO";
-				if (time.TotalDays > 1)
-					return (int)time.TotalDays + " DAYS AGO";
-				if ((int)time.TotalDays > 0)
-					return (int)time.TotalDays + " DAY AGO";
-				if (time.TotalHours > 1)
-					return (int)time.TotalHours + " HOURS AGO";
-				if ((int)time.TotalHours > 0)
-					return (int)time.TotalHours + " HOUR AGO";
-				if ((int)time.TotalMinutes > 0)
-					return (int)time.TotalMinutes + " MIN AGO";
-				return "< 1 MIN AGO";
-			}
-		}
-
-		private void MenuItemHearthStats_OnSubmenuOpened(object sender, RoutedEventArgs e) => OnPropertyChanged(nameof(LastSync));
 
 #endregion
 
@@ -522,8 +339,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 #region GENERAL GUI
 
-		private bool _closeAnyway;
-
 		private void MetroWindow_StateChanged(object sender, EventArgs e)
 		{
 			if(Config.Instance.MinimizeToTray && WindowState == WindowState.Minimized)
@@ -535,27 +350,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			try
 			{
 				Log.Info("Shutting down...");
-				if(HearthStatsManager.SyncInProgress && !_closeAnyway)
-				{
-					e.Cancel = true;
-					var result =
-						await
-						this.ShowMessageAsync("WARNING! Sync with HearthStats in progress!",
-						                      "Closing Hearthstone Deck Tracker now can cause data inconsistencies. Are you sure?",
-						                      MessageDialogStyle.AffirmativeAndNegative,
-						                      new MessageDialogs.Settings {AffirmativeButtonText = "close anyway", NegativeButtonText = "wait"});
-					if(result == MessageDialogResult.Negative)
-					{
-						while(HearthStatsManager.SyncInProgress)
-							await Task.Delay(100);
-						await this.ShowMessage("Sync is complete.", "You can close Hearthstone Deck Tracker now.");
-					}
-					else
-					{
-						_closeAnyway = true;
-						Close();
-					}
-				}
 				Core.UpdateOverlay = false;
 				Core.Update = false;
 
@@ -622,16 +416,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BtnOptions_OnClick(object sender, RoutedEventArgs e) => FlyoutOptions.IsOpen = true;
 		private void BtnHelp_OnClick(object sender, RoutedEventArgs e) => FlyoutHelp.IsOpen = true;
-
-		private void BtnDonate_OnClick(object sender, RoutedEventArgs e)
-		{
-			BtnDonateContextMenu.Placement = PlacementMode.Bottom;
-			BtnDonateContextMenu.PlacementTarget = BtnDonate;
-			BtnDonateContextMenu.IsOpen = true;
-		}
-
-		private void BtnPaypal_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PZDMUT88NLFYJ");
-		private void BtnPatreon_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://www.patreon.com/HearthstoneDeckTracker");
 
 #endregion
 
@@ -797,9 +581,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void SelectLastUsedDeck()
 		{
 			var lastSelected = DeckList.Instance.LastDeckClass.LastOrDefault();
-			if(lastSelected == null)
-				return;
-			var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == lastSelected.Id);
+			var deck = DeckList.Instance.Decks.FirstOrDefault(d => lastSelected == null || d.DeckId == lastSelected.Id);
 			if(deck == null)
 				return;
 			DeckPickerList.SelectDeck(deck);
@@ -859,19 +641,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(MenuItemReplayMyAccountVisibility));
 		}
 
-		public void UpdateHearthStatsMenuItem() => OnPropertyChanged(nameof(MenuItemHearthStatsVisibility));
-
 		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client");
-
-		private void MenuItemHearthStatsMoreInfo_OnClick(object sender, RoutedEventArgs e)
-		{
-			this.ShowMessage(
-				"HearthStats disabled",
-				@"HearthStats has not been updated for Mean Streets of Gadgetzan and will likely remain unmaintained.
-Syncing causes your local decks to lose their MSG cards.
-
-We are very sorry about the inconvenience and are working on a much improved replacement system!"
-			).Forget();
-		}
 	}
 }
