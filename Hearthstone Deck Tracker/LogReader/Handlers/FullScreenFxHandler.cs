@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using HearthWatcher.LogReader;
 using static Hearthstone_Deck_Tracker.Enums.Hearthstone.Mode;
 using Deck = HearthMirror.Objects.Deck;
 
@@ -17,9 +18,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	public class FullScreenFxHandler
 	{
 		private DateTime _lastQueueTime;
-		public void Handle(LogLineItem logLine, IGame game)
+		public void Handle(LogLine logLine, IGame game)
 		{
-			var match = HsLogReaderConstants.BeginBlurRegex.Match(logLine.Line);
+			var match = LogConstants.BeginBlurRegex.Match(logLine.Line);
 			if(match.Success && game.IsInMenu && new[] {TAVERN_BRAWL, TOURNAMENT, DRAFT, FRIENDLY, ADVENTURE}.Contains(game.CurrentMode))
 			{
 				game.MetaData.EnqueueTime = logLine.Time;

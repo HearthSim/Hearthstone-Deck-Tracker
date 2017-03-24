@@ -20,8 +20,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		public void TagChange(IHsGameState gameState, string rawTag, int id, string rawValue, IGame game, bool isCreationTag = false)
 		{
-			var tag = LogReaderHelper.ParseEnum<GameTag>(rawTag);
-			var value = LogReaderHelper.ParseTag(tag, rawValue);
+			var tag = GameTagHelper.ParseEnum<GameTag>(rawTag);
+			var value = GameTagHelper.ParseTag(tag, rawValue);
 			TagChange(gameState, tag, id, value, game, isCreationTag);
 		}
 

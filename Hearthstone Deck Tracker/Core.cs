@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker
 		private static int _updateRequestsPlayer;
 		private static int _updateRequestsOpponent;
 		private static DateTime _startUpTime;
+		private static readonly LogWatcherManager LogWatcherManger = new LogWatcherManager();
 		public static Version Version { get; set; }
 		public static GameV2 Game { get; set; }
 		public static MainWindow MainWindow { get; set; }
@@ -136,7 +137,7 @@ namespace Hearthstone_Deck_Tracker
 				MainWindow.ShowMessageAsync("Hearthstone restart required", "The log.config file has been updated. HDT may not work properly until Hearthstone has been restarted.");
 				Overlay.ShowRestartRequiredWarning();
 			}
-			LogReaderManager.Start(Game).Forget();
+			LogWatcherManger.Start(Game).Forget();
 
 			NewsManager.LoadNews();
 			HotKeyManager.Load();
@@ -265,7 +266,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			_resetting = true;
-			var stoppedReader = await LogReaderManager.Stop();
+			var stoppedReader = await LogWatcherManger.Stop();
 			Game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
 			{
@@ -274,7 +275,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			await Task.Delay(1000);
 			if(stoppedReader)
-				LogReaderManager.Restart();
+				LogWatcherManger.Start(Game).Forget();
 			Overlay.HideSecrets();
 			Overlay.Update(false);
 			UpdatePlayerCards(true);
@@ -305,6 +306,7 @@ namespace Hearthstone_Deck_Tracker
 				Windows.OpponentWindow.UpdateOpponentCards(new List<Card>(Game.Opponent.OpponentCardList), reset);
 		}
 
+		internal static async Task StopLogWacher() => await LogWatcherManger.Stop(true);
 
 		public static class Windows
 		{
@@ -319,5 +321,8 @@ namespace Hearthstone_Deck_Tracker
 			public static StatsWindow StatsWindow => _statsWindow ?? (_statsWindow = new StatsWindow());
 			public static CapturableOverlayWindow CapturableOverlay;
 		}
+
+		//Todo: keep this state somewhere tlse
+		internal static int GetTurnNumber() => LogWatcherManger.GetTurnNumber();
 	}
 }

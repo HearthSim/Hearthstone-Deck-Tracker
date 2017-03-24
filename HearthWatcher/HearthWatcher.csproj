@@ -65,6 +65,10 @@
     <Compile Include="EventArgs\ChoicesChangedEventArgs.cs" />
     <Compile Include="EventArgs\CompleteDeckEventArgs.cs" />
     <Compile Include="EventArgs\RewardsEventArgs.cs" />
+    <Compile Include="LogReader\LogLine.cs" />
+    <Compile Include="LogReader\LogFileWatcher.cs" />
+    <Compile Include="LogReader\LogWatcherInfo.cs" />
+    <Compile Include="LogWatcher.cs" />
     <Compile Include="Providers\IArenaProvider.cs" />
     <Compile Include="Providers\IPackProvider.cs" />
     <Compile Include="EventArgs\PackEventArgs.cs" />
@@ -72,6 +76,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj">
+      <Project>{7ED14243-E02B-4B94-AF00-A67A62C282F0}</Project>
+      <Name>HearthDb</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HearthMirror\HearthMirror\HearthMirror.csproj">
       <Project>{1694a2f8-645a-4263-a6ab-fc26323fd675}</Project>
       <Name>HearthMirror</Name>

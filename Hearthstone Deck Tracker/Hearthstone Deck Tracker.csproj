@@ -465,7 +465,7 @@
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
     <Compile Include="Enums\Hearthstone\Mode.cs" />
     <Compile Include="LogReader\Handlers\TagChangeActions.cs" />
-    <Compile Include="LogReader\LogReaderHelper.cs" />
+    <Compile Include="LogReader\GameTagHelper.cs" />
     <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
     <Compile Include="Stats\CompiledStats\ChartStats.cs" />
     <Compile Include="Stats\CompiledStats\ClassStats.cs" />
@@ -572,15 +572,12 @@
     <Compile Include="LogReader\Handlers\ArenaHandler.cs" />
     <Compile Include="LogReader\Handlers\PowerHandler.cs" />
     <Compile Include="LogReader\HsGameState.cs" />
-    <Compile Include="LogReader\HsLogReaderConstants.cs" />
+    <Compile Include="LogReader\LogConstants.cs" />
     <Compile Include="LogReader\Handlers\RachelleHandler.cs" />
     <Compile Include="LogReader\Handlers\TagChangeHandler.cs" />
     <Compile Include="LogReader\Interfaces\IHsGameState.cs" />
     <Compile Include="LogReader\Interfaces\IHSLogReader.cs" />
-    <Compile Include="LogReader\LogLineItem.cs" />
-    <Compile Include="LogReader\LogReader.cs" />
-    <Compile Include="LogReader\LogReaderInfo.cs" />
-    <Compile Include="LogReader\LogReaderManager.cs" />
+    <Compile Include="LogReader\LogWatcherManager.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
     <Compile Include="Hearthstone\CardDb.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
