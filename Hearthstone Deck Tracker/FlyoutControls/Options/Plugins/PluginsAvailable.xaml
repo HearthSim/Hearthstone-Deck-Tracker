@@ -1,0 +1,52 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins.OptionsPluginsAvailable"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="300">
+    <Grid>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Plugins_Header}" Loaded="GroupBox_Loaded">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Top" Height="150">
+                    <StackPanel DockPanel.Dock="Right">
+                    </StackPanel>
+                    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                        <ListBox Name="ListBoxAvailable" SelectionMode="Single">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Name}" TextWrapping="Wrap" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </DockPanel>
+                <GroupBox Name="GroupBoxAvailable"
+                          Header="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Name}"
+                          Margin="0,10,0,0">
+                    <DockPanel>
+                        <Separator DockPanel.Dock="Top" Margin="0,0,0,5" />
+                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+                            <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
+                            <TextBlock Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Author}"
+                                       TextWrapping="Wrap" Margin="2,0,0,0" />
+                        </StackPanel>
+                        <Button Name="ButtonDownload"
+                                Content="Install"
+                                DockPanel.Dock="Bottom" Click="ButtonInstall_OnClick" Margin="0,2" />
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <TextBlock
+                                       Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Description}"
+                                       TextWrapping="Wrap" />
+                        </ScrollViewer>
+                    </DockPanel>
+                </GroupBox>
+            </DockPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

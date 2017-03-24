@@ -1,0 +1,88 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins.OptionsPluginsInstalled"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="300">
+    <Grid>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Plugins_Header}" AllowDrop="True" Drop="GroupBox_Drop" Loaded="GroupBox_Loaded">
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Top" Height="150">
+                    <StackPanel DockPanel.Dock="Right">
+                    </StackPanel>
+                    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                        <ListBox Name="ListBoxPlugins" SelectionMode="Single" SelectionChanged="ListBoxPlugins_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock Name="UpdateText" DockPanel.Dock="Right" Margin="0,0,5,0">
+                                            <Hyperlink DataContext="{Binding}" Name="updateLink" Foreground="{Binding Path=UpdateTextColor}" Click="UpdateLink_Click" TextDecorations="{Binding Path=UpdateTextDecorations}">
+                                                <TextBlock Text="{Binding Path=UpdateHyperlink}" DockPanel.Dock="Right" Margin="0,0,0,0" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding Path=Plugin.Name}" TextWrapping="Wrap" DockPanel.Dock="Left">
+                                            <TextBlock.Style>
+                                                <Style>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
+                                                            <Setter Property="TextBlock.FontStyle" Value="Italic" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                </DockPanel>
+                <GroupBox Name="GroupBoxDetails"
+                          Header="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.NameAndVersion}"
+                          Margin="0,10,0,0">
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Name="ButtonReadme" Content="Details" Grid.Column="0"
+                                IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.RepoAvailable}"
+                                DockPanel.Dock="Top" Click="ButtonReadme_OnClick" Margin="2"  />
+                            <Button Name="ButtonSettings" Grid.Column="1"
+                                Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}"
+                                IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}"
+                                DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick" Margin="2" />
+                            <Button Grid.Column="2" Name="ButtonUninstall" Content="Uninstall"
+                                DockPanel.Dock="Top" Click="ButtonUninstall_OnClick" Margin="2" Foreground="Black" Background="Red" />
+                        </Grid>
+
+                        <controls:ToggleSwitch Margin="2" DockPanel.Dock="Top" OnLabel="{lex:Loc Options_Tracker_Plugins_Switch_Enabled}" 
+                                               OffLabel="{lex:Loc Options_Tracker_Plugins_Switch_Disabled}"
+                                               IsChecked="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" />
+                        <Separator DockPanel.Dock="Top" Margin="0,0,0,5" />
+                        <DockPanel DockPanel.Dock="Bottom">
+                            <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
+                            <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Author}"
+                                       TextWrapping="Wrap" Margin="2,0,0,0" />
+                            <TextBlock HorizontalAlignment="Right" Margin="0,0,3,0"><Hyperlink Click="ButtonOpenPluginsFolder_OnClick" Foreground="#FF47B1DF">Plugins Folder</Hyperlink></TextBlock>
+                        </DockPanel>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <TextBlock Name="TextBlockDescription"
+                                       Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}"
+                                       TextWrapping="Wrap" />
+                        </ScrollViewer>
+                    </DockPanel>
+                </GroupBox>
+            </DockPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

@@ -2,7 +2,9 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows;
+using System.Windows.Documents;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -11,14 +13,14 @@ using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 {
 	/// <summary>
 	/// Interaction logic for TrackerPlugins.xaml
 	/// </summary>
-	public partial class TrackerPlugins
+	public partial class OptionsPluginsInstalled
 	{
-		public TrackerPlugins()
+		public OptionsPluginsInstalled()
 		{
 			InitializeComponent();
 		}
@@ -31,12 +33,39 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			try
 			{
-				ListBoxAvailable.ItemsSource = InstallUtils.GetPlugins(ListBoxPlugins);
 				_loaded = true;
-				ListBoxUpdates.ItemsSource = InstallUtils.GetUpdates(ListBoxPlugins);
-			}
+				foreach(var item in ListBoxPlugins.Items)
+				{
+					
+					var plugin = item as PluginWrapper;
+					var update = InstallUtils.GetUpdate(plugin);
+
+					
+
+					if(update == null || plugin == null)
+						 continue;
+					plugin.TempPlugin = update.Plugin;
+
+					if(!update.IsUpdatable)
+					{
+						plugin.UpdateHyperlink = "Unavailable";
+						plugin.UpdateTextDecorations = "None";
+					}
+					if(update.IsUpdatable && update.IsUpToDate)
+					{
+						plugin.UpdateHyperlink = "Up to date ✔️";
+						plugin.UpdateTextDecorations = "None";
+					}
+					if(update.IsUpdatable && !update.IsUpToDate)
+					{
+						plugin.UpdateHyperlink = "Update available";
+						plugin.UpdateTextDecorations = "Underline";
+					}
+				}
+			} 
 			catch(Exception ex)
 			{
+				
 				Log.Error(ex);
 			}
 		}
@@ -73,12 +102,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				GroupBoxDetails.Visibility = Visibility.Hidden;
 		}
 
-		private void ButtonIssues_OnClick(object sender, RoutedEventArgs e)
-		{
-			var releases = (ListBoxPlugins.SelectedItem as PluginWrapper)?.Repourl + "/issues";
-			Helper.TryOpenUrl(releases);
-		}
-
 		private void ButtonReadme_OnClick(object sender, RoutedEventArgs e)
 		{
 			var releases = (ListBoxPlugins.SelectedItem as PluginWrapper)?.Repourl + "#readme";
@@ -96,11 +119,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			if(InstallUtils.InstallPluginFile((string[])e.Data.GetData(DataFormats.FileDrop)))
 			{
-				var result = await Core.MainWindow.ShowMessageAsync($"Successfully installed the plugin(s).", "Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
-				if(result == MessageDialogResult.Affirmative)
-				{
-					Core.MainWindow.Restart();
-				}
+				var newPlugins = PluginManager.Instance.SyncPlugins();
+				PluginManager.Instance.LoadPlugins(newPlugins);
 			}
 			else
 			{
@@ -112,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 		}
 
-
+		/*
 		private async void ButtonUpdate_OnClick(object sender, RoutedEventArgs e)
 		{
 			var plugin = ListBoxUpdates.SelectedItem as Plugin;
@@ -134,57 +154,72 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				GithubUnavailable($"Unable to update {plugin.Name}", plugin).Forget();
 			}
 		}
-
+		*/
 		
-		private void ButtonUninstall_OnClick(object sender, RoutedEventArgs e)
+		private async void ButtonUninstall_OnClick(object sender, RoutedEventArgs e)
 		{
 			var plugin = ListBoxPlugins.SelectedItem as PluginWrapper;
 			if(plugin == null)
 				return;
+			var ask = await Core.MainWindow.ShowMessageAsync($"Are you sure you want to remove {plugin.Name}?", "You may lose plugin settings.", MessageDialogStyle.AffirmativeAndNegative);
+			if(ask == MessageDialogResult.Negative)
+				return;
+
 			if(InstallUtils.UninstallPlugin(plugin))
 			{
 				Core.MainWindow.ShowMessageAsync($"Deleted {plugin.Name}", "The plugin will be removed upon next restart.").Forget();
 			}
 			else
 			{
-				var result = Core.MainWindow.ShowMessageAsync($"Unable to delete {plugin.Name}", "Open the plugins folder to manually delete?", MessageDialogStyle.AffirmativeAndNegative).Result;
+				var result = await Core.MainWindow.ShowMessageAsync($"Unable to delete {plugin.Name}", "Open the plugins folder to manually delete?", MessageDialogStyle.AffirmativeAndNegative);
 				if(result == MessageDialogResult.Negative)
 					return;
 				ButtonOpenPluginsFolder_OnClick(sender, e);
 			}
 		}
 
-		private async void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
-		{
-			var plugin = ListBoxAvailable.SelectedItem as Plugin;
-			if(plugin == null)
-				return;
-			if(InstallUtils.InstallRemote(plugin))
-			{
-				var result = await Core.MainWindow.ShowMessageAsync($"Successfully Installed {plugin.Name}.", "Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
-				if(result == MessageDialogResult.Affirmative)
-				{
-					Core.MainWindow.Restart();
-				}
-			}
-			else
-			{
-				GithubUnavailable($"Unable to install {plugin.Name}.", plugin).Forget();
-			}
-		}
-
 		private async Task GithubUnavailable(string messageText, Plugin plugin)
 		{
-			if(InstallUtils.RateLimitHit())
+			if(InstallUtils.RateLimitHit() > 0)
 			{
 				messageText = "You have hit GitHub's rate limit.";
 			}
 			var result = await Core.MainWindow.ShowMessageAsync("Unable to download plugin.",
-					$"{messageText}\nTry again later or manually drag-and-drop the plugin.\nGo to the manual download page now?", MessageDialogStyle.AffirmativeAndNegative);
+					$"{messageText}\nTry again in {InstallUtils.RateLimitHit()} seconds or manually drag-and-drop the plugin.\nGo to the manual download page now?", MessageDialogStyle.AffirmativeAndNegative);
 			if(result == MessageDialogResult.Negative || plugin == null)
 				return;
 			var releaseUrl = plugin.ReleaseUrl.Replace("api.", "").Replace("/repos", "");
 			Helper.TryOpenUrl(releaseUrl);
+		}
+
+		private void ListBoxPlugins_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			foreach (var p in ListBoxPlugins.Items)
+			{
+				var plugin = p as PluginWrapper;
+				if(plugin == null)
+					continue;
+				plugin.UpdateTextColor = p == ListBoxPlugins.SelectedItem ? "White" : "#FF47B1DF";
+			}
+		}
+
+		private async void UpdateLink_Click(object sender, RoutedEventArgs e)
+		{
+			
+			var pluginWrapper = (PluginWrapper)((Hyperlink) sender).DataContext;
+			if(string.IsNullOrEmpty(pluginWrapper?.Repourl))
+				return;
+			if(InstallUtils.UpdatePlugin(pluginWrapper.TempPlugin))
+			{
+				var result = await Core.MainWindow.ShowMessageAsync($"Successfully updated {pluginWrapper.Name}", "Would you like to restart now?", MessageDialogStyle.AffirmativeAndNegative);
+				if(result == MessageDialogResult.Negative)
+					return;
+				Core.MainWindow.Restart();
+			}
+			else
+			{
+				GithubUnavailable($"Unable to update {pluginWrapper.Name}", pluginWrapper.TempPlugin).Forget();
+			}
 		}
 	}
 }

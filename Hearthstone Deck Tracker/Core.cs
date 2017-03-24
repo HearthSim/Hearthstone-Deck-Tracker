@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker
 				Windows.TimerWindow.Show();
 
 			PluginManager.Instance.LoadPluginsFromDefaultPath();
-			MainWindow.Options.OptionsTrackerPlugins.Load();
+			MainWindow.Options.OptionsPluginsInstalled.Load();
 			PluginManager.Instance.StartUpdateAsync();
 
 			UpdateOverlayAsync();

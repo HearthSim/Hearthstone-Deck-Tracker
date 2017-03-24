@@ -1,17 +1,18 @@
 #region
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using MenuItem = System.Windows.Controls.MenuItem;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Plugins
 {
-	internal class PluginWrapper
+	internal class PluginWrapper : INotifyPropertyChanged
 	{
 		private int _exceptions;
 		private int _unhandledExceptions;
@@ -40,6 +41,35 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		public IPlugin Plugin { get; set; }
 		private MenuItem MenuItem { get; set; }
 		public IUpdatable Updatable { get; set; }
+		public Plugin TempPlugin { get; set; }
+
+		private string _updateHyperlink;
+		public string UpdateHyperlink
+		{
+			get { return _updateHyperlink; } 
+			set { _updateHyperlink = value; NotifyPropertyChanged("UpdateHyperlink"); }
+		}
+
+		private string _updateTextColor;
+		public string UpdateTextColor
+		{
+			get { return _updateTextColor; }
+			set { _updateTextColor = value; NotifyPropertyChanged("UpdateTextColor"); }
+		}
+
+		private string _updateTextDecorations;
+		public string UpdateTextDecorations
+		{
+			get { return _updateTextDecorations; }
+			set { _updateTextDecorations = value; NotifyPropertyChanged("UpdateTextDecorations"); }
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+		private void NotifyPropertyChanged(string propertyName)
+		{
+			var handler = PropertyChanged;
+			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 
 		public string Name => Plugin != null ? Plugin.Name : FileName;
 

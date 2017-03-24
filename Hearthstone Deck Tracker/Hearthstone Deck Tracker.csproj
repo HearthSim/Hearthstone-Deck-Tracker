@@ -385,6 +385,9 @@
     <Compile Include="Enums\TimeFrame.cs" />
     <Compile Include="Enums\YesNo.cs" />
     <Compile Include="Enums\Language.cs" />
+    <Compile Include="FlyoutControls\Options\Plugins\PluginsAvailable.xaml.cs">
+      <DependentUpon>PluginsAvailable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutControls\Warning.xaml.cs">
       <DependentUpon>Warning.xaml</DependentUpon>
     </Compile>
@@ -535,8 +538,8 @@
     <Compile Include="FlyoutControls\Options\Tracker\TrackerLogging.xaml.cs">
       <DependentUpon>TrackerLogging.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\Options\Tracker\TrackerPlugins.xaml.cs">
-      <DependentUpon>TrackerPlugins.xaml</DependentUpon>
+    <Compile Include="FlyoutControls\Options\Plugins\PluginsInstalled.xaml.cs">
+      <DependentUpon>PluginsInstalled.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\Tracker\TrackerBackups.xaml.cs">
       <DependentUpon>TrackerBackups.xaml</DependentUpon>
@@ -1025,7 +1028,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutControls\Options\Tracker\TrackerPlugins.xaml">
+    <Page Include="FlyoutControls\Options\Plugins\PluginsAvailable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FlyoutControls\Options\Plugins\PluginsInstalled.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
