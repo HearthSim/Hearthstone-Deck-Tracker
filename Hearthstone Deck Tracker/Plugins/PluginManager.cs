@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -24,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		private PluginManager()
 		{
-			Plugins = new List<PluginWrapper>();
+			Plugins = new ObservableCollection<PluginWrapper>();
 			try
 			{
 				if(!LocalPluginDirectory.Exists)
@@ -36,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			{
 				Log.Error(ex);
 			}
-			SyncPlugins(PluginDirectory, LocalPluginDirectory, LocalPluginDirectory);
+			SyncPlugins();
 			CreateNoticeFile();
 		}
 
@@ -74,29 +75,35 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
-		private void SyncPlugins(DirectoryInfo sourceDir, DirectoryInfo destDir, DirectoryInfo baseDir)
+		public IEnumerable<FileInfo> SyncPlugins() => SyncPlugins(PluginDirectory, LocalPluginDirectory, LocalPluginDirectory);
+
+		private IEnumerable<FileInfo> SyncPlugins(DirectoryInfo sourceDir, DirectoryInfo destDir, DirectoryInfo baseDir)
 		{
 			if(!sourceDir.Exists)
-				return;
+				yield break;
 			if(!destDir.Exists)
 				destDir.Create();
 			var sourceFiles = sourceDir.GetFiles();
 			var destFiles = destDir.GetFiles();
 			foreach(var file in sourceFiles)
 			{
+				var destFile = destFiles.FirstOrDefault(x => x.Name == file.Name);
+				if(destFile != null && destFile.LastWriteTimeUtc >= file.LastWriteTimeUtc)
+					continue;
+				var destPath = Path.Combine(destDir.FullName, file.Name);
+				Log.Info($"{(destFile == null ? "Adding" : "Updating")} {((destFile?.FullName) ?? Path.Combine(destDir.FullName, file.Name)).Substring(baseDir.FullName.Length + 1)}");
+				var success = false;
 				try
 				{
-					var destFile = destFiles.FirstOrDefault(x => x.Name == file.Name);
-					if(destFile != null && destFile.LastWriteTimeUtc >= file.LastWriteTimeUtc)
-						continue;
-					var destPath = Path.Combine(destDir.FullName, file.Name);
-					Log.Info($"{(destFile == null ? "Adding" : "Updating")} {((destFile?.FullName) ?? Path.Combine(destDir.FullName, file.Name)).Substring(baseDir.FullName.Length + 1)}");
 					File.Copy(file.FullName, destPath, true);
+					success = true;
 				}
 				catch(Exception ex)
 				{
 					Log.Error(ex);
 				}
+				if(success)
+					yield return new FileInfo(destPath);
 			}
 			foreach(var file in destFiles.Where(df => sourceFiles.All(sf => sf.Name != df.Name)))
 			{
@@ -128,21 +135,25 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 			foreach(var dir in sourceDir.GetDirectories())
 			{
+				var plugins = new List<FileInfo>();
 				try
 				{
-					SyncPlugins(dir, destDirs.FirstOrDefault(x => x.Name == dir.Name)
+					var synced = SyncPlugins(dir, destDirs.FirstOrDefault(x => x.Name == dir.Name)
 						?? new DirectoryInfo(Path.Combine(destDir.FullName, dir.Name)), baseDir);
+					plugins.AddRange(synced);
 				}
 				catch(Exception ex)
 				{
 					Log.Error(ex);
 				}
+				foreach(var plugin in plugins)
+					yield return plugin;
 			}
 		}
 
 		public static int MaxPluginExecutionTime => 2000;
 
-		public List<PluginWrapper> Plugins { get; }
+		public ObservableCollection<PluginWrapper> Plugins { get; }
 
 		public static PluginManager Instance => _instance ?? (_instance = new PluginManager());
 
@@ -150,36 +161,28 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public static int MaxExceptions => 100;
 
-		public void LoadPlugins() => LoadPlugins(DefaultPath, true);
+		public void LoadPluginsFromDefaultPath() => LoadPluginsFromPath(DefaultPath, true);
 
-		public void LoadPlugins(string pluginPath, bool checkSubDirs)
+		public void LoadPluginsFromPath(string pluginPath, bool checkSubDirs)
 		{
 			if(!Directory.Exists(pluginPath))
 				return;
 			if(Plugins.Any())
 				UnloadPlugins();
-			var dirInfo = new DirectoryInfo(pluginPath);
-
-			var files = dirInfo.GetFiles().Select(f => f.FullName).ToList();
-			if(checkSubDirs)
-			{
-				foreach(var dir in dirInfo.GetDirectories())
-					files.AddRange(dir.GetFiles().Select(f => f.FullName));
-			}
-
-			foreach(var file in files)
-			{
-				var fileInfo = new FileInfo(file);
-
-				if(fileInfo.Extension.Equals(".dll"))
-				{
-					var plugins = GetModule(file, typeof(IPlugin));
-					foreach(var p in plugins)
-						Plugins.Add(p);
-				}
-			}
+			var files = Helper.GetFileInfos(pluginPath, checkSubDirs);
 			Log.Info("Loading Plugins...");
+			LoadPlugins(files);
 			LoadPluginSettings();
+		}
+
+		public void LoadPlugins(IEnumerable<FileInfo> files)
+		{
+			foreach(var file in files.Where(f => f.Extension.Equals(".dll")))
+			{
+				var plugins = GetModule(file.FullName, typeof(IPlugin));
+				foreach(var p in plugins)
+					Plugins.Add(p);
+			}
 		}
 
 		private IEnumerable<PluginWrapper> GetModule(string pFileName, Type pTypeInterface)

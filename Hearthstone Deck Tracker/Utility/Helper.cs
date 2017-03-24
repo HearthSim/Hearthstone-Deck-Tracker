@@ -676,5 +676,17 @@ namespace Hearthstone_Deck_Tracker
 			{MultiClassGroup.JADE_LOTUS, new[] {CardClass.DRUID, CardClass.ROGUE, CardClass.SHAMAN}},
 			{MultiClassGroup.KABAL, new[] {CardClass.MAGE, CardClass.PRIEST, CardClass.WARLOCK}}
 		};
+
+		public static IEnumerable<FileInfo> GetFileInfos(string path, bool subDir)
+		{
+			var dirInfo = new DirectoryInfo(path);
+			foreach(var fileInfo in dirInfo.GetFiles())
+				yield return fileInfo;
+			if(!subDir)
+				yield break;
+			foreach(var dir in dirInfo.GetDirectories())
+			foreach(var fileInfo in dir.GetFiles())
+				yield return fileInfo;
+		}
 	}
 }
