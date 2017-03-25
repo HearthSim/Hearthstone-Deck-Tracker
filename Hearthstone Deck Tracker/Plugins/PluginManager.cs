@@ -75,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
-		public IEnumerable<FileInfo> SyncPlugins() => SyncPlugins(PluginDirectory, LocalPluginDirectory, LocalPluginDirectory);
+		public IEnumerable<FileInfo> SyncPlugins() => SyncPlugins(PluginDirectory, LocalPluginDirectory, LocalPluginDirectory).ToList();
 
 		private IEnumerable<FileInfo> SyncPlugins(DirectoryInfo sourceDir, DirectoryInfo destDir, DirectoryInfo baseDir)
 		{
@@ -190,11 +190,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			var plugins = new List<PluginWrapper>();
 			try
 			{
-
 				var assembly = Assembly.LoadFrom(pFileName);
 				// trigger the loading of embedded dependencies
 				TriggerAssembly(assembly);
-
 				foreach(var type in assembly.GetTypes())
 				{
 					try
