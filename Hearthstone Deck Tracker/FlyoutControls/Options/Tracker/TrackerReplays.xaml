@@ -46,10 +46,6 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
-            <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_LocalViewer}" Margin="5,5,0,0"
-                              IsChecked="{Binding ForceLocalReplayViewer, Source={StaticResource ConfigWrapper}}"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
         </StackPanel>
     </GroupBox>
 </UserControl>

@@ -7,7 +7,7 @@ using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.TimeZoneInfo;
 using static Hearthstone_Deck_Tracker.Enums.Region;
-using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants;
+using static Hearthstone_Deck_Tracker.LogReader.LogConstants;
 
 #endregion
 

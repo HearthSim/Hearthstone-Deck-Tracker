@@ -469,7 +469,7 @@
     <Compile Include="LogReader\Handlers\LoadingScreenHandler.cs" />
     <Compile Include="Enums\Hearthstone\Mode.cs" />
     <Compile Include="LogReader\Handlers\TagChangeActions.cs" />
-    <Compile Include="LogReader\LogReaderHelper.cs" />
+    <Compile Include="LogReader\GameTagHelper.cs" />
     <Compile Include="Stats\CompiledStats\ArenaRun.cs" />
     <Compile Include="Stats\CompiledStats\ChartStats.cs" />
     <Compile Include="Stats\CompiledStats\ClassStats.cs" />
@@ -576,22 +576,17 @@
     <Compile Include="LogReader\Handlers\ArenaHandler.cs" />
     <Compile Include="LogReader\Handlers\PowerHandler.cs" />
     <Compile Include="LogReader\HsGameState.cs" />
-    <Compile Include="LogReader\HsLogReaderConstants.cs" />
+    <Compile Include="LogReader\LogConstants.cs" />
     <Compile Include="LogReader\Handlers\RachelleHandler.cs" />
     <Compile Include="LogReader\Handlers\TagChangeHandler.cs" />
     <Compile Include="LogReader\Interfaces\IHsGameState.cs" />
     <Compile Include="LogReader\Interfaces\IHSLogReader.cs" />
-    <Compile Include="LogReader\LogLineItem.cs" />
-    <Compile Include="LogReader\LogReader.cs" />
-    <Compile Include="LogReader\LogReaderInfo.cs" />
-    <Compile Include="LogReader\LogReaderManager.cs" />
+    <Compile Include="LogReader\LogWatcherManager.cs" />
     <Compile Include="Plugins\IPlugin.cs" />
-    <Compile Include="Hearthstone\CardDb.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Plugins\PluginSettings.cs" />
     <Compile Include="Plugins\PluginWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Replay\TurnViewItem.cs" />
     <Compile Include="Stats\CompiledStats\ArenaStats.cs" />
     <Compile Include="Utility\ConfigWrapper.cs" />
     <Compile Include="Utility\ScreenCapture.cs" />
@@ -696,20 +691,7 @@
     <Compile Include="IGameHandler.cs" />
     <Compile Include="Hearthstone\Secrets\OpponentSecrets.cs" />
     <Compile Include="Hearthstone\Secrets\Secret.cs" />
-    <Compile Include="Replay\Controls\Arrow.cs" />
-    <Compile Include="Replay\Controls\BoardEntity.xaml.cs">
-      <DependentUpon>BoardEntity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Replay\Controls\CardEntity.xaml.cs">
-      <DependentUpon>CardEntity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Replay\Enums\KeyPointType.cs" />
-    <Compile Include="Replay\ReplayKeyPoint.cs" />
     <Compile Include="Replay\ReplayMaker.cs" />
-    <Compile Include="Replay\ReplayReader.cs" />
-    <Compile Include="Replay\ReplayViewer.xaml.cs">
-      <DependentUpon>ReplayViewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Stats\DeckStatsList.cs" />
     <Compile Include="Stats\DefaultDeckStats.cs" />
     <Compile Include="Enums\PlayType.cs" />
@@ -738,7 +720,6 @@
     </Compile>
     <Compile Include="Stats\DeckStats.cs" />
     <Compile Include="Stats\GameStats.cs" />
-    <Compile Include="Stats\TurnStats.cs" />
     <Compile Include="TurnTimer.cs" />
     <Compile Include="Utility\TextBoxTraceListener.cs" />
     <Compile Include="Windows\DebugWindow.xaml.cs">
@@ -1161,18 +1142,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Config.cs" />
-    <Page Include="Replay\Controls\BoardEntity.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Replay\Controls\CardEntity.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Replay\ReplayViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1326,10 +1295,6 @@
     <Resource Include="Resources\ClassIcons\Square\warlock.png" />
     <Resource Include="Resources\ClassIcons\Square\warrior.png" />
     <Resource Include="Resources\archived_marker.png" />
-    <Page Include="Resources\ReplayViewIcons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Resource Include="Resources\ClassIcons\Round\deathknight.png" />
     <Resource Include="Resources\ClassIcons\Round\druid.png" />
     <Resource Include="Resources\ClassIcons\Round\hunter.png" />
@@ -1438,25 +1403,25 @@
   git -C $(SolutionDir)HearthDb fetch
   git -C $(SolutionDir)HearthDb reset --hard origin/master
 ) else (
-  git clone https://github.com/HearthSim/HearthDb.git $(SolutionDir)HearthDb
+  git clone --depth 1 https://github.com/HearthSim/HearthDb.git $(SolutionDir)HearthDb
 )
 if exist $(SolutionDir)HearthMirror (
   git -C $(SolutionDir)HearthMirror fetch
   git -C $(SolutionDir)HearthMirror reset --hard origin/master
 ) else (
-  git clone https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror
+  git clone --depth 1 https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror
 )
 if exist $(SolutionDir)HSReplay-Api (
   git -C $(SolutionDir)HSReplay-Api fetch
   git -C $(SolutionDir)HSReplay-Api reset --hard origin/master
 ) else (
-  git clone https://github.com/HearthSim/HSReplay-API-Client.git $(SolutionDir)HSReplay-Api
+  git clone --depth 1 https://github.com/HearthSim/HSReplay-API-Client.git $(SolutionDir)HSReplay-Api
 )
 if exist $(SolutionDir)HDT-Localization (
   git -C $(SolutionDir)HDT-Localization fetch
   git -C $(SolutionDir)HDT-Localization reset --hard origin/master
 ) else (
-  git clone https://github.com/HearthSim/HDT-Localization.git $(SolutionDir)HDT-Localization
+  git clone --depth 1 https://github.com/HearthSim/HDT-Localization.git $(SolutionDir)HDT-Localization
 )
 xcopy /Y "$(SolutionDir)HDT-Localization\*.resx" "$(ProjectDir)Properties\"
 mkdir "$(TargetDir)\Images\Tiles"

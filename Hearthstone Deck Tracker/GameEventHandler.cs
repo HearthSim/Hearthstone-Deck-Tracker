@@ -139,7 +139,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(Config.Instance.RecordReplays && RecordCurrentGameMode && _game.Entities.Count > 0 && !_game.SavedReplay
 					&& _game.CurrentGameStats.ReplayFile == null)
-					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(powerLog);
+					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(_game.CurrentGameStats, powerLog);
 
 				if(Config.Instance.HsReplayAutoUpload && UploadCurrentGameMode)
 				{
@@ -512,7 +512,7 @@ namespace Hearthstone_Deck_Tracker
 				else
 					_game.CurrentGameStats.OpponentName = _game.CurrentGameStats.OpponentHero;
 
-				_game.CurrentGameStats.Turns = LogReaderManager.GetTurnNumber();
+				_game.CurrentGameStats.Turns = Core.GetTurnNumber();
 				if(Config.Instance.DiscardZeroTurnGame && _game.CurrentGameStats.Turns < 1)
 				{
 					Log.Info("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
@@ -580,7 +580,6 @@ namespace Hearthstone_Deck_Tracker
 							if(discardDialog.Result == DiscardGameDialogResult.Discard)
 							{
 								Log.Info("Assigned current game to NO deck - selected deck does not match cards played (dialogresult: discard)");
-								_game.CurrentGameStats.DeleteGameFile();
 								_assignedDeck = null;
 								return;
 							}
@@ -601,7 +600,6 @@ namespace Hearthstone_Deck_Tracker
 								else
 								{
 									Log.Info("No deck selected in move game dialog after discard dialog, discarding game");
-									_game.CurrentGameStats.DeleteGameFile();
 									_assignedDeck = null;
 									return;
 								}
@@ -610,7 +608,6 @@ namespace Hearthstone_Deck_Tracker
 						else
 						{
 							Log.Info("Assigned current game to NO deck - selected deck does not match cards played (no dialog)");
-							_game.CurrentGameStats.DeleteGameFile();
 							_assignedDeck = null;
 							return;
 						}
@@ -726,7 +723,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(_game.CurrentGameStats != null)
 				{
-					_game.CurrentGameStats.Turns = LogReaderManager.GetTurnNumber();
+					_game.CurrentGameStats.Turns = Core.GetTurnNumber();
 					if(Config.Instance.DiscardZeroTurnGame && _game.CurrentGameStats.Turns < 1)
 					{
 						Log.Info("Game has 0 turns, discarded. (DiscardZeroTurnGame)");

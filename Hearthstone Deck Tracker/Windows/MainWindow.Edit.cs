@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckPickerList.UpdateArchivedClassVisibility();
 		}
 
-		private async void DeleteDeck(Deck deck, bool saveAndUpdate = true)
+		private void DeleteDeck(Deck deck, bool saveAndUpdate = true)
 		{
 			if(deck == null)
 				return;
@@ -67,19 +67,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 						defaultDeck?.Games.AddRange(deckStats.Games);
 						DefaultDeckStats.Save();
 						Log.Info($"Moved deckstats for deck {deck.Name} to default stats");
-					}
-					else
-					{
-						try
-						{
-							foreach(var game in deckStats.Games)
-								game.DeleteGameFile();
-							Log.Info("Deleted games from deck: " + deck.Name);
-						}
-						catch(Exception ex)
-						{
-							Log.Error("Error deleting games " + ex);
-						}
 					}
 				}
 				DeckStatsList.Instance.DeckStats.TryRemove(deckStats.DeckId, out deckStats);

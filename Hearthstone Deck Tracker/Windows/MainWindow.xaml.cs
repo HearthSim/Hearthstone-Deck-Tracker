@@ -361,8 +361,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 					await Task.Delay(50);
 				}
 
-				ReplayReader.CloseViewers();
-
 				Config.Instance.SelectedTags = Config.Instance.SelectedTags.Distinct().ToList();
 				//Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
 				Config.Instance.SelectedDeckPickerClasses = DeckPickerList.SelectedClasses.ToArray();
@@ -394,7 +392,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				Core.TrayIcon.NotifyIcon.Visible = false;
 				Core.Overlay.Close();
-				await LogReaderManager.Stop(true);
+				await Core.StopLogWacher();
 				Core.Windows.TimerWindow.Shutdown();
 				Core.Windows.PlayerWindow.Shutdown();
 				Core.Windows.OpponentWindow.Shutdown();

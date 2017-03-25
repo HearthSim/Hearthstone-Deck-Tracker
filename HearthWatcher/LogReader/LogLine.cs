@@ -5,11 +5,11 @@ using System.Text.RegularExpressions;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.LogReader
+namespace HearthWatcher.LogReader
 {
-	public class LogLineItem
+	public class LogLine
 	{
-		public LogLineItem(string ns, string line)
+		public LogLine(string ns, string line)
 		{
 			Namespace = ns;
 			Line = line;
@@ -24,11 +24,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 					Time = DateTime.Today.Add(time.TimeOfDay);
 					if(Time > DateTime.Now)
 						Time = Time.AddDays(-1);
-
 				}
 				LineContent = match.Groups["line"].Value;
 			}
-			
 		}
 
 		public string Namespace { get; set; }

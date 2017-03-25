@@ -8,7 +8,7 @@ using static HearthDb.Enums.GameTag;
 
 namespace Hearthstone_Deck_Tracker.LogReader
 {
-	public class LogReaderHelper
+	public class GameTagHelper
 	{
 		public static int ParseTag(GameTag tag, string rawValue)
 		{

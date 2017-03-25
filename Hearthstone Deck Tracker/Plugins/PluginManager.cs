@@ -203,12 +203,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 						if(typeInterface == null)
 							continue;
 						var instance = Activator.CreateInstance(type) as IPlugin;
-						var updatable = Activator.CreateInstance(type) as IUpdatable;
-						if(updatable != null)
-						{
-							plugins.Add(new PluginWrapper(pFileName, instance, updatable));
-						}
-						else if(instance != null)
+						if(instance != null)
 							plugins.Add(new PluginWrapper(pFileName, instance));
 					}
 					catch(Exception ex)

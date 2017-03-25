@@ -96,7 +96,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 				{
 					if(deck.DeckStats.Games.Contains(game))
 					{
-						game.DeleteGameFile();
 						deck.DeckStats.Games.Remove(game);
 						Log.Info($"Deleted game {game} from {deck}.");
 						saveDeckStats = true;
@@ -107,7 +106,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 					var deckstats = DefaultDeckStats.Instance.DeckStats.FirstOrDefault(ds => ds.Games.Contains(game));
 					if(deckstats != null)
 					{
-						game.DeleteGameFile();
 						deckstats.Games.Remove(game);
 						Log.Info($"Deleted game {game} from default deck.");
 						saveDefaultDeckStats = true;

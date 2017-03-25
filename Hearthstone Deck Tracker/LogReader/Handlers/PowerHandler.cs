@@ -11,7 +11,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
-using static Hearthstone_Deck_Tracker.LogReader.HsLogReaderConstants.PowerTaskList;
+using static Hearthstone_Deck_Tracker.LogReader.LogConstants.PowerTaskList;
 
 #endregion
 
@@ -86,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						}
 						GameTag tag;
 						Enum.TryParse(match.Groups["tag"].Value, out tag);
-						var value = LogReaderHelper.ParseTag(tag, match.Groups["value"].Value);
+						var value = GameTagHelper.ParseTag(tag, match.Groups["value"].Value);
 						if(unnamedPlayers.Count == 1)
 							entity = unnamedPlayers.Single();
 						else if(unnamedPlayers.Count == 2 && tag == GameTag.CURRENT_PLAYER && value == 0)
@@ -126,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var match = CreationRegex.Match(logLine);
 				var id = int.Parse(match.Groups["id"].Value);
 				var cardId = match.Groups["cardId"].Value;
-				var zone = LogReaderHelper.ParseEnum<Zone>(match.Groups["zone"].Value);
+				var zone = GameTagHelper.ParseEnum<Zone>(match.Groups["zone"].Value);
 				if(!game.Entities.ContainsKey(id))
 				{
 					if(string.IsNullOrEmpty(cardId) && zone != Zone.SETASIDE)

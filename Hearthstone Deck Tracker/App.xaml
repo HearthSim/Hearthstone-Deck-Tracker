@@ -22,7 +22,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-                <ResourceDictionary Source="Resources/ReplayViewIcons.xaml"/>
                 <ResourceDictionary Source="Resources/Icons.xaml"/>
                 <ResourceDictionary>
                     <utility:ConfigWrapper x:Key="ConfigWrapper"/>

@@ -6,6 +6,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
+using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay.Utility;
 using Hearthstone_Deck_Tracker.Replay;
@@ -25,11 +26,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			if(game == null)
 				return false;
-			if(Config.Instance.ForceLocalReplayViewer)
-			{
-				ReplayReader.LaunchReplayViewer(game.ReplayFile, false);
-				return true;
-			}
 			Action<ReplayProgress> setToastStatus = null;
 			if(game.HasReplayFile && !game.HsReplay.Uploaded)
 			{
@@ -54,14 +50,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				setToastStatus?.Invoke(ReplayProgress.Complete);
 				Helper.TryOpenUrl(game.HsReplay?.Url);
 			}
-			else if(game.HasReplayFile)
-			{
-				setToastStatus?.Invoke(ReplayProgress.Error);
-				ReplayReader.LaunchReplayViewer(game.ReplayFile, true);
-			}
 			else
 			{
 				setToastStatus?.Invoke(ReplayProgress.Error);
+				if(game.HsReplay?.Unsupported ?? false) 
+					ErrorManager.AddError("Can not load replay", "Game has no valid replay.");
+				else 
+					ErrorManager.AddError("Error uploading replay", "Please try again later.");
 				return false;
 			}
 			return true;
@@ -88,11 +83,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static async Task ShowReplay(string fileName, bool showToast)
 		{
-			if(Config.Instance.ForceLocalReplayViewer)
-			{
-				ReplayReader.LaunchReplayViewer(fileName, false);
-				return;
-			}
 			Action<ReplayProgress> setToastStatus = null;
 			var log = GetLogFromHdtReplay(fileName).ToArray();
 			var validationResult = LogValidator.Validate(log);
@@ -107,16 +97,21 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				var gameStats = hsBuild != null ? new GameStats() {StartTime = file.LastWriteTime} : null;
 				var success = await LogUploader.Upload(log.ToArray(), metaData, gameStats);
 				if(success)
+				{
 					Helper.TryOpenUrl(gameStats?.HsReplay?.Url);
+					setToastStatus?.Invoke(ReplayProgress.Complete);
+				}
 				else
-					ReplayReader.LaunchReplayViewer(fileName, true);
+				{
+					ErrorManager.AddError("Error uploading replay", "Please try again later.");
+					setToastStatus?.Invoke(ReplayProgress.Error);
+				}
 			}
 			else
 			{
 				Log.Error("Invalid log: " + validationResult.Reason);
-				ReplayReader.LaunchReplayViewer(fileName, true);
+				ErrorManager.AddError("Can not load replay", $"{fileName} does not contain a valid replay.");
 			}
-			setToastStatus?.Invoke(ReplayProgress.Complete);
 		}
 	}
 }

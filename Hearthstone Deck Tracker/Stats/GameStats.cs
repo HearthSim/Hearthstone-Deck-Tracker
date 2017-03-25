@@ -517,41 +517,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeBrawlWins() => BrawlWins > 0;
 		public bool ShouldSerializeBrawlLosses() => BrawlLosses > 0;
 
-		#region Obsolete
-
-		private string GameFile => Config.Instance.DataDir + $@"Games\Game_{GameId}.xml";
-
-		internal List<TurnStats> LoadTurnStats()
-		{
-			if(GameId == Guid.Empty || !File.Exists(GameFile))
-				return new List<TurnStats>();
-			try
-			{
-				return XmlManager<List<TurnStats>>.Load(GameFile);
-			}
-			catch(Exception ex)
-			{
-				Log.Error($"Error loading file: {GameFile}/n{ex}");
-			}
-			return new List<TurnStats>();
-		}
-
-		internal void DeleteGameFile()
-		{
-			try
-			{
-				LastGames.Instance.Remove(GameId);
-				if(!File.Exists(GameFile))
-					return;
-				File.Delete(GameFile);
-				Log.Info("Deleted gamefile: " + GameFile);
-			}
-			catch(Exception ex)
-			{
-				Log.Error($"Error deleting gamefile: {GameFile}/n{ex}");
-			}
-		}
-		#endregion
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

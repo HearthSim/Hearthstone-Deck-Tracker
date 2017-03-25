@@ -86,7 +86,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 				return;
 			if(run.Deck.DeckStats.Games.Contains(SelectedGame))
 			{
-				SelectedGame.DeleteGameFile();
 				run.Deck.DeckStats.Games.Remove(SelectedGame);
 				Log.Info("Deleted game " + SelectedGame);
 			}
