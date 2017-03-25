@@ -1,3 +1,19 @@
+## __Release vNext__
+
+__New__:
+- Added Ukranian translation.
+
+__Changes__:
+- Secret helper now only displays standard secrets in arena.
+- The local replay system has now been fully removed.
+
+__Fixes__:
+- Fixes an issue where region detection would not work in some cases
+  - This also fixes some issues with gold progress tracking since it relies on regions.
+- Fixed an issue that prevented disabling no-deck mode.
+- Fixed an issue where importing decks from meta tags would not properly decode values.
+
+
 ## __Release v1.1.7 - 2017-03-01__
 
 __Updated for 7.1.0.17720__
