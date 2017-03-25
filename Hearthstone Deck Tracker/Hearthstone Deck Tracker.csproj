@@ -1395,25 +1395,25 @@
   git -C $(SolutionDir)HearthDb fetch
   git -C $(SolutionDir)HearthDb reset --hard origin/master
 ) else (
-  git clone https://github.com/HearthSim/HearthDb.git $(SolutionDir)HearthDb
+  git clone --depth 1 https://github.com/HearthSim/HearthDb.git $(SolutionDir)HearthDb
 )
 if exist $(SolutionDir)HearthMirror (
   git -C $(SolutionDir)HearthMirror fetch
   git -C $(SolutionDir)HearthMirror reset --hard origin/master
 ) else (
-  git clone https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror
+  git clone --depth 1 https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror
 )
 if exist $(SolutionDir)HSReplay-Api (
   git -C $(SolutionDir)HSReplay-Api fetch
   git -C $(SolutionDir)HSReplay-Api reset --hard origin/master
 ) else (
-  git clone https://github.com/HearthSim/HSReplay-API-Client.git $(SolutionDir)HSReplay-Api
+  git clone --depth 1 https://github.com/HearthSim/HSReplay-API-Client.git $(SolutionDir)HSReplay-Api
 )
 if exist $(SolutionDir)HDT-Localization (
   git -C $(SolutionDir)HDT-Localization fetch
   git -C $(SolutionDir)HDT-Localization reset --hard origin/master
 ) else (
-  git clone https://github.com/HearthSim/HDT-Localization.git $(SolutionDir)HDT-Localization
+  git clone --depth 1 https://github.com/HearthSim/HDT-Localization.git $(SolutionDir)HDT-Localization
 )
 xcopy /Y "$(SolutionDir)HDT-Localization\*.resx" "$(ProjectDir)Properties\"
 mkdir "$(TargetDir)\Images\Tiles"
