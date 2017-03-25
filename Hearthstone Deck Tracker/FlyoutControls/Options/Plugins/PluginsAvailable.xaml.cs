@@ -78,5 +78,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			var releaseUrl = plugin.ReleaseUrl.Replace("api.", "").Replace("/repos", "");
 			Helper.TryOpenUrl(releaseUrl);
 		}
+
+		private void ButtonDetails_OnClick(object sender, RoutedEventArgs e)
+		{
+			var Url =
+				((Plugin) ListBoxAvailable.SelectedItem).ReleaseUrl.Replace("api.", "").Replace("repos/", "").Replace(
+					"/releases/latest", "") + "#readme";
+			Helper.TryOpenUrl(Url);
+		}
 	}
 }

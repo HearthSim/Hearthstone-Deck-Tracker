@@ -30,15 +30,23 @@
                           Header="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Name}"
                           Margin="0,10,0,0">
                     <DockPanel>
+                        <Grid DockPanel.Dock="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Name="ButtonDownload" Content="Install" Grid.Column="1"
+                                DockPanel.Dock="Bottom" Click="ButtonInstall_OnClick" Margin="2" />
+                            <Button Name="ButtonDetails" Content="Details" Grid.Column="0"
+                                DockPanel.Dock="Bottom" Click="ButtonDetails_OnClick" Margin="2" />
+                        </Grid>
                         <Separator DockPanel.Dock="Top" Margin="0,0,0,5" />
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
                             <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
                             <TextBlock Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Author}"
                                        TextWrapping="Wrap" Margin="2,0,0,0" />
                         </StackPanel>
-                        <Button Name="ButtonDownload"
-                                Content="Install"
-                                DockPanel.Dock="Bottom" Click="ButtonInstall_OnClick" Margin="0,2" />
+                        
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <TextBlock
                                        Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Description}"

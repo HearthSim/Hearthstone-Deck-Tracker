@@ -39,16 +39,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 					
 					var plugin = item as PluginWrapper;
 					var update = InstallUtils.GetUpdate(plugin);
-
-					
-
 					if(update == null || plugin == null)
 						 continue;
 					plugin.TempPlugin = update.Plugin;
 
 					if(!update.IsUpdatable)
 					{
-						plugin.UpdateHyperlink = "Unavailable";
+						plugin.UpdateHyperlink = "";
 						plugin.UpdateTextDecorations = "None";
 					}
 					if(update.IsUpdatable && update.IsUpToDate)
@@ -65,7 +62,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			} 
 			catch(Exception ex)
 			{
-				
 				Log.Error(ex);
 			}
 		}
