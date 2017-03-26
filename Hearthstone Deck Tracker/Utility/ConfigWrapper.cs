@@ -356,6 +356,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public bool CheckForDevUpdates
+		{
+			get { return Config.Instance.CheckForDevUpdates; }
+			set
+			{
+				Config.Instance.CheckForDevUpdates = value;
+				Config.Save();
+			}
+		}
+
 		private static int? ValidateSeason(string value, bool allowEmpty)
 		{
 			if(allowEmpty && string.IsNullOrEmpty(value))

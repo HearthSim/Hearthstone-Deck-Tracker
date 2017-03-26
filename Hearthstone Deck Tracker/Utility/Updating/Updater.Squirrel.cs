@@ -30,13 +30,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			_lastUpdateCheck = DateTime.Now;
 			try
 			{
-				using(var mgr = await GetUpdateManager())
+				bool updated;
+				using(var mgr = await GetUpdateManager(false))
+					updated = await SquirrelUpdate(mgr, null);
+
+				if(!updated && Config.Instance.CheckForDevUpdates)
 				{
-					if(await SquirrelUpdate(mgr, null))
-					{
-						_updateCheckDelay = new TimeSpan(1, 0, 0);
-						StatusBar.Visibility = Visibility.Visible;
-					}
+					using(var mgr = await GetUpdateManager(true))
+						updated = await SquirrelUpdate(mgr, null);
+				}
+
+				if(updated)
+				{
+					_updateCheckDelay = new TimeSpan(1, 0, 0);
+					StatusBar.Visibility = Visibility.Visible;
 				}
 			}
 			catch(Exception ex)
@@ -68,19 +75,22 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			return _releaseUrl;
 		}
 
-		private static async Task<UpdateManager> GetUpdateManager()
+		private static async Task<UpdateManager> GetUpdateManager(bool dev)
 		{
+			if(dev)
+				return await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("dev"));
 			if(_useChinaMirror)
 				return new UpdateManager(await GetReleaseUrl("live-china"));
 			return await UpdateManager.GitHubUpdateManager(await GetReleaseUrl("live"), prerelease: Config.Instance.CheckForBetaUpdates);
 		}
+
 		public static async Task StartupUpdateCheck(SplashScreenWindow splashScreenWindow)
 		{
 			try
 			{
 				Log.Info("Checking for updates");
 				bool updated;
-				using(var mgr = await GetUpdateManager())
+				using(var mgr = await GetUpdateManager(false))
 				{
 					RegistryHelper.SetExecutablePath(Path.Combine(mgr.RootAppDirectory, "Update.exe"));
 					RegistryHelper.SetExecutableArgs("--processStart \"HearthstoneDeckTracker.exe\"");
@@ -107,6 +117,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						);
 					updated = await SquirrelUpdate(mgr, splashScreenWindow);
 				}
+
+				if(!updated && Config.Instance.CheckForDevUpdates)
+				{
+					using(var mgr = await GetUpdateManager(true))
+						updated = await SquirrelUpdate(mgr, null);
+				}
+
 				if(updated)
 				{
 					if(splashScreenWindow.SkipUpdate)

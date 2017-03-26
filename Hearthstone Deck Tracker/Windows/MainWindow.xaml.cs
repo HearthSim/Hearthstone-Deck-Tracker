@@ -286,6 +286,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 #if(DEBUG)
 			Title += " [DEBUG]";
 #endif
+#if(DEV)
+			StatusBarDev.Visibility = Visible;
+#endif
 			Config.Instance.OnConfigWarning += warning =>
 			{
 				WarningFlyout.SetConfigWarning(warning);
@@ -640,5 +643,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client");
+
+		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/CBnAFhX");
 	}
 }

@@ -147,6 +147,21 @@
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
     <DockPanel>
+        <StatusBar Name="StatusBarDev" DockPanel.Dock="Bottom" Visibility="Collapsed">
+            <StatusBarItem Margin="2,0,0,0">
+                <TextBlock FontSize="14">
+                    <Run FontWeight="SemiBold" Text="Development build (unstable) - join"/>
+                    <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkDevDiscord_OnClick">
+                        <Run Text="#hdt on the dev discord"/>
+                    </Hyperlink>
+                    <Run FontWeight="SemiBold" Text="for feedback/issues"/>
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <CheckBox Foreground="White" Content="check for dev updates" FlowDirection="RightToLeft" 
+                    IsChecked="{Binding CheckForDevUpdates, Source={StaticResource ConfigWrapper}}" />
+            </StatusBarItem>
+        </StatusBar>
         <StatusBar Name="StatusBarUpdate" DockPanel.Dock="Top" Margin="0,1,0,0" Visibility="{Binding Visibility, Source={x:Static utility:Updater.StatusBar}}">
             <StatusBarItem Margin="10,0,0,0" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
