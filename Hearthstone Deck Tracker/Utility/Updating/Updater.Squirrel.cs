@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 	{
 
 		private static bool _useChinaMirror = CultureInfo.CurrentCulture.Name == "zh-CN";
-		private static string _releaseUrl;
+		private static ReleaseUrls _releaseUrls;
 		private static TimeSpan _updateCheckDelay = new TimeSpan(0, 20, 0);
 		private static bool ShouldCheckForUpdates()
 			=> Config.Instance.CheckForUpdates && DateTime.Now - _lastUpdateCheck >= _updateCheckDelay;
@@ -54,8 +54,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 		private static async Task<string> GetReleaseUrl(string release)
 		{
-			if(!string.IsNullOrEmpty(_releaseUrl))
-				return _releaseUrl;
+			if(_releaseUrls != null)
+				return _releaseUrls.GetReleaseUrl(release);
 			var file = Path.Combine(Config.AppDataPath, "releases.json");
 			string fileContent;
 			try
@@ -70,9 +70,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 			using(var sr = new StreamReader(file))
 				fileContent = sr.ReadToEnd();
-			_releaseUrl = JsonConvert.DeserializeObject<ReleaseUrls>(fileContent).GetReleaseUrl(release);
-			Log.Info($"using '{release}' release: {_releaseUrl}");
-			return _releaseUrl;
+			_releaseUrls = JsonConvert.DeserializeObject<ReleaseUrls>(fileContent);
+			var url = _releaseUrls.GetReleaseUrl(release);
+			Log.Info($"using '{release}' release: {url}");
+			return url;
 		}
 
 		private static async Task<UpdateManager> GetUpdateManager(bool dev)
