@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -15,8 +14,12 @@ using Newtonsoft.Json.Linq;
 
 namespace Hearthstone_Deck_Tracker.Plugins
 {
-	static class InstallUtils
+	class InstallUtils
 	{
+		private static InstallUtils _instance;
+		public static InstallUtils Instance => _instance ?? (_instance = new InstallUtils());
+
+		public List<Plugin> Plugins;
 
 		private static string GetAuthor(string releaseData) => JObject.Parse(releaseData)["author"]["login"].ToString();
 
@@ -39,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
-		public static List<Plugin> GetPlugins(ObservableCollection<PluginWrapper> plugins)
+		public static List<Plugin> GetPlugins(IEnumerable<PluginWrapper> plugins)
 		{
 			//Create list of repo URLS to compare to.
 			var repos = plugins.Select(p => ReleaseUrl(p?.Repourl)).ToList();
@@ -60,7 +63,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 						Author = jToken["author"].ToString(),
 						Description = jToken["description"].ToString(),
 						Name = jToken["title"].ToString(),
-						ReleaseUrl = releaseUrl
+						ReleaseUrl = releaseUrl,
+						Binary = jToken["binary"].ToString()
 					};
 					pluginList.Add(plugin);
 				}
@@ -71,27 +75,40 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		public static Update GetUpdate(PluginWrapper pluginItem)
 		{
 			var update = new Update();
-			if(string.IsNullOrEmpty(pluginItem?.Repourl))
+			try
 			{
-				if(pluginItem != null) Log.Info($"{pluginItem.Name} cannot be checked for updates. Invalid repo url.");
-				update.IsUpdatable = false;
-				return update;
-			}
-			update.IsUpdatable = true;
-			using (var wc = new WebClient { Headers = { ["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim" } })
-			{
-				var release = ReleaseUrl(pluginItem.Repourl);
-				var releaseData = wc.DownloadString(release);
-				var latestVersion = Version.Parse(GetVersion(releaseData));
-				if(pluginItem.Plugin.Version >= latestVersion)
-					update.IsUpToDate = true;
-				update.Plugin = new Plugin
+				var pluginBinary = Path.GetFileName(pluginItem.RelativeFilePath)?.Replace("%20", " ");
+				var inTthis = Instance.Plugins.First(x => x.Binary == pluginBinary);
+				if(inTthis == null)
+					return update;
+				pluginItem.Repourl = inTthis.ReleaseUrl;
+				if(string.IsNullOrEmpty(pluginItem.Repourl))
 				{
-					Author = GetAuthor(releaseData),
-					Description = GetBody(releaseData),
-					Name = $"{pluginItem.Name} {latestVersion}",
-					ReleaseUrl = release
-				};
+					Log.Info($"{pluginItem.Name} cannot be checked for updates. Invalid repo url {pluginItem.Repourl}.");
+					update.IsUpdatable = false;
+					return update;
+				}
+				update.IsUpdatable = true;
+				update.IsUpToDate = true;
+				using(var wc = new WebClient { Headers = { ["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim" } })
+				{
+					var release = pluginItem.Repourl;
+					var releaseData = wc.DownloadString(release);
+					var latestVersion = Version.Parse(GetVersion(releaseData));
+					update.IsUpToDate = pluginItem.Plugin.Version >= latestVersion;
+					update.Plugin = new Plugin
+					{
+						Author = GetAuthor(releaseData),
+						Description = GetBody(releaseData),
+						Name = $"{pluginItem.Name} {latestVersion}",
+						ReleaseUrl = release
+					};
+				}
+			}
+			catch (Exception ex)
+			{
+				
+				Log.Error(ex);
 			}
 			return update;
 		}
@@ -235,6 +252,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		public string Author { get; set; }
 		public string Description { get; set; }
 		public string ReleaseUrl { get; set; }
+		public string Binary { get; set; }
 	}
 
 	public class Update

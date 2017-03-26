@@ -30,17 +30,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			Plugin = plugin;
 		}
 
-		public PluginWrapper(string fileName, IPlugin plugin, IUpdatable updatable)
-		{
-			FileName = fileName;
-			Plugin = plugin;
-			Updatable = updatable;
-		}
-
 		public string FileName { get; set; }
 		public IPlugin Plugin { get; set; }
 		private MenuItem MenuItem { get; set; }
-		public IUpdatable Updatable { get; set; }
 		public Plugin TempPlugin { get; set; }
 
 		private string _updateHyperlink;
@@ -64,6 +56,13 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			set { _updateTextDecorations = value; NotifyPropertyChanged("UpdateTextDecorations"); }
 		}
 
+		private string _updateTextEnabled;
+		public string UpdateTextEnabled
+		{
+			get { return _updateTextEnabled; }
+			set { _updateTextEnabled = value; NotifyPropertyChanged("UpdateTextEnabled"); }
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 		private void NotifyPropertyChanged(string propertyName)
 		{
@@ -77,7 +76,8 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public string RelativeFilePath => new Uri(AppDomain.CurrentDomain.BaseDirectory).MakeRelativeUri(new Uri(FileName)).ToString();
 
-		public string Repourl => Updatable != null ? Updatable.Repourl : "";
+		public string Repourl { get; set; }
+		//public string Repourl => Updatable != null ? Updatable.Repourl : "";
 
 		public bool RepoAvailable => !string.IsNullOrEmpty(Repourl);
 

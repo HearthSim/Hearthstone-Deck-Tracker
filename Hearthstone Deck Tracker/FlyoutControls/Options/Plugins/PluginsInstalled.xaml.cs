@@ -2,9 +2,9 @@
 
 using System;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -47,16 +47,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 					{
 						plugin.UpdateHyperlink = "";
 						plugin.UpdateTextDecorations = "None";
+						plugin.UpdateTextEnabled = "False";
 					}
 					if(update.IsUpdatable && update.IsUpToDate)
 					{
 						plugin.UpdateHyperlink = "Up to date ✔️";
 						plugin.UpdateTextDecorations = "None";
+						plugin.UpdateTextEnabled = "False";
 					}
 					if(update.IsUpdatable && !update.IsUpToDate)
 					{
 						plugin.UpdateHyperlink = "Update available";
 						plugin.UpdateTextDecorations = "Underline";
+						plugin.UpdateTextEnabled = "True";
 					}
 				}
 			} 
@@ -127,30 +130,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 				}
 			}
 		}
-
-		/*
-		private async void ButtonUpdate_OnClick(object sender, RoutedEventArgs e)
-		{
-			var plugin = ListBoxUpdates.SelectedItem as Plugin;
-			if(plugin == null)
-			{
-				Log.Error("Update pressed without a plugin selected.");
-				return;
-			}
-			if(InstallUtils.UpdatePlugin(plugin))
-			{
-				var result = await Core.MainWindow.ShowMessageAsync($"Successfully updated {plugin.Name}.", "Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
-				if(result == MessageDialogResult.Affirmative)
-				{
-					Core.MainWindow.Restart();
-				}
-			}
-			else
-			{
-				GithubUnavailable($"Unable to update {plugin.Name}", plugin).Forget();
-			}
-		}
-		*/
 		
 		private async void ButtonUninstall_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -201,12 +180,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 		private async void UpdateLink_Click(object sender, RoutedEventArgs e)
 		{
-			
 			var pluginWrapper = (PluginWrapper)((Hyperlink) sender).DataContext;
-			if(string.IsNullOrEmpty(pluginWrapper?.Repourl))
+
+			pluginWrapper.IsEnabled = false;
+			pluginWrapper.UpdateHyperlink = "Updating...";
+
+			Mouse.OverrideCursor = Cursors.Wait;
+
+			if (string.IsNullOrEmpty(pluginWrapper.Repourl))
 				return;
 			if(InstallUtils.UpdatePlugin(pluginWrapper.TempPlugin))
 			{
+				Mouse.OverrideCursor = null;
+				pluginWrapper.UpdateHyperlink = "Update installed";
 				var result = await Core.MainWindow.ShowMessageAsync($"Successfully updated {pluginWrapper.Name}", "Would you like to restart now?", MessageDialogStyle.AffirmativeAndNegative);
 				if(result == MessageDialogResult.Negative)
 					return;
@@ -214,6 +200,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			}
 			else
 			{
+				Mouse.OverrideCursor = null;
+				pluginWrapper.UpdateHyperlink = "Update failed";
 				GithubUnavailable($"Unable to update {pluginWrapper.Name}", pluginWrapper.TempPlugin).Forget();
 			}
 		}

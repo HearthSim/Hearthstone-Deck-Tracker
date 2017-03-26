@@ -65,12 +65,4 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		/// </summary>
 		void OnUpdate();
 	}
-
-	public interface IUpdatable
-	{
-		/// <summary>
-		/// The URL to the github repo. Used for auto-updates. Return null or empty to not check for updates.
-		/// </summary>
-		string Repourl { get; }
-	}
 }

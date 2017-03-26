@@ -1,8 +1,11 @@
 ﻿#region
 
 using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -27,11 +30,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 		private void GroupBox_Loaded(object sender, RoutedEventArgs e)
 		{
+			var dir = PluginManager.PluginDirectory;
 			if(_loaded)
 				return;
 			try
 			{
-				ListBoxAvailable.ItemsSource = InstallUtils.GetPlugins(PluginManager.Instance.Plugins);
+				_loaded = true;
+				var plugins = InstallUtils.GetPlugins(PluginManager.Instance.Plugins);
+				InstallUtils.Instance.Plugins = plugins;
+				var availablePlugins = plugins.Where(p => Directory.GetFiles(dir.FullName, p.Binary, SearchOption.AllDirectories).FirstOrDefault() == null).ToList();
+				ListBoxAvailable.ItemsSource = availablePlugins;
+				
 				_loaded = true;
 			}
 			catch(Exception ex)
@@ -40,16 +49,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			}
 		}
 
-		/*
-		private void ButtonReadme_OnClick(object sender, RoutedEventArgs e)
-		{
-			var releases = (ListBoxPlugins.SelectedItem as PluginWrapper)?.Repourl + "#readme";
-			Helper.TryOpenUrl(releases);
-		}
-		*/
-
 		private void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
 		{
+			//Localization: should use key SplashScreen_Text_Installing
+			ButtonDownload.Content = "INSTALLING...";
+			ButtonDownload.IsEnabled = false;
+
+			//Make cursor look busy
+			Mouse.OverrideCursor = Cursors.Wait;
+
 			var plugin = ListBoxAvailable.SelectedItem as Plugin;
 			if(plugin == null)
 				return;
@@ -58,10 +66,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 				var newPlugins = PluginManager.Instance.SyncPlugins();
 				PluginManager.Instance.LoadPlugins(newPlugins);
 				Core.MainWindow.ShowMessage($"Successfully installed {plugin.Name}", "").Forget();
+				ButtonDownload.IsEnabled = true;
+				ButtonDownload.Content = "INSTALL";
+				Mouse.OverrideCursor = null;
 			}
 			else
 			{
 				GithubUnavailable($"Unable to install {plugin.Name}.", plugin).Forget();
+				ButtonDownload.IsEnabled = true;
+				ButtonDownload.Content = "INSTALL";
+				Mouse.OverrideCursor = null;
 			}
 		}
 
@@ -81,10 +95,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 		private void ButtonDetails_OnClick(object sender, RoutedEventArgs e)
 		{
-			var Url =
+			var url =
 				((Plugin) ListBoxAvailable.SelectedItem).ReleaseUrl.Replace("api.", "").Replace("repos/", "").Replace(
 					"/releases/latest", "") + "#readme";
-			Helper.TryOpenUrl(Url);
+			Helper.TryOpenUrl(url);
 		}
 	}
 }

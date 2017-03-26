@@ -22,7 +22,8 @@
                                 <DataTemplate>
                                     <DockPanel>
                                         <TextBlock Name="UpdateText" DockPanel.Dock="Right" Margin="0,0,5,0">
-                                            <Hyperlink DataContext="{Binding}" Name="updateLink" Foreground="{Binding Path=UpdateTextColor}" Click="UpdateLink_Click" TextDecorations="{Binding Path=UpdateTextDecorations}">
+                                            <Hyperlink DataContext="{Binding}" Name="updateLink" Foreground="{Binding Path=UpdateTextColor}" Click="UpdateLink_Click"
+                                                 TextDecorations="{Binding Path=UpdateTextDecorations}" IsEnabled="{Binding Path=UpdateTextEnabled}">
                                                 <TextBlock Text="{Binding Path=UpdateHyperlink}" DockPanel.Dock="Right" Margin="0,0,0,0" />
                                             </Hyperlink>
                                         </TextBlock>

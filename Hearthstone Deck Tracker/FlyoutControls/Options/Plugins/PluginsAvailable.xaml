@@ -12,10 +12,12 @@
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Plugins_Header}" Loaded="GroupBox_Loaded">
-            <DockPanel>
-                <DockPanel DockPanel.Dock="Top" Height="150">
-                    <StackPanel DockPanel.Dock="Right">
-                    </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="300" />
+                </Grid.RowDefinitions>
+                <DockPanel Grid.Row="0">
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                         <ListBox Name="ListBoxAvailable" SelectionMode="Single">
                             <ListBox.ItemTemplate>
@@ -28,7 +30,7 @@
                 </DockPanel>
                 <GroupBox Name="GroupBoxAvailable"
                           Header="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Name}"
-                          Margin="0,10,0,0">
+                          Margin="0,10,0,0" Grid.Row="1">
                     <DockPanel>
                         <Grid DockPanel.Dock="Top">
                             <Grid.ColumnDefinitions>
@@ -54,7 +56,7 @@
                         </ScrollViewer>
                     </DockPanel>
                 </GroupBox>
-            </DockPanel>
+            </Grid>
         </GroupBox>
     </Grid>
 </UserControl>
