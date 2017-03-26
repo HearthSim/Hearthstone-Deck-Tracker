@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			var point = new InfluxPointBuilder("hdt_app_start")
-				.Tag("version", version.ToVersionString())
+				.Tag("version", version.ToVersionString(true))
 				.Tag("new", isNew)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
 				.Field("startup_duration", startupDuration);
