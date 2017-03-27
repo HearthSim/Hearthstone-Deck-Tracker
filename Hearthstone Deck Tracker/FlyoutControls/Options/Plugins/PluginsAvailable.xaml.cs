@@ -24,6 +24,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 		public OptionsPluginsAvailable()
 		{
 			InitializeComponent();
+			var plugins = InstallUtils.GetPlugins(PluginManager.Instance.Plugins);
+			InstallUtils.Instance.Plugins = plugins;
 		}
 
 		private bool _loaded;
@@ -36,8 +38,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			try
 			{
 				_loaded = true;
-				var plugins = InstallUtils.GetPlugins(PluginManager.Instance.Plugins);
-				InstallUtils.Instance.Plugins = plugins;
+				var plugins = InstallUtils.Instance.Plugins;
 				var availablePlugins = plugins.Where(p => Directory.GetFiles(dir.FullName, p.Binary, SearchOption.AllDirectories).FirstOrDefault() == null).ToList();
 				ListBoxAvailable.ItemsSource = availablePlugins;
 				
