@@ -122,6 +122,8 @@ namespace Hearthstone_Deck_Tracker
 			MainWindow.Options.OptionsPluginsInstalled.Load();
 			PluginManager.Instance.StartUpdateAsync();
 
+			InstallUtils.Instance.Plugins = await InstallUtils.GetPlugins(PluginManager.Instance.Plugins);
+
 			UpdateOverlayAsync();
 
 			if(Config.Instance.ShowCapturableOverlay)

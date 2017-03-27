@@ -6,6 +6,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json.Linq;
@@ -42,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
-		public static List<Plugin> GetPlugins(IEnumerable<PluginWrapper> plugins)
+		public static async Task<List<Plugin>> GetPlugins(IEnumerable<PluginWrapper> plugins)
 		{
 			//Create list of repo URLS to compare to.
 			var repos = plugins.Select(p => ReleaseUrl(p?.Repourl)).ToList();
@@ -51,28 +53,24 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			using(var wc = new WebClient { Headers = { ["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim" } })
 			{
 				wc.Headers["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim";
-				var json = JObject.Parse(wc.DownloadString("https://raw.githubusercontent.com/HearthSim/HDT-Plugins/master/plugins.json"));
-				foreach(var jToken in json["data"])
-				{
-					var baseUrl = jToken["url"].ToString();
-					var releaseUrl = baseUrl + "/releases/latest";
-					if(repos.Contains(releaseUrl))
-						continue;
-					var plugin = new Plugin
+				var json = JObject.Parse(await wc.DownloadStringTaskAsync("https://raw.githubusercontent.com/HearthSim/HDT-Plugins/master/plugins.json"));
+				pluginList.AddRange(from jToken in json["data"]
+					let baseUrl = jToken["url"].ToString()
+					let releaseUrl = baseUrl + "/releases/latest"
+					where !repos.Contains(releaseUrl)
+					select new Plugin
 					{
-						Author = jToken["author"].ToString(),
-						Description = jToken["description"].ToString(),
-						Name = jToken["title"].ToString(),
-						ReleaseUrl = releaseUrl,
+						Author = jToken["author"].ToString(), 
+						Description = jToken["description"].ToString(), 
+						Name = jToken["title"].ToString(), 
+						ReleaseUrl = releaseUrl, 
 						Binary = jToken["binary"].ToString()
-					};
-					pluginList.Add(plugin);
-				}
+					});
 				return pluginList;
 			}
 		}
 
-		public static Update GetUpdate(PluginWrapper pluginItem)
+		public static async Task<Update> GetUpdate(PluginWrapper pluginItem)
 		{
 			var update = new Update();
 			try
@@ -93,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				using(var wc = new WebClient { Headers = { ["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim" } })
 				{
 					var release = pluginItem.Repourl;
-					var releaseData = wc.DownloadString(release);
+					var releaseData = await wc.DownloadStringTaskAsync(release);
 					var latestVersion = Version.Parse(GetVersion(releaseData));
 					update.IsUpToDate = pluginItem.Plugin.Version >= latestVersion;
 					update.Plugin = new Plugin
@@ -113,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			return update;
 		}
 
-		public static bool UpdatePlugin(Plugin pluginItem)
+		public static async Task<bool> UpdatePlugin(Plugin pluginItem)
 		{
 			try
 			{
@@ -121,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				{
 					if(pluginItem == null) throw new Exception("Update pressed without a plugin selected.");
 					var releaseUrl = pluginItem.ReleaseUrl;
-					var json = JObject.Parse(wc.DownloadString(releaseUrl));
+					var json = JObject.Parse(await wc.DownloadStringTaskAsync(releaseUrl));
 					var downloadUrl = json["assets"].First["browser_download_url"].ToString();
 					var downloadFile = Path.Combine(Path.GetTempPath(), downloadUrl.Split('/').Last());
 					wc.DownloadFile(downloadUrl, downloadFile);
@@ -177,13 +175,6 @@ namespace Hearthstone_Deck_Tracker.Plugins
 					}
 				}
 				return plugins > 0;
-
-				//var result = await Core.MainWindow.ShowMessageAsync("Plugins installed",
-				//	$"Successfully installed {plugins} plugin(s). \n Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
-				//
-				//if(result != MessageDialogResult.Affirmative)
-				//	return;
-				//Core.MainWindow.Restart();
 			}
 			catch(Exception ex)
 			{
@@ -223,14 +214,13 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
-		public static bool InstallRemote(Plugin plugin)
+		public static async Task<bool> InstallRemote(Plugin plugin)
 		{
 			try
 			{
 				using(var wc = new WebClient { Headers = { ["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim" } })
 				{
-					var releaseUrl = plugin.ReleaseUrl;
-					var json = JObject.Parse(wc.DownloadString(releaseUrl));
+					var json = JObject.Parse(await wc.DownloadStringTaskAsync(plugin.ReleaseUrl));
 					var downloadUrl = json["assets"].First["browser_download_url"].ToString();
 					var downloadFile = Path.Combine(Path.GetTempPath(), downloadUrl.Split('/').Last());
 					wc.DownloadFile(downloadUrl, downloadFile);

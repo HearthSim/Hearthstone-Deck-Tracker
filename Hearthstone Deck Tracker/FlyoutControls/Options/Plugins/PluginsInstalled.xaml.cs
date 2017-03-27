@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 		private bool _loaded;
 
-		private void GroupBox_Loaded(object sender, RoutedEventArgs e)
+		private async void GroupBox_Loaded(object sender, RoutedEventArgs e)
 		{
 			if(_loaded)
 				return;
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 				{
 					
 					var plugin = item as PluginWrapper;
-					var update = InstallUtils.GetUpdate(plugin);
+					var update = await InstallUtils.GetUpdate(plugin);
 					if(update == null || plugin == null)
 						 continue;
 					plugin.TempPlugin = update.Plugin;
@@ -189,7 +189,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 			if (string.IsNullOrEmpty(pluginWrapper.Repourl))
 				return;
-			if(InstallUtils.UpdatePlugin(pluginWrapper.TempPlugin))
+			if(await InstallUtils.UpdatePlugin(pluginWrapper.TempPlugin))
 			{
 				Mouse.OverrideCursor = null;
 				pluginWrapper.UpdateHyperlink = "Update installed";

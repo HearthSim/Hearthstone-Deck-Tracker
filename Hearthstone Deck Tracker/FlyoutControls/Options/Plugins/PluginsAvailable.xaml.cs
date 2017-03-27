@@ -24,8 +24,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 		public OptionsPluginsAvailable()
 		{
 			InitializeComponent();
-			var plugins = InstallUtils.GetPlugins(PluginManager.Instance.Plugins);
-			InstallUtils.Instance.Plugins = plugins;
 		}
 
 		private bool _loaded;
@@ -38,11 +36,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			try
 			{
 				_loaded = true;
-				var plugins = InstallUtils.Instance.Plugins;
-				var availablePlugins = plugins.Where(p => Directory.GetFiles(dir.FullName, p.Binary, SearchOption.AllDirectories).FirstOrDefault() == null).ToList();
+				var availablePlugins = InstallUtils.Instance.Plugins.Where(
+					p => Directory.GetFiles(dir.FullName, p.Binary, SearchOption.AllDirectories)
+					.FirstOrDefault() == null).ToList();
 				ListBoxAvailable.ItemsSource = availablePlugins;
-				
-				_loaded = true;
 			}
 			catch(Exception ex)
 			{
@@ -50,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			}
 		}
 
-		private void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
+		private async void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
 		{
 			//Localization: should use key SplashScreen_Text_Installing
 			ButtonDownload.Content = "INSTALLING...";
@@ -62,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			var plugin = ListBoxAvailable.SelectedItem as Plugin;
 			if(plugin == null)
 				return;
-			if(InstallUtils.InstallRemote(plugin))
+			if(await InstallUtils.InstallRemote(plugin))
 			{
 				var newPlugins = PluginManager.Instance.SyncPlugins();
 				PluginManager.Instance.LoadPlugins(newPlugins);
