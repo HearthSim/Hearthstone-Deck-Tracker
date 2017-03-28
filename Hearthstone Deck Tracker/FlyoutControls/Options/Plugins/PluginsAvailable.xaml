@@ -19,7 +19,7 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0">
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                        <ListBox Name="ListBoxAvailable" SelectionMode="Single">
+                        <ListBox Name="ListBoxAvailable" SelectionMode="Single" SelectionChanged="listBoxAvailable_SelectionChanged">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Path=Name}" TextWrapping="Wrap" />
@@ -30,7 +30,7 @@
                 </DockPanel>
                 <GroupBox Name="GroupBoxAvailable"
                           Header="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Name}"
-                          Margin="0,10,0,0" Grid.Row="1">
+                          Margin="0,10,0,0" Grid.Row="1" IsEnabled="False">
                     <DockPanel>
                         <Grid DockPanel.Dock="Top">
                             <Grid.ColumnDefinitions>
@@ -39,10 +39,10 @@
                             </Grid.ColumnDefinitions>
                             <Button Name="ButtonDownload" Content="Install" Grid.Column="1"
                                 DockPanel.Dock="Bottom" Click="ButtonInstall_OnClick" Margin="2" />
-                            <Button Name="ButtonDetails" Content="Details" Grid.Column="0"
+                            <Button Name="ButtonDetails" Content="Project" Grid.Column="0"
                                 DockPanel.Dock="Bottom" Click="ButtonDetails_OnClick" Margin="2" />
                         </Grid>
-                        <Separator DockPanel.Dock="Top" Margin="0,0,0,5" />
+                        <Separator DockPanel.Dock="Top" Margin="0,3,0,3" />
                         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
                             <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
                             <TextBlock Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Author}"

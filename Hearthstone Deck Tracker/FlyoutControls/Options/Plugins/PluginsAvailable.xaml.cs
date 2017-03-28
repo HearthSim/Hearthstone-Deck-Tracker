@@ -1,6 +1,8 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,6 +28,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			InitializeComponent();
 		}
 
+		private ObservableCollection<Plugin> _availablePlugins;
 		private bool _loaded;
 
 		private void GroupBox_Loaded(object sender, RoutedEventArgs e)
@@ -36,10 +39,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			try
 			{
 				_loaded = true;
-				var availablePlugins = InstallUtils.Instance.Plugins.Where(
+				_availablePlugins = new ObservableCollection<Plugin>(InstallUtils.Instance.Plugins.Where(
 					p => Directory.GetFiles(dir.FullName, p.Binary, SearchOption.AllDirectories)
-					.FirstOrDefault() == null).ToList();
-				ListBoxAvailable.ItemsSource = availablePlugins;
+						     .FirstOrDefault() == null).ToList());
+				ListBoxAvailable.ItemsSource = _availablePlugins;
 			}
 			catch(Exception ex)
 			{
@@ -49,42 +52,45 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 		private async void ButtonInstall_OnClick(object sender, RoutedEventArgs e)
 		{
+			var plugin = (Plugin)ListBoxAvailable.SelectedItem;
+			if(plugin == null)
+				return;
+			
 			//Localization: should use key SplashScreen_Text_Installing
 			ButtonDownload.Content = "INSTALLING...";
 			ButtonDownload.IsEnabled = false;
-
-			//Make cursor look busy
-			Mouse.OverrideCursor = Cursors.Wait;
-
-			var plugin = ListBoxAvailable.SelectedItem as Plugin;
-			if(plugin == null)
-				return;
+			
 			if(await InstallUtils.InstallRemote(plugin))
 			{
+				//sync plugins
 				var newPlugins = PluginManager.Instance.SyncPlugins();
 				PluginManager.Instance.LoadPlugins(newPlugins);
+				
+
 				Core.MainWindow.ShowMessage($"Successfully installed {plugin.Name}", "").Forget();
+
+				//Update Download Button 
 				ButtonDownload.IsEnabled = true;
 				ButtonDownload.Content = "INSTALL";
-				Mouse.OverrideCursor = null;
+
+				_availablePlugins.Remove(plugin);
 			}
 			else
 			{
 				GithubUnavailable($"Unable to install {plugin.Name}.", plugin).Forget();
 				ButtonDownload.IsEnabled = true;
 				ButtonDownload.Content = "INSTALL";
-				Mouse.OverrideCursor = null;
 			}
 		}
 
 		private async Task GithubUnavailable(string messageText, Plugin plugin)
 		{
-			if(InstallUtils.RateLimitHit() > 0)
+			if(InstallUtils.GithubRateLeft() > 0)
 			{
 				messageText = "You have hit GitHub's rate limit.";
 			}
 			var result = await Core.MainWindow.ShowMessageAsync("Unable to download plugin.",
-					$"{messageText}\nTry again in {InstallUtils.RateLimitHit()} or manually drag-and-drop the plugin.\nGo to the manual download page now?", MessageDialogStyle.AffirmativeAndNegative);
+					$"{messageText}\nTry again in {InstallUtils.GithubRateLeft()} or manually drag-and-drop the plugin.\nGo to the manual download page now?", MessageDialogStyle.AffirmativeAndNegative);
 			if(result == MessageDialogResult.Negative || plugin == null)
 				return;
 			var releaseUrl = plugin.ReleaseUrl.Replace("api.", "").Replace("/repos", "");
@@ -93,10 +99,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 		private void ButtonDetails_OnClick(object sender, RoutedEventArgs e)
 		{
+			var selectedItem = (Plugin)ListBoxAvailable.SelectedItem;
+			if(selectedItem == null)
+				return;
 			var url =
-				((Plugin) ListBoxAvailable.SelectedItem).ReleaseUrl.Replace("api.", "").Replace("repos/", "").Replace(
+				selectedItem.ReleaseUrl.Replace("api.", "").Replace("repos/", "").Replace(
 					"/releases/latest", "") + "#readme";
 			Helper.TryOpenUrl(url);
+		}
+
+		private void listBoxAvailable_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			GroupBoxAvailable.IsEnabled = true;
 		}
 	}
 }

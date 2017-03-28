@@ -54,18 +54,17 @@
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
-
-                            <Button Name="ButtonReadme" Content="Details" Grid.Column="0"
-                                IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.RepoAvailable}"
-                                DockPanel.Dock="Top" Click="ButtonReadme_OnClick" Margin="2"  />
-                            <Button Name="ButtonSettings" Grid.Column="1"
+                            <Button Name="ButtonSettings" Grid.Column="0"
                                 Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}"
                                 IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}"
                                 DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick" Margin="2" />
+                            <Button Name="ButtonReadme" Content="Project" Grid.Column="1"
+                                IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.RepoAvailable}"
+                                DockPanel.Dock="Top" Click="ButtonReadme_OnClick" Margin="2"  />
                             <Button Grid.Column="2" Name="ButtonUninstall" Content="Uninstall"
                                 DockPanel.Dock="Top" Click="ButtonUninstall_OnClick" Margin="2" Foreground="Black" Background="Red" />
                         </Grid>
-
+                        
                         <controls:ToggleSwitch Margin="2" DockPanel.Dock="Top" OnLabel="{lex:Loc Options_Tracker_Plugins_Switch_Enabled}" 
                                                OffLabel="{lex:Loc Options_Tracker_Plugins_Switch_Disabled}"
                                                IsChecked="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" />

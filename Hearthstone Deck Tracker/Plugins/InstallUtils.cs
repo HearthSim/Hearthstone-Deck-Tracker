@@ -7,7 +7,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json.Linq;
@@ -134,7 +133,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			}
 		}
 
-		public static int RateLimitHit()
+		public static int GithubRateLeft()
 		{
 			using(var wc = new WebClient { Headers = { ["User-Agent"] = $"Hearthstone Deck Tracker {Core.Version} @ Hearthsim" } })
 			{

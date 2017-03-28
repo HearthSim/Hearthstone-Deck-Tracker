@@ -3,8 +3,8 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -61,6 +61,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 						plugin.UpdateTextDecorations = "Underline";
 						plugin.UpdateTextEnabled = "True";
 					}
+					UpdateAppearance();
 				}
 			} 
 			catch(Exception ex)
@@ -157,52 +158,73 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 		private async Task GithubUnavailable(string messageText, Plugin plugin)
 		{
-			if(InstallUtils.RateLimitHit() > 0)
+			var rateLeft = InstallUtils.GithubRateLeft();
+			if(rateLeft > 0)
 			{
-				messageText = "You have hit GitHub's rate limit.";
+				messageText = "Too many requests.";
 			}
+			var dialogSettings = new MetroDialogSettings
+			{
+				AffirmativeButtonText = "Go to Download",
+				NegativeButtonText = "Try again later"
+			};
 			var result = await Core.MainWindow.ShowMessageAsync("Unable to download plugin.",
-					$"{messageText}\nTry again in {InstallUtils.RateLimitHit()} seconds or manually drag-and-drop the plugin.\nGo to the manual download page now?", MessageDialogStyle.AffirmativeAndNegative);
+					$"{messageText}\nTry again in {TimeSpan.FromSeconds(rateLeft).Minutes + 1} minutes or manually download and install the plugin." +
+					$"\nGo to the manual download page now?", MessageDialogStyle.AffirmativeAndNegative, dialogSettings);
 			if(result == MessageDialogResult.Negative || plugin == null)
 				return;
 			var releaseUrl = plugin.ReleaseUrl.Replace("api.", "").Replace("/repos", "");
 			Helper.TryOpenUrl(releaseUrl);
 		}
 
-		private void ListBoxPlugins_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		private void UpdateAppearance()
 		{
-			foreach (var p in ListBoxPlugins.Items)
+			foreach(var p in ListBoxPlugins.Items)
 			{
+				var color = "";
 				var plugin = p as PluginWrapper;
 				if(plugin == null)
 					continue;
-				plugin.UpdateTextColor = p == ListBoxPlugins.SelectedItem ? "White" : "#FF47B1DF";
+				switch(plugin.UpdateHyperlink)
+				{
+					case "":
+						break;
+					case "Up to date ✔️":
+						color = "#808080"; // light green
+						break;
+					case "Update Available":
+						color = "#FF47B1DF"; // Metro blue 
+						break;
+					default:
+						color = "#FF47B1DF";
+						break;
+				}
+				plugin.UpdateTextColor = p == ListBoxPlugins.SelectedItem ? "White" : color;
 			}
 		}
+		private void ListBoxPlugins_SelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateAppearance();
 
 		private async void UpdateLink_Click(object sender, RoutedEventArgs e)
 		{
+			if(UseLayoutRounding)
+			{
+				
+			}
 			var pluginWrapper = (PluginWrapper)((Hyperlink) sender).DataContext;
 
-			pluginWrapper.IsEnabled = false;
+			pluginWrapper.UpdateTextEnabled = "False";
 			pluginWrapper.UpdateHyperlink = "Updating...";
-
-			Mouse.OverrideCursor = Cursors.Wait;
 
 			if (string.IsNullOrEmpty(pluginWrapper.Repourl))
 				return;
 			if(await InstallUtils.UpdatePlugin(pluginWrapper.TempPlugin))
 			{
-				Mouse.OverrideCursor = null;
-				pluginWrapper.UpdateHyperlink = "Update installed";
-				var result = await Core.MainWindow.ShowMessageAsync($"Successfully updated {pluginWrapper.Name}", "Would you like to restart now?", MessageDialogStyle.AffirmativeAndNegative);
-				if(result == MessageDialogResult.Negative)
-					return;
+				pluginWrapper.UpdateHyperlink = "Update Installed. Restart now?";
+				pluginWrapper.UpdateTextEnabled = "True";
 				Core.MainWindow.Restart();
 			}
 			else
 			{
-				Mouse.OverrideCursor = null;
 				pluginWrapper.UpdateHyperlink = "Update failed";
 				GithubUnavailable($"Unable to update {pluginWrapper.Name}", pluginWrapper.TempPlugin).Forget();
 			}
