@@ -26,6 +26,11 @@
                 <ResourceDictionary>
                     <utility:ConfigWrapper x:Key="ConfigWrapper"/>
                 </ResourceDictionary>
+                <ResourceDictionary>
+                    <Style TargetType="{x:Type Hyperlink}">
+                        <Setter Property="Foreground" Value="#FF47B1DF" />
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
