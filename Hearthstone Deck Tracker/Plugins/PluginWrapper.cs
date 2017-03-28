@@ -105,6 +105,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 					}
 				}
 				_isEnabled = value;
+				NotifyPropertyChanged("IsEnabled");
 			}
 		}
 

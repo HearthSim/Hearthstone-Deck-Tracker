@@ -142,7 +142,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 			if(InstallUtils.UninstallPlugin(plugin))
 			{
-				Core.MainWindow.ShowMessageAsync($"Deleted {plugin.Name}", "The plugin will be removed upon next restart.").Forget();
+				PluginManager.Instance.Plugins.Remove(plugin);
+				plugin.Unload();
+				plugin.IsEnabled = false;
 			}
 			else
 			{

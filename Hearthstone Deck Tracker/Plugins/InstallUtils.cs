@@ -76,10 +76,10 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			try
 			{
 				var pluginBinary = Path.GetFileName(pluginItem.RelativeFilePath)?.Replace("%20", " ");
-				var inTthis = Instance.Plugins.First(x => x.Binary == pluginBinary);
-				if(inTthis == null)
+				var validPlugin = Instance.Plugins.First(x => x.Binary == pluginBinary);
+				if(validPlugin == null)
 					return update;
-				pluginItem.Repourl = inTthis.ReleaseUrl;
+				pluginItem.Repourl = validPlugin.ReleaseUrl;
 				if(string.IsNullOrEmpty(pluginItem.Repourl))
 				{
 					Log.Info($"{pluginItem.Name} cannot be checked for updates. Invalid repo url {pluginItem.Repourl}.");
