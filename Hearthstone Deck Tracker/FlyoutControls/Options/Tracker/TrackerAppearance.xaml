@@ -37,7 +37,7 @@
                         <Italic>
                             <Run Text="{lex:Loc Options_Tracker_Appearance_Label_LanguageNote}"/>
                             <LineBreak/>
-                            <Hyperlink Foreground="#FF47B1DF" NavigateUri="https://github.com/HearthSim/HDT-Localization" RequestNavigate="Hyperlink_RequestNavigate">
+                            <Hyperlink NavigateUri="https://github.com/HearthSim/HDT-Localization" RequestNavigate="Hyperlink_RequestNavigate">
                                 <Run Text="{lex:Loc Options_Tracker_Appearance_Hyperlink_LanguageNote}"/>
                             </Hyperlink>
                         </Italic>

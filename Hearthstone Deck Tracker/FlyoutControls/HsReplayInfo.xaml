@@ -18,7 +18,7 @@
             <TextBlock>Continue</TextBlock>
         </Button>
         <TextBlock DockPanel.Dock="Bottom" TextWrapping="Wrap" FontSize="15" HorizontalAlignment="Center" Margin="0,10">
-            <Hyperlink Foreground="#FF47B1DF" RequestNavigate="Hyperlink_OnClick" NavigateUri="https://hsreplay.net/about/privacy/">Privacy Policy</Hyperlink> (Last updated: 2016-09-21)
+            <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://hsreplay.net/about/privacy/">Privacy Policy</Hyperlink> (Last updated: 2016-09-21)
         </TextBlock>
         <Separator DockPanel.Dock="Bottom"/>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="10" Width="510">
@@ -29,7 +29,7 @@
                     and share them with your friends.
                 </TextBlock>
                 <TextBlock Margin="0,10,0,0" HorizontalAlignment="Center" TextAlignment="Center">
-                    <Hyperlink Foreground="#FF47B1DF" RequestNavigate="Hyperlink_OnClick" NavigateUri="https://hsreplay.net/replay/H537Lb9H2fWT2GgfSS5qfn">
+                    <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://hsreplay.net/replay/H537Lb9H2fWT2GgfSS5qfn">
                         <Image Source="{StaticResource JoustScreenshot}" Width="400" RenderOptions.BitmapScalingMode="Fant"/>
                     </Hyperlink>
                     <LineBreak/>
@@ -38,7 +38,7 @@
                 <Label Content="How it works" FontWeight="SemiBold" DockPanel.Dock="Top" FontSize="18" HorizontalAlignment="Center" Margin="0,10,0,0"/>
                 <TextBlock TextWrapping="Wrap" FontSize="15" >
                     Whenever you complete a game, the game data will automatically be uploaded to
-                    <Hyperlink Foreground="#FF47B1DF" RequestNavigate="Hyperlink_OnClick" NavigateUri="https://hsreplay.net">HSReplay.net</Hyperlink>.
+                    <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://hsreplay.net">HSReplay.net</Hyperlink>.
                     <LineBreak/><LineBreak/>
 
                     Replay uploads can be disabled entirely or for specific game modes in
@@ -50,9 +50,9 @@
                     clicking on <Italic>Claim Account</Italic>.
                     <LineBreak/><LineBreak/>
 
-                    Tweet your feedback to <Hyperlink Foreground="#FF47B1DF" RequestNavigate="Hyperlink_OnClick" NavigateUri="https://twitter.com/hsdecktracker">@HSDeckTracker</Hyperlink> 
-                    or <Hyperlink Foreground="#FF47B1DF" RequestNavigate="Hyperlink_OnClick" NavigateUri="https://twitter.com/hsreplaynet">@HSReplayNet</Hyperlink> on twitter, or join us
-                    on reddit in <Hyperlink Foreground="#FF47B1DF" RequestNavigate="Hyperlink_OnClick" NavigateUri="https://www.reddit.com/r/hsreplay">/r/HSReplay</Hyperlink>.
+                    Tweet your feedback to <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://twitter.com/hsdecktracker">@HSDeckTracker</Hyperlink> 
+                    or <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://twitter.com/hsreplaynet">@HSReplayNet</Hyperlink> on twitter, or join us
+                    on reddit in <Hyperlink RequestNavigate="Hyperlink_OnClick" NavigateUri="https://www.reddit.com/r/hsreplay">/r/HSReplay</Hyperlink>.
                 </TextBlock>
             </StackPanel>
         </ScrollViewer>
