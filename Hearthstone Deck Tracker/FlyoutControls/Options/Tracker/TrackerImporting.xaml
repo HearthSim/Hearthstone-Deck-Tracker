@@ -80,6 +80,7 @@
                               Checked="CheckboxImportNetDeck_OnChecked" Unchecked="CheckboxImportNetDeck_OnUnchecked" />
                             <TextBlock Margin="10,2,0,0">
                         <Hyperlink
+                            Foreground="#FF47B1DF"
                             NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
                             RequestNavigate="Hyperlink_RequestNavigate">
                             <Run Text="{lex:Loc Options_Tracker_Importing_Web_Hyperlink_NetDeck}"/>

@@ -31,7 +31,7 @@
                 <Run Text="{lex:LocText Options_Overlay_Streaming_Text2}"/>
             </TextBlock>
             <TextBlock Margin="5,5,0,0" FontWeight="SemiBold">
-                <Hyperlink Click="Hyperlink_OnClick">
+                <Hyperlink Foreground="#FF47B1DF" Click="Hyperlink_OnClick">
                     <Run Text="{lex:LocText Options_Overlay_Streaming_Hyperlink_Wiki}"/>
                 </Hyperlink>
             </TextBlock>

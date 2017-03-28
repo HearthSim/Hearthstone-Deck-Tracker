@@ -24,6 +24,7 @@
                 <GroupBox Header="{lex:Loc Help_Label_Faq}">
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                         <Hyperlink
+                            Foreground="#FF47B1DF"
                             NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/FAQ"
                             RequestNavigate="Hyperlink_RequestNavigate">
                             <Run Text="{lex:Loc Help_Faq_Hyperlink}"/>
@@ -100,6 +101,7 @@
                         </GroupBox>
                         <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                             <Hyperlink
+                                Foreground="#FF47B1DF"
                                 NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Overlay"
                                 RequestNavigate="Hyperlink_RequestNavigate">
                                     <Run Text="{lex:Loc Help_Overlay_Customization_Hyperlink}"/>
@@ -111,12 +113,14 @@
                     <TextBlock Margin="10,0,10,0" VerticalAlignment="Top" Width="auto" TextWrapping="Wrap">
                         <Run Text="{lex:Loc Help_BugsFeatures_Option1_Text1}" />
                         <Hyperlink
+                            Foreground="#FF47B1DF"
                             NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/issues?state=open"
                             RequestNavigate="Hyperlink_RequestNavigate">
                             <Run Text="{lex:Loc Help_BugsFeatures_Option1_Hyperlink_Github1}" />
                         </Hyperlink>
                         <Run Text="{lex:Loc Help_BugsFeatures_Option1_Text2}"/> 
                         <Hyperlink
+                            Foreground="#FF47B1DF"
                             NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Reporting-Issues"
                             RequestNavigate="Hyperlink_RequestNavigate">
                             <Run Text="{lex:Loc Help_BugsFeatures_Option1_Hyperlink_Github2}" />
@@ -131,13 +135,16 @@
                     <StackPanel>
                         <TextBlock Margin="10,0,10,0" VerticalAlignment="Top">
                             <Run Text="{lex:Loc Help_Github_Text1}" />
-                            <Hyperlink NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/"
-                                       RequestNavigate="Hyperlink_RequestNavigate">
+                            <Hyperlink 
+                                Foreground="#FF47B1DF"
+                                NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/"
+                                RequestNavigate="Hyperlink_RequestNavigate">
                              <Run Text="{lex:Loc Help_Github_Hyperlink1}" />
                             </Hyperlink>
                             <LineBreak />
                             <Run Text="{lex:Loc Help_Github_Text2}" /> 
                             <Hyperlink
+                                Foreground="#FF47B1DF"
                                 NavigateUri="https://github.com/HearthSim/Hearthstone-Deck-Tracker/blob/master/README.md"
                                 RequestNavigate="Hyperlink_RequestNavigate">
                                 <Run Text="{lex:Loc Help_Github_Hyperlink2}" />

@@ -31,7 +31,7 @@
                         <Label Content="{Binding AccountStatus, RelativeSource={RelativeSource AncestorType=UserControl}}" DockPanel.Dock="Left"/>
                         <controls:ProgressRing Name="ProgressRing" IsActive="False" DockPanel.Dock="Right" Foreground="{DynamicResource AccentColorBrush}" Visibility="{Binding ProgressRingVisibility}" Width="16" Height="16"/>
                         <TextBlock VerticalAlignment="Center">
-                            <Hyperlink Click="HyperlinkBattleTag_OnClick">
+                            <Hyperlink Foreground="#FF47B1DF" Click="HyperlinkBattleTag_OnClick">
                                 <Run Text="{Binding BattleTag, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay}"/>
                             </Hyperlink>
                         </TextBlock>
