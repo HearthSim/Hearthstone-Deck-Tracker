@@ -230,6 +230,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Shaman.WhiteEyes:
 								AddKnownCardId(gameState, NonCollectible.Shaman.WhiteEyes_TheStormGuardianToken);
 								break;
+							case Collectible.Hunter.RaptorHatchling:
+								AddKnownCardId(gameState, NonCollectible.Hunter.RaptorHatchling_RaptorPatriarchToken);
+								break;
 						}
 					}
 					else //POWER
@@ -272,6 +275,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Druid.JadeIdol:
 								AddKnownCardId(gameState, Collectible.Druid.JadeIdol, 3);
+								break;
+							case NonCollectible.Hunter.TheMarshQueen_QueenCarnassaToken:
+								AddKnownCardId(gameState, NonCollectible.Hunter.TheMarshQueen_CarnassasBroodToken, 15);
+								break;
+							case Collectible.Warrior.DirehornHatchling:
+								AddKnownCardId(gameState, NonCollectible.Warrior.DirehornHatchling_DirehornMatriarchToken);
+								break;
+							case Collectible.Neutral.EliseTheTrailblazer:
+								AddKnownCardId(gameState, NonCollectible.Neutral.ElisetheTrailblazer_UngoroPackToken);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
