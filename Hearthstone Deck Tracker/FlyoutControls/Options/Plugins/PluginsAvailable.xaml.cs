@@ -64,11 +64,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 				var newPlugins = PluginManager.Instance.SyncPlugins();
 				PluginManager.Instance.LoadPlugins(newPlugins);
 
-				//manually set up to date
-				InstallUtils.Instance.Plugins.Add(plugin);
-				
-
-
 				Core.MainWindow.ShowMessage($"Successfully installed {plugin.Name}", "").Forget();
 
 				//Update Download Button 
