@@ -1,13 +1,11 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -65,7 +63,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 				//sync plugins
 				var newPlugins = PluginManager.Instance.SyncPlugins();
 				PluginManager.Instance.LoadPlugins(newPlugins);
+
+				//manually set up to date
+				InstallUtils.Instance.Plugins.Add(plugin);
 				
+
 
 				Core.MainWindow.ShowMessage($"Successfully installed {plugin.Name}", "").Forget();
 
@@ -74,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 				ButtonDownload.Content = "INSTALL";
 
 				_availablePlugins.Remove(plugin);
+				GroupBoxAvailable.IsEnabled = false;
 			}
 			else
 			{
@@ -111,6 +114,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 		private void listBoxAvailable_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
 			GroupBoxAvailable.IsEnabled = true;
+		}
+
+		private void availablePlugins_Click(object sender, RoutedEventArgs e)
+		{
+			Helper.TryOpenUrl("https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
 		}
 	}
 }

@@ -43,11 +43,12 @@
                                 DockPanel.Dock="Bottom" Click="ButtonDetails_OnClick" Margin="2" />
                         </Grid>
                         <Separator DockPanel.Dock="Top" Margin="0,3,0,3" />
-                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-                            <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Author}"
+                        <DockPanel DockPanel.Dock="Bottom">
+                            <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" DockPanel.Dock="Left" />
+                            <TextBlock Text="{Binding ElementName=ListBoxAvailable, Path=SelectedItem.Author}" DockPanel.Dock="Left"
                                        TextWrapping="Wrap" Margin="2,0,0,0" />
-                        </StackPanel>
+                            <TextBlock HorizontalAlignment="Right" Margin="0,0,3,0"><Hyperlink Click="availablePlugins_Click">All Available Plugins</Hyperlink></TextBlock>
+                        </DockPanel>
                         
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <TextBlock

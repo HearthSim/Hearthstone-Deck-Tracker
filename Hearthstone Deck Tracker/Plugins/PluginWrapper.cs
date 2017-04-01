@@ -38,28 +38,52 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		private string _updateHyperlink;
 		public string UpdateHyperlink
 		{
-			get { return _updateHyperlink; } 
+			get
+			{
+				return _updateHyperlink;
+			}
 			set { _updateHyperlink = value; NotifyPropertyChanged("UpdateHyperlink"); }
 		}
 
 		private string _updateTextColor;
 		public string UpdateTextColor
 		{
-			get { return _updateTextColor; }
+			get
+			{
+				if(string.IsNullOrEmpty(_updateTextColor))
+				{
+					_updateTextColor = "White";
+				}
+				return _updateTextColor;
+			}
 			set { _updateTextColor = value; NotifyPropertyChanged("UpdateTextColor"); }
 		}
 
 		private string _updateTextDecorations;
 		public string UpdateTextDecorations
 		{
-			get { return _updateTextDecorations; }
+			get
+			{
+				if(string.IsNullOrEmpty(_updateTextDecorations))
+				{
+					_updateTextDecorations = "None";
+				}
+				return _updateTextDecorations;
+			}
 			set { _updateTextDecorations = value; NotifyPropertyChanged("UpdateTextDecorations"); }
 		}
 
 		private string _updateTextEnabled;
 		public string UpdateTextEnabled
 		{
-			get { return _updateTextEnabled; }
+			get
+			{
+				if(string.IsNullOrEmpty(_updateTextEnabled))
+				{
+					_updateTextEnabled = "False";
+				}
+				return _updateTextEnabled;
+			}
 			set { _updateTextEnabled = value; NotifyPropertyChanged("UpdateTextEnabled"); }
 		}
 

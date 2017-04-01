@@ -30,7 +30,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 		private async void GroupBox_Loaded(object sender, RoutedEventArgs e)
 		{
 			if(_loaded)
+			{
+				UpdateAppearance();
 				return;
+			}
 			try
 			{
 				_loaded = true;
@@ -48,18 +51,21 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 						plugin.UpdateHyperlink = "";
 						plugin.UpdateTextDecorations = "None";
 						plugin.UpdateTextEnabled = "False";
+						continue;
 					}
-					if(update.IsUpdatable && update.IsUpToDate)
+					if(update.IsUpToDate)
 					{
 						plugin.UpdateHyperlink = "Up to date ✔️";
 						plugin.UpdateTextDecorations = "None";
 						plugin.UpdateTextEnabled = "False";
+						continue;
 					}
-					if(update.IsUpdatable && !update.IsUpToDate)
+					if(!update.IsUpToDate)
 					{
 						plugin.UpdateHyperlink = "Update available";
 						plugin.UpdateTextDecorations = "Underline";
 						plugin.UpdateTextEnabled = "True";
+						continue;
 					}
 					UpdateAppearance();
 				}
@@ -70,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			}
 		}
 
-		private void PluginsFolder()
+		private static void PluginsFolder()
 		{
 			var dir = PluginManager.PluginDirectory;
 			if(!dir.Exists)
@@ -156,7 +162,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			}
 		}
 
-		private async Task GithubUnavailable(string messageText, Plugin plugin)
+		private static async Task GithubUnavailable(string messageText, Plugin plugin)
 		{
 			var rateLeft = InstallUtils.GithubRateLeft();
 			if(rateLeft > 0)
@@ -206,11 +212,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 		private async void UpdateLink_Click(object sender, RoutedEventArgs e)
 		{
-			if(UseLayoutRounding)
-			{
-				
-			}
 			var pluginWrapper = (PluginWrapper)((Hyperlink) sender).DataContext;
+
+			if(pluginWrapper.UpdateHyperlink == "Update Installed. Restart now?")
+			{
+				Core.MainWindow.Restart();
+				return;
+			}
 
 			pluginWrapper.UpdateTextEnabled = "False";
 			pluginWrapper.UpdateHyperlink = "Updating...";
@@ -221,11 +229,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			{
 				pluginWrapper.UpdateHyperlink = "Update Installed. Restart now?";
 				pluginWrapper.UpdateTextEnabled = "True";
-				Core.MainWindow.Restart();
 			}
 			else
 			{
-				pluginWrapper.UpdateHyperlink = "Update failed";
+				pluginWrapper.UpdateHyperlink = "Update failed. Retry?";
+				pluginWrapper.UpdateTextEnabled = "True";
 				GithubUnavailable($"Unable to update {pluginWrapper.Name}", pluginWrapper.TempPlugin).Forget();
 			}
 		}
