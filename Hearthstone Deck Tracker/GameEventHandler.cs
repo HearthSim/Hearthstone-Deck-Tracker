@@ -909,6 +909,9 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_game.OpponentSecrets.SetZero(Mage.Counterspell);
 
+				if (_game.OpponentHandCount < 10)
+					_game.OpponentSecrets.SetZero(Mage.ManaBind);
+
 				if(_game.OpponentMinionCount < 7)
 				{
 					//CARD_TARGET is set after ZONE, wait for 50ms gametime before checking
