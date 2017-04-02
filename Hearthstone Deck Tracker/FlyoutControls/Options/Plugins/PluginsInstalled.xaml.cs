@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 		private bool _loaded;
 
-		private async void GroupBox_Loaded(object sender, RoutedEventArgs e)
+		private void GroupBox_Loaded(object sender, RoutedEventArgs e)
 		{
 			if(_loaded)
 			{
