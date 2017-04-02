@@ -233,6 +233,36 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				return false;
 			}
 		}
+
+		public static async void UpdateHyperlink(PluginWrapper plugin)
+		{
+			var update = await InstallUtils.GetUpdate(plugin);
+			if(update == null || plugin == null)
+				return;
+			plugin.TempPlugin = update.Plugin;
+
+			if(!update.IsUpdatable)
+			{
+				plugin.UpdateHyperlink = "";
+				plugin.UpdateTextDecorations = "None";
+				plugin.UpdateTextEnabled = "False";
+				return;
+			}
+			if(update.IsUpToDate)
+			{
+				plugin.UpdateHyperlink = "Up to date ✔️";
+				plugin.UpdateTextDecorations = "None";
+				plugin.UpdateTextEnabled = "False";
+				return;
+			}
+			if(!update.IsUpToDate)
+			{
+				plugin.UpdateHyperlink = "Update available";
+				plugin.UpdateTextDecorations = "Underline";
+				plugin.UpdateTextEnabled = "True";
+				return;
+			}
+		}
 	}
 
 	public class Plugin

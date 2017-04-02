@@ -175,14 +175,19 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			LoadPluginSettings();
 		}
 
-		public void LoadPlugins(IEnumerable<FileInfo> files)
+		public ObservableCollection<PluginWrapper> LoadPlugins(IEnumerable<FileInfo> files)
 		{
+			var newPlugins = new ObservableCollection<PluginWrapper>();
 			foreach(var file in files.Where(f => f.Extension.Equals(".dll")))
 			{
 				var plugins = GetModule(file.FullName, typeof(IPlugin));
-				foreach(var p in plugins)
+				foreach (var p in plugins)
+				{
+					newPlugins.Add(p);
 					Plugins.Add(p);
+				}
 			}
+			return newPlugins;
 		}
 
 		private IEnumerable<PluginWrapper> GetModule(string pFileName, Type pTypeInterface)

@@ -23,7 +23,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 		public OptionsPluginsInstalled()
 		{
 			InitializeComponent();
+			Instance = this;
 		}
+
+		public static OptionsPluginsInstalled Instance;
 
 		private bool _loaded;
 
@@ -41,32 +44,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 				{
 					
 					var plugin = item as PluginWrapper;
-					var update = await InstallUtils.GetUpdate(plugin);
-					if(update == null || plugin == null)
-						 continue;
-					plugin.TempPlugin = update.Plugin;
-
-					if(!update.IsUpdatable)
-					{
-						plugin.UpdateHyperlink = "";
-						plugin.UpdateTextDecorations = "None";
-						plugin.UpdateTextEnabled = "False";
-						continue;
-					}
-					if(update.IsUpToDate)
-					{
-						plugin.UpdateHyperlink = "Up to date ✔️";
-						plugin.UpdateTextDecorations = "None";
-						plugin.UpdateTextEnabled = "False";
-						continue;
-					}
-					if(!update.IsUpToDate)
-					{
-						plugin.UpdateHyperlink = "Update available";
-						plugin.UpdateTextDecorations = "Underline";
-						plugin.UpdateTextEnabled = "True";
-						continue;
-					}
+					InstallUtils.UpdateHyperlink(plugin);
 					UpdateAppearance();
 				}
 			} 
@@ -97,6 +75,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 		private void ButtonOpenPluginsFolder_OnClick(object sender, RoutedEventArgs e)
 		{
 			PluginsFolder();
+		}
+
+		public static explicit operator OptionsPluginsInstalled(Window v)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void Load()

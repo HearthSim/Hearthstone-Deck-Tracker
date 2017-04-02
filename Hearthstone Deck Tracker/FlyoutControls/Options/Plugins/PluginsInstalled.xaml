@@ -17,7 +17,8 @@
                     <StackPanel DockPanel.Dock="Right">
                     </StackPanel>
                     <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                        <ListBox Name="ListBoxPlugins" SelectionMode="Single" SelectionChanged="ListBoxPlugins_SelectionChanged">
+                        <ListBox x:Name="ListBoxPlugins" x:FieldModifier="public"
+                                 SelectionMode="Single" SelectionChanged="ListBoxPlugins_SelectionChanged">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <DockPanel>

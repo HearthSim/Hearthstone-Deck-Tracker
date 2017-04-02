@@ -61,8 +61,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 			if(await InstallUtils.InstallRemote(plugin))
 			{
 				//sync plugins
-				var newPlugins = PluginManager.Instance.SyncPlugins();
-				PluginManager.Instance.LoadPlugins(newPlugins);
+				var newPlugin = PluginManager.Instance.LoadPlugins(PluginManager.Instance.SyncPlugins()).FirstOrDefault();
 
 				Core.MainWindow.ShowMessage($"Successfully installed {plugin.Name}", "").Forget();
 
@@ -72,6 +71,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Plugins
 
 				_availablePlugins.Remove(plugin);
 				GroupBoxAvailable.IsEnabled = false;
+
+				//update plugin updatable
+				var newPluginManagerItem = PluginManager.Instance.Plugins.First(x => x == newPlugin);
+				//newPluginManagerItem.TempPlugin = plugin;
+				InstallUtils.UpdateHyperlink(newPluginManagerItem);
+
+				//switch to the window, scroll down and select plugin
+				OptionsPluginsInstalled.Instance.ListBoxPlugins.SelectedItem = newPlugin;
+				OptionsPluginsInstalled.Instance.ListBoxPlugins.ScrollIntoView(
+					OptionsPluginsInstalled.Instance.ListBoxPlugins.SelectedItem);
+				Helper.OptionsMain.ContentControlOptions.Content = Helper.OptionsMain.OptionsPluginsInstalled;
 			}
 			else
 			{
