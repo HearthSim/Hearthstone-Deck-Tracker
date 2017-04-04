@@ -1,4 +1,8 @@
-## __Release vNext__
+## __Release v1.2.0 - 2017-04-04__
+
+__Updated for 8.0.0.18336__
+- Fixed deck tracking :).
+- The UI will consider rotating sets wild even before they are. This will not affect your stats.
 
 __New__:
 - Added Ukranian translation.
