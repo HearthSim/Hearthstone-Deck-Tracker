@@ -32,7 +32,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{20, "League of Explorers"},
 			{21, "Whispers of the Old Gods"},
 			{23, "One Night in Karazhan"},
-			{25, "Mean Streets of Gadgetzan"}
+			{25, "Mean Streets of Gadgetzan"},
+			{27, "Journey to Un'Goro"}
 		};
 
 		public static string ConvertClass(CardClass cardClass) => (int)cardClass < 2 || (int)cardClass > 10
