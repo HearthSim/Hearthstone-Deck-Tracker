@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -105,6 +106,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 						v =>
 						{
 							mgr.CreateShortcutForThisExe();
+							FixStub();
 							if(Config.Instance.StartWithWindows)
 								RegistryHelper.SetRunKey();
 						},
@@ -142,6 +144,24 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			catch(Exception ex)
 			{
 				Log.Error(ex);
+			}
+		}
+
+		public static void FixStub()
+		{
+			var dir = new FileInfo(Assembly.GetEntryAssembly().Location).Directory.FullName;
+			var stubPath = Path.Combine(dir, "HearthstoneDeckTracker_ExecutionStub.exe");
+			if(File.Exists(stubPath))
+			{
+				var newStubPath = Path.Combine(Directory.GetParent(dir).FullName, "HearthstoneDeckTracker.exe");
+				try
+				{
+					File.Move(stubPath, newStubPath);
+				}
+				catch(Exception e)
+				{
+					Log.Error("Could not move ExecutionStub");
+				}
 			}
 		}
 
