@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -16,7 +17,8 @@
                 <Button Name="ButtonUpdateNotes" Content="{lex:Loc Help_Button_Updatenotes}" Click="ButtonUpdateNotes_OnClick"
                         DockPanel.Dock="Right" Margin="2" Width="200"
                         Style="{DynamicResource AccentedSquareButtonStyle}" />
-                <TextBlock Name="TxtblockVersion" Text="{lex:Loc Help_Label_Version}" VerticalAlignment="Center" Margin="10,0,0,0" />
+                <TextBlock Name="TxtblockVersion" Text="{lex:Loc Help_Label_Version}" VerticalAlignment="Center" Margin="10,0,5,0" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding VersionString, RelativeSource={RelativeSource AncestorType=hearthstoneDeckTracker:Help}}" />
             </DockPanel>
         </Border>
         <ScrollViewer>

@@ -2,6 +2,7 @@
 
 using System.Windows;
 using System.Windows.Navigation;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -16,6 +17,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			InitializeComponent();
 		}
+
+		public string VersionString => Helper.GetCurrentVersion().ToVersionString();
 
 		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 
