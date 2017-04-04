@@ -202,8 +202,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 					sets.Add("and the Naxxramas DLC ");
 				else if(card.Set == HearthDbConverter.SetConverter(CardSet.PROMO))
 					sets.Add("and Promotion cards ");
-				else if(card.Set == HearthDbConverter.SetConverter(CardSet.REWARD))
-					sets.Add("and the Reward cards ");
+				else if(card.Set == HearthDbConverter.SetConverter(CardSet.HOF))
+					sets.Add("and the Hall of Fame cards ");
 				else if(card.Set == HearthDbConverter.SetConverter(CardSet.BRM))
 					sets.Add("and the Blackrock Mountain DLC ");
 				else if(card.Set == HearthDbConverter.SetConverter(CardSet.LOE))
