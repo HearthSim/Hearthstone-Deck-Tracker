@@ -193,7 +193,7 @@ namespace HDTTests.Hearthstone
             _gameEventHandler.HandleSecretsOnPlay(_playerSpell1);
             _game.GameTime.Time += TimeSpan.FromSeconds(1);
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
-            VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender, MageSecrets.ManaBind);
             VerifySecrets(2, PaladinSecrets.All);
         }
 
