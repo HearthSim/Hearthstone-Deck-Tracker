@@ -1202,6 +1202,7 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\hsreplay_logo_white.png" />
     <EmbeddedResource Include="Resources\CHANGELOG.md" />
     <EmbeddedResource Include="Properties\Strings.ja-JP.resx">
       <SubType>Designer</SubType>

@@ -11,7 +11,9 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Information;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
 
@@ -96,5 +98,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		}
 
 		private void ButtonContinue_OnClick(object sender, RoutedEventArgs e) => TabControl.SelectedIndex = 0;
+
+		private void ButtonHSReplaynet_Click(object sender, RoutedEventArgs e)
+		{
+			const string url = "https://hsreplay.net/premium/?utm_source=hdt&utm_medium=client&utm_campaign=updatenotes";
+			if (!Helper.TryOpenUrl(url))
+				Core.MainWindow.ShowMessage("Could not start your browser", "You can find our premium page at https://hsreplay.net/premium/").Forget();
+		}
 	}
 }

@@ -58,9 +58,25 @@
     <TabControl Name="TabControl">
         <TabItem>
             <DockPanel>
-                <Button DockPanel.Dock="Bottom" Name="ButtonClose" Width="160" Height="30"  Margin="5" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonClose_Click">
-                    <TextBlock Text="Continue"/>
-                </Button>
+                <GroupBox DockPanel.Dock="Bottom" Header="Continue...">
+                    <StackPanel Margin="5">
+                        <TextBlock Text="Want to support the development of Hearthstone Deck Tracker and our other projects? You can now subscribe to our premium service on HSReplay.net! (We also have a ton of new and completely free features there!)" 
+                                    Margin="10,5,10,10" FontWeight="SemiBold" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Name="ButtonHSReplaynet" Width="160" Height="30" Margin="10,0,0,0" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonHSReplaynet_Click">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/HearthstoneDeckTracker;component/Resources/hsreplay_logo_white.png" Width="18" RenderOptions.BitmapScalingMode="Fant"/>
+                                        <TextBlock Margin="3,0,0,0" Text="HSReplay.net" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                            <Button Name="ButtonClose" Width="160" Height="30"  Margin="10,0,0,0" Style="{DynamicResource SquareButtonStyle}" Click="ButtonClose_Click">
+                                <TextBlock Text="Continue"/>
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+                </GroupBox>
                 <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Margin="5">
                     <FlowDocumentScrollViewer Document="{Binding ReleaseNotes, RelativeSource={RelativeSource AncestorType=flyoutControls:UpdateNotes}, Converter={StaticResource TextToFlowDocumentConverter}}"
                                               Margin="5" />
