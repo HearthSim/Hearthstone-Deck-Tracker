@@ -245,7 +245,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void CreateInDeck(Entity entity, int turn)
 		{
-			entity.Info.Created |= turn > 1;
+			if(entity.Info.Discarded)
+			{
+				//Entity moved back to the deck after being revealed for tracking
+				entity.Info.Discarded = false;
+				entity.Info.Created = false;
+			}
+			else
+				entity.Info.Created |= turn > 1;
 			entity.Info.Turn = turn;
 			Log(entity);
 		}
