@@ -1,3 +1,10 @@
+## __Release v1.2.1 - 2017-04-04__
+
+__Fixes__:
+- Fixed an issue where the Tracking (Hunter) pick would not be tracked correctly.
+- Fixed an issue where the Desktop/Start shortcut was not updated properly.
+
+
 ## __Release v1.2.0 - 2017-04-04__
 
 __Updated for 8.0.0.18336__
