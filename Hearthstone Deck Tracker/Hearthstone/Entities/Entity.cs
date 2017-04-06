@@ -80,6 +80,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsInSecret => IsInZone(Zone.SECRET);
 
 		[JsonIgnore]
+		public bool IsQuest => HasTag(GameTag.QUEST);
+
+		[JsonIgnore]
 		public Card Card
 			=>
 				_cachedCard
