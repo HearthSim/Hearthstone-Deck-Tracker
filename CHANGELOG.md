@@ -1,3 +1,10 @@
+## __Release vNext__
+
+__Fixes__:
+- Fixed an issue where Quests would trigger the secret list.
+- Fixed an issue where some cards were not in the correct sets.
+
+
 ## __Release v1.2.1 - 2017-04-04__
 
 __Fixes__:
