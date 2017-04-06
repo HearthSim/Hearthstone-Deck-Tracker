@@ -529,7 +529,7 @@
                         <RadioButton Name="RadioButtonSet0" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_All}" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Name="RadioButtonSet2" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Basic}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Name="RadioButtonSet3" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Classic}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet11" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_HallOfFame}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
+                        <RadioButton Name="RadioButtonSet4" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_HallOfFame}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Name="RadioButtonSet12" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Naxx}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Name="RadioButtonSet13" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Gvg}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
                         <RadioButton Name="RadioButtonSet14" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Brm}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />

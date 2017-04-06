@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{0, null},
 			{2, "Basic"},
 			{3, "Classic"},
-			{4, "Reward"},
+			{4, "Hall of Fame"},
 			{5, "Missions"},
 			{7, "System"},
 			{8, "Debug"},
