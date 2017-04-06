@@ -864,6 +864,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
+			if (!entity.IsSecret)
+				return;
 			switch(fromZone)
 			{
 				case Zone.DECK:
@@ -1123,6 +1125,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, Zone fromZone, int otherId)
 		{
+			if(!entity.IsSecret)
+				return;
 			_game.OpponentSecretCount++;
 			switch(fromZone)
 			{
@@ -1172,6 +1176,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentSecretTrigger(Entity entity, string cardId, int turn, int otherId)
 		{
+			if (!entity.IsSecret)
+				return;
 			_game.Opponent.SecretTriggered(entity, turn);
 			_game.OpponentSecretCount--;
 			_game.OpponentSecrets.SecretRemoved(otherId, cardId);
