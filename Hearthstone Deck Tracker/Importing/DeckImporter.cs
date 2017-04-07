@@ -29,7 +29,6 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{"tempostorm", Tempostorm.Import},
 			{"hearthstonetopdecks", Hearthstonetopdecks.Import},
 			{"hearthstonetopdeck.", Hearthstonetopdeck.Import},
-			{"hearthnews.fr", HearthnewsFr.Import},
 			{"arenavalue", Arenavalue.Import},
 			{"hearthstone-decks", Hearthstonedecks.Import},
 			{"heartharena", Heartharena.Import},
