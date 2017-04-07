@@ -1390,31 +1390,10 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if exist $(SolutionDir)HearthDb (
-  git -C $(SolutionDir)HearthDb fetch
-  git -C $(SolutionDir)HearthDb reset --hard origin/master
-) else (
-  git clone --depth 1 https://github.com/HearthSim/HearthDb.git $(SolutionDir)HearthDb
-)
-if exist $(SolutionDir)HearthMirror (
-  git -C $(SolutionDir)HearthMirror fetch
-  git -C $(SolutionDir)HearthMirror reset --hard origin/master
-) else (
-  git clone --depth 1 https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror
-)
-if exist $(SolutionDir)HSReplay-Api (
-  git -C $(SolutionDir)HSReplay-Api fetch
-  git -C $(SolutionDir)HSReplay-Api reset --hard origin/master
-) else (
-  git clone --depth 1 https://github.com/HearthSim/HSReplay-API-Client.git $(SolutionDir)HSReplay-Api
-)
-if exist $(SolutionDir)HDT-Localization (
-  git -C $(SolutionDir)HDT-Localization fetch
-  git -C $(SolutionDir)HDT-Localization reset --hard origin/master
-) else (
-  git clone --depth 1 https://github.com/HearthSim/HDT-Localization.git $(SolutionDir)HDT-Localization
-)
-xcopy /Y "$(SolutionDir)HDT-Localization\*.resx" "$(ProjectDir)Properties\"
+    <PreBuildEvent>git submodule foreach --recursive git clean
+git submodule foreach --recursive git reset
+git submodule update --init --recursive
+
 mkdir "$(TargetDir)\Images\Tiles"
 mkdir "$(TargetDir)\Images\Themes"
 xcopy /E /Y /Q "$(SolutionDir)Resources\Generated\Tiles" "$(TargetDir)\Images\Tiles"
@@ -1428,7 +1407,22 @@ xcopy /Y /Q "$(SolutionDir)CHANGELOG.md" "$(ProjectDir)Resources"</PreBuildEvent
   <Target Name="AfterBuild">
   </Target>
   -->
+ <ItemGroup>    
+    <StringResources Include="$(SolutionDir)HDT-Localization\*.resx">
+      <InProject>false</InProject>
+    </StringResources>  
+  </ItemGroup>  
   <Target Name="GenerateDesignerFiles">
+    <Copy  
+            SourceFiles="@(StringResources)"  
+            DestinationFiles="@(StringResources->'$(ProjectDir)Properties\%(Filename)%(Extension)')"
+    />
+    <GenerateResource Sources="Properties/Strings.resx" StronglyTypedLanguage="C#" StronglyTypedClassName="Strings" StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties" StronglyTypedFileName="Properties/Strings.Designer.cs" OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources" PublicClass="true">
+    </GenerateResource>
+    <Delete Files="Hearthstone_Deck_Tracker.Properties.Strings.resources" />
+  </Target>
+  <Target Name="GenerateDesignerFiles">
+    <Copy SourceFiles="@(StringResources)" DestinationFiles="@(StringResources->'$(ProjectDir)Properties\%(Filename)%(Extension)')" />
     <GenerateResource Sources="Properties/Strings.resx" StronglyTypedLanguage="C#" StronglyTypedClassName="Strings" StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties" StronglyTypedFileName="Properties/Strings.Designer.cs" OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources" PublicClass="true">
     </GenerateResource>
     <Delete Files="Hearthstone_Deck_Tracker.Properties.Strings.resources" />
