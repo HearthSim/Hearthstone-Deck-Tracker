@@ -233,6 +233,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Hunter.RaptorHatchling:
 								AddKnownCardId(gameState, NonCollectible.Hunter.RaptorHatchling_RaptorPatriarchToken);
 								break;
+							case Collectible.Warrior.DirehornHatchling:
+								AddKnownCardId(gameState, NonCollectible.Warrior.DirehornHatchling_DirehornMatriarchToken);
+								break;
 						}
 					}
 					else //POWER
@@ -278,9 +281,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case NonCollectible.Hunter.TheMarshQueen_QueenCarnassaToken:
 								AddKnownCardId(gameState, NonCollectible.Hunter.TheMarshQueen_CarnassasBroodToken, 15);
-								break;
-							case Collectible.Warrior.DirehornHatchling:
-								AddKnownCardId(gameState, NonCollectible.Warrior.DirehornHatchling_DirehornMatriarchToken);
 								break;
 							case Collectible.Neutral.EliseTheTrailblazer:
 								AddKnownCardId(gameState, NonCollectible.Neutral.ElisetheTrailblazer_UngoroPackToken);
