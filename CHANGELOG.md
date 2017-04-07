@@ -1,4 +1,4 @@
-## __Release vNext__
+## __Release v1.2.2 - 2017-04-07__
 
 __Fixes__:
 - Fixed an issue where Quests would trigger the secret list.
