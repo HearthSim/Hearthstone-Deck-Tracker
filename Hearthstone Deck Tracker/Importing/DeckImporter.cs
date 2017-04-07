@@ -68,6 +68,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			var website = Websites.FirstOrDefault(x => url.Contains(x.Key));
 			if(website.Value != null)
 			{
+				Log.Info("Using custom importer...");
 				var deck = await website.Value.Invoke(url);
 				if(deck == null)
 				{
@@ -77,6 +78,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 				deck.Cards = new ObservableCollection<Card>(deck.Cards.Where(x => x.Id != Database.UnknownCardId));
 				return deck;
 			}
+			Log.Info("Using meta tags importer...");
 			return await MetaTagImporter.TryFindDeck(url);
 		}
 
