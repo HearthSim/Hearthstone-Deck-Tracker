@@ -487,7 +487,6 @@
     <Compile Include="Importing\Websites\Hearthbuilder.cs" />
     <Compile Include="Importing\Websites\HearthnewsFr.cs" />
     <Compile Include="Importing\Websites\Hearthpwn.cs" />
-    <Compile Include="Importing\Websites\Hearthstats.cs" />
     <Compile Include="Importing\Websites\Hearthstonedecks.cs" />
     <Compile Include="Importing\Websites\Hearthstoneheroes.cs" />
     <Compile Include="Importing\Websites\Hearthstoneplayers.cs" />
