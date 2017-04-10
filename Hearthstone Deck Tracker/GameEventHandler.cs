@@ -864,9 +864,14 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
-			if (!entity.IsSecret)
+			if(!entity.IsSecret)
+			{
+				if(entity.IsQuest)
+					_game.Player.QuestPlayedFromHand(entity, turn);
 				return;
-			switch(fromZone)
+			}
+
+			switch (fromZone)
 			{
 				case Zone.DECK:
 					_game.Player.SecretPlayedFromDeck(entity, turn);
@@ -1126,7 +1131,11 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, Zone fromZone, int otherId)
 		{
 			if(!entity.IsSecret)
+			{
+				if(entity.IsQuest)
+					_game.Opponent.QuestPlayedFromHand(entity, turn);
 				return;
+			}
 			_game.OpponentSecretCount++;
 			switch(fromZone)
 			{

@@ -351,6 +351,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(entity);
 		}
 
+		public void QuestPlayedFromHand(Entity entity, int turn)
+		{
+			entity.Info.Turn = turn;
+			SpellsPlayedCount++;
+			Log(entity);
+		}
+
 		public void PlayToGraveyard(Entity entity, string cardId, int turn)
 		{
 			entity.Info.Turn = turn;
