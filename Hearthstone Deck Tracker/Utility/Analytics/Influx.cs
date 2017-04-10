@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -9,7 +10,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 {
 	internal class Influx
 	{
-		private const string Url = "https://metrics.hearthsim.net:8086/write?db=hsreplaynet&precision=s&u=hdt&p=GPPHbmJQtC87FAAR";
 		private static DateTime _appStartTime;
 		private static bool _new;
 
@@ -76,23 +76,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			try
 			{
-				var request = (HttpWebRequest)WebRequest.Create(Url);
-				request.ContentType = "text/plain";
-				request.Method = "POST";
-				using(var stream = await request.GetRequestStreamAsync())
+				using(var client = new UdpClient())
 				{
 					var line = point.ToLineProtocol();
-					Log.Debug(line);
-					stream.Write(Encoding.UTF8.GetBytes(line), 0, line.Length);
-				}
-				try
-				{
-					using(var response = (HttpWebResponse)await request.GetResponseAsync())
-						Log.Debug(response.StatusCode.ToString());
-				}
-				catch(WebException e)
-				{
-					Log.Debug(e.Status.ToString());
+					var data = Encoding.UTF8.GetBytes(line);
+					var length = await client.SendAsync(data, data.Length, "metrics.hearthsim.net", 8091);
+					Log.Debug(line + " - " +  length);
 				}
 			}
 			catch(Exception ex)
