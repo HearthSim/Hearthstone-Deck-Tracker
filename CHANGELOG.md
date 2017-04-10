@@ -1,3 +1,10 @@
+## __Release vNext__
+
+__Fixes__:
+- Fixed an issue where Direhorn Hatchling would not add a token to the deck.
+- Fixed an issue where quests would not count towards the spell counter.
+
+
 ## __Release v1.2.2 - 2017-04-07__
 
 __Fixes__:
