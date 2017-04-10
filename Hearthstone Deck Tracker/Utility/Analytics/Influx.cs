@@ -2,7 +2,6 @@ using System;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -34,13 +33,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_hsreplay_autoupload_changed").Tag("new_state", newState).Build());
-		}
-
-		public static void OnGameEnd(BnetGameType gameType)
-		{
-			if(!Config.Instance.GoogleAnalytics)
-				return;
-			WritePoint(new InfluxPointBuilder("hdt_played_game_counter").Tag("game_type", gameType).Build());
 		}
 
 		public static void OnHighMemoryUsage(long mem)
@@ -86,13 +78,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			{
 				Log.Debug(ex.ToString());
 			}
-		}
-
-		public static void OnGameUpload(int tries)
-		{
-			if(!Config.Instance.GoogleAnalytics)
-				return;
-			WritePoint(new InfluxPointBuilder("hdt_hsreplay_upload_counter", false).Field("tries", tries).Build());
 		}
 
 		public static void OnGameUploadFailed(WebExceptionStatus status = WebExceptionStatus.UnknownError)
