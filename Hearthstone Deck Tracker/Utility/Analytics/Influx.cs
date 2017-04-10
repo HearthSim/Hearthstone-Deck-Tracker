@@ -10,16 +10,37 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 	internal class Influx
 	{
 		private const string Url = "https://metrics.hearthsim.net:8086/write?db=hsreplaynet&precision=s&u=hdt&p=GPPHbmJQtC87FAAR";
+		private static DateTime _appStartTime;
+		private static bool _new;
 
 		public static void OnAppStart(Version version, bool isNew, int startupDuration)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
+			_appStartTime = DateTime.Now;
+			_new = isNew;
 			var point = new InfluxPointBuilder("hdt_app_start")
 				.Tag("version", version.ToVersionString(true))
 				.Tag("new", isNew)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
 				.Field("startup_duration", startupDuration);
+#if(SQUIRREL)
+			point.Tag("squirrel", true);
+#else
+			point.Tag("squirrel", false);
+#endif
+			WritePoint(point.Build());
+		}
+
+		public static void OnAppExit(Version version)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var sessionDuration = (DateTime.Now - _appStartTime).TotalSeconds;
+			var point = new InfluxPointBuilder("hdt_app_exit")
+				.Tag("version", version.ToVersionString(true))
+				.Tag("new", _new)
+				.Field("session_duration_seconds", (int)sessionDuration);
 #if(SQUIRREL)
 			point.Tag("squirrel", true);
 #else

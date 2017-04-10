@@ -23,6 +23,7 @@ using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Updating;
@@ -353,6 +354,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			try
 			{
 				Log.Info("Shutting down...");
+				Influx.OnAppExit(Helper.GetCurrentVersion());
 				Core.UpdateOverlay = false;
 				Core.Update = false;
 
