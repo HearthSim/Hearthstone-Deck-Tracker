@@ -63,9 +63,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public void SetCurrentEntity(int id)
 		{
-			Entity entity;
 			CurrentEntityId = id;
-			if(_game.Entities.TryGetValue(CurrentEntityId, out entity))
+			if(_game.Entities.TryGetValue(CurrentEntityId, out var entity))
 				entity.Info.HasOutstandingTagChanges = true;
 		}
 
@@ -80,7 +79,12 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			CurrentBlock = CurrentBlock?.CreateChild(blockId) ?? new Block(null, blockId);
 		}
 
-		public void BlockEnd() => CurrentBlock = CurrentBlock?.Parent;
+		public void BlockEnd()
+		{
+			CurrentBlock = CurrentBlock?.Parent;
+			if(_game.Entities.TryGetValue(CurrentEntityId, out var entity))
+				entity.Info.HasOutstandingTagChanges = false;
+		}
 	}
 
 	public class Block
