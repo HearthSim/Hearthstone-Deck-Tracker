@@ -865,7 +865,10 @@ namespace Hearthstone_Deck_Tracker
 			if(!entity.IsSecret)
 			{
 				if(entity.IsQuest)
+				{
 					_game.Player.QuestPlayedFromHand(entity, turn);
+					GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
+				}
 				return;
 			}
 
@@ -1131,7 +1134,10 @@ namespace Hearthstone_Deck_Tracker
 			if(!entity.IsSecret)
 			{
 				if(entity.IsQuest)
+				{
 					_game.Opponent.QuestPlayedFromHand(entity, turn);
+					GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
+				}
 				return;
 			}
 			_game.OpponentSecretCount++;
