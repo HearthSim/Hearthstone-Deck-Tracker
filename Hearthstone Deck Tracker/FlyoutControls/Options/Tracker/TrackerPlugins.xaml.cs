@@ -98,12 +98,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					}
 					if(plugins <= 0) 
 						return;
-					var result = await Core.MainWindow.ShowMessageAsync("Plugins installed",
-						$"Successfully installed {plugins} plugin(s). \n Restart now to take effect?", MessageDialogStyle.AffirmativeAndNegative);
-
-					if(result != MessageDialogResult.Affirmative)
-						return;
-					Core.MainWindow.Restart();
+					PluginManager.Instance.LoadPlugins(PluginManager.Instance.SyncPlugins());
 				}
 			}
 			catch(Exception ex)
