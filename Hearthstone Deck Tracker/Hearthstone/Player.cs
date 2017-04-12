@@ -158,7 +158,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			=> RevealedEntities.Where(x => (x.IsMinion || x.IsSpell || x.IsWeapon || !x.HasTag(GameTag.CARDTYPE))
 										&& (x.GetTag(GameTag.CREATOR) == 1 || ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
 											&& x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck) && !(x.Info.Created && x.IsInSetAside))
-								.GroupBy(e => new {	e.CardId, Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
+								.GroupBy(e => new { CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId, 
+													Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
 													Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
 													Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded})
 								.Select(g =>
