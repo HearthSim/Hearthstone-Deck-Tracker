@@ -25,6 +25,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return UnknownCard;
 		}
 
+		public static Card GetCardFromDbfId(int dbfId)
+		{
+			if(dbfId == 0)
+				return null;
+			var card = Cards.GetFromDbfId(dbfId);
+			if(card != null)
+				return new Card(card);
+			Log.Warn("Could not find card with DbfId=" + dbfId);
+			return UnknownCard;
+		}
+
 		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true, bool collectible = true)
 		{
 			var langs = new List<Locale> {Locale.enUS};

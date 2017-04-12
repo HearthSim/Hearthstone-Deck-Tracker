@@ -262,6 +262,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			}
 		}
 
+		public void SetOriginalCardId(int dbfId)
+		{
+			if(dbfId <= 0)
+				return;
+			OriginalCardId = Database.GetCardFromDbfId(dbfId).Id;
+		}
+
 		public bool Discarded { get; set; }
 		public bool Returned { get; set; }
 		public bool Mulliganed { get; set; }
@@ -272,6 +279,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool Hidden { get; set; }
 		public int CostReduction { get; set; }
 		public Zone? OriginalZone { get; set; }
+		public string OriginalCardId { get; private set; }
+		public bool WasTransformed => !string.IsNullOrEmpty(OriginalCardId);
 		public bool CreatedInDeck => OriginalZone == Zone.DECK;
 		public bool CreatedInHand => OriginalZone == Zone.HAND;
 
