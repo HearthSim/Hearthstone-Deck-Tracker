@@ -33,12 +33,15 @@
                         <TreeViewItem Name="TreeViewItemTrackerExporting" Header="{lex:LocText Options_Tracker_Exporting_Header}" Selected="TreeViewItemTrackerExporting_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerImporting" Header="{lex:LocText Options_Tracker_Importing_Header}" Selected="TreeViewItemTrackerImporting_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerNotifications" Header="{lex:LocText Options_Tracker_Notifications_Header}" Selected="TreeViewItemTrackerNotifications_OnSelected"/>
-                        <TreeViewItem Name="TreeViewItemTrackerPlugins" Header="{lex:LocText Options_Tracker_Plugins_Header}" Selected="TreeViewItemTrackerPlugins_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerHotKeys" Header="{lex:LocText Options_Tracker_Hotkeys_Header}" Selected="TreeViewItemTrackerHotKeys_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerBackups" Header="{lex:LocText Options_Tracker_Backups_Header}" Selected="TreeViewItemTrackerBackups_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerAppearance" Header="{lex:LocText Options_Tracker_Appearance_Header}" Selected="TreeViewItemTrackerAppearance_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerSettings" Header="{lex:LocText Options_Tracker_Settings_Header}" Selected="TreeViewItemTrackerSettings_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerLogging" Header="{lex:LocText Options_Tracker_Logging_Header}" Selected="TreeViewItemTrackerLogging_OnSelected" Visibility="Collapsed"/>
+                    </TreeViewItem>
+                    <TreeViewItem Name="TreeViewItemTrackerPlugins" Header="{lex:LocText Options_Tracker_Plugins_Header}">
+                        <TreeViewItem Name="TreeViewItemTrackerPluginsInstalled" Header="Installed" Selected="TreeViewItemTrackerPluginsInstalled_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemTrackerPluginsAvailable" Header="Available" Selected="TreeViewItemTrackerPluginsAvailable_OnSelected"/>
                     </TreeViewItem>
                 </TreeView>
             </DockPanel>

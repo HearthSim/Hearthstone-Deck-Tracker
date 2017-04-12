@@ -47,7 +47,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerHotKeys, nameof(Core.MainWindow.Options.OptionsTrackerHotKeys)),
 				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerImporting, nameof(Core.MainWindow.Options.OptionsTrackerImporting)),
 				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerNotifications, nameof(Core.MainWindow.Options.OptionsTrackerNotifications)),
-				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerPlugins, nameof(Core.MainWindow.Options.OptionsTrackerPlugins)),
+				new UserControlWrapper(Core.MainWindow.Options.OptionsPluginsInstalled, nameof(Core.MainWindow.Options.OptionsPluginsInstalled)),
+				new UserControlWrapper(Core.MainWindow.Options.OptionsPluginsAvailable, nameof(Core.MainWindow.Options.OptionsPluginsAvailable)),
 				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerSettings, nameof(Core.MainWindow.Options.OptionsTrackerSettings)),
 				new UserControlWrapper(Core.MainWindow.Options.OptionsTrackerStats, nameof(Core.MainWindow.Options.OptionsTrackerStats))
 			};
