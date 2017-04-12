@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
-using HearthDb;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
@@ -17,15 +18,38 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class OverlayWindow
 	{
+		private async void SetTopmost()
+		{
+			if(User32.GetHearthstoneWindow() == IntPtr.Zero)
+			{
+				Log.Info("Hearthstone window not found");
+				return;
+			}
+
+			for(var i = 0; i < 20; i++)
+			{
+				var isTopmost = User32.IsTopmost(new WindowInteropHelper(this).Handle);
+				if(isTopmost)
+				{
+					Log.Info($"Overlay is topmost after {i + 1} tries.");
+					return;
+				}
+
+				Topmost = false;
+				Topmost = true;
+				await Task.Delay(250);
+			}
+
+			Log.Info("Could not set overlay as topmost");
+		}
+
 		public void Update(bool refresh)
 		{
 			if (refresh)
 			{
 				ListViewPlayer.Items.Refresh();
 				ListViewOpponent.Items.Refresh();
-				Topmost = false;
-				Topmost = true;
-				Log.Info("Refreshed overlay topmost status");
+				SetTopmost();
 			}
 
 			var opponentHandCount = _game.Opponent.HandCount;
@@ -362,5 +386,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double GoldFrameWidth => 6 * GoldFrameHeight;
 		public double GoldFrameOffset => 85 / 25 * GoldFrameHeight;
 
+		private void OverlayWindow_OnDeactivated(object sender, EventArgs e) => SetTopmost();
 	}
 }

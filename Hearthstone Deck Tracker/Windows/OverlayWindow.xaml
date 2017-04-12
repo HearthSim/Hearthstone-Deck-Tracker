@@ -13,7 +13,7 @@
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
         Title="HearthstoneOverlay" Height="571" Width="832" Background="{x:Null}" ResizeMode="NoResize"
         ShowInTaskbar="False" SourceInitialized="Window_SourceInitialized_1" AllowsTransparency="True"
-        Loaded="OverlayWindow_OnLoaded"
+        Loaded="OverlayWindow_OnLoaded" Deactivated="OverlayWindow_OnDeactivated"
         WindowStyle="None" Topmost="True" Closing="Window_Closing">
     <Window.Resources>
         <themes:ThemeManager x:Key="ThemeManager"/>

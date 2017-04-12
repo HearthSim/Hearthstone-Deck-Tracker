@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public const int WsExTransparent = 0x00000020;
 		public const int WsExToolWindow = 0x00000080;
+		public const int WsExTopmost = 0x00000008;
 		private const int GwlExstyle = (-20);
 		private const int GwlStyle = -16;
 		private const int WsMinimize = 0x20000000;
@@ -113,6 +114,8 @@ namespace Hearthstone_Deck_Tracker
 				return WindowState.Minimized;
 			return WindowState.Normal;
 		}
+
+		public static bool IsTopmost(IntPtr hwnd) => (GetWindowLong(hwnd, GwlExstyle) & WsExTopmost) != 0;
 
 		public static IntPtr GetHearthstoneWindow()
 		{
