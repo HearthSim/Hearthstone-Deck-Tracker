@@ -1,8 +1,18 @@
-## __Release vNext__
+## __Release v1.2.3 - 2017-04-12__
+
+__Changes__:
+- Hopefully made some improvements to issues with the overlay hiding behind Hearthstone.
+  - If you are still having problems, try running HDT as administrator.
+- Drag & Dropping plugins into the plugins options menu will now install them without requiring a restart.
 
 __Fixes__:
 - Fixed an issue where Direhorn Hatchling would not add a token to the deck.
+- Fixed an issue where Patches would remain in the decklist in some cases.
+- Fixes an issue where transformed cards would not be displayed correctly in the opponents deck list (Shifter Zerus, Molten Blade).
 - Fixed an issue where quests would not count towards the spell counter.
+
+__API__:
+- Quests now properly emit `OnPlay` events.
 
 
 ## __Release v1.2.2 - 2017-04-07__
