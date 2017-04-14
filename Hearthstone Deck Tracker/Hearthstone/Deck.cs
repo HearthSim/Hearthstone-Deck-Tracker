@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.HsReplay.Utility;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -335,6 +336,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool HasVersions => Versions != null && Versions.Count > 0;
 
+		private string _shortId;
+		public string ShortId => _shortId ?? (_shortId = ShortIdHelper.GetShortId(this));
 
 		public Visibility VisibilityStats => GetRelevantGames().Any() ? Visibility.Visible : Visibility.Collapsed;
 

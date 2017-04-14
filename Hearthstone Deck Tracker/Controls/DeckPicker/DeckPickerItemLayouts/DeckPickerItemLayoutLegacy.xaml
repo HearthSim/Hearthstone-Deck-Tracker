@@ -55,6 +55,11 @@
                            Visibility="{Binding ArchivedVisibility}"
                            ToolTip="{lex:Loc DeckPicker_Deck_Archived_Tooltip}" />
                     <DockPanel>
+                        <Image Source="{DynamicResource HsReplayIcon}" 
+                               Visibility="{Binding HsReplayDataIndicatorVisibility, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
+                               ToolTip="{lex:Loc DeckPicker_Deck_HsReplayDataIndicator_Tooltip}"
+                               Width="14" RenderOptions.BitmapScalingMode="Fant"
+                               DockPanel.Dock="Left" Margin="0,0,4,0"/>
                         <TextBlock Text="{Binding NameAndVersion}" Margin="0,0,15,0" DockPanel.Dock="Left"
                                    FontSize="17" TextTrimming="CharacterEllipsis"
                                    Foreground="Black"

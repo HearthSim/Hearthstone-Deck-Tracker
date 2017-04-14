@@ -47,6 +47,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				return;
 			}
 #endif
+			if(previousVersion < new Version(1,2,4))
+				infoControl = new HsReplayStatisticsInfo();
 			if(infoControl == null)
 				return;
 			ContentControlHighlight.Content = infoControl;

@@ -85,7 +85,9 @@
         </TabItem>
         <TabItem>
             <DockPanel>
-                <Button Name="ButtonContinue" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Content="continue to update notes" Margin="5" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonContinue_OnClick"/>
+                <Button Name="ButtonContinue" DockPanel.Dock="Bottom" MinWidth="180" HorizontalAlignment="Center" Margin="5" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonContinue_OnClick">
+                    <TextBlock>Continue to Update Notes</TextBlock>
+                </Button>
                 <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}" Margin="5">
                     <ScrollViewer>
                         <ContentControl Name="ContentControlHighlight"/>

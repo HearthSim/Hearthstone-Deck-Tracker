@@ -386,13 +386,24 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="10,6,10,-4" Grid.Row="0" Visibility="Visible" Style="{StaticResource AccentedSquareButtonStyle}">
                     <TextBlock Name="TextBlockBtnStartHearthstone" Text="{lex:LocTextUpper MainWindow_Button_StartHearthstone}" />
                 </Button>
-                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="1" Visibility="Collapsed">
+                <Button Name="BtnHsReplayDeckDetail" Margin="10,6,10,-4" Height="40"  Grid.Row="1" Style="{StaticResource SquareButtonStyle}"
+                    Visibility="{Binding HsReplayButtonVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}}"
+                    Click="BtnHsReplayDeckDetail_OnClick">
+                    <DockPanel HorizontalAlignment="Center">
+                        <Image Source="{DynamicResource HsReplayIcon}"
+                            Height="24" RenderOptions.BitmapScalingMode="Fant"
+                            DockPanel.Dock="Left" Margin="0,0,8,0"/>
+                        <TextBlock VerticalAlignment="Center" FontWeight="SemiBold" Text="{lex:LocTextUpper MainWindow_DeckList_Button_HSReplay}" />
+                    </DockPanel>
+                </Button>
+                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="2" Visibility="Collapsed">
                     <DockPanel>
                         <TextBlock Text="{lex:LocTextUpper MainWindow_Label_SelectedVersion}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
                         <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
@@ -404,7 +415,7 @@
                         </ComboBox>
                     </DockPanel>
                 </Border>
-                <Border Name="PanelCardCount" Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="1"  Visibility="Collapsed">
+                <Border Name="PanelCardCount" Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="2"  Visibility="Collapsed">
                     <DockPanel>
                         <controls1:DeckSetIcons x:Name="SetIcons" DockPanel.Dock="Right" Margin="0,0,2,0" Fill="{DynamicResource TextBrush}"/>
                         <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" >
@@ -418,7 +429,7 @@
                         </StackPanel>
                     </DockPanel>
                 </Border>
-                <ListView x:Name="ListViewDeck" Grid.Row="2" Background="#696969"
+                <ListView x:Name="ListViewDeck" Grid.Row="3" Background="#696969"
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -458,7 +469,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="3" Height="150" Margin="0,6,0,6" />
+                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="4" Height="150" Margin="0,6,0,6" />
             </Grid>
                 <deckPicker:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                               Grid.Row="2"

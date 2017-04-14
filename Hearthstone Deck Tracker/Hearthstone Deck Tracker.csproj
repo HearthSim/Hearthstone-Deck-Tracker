@@ -169,6 +169,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
@@ -260,6 +261,9 @@
       <DependentUpon>ElementSorterItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckPicker\MarginConverter.cs" />
+    <Compile Include="Controls\Information\HsReplayStatisticsInfo.xaml.cs">
+      <DependentUpon>HsReplayStatisticsInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\DeckPanel.cs" />
     <Compile Include="Enums\ConfigWarning.cs" />
     <Compile Include="Enums\ImportingChoice.cs" />
@@ -388,6 +392,9 @@
     <Compile Include="FlyoutControls\Warning.xaml.cs">
       <DependentUpon>Warning.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HsReplay\DecksData.cs" />
+    <Compile Include="HsReplay\HsReplayDecks.cs" />
+    <Compile Include="HsReplay\Utility\ShortIdHelper.cs" />
     <Compile Include="Importing\StringImporter.cs" />
     <Compile Include="Utility\RegistryHelper.cs" />
     <Compile Include="Hearthstone\Watchers.cs" />
@@ -839,6 +846,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Information\HsReplayStatisticsInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FlyoutControls\HsReplayInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1200,6 +1211,10 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\hsreplay_info_3.png" />
+    <Resource Include="Resources\hsreplay_info_1.png" />
+    <Resource Include="Resources\hsreplay_info_2.png" />
+    <Resource Include="Resources\hsreplay_logo_blue.png" />
     <Resource Include="Resources\hsreplay_logo_white.png" />
     <EmbeddedResource Include="Resources\CHANGELOG.md" />
     <EmbeddedResource Include="Properties\Strings.ja-JP.resx">

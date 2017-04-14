@@ -189,6 +189,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckPickerList.UpdateDecks(forceUpdate: new[] {deck});
 			UpdateDeckList(deck);
 			ManaCurveMyDecks.UpdateValues();
+			OnPropertyChanged(nameof(HsReplayButtonVisibility));
 			if(deck.Equals(DeckList.Instance.ActiveDeck))
 				UseDeck(deck);
 			Console.WriteLine(version);
@@ -262,6 +263,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public Visibility MenuItemReplayClaimAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Visible : Collapsed;
 		public Visibility MenuItemReplayMyAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Collapsed : Visible;
+		
+		public Visibility HsReplayButtonVisibility
+		{
+			get
+			{
+				var deck = DeckPickerList.SelectedDecks.FirstOrDefault()?.GetSelectedDeckVersion() ?? DeckList.Instance.ActiveDeckVersion;
+				if(deck != null && HsReplayDecks.AvailableDecks.Contains(deck.ShortId))
+					return Visible;
+				return Collapsed;
+			}
+		}
 
 		public void UpdateIntroLabelVisibility() => OnPropertyChanged(nameof(IntroductionLabelVisibility));
 
@@ -296,6 +308,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				FlyoutWarnings.IsOpen = true;
 			};
 			Config.Instance.CheckConfigWarnings();
+
+			HsReplayDecks.OnLoaded += () =>
+			{
+				DeckPickerList.RefreshDisplayedDecks();
+				OnPropertyChanged(nameof(HsReplayButtonVisibility));
+			};
 		}
 
 		public void LoadAndUpdateDecks()
@@ -527,6 +545,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				DeckPickerList.MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 				DeckPickerList.MenuItemQuickSetTag.Items.Refresh();
 
+				OnPropertyChanged(nameof(HsReplayButtonVisibility));
 
 				//set and save last used deck for class
 				if(setActive)
@@ -647,5 +666,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client");
 
 		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/CBnAFhX");
+
+		private void BtnHsReplayDeckDetail_OnClick(object sender, RoutedEventArgs e)
+		{
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault()?.GetSelectedDeckVersion() ?? DeckList.Instance.ActiveDeckVersion;
+			if(deck?.ShortId != null)
+				Helper.TryOpenUrl($"https://hsreplay.net/decks/{deck.ShortId}/?utm_source=hdt&utm_medium=client");
+		}
 	}
 }

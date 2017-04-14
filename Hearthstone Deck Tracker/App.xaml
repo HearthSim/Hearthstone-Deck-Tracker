@@ -16,6 +16,12 @@
                 <ResourceDictionary>
                     <ImageSource x:Key="AppIcon">pack://siteoforigin:,,,/Images/HearthstoneDeckTracker.ico</ImageSource>
                     <ImageSource x:Key="JoustScreenshot">Resources/joust-screenshot.jpg</ImageSource>
+                    <ImageSource x:Key="HsReplayInfo1">Resources/hsreplay_info_1.png</ImageSource>
+                    <ImageSource x:Key="HsReplayInfo2">Resources/hsreplay_info_2.png</ImageSource>
+                    <ImageSource x:Key="HsReplayInfo3">Resources/hsreplay_info_3.png</ImageSource>
+                    <ImageSource x:Key="HsReplayIcon">Resources/hsreplay_logo_blue.png</ImageSource>
+                    <ImageSource x:Key="HsReplayIconBlue">Resources/hsreplay_logo_blue.png</ImageSource>
+                    <ImageSource x:Key="HsReplayIconWhite">Resources/hsreplay_logo_white.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

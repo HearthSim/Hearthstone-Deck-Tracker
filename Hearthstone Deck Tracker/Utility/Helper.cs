@@ -478,9 +478,16 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var theme = GetAppTheme();
 			ThemeManager.ChangeAppStyle(Application.Current, GetAppAccent(), theme);
-			Application.Current.Resources["GrayTextColorBrush"] = theme.Name == MetroTheme.BaseLight.ToString()
-																	  ? new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor1"])
-																	  : new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor2"]);
+			if(theme.Name == MetroTheme.BaseLight.ToString())
+			{
+				Application.Current.Resources["GrayTextColorBrush"] = new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor1"]);
+				Application.Current.Resources["HsReplayIcon"] = Application.Current.Resources["HsReplayIconBlue"];
+			}
+			else
+			{
+				Application.Current.Resources["GrayTextColorBrush"] = new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor2"]);
+				Application.Current.Resources["HsReplayIcon"] = Application.Current.Resources["HsReplayIconWhite"];
+			}
 		}
 
 		public static Accent GetAppAccent() => string.IsNullOrEmpty(Config.Instance.AccentName)

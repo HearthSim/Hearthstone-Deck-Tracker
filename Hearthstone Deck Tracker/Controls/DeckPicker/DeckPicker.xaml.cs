@@ -337,7 +337,10 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			{
 				var dpi = GetDeckPickerItemFromCache(deck);
 				if(dpi != null)
+				{
 					_displayedDecks.Add(dpi);
+					dpi.RefreshProperties();
+				}
 			}
 			Sort();
 			if(selectedDeck != null && reselectActiveDeck && decks.Contains(selectedDeck))

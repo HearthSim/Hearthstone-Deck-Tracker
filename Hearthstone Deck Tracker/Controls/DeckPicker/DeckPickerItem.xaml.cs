@@ -2,12 +2,14 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
@@ -50,6 +52,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? LocUtil.Get(LocActive, true) : LocUtil.Get(LocUse, true);
 
+		public Visibility HsReplayDataIndicatorVisibility => HsReplayDecks.AvailableDecks.Contains(Deck.GetSelectedDeckVersion().ShortId) ? Visibility.Visible : Visibility.Collapsed;
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void SetLayout() => Content = Activator.CreateInstance(_deckPickerItem);
@@ -60,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			OnPropertyChanged(nameof(FontWeightActiveDeck));
 			OnPropertyChanged(nameof(TextUseButton));
 			OnPropertyChanged(nameof(LastPlayed));
+			OnPropertyChanged(nameof(HsReplayDataIndicatorVisibility));
 			Deck.UpdateWildIndicatorVisibility();
 		}
 

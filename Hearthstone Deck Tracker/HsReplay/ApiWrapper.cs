@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
@@ -115,6 +116,29 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			catch(Exception ex)
 			{
 				Log.Error(ex);
+				return null;
+			}
+		}
+
+		internal static async Task<DecksData> GetAvailableDecks()
+		{
+			Log.Info("Fetching available decks...");
+			try
+			{
+				var token = await GetUploadToken();
+				var data = await Client.GetAvailableDecks(token);
+				if(data == null)
+					return null;
+				return new DecksData
+				{
+					ClientTimeStamp = DateTime.Now,
+					Decks = data.Data.Properties().Select(p => p.Name).ToArray(),
+					ServerTimeStamp = data.ServerTimeStamp
+				};
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
 				return null;
 			}
 		}
