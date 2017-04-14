@@ -22,8 +22,12 @@
             </DockPanel.Background>
             <Grid Width="46" Height="46" Margin="5,1,10,0">
                 <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}" RenderOptions.BitmapScalingMode="Fant" />
-                <hearthstoneDeckTracker:HearthstoneTextBlock Text="s" FontSize="14" Fill="LimeGreen" Width="10" Height="18" TextAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,2,0" Visibility="{Binding StandardViableVisibility}"
-                                                             ToolTip="{lex:Loc DeckPicker_Deck_Standard_Tooltip}"/>
+                <Rectangle Width="18" Height="14" Visibility="{Binding WildIndicatorVisibility}" Margin="0,2,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                           ToolTip="{lex:Loc DeckPicker_Deck_Wild_Tooltip}">
+                    <Rectangle.Fill>
+                        <VisualBrush Visual="{StaticResource wild_icon}" />
+                    </Rectangle.Fill>
+                </Rectangle>
             </Grid>
             <Border BorderThickness="1"  BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Width="48" DockPanel.Dock="Right" Margin="-1">
                 <Grid>

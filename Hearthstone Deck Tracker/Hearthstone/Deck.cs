@@ -151,7 +151,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				_selectedVersion = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(NameAndVersion));
-				OnPropertyChanged(nameof(StandardViableVisibility));
+				OnPropertyChanged(nameof(WildIndicatorVisibility));
 			}
 		}
 
@@ -342,9 +342,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Visibility NoteVisibility => string.IsNullOrEmpty(Note) ? Visibility.Collapsed : Visibility.Visible;
 
-		public Visibility StandardViableVisibility => StandardViable ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility WildIndicatorVisibility => IsArenaDeck || !IsWildDeck ? Visibility.Collapsed : Visibility.Visible;
 
-		public bool StandardViable => !IsArenaDeck && !GetSelectedDeckVersion().Cards.Any(x => Helper.WildOnlySets.Contains(x.Set));
+		public bool StandardViable => !IsArenaDeck && !IsWildDeck;
+
+		public bool IsWildDeck => GetSelectedDeckVersion().Cards.Any(x => Helper.WildOnlySets.Contains(x.Set));
 
 		public Visibility ArchivedVisibility => Archived ? Visibility.Visible : Visibility.Collapsed;
 
@@ -530,6 +532,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OnPropertyChanged(nameof(VisibilityNoStats));
 		}
 
-		public void UpdateStandardIndicatorVisibility() => OnPropertyChanged(nameof(StandardViableVisibility));
+		public void UpdateWildIndicatorVisibility() => OnPropertyChanged(nameof(WildIndicatorVisibility));
 	}
 }

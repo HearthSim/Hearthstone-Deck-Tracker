@@ -60,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			OnPropertyChanged(nameof(FontWeightActiveDeck));
 			OnPropertyChanged(nameof(TextUseButton));
 			OnPropertyChanged(nameof(LastPlayed));
-			Deck.UpdateStandardIndicatorVisibility();
+			Deck.UpdateWildIndicatorVisibility();
 		}
 
 		[NotifyPropertyChangedInvocator]
