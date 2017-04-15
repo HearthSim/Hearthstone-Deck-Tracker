@@ -178,7 +178,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(!_initialized || DeckPickerList.ChangedSelection)
 				return;
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
 			if(deck == null)
 				return;
 			var version = ComboBoxDeckVersion.SelectedItem as SerializableVersion;
