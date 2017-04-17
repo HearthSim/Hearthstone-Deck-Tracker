@@ -42,7 +42,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(result == MessageDialogResult.Negative)
 				return;
 			DeckManagerEvents.OnDeckDeleted.Execute(decks);
-			SelectDeck(null, true);
 			foreach(var deck in decks)
 				DeleteDeck(deck, false);
 			DeckStatsList.Save();
@@ -55,6 +54,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(deck == null)
 				return;
+
+			if(Equals(DeckList.Instance.ActiveDeck, deck))
+				SelectDeck(null, true);
 
 			DeckStats deckStats;
 			if(DeckStatsList.Instance.DeckStats.TryGetValue(deck.DeckId, out deckStats))
@@ -82,7 +84,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				DeckPickerList.UpdateDecks();
 				DeckPickerList.UpdateArchivedClassVisibility();
 			}
-			ListViewDeck.ItemsSource = null;
 			Log.Info("Deleted deck: " + deck.Name);
 		}
 
