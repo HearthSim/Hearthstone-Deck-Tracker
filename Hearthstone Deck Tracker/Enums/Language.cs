@@ -16,7 +16,9 @@ namespace Hearthstone_Deck_Tracker.Enums
 		koKR,
 		[Description("Polish")]
 		plPL,
-		[Description("Portuguese")]
+		[Description("Portuguese (Brazil)")]
+		ptBR,
+		[Description("Portuguese (Portugal)")]
 		ptPT,
 		[Description("Ukrainian")]
 		ukUA,		
