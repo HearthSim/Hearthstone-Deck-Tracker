@@ -1200,6 +1200,7 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <None Include="Test.bat" />
     <Resource Include="Resources\hsreplay_logo_white.png" />
     <EmbeddedResource Include="Resources\CHANGELOG.md" />
     <EmbeddedResource Include="Properties\Strings.ja-JP.resx">
@@ -1315,6 +1316,7 @@
     <Resource Include="Resources\ClassIcons\General\BaseLight\all.png" />
     <Resource Include="Resources\ClassIcons\General\BaseLight\archived.png" />
     <Resource Include="Resources\ClassIcons\General\BaseDark\archived.png" />
+    <None Include="PreBuildEvent.bat" />
     <None Include="Resources\card-mark-coin.png" />
     <Resource Include="Utility\Markdown.Xaml\License.txt" />
     <Resource Include="Resources\cards.png" />
@@ -1394,36 +1396,9 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if exist $(SolutionDir)HearthDb (
-  git -C $(SolutionDir)HearthDb fetch
-  git -C $(SolutionDir)HearthDb reset --hard origin/master
-) else (
-  git clone --depth 1 https://github.com/HearthSim/HearthDb.git $(SolutionDir)HearthDb
-)
-if exist $(SolutionDir)HearthMirror (
-  git -C $(SolutionDir)HearthMirror fetch
-  git -C $(SolutionDir)HearthMirror reset --hard origin/master
-) else (
-  git clone --depth 1 https://github.com/HearthSim/HearthMirror.git $(SolutionDir)HearthMirror
-)
-if exist $(SolutionDir)HSReplay-Api (
-  git -C $(SolutionDir)HSReplay-Api fetch
-  git -C $(SolutionDir)HSReplay-Api reset --hard origin/master
-) else (
-  git clone --depth 1 https://github.com/HearthSim/HSReplay-API-Client.git $(SolutionDir)HSReplay-Api
-)
-if exist $(SolutionDir)HDT-Localization (
-  git -C $(SolutionDir)HDT-Localization fetch
-  git -C $(SolutionDir)HDT-Localization reset --hard origin/master
-) else (
-  git clone --depth 1 https://github.com/HearthSim/HDT-Localization.git $(SolutionDir)HDT-Localization
-)
-xcopy /Y "$(SolutionDir)HDT-Localization\*.resx" "$(ProjectDir)Properties\"
-mkdir "$(TargetDir)\Images\Tiles"
-mkdir "$(TargetDir)\Images\Themes"
-xcopy /E /Y /Q "$(SolutionDir)Resources\Generated\Tiles" "$(TargetDir)\Images\Tiles"
-xcopy /E /Y /Q "$(ProjectDir)Images\Themes" "$(TargetDir)\Images\Themes"
-xcopy /Y /Q "$(SolutionDir)CHANGELOG.md" "$(ProjectDir)Resources"</PreBuildEvent>
+    <PreBuildEvent>"$(ProjectDir)PreBuildEvent.bat" "$(ProjectDir)..\" "$(ProjectDir)" "$(ProjectDir)($OutDir)" 0 0  
+ 
+</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
