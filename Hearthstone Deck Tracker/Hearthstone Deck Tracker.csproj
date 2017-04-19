@@ -1200,7 +1200,6 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
-    <None Include="Test.bat" />
     <Resource Include="Resources\hsreplay_logo_white.png" />
     <EmbeddedResource Include="Resources\CHANGELOG.md" />
     <EmbeddedResource Include="Properties\Strings.ja-JP.resx">
@@ -1400,7 +1399,7 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>"$(ProjectDir)PreBuildEvent.bat" "$(ProjectDir)..\" "$(ProjectDir)" "$(ProjectDir)($OutDir)" 0 0  
+    <PreBuildEvent>"$(ProjectDir)PreBuildEvent.bat" "$(ProjectDir)..\" "$(ProjectDir)" "$(TargetDir)" 0 0  
  
 </PreBuildEvent>
   </PropertyGroup>
