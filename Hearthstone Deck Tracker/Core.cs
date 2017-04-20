@@ -169,6 +169,7 @@ namespace Hearthstone_Deck_Tracker
 					if(Game.CurrentRegion == Region.UNKNOWN)
 					{
 						//game started
+						Helper.VerifyHearthstonePath();
 						Game.CurrentRegion = await Helper.GetCurrentRegion();
 						if(Game.CurrentRegion != Region.UNKNOWN)
 						{
