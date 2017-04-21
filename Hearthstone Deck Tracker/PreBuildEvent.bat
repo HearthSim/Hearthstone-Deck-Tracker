@@ -79,7 +79,7 @@ if %SkipResourceCopy% equ 1 (
 )
 
 if exist "%SolutionDir%HDT-Localization" if exist "%ProjectDir%Properties\" (
-	echo Copying Localization files from "%SolutionDir%HDT-Localization\*.resx" to "%ProjectDir%Properties\"
+	echo Copying Localization files from "%SolutionDir%HDT-Localization" to "%ProjectDir%Properties\"
 	xcopy /Y "%SolutionDir%HDT-Localization\*.resx" "%ProjectDir%Properties\"
 	echo.
 )
@@ -90,9 +90,9 @@ if not exist "%TargetDir%Images\Tiles" (
 	echo.
 )
 
-if not exist "%TargetDir%\Images\Themes" (
-	echo Creating missing directory "%TargetDir%\Images\Themes"
-	mkdir "%TargetDir%\Images\Themes"
+if not exist "%TargetDir%Images\Themes" (
+	echo Creating missing directory "%TargetDir%Images\Themes"
+	mkdir "%TargetDir%Images\Themes"
 	echo.
 )
 
