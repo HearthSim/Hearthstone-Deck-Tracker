@@ -102,9 +102,9 @@ if exist "%SolutionDir%Resources\Generated\Tiles" if exist "%TargetDir%Images\Ti
 	echo.
 )
 
-if exist "$%ProjectDir%Images\Themes" if exist "%TargetDir%Images\Themes" (
-	echo Copying Themes from "$%ProjectDir%Images\Themes" to "%TargetDir%Images\Themes"
-	xcopy /E /Y /Q "$%ProjectDir%Images\Themes" "%TargetDir%Images\Themes"
+if exist "%ProjectDir%Images\Themes" if exist "%TargetDir%Images\Themes" (
+	echo Copying Themes from "%ProjectDir%Images\Themes" to "%TargetDir%Images\Themes"
+	xcopy /E /Y /Q "%ProjectDir%Images\Themes" "%TargetDir%Images\Themes"
 	echo.
 )
 
