@@ -223,7 +223,7 @@ namespace Hearthstone_Deck_Tracker
 				else if(Game.IsRunning)
 				{
 					Game.IsRunning = false;
-					Overlay.ShowOverlay(false);
+					Overlay.ShowOverlay(false, false);
 					if(Windows.CapturableOverlay != null)
 					{
 						Windows.CapturableOverlay.UpdateContentVisibility();

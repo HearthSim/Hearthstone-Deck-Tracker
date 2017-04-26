@@ -105,14 +105,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public VerticalAlignment OpponentStackPanelAlignment
 			=> Config.Instance.OverlayCenterOpponentStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
 
-		public void ShowOverlay(bool enable)
+		public void ShowOverlay(bool enable, bool fakeHide)
 		{
 			if(enable)
 			{
 				Show();
+				GridMain.Visibility = Visible;
 				if(User32.GetForegroundWindow() == new WindowInteropHelper(this).Handle)
 					User32.BringHsToForeground();
 			}
+			else if(fakeHide)
+				GridMain.Visibility = Collapsed;
 			else
 				Hide();
 		}

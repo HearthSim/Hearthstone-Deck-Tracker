@@ -220,13 +220,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 
+		private bool HideInBackground => Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground();
+		private bool HideInSpectator => Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator;
+		private bool HearthstoneIsMinimized => Helper.GameWindowState == WindowState.Minimized;
+
 		public void UpdatePosition()
 		{
 			//hide the overlay depenting on options
-			ShowOverlay(
-						!((Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
-						  || (Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator) || Config.Instance.HideOverlay
-						  || ForceHidden || Helper.GameWindowState == WindowState.Minimized));
+			var hide = HideInBackground || HideInSpectator || Config.Instance.HideOverlay || ForceHidden || HearthstoneIsMinimized;
+			ShowOverlay(!hide, true);
 
 
 			var hsRect = User32.GetHearthstoneRect(true);
