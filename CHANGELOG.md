@@ -1,3 +1,16 @@
+## __Release vNext__
+
+__New__:
+- Added a simple way on decks to open the corresponding HSReplay.net deck page.
+- Added Brazilian Portuguese translation.
+
+__Changes__:
+- Wild deck are now indicated with the proper icon (instead of the 'S' on standard decks).
+
+__Fixes__:
+- Fixed an issue where HDT would have trouble picking up the correct Hearthstone path.
+
+
 ## __Release v1.2.3 - 2017-04-12__
 
 __Changes__:
