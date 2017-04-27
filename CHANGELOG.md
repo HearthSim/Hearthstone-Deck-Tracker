@@ -5,6 +5,7 @@ __New__:
 - Added Brazilian Portuguese translation.
 
 __Changes__:
+- Exporting decks to Hearthstone will now warn you about missing cards before starting the export process.
 - Wild deck are now indicated with the proper icon (instead of the 'S' on standard decks).
 
 __Fixes__:

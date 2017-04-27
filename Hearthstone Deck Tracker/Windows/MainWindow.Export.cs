@@ -50,6 +50,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(result == MessageDialogResult.Negative)
 					return;
 			}
+			var missingCards = ExportingHelper.GetMissingCards(deck).ToList();
+			deck.MissingCards = missingCards;
+			if(missingCards.Count > 0)
+			{
+				var result = await this.ShowMissingCardsMessage(deck, true);
+				if(result == MessageDialogResult.Negative)
+					return;
+			}
 			string selectedClass;
 			while((selectedClass = Database.GetCardFromId(openDeck.Hero).PlayerClass) != deck.Class)
 			{
@@ -93,8 +101,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 					DeckList.Save();
 				}
 			}
-			if(deck.MissingCards.Any())
-				this.ShowMissingCardsMessage(deck);
 		}
 
 		private void BtnScreenhot_Click(object sender, RoutedEventArgs e) => CaptureScreenshot(true);
@@ -276,7 +282,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
-			this.ShowMissingCardsMessage(deck);
+			this.ShowMissingCardsMessage(deck, false).Forget();
 		}
 	}
 }

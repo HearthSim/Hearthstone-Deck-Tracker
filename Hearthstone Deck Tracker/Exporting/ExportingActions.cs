@@ -181,21 +181,9 @@ namespace Hearthstone_Deck_Tracker.Exporting
 		{
 			Log.Info("Creating deck...");
 			_cardCount = 0;
-			_deck.MissingCards.Clear();
 			var collection = Reflection.GetCollection();
 			foreach(var card in _deck.GetSelectedDeckVersion().Cards.ToSortedCardList())
-			{
-				var missingCardsCount = await AddCardToDeck(card, collection);
-				if(missingCardsCount > 0)
-				{
-					var missingCard = (Card)card.Clone();
-					missingCard.Count = missingCardsCount;
-					_deck.MissingCards.Add(missingCard);
-				}
-			}
-			Log.Info(_deck.MissingCards.Count + " missing cards");
-			if(_deck.MissingCards.Any())
-				DeckList.Save();
+				await AddCardToDeck(card, collection);
 		}
 
 		public async Task ClearFilters()

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -116,6 +117,23 @@ namespace Hearthstone_Deck_Tracker.Exporting
 			Core.MainWindow.ShowMessage("Exporting error", "Can't find Hearthstone window.").Forget();
 			Log.Error("Can't find Hearthstone window.");
 			return null;
+		}
+
+		public static IEnumerable<Card> GetMissingCards(Deck deck)
+		{
+			var collection = Reflection.GetCollection();
+			foreach(var card in deck.GetSelectedDeckVersion().Cards)
+			{
+				var collectionCard = collection.FirstOrDefault(cCard => cCard.Id == card.Id);
+				if(collectionCard == null)
+					yield return (Card)card.Clone();
+				else if(collectionCard.Count < card.Count)
+				{
+					var missing = (Card)card.Clone();
+					missing.Count = card.Count - collectionCard.Count;
+					yield return missing;
+				}
+			}
 		}
 	}
 }

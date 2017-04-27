@@ -180,16 +180,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Helper.TryOpenUrl("https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Setting-up-the-log.config");
 		}
 
-		public static async void ShowMissingCardsMessage(this MetroWindow window, Deck deck)
+		public static async Task<MessageDialogResult> ShowMissingCardsMessage(this MetroWindow window, Deck deck, bool exportDialog)
 		{
 			if(!deck.MissingCards.Any())
 			{
-				await window.ShowMessageAsync("No missing cards",
+				return await window.ShowMessageAsync("No missing cards",
 						"No cards were missing when you last exported this deck. (or you have not recently exported this deck)",
 						Affirmative, new Settings {AffirmativeButtonText = "OK"});
-				return;
 			}
-			var message = "The following cards were not found:\n";
+			var message = "You are missing the following cards:\n";
 			var totalDust = 0;
 			var sets = new List<string>();
 			foreach(var card in deck.MissingCards)
@@ -214,7 +213,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 					totalDust += card.DustCost * card.Count;
 			}
 			message += $"\n\nYou need {totalDust} dust {string.Join("", sets.Distinct())}to craft the missing cards.";
-			await window.ShowMessageAsync("Export incomplete", message, Affirmative, new Settings {AffirmativeButtonText = "OK"});
+			var style = exportDialog ? AffirmativeAndNegative : Affirmative;
+			var settings = new Settings {AffirmativeButtonText = "OK"};
+			if(exportDialog)
+			{
+				settings.AffirmativeButtonText = "Export";
+				settings.NegativeButtonText = "Cancel";
+				message += "\n\nExport anyway? (this will not craft the cards)";
+			}
+			return await window.ShowMessageAsync("Missing cards", message, style, settings);
 		}
 
 		public static async Task<bool> ShowAddGameDialog(this MetroWindow window, Deck deck)
