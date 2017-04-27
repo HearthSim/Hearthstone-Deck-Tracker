@@ -164,6 +164,12 @@
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick" PreviewMouseRightButtonUp="ListViewDecks_OnPreviewMouseRightButtonUp">
         <ListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">
+                <MenuItem Name="MenuItemExportDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Export}" Click="BtnExportDeck_Click" />
+                <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Screenshot}">
+                    <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Screenshot_CardsOnly}" Click="BtnScreenshotCards_Click" />
+                    <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Screenshot_WithInfo}" ToolTip="{lex:Loc DeckPicker_ContextMenu_Screenshot_WithInfo_Tooltip}" Click="BtnScreenshotWithInfo_Click" />
+                </MenuItem>
+                <Separator/>
                 <MenuItem Name="MenuItemUseDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Use}" Click="BtnUseDeck_Click"/>
                 <Separator Name="SeparatorUseDeck" />
                 <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Deck}" Click="BtnEditDeck_Click" />

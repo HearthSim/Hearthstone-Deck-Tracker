@@ -661,6 +661,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			MenuItemUseDeck.Visibility =
 				SeparatorUseDeck.Visibility =
 				selectedDecks.First().Equals(DeckList.Instance.ActiveDeck) ? Collapsed : Visible;
+			MenuItemExportDeck.Visibility = selectedDecks.First().IsArenaDeck ? Collapsed : Visible;
 		}
 
 		private void BtnEditDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnEditDeck_Click(sender, e);
@@ -678,6 +679,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void BtnCloneDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnCloneDeck_Click(sender, e);
 		private void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnCloneSelectedVersion_Click(sender, e);
 		private void BtnName_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnName_Click(sender, e);
+		private void BtnExportDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnExport_Click(sender, e);
+		private void BtnScreenshotCards_Click(object sender, RoutedEventArgs e) => Core.MainWindow.CaptureScreenshot(true);
+		private void BtnScreenshotWithInfo_Click(object sender, RoutedEventArgs e) => Core.MainWindow.CaptureScreenshot(false);
 
 		private void ActiveDeckPanel_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{

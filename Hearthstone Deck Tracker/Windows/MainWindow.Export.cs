@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class MainWindow
 	{
-		private void BtnExport_Click(object sender, RoutedEventArgs e)
+		internal void BtnExport_Click(object sender, RoutedEventArgs e)
 		{
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
 			if(deck == null)
@@ -107,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BtnScreenhotWithInfo_Click(object sender, RoutedEventArgs e) => CaptureScreenshot(false);
 
-		private async void CaptureScreenshot(bool deckOnly)
+		internal async void CaptureScreenshot(bool deckOnly)
 		{
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(selectedDeck == null)
