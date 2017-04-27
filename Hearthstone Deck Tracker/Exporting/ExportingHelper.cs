@@ -121,7 +121,10 @@ namespace Hearthstone_Deck_Tracker.Exporting
 
 		public static IEnumerable<Card> GetMissingCards(Deck deck)
 		{
-			var collection = Reflection.GetCollection();
+			var collection = Reflection.GetCollection()
+				.GroupBy(x => x.Id)
+				.Select(x => new {Id=x.Key, Count=x.Sum(c => c.Count)})
+				.ToList();
 			foreach(var card in deck.GetSelectedDeckVersion().Cards)
 			{
 				var collectionCard = collection.FirstOrDefault(cCard => cCard.Id == card.Id);
