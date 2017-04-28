@@ -47,7 +47,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			OnPropertyChanged(nameof(ClaimErrorVisibility));
 		}
 
-		private async void ButtonClaimAccount_OnClick(object sender, RoutedEventArgs e)
+		private void ButtonClaimAccount_OnClick(object sender, RoutedEventArgs e) => ClaimAccount();
+
+		internal async void ClaimAccount()
 		{
 			ButtonClaimAccount.Content = ButtonTextWaiting;
 			ButtonClaimAccount.IsEnabled = false;

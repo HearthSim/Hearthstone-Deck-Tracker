@@ -650,6 +650,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MenuItemReplayClaimAccount_OnClick(object sender, RoutedEventArgs e)
 		{
+			Options.OptionsTrackerReplays.ClaimAccount();
 			Options.TreeViewItemTrackerReplays.IsSelected = true;
 			FlyoutOptions.IsOpen = true;
 		}
