@@ -665,7 +665,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client");
 
-		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/CBnAFhX");
+		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/hearthsim-devs");
 
 		private void BtnHsReplayDeckDetail_OnClick(object sender, RoutedEventArgs e)
 		{
