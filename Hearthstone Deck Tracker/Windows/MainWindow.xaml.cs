@@ -437,6 +437,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void BtnOptions_OnClick(object sender, RoutedEventArgs e) => FlyoutOptions.IsOpen = true;
 		private void BtnHelp_OnClick(object sender, RoutedEventArgs e) => FlyoutHelp.IsOpen = true;
+		private void BtnDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/hearthsim");
 
 #endregion
 

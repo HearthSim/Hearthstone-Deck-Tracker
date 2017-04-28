@@ -60,6 +60,16 @@
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:LocTextLower MainWindow_TitleBar_Options}" />
                 </StackPanel>
             </Button>
+            <Button Click="BtnDiscord_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="14" Height="16" Margin="0,2,0,0">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_discord}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="discord" />
+                </StackPanel>
+            </Button>
             <Button Click="BtnHelp_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="12" Height="14">
