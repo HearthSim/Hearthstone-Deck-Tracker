@@ -17,10 +17,12 @@
     <StackPanel>
         <UniformGrid Rows="1">
             <GroupBox Header="{lex:Loc ArenaRewards_Label_Gold}">
-                <TextBox Name="TextBoxGold" ToolTip="{lex:Loc ArenaRewards_Label_Gold_Tooltip}" TextChanged="TextBoxGold_OnTextChanged"/>
+                <TextBox Name="TextBoxGold" ToolTip="{lex:Loc ArenaRewards_Label_Gold_Tooltip}" TextChanged="TextBoxGold_OnTextChanged"
+                    GotKeyboardFocus="TextBox_OnGotKeyboardFocus" GotMouseCapture="TextBox_OnGotMouseCapture"/>
             </GroupBox>
             <GroupBox Header="{lex:Loc ArenaRewards_Label_Dust}">
-                <TextBox Name="TextBoxDust" TextChanged="TextBoxDust_OnTextChanged"/>
+                <TextBox Name="TextBoxDust" TextChanged="TextBoxDust_OnTextChanged"
+                    GotKeyboardFocus="TextBox_OnGotKeyboardFocus" GotMouseCapture="TextBox_OnGotMouseCapture"/>
             </GroupBox>
         </UniformGrid>
         <GroupBox Header="{lex:Loc ArenaRewards_Label_Packs}">
