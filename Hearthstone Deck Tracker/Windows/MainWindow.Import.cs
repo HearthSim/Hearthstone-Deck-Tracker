@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (result.WasCancelled)
 				return;
 			if (result.Deck != null)
-				SaveImportedDeck(result.Deck);
+				await ShowImportingChoice(result.Deck);
 			else
 				await this.ShowMessageAsync("No deck found", "Could not find a deck on" + Environment.NewLine + result.Url);
 		}
@@ -392,6 +392,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				_clipboardImportingInProgress = false;
 				return;
 			}
+			await ShowImportingChoice(deck);
+			_clipboardImportingInProgress = false;
+		}
+
+		private async Task ShowImportingChoice(Deck deck)
+		{
 			var choice = Config.Instance.PasteImportingChoice == ImportingChoice.Manual
 				? await this.ShowImportingChoiceDialog() : Config.Instance.PasteImportingChoice;
 			if(choice.HasValue)
@@ -401,7 +407,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				else
 					ExportDeck(deck);
 			}
-			_clipboardImportingInProgress = false;
 		}
 	}
 }
