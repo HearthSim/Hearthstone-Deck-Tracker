@@ -11,9 +11,15 @@
         <DockPanel MaxWidth="500" DockPanel.Dock="Top" Margin="0,0,0,10" >
             <TextBlock Text="We made accessing global statistics and mulligan information about your favorite decks even easier!"
                 DockPanel.Dock="Top" Margin="10,10,10,0" FontSize="14" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
-            <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="10">
+            <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="10,10,10,0">
                 <Image Source="{StaticResource HsReplayInfo3}" MaxWidth="500" />
             </Border>
+            <TextBlock DockPanel.Dock="Top" TextAlignment="Center" Padding="0,0,0,10">
+                <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate"
+                    NavigateUri="https://hsreplay.net/decks/ZrydJsC1jKZ3TpSiFWQXNg/?utm_source=hdt&amp;utm_medium=client&amp;utm_campaign=updatenotes">
+                    example deck page
+                </Hyperlink>
+            </TextBlock>
             <Separator DockPanel.Dock="Top"/>
             <DockPanel DockPanel.Dock="Top" Margin="10">
                 <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2" DockPanel.Dock="Left">
