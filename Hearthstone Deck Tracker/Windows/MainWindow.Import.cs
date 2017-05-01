@@ -34,9 +34,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public async void ImportDeck(string url = null)
 		{
 			var result = await ImportDeckFromUrl(url);
-			if(result.WasCancelled)
+			if (result.WasCancelled)
 				return;
-			if(result.Deck != null)
+			if (result.Deck != null)
 				SaveImportedDeck(result.Deck);
 			else
 				await this.ShowMessageAsync("No deck found", "Could not find a deck on" + Environment.NewLine + result.Url);
@@ -102,8 +102,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			try
 			{
-				var validUrls = DeckImporter.Websites.Keys.Select(x => x.Split('.')[0]).ToArray();
-				return await this.ShowInputAsync("Import deck", "Some supported websites:\n" + validUrls.Aggregate((x, next) => x + ", " + next), new MessageDialogs.Settings());
+				return await this.ShowWebImportingDialog();
 			}
 			catch(Exception e)
 			{

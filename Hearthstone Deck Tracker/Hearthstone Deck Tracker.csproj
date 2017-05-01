@@ -636,6 +636,9 @@
     <Compile Include="Controls\DeckView.xaml.cs">
       <DependentUpon>DeckView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\WebImportingDialog.xaml.cs">
+      <DependentUpon>WebImportingDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\ImportingChoiceDialog.xaml.cs">
       <DependentUpon>ImportingChoiceDialog.xaml</DependentUpon>
     </Compile>
@@ -1081,6 +1084,10 @@
     <Page Include="Controls\DeckView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\WebImportingDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\ImportingChoiceDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
