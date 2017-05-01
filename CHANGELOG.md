@@ -1,4 +1,4 @@
-## __Release vNext__
+## __Release v1.2.4 - 2017-05-01__
 
 __New__:
 - Added a simple way on decks to open the corresponding HSReplay.net deck page.
