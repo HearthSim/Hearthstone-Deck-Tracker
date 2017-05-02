@@ -708,15 +708,22 @@ namespace Hearthstone_Deck_Tracker
 				Log.Warn("Could not find Hearthstone process");
 				return;
 			}
-			var executable = new FileInfo(proc.MainModule.FileName);
-			var currentPath = Config.Instance.HearthstoneDirectory;
-			var procPath = executable.Directory?.FullName;
-			if(procPath != null && procPath != currentPath)
+			try
 			{
-				Log.Warn($"Current path (\"{currentPath}\") does not match the running Hearthstone process: \"{procPath}\". Updating path");
-				Config.Instance.HearthstoneDirectory = procPath;
-				Config.Save();
-				Core.Reset().Forget();
+				var executable = new FileInfo(proc.MainModule.FileName);
+				var currentPath = Config.Instance.HearthstoneDirectory;
+				var procPath = executable.Directory?.FullName;
+				if(procPath != null && procPath != currentPath)
+				{
+					Log.Warn($"Current path (\"{currentPath}\") does not match the running Hearthstone process: \"{procPath}\". Updating path");
+					Config.Instance.HearthstoneDirectory = procPath;
+					Config.Save();
+					Core.Reset().Forget();
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
 			}
 		}
 	}
