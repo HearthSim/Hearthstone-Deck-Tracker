@@ -1,3 +1,7 @@
+## __Release v1.2.5 - 2017-05-02__
+- Fixed several crashes.
+
+
 ## __Release v1.2.4 - 2017-05-01__
 
 __New__:
