@@ -125,6 +125,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void SetRect(int top, int left, int width, int height)
 		{
+			if(width < 0 || height < 0)
+				return;
 			Top = top + _offsetY;
 			Left = left + _offsetX;
 			Width = (_customWidth == -1) ? width : _customWidth;
