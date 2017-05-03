@@ -90,6 +90,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public string TagList => Deck.TagList;
 
+		public int NumGames => Deck.GetRelevantGames().Count;
+
 		#endregion
 	}
 

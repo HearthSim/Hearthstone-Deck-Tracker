@@ -421,6 +421,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				                  ? Config.Instance.SelectedDeckSortingArena : Config.Instance.SelectedDeckSorting;
 			switch(deckSorting)
 			{
+				case "Most Played":
+					view.SortDescriptions.Add(new SortDescription("NumGames", Descending));
+					break;
 				case "Name":
 					view.SortDescriptions.Add(new SortDescription("DeckName", Ascending));
 					break;
