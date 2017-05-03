@@ -237,11 +237,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 
 			var english = true;
-			if(Config.Instance.SelectedLanguage != "enUS")
+			var altLang = Config.Instance.AlternativeLanguages.FirstOrDefault(x => x != Config.Instance.SelectedLanguage);
+			if(altLang != null || Config.Instance.SelectedLanguage != "enUS")
 			{
 				try
 				{
-					english = await this.ShowLanguageSelectionDialog();
+					english = await this.ShowLanguageSelectionDialog(Config.Instance.SelectedLanguage == "enUS" ? altLang : Config.Instance.SelectedLanguage);
 				}
 				catch(Exception ex)
 				{

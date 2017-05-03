@@ -282,14 +282,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return true;
 		}
 
-		public static async Task<bool> ShowLanguageSelectionDialog(this MetroWindow window)
+		public static async Task<bool> ShowLanguageSelectionDialog(this MetroWindow window, string altLang)
 		{
 			var english = await
 				window.ShowMessageAsync("Select language", "", AffirmativeAndNegative,
 										new Settings
 										{
 											AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
-											NegativeButtonText = Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key
+											NegativeButtonText = Helper.LanguageDict.First(x => x.Value == altLang).Key
 										}) == MessageDialogResult.Affirmative;
 			return english;
 		}

@@ -177,7 +177,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					{
 						try
 						{
-							english = await this.ShowLanguageSelectionDialog();
+							english = await this.ShowLanguageSelectionDialog(Config.Instance.SelectedLanguage);
 						}
 						catch(Exception ex)
 						{
