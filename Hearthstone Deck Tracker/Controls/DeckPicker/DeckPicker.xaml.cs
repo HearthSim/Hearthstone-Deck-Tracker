@@ -683,8 +683,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnCloneSelectedVersion_Click(sender, e);
 		private void BtnName_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnName_Click(sender, e);
 		private void BtnExportDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.BtnExport_Click(sender, e);
-		private void BtnScreenshotCards_Click(object sender, RoutedEventArgs e) => Core.MainWindow.CaptureScreenshot(true);
-		private void BtnScreenshotWithInfo_Click(object sender, RoutedEventArgs e) => Core.MainWindow.CaptureScreenshot(false);
+		private void BtnScreenshotCards_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowScreenshotFlyout();
 
 		private void ActiveDeckPanel_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{

@@ -416,7 +416,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			MenuItemEdit.IsEnabled = enable;
 			MenuItemExportIds.IsEnabled = enable;
 			MenuItemExportScreenshot.IsEnabled = enable;
-			MenuItemExportScreenshotWithInfo.IsEnabled = enable;
 			MenuItemExportToHs.IsEnabled = enable;
 			MenuItemExportXml.IsEnabled = enable;
 		}

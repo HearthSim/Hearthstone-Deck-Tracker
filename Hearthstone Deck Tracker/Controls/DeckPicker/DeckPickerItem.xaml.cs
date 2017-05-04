@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -93,22 +92,5 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public int NumGames => Deck.GetRelevantGames().Count;
 
 		#endregion
-	}
-
-	public class Command : ICommand
-	{
-		private readonly Action _action;
-
-		public Command(Action action)
-		{
-			_action = action;
-		}
-
-		public bool CanExecute(object parameter) => _action != null;
-
-		public void Execute(object parameter) => _action.Invoke();
-#pragma warning disable 0067
-		public event EventHandler CanExecuteChanged;
-#pragma warning restore 0067
 	}
 }

@@ -570,6 +570,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					int useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
 					Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
 				}
+
+				if(FlyoutDeckScreenshot.IsOpen)
+					DeckScreenshotFlyout.Deck = deck.GetSelectedDeckVersion();
 			}
 			else
 			{

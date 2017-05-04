@@ -1,16 +1,14 @@
 ﻿#region
 
 using System;
-using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using HearthMirror;
-using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Exporting;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -103,34 +101,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void BtnScreenhot_Click(object sender, RoutedEventArgs e) => CaptureScreenshot(true);
+		private void BtnScreenhot_Click(object sender, RoutedEventArgs e) => ShowScreenshotFlyout();
 
-		private void BtnScreenhotWithInfo_Click(object sender, RoutedEventArgs e) => CaptureScreenshot(false);
-
-		internal async void CaptureScreenshot(bool deckOnly)
+		public void ShowScreenshotFlyout()
 		{
-			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			if(selectedDeck == null)
-				return;
-			Log.Info("Creating screenshot of " + selectedDeck.GetSelectedDeckVersion().GetDeckInfo());
-
-			var deck = selectedDeck.GetSelectedDeckVersion();
-			var cards = 35 * deck.Cards.Count;
-			var height = (deckOnly ? 0 : 124) + cards;
-			var width = 219;
-
-			DeckView control = new DeckView(deck, deckOnly);
-			control.Measure(new Size(width, height));
-			control.Arrange(new Rect(new Size(width, height)));
-			control.UpdateLayout();
-			Log.Debug($"Screenshot: {control.ActualWidth} x {control.ActualHeight}");
-
-			RenderTargetBitmap bmp = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
-			bmp.Render(control);
-			var encoder = new PngBitmapEncoder();
-			encoder.Frames.Add(BitmapFrame.Create(bmp));
-
-			await SaveOrUploadScreenshot(encoder, deck.Name);
+			DeckScreenshotFlyout.Deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
+			FlyoutDeckScreenshot.IsOpen = true;
 		}
 
 		public async Task SaveOrUploadScreenshot(PngBitmapEncoder pngEncoder, string proposedFileName)

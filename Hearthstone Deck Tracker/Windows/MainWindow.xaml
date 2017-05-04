@@ -12,6 +12,7 @@
                       xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
                       xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      xmlns:deckScreenshot="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -126,6 +127,9 @@
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutDeckImporting" Header="{lex:Loc MainWindow_Flyout_DeckImporting_Header}" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls1:DeckImportingControl x:Name="DeckImportingFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckScreenshot" Header="{lex:Loc MainWindow_Flyout_DeckScreenshot_Header}" Position="Right" Panel.ZIndex="1" Width="300">
+                <deckScreenshot:DeckScreenshotView x:Name="DeckScreenshotFlyout"/>
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls:Flyout.HeaderTemplate>
@@ -322,7 +326,6 @@
                     <MenuItem Name="MenuItemExportIds" Header="{lex:LocTextUpper MainWindow_Menu_Export_Ids}" Click="BtnClipboard_OnClick" />
                     <MenuItem Name="MenuItemExportNames" Header="{lex:LocTextUpper MainWindow_Menu_Export_Clpiboard}" Click="BtnClipboardNames_OnClick" />
                     <MenuItem Name="MenuItemExportScreenshot" Header="{lex:LocTextUpper MainWindow_Menu_Export_Screenshot}" Click="BtnScreenhot_Click" />
-                    <MenuItem Name="MenuItemExportScreenshotWithInfo" Header="{lex:LocTextUpper MainWindow_Menu_Export_Screenshot_Info}" Click="BtnScreenhotWithInfo_Click" />
                 </MenuItem>
                 <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats}">
                     <MenuItem.Icon>

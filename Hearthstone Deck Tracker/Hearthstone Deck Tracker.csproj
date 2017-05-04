@@ -232,6 +232,9 @@
     <Compile Include="Controls\DeckImportingControl.xaml.cs">
       <DependentUpon>DeckImportingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotHelper.cs" />
+    <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotViewModel.cs" />
+    <Compile Include="Utility\Command.cs" />
     <Compile Include="Controls\DeckPicker\DateConverter.cs" />
     <Compile Include="Controls\DeckPicker\DeckPickerClassItem.xaml.cs">
       <DependentUpon>DeckPickerClassItem.xaml</DependentUpon>
@@ -253,6 +256,9 @@
     </Compile>
     <Compile Include="Controls\DeckVersionChange.xaml.cs">
       <DependentUpon>DeckVersionChange.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotView.xaml.cs">
+      <DependentUpon>DeckScreenshotView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ElementSorter.xaml.cs">
       <DependentUpon>ElementSorter.xaml</DependentUpon>
@@ -838,6 +844,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeckVersionChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\DeckScreenshot\DeckScreenshotView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
