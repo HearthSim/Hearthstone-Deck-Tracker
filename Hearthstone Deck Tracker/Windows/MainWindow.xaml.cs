@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -18,22 +19,18 @@ using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
-using Hearthstone_Deck_Tracker.LogReader;
 using Hearthstone_Deck_Tracker.Plugins;
-using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Updating;
-using MahApps.Metro.Controls.Dialogs;
 #if(SQUIRREL)
 	using Squirrel;
 #endif
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
-using MenuItem = System.Windows.Controls.MenuItem;
 
 #endregion
 
@@ -44,33 +41,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 	/// </summary>
 	public partial class MainWindow : INotifyPropertyChanged
 	{
-		private const string LocLink = "MainWindow_Menu_Deck_LinkUrl";
-		private const string LocLinkNew = "MainWindow_Menu_Deck_LinkNewUrl";
-
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public async void UseDeck(Deck selected)
 		{
 			if(selected != null)
 				DeckList.Instance.ActiveDeck = selected;
+			MainWindowMenu.SelectedDecks = selected != null ? new List<Deck> { selected } : new List<Deck>();
 			await Core.Reset();
-		}
-
-		internal void UpdateMenuItemVisibility()
-		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
-			if(deck == null)
-				return;
-			MenuItemMoveDecktoArena.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
-			MenuItemMoveDeckToConstructed.Visibility = deck.IsArenaDeck ? Visible : Collapsed;
-			MenuItemMissingCards.Visibility = deck.MissingCards.Any() ? Visible : Collapsed;
-			MenuItemSetDeckUrl.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
-			MenuItemSetDeckUrl.Header = string.IsNullOrEmpty(deck.Url) ? LocUtil.Get(LocLink, true) : LocUtil.Get(LocLinkNew, true);
-			MenuItemUpdateDeck.Visibility = string.IsNullOrEmpty(deck.Url) ? Collapsed : Visible;
-			MenuItemOpenUrl.Visibility = string.IsNullOrEmpty(deck.Url) ? Collapsed : Visible;
-			MenuItemArchive.Visibility = DeckPickerList.SelectedDecks.Any(d => !d.Archived) ? Visible : Collapsed;
-			MenuItemUnarchive.Visibility = DeckPickerList.SelectedDecks.Any(d => d.Archived) ? Visible : Collapsed;
-			SeparatorDeck1.Visibility = deck.IsArenaDeck ? Collapsed : Visible;
 		}
 
 		public void UpdateDeckList(Deck selected)
@@ -145,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.TrayIcon.SetContextMenuProperty(TrayIcon.ClassCardsFirstMenuItemName, TrayIcon.CheckedProperty, classFirst);
 		}
 
-		private void MenuItemReplayFromFile_OnClick(object sender, RoutedEventArgs e)
+		internal void ShowReplayFromFileDialog()
 		{
 			try
 			{
@@ -165,8 +143,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Log.Error(ex);
 			}
 		}
-
-		private void MenuItemReplaySelectGame_OnClick(object sender, RoutedEventArgs e) => ShowStats(false, true);
 
 		private void MenuItemSaveVersionCurrent_OnClick(object sender, RoutedEventArgs e) => SaveDeckWithOverwriteCheck(_newDeck.Version);
 
@@ -285,7 +261,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			InitializeComponent();
 			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsTrackerLogging.TextBoxLog));
-			EnableMenuItems(false);
 			TagControlEdit.StackPanelFilterOptions.Visibility = Collapsed;
 			TagControlEdit.GroupBoxSortingAllConstructed.Visibility = Collapsed;
 			TagControlEdit.GroupBoxSortingArena.Visibility = Collapsed;
@@ -485,10 +460,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 #region MY DECKS - GUI
 
-		private void BtnArenaStats_Click(object sender, RoutedEventArgs e) => ShowStats(true, false);
-
-		private void BtnConstructedStats_Click(object sender, RoutedEventArgs e) => ShowStats(false, false);
-
 		internal void ShowStats(bool arena, bool matches)
 		{
 			if(Config.Instance.StatsInWindow)
@@ -524,10 +495,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.StatsOverview.UpdateStats();
 		}
 
-		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, Deck deck)
+		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, List<Deck> decks)
 		{
-			SelectDeck(deck, Config.Instance.AutoUseDeck);
-			UpdateMenuItemVisibility();
+			if(decks?.Any() ?? false)
+				SelectDeck(decks.FirstOrDefault(), Config.Instance.AutoUseDeck);
+			var active = DeckList.Instance.ActiveDeck;
+			MainWindowMenu.SelectedDecks = (!decks?.Any() ?? false) && active != null ? new List<Deck> { active } : decks;
 		}
 
 		public void SelectDeck(Deck deck, bool setActive)
@@ -536,15 +509,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				DeckPickerList.ClearFromCache(DeckList.Instance.ActiveDeck);
 			if(deck != null)
 			{
-				//set up notes
-				DeckNotesEditor.SetDeck(deck);
-				var flyoutHeader = deck.Name.Length >= 20 ? string.Join("", deck.Name.Take(17)) + "..." : deck.Name;
-				FlyoutNotes.Header = flyoutHeader;
-
 				//set up tags
 				TagControlEdit.SetSelectedTags(DeckPickerList.SelectedDecks);
-				MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
-				MenuItemQuickSetTag.Items.Refresh();
 				DeckPickerList.MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 				DeckPickerList.MenuItemQuickSetTag.Items.Refresh();
 
@@ -575,6 +541,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				if(FlyoutDeckScreenshot.IsOpen)
 					DeckScreenshotFlyout.Deck = deck.GetSelectedDeckVersion();
+
+				if(FlyoutNotes.IsOpen)
+					ShowDeckNotesDialog(deck);
+
 			}
 			else
 			{
@@ -595,7 +565,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				UseDeck(deck);
 			DeckPickerList.SelectDeck(deck);
 			UpdateDeckList(deck);
-			EnableMenuItems(deck != null);
 			ManaCurveMyDecks.SetDeck(deck);
 			UpdatePanelVersionComboBox(deck);
 			if(setActive)
@@ -646,31 +615,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e) => Updater.StartUpdate();
 
-		private async void MenuItemLastGamesReplay_OnClick(object sender, RoutedEventArgs e)
-		{
-			var game = (e.OriginalSource as MenuItem)?.DataContext as GameStats;
-			if(game == null)
-				return;
-			await ReplayLauncher.ShowReplay(game, true);
-		}
-
-		private void MenuItemReplayClaimAccount_OnClick(object sender, RoutedEventArgs e)
+		internal void StartClaimAccount()
 		{
 			Options.OptionsTrackerReplays.ClaimAccount();
 			Options.TreeViewItemTrackerReplays.IsSelected = true;
 			FlyoutOptions.IsOpen = true;
 		}
-
-		private void MenuItemReplayMyAccount_OnClick(object sender, RoutedEventArgs e)
-			=> Helper.TryOpenUrl("https://hsreplay.net/games/mine/?utm_source=hdt&utm_medium=client");
-
-		private void MenuItemReplays_OnSubmenuOpened(object sender, RoutedEventArgs e)
-		{
-			OnPropertyChanged(nameof(MenuItemReplayClaimAccountVisibility));
-			OnPropertyChanged(nameof(MenuItemReplayMyAccountVisibility));
-		}
-
-		private void MenuItemHsReplay_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client");
 
 		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/hearthsim-devs");
 

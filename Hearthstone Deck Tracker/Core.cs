@@ -270,10 +270,7 @@ namespace Hearthstone_Deck_Tracker
 			var stoppedReader = await LogWatcherManger.Stop();
 			Game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
-			{
 				Game.IsUsingPremade = true;
-				MainWindow.UpdateMenuItemVisibility();
-			}
 			await Task.Delay(1000);
 			if(stoppedReader)
 				LogWatcherManger.Start(Game).Forget();

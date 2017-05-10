@@ -15,8 +15,23 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public bool CanExecute(object parameter) => _action != null;
 
 		public void Execute(object parameter) => _action.Invoke();
-#pragma warning disable 0067
+
 		public event EventHandler CanExecuteChanged;
-#pragma warning restore 0067
+	}
+
+	public class Command<T> : ICommand
+	{
+		private readonly Action<T> _action;
+
+		public Command(Action<T> action)
+		{
+			_action = action;
+		}
+		
+		public event EventHandler CanExecuteChanged;
+
+		public bool CanExecute(object parameter) => _action != null;
+
+		public void Execute(object parameter) => _action.Invoke((T)parameter);
 	}
 }

@@ -383,8 +383,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void CloseNewDeck()
 		{
-			if(DeckPickerList.SelectedDecks.Any())
-				EnableMenuItems(true);
 			if(GridNewDeck.Visibility != Collapsed)
 			{
 				var width = GridNewDeck.ActualWidth;
@@ -410,16 +408,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateIntroLabelVisibility();
 		}
 
-		private void EnableMenuItems(bool enable)
-		{
-			//MenuItemSelectedDeckStats.IsEnabled = enable;
-			MenuItemEdit.IsEnabled = enable;
-			MenuItemExportIds.IsEnabled = enable;
-			MenuItemExportScreenshot.IsEnabled = enable;
-			MenuItemExportToHs.IsEnabled = enable;
-			MenuItemExportXml.IsEnabled = enable;
-		}
-
 		private void MenuItem_OnSubmenuOpened(object sender, RoutedEventArgs e)
 		{
 			if(_newDeck == null)
@@ -443,17 +431,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		#region UI
 
-		private void BtnNewDeckDruid_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Druid");
-		private void BtnNewDeckHunter_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Hunter");
-		private void BtnNewDeckMage_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Mage");
-		private void BtnNewDeckPaladin_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Paladin");
-		private void BtnNewDeckPriest_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Priest");
-		private void BtnNewDeckRogue_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Rogue");
-		private void BtnNewDeckShaman_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Shaman");
-		private void BtnNewDeckWarrior_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Warrior");
-		private void BtnNewDeckWarlock_Click(object sender, RoutedEventArgs e) => CreateNewDeck("Warlock");
-
-		private async void CreateNewDeck(string hero)
+		internal async void ShowNewDeckMessage(string hero)
 		{
 			_newDeck = new Deck {Class = hero};
 			var type = await this.ShowDeckTypeDialog();

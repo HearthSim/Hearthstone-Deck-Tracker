@@ -1,16 +1,20 @@
 using System;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
-	internal sealed class Account
+	internal sealed class Account : INotifyPropertyChanged
 	{
 		public static string CacheFilePath => Path.Combine(Config.Instance.DataDir, "hsreplay.cache");
 
 		private static readonly Lazy<Account> Lazy = new Lazy<Account>(Load);
+		private AccountStatus _status;
 
 		private Account()
 		{
@@ -19,7 +23,17 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static Account Instance => Lazy.Value;
 
 		public string UploadToken { get; set; }
-		public AccountStatus Status { get; set; }
+
+		public AccountStatus Status
+		{
+			get { return _status; }
+			set
+			{
+				_status = value; 
+				OnPropertyChanged();
+			}
+		}
+
 		public string Username { get; set; }
 		public int Id { get; set; }
 		public DateTime LastUpdated { get; set; }
@@ -69,6 +83,14 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Log.Error(ex);
 				return new Account();
 			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

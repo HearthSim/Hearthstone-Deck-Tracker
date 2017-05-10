@@ -82,7 +82,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
 			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
-			MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 		}
 
 		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)

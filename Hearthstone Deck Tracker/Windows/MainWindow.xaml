@@ -9,10 +9,9 @@
                       xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
                       xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility.Updating"
-                      xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
-                      xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
                       xmlns:deckScreenshot="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot"
+                      xmlns:mainWindowControls="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -100,8 +99,8 @@
                 <local:Help x:Name="Help" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="{lex:Loc MainWindow_Flyout_OpponentDeck_Header}">
-                    <flyoutControls:DeckPanel x:Name="DeckFlyout" />
-             </controls:Flyout>
+                <flyoutControls:DeckPanel x:Name="DeckFlyout" />
+            </controls:Flyout>
             <controls:Flyout x:Name="FlyoutSortFilter" Header="{lex:Loc MainWindow_Flyout_SortFilter_Header}" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
                 <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
             </controls:Flyout>
@@ -201,199 +200,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Menu Grid.Row="1" Grid.ColumnSpan="3">
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_New}">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_layer_add}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Druid}" Click="BtnNewDeckDruid_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/druid.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Hunter}" Click="BtnNewDeckHunter_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/hunter.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Mage}" Click="BtnNewDeckMage_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/mage.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Priest}" Click="BtnNewDeckPriest_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/priest.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Paladin}" Click="BtnNewDeckPaladin_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/paladin.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Rogue}" Click="BtnNewDeckRogue_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/rogue.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Shaman}" Click="BtnNewDeckShaman_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/shaman.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Warlock}" Click="BtnNewDeckWarlock_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/warlock.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Warrior}" Click="BtnNewDeckWarrior_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/warrior.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck}" Name="MenuItemEdit">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_layer}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditDeck}" Click="BtnEditDeck_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditName}" Click="BtnName_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditNotes}" Click="BtnNotes_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditTags}" Click="BtnTags_Click" />
-                    <MenuItem Name="MenuItemQuickSetTag" Header="{lex:LocTextUpper MainWindow_Menu_Deck_QuickSetTag}">
-                        <MenuItem.ItemTemplate>
-                            <DataTemplate>
-                                <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" />
-                            </DataTemplate>
-                        </MenuItem.ItemTemplate>
-                    </MenuItem>
-                    <MenuItem Name="MenuItemMoveDecktoArena" Header="{lex:LocTextUpper MainWindow_Menu_Deck_MoveToArena}" Click="BtnMoveDeckToArena_Click" Visibility="Collapsed"/>
-                    <MenuItem Name="MenuItemMoveDeckToConstructed" Header="{lex:LocTextUpper MainWindow_Menu_Deck_MoveToContrstucted}" Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed"/>
-                    <Separator Name="SeparatorDeck1"/>
-                    <MenuItem Name="MenuItemMissingCards" Header="{lex:LocTextUpper MainWindow_Menu_Deck_MissingCards}" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
-                    <MenuItem Name="MenuItemUpdateDeck" Header="{lex:LocTextUpper MainWindow_Menu_Deck_UpdateWeb}" Click="BtnUpdateDeck_Click" />
-                    <MenuItem Name="MenuItemSetDeckUrl" Header="" Click="BtnSetDeckUrl_Click" />
-                    <MenuItem Name="MenuItemOpenUrl" Header="{lex:LocTextUpper MainWindow_Menu_Deck_OpenWebsite}" Click="BtnOpenDeckUrl_Click" />
-                    <Separator />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Archive}" Name="MenuItemArchive" Click="BtnArchiveDeck_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Unarchive}" Name="MenuItemUnarchive" Click="BtnUnarchiveDeck_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_DeleteDeck}" Click="BtnDeleteDeck_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Clone}">
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Clone_EntireDeck}" Click="BtnCloneDeck_Click" />
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Clone_Version}" Click="BtnCloneSelectedVersion_Click" />
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import}">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16"  Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_download}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Web}" Click="BtnWeb_Click" />
-                    <Separator/>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Constructed}" Click="BtnConstructed_Click" Name="MenuItemImportConstructed" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Arena}" Click="BtnArena_Click" Name="MenuItemImportArena" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Brawl}" Click="BtnBrawl_Click" Name="MenuItemImportBrawl" />
-                    <Separator/>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other}">
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_File}" Click="BtnFile_Click" />
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_Ids}" Click="BtnIdString_Click" />
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_Clipboard}" Click="BtnClipboardText_Click" />
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_LastGame}" Click="BtnLastGame_Click" />
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export}" Name="MenuItemExport">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_upload}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Name="MenuItemExportToHs" Header="{lex:LocTextUpper MainWindow_Menu_Export_Hearthstone}" Click="BtnExport_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Hearthstone_FromWeb}" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck." />
-                    <MenuItem Name="MenuItemExportXml" Header="{lex:LocTextUpper MainWindow_Menu_Export_Xml}" Click="BtnSaveToFile_OnClick" />
-                    <MenuItem Name="MenuItemExportIds" Header="{lex:LocTextUpper MainWindow_Menu_Export_Ids}" Click="BtnClipboard_OnClick" />
-                    <MenuItem Name="MenuItemExportNames" Header="{lex:LocTextUpper MainWindow_Menu_Export_Clpiboard}" Click="BtnClipboardNames_OnClick" />
-                    <MenuItem Name="MenuItemExportScreenshot" Header="{lex:LocTextUpper MainWindow_Menu_Export_Screenshot}" Click="BtnScreenhot_Click" />
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats}">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_graph_line}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats_Arena}"  Click="BtnArenaStats_Click"/>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats_Constructed}"  Click="BtnConstructedStats_Click"/>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays}" SubmenuOpened="MenuItemReplays_OnSubmenuOpened">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_chevron_right}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Latest}" Click="MenuItemLastGamesReplay_OnClick">
-                        <MenuItem.Resources>
-                            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
-                        </MenuItem.Resources>
-                        <MenuItem.ItemsSource>
-                            <CompositeCollection>
-                                <CollectionContainer Collection="{Binding Source={x:Static stats:LastGames.Instance}, Path=Games}"/>
-                                <MenuItem Header="EMPTY..." IsEnabled="False" Visibility="{Binding Source={x:Static stats:LastGames.Instance}, Path=HasGames, Converter={StaticResource InverseBoolToVisibilityConverter}}"></MenuItem>
-                            </CompositeCollection>
-                        </MenuItem.ItemsSource>
-                        <MenuItem.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding}"/>
-                            </DataTemplate>
-                        </MenuItem.ItemTemplate>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Stats}" Click="MenuItemReplaySelectGame_OnClick" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_File}" Click="MenuItemReplayFromFile_OnClick"/>
-                    <MenuItem StaysOpenOnClick="True" Click="MenuItemHsReplay_OnClick">
-                        <MenuItem.Header>
-                            <Grid Margin="-10,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Separator Grid.Column="0"/>
-                                <TextBlock Grid.Column="1" Text="HSREPLAY.NET" IsEnabled="False" Margin="5,0"/>
-                                <Separator Grid.Column="2"/>
-                            </Grid>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_ClaimAccount}" Click="MenuItemReplayClaimAccount_OnClick" 
-                              Visibility="{Binding MenuItemReplayClaimAccountVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_MyAccount}" Click="MenuItemReplayMyAccount_OnClick"
-                              Visibility="{Binding MenuItemReplayMyAccountVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins}" Name="MenuItemPlugins">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_puzzle_round}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins_Empty}" IsEnabled="False" Name="MenuItemPluginsEmpty"/>
-                </MenuItem>
-            </Menu>
+            <mainWindowControls:MainWindowMenuView x:Name="MainWindowMenu" Grid.Row="1" Grid.ColumnSpan="3"/>
             <Separator Grid.Row="1" Grid.ColumnSpan="4" Margin="0,29,0,0" Panel.ZIndex="2" />
             <Grid Grid.Column="1" Grid.Row="2" Margin="-1,0,0,0" Width="255">
                 <Grid.RowDefinitions>
@@ -484,9 +291,8 @@
                 </ListView>
                 <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="4" Height="150" Margin="0,6,0,6" />
             </Grid>
-                <deckPicker:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
-                              Grid.Row="2"
-                              Height="auto" Width="auto"
+            <deckPicker:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
+                              Grid.Row="2" Height="auto" Width="auto"
                               OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
                               OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
             <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
@@ -725,7 +531,7 @@
                         </Button.Content>
                     </Button>
                 </StatusBarItem>
-                
+
             </StatusBar>
         </Grid>
     </DockPanel>

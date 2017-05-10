@@ -642,6 +642,10 @@
     <Compile Include="Controls\DeckView.xaml.cs">
       <DependentUpon>DeckView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MainWindowControls\MainWindowMenuView.xaml.cs">
+      <DependentUpon>MainWindowMenuView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindowControls\MainWindowMenuViewModel.cs" />
     <Compile Include="Windows\WebImportingDialog.xaml.cs">
       <DependentUpon>WebImportingDialog.xaml</DependentUpon>
     </Compile>
@@ -1092,6 +1096,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DeckView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindowControls\MainWindowMenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using static MahApps.Metro.Controls.Dialogs.MessageDialogStyle;
 using Clipboard = System.Windows.Clipboard;
+using System.Collections.Generic;
 
 #endregion
 
@@ -23,16 +24,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class MainWindow
 	{
-		internal void BtnExport_Click(object sender, RoutedEventArgs e)
+		internal async void ExportDeck(Deck deck)
 		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
 			if(deck == null)
 				return;
-			ExportDeck(deck);
-		}
-
-		private async void ExportDeck(Deck deck)
-		{
 			if(Config.Instance.ShowExportingDialog)
 			{
 				var message = $"1) Create a new (or open an existing) {deck.Class} deck.\n\n2) Leave the deck creation screen open.\n\n3) Click 'Export' and do not move your mouse or type until done.";
@@ -101,8 +96,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void BtnScreenhot_Click(object sender, RoutedEventArgs e) => ShowScreenshotFlyout();
-
 		public void ShowScreenshotFlyout()
 		{
 			DeckScreenshotFlyout.Deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
@@ -158,7 +151,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private async void BtnSaveToFile_OnClick(object sender, RoutedEventArgs e)
+		internal async void SaveDecksToDisk(IEnumerable<Deck> decks)
 		{
 			var selectedDecks = DeckPickerList.SelectedDecks;
 			if (selectedDecks.Count > 1)
@@ -196,9 +189,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void BtnClipboard_OnClick(object sender, RoutedEventArgs e)
+		internal void ExportIdsToClipboard(Deck deck)
 		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null)
 				return;
 			Clipboard.SetText(Helper.DeckToIdString(deck.GetSelectedDeckVersion()));
@@ -206,9 +198,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Log.Info("Copied " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to clipboard");
 		}
 
-		private async void BtnClipboardNames_OnClick(object sender, RoutedEventArgs e)
+		internal async void ExportCardNamesToClipboard(Deck deck)
 		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(deck == null || !deck.GetSelectedDeckVersion().Cards.Any())
 				return;
 
@@ -243,7 +234,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private async void BtnExportFromWeb_Click(object sender, RoutedEventArgs e)
+		internal async void ExportDeckFromWeb()
 		{
 			var result = await ImportDeckFromUrl();
 			if(result.WasCancelled)
@@ -252,14 +243,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ExportDeck(result.Deck);
 			else
 				await this.ShowMessageAsync("No deck found", "Could not find a deck on" + Environment.NewLine + result.Url);
-		}
-
-		internal void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e)
-		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault();
-			if(deck == null)
-				return;
-			this.ShowMissingCardsMessage(deck, false).Forget();
 		}
 	}
 }
