@@ -1,3 +1,17 @@
+## __Release v1.2.6 - In Development__
+
+__New__:
+- Added "Most Played" as a deck sorting option.
+
+__Changes__:
+- Greatly improved the deck screenshot dialog.
+  - Deck images can now also be copied to the clipboard.
+- Importing decks from a list of card names now also gives a language selection option if english is the active language but an alternative language is selected.
+
+__Fixes__:
+- Fixed an issue where enchantment cards would be tracked in some cases.
+
+
 ## __Release v1.2.5 - 2017-05-02__
 - Fixed several crashes.
 
