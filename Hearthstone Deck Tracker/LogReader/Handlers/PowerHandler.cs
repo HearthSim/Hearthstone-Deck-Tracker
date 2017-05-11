@@ -183,7 +183,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						else if(currentEntity.IsControlledBy(game.Player.Id))
 							gameState.GameHandler.HandlePlayerJoust(currentEntity, cardId, gameState.GetTurnNumber());
 					}
-					//gameState.JoustReveals--;
 				}
 				return;
 			}
@@ -327,6 +326,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					_tagChangeHandler.InvokeQueuedActions(game);
 					gameState.SetupDone = true;
 				}
+				if(gameState.CurrentBlock.Type == "JOUST")
+				{
+					//make sure there are no more queued actions that might depend on JoustReveals
+					_tagChangeHandler.InvokeQueuedActions(game);
+					gameState.JoustReveals = 0;
+				}
+
 				gameState.BlockEnd();
 			}
 
