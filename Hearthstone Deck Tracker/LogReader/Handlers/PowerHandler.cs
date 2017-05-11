@@ -197,8 +197,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.GameHandler.HandleGameEnd();
 			else if(logLine.Contains("BLOCK_START"))
 			{
-				gameState.BlockStart();
-				if(BlockStartRegex.IsMatch(logLine))
+				var match = BlockStartRegex.Match(logLine);
+				var blockType = match.Success ? match.Groups["type"].Value : null;
+				gameState.BlockStart(blockType);
+
+				if(match.Success && (blockType == "TRIGGER" || blockType == "POWER"))
 				{
 					var playerEntity =
 						game.Entities.FirstOrDefault(
@@ -207,7 +210,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						game.Entities.FirstOrDefault(
 							e => e.Value.HasTag(GameTag.PLAYER_ID) && e.Value.GetTag(GameTag.PLAYER_ID) == game.Opponent.Id);
 
-					var match = BlockStartRegex.Match(logLine);
 					var actionStartingCardId = match.Groups["cardId"].Value.Trim();
 					var actionStartingEntityId = int.Parse(match.Groups["id"].Value);
 
@@ -219,7 +221,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					if(string.IsNullOrEmpty(actionStartingCardId))
 						return;
-					if(match.Groups["type"].Value == "TRIGGER")
+					if(blockType == "TRIGGER")
 					{
 						switch(actionStartingCardId)
 						{
