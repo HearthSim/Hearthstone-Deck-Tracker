@@ -326,6 +326,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
 			DeckPickerList.UpdateDecks();
 			DeckPickerList.UpdateArchivedClassVisibility();
+			DeckPickerList.SelectDeck(DeckList.Instance.ActiveDeck);
 			ManaCurveMyDecks.UpdateValues();
 		}
 
