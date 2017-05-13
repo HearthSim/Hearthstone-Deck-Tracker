@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -12,6 +16,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 	{
 		private static DateTime _appStartTime;
 		private static bool _new;
+		private static int? _pctHsReplayData;
+		private static int? _pctHsReplayDataTotal;
 
 		public static void OnAppStart(Version version, bool isNew, int startupDuration)
 		{
@@ -46,6 +52,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #else
 			point.Tag("squirrel", false);
 #endif
+
+			if(_pctHsReplayDataTotal.HasValue)
+				point.Field("pct_hsreplay_data_total", _pctHsReplayDataTotal.Value);
+			if(_pctHsReplayData.HasValue)
+				point.Field("pct_hsreplay_data_last14d", _pctHsReplayData.Value);
+
 			WritePoint(point.Build());
 		}
 
@@ -102,6 +114,30 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_end_of_game_upload_error").Tag("reason", Regex.Escape(reason)).Build());
+		}
+
+		public static void OnHsReplayDataLoaded()
+		{
+			try
+			{
+				var constructedDecks = DeckList.Instance.Decks.Where(x => !x.IsArenaDeck).ToList();
+				if(constructedDecks.Count == 0)
+					return;
+
+				var available = HsReplayDecks.AvailableDecks;
+				bool HasData(Deck deck) => available.Contains(deck.ShortId);
+				int PctHasData(IReadOnlyCollection<Deck> decks) => (int)Math.Round(100.0 * decks.Count(HasData) / decks.Count);
+
+				_pctHsReplayDataTotal = PctHasData(constructedDecks);
+
+				var decksPlayed = constructedDecks.Where(x => DateTime.Now - x.LastPlayed < TimeSpan.FromDays(14)).ToList();
+				if(decksPlayed.Count > 0)
+					_pctHsReplayData = PctHasData(decksPlayed);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
 		}
 	}
 }

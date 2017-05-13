@@ -313,6 +313,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				DeckPickerList.RefreshDisplayedDecks();
 				OnPropertyChanged(nameof(HsReplayButtonVisibility));
+				Influx.OnHsReplayDataLoaded();
 			};
 		}
 
