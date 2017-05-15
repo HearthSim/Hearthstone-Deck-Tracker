@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.ComponentModel.ListSortDirection;
 using static System.Windows.Visibility;
@@ -665,6 +666,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				SeparatorUseDeck.Visibility =
 				selectedDecks.First().Equals(DeckList.Instance.ActiveDeck) ? Collapsed : Visible;
 			MenuItemExportDeck.Visibility = selectedDecks.First().IsArenaDeck ? Collapsed : Visible;
+			MenuItemVersionHistory.Visibility = selectedDecks.First().HasVersions ? Visible : Collapsed;
 		}
 
 
@@ -673,7 +675,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void BtnTags_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowTagEditDialog(SelectedDecks);
 		private void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e) => Core.MainWindow.MoveDecksToArena(SelectedDecks);
 		private void BtnMoveDeckToConstructed_Click(object sender, RoutedEventArgs e) => Core.MainWindow.MoveDecksToConstructed(SelectedDecks);
-		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e) => Core.MainWindow.ShowMissingCardsMessage(SelectedDecks.FirstOrDefault(), false);
+		private void MenuItemMissingDust_OnClick(object sender, RoutedEventArgs e) => Core.MainWindow.ShowMissingCardsMessage(SelectedDecks.FirstOrDefault(), false).Forget();
 		private void BtnSetDeckUrl_Click(object sender, RoutedEventArgs e) => Core.MainWindow.SetDeckUrl(SelectedDecks.FirstOrDefault());
 		private void BtnUpdateDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.UpdateDeckFromWeb(SelectedDecks.FirstOrDefault());
 		private void BtnOpenDeckUrl_Click(object sender, RoutedEventArgs e) => Core.MainWindow.OpenDeckUrl(SelectedDecks.FirstOrDefault());
@@ -685,6 +687,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void BtnName_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowEditDeckNameDialog(SelectedDecks.FirstOrDefault());
 		private void BtnExportDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ExportDeck(SelectedDecks.FirstOrDefault());
 		private void BtnScreenshotCards_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowScreenshotFlyout();
+		private void MenuItemVersionHistory_OnClick(object sender, RoutedEventArgs e) => Core.MainWindow.ShowDeckHistoryFlyout();
 
 		private void ActiveDeckPanel_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{

@@ -232,6 +232,10 @@
     <Compile Include="Controls\DeckImportingControl.xaml.cs">
       <DependentUpon>DeckImportingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\DeckHistory\DeckHistoryViewModel.cs" />
+    <Compile Include="FlyoutControls\DeckHistory\DeckHistoryView.xaml.cs">
+      <DependentUpon>DeckHistoryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\MVVM\ViewModel.cs" />
     <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotHelper.cs" />
     <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotViewModel.cs" />
@@ -255,8 +259,8 @@
     <Compile Include="Controls\DeckSetIcons.xaml.cs">
       <DependentUpon>DeckSetIcons.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DeckVersionChange.xaml.cs">
-      <DependentUpon>DeckVersionChange.xaml</DependentUpon>
+    <Compile Include="FlyoutControls\DeckHistory\DeckVersionChangeView.xaml.cs">
+      <DependentUpon>DeckVersionChangeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotView.xaml.cs">
       <DependentUpon>DeckScreenshotView.xaml</DependentUpon>
@@ -852,7 +856,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DeckVersionChange.xaml">
+    <Page Include="FlyoutControls\DeckHistory\DeckVersionChangeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\DeckHistory\DeckHistoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

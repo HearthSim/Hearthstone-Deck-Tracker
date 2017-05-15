@@ -60,45 +60,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 		}
 
-		private void UpdateDeckHistoryPanel(Deck selected, bool isNewDeck)
+		private void UpdateNewDeckMenu(bool isNewDeck)
 		{
-			DeckHistoryPanel.Children.Clear();
-			DeckCurrentVersion.Text = $"v{selected.SelectedVersion.Major}.{selected.SelectedVersion.Minor}";
-			if(isNewDeck)
+			MenuItemSaveVersionCurrent.IsEnabled = !isNewDeck;
+			MenuItemSaveVersionMinor.IsEnabled = !isNewDeck;
+			MenuItemSaveVersionMajor.IsEnabled = !isNewDeck;
+			MenuItemSaveVersionCurrent.Visibility = isNewDeck ? Collapsed : Visible;
+			MenuItemSaveVersionMinor.Visibility = isNewDeck ? Collapsed : Visible;
+			MenuItemSaveVersionMajor.Visibility = isNewDeck ? Collapsed : Visible;
+			if(!isNewDeck)
 			{
-				MenuItemSaveVersionCurrent.IsEnabled = false;
-				MenuItemSaveVersionMinor.IsEnabled = false;
-				MenuItemSaveVersionMajor.IsEnabled = false;
-				MenuItemSaveVersionCurrent.Visibility = Collapsed;
-				MenuItemSaveVersionMinor.Visibility = Collapsed;
-				MenuItemSaveVersionMajor.Visibility = Collapsed;
-			}
-			else
-			{
-				MenuItemSaveVersionCurrent.IsEnabled = true;
-				MenuItemSaveVersionMinor.IsEnabled = true;
-				MenuItemSaveVersionMajor.IsEnabled = true;
-				MenuItemSaveVersionCurrent.Visibility = Visible;
-				MenuItemSaveVersionMinor.Visibility = Visible;
-				MenuItemSaveVersionMajor.Visibility = Visible;
 				MenuItemSaveVersionCurrent.Header = _newDeck.Version.ToString("v{M}.{m} (current)");
 				MenuItemSaveVersionMinor.Header = $"v{_newDeck.Version.Major}.{_newDeck.Version.Minor + 1}";
 				MenuItemSaveVersionMajor.Header = $"v{_newDeck.Version.Major + 1}.{0}";
-			}
-
-			if(selected.Versions.Count > 0)
-			{
-				var current = selected;
-				foreach(var prevVersion in selected.Versions.OrderByDescending(d => d.Version))
-				{
-					var versionChange = new DeckVersionChange
-					{
-						Label = {Text = $"{prevVersion.Version.ToString("v{M}.{m}")} -> {current.Version.ToString("v{M}.{m}")}"},
-						ListViewDeck = {ItemsSource = current - prevVersion}
-					};
-					DeckHistoryPanel.Children.Add(versionChange);
-					current = prevVersion;
-				}
 			}
 		}
 
@@ -538,6 +512,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				if(FlyoutNotes.IsOpen)
 					ShowDeckNotesDialog(deck);
+
+				if(FlyoutDeckHistory.IsOpen)
+				{
+					if(deck.HasVersions)
+						DeckHistoryFlyout.Deck = deck;
+					else
+						FlyoutDeckHistory.IsOpen = false;
+				}
 
 			}
 			else

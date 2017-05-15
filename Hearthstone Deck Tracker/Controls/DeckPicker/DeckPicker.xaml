@@ -185,6 +185,7 @@
                 <MenuItem Name="MenuItemMoveDeckToConstructed" Header="{lex:LocTextUpper DeckPicker_ContextMenu_MoveToConstructed}"
                           Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed" />
                 <Separator Name="SeparatorDeck1" />
+                <MenuItem Name="MenuItemVersionHistory" Header="{lex:LocTextUpper DeckPicker_ContextMenu_VersionHistory}" Click="MenuItemVersionHistory_OnClick"/>
                 <MenuItem Name="MenuItemMissingCards" Header="{lex:LocTextUpper DeckPicker_ContextMenu_MissingCards}"
                           ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick" />
                 <MenuItem Name="MenuItemUpdateDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Update}" Click="BtnUpdateDeck_Click" />

@@ -107,6 +107,7 @@
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_MoveToArena}" Command="{Binding MoveToArenaCommand}" Visibility="{Binding MoveToArenaVisibility}"/>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_MoveToContrstucted}" Command="{Binding MoveToConstructedCommand}" Visibility="{Binding MoveToConstructedVisibility}"/>
             <Separator Visibility="{Binding SeparatorVisibility}"/>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_VersionHistory}" Command="{Binding DeckHistoryCommand}" Visibility="{Binding DeckHistoryVisibility}" />
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_MissingCards}" Command="{Binding MissingCardsCommand}" Visibility="{Binding MissingCardsVisibility}" />
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_UpdateWeb}" Command="{Binding UpdateFromWebCommand}" Visibility="{Binding UpdateFromWebVisibility}" />
             <MenuItem Header="{Binding SetDeckUrlText}" Command="{Binding SetDeckUrlCommand}" Visibility="{Binding SetDeckUrlVisibility}" />

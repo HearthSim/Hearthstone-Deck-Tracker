@@ -322,7 +322,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BorderConstructedCardLimits.Visibility = _newDeck.IsArenaDeck ? Collapsed : Visible;
 			CheckBoxIncludeWild.Visibility = _newDeck.IsBrawlDeck ? Collapsed : Visible;
 			CheckBoxConstructedCardLimits.IsChecked = true;
-			UpdateDeckHistoryPanel(deck, !editing);
+			UpdateNewDeckMenu(!editing);
 			UpdateDbListView();
 			ExpandNewDeck();
 			UpdateCardCount();
@@ -336,7 +336,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				GridNewDeck.Visibility = Visible;
 				MenuNewDeck.Visibility = Visible;
-				ButtonVersionHistory.Visibility = _newDeck?.HasVersions ?? false ? Visible : Collapsed;
 				GridNewDeck.Width = widthWithoutHistoryPanel;
 				GridNewDeck.UpdateLayout();
 				Width += GridNewDeck.ActualWidth;
@@ -388,7 +387,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var width = GridNewDeck.ActualWidth;
 				GridNewDeck.Visibility = Collapsed;
 				MenuNewDeck.Visibility = Collapsed;
-				PanelDeckHistory.Visibility = Collapsed;
 				MinWidth -= width;
 				Width -= width;
 			}
@@ -398,7 +396,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PanelVersionComboBox.Visibility = selectedDeck != null && selectedDeck.HasVersions ? Visible : Collapsed;
 			PanelCardCount.Visibility = Collapsed;
 			BtnStartHearthstone.Visibility = Core.Game.IsRunning ? Collapsed : Visible;
-			TextBlockButtonVersionHistory.Text = "SHOW VERSION HISTORY";
 
 			if(MovedLeft.HasValue)
 			{
@@ -456,7 +453,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SelectDeck(null, false);
 			ExpandNewDeck();
 			ListViewDeck.ItemsSource = _newDeck.Cards;
-			UpdateDeckHistoryPanel(_newDeck, true);
+			UpdateNewDeckMenu(true);
 			ManaCurveMyDecks.SetDeck(_newDeck);
 			UpdateDbListView();
 		}
@@ -646,27 +643,5 @@ namespace Hearthstone_Deck_Tracker.Windows
 		#endregion
 
 		private void CheckBoxIncludeWild_Changed(object sender, RoutedEventArgs e) => UpdateDbListView();
-
-		private void ButtonVersionHistory_OnClick(object sender, RoutedEventArgs e)
-		{
-			const int widthWithHistoryPanel = 485;
-			const int widthWithoutHistoryPanel = 240;
-			if(PanelDeckHistory.Visibility != Visible)
-			{
-				TextBlockButtonVersionHistory.Text = "HIDE VERSION HISTORY";
-				PanelDeckHistory.Visibility = Visible;
-				GridNewDeck.Width = widthWithHistoryPanel;
-				Width += widthWithHistoryPanel - widthWithoutHistoryPanel;
-				MinWidth += widthWithHistoryPanel - widthWithoutHistoryPanel;
-			}
-			else
-			{
-				TextBlockButtonVersionHistory.Text = "SHOW VERSION HISTORY";
-				PanelDeckHistory.Visibility = Collapsed;
-				GridNewDeck.Width = widthWithoutHistoryPanel;
-				MinWidth -= widthWithHistoryPanel - widthWithoutHistoryPanel;
-				Width -= widthWithHistoryPanel - widthWithoutHistoryPanel;
-			}
-		}
 	}
 }

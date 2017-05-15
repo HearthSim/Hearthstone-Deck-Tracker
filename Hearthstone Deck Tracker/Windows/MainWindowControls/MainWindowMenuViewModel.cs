@@ -82,6 +82,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public ICommand HsReplayNetCommand => new Command(() => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client"));
 		public ICommand ClaimAccountCommand => new Command(() => MainWindow.StartClaimAccount());
 		public ICommand MyAccountCommand => new Command(() => Helper.TryOpenUrl("https://hsreplay.net/games/mine/?utm_source=hdt&utm_medium=client"));
+		public ICommand DeckHistoryCommand => new Command(() => MainWindow.ShowDeckHistoryFlyout());
 
 		public IEnumerable<SortFilterDecks.Tag> DeckTags => MainWindow?.TagControlEdit.Tags ?? new ObservableCollection<SortFilterDecks.Tag>();
 		public string SetDeckUrlText => LocUtil.Get(string.IsNullOrEmpty(Decks.FirstOrDefault()?.Url) ? LocLinkNew : LocLink, true);
@@ -105,6 +106,8 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public Visibility ArchiveDeckVisibility => Decks.FirstOrDefault()?.Archived ?? true ? Collapsed : Visible;
 		public Visibility UnarchiveDeckVisibility => Decks.FirstOrDefault()?.Archived ?? false ? Visible : Collapsed;
 		public Visibility SeparatorVisibility => Decks.FirstOrDefault()?.IsArenaDeck ?? true ? Collapsed : Visible;
+		public Visibility DeckHistoryVisibility => Decks.FirstOrDefault()?.HasVersions ?? false ? Visible : Collapsed;
+
 
 		public MainWindowMenuViewModel()
 		{
@@ -139,6 +142,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			OnPropertyChanged(nameof(ArchiveDeckVisibility));
 			OnPropertyChanged(nameof(UnarchiveDeckVisibility));
 			OnPropertyChanged(nameof(SeparatorVisibility));
+			OnPropertyChanged(nameof(DeckHistoryVisibility));
 		}
 
 		public void PluginsMenuOpened()

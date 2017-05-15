@@ -102,6 +102,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlyoutDeckScreenshot.IsOpen = true;
 		}
 
+		public void ShowDeckHistoryFlyout()
+		{
+			var deck = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
+			if(!deck?.HasVersions ?? true)
+				return;
+			DeckHistoryFlyout.Deck = deck;
+			FlyoutDeckHistory.IsOpen = true;
+		}
+
 		public async Task SaveOrUploadScreenshot(PngBitmapEncoder pngEncoder, string proposedFileName)
 		{
 			if(pngEncoder != null)
