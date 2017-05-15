@@ -3,22 +3,20 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Stats;
 using static System.Windows.Visibility;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 {
-	public class MainWindowMenuViewModel : INotifyPropertyChanged
+	public class MainWindowMenuViewModel : ViewModel
 	{
 		private const string LocLink = "DeckPicker_ContextMenu_LinkUrl";
 		private const string LocLinkNew = "DeckPicker_ContextMenu_LinkNewUrl";
@@ -127,14 +125,6 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 					OnPropertyChanged(nameof(MyAccountVisibility));
 				}
 			};
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public void DeckMenuOpened()

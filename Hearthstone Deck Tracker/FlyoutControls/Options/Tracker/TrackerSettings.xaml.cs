@@ -58,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void TrackerSettings_Loaded(object sender, RoutedEventArgs e)
 		{
-			CheckboxShowNewsBar.IsChecked = Core.MainWindow.StatusBarNews.Visibility != Visibility.Collapsed;
+			CheckboxShowNewsBar.IsChecked = Core.MainWindow.NewsBar.Visibility != Visibility.Collapsed;
 		}
 
 		private void SaveConfig(bool updateOverlay)

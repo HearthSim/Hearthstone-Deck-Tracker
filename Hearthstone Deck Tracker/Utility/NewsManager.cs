@@ -31,9 +31,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(newsLine < _news.Data.Length && _currentNewsLine != _news.Data[newsLine])
 			{
 				_currentNewsLine = _news.Data[newsLine];
-				Core.MainWindow.NewsContentControl.Content = StringToTextBlock(_currentNewsLine);
+				Core.MainWindow.NewsBar.NewsContent = StringToTextBlock(_currentNewsLine);
 			}
-			Core.MainWindow.StatusBarItemNewsIndex.Content = $"({_newsLine + 1}/{_news.Data.Length})";
+			Core.MainWindow.NewsBar.IndexContent = $"({_newsLine + 1}/{_news.Data.Length})";
 			_lastNewsUpdate = DateTime.Now;
 		}
 
@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static void ToggleNewsVisibility()
 		{
-			if(Core.MainWindow.StatusBarNews.Visibility == Visibility.Collapsed)
+			if(Core.MainWindow.NewsBar.Visibility == Visibility.Collapsed)
 			{
 				Config.Instance.IgnoreNewsId = -1;
 				Config.Save();
@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			{
 				Config.Instance.IgnoreNewsId = _news?.Id ?? 0;
 				Config.Save();
-				Core.MainWindow.StatusBarNews.Visibility = Visibility.Collapsed;
+				Core.MainWindow.NewsBar.Visibility = Visibility.Collapsed;
 				Core.MainWindow.MinHeight -= Core.MainWindow.StatusBarNewsHeight;
 				Core.MainWindow.TopRow.Height = new GridLength(0);
 			}
@@ -151,7 +151,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		private static void ShowNewsBar()
 		{
 			Core.MainWindow.TopRow.Height = new GridLength(26);
-			Core.MainWindow.StatusBarNews.Visibility = Visibility.Visible;
+			Core.MainWindow.NewsBar.Visibility = Visibility.Visible;
 			Core.MainWindow.MinHeight += Core.MainWindow.StatusBarNewsHeight;
 			UpdateNews(0);
 		}

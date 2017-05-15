@@ -232,6 +232,7 @@
     <Compile Include="Controls\DeckImportingControl.xaml.cs">
       <DependentUpon>DeckImportingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility\MVVM\ViewModel.cs" />
     <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotHelper.cs" />
     <Compile Include="FlyoutControls\DeckScreenshot\DeckScreenshotViewModel.cs" />
     <Compile Include="Utility\Command.cs" />
@@ -646,6 +647,10 @@
       <DependentUpon>MainWindowMenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindowControls\MainWindowMenuViewModel.cs" />
+    <Compile Include="Windows\MainWindowControls\NewsBarView.xaml.cs">
+      <DependentUpon>NewsBarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindowControls\NewsBarViewModel.cs" />
     <Compile Include="Windows\WebImportingDialog.xaml.cs">
       <DependentUpon>WebImportingDialog.xaml</DependentUpon>
     </Compile>
@@ -1100,6 +1105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\MainWindowControls\MainWindowMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindowControls\NewsBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

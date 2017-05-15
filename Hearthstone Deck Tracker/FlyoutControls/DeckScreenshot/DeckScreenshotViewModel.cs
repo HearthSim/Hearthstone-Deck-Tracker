@@ -10,12 +10,13 @@ using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 {
-	public class DeckScreenshotViewModel : INotifyPropertyChanged
+	public class DeckScreenshotViewModel : ViewModel
 	{
 		private const string ClipboardDefault = "DeckScreenshot_Button_Clipboard_Copy";
 		private const string ClipboardCopied = "DeckScreenshot_Button_Clipboard_Copied";
@@ -168,8 +169,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public string SavedFolderPath => SavedFile?.Directory?.FullName;
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
 		public void Save()
 		{
 			var file = DeckScreenshotHelper.Save(Deck, DeckImage);
@@ -210,12 +209,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			if(_deck == null)
 				return;
 			DeckImage = DeckScreenshotHelper.Generate(_deck, CardsOnly);
-		}
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

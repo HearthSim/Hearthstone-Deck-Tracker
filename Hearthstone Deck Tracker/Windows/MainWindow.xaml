@@ -472,67 +472,7 @@
                     </ScrollViewer>
                 </DockPanel>
             </Grid>
-            <StatusBar Name="StatusBarNews"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Height="26" Margin="0,1,0,0" Visibility="Collapsed">
-                <StatusBar.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="30"/>
-                            </Grid.ColumnDefinitions>
-                        </Grid>
-                    </ItemsPanelTemplate>
-                </StatusBar.ItemsPanel>
-                <StatusBarItem Content="{lex:LocTextUpper MainWindow_NewsBar_Header}" Grid.Column="0"/>
-                <StatusBarItem Name="StatusBarItemNewsIndex" Content="(0/0)" Grid.Column="1"/>
-                <StatusBarItem Grid.Column="2">
-                    <controls:TransitioningContentControl Name="NewsContentControl" Transition="Right"/>
-                </StatusBarItem>
-                <StatusBarItem Grid.Column="3">
-                    <Button Name="BtnClosePrevious" VerticalAlignment="Center" Height="24" Width="24" 
-                            Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" 
-                            BorderThickness="0" Click="BtnNewsPrevious_OnClick"  ToolTip="Previous">
-                        <Button.Content>
-                            <Rectangle Width="8" Height="8">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chevron_left_white}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button.Content>
-                    </Button>
-                </StatusBarItem>
-                <StatusBarItem Grid.Column="4">
-                    <Button Name="BtnNewsNext" VerticalAlignment="Center" Height="24" Width="24" 
-                            Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" 
-                            BorderThickness="0" Click="BtnNewsNext_OnClick"  ToolTip="Next">
-                        <Button.Content>
-                            <Rectangle Width="8" Height="8">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chevron_right_white}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button.Content>
-                    </Button>
-                </StatusBarItem>
-                <StatusBarItem Grid.Column="5">
-                    <Button Name="BtnCloseNews" VerticalAlignment="Center" Height="24" Width="24" 
-                            Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" BorderThickness="0" 
-                            Click="BtnCloseNews_OnClick" ToolTip="Close">
-                        <Button.Content>
-                            <Rectangle Width="8" Height="8">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_close_white}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button.Content>
-                    </Button>
-                </StatusBarItem>
-
-            </StatusBar>
+            <mainWindowControls:NewsBarView x:Name="NewsBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Height="26" Margin="0,1,0,0" Visibility="Collapsed" />
         </Grid>
     </DockPanel>
 </controls:MetroWindow>
