@@ -9,10 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
-using Hearthstone_Deck_Tracker.Exporting;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using MahApps.Metro.Controls.Dialogs;
 using Clipboard = System.Windows.Clipboard;
 
 #endregion
@@ -111,14 +109,6 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 				Core.MainWindow.SelectLastUsedDeck();
 			else
 				Core.MainWindow.SelectDeck(null, true);
-		}
-
-		[PredefinedHotKeyAction("Export deck",
-			"Activates \"no deck mode\" (use no deck) or selects the last used deck. This will not show any dialogs in the main window.")]
-		public static void ExportDeck()
-		{
-			if(DeckList.Instance.ActiveDeck != null && Core.Game.IsInMenu)
-				DeckExporter.Export(DeckList.Instance.ActiveDeckVersion, null).Forget();
 		}
 
 		[PredefinedHotKeyAction("Edit active deck", "Opens the edit dialog for the active deck (if any) and brings HDT to foreground.")]

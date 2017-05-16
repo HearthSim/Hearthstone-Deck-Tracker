@@ -19,6 +19,10 @@ namespace Hearthstone_Deck_Tracker.Importing
 				if(validUrl)
 					return await DeckImporter.Import(clipboard);
 
+				var deck = DeckSerializer.Deserialize(clipboard);
+				if(deck != null)
+					return deck;
+
 				if(StringImporter.IsValidImportString(clipboard))
 					return StringImporter.Import(clipboard);
 

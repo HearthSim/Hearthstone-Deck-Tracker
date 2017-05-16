@@ -78,6 +78,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{HearthDb.CardIds.Collectible.Neutral.MajordomoExecutus, "Ragnaros the Firelord"}
 		};
 
+		public static readonly Dictionary<string, string> HeroNameDict = new Dictionary<string, string>
+		{
+			{"Warrior", HearthDb.CardIds.Collectible.Warrior.GarroshHellscream},
+			{"Shaman", HearthDb.CardIds.Collectible.Shaman.Thrall},
+			{"Rogue", HearthDb.CardIds.Collectible.Rogue.ValeeraSanguinar},
+			{"Paladin", HearthDb.CardIds.Collectible.Paladin.UtherLightbringer},
+			{"Hunter", HearthDb.CardIds.Collectible.Hunter.Rexxar},
+			{"Druid", HearthDb.CardIds.Collectible.Druid.MalfurionStormrage},
+			{"Warlock", HearthDb.CardIds.Collectible.Warlock.Guldan},
+			{"Mage", HearthDb.CardIds.Collectible.Mage.JainaProudmoore},
+			{"Priest", HearthDb.CardIds.Collectible.Priest.AnduinWrynn}
+		};
+
 		public static class Secrets
 		{
 			public static List<string> FastCombat = new List<string>

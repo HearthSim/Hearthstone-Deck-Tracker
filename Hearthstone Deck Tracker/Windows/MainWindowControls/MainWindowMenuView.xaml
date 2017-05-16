@@ -130,6 +130,7 @@
                 </Rectangle>
             </MenuItem.Icon>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Web}" Command="{Binding ImportFromWebCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_DeckString}" Command="{Binding ImportFromDeckString}" />
             <Separator/>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Constructed}" Command="{Binding ImportFromConstructedCommand}" />
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Arena}" Command="{Binding ImportFromArenaCommand}" />

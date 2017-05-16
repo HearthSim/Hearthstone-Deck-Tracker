@@ -22,6 +22,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.ComponentModel.ListSortDirection;
 using static System.Windows.Visibility;
+using Clipboard = System.Windows.Clipboard;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListView = System.Windows.Controls.ListView;
 using Hearthstone_Deck_Tracker.Windows;
@@ -687,7 +688,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private void BtnCloneDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowCloneDeckDialog(SelectedDecks.FirstOrDefault());
 		private void BtnCloneSelectedVersion_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowCloneDeckVersionDialog(SelectedDecks.FirstOrDefault());
 		private void BtnName_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowEditDeckNameDialog(SelectedDecks.FirstOrDefault());
-		private void BtnExportDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ExportDeck(SelectedDecks.FirstOrDefault());
+		private void BtnExportDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowExportFlyout(SelectedDecks.FirstOrDefault());
 		private void BtnScreenshotCards_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowScreenshotFlyout();
 		private void MenuItemVersionHistory_OnClick(object sender, RoutedEventArgs e) => Core.MainWindow.ShowDeckHistoryFlyout();
 

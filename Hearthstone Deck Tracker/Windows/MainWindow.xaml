@@ -11,6 +11,7 @@
                       xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility.Updating"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
                       xmlns:deckScreenshot="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot"
+                      xmlns:deckExport="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckExport"
                       xmlns:mainWindowControls="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
                       xmlns:deckHistory="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory"
                       xmlns:deckEditor="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor"
@@ -129,11 +130,14 @@
             <controls:Flyout x:Name="FlyoutDeckImporting" Header="{lex:Loc MainWindow_Flyout_DeckImporting_Header}" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls1:DeckImportingControl x:Name="DeckImportingFlyout"/>
             </controls:Flyout>
-            <controls:Flyout x:Name="FlyoutDeckEditor" Header="Deck editor" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+            <controls:Flyout x:Name="FlyoutDeckEditor" Header="{lex:Loc MainWindow_Flyout_DeckEditor_Header}" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <deckEditor:DeckEditorView x:Name="DeckEditorFlyout" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutDeckScreenshot" Header="{lex:Loc MainWindow_Flyout_DeckScreenshot_Header}" Position="Right" Panel.ZIndex="1" Width="300">
                 <deckScreenshot:DeckScreenshotView x:Name="DeckScreenshotFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckExport" Header="{lex:Loc MainWindow_Flyout_DeckExport_Header}" Position="Right" Panel.ZIndex="1" Width="550">
+                <deckExport:DeckExportView x:Name="DeckExportFlyout"/>
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutDeckHistory" Header="{lex:Loc MainWindow_Flyout_VersionHistory_Header}" Position="Right" Panel.ZIndex="1" Width="245">
                 <deckHistory:DeckHistoryView x:Name="DeckHistoryFlyout"/>
