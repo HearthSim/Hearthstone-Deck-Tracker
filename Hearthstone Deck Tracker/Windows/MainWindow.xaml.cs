@@ -60,22 +60,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 		}
 
-		private void UpdateNewDeckMenu(bool isNewDeck)
-		{
-			MenuItemSaveVersionCurrent.IsEnabled = !isNewDeck;
-			MenuItemSaveVersionMinor.IsEnabled = !isNewDeck;
-			MenuItemSaveVersionMajor.IsEnabled = !isNewDeck;
-			MenuItemSaveVersionCurrent.Visibility = isNewDeck ? Collapsed : Visible;
-			MenuItemSaveVersionMinor.Visibility = isNewDeck ? Collapsed : Visible;
-			MenuItemSaveVersionMajor.Visibility = isNewDeck ? Collapsed : Visible;
-			if(!isNewDeck)
-			{
-				MenuItemSaveVersionCurrent.Header = _newDeck.Version.ToString("v{M}.{m} (current)");
-				MenuItemSaveVersionMinor.Header = $"v{_newDeck.Version.Major}.{_newDeck.Version.Minor + 1}";
-				MenuItemSaveVersionMajor.Header = $"v{_newDeck.Version.Major + 1}.{0}";
-			}
-		}
-
 		public void AutoDeckDetection(bool enable)
 		{
 			if(!_initialized)
@@ -118,12 +102,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void MenuItemSaveVersionCurrent_OnClick(object sender, RoutedEventArgs e) => SaveDeckWithOverwriteCheck(_newDeck.Version);
-
-		private void MenuItemSaveVersionMinor_OnClick(object sender, RoutedEventArgs e) => SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMinor(_newDeck.Version));
-
-		private void MenuItemSaveVersionMajor_OnClick(object sender, RoutedEventArgs e) => SaveDeckWithOverwriteCheck(SerializableVersion.IncreaseMajor(_newDeck.Version));
-
 		private void ComboBoxDeckVersion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized || DeckPickerList.ChangedSelection)
@@ -145,17 +123,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Console.WriteLine(version);
 		}
 
-		private void MenuItemSaveAsNew_OnClick(object sender, RoutedEventArgs e) => SaveDeckWithOverwriteCheck(new SerializableVersion(1, 0), true);
-
 		private void DeckPickerList_OnOnDoubleClick(DeckPicker sender, Deck deck)
 		{
 			if(deck?.Equals(DeckList.Instance.ActiveDeck) ?? true)
 				return;
 			SelectDeck(deck, true);
 		}
-
-		private void MetroWindow_LocationChanged(object sender, EventArgs e) => MovedLeft = null;
-
 
 		[NotifyPropertyChangedInvocator]
 		internal virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -187,11 +160,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public OverlayWindow Overlay => Core.Overlay;
 
 		private bool _initialized => Core.Initialized;
-
-		public bool EditingDeck;
-		private Deck _newDeck;
-		private bool _newDeckUnsavedChanges;
-		private Deck _originalDeck;
 
 		private double _heightChangeDueToSearchBox;
 		public const int SearchBoxHeight = 30;
@@ -263,7 +231,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void LoadAndUpdateDecks()
 		{
 			UpdateDeckList(DeckList.Instance.ActiveDeck);
-			UpdateDbListView();
 			SelectDeck(DeckList.Instance.ActiveDeck, true);
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			DeckPickerList.PropertyChanged += DeckPickerList_PropertyChanged;
@@ -333,10 +300,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				//Config.Instance.ShowAllDecks = DeckPickerList.ShowAll;
 				Config.Instance.SelectedDeckPickerClasses = DeckPickerList.SelectedClasses.ToArray();
 
-				Config.Instance.WindowWidth = (int)(Width - (GridNewDeck.Visibility == Visible ? GridNewDeck.ActualWidth : 0));
+				Config.Instance.WindowWidth = (int)Width;
 				Config.Instance.WindowHeight = (int)(Height - _heightChangeDueToSearchBox);
 				Config.Instance.TrackerWindowTop = (int)Top;
-				Config.Instance.TrackerWindowLeft = (int)(Left + (MovedLeft ?? 0));
+				Config.Instance.TrackerWindowLeft = (int)Left;
 
 				//position of add. windows is NaN if they were never opened.
 				if(!double.IsNaN(Core.Windows.PlayerWindow.Left))
@@ -605,6 +572,35 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault()?.GetSelectedDeckVersion() ?? DeckList.Instance.ActiveDeckVersion;
 			if(deck?.ShortId != null)
 				Helper.TryOpenUrl($"https://hsreplay.net/decks/{deck.ShortId}/?utm_source=hdt&utm_medium=client");
+		}
+
+		public void ShowDeckEditorFlyout(Deck deck, bool isNewDeck)
+		{
+			if(deck == null)
+				return;
+			DeckEditorFlyout.SetDeck(deck, isNewDeck);
+			FlyoutDeckEditor.IsOpen = true;
+		}
+
+		internal async void ShowNewDeckMessage(string hero)
+		{
+			var deck = new Deck {Class = hero};
+			var type = await this.ShowDeckTypeDialog();
+			if(type == null)
+				return;
+			if(type == DeckType.Arena)
+				deck.IsArenaDeck = true;
+			else if(type == DeckType.Brawl)
+			{
+				if(!DeckList.Instance.AllTags.Contains("Brawl"))
+				{
+					DeckList.Instance.AllTags.Add("Brawl");
+					DeckList.Save();
+					Core.MainWindow?.ReloadTags();
+				}
+				deck.Tags.Add("Brawl");
+			}
+			ShowDeckEditorFlyout(deck, true);
 		}
 	}
 }

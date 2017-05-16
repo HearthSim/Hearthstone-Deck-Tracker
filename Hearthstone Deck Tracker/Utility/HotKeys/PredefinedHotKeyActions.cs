@@ -126,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		{
 			if(DeckList.Instance.ActiveDeck == null)
 				return;
-			Core.MainWindow.SetNewDeck(DeckList.Instance.ActiveDeck, true);
+			Core.MainWindow.ShowDeckEditorFlyout(DeckList.Instance.ActiveDeck, false);
 			Core.MainWindow.ActivateWindow();
 		}
 

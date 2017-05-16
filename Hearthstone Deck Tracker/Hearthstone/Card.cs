@@ -157,6 +157,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				_count = value;
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(Background));
 			}
 		}
 

@@ -670,7 +670,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		}
 
 
-		private void BtnEditDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.SetNewDeck(SelectedDecks.FirstOrDefault(), true);
+		private void BtnEditDeck_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowDeckEditorFlyout(SelectedDecks.FirstOrDefault(), false);
 		private void BtnNotes_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowDeckNotesDialog(SelectedDecks.FirstOrDefault());
 		private void BtnTags_Click(object sender, RoutedEventArgs e) => Core.MainWindow.ShowTagEditDialog(SelectedDecks);
 		private void BtnMoveDeckToArena_Click(object sender, RoutedEventArgs e) => Core.MainWindow.MoveDecksToArena(SelectedDecks);

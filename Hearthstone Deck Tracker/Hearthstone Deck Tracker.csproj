@@ -232,6 +232,16 @@
     <Compile Include="Controls\DeckImportingControl.xaml.cs">
       <DependentUpon>DeckImportingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\DeckEditor\Enums\ClassFilter.cs" />
+    <Compile Include="FlyoutControls\DeckEditor\Enums\CostFilter.cs" />
+    <Compile Include="FlyoutControls\DeckEditor\Enums\DeckEditorErrors.cs" />
+    <Compile Include="FlyoutControls\DeckEditor\DeckEditorView.xaml.cs">
+      <DependentUpon>DeckEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\DeckEditor\DeckEditorViewModel.cs" />
+    <Compile Include="FlyoutControls\DeckEditor\Enums\DeckEditorWarnings.cs" />
+    <Compile Include="FlyoutControls\DeckEditor\Enums\SetFilter.cs" />
+    <Compile Include="FlyoutControls\DeckEditor\SaveOperation.cs" />
     <Compile Include="FlyoutControls\DeckHistory\DeckHistoryViewModel.cs" />
     <Compile Include="FlyoutControls\DeckHistory\DeckHistoryView.xaml.cs">
       <DependentUpon>DeckHistoryView.xaml</DependentUpon>
@@ -738,9 +748,6 @@
     <Compile Include="Windows\MainWindow.Load.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MainWindow.NewDeck.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Stats\DeckStats.cs" />
     <Compile Include="Stats\GameStats.cs" />
     <Compile Include="TurnTimer.cs" />
@@ -857,6 +864,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\DeckHistory\DeckVersionChangeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\DeckEditor\DeckEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

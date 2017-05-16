@@ -237,7 +237,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			DeckStatsList.Save();
-			//DeckPickerList.UpdateList();
 			DeckPickerList.SelectDeckAndAppropriateView(clone);
 		}
 
@@ -254,7 +253,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var selectedDeck = DeckPickerList.SelectedDecks.FirstOrDefault();
 			if(selectedDeck == null)
 				return;
-			SetNewDeck(selectedDeck, true);
+			ShowDeckEditorFlyout(selectedDeck, false);
 		}
 
 		internal async void UpdateDeckFromWeb(Deck existingDeck)
@@ -274,14 +273,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			}
 
-			SetNewDeck(existingDeck, true);
-			TextBoxDeckName.Text = deck.Name;
-			_newDeck.Cards.Clear();
+			var imported = (Deck)existingDeck.Clone();
+			imported.Name = deck.Name;
+			imported.Cards.Clear();
 			foreach(var card in deck.Cards)
-				_newDeck.Cards.Add(card);
-			_newDeck.Edited();
-
-			UpdateCardCount();
+				imported.Cards.Add(card);
+			ShowDeckEditorFlyout(imported, false);
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			ManaCurveMyDecks.UpdateValues();
 
@@ -349,12 +346,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void MainWindow_OnPreviewKeyDown(object sender, KeyEventArgs e)
 		{
-			if(e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control && _newDeck != null)
-			{
-				MenuItemSave.IsSubmenuOpen = true;
-				MenuItemSave.Focus();
-			}
-			else if(e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
+			if(e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
 			{
 				if(Keyboard.FocusedElement is TextBox)
 					return;

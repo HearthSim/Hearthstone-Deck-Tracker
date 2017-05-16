@@ -102,13 +102,6 @@
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxManaCurveMyDecks_Checked"
                               Unchecked="CheckboxManaCurveMyDecks_Unchecked" />
-                    <CheckBox x:Name="CheckboxFullTextSearch"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="{lex:Loc Options_Tracker_General_CheckBox_FullTextSearch}" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxFullTextSearch_Checked"
-                              Unchecked="CheckboxFullTextSearch_Unchecked" />
                     <Separator Margin="0,5,0,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
                     <CheckBox x:Name="CheckboxDeckPickerCaps" Content="{lex:Loc Options_Tracker_General_CheckBox_UpperCaseDeckNames}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"

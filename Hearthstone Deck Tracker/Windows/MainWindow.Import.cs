@@ -40,19 +40,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await this.ShowMessageAsync("No deck found", "Could not find a deck on" + Environment.NewLine + result.Url);
 		}
 
-		private void SaveImportedDeck(Deck deck)
-		{
-			var reimport = EditingDeck && _newDeck != null && _newDeck.Url == deck.Url;
-
-			if(reimport) //keep old notes
-				deck.Note = _newDeck.Note;
-
-			SetNewDeck(deck, reimport);
-			TagControlEdit.SetSelectedTags(deck.Tags);
-			if(Config.Instance.AutoSaveOnImport)
-				SaveDeckWithOverwriteCheck();
-		}
-
 		public class ImportingResult
 		{
 			public Deck Deck { get; set; }
@@ -144,9 +131,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 					deck.Cards.Add(card);
 				}
-				SetNewDeck(deck);
 				if(Config.Instance.AutoSaveOnImport)
-					SaveDeckWithOverwriteCheck();
+					DeckManager.SaveDeck(deck);
+				else
+					ShowDeckEditorFlyout(deck, true);
 			}
 			catch(Exception ex)
 			{
@@ -180,9 +168,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 								card.Load();
 							TagControlEdit.SetSelectedTags(deck.Tags);
 						}
-						SetNewDeck(deck);
 						if(Config.Instance.AutoSaveOnImport || dialog.FileNames.Length > 1)
-							SaveDeckWithOverwriteCheck();
+							DeckManager.SaveDeck(deck);
+						else
+							ShowDeckEditorFlyout(deck, true);
 					}
 					catch(Exception ex)
 					{
@@ -208,7 +197,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					deck.Class = card.PlayerClass;
 			}
 
-			SetNewDeck(deck);
+			ShowDeckEditorFlyout(deck, true);
 		}
 
 		public async Task StartArenaImporting()
@@ -351,7 +340,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(choice.HasValue)
 			{
 				if(choice.Value == ImportingChoice.SaveLocal)
-					SaveImportedDeck(deck);
+					ShowDeckEditorFlyout(deck, true);
 				else
 					ExportDeck(deck);
 			}

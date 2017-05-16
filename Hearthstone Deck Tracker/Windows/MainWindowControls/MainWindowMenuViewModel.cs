@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		}
 
 		public ICommand NewDeckCommand => new Command<string>(playerClass => MainWindow.ShowNewDeckMessage(playerClass));
-		public ICommand EditDeckCommand => new Command(() => MainWindow.SetNewDeck(Decks.FirstOrDefault(), true));
+		public ICommand EditDeckCommand => new Command(() => MainWindow.ShowDeckEditorFlyout(Decks.FirstOrDefault(), false));
 		public ICommand RenameDeckNameCommand => new Command(() => MainWindow.ShowEditDeckNameDialog(Decks.FirstOrDefault()));
 		public ICommand EditNotesCommand => new Command(() => MainWindow.ShowDeckNotesDialog(Decks.FirstOrDefault()));
 		public ICommand EditTagsCommand => new Command(() => MainWindow.ShowTagEditDialog(Decks));
