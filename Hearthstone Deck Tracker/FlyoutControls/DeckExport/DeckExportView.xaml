@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.DeckExport.DeckExportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckExport"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+     <UserControl.DataContext>
+        <local:DeckExportViewModel/>
+     </UserControl.DataContext>
+    <DockPanel Margin="5">
+        <TextBlock DockPanel.Dock="Top" Text="{lex:Loc DeckExport_Label_Instructions}" FontWeight="Bold"/>
+        <TextBlock DockPanel.Dock="Top" Margin="5,0,0,0">
+            1. <Run Text="{lex:Loc DeckExport_Label_Step1}"/>
+            <LineBreak/>
+            2. <Run Text="{lex:Loc DeckExport_Label_Step2}"/>
+        </TextBlock>
+        <UniformGrid DockPanel.Dock="Top" Rows="1">
+            <Button Command="{Binding CopyAllCommand}" Margin="0,5,2,5">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="12">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_copy_white}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Text="{Binding CopyAllButtonText}" Margin="4,0,0,0"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding CopyCodeCommand}" Margin="2,5,0,5">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="12">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_copy_white}"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Text="{Binding CopyCodeButtonText}" Margin="4,0,0,0"/>
+                </StackPanel>
+            </Button>
+        </UniformGrid>
+        <TextBlock DockPanel.Dock="Bottom" TextWrapping="Wrap" Text="{lex:Loc DeckExport_Text_CodeInfo}" FontStyle="Italic"/>
+        <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+            <ScrollViewer>
+                <TextBox Text="{Binding DeckString, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" BorderThickness="0"/>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</UserControl>

@@ -104,6 +104,7 @@
     <Compile Include="Hearthstone\GameTimeTest.cs" />
     <Compile Include="Hearthstone\ParseCardStringTest.cs" />
     <Compile Include="Hearthstone\SecretTests.cs" />
+    <Compile Include="Hearthstone\DeckSerializerTest.cs" />
     <Compile Include="Hearthstone\WebImportTest.cs" />
     <Compile Include="Hearthstone\DeckTest.cs" />
     <Compile Include="Hearthstone\CardDbTest.cs" />

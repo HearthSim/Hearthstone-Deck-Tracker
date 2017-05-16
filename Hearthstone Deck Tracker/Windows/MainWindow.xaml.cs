@@ -32,6 +32,7 @@ using Hearthstone_Deck_Tracker.Utility.Updating;
 #endif
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
+using Clipboard = System.Windows.Clipboard;
 
 #endregion
 
@@ -483,9 +484,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 				if(FlyoutDeckScreenshot.IsOpen)
 					DeckScreenshotFlyout.Deck = deck.GetSelectedDeckVersion();
-
-				if(FlyoutNotes.IsOpen)
-					ShowDeckNotesDialog(deck);
+				if(FlyoutDeckExport.IsOpen)
+					DeckExportFlyout.Deck = deck.GetSelectedDeckVersion();
 
 				if(FlyoutDeckHistory.IsOpen)
 				{

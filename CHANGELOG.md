@@ -1,6 +1,7 @@
 ## __Release v1.2.6 - In Development__
 
 __New__:
+- Now using Hearthstones new deck code system for importing and exporting decks.
 - Added more stats, recent games, as well as global stats (if available) for the selected deck.
 - Added "Most Played" as a deck sorting option.
 

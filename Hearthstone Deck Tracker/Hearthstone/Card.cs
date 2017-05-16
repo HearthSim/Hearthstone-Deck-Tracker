@@ -58,6 +58,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
+		[XmlIgnore]
+		public int DbfIf => _dbCard.DbfId;
+
 		/// The mechanics attribute, such as windfury or taunt, comes from the cardDB json file
 		[XmlIgnore]
 		public string[] Mechanics;
