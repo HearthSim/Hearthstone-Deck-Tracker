@@ -6,6 +6,8 @@ __New__:
 __Changes__:
 - Greatly improved the deck screenshot dialog.
   - Deck images can now also be copied to the clipboard.
+- Deck editor has been moved to it's own flyout.
+- Deck version history has been moved to it's own flyout and can now be accessed via the `DECK` menu item or the decks context menu.
 - Importing decks from a list of card names now also gives a language selection option if english is the active language but an alternative language is selected.
 
 __Fixes__:
