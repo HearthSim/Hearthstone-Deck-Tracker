@@ -79,9 +79,9 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public ICommand ConstructedStatsCommand => new Command(() => MainWindow.ShowStats(false, false));
 		public ICommand ReplayFromStatsCommand => new Command(() => MainWindow.ShowStats(false, true));
 		public ICommand ReplayFromFileCommand => new Command(() => MainWindow.ShowReplayFromFileDialog());
-		public ICommand HsReplayNetCommand => new Command(() => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client"));
+		public ICommand HsReplayNetCommand => new Command(() => Helper.TryOpenUrl("https://hsreplay.net/?utm_source=hdt&utm_medium=client&utm_campaign=replaymenu"));
 		public ICommand ClaimAccountCommand => new Command(() => MainWindow.StartClaimAccount());
-		public ICommand MyAccountCommand => new Command(() => Helper.TryOpenUrl("https://hsreplay.net/games/mine/?utm_source=hdt&utm_medium=client"));
+		public ICommand MyAccountCommand => new Command(() => Helper.TryOpenUrl("https://hsreplay.net/games/mine/?utm_source=hdt&utm_medium=client&utm_campaign=myaccount"));
 		public ICommand DeckHistoryCommand => new Command(() => MainWindow.ShowDeckHistoryFlyout());
 
 		public IEnumerable<SortFilterDecks.Tag> DeckTags => MainWindow?.TagControlEdit.Tags ?? new ObservableCollection<SortFilterDecks.Tag>();

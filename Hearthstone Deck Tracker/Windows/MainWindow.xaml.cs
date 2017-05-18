@@ -571,7 +571,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var deck = DeckPickerList.SelectedDecks.FirstOrDefault()?.GetSelectedDeckVersion() ?? DeckList.Instance.ActiveDeckVersion;
 			if(deck?.ShortId != null)
-				Helper.TryOpenUrl($"https://hsreplay.net/decks/{deck.ShortId}/?utm_source=hdt&utm_medium=client");
+				Helper.TryOpenUrl($"https://hsreplay.net/decks/{deck.ShortId}/?utm_source=hdt&utm_medium=client&utm_campaign=mulliganguide");
 		}
 
 		public void ShowDeckEditorFlyout(Deck deck, bool isNewDeck)
