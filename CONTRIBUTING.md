@@ -12,6 +12,10 @@
 
 ## Contributing
 
+### Bootstrapping
+
+Run [bootstrap.bat](https://github.com/HearthSim/Hearthstone-Deck-Tracker/blob/master/bootstrap.bat) before opening the solution in Visual Studio.
+
 ### Coding style
 
 1. Always use tabs.
