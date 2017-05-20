@@ -333,7 +333,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 			if(forceUpdate == null)
 				forceUpdate = new List<Deck>();
-			foreach(var deck in _displayedDecks.Where(dpi => !decks.Contains(dpi.Deck) || forceUpdate.Contains(dpi.Deck)).ToList())
+			foreach(var deck in _displayedDecks.Where(dpi => !decks.Contains(dpi.Deck)).ToList())
 				_displayedDecks.Remove(deck);
 			foreach(var deck in decks.Where(d => !_displayedDecks.Select(x => x.Deck).Contains(d)))
 			{
@@ -344,6 +344,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					dpi.RefreshProperties();
 				}
 			}
+			foreach(var deck in forceUpdate)
+				_displayedDecks.FirstOrDefault(x => x.Deck.DeckId == deck.DeckId)?.RefreshProperties();
 			Sort();
 			if(selectedDeck != null && reselectActiveDeck && decks.Contains(selectedDeck))
 				SelectDeck(selectedDeck);

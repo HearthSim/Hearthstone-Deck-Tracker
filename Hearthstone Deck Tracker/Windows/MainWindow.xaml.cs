@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.API;
-using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
@@ -48,6 +49,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(selected != null)
 				DeckList.Instance.ActiveDeck = selected;
 			MainWindowMenu.SelectedDecks = selected != null ? new List<Deck> { selected } : new List<Deck>();
+			DeckCharts.SetDeck(selected);
+			HsReplayDeckInfo.SetDeck(selected);
 			await Core.Reset();
 		}
 
@@ -120,7 +123,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(HsReplayButtonVisibility));
 			if(deck.Equals(DeckList.Instance.ActiveDeck))
 				UseDeck(deck);
-			Console.WriteLine(version);
+			DeckCharts.SetDeck(deck);
+			HsReplayDeckInfo.SetDeck(deck);
 		}
 
 		private void DeckPickerList_OnOnDoubleClick(DeckPicker sender, Deck deck)
@@ -181,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			get
 			{
 				var deck = DeckPickerList.SelectedDecks.FirstOrDefault()?.GetSelectedDeckVersion() ?? DeckList.Instance.ActiveDeckVersion;
-				if(deck != null && HsReplayDecks.AvailableDecks.Contains(deck.ShortId))
+				if(deck != null && HsReplayDataManager.Decks.AvailableDecks.Contains(deck.ShortId))
 					return Visible;
 				return Collapsed;
 			}
@@ -220,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 			Config.Instance.CheckConfigWarnings();
 
-			HsReplayDecks.OnLoaded += () =>
+			HsReplayDataManager.Decks.OnLoaded += () =>
 			{
 				DeckPickerList.RefreshDisplayedDecks();
 				OnPropertyChanged(nameof(HsReplayButtonVisibility));
@@ -432,10 +436,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, List<Deck> decks)
 		{
-			if(decks?.Any() ?? false)
-				SelectDeck(decks.FirstOrDefault(), Config.Instance.AutoUseDeck);
 			var active = DeckList.Instance.ActiveDeck;
 			MainWindowMenu.SelectedDecks = (!decks?.Any() ?? false) && active != null ? new List<Deck> { active } : decks;
+
+			var deck = decks?.FirstOrDefault() ?? active;
+			SelectDeck(deck, Config.Instance.AutoUseDeck);
+			DeckCharts.SetDeck(deck);
+			HsReplayDeckInfo.SetDeck(deck);
 		}
 
 		public void SelectDeck(Deck deck, bool setActive)
@@ -567,13 +574,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/hearthsim-devs");
 
-		private void BtnHsReplayDeckDetail_OnClick(object sender, RoutedEventArgs e)
-		{
-			var deck = DeckPickerList.SelectedDecks.FirstOrDefault()?.GetSelectedDeckVersion() ?? DeckList.Instance.ActiveDeckVersion;
-			if(deck?.ShortId != null)
-				Helper.TryOpenUrl($"https://hsreplay.net/decks/{deck.ShortId}/?utm_source=hdt&utm_medium=client&utm_campaign=mulliganguide");
-		}
-
 		public void ShowDeckEditorFlyout(Deck deck, bool isNewDeck)
 		{
 			if(deck == null)
@@ -610,5 +610,27 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			ShowDeckEditorFlyout(deck, true);
 		}
+
+		private void MyGamesFilters_OnClick(object sender, MouseButtonEventArgs e)
+		{
+			Options.TreeViewItemTrackerStats.IsSelected = true;
+			FlyoutOptions.IsOpen = true;
+		}
+
+		public void DisplayFiltersUpdated()
+		{
+			foreach(var deck in DeckList.Instance.Decks)
+				deck.StatsUpdated();
+			DeckPickerList.UpdateDecks();
+			Core.Overlay.Update(true);
+			var selected = DeckPickerList.SelectedDecks.FirstOrDefault() ?? DeckList.Instance.ActiveDeck;
+			DeckCharts.SetDeck(selected);
+			HsReplayDeckInfo.SetDeck(selected);
+			OnPropertyChanged(nameof(ActiveFiltersWarningVisibility));
+		}
+
+		public Visibility ActiveFiltersWarningVisibility => Config.Instance.DisplayedMode != GameMode.All
+															|| Config.Instance.DisplayedStats != DisplayedStats.All
+															|| Config.Instance.DisplayedTimeFrame != DisplayedTimeFrame.AllTime ? Visible : Collapsed;
 	}
 }

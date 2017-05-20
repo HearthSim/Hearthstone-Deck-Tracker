@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? LocUtil.Get(LocActive, true) : LocUtil.Get(LocUse, true);
 
-		public Visibility HsReplayDataIndicatorVisibility => HsReplayDecks.AvailableDecks.Contains(Deck.GetSelectedDeckVersion().ShortId) ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility HsReplayDataIndicatorVisibility => HsReplayDataManager.Decks.AvailableDecks.Contains(Deck.GetSelectedDeckVersion().ShortId) ? Visibility.Visible : Visibility.Collapsed;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

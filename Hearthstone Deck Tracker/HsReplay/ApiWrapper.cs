@@ -1,13 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.HsReplay.Data;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HSReplay;
 using HSReplay.Responses;
+using Newtonsoft.Json.Linq;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -132,8 +135,41 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				return new DecksData
 				{
 					ClientTimeStamp = DateTime.Now,
-					Decks = data.Data.Properties().Select(p => p.Name).ToArray(),
-					ServerTimeStamp = data.ServerTimeStamp
+					ServerTimeStamp = data.ServerTimeStamp,
+					Decks = data.Data.Properties().Select(p => p.Name).ToArray()
+				};
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
+			}
+		}
+
+		internal static async Task<DeckWinrateData> GetDeckWinrates(string deckId)
+		{
+			Log.Info("Fetching winrates for deck " + deckId);
+			try
+			{
+				var token = await GetUploadToken();
+				var data = await Client.GetDeckWinrates(deckId, token);
+				if(data == null)
+					return null;
+
+				var winrates = data.Data["data"].Children().OfType<JProperty>().Where(x => x.Values().Any());
+				var dict = winrates.ToDictionary(
+					x => x.Name,
+					x => x.Value[0]["winrate"].Value<double>()
+				);
+
+				var totalWinrate = data.Data.SelectToken("metadata.total_winrate").Value<double>();
+
+				return new DeckWinrateData
+				{
+					ClientTimeStamp = DateTime.Now,
+					ServerTimeStamp = data.ServerTimeStamp,
+					TotalWinrate = totalWinrate,
+					ClassWinrates = dict
 				};
 			}
 			catch(Exception e)

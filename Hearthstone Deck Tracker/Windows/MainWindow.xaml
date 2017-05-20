@@ -17,8 +17,8 @@
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-                      Title="Hearthstone Deck Tracker" Height="603" Width="720"
-                      MinHeight="584" MinWidth="720"
+                      Title="Hearthstone Deck Tracker" Height="603" Width="1100"
+                      MinHeight="584" MinWidth="1100"
                       Closing="Window_Closing"
                       Icon="{StaticResource AppIcon}"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
@@ -210,86 +210,109 @@
             </Grid.ColumnDefinitions>
             <mainWindowControls:MainWindowMenuView x:Name="MainWindowMenu" Grid.Row="1" Grid.ColumnSpan="3"/>
             <Separator Grid.Row="1" Grid.ColumnSpan="4" Margin="0,29,0,0" Panel.ZIndex="2" />
-            <Grid Grid.Column="1" Grid.Row="2" Margin="-1,0,0,0" Width="255">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="10,6,10,-4" Grid.Row="0" Visibility="Visible" Style="{StaticResource AccentedSquareButtonStyle}">
-                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="{lex:LocTextUpper MainWindow_Button_StartHearthstone}" />
-                </Button>
-                <Button Name="BtnHsReplayDeckDetail" Margin="10,6,10,-4" Height="40"  Grid.Row="1" Style="{StaticResource SquareButtonStyle}"
-                    Visibility="{Binding HsReplayButtonVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}}"
-                    Click="BtnHsReplayDeckDetail_OnClick">
-                    <DockPanel HorizontalAlignment="Center">
-                        <Image Source="{DynamicResource HsReplayIcon}"
-                            Height="24" RenderOptions.BitmapScalingMode="Fant"
-                            DockPanel.Dock="Left" Margin="0,0,8,0"/>
-                        <TextBlock VerticalAlignment="Center" FontWeight="SemiBold" Text="{lex:LocTextUpper MainWindow_DeckList_Button_HSReplay}" />
+            <Grid Grid.Column="1" Grid.Row="2" Margin="5,0,6,6">
+                <StackPanel Orientation="Horizontal">
+                    <DockPanel Width="380" Margin="0,0,5,0">
+                        <GroupBox Header="{lex:LocTextUpper MainWindow_Header_GlobalDeckStatistics}" DockPanel.Dock="Top" Margin="0,5,0,0">
+                            <mainWindowControls:HsReplayDeckInfoView x:Name="HsReplayDeckInfo"/>
+                        </GroupBox>
+                        <GroupBox Margin="0,5,0,0" DockPanel.Dock="Top">
+                            <GroupBox.Header>
+                                <Grid>
+                                    <TextBlock Text="{lex:LocTextUpper MainWindow_Header_MyGames}" Foreground="White"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" MouseDown="MyGamesFilters_OnClick">
+                                        <StackPanel.Style>
+                                            <Style>
+                                                <Setter Property="StackPanel.Opacity" Value="0.7"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="StackPanel.IsMouseOver" Value="True">
+                                                        <Setter Property="StackPanel.Opacity" Value="0.9"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                        <TextBlock Text="{lex:LocTextUpper MainWindow_MyGames_HasActiveFilters}" Foreground="White" DockPanel.Dock="Right" Margin="8,0" Opacity="1"
+                                            Visibility="{Binding ActiveFiltersWarningVisibility, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}"/>
+                                        <Rectangle Width="16" Height="16" DockPanel.Dock="Right" Opacity="0.8">
+                                            <Rectangle.Fill>
+                                                <VisualBrush Visual="{StaticResource appbar_settings}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </StackPanel>
+                                </Grid>
+                            </GroupBox.Header>
+                            <mainWindowControls:DeckChartsView x:Name="DeckCharts" DockPanel.Dock="Top"/>
+                        </GroupBox>
                     </DockPanel>
-                </Button>
-                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="2" Visibility="Collapsed">
-                    <DockPanel>
-                        <TextBlock Text="{lex:LocTextUpper MainWindow_Label_SelectedVersion}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                        <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
-                            <ComboBox.ItemTemplate>
+                    <Grid Width="236">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="0,6,0,0" Grid.Row="0" Visibility="Visible" Style="{StaticResource AccentedSquareButtonStyle}">
+                            <TextBlock Name="TextBlockBtnStartHearthstone" Text="{lex:LocTextUpper MainWindow_Button_StartHearthstone}" />
+                        </Button>
+                        <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Grid.Row="2" Visibility="Collapsed" Margin="0,5,0,0">
+                            <DockPanel>
+                                <TextBlock Text="{lex:LocTextUpper MainWindow_Label_SelectedVersion}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ShortVersionString}" FontWeight="SemiBold"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </DockPanel>
+                        </Border>
+                        <ListView x:Name="ListViewDeck" Grid.Row="3" Background="#696969" Margin="0,5,0,0"
+                                            Foreground="White" FontWeight="Bold" BorderThickness="1"
+                                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                            ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                            ScrollViewer.CanContentScroll="True" FontFamily="Arial"
+                                            HorizontalAlignment="Center" Width="236" Height="auto">
+                            <ListView.Resources>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Style>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                    <Setter Property="ToolTipService.ShowDuration" Value="60000" />
+                                    <Setter Property="ToolTipService.IsEnabled"
+                                            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}, Path=ShowToolTip}" />
+                                    <Setter Property="ToolTip">
+                                        <Setter.Value>
+                                            <ToolTip Background="Transparent" BorderBrush="Transparent">
+                                                <local:CardToolTip />
+                                            </ToolTip>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Margin" Value="-4,-3,-3,0"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected"
+                                                 Value="True">
+                                            <Setter Property="BorderBrush"
+                                                    Value="Blue" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.Resources>
+                            <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding ShortVersionString}" FontWeight="SemiBold"/>
+                                    <controls1:Card/>
                                 </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                </Border>
-                <ListView x:Name="ListViewDeck" Grid.Row="3" Background="#696969"
-                                    Foreground="White" FontWeight="Bold" BorderThickness="1"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,0"
-                                    HorizontalAlignment="Center" Width="236" Height="auto">
-                    <ListView.Resources>
-                        <Style TargetType="GridViewColumnHeader">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </Style>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
-                            <Setter Property="ToolTipService.ShowDuration" Value="60000" />
-                            <Setter Property="ToolTipService.IsEnabled"
-                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}, Path=ShowToolTip}" />
-                            <Setter Property="ToolTip">
-                                <Setter.Value>
-                                    <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                        <local:CardToolTip />
-                                    </ToolTip>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Margin" Value="-4,-3,-3,0"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected"
-                                         Value="True">
-                                    <Setter Property="BorderBrush"
-                                            Value="Blue" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListView.Resources>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <controls1:Card/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="4" Height="150" Margin="0,6,0,6" />
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="4" Height="150" Margin="0,5,0,0" />
+                    </Grid>
+                </StackPanel>
             </Grid>
             <deckPicker:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
                               Grid.Row="2" Height="auto" Width="auto"
                               OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
                               OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
-            <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
-                       Grid.Row="2" Panel.ZIndex="1"
-                       Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
             <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray" 
                    FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" 
                    Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />

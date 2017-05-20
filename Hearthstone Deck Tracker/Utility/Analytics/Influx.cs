@@ -124,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				if(constructedDecks.Count == 0)
 					return;
 
-				var available = HsReplayDecks.AvailableDecks;
+				var available = HsReplayDataManager.Decks.AvailableDecks;
 				bool HasData(Deck deck) => available.Contains(deck.ShortId);
 				int PctHasData(IReadOnlyCollection<Deck> decks) => (int)Math.Round(100.0 * decks.Count(HasData) / decks.Count);
 

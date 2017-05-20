@@ -1,6 +1,7 @@
 ## __Release v1.2.6 - In Development__
 
 __New__:
+- Added more stats, recent games, as well as global stats (if available) for the selected deck.
 - Added "Most Played" as a deck sorting option.
 
 __Changes__:

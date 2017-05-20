@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private ArenaReward _arenaReward = new ArenaReward();
 		private List<GameStats> _cachedGames;
+		private SerializableVersion _cachedVersion;
 		private Guid _deckId;
 		private bool? _isArenaDeck;
 		private bool _isSelectedInGui;
@@ -72,6 +73,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArray(ElementName = "DeckHistory")]
 		[XmlArrayItem(ElementName = "Deck")]
 		public List<Deck> Versions;
+
+		public event Action OnStatsUpdated;
 
 		public Deck()
 		{
@@ -355,7 +358,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private TimeSpan ValidCacheDuration => new TimeSpan(0, 0, 1);
 
-		private bool CacheIsValid => _cachedGames != null && DateTime.Now - _lastCacheUpdate < ValidCacheDuration;
+		private bool CacheIsValid => _cachedGames != null && _cachedVersion == SelectedVersion && DateTime.Now - _lastCacheUpdate < ValidCacheDuration;
 
 		[XmlIgnore]
 		public List<Mechanic> Mechanics => _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList();
@@ -373,23 +376,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				               ? DeckStats.Games
 				               : (IsArenaDeck
 					                  ? DeckStats.Games.Where(g => g.GameMode == GameMode.Arena).ToList()
-					                  : DeckStats.Games.Where(g => g.GameMode == Config.Instance.DisplayedMode).ToList());
+					                  : DeckStats.Games.Where(g => g.GameMode == Config.Instance.DisplayedMode));
 			switch(Config.Instance.DisplayedTimeFrame)
 			{
 				case DisplayedTimeFrame.AllTime:
 					break;
+				case DisplayedTimeFrame.LastSeason:
+					filtered = filtered.Where(g => g.StartTime >= new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-1)
+												&& g.StartTime < new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+					break;
 				case DisplayedTimeFrame.CurrentSeason:
-					filtered = filtered.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)).ToList();
+					filtered = filtered.Where(g => g.StartTime > new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
 					break;
 				case DisplayedTimeFrame.ThisWeek:
-					filtered = filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1))).ToList();
+					filtered = filtered.Where(g => g.StartTime > DateTime.Today.AddDays(-((int)g.StartTime.DayOfWeek + 1)));
 					break;
 				case DisplayedTimeFrame.Today:
-					filtered = filtered.Where(g => g.StartTime > DateTime.Today).ToList();
+					filtered = filtered.Where(g => g.StartTime > DateTime.Today);
 					break;
 				case DisplayedTimeFrame.Custom:
 					if(Config.Instance.CustomDisplayedTimeFrame.HasValue)
-						filtered = filtered.Where(g => g.StartTime > Config.Instance.CustomDisplayedTimeFrame.Value).ToList();
+						filtered = filtered.Where(g => g.StartTime > Config.Instance.CustomDisplayedTimeFrame.Value);
 					break;
 			}
 			switch(Config.Instance.DisplayedStats)
@@ -397,27 +404,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				case DisplayedStats.All:
 					break;
 				case DisplayedStats.Latest:
-					filtered = filtered.Where(g => g.BelongsToDeckVerion(this)).ToList();
+					filtered = filtered.Where(g => g.BelongsToDeckVerion(this));
 					break;
 				case DisplayedStats.Selected:
-					filtered = filtered.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion())).ToList();
+					filtered = filtered.Where(g => g.BelongsToDeckVerion(GetSelectedDeckVersion()));
 					break;
 				case DisplayedStats.LatestMajor:
 					filtered =
-						filtered.Where(g => VersionsIncludingSelf.Where(v => v.Major == Version.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
-						        .ToList();
+						filtered.Where(g => VersionsIncludingSelf.Where(v => v.Major == Version.Major).Select(GetVersion).Any(g.BelongsToDeckVerion));
 					break;
 				case DisplayedStats.SelectedMajor:
-					filtered =
-						filtered.Where(
-						               g =>
-						               VersionsIncludingSelf.Where(v => v.Major == SelectedVersion.Major).Select(GetVersion).Any(g.BelongsToDeckVerion))
-						        .ToList();
+					filtered = filtered.Where(g => VersionsIncludingSelf.Where(v => v.Major == SelectedVersion.Major)
+						.Select(GetVersion).Any(g.BelongsToDeckVerion));
 					break;
 			}
-			_cachedGames = filtered;
+			_cachedGames = filtered.ToList();
 			_lastCacheUpdate = DateTime.Now;
-			return filtered;
+			_cachedVersion = SelectedVersion;
+			return _cachedGames;
 		}
 
 		public bool? CheckIfArenaDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
@@ -533,6 +537,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OnPropertyChanged(nameof(WinPercentString));
 			OnPropertyChanged(nameof(VisibilityStats));
 			OnPropertyChanged(nameof(VisibilityNoStats));
+			OnStatsUpdated?.Invoke();
 		}
 
 		public void UpdateWildIndicatorVisibility() => OnPropertyChanged(nameof(WildIndicatorVisibility));
