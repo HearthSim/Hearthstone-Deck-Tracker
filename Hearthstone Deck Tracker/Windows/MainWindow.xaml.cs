@@ -582,6 +582,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlyoutDeckEditor.IsOpen = true;
 		}
 
+		[Obsolete("Use ShowDeckEditorFlyout", true)]
+		public void SetNewDeck(Deck deck, bool edit) => ShowDeckEditorFlyout(deck, !edit);
+
+		[Obsolete("Use DeckManager.SaveDeck", true)]
+		public async void SaveDeck(bool overwrite, SerializableVersion newVersion, bool workInProgressDeck = false)
+		{
+		}
+
 		internal async void ShowNewDeckMessage(string hero)
 		{
 			var deck = new Deck {Class = hero};
