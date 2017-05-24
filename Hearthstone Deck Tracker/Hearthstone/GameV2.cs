@@ -49,8 +49,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int OpponentMinionCount => Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id)));
 		public int PlayerMinionCount => Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Player.Id)));
 		public int OpponentHandCount => Entities.Count(x => x.Value.IsInHand && x.Value.IsControlledBy(Opponent.Id));
+        public int MaxNumberOfMinions = 7;
 
-		public Player Player { get; set; }
+        public Player Player { get; set; }
 		public Player Opponent { get; set; }
 		public bool IsInMenu { get; set; }
 		public bool IsUsingPremade { get; set; }
