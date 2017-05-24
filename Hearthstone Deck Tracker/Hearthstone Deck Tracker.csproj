@@ -1479,7 +1479,7 @@
   </Target>
   -->
   <Target Name="GenerateDesignerFiles">
-    <GenerateResource Sources="Properties/Strings.resx" StronglyTypedLanguage="C#" StronglyTypedClassName="Strings" StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties" StronglyTypedFileName="Properties/Strings.Designer.cs" OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources" PublicClass="true">
+    <GenerateResource SdkToolsPath="$(TargetFrameworkSDKToolsDirectory)" Sources="Properties/Strings.resx" StronglyTypedLanguage="C#" StronglyTypedClassName="Strings" StronglyTypedNamespace="Hearthstone_Deck_Tracker.Properties" StronglyTypedFileName="Properties/Strings.Designer.cs" OutputResources="Hearthstone_Deck_Tracker.Properties.Strings.resources" PublicClass="true">
     </GenerateResource>
     <Delete Files="Hearthstone_Deck_Tracker.Properties.Strings.resources" />
   </Target>
