@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void ButtonHSReplaynet_Click(object sender, RoutedEventArgs e)
 		{
-			const string url = "https://hsreplay.net/premium/?utm_source=hdt&utm_medium=client&utm_campaign=updatenotes";
+			var url = Helper.BuildHsReplayNetUrl("premium", "updatenotes");
 			if (!Helper.TryOpenUrl(url))
 				Core.MainWindow.ShowMessage("Could not start your browser", "You can find our premium page at https://hsreplay.net/premium/").Forget();
 		}

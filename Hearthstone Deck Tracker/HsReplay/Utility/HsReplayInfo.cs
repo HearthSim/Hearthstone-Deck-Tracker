@@ -1,3 +1,4 @@
+using System.Windows.Forms;
 namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 {
 	public class HsReplayInfo
@@ -20,7 +21,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 
 		public bool Uploaded => !string.IsNullOrEmpty(UploadId);
 
-		public string Url => (string.IsNullOrEmpty(ReplayUrl) ? $"https://hsreplay.net/uploads/upload/{UploadId}/" : ReplayUrl) + "?utm_source=hdt&utm_medium=client&utm_campaign=replay";
+		public string Url
+		{
+			get
+			{
+				if(string.IsNullOrEmpty(ReplayUrl))
+					return Helper.BuildHsReplayNetUrl($"/uploads/upload/{UploadId}", "replay");
+				return ReplayUrl + Helper.GetHsReplayNetUrlParams("replay");
+			}
+		}
 
 		public string ReplayUrl { get; set; }
 

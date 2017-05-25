@@ -98,7 +98,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private void HyperlinkBattleTag_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/account/");
+		private void HyperlinkBattleTag_OnClick(object sender, RoutedEventArgs e)
+		{
+			var url = Helper.BuildHsReplayNetUrl("account", "myaccount");
+			Helper.TryOpenUrl(url);
+		}
 
 		private void ButtonCopyUrl_OnClick(object sender, RoutedEventArgs e)
 		{

@@ -556,6 +556,25 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public static string BuildHsReplayNetUrl(string path, string campaign)
+		{
+			var url = "https://hsreplay.net";
+			if(!path.StartsWith("/"))
+				url += "/";
+			url += path;
+			if(!path.EndsWith("/"))
+				url += "/";
+			return url + GetHsReplayNetUrlParams(campaign);
+		}
+
+		public static string GetHsReplayNetUrlParams(string campaign)
+		{
+			var param = "?utm_source=hdt&utm_medium=client";
+			if(!string.IsNullOrEmpty(campaign))
+				param += "&utm_campaign=" + campaign;
+			return param;
+		}
+
 		private static int? _hearthstoneBuild;
 		public static int? GetHearthstoneBuild()
 		{
