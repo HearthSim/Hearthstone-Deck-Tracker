@@ -326,7 +326,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					_tagChangeHandler.InvokeQueuedActions(game);
 					gameState.SetupDone = true;
 				}
-				if(gameState.CurrentBlock.Type == "JOUST")
+				if(gameState.CurrentBlock?.Type == "JOUST")
 				{
 					//make sure there are no more queued actions that might depend on JoustReveals
 					_tagChangeHandler.InvokeQueuedActions(game);
