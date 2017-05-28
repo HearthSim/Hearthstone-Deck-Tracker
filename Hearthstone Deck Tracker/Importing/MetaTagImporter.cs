@@ -21,6 +21,19 @@ namespace Hearthstone_Deck_Tracker.Importing
 					return null;
 				deck.Name = GetMetaProperty(metaNodes, "x-hearthstone:deck");
 				deck.Url = GetMetaProperty(metaNodes, "x-hearthstone:deck:url") ?? url;
+
+				var deckString = GetMetaProperty(metaNodes, "x-hearthstone:deck:deckstring");
+				if(!string.IsNullOrEmpty(deckString))
+				{
+					var fromDeckString = DeckSerializer.Deserialize(deckString);
+					if(fromDeckString != null)
+					{
+						fromDeckString.Name = deck.Name;
+						fromDeckString.Url = deck.Url;
+						return fromDeckString;
+					}
+				}
+
 				var heroId = GetMetaProperty(metaNodes, "x-hearthstone:deck:hero");
 				if(!string.IsNullOrEmpty(heroId))
 					deck.Class = Database.GetCardFromId(heroId).PlayerClass;
