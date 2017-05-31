@@ -110,7 +110,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Save();
 				Core.MainWindow.NewsBar.Visibility = Visibility.Collapsed;
 				Core.MainWindow.MinHeight -= Core.MainWindow.StatusBarNewsHeight;
-				Core.MainWindow.TopRow.Height = new GridLength(0);
 			}
 		}
 
@@ -150,7 +149,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		private static void ShowNewsBar()
 		{
-			Core.MainWindow.TopRow.Height = new GridLength(26);
 			Core.MainWindow.NewsBar.Visibility = Visibility.Visible;
 			Core.MainWindow.MinHeight += Core.MainWindow.StatusBarNewsHeight;
 			UpdateNews(0);
