@@ -492,6 +492,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlArrayItem(ElementName = "Card")]
 		public List<TrackedCard> OpponentCards { get; set; } = new List<TrackedCard>();
 
+		public string VersusLabel => LocUtil.Get("DeckCharts_Replays_Label_Vs");
+		public string UploadedTooltip => LocUtil.Get("DeckCharts_Tooltip_Uploaded");
+		public string NoReplayDataTooltip => LocUtil.Get("DeckCharts_Tooltip_NoReplayData");
+
 		public void SetPlayerCards(Deck deck, List<Card> revealedCards) => SetPlayerCards(deck?.Cards, revealedCards);
 
 		public void SetPlayerCards(HearthMirror.Objects.Deck deck, List<Card> revealedCards)

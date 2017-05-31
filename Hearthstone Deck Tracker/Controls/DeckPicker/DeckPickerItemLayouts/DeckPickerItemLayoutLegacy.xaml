@@ -23,7 +23,7 @@
             <Grid Width="46" Height="46" Margin="5,1,10,0">
                 <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}" RenderOptions.BitmapScalingMode="Fant" />
                 <Rectangle Width="18" Height="14" Visibility="{Binding WildIndicatorVisibility}" Margin="0,2,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
-                           ToolTip="{lex:Loc DeckPicker_Deck_Wild_Tooltip}">
+                           ToolTip="{Binding WildIndicatorTooltip, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}">
                     <Rectangle.Fill>
                         <VisualBrush Visual="{StaticResource wild_icon}" />
                     </Rectangle.Fill>
@@ -42,9 +42,9 @@
                         </Viewbox>
                     </Border>
                     <TextBlock Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" TextAlignment="Center" Foreground="Black" FontSize="12" Visibility="{Binding VisibilityNoStats}">
-                        <Run Text="{lex:Loc DeckPicker_Deck_Legacy_NoStats_No}"/>
+                        <Run Text="{Binding LegacyNoStatsNo, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"/>
                         <LineBreak/>
-                        <Run Text="{lex:Loc DeckPicker_Deck_Legacy_NoStats_Stats}"/>
+                        <Run Text="{Binding LegacyNoStatsStats, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"/>
                     </TextBlock>
                 </Grid>
             </Border>
@@ -53,11 +53,11 @@
                     <Image DockPanel.Dock="Left" Source="{x:Static utility:ImageCache.ArchivedBlack}" Width="16"
                            Height="16" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left"
                            Visibility="{Binding ArchivedVisibility}"
-                           ToolTip="{lex:Loc DeckPicker_Deck_Archived_Tooltip}" />
+                           ToolTip="{Binding ArchivedTooltip, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" />
                     <DockPanel>
                         <Image Source="{DynamicResource HsReplayIcon}" 
                                Visibility="{Binding HsReplayDataIndicatorVisibility, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
-                               ToolTip="{lex:Loc DeckPicker_Deck_HsReplayDataIndicator_Tooltip}"
+                               ToolTip="{Binding DataIndicatorTooltip, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
                                Width="14" RenderOptions.BitmapScalingMode="Fant"
                                DockPanel.Dock="Left" Margin="0,0,4,0"/>
                         <TextBlock Text="{Binding NameAndVersion}" Margin="0,0,15,0" DockPanel.Dock="Left"

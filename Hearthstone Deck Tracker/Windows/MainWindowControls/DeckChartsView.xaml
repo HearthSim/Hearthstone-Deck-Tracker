@@ -89,7 +89,7 @@
                                         </Style>
                                     </Grid.Resources>
                                     <DockPanel HorizontalAlignment="Left" Width="140">
-                                        <TextBlock Margin="7,0,0,0" Text="{lex:Loc DeckCharts_Replays_Label_Vs}" DockPanel.Dock="Left"/>
+                                        <TextBlock Margin="7,0,0,0" Text="{Binding VersusLabel}" DockPanel.Dock="Left"/>
                                         <Image Source="{Binding OpponentHeroImage}" Width="28" Height="28" RenderOptions.BitmapScalingMode="Fant" Margin="5,0,0,0" DockPanel.Dock="Left"/>
                                         <TextBlock Text="{Binding OpponentHero, Converter={StaticResource LocalizationConverter}}" Margin="5,0,0,0" TextTrimming="CharacterEllipsis"/>
                                     </DockPanel>
@@ -98,10 +98,10 @@
                                     </TextBlock>
                                     <StackPanel Margin="5,0,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
                                         <TextBlock Text="{Binding Age}" FontWeight="SemiBold" VerticalAlignment="Center" />
-                                        <Grid Width="15" DockPanel.Dock="Right" Margin="5,0,0,0" >
-                                            <TextBlock Text="✓" ToolTip="{lex:Loc DeckCharts_Tooltip_Uploaded}" Foreground="Green" 
+                                        <Grid Width="15" DockPanel.Dock="Right" Margin="5,0,0,0">
+                                            <TextBlock Text="✓" ToolTip="{Binding UploadedTooltip}" Foreground="Green" 
                                                 Visibility="{Binding HsReplay.Uploaded, Converter={StaticResource BoolToVisibility}}" />
-                                            <TextBlock Text="✗" ToolTip="{lex:Loc DeckCharts_Tooltip_NoReplayData}" Foreground="Red" ToolTipService.ShowOnDisabled="True"
+                                            <TextBlock Text="✗" ToolTip="{Binding NoReplayDataTooltip}" Foreground="Red" ToolTipService.ShowOnDisabled="True"
                                                 Visibility="{Binding IsEnabled, RelativeSource={RelativeSource AncestorType=Grid}, Converter={StaticResource InverseBoolToVisibility}}" />
                                         </Grid>
                                     </StackPanel>

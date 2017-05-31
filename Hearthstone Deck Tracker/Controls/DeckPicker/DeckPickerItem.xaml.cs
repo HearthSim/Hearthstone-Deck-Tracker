@@ -57,6 +57,18 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public void SetLayout() => Content = Activator.CreateInstance(_deckPickerItem);
 
+		public string DataIndicatorTooltip => LocUtil.Get("DeckCharts_Tooltip_Uploaded");
+
+		public string LastTimePlayedTooltip => LocUtil.Get("DeckPicker_Deck_LastTimePlayed_Tooltip");
+
+		public string WildIndicatorTooltip => LocUtil.Get("DeckPicker_Deck_Wild_Tooltip");
+
+		public string ArchivedTooltip => LocUtil.Get("DeckPicker_Deck_Archived_Tooltip");
+
+		public string LegacyNoStatsNo => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_No");
+
+		public string LegacyNoStatsStats => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_Stats");
+
 		public void RefreshProperties()
 		{
 			OnPropertyChanged(nameof(FontWeightSelected));

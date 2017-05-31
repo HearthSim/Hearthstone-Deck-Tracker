@@ -128,11 +128,6 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 
 		public void Update()
 		{
-			UpdateWinrate();
-		}
-
-		public void UpdateWinrate()
-		{
 			Games = _deck?.GetRelevantGames().OrderByDescending(x => x.StartTime).ToList();
 			HasData = Games?.Any() ?? false;
 
