@@ -1,4 +1,4 @@
-## __Release v1.2.6 - In Development__
+## __Release v1.3.0 - 2017-06-01__
 
 __New__:
 - Added more stats, recent games, as well as global stats (if available) for the selected deck.
