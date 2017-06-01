@@ -172,8 +172,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return BGT_TAVERNBRAWL_1P_VERSUS_AI;
 				case GameType.GT_TB_2P_COOP:
 					return BGT_TAVERNBRAWL_2P_COOP;
-				case GameType.GT_LAST:
-					return BGT_LAST;
+				case GameType.GT_FSG_BRAWL:
+					return BGT_FSG_BRAWL_VS_FRIEND;
+				case GameType.GT_FSG_BRAWL_1P_VS_AI:
+					return BGT_FSG_BRAWL_1P_VERSUS_AI;
+				case GameType.GT_FSG_BRAWL_2P_COOP:
+					return BGT_FSG_BRAWL_2P_COOP;
+				case GameType.GT_FSG_BRAWL_VS_FRIEND:
+					return BGT_FSG_BRAWL_VS_FRIEND;
 				default:
 					return BGT_UNKNOWN;
 			}
