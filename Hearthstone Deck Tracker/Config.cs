@@ -117,9 +117,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool AutoArchiveArenaDecks = false;
 
 		[DefaultValue(true)]
-		public bool AutoClearDeck = true;
-
-		[DefaultValue(true)]
 		public bool AutoDeckDetection = true;
 
 		[DefaultValue(true)]
@@ -266,9 +263,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool Debug = false;
 
-		[DefaultValue(50)]
-		public int DeckExportDelay = 60;
-
 		[DefaultValue(DeckLayout.Layout1)]
 		public DeckLayout DeckPickerItemLayout = DeckLayout.Layout1;
 
@@ -304,9 +298,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(0.915)]
 		public double ExportAllButtonY = 0.915;
-
-		[DefaultValue(false)]
-		public bool ExportAddDeckVersionToName = false;
 
 		[DefaultValue(0.118)]
 		public double ExportZeroButtonX = 0.118;
@@ -350,32 +341,17 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(0.13)]
 		public double ExportClearY = 0.13;
 
-		[DefaultValue(false)]
-		public bool ExportForceClear = false;
-
 		[DefaultValue(0.85)]
 		public double ExportNameDeckX = 0.85;
 
 		[DefaultValue(0.075)]
 		public double ExportNameDeckY = 0.075;
 
-		[DefaultValue(false)]
-		public bool ExportPasteClipboard = false;
-
 		[DefaultValue(0.5)]
 		public double ExportSearchBoxX = 0.5;
 
 		[DefaultValue(0.915)]
 		public double ExportSearchBoxY = 0.915;
-
-		[DefaultValue(true)]
-		public bool ExportSetDeckName = true;
-
-		[DefaultValue(1)]
-		public int ExportStartDelay = 1;
-
-		[DefaultValue(true)]
-		public bool EnableExportAutoFilter = true;
 
 		[DefaultValue(false)]
 		public bool ExtraFeatures = false;
@@ -696,9 +672,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(null)]
 		public int? PlayerWindowTop = null;
 
-		[DefaultValue(true)]
-		public bool PrioritizeGolden = true;
-
 		[DefaultValue(ImportingChoice.Manual)]
 		public ImportingChoice PasteImportingChoice = ImportingChoice.Manual;
 
@@ -821,9 +794,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ShowDeckWins = false;
-
-		[DefaultValue(true)]
-		public bool ShowExportingDialog = true;
 
 		[DefaultValue(true)]
 		public bool ShowFlavorText = true;
