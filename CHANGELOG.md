@@ -1,5 +1,13 @@
+## __Release v1.3.2 - 2017-06-02__
+
+__Updated for 8.2.0.19506__
+- Fixed a crash when starting/exiting a match.
+- Now using Hearthstones new deck code system for importing and exporting decks.
+
+
 ## __Release v1.3.1 - 2017-06-01__
 - Fixed a crash on startup if the legacy deck style was selected.
+
 
 ## __Release v1.3.0 - 2017-06-01__
 
