@@ -42,9 +42,9 @@
                         </Viewbox>
                     </Border>
                     <TextBlock Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Center" TextAlignment="Center" Foreground="Black" FontSize="12" Visibility="{Binding VisibilityNoStats}">
-                        <Run Text="{Binding LegacyNoStatsNo, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"/>
+                        <Run Text="{Binding LegacyNoStatsNo, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}, Mode=OneWay}"/>
                         <LineBreak/>
-                        <Run Text="{Binding LegacyNoStatsStats, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"/>
+                        <Run Text="{Binding LegacyNoStatsStats, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}, Mode=OneWay}"/>
                     </TextBlock>
                 </Grid>
             </Border>
