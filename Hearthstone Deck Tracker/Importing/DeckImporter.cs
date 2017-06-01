@@ -105,7 +105,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 		}
 
 		private static List<HearthMirror.Objects.Deck> GetConstructedDecks()
-			=> Reflection.GetDecks().Where(x => x.Cards.Sum(c => c.Count) == 30 && x.Type != BrawlDeckType).ToList();
+			=> Reflection.GetDecks()?.Where(x => x.Cards.Sum(c => c.Count) == 30 && x.Type != BrawlDeckType).ToList()
+				?? new List<HearthMirror.Objects.Deck>();
 
 		public static List<ImportedDeck> FromBrawl()
 		{
@@ -123,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 		}
 
 		private static List<HearthMirror.Objects.Deck> GetBrawlDecks()
-			=> Reflection.GetDecks().Where(x => x.Type == BrawlDeckType).ToList();
+			=> Reflection.GetDecks()?.Where(x => x.Type == BrawlDeckType).ToList() ?? new List<HearthMirror.Objects.Deck>();
 
 		private static List<ImportedDeck> GetImportedDecks(IEnumerable<HearthMirror.Objects.Deck> decks)
 		{
