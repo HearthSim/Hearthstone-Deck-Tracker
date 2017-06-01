@@ -1,3 +1,6 @@
+## __Release v1.3.1 - 2017-06-01__
+- Fixed a crash on startup if the legacy deck style was selected.
+
 ## __Release v1.3.0 - 2017-06-01__
 
 __New__:
