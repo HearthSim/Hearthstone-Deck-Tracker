@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -72,7 +74,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 		{
 			if(Deck == null)
 				return;
-			Clipboard.SetText(DeckString);
+			try
+			{
+				Clipboard.SetText(DeckString);
+			}
+			catch(Exception e)
+			{
+				ErrorManager.AddError("Error copying deck to clipboard", e.ToString());
+			}
 			CopyAllButtonText = LocUtil.Get(LocCopied, true);
 			await Task.Delay(2000);
 			CopyAllButtonText = LocUtil.Get(LocCopyAll, true);
@@ -82,7 +91,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 		{
 			if(Deck == null)
 				return;
-			Clipboard.SetText(_deckString);
+			try
+			{
+				Clipboard.SetText(_deckString);
+			}
+			catch(Exception e)
+			{
+				ErrorManager.AddError("Error copying deck to clipboard", e.ToString());
+			}
 			CopyCodeButtonText = LocUtil.Get(LocCopied, true);
 			await Task.Delay(2000);
 			CopyCodeButtonText = LocUtil.Get(LocCopyCode, true);
