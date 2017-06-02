@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		public void ShowExportFlyout(Deck deck)
 		{
-			DeckExportFlyout.Deck = deck;
+			DeckExportFlyout.Deck = deck.GetSelectedDeckVersion();
 			FlyoutDeckExport.IsOpen = true;
 		}
 
