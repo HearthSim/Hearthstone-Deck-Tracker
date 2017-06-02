@@ -632,5 +632,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public Visibility ActiveFiltersWarningVisibility => Config.Instance.DisplayedMode != GameMode.All
 															|| Config.Instance.DisplayedStats != DisplayedStats.All
 															|| Config.Instance.DisplayedTimeFrame != DisplayedTimeFrame.AllTime ? Visible : Collapsed;
+
+		public void UpdateMyGamesPanelVisibility()
+		{
+			const int baseWidth = 1100;
+			if(Config.Instance.ShowMyGamesPanel)
+			{
+				MyGamesPanel.Visibility = Visible;
+				MinWidth = baseWidth;
+			}
+			else
+			{
+				MinWidth = baseWidth - MyGamesPanel.Width - MyGamesPanel.Margin.Left;
+				MyGamesPanel.Visibility = Collapsed;
+			}
+		}
 	}
 }

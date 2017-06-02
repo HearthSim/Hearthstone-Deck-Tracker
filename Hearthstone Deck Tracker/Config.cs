@@ -799,6 +799,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowFlavorText = true;
 
 		[DefaultValue(true)]
+		public bool ShowMyGamesPanel = true;
+
+		[DefaultValue(true)]
 		public bool ShowGameResultNotifications = true;
 
 		[DefaultValue("c7b1c7904951f7a")]

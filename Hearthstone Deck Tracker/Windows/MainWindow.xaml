@@ -258,7 +258,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </DockPanel>
-            <DockPanel Width="380" DockPanel.Dock="Right" Margin="5,0,0,0">
+            <DockPanel Name="MyGamesPanel" Width="380" DockPanel.Dock="Right" Margin="5,0,0,0">
                 <GroupBox Header="{lex:LocTextUpper MainWindow_Header_GlobalDeckStatistics}" DockPanel.Dock="Top" Margin="0,0,0,0">
                     <mainWindowControls:HsReplayDeckInfoView x:Name="HsReplayDeckInfo"/>
                 </GroupBox>

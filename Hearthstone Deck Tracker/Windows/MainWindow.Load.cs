@@ -76,6 +76,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Core.TrayIcon.SetContextMenuProperty("classCardsFirst", "Checked", Config.Instance.CardSortingClassFirst);
 			Core.TrayIcon.SetContextMenuProperty("useNoDeck", "Checked", DeckList.Instance.ActiveDeck == null);
+
+			UpdateMyGamesPanelVisibility();
 		}
 
 		public void ReloadTags()
