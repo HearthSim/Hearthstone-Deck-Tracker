@@ -133,7 +133,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(deck == null)
 				return;
-			Clipboard.SetText(Helper.DeckToIdString(deck.GetSelectedDeckVersion()));
+			Clipboard.SetDataObject(Helper.DeckToIdString(deck.GetSelectedDeckVersion()));
 			this.ShowMessage("", "copied ids to clipboard").Forget();
 			Log.Info("Copied " + deck.GetSelectedDeckVersion().GetDeckInfo() + " to clipboard");
 		}
@@ -163,7 +163,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					    .Cards.ToSortedCardList()
 					    .Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
 					    .Aggregate((c, n) => c + Environment.NewLine + n);
-				Clipboard.SetText(names);
+				Clipboard.SetDataObject(names);
 				this.ShowMessage("", "copied names to clipboard").Forget();
 				Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
 			}

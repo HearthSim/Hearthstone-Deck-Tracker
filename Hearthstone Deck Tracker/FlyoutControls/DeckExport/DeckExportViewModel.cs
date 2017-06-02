@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 				return;
 			try
 			{
-				Clipboard.SetText(DeckString);
+				Clipboard.SetDataObject(DeckString);
 			}
 			catch(Exception e)
 			{
@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 				return;
 			try
 			{
-				Clipboard.SetText(_deckString);
+				Clipboard.SetDataObject(_deckString);
 			}
 			catch(Exception e)
 			{

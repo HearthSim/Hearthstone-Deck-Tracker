@@ -137,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				try
 				{
-					Clipboard.SetText(url);
+					Clipboard.SetDataObject(url);
 				}
 				catch(Exception ex)
 				{

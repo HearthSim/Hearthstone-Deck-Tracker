@@ -110,7 +110,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			try
 			{
-				Clipboard.SetText(_claimUrl);
+				Clipboard.SetDataObject(_claimUrl);
 				ButtonCopyUrl.Content = "Copied!";
 			}
 			catch(Exception ex)
