@@ -370,7 +370,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 
 		private void RemoveCardFromDeck(Card card)
 		{
-			if(Deck == null)
+			if(Deck == null || card == null)
 				return;
 			card.Count--;
 			if(card.Count <= 0)
@@ -383,7 +383,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 
 		private void AddCardToDeck(Card card)
 		{
-			if(Deck == null)
+			if(Deck == null || card == null)
 				return;
 			var existing = Deck.Cards.FirstOrDefault(c => c.Id == card.Id);
 			if(existing == null)
