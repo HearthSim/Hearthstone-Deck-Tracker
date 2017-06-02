@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 {
@@ -16,14 +17,22 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 
 		public static string GetShortId(Deck deck)
 		{
-			if(deck.Cards.Count == 0)
+			if(deck == null || deck.Cards.Count == 0)
 				return string.Empty;
-			var ids = deck.Cards.SelectMany(c => Enumerable.Repeat(c.Id.ToString(), c.Count));
-			var idString = string.Join(",", ids.OrderBy(x => x, new Utf8StringComperer()));
-			var bytes = Encoding.UTF8.GetBytes(idString);
-			var hash = MD5.Create().ComputeHash(bytes);
-			var hex = BitConverter.ToString(hash).Replace("-", string.Empty);
-			return IntToString(BigInteger.Parse("00" + hex, NumberStyles.HexNumber));
+			try
+			{
+				var ids = deck.Cards.SelectMany(c => Enumerable.Repeat(c.Id.ToString(), c.Count));
+				var idString = string.Join(",", ids.OrderBy(x => x, new Utf8StringComperer()));
+				var bytes = Encoding.UTF8.GetBytes(idString);
+				var hash = MD5.Create().ComputeHash(bytes);
+				var hex = BitConverter.ToString(hash).Replace("-", string.Empty);
+				return IntToString(BigInteger.Parse("00" + hex, NumberStyles.HexNumber));
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return string.Empty;
+			}
 		}
 
 		private static string IntToString(BigInteger number)
@@ -41,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 
 	public class Utf8StringComperer : IComparer<string>
 	{
-		private readonly string Chars = "_0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ";
+		private const string Chars = "_0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ";
 
 		public int Compare(string x, string y)
 		{
