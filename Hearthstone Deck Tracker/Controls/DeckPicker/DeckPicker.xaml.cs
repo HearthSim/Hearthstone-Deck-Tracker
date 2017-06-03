@@ -59,7 +59,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public DeckPicker()
 		{
-			InitializeComponent();
 			_classItems =
 				new ObservableCollection<DeckPickerClassItem>(
 					Enum.GetValues(typeof(HeroClassAll)).OfType<HeroClassAll>().Select(x => new DeckPickerClassItem {DataContext = x}));
@@ -69,6 +68,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			SelectedClasses = new ObservableCollection<HeroClassAll>();
 			_displayedDecks = new List<DeckPickerItem>();
 			DeckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Take(4));
+			InitializeComponent();
 		}
 
 		public List<DeckPickerItem> DisplayedDecks => _displayedDecks;
@@ -417,7 +417,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public void Sort()
 		{
-			var view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDecks.ItemsSource);
+			var view = (CollectionView)CollectionViewSource.GetDefaultView(DisplayedDecks);
 			view.SortDescriptions.Clear();
 			if(Config.Instance.SortDecksByClass && Config.Instance.SelectedDeckPickerDeckType != DeckType.Arena
 			   || Config.Instance.SortDecksByClassArena && Config.Instance.SelectedDeckPickerDeckType == DeckType.Arena)
