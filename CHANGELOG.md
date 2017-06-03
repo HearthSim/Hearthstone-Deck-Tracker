@@ -1,3 +1,15 @@
+## __Release v1.3.3 - 2017-06-03__
+
+__Fixes__:
+- Fixed an issue where the export deck dialog would not respect the selected deck version.
+- Fixed an issue where editing and saving a deck as the current version would not update it in the UI.
+- Fixed an issue where Mirror Entity would be grayed out while the opponent has a full board.
+- Fixed several crashes.
+
+__Changes__:
+- Added an option to hide the new "my games" panel: `options (advanced) > tracker > general`
+
+
 ## __Release v1.3.2 - 2017-06-02__
 
 __Updated for 8.2.0.19506__
