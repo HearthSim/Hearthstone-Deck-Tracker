@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private readonly DeckPickerClassItem _archivedClassItem;
 		private readonly Dictionary<Deck, DeckPickerItem> _cachedDeckPickerItems = new Dictionary<Deck, DeckPickerItem>();
 		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
-		private readonly ObservableCollection<DeckPickerItem> _displayedDecks;
+		private readonly List<DeckPickerItem> _displayedDecks;
 		private bool _clearingClasses;
 		private ObservableCollection<DeckType> _deckTypeItems;
 		private bool _ignoreSelectionChange;
@@ -67,10 +67,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			_classItems.Remove(_archivedClassItem);
 			ListViewClasses.ItemsSource = _classItems;
 			SelectedClasses = new ObservableCollection<HeroClassAll>();
-			_displayedDecks = new ObservableCollection<DeckPickerItem>();
-			ListViewDecks.ItemsSource = _displayedDecks;
+			_displayedDecks = new List<DeckPickerItem>();
 			DeckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Take(4));
 		}
+
+		public List<DeckPickerItem> DisplayedDecks => _displayedDecks;
 
 		public List<Deck> SelectedDecks
 		{
@@ -346,6 +347,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				}
 			}
 			Sort();
+			OnPropertyChanged(nameof(DisplayedDecks));
 			if(selectedDeck != null && reselectActiveDeck && decks.Contains(selectedDeck))
 				SelectDeck(selectedDeck);
 			ActiveDeck?.StatsUpdated();
