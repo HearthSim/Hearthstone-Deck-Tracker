@@ -417,7 +417,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public void Sort()
 		{
-			var view = (CollectionView)CollectionViewSource.GetDefaultView(ListViewDecks.ItemsSource);
+			var view = (CollectionView)CollectionViewSource.GetDefaultView(DisplayedDecks);
 			view.SortDescriptions.Clear();
 			if(Config.Instance.SortDecksByClass && Config.Instance.SelectedDeckPickerDeckType != DeckType.Arena
 			   || Config.Instance.SortDecksByClassArena && Config.Instance.SelectedDeckPickerDeckType == DeckType.Arena)
