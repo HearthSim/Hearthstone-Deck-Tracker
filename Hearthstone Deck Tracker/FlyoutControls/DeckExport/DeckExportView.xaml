@@ -42,7 +42,7 @@
         <TextBlock DockPanel.Dock="Bottom" TextWrapping="Wrap" Text="{lex:Loc DeckExport_Text_CodeInfo}" FontStyle="Italic"/>
         <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
             <ScrollViewer>
-                <TextBox Text="{Binding DeckString, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" BorderThickness="0"/>
+                <TextBox Text="{Binding DeckStringWithComments, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap" BorderThickness="0"/>
             </ScrollViewer>
         </Border>
     </DockPanel>

@@ -2,9 +2,11 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using HearthDb.Deckstrings;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HtmlAgilityPack;
+using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 namespace Hearthstone_Deck_Tracker.Importing
 {
@@ -25,12 +27,18 @@ namespace Hearthstone_Deck_Tracker.Importing
 				var deckString = GetMetaProperty(metaNodes, "x-hearthstone:deck:deckstring");
 				if(!string.IsNullOrEmpty(deckString))
 				{
-					var fromDeckString = DeckSerializer.Deserialize(deckString);
-					if(fromDeckString != null)
+					try
 					{
+						var hearthDbDeck = DeckSerializer.Deserialize(deckString);
+						var fromDeckString = HearthDbConverter.FromHearthDbDeck(hearthDbDeck);
 						fromDeckString.Name = deck.Name;
 						fromDeckString.Url = deck.Url;
 						return fromDeckString;
+						
+					}
+					catch(Exception e)
+					{
+						Log.Error(e);
 					}
 				}
 
