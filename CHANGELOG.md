@@ -1,4 +1,4 @@
-## __Release v1.3.3 - 2017-06-03__
+## __Release v1.3.4 - 2017-06-03__
 
 __Fixes__:
 - Fixed an issue where the export deck dialog would not respect the selected deck version.
