@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 
 		private bool Matches(Card card, string searchStr)
 		{
-			var names = new[] { card.Name }.Concat(card.AlternativeNames).Where(x => !string.IsNullOrEmpty(x)).Select(x => Helper.RemoveDiacritics(x, true).ToLowerInvariant());
+			var names = new[] { card.LocalizedName }.Concat(card.AlternativeNames).Where(x => !string.IsNullOrEmpty(x)).Select(x => Helper.RemoveDiacritics(x, true).ToLowerInvariant());
 			return names.Any(name => name.Contains(searchStr)) || (card.Race?.ToLowerInvariant().Contains(searchStr) ?? false);
 		}
 
