@@ -48,7 +48,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			Options.Load(Core.Game);
-			Help.TxtblockVersion.Text = "v" + Helper.GetCurrentVersion().ToVersionString();
 
 			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", Config.Instance.AutoDeckDetection);
 
