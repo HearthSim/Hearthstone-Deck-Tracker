@@ -14,11 +14,11 @@
         <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Margin="-1"
                 DockPanel.Dock="Bottom">
             <DockPanel VerticalAlignment="Bottom">
-                <Button Name="ButtonUpdateNotes" Content="{lex:Loc Help_Button_Updatenotes}" Click="ButtonUpdateNotes_OnClick"
-                        DockPanel.Dock="Right" Margin="2" Width="200"
-                        Style="{DynamicResource AccentedSquareButtonStyle}" />
-                <TextBlock Name="TxtblockVersion" Text="{lex:Loc Help_Label_Version}" VerticalAlignment="Center" Margin="10,0,5,0" />
-                <TextBlock VerticalAlignment="Center" Text="{Binding VersionString, RelativeSource={RelativeSource AncestorType=hearthstoneDeckTracker:Help}}" />
+                <Button x:Name="ButtonUpdateNotes" Style="{DynamicResource AccentedSquareButtonStyle}" Click="ButtonUpdateNotes_OnClick" DockPanel.Dock="Right" Margin="2" Width="200">
+                    <TextBlock Text="{lex:Loc Help_Button_Updatenotes}"/>
+                </Button>
+                <TextBlock Text="{lex:Loc Help_Label_Version}" VerticalAlignment="Center" Margin="10,0,5,0" />
+                <TextBlock VerticalAlignment="Center" Text="{Binding VersionString, RelativeSource={RelativeSource AncestorType={x:Type hearthstoneDeckTracker:Help}}}"/>
             </DockPanel>
         </Border>
         <ScrollViewer>
