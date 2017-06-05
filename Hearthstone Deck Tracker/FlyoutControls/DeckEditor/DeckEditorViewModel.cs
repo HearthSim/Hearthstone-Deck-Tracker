@@ -30,7 +30,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		private Visibility _saveOperationSelectionVisibility;
 		private int _selectedDbIndex;
 		private string _selectedSearchText;
-		private bool _isNewDeck;
 
 		public Action DbInputFocusRequest { get; set; }
 

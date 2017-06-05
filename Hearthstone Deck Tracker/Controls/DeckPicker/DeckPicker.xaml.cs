@@ -267,19 +267,23 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		private void SelectPickerClassItem(DeckPickerClassItem dpci)
 		{
+#pragma warning disable IDE0019
 			var heroClass = dpci.DataContext as HeroClassAll?;
 			if(heroClass != null && !SelectedClasses.Contains(heroClass.Value))
 			{
 				SelectedClasses.Add(heroClass.Value);
 				dpci.OnSelected();
 			}
+#pragma warning restore IDE0019
 		}
 
 		private void DeselectPickerClassItem(DeckPickerClassItem dpci)
 		{
+#pragma warning disable IDE0019
 			var heroClass = dpci.DataContext as HeroClassAll?;
 			if(heroClass != null && SelectedClasses.Remove(heroClass.Value))
 				dpci.OnDelselected();
+#pragma warning restore IDE0019
 		}
 
 		private static IEnumerable<HeroClassAll?> PickerClassItemsAsEnum(IEnumerable<DeckPickerClassItem> items)

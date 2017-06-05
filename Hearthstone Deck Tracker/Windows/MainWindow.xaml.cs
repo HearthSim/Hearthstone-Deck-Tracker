@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				};
 				var dialogResult = dialog.ShowDialog();
 				if(dialogResult == System.Windows.Forms.DialogResult.OK)
-					ReplayLauncher.ShowReplay(dialog.FileName, true);
+					ReplayLauncher.ShowReplay(dialog.FileName, true).Forget();
 			}
 			catch(Exception ex)
 			{
@@ -478,7 +478,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 					Log.Info($"Switched to deck: {deck.Name} ({deck.SelectedVersion.ShortVersionString})");
 
-					int useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
+					var useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
 					Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
 				}
 
@@ -586,7 +586,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void SetNewDeck(Deck deck, bool edit) => ShowDeckEditorFlyout(deck, !edit);
 
 		[Obsolete("Use DeckManager.SaveDeck", true)]
+#pragma warning disable 1998
 		public async void SaveDeck(bool overwrite, SerializableVersion newVersion, bool workInProgressDeck = false)
+#pragma warning disable 1998
 		{
 		}
 
