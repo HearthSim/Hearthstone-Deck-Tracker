@@ -18,7 +18,7 @@
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="{lex:LocText Options_Overlay_Opponent_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="ScrollViewerOptionsOponent" VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewerOptionsOponent_ManipulationBoundaryFeedback">
                 <StackPanel>
                     <CheckBox x:Name="CheckboxSameScaling"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

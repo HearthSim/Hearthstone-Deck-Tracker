@@ -161,8 +161,9 @@
     </DockPanel>
     <ListView Name="ListViewDecks" VirtualizingPanel.IsVirtualizing="True" KeyUp="ListViewDecks_OnKeyUp"
               ItemsSource="{Binding DisplayedDecks, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
-              ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged"
-              SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick" PreviewMouseRightButtonUp="ListViewDecks_OnPreviewMouseRightButtonUp">
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.PanningMode="VerticalOnly"
+              SelectionChanged="ListViewDecks_OnSelectionChanged"
+              SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick" PreviewMouseRightButtonUp="ListViewDecks_OnPreviewMouseRightButtonUp" ManipulationBoundaryFeedback="ListViewDecks_ManipulationBoundaryFeedback">
         <ListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">
                 <MenuItem Name="MenuItemExportDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Export}" Click="BtnExportDeck_Click" />

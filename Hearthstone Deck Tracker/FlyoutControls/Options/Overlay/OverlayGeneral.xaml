@@ -12,7 +12,7 @@
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
         <GroupBox Header="{lex:Loc Options_Overlay_General_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="ScrollViewerOptionsGeneral" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewerOptionsGeneral_ManipulationBoundaryFeedback">
                 <StackPanel>
                     <CheckBox x:Name="CheckboxHideOverlay" Content="{lex:Loc Options_Overlay_General_CheckBox_HideCompletely}"
                               HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"

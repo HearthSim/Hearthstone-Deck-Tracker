@@ -15,5 +15,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory
 			get => ((DeckHistoryViewModel)DataContext).Deck;
 			set => ((DeckHistoryViewModel)DataContext).Deck = value;
 		}
+
+		private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }

@@ -11,7 +11,7 @@
         <deckHistory:DeckHistoryViewModel/>
     </UserControl.DataContext>
     <DockPanel>
-        <ScrollViewer Margin="6" BorderThickness="1" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Margin="6" BorderThickness="1" VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
             <ItemsControl ItemsSource="{Binding DeckVersions}" Width="220">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

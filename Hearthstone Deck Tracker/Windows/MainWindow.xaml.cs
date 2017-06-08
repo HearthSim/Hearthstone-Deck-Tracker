@@ -450,6 +450,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(DeckList.Instance.ActiveDeck != null)
 				DeckPickerList.ClearFromCache(DeckList.Instance.ActiveDeck);
+
 			if(deck != null)
 			{
 				//set up tags
@@ -648,6 +649,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 				MinWidth = baseWidth - MyGamesPanel.Width - MyGamesPanel.Margin.Left;
 				MyGamesPanel.Visibility = Collapsed;
 			}
+		}
+
+		private void ListViewDeck_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
 		}
 	}
 }

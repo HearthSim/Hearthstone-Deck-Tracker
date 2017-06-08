@@ -49,6 +49,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Options.Load(Core.Game);
 
+			
+
+
 			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", Config.Instance.AutoDeckDetection);
 
 			// Don't select the 'archived' class on load
