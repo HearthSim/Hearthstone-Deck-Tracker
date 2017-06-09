@@ -252,6 +252,7 @@
     <Compile Include="FlyoutControls\DeckHistory\DeckHistoryView.xaml.cs">
       <DependentUpon>DeckHistoryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hearthstone\CollectionHelper.cs" />
     <Compile Include="HsReplay\Data\DeckWinrateData.cs" />
     <Compile Include="HsReplay\Data\HsReplayData.cs" />
     <Compile Include="HsReplay\HsReplayDataManager.cs" />

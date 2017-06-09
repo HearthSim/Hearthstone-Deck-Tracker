@@ -31,6 +31,7 @@
                     <ImageSource x:Key="ClassIconShamanRound">Resources/ClassIcons/Round/shaman.png</ImageSource>
                     <ImageSource x:Key="ClassIconWarlockRound">Resources/ClassIcons/Round/warlock.png</ImageSource>
                     <ImageSource x:Key="ClassIconWarriorRound">Resources/ClassIcons/Round/warrior.png</ImageSource>
+                    <ImageSource x:Key="DustIcon">Resources/dust.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
