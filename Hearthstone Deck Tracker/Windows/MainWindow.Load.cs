@@ -48,10 +48,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			Options.Load(Core.Game);
-
-			
-
-
 			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", Config.Instance.AutoDeckDetection);
 
 			// Don't select the 'archived' class on load
@@ -63,12 +59,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckPickerList.SelectDeckType(Config.Instance.SelectedDeckPickerDeckType, true);
 
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
-
 			SortFilterDecksFlyout.SetSelectedTags(Config.Instance.SelectedTags);
 
 			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
-			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
 
+			SortFilterDecksFlyout.OperationSwitch.IsChecked = Config.Instance.TagOperation == TagFilerOperation.And;
 			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
 			SortFilterDecksFlyout.CheckBoxSortByClass.IsChecked = Config.Instance.SortDecksByClass;
 			SortFilterDecksFlyout.ComboboxDeckSortingArena.SelectedItem = Config.Instance.SelectedDeckSortingArena;

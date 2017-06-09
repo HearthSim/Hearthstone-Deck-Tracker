@@ -450,7 +450,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(DeckList.Instance.ActiveDeck != null)
 				DeckPickerList.ClearFromCache(DeckList.Instance.ActiveDeck);
-
 			if(deck != null)
 			{
 				//set up tags
