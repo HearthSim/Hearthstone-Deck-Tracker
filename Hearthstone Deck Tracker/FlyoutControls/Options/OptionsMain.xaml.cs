@@ -4,11 +4,11 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -90,9 +90,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private void TreeViewItemTrackerNotifications_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerNotifications;
 		private void TreeViewItemSearch_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsSearch;
 		private void TreeViewItemOverlayStreaming_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayStreaming;
-		private void TreeViewItemTrackerReplays_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentControlOptions.Content = OptionsTrackerReplays;
-		}
+		private void TreeViewItemTrackerReplays_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerReplays;
+
+		private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e) => e.Handled = true;
 	}
 }

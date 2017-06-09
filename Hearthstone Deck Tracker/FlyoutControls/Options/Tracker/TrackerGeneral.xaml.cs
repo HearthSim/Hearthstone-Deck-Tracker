@@ -1,4 +1,4 @@
-#region
+﻿#region
 
 using System;
 using System.Collections.Generic;
@@ -397,11 +397,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.ShowMyGamesPanel = false;
 			Core.MainWindow.UpdateMyGamesPanelVisibility();
 			Config.Save();
-		}
-
-		private void ScrollViewerOptionsGeneral_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
 		}
 	}
 }

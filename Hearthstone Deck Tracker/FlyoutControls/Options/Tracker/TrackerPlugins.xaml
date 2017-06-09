@@ -1,4 +1,4 @@
-<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerPlugins"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerPlugins"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -56,7 +56,7 @@
                                 Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}"
                                 IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}"
                                 DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick" Margin="0,2" />
-                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
                             <TextBlock Name="TextBlockDescription"
                                        Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}"
                                        TextWrapping="Wrap" />

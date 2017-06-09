@@ -279,10 +279,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.HidePlayerAttackIcon = true;
 			Config.Save();
 		}
-
-		private void ScrollViewerOptionsPlayer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
-		}
 	}
 }

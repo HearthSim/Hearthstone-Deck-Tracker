@@ -42,6 +42,8 @@
                 </TreeView>
             </DockPanel>
         </Border>
-        <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0"/>
+        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
+            <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0"/>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>

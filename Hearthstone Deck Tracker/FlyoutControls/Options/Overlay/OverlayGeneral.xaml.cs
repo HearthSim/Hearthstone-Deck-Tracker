@@ -471,10 +471,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.RemoveSecretsFromList = false;
 			Config.Save();
 		}
-
-		private void ScrollViewerOptionsGeneral_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
-		}
 	}
 }

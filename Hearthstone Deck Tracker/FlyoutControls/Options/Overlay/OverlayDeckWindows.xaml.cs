@@ -270,10 +270,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				Core.Windows.TimerWindow.Background = background;
 			}
 		}
-
-		private void ScrollViewerOptionsWindows_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
-		}
 	}
 }

@@ -1,4 +1,4 @@
-#region
+﻿#region
 
 using System;
 using System.Windows;
@@ -192,10 +192,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		}
 
 		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
-
-		private void ScrollViewerOptionsAppearance_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
-		}
 	}
 }
