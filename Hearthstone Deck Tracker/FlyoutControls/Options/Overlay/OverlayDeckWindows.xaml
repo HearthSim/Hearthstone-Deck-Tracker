@@ -12,7 +12,7 @@
              d:DesignHeight="400" d:DesignWidth="300">
     <Grid>
         <GroupBox Header="{lex:Loc Options_Overlay_Windows_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="ScrollViewerOptionsWindows" VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewerOptionsWindows_ManipulationBoundaryFeedback">
                 <StackPanel>
                     <CheckBox x:Name="CheckboxPlayerWindowOpenAutomatically"
                               Content="{lex:Loc Options_DeckWindows_CheckBox_Player}" HorizontalAlignment="Left"

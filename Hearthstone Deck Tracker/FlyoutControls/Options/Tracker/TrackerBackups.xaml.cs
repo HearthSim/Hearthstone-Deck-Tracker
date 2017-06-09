@@ -111,5 +111,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			public string DisplayName => FileInfo.CreationTime + " " + (FileInfo.Name.StartsWith("Backup_") ? "(auto)" : "(manual)");
 		}
+
+		private void ScrollViewerOptionsBackups_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }

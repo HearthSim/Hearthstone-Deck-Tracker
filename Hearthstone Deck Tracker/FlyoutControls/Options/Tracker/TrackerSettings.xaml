@@ -12,7 +12,7 @@
              d:DesignHeight="600" d:DesignWidth="300" Loaded="TrackerSettings_Loaded">
     <Grid>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Settings_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="ScrollViewerOptionsSettings" VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewerOptionsSettings_ManipulationBoundaryFeedback">
                 <StackPanel>
                     <GroupBox Header="{lex:LocTextUpper Options_Tracker_Settings_Label_Analytics}">
                         <StackPanel>

@@ -317,5 +317,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AskBeforeDiscardingGame = false;
 			Config.Save();
 		}
+
+		private void ScrollViewerOptionsStats_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }

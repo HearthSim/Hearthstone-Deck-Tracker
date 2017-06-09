@@ -11,7 +11,7 @@
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Backups_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="ScrollViewerOptionsBackups" VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewerOptionsBackups_ManipulationBoundaryFeedback">
                 <StackPanel Margin="10">
                     <ListBox Name="ListBoxBackups" Height="200" SelectionMode="Extended">
                         <ListBox.ItemTemplate>

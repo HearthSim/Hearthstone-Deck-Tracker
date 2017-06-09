@@ -16,7 +16,7 @@
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Stats_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="ScrollViewerOptionsStats" VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewerOptionsStats_ManipulationBoundaryFeedback">
                 <StackPanel>
                     <GroupBox Header="{lex:LocTextUpper Options_Tracker_Stats_Label_Record}">
                         <StackPanel>

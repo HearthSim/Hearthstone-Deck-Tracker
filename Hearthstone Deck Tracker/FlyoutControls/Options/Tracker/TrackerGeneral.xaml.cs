@@ -398,5 +398,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Core.MainWindow.UpdateMyGamesPanelVisibility();
 			Config.Save();
 		}
+
+		private void ScrollViewerOptionsGeneral_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }

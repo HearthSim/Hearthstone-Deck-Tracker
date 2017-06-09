@@ -164,5 +164,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.PasteImportingChoice = (ImportingChoice)ComboboxPasteImporting.SelectedItem;
 			Config.Save();
 		}
+
+		private void ScrollViewerOptionsImporting_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }

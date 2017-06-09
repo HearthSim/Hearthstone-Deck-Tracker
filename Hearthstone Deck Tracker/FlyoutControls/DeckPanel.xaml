@@ -18,8 +18,9 @@
                   Foreground="White" FontWeight="Bold" BorderThickness="1"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
-                  HorizontalAlignment="Center" Width="235" Height="auto">
+                  ScrollViewer.CanContentScroll="True" ScrollViewer.PanningMode="VerticalOnly"
+                  FontFamily="Arial" Margin="0,6,0,6"
+                  HorizontalAlignment="Center" Width="235" Height="auto" ManipulationBoundaryFeedback="ListViewDeck_ManipulationBoundaryFeedback">
             <ListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed" />

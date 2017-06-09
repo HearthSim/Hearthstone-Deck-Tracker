@@ -18,7 +18,7 @@
     </UserControl.Resources>
     <Grid>
         <GroupBox Header="{lex:LocText Options_Overlay_Player_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer x:Name="ScrollViewerOptionsPlayer" VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewerOptionsPlayer_ManipulationBoundaryFeedback">
                 <StackPanel>
                     <CheckBox x:Name="CheckboxSameScaling"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"

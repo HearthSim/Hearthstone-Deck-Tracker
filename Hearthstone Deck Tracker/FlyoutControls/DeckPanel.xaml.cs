@@ -62,5 +62,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			Helper.SortCardCollection(ListViewDeck.Items, false);
 			ButtonImport.Visibility = showImportButton ? Visibility.Visible : Visibility.Collapsed;
 		}
+
+		private void ListViewDeck_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }
