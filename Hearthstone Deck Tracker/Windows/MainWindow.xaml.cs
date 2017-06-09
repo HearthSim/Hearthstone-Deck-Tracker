@@ -1,4 +1,4 @@
-#region
+﻿#region
 
 using System;
 using System.Collections.Generic;
@@ -650,9 +650,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void ListViewDeck_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
-		}
+		private void ListViewDeck_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e) => e.Handled = true;
 	}
 }
