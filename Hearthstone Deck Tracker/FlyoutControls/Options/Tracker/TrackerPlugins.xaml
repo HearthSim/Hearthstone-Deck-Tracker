@@ -11,7 +11,7 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Plugins_Header}" AllowDrop="True" Drop="GroupBox_Drop">
+        <GroupBox AllowDrop="True" Drop="GroupBox_Drop">
             <DockPanel>
                 <DockPanel DockPanel.Dock="Top" Height="150">
                     <StackPanel DockPanel.Dock="Right" Margin="5,0,0,0">

@@ -42,8 +42,10 @@
                 </TreeView>
             </DockPanel>
         </Border>
-        <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
-            <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0"/>
-        </ScrollViewer>
+        <GroupBox x:Name="OptionsRightDynamicHeader">
+            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
+                <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0"/>
+            </ScrollViewer>
+        </GroupBox>
     </DockPanel>
 </UserControl>

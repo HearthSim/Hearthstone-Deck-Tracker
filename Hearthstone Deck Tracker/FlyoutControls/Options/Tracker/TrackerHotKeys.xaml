@@ -1,4 +1,4 @@
-<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerHotKeys"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerHotKeys"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,7 +13,7 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
-    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Hotkeys_Header}">
+    <GroupBox>
         <GroupBox.Resources>
             <hotKeys:HotKeyManager x:Key="HotKeyManager" />
             <hotKeys:PredefinedHotKeyActions x:Key="PredefinedHotKeyActions" />

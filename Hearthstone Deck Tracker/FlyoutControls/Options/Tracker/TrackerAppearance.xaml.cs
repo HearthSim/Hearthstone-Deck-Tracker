@@ -189,6 +189,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.Localization = (Language)ComboBoxLanguage.SelectedItem;
 			Config.Save();
 			LocUtil.UpdateCultureInfo();
+			Helper.OptionsMain.OptionsRightDynamicHeader.Header = LocUtil.Get("Options_Tracker_Appearance_Header");
 		}
 
 		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
