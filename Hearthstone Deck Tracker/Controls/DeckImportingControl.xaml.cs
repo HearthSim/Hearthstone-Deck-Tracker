@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -168,6 +168,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			Core.MainWindow.Options.TreeViewItemTrackerImporting.IsSelected = true;
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
+		}
+
+		private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
 		}
 	}
 }

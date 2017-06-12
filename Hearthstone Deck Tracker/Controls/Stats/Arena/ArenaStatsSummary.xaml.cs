@@ -28,5 +28,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			var parent = ((Control)sender).Parent as UIElement;
 			parent?.RaiseEvent(eventArg);
 		}
+
+		private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }
