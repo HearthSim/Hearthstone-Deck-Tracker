@@ -11,59 +11,57 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <Grid>
-        <GroupBox AllowDrop="True" Drop="GroupBox_Drop">
-            <DockPanel>
-                <DockPanel DockPanel.Dock="Top" Height="150">
-                    <StackPanel DockPanel.Dock="Right" Margin="5,0,0,0">
-                        <Button Click="ButtonAvailablePlugins_OnClick" Content="{lex:Loc Options_Tracker_Plugins_Button_Avilable}" />
-                        <Button Click="ButtonOpenPluginsFolder_OnClick" Content="{lex:Loc Options_Tracker_Plugins_Button_Folder}" Margin="0,5,0,0" />
-                    </StackPanel>
-                    <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                        <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"
+        <DockPanel AllowDrop="True" Drop="DockPanel_Drop">
+            <DockPanel DockPanel.Dock="Top" Height="150">
+                <StackPanel DockPanel.Dock="Right" Margin="5,0,0,0">
+                    <Button Click="ButtonAvailablePlugins_OnClick" Content="{lex:Loc Options_Tracker_Plugins_Button_Avilable}" />
+                    <Button Click="ButtonOpenPluginsFolder_OnClick" Content="{lex:Loc Options_Tracker_Plugins_Button_Folder}" Margin="0,5,0,0" />
+                </StackPanel>
+                <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+                    <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"
                                  SelectionMode="Single">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Plugin.Name}" TextWrapping="Wrap">
-                                        <TextBlock.Style>
-                                            <Style>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
-                                                        <Setter Property="TextBlock.FontStyle" Value="Italic" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Border>
-                </DockPanel>
-                <GroupBox Name="GroupBoxDetails"
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Plugin.Name}" TextWrapping="Wrap">
+                                    <TextBlock.Style>
+                                        <Style>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
+                                                    <Setter Property="TextBlock.FontStyle" Value="Italic" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+            </DockPanel>
+            <GroupBox Name="GroupBoxDetails"
                           Header="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.NameAndVersion}"
                           Margin="0,10,0,0">
-                    <DockPanel>
-                        <controls:ToggleSwitch Margin="2" DockPanel.Dock="Top" OnLabel="{lex:Loc Options_Tracker_Plugins_Switch_Enabled}" 
+                <DockPanel>
+                    <controls:ToggleSwitch Margin="2" DockPanel.Dock="Top" OnLabel="{lex:Loc Options_Tracker_Plugins_Switch_Enabled}" 
                                                OffLabel="{lex:Loc Options_Tracker_Plugins_Switch_Disabled}"
                                                IsChecked="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" />
-                        <Separator DockPanel.Dock="Top" Margin="0,0,0,5" />
-                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-                            <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
-                            <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Author}"
+                    <Separator DockPanel.Dock="Top" Margin="0,0,0,5" />
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+                        <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Author}"
                                        TextWrapping="Wrap" Margin="2,0,0,0" />
-                        </StackPanel>
-                        <Button Name="ButtonSettings"
+                    </StackPanel>
+                    <Button Name="ButtonSettings"
                                 Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}"
                                 IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}"
                                 DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick" Margin="0,2" />
-                        <ScrollViewer VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
-                            <TextBlock Name="TextBlockDescription"
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
+                        <TextBlock Name="TextBlockDescription"
                                        Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}"
                                        TextWrapping="Wrap" />
-                        </ScrollViewer>
-                    </DockPanel>
-                </GroupBox>
-            </DockPanel>
-        </GroupBox>
+                    </ScrollViewer>
+                </DockPanel>
+            </GroupBox>
+        </DockPanel>
     </Grid>
 </UserControl>
