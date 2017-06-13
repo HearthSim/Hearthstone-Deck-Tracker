@@ -169,10 +169,5 @@ namespace Hearthstone_Deck_Tracker.Controls
 			Core.MainWindow.Options.TreeViewItemTrackerImporting.IsSelected = true;
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
 		}
-
-		private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
-		}
 	}
 }

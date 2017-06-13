@@ -167,10 +167,5 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			UpdateStats();
 		}
-
-		private void ScrollViewer_ManipulationBoundaryFeedback(object sender, System.Windows.Input.ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
-		}
 	}
 }

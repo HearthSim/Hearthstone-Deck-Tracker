@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -43,9 +44,9 @@
             </DockPanel>
         </Border>
         <GroupBox x:Name="OptionsRightDynamicHeader">
-            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
+            <controls:TouchEnabledScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0"/>
-            </ScrollViewer>
+            </controls:TouchEnabledScrollViewer>
         </GroupBox>
     </DockPanel>
 </UserControl>

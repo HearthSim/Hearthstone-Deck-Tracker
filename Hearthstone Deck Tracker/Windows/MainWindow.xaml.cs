@@ -649,7 +649,5 @@ namespace Hearthstone_Deck_Tracker.Windows
 				MyGamesPanel.Visibility = Collapsed;
 			}
 		}
-
-		private void ListViewDeck_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e) => e.Handled = true;
 	}
 }

@@ -755,7 +755,5 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			if(!SelectedDecks.Any())
 				e.Handled = true;
 		}
-
-		private void ListViewDecks_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e) => e.Handled = true;
 	}
 }

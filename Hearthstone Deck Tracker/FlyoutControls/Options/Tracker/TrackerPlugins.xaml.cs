@@ -108,7 +108,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Core.MainWindow.ShowMessage("Error Importing Plugin", $"Please import manually to {dir}.").Forget();
 			}
 		}
-
-		private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e) => e.Handled = true;
 	}
 }

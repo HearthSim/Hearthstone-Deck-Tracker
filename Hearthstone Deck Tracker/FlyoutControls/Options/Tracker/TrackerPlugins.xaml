@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:hdtcontrols="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -55,11 +56,11 @@
                                 Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}"
                                 IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}"
                                 DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick" Margin="0,2" />
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
+                    <hdtcontrols:TouchEnabledScrollViewer VerticalScrollBarVisibility="Auto">
                         <TextBlock Name="TextBlockDescription"
                                        Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}"
                                        TextWrapping="Wrap" />
-                    </ScrollViewer>
+                    </hdtcontrols:TouchEnabledScrollViewer>
                 </DockPanel>
             </GroupBox>
         </DockPanel>

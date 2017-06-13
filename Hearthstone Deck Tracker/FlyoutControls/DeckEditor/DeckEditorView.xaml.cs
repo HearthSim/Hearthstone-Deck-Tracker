@@ -34,15 +34,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		}
 
 		public void SetDeck(Deck deck, bool isNewDeck) => ((DeckEditorViewModel)DataContext).SetDeck(deck, isNewDeck);
-
-		private void ListView_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
-		}
-
-		private void ListView_ManipulationBoundaryFeedback_1(object sender, ManipulationBoundaryFeedbackEventArgs e)
-		{
-			e.Handled = true;
-		}
 	}
 }

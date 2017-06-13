@@ -185,7 +185,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ContentControlOptions.Content = OptionsTrackerLogging;
 		}
 		#endregion
-
-		private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e) => e.Handled = true;
 	}
 }

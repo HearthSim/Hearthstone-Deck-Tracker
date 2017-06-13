@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -35,7 +36,7 @@
                         <Label Content="{lex:LocTextUpper Importing_Constructed_Label_SaveTo}" Margin="160,0,0,0" FontWeight="SemiBold"/>
                     </StackPanel>
                     <Separator DockPanel.Dock="Top"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback">
+                    <controls:TouchEnabledScrollViewer VerticalScrollBarVisibility="Auto">
                         <ItemsControl Name="ItemsControl" ItemsSource="{Binding Decks}" Margin="0,0,5,0">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -55,7 +56,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                    </ScrollViewer>
+                    </controls:TouchEnabledScrollViewer>
                 </DockPanel>
             </Border>
         </DockPanel>
