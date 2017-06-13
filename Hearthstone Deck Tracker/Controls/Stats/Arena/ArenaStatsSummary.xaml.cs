@@ -33,5 +33,25 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		{
 			e.Handled = true;
 		}
+
+		private void ScrollViewerMain_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
+
+		private void ScrollViewer_ManipulationBoundaryFeedback_1(object sender, ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
+
+		private void ScrollViewer_ManipulationBoundaryFeedback_2(object sender, ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
+
+		private void ScrollViewer_ManipulationBoundaryFeedback_3(object sender, ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }

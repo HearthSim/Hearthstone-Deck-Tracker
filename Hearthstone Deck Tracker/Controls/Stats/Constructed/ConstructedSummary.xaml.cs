@@ -64,5 +64,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+		private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
+
+		private void ScrollViewer_ManipulationBoundaryFeedback_1(object sender, ManipulationBoundaryFeedbackEventArgs e)
+		{
+			e.Handled = true;
+		}
 	}
 }

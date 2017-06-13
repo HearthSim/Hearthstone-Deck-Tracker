@@ -17,7 +17,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <utility:ConfigWrapper x:Key="ConfigWrapper"/>
     </UserControl.Resources>
-    <ScrollViewer Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" ScrollViewer.PanningMode="VerticalOnly" ManipulationBoundaryFeedback="ScrollViewerMain_ManipulationBoundaryFeedback">
         <DockPanel>
             <Expander Name="ExpanderCharts" IsExpanded="{Binding ArenaSummaryChartsExpanded, Source={StaticResource ConfigWrapper}}" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
                 <Expander.Header>
@@ -26,7 +26,7 @@
                         <CheckBox Name="CheckBoxShowLegends" Content="show legends" Margin="20,0,0,0" Foreground="White" IsChecked="{Binding Path=ArenaStatsShowLegends, Source={StaticResource ConfigWrapper}}"/>
                     </StackPanel>
                 </Expander.Header>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" ScrollViewer.PanningMode="HorizontalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback_1">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -89,7 +89,7 @@
             </Expander>
             <DockPanel DockPanel.Dock="Top">
                 <GroupBox Header="{lex:Loc Stats_Arena_Summary_Label_Highlights}">
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" ScrollViewer.PanningMode="HorizontalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback_2">
                         <arena:ArenaStatsSummaryHighlights Margin="0,0,0,5"/>
                     </ScrollViewer>
                 </GroupBox>
@@ -97,7 +97,7 @@
             </DockPanel>
             <DockPanel DockPanel.Dock="Top">
                 <GroupBox Header="{lex:Loc Stats_Arena_Summary_Label_Classes}" DockPanel.Dock="Top">
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" ScrollViewer.PanningMode="HorizontalOnly" ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback_3">
                         <arena:ArensStatsSummaryClasses  Margin="0,0,0,5"/>
                     </ScrollViewer>
                 </GroupBox>
