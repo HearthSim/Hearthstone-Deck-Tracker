@@ -26,7 +26,10 @@
                     <LineBreak/>
                     2. <Run Text="{lex:Loc DeckExport_Label_Step2}"/>
                 </TextBlock>
-                <UniformGrid DockPanel.Dock="Top" Rows="1">
+                <DockPanel DockPanel.Dock="Top">
+                    <CheckBox Content="{lex:Loc DeckExport_Checkbox_IncludeVersion}" Margin="4" IsChecked="{Binding IncludeVersion}"/>
+                </DockPanel>
+                <UniformGrid DockPanel.Dock="Top" Rows="1" Margin="2,0">
                     <Button Command="{Binding CopyAllCommand}" Margin="0,5,2,5">
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Width="12">
