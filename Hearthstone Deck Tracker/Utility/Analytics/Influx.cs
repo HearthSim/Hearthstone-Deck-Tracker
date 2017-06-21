@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			var point = new InfluxPointBuilder("hdt_app_exit")
 				.Tag("version", version.ToVersionString(true))
 				.Tag("new", _new)
+				.Tag("stats_window_used", Core.StatsOverviewInitialized)
 				.Field("session_duration_seconds", (int)sessionDuration);
 #if(SQUIRREL)
 			point.Tag("squirrel", true);
