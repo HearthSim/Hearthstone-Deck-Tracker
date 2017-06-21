@@ -13,7 +13,7 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="1600" d:DesignWidth="1200">
-    <ScrollViewer Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <controls:TouchEnabledScrollViewer x:Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <DockPanel>
             <Expander Name="ExpanderCharts" IsExpanded="{Binding ConstructedSummaryChartsExpanded, Source={StaticResource ConfigWrapper}}" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
                 <Expander.Header>
@@ -101,6 +101,6 @@
                 <ContentControl Name="ContentControlMatchups"/>
             </GroupBox>
         </DockPanel>
-    </ScrollViewer>
+    </controls:TouchEnabledScrollViewer>
 </UserControl>
 

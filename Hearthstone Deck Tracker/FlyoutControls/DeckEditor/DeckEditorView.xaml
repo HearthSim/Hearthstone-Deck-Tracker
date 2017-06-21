@@ -66,8 +66,10 @@
                         <KeyBinding Key="Up" Command="{Binding MoveSelectionCommand}" CommandParameter="-1"/>
                     </TextBox.InputBindings>
                 </TextBox>
+                <!-- This control needs virtualization don't change ScrollViewer.CanContentScroll="True" -->
                 <controls:TouchEnabledListView ItemsSource="{Binding CardDatabase}" Style="{DynamicResource VirtualisedMetroListView}"
-                    SelectedIndex="{Binding SelectedDbIndex}" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,5,0,0" BorderThickness="0">
+                    SelectedIndex="{Binding SelectedDbIndex}" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
+                    Margin="0,5,0,0" BorderThickness="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <controls:Card>
