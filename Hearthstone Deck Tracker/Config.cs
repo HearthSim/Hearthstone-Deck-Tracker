@@ -131,11 +131,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool DeckPickerCaps = true;
 
-		[DefaultValue("Arena {Date dd-MM hh:mm}")]
-		public string ArenaDeckNameTemplate = "Arena {Date dd-MM hh:mm}";
+		[DefaultValue("Arena {Date dd-MM HH:mm}")]
+		public string ArenaDeckNameTemplate = "Arena {Date dd-MM HH:mm}";
 
-		[DefaultValue("Brawl {Date dd-MM hh:mm}")]
-		public string BrawlDeckNameTemplate = "Brawl {Date dd-MM hh:mm}";
+		[DefaultValue("Brawl {Date dd-MM HH:mm}")]
+		public string BrawlDeckNameTemplate = "Brawl {Date dd-MM HH:mm}";
 
 		[DefaultValue(false)]
 		public bool BringHsToForeground = false;
