@@ -259,6 +259,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		}
 
 		private void ButtonSave_OnClick(object sender, RoutedEventArgs e) => RaiseEvent(new RoutedEventArgs(SaveEvent, this));
+
+		private void TextBox_OnGotKeyboardFocus(object sender, RoutedEventArgs routedEventArgs) => ((TextBox)sender).SelectAll();
+
+		private void TextBox_OnGotMouseCapture(object sender, MouseEventArgs e) => ((TextBox)sender).SelectAll();
 	}
 
 	public class ArenaReward

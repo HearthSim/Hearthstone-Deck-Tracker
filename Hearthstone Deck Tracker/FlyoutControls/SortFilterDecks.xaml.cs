@@ -273,7 +273,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public List<string> GetTags() => Tags.Where(t => t.Selected == true).Select(t => t.Name).ToList();
 
-		public void SetSelectedTags(List<string> tags)
+		public void SetSelectedTags(IEnumerable<string> tags)
 		{
 			if(tags == null)
 				return;
@@ -282,7 +282,7 @@ namespace Hearthstone_Deck_Tracker
 			ListboxTags.Items.Refresh();
 		}
 
-		public void SetSelectedTags(List<Deck> decks)
+		public void SetSelectedTags(IEnumerable<Deck> decks)
 		{
 			if(!decks.Any())
 				return;

@@ -1,7 +1,9 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using static HearthDb.Enums.BnetGameType;
@@ -172,11 +174,49 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return BGT_TAVERNBRAWL_1P_VERSUS_AI;
 				case GameType.GT_TB_2P_COOP:
 					return BGT_TAVERNBRAWL_2P_COOP;
-				case GameType.GT_LAST:
-					return BGT_LAST;
+				case GameType.GT_FSG_BRAWL:
+					return BGT_FSG_BRAWL_VS_FRIEND;
+				case GameType.GT_FSG_BRAWL_1P_VS_AI:
+					return BGT_FSG_BRAWL_1P_VERSUS_AI;
+				case GameType.GT_FSG_BRAWL_2P_COOP:
+					return BGT_FSG_BRAWL_2P_COOP;
+				case GameType.GT_FSG_BRAWL_VS_FRIEND:
+					return BGT_FSG_BRAWL_VS_FRIEND;
 				default:
 					return BGT_UNKNOWN;
 			}
+		}
+
+		public static HearthDb.Deckstrings.Deck ToHearthDbDeck(Deck deck)
+		{
+			if(!CardIds.HeroNameDict.TryGetValue(deck.Class ?? "", out var heroId))
+				heroId = deck.Cards.FirstOrDefault(x => x.PlayerClass != "Neutral")?.Id;
+			if(string.IsNullOrEmpty(heroId))
+				return null;
+			var heroDbfId = Database.GetCardFromId(heroId)?.DbfIf ?? 0;
+			if(heroDbfId == 0)
+				return null;
+
+			return new HearthDb.Deckstrings.Deck
+			{
+				Name = deck.Name,
+				Format = deck.IsWildDeck ? FormatType.FT_WILD : FormatType.FT_STANDARD,
+				ZodiacYear = (ZodiacYear)Enum.GetValues(typeof(ZodiacYear)).Cast<int>().OrderByDescending(x => x).First(),
+				HeroDbfId = heroDbfId,
+				CardDbfIds = deck.Cards.ToDictionary(c => c.DbfIf, c => c.Count)
+			};
+		}
+
+		public static Deck FromHearthDbDeck(HearthDb.Deckstrings.Deck hDbDeck)
+		{
+			var deck = new Deck
+			{
+				Name = hDbDeck.Name,
+				Class = Database.GetCardFromDbfId(hDbDeck.HeroDbfId, false).PlayerClass
+			};
+			foreach(var c in hDbDeck.GetCards())
+				deck.Cards.Add(new Card(c.Key) { Count = c.Value });
+			return deck;
 		}
 	}
 }

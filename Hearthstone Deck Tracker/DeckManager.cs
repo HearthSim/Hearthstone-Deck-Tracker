@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -320,6 +321,30 @@ namespace Hearthstone_Deck_Tracker
 				return true;
 			}
 			return false;
+		}
+
+		public static void SaveDeck(Deck deck, bool invokeApi = true)
+		{
+			deck.Edited();
+			DeckList.Instance.Decks.Add(deck);
+			DeckList.Save();
+			Core.MainWindow.DeckPickerList.SelectDeckAndAppropriateView(deck);
+			Core.MainWindow.DeckPickerList.UpdateDecks(forceUpdate: new[] { deck });
+			Core.MainWindow.SelectDeck(deck, true);
+			if(invokeApi)
+				DeckManagerEvents.OnDeckCreated.Execute(deck);
+		}
+
+		public static void SaveDeck(Deck baseDeck, Deck newVersion, bool overwriteCurrent = false)
+		{
+			DeckList.Instance.Decks.Remove(baseDeck);
+			baseDeck.Versions?.Clear();
+			if(!overwriteCurrent)
+				newVersion.Versions.Add(baseDeck);
+			newVersion.SelectedVersion = newVersion.Version;
+			newVersion.Archived = false;
+			SaveDeck(newVersion, false);
+			DeckManagerEvents.OnDeckUpdated.Execute(newVersion);
 		}
 	}
 

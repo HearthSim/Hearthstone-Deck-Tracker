@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 #else
 			exception.Tags.Add("squirrel", "false");
 #endif
+			exception.Tags.Add("hearthstone", Helper.GetHearthstoneBuild()?.ToString());
 			return Client.Capture(exception);
 		}
 	}

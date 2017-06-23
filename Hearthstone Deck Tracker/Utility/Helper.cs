@@ -478,9 +478,16 @@ namespace Hearthstone_Deck_Tracker
 		{
 			var theme = GetAppTheme();
 			ThemeManager.ChangeAppStyle(Application.Current, GetAppAccent(), theme);
-			Application.Current.Resources["GrayTextColorBrush"] = theme.Name == MetroTheme.BaseLight.ToString()
-																	  ? new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor1"])
-																	  : new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor2"]);
+			if(theme.Name == MetroTheme.BaseLight.ToString())
+			{
+				Application.Current.Resources["GrayTextColorBrush"] = new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor1"]);
+				Application.Current.Resources["HsReplayIcon"] = Application.Current.Resources["HsReplayIconBlue"];
+			}
+			else
+			{
+				Application.Current.Resources["GrayTextColorBrush"] = new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor2"]);
+				Application.Current.Resources["HsReplayIcon"] = Application.Current.Resources["HsReplayIconWhite"];
+			}
 		}
 
 		public static Accent GetAppAccent() => string.IsNullOrEmpty(Config.Instance.AccentName)
@@ -547,6 +554,25 @@ namespace Hearthstone_Deck_Tracker
 				Log.Error("[Helper.TryOpenUrl] " + e, memberName, sourceFilePath);
 				return false;
 			}
+		}
+
+		public static string BuildHsReplayNetUrl(string path, string campaign)
+		{
+			var url = "https://hsreplay.net";
+			if(!path.StartsWith("/"))
+				url += "/";
+			url += path;
+			if(!path.EndsWith("/"))
+				url += "/";
+			return url + GetHsReplayNetUrlParams(campaign);
+		}
+
+		public static string GetHsReplayNetUrlParams(string campaign)
+		{
+			var param = "?utm_source=hdt&utm_medium=client";
+			if(!string.IsNullOrEmpty(campaign))
+				param += "&utm_campaign=" + campaign;
+			return param;
 		}
 
 		private static int? _hearthstoneBuild;
@@ -701,15 +727,22 @@ namespace Hearthstone_Deck_Tracker
 				Log.Warn("Could not find Hearthstone process");
 				return;
 			}
-			var executable = new FileInfo(proc.MainModule.FileName);
-			var currentPath = Config.Instance.HearthstoneDirectory;
-			var procPath = executable.Directory?.FullName;
-			if(procPath != null && procPath != currentPath)
+			try
 			{
-				Log.Warn($"Current path (\"{currentPath}\") does not match the running Hearthstone process: \"{procPath}\". Updating path");
-				Config.Instance.HearthstoneDirectory = procPath;
-				Config.Save();
-				Core.Reset().Forget();
+				var executable = new FileInfo(proc.MainModule.FileName);
+				var currentPath = Config.Instance.HearthstoneDirectory;
+				var procPath = executable.Directory?.FullName;
+				if(procPath != null && procPath != currentPath)
+				{
+					Log.Warn($"Current path (\"{currentPath}\") does not match the running Hearthstone process: \"{procPath}\". Updating path");
+					Config.Instance.HearthstoneDirectory = procPath;
+					Config.Save();
+					Core.Reset().Forget();
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
 			}
 		}
 	}

@@ -160,10 +160,14 @@
         </Border>
     </DockPanel>
     <ListView Name="ListViewDecks" VirtualizingPanel.IsVirtualizing="True" KeyUp="ListViewDecks_OnKeyUp"
+              ItemsSource="{Binding DisplayedDecks, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged"
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick" PreviewMouseRightButtonUp="ListViewDecks_OnPreviewMouseRightButtonUp">
         <ListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">
+                <MenuItem Name="MenuItemExportDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Export}" Click="BtnExportDeck_Click" />
+                <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Screenshot}" Click="BtnScreenshotCards_Click"/>
+                <Separator/>
                 <MenuItem Name="MenuItemUseDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Use}" Click="BtnUseDeck_Click"/>
                 <Separator Name="SeparatorUseDeck" />
                 <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Deck}" Click="BtnEditDeck_Click" />
@@ -182,6 +186,7 @@
                 <MenuItem Name="MenuItemMoveDeckToConstructed" Header="{lex:LocTextUpper DeckPicker_ContextMenu_MoveToConstructed}"
                           Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed" />
                 <Separator Name="SeparatorDeck1" />
+                <MenuItem Name="MenuItemVersionHistory" Header="{lex:LocTextUpper DeckPicker_ContextMenu_VersionHistory}" Click="MenuItemVersionHistory_OnClick"/>
                 <MenuItem Name="MenuItemMissingCards" Header="{lex:LocTextUpper DeckPicker_ContextMenu_MissingCards}"
                           ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick" />
                 <MenuItem Name="MenuItemUpdateDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Update}" Click="BtnUpdateDeck_Click" />

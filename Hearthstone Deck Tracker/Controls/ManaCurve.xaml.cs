@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Enums;
@@ -54,6 +55,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				ClearDeck();
 				TextBlockNoMechanics.Visibility = Visible;
+				return;
+			}
+			if(deck.Equals(_deck))
+			{
+				UpdateValues();
 				return;
 			}
 			_deck = deck;
@@ -166,6 +172,7 @@ namespace Hearthstone_Deck_Tracker
 					_manaCostBars[i].SetTooltipValues(weapons[i], spells[i], minions[i]);
 				}
 			}
+			ItemsControlMechanics.ItemsSource = _deck.Mechanics;
 		}
 
 		private void ComboBoxStatType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

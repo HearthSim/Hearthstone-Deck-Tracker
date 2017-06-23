@@ -28,7 +28,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly OverlayStreaming OptionsOverlayStreaming = new OverlayStreaming();
 		public readonly TrackerAppearance OptionsTrackerAppearance = new TrackerAppearance();
 		public readonly TrackerBackups OptionsTrackerBackups = new TrackerBackups();
-		public readonly TrackerExporting OptionsTrackerExporting = new TrackerExporting();
 		public readonly TrackerGeneral OptionsTrackerGeneral = new TrackerGeneral();
 		public readonly TrackerHotKeys OptionsTrackerHotKeys = new TrackerHotKeys();
 		public readonly TrackerImporting OptionsTrackerImporting = new TrackerImporting();
@@ -64,7 +63,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsOverlayOpponent.Load(game);
 			OptionsOverlayInteractivity.Load();
 			OptionsTrackerSettings.Load();
-			OptionsTrackerExporting.Load();
 			OptionsTrackerImporting.Load(game);
 			OptionsTrackerLogging.Load(game);
 			OptionsTrackerStats.Load();
@@ -81,7 +79,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private void TreeViewItemOverlayPlayer_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayPlayer;
 		private void TreeViewItemTrackerGeneral_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerGeneral;
 		private void TreeViewItemTrackerStats_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerStats;
-		private void TreeViewItemTrackerExporting_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerExporting;
 		private void TreeViewItemTrackerImporting_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerImporting;
 		private void TreeViewItemTrackerLogging_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerLogging;
 		private void TreeViewItemOverlayInteractivity_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayInteractivity;

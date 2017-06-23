@@ -108,9 +108,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 								deck.IsArenaDeck = isArenaDeck.Value;
 							deck.Url = url;
 							deck.Name = deckName;
-							Core.MainWindow.SetNewDeck(deck);
 							if(Config.Instance.AutoSaveOnImport)
-								Core.MainWindow.SaveDeckWithOverwriteCheck();
+								DeckManager.SaveDeck(deck);
+							else
+								Core.MainWindow.ShowDeckEditorFlyout(deck, true);
 							Core.MainWindow.ActivateWindow();
 						}
 						Clipboard.Clear();

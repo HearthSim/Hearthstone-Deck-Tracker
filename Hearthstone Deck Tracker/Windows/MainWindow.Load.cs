@@ -48,7 +48,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			Options.Load(Core.Game);
-			Help.TxtblockVersion.Text = "v" + Helper.GetCurrentVersion().ToVersionString();
 
 			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", Config.Instance.AutoDeckDetection);
 
@@ -76,13 +75,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Core.TrayIcon.SetContextMenuProperty("classCardsFirst", "Checked", Config.Instance.CardSortingClassFirst);
 			Core.TrayIcon.SetContextMenuProperty("useNoDeck", "Checked", DeckList.Instance.ActiveDeck == null);
+
+			UpdateMyGamesPanelVisibility();
 		}
 
 		public void ReloadTags()
 		{
 			SortFilterDecksFlyout.LoadTags(DeckList.Instance.AllTags);
 			TagControlEdit.LoadTags(DeckList.Instance.AllTags.Where(tag => tag != "All" && tag != "None").ToList());
-			MenuItemQuickSetTag.ItemsSource = TagControlEdit.Tags;
 		}
 
 		private void MetroWindow_Loaded(object sender, RoutedEventArgs e)

@@ -2,8 +2,10 @@
 
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
@@ -32,11 +34,16 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_notifyIcon = new NotifyIcon
 			{
-				Icon = new Icon(@"Images/HearthstoneDeckTracker16.ico"),
 				Visible = true,
 				ContextMenu = new ContextMenu(),
 				Text = "Hearthstone Deck Tracker v" + (Helper.GetCurrentVersion() ?? new Version("0.0")).ToVersionString()
 			};
+
+			var iconFile = new FileInfo("Images/HearthstoneDeckTracker16.ico");
+			if(iconFile.Exists)
+				_notifyIcon.Icon = new Icon(iconFile.FullName);
+			else
+				Log.Error($"Cant find tray icon at \"{iconFile.FullName}\"");
 
 			var startHearthstonMenuItem = new MenuItem("Start Launcher/Hearthstone", (sender, args) => Helper.StartHearthstoneAsync().Forget())
 			{

@@ -47,7 +47,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			OnPropertyChanged(nameof(ClaimErrorVisibility));
 		}
 
-		private async void ButtonClaimAccount_OnClick(object sender, RoutedEventArgs e)
+		private void ButtonClaimAccount_OnClick(object sender, RoutedEventArgs e) => ClaimAccount();
+
+		internal async void ClaimAccount()
 		{
 			ButtonClaimAccount.Content = ButtonTextWaiting;
 			ButtonClaimAccount.IsEnabled = false;
@@ -96,7 +98,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private void HyperlinkBattleTag_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://hsreplay.net/account/");
+		private void HyperlinkBattleTag_OnClick(object sender, RoutedEventArgs e)
+		{
+			var url = Helper.BuildHsReplayNetUrl("account", "myaccount");
+			Helper.TryOpenUrl(url);
+		}
 
 		private void ButtonCopyUrl_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -104,7 +110,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			try
 			{
-				Clipboard.SetText(_claimUrl);
+				Clipboard.SetDataObject(_claimUrl);
 				ButtonCopyUrl.Content = "Copied!";
 			}
 			catch(Exception ex)

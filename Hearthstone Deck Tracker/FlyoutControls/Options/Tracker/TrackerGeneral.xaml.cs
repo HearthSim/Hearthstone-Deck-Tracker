@@ -35,7 +35,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxAutoDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
-			CheckboxFullTextSearch.IsChecked = Config.Instance.UseFullTextSearch;
 			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
 			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
 			CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
@@ -46,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboBoxLastPlayedDateFormat.ItemsSource = Enum.GetValues(typeof(LastPlayedDateFormat));
 			CheckBoxShowLastPlayedDate.IsChecked = Config.Instance.ShowLastPlayedDateOnDeck;
 			ComboBoxLastPlayedDateFormat.SelectedItem = Config.Instance.LastPlayedDateFormat;
+			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
 
 			if(Config.Instance.NonLatinUseDefaultFont == null)
 			{
@@ -379,6 +379,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AutoDeckDetection = false;
 			Config.Save();
 			Core.MainWindow.AutoDeckDetection(false);
+		}
+
+		private void CheckboxShowMyGamesPanel_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowMyGamesPanel = true;
+			Core.MainWindow.UpdateMyGamesPanelVisibility();
+			Config.Save();
+		}
+
+		private void CheckboxShowMyGamesPanel_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowMyGamesPanel = false;
+			Core.MainWindow.UpdateMyGamesPanelVisibility();
+			Config.Save();
 		}
 	}
 }

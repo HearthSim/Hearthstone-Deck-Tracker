@@ -55,7 +55,9 @@ namespace Hearthstone_Deck_Tracker
 		internal static bool Update { get; set; }
 		internal static bool CanShutdown { get; set; }
 
+#pragma warning disable 1998
 		public static async void Initialize()
+#pragma warning restore 1998
 		{
 			LocalizeDictionary.Instance.Culture = CultureInfo.GetCultureInfo("en-US");
 			_startUpTime = DateTime.UtcNow;
@@ -134,7 +136,7 @@ namespace Hearthstone_Deck_Tracker
 				MainWindow.ShowLogConfigUpdateFailedMessage().Forget();
 			else if(LogConfigUpdater.LogConfigUpdated && Game.IsRunning)
 			{
-				MainWindow.ShowMessageAsync("Hearthstone restart required", "The log.config file has been updated. HDT may not work properly until Hearthstone has been restarted.");
+				MainWindow.ShowMessageAsync("Hearthstone restart required", "The log.config file has been updated. HDT may not work properly until Hearthstone has been restarted.").Forget();
 				Overlay.ShowRestartRequiredWarning();
 			}
 			LogWatcherManger.Start(Game).Forget();
@@ -270,10 +272,7 @@ namespace Hearthstone_Deck_Tracker
 			var stoppedReader = await LogWatcherManger.Stop();
 			Game.Reset();
 			if(DeckList.Instance.ActiveDeck != null)
-			{
 				Game.IsUsingPremade = true;
-				MainWindow.UpdateMenuItemVisibility();
-			}
 			await Task.Delay(1000);
 			if(stoppedReader)
 				LogWatcherManger.Start(Game).Forget();
@@ -325,5 +324,7 @@ namespace Hearthstone_Deck_Tracker
 
 		//Todo: keep this state somewhere tlse
 		internal static int GetTurnNumber() => LogWatcherManger.GetTurnNumber();
+
+		internal static bool StatsOverviewInitialized => _statsOverview != null;
 	}
 }

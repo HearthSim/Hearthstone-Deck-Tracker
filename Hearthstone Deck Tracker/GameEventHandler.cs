@@ -223,9 +223,11 @@ namespace Hearthstone_Deck_Tracker
 			//We might not know this for certain - requires additional tracking logic.
 			//TODO: _game.OpponentSecrets.SetZero(Hunter.HiddenCache);
 			_game.OpponentSecrets.SetZero(Hunter.Snipe);
-			_game.OpponentSecrets.SetZero(Mage.MirrorEntity);
 			_game.OpponentSecrets.SetZero(Mage.PotionOfPolymorph);
 			_game.OpponentSecrets.SetZero(Paladin.Repentance);
+
+			if(_game.OpponentMinionCount < 7)
+				_game.OpponentSecrets.SetZero(Mage.MirrorEntity);
 
 			if(Core.MainWindow != null)
 				Core.Overlay.ShowSecrets();

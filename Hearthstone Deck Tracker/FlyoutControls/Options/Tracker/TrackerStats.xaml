@@ -54,9 +54,8 @@
                                       Unchecked="CheckboxRecordOther_Unchecked" />
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Stats_Label_Display}">
+                    <GroupBox Header="{lex:Loc Options_Tracker_Stats_Label_DecksMyGames}">
                         <StackPanel>
-                            <Label Content="{lex:Loc Options_Tracker_Stats_Label_DecksOverlay}" Margin="0,-8,0,0" />
                             <DockPanel>
                                 <ComboBox Name="ComboboxDisplayedStats" Width="150"
                                           SelectionChanged="ComboboxDisplayedStats_SelectionChanged"

@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Windows.MainWindowControls.NewsBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <local:NewsBarViewModel/>
+    </UserControl.DataContext>
+    <StatusBar>
+        <StatusBar.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="30"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ItemsPanelTemplate>
+        </StatusBar.ItemsPanel>
+        <StatusBarItem Content="{lex:LocTextUpper MainWindow_NewsBar_Header}" Grid.Column="0"/>
+        <StatusBarItem Content="{Binding IndexContent}" Grid.Column="1" />
+        <StatusBarItem Grid.Column="2">
+            <controls:TransitioningContentControl Transition="Right" Content="{Binding NewsContent}"/>
+        </StatusBarItem>
+        <StatusBarItem Grid.Column="3">
+            <Button Name="BtnClosePrevious" VerticalAlignment="Center" Height="24" Width="24" 
+                    Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" 
+                    BorderThickness="0" Command="{Binding PreviousItemCommand}" ToolTip="Previous">
+                <Button.Content>
+                    <Rectangle Width="8" Height="8">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_chevron_left_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button.Content>
+            </Button>
+        </StatusBarItem>
+        <StatusBarItem Grid.Column="4">
+            <Button Name="BtnNewsNext" VerticalAlignment="Center" Height="24" Width="24" 
+                    Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" 
+                    BorderThickness="0" Command="{Binding NextItemCommand}" ToolTip="Next">
+                <Button.Content>
+                    <Rectangle Width="8" Height="8">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_chevron_right_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button.Content>
+            </Button>
+        </StatusBarItem>
+        <StatusBarItem Grid.Column="5">
+            <Button Name="BtnCloseNews" VerticalAlignment="Center" Height="24" Width="24" 
+                    Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" BorderThickness="0" 
+                    Command="{Binding CloseCommand}" ToolTip="Close">
+                <Button.Content>
+                    <Rectangle Width="8" Height="8">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_close_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button.Content>
+            </Button>
+        </StatusBarItem>
+
+    </StatusBar>
+</UserControl>

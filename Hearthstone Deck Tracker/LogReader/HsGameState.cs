@@ -73,10 +73,10 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private int _maxBlockId;
 		public Block CurrentBlock { get; private set; }
 
-		public void BlockStart()
+		public void BlockStart(string type)
 		{
 			var blockId = _maxBlockId++;
-			CurrentBlock = CurrentBlock?.CreateChild(blockId) ?? new Block(null, blockId);
+			CurrentBlock = CurrentBlock?.CreateChild(blockId, type) ?? new Block(null, blockId, type);
 		}
 
 		public void BlockEnd()
@@ -92,14 +92,16 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public Block Parent { get; }
 		public IList<Block> Children { get; }
 		public int Id { get; }
+		public string Type { get; }
 
-		public Block(Block parent, int blockId)
+		public Block(Block parent, int blockId, string type)
 		{
 			Parent = parent;
 			Children = new List<Block>();
 			Id = blockId;
+			Type = type;
 		}
 
-		public Block CreateChild(int blockId) => new Block(this, blockId);
+		public Block CreateChild(int blockId, string type) => new Block(this, blockId, type);
 	}
 }

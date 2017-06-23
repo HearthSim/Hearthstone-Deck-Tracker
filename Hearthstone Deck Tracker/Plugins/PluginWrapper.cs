@@ -1,9 +1,12 @@
 #region
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -11,12 +14,13 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Plugins
 {
-	internal class PluginWrapper
+	public class PluginWrapper : INotifyPropertyChanged
 	{
 		private int _exceptions;
 		private int _unhandledExceptions;
 		private bool _isEnabled;
 		private bool _loaded;
+		private MenuItem _menuItem;
 
 		public PluginWrapper()
 		{
@@ -31,7 +35,16 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public string FileName { get; set; }
 		public IPlugin Plugin { get; set; }
-		private MenuItem MenuItem { get; set; }
+
+		public MenuItem MenuItem
+		{
+			get => _menuItem;
+			set
+			{
+				_menuItem = value; 
+				OnPropertyChanged();
+			}
+		}
 
 		public string Name => Plugin != null ? Plugin.Name : FileName;
 
@@ -63,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 					}
 				}
 				_isEnabled = value;
+				OnPropertyChanged();
 			}
 		}
 
@@ -77,11 +91,6 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				_loaded = true;
 				_exceptions = 0;
 				MenuItem = Plugin.MenuItem;
-				if(MenuItem != null)
-				{
-					Core.MainWindow.MenuItemPlugins.Items.Add(MenuItem);
-					Core.MainWindow.MenuItemPluginsEmpty.Visibility = Visibility.Collapsed;
-				}
 			}
 			catch(Exception ex)
 			{
@@ -149,14 +158,16 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				Log.Error(Name + ":\n" + ex);
 			}
 			_loaded = false;
-			if(MenuItem != null)
-			{
-				Core.MainWindow.MenuItemPlugins.Items.Remove(MenuItem);
-				if(Core.MainWindow.MenuItemPlugins.Items.Count == 1)
-					Core.MainWindow.MenuItemPluginsEmpty.Visibility = Visibility.Visible;
-			}
+			MenuItem = null;
 		}
 
 		internal bool UnhandledException() => ++_unhandledExceptions > PluginManager.MaxExceptions / 10;
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }

@@ -2,12 +2,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
@@ -50,9 +51,23 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? LocUtil.Get(LocActive, true) : LocUtil.Get(LocUse, true);
 
+		public Visibility HsReplayDataIndicatorVisibility => HsReplayDataManager.Decks.AvailableDecks.Contains(Deck.GetSelectedDeckVersion().ShortId) ? Visibility.Visible : Visibility.Collapsed;
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void SetLayout() => Content = Activator.CreateInstance(_deckPickerItem);
+
+		public string DataIndicatorTooltip => LocUtil.Get("DeckCharts_Tooltip_Uploaded");
+
+		public string LastTimePlayedTooltip => LocUtil.Get("DeckPicker_Deck_LastTimePlayed_Tooltip");
+
+		public string WildIndicatorTooltip => LocUtil.Get("DeckPicker_Deck_Wild_Tooltip");
+
+		public string ArchivedTooltip => LocUtil.Get("DeckPicker_Deck_Archived_Tooltip");
+
+		public string LegacyNoStatsNo => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_No");
+
+		public string LegacyNoStatsStats => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_Stats");
 
 		public void RefreshProperties()
 		{
@@ -60,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			OnPropertyChanged(nameof(FontWeightActiveDeck));
 			OnPropertyChanged(nameof(TextUseButton));
 			OnPropertyChanged(nameof(LastPlayed));
+			OnPropertyChanged(nameof(HsReplayDataIndicatorVisibility));
 			Deck.UpdateWildIndicatorVisibility();
 		}
 
@@ -85,23 +101,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public string TagList => Deck.TagList;
 
+		public int NumGames => Deck.GetRelevantGames().Count;
+
 		#endregion
-	}
-
-	public class Command : ICommand
-	{
-		private readonly Action _action;
-
-		public Command(Action action)
-		{
-			_action = action;
-		}
-
-		public bool CanExecute(object parameter) => _action != null;
-
-		public void Execute(object parameter) => _action.Invoke();
-#pragma warning disable 0067
-		public event EventHandler CanExecuteChanged;
-#pragma warning restore 0067
 	}
 }

@@ -9,19 +9,22 @@
                       xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
                       xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
                       xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility.Updating"
-                      xmlns:stats="clr-namespace:Hearthstone_Deck_Tracker.Stats"
-                      xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      xmlns:deckScreenshot="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot"
+                      xmlns:deckExport="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckExport"
+                      xmlns:mainWindowControls="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
+                      xmlns:deckHistory="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory"
+                      xmlns:deckEditor="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-                      Title="Hearthstone Deck Tracker" Height="603" Width="720"
-                      MinHeight="584" MinWidth="720"
+                      Title="Hearthstone Deck Tracker" Height="603" Width="1100"
+                      MinHeight="584" MinWidth="1100"
                       Closing="Window_Closing"
                       Icon="{StaticResource AppIcon}"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
                       PreviewKeyDown="MainWindow_OnPreviewKeyDown"
-                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" LocationChanged="MetroWindow_LocationChanged" SizeChanged="MetroWindow_SizeChanged">
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" SizeChanged="MetroWindow_SizeChanged">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -60,6 +63,16 @@
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:LocTextLower MainWindow_TitleBar_Options}" />
                 </StackPanel>
             </Button>
+            <Button Click="BtnDiscord_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="14" Height="16" Margin="0,2,0,0">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_discord}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="discord" />
+                </StackPanel>
+            </Button>
             <Button Click="BtnHelp_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="12" Height="14">
@@ -89,8 +102,8 @@
                 <local:Help x:Name="Help" />
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="{lex:Loc MainWindow_Flyout_OpponentDeck_Header}">
-                    <flyoutControls:DeckPanel x:Name="DeckFlyout" />
-             </controls:Flyout>
+                <flyoutControls:DeckPanel x:Name="DeckFlyout" />
+            </controls:Flyout>
             <controls:Flyout x:Name="FlyoutSortFilter" Header="{lex:Loc MainWindow_Flyout_SortFilter_Header}" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
                 <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
             </controls:Flyout>
@@ -116,6 +129,18 @@
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutDeckImporting" Header="{lex:Loc MainWindow_Flyout_DeckImporting_Header}" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls1:DeckImportingControl x:Name="DeckImportingFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckEditor" Header="{lex:Loc MainWindow_Flyout_DeckEditor_Header}" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <deckEditor:DeckEditorView x:Name="DeckEditorFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckScreenshot" Header="{lex:Loc MainWindow_Flyout_DeckScreenshot_Header}" Position="Right" Panel.ZIndex="1" Width="300">
+                <deckScreenshot:DeckScreenshotView x:Name="DeckScreenshotFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckExport" Header="{lex:Loc MainWindow_Flyout_DeckExport_Header}" Position="Right" Panel.ZIndex="1" Width="550">
+                <deckExport:DeckExportView x:Name="DeckExportFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckHistory" Header="{lex:Loc MainWindow_Flyout_VersionHistory_Header}" Position="Right" Panel.ZIndex="1" Width="245">
+                <deckHistory:DeckHistoryView x:Name="DeckHistoryFlyout"/>
             </controls:Flyout>
             <controls:Flyout x:Name="FlyoutStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls:Flyout.HeaderTemplate>
@@ -175,224 +200,15 @@
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Name="TopRow" Height="0" />
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Menu Grid.Row="1" Grid.ColumnSpan="3">
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_New}">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_layer_add}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Druid}" Click="BtnNewDeckDruid_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/druid.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Hunter}" Click="BtnNewDeckHunter_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/hunter.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Mage}" Click="BtnNewDeckMage_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/mage.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant"/>
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Priest}" Click="BtnNewDeckPriest_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/priest.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Paladin}" Click="BtnNewDeckPaladin_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/paladin.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Rogue}" Click="BtnNewDeckRogue_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/rogue.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Shaman}" Click="BtnNewDeckShaman_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/shaman.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Warlock}" Click="BtnNewDeckWarlock_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/warlock.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Warrior}" Click="BtnNewDeckWarrior_Click">
-                        <MenuItem.Icon>
-                            <Image Source="/HearthstoneDeckTracker;component/Resources/ClassIcons/Round/warrior.png" Width="24" Height="24" Margin="3,0,0,0" RenderOptions.BitmapScalingMode="Fant" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck}" Name="MenuItemEdit">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_layer}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditDeck}" Click="BtnEditDeck_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditName}" Click="BtnName_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditNotes}" Click="BtnNotes_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditTags}" Click="BtnTags_Click" />
-                    <MenuItem Name="MenuItemQuickSetTag" Header="{lex:LocTextUpper MainWindow_Menu_Deck_QuickSetTag}">
-                        <MenuItem.ItemTemplate>
-                            <DataTemplate>
-                                <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" />
-                            </DataTemplate>
-                        </MenuItem.ItemTemplate>
-                    </MenuItem>
-                    <MenuItem Name="MenuItemMoveDecktoArena" Header="{lex:LocTextUpper MainWindow_Menu_Deck_MoveToArena}" Click="BtnMoveDeckToArena_Click" Visibility="Collapsed"/>
-                    <MenuItem Name="MenuItemMoveDeckToConstructed" Header="{lex:LocTextUpper MainWindow_Menu_Deck_MoveToContrstucted}" Click="BtnMoveDeckToConstructed_Click" Visibility="Collapsed"/>
-                    <Separator Name="SeparatorDeck1"/>
-                    <MenuItem Name="MenuItemMissingCards" Header="{lex:LocTextUpper MainWindow_Menu_Deck_MissingCards}" ToolTip="this information is based on your last export" Click="MenuItemMissingDust_OnClick"/>
-                    <MenuItem Name="MenuItemUpdateDeck" Header="{lex:LocTextUpper MainWindow_Menu_Deck_UpdateWeb}" Click="BtnUpdateDeck_Click" />
-                    <MenuItem Name="MenuItemSetDeckUrl" Header="" Click="BtnSetDeckUrl_Click" />
-                    <MenuItem Name="MenuItemOpenUrl" Header="{lex:LocTextUpper MainWindow_Menu_Deck_OpenWebsite}" Click="BtnOpenDeckUrl_Click" />
-                    <Separator />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Archive}" Name="MenuItemArchive" Click="BtnArchiveDeck_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Unarchive}" Name="MenuItemUnarchive" Click="BtnUnarchiveDeck_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_DeleteDeck}" Click="BtnDeleteDeck_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Clone}">
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Clone_EntireDeck}" Click="BtnCloneDeck_Click" />
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Clone_Version}" Click="BtnCloneSelectedVersion_Click" />
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import}">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16"  Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_download}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Web}" Click="BtnWeb_Click" />
-                    <Separator/>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Constructed}" Click="BtnConstructed_Click" Name="MenuItemImportConstructed" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Arena}" Click="BtnArena_Click" Name="MenuItemImportArena" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Brawl}" Click="BtnBrawl_Click" Name="MenuItemImportBrawl" />
-                    <Separator/>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other}">
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_File}" Click="BtnFile_Click" />
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_Ids}" Click="BtnIdString_Click" />
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_Clipboard}" Click="BtnClipboardText_Click" />
-                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_LastGame}" Click="BtnLastGame_Click" />
-                    </MenuItem>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export}" Name="MenuItemExport">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_upload}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Name="MenuItemExportToHs" Header="{lex:LocTextUpper MainWindow_Menu_Export_Hearthstone}" Click="BtnExport_Click" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Hearthstone_FromWeb}" Click="BtnExportFromWeb_Click" ToolTip="This does not save the deck." />
-                    <MenuItem Name="MenuItemExportXml" Header="{lex:LocTextUpper MainWindow_Menu_Export_Xml}" Click="BtnSaveToFile_OnClick" />
-                    <MenuItem Name="MenuItemExportIds" Header="{lex:LocTextUpper MainWindow_Menu_Export_Ids}" Click="BtnClipboard_OnClick" />
-                    <MenuItem Name="MenuItemExportNames" Header="{lex:LocTextUpper MainWindow_Menu_Export_Clpiboard}" Click="BtnClipboardNames_OnClick" />
-                    <MenuItem Name="MenuItemExportScreenshot" Header="{lex:LocTextUpper MainWindow_Menu_Export_Screenshot}" Click="BtnScreenhot_Click" />
-                    <MenuItem Name="MenuItemExportScreenshotWithInfo" Header="{lex:LocTextUpper MainWindow_Menu_Export_Screenshot_Info}" Click="BtnScreenhotWithInfo_Click" />
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats}">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_graph_line}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats_Arena}"  Click="BtnArenaStats_Click"/>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats_Constructed}"  Click="BtnConstructedStats_Click"/>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays}" SubmenuOpened="MenuItemReplays_OnSubmenuOpened">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_chevron_right}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Latest}" Click="MenuItemLastGamesReplay_OnClick">
-                        <MenuItem.Resources>
-                            <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
-                        </MenuItem.Resources>
-                        <MenuItem.ItemsSource>
-                            <CompositeCollection>
-                                <CollectionContainer Collection="{Binding Source={x:Static stats:LastGames.Instance}, Path=Games}"/>
-                                <MenuItem Header="EMPTY..." IsEnabled="False" Visibility="{Binding Source={x:Static stats:LastGames.Instance}, Path=HasGames, Converter={StaticResource InverseBoolToVisibilityConverter}}"></MenuItem>
-                            </CompositeCollection>
-                        </MenuItem.ItemsSource>
-                        <MenuItem.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding}"/>
-                            </DataTemplate>
-                        </MenuItem.ItemTemplate>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Stats}" Click="MenuItemReplaySelectGame_OnClick" />
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_File}" Click="MenuItemReplayFromFile_OnClick"/>
-                    <MenuItem StaysOpenOnClick="True" Click="MenuItemHsReplay_OnClick">
-                        <MenuItem.Header>
-                            <Grid Margin="-10,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Separator Grid.Column="0"/>
-                                <TextBlock Grid.Column="1" Text="HSREPLAY.NET" IsEnabled="False" Margin="5,0"/>
-                                <Separator Grid.Column="2"/>
-                            </Grid>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_ClaimAccount}" Click="MenuItemReplayClaimAccount_OnClick" 
-                              Visibility="{Binding MenuItemReplayClaimAccountVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_MyAccount}" Click="MenuItemReplayMyAccount_OnClick"
-                              Visibility="{Binding MenuItemReplayMyAccountVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins}" Name="MenuItemPlugins">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16" Margin="0,0,-10,0">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_puzzle_round}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins_Empty}" IsEnabled="False" Name="MenuItemPluginsEmpty"/>
-                </MenuItem>
-            </Menu>
-            <Separator Grid.Row="1" Grid.ColumnSpan="4" Margin="0,29,0,0" Panel.ZIndex="2" />
-            <Grid Grid.Column="1" Grid.Row="2" Margin="-1,0,0,0" Width="255">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="10,6,10,-4" Grid.Row="0" Visibility="Visible" Style="{StaticResource AccentedSquareButtonStyle}">
+        <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top" Height="26" Margin="0,1,0,0" Visibility="Collapsed" />
+        <mainWindowControls:MainWindowMenuView x:Name="MainWindowMenu" DockPanel.Dock="Top"/>
+        <Separator DockPanel.Dock="Top" Panel.ZIndex="2" Margin="0,-1,0,0"/>
+        <DockPanel Margin="5">
+            <DockPanel Width="236" DockPanel.Dock="Right" Margin="5,0,0,0">
+                <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="0,0,0,5" Style="{StaticResource AccentedSquareButtonStyle}" DockPanel.Dock="Top">
                     <TextBlock Name="TextBlockBtnStartHearthstone" Text="{lex:LocTextUpper MainWindow_Button_StartHearthstone}" />
                 </Button>
-                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="1" Visibility="Collapsed">
+                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Visibility="Collapsed" Margin="0,0,0,5" DockPanel.Dock="Top">
                     <DockPanel>
                         <TextBlock Text="{lex:LocTextUpper MainWindow_Label_SelectedVersion}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
                         <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
@@ -404,28 +220,13 @@
                         </ComboBox>
                     </DockPanel>
                 </Border>
-                <Border Name="PanelCardCount" Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="10,6,10,-4" Grid.Row="1"  Visibility="Collapsed">
-                    <DockPanel>
-                        <controls1:DeckSetIcons x:Name="SetIcons" DockPanel.Dock="Right" Margin="0,0,2,0" Fill="{DynamicResource TextBrush}"/>
-                        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" >
-                            <TextBlock Text="{lex:LocTextUpper MainWindow_DeckBuilder_Label_Cards}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
-                            <TextBlock Name="TextBlockCardCount" VerticalAlignment="Center" Text="0 / 30" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
-                            <Rectangle Name="CardCountWarning" DockPanel.Dock="Left"  Width="16" Height="16" Visibility="Collapsed" Margin="3,0,0,0">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_warning}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </StackPanel>
-                    </DockPanel>
-                </Border>
-                <ListView x:Name="ListViewDeck" Grid.Row="2" Background="#696969"
+                <local:ManaCurve x:Name="ManaCurveMyDecks" Height="150" Margin="0,5,0,0" DockPanel.Dock="Bottom"/>
+                <ListView x:Name="ListViewDeck" Background="#696969"
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,0"
-                                    HorizontalAlignment="Center" Width="236" Height="auto"
-                                    MouseLeftButtonUp="ListViewDeck_MouseLeftButtonUp"
-                                    MouseRightButtonUp="ListViewDeck_MouseRightButtonUp">
+                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial"
+                                    HorizontalAlignment="Center" Width="236" Height="auto">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
@@ -444,10 +245,8 @@
                             </Setter>
                             <Setter Property="Margin" Value="-4,-3,-3,0"/>
                             <Style.Triggers>
-                                <Trigger Property="IsSelected"
-                                         Value="True">
-                                    <Setter Property="BorderBrush"
-                                            Value="Blue" />
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="BorderBrush" Value="Blue" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -458,251 +257,45 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <local:ManaCurve x:Name="ManaCurveMyDecks" Grid.Row="3" Height="150" Margin="0,6,0,6" />
-            </Grid>
-                <deckPicker:DeckPicker x:Name="DeckPickerList" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
-                              Grid.Row="2"
-                              Height="auto" Width="auto"
-                              OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged"
-                              OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
-            <Rectangle Name="DeckPickerListCover" HorizontalAlignment="Stretch" Margin="6,6,0,6" Grid.Column="0"
-                       Grid.Row="2" Panel.ZIndex="1"
-                       Height="auto" Width="auto" Fill="#7F000000" Visibility="Hidden" />
-            <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray" 
-                   FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" 
-                   Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
-            <Menu Name="MenuNewDeck" Grid.Column="2" Grid.Row="1" Visibility="Collapsed">
-                <MenuItem Header="{lex:LocTextUpper MainWindow_DeckBuilder_Button_Save}" Name="MenuItemSave" SubmenuOpened="MenuItem_OnSubmenuOpened">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_save}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Name="MenuItemSaveVersionCurrent" Click="MenuItemSaveVersionCurrent_OnClick" Header="{lex:LocText InitializeValue=MainWindow_DeckBuilder_Button_Save_Current, Prefix='v1.0 '}">
-                    </MenuItem>
-                    <MenuItem Name="MenuItemSaveVersionMinor" Header="v1.1" Click="MenuItemSaveVersionMinor_OnClick"/>
-                    <MenuItem Name="MenuItemSaveVersionMajor" Header="v2.0" Click="MenuItemSaveVersionMajor_OnClick"/>
-                    <MenuItem Name="MenuItemSaveAsNew" Header="{lex:LocTextUpper InitializeValue=MainWindow_DeckBuilder_Button_Save_New, Suffix=' (v1.0)'}" Click="MenuItemSaveAsNew_OnClick"/>
-                </MenuItem>
-                <MenuItem Header="{lex:LocTextUpper MainWindow_DeckBuilder_Button_Cancel}" Click="BtnCancelEdit_Click">
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_cancel}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem>
-                    <MenuItem.Header>
-                        <TextBlock VerticalAlignment="Center" Margin="-10,0,0,0" Text="{lex:LocTextUpper MainWindow_DeckBuilder_Button_Filter}" />
-                    </MenuItem.Header>
-                    <MenuItem.Icon>
-                        <Rectangle Width="16" Height="16">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_filter}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </MenuItem.Icon>
-                    <MenuItem Name="MenuFilterMana" Header="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Cost}">
-                        <RadioButton Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Cost_All}" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0"
-                                     FontSize="14" />
-                        <RadioButton Content="0" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="1" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="2" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="3" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="4" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="5" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="6" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="7" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="8" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Content="9+" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                    </MenuItem>
-                    <MenuItem Name="MenuFilterType" Header="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Type}">
-                        <RadioButton Name="RadioButtonTypeAll"  Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Type_All}" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonTypeClass" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Type_Class}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonTypeNeutral" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Type_Neutral}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                    </MenuItem>
-                    <MenuItem Name="MenuFilterSet" Header="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set}">
-                        <RadioButton Name="RadioButtonSet0" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_All}" IsChecked="True" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet2" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Basic}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet3" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Classic}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet4" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_HallOfFame}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet12" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Naxx}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet13" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Gvg}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet14" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Brm}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet15" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Tgt}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet20" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Loe}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet21" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Wotog}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet23" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Kara}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet25" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Msg}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                        <RadioButton Name="RadioButtonSet27" Content="{lex:LocTextUpper MainWindow_DeckBuilder_Filter_Set_Ungoro}" Click="BtnFilter_OnClick" Margin="-24,0,0,0" FontSize="14" />
-                    </MenuItem>
-                </MenuItem>
-            </Menu>
-            <Grid Grid.Column="2" Grid.Row="2" Name="GridNewDeck" Visibility="Collapsed" Width="492">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,6,0,0" Grid.Row="0"
-                            Width="236" Grid.ColumnSpan="2">
-                    <Border Width="107"
-            BorderThickness="1" DockPanel.Dock="Top" BorderBrush="{DynamicResource TextBrush}">
-                        <TextBox controls:TextBoxHelper.Watermark="{lex:LocText MainWindow_DeckBuilder_TextBox_Name_Watermark}" TextWrapping="NoWrap"
-                             TextChanged="TextBoxDeckName_TextChanged" Name="TextBoxDeckName" 
-                     controls:TextBoxHelper.IsWaitingForData="True"/>
-                    </Border>
-
-                    <Rectangle Name="DeckNameExistsWarning" Width="16" Height="16" ToolTip="{lex:LocText MainWindow_DeckBuilder_Warning_ToolTip_NameAlreadyExists}" Visibility="Collapsed" Margin="3,0,0,0">
-                        <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_warning}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <Border Width="125"
-            BorderThickness="1" DockPanel.Dock="Top" Margin="3,0,0,0" BorderBrush="{DynamicResource TextBrush}">
-                        <TextBox  controls:TextBoxHelper.Watermark="Search..." x:Name="TextBoxDBFilter"
-                             TextChanged="TextBoxDBFilter_TextChanged" TextWrapping="NoWrap" 
-                             PreviewKeyDown="TextBoxDBFilter_PreviewKeyDown"
-                     controls:TextBoxHelper.IsWaitingForData="True" />
-                    </Border>
-                </StackPanel>
-                <DockPanel Grid.Row="1" Grid.Column="0" Margin="0,2,0,6">
-                    <Border Name="BorderConstructedCardLimits" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" DockPanel.Dock="Bottom" Margin="0,2,0,0" HorizontalAlignment="Left" Width="236">
-                        <StackPanel>
-                            <CheckBox Name="CheckBoxIncludeWild" Content="{lex:Loc MainWindow_DeckBuilder_CheckBox_IncludeWild}" IsChecked="{Binding CardDbIncludeWildOnlyCards, Source={StaticResource ConfigWrapper}}" Margin="2" Checked="CheckBoxIncludeWild_Changed" Unchecked="CheckBoxIncludeWild_Changed"/>
-                            <CheckBox Name="CheckBoxConstructedCardLimits" Content="{lex:Loc MainWindow_DeckBuilder_CheckBox_CardLimit}" IsChecked="True" Margin="2"/>
-                            <Button Name="ButtonVersionHistory" Style="{StaticResource SquareButtonStyle}" Click="ButtonVersionHistory_OnClick">
-                                <TextBlock Name="TextBlockButtonVersionHistory" Text="{lex:LocTextUpper MainWindow_DeckBuilder_Button_VerionHistory}" />
-                            </Button>
-                        </StackPanel>
-                    </Border>
-                    <ListView x:Name="ListViewDB" Foreground="White" Background="#696969"
-                                    FontWeight="Bold" BorderThickness="1"
-                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial"
-                                    HorizontalAlignment="Left"
-                                    Width="236" KeyDown="ListViewDB_KeyDown"
-                                    MouseLeftButtonUp="ListViewDB_MouseLeftButtonUp">
-                        <ListView.Resources>
-                            <Style TargetType="GridViewColumnHeader">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </Style>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
-                                <Setter Property="ToolTipService.ShowDuration" Value="60000" />
-                                <Setter Property="ToolTipService.IsEnabled"
-                                    Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type windows:MainWindow}}, Path=ShowToolTip}" />
-                                <Setter Property="ToolTip">
-                                    <Setter.Value>
-                                        <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                            <local:CardToolTip />
-                                        </ToolTip>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Margin" Value="-4,-3,-3,0"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsSelected"
-                                         Value="True">
-                                        <Setter Property="BorderBrush"
-                                            Value="Blue" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListView.Resources>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <controls1:Card/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </DockPanel>
-                <DockPanel Name="PanelDeckHistory" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed">
-                    <Border Height="28" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Margin="0,6,6,-4" DockPanel.Dock="Top">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Name="DeckCurrentVersionHeader" Text="{lex:LocTextUpper MainWindow_DeckBuilder_History_Header}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
-                            <TextBlock x:Name="DeckCurrentVersion" Text="v1.0" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
-                        </StackPanel>
-                    </Border>
-                    <ScrollViewer Margin="0,6,6,6" BorderThickness="1" Background="#696969">
-                        <StackPanel x:Name="DeckHistoryPanel" 
-                                    Orientation="Vertical"
-                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.CanContentScroll="True"
-                                    HorizontalAlignment="Center" Height="auto" Width="220"  Margin="0,0,0,0"
-                />
-                    </ScrollViewer>
-                </DockPanel>
-            </Grid>
-            <StatusBar Name="StatusBarNews"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Height="26" Margin="0,1,0,0" Visibility="Collapsed">
-                <StatusBar.ItemsPanel>
-                    <ItemsPanelTemplate>
+            </DockPanel>
+            <DockPanel Name="MyGamesPanel" Width="380" DockPanel.Dock="Right" Margin="5,0,0,0">
+                <GroupBox Header="{lex:LocTextUpper MainWindow_Header_GlobalDeckStatistics}" DockPanel.Dock="Top" Margin="0,0,0,0">
+                    <mainWindowControls:HsReplayDeckInfoView x:Name="HsReplayDeckInfo"/>
+                </GroupBox>
+                <GroupBox Margin="0,5,0,0" DockPanel.Dock="Top">
+                    <GroupBox.Header>
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="30"/>
-                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{lex:LocTextUpper MainWindow_Header_MyGames}" Foreground="White"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" MouseDown="MyGamesFilters_OnClick">
+                                <StackPanel.Style>
+                                    <Style>
+                                        <Setter Property="StackPanel.Opacity" Value="0.7"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="StackPanel.IsMouseOver" Value="True">
+                                                <Setter Property="StackPanel.Opacity" Value="0.9"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <TextBlock Text="{lex:LocTextUpper MainWindow_MyGames_HasActiveFilters}" Foreground="White" DockPanel.Dock="Right" Margin="8,0" Opacity="1"
+                                    Visibility="{Binding ActiveFiltersWarningVisibility, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}"/>
+                                <Rectangle Width="16" Height="16" DockPanel.Dock="Right" Opacity="0.8">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource appbar_settings}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </StackPanel>
                         </Grid>
-                    </ItemsPanelTemplate>
-                </StatusBar.ItemsPanel>
-                <StatusBarItem Content="{lex:LocTextUpper MainWindow_NewsBar_Header}" Grid.Column="0"/>
-                <StatusBarItem Name="StatusBarItemNewsIndex" Content="(0/0)" Grid.Column="1"/>
-                <StatusBarItem Grid.Column="2">
-                    <controls:TransitioningContentControl Name="NewsContentControl" Transition="Right"/>
-                </StatusBarItem>
-                <StatusBarItem Grid.Column="3">
-                    <Button Name="BtnClosePrevious" VerticalAlignment="Center" Height="24" Width="24" 
-                            Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" 
-                            BorderThickness="0" Click="BtnNewsPrevious_OnClick"  ToolTip="Previous">
-                        <Button.Content>
-                            <Rectangle Width="8" Height="8">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chevron_left_white}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button.Content>
-                    </Button>
-                </StatusBarItem>
-                <StatusBarItem Grid.Column="4">
-                    <Button Name="BtnNewsNext" VerticalAlignment="Center" Height="24" Width="24" 
-                            Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" 
-                            BorderThickness="0" Click="BtnNewsNext_OnClick"  ToolTip="Next">
-                        <Button.Content>
-                            <Rectangle Width="8" Height="8">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_chevron_right_white}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button.Content>
-                    </Button>
-                </StatusBarItem>
-                <StatusBarItem Grid.Column="5">
-                    <Button Name="BtnCloseNews" VerticalAlignment="Center" Height="24" Width="24" 
-                            Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent" BorderThickness="0" 
-                            Click="BtnCloseNews_OnClick" ToolTip="Close">
-                        <Button.Content>
-                            <Rectangle Width="8" Height="8">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{StaticResource appbar_close_white}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button.Content>
-                    </Button>
-                </StatusBarItem>
-                
-            </StatusBar>
-        </Grid>
+                    </GroupBox.Header>
+                    <mainWindowControls:DeckChartsView x:Name="DeckCharts" DockPanel.Dock="Top"/>
+                </GroupBox>
+            </DockPanel>
+            <Grid>
+                <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
+                <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray" 
+                       FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
+            </Grid>
+        </DockPanel>
     </DockPanel>
 </controls:MetroWindow>

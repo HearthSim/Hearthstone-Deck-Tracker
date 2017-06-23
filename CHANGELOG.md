@@ -1,3 +1,61 @@
+## __Release v1.3.5 - 2017-06-03__
+
+__Fixes__:
+- Fixed an issue where the export deck dialog would not respect the selected deck version.
+- Fixed an issue where editing and saving a deck as the current version would not update it in the UI.
+- Fixed an issue where Mirror Entity would be grayed out while the opponent has a full board.
+- Fixed several crashes.
+
+__Changes__:
+- Added an option to hide the new "my games" panel: `options (advanced) > tracker > general`
+
+
+## __Release v1.3.2 - 2017-06-02__
+
+__Updated for 8.2.0.19506__
+- Fixed a crash when starting/exiting a match.
+- Now using Hearthstones new deck code system for importing and exporting decks.
+
+
+## __Release v1.3.1 - 2017-06-01__
+- Fixed a crash on startup if the legacy deck style was selected.
+
+
+## __Release v1.3.0 - 2017-06-01__
+
+__New__:
+- Added more stats, recent games, as well as global stats (if available) for the selected deck.
+- Added "Most Played" as a deck sorting option.
+
+__Changes__:
+- Greatly improved the deck screenshot dialog.
+  - Deck images can now also be copied to the clipboard.
+- Deck editor has been moved to it's own flyout.
+- Deck version history has been moved to it's own flyout and can now be accessed via the `DECK` menu item or the decks context menu.
+- Importing decks from a list of card names now also gives a language selection option if english is the active language but an alternative language is selected.
+
+__Fixes__:
+- Fixed an issue where enchantment cards would be tracked in some cases.
+
+
+## __Release v1.2.5 - 2017-05-02__
+- Fixed several crashes.
+
+
+## __Release v1.2.4 - 2017-05-01__
+
+__New__:
+- Added a simple way on decks to open the corresponding HSReplay.net deck page.
+- Added Brazilian Portuguese translation.
+
+__Changes__:
+- Exporting decks to Hearthstone will now warn you about missing cards before starting the export process.
+- Wild deck are now indicated with the proper icon (instead of the 'S' on standard decks).
+
+__Fixes__:
+- Fixed an issue where HDT would have trouble picking up the correct Hearthstone path.
+
+
 ## __Release v1.2.3 - 2017-04-12__
 
 __Changes__:

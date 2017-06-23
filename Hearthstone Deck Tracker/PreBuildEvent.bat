@@ -9,11 +9,11 @@ set SkipResourceCopy=%5
 if "%SkipGitSync%"=="" (set SkipGitSync=0)
 if "%SkipResourceCopy%"=="" (set SkipResourceCopy=0)
 
-echo SolutionDir=%SolutionDir%
-echo ProjectDir=%ProjectDir%
-echo TargetDir=%TargetDir%
-echo SkipGitSync=%SkipGitSync%
-echo SkipResourceCopy=%SkipResourceCopy%
+echo SolutionDir="%SolutionDir%"
+echo ProjectDir="%ProjectDir%"
+echo TargetDir="%TargetDir%""
+echo SkipGitSync="%SkipGitSync%"
+echo SkipResourceCopy="%SkipResourceCopy%"
 
 echo.
 echo.
@@ -22,57 +22,57 @@ if %SkipGitSync% equ 1 if %SkipResourceCopy% equ 1 (
 	echo ** Skipping GitSync and Resource Copy
 	echo.
 	goto EndLabel
-) 
+)
 
 if %SkipGitSync% equ 1 (
-	echo ** Skipping GitSync  
+	echo ** Skipping GitSync
 	echo.
-	goto ResourceCopyLabel 
+	goto ResourceCopyLabel
 )
 
-if exist %SolutionDir%HearthDb (
-  echo Updating %SolutionDir%HearthDb to origin/master
-  git -C %SolutionDir%HearthDb fetch
-  git -C %SolutionDir%HearthDb reset --hard origin/master
+if exist "%SolutionDir%HearthDb" (
+  echo Updating "%SolutionDir%HearthDb" to origin/master
+  git -C "%SolutionDir%HearthDb" fetch
+  git -C "%SolutionDir%HearthDb" reset --hard origin/master
 ) else (
-  git clone --depth 1 https://github.com/HearthSim/HearthDb.git %SolutionDir%HearthDb
-)
-
-echo.
-
-if exist %SolutionDir%HearthMirror (
-  echo Updating %SolutionDir%HearthMirror to origin/master
-  git -C %SolutionDir%HearthMirror fetch
-  git -C %SolutionDir%HearthMirror reset --hard origin/master
-) else (
-  git clone --depth 1 https://github.com/HearthSim/HearthMirror.git %SolutionDir%HearthMirror
+  git clone --depth 1 https://github.com/HearthSim/HearthDb.git "%SolutionDir%HearthDb"
 )
 
 echo.
 
-if exist %SolutionDir%HSReplay-Api (
-  echo Updating %SolutionDir%HSReplay-Api to origin/master
-  git -C %SolutionDir%HSReplay-Api fetch
-  git -C %SolutionDir%HSReplay-Api reset --hard origin/master
+if exist "%SolutionDir%HearthMirror" (
+  echo Updating "%SolutionDir%HearthMirror" to origin/master
+  git -C "%SolutionDir%HearthMirror" fetch
+  git -C "%SolutionDir%HearthMirror" reset --hard origin/master
 ) else (
-  git clone --depth 1 https://github.com/HearthSim/HSReplay-API-Client.git %SolutionDir%HSReplay-Api
+  git clone --depth 1 https://github.com/HearthSim/HearthMirror.git "%SolutionDir%HearthMirror"
 )
 
 echo.
 
-if exist %SolutionDir%HDT-Localization (
-  echo Updating %SolutionDir%HDT-Localization to origin/master
-  git -C %SolutionDir%HDT-Localization fetch
-  git -C %SolutionDir%HDT-Localization reset --hard origin/master
+if exist "%SolutionDir%HSReplay-Api" (
+  echo Updating "%SolutionDir%HSReplay"-Api to origin/master
+  git -C "%SolutionDir%HSReplay-Api" fetch
+  git -C "%SolutionDir%HSReplay-Api" reset --hard origin/master
 ) else (
-  git clone --depth 1 https://github.com/HearthSim/HDT-Localization.git %SolutionDir%HDT-Localization
+  git clone --depth 1 https://github.com/HearthSim/HSReplay-API-Client.git "%SolutionDir%HSReplay-Api"
+)
+
+echo.
+
+if exist "%SolutionDir%HDT-Localization" (
+  echo Updating "%SolutionDir%HDT-Localization" to origin/master
+  git -C "%SolutionDir%HDT-Localization" fetch
+  git -C "%SolutionDir%HDT-Localization" reset --hard origin/master
+) else (
+  git clone --depth 1 https://github.com/HearthSim/HDT-Localization.git "%SolutionDir%HDT-Localization"
 )
 
 echo.
 
 :ResourceCopyLabel
 
-if %SkipResourceCopy% equ 1 ( 
+if %SkipResourceCopy% equ 1 (
   echo ** Skipping Resource Copy
   echo.
   goto EndLabel
@@ -111,11 +111,8 @@ if exist "%ProjectDir%Images\Themes" if exist "%TargetDir%Images\Themes" (
 if exist "%SolutionDir%CHANGELOG.md" if exist "%ProjectDir%Resources" (
 	echo Copying "%SolutionDir%CHANGELOG.md" to "%ProjectDir%Resources"
 	xcopy /Y /Q "%SolutionDir%CHANGELOG.md" "%ProjectDir%Resources"
-) 
+)
 
 :EndLabel
 
 echo Completed.
-
-
-

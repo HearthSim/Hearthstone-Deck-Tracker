@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				else
 				{
 					var selectedId = GetSelectedDeckId(game.CurrentMode);
-					game.CurrentSelectedDeck = selectedId > 0 ? Reflection.GetDecks().FirstOrDefault(deck => deck.Id == selectedId) : null;
+					game.CurrentSelectedDeck = selectedId > 0 ? Reflection.GetDecks()?.FirstOrDefault(deck => deck.Id == selectedId) : null;
 				}
 				if(!Config.Instance.AutoDeckDetection)
 					return;
