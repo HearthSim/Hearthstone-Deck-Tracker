@@ -12,7 +12,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
-        <Border Margin="5,5,0,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+        <Border Margin="5,5,-5,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
             <DockPanel>
                 <Border DockPanel.Dock="Bottom" Margin="-1,0,-1,-1" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <CheckBox Content="{lex:LocText Options_CheckBoxAdvanced}" Margin="5" IsChecked="{Binding Show, Source={x:Static options:AdvancedOptions.Instance}}"/>
@@ -45,7 +45,7 @@
         </Border>
         <GroupBox x:Name="OptionsRightDynamicHeader">
             <controls:TouchEnabledScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0"/>
+                <ContentControl Name="ContentControlOptions" Margin="-5,0,0,0"/>
             </controls:TouchEnabledScrollViewer>
         </GroupBox>
     </DockPanel>

@@ -164,7 +164,7 @@
               ItemsSource="{Binding DisplayedDecks, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged"
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick" PreviewMouseRightButtonUp="ListViewDecks_OnPreviewMouseRightButtonUp">
-        <ListView.ContextMenu>
+        <controls:TouchEnabledListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">
                 <MenuItem Name="MenuItemExportDeck" Header="{lex:LocTextUpper DeckPicker_ContextMenu_Export}" Click="BtnExportDeck_Click" />
                 <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Screenshot}" Click="BtnScreenshotCards_Click"/>
@@ -202,7 +202,7 @@
                     <MenuItem Header="{lex:LocTextUpper DeckPicker_ContextMenu_Clone_Version}" Click="BtnCloneSelectedVersion_Click" />
                 </MenuItem>
             </ContextMenu>
-        </ListView.ContextMenu>
+        </controls:TouchEnabledListView.ContextMenu>
         <ListView.Resources>
             <Style TargetType="GridViewColumnHeader">
                 <Setter Property="Visibility" Value="Collapsed" />

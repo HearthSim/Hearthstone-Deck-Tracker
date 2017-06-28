@@ -68,7 +68,7 @@
                 </TextBox>
                 <!-- This control needs virtualization don't change ScrollViewer.CanContentScroll="True" -->
                 <controls:TouchEnabledListView ItemsSource="{Binding CardDatabase}" Style="{DynamicResource VirtualisedMetroListView}"
-                    SelectedIndex="{Binding SelectedDbIndex}" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
+                    SelectedIndex="{Binding SelectedDbIndex}" ScrollViewer.VerticalScrollBarVisibility="Visible" CanContentScroll="True"
                     Margin="0,5,0,0" BorderThickness="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -82,9 +82,9 @@
                             </controls:Card>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                    <ListView.InputBindings>
+                    <controls:TouchEnabledListView.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding AddCardByIndexCommand}" CommandParameter="{Binding SelectedDbIndex}"/>
-                    </ListView.InputBindings>
+                    </controls:TouchEnabledListView.InputBindings>
                 </controls:TouchEnabledListView>
             </DockPanel>
         </GroupBox>

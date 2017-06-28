@@ -225,8 +225,7 @@
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    FontFamily="Arial"
-                                    HorizontalAlignment="Center" Width="236" Height="auto">
+                                    HorizontalAlignment="Center" FontFamily="Arial" Width="236" Height="auto">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
