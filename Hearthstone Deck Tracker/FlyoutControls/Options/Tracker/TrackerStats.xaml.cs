@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxReplays.IsChecked = Config.Instance.RecordReplays;
 			ComboboxDisplayedStats.ItemsSource = Enum.GetValues(typeof(DisplayedStats));
 			ComboboxDisplayedMode.ItemsSource = Enum.GetValues(typeof(GameMode));
-			ComboboxDisplayedTimeFrame.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));
+			ComboboxDisplayedTimeFrame.ItemsSource = GetTimeFrames();
 			ComboboxDisplayedStats.SelectedItem = Config.Instance.DisplayedStats;
 			ComboboxDisplayedMode.SelectedItem = Config.Instance.DisplayedMode;
 			ComboboxDisplayedTimeFrame.SelectedItem = Config.Instance.DisplayedTimeFrame;
@@ -53,6 +54,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			DatePickerCustomTimeFrame.SelectedDate = Config.Instance.CustomDisplayedTimeFrame;
 			_initialized = true;
 		}
+
+		private IEnumerable<DisplayedTimeFrame> GetTimeFrames() => Enum.GetValues(typeof(DisplayedTimeFrame))
+			.OfType<DisplayedTimeFrame>().Where(x => x != DisplayedTimeFrame.CustomSeason);
 
 		private void CheckboxRecordRanked_Checked(object sender, RoutedEventArgs e)
 		{
