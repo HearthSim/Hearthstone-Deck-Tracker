@@ -226,7 +226,7 @@
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                                     HorizontalAlignment="Center" FontFamily="Arial" Width="236" Height="auto">
-                    <ListView.Resources>
+                    <controls1:TouchEnabledListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
@@ -249,12 +249,12 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ListView.Resources>
-                    <ListView.ItemTemplate>
+                    </controls1:TouchEnabledListView.Resources>
+                    <controls1:TouchEnabledListView.ItemTemplate>
                         <DataTemplate>
                             <controls1:Card/>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
+                    </controls1:TouchEnabledListView.ItemTemplate>
                 </controls1:TouchEnabledListView>
             </DockPanel>
             <DockPanel Name="MyGamesPanel" Width="380" DockPanel.Dock="Right" Margin="5,0,0,0">

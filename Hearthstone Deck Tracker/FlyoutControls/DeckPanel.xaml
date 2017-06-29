@@ -20,7 +20,7 @@
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
                   HorizontalAlignment="Center" Width="235" Height="auto">
-            <ListView.Resources>
+            <controls:TouchEnabledListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
@@ -44,12 +44,12 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-            </ListView.Resources>
-            <ListView.ItemTemplate>
+            </controls:TouchEnabledListView.Resources>
+            <controls:TouchEnabledListView.ItemTemplate>
                 <DataTemplate>
                     <controls:Card />
                 </DataTemplate>
-            </ListView.ItemTemplate>
+            </controls:TouchEnabledListView.ItemTemplate>
         </controls:TouchEnabledListView>
     </DockPanel>
 </UserControl>
