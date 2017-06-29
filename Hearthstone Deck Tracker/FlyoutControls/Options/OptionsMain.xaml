@@ -45,7 +45,7 @@
         </Border>
         <GroupBox x:Name="OptionsRightDynamicHeader">
             <controls:TouchEnabledScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ContentControl Name="ContentControlOptions" Margin="-5,0,0,0"/>
+                <ContentControl Name="ContentControlOptions"/>
             </controls:TouchEnabledScrollViewer>
         </GroupBox>
     </DockPanel>
