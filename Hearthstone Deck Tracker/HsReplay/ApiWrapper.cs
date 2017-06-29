@@ -146,13 +146,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		internal static async Task<DeckWinrateData> GetDeckWinrates(string deckId)
+		internal static async Task<DeckWinrateData> GetDeckWinrates(string deckId, bool wild)
 		{
 			Log.Info("Fetching winrates for deck " + deckId);
 			try
 			{
 				var token = await GetUploadToken();
-				var data = await Client.GetDeckWinrates(deckId, token);
+				var data = await Client.GetDeckWinrates(deckId, wild, token);
 				if(data == null)
 					return null;
 

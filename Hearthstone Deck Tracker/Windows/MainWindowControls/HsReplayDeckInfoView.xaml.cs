@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			if(!HasHsReplayData)
 				return;
 			Loading = true;
-			var data = await HsReplayDataManager.Winrates.Get(ShortId);
+			var data = await HsReplayDataManager.Winrates.Get(ShortId, _deck.IsWildDeck);
 			MatchupData = new MatchupData(data);
 			Loading = false;
 		}
