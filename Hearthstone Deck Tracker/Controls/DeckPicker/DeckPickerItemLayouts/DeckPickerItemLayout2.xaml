@@ -23,7 +23,7 @@
                     </Rectangle.Fill>
                 </Rectangle>
             </Grid>
-            <Viewbox DockPanel.Dock="Right" Width="70" StretchDirection="DownOnly" Stretch="Fill"
+            <Viewbox DockPanel.Dock="Right" MinWidth="70" StretchDirection="DownOnly" Stretch="Fill"
                      HorizontalAlignment="Right" Margin="0,0,2,0">
                 <StackPanel>
                     <StackPanel.Resources>
