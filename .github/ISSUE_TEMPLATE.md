@@ -15,5 +15,5 @@ Describe the actual behavior here
 - Step 2
 
 ### Log/Screenshots
-If applicable, provide a log of the session where the problem occoured.  
+If applicable, provide a log of the session where the problem occurred.  
 See here: https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Reporting-Issues

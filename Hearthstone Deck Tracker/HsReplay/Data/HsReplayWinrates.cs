@@ -15,14 +15,14 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Data
 		{
 		}
 
-		public async Task<DeckWinrateData> Get(string shortId)
+		public async Task<DeckWinrateData> Get(string shortId, bool wild)
 		{
 			var data = await GetData();
 			if(data.TryGetValue(shortId, out var deck) && !deck.IsStale)
 				return deck;
 			if(!_cleaned)
 				Cleanup();
-			deck = await ApiWrapper.GetDeckWinrates(shortId) ?? NoDataFallback;
+			deck = await ApiWrapper.GetDeckWinrates(shortId, wild) ?? NoDataFallback;
 			_data[shortId] = deck;
 			await WriteToDisk(data);
 			return deck;

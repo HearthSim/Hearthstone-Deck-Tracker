@@ -79,7 +79,7 @@
                     </DockPanel>
                 </DockPanel>
                 <DockPanel Margin="0,-2,0,0" Height="19">
-                    <Viewbox DockPanel.Dock="Left" Width="70" StretchDirection="DownOnly" Stretch="Fill"
+                    <Viewbox DockPanel.Dock="Left" MinWidth="70" StretchDirection="DownOnly" Stretch="Fill"
                              HorizontalAlignment="Left">
                         <TextBlock Text="{Binding StatsString}" HorizontalAlignment="Left"
                                    Foreground="{DynamicResource GrayTextColorBrush}" FontSize="14" />

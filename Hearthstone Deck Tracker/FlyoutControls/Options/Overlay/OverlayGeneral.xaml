@@ -46,16 +46,16 @@
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxHideOpponentCardMarks_Checked"
                               Unchecked="CheckboxHideOpponentCardMarks_Unchecked"
-                              HorizontalAlignment="Left" Width="200" />
+                              HorizontalAlignment="Left" />
             <CheckBox x:Name="CheckboxHideSecrets" Content="{lex:Loc Options_Overlay_General_CheckBox_HideSecrets}"
-                              HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0"
+                              HorizontalAlignment="Left"
                               VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked"
                               Unchecked="CheckboxHideSecrets_Unchecked" Margin="10,5,0,0" />
             <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="{lex:Loc Options_Overlay_General_CheckBox_CardTooltips}"
                               Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxOverlayCardToolTips_Checked"
                               Unchecked="CheckboxOverlayCardToolTips_Unchecked"
-                              HorizontalAlignment="Left" Width="200" />
+                              HorizontalAlignment="Left" />
             <CheckBox x:Name="CheckboxOverlaySecretToolTipsOnly"
                               Content="{lex:Loc Options_Overlay_General_CheckBox_SecretsOnly}" Margin="30,5,0,0"
                               VerticalAlignment="Top"
@@ -101,7 +101,7 @@
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
                               Content="{lex:Loc Options_Overlay_General_CheckBox_NoResetAfterGame}" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top" Width="200"
+                              Margin="10,5,0,0" VerticalAlignment="Top"
                               Checked="CheckboxKeepDecksVisible_Checked"
                               Unchecked="CheckboxKeepDecksVisible_Unchecked" />
             <CheckBox x:Name="CheckboxAlwaysShowGoldProgress"
