@@ -70,7 +70,7 @@
                                 ValueChanged="SliderSecretOpacity_ValueChanged" />
                     </DockPanel>
                     <DockPanel Margin="5,5,5,0">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Cthun}" Width="155"/>
+                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Cthun}" />
                         <ComboBox x:Name="ComboBoxCthun" HorizontalAlignment="Right"
                                   Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboBoxCthun_SelectionChanged">
@@ -82,7 +82,7 @@
                         </ComboBox>
                     </DockPanel>
                     <DockPanel Margin="5,5,5,0">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Yogg}" Width="155"/>
+                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Yogg}" />
                         <ComboBox x:Name="ComboBoxSpells" HorizontalAlignment="Right"
                                   Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboBoxSpells_SelectionChanged">
@@ -94,7 +94,7 @@
                         </ComboBox>
                     </DockPanel>
                     <DockPanel Margin="5,5,5,0">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Jade}" Width="155"/>
+                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Jade}" />
                         <ComboBox x:Name="ComboBoxJade" HorizontalAlignment="Right"
                                   Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
                                   SelectionChanged="ComboBoxJade_SelectionChanged">
