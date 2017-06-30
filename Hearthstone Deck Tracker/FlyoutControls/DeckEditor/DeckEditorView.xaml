@@ -66,8 +66,9 @@
                         <KeyBinding Key="Up" Command="{Binding MoveSelectionCommand}" CommandParameter="-1"/>
                     </TextBox.InputBindings>
                 </TextBox>
-                <ListView ItemsSource="{Binding CardDatabase}" Style="{DynamicResource VirtualisedMetroListView}"
-                    SelectedIndex="{Binding SelectedDbIndex}" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                <!-- This control needs virtualization don't change ScrollViewer.CanContentScroll="True" -->
+                <controls:TouchEnabledListView ItemsSource="{Binding CardDatabase}" Style="{DynamicResource VirtualisedMetroListView}"
+                    SelectedIndex="{Binding SelectedDbIndex}" ScrollViewer.VerticalScrollBarVisibility="Visible" CanContentScroll="True"
                     Margin="0,5,0,0" BorderThickness="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -81,10 +82,10 @@
                             </controls:Card>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                    <ListView.InputBindings>
+                    <controls:TouchEnabledListView.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding AddCardByIndexCommand}" CommandParameter="{Binding SelectedDbIndex}"/>
-                    </ListView.InputBindings>
-                </ListView>
+                    </controls:TouchEnabledListView.InputBindings>
+                </controls:TouchEnabledListView>
             </DockPanel>
         </GroupBox>
         <GroupBox Header="{lex:LocTextUpper MainWindow_DeckBuilder_Header_Deck}" Margin="10,5,5,5">
@@ -99,7 +100,7 @@
                     </DockPanel>
                 </Border>
                 <hearthstoneDeckTracker:ManaCurve x:Name="ManaCurve" DockPanel.Dock="Bottom" Height="150" />
-                <ListView ItemsSource="{Binding Cards}" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,5" BorderThickness="0">
+                <controls:TouchEnabledListView ItemsSource="{Binding Cards}" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,5" BorderThickness="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <controls:Card>
@@ -116,7 +117,7 @@
                             </controls:Card>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ListView>
+                </controls:TouchEnabledListView>
             </DockPanel>
         </GroupBox>
         <StackPanel Margin="5,0,0,0">

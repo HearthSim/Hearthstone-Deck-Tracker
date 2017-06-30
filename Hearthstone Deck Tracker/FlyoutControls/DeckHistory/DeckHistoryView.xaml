@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:deckHistory="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.DataContext>
         <deckHistory:DeckHistoryViewModel/>
     </UserControl.DataContext>
     <DockPanel>
-        <ScrollViewer Margin="6" BorderThickness="1" VerticalScrollBarVisibility="Auto">
+        <controls:TouchEnabledScrollViewer Margin="6" BorderThickness="1" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding DeckVersions}" Width="220">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -24,6 +25,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </ScrollViewer>
+        </controls:TouchEnabledScrollViewer>
     </DockPanel>
 </UserControl>

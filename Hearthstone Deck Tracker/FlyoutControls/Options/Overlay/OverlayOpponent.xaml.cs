@@ -28,7 +28,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			InitializeComponent();
 		}
 
-
 		public double OpponentScaling
 		{
 			get { return Config.Instance.OverlayOpponentScaling; }

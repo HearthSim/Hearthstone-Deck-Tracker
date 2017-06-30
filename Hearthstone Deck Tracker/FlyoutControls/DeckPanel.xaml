@@ -1,4 +1,4 @@
-<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.DeckPanel"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.DeckPanel"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,14 +13,14 @@
              d:DesignHeight="300" d:DesignWidth="245">
     <DockPanel>
         <Button Name="ButtonImport" DockPanel.Dock="Bottom" Content="{lex:Loc DeckPanel_Button_Import}" Click="ButtonImport_OnClick" Margin="5"/>
-        <ListView x:Name="ListViewDeck"
+        <controls:TouchEnabledListView x:Name="ListViewDeck"
                   Background="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"
                   Foreground="White" FontWeight="Bold" BorderThickness="1"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  ScrollViewer.CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
+                  CanContentScroll="True" FontFamily="Arial" Margin="0,6,0,6"
                   HorizontalAlignment="Center" Width="235" Height="auto">
-            <ListView.Resources>
+            <controls:TouchEnabledListView.Resources>
                 <Style TargetType="GridViewColumnHeader">
                     <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
@@ -44,12 +44,12 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-            </ListView.Resources>
-            <ListView.ItemTemplate>
+            </controls:TouchEnabledListView.Resources>
+            <controls:TouchEnabledListView.ItemTemplate>
                 <DataTemplate>
                     <controls:Card />
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </controls:TouchEnabledListView.ItemTemplate>
+        </controls:TouchEnabledListView>
     </DockPanel>
 </UserControl>

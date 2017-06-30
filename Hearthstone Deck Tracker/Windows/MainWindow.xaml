@@ -1,4 +1,4 @@
-<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.MainWindow"
+﻿<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.MainWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -221,13 +221,12 @@
                     </DockPanel>
                 </Border>
                 <local:ManaCurve x:Name="ManaCurveMyDecks" Height="150" Margin="0,5,0,0" DockPanel.Dock="Bottom"/>
-                <ListView x:Name="ListViewDeck" Background="#696969"
+                <controls1:TouchEnabledListView x:Name="ListViewDeck" Background="#696969"
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial"
-                                    HorizontalAlignment="Center" Width="236" Height="auto">
-                    <ListView.Resources>
+                                    HorizontalAlignment="Center" FontFamily="Arial" Width="236" Height="auto">
+                    <controls1:TouchEnabledListView.Resources>
                         <Style TargetType="GridViewColumnHeader">
                             <Setter Property="Visibility" Value="Collapsed" />
                         </Style>
@@ -250,13 +249,13 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ListView.Resources>
-                    <ListView.ItemTemplate>
+                    </controls1:TouchEnabledListView.Resources>
+                    <controls1:TouchEnabledListView.ItemTemplate>
                         <DataTemplate>
                             <controls1:Card/>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </controls1:TouchEnabledListView.ItemTemplate>
+                </controls1:TouchEnabledListView>
             </DockPanel>
             <DockPanel Name="MyGamesPanel" Width="380" DockPanel.Dock="Right" Margin="5,0,0,0">
                 <GroupBox Header="{lex:LocTextUpper MainWindow_Header_GlobalDeckStatistics}" DockPanel.Dock="Top" Margin="0,0,0,0">

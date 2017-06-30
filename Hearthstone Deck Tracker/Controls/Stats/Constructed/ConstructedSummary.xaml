@@ -7,12 +7,13 @@
              xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
              xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="1600" d:DesignWidth="1200">
-    <ScrollViewer Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+    <controls:TouchEnabledScrollViewer x:Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <DockPanel>
             <Expander Name="ExpanderCharts" IsExpanded="{Binding ConstructedSummaryChartsExpanded, Source={StaticResource ConfigWrapper}}" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
                 <Expander.Header>
@@ -21,7 +22,7 @@
                         <CheckBox Name="CheckBoxShowLegends" Content="{lex:Loc Stats_Constructed_Summary_CheckBox_ShowLegends}" Margin="20,0,0,0" Foreground="White" IsChecked="{Binding Path=ArenaStatsShowLegends, Source={StaticResource ConfigWrapper}}"/>
                     </StackPanel>
                 </Expander.Header>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                <controls:TouchEnabledScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" ScrollViewer.PanningMode="HorizontalOnly">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -53,10 +54,10 @@
                             </metroChart:DoughnutChart>
                         </DockPanel>
                     </Grid>
-                </ScrollViewer>
+                </controls:TouchEnabledScrollViewer>
             </Expander>
             <GroupBox Header="{lex:Loc Stats_Constructed_Summary_Label_Highlights}" DockPanel.Dock="Top" PreviewMouseWheel="ForwardScrollEvent">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <controls:TouchEnabledScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" ScrollViewer.PanningMode="HorizontalOnly">
                     <StackPanel Orientation="Horizontal">
                         <DockPanel>
                             <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Constructed_Summary_Label_Total}" FontSize="16" Margin="10,0,0,0"/>
@@ -86,7 +87,7 @@
                             <local:ConstructedDeckHighlights DataContext="{Binding Path=DeckStatsSlowest, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
                         </DockPanel>
                     </StackPanel>
-                </ScrollViewer>
+                </controls:TouchEnabledScrollViewer>
             </GroupBox>
             <GroupBox PreviewMouseWheel="ForwardScrollEvent">
                 <GroupBox.Header>
@@ -100,6 +101,6 @@
                 <ContentControl Name="ContentControlMatchups"/>
             </GroupBox>
         </DockPanel>
-    </ScrollViewer>
+    </controls:TouchEnabledScrollViewer>
 </UserControl>
 

@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
-        <Border Margin="5,5,0,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+        <Border Margin="5,5,-5,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
             <DockPanel>
                 <Border DockPanel.Dock="Bottom" Margin="-1,0,-1,-1" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <CheckBox Content="{lex:LocText Options_CheckBoxAdvanced}" Margin="5" IsChecked="{Binding Show, Source={x:Static options:AdvancedOptions.Instance}}"/>
@@ -42,6 +43,10 @@
                 </TreeView>
             </DockPanel>
         </Border>
-        <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0"/>
+        <GroupBox x:Name="OptionsRightDynamicHeader">
+            <controls:TouchEnabledScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ContentControl Name="ContentControlOptions"/>
+            </controls:TouchEnabledScrollViewer>
+        </GroupBox>
     </DockPanel>
 </UserControl>

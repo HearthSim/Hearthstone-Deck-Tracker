@@ -109,5 +109,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 				return;
 			UpdateSearchResult(TextBoxSearch.Text);
 		}
+
+		private void ListBoxSearchResult_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e) => e.Handled = true;
 	}
 }
