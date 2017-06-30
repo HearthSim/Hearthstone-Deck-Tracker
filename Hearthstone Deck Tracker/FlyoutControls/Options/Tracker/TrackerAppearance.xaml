@@ -16,122 +16,116 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     </UserControl.Resources>
-    <Grid>
-        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Appearance_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Language}" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboBoxLanguage" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxLanguage_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <TextBlock Margin="10,5,10,0" TextWrapping="Wrap">
-                        <Italic>
-                            <Run Text="{lex:Loc Options_Tracker_Appearance_Label_LanguageNote}"/>
-                            <LineBreak/>
-                            <Hyperlink NavigateUri="https://github.com/HearthSim/HDT-Localization" RequestNavigate="Hyperlink_RequestNavigate">
-                                <Run Text="{lex:Loc Options_Tracker_Appearance_Hyperlink_LanguageNote}"/>
-                            </Hyperlink>
-                        </Italic>
-                    </TextBlock>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Theme}" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboboxTheme_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Accent}" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboboxAccent_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassIcons}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
-                        <ComboBox x:Name="ComboBoxIconSet" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboboxIconSet_SelectionChanged" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassColors}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
-                        <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxClassColors_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_CardTheme}" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboBoxCardTheme" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxCardTheme_SelectionChanged" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:Loc Options_Tracker_Appearance_Label_DeckLayout}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" />
-                        <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
-                                  VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboboxDeckLayout_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <CheckBox x:Name="CheckboxCardFrameRarity" Content="{lex:Loc Options_Tracker_Appearance_CheckBox_RarityFrames}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxCardFrameRarity_OnChecked"
-                              Unchecked="CheckboxCardFrameRarity_OnUnchecked" />
-                    <CheckBox x:Name="CheckboxCardGemRarity" Content="{lex:Loc Options_Tracker_Appearance_CheckBox_RarityGems}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxCardGemRarity_OnChecked"
-                              Unchecked="CheckboxCardGemRarity_OnUnchecked" />
-                    <CheckBox x:Name="CheckBoxArenaStatsTextColoring" Content="{lex:Loc Options_Tracker_Appearance_CheckBox_RedGreenStats}"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckBoxArenaStatsTextColoring_Checked"
-                              Unchecked="CheckBoxArenaStatsTextColoring_Unchecked" />
-                    <CheckBox x:Name="CheckboxUseAnimations" Content="{lex:Loc Options_Tracker_Appearance_CheckBox_Metro}"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top"
-                              Unchecked="CheckboxUseAnimations_Unchecked"
-                              ToolTip="{lex:Loc Options_Tracker_Appearance_CheckBox_Metro_Tooltip}"
-                              Checked="CheckboxUseAnimations_Checked" />
-                </StackPanel>
-            </ScrollViewer>
-        </GroupBox>
-    </Grid>
+    <StackPanel>
+        <DockPanel Margin="10,5,10,0">
+            <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Language}" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" />
+            <ComboBox x:Name="ComboBoxLanguage" HorizontalAlignment="Right"
+                      VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboBoxLanguage_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <TextBlock Margin="10,5,10,0" TextWrapping="Wrap">
+            <Italic>
+                <Run Text="{lex:Loc Options_Tracker_Appearance_Label_LanguageNote}"/>
+                <LineBreak/>
+                <Hyperlink NavigateUri="https://github.com/HearthSim/HDT-Localization" RequestNavigate="Hyperlink_RequestNavigate">
+                    <Run Text="{lex:Loc Options_Tracker_Appearance_Hyperlink_LanguageNote}"/>
+                </Hyperlink>
+            </Italic>
+        </TextBlock>
+        <DockPanel Margin="10,5,10,0">
+            <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Theme}" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" />
+            <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Right"
+                      VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboboxTheme_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="10,5,10,0">
+            <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Accent}" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" />
+            <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Right"
+                      VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboboxAccent_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+            <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassIcons}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+            <ComboBox x:Name="ComboBoxIconSet" HorizontalAlignment="Right"
+                      VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboboxIconSet_SelectionChanged" />
+        </DockPanel>
+        <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+            <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassColors}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+            <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
+                      VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboBoxClassColors_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="10,5,10,0">
+            <Label Content="{lex:Loc Options_Tracker_Appearance_Label_CardTheme}" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" />
+            <ComboBox x:Name="ComboBoxCardTheme" HorizontalAlignment="Right"
+                      VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboBoxCardTheme_SelectionChanged" />
+        </DockPanel>
+        <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+            <Label Content="{lex:Loc Options_Tracker_Appearance_Label_DeckLayout}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" />
+            <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
+                      VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboboxDeckLayout_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <CheckBox x:Name="CheckboxCardFrameRarity" Content="{lex:Loc Options_Tracker_Appearance_CheckBox_RarityFrames}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxCardFrameRarity_OnChecked"
+                  Unchecked="CheckboxCardFrameRarity_OnUnchecked" />
+        <CheckBox x:Name="CheckboxCardGemRarity" Content="{lex:Loc Options_Tracker_Appearance_CheckBox_RarityGems}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxCardGemRarity_OnChecked"
+                  Unchecked="CheckboxCardGemRarity_OnUnchecked" />
+        <CheckBox x:Name="CheckBoxArenaStatsTextColoring" Content="{lex:Loc Options_Tracker_Appearance_CheckBox_RedGreenStats}"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top" Checked="CheckBoxArenaStatsTextColoring_Checked"
+                  Unchecked="CheckBoxArenaStatsTextColoring_Unchecked" />
+        <CheckBox x:Name="CheckboxUseAnimations" Content="{lex:Loc Options_Tracker_Appearance_CheckBox_Metro}"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top"
+                  Unchecked="CheckboxUseAnimations_Unchecked"
+                  ToolTip="{lex:Loc Options_Tracker_Appearance_CheckBox_Metro_Tooltip}"
+                  Checked="CheckboxUseAnimations_Checked" />
+    </StackPanel>
 </UserControl>

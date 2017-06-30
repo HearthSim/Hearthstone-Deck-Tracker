@@ -10,13 +10,11 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <GroupBox Header="{lex:Loc Options_Search_Header}">
-        <DockPanel>
-            <DockPanel DockPanel.Dock="Top">
-                <Button Name="ButtonSearch" Content="{lex:Loc Options_Search_SearchButton}" Width="100" Margin="5,0,0,0" IsDefault="True" Click="ButtonSearch_OnClick" DockPanel.Dock="Right"/>
-                <TextBox Name="TextBoxSearch" controls:TextBoxHelper.Watermark="{lex:Loc Options_Search_TextBox_Watermark}" Loaded="TextBoxSearchLoaded" TextChanged="TextBoxSearch_TextChanged"/>
-            </DockPanel>
-            <ListBox Name="ListBoxSearchResult" Margin="0,5,0,0" MouseDoubleClick="ListBoxSearchResult_OnMouseDoubleClick"/>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <Button Name="ButtonSearch" Content="{lex:Loc Options_Search_SearchButton}" Width="100" Margin="5,0,0,0" IsDefault="True" Click="ButtonSearch_OnClick" DockPanel.Dock="Right"/>
+            <TextBox Name="TextBoxSearch" controls:TextBoxHelper.Watermark="{lex:Loc Options_Search_TextBox_Watermark}" Loaded="TextBoxSearchLoaded" TextChanged="TextBoxSearch_TextChanged"/>
         </DockPanel>
-    </GroupBox>
+        <ListBox Name="ListBoxSearchResult" Margin="0,5,0,0" MouseDoubleClick="ListBoxSearchResult_OnMouseDoubleClick"/>
+    </DockPanel>
 </UserControl>

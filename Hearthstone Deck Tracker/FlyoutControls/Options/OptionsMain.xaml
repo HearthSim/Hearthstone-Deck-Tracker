@@ -9,9 +9,10 @@
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="300" d:DesignWidth="300">
     <DockPanel>
-        <Border Margin="5,5,0,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
+        <Border Margin="5,5,-6,5" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
             <DockPanel>
                 <Border DockPanel.Dock="Bottom" Margin="-1,0,-1,-1" BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
                     <CheckBox Content="{lex:LocText Options_CheckBoxAdvanced}" Margin="5" IsChecked="{Binding Show, Source={x:Static options:AdvancedOptions.Instance}}"/>
@@ -42,6 +43,10 @@
                 </TreeView>
             </DockPanel>
         </Border>
-        <ContentControl Name="ContentControlOptions" Margin="-6,0,0,0"/>
+        <GroupBox Header="{Binding ContentHeader}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ContentControl Content="{Binding OptionsContent}"/>
+            </ScrollViewer>
+        </GroupBox>
     </DockPanel>
 </UserControl>

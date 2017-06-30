@@ -1,4 +1,4 @@
-<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayStreaming"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayStreaming"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,32 +9,30 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <GroupBox Header="{lex:LocText Options_Overlay_Streaming_Header}">
-        <StackPanel>
-            <CheckBox Margin="5,5,0,0" Name="CheckBoxShowCapOverlay" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_Show}" 
-                      Checked="CheckBoxShowCapOverlay_OnChecked" Unchecked="CheckBoxShowCapOverlay_OnUnchecked"/>
-            <CheckBox Margin="5,5,0,0" Name="CheckBoxDisableOpacityTransition" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_DisableTransitions}" 
-                              Checked="CheckBoxDisableOpacityTransition_Checked" Unchecked="CheckBoxDisableOpacityTransition_Unchecked" />
-            <DockPanel Margin="0,5,0,0">
-                <Label Content="{lex:LocText Options_Overlay_Streaming_Label_Background}" DockPanel.Dock="Left" />
-                <Border Width="26" Height="26" Background="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                        BorderThickness="1" BorderBrush="{DynamicResource ControlBorderBrush}" DockPanel.Dock="Right" Margin="2,0,0,0"/>
-                <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Right"
-                                 Height="23" HorizontalContentAlignment="Center" Margin="10,0,0,0"
-                                 TextWrapping="Wrap" Text="#FF00FF" VerticalAlignment="Top"
-                                 Width="127" TextChanged="TextboxBackground_TextChanged" />
-            </DockPanel>
-            <TextBlock Margin="5,15,5,5" TextWrapping="Wrap">
-                <Run Text="{lex:LocText Options_Overlay_Streaming_Text1}"/>
-                <LineBreak/>
-                <LineBreak/>
-                <Run Text="{lex:LocText Options_Overlay_Streaming_Text2}"/>
-            </TextBlock>
-            <TextBlock Margin="5,5,0,0" FontWeight="SemiBold">
-                <Hyperlink Click="Hyperlink_OnClick">
-                    <Run Text="{lex:LocText Options_Overlay_Streaming_Hyperlink_Wiki}"/>
-                </Hyperlink>
-            </TextBlock>
-        </StackPanel>
-    </GroupBox>
+    <StackPanel>
+        <CheckBox Margin="5,5,0,0" Name="CheckBoxShowCapOverlay" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_Show}" 
+                  Checked="CheckBoxShowCapOverlay_OnChecked" Unchecked="CheckBoxShowCapOverlay_OnUnchecked"/>
+        <CheckBox Margin="5,5,0,0" Name="CheckBoxDisableOpacityTransition" Content="{lex:LocText Options_Overlay_Streaming_CheckBox_DisableTransitions}" 
+                          Checked="CheckBoxDisableOpacityTransition_Checked" Unchecked="CheckBoxDisableOpacityTransition_Unchecked" />
+        <DockPanel Margin="0,5,0,0">
+            <Label Content="{lex:LocText Options_Overlay_Streaming_Label_Background}" DockPanel.Dock="Left" />
+            <Border Width="26" Height="26" Background="{Binding SelectedColor, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                    BorderThickness="1" BorderBrush="{DynamicResource ControlBorderBrush}" DockPanel.Dock="Right" Margin="2,0,0,0"/>
+            <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Right"
+                             Height="23" HorizontalContentAlignment="Center" Margin="10,0,0,0"
+                             TextWrapping="Wrap" Text="#FF00FF" VerticalAlignment="Top"
+                             Width="127" TextChanged="TextboxBackground_TextChanged" />
+        </DockPanel>
+        <TextBlock Margin="5,15,5,5" TextWrapping="Wrap">
+            <Run Text="{lex:LocText Options_Overlay_Streaming_Text1}"/>
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="{lex:LocText Options_Overlay_Streaming_Text2}"/>
+        </TextBlock>
+        <TextBlock Margin="5,5,0,0" FontWeight="SemiBold">
+            <Hyperlink Click="Hyperlink_OnClick">
+                <Run Text="{lex:LocText Options_Overlay_Streaming_Hyperlink_Wiki}"/>
+            </Hyperlink>
+        </TextBlock>
+    </StackPanel>
 </UserControl>

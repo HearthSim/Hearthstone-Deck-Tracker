@@ -14,82 +14,76 @@
     <UserControl.Resources>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </UserControl.Resources>
-    <Grid>
-        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Constructed}">
-                        <StackPanel>
-                            <TextBlock TextWrapping="Wrap" Text="{lex:Loc Options_Tracker_Importing_Constructed_Description}" Margin="5,0,5,0"/>
-                            <CheckBox x:Name="CheckBoxConstructedImportNew" Content="{lex:Loc Options_Tracker_Importing_Constructed_CheckBox_Import}" Margin="10,5,0,0"
-                                      Checked="CheckBoxConstructedImportNew_Checked" Unchecked="CheckBoxConstructedImportNew_Unchecked" />
-                            <CheckBox x:Name="CheckBoxConstrucedUpdate" Content="{lex:Loc Options_Tracker_Importing_Constructed_CheckBox_Update}" Margin="10,5,0,5"
-                                      Checked="CheckBoxConstrucedUpdate_Checked" Unchecked="CheckBoxConstrucedUpdate_Unchecked" />
-                        </StackPanel>
-                    </GroupBox>
-                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Arena}">
-                        <StackPanel>
-                            <DockPanel Margin="10,5,10,0">
-                                <TextBlock DockPanel.Dock="Left" Text="{lex:Loc Options_Tracker_Importing_Label_ArenaBehavior}" VerticalAlignment="Center" />
-                                <ComboBox Name="ComboboxArenaImportingBehaviour" Margin="5,0,0,0"
-                                          SelectionChanged="ComboboxArenaImportingBehaviour_OnSelectionChanged">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </DockPanel>
-                            <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_ArenaTemplates}">
-                                <DockPanel>
-                                    <TextBlock Text="{lex:LocText Key=Options_Tracker_Importing_Label_TemplatesFormat, Suffix=' \{Class}, {Date FORMAT}'}" DockPanel.Dock="Bottom"
-                                               Margin="0,5,0,0" TextWrapping="Wrap"
-                                               ToolTip="{lex:Loc Options_Tracker_Importing_Label_ArenaTemplatesFormat_Tooltip}" />
-                                    <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
-                                        <TextBlock Text="{lex:Loc Options_Tracker_Importing_Label_TemplatesPreview}" />
-                                        <TextBlock Name="TextBlockNamePreview" Margin="5,0,0,0" />
-                                    </DockPanel>
+    <StackPanel>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Constructed}">
+            <StackPanel>
+                <TextBlock TextWrapping="Wrap" Text="{lex:Loc Options_Tracker_Importing_Constructed_Description}" Margin="5,0,5,0"/>
+                <CheckBox x:Name="CheckBoxConstructedImportNew" Content="{lex:Loc Options_Tracker_Importing_Constructed_CheckBox_Import}" Margin="10,5,0,0"
+                          Checked="CheckBoxConstructedImportNew_Checked" Unchecked="CheckBoxConstructedImportNew_Unchecked" />
+                <CheckBox x:Name="CheckBoxConstrucedUpdate" Content="{lex:Loc Options_Tracker_Importing_Constructed_CheckBox_Update}" Margin="10,5,0,5"
+                          Checked="CheckBoxConstrucedUpdate_Checked" Unchecked="CheckBoxConstrucedUpdate_Unchecked" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Arena}">
+            <StackPanel>
+                <DockPanel Margin="10,5,10,0">
+                    <TextBlock DockPanel.Dock="Left" Text="{lex:Loc Options_Tracker_Importing_Label_ArenaBehavior}" VerticalAlignment="Center" />
+                    <ComboBox Name="ComboboxArenaImportingBehaviour" Margin="5,0,0,0"
+                              SelectionChanged="ComboboxArenaImportingBehaviour_OnSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+                <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_ArenaTemplates}">
+                    <DockPanel>
+                        <TextBlock Text="{lex:LocText Key=Options_Tracker_Importing_Label_TemplatesFormat, Suffix=' \{Class}, {Date FORMAT}'}" DockPanel.Dock="Bottom"
+                                   Margin="0,5,0,0" TextWrapping="Wrap"
+                                   ToolTip="{lex:Loc Options_Tracker_Importing_Label_ArenaTemplatesFormat_Tooltip}" />
+                        <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
+                            <TextBlock Text="{lex:Loc Options_Tracker_Importing_Label_TemplatesPreview}" />
+                            <TextBlock Name="TextBlockNamePreview" Margin="5,0,0,0" />
+                        </DockPanel>
                                     <Button Name="BtnEditTemplate" Content="{Binding EditButtonText}" DockPanel.Dock="Right"
                                             Margin="5,0,0,0" Click="BtnEditTemplate_Click"/>
                                     <TextBox Name="TextBoxArenaTemplate" IsEnabled="{Binding TemplateEditable}"
-                                             TextChanged="TextBoxArenaTemplate_OnTextChanged" />
-                                </DockPanel>
-                            </GroupBox>
-                        </StackPanel>
-                    </GroupBox>
-                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Web}">
-                        <StackPanel>
-                            <DockPanel Margin="10,5,10,0" ToolTip="{lex:Loc Options_Tracker_Importing_Label_Tooltip_PasteBehavior}">
-                                <TextBlock DockPanel.Dock="Left" Text="{lex:Loc Options_Tracker_Importing_Label_PasteBehavior}" VerticalAlignment="Center" />
-                                <ComboBox Name="ComboboxPasteImporting" Margin="5,0,0,0" SelectionChanged="ComboboxPasteImporting_OnSelectionChanged">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                            </DockPanel>
-                            <CheckBox x:Name="CheckboxTagOnImport" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_Tags}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
-                              Unchecked="CheckboxTagOnImport_Unchecked" />
-                            <CheckBox Name="CheckboxAutoSaveOnImport" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_AutoSave}" Margin="10,5,0,0"
-                              Checked="CheckboxAutoSaveOnImport_OnChecked"
-                              Unchecked="CheckboxAutoSaveOnImport_OnUnchecked" />
-                            <CheckBox Name="CheckboxImportNetDeck" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_AutoSaveNetDeck}" Margin="10,5,0,0"
-                              Checked="CheckboxImportNetDeck_OnChecked" Unchecked="CheckboxImportNetDeck_OnUnchecked" />
-                            <TextBlock Margin="10,2,0,0">
-                        <Hyperlink
-                            NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
-                            RequestNavigate="Hyperlink_RequestNavigate">
-                            <Run Text="{lex:Loc Options_Tracker_Importing_Web_Hyperlink_NetDeck}"/>
-                        </Hyperlink>
-                            </TextBlock>
-                        </StackPanel>
-                    </GroupBox>
-                </StackPanel>
-            </ScrollViewer>
+                                 TextChanged="TextBoxArenaTemplate_OnTextChanged" />
+                    </DockPanel>
+                </GroupBox>
+            </StackPanel>
         </GroupBox>
-    </Grid>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Web}">
+            <StackPanel>
+                <DockPanel Margin="10,5,10,0" ToolTip="{lex:Loc Options_Tracker_Importing_Label_Tooltip_PasteBehavior}">
+                    <TextBlock DockPanel.Dock="Left" Text="{lex:Loc Options_Tracker_Importing_Label_PasteBehavior}" VerticalAlignment="Center" />
+                    <ComboBox Name="ComboboxPasteImporting" Margin="5,0,0,0" SelectionChanged="ComboboxPasteImporting_OnSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+                <CheckBox x:Name="CheckboxTagOnImport" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_Tags}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top" Checked="CheckboxTagOnImport_Checked"
+                  Unchecked="CheckboxTagOnImport_Unchecked" />
+                <CheckBox Name="CheckboxAutoSaveOnImport" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_AutoSave}" Margin="10,5,0,0"
+                  Checked="CheckboxAutoSaveOnImport_OnChecked"
+                  Unchecked="CheckboxAutoSaveOnImport_OnUnchecked" />
+                <CheckBox Name="CheckboxImportNetDeck" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_AutoSaveNetDeck}" Margin="10,5,0,0"
+                  Checked="CheckboxImportNetDeck_OnChecked" Unchecked="CheckboxImportNetDeck_OnUnchecked" />
+                <TextBlock Margin="10,2,0,0">
+            <Hyperlink
+                NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
+                RequestNavigate="Hyperlink_RequestNavigate">
+                <Run Text="{lex:Loc Options_Tracker_Importing_Web_Hyperlink_NetDeck}"/>
+            </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
 </UserControl>

@@ -10,33 +10,29 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <GroupBox Header="{lex:LocText Options_Overlay_Interactivity_Header}">
-            <StackPanel>
-                <Label Content="{lex:LocTextUpper Options_Overlay_Interactivity_Label_Warning}" FontWeight="Bold" Foreground="Red" />
-                <Label Content="{lex:Loc Options_Overlay_Interactivity_Label_Freezing}" Margin="0,-10,0,0" Foreground="Red" />
-                <controls:ToggleSwitch x:Name="ToggleSwitchExtraFeatures" Margin="10,0,0,0"
-                                       OnLabel="{lex:Loc Options_Overlay_Interactivity_Switch_Enabled}" 
-                                       OffLabel="{lex:Loc Options_Overlay_Interactivity_Switch_Disabled}"
-                                       Checked="ToggleSwitchExtraFeatures_Checked"
-                                       Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
-                <CheckBox Name="CheckBoxForceExtraFeatures" Content="{lex:Loc Options_Overlay_Interactivity_CheckBox_ForceOn}"
-                          Margin="10,0,5,0"
-                          Checked="CheckBoxForceExtraFeatures_OnChecked"
-                          Unchecked="CheckBoxForceExtraFeatures_OnUnchecked"
-                          IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}" />
-                <Separator Margin="0,20,0,10" />
-                <Label Content="{lex:LocTextUpper Options_Overlay_Interactivity_Label_Features}" FontWeight="Bold" />
-                <CheckBox Name="CheckBoxFriendslist" Content="{lex:Loc Options_Overlay_Interactivity_CheckBox_FriendsList}"
-                          Checked="CheckBoxFriendslist_OnChecked" Unchecked="CheckBoxFriendslist_OnUnchecked"
-                          Margin="10,5,0,0" IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}" />
-                <CheckBox Name="CheckBoxSecrets" Content="{lex:Loc Options_Overlay_Interactivity_CheckBoxSecrets}"
-                          Checked="CheckBoxSecrets_OnChecked" Unchecked="CheckBoxSecrets_OnUnchecked" Margin="10,5,0,0"
-                          IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}" />
-                <TextBlock
-                    Text="{lex:Loc Options_Overlay_Interactivity_Label_Note}"
-                    TextWrapping="Wrap" FontStyle="Italic" Margin="34,0,0,0" />
-            </StackPanel>
-        </GroupBox>
-    </Grid>
+    <StackPanel>
+        <Label Content="{lex:LocTextUpper Options_Overlay_Interactivity_Label_Warning}" FontWeight="Bold" Foreground="Red" />
+        <Label Content="{lex:Loc Options_Overlay_Interactivity_Label_Freezing}" Margin="0,-10,0,0" Foreground="Red" />
+        <controls:ToggleSwitch x:Name="ToggleSwitchExtraFeatures" Margin="10,0,0,0"
+                               OnLabel="{lex:Loc Options_Overlay_Interactivity_Switch_Enabled}" 
+                               OffLabel="{lex:Loc Options_Overlay_Interactivity_Switch_Disabled}"
+                               Checked="ToggleSwitchExtraFeatures_Checked"
+                               Unchecked="ToggleSwitchExtraFeatures_Unchecked" />
+        <CheckBox Name="CheckBoxForceExtraFeatures" Content="{lex:Loc Options_Overlay_Interactivity_CheckBox_ForceOn}"
+                  Margin="10,0,5,0"
+                  Checked="CheckBoxForceExtraFeatures_OnChecked"
+                  Unchecked="CheckBoxForceExtraFeatures_OnUnchecked"
+                  IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}" />
+        <Separator Margin="0,20,0,10" />
+        <Label Content="{lex:LocTextUpper Options_Overlay_Interactivity_Label_Features}" FontWeight="Bold" />
+        <CheckBox Name="CheckBoxFriendslist" Content="{lex:Loc Options_Overlay_Interactivity_CheckBox_FriendsList}"
+                  Checked="CheckBoxFriendslist_OnChecked" Unchecked="CheckBoxFriendslist_OnUnchecked"
+                  Margin="10,5,0,0" IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}" />
+        <CheckBox Name="CheckBoxSecrets" Content="{lex:Loc Options_Overlay_Interactivity_CheckBoxSecrets}"
+                  Checked="CheckBoxSecrets_OnChecked" Unchecked="CheckBoxSecrets_OnUnchecked" Margin="10,5,0,0"
+                  IsEnabled="{Binding ElementName=ToggleSwitchExtraFeatures, Path=IsChecked}" />
+        <TextBlock
+            Text="{lex:Loc Options_Overlay_Interactivity_Label_Note}"
+            TextWrapping="Wrap" FontStyle="Italic" Margin="34,0,0,0" />
+    </StackPanel>
 </UserControl>

@@ -14,131 +14,125 @@
     <UserControl.Resources>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </UserControl.Resources>
-    <Grid>
-        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Stats_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Stats_Label_Record}">
-                        <StackPanel>
-                            <CheckBox x:Name="CheckboxRecordRanked" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Ranked}"
-                                      HorizontalAlignment="Left" Margin="0,0,0,0"
-                                      VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked"
-                                      Unchecked="CheckboxRecordRanked_Unchecked" />
-                            <CheckBox x:Name="CheckboxRecordArena" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Arena}"
-                                      HorizontalAlignment="Left" Margin="0,5,0,0"
-                                      VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked"
-                                      Unchecked="CheckboxRecordArena_Unchecked" />
-                            <CheckBox x:Name="CheckboxRecordBrawl" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Brawl}"
-                                      HorizontalAlignment="Left" Margin="0,5,0,0"
-                                      VerticalAlignment="Top" Checked="CheckboxRecordBrawl_Checked"
-                                      Unchecked="CheckboxRecordBrawl_Unchecked" />
-                            <CheckBox x:Name="CheckboxRecordCasual" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Casual}"
-                                      HorizontalAlignment="Left" Margin="0,5,0,0"
-                                      VerticalAlignment="Top" Checked="CheckboxRecordCasual_Checked"
-                                      Unchecked="CheckboxRecordCasual_Unchecked" />
-                            <CheckBox x:Name="CheckboxRecordFriendly" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Friendly}"
-                                      HorizontalAlignment="Left" Margin="0,5,0,0"
-                                      VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked"
-                                      Unchecked="CheckboxRecordFriendly_Unchecked" />
-                            <CheckBox x:Name="CheckboxRecordPractice" Content="{lex:Loc Options_Tracker_Stats_CheckBox_AdventurePractive}"
-                                      HorizontalAlignment="Left" Margin="0,5,0,0"
-                                      VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked"
-                                      Unchecked="CheckboxRecordPractice_Unchecked" />
-                            <CheckBox x:Name="CheckboxRecordSpectator" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Spectator}"
-                                      HorizontalAlignment="Left" Margin="0,5,0,0"
-                                      VerticalAlignment="Top" Checked="CheckboxRecordSpectator_Checked"
-                                      Unchecked="CheckboxRecordSpectator_Unchecked" />
-                            <CheckBox x:Name="CheckboxRecordOther" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Other}"
-                                      HorizontalAlignment="Left" Margin="0,5,0,0"
-                                      VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked"
-                                      Unchecked="CheckboxRecordOther_Unchecked" />
-                        </StackPanel>
-                    </GroupBox>
-                    <GroupBox Header="{lex:Loc Options_Tracker_Stats_Label_DecksMyGames}">
-                        <StackPanel>
-                            <DockPanel>
-                                <ComboBox Name="ComboboxDisplayedStats" Width="150"
-                                          SelectionChanged="ComboboxDisplayedStats_SelectionChanged"
-                                          DockPanel.Dock="Right" HorizontalAlignment="Left">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <Label Content="{lex:Loc Options_Tracker_Stats_Label_Versions}" />
-                            </DockPanel>
-                            <DockPanel Margin="0,5,0,0">
-                                <ComboBox Name="ComboboxDisplayedMode" VerticalAlignment="Bottom" Width="150"
-                                          DockPanel.Dock="Right" SelectionChanged="ComboboxGameMode_SelectionChanged" />
-                                <Label Content="{lex:Loc Options_Tracker_Stats_Label_Mode}" />
-                            </DockPanel>
-                            <DockPanel Margin="0,5,0,0">
-                                <ComboBox Name="ComboboxDisplayedTimeFrame" VerticalAlignment="Bottom" Width="150"
-                                          DockPanel.Dock="Right"
-                                          SelectionChanged="ComboboxDisplayedTimeFrame_SelectionChanged">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
-                                <Label Content="{lex:Loc Options_Tracker_Stats_Label_Timeframe}" />
-                            </DockPanel>
-                            <DockPanel Name="PanelCustomTimeFrame" Margin="0,5,0,0">
-                                <DatePicker Name="DatePickerCustomTimeFrame" Width="150" DockPanel.Dock="Right"
-                                            SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
-                                <Label Content="{lex:Loc Options_Tracker_Stats_Label_Timeframe_Since}" />
-                            </DockPanel>
-                        </StackPanel>
-                    </GroupBox>
-                    <CheckBox x:Name="CheckboxDiscardGame"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="{lex:Loc Options_Tracker_Stats_CheckBox_DiscardNoMatch}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked"
-                              Unchecked="CheckboxDiscardGame_Unchecked" />
-                    <CheckBox x:Name="CheckboxAskBeforeDiscarding"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="{lex:Loc Options_Tracker_Stats_CheckBox_AskDiscard}"
-                              HorizontalAlignment="Left" Margin="35,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxAskBeforeDiscarding_Checked"
-                              Unchecked="CheckboxAskBeforeDiscarding_Unchecked" />
-                    <CheckBox x:Name="CheckboxDiscardZeroTurnGame"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="{lex:Loc Options_Tracker_Stats_CheckBox_DiscardZeroTurns}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxDiscardZeroTurnGame_Checked"
-                              Unchecked="CheckboxDiscardZeroTurnGame_Unchecked" />
-                    <CheckBox x:Name="CheckboxReplays"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="{lex:Loc Options_Tracker_Stats_CheckBox_RecordLocalReplays}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0"
-                              VerticalAlignment="Top" Checked="CheckboxRecordReplays_Checked"
-                              Unchecked="CheckboxRecordReplays_Unchecked" />
-                    <CheckBox x:Name="CheckboxDeleteDeckKeepStats"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="{lex:Loc Options_Tracker_Stats_CheckBox_KeepStatsWhenDeleting}"
-                              ToolTip="{lex:Loc Options_Tracker_Stats_CheckBox_KeepStatsWhenDeleting_Tooltip}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxDeleteDeckKeepStats_Checked"
-                              Unchecked="CheckboxDeleteDeckKeepStats_Unchecked" />
-                    <CheckBox x:Name="CheckboxStatsInWindow"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="{lex:Loc Options_Tracker_Stats_CheckBox_StatsWindow}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxStatsInWindow_Checked"
-                              Unchecked="CheckboxStatsInWindow_Unchecked" />
-                </StackPanel>
-            </ScrollViewer>
+    <StackPanel>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Stats_Label_Record}">
+            <StackPanel>
+                <CheckBox x:Name="CheckboxRecordRanked" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Ranked}"
+                          HorizontalAlignment="Left" Margin="0,0,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxRecordRanked_Checked"
+                          Unchecked="CheckboxRecordRanked_Unchecked" />
+                <CheckBox x:Name="CheckboxRecordArena" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Arena}"
+                          HorizontalAlignment="Left" Margin="0,5,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxRecordArena_Checked"
+                          Unchecked="CheckboxRecordArena_Unchecked" />
+                <CheckBox x:Name="CheckboxRecordBrawl" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Brawl}"
+                          HorizontalAlignment="Left" Margin="0,5,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxRecordBrawl_Checked"
+                          Unchecked="CheckboxRecordBrawl_Unchecked" />
+                <CheckBox x:Name="CheckboxRecordCasual" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Casual}"
+                          HorizontalAlignment="Left" Margin="0,5,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxRecordCasual_Checked"
+                          Unchecked="CheckboxRecordCasual_Unchecked" />
+                <CheckBox x:Name="CheckboxRecordFriendly" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Friendly}"
+                          HorizontalAlignment="Left" Margin="0,5,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxRecordFriendly_Checked"
+                          Unchecked="CheckboxRecordFriendly_Unchecked" />
+                <CheckBox x:Name="CheckboxRecordPractice" Content="{lex:Loc Options_Tracker_Stats_CheckBox_AdventurePractive}"
+                          HorizontalAlignment="Left" Margin="0,5,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxRecordPractice_Checked"
+                          Unchecked="CheckboxRecordPractice_Unchecked" />
+                <CheckBox x:Name="CheckboxRecordSpectator" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Spectator}"
+                          HorizontalAlignment="Left" Margin="0,5,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxRecordSpectator_Checked"
+                          Unchecked="CheckboxRecordSpectator_Unchecked" />
+                <CheckBox x:Name="CheckboxRecordOther" Content="{lex:Loc Options_Tracker_Stats_CheckBox_Other}"
+                          HorizontalAlignment="Left" Margin="0,5,0,0"
+                          VerticalAlignment="Top" Checked="CheckboxRecordOther_Checked"
+                          Unchecked="CheckboxRecordOther_Unchecked" />
+            </StackPanel>
         </GroupBox>
-    </Grid>
+        <GroupBox Header="{lex:Loc Options_Tracker_Stats_Label_DecksMyGames}">
+            <StackPanel>
+                <DockPanel>
+                    <ComboBox Name="ComboboxDisplayedStats" Width="150"
+                              SelectionChanged="ComboboxDisplayedStats_SelectionChanged"
+                              DockPanel.Dock="Right" HorizontalAlignment="Left">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label Content="{lex:Loc Options_Tracker_Stats_Label_Versions}" />
+                </DockPanel>
+                <DockPanel Margin="0,5,0,0">
+                    <ComboBox Name="ComboboxDisplayedMode" VerticalAlignment="Bottom" Width="150"
+                              DockPanel.Dock="Right" SelectionChanged="ComboboxGameMode_SelectionChanged" />
+                    <Label Content="{lex:Loc Options_Tracker_Stats_Label_Mode}" />
+                </DockPanel>
+                <DockPanel Margin="0,5,0,0">
+                    <ComboBox Name="ComboboxDisplayedTimeFrame" VerticalAlignment="Bottom" Width="150"
+                              DockPanel.Dock="Right"
+                              SelectionChanged="ComboboxDisplayedTimeFrame_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Label Content="{lex:Loc Options_Tracker_Stats_Label_Timeframe}" />
+                </DockPanel>
+                <DockPanel Name="PanelCustomTimeFrame" Margin="0,5,0,0">
+                    <DatePicker Name="DatePickerCustomTimeFrame" Width="150" DockPanel.Dock="Right"
+                                SelectedDateChanged="DatePickerCustomTimeFrame_OnSelectedDateChanged" />
+                    <Label Content="{lex:Loc Options_Tracker_Stats_Label_Timeframe_Since}" />
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+        <CheckBox x:Name="CheckboxDiscardGame"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Tracker_Stats_CheckBox_DiscardNoMatch}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top" Checked="CheckboxDiscardGame_Checked"
+                  Unchecked="CheckboxDiscardGame_Unchecked" />
+        <CheckBox x:Name="CheckboxAskBeforeDiscarding"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Tracker_Stats_CheckBox_AskDiscard}"
+                  HorizontalAlignment="Left" Margin="35,5,0,0"
+                  VerticalAlignment="Top" Checked="CheckboxAskBeforeDiscarding_Checked"
+                  Unchecked="CheckboxAskBeforeDiscarding_Unchecked" />
+        <CheckBox x:Name="CheckboxDiscardZeroTurnGame"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Tracker_Stats_CheckBox_DiscardZeroTurns}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top" Checked="CheckboxDiscardZeroTurnGame_Checked"
+                  Unchecked="CheckboxDiscardZeroTurnGame_Unchecked" />
+        <CheckBox x:Name="CheckboxReplays"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Tracker_Stats_CheckBox_RecordLocalReplays}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top" Checked="CheckboxRecordReplays_Checked"
+                  Unchecked="CheckboxRecordReplays_Unchecked" />
+        <CheckBox x:Name="CheckboxDeleteDeckKeepStats"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Tracker_Stats_CheckBox_KeepStatsWhenDeleting}"
+                  ToolTip="{lex:Loc Options_Tracker_Stats_CheckBox_KeepStatsWhenDeleting_Tooltip}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxDeleteDeckKeepStats_Checked"
+                  Unchecked="CheckboxDeleteDeckKeepStats_Unchecked" />
+        <CheckBox x:Name="CheckboxStatsInWindow"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Tracker_Stats_CheckBox_StatsWindow}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxStatsInWindow_Checked"
+                  Unchecked="CheckboxStatsInWindow_Unchecked" />
+    </StackPanel>
 </UserControl>

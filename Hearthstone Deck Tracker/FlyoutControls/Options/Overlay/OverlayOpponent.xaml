@@ -1,4 +1,4 @@
-<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayOpponent"
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayOpponent"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -16,120 +16,114 @@
     <UserControl.Resources>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     </UserControl.Resources>
-    <Grid>
-        <GroupBox Header="{lex:LocText Options_Overlay_Opponent_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <CheckBox x:Name="CheckboxSameScaling"
-                              Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="{lex:LocText Options_Overlay_Opponent_CheckBox_SameScaling}"
-                              Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                              HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top" IsChecked="True"
-                              Checked="CheckboxSameScaling_Checked"
-                              Unchecked="CheckboxSameScaling_Unchecked" />
-                    <DockPanel Margin="10,5,10,0">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Scaling}" />
-                        <TextBox Name="TextBoxScaling" PreviewTextInput="TextBoxScaling_OnPreviewTextInput"
-                                 Text="{Binding OpponentScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}"
-                                 DockPanel.Dock="Right" Margin="5,0,0,0" Width="50" />
-                        <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Right"
-                                VerticalAlignment="Center" Width="150"
-                                Value="{Binding OpponentScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}, Delay=100}"
-                                Minimum="1" SmallChange="1" LargeChange="10" Maximum="200" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0"
-                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Opacity}" HorizontalAlignment="Left"
-                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                               VerticalAlignment="Top" />
-                        <Slider x:Name="SliderOpponentOpacity" HorizontalAlignment="Right"
-                                VerticalAlignment="Center" Width="205" Value="100"
-                                ValueChanged="SliderOpponentOpacity_ValueChanged" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0"
-                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_SecretScaling}"
-                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" />
-                        <TextBox Name="TextBoxSecretScaling" PreviewTextInput="TextBoxScaling_OnPreviewTextInput"
-                                 Text="{Binding SecretScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}"
-                                 DockPanel.Dock="Right" Margin="5,0,0,0" Width="50" />
-                        <Slider x:Name="SliderOverlaySecretScaling" HorizontalAlignment="Right"
-                                VerticalAlignment="Center" Width="150"
-                                Value="{Binding SecretScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}"
-                                Minimum="1" SmallChange="1" LargeChange="10" Maximum="200" />
-                    </DockPanel>
-                    <DockPanel Margin="10,5,10,0"
-                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_LabelSecretOpacity}"
-                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
-                        <Slider x:Name="SliderSecretOpacity" HorizontalAlignment="Right"
-                                VerticalAlignment="Center" Width="205" Value="100"
-                                ValueChanged="SliderSecretOpacity_ValueChanged" />
-                    </DockPanel>
-                    <DockPanel Margin="5,5,5,0">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Cthun}" />
-                        <ComboBox x:Name="ComboBoxCthun" HorizontalAlignment="Right"
-                                  Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxCthun_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <DockPanel Margin="5,5,5,0">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Yogg}" />
-                        <ComboBox x:Name="ComboBoxSpells" HorizontalAlignment="Right"
-                                  Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxSpells_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <DockPanel Margin="5,5,5,0">
-                        <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Jade}" />
-                        <ComboBox x:Name="ComboBoxJade" HorizontalAlignment="Right"
-                                  Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboBoxJade_SelectionChanged">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </DockPanel>
-                    <CheckBox x:Name="CheckBoxAttack"
-                              Content="{lex:LocText Options_Overlay_Opponent_CheckBox_Attack}" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckBoxAttack_Checked"
-                              Unchecked="CheckBoxAttack_Unchecked" />
-                    <CheckBox x:Name="CheckBoxCenterDeckVertically"
-                              Content="{lex:LocText Options_Overlay_Opponent_CheckBox_CenterVertically}" HorizontalAlignment="Left"
-                              ToolTip="{lex:Loc Options_Overlay_Opponent_CheckBox_CenterVertically_Tooltip}"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckBoxCenterDeckVertically_Checked"
-                              Unchecked="CheckBoxCenterDeckVertically_Unchecked" />
-                    <CheckBox x:Name="CheckboxIncludeCreated"
-                              Content="{lex:LocText Options_Overlay_Opponent_CheckBox_CreatedCards}" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxIncludeCreated_Checked"
-                              Unchecked="CheckboxIncludeCreated_Unchecked" />
-                    <CheckBox x:Name="CheckboxHighlightDiscarded"
-                              Content="{lex:LocText Options_Overlay_Opponent_CheckBox_DiscardedCards}" HorizontalAlignment="Left"
-                              Margin="10,5,0,10" VerticalAlignment="Top"
-                              Checked="CheckboxHighlightDiscarded_Checked"
-                              Unchecked="CheckboxHighlightDiscarded_Unchecked" />
-                    <hearthstoneDeckTracker:ElementSorter x:Name="ElementSorterOpponent" Margin="10,5,10,10"
-                                                          Height="auto" />
-                </StackPanel>
-            </ScrollViewer>
-        </GroupBox>
-    </Grid>
+    <StackPanel>
+        <CheckBox x:Name="CheckboxSameScaling"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:LocText Options_Overlay_Opponent_CheckBox_SameScaling}"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top" IsChecked="True"
+                  Checked="CheckboxSameScaling_Checked"
+                  Unchecked="CheckboxSameScaling_Unchecked" />
+        <DockPanel Margin="10,5,10,0">
+            <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Scaling}" />
+            <TextBox Name="TextBoxScaling" PreviewTextInput="TextBoxScaling_OnPreviewTextInput"
+                     Text="{Binding OpponentScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}"
+                     DockPanel.Dock="Right" Margin="5,0,0,0" Width="50" />
+            <Slider x:Name="SliderOverlayOpponentScaling" HorizontalAlignment="Right"
+                    VerticalAlignment="Center" Width="150"
+                    Value="{Binding OpponentScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}, Delay=100}"
+                    Minimum="1" SmallChange="1" LargeChange="10" Maximum="200" />
+        </DockPanel>
+        <DockPanel Margin="10,5,10,0"
+                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+            <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Opacity}" HorizontalAlignment="Left"
+                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                   VerticalAlignment="Top" />
+            <Slider x:Name="SliderOpponentOpacity" HorizontalAlignment="Right"
+                    VerticalAlignment="Center" Width="205" Value="100"
+                    ValueChanged="SliderOpponentOpacity_ValueChanged" />
+        </DockPanel>
+        <DockPanel Margin="10,5,10,0"
+                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+            <Label Content="{lex:LocText Options_Overlay_Opponent_Label_SecretScaling}"
+                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" />
+            <TextBox Name="TextBoxSecretScaling" PreviewTextInput="TextBoxScaling_OnPreviewTextInput"
+                     Text="{Binding SecretScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}"
+                     DockPanel.Dock="Right" Margin="5,0,0,0" Width="50" />
+            <Slider x:Name="SliderOverlaySecretScaling" HorizontalAlignment="Right"
+                    VerticalAlignment="Center" Width="150"
+                    Value="{Binding SecretScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayOpponent}}"
+                    Minimum="1" SmallChange="1" LargeChange="10" Maximum="200" />
+        </DockPanel>
+        <DockPanel Margin="10,5,10,0"
+                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+            <Label Content="{lex:LocText Options_Overlay_Opponent_LabelSecretOpacity}"
+                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top" />
+            <Slider x:Name="SliderSecretOpacity" HorizontalAlignment="Right"
+                    VerticalAlignment="Center" Width="205" Value="100"
+                    ValueChanged="SliderSecretOpacity_ValueChanged" />
+        </DockPanel>
+        <DockPanel Margin="5,5,5,0">
+            <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Cthun}" />
+            <ComboBox x:Name="ComboBoxCthun" HorizontalAlignment="Right"
+                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboBoxCthun_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="5,5,5,0">
+            <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Yogg}" />
+            <ComboBox x:Name="ComboBoxSpells" HorizontalAlignment="Right"
+                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboBoxSpells_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="5,5,5,0">
+            <Label Content="{lex:LocText Options_Overlay_Opponent_Label_Jade}" />
+            <ComboBox x:Name="ComboBoxJade" HorizontalAlignment="Right"
+                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboBoxJade_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <CheckBox x:Name="CheckBoxAttack"
+                  Content="{lex:LocText Options_Overlay_Opponent_CheckBox_Attack}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxAttack_Checked"
+                  Unchecked="CheckBoxAttack_Unchecked" />
+        <CheckBox x:Name="CheckBoxCenterDeckVertically"
+                  Content="{lex:LocText Options_Overlay_Opponent_CheckBox_CenterVertically}" HorizontalAlignment="Left"
+                  ToolTip="{lex:Loc Options_Overlay_Opponent_CheckBox_CenterVertically_Tooltip}"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxCenterDeckVertically_Checked"
+                  Unchecked="CheckBoxCenterDeckVertically_Unchecked" />
+        <CheckBox x:Name="CheckboxIncludeCreated"
+                  Content="{lex:LocText Options_Overlay_Opponent_CheckBox_CreatedCards}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxIncludeCreated_Checked"
+                  Unchecked="CheckboxIncludeCreated_Unchecked" />
+        <CheckBox x:Name="CheckboxHighlightDiscarded"
+                  Content="{lex:LocText Options_Overlay_Opponent_CheckBox_DiscardedCards}" HorizontalAlignment="Left"
+                  Margin="10,5,0,10" VerticalAlignment="Top"
+                  Checked="CheckboxHighlightDiscarded_Checked"
+                  Unchecked="CheckboxHighlightDiscarded_Unchecked" />
+        <hearthstoneDeckTracker:ElementSorter x:Name="ElementSorterOpponent" Margin="10,5,10,10"
+                                              Height="auto" />
+    </StackPanel>
 </UserControl>

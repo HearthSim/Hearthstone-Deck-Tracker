@@ -1,14 +1,17 @@
 ﻿#region
 
 using System;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -18,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 	/// <summary>
 	/// Interaction logic for Options.xaml
 	/// </summary>
-	public partial class OptionsMain
+	public partial class OptionsMain : INotifyPropertyChanged
 	{
 		public readonly OverlayDeckWindows OptionsOverlayDeckWindows = new OverlayDeckWindows();
 		public readonly OverlayGeneral OptionsOverlayGeneral = new OverlayGeneral();
@@ -38,6 +41,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly TrackerStats OptionsTrackerStats = new TrackerStats();
 		public readonly TrackerReplays OptionsTrackerReplays = new TrackerReplays();
 		public readonly OptionsSearch OptionsSearch = new OptionsSearch();
+		private string _contentHeader;
+		private object _optionsContent;
 
 		public OptionsMain()
 		{
@@ -52,6 +57,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			catch(Exception ex)
 			{
 				Log.Error(ex);
+			}
+		}
+
+		public string ContentHeader
+		{
+			get => _contentHeader;
+			set
+			{
+				_contentHeader = value; 
+				OnPropertyChanged();
+			}
+		}
+
+		public object OptionsContent
+		{
+			get => _optionsContent;
+			set
+			{
+				_optionsContent = value;
+				OnPropertyChanged();
 			}
 		}
 
@@ -73,26 +98,120 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsTrackerNotifications.Load();
 		}
 
-		private void TreeViewItemGeneralOverlay_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayGeneral;
-		private void TreeViewItemOverlayDeckWindows_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayDeckWindows;
-		private void TreeViewItemOverlayOpponent_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayOpponent;
-		private void TreeViewItemOverlayPlayer_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayPlayer;
-		private void TreeViewItemTrackerGeneral_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerGeneral;
-		private void TreeViewItemTrackerStats_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerStats;
-		private void TreeViewItemTrackerImporting_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerImporting;
-		private void TreeViewItemTrackerLogging_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerLogging;
-		private void TreeViewItemOverlayInteractivity_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayInteractivity;
-		private void TreeViewItemTrackerSettings_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerSettings;
-		private void TreeViewItemTrackerPlugins_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerPlugins;
-		private void TreeViewItemTrackerAppearance_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerAppearance;
-		private void TreeViewItemTrackerBackups_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerBackups;
-		private void TreeViewItemTrackerHotKeys_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerHotKeys;
-		private void TreeViewItemTrackerNotifications_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsTrackerNotifications;
-		private void TreeViewItemSearch_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsSearch;
-		private void TreeViewItemOverlayStreaming_OnSelected(object sender, RoutedEventArgs e) => ContentControlOptions.Content = OptionsOverlayStreaming;
+		private void TreeViewItemSearch_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Search_Header");
+			OptionsContent = OptionsSearch;
+		}
+
+		private void TreeViewItemGeneralOverlay_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_General_Header");
+			OptionsContent = OptionsOverlayGeneral;
+		}
+
+		private void TreeViewItemOverlayDeckWindows_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_Windows_Header");
+			OptionsContent = OptionsOverlayDeckWindows;
+		}
+
+		private void TreeViewItemOverlayPlayer_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_Player_Header");
+			OptionsContent = OptionsOverlayPlayer;
+		}
+
+		private void TreeViewItemOverlayOpponent_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_Opponent_Header");
+			OptionsContent = OptionsOverlayOpponent;
+		}
+
+		private void TreeViewItemOverlayInteractivity_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_Interactivity_Header");
+			OptionsContent = OptionsOverlayInteractivity;
+		}
+
+		private void TreeViewItemOverlayStreaming_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_Streaming_Header");
+			OptionsContent = OptionsOverlayStreaming;
+		}
+
+		private void TreeViewItemTrackerGeneral_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_General_Header");
+			OptionsContent = OptionsTrackerGeneral;
+		}
+
+		private void TreeViewItemTrackerStats_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_Stats_Header");
+			OptionsContent = OptionsTrackerStats;
+		}
+
 		private void TreeViewItemTrackerReplays_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentControlOptions.Content = OptionsTrackerReplays;
+			ContentHeader = LocUtil.Get("Options_Tracker_Replays_Header");
+			OptionsContent = OptionsTrackerReplays;
+		}
+
+		private void TreeViewItemTrackerImporting_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_Importing_Header");
+			OptionsContent = OptionsTrackerImporting;
+		}
+
+		private void TreeViewItemTrackerNotifications_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_Notifications_Header");
+			OptionsContent = OptionsTrackerNotifications;
+		}
+
+		private void TreeViewItemTrackerPlugins_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_Plugins_Header");
+			OptionsContent = OptionsTrackerPlugins;
+		}
+
+		private void TreeViewItemTrackerHotKeys_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_Hotkeys_Header");
+			OptionsContent = OptionsTrackerHotKeys;
+		}
+
+		private void TreeViewItemTrackerBackups_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_Backups_Header");
+			OptionsContent = OptionsTrackerBackups;
+		}
+
+		private void TreeViewItemTrackerAppearance_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_Appearance_Header");
+			OptionsContent = OptionsTrackerAppearance;
+		}
+
+		private void TreeViewItemTrackerSettings_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_Settings_Header");
+			OptionsContent = OptionsTrackerSettings;
+		}
+
+		private void TreeViewItemTrackerLogging_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Tracker_Logging_Header");
+			OptionsContent = OptionsTrackerLogging;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Helper.TryOpenUrl(dir.FullName);
 		}
 
-		private void GroupBox_Drop(object sender, DragEventArgs e)
+		private void DockPanel_Drop(object sender, DragEventArgs e)
 		{
 			var dir = PluginManager.PluginDirectory.FullName;
 			try

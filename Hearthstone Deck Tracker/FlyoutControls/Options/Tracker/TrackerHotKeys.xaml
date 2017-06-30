@@ -13,76 +13,72 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
-    <GroupBox Header="{lex:LocTextUpper Options_Tracker_Hotkeys_Header}">
-        <GroupBox.Resources>
+    <StackPanel>
+        <StackPanel.Resources>
+            <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="Keys">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="forms:Keys" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+            <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="Mods">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="hotKeys:ModifierKeys" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
             <hotKeys:HotKeyManager x:Key="HotKeyManager" />
             <hotKeys:PredefinedHotKeyActions x:Key="PredefinedHotKeyActions" />
-        </GroupBox.Resources>
-        <StackPanel>
-            <StackPanel.Resources>
-                <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="Keys">
-                    <ObjectDataProvider.MethodParameters>
-                        <x:Type TypeName="forms:Keys" />
-                    </ObjectDataProvider.MethodParameters>
-                </ObjectDataProvider>
-                <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="Mods">
-                    <ObjectDataProvider.MethodParameters>
-                        <x:Type TypeName="hotKeys:ModifierKeys" />
-                    </ObjectDataProvider.MethodParameters>
-                </ObjectDataProvider>
-            </StackPanel.Resources>
-            <DataGrid Name="DataGridHotKeys" Height="200"
-                      ItemsSource="{Binding Path=RegisteredHotKeysInfo, Source={StaticResource HotKeyManager}}"
-                      AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False"
-                      CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False"
-                      CanUserSortColumns="False" IsReadOnly="True">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{lex:Loc Options_Tracker_Hotkeys_Table_Mod}" Binding="{Binding Key.Mod}" />
-                    <DataGridTextColumn Header="{lex:Loc Options_Tracker_Hotkeys_Table_Key}" Binding="{Binding Key.Key}" />
-                    <DataGridTextColumn Header="{lex:Loc Options_Tracker_Hotkeys_Table_Action}" Binding="{Binding Value}" />
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button Margin="0,5" Content="{lex:Loc Options_Tracker_Hotkeys_Button_Delete}" Click="ButtonDelete_OnClick" />
-            <GroupBox Header="{lex:LocTextUpper Options_Tracker_Hotkeys_LabelNew}">
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Label Content="{lex:Loc Options_Tracker_Hotkeys_Label_Mod}" DockPanel.Dock="Left" Grid.Column="0" Grid.Row="0" />
-                        <ComboBox Name="ComboBoxMod" ItemsSource="{Binding Source={StaticResource Mods}}"
-                                  SelectedIndex="0" Margin="5,2" Grid.Column="1" Grid.Row="0"
-                                  SelectionChanged="ComboBoxMod_OnSelectionChanged" />
-                        <Label Content="{lex:Loc Options_Tracker_Hotkeys_Label_Key}" DockPanel.Dock="Left" Grid.Column="0" Grid.Row="1" />
-                        <TextBox Name="TextBoxKey" controls:TextBoxHelper.Watermark="{lex:Loc Options_Tracker_Hotkeys_Text_Key_Watermark}" Margin="5,2"
-                                 Grid.Column="1" Grid.Row="1" PreviewKeyDown="TextBoxKey_OnPreviewKeyDown" />
-                        <Label Content="{lex:Loc Options_Tracker_Hotkeys_Label_Action}" Grid.Column="0" Grid.Row="2" />
-                        <ComboBox Name="ComboBoxActions" Margin="5,2"
-                                  ItemsSource="{Binding Path=PredefinedActionNames, Source={StaticResource PredefinedHotKeyActions}}"
-                                  SelectedIndex="1" Grid.Column="1" Grid.Row="2">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Title}" ToolTip="{Binding Description}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </Grid>
-                    <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" FontStyle="Normal" FontWeight="SemiBold"
-                               Text="{Binding Path=SelectedItem.Title, ElementName=ComboBoxActions, StringFormat={}{0}:}" />
-                    <TextBlock Text="{Binding Path=SelectedItem.Description, ElementName=ComboBoxActions}"
-                               TextWrapping="Wrap" FontStyle="Italic" />
-                    <TextBlock TextWrapping="Wrap" Foreground="Red"
-                               Text="{Binding Path=ErrorText, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                    <Button Content="{lex:Loc Options_Tracker_Hotkeys_Button_AddNew}" Margin="0,5,0,0" Click="ButtonAddNew_OnClick"
-                            IsEnabled="{Binding Path=SelectedHotKeyIsValue, RelativeSource={RelativeSource AncestorType=UserControl}}" />
-                </StackPanel>
-            </GroupBox>
-        </StackPanel>
-    </GroupBox>
+        </StackPanel.Resources>
+        <DataGrid Name="DataGridHotKeys" Height="200"
+                  ItemsSource="{Binding Path=RegisteredHotKeysInfo, Source={StaticResource HotKeyManager}}"
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False"
+                  CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False"
+                  CanUserSortColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{lex:Loc Options_Tracker_Hotkeys_Table_Mod}" Binding="{Binding Key.Mod}" />
+                <DataGridTextColumn Header="{lex:Loc Options_Tracker_Hotkeys_Table_Key}" Binding="{Binding Key.Key}" />
+                <DataGridTextColumn Header="{lex:Loc Options_Tracker_Hotkeys_Table_Action}" Binding="{Binding Value}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Margin="0,5" Content="{lex:Loc Options_Tracker_Hotkeys_Button_Delete}" Click="ButtonDelete_OnClick" />
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Hotkeys_LabelNew}">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Content="{lex:Loc Options_Tracker_Hotkeys_Label_Mod}" DockPanel.Dock="Left" Grid.Column="0" Grid.Row="0" />
+                    <ComboBox Name="ComboBoxMod" ItemsSource="{Binding Source={StaticResource Mods}}"
+                              SelectedIndex="0" Margin="5,2" Grid.Column="1" Grid.Row="0"
+                              SelectionChanged="ComboBoxMod_OnSelectionChanged" />
+                    <Label Content="{lex:Loc Options_Tracker_Hotkeys_Label_Key}" DockPanel.Dock="Left" Grid.Column="0" Grid.Row="1" />
+                    <TextBox Name="TextBoxKey" controls:TextBoxHelper.Watermark="{lex:Loc Options_Tracker_Hotkeys_Text_Key_Watermark}" Margin="5,2"
+                             Grid.Column="1" Grid.Row="1" PreviewKeyDown="TextBoxKey_OnPreviewKeyDown" />
+                    <Label Content="{lex:Loc Options_Tracker_Hotkeys_Label_Action}" Grid.Column="0" Grid.Row="2" />
+                    <ComboBox Name="ComboBoxActions" Margin="5,2"
+                              ItemsSource="{Binding Path=PredefinedActionNames, Source={StaticResource PredefinedHotKeyActions}}"
+                              SelectedIndex="1" Grid.Column="1" Grid.Row="2">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Title}" ToolTip="{Binding Description}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+                <TextBlock Margin="0,5,0,0" TextWrapping="Wrap" FontStyle="Normal" FontWeight="SemiBold"
+                           Text="{Binding Path=SelectedItem.Title, ElementName=ComboBoxActions, StringFormat={}{0}:}" />
+                <TextBlock Text="{Binding Path=SelectedItem.Description, ElementName=ComboBoxActions}"
+                           TextWrapping="Wrap" FontStyle="Italic" />
+                <TextBlock TextWrapping="Wrap" Foreground="Red"
+                           Text="{Binding Path=ErrorText, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                <Button Content="{lex:Loc Options_Tracker_Hotkeys_Button_AddNew}" Margin="0,5,0,0" Click="ButtonAddNew_OnClick"
+                        IsEnabled="{Binding Path=SelectedHotKeyIsValue, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
 </UserControl>

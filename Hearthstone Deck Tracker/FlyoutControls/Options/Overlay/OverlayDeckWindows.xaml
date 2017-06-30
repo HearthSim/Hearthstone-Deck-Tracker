@@ -10,71 +10,65 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="300">
-    <Grid>
-        <GroupBox Header="{lex:Loc Options_Overlay_Windows_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <CheckBox x:Name="CheckboxPlayerWindowOpenAutomatically"
-                              Content="{lex:Loc Options_DeckWindows_CheckBox_Player}" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxPlayerWindowOpenAutomatically_Checked"
-                              Unchecked="CheckboxPlayerWindowOpenAutomatically_Unchecked" />
-                    <CheckBox x:Name="CheckboxOpponentWindowOpenAutomatically"
-                              Content="{lex:Loc Options_DeckWindows_CheckBox_Opponent}" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxOpponentWindowOpenAutomatically_Checked"
-                              Unchecked="CheckboxOpponentWindowOpenAutomatically_Unchecked" />
-                    <CheckBox x:Name="CheckboxWindowsTopmost" Content="{lex:Loc Options_DeckWindows_CheckBox_Topmost}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxWindowsTopmost_Checked"
-                              Unchecked="CheckboxWindowsTopmost_Unchecked" />
-                    <CheckBox x:Name="CheckboxWinTopmostHsForeground"
-                              Content="{lex:Loc Options_DeckWindows_CheckBox_HsForeground}" HorizontalAlignment="Left"
-                              Margin="30,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxWinTopmostHsForeground_Checked"
-                              Unchecked="CheckboxWinTopmostHsForeground_Unchecked" />
-                    <CheckBox x:Name="CheckboxWindowCardToolTips" Content="{lex:Loc Options_DeckWindows_CheckBox_CardTooltips}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxWindowCardToolTips_Checked"
-                              Unchecked="CheckboxWindowCardToolTips_Unchecked" />
-                    <Separator Margin="0,5,0,0" />
-                    <CheckBox x:Name="CheckboxTimerWindow"
-                              Content="{lex:Loc Options_DeckWindows_CheckBox_Timer}" HorizontalAlignment="Left"
-                              Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxTimerWindow_Checked"
-                              Unchecked="CheckboxTimerWindow_Unchecked" />
-                    <CheckBox x:Name="CheckboxTimerTopmost" Content="{lex:Loc Options_DeckWindows_CheckBox_Topmost}"
-                              HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxTimerTopmost_Checked"
-                              Unchecked="CheckboxTimerTopmost_Unchecked" />
-                    <CheckBox x:Name="CheckboxTimerTopmostHsForeground"
-                              Content="{lex:Loc Options_DeckWindows_CheckBox_HsForeground}" HorizontalAlignment="Left"
-                              Margin="30,5,0,0" VerticalAlignment="Top"
-                              Checked="CheckboxTimerTopmostHsForeground_Checked"
-                              Unchecked="CheckboxTimerTopmostHsForeground_Unchecked" />
-                    <Separator Margin="0,5,0,0" />
-                    <DockPanel Margin="5,5,5,0">
-                        <Label Content="{lex:Loc Options_DeckWindows_Label_Background}" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
-                        <ComboBox x:Name="ComboboxWindowBackground" HorizontalAlignment="Right"
-                                  Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                                  SelectionChanged="ComboboxWindowBackground_SelectionChanged">
-                            <system:String>Theme</system:String>
-                            <system:String>Light</system:String>
-                            <system:String>Dark</system:String>
-                            <system:String>Custom</system:String>
-                        </ComboBox>
-                    </DockPanel>
-                    <DockPanel Margin="5,5,5,0">
-                        <Label Content="{lex:Loc Options_DeckWindows_Label_CustomHex}" HorizontalAlignment="Left"
-                               VerticalAlignment="Top" />
-                        <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Right"
-                                 Height="23" HorizontalContentAlignment="Center" Margin="10,0,0,0"
-                                 TextWrapping="Wrap" Text="#123456" VerticalAlignment="Top"
-                                 Width="150" TextChanged="TextboxCustomBackground_TextChanged" />
-                    </DockPanel>
-                </StackPanel>
-            </ScrollViewer>
-        </GroupBox>
-    </Grid>
+    <StackPanel>
+        <CheckBox x:Name="CheckboxPlayerWindowOpenAutomatically"
+                  Content="{lex:Loc Options_DeckWindows_CheckBox_Player}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxPlayerWindowOpenAutomatically_Checked"
+                  Unchecked="CheckboxPlayerWindowOpenAutomatically_Unchecked" />
+        <CheckBox x:Name="CheckboxOpponentWindowOpenAutomatically"
+                  Content="{lex:Loc Options_DeckWindows_CheckBox_Opponent}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxOpponentWindowOpenAutomatically_Checked"
+                  Unchecked="CheckboxOpponentWindowOpenAutomatically_Unchecked" />
+        <CheckBox x:Name="CheckboxWindowsTopmost" Content="{lex:Loc Options_DeckWindows_CheckBox_Topmost}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxWindowsTopmost_Checked"
+                  Unchecked="CheckboxWindowsTopmost_Unchecked" />
+        <CheckBox x:Name="CheckboxWinTopmostHsForeground"
+                  Content="{lex:Loc Options_DeckWindows_CheckBox_HsForeground}" HorizontalAlignment="Left"
+                  Margin="30,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxWinTopmostHsForeground_Checked"
+                  Unchecked="CheckboxWinTopmostHsForeground_Unchecked" />
+        <CheckBox x:Name="CheckboxWindowCardToolTips" Content="{lex:Loc Options_DeckWindows_CheckBox_CardTooltips}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxWindowCardToolTips_Checked"
+                  Unchecked="CheckboxWindowCardToolTips_Unchecked" />
+        <Separator Margin="0,5,0,0" />
+        <CheckBox x:Name="CheckboxTimerWindow"
+                  Content="{lex:Loc Options_DeckWindows_CheckBox_Timer}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxTimerWindow_Checked"
+                  Unchecked="CheckboxTimerWindow_Unchecked" />
+        <CheckBox x:Name="CheckboxTimerTopmost" Content="{lex:Loc Options_DeckWindows_CheckBox_Topmost}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxTimerTopmost_Checked"
+                  Unchecked="CheckboxTimerTopmost_Unchecked" />
+        <CheckBox x:Name="CheckboxTimerTopmostHsForeground"
+                  Content="{lex:Loc Options_DeckWindows_CheckBox_HsForeground}" HorizontalAlignment="Left"
+                  Margin="30,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxTimerTopmostHsForeground_Checked"
+                  Unchecked="CheckboxTimerTopmostHsForeground_Unchecked" />
+        <Separator Margin="0,5,0,0" />
+        <DockPanel Margin="5,5,5,0">
+            <Label Content="{lex:Loc Options_DeckWindows_Label_Background}" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" />
+            <ComboBox x:Name="ComboboxWindowBackground" HorizontalAlignment="Right"
+                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
+                      SelectionChanged="ComboboxWindowBackground_SelectionChanged">
+                <system:String>Theme</system:String>
+                <system:String>Light</system:String>
+                <system:String>Dark</system:String>
+                <system:String>Custom</system:String>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="5,5,5,0">
+            <Label Content="{lex:Loc Options_DeckWindows_Label_CustomHex}" HorizontalAlignment="Left"
+                   VerticalAlignment="Top" />
+            <TextBox x:Name="TextboxCustomBackground" HorizontalAlignment="Right"
+                     Height="23" HorizontalContentAlignment="Center" Margin="10,0,0,0"
+                     TextWrapping="Wrap" Text="#123456" VerticalAlignment="Top"
+                     Width="150" TextChanged="TextboxCustomBackground_TextChanged" />
+        </DockPanel>
+    </StackPanel>
 </UserControl>

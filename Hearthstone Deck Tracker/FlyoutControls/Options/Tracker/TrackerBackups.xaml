@@ -9,26 +9,20 @@
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              d:DesignHeight="600" d:DesignWidth="300">
-    <Grid>
-        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Backups_Header}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel Margin="10">
-                    <ListBox Name="ListBoxBackups" Height="200" SelectionMode="Extended">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding DisplayName}" />
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <Button Content="{lex:Loc Options_Tracker_Backups_Button_Restore}" Margin="0,5,0,0" Click="ButtonRestore_Click" />
-                    <Button Content="{lex:Loc Options_Tracker_Backups_Button_Create}" Margin="0,5,0,0" Click="ButtonCreateNew_Click" />
-                    <Button Content="{lex:Loc Options_Tracker_Backups_Button_Delete}" Margin="0,5,0,0" Click="ButtonDelete_Click" />
-                    <TextBlock
-                        Text="{lex:Loc Options_Tracker_Backups_Text_Description}"
-                        TextWrapping="Wrap" Margin="0,5,0,0" />
-                    <Button Content="{lex:Loc Options_Tracker_Backups_Button_BackupDir}" Margin="0,5,0,0" Click="ButtonOpenFolder_Click" />
-                </StackPanel>
-            </ScrollViewer>
-        </GroupBox>
-    </Grid>
+    <StackPanel Margin="10">
+        <ListBox Name="ListBoxBackups" Height="200" SelectionMode="Extended">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DisplayName}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Content="{lex:Loc Options_Tracker_Backups_Button_Restore}" Margin="0,5,0,0" Click="ButtonRestore_Click" />
+        <Button Content="{lex:Loc Options_Tracker_Backups_Button_Create}" Margin="0,5,0,0" Click="ButtonCreateNew_Click" />
+        <Button Content="{lex:Loc Options_Tracker_Backups_Button_Delete}" Margin="0,5,0,0" Click="ButtonDelete_Click" />
+        <TextBlock
+            Text="{lex:Loc Options_Tracker_Backups_Text_Description}"
+            TextWrapping="Wrap" Margin="0,5,0,0" />
+        <Button Content="{lex:Loc Options_Tracker_Backups_Button_BackupDir}" Margin="0,5,0,0" Click="ButtonOpenFolder_Click" />
+    </StackPanel>
 </UserControl>
