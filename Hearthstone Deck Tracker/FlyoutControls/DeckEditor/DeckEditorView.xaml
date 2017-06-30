@@ -122,9 +122,15 @@
         <StackPanel Margin="5,0,0,0">
             <GroupBox Header="{lex:LocTextUpper MainWindow_DeckBuilder_Header_Filters}">
                 <StackPanel Width="235">
-                    <CheckBox Content="{lex:Loc MainWindow_DeckBuilder_CheckBox_CardLimit}" IsChecked="{Binding ConstructedCardLimits}" Margin="2" Visibility="{Binding ConstructedCardLimitsVisibility}"/>
-                    <CheckBox Content="{lex:Loc MainWindow_DeckBuilder_CheckBox_IncludeWild}" IsChecked="{Binding IncludeWild}" Margin="2" />
-                    <CheckBox Content="{lex:Loc MainWindow_DeckBuilder_Label_SearchCardText}" IsChecked="{Binding FullTextSearch}" Margin="2" />
+                    <CheckBox IsChecked="{Binding ConstructedCardLimits}" Margin="2" Visibility="{Binding ConstructedCardLimitsVisibility}">
+                        <TextBlock Text="{lex:Loc MainWindow_DeckBuilder_CheckBox_CardLimit}" TextWrapping="Wrap"/>
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding IncludeWild}" Margin="2">
+                        <TextBlock Text="{lex:Loc MainWindow_DeckBuilder_CheckBox_IncludeWild}" TextWrapping="Wrap"/>
+                    </CheckBox>
+                    <CheckBox IsChecked="{Binding FullTextSearch}" Margin="2">
+                        <TextBlock Text="{lex:Loc MainWindow_DeckBuilder_Label_SearchCardText}" TextWrapping="Wrap"/>
+                    </CheckBox>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
