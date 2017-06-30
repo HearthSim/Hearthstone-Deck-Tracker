@@ -69,6 +69,18 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
+                    <Style TargetType="ListView" BasedOn="{StaticResource MetroListView}">
+                        <Setter Property="ScrollViewer.PanningMode" Value="VerticalOnly"/>
+                        <EventSetter Event="ManipulationBoundaryFeedback" Handler="HandleManipulationBoundaryFeedback"/>
+                    </Style>
+                    <Style TargetType="ListBox" BasedOn="{StaticResource MetroListBox}">
+                        <Setter Property="ScrollViewer.PanningMode" Value="VerticalOnly"/>
+                        <EventSetter Event="ManipulationBoundaryFeedback" Handler="HandleManipulationBoundaryFeedback"/>
+                    </Style>
+                    <Style TargetType="ScrollViewer">
+                        <Setter Property="PanningMode" Value="VerticalOnly"/>
+                        <EventSetter Event="ManipulationBoundaryFeedback" Handler="HandleManipulationBoundaryFeedback"/>
+                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

@@ -68,6 +68,7 @@
                 </TextBox>
                 <ListView ItemsSource="{Binding CardDatabase}" Style="{DynamicResource VirtualisedMetroListView}"
                     SelectedIndex="{Binding SelectedDbIndex}" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                    ScrollViewer.PanningMode="VerticalOnly"
                     Margin="0,5,0,0" BorderThickness="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -99,7 +100,9 @@
                     </DockPanel>
                 </Border>
                 <hearthstoneDeckTracker:ManaCurve x:Name="ManaCurve" DockPanel.Dock="Bottom" Height="150" />
-                <ListView ItemsSource="{Binding Cards}" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,5" BorderThickness="0">
+                <ListView ItemsSource="{Binding Cards}" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                          ScrollViewer.CanContentScroll="False"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"  Margin="0,5" BorderThickness="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <controls:Card>

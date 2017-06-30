@@ -225,7 +225,7 @@
                                     Foreground="White" FontWeight="Bold" BorderThickness="1"
                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                     ScrollViewer.VerticalScrollBarVisibility="Visible"
-                                    ScrollViewer.CanContentScroll="True" FontFamily="Arial"
+                                    ScrollViewer.CanContentScroll="False" FontFamily="Arial"
                                     HorizontalAlignment="Center" Width="236" Height="auto">
                     <ListView.Resources>
                         <Style TargetType="GridViewColumnHeader">

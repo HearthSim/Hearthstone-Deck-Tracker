@@ -162,6 +162,7 @@
     <ListView Name="ListViewDecks" VirtualizingPanel.IsVirtualizing="True" KeyUp="ListViewDecks_OnKeyUp"
               ItemsSource="{Binding DisplayedDecks, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewDecks_OnSelectionChanged"
+              ScrollViewer.CanContentScroll="False"
               SelectionMode="Extended" BorderThickness="1" MouseDoubleClick="ListViewDecks_OnMouseDoubleClick" PreviewMouseRightButtonUp="ListViewDecks_OnPreviewMouseRightButtonUp">
         <ListView.ContextMenu>
             <ContextMenu Opened="ContextMenu_OnOpened">

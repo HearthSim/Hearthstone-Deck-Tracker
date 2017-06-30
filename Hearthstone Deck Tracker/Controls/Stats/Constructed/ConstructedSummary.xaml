@@ -21,7 +21,7 @@
                         <CheckBox Name="CheckBoxShowLegends" Content="{lex:Loc Stats_Constructed_Summary_CheckBox_ShowLegends}" Margin="20,0,0,0" Foreground="White" IsChecked="{Binding Path=ArenaStatsShowLegends, Source={StaticResource ConfigWrapper}}"/>
                     </StackPanel>
                 </Expander.Header>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" PanningMode="HorizontalOnly">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -56,7 +56,7 @@
                 </ScrollViewer>
             </Expander>
             <GroupBox Header="{lex:Loc Stats_Constructed_Summary_Label_Highlights}" DockPanel.Dock="Top" PreviewMouseWheel="ForwardScrollEvent">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PanningMode="HorizontalOnly">
                     <StackPanel Orientation="Horizontal">
                         <DockPanel>
                             <Label DockPanel.Dock="Top" Content="{lex:Loc Stats_Constructed_Summary_Label_Total}" FontSize="16" Margin="10,0,0,0"/>

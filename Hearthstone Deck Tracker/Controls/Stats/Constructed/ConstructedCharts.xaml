@@ -14,7 +14,7 @@
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <StackPanel>
             <GroupBox Header="{lex:Loc Stats_Constructed_Charts_Label_Winrate}">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" PanningMode="HorizontalOnly">
                     <DockPanel Height="300" MinWidth="300">
                         <metroChart:RadialGaugeChart Background="Transparent" Margin="0,0,0,-10" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="Collapsed">
                             <metroChart:RadialGaugeChart.Series>
@@ -25,7 +25,7 @@
                 </ScrollViewer>
             </GroupBox>
             <GroupBox Header="{lex:Loc Stats_Constructed_Charts_Label_ByClass}">
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" PanningMode="HorizontalOnly">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>

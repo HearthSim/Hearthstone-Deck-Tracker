@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -83,5 +84,7 @@ namespace Hearthstone_Deck_Tracker
 			ShutdownMode = ShutdownMode.OnExplicitShutdown;
 			Core.Initialize();
 		}
+
+		private void HandleManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e) => e.Handled = true;
 	}
 }
