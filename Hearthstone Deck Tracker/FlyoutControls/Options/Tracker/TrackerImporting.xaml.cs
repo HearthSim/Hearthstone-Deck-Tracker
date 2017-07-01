@@ -1,12 +1,16 @@
 #region
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -17,14 +21,38 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	/// <summary>
 	/// Interaction logic for OtherImporting.xaml
 	/// </summary>
-	public partial class TrackerImporting
+	public partial class TrackerImporting : INotifyPropertyChanged
 	{
 		private GameV2 _game;
 		private bool _initialized;
+		private string _editButtonText = LocUtil.Get(LocEdit);
+		private bool _templateEditable;
+		private const string LocEdit = "Options_Tracker_Importing_Button_Edit";
+		private const string LocSave = "Options_Tracker_Importing_Button_Save";
 
 		public TrackerImporting()
 		{
 			InitializeComponent();
+		}
+
+		public string EditButtonText
+		{
+			get => _editButtonText;
+			set
+			{
+				_editButtonText = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool TemplateEditable
+		{
+			get => _templateEditable;
+			set
+			{
+				_templateEditable = value;
+				OnPropertyChanged();
+			}
 		}
 
 		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
@@ -96,18 +124,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void BtnEditTemplate_Click(object sender, RoutedEventArgs e)
 		{
-			if(TextBoxArenaTemplate.IsEnabled)
+			if(TemplateEditable)
 			{
-				BtnEditTemplate.Content = "EDIT";
 				Config.Instance.ArenaDeckNameTemplate = TextBoxArenaTemplate.Text;
 				Config.Save();
-				TextBoxArenaTemplate.IsEnabled = false;
 			}
-			else
-			{
-				BtnEditTemplate.Content = "SAVE";
-				TextBoxArenaTemplate.IsEnabled = true;
-			}
+			EditButtonText = LocUtil.Get(TemplateEditable ? LocEdit : LocSave);
+			TemplateEditable = !TemplateEditable;
 		}
 
 		private void TextBoxArenaTemplate_OnTextChanged(object sender, TextChangedEventArgs e) 
@@ -163,6 +186,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.PasteImportingChoice = (ImportingChoice)ComboboxPasteImporting.SelectedItem;
 			Config.Save();
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

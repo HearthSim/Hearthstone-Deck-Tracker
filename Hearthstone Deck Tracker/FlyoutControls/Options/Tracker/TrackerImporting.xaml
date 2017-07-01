@@ -9,6 +9,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="600" d:DesignWidth="300">
     <UserControl.Resources>
         <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
@@ -49,9 +50,9 @@
                                         <TextBlock Text="{lex:Loc Options_Tracker_Importing_Label_TemplatesPreview}" />
                                         <TextBlock Name="TextBlockNamePreview" Margin="5,0,0,0" />
                                     </DockPanel>
-                                    <Button Name="BtnEditTemplate" Content="{lex:Loc Options_Tracker_Importing_Button_Edit}" DockPanel.Dock="Right"
-                                            Margin="5,0,0,0" Click="BtnEditTemplate_Click" />
-                                    <TextBox Name="TextBoxArenaTemplate" IsEnabled="False"
+                                    <Button Name="BtnEditTemplate" Content="{Binding EditButtonText}" DockPanel.Dock="Right"
+                                            Margin="5,0,0,0" Click="BtnEditTemplate_Click"/>
+                                    <TextBox Name="TextBoxArenaTemplate" IsEnabled="{Binding TemplateEditable}"
                                              TextChanged="TextBoxArenaTemplate_OnTextChanged" />
                                 </DockPanel>
                             </GroupBox>
