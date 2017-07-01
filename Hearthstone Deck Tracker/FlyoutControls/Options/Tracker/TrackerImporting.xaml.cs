@@ -2,7 +2,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,19 +10,13 @@ using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
-using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 {
-	/// <summary>
-	/// Interaction logic for OtherImporting.xaml
-	/// </summary>
 	public partial class TrackerImporting : INotifyPropertyChanged
 	{
-		private GameV2 _game;
 		private bool _initialized;
 		private string _editButtonText = LocUtil.Get(LocEdit);
 		private bool _templateEditable;
@@ -57,9 +50,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 
-		public void Load(GameV2 game)
+		public void Load()
 		{
-			_game = game;
 			ComboboxArenaImportingBehaviour.ItemsSource = Enum.GetValues(typeof(ArenaImportingBehaviour));
 			if(Config.Instance.SelectedArenaImportingBehaviour.HasValue)
 				ComboboxArenaImportingBehaviour.SelectedItem = Config.Instance.SelectedArenaImportingBehaviour.Value;

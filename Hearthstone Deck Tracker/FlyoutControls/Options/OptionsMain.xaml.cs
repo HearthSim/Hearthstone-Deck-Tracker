@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsOverlayOpponent.Load(game);
 			OptionsOverlayInteractivity.Load();
 			OptionsTrackerSettings.Load();
-			OptionsTrackerImporting.Load(game);
+			OptionsTrackerImporting.Load();
 			OptionsTrackerLogging.Load(game);
 			OptionsTrackerStats.Load();
 			OptionsTrackerLogging.Load(game);
