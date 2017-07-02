@@ -10,7 +10,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="245">
     <Grid>
         <DockPanel Margin="6,0,6,6">
             <GroupBox Name="GroupBoxSortingAllConstructed" Header="{lex:Loc SortFilter_Label_Constructed}" DockPanel.Dock="Top">
@@ -69,9 +69,11 @@
                     <StackPanel Name="StackPanelFilterOptions" DockPanel.Dock="Bottom">
                         <Separator/>
                         <DockPanel>
-                            <Label Content="{lex:Loc SortFilter_Filter_Label_FilterOperation}" VerticalAlignment="Center"/>
-                            <controls:ToggleSwitch Name="OperationSwitch" OnLabel="{lex:Loc SortFilter_Filter_SwitchLabel_And}" OffLabel="{lex:Loc SortFilter_Filter_SwitchLabel_Or}" Width="110" HorizontalAlignment="Right"
-                                           Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked" />
+                            <controls:ToggleSwitch Name="OperationSwitch" 
+                                                   OnLabel="{lex:Loc SortFilter_Filter_SwitchLabel_And}" OffLabel="{lex:Loc SortFilter_Filter_SwitchLabel_Or}" 
+                                                   Width="110" HorizontalAlignment="Right" DockPanel.Dock="Right"
+                                                   Checked="OperationSwitch_OnChecked" Unchecked="OperationSwitch_OnUnchecked"/>
+                            <TextBlock Text="{lex:Loc SortFilter_Filter_Label_FilterOperation}" VerticalAlignment="Center" TextWrapping="Wrap"/>
                         </DockPanel>
                         <CheckBox Content="{lex:Loc SortFilter_Filter_CheckBoxIncludeStandard}" Margin="0,0,0,5" IsChecked="{Binding Path=DeckPickerWildIncludesStandard, Source={StaticResource ConfigWrapper}}"/>
                     </StackPanel>
