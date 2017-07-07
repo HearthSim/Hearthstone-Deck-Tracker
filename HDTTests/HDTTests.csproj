@@ -25,7 +25,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>5</LangVersion>
+    <LangVersion>7</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,7 +50,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <LangVersion>5</LangVersion>
+    <LangVersion>7</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -101,6 +101,10 @@
     <Compile Include="BoardDamage\PlayerBoardTest.cs" />
     <Compile Include="BoardDamage\BoardStateTest.cs" />
     <Compile Include="BoardDamage\EntityHelperTest.cs" />
+    <Compile Include="DeckImporting\DataGenerator.cs" />
+    <Compile Include="DeckImporting\DeckComparer.cs" />
+    <Compile Include="DeckImporting\DeckImportingTests.cs" />
+    <Compile Include="DeckImporting\TestData.cs" />
     <Compile Include="Hearthstone\GameTimeTest.cs" />
     <Compile Include="Hearthstone\ParseCardStringTest.cs" />
     <Compile Include="Hearthstone\SecretTests.cs" />
@@ -113,6 +117,10 @@
     <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj">
       <Project>{7ed14243-e02b-4b94-af00-a67a62c282f0}</Project>
       <Name>HearthDb</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HearthMirror\HearthMirror\HearthMirror.csproj">
+      <Project>{1694a2f8-645a-4263-a6ab-fc26323fd675}</Project>
+      <Name>HearthMirror</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj">
       <Project>{e63a3f1c-e662-4e62-be43-af27cb9e953d}</Project>
