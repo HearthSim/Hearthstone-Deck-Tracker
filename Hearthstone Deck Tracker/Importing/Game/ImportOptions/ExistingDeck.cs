@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Game.ImportOptions
 			Deck = deck;
 			var tmp = new Deck { Cards = new ObservableCollection<Card>(newDeck.Cards.Select(x => new Card { Id = x.Id, Count = x.Count })) };
 			var diff = tmp - deck;
-			MatchingCards = 30 - Math.Max(diff.Count(x => x.Count > 0), diff.Count(x => x.Count < 0));
+			MatchingCards = 30 - Math.Max(diff.Where(x => x.Count > 0).Sum(x => x.Count), diff.Where(x => x.Count < 0).Sum(x => -x.Count));
 			NewVersion = MatchingCards == 30 ? new SerializableVersion(0, 0)
 				: (MatchingCards < 26 ? SerializableVersion.IncreaseMajor(deck.Version)
 					: SerializableVersion.IncreaseMinor(deck.Version));
