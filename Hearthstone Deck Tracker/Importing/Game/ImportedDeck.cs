@@ -36,6 +36,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 				.ThenByDescending(x => x.Deck.LastPlayed);
 
 			ImportOptions = New.Concat(importOptions);
+
+			SelectedIndex = matchesOptions.Any(x => !x.ShouldBeNewDeck) ? 1 : 0;
 		}
 
 		public HearthMirror.Objects.Deck Deck { get; }

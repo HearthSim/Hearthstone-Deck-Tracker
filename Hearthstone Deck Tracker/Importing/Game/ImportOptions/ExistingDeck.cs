@@ -15,6 +15,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Game.ImportOptions
 
 		public int MatchingCards { get; }
 
+		public bool ShouldBeNewDeck { get; }
+
 		public ExistingDeck(Deck deck, HearthMirror.Objects.Deck newDeck)
 		{
 			Deck = deck;
@@ -24,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Game.ImportOptions
 			NewVersion = MatchingCards == 30 ? new SerializableVersion(0, 0)
 				: (MatchingCards < 26 ? SerializableVersion.IncreaseMajor(deck.Version)
 					: SerializableVersion.IncreaseMinor(deck.Version));
+			ShouldBeNewDeck = MatchingCards < 15;
 		}
 	}
 }
