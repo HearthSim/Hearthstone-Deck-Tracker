@@ -188,7 +188,20 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void ImportDecks(IEnumerable<ImportedDeck> decks, bool brawl, bool importNew = true, bool updateExisting = true, bool select = true)
 		{
-			Deck toSelect = null;
+			var imported = ImportDecksTo(DeckList.Instance.Decks, decks, brawl, importNew, updateExisting);
+			if(!imported.Any())
+				return;
+			DeckList.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+			Core.MainWindow.UpdateIntroLabelVisibility();
+			if(select)
+				Core.MainWindow.SelectDeck(imported.First(), true);
+			Core.UpdatePlayerCards(true);
+		}
+
+		public static List<Deck> ImportDecksTo(ICollection<Deck> targetList, IEnumerable<ImportedDeck> decks, bool brawl, bool importNew, bool updateExisting)
+		{
+			var importedDecks = new List<Deck>();
 			foreach(var deck in decks)
 			{
 				if(deck.SelectedImportOption is NewDeck)
@@ -196,7 +209,8 @@ namespace Hearthstone_Deck_Tracker
 					if(!importNew)
 						continue;
 					Log.Info($"Saving {deck.Deck.Name} as new deck.");
-					var newDeck = new Deck {
+					var newDeck = new Deck
+					{
 						Class = deck.Class,
 						Name = deck.Deck.Name,
 						HsId = deck.Deck.Id,
@@ -214,8 +228,8 @@ namespace Hearthstone_Deck_Tracker
 						newDeck.Tags.Add("Brawl");
 						newDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.BrawlDeckNameTemplate, newDeck);
 					}
-					DeckList.Instance.Decks.Add(newDeck);
-					toSelect = newDeck;
+					targetList.Add(newDeck);
+					importedDecks.Add(newDeck);
 				}
 				else
 				{
@@ -232,9 +246,10 @@ namespace Hearthstone_Deck_Tracker
 						Log.Info($"Assinging id to existing deck: {deck.Deck.Name}.");
 					else
 					{
-						Log.Info($"Saving {deck.Deck.Name} as {existing.NewVersion.ShortVersionString} (prev={target.Version.ShortVersionString}).");
-						DeckList.Instance.Decks.Remove(target);
-						var oldDeck = (Deck)target.Clone();
+						Log.Info(
+							$"Saving {deck.Deck.Name} as {existing.NewVersion.ShortVersionString} (prev={target.Version.ShortVersionString}).");
+						targetList.Remove(target);
+						var oldDeck = (Deck) target.Clone();
 						oldDeck.Versions = new List<Deck>();
 						if(!brawl)
 							target.Name = deck.Deck.Name;
@@ -251,18 +266,13 @@ namespace Hearthstone_Deck_Tracker
 						});
 						foreach(var card in cards)
 							target.Cards.Add(card);
-						var clone = (Deck)target.Clone();
-						DeckList.Instance.Decks.Add(clone);
-						toSelect = clone;
+						var clone = (Deck) target.Clone();
+						targetList.Add(clone);
+						importedDecks.Add(clone);
 					}
 				}
 			}
-			DeckList.Save();
-			Core.MainWindow.DeckPickerList.UpdateDecks();
-			Core.MainWindow.UpdateIntroLabelVisibility();
-			if(select && toSelect != null)
-				Core.MainWindow.SelectDeck(toSelect, true);
-			Core.UpdatePlayerCards(true);
+			return importedDecks;
 		}
 
 		private static DateTime _lastAutoImport;
