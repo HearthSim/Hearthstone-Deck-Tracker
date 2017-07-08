@@ -64,12 +64,24 @@ namespace HDTTests.DeckImporting
 			Druid.IronbarkProtector,
 		};
 
-		public static readonly Deck LocalDeck1 = DataGenerator.GetDeck(1, "Druid", "Druid1", Deck1Cards);
-		public static readonly Deck LocalDeck2 = DataGenerator.GetDeck(2, "Hunter", "Hunter2", Deck2Cards);
-		public static readonly Deck LocalDeck1_DifferentCards = DataGenerator.GetDeck(1, "Druid", "Druid1", Deck3Cards);
+		public static readonly string[] Deck1Cards_MinorChanges = Deck1Cards.Take(14).Concat(new[] { Druid.VerdantLongneck }).ToArray();
+		public static readonly string[] Deck1Cards_MajorChanges = Deck1Cards.Take(12).Concat(new[]
+		{
+			Druid.VerdantLongneck,
+			Druid.VirmenSensei,
+			Druid.VolcanicLumberer
+		}).ToArray();
 
-		public static readonly HmDeck RemoteDeck1 = DataGenerator.GetHmDeck(1, Druid.MalfurionStormrage, "Druid1", Deck1Cards);
-		public static readonly HmDeck RemoteDeck1_DifferentCards = DataGenerator.GetHmDeck(1, Druid.MalfurionStormrage, "Druid1", Deck3Cards);
-		public static readonly HmDeck RemoteDeck2 = DataGenerator.GetHmDeck(2, Hunter.Rexxar, "Hunter2", Deck2Cards);
+		public static Deck LocalDeck1 => DataGenerator.GetDeck(1, "Druid", "Druid1", Deck1Cards);
+		public static Deck LocalDeck2 => DataGenerator.GetDeck(2, "Hunter", "Hunter2", Deck2Cards);
+		public static Deck LocalDeck1_DifferentCards => DataGenerator.GetDeck(1, "Druid", "Druid1", Deck3Cards);
+		public static Deck LocalDeck1_MinorChanges => DataGenerator.GetDeck(1, "Druid", "Druid1", Deck1Cards_MinorChanges);
+		public static Deck LocalDeck1_MajorChanges => DataGenerator.GetDeck(1, "Druid", "Druid1", Deck1Cards_MajorChanges);
+
+		public static HmDeck RemoteDeck1 => DataGenerator.GetHmDeck(1, Druid.MalfurionStormrage, "Druid1", Deck1Cards);
+		public static HmDeck RemoteDeck1_DifferentCards => DataGenerator.GetHmDeck(1, Druid.MalfurionStormrage, "Druid1", Deck3Cards);
+		public static HmDeck RemoteDeck1_MinorChanges => DataGenerator.GetHmDeck(1, Druid.MalfurionStormrage, "Druid1", Deck1Cards_MinorChanges);
+		public static HmDeck RemoteDeck1_MajorChanges => DataGenerator.GetHmDeck(1, Druid.MalfurionStormrage, "Druid1", Deck1Cards_MajorChanges);
+		public static HmDeck RemoteDeck2 => DataGenerator.GetHmDeck(2, Hunter.Rexxar, "Hunter2", Deck2Cards);
 	}
 }
