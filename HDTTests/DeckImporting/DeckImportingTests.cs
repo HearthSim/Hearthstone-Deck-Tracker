@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Importing;
+using Hearthstone_Deck_Tracker.Importing.Game.ImportOptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HmDeck = HearthMirror.Objects.Deck;
 
@@ -12,13 +16,7 @@ namespace HDTTests.DeckImporting
 		/*
 		 * Deck importing test cases:
 		 * 
-		 * No local decks
-		 *	- no decks in hearthstone
-		 *	- new decks in hearthstone
-		 *
 		 * Local decks
-		 *	- no decks in hearthstone
-		 *	- new deck in hearthstone (new id, fully distinct cards from local decks)
 		 *	- new deck in hearthstone (existing id, fully distinct cards from local decks)
 		 *	- new deck in hearthstone (new id, minor changes from local deck)
 		 *	- new deck in hearthstone (existing id, minor changes from local deck)
@@ -26,7 +24,7 @@ namespace HDTTests.DeckImporting
 		 *	- new deck in hearthstone (existing id, major changes from local deck)
 		 *	- new deck in hearthstone (new id, cards exactly match local deck)
 		 *	- new deck in hearthstone (existing id, cards exatly match local deck)
-		 *  - new deck in hearthstone (less than 30 cards);
+		 *  - new deck in hearthstone (less than 30 cards) (irrelevant - handled before decks are passed to importer)
 		 *  
 		 *  - archived decks
 		 *  - same vs different class
@@ -67,8 +65,12 @@ namespace HDTTests.DeckImporting
 		{
 			Assert.AreEqual(0, _localDecks.Count);
 			Assert.AreEqual(0, _remoteDecks.Count);
-			// var decks = GetImportableDecks(_remoteDecks, _localDecks);
-			// Assert.AreEqual(0, decks.Count);
+
+			var decks = DeckImporter.GetImportedDecks(_remoteDecks, _localDecks);
+			Assert.AreEqual(0, decks.Count);
+
+			DeckManager.ImportDecksTo(_localDecks, decks, false, true, true);
+			Assert.AreEqual(0, _localDecks.Count);
 		}
 
 		[TestMethod]
@@ -77,12 +79,56 @@ namespace HDTTests.DeckImporting
 			_remoteDecks.Add(TestData.RemoteDeck1);
 			Assert.AreEqual(0, _localDecks.Count);
 			Assert.AreEqual(1, _remoteDecks.Count);
-			// var decks = GetImportableDecks(_remoteDecks, _localDecks);
-			// Assert.AreEqual(1, decks.Count);
-			// Assert.AreEqual(_remoteDeck.Id, decks[0].Id);
-			// ImportDecks(decks, _localDecks);
-			// Assert.AreEqual(1, _localDecks.Count);
-			// Assert.AreEqual(_localDeck1.Id, _localDecks[0].Id);
+
+			var decks = DeckImporter.GetImportedDecks(_remoteDecks, _localDecks);
+
+			Assert.AreEqual(1, decks.Count);
+			DeckComparer.AssertAreEqual(TestData.RemoteDeck1, decks[0].Deck);
+			Assert.IsTrue(decks[0].Import);
+			Assert.AreEqual(1, decks[0].ImportOptions.Count());
+			Assert.AreEqual(TestData.LocalDeck1.Class, decks[0].Class);
+			Assert.AreEqual(0, decks[0].SelectedIndex);
+			Assert.AreEqual(typeof(NewDeck), decks[0].SelectedImportOption.GetType());
+
+			DeckManager.ImportDecksTo(_localDecks, decks, false, true, true);
+
+			Assert.AreEqual(1, _localDecks.Count);
+			DeckComparer.AssertAreEqual(TestData.LocalDeck1, _localDecks[0]);
+		}
+
+		[TestMethod]
+		public void HasLocal_NewRemote_NewId_Distinct()
+		{
+			_localDecks.Add(TestData.LocalDeck1);
+			_remoteDecks.Add(TestData.RemoteDeck2);
+			Assert.AreEqual(1, _localDecks.Count);
+			Assert.AreEqual(1, _remoteDecks.Count);
+
+			var decks = DeckImporter.GetImportedDecks(_remoteDecks, _localDecks);
+
+			Assert.AreEqual(1, decks.Count);
+			DeckComparer.AssertAreEqual(TestData.RemoteDeck2, decks[0].Deck);
+			Assert.IsTrue(decks[0].Import);
+			Assert.AreEqual(1, decks[0].ImportOptions.Count());
+			Assert.AreEqual(0, decks[0].SelectedIndex);
+			Assert.AreEqual(typeof(NewDeck), decks[0].SelectedImportOption.GetType());
+
+			DeckManager.ImportDecksTo(_localDecks, decks, false, true, true);
+
+			Assert.AreEqual(2, _localDecks.Count);
+			DeckComparer.AssertAreEqual(TestData.LocalDeck1, _localDecks[0]);
+			DeckComparer.AssertAreEqual(TestData.LocalDeck2, _localDecks[1]);
+		}
+
+		[TestMethod]
+		public void HasLocal_NoRemote()
+		{
+			_localDecks.Add(TestData.LocalDeck1);
+			Assert.AreEqual(1, _localDecks.Count);
+			Assert.AreEqual(0, _remoteDecks.Count);
+
+			var decks = DeckImporter.GetImportedDecks(_remoteDecks, _localDecks);
+			Assert.AreEqual(0, decks.Count);
 		}
 	}
 }
