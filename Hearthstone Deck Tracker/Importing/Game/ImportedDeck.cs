@@ -11,10 +11,13 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 {
 	public class ImportedDeck
 	{
-		public ImportedDeck(HearthMirror.Objects.Deck deck, List<Deck> candidates, IEnumerable<Deck> localDecks)
+		/// <param name="deck">HearthMirror deck object</param>
+		/// <param name="matches">Local decks with HsId OR 30 matching cards</param>
+		/// <param name="localDecks">All local decks</param>
+		public ImportedDeck(HearthMirror.Objects.Deck deck, List<Deck> matches, IList<Deck> localDecks)
 		{
 			Deck = deck;
-			candidates = candidates ?? new List<Deck>();
+			matches = matches ?? new List<Deck>();
 			var hero = Database.GetCardFromId(deck.Hero);
 			if(string.IsNullOrEmpty(hero?.PlayerClass) || hero.Id == Database.UnknownCardId)
 			{
@@ -22,10 +25,17 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 				return;
 			}
 			Class = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(hero.PlayerClass.ToLower());
-			ImportOptions =
-				New.Concat(candidates.Concat(localDecks.Where(x => x.Class == Class && !x.Archived && !x.IsArenaDeck)).Distinct()
-					.Select(x => new ExistingDeck(x, deck)).OrderByDescending(x => x.Deck.HsId == deck.Id).ThenByDescending(x => x.MatchingCards).ThenByDescending(x => x.Deck.LastPlayed));
-			SelectedIndex = candidates.Any() ? 1 : 0;
+
+			var localOptions = localDecks.Where(d => d.Class == Class && !d.Archived && !d.IsArenaDeck)
+				.Select(x => new ExistingDeck(x, deck));
+			var matchesOptions = matches.Select(x => new ExistingDeck(x, deck)).ToList();
+			var importOptions = matchesOptions.Concat(localOptions)
+				.GroupBy(x => new {x.Deck.DeckId, x.Deck.Version}).Select(g => g.First())
+				.OrderByDescending(x => x.Deck.HsId == deck.Id)
+				.ThenByDescending(x => x.MatchingCards)
+				.ThenByDescending(x => x.Deck.LastPlayed);
+
+			ImportOptions = New.Concat(importOptions);
 		}
 
 		public HearthMirror.Objects.Deck Deck { get; }
