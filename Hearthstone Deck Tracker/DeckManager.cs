@@ -228,6 +228,11 @@ namespace Hearthstone_Deck_Tracker
 						newDeck.Tags.Add("Brawl");
 						newDeck.Name = Helper.ParseDeckNameTemplate(Config.Instance.BrawlDeckNameTemplate, newDeck);
 					}
+
+					var existingWithId = targetList.FirstOrDefault(d => d.HsId == deck.Deck.Id);
+					if(existingWithId != null)
+						existingWithId.HsId = 0;
+
 					targetList.Add(newDeck);
 					importedDecks.Add(newDeck);
 				}
