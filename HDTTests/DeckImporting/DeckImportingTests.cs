@@ -54,6 +54,7 @@ namespace HDTTests.DeckImporting
 			{
 				new { Local = TestData.LocalDeck1, Remote = TestData.RemoteDeck1 },
 				new { Local = TestData.LocalDeck2, Remote = TestData.RemoteDeck2 },
+				new { Local = TestData.LocalDeck1_DifferentCards, Remote = TestData.RemoteDeck1_DifferentCards },
 			};
 
 			foreach(var deckPair in deckPairs)
@@ -118,6 +119,32 @@ namespace HDTTests.DeckImporting
 			Assert.AreEqual(2, _localDecks.Count);
 			DeckComparer.AssertAreEqual(TestData.LocalDeck1, _localDecks[0]);
 			DeckComparer.AssertAreEqual(TestData.LocalDeck2, _localDecks[1]);
+		}
+
+		[TestMethod]
+		public void HasLocal_NewRemote_ExistingId_Distinct()
+		{
+			_localDecks.Add(TestData.LocalDeck1);
+			_remoteDecks.Add(TestData.RemoteDeck1_DifferentCards);
+			Assert.AreEqual(1, _localDecks.Count);
+			Assert.AreEqual(1, _remoteDecks.Count);
+
+			var decks = DeckImporter.GetImportedDecks(_remoteDecks, _localDecks);
+
+			Assert.AreEqual(1, decks.Count);
+			DeckComparer.AssertAreEqual(TestData.RemoteDeck1_DifferentCards, decks[0].Deck);
+			Assert.IsTrue(decks[0].Import);
+			Assert.AreEqual(2, decks[0].ImportOptions.Count());
+			Assert.AreEqual(0, decks[0].SelectedIndex);
+			Assert.AreEqual(typeof(NewDeck), decks[0].SelectedImportOption.GetType());
+
+			DeckManager.ImportDecksTo(_localDecks, decks, false, true, true);
+
+			Assert.AreEqual(2, _localDecks.Count);
+			var localDeck = (Deck)TestData.LocalDeck1.Clone();
+			localDeck.HsId = 0;
+			DeckComparer.AssertAreEqual(localDeck, _localDecks[0]);
+			DeckComparer.AssertAreEqual(TestData.RemoteDeck1_DifferentCards, _localDecks[1]);
 		}
 
 		[TestMethod]
