@@ -7,10 +7,10 @@
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-        Title="{lex:Loc ArenaRewardsDialog_Title}" Height="416" Width="300" Topmost="True" WindowStyle="ToolWindow"
+        Title="{lex:Loc ArenaRewardsDialog_Title}" Height="416" Width="350" Topmost="True" WindowStyle="ToolWindow"
         SaveWindowPosition="True"
         BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
-    <StackPanel HorizontalAlignment="Center">
+    <StackPanel>
         <stats:ArenaRewards x:Name="ArenaRewards" Save="ArenaRewards_OnSave"/>
     </StackPanel>
 </controls:MetroWindow>
