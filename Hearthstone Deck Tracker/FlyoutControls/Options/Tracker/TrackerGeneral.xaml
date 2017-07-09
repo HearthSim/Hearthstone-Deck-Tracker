@@ -83,8 +83,9 @@
                     <CheckBox x:Name="CheckBoxAutoUse" Margin="10,5,0,0"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                               Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                              Content="{lex:Loc Options_Tracker_General_CheckBox_AutoUse}"
-                              Checked="CheckBoxAutoUse_OnChecked" Unchecked="CheckBoxAutoUse_OnUnchecked" />
+                              Checked="CheckBoxAutoUse_OnChecked" Unchecked="CheckBoxAutoUse_OnUnchecked">
+                        <TextBlock Text="{lex:Loc Options_Tracker_General_CheckBox_AutoUse}" TextWrapping="Wrap"/>
+                    </CheckBox>
                     <CheckBox x:Name="CheckBoxClassCardsFirst" Margin="10,5,0,0"
                               Content="{lex:Loc Options_Tracker_General_CheckBox_Sorting}"
                               Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"

@@ -29,10 +29,11 @@
                 </StackPanel>
             </GroupBox>
             <CheckBox x:Name="CheckboxArenaRewardDialog"
-                      Content="{lex:Loc Options_Tracker_Notifications_Label_ArenaReward}"
                       HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                       Checked="CheckboxArenaRewardDialog_Checked"
-                      Unchecked="CheckboxArenaRewardDialog_Unchecked" />
+                      Unchecked="CheckboxArenaRewardDialog_Unchecked">
+                <TextBlock Text="{lex:Loc Options_Tracker_Notifications_Label_ArenaReward}" TextWrapping="Wrap"/>
+            </CheckBox>
             <CheckBox x:Name="CheckboxNoteDialog"
                       Content="{lex:Loc Options_Tracker_Notifications_Label_NoteDialog}"
                       HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
