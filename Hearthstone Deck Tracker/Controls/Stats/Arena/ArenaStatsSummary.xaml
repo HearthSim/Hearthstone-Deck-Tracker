@@ -23,7 +23,7 @@
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{lex:LocTextUpper Stats_Arena_Summary_Label_Charts}" Foreground="White"/>
-                        <CheckBox Name="CheckBoxShowLegends" Content="show legends" Margin="20,0,0,0" Foreground="White" IsChecked="{Binding Path=ArenaStatsShowLegends, Source={StaticResource ConfigWrapper}}"/>
+                        <CheckBox Name="CheckBoxShowLegends" Content="{lex:Loc Stats_CheckBox_ShowLegends}" Margin="20,0,0,0" Foreground="White" IsChecked="{Binding Path=ArenaStatsShowLegends, Source={StaticResource ConfigWrapper}}"/>
                     </StackPanel>
                 </Expander.Header>
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" PanningMode="HorizontalOnly">
