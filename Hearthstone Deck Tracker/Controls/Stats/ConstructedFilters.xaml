@@ -218,13 +218,17 @@
                  LostFocus="TextBoxOpponentName_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
         <TextBox Name="TextBoxNote" controls:TextBoxHelper.Watermark="{lex:Loc Stats_Constructed_Filters_Text_Notes_Watermark}" Margin="0,5,0,0" 
                  LostFocus="TextBoxNote_OnLostFocus" PreviewKeyUp="TextBox_OnEnter" MaxLength="100"/>
-        <CheckBox Name="CheckBoxArchived" Content="{lex:Loc Stats_Constructed_Filters_CheckBox_Archived}" Margin="5,5,0,0" 
+        <CheckBox Name="CheckBoxArchived" Margin="5,5,0,0" 
                   IsChecked="{Binding Path=ConstructedStatsIncludeArchived, Source={StaticResource ConfigWrapper}}"
                   IsEnabled="{Binding IsChecked, ElementName=CheckBoxDecks, Converter={StaticResource InverseBooleanConverter}}"
-                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" />
-        <CheckBox Name="CheckBoxTags" Content="{lex:Loc Stats_Constructed_Filters_CheckBox_TagFilters}" Margin="5,5,0,0" 
+                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats">
+            <TextBlock Text="{lex:Loc Stats_Constructed_Filters_CheckBox_Archived}" TextWrapping="Wrap"/>
+        </CheckBox>
+        <CheckBox Name="CheckBoxTags" Margin="5,5,0,0" 
                   ToolTip="{lex:Loc Stats_Constructed_Filters_CheckBox_TagFilters_Tooltip}"
                   IsChecked="{Binding Path=ConstructedStatsApplyTagFilters, Source={StaticResource ConfigWrapper}}"
-                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats" />
+                  Checked="CheckBox_UpdateStats" Unchecked="CheckBox_UpdateStats">
+            <TextBlock Text="{lex:Loc Stats_Constructed_Filters_CheckBox_TagFilters}" TextWrapping="Wrap"/>
+        </CheckBox>
     </StackPanel>
 </UserControl>
