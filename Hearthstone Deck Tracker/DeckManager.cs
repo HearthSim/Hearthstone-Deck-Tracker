@@ -247,6 +247,11 @@ namespace Hearthstone_Deck_Tracker
 					target.HsId = deck.Deck.Id;
 					if(brawl && !target.Tags.Any(x => x.ToUpper().Contains("BRAWL")))
 						target.Tags.Add("Brawl");
+					if(target.Archived)
+					{
+						target.Archived = false;
+						Log.Info($"Unarchiving deck: {deck.Deck.Name}.");
+					}
 					if(existing.NewVersion.Major == 0)
 						Log.Info($"Assinging id to existing deck: {deck.Deck.Name}.");
 					else
