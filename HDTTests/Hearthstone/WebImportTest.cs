@@ -19,14 +19,6 @@ namespace HDTTests.Hearthstone
 		}
 
 		[TestMethod, TestCategory("Web")]
-		public void Hearthstats()
-		{
-			Deck expected = CreateDeck();
-			Deck found = DeckImporter.Import(@"https://hearthstats.net/decks/senfglas-patron--248").Result;
-			Assert.IsTrue(AreDecksEqual(expected, found));
-		}
-
-		[TestMethod, TestCategory("Web")]
 		public void Hearthpwn()
 		{
 			Deck expected = CreateDeck();
