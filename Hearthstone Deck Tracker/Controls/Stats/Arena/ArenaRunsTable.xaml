@@ -15,7 +15,11 @@
     <UserControl.Resources>
         <converters:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter"/>
     </UserControl.Resources>
-    <DataGrid Name="DataGridArenaRuns" SelectedIndex="0" SelectedItem="{Binding SelectedRun, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource, IsAsync=True}" ItemsSource="{Binding Path=FilteredRuns, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True, NotifyOnTargetUpdated=True}" TargetUpdated="DataGridArenaRuns_OnTargetUpdated" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
+    <DataGrid Name="DataGridArenaRuns" SelectionMode="Single" SelectedIndex="0"
+        SelectedItem="{Binding SelectedRun, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWayToSource, IsAsync=True}"
+        ItemsSource="{Binding Path=FilteredRuns, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True, NotifyOnTargetUpdated=True}"
+        TargetUpdated="DataGridArenaRuns_OnTargetUpdated" AutoGenerateColumns="False" CanUserAddRows="False"
+        CanUserDeleteRows="False" CanUserResizeRows="False" IsReadOnly="True">
         <DataGrid.Columns>
             <DataGridTemplateColumn Header="{lex:Loc Stats_Arena_Runs_Table_Class}" SortMemberPath="Class">
                 <DataGridTemplateColumn.CellTemplate>
