@@ -97,6 +97,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		private async void ButtonShowReplay_OnClick(object sender, RoutedEventArgs e)
 		{
 			var game = SelectedGame;
+			if(game == null)
+				return;
 			await ReplayLauncher.ShowReplay(game, true);
 			game.UpdateReplayState();
 		}
