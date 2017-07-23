@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="800">
     <StackPanel Orientation="Horizontal">
-        <StackPanel Margin="10" Width="120">
+        <StackPanel Margin="10" MinWidth="120">
             <StackPanel Orientation="Horizontal" Height="48">
                 <Image Width="46" Height="46" Source="/HearthstoneDeckTracker;component/Resources/gold_2.png" RenderOptions.BitmapScalingMode="Fant"/>
                 <Label Content="{lex:Loc Stats_Arena_Rewards_Label_Gold}" FontSize="16" VerticalAlignment="Center"/>
@@ -32,7 +32,7 @@
             </StackPanel>
         </StackPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <StackPanel Margin="10" Width="120">
+        <StackPanel Margin="10" MinWidth="120">
             <StackPanel Orientation="Horizontal">
                 <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/dust.png" RenderOptions.BitmapScalingMode="Fant"/>
                 <Label Content="{lex:Loc Stats_Arena_Rewards_Label_Dust}" FontSize="16" VerticalAlignment="Center"/>
@@ -49,7 +49,7 @@
                 </StackPanel>
         </StackPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <StackPanel Margin="10" Width="260">
+        <StackPanel Margin="10" MinWidth="260">
             <StackPanel Orientation="Horizontal">
                 <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/pack_stack.png" RenderOptions.BitmapScalingMode="Fant"/>
                 <Label Content="{lex:Loc Stats_Arena_Rewards_Label_Packs}" FontSize="16" VerticalAlignment="Center"/>
@@ -90,7 +90,7 @@
             </StackPanel>
         </StackPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>
-        <StackPanel Margin="10" Width="120">
+        <StackPanel Margin="10" MinWidth="120">
             <StackPanel Orientation="Horizontal">
                 <Image Width="48" Height="48" Source="/HearthstoneDeckTracker;component/Resources/cards_2.png" RenderOptions.BitmapScalingMode="Fant"/>
                 <Label Content="{lex:Loc Stats_Arena_Rewards_Label_Cards}" FontSize="16" VerticalAlignment="Center"/>
