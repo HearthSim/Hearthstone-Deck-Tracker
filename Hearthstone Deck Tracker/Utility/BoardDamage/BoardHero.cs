@@ -49,10 +49,8 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 				// weapon is equipped
 				if(_weapon != null)
 				{
-					// windfury weapon, with more than 2 chages
+					// windfury weapon, with 2 or more charges,
 					// and hero hasn't attacked yet this turn.
-					// better to check weapon for durability in 
-					// case of windfury, instead of heros exhausted
 					if(_weapon.Windfury && _weapon.Health >= 2 && _hero.AttacksThisTurn == 0)
 					{
 						// double the hero attack value

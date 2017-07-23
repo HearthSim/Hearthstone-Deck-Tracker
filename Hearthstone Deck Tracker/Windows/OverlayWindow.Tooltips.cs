@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else if(ListViewPlayer.Visibility == Visible && StackPanelPlayer.Visibility == Visible
 					&& PointInsideControl(relativePlayerDeckPos, ListViewPlayer.ActualWidth, ListViewPlayer.ActualHeight))
 			{
-				//card size = card list height / ammount of cards
+				//card size = card list height / amount of cards
 				var cardSize = ViewBoxPlayer.ActualHeight / ListViewPlayer.Items.Count;
 				var cardIndex = (int)(relativePlayerDeckPos.Y / cardSize);
 				if(cardIndex < 0 || cardIndex >= ListViewPlayer.Items.Count)
@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else if(ListViewOpponent.Visibility == Visible && StackPanelOpponent.Visibility == Visible
 					&& PointInsideControl(relativeOpponentDeckPos, ListViewOpponent.ActualWidth, ListViewOpponent.ActualHeight))
 			{
-				//card size = card list height / ammount of cards
+				//card size = card list height / amount of cards
 				var cardSize = ViewBoxOpponent.ActualHeight / ListViewOpponent.Items.Count;
 				var cardIndex = (int)(relativeOpponentDeckPos.Y / cardSize);
 				if(cardIndex < 0 || cardIndex >= ListViewOpponent.Items.Count)
@@ -141,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else if(StackPanelSecrets.Visibility == Visible
 					&& PointInsideControl(relativeSecretsPos, StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
 			{
-				//card size = card list height / ammount of cards
+				//card size = card list height / amount of cards
 				var cardSize = StackPanelSecrets.ActualHeight / StackPanelSecrets.Children.Count;
 				var cardIndex = (int)(relativeSecretsPos.Y / cardSize);
 				if(cardIndex < 0 || cardIndex >= StackPanelSecrets.Children.Count)

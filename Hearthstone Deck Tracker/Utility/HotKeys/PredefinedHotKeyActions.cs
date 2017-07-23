@@ -162,7 +162,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		}
 
 		[PredefinedHotKeyAction("Screenshot",
-			"Creates a screenshot of the game and overlay (and everthing else in front of it). Comes with an option to automatically upload to imgur."
+			"Creates a screenshot of the game and overlay (and everything else in front of it). Comes with an option to automatically upload to imgur."
 			)]
 		public static async void Screenshot()
 		{

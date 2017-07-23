@@ -21,8 +21,8 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		{
 			if(!forPlayer)
 				id = (id % 2) + 1;
-			var heros = entities.Where(x => IsHero(x.Value)).Select(x => x.Value).ToList();
-			return heros.FirstOrDefault(x => x.GetTag(CONTROLLER) == id);
+			var heroes = entities.Where(x => IsHero(x.Value)).Select(x => x.Value).ToList();
+			return heroes.FirstOrDefault(x => x.GetTag(CONTROLLER) == id);
 		}
 
 		public static bool IsPlayersTurn() => IsPlayersTurn(Core.Game.Entities);
