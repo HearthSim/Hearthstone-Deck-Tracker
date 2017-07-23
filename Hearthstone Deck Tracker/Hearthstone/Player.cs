@@ -33,8 +33,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int SpellsPlayedCount { get; private set; }
 
 		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin);
-		public int HandCount => Hand.Count(x => x.IsControlledBy(Id));
-		public int DeckCount => Deck.Count(x => x.IsControlledBy(Id));
+		public int HandCount => Hand.Count();
+		public int DeckCount => Deck.Count();
 
 		public IEnumerable<Entity> PlayerEntities => _game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && x.IsControlledBy(Id));
 		public IEnumerable<Entity> RevealedEntities => _game.Entities.Values.Where(x => !x.Info.HasOutstandingTagChanges && (x.IsControlledBy(Id) || x.Info.OriginalController == Id)).Where(x => x.HasCardId);
