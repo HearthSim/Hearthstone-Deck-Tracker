@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				var deck = new Deck();
 
 				var deckName =
-					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header[@class='entry-header']/h1[@class='entry-title']").InnerText);
+					HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header[@class='entry-header']//h1[@class='entry-title']").InnerText);
 				deck.Name = deckName;
 
 
