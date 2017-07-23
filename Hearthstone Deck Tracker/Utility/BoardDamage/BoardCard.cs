@@ -66,8 +66,8 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		public string Zone { get; }
 
 		/// <summary>
-		///  weapons use durability, instead of health
-		/// include armor so heros are correct
+		/// weapons use durability, instead of health
+		/// include armor so heroes are correct
 		/// </summary>
 		/// <param name="isWeapon"></param>
 		/// <returns></returns>
@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			// V-07-TR-0N is a special case Mega-Windfury
 			if(!string.IsNullOrEmpty(CardId) && CardId == "GVG_111t")
 				return V07TRONAttack(active);
-				// for weapons check for windfury and number of hits left
+			// for weapons check for windfury and number of hits left
 			if(isWeapon)
 			{
 				if(Windfury && Health >= 2 && AttacksThisTurn == 0)
@@ -107,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 				return Charge && AttacksThisTurn == 0;
 			}
 			// sometimes cards seem to be in wrong zone while in play,
-				// these cards don't become exhausted, so check attacks.
+			// these cards don't become exhausted, so check attacks.
 			if(Zone.ToLower() == "deck" || Zone.ToLower() == "hand")
 				return (!Windfury || AttacksThisTurn < 2) && (Windfury || AttacksThisTurn < 1);
 			return true;
