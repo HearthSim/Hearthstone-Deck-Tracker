@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Options.Load(Core.Game);
 
-			Core.TrayIcon.SetContextMenuProperty("autoSelectDeck", "Checked", Config.Instance.AutoDeckDetection);
+			Core.TrayIcon.MenuItemAutoSelect.Checked = Config.Instance.AutoDeckDetection;
 
 			// Don't select the 'archived' class on load
 			var selectedClasses = Config.Instance.SelectedDeckPickerClasses.Where(c => c.ToString() != "Archived").ToList();
@@ -73,8 +73,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			ManaCurveMyDecks.Visibility = Config.Instance.ManaCurveMyDecks ? Visibility.Visible : Visibility.Collapsed;
 
-			Core.TrayIcon.SetContextMenuProperty("classCardsFirst", "Checked", Config.Instance.CardSortingClassFirst);
-			Core.TrayIcon.SetContextMenuProperty("useNoDeck", "Checked", DeckList.Instance.ActiveDeck == null);
+			Core.TrayIcon.MenuItemClassCardsFirst.Checked = Config.Instance.CardSortingClassFirst;
+			Core.TrayIcon.MenuItemUseNoDeck.Checked = DeckList.Instance.ActiveDeck == null;
 
 			UpdateMyGamesPanelVisibility();
 		}

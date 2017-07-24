@@ -71,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Config.Instance.AutoDeckDetection = enable;
 			Config.Save();
 			Options.OptionsTrackerGeneral.CheckBoxAutoDeckDetection.IsChecked = enable;
-			Core.TrayIcon.SetContextMenuProperty(TrayIcon.AutoSelectDeckMenuItemName, TrayIcon.CheckedProperty, enable);
+			Core.TrayIcon.MenuItemAutoSelect.Checked = enable;
 		}
 
 		public void SortClassCardsFirst(bool classFirst)
@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Config.Instance.CardSortingClassFirst = classFirst;
 			Config.Save();
 			Helper.SortCardCollection(Core.MainWindow.ListViewDeck.ItemsSource, classFirst);
-			Core.TrayIcon.SetContextMenuProperty(TrayIcon.ClassCardsFirstMenuItemName, TrayIcon.CheckedProperty, classFirst);
+			Core.TrayIcon.MenuItemClassCardsFirst.Checked = classFirst;
 		}
 
 		internal void ShowReplayFromFileDialog()
@@ -477,9 +477,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					}
 
 					Log.Info($"Switched to deck: {deck.Name} ({deck.SelectedVersion.ShortVersionString})");
-
-					var useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
-					Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = false;
+					Core.TrayIcon.MenuItemUseNoDeck.Checked = false;
 				}
 
 				if(FlyoutDeckScreenshot.IsOpen)
@@ -507,8 +505,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(setActive)
 					DeckPickerList.DeselectDeck();
 
-				var useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey(TrayIcon.UseNoDeckMenuItemName);
-				Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Checked = true;
+				Core.TrayIcon.MenuItemUseNoDeck.Checked = true;
 			}
 
 			if(setActive)

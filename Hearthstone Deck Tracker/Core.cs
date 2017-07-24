@@ -161,7 +161,6 @@ namespace Hearthstone_Deck_Tracker
 				Updater.CheckForUpdates(true);
 #endif
 			var hsForegroundChanged = false;
-			var useNoDeckMenuItem = TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
 			while(UpdateOverlay)
 			{
 				if(Config.Instance.CheckForUpdates)
@@ -188,7 +187,7 @@ namespace Hearthstone_Deck_Tracker
 					}
 
 					MainWindow.BtnStartHearthstone.Visibility = Visibility.Collapsed;
-					TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = false;
+					TrayIcon.MenuItemStartHearthstone.Visible = false;
 
 					Game.IsRunning = true;
 
@@ -244,7 +243,7 @@ namespace Hearthstone_Deck_Tracker
 					TurnTimer.Instance.Stop();
 
 					MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
-					TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Visible = true;
+					TrayIcon.MenuItemStartHearthstone.Visible = true;
 
 					if(Config.Instance.CloseWithHearthstone)
 						MainWindow.Close();

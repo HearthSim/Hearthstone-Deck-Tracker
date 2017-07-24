@@ -310,8 +310,7 @@ namespace Hearthstone_Deck_Tracker
 			if(User32.GetHearthstoneWindow() != IntPtr.Zero)
 				return;
 			Core.MainWindow.BtnStartHearthstone.IsEnabled = false;
-			var useNoDeckMenuItem = Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems.IndexOfKey("startHearthstone");
-			Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Enabled = false;
+			Core.TrayIcon.MenuItemUseNoDeck.Enabled = false;
 			try
 			{
 				var bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault();
@@ -348,7 +347,7 @@ namespace Hearthstone_Deck_Tracker
 				Log.Error(ex);
 			}
 
-			Core.TrayIcon.NotifyIcon.ContextMenu.MenuItems[useNoDeckMenuItem].Enabled = true;
+			Core.TrayIcon.MenuItemUseNoDeck.Enabled = true;
 			Core.MainWindow.BtnStartHearthstone.IsEnabled = true;
 		}
 
