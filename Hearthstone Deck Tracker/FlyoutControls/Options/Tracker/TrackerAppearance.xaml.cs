@@ -189,7 +189,21 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.Localization = (Language)ComboBoxLanguage.SelectedItem;
 			Config.Save();
 			LocUtil.UpdateCultureInfo();
+			UpdateUIAfterChangeLanguage();
+		}
+
+		private void UpdateUIAfterChangeLanguage()
+		{
+			// Options
 			Helper.OptionsMain.ContentHeader = LocUtil.Get("Options_Tracker_Appearance_Header");
+
+			// TrayIcon
+			Core.TrayIcon.MenuItemStartHearthstone.Text = LocUtil.Get("TrayIcon_MenuItemStartHearthstone");
+			Core.TrayIcon.MenuItemUseNoDeck.Text = LocUtil.Get("TrayIcon_MenuItemUseNoDeck");
+			Core.TrayIcon.MenuItemAutoSelect.Text = LocUtil.Get("TrayIcon_MenuItemAutoSelect");
+			Core.TrayIcon.MenuItemClassCardsFirst.Text = LocUtil.Get("TrayIcon_MenuItemClassCardsFirst");
+			Core.TrayIcon.MenuItemShow.Text = LocUtil.Get("TrayIcon_MenuItemShow");
+			Core.TrayIcon.MenuItemExit.Text = LocUtil.Get("TrayIcon_MenuItemExit");
 		}
 
 		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);

@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -42,22 +43,22 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Log.Error($"Cant find tray icon at \"{iconFile.FullName}\"");
 
-			MenuItemStartHearthstone = new MenuItem("Start Launcher/Hearthstone", (sender, args) => Helper.StartHearthstoneAsync().Forget());
+			MenuItemStartHearthstone = new MenuItem(LocUtil.Get("TrayIcon_MenuItemStartHearthstone"), (sender, args) => Helper.StartHearthstoneAsync().Forget());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemStartHearthstone);
 
-			MenuItemUseNoDeck = new MenuItem("No-deck mode", (sender, args) => UseNoDeckContextMenu());
+			MenuItemUseNoDeck = new MenuItem(LocUtil.Get("TrayIcon_MenuItemUseNoDeck"), (sender, args) => UseNoDeckContextMenu());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemUseNoDeck);
 
-			MenuItemAutoSelect = new MenuItem("Autoselect deck", (sender, args) => AutoDeckDetectionContextMenu());
+			MenuItemAutoSelect = new MenuItem(LocUtil.Get("TrayIcon_MenuItemAutoSelect"), (sender, args) => AutoDeckDetectionContextMenu());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemAutoSelect);
 
-			MenuItemClassCardsFirst = new MenuItem("Class cards first", (sender, args) => SortClassCardsFirstContextMenu());
+			MenuItemClassCardsFirst = new MenuItem(LocUtil.Get("TrayIcon_MenuItemClassCardsFirst"), (sender, args) => SortClassCardsFirstContextMenu());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemClassCardsFirst);
 
-			MenuItemShow = new MenuItem("Show", (sender, args) => Core.MainWindow.ActivateWindow());
+			MenuItemShow = new MenuItem(LocUtil.Get("TrayIcon_MenuItemShow"), (sender, args) => Core.MainWindow.ActivateWindow());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemShow);
 
-			MenuItemExit = new MenuItem("Exit", (sender, args) => Core.MainWindow.Close());
+			MenuItemExit = new MenuItem(LocUtil.Get("TrayIcon_MenuItemExit"), (sender, args) => Core.MainWindow.Close());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemExit);
 
 			NotifyIcon.MouseClick += (sender, args) =>
