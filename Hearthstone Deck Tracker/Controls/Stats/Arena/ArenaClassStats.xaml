@@ -44,7 +44,7 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_Runs, Suffix=' '}"/>
                 <TextBlock VerticalAlignment="Center">
-                    <Run Text="{Binding Runs, Mode=OneWay}"/> (<Run Text="{Binding PickedPercent, Mode=OneWay}"/> <Run Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_PercentTotal}"/>)
+                    <Run Text="{Binding Runs, Mode=OneWay, FallbackValue=0}"/> (<Run Text="{Binding PickedPercent, Mode=OneWay, FallbackValue=0}"/><Run Text="{lex:LocText Key=Stats_Arena_ClassStats_Label_PercentTotal}"/>)
                 </TextBlock>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
