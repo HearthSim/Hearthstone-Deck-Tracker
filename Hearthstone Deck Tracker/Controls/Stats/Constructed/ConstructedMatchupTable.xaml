@@ -29,7 +29,7 @@
             <DataGridTextColumn Binding="{Binding Druid.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Druid}" Width="24" Height="24" />
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Druid}" ToolTip="{lex:Loc Druid}" Width="24" Height="24" />
                     </DataTemplate>
                 </DataGridTextColumn.HeaderTemplate>
                 <DataGridTextColumn.ElementStyle>
@@ -42,7 +42,7 @@
             <DataGridTextColumn Binding="{Binding Hunter.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Hunter}" Width="24" Height="24" />
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Hunter}" ToolTip="{lex:Loc Hunter}" Width="24" Height="24" />
                     </DataTemplate>
                 </DataGridTextColumn.HeaderTemplate>
                 <DataGridTextColumn.ElementStyle>
@@ -55,7 +55,7 @@
             <DataGridTextColumn Binding="{Binding Mage.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Mage}" Width="24" Height="24" />
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Mage}" ToolTip="{lex:Loc Mage}" Width="24" Height="24" />
                     </DataTemplate>
                 </DataGridTextColumn.HeaderTemplate>
                 <DataGridTextColumn.ElementStyle>
@@ -68,7 +68,7 @@
             <DataGridTextColumn Binding="{Binding Paladin.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Paladin}" Width="24" Height="24" />
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Paladin}" ToolTip="{lex:Loc Paladin}" Width="24" Height="24" />
                     </DataTemplate>
                 </DataGridTextColumn.HeaderTemplate>
                 <DataGridTextColumn.ElementStyle>
@@ -81,7 +81,7 @@
             <DataGridTextColumn Binding="{Binding Priest.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Priest}" Width="24" Height="24" />
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Priest}" ToolTip="{lex:Loc Priest}" Width="24" Height="24" />
                     </DataTemplate>
                 </DataGridTextColumn.HeaderTemplate>
                 <DataGridTextColumn.ElementStyle>
@@ -94,7 +94,7 @@
             <DataGridTextColumn Binding="{Binding Rogue.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Rogue}" Width="24" Height="24" />
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Rogue}" ToolTip="{lex:Loc Rogue}" Width="24" Height="24" />
                     </DataTemplate>
                 </DataGridTextColumn.HeaderTemplate>
                 <DataGridTextColumn.ElementStyle>
@@ -107,7 +107,7 @@
             <DataGridTextColumn Binding="{Binding Shaman.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Shaman}" Width="24" Height="24" />
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Shaman}" ToolTip="{lex:Loc Shaman}" Width="24" Height="24" />
                     </DataTemplate>
                 </DataGridTextColumn.HeaderTemplate>
                 <DataGridTextColumn.ElementStyle>
@@ -120,7 +120,7 @@
             <DataGridTextColumn Binding="{Binding Warlock.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Warlock}" Width="24" Height="24" />
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Warlock}" ToolTip="{lex:Loc Warlock}" Width="24" Height="24" />
                     </DataTemplate>
                 </DataGridTextColumn.HeaderTemplate>
                 <DataGridTextColumn.ElementStyle>
@@ -133,7 +133,7 @@
             <DataGridTextColumn Binding="{Binding Warrior.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>
-                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Warrior}" Width="24" Height="24" />
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.Warrior}" ToolTip="{lex:Loc Warrior}" Width="24" Height="24" />
                     </DataTemplate>
                 </DataGridTextColumn.HeaderTemplate>
                 <DataGridTextColumn.ElementStyle>
