@@ -58,7 +58,7 @@
             </DockPanel>
             <DockPanel Margin="0,2,0,0">
                 <Label Content="{lex:Loc AddGameDialog_Label_Region}" Width="90"/>
-                <ComboBox Name="ComboBoxRegion" SelectedIndex="0" SelectionChanged="ComboBoxMode_OnSelectionChanged">
+                <ComboBox Name="ComboBoxRegion" SelectedIndex="0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
