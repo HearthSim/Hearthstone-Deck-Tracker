@@ -340,7 +340,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			GPLeftCol.Width = new GridLength(GoldFrameHeight);
 			GPRightCol.Width = new GridLength(GoldFrameHeight);
 			LblGoldProgress.Margin = new Thickness(GoldFrameHeight * 1.2, 0, GoldFrameHeight * 0.8, 0);
-			LblGoldProgress.FontSize = Height * 0.017;
 			
 			//Scale attack icons, with height
 			var atkWidth = (int)Math.Round(Height * 0.0695, 0);
@@ -350,14 +349,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			IconBoardAttackPlayer.Height = atkWidth;
 			TextBlockPlayerAttack.Width = atkWidth;
 			TextBlockPlayerAttack.Height = atkWidth;
-			TextBlockPlayerAttack.FontSize = atkFont;
 			IconBoardAttackOpponent.Width = atkWidth;
 			IconBoardAttackOpponent.Height = atkWidth;
 			TextBlockOpponentAttack.Width = atkWidth;
 			TextBlockOpponentAttack.Height = atkWidth;
-			TextBlockOpponentAttack.FontSize = atkFont;
 			TextBlockPlayerAttack.Margin = new Thickness(0, atkFontMarginTop, 0, 0);
 			TextBlockOpponentAttack.Margin = new Thickness(0, atkFontMarginTop, 0, 0);
+
+			if(Height > 0)
+			{
+				LblGoldProgress.FontSize = Height * 0.017;
+				TextBlockPlayerAttack.FontSize = atkFont;
+				TextBlockOpponentAttack.FontSize = atkFont;
+			}
 
 			var wotogSize = Math.Min(1, Height / 1800);
 			if(_wotogSize != wotogSize)
