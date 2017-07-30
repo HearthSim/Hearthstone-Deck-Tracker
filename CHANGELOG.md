@@ -1,3 +1,22 @@
+## __Release v1.3.6 - 2017-07-30__
+
+__New__:
+- Added German and French translations.
+- Added a "Missing cards" tab to the "Export" flyout, which will show you any cards you are missing for that deck.
+
+__Fixes__:
+- Fixed an issue where deck importing would not find an existing deck in versions.
+- Fixed an issue where auto deck selection would not always find the correct version.
+- Fixed an issue where the deck editor would not find non-english card names.
+- Fixed an issue where the "This week" timeframe filter would not always use the correct first day of the week.
+- Fixed an issue where global statistics would not be loaded for wild decks.
+
+__Changes__:
+- Deck code export now has an option to include the version number in the name.
+- The global statistics is now hidden while an arena deck is selected.
+- Improved touch screen behavior in several places.
+
+
 ## __Release v1.3.5 - 2017-06-03__
 
 __Fixes__:
