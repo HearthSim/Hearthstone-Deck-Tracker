@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.StreamingOverlayBackground = TextboxCustomBackground.Text;
 			Config.Save();
 			OnPropertyChanged(nameof(SelectedColor));
-			Core.Windows.CapturableOverlay.UpdateBackground();
+			Core.Windows.CapturableOverlay?.UpdateBackground();
 		}
 
 		[NotifyPropertyChangedInvocator]
