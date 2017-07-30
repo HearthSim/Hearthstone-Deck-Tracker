@@ -3,8 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Rectangle Fill="{Binding Background}" Height="34" Width="217"/>
+    <Rectangle Fill="{Binding Background}" Height="34" Width="217" ToolTipService.ShowOnDisabled="True" ToolTipService.ShowDuration="60000"
+            ToolTipService.IsEnabled="{Binding HasTooltip, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Rectangle.ToolTip>
+            <controls:CardToolTipControl/>
+        </Rectangle.ToolTip>
+        <Rectangle.Resources>
+            <Style TargetType="ToolTip">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+            </Style>
+        </Rectangle.Resources>
+    </Rectangle>
 </UserControl>

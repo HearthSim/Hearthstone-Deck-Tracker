@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelAdditionalTooltips.Children.Clear();
 			foreach(var id in card.EntourageCardIds)
 			{
-				var tooltip = new CardToolTip();
+				var tooltip = new CardToolTipControl();
 				tooltip.SetValue(DataContextProperty, Database.GetCardFromId(id));
 				StackPanelAdditionalTooltips.Children.Add(tooltip);
 			}

@@ -715,9 +715,6 @@
     </Compile>
     <Compile Include="GameEventHandler.cs" />
     <Compile Include="Hearthstone\Card.cs" />
-    <Compile Include="Controls\CardToolTip.xaml.cs">
-      <DependentUpon>CardToolTip.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FlyoutControls\DeckNotes.xaml.cs">
       <DependentUpon>DeckNotes.xaml</DependentUpon>
     </Compile>
@@ -840,10 +837,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CardMarker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\CardToolTip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -25,16 +25,6 @@
                     <Setter Property="Visibility" Value="Collapsed" />
                 </Style>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
-                    <Setter Property="ToolTipService.ShowDuration" Value="60000" />
-                    <Setter Property="ToolTipService.IsEnabled" Value="True" />
-                    <Setter Property="ToolTip">
-                        <Setter.Value>
-                            <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                <hearthstoneDeckTracker:CardToolTip />
-                            </ToolTip>
-                        </Setter.Value>
-                    </Setter>
                     <Setter Property="Margin" Value="-4,-3,-3,0" />
                     <Style.Triggers>
                         <Trigger Property="IsSelected"

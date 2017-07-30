@@ -38,16 +38,6 @@
                             ScrollViewer.CanContentScroll="False">
                     <controls1:AnimatedCardList.ItemContainerStyle>
                         <Style TargetType="controls1:AnimatedCard">
-                            <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
-                            <Setter Property="ToolTipService.ShowDuration" Value="60000" />
-                            <Setter Property="ToolTipService.IsEnabled" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:OpponentWindow}}, Path=ShowToolTip}" />
-                            <Setter Property="ToolTip">
-                                <Setter.Value>
-                                    <ToolTip Background="Transparent" BorderBrush="Transparent">
-                                        <local:CardToolTip/>
-                                    </ToolTip>
-                                </Setter.Value>
-                            </Setter>
                             <Setter Property="Margin" Value="0,1,0,0"/>
                         </Style>
                     </controls1:AnimatedCardList.ItemContainerStyle>

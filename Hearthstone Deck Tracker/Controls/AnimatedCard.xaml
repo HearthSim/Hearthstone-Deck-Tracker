@@ -27,7 +27,8 @@
         </Storyboard>
     </UserControl.Resources>
     <Grid Name="Grid">
-        <Rectangle Name="RectCard" Fill="{Binding Background}" Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Center"/>
-        <Rectangle Name="RectHighlight" Fill="{Binding Highlight}" Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant" Opacity="0" VerticalAlignment="Center"/>
+        <local:Card HasTooltip="{Binding Path=WindowCardToolTips, Source={StaticResource ConfigWrapper}}"/>
+        <Rectangle Name="RectHighlight" Fill="{Binding Highlight}" Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant"
+                   Opacity="0" VerticalAlignment="Center" IsHitTestVisible="False" />
     </Grid>
 </UserControl>

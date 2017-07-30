@@ -135,8 +135,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 
 		private string CleanString(string str) => string.IsNullOrEmpty(str) ? string.Empty : Helper.RemoveDiacritics(str, true).ToLowerInvariant();
 
-		public bool TooltipEnabled => Config.Instance.TrackerCardToolTips;
-
 		public ICommand AddCardCommand => new Command<Card>(AddCardToDeck);
 
 		public ICommand RemoveCardCommand => new Command<Card>(RemoveCardFromDeck);
