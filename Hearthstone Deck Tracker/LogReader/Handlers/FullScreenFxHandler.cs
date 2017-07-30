@@ -87,9 +87,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			Log.Info("Found selected deck: " + selectedDeck.Name);
 			var hsDeck = DeckImporter.ConstructedDecksCache.FirstOrDefault(x => x.Id == selectedDeckId);
-			if(hsDeck != null && !selectedDeck.Cards.All(c => hsDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
+			var selectedVersion = selectedDeck.GetSelectedDeckVersion();
+			if(hsDeck != null && !selectedVersion.Cards.All(c => hsDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)))
 			{
-				var version = selectedDeck.Versions.FirstOrDefault(v => v.Cards.All(c => hsDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)));
+				var nonSelectedVersions = selectedDeck.VersionsIncludingSelf.Where(v => v != selectedVersion.Version).Select(selectedDeck.GetVersion);
+				var version = nonSelectedVersions.FirstOrDefault(v => v.Cards.All(c => hsDeck.Cards.Any(c2 => c.Id == c2.Id && c.Count == c2.Count)));
 				if(version != null)
 				{
 					selectedDeck.SelectVersion(version);
