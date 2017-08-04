@@ -321,6 +321,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var handCount = _game.Opponent.HandCount > 10 ? 10 : _game.Opponent.HandCount;
 			for (int i = 0; i < handCount; i++)
 			{
+				_cardMarks[i].UpdateScaling();
 				Canvas.SetLeft(_cardMarks[i], Helper.GetScaledXPos(_cardMarkPos[handCount - 1][i].X, (int)Width, ScreenRatio) - _cardMarks[i].ActualWidth / 2);
 				Canvas.SetTop(_cardMarks[i], Math.Max(_cardMarkPos[handCount - 1][i].Y * Height - _cardMarks[i].ActualHeight / 3, 5));
 			}
