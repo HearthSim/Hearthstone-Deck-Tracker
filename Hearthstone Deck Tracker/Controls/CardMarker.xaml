@@ -7,7 +7,7 @@
              x:Class="Hearthstone_Deck_Tracker.Controls.CardMarker"
              mc:Ignorable="d" 
              d:DesignHeight="34" d:DesignWidth="36">
-    <Canvas>
+    <Canvas x:Name="CombinedCardIcon">
         <Canvas Width="32" Height="32">
             <Canvas.Background>
                <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/card-marker.png"/>

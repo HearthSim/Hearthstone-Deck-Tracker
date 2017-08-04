@@ -22,6 +22,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public CardMarker()
 		{
 			InitializeComponent();
+			UpdateScaling();
 		}
 
 		public string Text
@@ -30,6 +31,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			set { CardAge.Text = value; }
 		}
 
+		public void UpdateScaling() => CombinedCardIcon.LayoutTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100, Config.Instance.OverlayOpponentScaling / 100);
+	
 		public CardMark Mark
 		{
 			get { return _mark; }
