@@ -1,6 +1,7 @@
 ﻿#region
 
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
@@ -67,6 +68,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public static readonly ActionList OnInMenu = new ActionList();
 		public static readonly ActionList<ActivePlayer> OnTurnStart = new ActionList<ActivePlayer>();
 		public static readonly ActionList OnMouseOverOff = new ActionList();
+		public static readonly ActionList<Mode> OnModeChanged = new ActionList<Mode>();
 
 		#endregion
 	}
