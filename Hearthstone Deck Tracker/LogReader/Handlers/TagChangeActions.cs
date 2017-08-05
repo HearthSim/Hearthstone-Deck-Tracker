@@ -277,7 +277,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				entity.Info.Created = true;
 				return;
 			}
-			if(entity.IsHero || entity.IsHeroPower || entity.HasTag(PLAYER_ID) || entity.GetTag(CARDTYPE) == (int)CardType.GAME
+			if(entity.IsHero && !entity.IsPlayableHero || entity.IsHeroPower || entity.HasTag(PLAYER_ID) || entity.GetTag(CARDTYPE) == (int)CardType.GAME
 				|| entity.HasTag(CREATOR))
 				return;
 			ZoneChangeFromDeck(gameState, id, game, (int)HAND, (int)DECK, entity.GetTag(CONTROLLER), cardId);
