@@ -47,6 +47,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsHero => GetTag(GameTag.CARDTYPE) == (int)CardType.HERO;
 
 		[JsonIgnore]
+		// TODO: Replace CardSet check once the ICC update goes live
+		public bool IsPlayableHero => IsHero && Card.CardSet != CardSet.CORE && Card.CardSet != CardSet.HERO_SKINS;
+
+		[JsonIgnore]
 		public bool IsActiveDeathrattle => HasTag(GameTag.DEATHRATTLE) && GetTag(GameTag.DEATHRATTLE) == 1;
 
 		/// <Summary>
@@ -59,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsMinion => GetTag(GameTag.CARDTYPE) == (int)CardType.MINION;
 
 		[JsonIgnore]
-		public bool IsPlayableCard => IsMinion || IsSpell || IsWeapon;
+		public bool IsPlayableCard => IsMinion || IsSpell || IsWeapon || IsPlayableHero;
 
 		[JsonIgnore]
 		public bool IsWeapon => GetTag(GameTag.CARDTYPE) == (int)CardType.WEAPON;
