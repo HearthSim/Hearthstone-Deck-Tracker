@@ -1,3 +1,13 @@
+## __Release v1.4.0 - 2017-08-08__
+
+__Updated for Knights of the Frozen Throne__
+
+__Changes__:
+- Opponent card markers now scale with the opponent scaling value set in `options > overlay > opponent`.
+
+__API__:
+- Added GameEvents.OnModeChanged
+
 ## __Release v1.3.6 - 2017-07-30__
 
 __New__:
