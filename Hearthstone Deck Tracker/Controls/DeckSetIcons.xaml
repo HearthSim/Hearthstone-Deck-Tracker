@@ -110,7 +110,7 @@
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_ungoro}" />
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Name="RectIconIcecrown" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Kft}">
+        <Rectangle Name="RectIconIcecrown" Width="16" Height="16" Margin="2,0" ToolTip="{lex:Loc DeckSetIcons_Tooltip_Icecrown}">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_icecrown}" />
             </Rectangle.Fill>

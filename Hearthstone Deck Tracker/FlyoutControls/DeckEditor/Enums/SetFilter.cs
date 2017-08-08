@@ -29,6 +29,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Msg")]
 		GANGS = 25,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Ungoro")]
-		UNGORO = 27
+		UNGORO = 27,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Icecrown")]
+		ICECROWN = 1001
 	}
 }

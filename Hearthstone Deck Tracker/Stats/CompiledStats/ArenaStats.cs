@@ -36,6 +36,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountUngoro => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.JourneyToUngoro));
 
+		public int PacksCountIcecrown => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.KnightsOfTheFrozenThrone));
+
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
 		public double PacksCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.PackCount).DefaultIfEmpty(0).Average(), 2);
@@ -318,6 +320,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			OnPropertyChanged(nameof(PacksCountTgt));
 			OnPropertyChanged(nameof(PacksCountWotog));
 			OnPropertyChanged(nameof(PacksCountMsg));
+			OnPropertyChanged(nameof(PacksCountUngoro));
+			OnPropertyChanged(nameof(PacksCountIcecrown));
 			OnPropertyChanged(nameof(PacksCountTotal));
 			OnPropertyChanged(nameof(PacksCountAveragePerRun));
 			OnPropertyChanged(nameof(CardCountTotal));

@@ -21,6 +21,9 @@ namespace Hearthstone_Deck_Tracker.Enums
 		MeanStreetsOfGadgetzan,
 
 		[LocDescription("Enum_ArenaRewardPacks_JourneyToUngoro")]
-		JourneyToUngoro
+		JourneyToUngoro,
+
+		[LocDescription("Enum_ArenaRewardPacks_KnightsOfTheFrozenThrone")]
+		KnightsOfTheFrozenThrone
 	}
 }
