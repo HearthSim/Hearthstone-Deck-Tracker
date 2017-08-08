@@ -229,6 +229,9 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.OpponentMinionCount < 7)
 				_game.OpponentSecrets.SetZero(Mage.MirrorEntity);
 
+			if(_game.OpponentHandCount < 10)
+				_game.OpponentSecrets.SetZero(Mage.FrozenClone);
+
 			if(Core.MainWindow != null)
 				Core.Overlay.ShowSecrets();
 		}

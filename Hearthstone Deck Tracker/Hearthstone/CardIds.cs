@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, Snipe, SnakeTrap};
+				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, Snipe, SnakeTrap, VemonstrikeTrap};
 				public static string BearTrap => HearthDb.CardIds.Collectible.Hunter.BearTrap;
 				public static string CatTrick => HearthDb.CardIds.Collectible.Hunter.CatTrick;
 				public static string DartTrap => HearthDb.CardIds.Collectible.Hunter.DartTrap;
@@ -114,6 +114,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string Misdirection => HearthDb.CardIds.Collectible.Hunter.Misdirection;
 				public static string Snipe => HearthDb.CardIds.Collectible.Hunter.Snipe;
 				public static string SnakeTrap => HearthDb.CardIds.Collectible.Hunter.SnakeTrap;
+				public static string VemonstrikeTrap => HearthDb.CardIds.Collectible.Hunter.VenomstrikeTrap;
 
 				public static List<string> GetCards(bool standardOnly) => 
 					standardOnly ? All.Where(x => !Helper.WildOnlySets.Contains(Database.GetCardFromId(x).Set)).ToList() : All;
@@ -121,10 +122,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Mage
 			{
-				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, IceBarrier, IceBlock, ManaBind, MirrorEntity, PotionOfPolymorph, Spellbender, Vaporize};
+				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, PotionOfPolymorph, Spellbender, Vaporize};
 				public static string Counterspell => HearthDb.CardIds.Collectible.Mage.Counterspell;
 				public static string Duplicate => HearthDb.CardIds.Collectible.Mage.Duplicate;
 				public static string Effigy => HearthDb.CardIds.Collectible.Mage.Effigy;
+				public static string FrozenClone => HearthDb.CardIds.Collectible.Mage.FrozenClone;
 				public static string IceBarrier => HearthDb.CardIds.Collectible.Mage.IceBarrier;
 				public static string IceBlock => HearthDb.CardIds.Collectible.Mage.IceBlock;
 				public static string ManaBind => HearthDb.CardIds.Collectible.Mage.ManaBind;

@@ -141,7 +141,10 @@ namespace Hearthstone_Deck_Tracker
 			else
 			{
 				if(!fastOnly && Game.OpponentMinionCount < 7)
+				{
 					SetZeroOlder(CardIds.Secrets.Hunter.SnakeTrap, stopIndex);
+					SetZeroOlder(CardIds.Secrets.Hunter.VemonstrikeTrap, stopIndex);
+				}
 
 				if(attacker.IsMinion)
 					SetZeroOlder(CardIds.Secrets.Hunter.FreezingTrap, stopIndex);
