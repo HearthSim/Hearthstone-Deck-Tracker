@@ -237,6 +237,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warrior.DirehornHatchling:
 								AddKnownCardId(gameState, NonCollectible.Warrior.DirehornHatchling_DirehornMatriarchToken);
 								break;
+							case Collectible.Mage.FrozenClone:
+								AddKnownCardId(gameState, GetTargetCardId(match), 2);
+								break;
+							case Collectible.Shaman.Moorabi:
+								AddKnownCardId(gameState, GetTargetCardId(match));
+								break;
 						}
 					}
 					else //POWER
@@ -285,6 +291,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Neutral.EliseTheTrailblazer:
 								AddKnownCardId(gameState, NonCollectible.Neutral.ElisetheTrailblazer_UngoroPackToken);
+								break;
+							case Collectible.Mage.GhastlyConjurer:
+								AddKnownCardId(gameState, Collectible.Mage.MirrorImage);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
