@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, Snipe, SnakeTrap, VemonstrikeTrap};
+				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, Snipe, SnakeTrap, VenomstrikeTrap};
 				public static string BearTrap => HearthDb.CardIds.Collectible.Hunter.BearTrap;
 				public static string CatTrick => HearthDb.CardIds.Collectible.Hunter.CatTrick;
 				public static string DartTrap => HearthDb.CardIds.Collectible.Hunter.DartTrap;
@@ -114,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string Misdirection => HearthDb.CardIds.Collectible.Hunter.Misdirection;
 				public static string Snipe => HearthDb.CardIds.Collectible.Hunter.Snipe;
 				public static string SnakeTrap => HearthDb.CardIds.Collectible.Hunter.SnakeTrap;
-				public static string VemonstrikeTrap => HearthDb.CardIds.Collectible.Hunter.VenomstrikeTrap;
+				public static string VenomstrikeTrap => HearthDb.CardIds.Collectible.Hunter.VenomstrikeTrap;
 
 				public static List<string> GetCards(bool standardOnly) => 
 					standardOnly ? All.Where(x => !Helper.WildOnlySets.Contains(Database.GetCardFromId(x).Set)).ToList() : All;

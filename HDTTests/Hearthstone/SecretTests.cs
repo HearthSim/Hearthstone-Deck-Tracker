@@ -140,7 +140,7 @@ namespace HDTTests.Hearthstone
         public void SingleSecret_HeroToMinion_PlayerAttackTest()
         {
             _game.OpponentSecrets.ZeroFromAttack(_heroPlayer, _opponentMinion1);
-            VerifySecrets(0, HunterSecrets.All, HunterSecrets.SnakeTrap);
+            VerifySecrets(0, HunterSecrets.All, HunterSecrets.SnakeTrap, HunterSecrets.VenomstrikeTrap);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
         }
@@ -149,7 +149,7 @@ namespace HDTTests.Hearthstone
         public void SingleSecret_MinionToMinion_PlayerAttackTest()
         {
             _game.OpponentSecrets.ZeroFromAttack(_playerMinion1, _opponentMinion1);
-            VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap);
+            VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap, HunterSecrets.VenomstrikeTrap);
             VerifySecrets(1, MageSecrets.All);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
         }
@@ -180,7 +180,7 @@ namespace HDTTests.Hearthstone
         {
             _gameEventHandler.HandlePlayerMinionPlayed();
             VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
-            VerifySecrets(1, MageSecrets.All, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph);
+            VerifySecrets(1, MageSecrets.All, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
             VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
         }
 
