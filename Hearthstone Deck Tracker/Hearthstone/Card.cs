@@ -214,7 +214,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Visibility ShowAlternativeLanguageTextInTooltip => AlternativeNames.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
 
 		[XmlIgnore]
-		public Visibility ShowIconsInTooltip => Type == "Spell" || Type == "Enchantment" || Type == "Hero Power" ? Visibility.Hidden : Visibility.Visible;
+		public bool HasVisibleStats => Type != "Spell" && Type != "Enchantment" && Type != "Hero Power" && !IsPlayableHeroCard;
+
+		[XmlIgnore]
+		public Visibility ShowIconsInTooltip => HasVisibleStats ? Visibility.Visible : Visibility.Hidden;
+
+		[XmlIgnore]
+		public Visibility ShowArmorIconInTooltip => IsPlayableHeroCard ? Visibility.Visible : Visibility.Hidden;
+
+		[XmlIgnore]
+		public Visibility ShowHealthValueInTooltip => HasVisibleStats || IsPlayableHeroCard ? Visibility.Visible : Visibility.Hidden;
 
 		[XmlIgnore]
 		public string Set { get; set; }
@@ -231,7 +240,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int? Durability { get; set; }
 
 		[XmlIgnore]
-		public int DurabilityOrHealth => Durability ?? Health;
+		public int ArmorDurabilityOrHealth => (IsPlayableHeroCard ? _dbCard?.Armor : Durability) ?? Health;
 
 		[XmlIgnore]
 		public string Type { get; set; }
@@ -242,6 +251,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public int Cost { get; set; }
 
+		[XmlIgnore]
+		public bool IsPlayableHeroCard => Type == "Hero" && CardSet != HearthDb.Enums.CardSet.CORE && CardSet != HearthDb.Enums.CardSet.HERO_SKINS;
 
 		[XmlIgnore]
 		public int Overload
