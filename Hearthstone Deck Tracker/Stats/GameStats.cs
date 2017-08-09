@@ -388,35 +388,34 @@ namespace Hearthstone_Deck_Tracker.Stats
 				var duration = DateTime.Now - StartTime;
 				int time;
 				string str;
-				const double delta = 0.01;
-				if(Math.Abs(duration.TotalDays - 1) < delta)
-				{
-					str = LocAgeDay;
-					time = (int)duration.TotalDays;
-				}
-				else if(duration.TotalDays > 1)
+				if(duration.TotalDays >= 2)
 				{
 					str = LocAgeDays;
 					time = (int)duration.TotalDays;
 				}
-				else if(Math.Abs(duration.TotalHours - 1) < delta)
+				else if(duration.TotalDays >= 1)
 				{
-					str = LocAgeHour;
-					time = (int)duration.TotalHours;
+					str = LocAgeDay;
+					time = (int)duration.TotalDays;
 				}
-				else if(duration.TotalHours > 1)
+				else if(duration.TotalHours >= 2)
 				{
 					str = LocAgeHours;
 					time = (int)duration.TotalHours;
 				}
-				else if(Math.Abs(duration.TotalMinutes - 1) < delta)
+				else if(duration.TotalHours >= 1)
 				{
-					str = LocAgeMinute;
+					str = LocAgeHour;
+					time = (int)duration.TotalHours;
+				}
+				else if(duration.TotalMinutes >= 2 || duration.TotalMinutes < 1)
+				{
+					str = LocAgeMinutes;
 					time = (int)duration.TotalMinutes;
 				}
 				else
 				{
-					str = LocAgeMinutes;
+					str = LocAgeMinute;
 					time = (int)duration.TotalMinutes;
 				}
 				return string.Format(LocUtil.Get(str), time);
