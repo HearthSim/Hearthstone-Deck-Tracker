@@ -1,19 +1,18 @@
-## Before we start
-- Please doublecheck there is no existing issue for your problem/feature request.  
-- Please delete any obsolete sections (including this one) from this template before submitting your issue.
+<!--- ### Before we start ### -->
+<!--- Please doublecheck there is no existing issue for your problem/feature request. -->
+<!--- Please delete any obsolete sections from this template before submitting your issue. -->
 
 ## Bug report
 
 ### Expected Behavior
-Describe the expected behavior here
+<!--- What did you expect to happen? -->
 
 ### Actual Behavior
-Describe the actual behavior here
+<!--- What did actually happen? -->
 
 ### Steps to reproduce behavior
-- Step 1
-- Step 2
+<!--- Can you reproduce it? How? -->
 
 ### Log/Screenshots
-If applicable, provide a log of the session where the problem occurred.  
-See here: https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Reporting-Issues
+<!--- If applicable, provide a log of the session where the problem occurred. -->
+<!--- See here: https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Reporting-Issues -->
