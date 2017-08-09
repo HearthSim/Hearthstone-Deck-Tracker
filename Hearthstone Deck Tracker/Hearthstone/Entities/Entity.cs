@@ -3,8 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows;
-using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Newtonsoft.Json;
@@ -90,113 +88,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsQuest => HasTag(GameTag.QUEST);
 
 		[JsonIgnore]
-		public Card Card
-			=>
-				_cachedCard
-				?? (_cachedCard =
-					(Database.GetCardFromId(CardId)
-					 ?? new Card(string.Empty, null, Rarity.FREE, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "", "")))
-			;
+		public Card Card => _cachedCard ??
+			(_cachedCard = Database.GetCardFromId(CardId) ??
+				new Card(string.Empty, null, Rarity.FREE, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "", ""));
 
 		[JsonIgnore]
 		public int Attack => GetTag(GameTag.ATK);
 
 		[JsonIgnore]
-		public SolidColorBrush AttackTextColor
-		{
-			get
-			{
-				var color = Colors.White;
-				if(!string.IsNullOrEmpty(CardId) && Attack > Card.Attack)
-					color = Colors.LawnGreen;
-				return new SolidColorBrush(color);
-			}
-		}
-
-		[JsonIgnore]
 		public int Health => GetTag(GameTag.HEALTH) - GetTag(GameTag.DAMAGE);
-
-		[JsonIgnore]
-		public SolidColorBrush HealthTextColor
-		{
-			get
-			{
-				var color = Colors.White;
-				if(GetTag(GameTag.DAMAGE) > 0)
-					color = Colors.Red;
-				else if(!string.IsNullOrEmpty(CardId) && Health > Card.Health)
-					color = Colors.LawnGreen;
-
-				return new SolidColorBrush(color);
-			}
-		}
 
 		[JsonIgnore]
 		public int Cost => HasTag(GameTag.COST) ? GetTag(GameTag.COST) : Card.Cost;
 
 		[JsonIgnore]
-		public SolidColorBrush CostTextColor
-		{
-			get
-			{
-				var color = Colors.White;
-				if(!string.IsNullOrEmpty(CardId))
-				{
-					if(Cost < Card.Cost)
-						color = Colors.LawnGreen;
-					else if(Cost > Card.Cost)
-						color = Colors.Red;
-				}
-				return new SolidColorBrush(color);
-			}
-		}
-
-		[JsonIgnore]
-		public DrawingBrush Background => Card.Background;
-
-		[JsonIgnore]
-		public FontFamily Font
-		{
-			get
-			{
-				var lang = Config.Instance.SelectedLanguage;
-				var font = new FontFamily();
-				// if the language uses a Latin script use Belwe font
-				if(Helper.LatinLanguages.Contains(lang) || Config.Instance.NonLatinUseDefaultFont == false)
-					font = new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT");
-				return font;
-			}
-		}
-
-		[JsonIgnore]
 		public string LocalizedName => Card.LocalizedName;
-
-		[JsonIgnore]
-		public string Effects
-		{
-			get
-			{
-				var effects = string.Empty;
-				if(HasTag(GameTag.DIVINE_SHIELD))
-					effects += "Divine Shield";
-				if(HasTag(GameTag.TAUNT))
-					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Taunt";
-				if(HasTag(GameTag.STEALTH))
-					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Stealth";
-				if(HasTag(GameTag.SILENCED))
-					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Silenced";
-				if(HasTag(GameTag.FROZEN))
-					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Frozen";
-				if(HasTag(GameTag.ENRAGED))
-					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Enraged";
-				if(HasTag(GameTag.WINDFURY))
-					effects += (string.IsNullOrEmpty(effects) ? string.Empty : Environment.NewLine) + "Windfury";
-				return effects;
-			}
-		}
-
-		[JsonIgnore]
-		public Visibility EffectsVisibility => string.IsNullOrEmpty(Effects) ? Visibility.Collapsed : Visibility.Visible;
 
 		public bool IsSecret => HasTag(GameTag.SECRET);
 
