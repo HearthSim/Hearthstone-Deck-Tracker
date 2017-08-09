@@ -14,19 +14,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static readonly Dictionary<string, int> DeathrattleSummonCardIds = new Dictionary<string, int>
 		{
 			{Collectible.Druid.MountedRaptor, 1},
+			{Collectible.Hunter.InfestedWolf, 2},
+			{Collectible.Hunter.KindlyGrandmother, 1},
+			{Collectible.Hunter.RatPack, 2},
 			{Collectible.Hunter.SavannahHighmane, 2},
 			{Collectible.Rogue.Anubarak, 1},
+			{Collectible.Rogue.JadeSwarmer, 1},
 			{Collectible.Warlock.Dreadsteed, 1},
+			{Collectible.Warlock.PossessedVillager, 1},
 			{Collectible.Warlock.Voidcaller, 1}, //false negative better than false positive
+			{Collectible.Neutral.AyaBlackpaw, 1},
 			{Collectible.Neutral.CairneBloodhoof, 1},
+			{Collectible.Neutral.DevilsaurEgg, 1},
+			{Collectible.Neutral.Eggnapper, 2},
 			{Collectible.Neutral.HarvestGolem, 1},
+			{Collectible.Neutral.HauntedCreeper, 2},
+			{Collectible.Neutral.InfestedTauren, 1},
+			{Collectible.Neutral.NerubianEgg, 1},
 			{Collectible.Neutral.PilotedShredder, 1},
 			{Collectible.Neutral.PilotedSkyGolem, 1},
-			{Collectible.Neutral.SneedsOldShredder, 1},
-			{Collectible.Neutral.HauntedCreeper, 2},
-			{Collectible.Neutral.NerubianEgg, 1},
+			{Collectible.Neutral.SatedThreshadon, 3},
 			{Collectible.Neutral.SludgeBelcher, 1},
-			{Collectible.Neutral.WobblingRunts, 3}
+			{Collectible.Neutral.SneedsOldShredder, 1},
+			{Collectible.Neutral.TwilightSummoner, 1},
+			{Collectible.Neutral.WobblingRunts, 3},
 		};
 
 		public static readonly Dictionary<string, string> HeroIdDict = new Dictionary<string, string>
