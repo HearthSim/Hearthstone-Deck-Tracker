@@ -105,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void FilterEntities()
 		{
-			List<object> list = new List<object>();
+			var list = new List<object>();
 			foreach(var entity in _game.Entities)
 			{
 				var tags = entity.Value.Tags.Select(GetTagKeyValue).Aggregate((c, n) => c + " | " + n);
@@ -123,8 +123,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				DataGridProperties.UpdateLayout();
 				foreach(var item in firstNotSecond)
 				{
-					var row = DataGridProperties.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
-					if(row != null)
+					if(DataGridProperties.ItemContainerGenerator.ContainerFromItem(item) is DataGridRow row)
 						row.Background = new SolidColorBrush(Color.FromArgb(50, 0, 205, 0));
 				}
 				_previous = list;
@@ -133,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private string GetTagKeyValue(KeyValuePair<GameTag, int> pair)
 		{
-			string value = pair.Value.ToString();
+			var value = pair.Value.ToString();
 			switch(pair.Key)
 			{
 				case GameTag.ZONE:
@@ -154,13 +153,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void FilterGame()
 		{
-			List<object> list = new List<object>();
+			var list = new List<object>();
 			var props = typeof(GameV2).GetProperties().OrderBy(x => x.Name);
 			foreach(var prop in props)
 			{
 				if(prop.Name == "HSLogLines" || prop.Name == "Entities")
 					continue;
-				string val = "";
+				var val = "";
 				var propVal = prop.GetValue(_game, null);
 				if(propVal != null)
 				{
@@ -191,8 +190,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				DataGridProperties.UpdateLayout();
 				foreach(var item in firstNotSecond)
 				{
-					var row = DataGridProperties.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
-					if(row != null)
+					if(DataGridProperties.ItemContainerGenerator.ContainerFromItem(item) is DataGridRow row)
 						row.Background = new SolidColorBrush(Color.FromArgb(50, 0, 205, 0));
 				}
 				_previous = list;

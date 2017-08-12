@@ -938,19 +938,15 @@ namespace Hearthstone_Deck_Tracker
 
 		public GameDetailsConfig GameDetails
 		{
-			get { return _gameDetails ?? (_gameDetails = new GameDetailsConfig()); }
-			set { _gameDetails = value; }
+			get => _gameDetails ?? (_gameDetails = new GameDetailsConfig());
+			set => _gameDetails = value;
 		}
 
 		[XmlIgnore]
 		public Guid ActiveDeckId
 		{
-			get
-			{
-				Guid id;
-				return Guid.TryParse(ActiveDeckIdString, out id) ? id : Guid.Empty;
-			}
-			set { ActiveDeckIdString = value.ToString(); }
+			get => Guid.TryParse(ActiveDeckIdString, out var id) ? id : Guid.Empty;
+			set => ActiveDeckIdString = value.ToString();
 		}
 
 		#endregion

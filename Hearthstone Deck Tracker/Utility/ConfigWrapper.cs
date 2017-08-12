@@ -372,8 +372,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		{
 			if(allowEmpty && string.IsNullOrEmpty(value))
 				return null;
-			int season;
-			if(!int.TryParse(value, out season))
+			if(!int.TryParse(value, out var season))
 				throw new ApplicationException("Invalid season");
 			if(season < 1)
 				throw new ApplicationException("Invalid season. Minimum value: 1");
@@ -391,8 +390,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(!match.Success)
 				throw new ApplicationException("Invalid rank");
 			var legend = match.Groups["legend"].Success;
-			int rank;
-			if(int.TryParse(match.Groups["rank"].Value, out rank))
+			if(int.TryParse(match.Groups["rank"].Value, out var rank))
 			{
 				if(!legend && rank > 25)
 					throw new ApplicationException("Rank can not be higher than 25");

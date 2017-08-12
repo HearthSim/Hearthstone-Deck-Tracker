@@ -36,8 +36,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static BitmapImage GetImage(string resourcePath, string basePath = "Resources")
 		{
-			BitmapImage image;
-			if(ImageCacheDict.TryGetValue(resourcePath, out image))
+			if(ImageCacheDict.TryGetValue(resourcePath, out var image))
 				return image;
 			var uri = new Uri($"pack://application:,,,/{basePath}/{resourcePath}", UriKind.Absolute);
 			image = new BitmapImage(uri);
@@ -46,10 +45,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 
 		public static BitmapImage GetClassIcon(string className)
-		{
-			HeroClassAll heroClass;
-			return Enum.TryParse(className, out heroClass) ? GetClassIcon(heroClass) : new BitmapImage();
-		}
+			=> Enum.TryParse(className, out HeroClassAll heroClass) ? GetClassIcon(heroClass) : new BitmapImage();
 
 		public static BitmapImage GetClassIcon(HeroClassAll @class)
 		{
@@ -73,11 +69,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static BitmapImage GetCardImage(Card card)
 		{
-			BitmapImage bmpImg;
-			if(CardBitmapImages.TryGetValue(card.Id, out bmpImg))
+			if(CardBitmapImages.TryGetValue(card.Id, out BitmapImage bmpImg))
 				return bmpImg;
-			Bitmap bmp;
-			if(!CardBitmaps.TryGetValue(card.Id, out bmp))
+			if(!CardBitmaps.TryGetValue(card.Id, out Bitmap bmp))
 				LoadResource(card, out bmp);
 			if(bmp != null)
 				bmpImg = bmp.ToImageSource();
@@ -87,8 +81,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static Bitmap GetCardBitmap(Card card)
 		{
-			Bitmap bmp;
-			if(!CardBitmaps.TryGetValue(card.Id, out bmp))
+			if(!CardBitmaps.TryGetValue(card.Id, out Bitmap bmp))
 				LoadResource(card, out bmp);
 			return bmp;
 		}

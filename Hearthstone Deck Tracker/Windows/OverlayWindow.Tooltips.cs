@@ -168,8 +168,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(ToolTipCard.Visibility == Visible)
 			{
-				var card = ToolTipCard.GetValue(DataContextProperty) as Card;
-				if(card != null)
+				if(ToolTipCard.GetValue(DataContextProperty) is Card card)
 				{
 					if(_lastToolTipCardId != card.Id)
 					{
@@ -225,15 +224,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var offset = 0.0;
 			foreach(var child in stackPanel.Children)
 			{
-				var text = child as HearthstoneTextBlock;
-				if(text != null)
+				if(child is HearthstoneTextBlock text)
 					offset += text.ActualHeight;
 				else
 				{
 					if(child is ListView)
 						break;
-					var sp = child as StackPanel;
-					if(sp != null)
+					if(child is StackPanel sp)
 						offset += sp.ActualHeight;
 				}
 			}

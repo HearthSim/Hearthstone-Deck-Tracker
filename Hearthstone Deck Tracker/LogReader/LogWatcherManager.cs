@@ -111,8 +111,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private void InitializeGameState(GameV2 game)
 		{
 			_game = game;
-			_gameState = new HsGameState(game);
-			_gameState.GameHandler = new GameEventHandler(game);
+			_gameState = new HsGameState(game) { GameHandler = new GameEventHandler(game) };
 			_gameState.Reset();
 		}
 

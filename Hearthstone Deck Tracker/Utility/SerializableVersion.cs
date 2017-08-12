@@ -132,8 +132,7 @@ namespace Hearthstone_Deck_Tracker
 					return Default;
 				if(!verionString.Contains("."))
 					verionString += ".0";
-				Version version;
-				if(Version.TryParse(verionString.Replace("v", ""), out version))
+				if(Version.TryParse(verionString.Replace("v", ""), out var version))
 					return new SerializableVersion(version);
 				return Default;
 			}

@@ -31,8 +31,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void ListViewDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			var item = ListViewDecks.SelectedItem as DeckPickerItem;
-			if(item != null)
+			if(ListViewDecks.SelectedItem is DeckPickerItem item)
 				SelectedDeck = item.Deck;
 			Close();
 		}

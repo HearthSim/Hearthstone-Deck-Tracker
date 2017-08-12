@@ -272,10 +272,7 @@ namespace Hearthstone_Deck_Tracker
 			=> new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).Add(TimeSpan.FromSeconds(unixTime)).ToLocalTime();
 
 		public static DateTime FromUnixTime(string unixTime)
-		{
-			long time;
-			return long.TryParse(unixTime, out time) ? FromUnixTime(time) : DateTime.Now;
-		}
+			=> long.TryParse(unixTime, out var time) ? FromUnixTime(time) : DateTime.Now;
 
 		public static Rectangle GetHearthstoneRect(bool dpiScaling) => User32.GetHearthstoneRect(dpiScaling);
 
@@ -706,11 +703,8 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		public static bool IsValidUrl(string url)
-		{
-			Uri result;
-			return Uri.TryCreate(url, UriKind.Absolute, out result)
+			=> Uri.TryCreate(url, UriKind.Absolute, out Uri result)
 				&& (result.Scheme == Uri.UriSchemeHttp || result.Scheme == Uri.UriSchemeHttps);
-		}
 
 		public static readonly Dictionary<MultiClassGroup, CardClass[]> MultiClassGroups = new Dictionary<MultiClassGroup, CardClass[]>
 		{

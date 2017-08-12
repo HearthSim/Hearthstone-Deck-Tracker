@@ -319,7 +319,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Canvas.SetLeft(GridFlavorText, Width - GridFlavorText.ActualWidth - 10);
 			}
 			var handCount = _game.Opponent.HandCount > 10 ? 10 : _game.Opponent.HandCount;
-			for (int i = 0; i < handCount; i++)
+			for (var i = 0; i < handCount; i++)
 			{
 				_cardMarks[i].UpdateScaling();
 				var width = _cardMarks[i].Width * Config.Instance.OverlayOpponentScaling / 100;

@@ -929,8 +929,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					//CARD_TARGET is set after ZONE, wait for 50ms gametime before checking
 					await _game.GameTime.WaitForDuration(50);
-					Entity target;
-					if(entity.HasTag(CARD_TARGET) && _game.Entities.TryGetValue(entity.GetTag(CARD_TARGET), out target) && target.IsMinion)
+					if(entity.HasTag(CARD_TARGET) && _game.Entities.TryGetValue(entity.GetTag(CARD_TARGET), out Entity target) && target.IsMinion)
 						_game.OpponentSecrets.SetZero(Mage.Spellbender);
 					_game.OpponentSecrets.SetZero(Hunter.CatTrick);
 				}

@@ -18,8 +18,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return null;
-			HearthDb.Card dbCard;
-			if(Cards.All.TryGetValue(cardId, out dbCard))
+			if(Cards.All.TryGetValue(cardId, out HearthDb.Card dbCard))
 				return new Card(dbCard);
 			Log.Warn("Could not find card with ID=" + cardId);
 			return UnknownCard;
@@ -44,8 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				var selectedLangs = Config.Instance.AlternativeLanguages.Concat(new[] {Config.Instance.SelectedLanguage});
 				foreach(var selectedLang in selectedLangs)
 				{
-					Locale lang;
-					if(Enum.TryParse(selectedLang, out lang) && !langs.Contains(lang))
+					if(Enum.TryParse(selectedLang, out Locale lang) && !langs.Contains(lang))
 						langs.Add(lang);
 				}
 			}
@@ -73,9 +71,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(string.IsNullOrEmpty(id))
 				return returnIdIfNotFound ? id : null;
-			string name;
 			var baseId = GetBaseId(id);
-			if(CardIds.HeroIdDict.TryGetValue(baseId, out name))
+			if(CardIds.HeroIdDict.TryGetValue(baseId, out var name))
 				return name;
 			var card = GetCardFromId(baseId);
 			if(string.IsNullOrEmpty(card?.Name) || card.Name == "UNKNOWN" || card.Type != "Hero")

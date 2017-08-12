@@ -49,8 +49,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 				return;
 			if(toast.ToastType == typeof(ReplayToast))
 			{
-				ToastHelper resultToast;
-				if(GameResultToasts.TryGetValue(toast, out resultToast))
+				if(GameResultToasts.TryGetValue(toast, out ToastHelper resultToast))
 					resultToast.ForceClose();
 			}
 			toast.ForceClose();

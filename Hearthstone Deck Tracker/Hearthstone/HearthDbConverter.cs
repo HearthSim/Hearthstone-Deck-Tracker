@@ -71,12 +71,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static string SetConverter(CardSet set)
-		{
-			string str;
-			SetDict.TryGetValue((int)set, out str);
-			return str;
-		}
+		public static string SetConverter(CardSet set) => SetDict.TryGetValue((int)set, out var str) ? str : string.Empty;
 
 		public static GameMode GetGameMode(GameType gameType)
 		{

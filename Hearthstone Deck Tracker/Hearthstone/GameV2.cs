@@ -207,12 +207,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				StoredGameStats = CurrentGameStats;
 		}
 
-		public string GetStoredPlayerName(int id)
-		{
-			string name;
-			StoredPlayerNames.TryGetValue(id, out name);
-			return name;
-		}
+		public string GetStoredPlayerName(int id) => StoredPlayerNames.TryGetValue(id, out var name) ? name : string.Empty;
 
 		internal void ResetStoredGameState()
 		{

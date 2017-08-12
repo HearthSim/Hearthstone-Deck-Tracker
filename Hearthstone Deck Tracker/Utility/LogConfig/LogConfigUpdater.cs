@@ -127,14 +127,12 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 			var match = regex.Match(line);
 			if(!match.Success)
 				return false;
-			bool boolValue;
-			if(bool.TryParse(match.Groups["value"].Value, out boolValue))
+			if(bool.TryParse(match.Groups["value"].Value, out var boolValue))
 			{
 				value = boolValue;
 				return true;
 			}
-			int intValue;
-			if(int.TryParse(match.Groups["value"].Value, out intValue))
+			if(int.TryParse(match.Groups["value"].Value, out var intValue))
 			{
 				value = intValue > 0;
 				return true;

@@ -51,17 +51,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public HeroClassWrapper Opponent
 		{
-			get
-			{
-				HeroClass heroClass;
-				return Enum.TryParse(_game.OpponentHero, out heroClass) ? new HeroClassWrapper(heroClass) : null;
-			}
+			get => Enum.TryParse(_game.OpponentHero, out HeroClass heroClass) ? new HeroClassWrapper(heroClass) : null;
 			set
 			{
 				if(value == null)
 					return;
-				HeroClass heroClass;
-				if(!Enum.TryParse(value.Class, out heroClass))
+				if(!Enum.TryParse(value.Class, out HeroClass heroClass))
 					return;
 				_game.OpponentHero = heroClass.ToString();
 				_edited = true;
@@ -72,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public Format? Format
 		{
-			get { return _game.Format; }
+			get => _game.Format;
 			set
 			{
 				_game.Format = value;
@@ -82,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public GameMode Mode
 		{
-			get { return _game.GameMode; }
+			get => _game.GameMode;
 			set
 			{
 				_game.GameMode = value;
@@ -93,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public GameResult Result
 		{
-			get { return _game.Result; }
+			get => _game.Result;
 			set
 			{
 				_game.Result = value;

@@ -113,8 +113,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				if(_selectedLanguage.HasValue)
 					return _selectedLanguage.Value;
-				Locale lang;
-				if(!Enum.TryParse(Config.Instance.SelectedLanguage, out lang))
+				if(!Enum.TryParse(Config.Instance.SelectedLanguage, out Locale lang))
 					lang = Locale.enUS;
 				_selectedLanguage = lang;
 				return _selectedLanguage.Value;
@@ -143,8 +142,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Set = HearthDbConverter.SetConverter(dbCard.Set);
 			foreach(var altLangStr in Config.Instance.AlternativeLanguages)
 			{
-				Locale altLang;
-				if(Enum.TryParse(altLangStr, out altLang))
+				if(Enum.TryParse(altLangStr, out Locale altLang))
 				{
 					AlternativeNames.Add(dbCard.GetLocName(altLang));
 					AlternativeTexts.Add(dbCard.GetLocText(altLang));
@@ -392,11 +390,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(Id == null || Name == null)
 					return new DrawingBrush();
 				var cardImageObj = new CardImageObject(this);
-				Dictionary<int, CardImageObject> cache;
-				if(CardImageCache.TryGetValue(Id, out cache))
+				if(CardImageCache.TryGetValue(Id, out Dictionary<int, CardImageObject> cache))
 				{
-					CardImageObject cached;
-					if(cache.TryGetValue(cardImageObj.GetHashCode(), out cached))
+					if(cache.TryGetValue(cardImageObj.GetHashCode(), out CardImageObject cached))
 						return cached.Image;
 				}
 				try

@@ -40,8 +40,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_mousePos = newPos;
 
 
-			var border = _selectedUiElement as Border;
-			if(border != null)
+			if(_selectedUiElement is Border border)
 			{
 				if(border.Equals(BorderStackPanelPlayer))
 				{
@@ -80,8 +79,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
-			var panel = _selectedUiElement as Panel;
-			if(panel != null)
+			if(_selectedUiElement is Panel panel)
 			{
 				if(panel.Equals(StackPanelSecrets))
 				{
@@ -111,8 +109,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
-			var wotogIcons = _selectedUiElement as WotogCounter;
-			if(wotogIcons != null)
+			if(_selectedUiElement is WotogCounter wotogIcons)
 			{
 				if(wotogIcons.Equals(WotogIconsPlayer))
 				{
@@ -132,8 +129,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
-			var timer = _selectedUiElement as HearthstoneTextBlock;
-			if (timer != null)
+			if (_selectedUiElement is HearthstoneTextBlock timer)
 			{
 				if (timer.Equals(LblPlayerTurnTime))
 				{
@@ -172,35 +168,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (_uiMovable)
 			{
 				_lmbDown = true;
-				foreach (var movableElement in _movableElements)
+				foreach (var element in _movableElements)
 				{
-					var relativePos = movableElement.Value.PointFromScreen(_mousePos);
-					var border = movableElement.Key as Border;
-					if(border != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
+					var relativePos = element.Value.PointFromScreen(_mousePos);
+					if(element.Key is Border && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
 					{
-						if(Math.Abs(relativePos.X - movableElement.Value.ActualWidth) < 30
-						   && Math.Abs(relativePos.Y - movableElement.Value.ActualHeight) < 30)
+						if(Math.Abs(relativePos.X - element.Value.ActualWidth) < 30
+						   && Math.Abs(relativePos.Y - element.Value.ActualHeight) < 30)
 							_resizeElement = true;
 
-						_selectedUiElement = movableElement.Key;
+						_selectedUiElement = element.Key;
 						return;
 					}
-					var panel = movableElement.Key as Panel;
-					if(panel != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
+					if(element.Key is Panel && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
 					{
-						_selectedUiElement = movableElement.Key;
+						_selectedUiElement = element.Key;
 						return;
 					}
-					var timer = movableElement.Key as HearthstoneTextBlock;
-					if(timer != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
+					if(element.Key is HearthstoneTextBlock && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
 					{
-						_selectedUiElement = movableElement.Key;
+						_selectedUiElement = element.Key;
 						return;
 					}
-					var wotogIcons = movableElement.Key as WotogCounter;
-					if(wotogIcons != null && PointInsideControl(relativePos, movableElement.Value.ActualWidth, movableElement.Value.ActualHeight))
+					if(element.Key is WotogCounter && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
 					{
-						_selectedUiElement = movableElement.Key;
+						_selectedUiElement = element.Key;
 						return;
 					}
 				}
@@ -312,17 +304,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if (element == null)
 				return new Size();
-			var border = element as Border;
-			if(border != null)
+			if(element is Border border)
 				return new Size(border.ActualWidth, border.ActualHeight);
-			var panel = element as Panel;
-			if(panel != null)
+			if(element is Panel panel)
 				return new Size(panel.ActualWidth, panel.ActualHeight);
-			var block = element as HearthstoneTextBlock;
-			if (block != null)
+			if (element is HearthstoneTextBlock block)
 				return new Size(block.ActualWidth, block.ActualHeight);
-			var wotogIcons = element as WotogCounter;
-			if(wotogIcons != null)
+			if(element is WotogCounter wotogIcons)
 				return new Size(wotogIcons.IconWidth * _wotogSize, wotogIcons.ActualHeight * _wotogSize);
 			return new Size();
 		}

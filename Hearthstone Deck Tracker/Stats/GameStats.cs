@@ -355,24 +355,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool CanSelectDeck => DeckList.Instance.Decks.Any(d => d.DeckId == DeckId);
 
 		[XmlIgnore]
-		public BitmapImage OpponentHeroImage
-		{
-			get
-			{
-				HeroClassAll oppHero;
-				return Enum.TryParse(OpponentHero, out oppHero) ? ImageCache.GetClassIcon(oppHero) : new BitmapImage();
-			}
-		}
+		public BitmapImage OpponentHeroImage => Enum.TryParse(OpponentHero, out HeroClassAll oppHero) ? ImageCache.GetClassIcon(oppHero) : new BitmapImage();
 
 		[XmlIgnore]
-		public BitmapImage PlayerHeroImage
-		{
-			get
-			{
-				HeroClassAll playerHero;
-				return Enum.TryParse(PlayerHero, out playerHero) ? ImageCache.GetClassIcon(playerHero) : new BitmapImage();
-			}
-		}
+		public BitmapImage PlayerHeroImage => Enum.TryParse(PlayerHero, out HeroClassAll playerHero) ? ImageCache.GetClassIcon(playerHero) : new BitmapImage();
 
 		[XmlIgnore]
 		public string Duration => (EndTime - StartTime).Minutes + " min";

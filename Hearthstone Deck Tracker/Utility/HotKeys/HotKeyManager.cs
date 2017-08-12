@@ -51,9 +51,8 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 
 		private static void KeyboardHookOnKeyPressed(object sender, KeyPressedEventArgs e)
 		{
-			Action action;
 			var hotKey = HotKey.FromKeyPressedEventArgs(e);
-			if(RegisteredHotKeys.TryGetValue(hotKey, out action))
+			if(RegisteredHotKeys.TryGetValue(hotKey, out var action))
 			{
 				Log.Info($"[{hotKey}] pressed.");
 				action.Invoke();

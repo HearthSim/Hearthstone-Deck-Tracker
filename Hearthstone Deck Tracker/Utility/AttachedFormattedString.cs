@@ -38,8 +38,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			//so we gotta make sure the parent is the element we created to know these are the values we are after.
 			foreach (var n in element.DescendantNodes().Where(x => x.Parent.Name == "w"))
 			{
-				var text = n as XText;
-				if (text != null)
+				if (n is XText text)
 				{
 					yield return new Run(text.Value);
 					continue;

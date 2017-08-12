@@ -97,12 +97,7 @@ namespace Hearthstone_Deck_Tracker
 		[return: MarshalAs(UnmanagedType.Bool)]
 		private static extern bool GetCursorPos(out MousePoint lpPoint);
 
-		public static Point GetMousePos()
-		{
-			MousePoint p;
-			GetCursorPos(out p);
-			return new Point(p.X, p.Y);
-		}
+		public static Point GetMousePos() => GetCursorPos(out var p) ? new Point(p.X, p.Y) : Point.Empty;
 
 		public static WindowState GetHearthstoneWindowState()
 		{
@@ -164,8 +159,7 @@ namespace Hearthstone_Deck_Tracker
 				return null;
 			try
 			{
-				uint procId;
-				GetWindowThreadProcessId(_hsWindow, out procId);
+				GetWindowThreadProcessId(_hsWindow, out uint procId);
 				return Process.GetProcessById((int)procId);
 			}
 			catch

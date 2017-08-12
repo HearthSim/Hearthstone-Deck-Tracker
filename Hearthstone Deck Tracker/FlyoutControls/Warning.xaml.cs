@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		public string WarningText
 		{
-			get { return _warningText; }
+			get => _warningText;
 			set
 			{
 				if(value == _warningText)

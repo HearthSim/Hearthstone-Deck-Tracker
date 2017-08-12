@@ -9,12 +9,10 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				DateTime today = DateTime.Today;
-				int differenceToFirstDayOfWeek = today.DayOfWeek - CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
+				var today = DateTime.Today;
+				var differenceToFirstDayOfWeek = today.DayOfWeek - CultureInfo.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
 				if (differenceToFirstDayOfWeek < 0)
-				{
 					differenceToFirstDayOfWeek += 7;
-				}
 				return today.AddDays(-differenceToFirstDayOfWeek);
 			}
 		}

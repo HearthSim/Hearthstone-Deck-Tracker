@@ -54,10 +54,9 @@ namespace Hearthstone_Deck_Tracker
 
 		public HeroClass? GetHeroClass(string cardId)
 		{
-			HeroClass heroClass;
-			if(!Enum.TryParse(Database.GetCardFromId(cardId).PlayerClass, out heroClass))
-				return null;
-			return heroClass;
+			if(Enum.TryParse(Database.GetCardFromId(cardId).PlayerClass, out HeroClass heroClass))
+				return heroClass;
+			return null;
 		}
 
 		public void Trigger(string cardId)
@@ -82,15 +81,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public void SecretRemoved(int id, string cardId)
 		{
-			int index = Secrets.FindIndex(s => s.Id == id);
+			var index = Secrets.FindIndex(s => s.Id == id);
 			if(index == -1)
 			{
 				Log.Warn($"Secret with id={id}, cardId={cardId} not found when trying to remove it.");
 				return;
 			}
-			Entity attacker, defender;
-			Game.Entities.TryGetValue(ProposedAttackerEntityId, out attacker);
-			Game.Entities.TryGetValue(ProposedDefenderEntityId, out defender);
+			Game.Entities.TryGetValue(ProposedAttackerEntityId, out Entity attacker);
+			Game.Entities.TryGetValue(ProposedDefenderEntityId, out Entity defender);
 
 			// see http://hearthstone.gamepedia.com/Advanced_rulebook#Combat for fast vs. slow secrets
 

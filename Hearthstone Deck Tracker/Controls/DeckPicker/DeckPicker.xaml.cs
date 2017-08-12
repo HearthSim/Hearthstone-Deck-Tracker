@@ -154,8 +154,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				senderList.UnselectAll();
 				foreach(var item in senderList.Items)
 				{
-					var dpci = item as DeckPickerClassItem;
-					if(dpci != null)
+					if(item is DeckPickerClassItem dpci)
 					{
 						var hca = (HeroClassAll)dpci.DataContext;
 
@@ -362,8 +361,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			if(deck == null)
 				return null;
-			DeckPickerItem dpi;
-			if(_cachedDeckPickerItems.TryGetValue(deck, out dpi))
+			if(_cachedDeckPickerItems.TryGetValue(deck, out var dpi))
 				return dpi;
 			Type layout;
 			switch(Config.Instance.DeckPickerItemLayout)
@@ -486,15 +484,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			}
 			if(deck.Archived && !SelectedClasses.Contains(HeroClassAll.Archived))
 				SelectClass(HeroClassAll.Archived);
-			else if(!SelectedClasses.Contains(HeroClassAll.All))
-			{
-				HeroClassAll deckClass;
-				if(Enum.TryParse(deck.Class, out deckClass))
-				{
-					if(!SelectedClasses.Contains(deckClass))
-						SelectClass(deckClass);
-				}
-			}
+			else if(!SelectedClasses.Contains(HeroClassAll.All) && Enum.TryParse(deck.Class, out HeroClassAll deckClass) && !SelectedClasses.Contains(deckClass))
+				SelectClass(deckClass);
 
 			if(!DeckMatchesSelectedTags(deck))
 			{
@@ -542,8 +533,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 						SelectClass(HeroClassAll.Archived);
 					else
 					{
-						HeroClassAll heroClass;
-						if(Enum.TryParse(deck.Class, out heroClass))
+						if(Enum.TryParse(deck.Class, out HeroClassAll heroClass))
 							SelectClass(heroClass);
 					}
 

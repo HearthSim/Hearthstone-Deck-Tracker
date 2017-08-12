@@ -14,9 +14,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			try
 			{
-				Uri uriResult;
 				var clipboard = Clipboard.GetText();
-				var validUrl = Uri.TryCreate(clipboard, UriKind.Absolute, out uriResult)
+				var validUrl = Uri.TryCreate(clipboard, UriKind.Absolute, out Uri uriResult)
 								&& (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
 				if(validUrl)
 					return await DeckImporter.Import(clipboard);
@@ -35,9 +34,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 				if(StringImporter.IsValidImportString(clipboard))
 					return StringImporter.Import(clipboard);
-
 				return JsonDeckImporter.Import(clipboard);
-
 			}
 			catch(Exception ex)
 			{

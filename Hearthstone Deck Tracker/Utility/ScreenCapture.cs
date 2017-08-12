@@ -40,8 +40,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static Bitmap CaptureWindow(IntPtr wndHandle, Point point, int width, int height)
 		{
-			User32.Rect windowRect;
-			User32.GetWindowRect(wndHandle, out windowRect);
+			User32.GetWindowRect(wndHandle, out var windowRect);
 			var windowWidth = windowRect.right - windowRect.left;
 			var windowHeight = windowRect.bottom - windowRect.top;
 			var bmp = new Bitmap(windowWidth, windowHeight, PixelFormat.Format32bppArgb);

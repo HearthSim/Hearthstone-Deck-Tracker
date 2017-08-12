@@ -312,8 +312,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				HeroClassAll heroClass;
-				if(Enum.TryParse(Class, out heroClass))
+				if(Enum.TryParse(Class, out HeroClassAll heroClass))
 					return ImageCache.GetClassIcon(heroClass);
 				return new BitmapImage();
 			}

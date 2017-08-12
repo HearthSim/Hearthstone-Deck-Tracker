@@ -120,12 +120,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool HasTag(GameTag tag) => GetTag(tag) > 0;
 
-		public int GetTag(GameTag tag)
-		{
-			int value;
-			Tags.TryGetValue(tag, out value);
-			return value;
-		}
+		public int GetTag(GameTag tag) => Tags.TryGetValue(tag, out var value) ? value : 0;
 
 		public void SetTag(GameTag tag, int value)
 		{

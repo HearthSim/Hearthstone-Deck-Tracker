@@ -22,9 +22,9 @@ namespace Hearthstone_Deck_Tracker
 				PossibleSecrets[cardId] = true;
 		}
 
-		public int Id { get; private set; }
-		public int TurnPlayed { get; private set; }
-		public HeroClass HeroClass { get; private set; }
+		public int Id { get; }
+		public int TurnPlayed { get; }
+		public HeroClass HeroClass { get; }
 		public Dictionary<string, bool> PossibleSecrets { get; set; }
 
 		public void TrySetSecret(string cardId, bool active)
@@ -33,12 +33,7 @@ namespace Hearthstone_Deck_Tracker
 				PossibleSecrets[cardId] = active;
 		}
 
-		public bool TryGetSecret(string cardId)
-		{
-			bool active;
-			return PossibleSecrets.TryGetValue(cardId, out active) && active;
-		}
-
+		public bool TryGetSecret(string cardId) => PossibleSecrets.TryGetValue(cardId, out var active) && active;
 
 		public static int GetMaxSecretCount(HeroClass heroClass)
 		{

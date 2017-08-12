@@ -41,8 +41,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					_lastAutoImport = logLine.Time;
 					var decks = DeckImporter.FromConstructed();
 					if(decks.Any() && (Config.Instance.ConstructedAutoImportNew || Config.Instance.ConstructedAutoUpdate))
+					{
 						DeckManager.ImportDecks(decks, false, Config.Instance.ConstructedAutoImportNew,
 							Config.Instance.ConstructedAutoUpdate);
+					}
 				}
 
 				if(game.PreviousMode == Mode.GAMEPLAY && game.CurrentMode != Mode.GAMEPLAY)
@@ -97,12 +99,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			OnHearthMirrorCheckFailed?.Invoke();
 		}
 
-		private Mode GetMode(string modeString)
-		{
-			Mode mode;
-			if(Enum.TryParse(modeString, out mode))
-				return mode;
-			return Mode.INVALID;
-		}
+		private Mode GetMode(string modeString) => Enum.TryParse(modeString, out Mode mode) ? mode : Mode.INVALID;
 	}
 }

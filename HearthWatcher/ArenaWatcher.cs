@@ -26,9 +26,7 @@ namespace HearthWatcher
 
 		public ArenaWatcher(IArenaProvider arenaProvider, int delay = 500)
 		{
-			if(arenaProvider == null)
-				throw new ArgumentNullException(nameof(arenaProvider));
-			_arenaProvider = arenaProvider;
+			_arenaProvider = arenaProvider ?? throw new ArgumentNullException(nameof(arenaProvider));
 			_delay = delay;
 		}
 

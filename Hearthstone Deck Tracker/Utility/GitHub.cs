@@ -93,11 +93,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				public string Name { get; set; }
 			}
 
-			public Version GetVersion()
-			{
-				Version v;
-				return Version.TryParse(Tag.Replace("v", ""), out v) ? v : null;
-			}
+			public Version GetVersion() => Version.TryParse(Tag.Replace("v", ""), out Version v) ? v : null;
 		}
 	}
 }

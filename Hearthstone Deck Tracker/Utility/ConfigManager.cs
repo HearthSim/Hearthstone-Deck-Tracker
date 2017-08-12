@@ -167,8 +167,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				}
 				if(configVersion <= new Version(0, 13, 16, 0))
 				{
-					MetroTheme theme;
-					if(Enum.TryParse(Config.Instance.ThemeName, out theme))
+					if(Enum.TryParse(Config.Instance.ThemeName, out MetroTheme theme))
 					{
 						Config.Instance.AppTheme = theme;
 						converted = true;

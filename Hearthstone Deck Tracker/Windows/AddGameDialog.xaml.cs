@@ -92,8 +92,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			if(game == null)
 				return;
 			ComboBoxResult.SelectedItem = game.Result;
-			HeroClass heroClass;
-			if(!string.IsNullOrWhiteSpace(game.OpponentHero) && Enum.TryParse(game.OpponentHero, out heroClass))
+			if(!string.IsNullOrWhiteSpace(game.OpponentHero) && Enum.TryParse(game.OpponentHero, out HeroClass heroClass))
 				ComboBoxOpponent.SelectedItem = heroClass;
 			ComboBoxMode.SelectedItem = game.GameMode;
 			ComboBoxFormat.SelectedItem = game.Format;
@@ -122,14 +121,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			BtnSave.IsEnabled = false;
 			try
 			{
-				int duration;
-				int.TryParse(TextBoxDuration.Text, out duration);
-				int rank;
-				int.TryParse(TextBoxRank.Text, out rank);
-				int legendRank;
-				int.TryParse(TextBoxLegendRank.Text, out legendRank);
-				int turns;
-				int.TryParse(TextBoxTurns.Text, out turns);
+				int.TryParse(TextBoxDuration.Text, out var duration);
+				int.TryParse(TextBoxRank.Text, out var rank);
+				int.TryParse(TextBoxLegendRank.Text, out var legendRank);
+				int.TryParse(TextBoxTurns.Text, out var turns);
 				if(!_editing)
 				{
 					_game.StartTime = DateTime.Now;

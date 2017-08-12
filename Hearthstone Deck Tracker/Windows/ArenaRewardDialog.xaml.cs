@@ -24,8 +24,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private async void ArenaRewards_OnSave(object sender, RoutedEventArgs e)
 		{
-			string warning;
-			if(!ArenaRewards.Validate(out warning))
+			if(!ArenaRewards.Validate(out var warning))
 			{
 				await this.ShowMessage("Error", warning);
 				return;

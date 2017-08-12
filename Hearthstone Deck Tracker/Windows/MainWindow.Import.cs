@@ -122,8 +122,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					var card = Database.GetCardFromId(splitEntry[0]);
 					if(card.Id == "UNKNOWN")
 						continue;
-					int count;
-					int.TryParse(splitEntry[1], out count);
+					int.TryParse(splitEntry[1], out var count);
 					card.Count = count;
 
 					if(string.IsNullOrEmpty(deck.Class) && card.GetPlayerClass != "Neutral")
@@ -149,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var dialogResult = dialog.ShowDialog();
 			if(dialogResult == true)
 			{
-				foreach(String file in dialog.FileNames)
+				foreach(var file in dialog.FileNames)
 				{
 					try
 					{

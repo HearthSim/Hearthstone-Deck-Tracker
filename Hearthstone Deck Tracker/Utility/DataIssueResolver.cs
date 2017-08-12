@@ -48,8 +48,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			var save = false;
 			foreach(var d in DeckList.Instance.Decks.Where(d => d.DeckStats.DeckId != d.DeckId))
 			{
-				DeckStats deckStats;
-				if(!DeckStatsList.Instance.DeckStats.TryGetValue(d.DeckId, out deckStats))
+				if(!DeckStatsList.Instance.DeckStats.TryGetValue(d.DeckId, out var deckStats))
 					continue;
 				foreach(var game in deckStats.Games.ToList())
 				{

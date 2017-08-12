@@ -62,8 +62,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 						if(!string.IsNullOrEmpty(arena))
 						{
 							clipboardLines.Remove(arena);
-							bool isArena;
-							if(bool.TryParse(arena.Replace("arena:", "").Trim(), out isArena))
+							if(bool.TryParse(arena.Replace("arena:", "").Trim(), out var isArena))
 								isArenaDeck = isArena;
 						}
 						var localized = false;

@@ -47,8 +47,7 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 			var modified = false;
 			foreach(var field in GetType().GetFields())
 			{
-				object req;
-				if(!_requiredValues.TryGetValue(field.Name, out req) || Equals(field.GetValue(this), req))
+				if(!_requiredValues.TryGetValue(field.Name, out var req) || Equals(field.GetValue(this), req))
 					continue;
 				field.SetValue(this, req);
 				Log.Info($"[{Name}] set {field.Name}={req}");

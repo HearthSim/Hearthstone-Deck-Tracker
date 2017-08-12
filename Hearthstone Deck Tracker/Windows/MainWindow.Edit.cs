@@ -66,8 +66,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(Equals(DeckList.Instance.ActiveDeck, deck))
 				SelectDeck(null, true);
 
-			DeckStats deckStats;
-			if(DeckStatsList.Instance.DeckStats.TryGetValue(deck.DeckId, out deckStats))
+			if(DeckStatsList.Instance.DeckStats.TryGetValue(deck.DeckId, out var deckStats))
 			{
 				if(deckStats.Games.Any())
 				{
@@ -175,8 +174,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckList.Instance.Decks.Add(clone);
 			DeckList.Save();
 
-			DeckStats newStatsEntry;
-			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out newStatsEntry))
+			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out var newStatsEntry))
 			{
 				newStatsEntry = new DeckStats(clone);
 				DeckStatsList.Instance.DeckStats.TryAdd(clone.DeckId, newStatsEntry);
@@ -221,8 +219,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckPickerList.UpdateDecks();
 			DeckList.Save();
 			
-			DeckStats newStatsEntry;
-			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out newStatsEntry))
+			if(!DeckStatsList.Instance.DeckStats.TryGetValue(clone.DeckId, out var newStatsEntry))
 			{
 				newStatsEntry = new DeckStats(clone);
 				DeckStatsList.Instance.DeckStats.TryAdd(clone.DeckId, newStatsEntry);
