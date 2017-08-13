@@ -161,9 +161,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 #region Properties
 
-		[Obsolete("Use API.Core.OverlayWindow", true)] //for plugin compatibility
-		public OverlayWindow Overlay => Core.Overlay;
-
 		private bool _initialized => Core.Initialized;
 
 		private double _heightChangeDueToSearchBox;
@@ -576,16 +573,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			DeckEditorFlyout.SetDeck(deck, isNewDeck);
 			FlyoutDeckEditor.IsOpen = true;
-		}
-
-		[Obsolete("Use ShowDeckEditorFlyout", true)]
-		public void SetNewDeck(Deck deck, bool edit) => ShowDeckEditorFlyout(deck, !edit);
-
-		[Obsolete("Use DeckManager.SaveDeck", true)]
-#pragma warning disable 1998
-		public async void SaveDeck(bool overwrite, SerializableVersion newVersion, bool workInProgressDeck = false)
-#pragma warning disable 1998
-		{
 		}
 
 		internal async void ShowNewDeckMessage(string hero)

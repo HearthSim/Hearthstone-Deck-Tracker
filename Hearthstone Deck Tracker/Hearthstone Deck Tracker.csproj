@@ -215,7 +215,6 @@
     <Compile Include="API\Core.cs" />
     <Compile Include="API\GameEvents.cs" />
     <Compile Include="API\LogEvents.cs" />
-    <Compile Include="API\Overlay.cs" />
     <Compile Include="API\PredamageInfo.cs" />
     <Compile Include="Controls\AnimatedCard.xaml.cs">
       <DependentUpon>AnimatedCard.xaml</DependentUpon>
@@ -747,7 +746,6 @@
     <Compile Include="Enums\PlayType.cs" />
     <Compile Include="Enums\GameResult.cs" />
     <Compile Include="Enums\ActivePlayer.cs" />
-    <Compile Include="Utility\Logger.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
