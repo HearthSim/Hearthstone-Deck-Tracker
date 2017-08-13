@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
@@ -24,11 +25,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		private readonly Dictionary<object, string> _invalidFields = new Dictionary<object, string>();
 
-		private readonly string[] _validSets =
+		private readonly CardSet[] _validSets =
 			Enum.GetValues(typeof(ArenaRewardPacks))
-				.Cast<ArenaRewardPacks>()
+				.Cast<CardSet>()
 				.Skip(1)
-				.Select(x => EnumDescriptionConverter.GetDescription(x))
 				.ToArray();
 
 		private List<string> _cardNames;
@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		private IEnumerable<string> CardNames => _cardNames
 												 ?? (_cardNames =
-													 Database.GetActualCards().Where(x => _validSets.Any(set => x.Set == set))
+													 Database.GetActualCards().Where(x => _validSets.Any(set => x.CardSet == set))
 																.SelectMany(x => x.AlternativeNames.Concat(new[] {x.LocalizedName}))
 																.OrderBy(x => x.Length).ToList());
 
