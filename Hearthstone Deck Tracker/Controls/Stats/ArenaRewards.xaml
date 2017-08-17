@@ -51,20 +51,20 @@
         </GroupBox>
         <GroupBox Header="{lex:Loc ArenaRewards_Label_Cards}">
             <StackPanel>
-                <DockPanel Margin="0,2,0,0">
+                <DockPanel Margin="0,2,0,0" KeyboardNavigation.TabNavigation="Local">
                     <Label Content="#1:" DockPanel.Dock="Left"/>
-                    <CheckBox Name="CheckBoxGolden1" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
-                    <TextBox Name="TextBoxCard1" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                    <CheckBox Name="CheckBoxGolden1" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" TabIndex="2" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard1" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TabIndex="1" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
                 </DockPanel>
-                <DockPanel Margin="0,2,0,0">
+                <DockPanel Margin="0,2,0,0" KeyboardNavigation.TabNavigation="Local">
                     <Label Content="#2:" DockPanel.Dock="Left"/>
-                    <CheckBox Name="CheckBoxGolden2" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
-                    <TextBox Name="TextBoxCard2" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                    <CheckBox Name="CheckBoxGolden2" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" TabIndex="2" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard2" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TabIndex="1" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
                 </DockPanel>
-                <DockPanel Margin="0,2,0,0">
+                <DockPanel Margin="0,2,0,0" KeyboardNavigation.TabNavigation="Local">
                     <Label Content="#3:" DockPanel.Dock="Left"/>
-                    <CheckBox Name="CheckBoxGolden3" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
-                    <TextBox Name="TextBoxCard3" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                    <CheckBox Name="CheckBoxGolden3" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" TabIndex="2" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard3" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TabIndex="1" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
                 </DockPanel>
             </StackPanel>
         </GroupBox>
