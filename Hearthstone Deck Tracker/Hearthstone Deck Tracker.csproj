@@ -252,6 +252,9 @@
       <DependentUpon>DeckHistoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Hearthstone\CollectionHelper.cs" />
+    <Compile Include="Hearthstone\Secrets\Secret.cs" />
+    <Compile Include="Hearthstone\Secrets\SecretsEventHandler.cs" />
+    <Compile Include="Hearthstone\Secrets\SecretsManager.cs" />
     <Compile Include="HsReplay\Data\DeckWinrateData.cs" />
     <Compile Include="HsReplay\Data\HsReplayData.cs" />
     <Compile Include="HsReplay\HsReplayDataManager.cs" />
@@ -736,10 +739,7 @@
     <Compile Include="Importing\DeckImporter.cs" />
     <Compile Include="Enums\GameMode.cs" />
     <Compile Include="Hearthstone\Entities\Entity.cs" />
-    <Compile Include="Hearthstone\Secrets\SecretHelper.cs" />
     <Compile Include="IGameHandler.cs" />
-    <Compile Include="Hearthstone\Secrets\OpponentSecrets.cs" />
-    <Compile Include="Hearthstone\Secrets\Secret.cs" />
     <Compile Include="Replay\ReplayMaker.cs" />
     <Compile Include="Stats\DeckStatsList.cs" />
     <Compile Include="Stats\DefaultDeckStats.cs" />

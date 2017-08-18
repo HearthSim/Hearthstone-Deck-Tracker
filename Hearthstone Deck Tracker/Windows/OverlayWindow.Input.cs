@@ -209,12 +209,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Update(false);
 			if (_uiMovable)
 			{
-				//if(!Config.Instance.ExtraFeatures)
 				HookMouse();
 				if (StackPanelSecrets.Visibility != Visibility.Visible)
 				{
 					_secretsTempVisible = true;
-					ShowSecrets(true, HeroClass.Mage);
+					var secrets = CardIds.Secrets.Mage.All.Select(Database.GetCardFromId).ToList();
+					ShowSecrets(secrets, true);
 					//need to wait for panel to actually show up
 					await Task.Delay(50);
 				}
@@ -343,8 +343,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (card == null)
 				return;
 
-			_game.OpponentSecrets.Trigger(card.Id);
-			ShowSecrets();
+			_game.SecretsManager.Toggle(card.Id);
 		}
 
 		private async void HideCardsWhenFriendsListOpen(Point clickPos)

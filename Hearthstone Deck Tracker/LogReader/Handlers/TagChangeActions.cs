@@ -31,10 +31,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => DefendingChange(gameState, id, game, value);
 				case ATTACKING:
 					return () => AttackingChange(gameState, id, game, value);
-				case PROPOSED_DEFENDER:
-					return () => ProposedDefenderChange(game, value);
-				case PROPOSED_ATTACKER:
-					return () => ProposedAttackerChange(game, value);
 				case NUM_MINIONS_PLAYED_THIS_TURN:
 					return () => NumMinionsPlayedThisTurnChange(gameState, game, value);
 				case PREDAMAGE:
@@ -107,10 +103,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			gameState.GameHandler.HandleAttackingEntity(value == 1 ? entity : null);
 		}
-
-		private void ProposedDefenderChange(IGame game, int value) => game.OpponentSecrets.ProposedDefenderEntityId = value;
-
-		private void ProposedAttackerChange(IGame game, int value) => game.OpponentSecrets.ProposedAttackerEntityId = value;
 
 		private void NumMinionsPlayedThisTurnChange(IHsGameState gameState, IGame game, int value)
 		{
