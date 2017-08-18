@@ -89,6 +89,7 @@ namespace Hearthstone_Deck_Tracker
 			ThemeManager.Run();
 			ResourceMonitor.Run();
 			Game = new GameV2();
+			Game.SecretsManager.OnSecretsChanged += cards => Overlay.ShowSecrets(cards);
 			MainWindow = new MainWindow();
 			MainWindow.LoadConfigSettings();
 			MainWindow.Show();

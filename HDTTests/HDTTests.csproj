@@ -105,9 +105,12 @@
     <Compile Include="DeckImporting\DeckComparer.cs" />
     <Compile Include="DeckImporting\DeckImportingTests.cs" />
     <Compile Include="DeckImporting\TestData.cs" />
+    <Compile Include="Hearthstone\Secrets\MockGame.cs" />
+    <Compile Include="Hearthstone\Secrets\SecretsManagerTest.cs" />
+    <Compile Include="Hearthstone\Secrets\SecretTest.cs" />
     <Compile Include="Hearthstone\GameTimeTest.cs" />
     <Compile Include="Hearthstone\ParseCardStringTest.cs" />
-    <Compile Include="Hearthstone\SecretTests.cs" />
+    <Compile Include="Hearthstone\Secrets\SecretEventHandlerTest.cs" />
     <Compile Include="Hearthstone\LogReadingTest.cs" />
     <Compile Include="Hearthstone\WebImportTest.cs" />
     <Compile Include="Hearthstone\DeckTest.cs" />

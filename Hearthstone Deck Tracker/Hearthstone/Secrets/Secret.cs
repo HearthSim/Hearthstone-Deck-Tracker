@@ -1,33 +1,56 @@
-#region
-
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone;
+using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
-#endregion
-
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 {
 	public class Secret
 	{
-		public Secret(string cardId, int count)
+		public Entity Entity { get; }
+
+		public Secret(Entity entity)
 		{
-			CardId = cardId;
-			Count = count;
+			if(!entity.IsSecret)
+				throw new ArgumentException(nameof(entity) + " is not a secret");
+			if(!entity.HasTag(GameTag.CLASS))
+				throw new ArgumentException(nameof(entity) + " has no CardClass");
+
+			Entity = entity;
+			Excluded = GetAllSecrets().ToDictionary(x => x, x => false);
 		}
 
-		public string CardId { get; }
-		public int Count { get; set; }
+		public Dictionary<string, bool> Excluded { get; set; }
 
-		public bool ActiveDeckIsConstructed => DeckList.Instance.ActiveDeck != null && !DeckList.Instance.ActiveDeck.IsArenaDeck;
-
-
-		public int AdjustedCount(GameV2 game)
+		public void Exclude(string cardId)
 		{
-			return (Config.Instance.AutoGrayoutSecrets
-			        && (game.CurrentGameMode == GameMode.Casual || game.CurrentGameMode == GameMode.Ranked
-			            || game.CurrentGameMode == GameMode.Friendly || game.CurrentGameMode == GameMode.Practice || ActiveDeckIsConstructed)
-			        && game.Opponent.RevealedEntities.Count(x => x.Id < 68 && x.CardId == CardId) >= 2) ? 0 : Count;
+			if(Excluded.ContainsKey(cardId))
+				Excluded[cardId] = true;
+		}
+
+		private IEnumerable<string> GetAllSecrets()
+		{
+			switch(Entity.GetTag(GameTag.CLASS))
+			{
+				case (int)CardClass.HUNTER:
+					return CardIds.Secrets.Hunter.All;
+				case (int)CardClass.MAGE:
+					return CardIds.Secrets.Mage.All;
+				case (int)CardClass.PALADIN:
+					return CardIds.Secrets.Paladin.All;
+				default:
+					return new List<string>();
+			}
+		}
+
+		public bool IsExcluded(string cardId) => Excluded.TryGetValue(cardId, out var excluded) && excluded;
+
+		public void Include(string cardId)
+		{
+			if(Excluded.ContainsKey(cardId))
+				Excluded[cardId] = false;
 		}
 	}
 }
+

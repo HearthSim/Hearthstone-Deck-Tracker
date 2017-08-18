@@ -70,6 +70,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static class Secrets
 		{
+			public static List<string> ArenaExcludes = new List<string>
+			{
+				Hunter.Snipe
+			};
+
 			public static List<string> FastCombat = new List<string>
 			{
 				Hunter.FreezingTrap,
@@ -92,9 +97,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string Snipe => Collectible.Hunter.Snipe;
 				public static string SnakeTrap => Collectible.Hunter.SnakeTrap;
 				public static string VenomstrikeTrap => Collectible.Hunter.VenomstrikeTrap;
-
-				public static List<string> GetCards(bool standardOnly) => 
-					standardOnly ? All.Where(x => !Helper.WildOnlySets.Contains(Database.GetCardFromId(x).Set)).ToList() : All;
 			}
 
 			public static class Mage
@@ -111,9 +113,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string PotionOfPolymorph => Collectible.Mage.PotionOfPolymorph;
 				public static string Spellbender => Collectible.Mage.Spellbender;
 				public static string Vaporize => Collectible.Mage.Vaporize;
-
-				public static List<string> GetCards(bool standardOnly) =>
-					standardOnly ? All.Where(x => !Helper.WildOnlySets.Contains(Database.GetCardFromId(x).Set)).ToList() : All;
 			}
 
 			public static class Paladin
@@ -127,9 +126,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string Redemption => Collectible.Paladin.Redemption;
 				public static string Repentance => Collectible.Paladin.Repentance;
 				public static string SacredTrial => Collectible.Paladin.SacredTrial;
-
-				public static List<string> GetCards(bool standardOnly) =>
-					standardOnly ? All.Where(x => !Helper.WildOnlySets.Contains(Database.GetCardFromId(x).Set)).ToList() : All;
 			}
 		}
 	}

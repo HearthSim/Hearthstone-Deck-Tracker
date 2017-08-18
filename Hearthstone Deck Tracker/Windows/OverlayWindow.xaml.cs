@@ -150,22 +150,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 				LblPlayerTurnTime.Visibility =
 				LblOpponentTurnTime.Visibility = LblTurnTime.Visibility = Config.Instance.HideTimers ? Hidden : Visible;
 
-		public void ShowSecrets(bool force = false, HeroClass? heroClass = null)
+		public void ShowSecrets(List<Card> secrets, bool force = false)
 		{
 			if(Config.Instance.HideSecrets && !force)
 				return;
 
 			StackPanelSecrets.Children.Clear();
-			var secrets = heroClass == null ? _game.OpponentSecrets.GetSecrets() : _game.OpponentSecrets.GetDefaultSecrets(heroClass.Value);
-			foreach(var id in secrets)
+
+			foreach(var secret in secrets)
 			{
-				var count = id.AdjustedCount(_game);
-				if(count <= 0 && Config.Instance.RemoveSecretsFromList)
+				if(secret.Count <= 0 && Config.Instance.RemoveSecretsFromList)
 					continue;
-				var card = Database.GetCardFromId(id.CardId);
-				card.Count = count; 
 				var cardObj = new Controls.Card();
-				cardObj.SetValue(DataContextProperty, card);
+				cardObj.SetValue(DataContextProperty, secret);
 				StackPanelSecrets.Children.Add(cardObj);
 			}
 

@@ -183,8 +183,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.HideSecrets = false;
 			SaveConfig(false);
-			if(!_game.IsInMenu)
-				Core.Overlay.ShowSecrets();
+			Core.Overlay.ShowSecrets(Core.Game.SecretsManager.GetSecretList());
 		}
 
 		private void CheckboxOverlaySecretToolTipsOnly_Checked(object sender, RoutedEventArgs e)

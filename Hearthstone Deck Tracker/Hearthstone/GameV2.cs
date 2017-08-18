@@ -10,6 +10,7 @@ using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -34,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Player = new Player(this, true);
 			Opponent = new Player(this, false);
 			IsInMenu = true;
-			OpponentSecrets = new OpponentSecrets(this);
+			SecretsManager = new SecretsManager(this);
 			Reset();
 		}
 
@@ -54,18 +55,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Player Opponent { get; set; }
 		public bool IsInMenu { get; set; }
 		public bool IsUsingPremade { get; set; }
-		public int OpponentSecretCount { get; set; }
 		public bool IsRunning { get; set; }
 		public Region CurrentRegion { get; set; }
 		public GameStats CurrentGameStats { get; set; }
 		public HearthMirror.Objects.Deck CurrentSelectedDeck { get; set; }
-		public OpponentSecrets OpponentSecrets { get; set; }
+		public SecretsManager SecretsManager { get; }
 		public List<Card> DrawnLastGame { get; set; }
 		public Dictionary<int, Entity> Entities { get; } = new Dictionary<int, Entity>();
 		public GameMetaData MetaData { get; } = new GameMetaData();
 		internal List<Tuple<int, List<string>>> StoredPowerLogs { get; } = new List<Tuple<int, List<string>>>();
 		internal Dictionary<int, string> StoredPlayerNames { get; } = new Dictionary<int, string>();
 		internal GameStats StoredGameStats { get; set; }
+		public int ProposedAttacker { get; set; }
+		public int ProposedDefender { get; set; }
 
 		public Mode CurrentMode
 		{
@@ -174,10 +176,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Player.Id = MatchInfo.LocalPlayer.Id;
 				Opponent.Id = MatchInfo.OpposingPlayer.Id;
 			}
+			ProposedAttacker = 0;
+			ProposedDefender = 0;
 			Entities.Clear();
 			SavedReplay = false;
-			OpponentSecretCount = 0;
-			OpponentSecrets.ClearSecrets();
+			SecretsManager.Reset();
 			_spectator = null;
 			_currentGameMode = GameMode.None;
 			_currentGameType = GameType.GT_UNKNOWN;

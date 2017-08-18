@@ -108,9 +108,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			gameState.GameHandler.HandleAttackingEntity(value == 1 ? entity : null);
 		}
 
-		private void ProposedDefenderChange(IGame game, int value) => game.OpponentSecrets.ProposedDefenderEntityId = value;
+		private void ProposedDefenderChange(IGame game, int value) => game.ProposedDefender = value;
 
-		private void ProposedAttackerChange(IGame game, int value) => game.OpponentSecrets.ProposedAttackerEntityId = value;
+		private void ProposedAttackerChange(IGame game, int value) => game.ProposedAttacker = value;
 
 		private void NumMinionsPlayedThisTurnChange(IHsGameState gameState, IGame game, int value)
 		{
