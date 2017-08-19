@@ -33,13 +33,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(value == prevValue)
 				return;
 
-			game.Entities[id].SetTag(tag, value);
+			var entity = game.Entities[id];
+			entity.SetTag(tag, value);
 
 			if(isCreationTag)
 			{
 				var action = _tagChangeActions.FindAction(tag, game, gameState, id, value, prevValue);
 				if(action != null)
+				{
+					entity.Info.HasOutstandingTagChanges = true;
 					_creationTagActionQueue.Enqueue(new Tuple<int, Action>(id, action));
+				}
 			}
 			else
 				_tagChangeActions.FindAction(tag, game, gameState, id, value, prevValue)?.Invoke();
