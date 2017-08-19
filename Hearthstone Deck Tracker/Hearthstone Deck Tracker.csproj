@@ -264,6 +264,7 @@
     </Compile>
     <Compile Include="FlyoutControls\DeckExport\DeckExportViewModel.cs" />
     <Compile Include="HsReplay\Data\JsonCache.cs" />
+    <Compile Include="Importing\Websites\Hearthhead.cs" />
     <Compile Include="Stats\CompiledStats\DateTimeHelper.cs" />
     <Compile Include="Utility\Converters\LocalizationConverter.cs" />
     <Compile Include="Utility\Converters\GameStatsHasReplayConverter.cs" />
