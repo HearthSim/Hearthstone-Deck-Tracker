@@ -34,6 +34,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(!HandleAction)
 				return;
 
+			if(attacker.GetTag(GameTag.CONTROLLER) == defender.GetTag(GameTag.CONTROLLER))
+				return;
+
 			var exclude = new List<string>();
 
 			var freeSpaceOnBoard = FreeSpaceOnBoard;

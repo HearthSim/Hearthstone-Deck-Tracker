@@ -233,6 +233,36 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(2, PaladinSecrets.All);
 		}
 
+		[TestMethod]
+		public void SingleSecret_Retarget_FriendlyHitsFriendly()
+		{
+			_game.SecretsManager.HandleAttack(_playerMinion1, _heroPlayer);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+
+			// minions can't actually hit themselves, but this works for the
+			// purposes of this test.
+			_game.SecretsManager.HandleAttack(_playerMinion1, _playerMinion1);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+		}
+
+		[TestMethod]
+		public void SingleSecret_OpponentAttack_Retarget_OpponentHitsOpponent()
+		{
+			_game.SecretsManager.HandleAttack(_opponentMinion1, _heroOpponent);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+
+			_game.SecretsManager.HandleAttack(_opponentMinion1, _opponentMinion2);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+		}
+
 		private void VerifySecrets(int index, List<string> allSecrets, params string[] triggered)
 		{
 			var secrets = _game.SecretsManager.Secrets[index];
