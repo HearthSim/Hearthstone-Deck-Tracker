@@ -64,8 +64,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public void SetCurrentEntity(int id)
 		{
 			CurrentEntityId = id;
-			if(_game.Entities.TryGetValue(CurrentEntityId, out var entity))
-				entity.Info.HasOutstandingTagChanges = true;
 		}
 
 		public void ResetCurrentEntity() => CurrentEntityId = 0;
