@@ -210,6 +210,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				sb.Append(", created=true");
 			if(OriginalZone.HasValue)
 				sb.Append(", originalZone=" + OriginalZone);
+			if(HasOutstandingTagChanges)
+				sb.Append(", hasOutstandingTagChanges=true");
+			if(Hidden)
+				sb.Append(", hidden=true");
+			if(OriginalController > 0)
+				sb.Append(", OriginalController=" + OriginalController);
+			if(!string.IsNullOrEmpty(OriginalCardId))
+				sb.Append(", OriginalCardId=" + OriginalCardId);
 			return sb.ToString();
 		}
 	}
