@@ -85,7 +85,8 @@ namespace Hearthstone_Deck_Tracker
 			var newUser = ConfigManager.PreviousVersion == null;
 			LogConfigUpdater.Run().Forget();
 			LogConfigWatcher.Start();
-			Helper.UpdateAppTheme();
+			UITheme.InitializeTheme();
+			UITheme.ShowHDTLogo();
 			ThemeManager.Run();
 			ResourceMonitor.Run();
 			Game = new GameV2();
