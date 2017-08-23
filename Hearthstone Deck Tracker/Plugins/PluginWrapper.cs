@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -87,7 +88,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			try
 			{
 				Log.Info("Loading " + Name);
+				var start = DateTime.Now;
 				Plugin.OnLoad();
+				Influx.OnPluginLoaded(Plugin, DateTime.Now - start);
 				_loaded = true;
 				_exceptions = 0;
 				MenuItem = Plugin.MenuItem;
@@ -97,6 +100,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 				ErrorManager.AddError("Error loading Plugin \"" + Name + "\"",
 				                      "Make sure you are using the latest version of the Plugin and HDT.\n\n" + ex);
 				Log.Error(Name + ":\n" + ex);
+				Influx.OnPluginLoadingError(Plugin);
 				return false;
 			}
 			return true;

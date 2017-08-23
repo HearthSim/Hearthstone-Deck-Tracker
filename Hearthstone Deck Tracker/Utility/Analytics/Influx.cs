@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -19,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static int? _pctHsReplayData;
 		private static int? _pctHsReplayDataTotal;
 
-		public static void OnAppStart(Version version, bool isNew, int startupDuration)
+		public static void OnAppStart(Version version, bool isNew, int startupDuration, int numPlugins)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -29,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("version", version.ToVersionString(true))
 				.Tag("new", isNew)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
+				.Field("num_plugins", numPlugins)
 				.Field("startup_duration", startupDuration);
 #if(SQUIRREL)
 			point.Tag("squirrel", true);
@@ -85,22 +87,25 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("net", Helper.GetInstalledDotNetVersion()).Build());
 		}
 
-		private static async void WritePoint(InfluxPoint point)
+		public static void OnPluginLoaded(IPlugin plugin, TimeSpan startupTime)
 		{
-			try
-			{
-				using(var client = new UdpClient())
-				{
-					var line = point.ToLineProtocol();
-					var data = Encoding.UTF8.GetBytes(line);
-					var length = await client.SendAsync(data, data.Length, "metrics.hearthsim.net", 8091);
-					Log.Debug(line + " - " +  length);
-				}
-			}
-			catch(Exception ex)
-			{
-				Log.Debug(ex.ToString());
-			}
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_plugin_loaded", false)
+				.Tag("name", plugin.Name)
+				.Tag("version", plugin.Version.ToVersionString())
+				.Field("startup_time", (int)startupTime.TotalMilliseconds);
+			WritePoint(point.Build());
+		}
+
+		public static void OnPluginLoadingError(IPlugin plugin)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_plugin_loading_error", false)
+				.Tag("name", plugin.Name)
+				.Tag("version", plugin.Version.ToVersionString());
+			WritePoint(point.Build());
 		}
 
 		public static void OnGameUploadFailed(WebExceptionStatus status = WebExceptionStatus.UnknownError)
@@ -138,6 +143,24 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			catch(Exception e)
 			{
 				Log.Error(e);
+			}
+		}
+
+		private static async void WritePoint(InfluxPoint point)
+		{
+			try
+			{
+				using(var client = new UdpClient())
+				{
+					var line = point.ToLineProtocol();
+					var data = Encoding.UTF8.GetBytes(line);
+					var length = await client.SendAsync(data, data.Length, "metrics.hearthsim.net", 8091);
+					Log.Debug(line + " - " +  length);
+				}
+			}
+			catch(Exception ex)
+			{
+				Log.Debug(ex.ToString());
 			}
 		}
 	}

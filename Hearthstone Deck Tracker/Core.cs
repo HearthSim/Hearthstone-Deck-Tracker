@@ -152,7 +152,12 @@ namespace Hearthstone_Deck_Tracker
 
 			Initialized = true;
 
-			Influx.OnAppStart(Helper.GetCurrentVersion(), newUser, (int)(DateTime.UtcNow - _startUpTime).TotalSeconds);
+			Influx.OnAppStart(
+				Helper.GetCurrentVersion(),
+				newUser,
+				(int)(DateTime.UtcNow - _startUpTime).TotalSeconds,
+				PluginManager.Instance.Plugins.Count
+			);
 		}
 
 		private static async void UpdateOverlayAsync()
