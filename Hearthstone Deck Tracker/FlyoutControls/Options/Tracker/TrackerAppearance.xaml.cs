@@ -53,10 +53,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboboxAccent_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			var accent = ComboboxAccent.SelectedItem as Accent;
-			if (accent != null)
+			if(accent != null)
 			{
 				Config.Instance.AccentName = accent.Name;
 				Config.Save();
@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboboxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.AppTheme = (MetroTheme)ComboboxTheme.SelectedItem;
 			Config.Save();
