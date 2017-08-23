@@ -86,7 +86,6 @@ namespace Hearthstone_Deck_Tracker
 			LogConfigUpdater.Run().Forget();
 			LogConfigWatcher.Start();
 			UITheme.InitializeTheme();
-			UITheme.ShowHDTLogo();
 			ThemeManager.Run();
 			ResourceMonitor.Run();
 			Game = new GameV2();
