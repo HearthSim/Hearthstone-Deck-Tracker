@@ -1,3 +1,12 @@
+## __Release v1.4.1 - 2017-08-24__
+
+__Fixes__:
+- Fixed an issue where cards destroyed by Skulking Geist would sometimes not be tracked.
+- Fixed an issue where Adventure heroes would show up in the card lists.
+- Fixed an issue where entering card names in the arena rewards dialog would not work if the UI language was not english.
+- Fixed several issues related to secrets tracking.
+
+
 ## __Release v1.4.0 - 2017-08-08__
 
 __Updated for Knights of the Frozen Throne__
@@ -7,6 +16,7 @@ __Changes__:
 
 __API__:
 - Added GameEvents.OnModeChanged
+
 
 ## __Release v1.3.6 - 2017-07-30__
 
