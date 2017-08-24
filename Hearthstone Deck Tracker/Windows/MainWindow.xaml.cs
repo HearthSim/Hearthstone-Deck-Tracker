@@ -632,5 +632,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				MyGamesPanel.Visibility = Collapsed;
 			}
 		}
+
+		private void MainWindow_OnActivated(object sender, EventArgs e)
+		{
+			Influx.OnMainWindowActivated();
+		}
+
+		private void MainWindow_OnDeactivated(object sender, EventArgs e)
+		{
+			Influx.OnMainWindowDeactivated();
+		}
 	}
 }

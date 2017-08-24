@@ -19,6 +19,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static bool _new;
 		private static int? _pctHsReplayData;
 		private static int? _pctHsReplayDataTotal;
+		private static readonly List<int> MainWindowActivations = new List<int>();
+		private static DateTime? _lastMainWindowActivation;
 
 		public static void OnAppStart(Version version, bool isNew, int startupDuration, int numPlugins)
 		{
@@ -60,6 +62,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				point.Field("pct_hsreplay_data_total", _pctHsReplayDataTotal.Value);
 			if(_pctHsReplayData.HasValue)
 				point.Field("pct_hsreplay_data_last14d", _pctHsReplayData.Value);
+
+			if(_lastMainWindowActivation != null)
+				OnMainWindowDeactivated();
+			point.Field("window_activations", MainWindowActivations.Count);
+			point.Field("window_active_duration", (int)MainWindowActivations.Average());
 
 			WritePoint(point.Build());
 		}
@@ -144,6 +151,20 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			{
 				Log.Error(e);
 			}
+		}
+
+		public static void OnMainWindowActivated()
+		{
+			_lastMainWindowActivation = DateTime.Now;
+		}
+
+		public static void OnMainWindowDeactivated()
+		{
+			if(_lastMainWindowActivation == null)
+				return;
+			var duration = DateTime.Now - _lastMainWindowActivation.Value;
+			MainWindowActivations.Add((int)duration.TotalSeconds);
+			_lastMainWindowActivation = null;
 		}
 
 		private static async void WritePoint(InfluxPoint point)
