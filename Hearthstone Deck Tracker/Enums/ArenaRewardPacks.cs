@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 		None = CardSet.INVALID,
 
 		[LocDescription("Enum_ArenaRewardPacks_Classic")]
-		Classic = CardSet.CORE,
+		Classic = CardSet.EXPERT1,
 
 		[LocDescription("Enum_ArenaRewardPacks_GoblinsVsGnomes")]
 		GoblinsVsGnomes = CardSet.GVG,
