@@ -1,3 +1,8 @@
+## __Release v1.4.2 - 2017-09-05__
+
+- Fixed an issue where cards from the Classic set could not be set as arena rewards.
+
+
 ## __Release v1.4.1 - 2017-08-24__
 
 __Fixes__:
