@@ -24,12 +24,10 @@ using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using Application = System.Windows.Application;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using MediaColor = System.Windows.Media.Color;
 using Region = Hearthstone_Deck_Tracker.Enums.Region;
@@ -470,27 +468,6 @@ namespace Hearthstone_Deck_Tracker
 		}
 #endif
 
-		public static void UpdateAppTheme()
-		{
-			var theme = GetAppTheme();
-			ThemeManager.ChangeAppStyle(Application.Current, GetAppAccent(), theme);
-			if(theme.Name == MetroTheme.BaseLight.ToString())
-			{
-				Application.Current.Resources["GrayTextColorBrush"] = new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor1"]);
-				Application.Current.Resources["HsReplayIcon"] = Application.Current.Resources["HsReplayIconBlue"];
-			}
-			else
-			{
-				Application.Current.Resources["GrayTextColorBrush"] = new SolidColorBrush((MediaColor)Application.Current.Resources["GrayTextColor2"]);
-				Application.Current.Resources["HsReplayIcon"] = Application.Current.Resources["HsReplayIconWhite"];
-			}
-		}
-
-		public static Accent GetAppAccent() => string.IsNullOrEmpty(Config.Instance.AccentName)
-												  ? ThemeManager.DetectAppStyle().Item2 : ThemeManager.Accents.First(a => a.Name == Config.Instance.AccentName);
-
-		public static AppTheme GetAppTheme() => ThemeManager.AppThemes.First(t => t.Name == Config.Instance.AppTheme.ToString());
-
 		public static double GetScaledXPos(double left, int width, double ratio) => (width * ratio * left) + (width * (1 - ratio) / 2);
 
 		public static MediaColor GetClassColor(string className, bool priestAsGray)
@@ -531,6 +508,19 @@ namespace Hearthstone_Deck_Tracker
 				return reg != null && ((string)reg.GetValue("ProductName")).Contains("Windows 10");
 			}
 			catch(Exception ex)
+			{
+				Log.Error(ex);
+				return false;
+			}
+		}
+		public static bool IsWindows8()
+		{
+			try
+			{
+				var reg = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+				return reg != null && ((string)reg.GetValue("ProductName")).Contains("Windows 8");
+			}
+			catch (Exception ex)
 			{
 				Log.Error(ex);
 				return false;

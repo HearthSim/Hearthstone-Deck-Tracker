@@ -27,10 +27,10 @@
     <Menu>
         <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_New}">
             <MenuItem.Icon>
-                <Rectangle>
-                    <Rectangle.Fill>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{StaticResource appbar_layer_add}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
             <MenuItem.Resources>
@@ -87,10 +87,10 @@
         </MenuItem>
         <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck}" IsEnabled="{Binding HasSelectedDeck}" SubmenuOpened="Deck_OnSubmenuOpened">
             <MenuItem.Icon>
-                <Rectangle>
-                    <Rectangle.Fill>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{StaticResource appbar_layer}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditDeck}" Command="{Binding EditDeckCommand}" />
@@ -123,10 +123,10 @@
         </MenuItem>
         <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import}">
             <MenuItem.Icon>
-                <Rectangle>
-                    <Rectangle.Fill>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{StaticResource appbar_download}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Web}" Command="{Binding ImportFromWebCommand}" />
@@ -145,10 +145,10 @@
         </MenuItem>
         <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export}" IsEnabled="{Binding HasSelectedDeck}">
             <MenuItem.Icon>
-                <Rectangle>
-                    <Rectangle.Fill>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{StaticResource appbar_upload}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Hearthstone}" Command="{Binding ExportDeckCommand}" />
@@ -160,10 +160,10 @@
         </MenuItem>
         <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats}">
             <MenuItem.Icon>
-                <Rectangle>
-                    <Rectangle.Fill>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{StaticResource appbar_graph_line}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats_Arena}" Command="{Binding ArenaStatsCommand}" />
@@ -174,10 +174,10 @@
                 <CollectionViewSource x:Key="LatestReplaysCollection" Source="{Binding LatestReplays}"/>
             </MenuItem.Resources>
             <MenuItem.Icon>
-                <Rectangle>
-                    <Rectangle.Fill>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{StaticResource appbar_chevron_right}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Latest}">
@@ -220,10 +220,10 @@
                 <CollectionViewSource x:Key="PluginsCollection" Source="{Binding PluginsMenuItems}"/>
             </MenuItem.Resources>
             <MenuItem.Icon>
-                <Rectangle>
-                    <Rectangle.Fill>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{StaticResource appbar_puzzle_round}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
             <MenuItem.ItemsSource>
