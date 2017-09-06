@@ -24,7 +24,7 @@
                       Icon="{StaticResource AppIcon}"
                       StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
                       PreviewKeyDown="MainWindow_OnPreviewKeyDown"
-                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" SizeChanged="MetroWindow_SizeChanged">
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" SizeChanged="MetroWindow_SizeChanged" Activated="MetroWindow_Activated">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

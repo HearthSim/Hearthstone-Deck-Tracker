@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro;
 using Point = System.Windows.Point;
 using Application = System.Windows.Application;
@@ -12,9 +13,10 @@ namespace Hearthstone_Deck_Tracker
 {
 	public static class UITheme
 	{
-		private const string WindowAccentName = "Windows Accent";
+		public const string WindowAccentName = "Windows Accent";
 		public static AppTheme CurrentTheme => ThemeManager.AppThemes.FirstOrDefault(t => t.Name == Config.Instance.AppTheme.ToString()) ?? ThemeManager.DetectAppStyle().Item1;
 		public static Accent CurrentAccent => ThemeManager.Accents.FirstOrDefault(a => a.Name == Config.Instance.AccentName) ?? ThemeManager.GetAccent("Blue");
+		public static Color WindowsAccent = SystemParameters.WindowGlassColor;
 
 		public static void InitializeTheme()
 		{
@@ -31,7 +33,8 @@ namespace Hearthstone_Deck_Tracker
 
 			if(Config.Instance.AccentName == WindowAccentName)
 			{
-				Config.Instance.AccentName = "Blue"; //In case if somehow user will get "Windows Accent" on Windows which not support this. (For example move whole HDT on diffrent machine instead of fresh install)
+				// In case if somehow user will get "Windows Accent" on Windows which not support this. (For example move whole HDT on diffrent machine instead of fresh install)
+				Config.Instance.AccentName = "Blue";
 				Config.Save();
 			}
 
@@ -58,7 +61,9 @@ namespace Hearthstone_Deck_Tracker
 		public static void CreateWindowsAccentStyle(bool changeImmediately = false)
 		{
 			var resourceDictionary = new ResourceDictionary();
-			var color = SystemParameters.WindowGlassColor; // Detect WindowsAccent color
+
+			// Detect WindowsAccent color
+			var color = SystemParameters.WindowGlassColor;
 
 			resourceDictionary.Add("HighlightColor", color);
 			resourceDictionary.Add("AccentColor", Color.FromArgb(204, color.R, color.G, color.B));
@@ -105,7 +110,8 @@ namespace Hearthstone_Deck_Tracker
 			resourceDictionary = new ResourceDictionary() { Source = new Uri(fileName, UriKind.Absolute) };
 
 			ThemeManager.AddAccent(WindowAccentName, resourceDictionary.Source);
-			var oldWindowsAccent = ThemeManager.GetAccent("Windows Accent");
+
+			var oldWindowsAccent = ThemeManager.GetAccent(WindowAccentName);
 			oldWindowsAccent.Resources.Source = resourceDictionary.Source;
 
 			if(changeImmediately)
@@ -125,5 +131,23 @@ namespace Hearthstone_Deck_Tracker
 				Application.Current.Resources["HsReplayIcon"] = Application.Current.Resources["HsReplayIconWhite"];
 			}
 		}
+
+		public static void RefreshWindowsAccent()
+		{
+			// Called from MetroWindow_Activated
+			if (Config.Instance.AccentName == WindowAccentName)
+				if (WindowsAccent != SystemParameters.WindowGlassColor)
+				{
+					// Workaround #1
+					Log.Info("Refreshing WindowsAccent called in MetroWindow_Activated");
+					Config.Instance.AccentName = "Blue";
+					UpdateAccent();
+					Config.Instance.AccentName = WindowAccentName;
+					UpdateAccent();
+
+					WindowsAccent = SystemParameters.WindowGlassColor;
+				}
+		}
+
 	}
 }

@@ -35,19 +35,19 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <Rectangle Name="RectangleSearchIcon" Margin="2"
+                <Rectangle Name="RectangleSearchIcon" Margin="2" Fill="{DynamicResource TextBrush}"
                            Visibility="{Binding VisibilitySearchIcon, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                            PreviewMouseLeftButtonUp="RectangleSearchIcon_OnPreviewMouseLeftButtonUp">
-                    <Rectangle.Fill>
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{DynamicResource appbar_magnify}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
-                <Rectangle Name="RectangleCloseIcon" Margin="2"
+                <Rectangle Name="RectangleCloseIcon" Margin="2" Fill="{DynamicResource TextBrush}"
                            Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
                            PreviewMouseLeftButtonUp="RectangleCloseIcon_OnPreviewMouseLeftButtonUp">
-                    <Rectangle.Fill>
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{DynamicResource appbar_close}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </Grid>
         </Border>
@@ -64,11 +64,10 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <Rectangle Name="RectangleSortIcon" Margin="2"
-                           PreviewMouseLeftButtonUp="RectangleSortIcon_OnPreviewMouseLeftButtonUp">
-                    <Rectangle.Fill>
+                <Rectangle Name="RectangleSortIcon" Margin="2" Fill="{DynamicResource TextBrush}" PreviewMouseLeftButtonUp="RectangleSortIcon_OnPreviewMouseLeftButtonUp">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Visual="{DynamicResource appbar_arrow_up_down}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </Grid>
         </Border>
@@ -123,8 +122,7 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <TextBlock Text="{lex:LocTextUpper DeckPicker_Button_NoDeckMode}"  Margin="6,0"  FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"
-                           Foreground="{Binding BorderDeckModeTextBrush, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"/>
+                <TextBlock Text="{lex:LocTextUpper DeckPicker_Button_NoDeckMode}" Margin="6,0" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Grid>
         </Border>
         <Border BorderThickness="1" Margin="0,2,0,0" BorderBrush="{DynamicResource TextBrush}"

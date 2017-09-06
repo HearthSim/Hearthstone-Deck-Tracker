@@ -1,5 +1,4 @@
 #region
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,8 +31,6 @@ using Hearthstone_Deck_Tracker.Utility.Updating;
 #endif
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
-using Clipboard = System.Windows.Clipboard;
-
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -632,5 +629,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				MyGamesPanel.Visibility = Collapsed;
 			}
 		}
+		private void MetroWindow_Activated(object sender, EventArgs e) => UITheme.RefreshWindowsAccent();
 	}
 }
