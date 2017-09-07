@@ -1,5 +1,4 @@
 #region
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,8 +31,6 @@ using Hearthstone_Deck_Tracker.Utility.Updating;
 #endif
 using static System.Windows.Visibility;
 using Application = System.Windows.Application;
-using Clipboard = System.Windows.Clipboard;
-
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -636,6 +633,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void MainWindow_OnActivated(object sender, EventArgs e)
 		{
 			Influx.OnMainWindowActivated();
+			UITheme.RefreshWindowsAccent();
 		}
 
 		private void MainWindow_OnDeactivated(object sender, EventArgs e)
