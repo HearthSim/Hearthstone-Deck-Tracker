@@ -102,6 +102,15 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Core.Overlay.UpdatePosition();
 		}
 
+		[PredefinedHotKeyAction("Toggle My Games panel", "Turns on or off visibility of My Games panel.")]
+		public static void ToggleMyGamesPanel()
+		{
+			Config.Instance.ShowMyGamesPanel = !Config.Instance.ShowMyGamesPanel;
+			Core.MainWindow.Options.OptionsTrackerGeneral.CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
+			Core.MainWindow.UpdateMyGamesPanelVisibility();
+			Config.Save();
+		}
+
 		[PredefinedHotKeyAction("Toggle no deck mode", "Activates \"no deck mode\" (use no deck) or selects the last used deck.")]
 		public static void ToggleNoDeckMode()
 		{
