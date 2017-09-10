@@ -31,7 +31,10 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.AccentName == WindowAccentName)
 					CreateWindowsAccentStyle(true);
 				else
+				{
 					CreateWindowsAccentStyle();
+					ThemeManager.ChangeAppStyle(Application.Current, CurrentAccent, CurrentTheme);
+				}
 			}
 			else
 			{
