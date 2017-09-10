@@ -27,27 +27,15 @@ namespace Hearthstone_Deck_Tracker
 		{
 			UpdateIconColors();
 			if(Helper.IsWindows8() || Helper.IsWindows10())
+				CreateWindowsAccentStyle();
+			else if(Config.Instance.AccentName == WindowAccentName)
 			{
-				if(Config.Instance.AccentName == WindowAccentName)
-					CreateWindowsAccentStyle(true);
-				else
-				{
-					CreateWindowsAccentStyle();
-					ThemeManager.ChangeAppStyle(Application.Current, CurrentAccent, CurrentTheme);
-				}
+				// In case if somehow user will get "Windows Accent" on Windows which not support this.
+				// (For example move whole HDT on diffrent machine instead of fresh install)
+				Config.Instance.AccentName = DefaultAccentName;
+				Config.Save();
 			}
-			else
-			{
-				if(Config.Instance.AccentName == WindowAccentName)
-				{
-					// In case if somehow user will get "Windows Accent" on Windows which not support this.
-					// (For example move whole HDT on diffrent machine instead of fresh install)
-					Config.Instance.AccentName = DefaultAccentName;
-					Config.Save();
-				}
-
-				ThemeManager.ChangeAppStyle(Application.Current, CurrentAccent, CurrentTheme);
-			}
+			ThemeManager.ChangeAppStyle(Application.Current, CurrentAccent, CurrentTheme);
 		}
 
 		public static void UpdateTheme()
