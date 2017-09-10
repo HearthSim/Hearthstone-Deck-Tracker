@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.Controls.Information;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
+using Microsoft.Win32;
 
 #endregion
 
@@ -49,10 +50,23 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 #endif
 			if(previousVersion < new Version(1,2,4))
 				infoControl = new HsReplayStatisticsInfo();
+			if(previousVersion < new Version(1, 5, 2) && IsStreamingSoftwareInstalled())
+				infoControl = new TwitchExtensionInfo();
 			if(infoControl == null)
 				return;
 			ContentControlHighlight.Content = infoControl;
 			TabControl.SelectedIndex = 1;
+		}
+
+		private bool IsStreamingSoftwareInstalled()
+		{
+			return HasRegistryEntry(@"SOFTWARE\OBS Studio") || HasRegistryEntry(@"SOFTWARE\SplitmediaLabs\XSplit");
+		}
+
+		private bool HasRegistryEntry(string key)
+		{
+			using(var obs = Registry.LocalMachine.OpenSubKey(key))
+				return obs != null;
 		}
 
 		private string _releaseNotes;

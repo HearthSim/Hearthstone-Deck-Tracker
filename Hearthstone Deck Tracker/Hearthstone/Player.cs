@@ -136,22 +136,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 							return card;
 						});
 
-		public List<Card> PlayerCardList
+		public List<Card> PlayerCardList => GetPlayerCardList(Config.Instance.RemoveCardsFromDeck, Config.Instance.HighlightCardsInHand, Config.Instance.ShowPlayerGet);
+
+		internal List<Card> GetPlayerCardList(bool removeNotInDeck, bool highlightCardsInHand, bool includeCreatedInHand)
 		{
-			get
-			{
-				var createdInHand = Config.Instance.ShowPlayerGet ? CreatedCardsInHand : new List<Card>();
-				if(DeckList.Instance.ActiveDeck == null)
-					return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(PredictedCardsInDeck).ToSortedCardList();
-				var deckState = GetDeckState();
-				var inDeck = deckState.RemainingInDeck.ToList();
-				var notInDeck = deckState.RemovedFromDeck.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
-				if(!Config.Instance.RemoveCardsFromDeck)
-					return inDeck.Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
-				if(Config.Instance.HighlightCardsInHand)
-					return inDeck.Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand).ToSortedCardList();
-				return inDeck.Concat(createdInHand).ToSortedCardList();
-			}
+			var createdInHand = includeCreatedInHand ? CreatedCardsInHand : new List<Card>();
+			if(DeckList.Instance.ActiveDeck == null)
+				return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(PredictedCardsInDeck).ToSortedCardList();
+			var deckState = GetDeckState();
+			var inDeck = deckState.RemainingInDeck.ToList();
+			var notInDeck = deckState.RemovedFromDeck.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
+			if(!removeNotInDeck)
+				return inDeck.Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
+			if(highlightCardsInHand)
+				return inDeck.Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand).ToSortedCardList();
+			return inDeck.Concat(createdInHand).ToSortedCardList();
 		}
 
 		public List<Card> OpponentCardList

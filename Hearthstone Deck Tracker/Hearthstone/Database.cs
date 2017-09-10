@@ -80,6 +80,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return card.Name;
 		}
 
+		public static Card GetHeroCardFromClass(string className)
+		{
+			if(string.IsNullOrEmpty(className))
+				return null;
+			if(!CardIds.HeroNameDict.TryGetValue(className, out var heroId) || string.IsNullOrEmpty(heroId))
+				return null;
+			return GetCardFromId(heroId);
+		}
+
 		private static string GetBaseId(string cardId)
 		{
 			if(string.IsNullOrEmpty(cardId))

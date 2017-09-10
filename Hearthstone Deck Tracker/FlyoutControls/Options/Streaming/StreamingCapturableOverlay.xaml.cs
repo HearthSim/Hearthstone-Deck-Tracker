@@ -6,13 +6,13 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Windows;
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
+namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 {
-	public partial class OverlayStreaming : INotifyPropertyChanged
+	public partial class StreamingCapturableOverlay : INotifyPropertyChanged
 	{
 		private readonly bool _initialized;
 
-		public OverlayStreaming()
+		public StreamingCapturableOverlay()
 		{
 			InitializeComponent();
 			CheckBoxShowCapOverlay.IsChecked = Config.Instance.ShowCapturableOverlay;

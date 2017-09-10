@@ -716,8 +716,14 @@ namespace Hearthstone_Deck_Tracker
 		[XmlArrayItem(ElementName = "Tag")]
 		public List<string> SelectedTags = new List<string>();
 
+		[DefaultValue(0)]
+		public int SelectedTwitchUser = 0;
+
 		[DefaultValue("Theme")]
 		public string SelectedWindowBackground = "Theme";
+
+		[DefaultValue(true)]
+		public bool SendTwitchExtensionData = true;
 
 		[Obsolete]
 		[DefaultValue(false)]

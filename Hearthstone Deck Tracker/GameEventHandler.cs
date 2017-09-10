@@ -11,9 +11,9 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Importing;
+using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
@@ -25,7 +25,6 @@ using Hearthstone_Deck_Tracker.Windows;
 using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
-using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
 
 #endregion
 
@@ -360,6 +359,7 @@ namespace Hearthstone_Deck_Tracker
 				_game.IsUsingPremade = true;
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 			GameEvents.OnGameStart.Execute();
+			LiveDataManager.WatchBoardState();
 		}
 
 		private void HandleAdventureRestart()
@@ -386,6 +386,7 @@ namespace Hearthstone_Deck_Tracker
 				TurnTimer.Instance.Stop();
 				Core.Overlay.HideTimers();
 				DeckManager.ResetAutoSelectCount();
+				LiveDataManager.Stop();
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
 				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)

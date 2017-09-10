@@ -185,22 +185,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static HearthDb.Deckstrings.Deck ToHearthDbDeck(Deck deck)
 		{
-			if(!CardIds.HeroNameDict.TryGetValue(deck.Class ?? "", out var heroId))
-				heroId = deck.Cards.FirstOrDefault(x => x.PlayerClass != "Neutral")?.Id;
-			if(string.IsNullOrEmpty(heroId))
-				return null;
-			var heroDbfId = Database.GetCardFromId(heroId)?.DbfIf ?? 0;
-			if(heroDbfId == 0)
-				return null;
-
-			return new HearthDb.Deckstrings.Deck
+			var card = Database.GetHeroCardFromClass(deck.Class);
+			if(card?.DbfIf > 0)
 			{
-				Name = deck.Name,
-				Format = deck.IsWildDeck ? FormatType.FT_WILD : FormatType.FT_STANDARD,
-				ZodiacYear = (ZodiacYear)Enum.GetValues(typeof(ZodiacYear)).Cast<int>().OrderByDescending(x => x).First(),
-				HeroDbfId = heroDbfId,
-				CardDbfIds = deck.Cards.ToDictionary(c => c.DbfIf, c => c.Count)
-			};
+				return new HearthDb.Deckstrings.Deck
+				{
+					Name = deck.Name,
+					Format = deck.IsWildDeck ? FormatType.FT_WILD : FormatType.FT_STANDARD,
+					ZodiacYear = (ZodiacYear)Enum.GetValues(typeof(ZodiacYear)).Cast<int>().OrderByDescending(x => x).First(),
+					HeroDbfId = card.DbfIf,
+					CardDbfIds = deck.Cards.ToDictionary(c => c.DbfIf, c => c.Count)
+				};
+			}
+			return null;
 		}
 
 		public static Deck FromHearthDbDeck(HearthDb.Deckstrings.Deck hDbDeck)

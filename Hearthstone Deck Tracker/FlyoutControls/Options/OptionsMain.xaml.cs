@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
+using Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
@@ -28,7 +29,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly OverlayInteractivity OptionsOverlayInteractivity = new OverlayInteractivity();
 		public readonly OverlayOpponent OptionsOverlayOpponent = new OverlayOpponent();
 		public readonly OverlayPlayer OptionsOverlayPlayer = new OverlayPlayer();
-		public readonly OverlayStreaming OptionsOverlayStreaming = new OverlayStreaming();
 		public readonly TrackerAppearance OptionsTrackerAppearance = new TrackerAppearance();
 		public readonly TrackerBackups OptionsTrackerBackups = new TrackerBackups();
 		public readonly TrackerGeneral OptionsTrackerGeneral = new TrackerGeneral();
@@ -40,6 +40,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly TrackerSettings OptionsTrackerSettings = new TrackerSettings();
 		public readonly TrackerStats OptionsTrackerStats = new TrackerStats();
 		public readonly TrackerReplays OptionsTrackerReplays = new TrackerReplays();
+		public readonly StreamingTwitchExtension OptionsStreamingTwitchExtension = new StreamingTwitchExtension();
+		public readonly StreamingCapturableOverlay OptionsStreamingCapturableOverlay = new StreamingCapturableOverlay();
 		public readonly OptionsSearch OptionsSearch = new OptionsSearch();
 		private string _contentHeader;
 		private object _optionsContent;
@@ -134,12 +136,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsContent = OptionsOverlayInteractivity;
 		}
 
-		private void TreeViewItemOverlayStreaming_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentHeader = LocUtil.Get("Options_Overlay_Streaming_Header");
-			OptionsContent = OptionsOverlayStreaming;
-		}
-
 		private void TreeViewItemTrackerGeneral_OnSelected(object sender, RoutedEventArgs e)
 		{
 			ContentHeader = LocUtil.Get("Options_Tracker_General_Header");
@@ -213,5 +209,21 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+		private void TreeViewItemStreamingTwitchExtension_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = "Twitch Extension";
+			OptionsContent = OptionsStreamingTwitchExtension;
+			OptionsStreamingTwitchExtension.UpdateTwitchData();
+			OptionsStreamingTwitchExtension.UpdateAccountName();
+		}
+
+		private void TreeViewItemStreamingCapturableOverlay_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = "Capturable Overlay";
+			OptionsContent = OptionsStreamingCapturableOverlay;
+		}
+
+		public bool TwitchExtensionMenuSelected => Equals(OptionsContent, OptionsStreamingTwitchExtension);
 	}
 }

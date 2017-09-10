@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Information.TwitchExtensionInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="600" d:DesignWidth="700">
+    <DockPanel>
+        <Label Name="LabelHeader" Content="HDT Twitch Extension" FontWeight="SemiBold" DockPanel.Dock="Top" FontSize="18" HorizontalAlignment="Center"/>
+        <Separator DockPanel.Dock="Top"/>
+        <StackPanel VerticalAlignment="Center" Margin="20">
+            <TextBlock TextWrapping="Wrap" FontSize="15" HorizontalAlignment="Center">
+                <Run>We are happy to announce HDT now as an interactive Twitch Overlay Extension!</Run>
+            </TextBlock>
+            <UniformGrid MaxWidth="800" Rows="1" Margin="0,25">
+                <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2" DockPanel.Dock="Left" Margin="0,0,5,0">
+                    <Image Source="{StaticResource TwitchExtDecklist}" RenderOptions.BitmapScalingMode="Fant"/>
+                </Border>
+                <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2" DockPanel.Dock="Left" Margin="5,0,0,0">
+                    <Image Source="{StaticResource TwitchExtSecret}" RenderOptions.BitmapScalingMode="Fant"/>
+                </Border>
+            </UniformGrid>
+            <TextBlock TextWrapping="Wrap" FontSize="15" HorizontalAlignment="Center">
+                <Run FontWeight="SemiBold">Improve your viewers experience with:</Run>
+                <LineBreak/><Run>&#160;&#160;• An interactive and live updating decklist (including easy deck code copying)</Run>
+                <LineBreak/><Run>&#160;&#160;• Tooltips for minions, heroes, secrets, etc</Run>
+                <LineBreak/><Run>&#160;&#160;• ...and more awesome features to come in the future!</Run>
+                <LineBreak/><LineBreak/>
+                <Run FontWeight="SemiBold">Setup available under:</Run><LineBreak/>
+                &#160;&#160;<Hyperlink Command="{Binding OptionsCommand}"><Run>Options (advanced) > Streaming > Twitch Extension</Run></Hyperlink>
+                <LineBreak/>&#160;&#160;<Hyperlink Command="{Binding SetupGuideCommand}"><Run>View full setup guide</Run></Hyperlink>
+            </TextBlock>
+        </StackPanel>
+    </DockPanel>
+</UserControl>
+
+
+

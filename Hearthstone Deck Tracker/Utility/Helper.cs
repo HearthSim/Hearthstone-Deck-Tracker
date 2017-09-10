@@ -757,5 +757,15 @@ namespace Hearthstone_Deck_Tracker
 			attribute = default(T);
 			return false;
 		}
+
+		internal static string GetUserAgent()
+		{
+#if(SQUIRREL)
+			const string name = "HDT";
+#else
+			const string name = "HDTPortable";
+#endif
+			return name + "/" + GetCurrentVersion();
+		}
 	}
 }

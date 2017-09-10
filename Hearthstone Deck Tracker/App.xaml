@@ -32,6 +32,8 @@
                     <ImageSource x:Key="ClassIconWarlockRound">Resources/ClassIcons/Round/warlock.png</ImageSource>
                     <ImageSource x:Key="ClassIconWarriorRound">Resources/ClassIcons/Round/warrior.png</ImageSource>
                     <ImageSource x:Key="DustIcon">Resources/dust.png</ImageSource>
+                    <ImageSource x:Key="TwitchExtDecklist">Resources/twitch_ext_decklist.png</ImageSource>
+                    <ImageSource x:Key="TwitchExtSecret">Resources/twitch_ext_secret.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

@@ -19,6 +19,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
+using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
@@ -282,6 +283,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				Log.Info("Shutting down...");
 				Influx.OnAppExit(Helper.GetCurrentVersion());
+				LiveDataManager.Stop();
 				Core.UpdateOverlay = false;
 				Core.Update = false;
 
@@ -634,6 +636,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Influx.OnMainWindowActivated();
 			UITheme.RefreshWindowsAccent();
+			if(Options.TwitchExtensionMenuSelected && Options.OptionsStreamingTwitchExtension.AwaitingTwitchAccountConnection)
+				Options.OptionsStreamingTwitchExtension.RefreshTwitchAccounts();
 		}
 
 		private void MainWindow_OnDeactivated(object sender, EventArgs e)

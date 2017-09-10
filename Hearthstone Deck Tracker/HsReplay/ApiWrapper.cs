@@ -16,12 +16,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 {
 	internal class ApiWrapper
 	{
-#if(SQUIRREL)
-		private const string UserAgentName = "HDT";
-#else
-		private const string UserAgentName = "HDTPortable";
-#endif
-		private static readonly HsReplayClient Client = new HsReplayClient("089b2bc6-3c26-4aab-adbe-bcfd5bb48671", UserAgentName + "/" + Helper.GetCurrentVersion(), config: TryGetConfig());
+		private static readonly HsReplayClient Client = new HsReplayClient("089b2bc6-3c26-4aab-adbe-bcfd5bb48671", Helper.GetUserAgent(), config: TryGetConfig());
 		private static bool _requestedNewToken;
 
 		private static async Task<string> GetUploadToken()
