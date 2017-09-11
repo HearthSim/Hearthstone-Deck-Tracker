@@ -341,13 +341,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 			DeckPickerList.UpdateDecks();
 		}
 
-		private void MainWindow_OnPreviewKeyDown(object sender, KeyEventArgs e)
+		private async void MainWindow_OnPreviewKeyDown(object sender, KeyEventArgs e)
 		{
 			if(e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
 			{
-				if(Keyboard.FocusedElement is TextBox)
-					return;
-				ImportFromClipboard();
+				if(FlyoutDeckEditor.IsOpen)
+				{
+					var deck = await ClipboardImporter.Import();
+					if(deck != null)
+					{
+						var currentDeck = DeckEditorFlyout.CurrentDeck;
+						if(currentDeck != null && deck.Class == currentDeck.Class)
+						{
+							if(string.IsNullOrEmpty(currentDeck.Name))
+								DeckEditorFlyout.SetDeckName(deck.Name);
+							DeckEditorFlyout.SetCards(deck.Cards);
+						}
+						e.Handled = true;
+					}
+				}
+				else
+				{
+					if(Keyboard.FocusedElement is TextBox)
+						return;
+					ImportFromClipboard();
+				}
 			}
 		}
 	}

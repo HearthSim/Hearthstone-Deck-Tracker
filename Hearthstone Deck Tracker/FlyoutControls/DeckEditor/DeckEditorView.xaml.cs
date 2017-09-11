@@ -1,19 +1,16 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Hearthstone;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 {
-	/// <summary>
-	/// Interaction logic for DeckEditorView.xaml
-	/// </summary>
-	public partial class DeckEditorView : UserControl
+	public partial class DeckEditorView
 	{
 
 		public DeckEditorView()
 		{
 			InitializeComponent();
-			var viewModel = ((DeckEditorViewModel)DataContext);
+			var viewModel = (DeckEditorViewModel)DataContext;
 			
 			viewModel.PropertyChanged += (sender, args) =>
 			{
@@ -34,5 +31,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		}
 
 		public void SetDeck(Deck deck, bool isNewDeck) => ((DeckEditorViewModel)DataContext).SetDeck(deck, isNewDeck);
+
+		public void SetCards(IEnumerable<Card> cards) => ((DeckEditorViewModel)DataContext).SetCards(cards);
+
+		public Deck CurrentDeck => ((DeckEditorViewModel)DataContext).Deck;
+
+		public void SetDeckName(string name) => ((DeckEditorViewModel)DataContext).DeckName = name;
 	}
 }

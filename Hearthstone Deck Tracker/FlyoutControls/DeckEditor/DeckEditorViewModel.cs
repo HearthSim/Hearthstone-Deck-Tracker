@@ -73,18 +73,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			{
 				_originalDeck = value;
 				_deck = (Deck)value.Clone();
-				_deck.Cards.Clear();
-				foreach(var card in value.GetSelectedDeckVersion().Cards)
-					_deck.Cards.Add((Card)card.Clone());
-				UpdateCardCountWarning();
+				SetCards(value.GetSelectedDeckVersion().Cards);
 				OnPropertyChanged();
-				OnPropertyChanged(nameof(Cards));
-				OnPropertyChanged(nameof(CardCount));
 				OnPropertyChanged(nameof(DeckName));
 				OnPropertyChanged(nameof(CardDatabase));
 				OnPropertyChanged(nameof(ConstructedCardLimitsVisibility));
 				UpdateDeckNameError();
-				UpdateCardCountWarning();
 				UpdateNameExistsWarning();
 				SaveOperations = new[]
 				{
@@ -96,6 +90,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 				SearchText = string.Empty;
 				Helper.SortCardCollection(Cards, false);
 			}
+		}
+
+		public void SetCards(IEnumerable<Card> cards)
+		{
+			_deck.Cards.Clear();
+			foreach(var card in cards)
+				_deck.Cards.Add((Card)card.Clone());
+			OnPropertyChanged(nameof(Cards));
+			OnPropertyChanged(nameof(CardCount));
+			UpdateCardCountWarning();
 		}
 
 		public IEnumerable<Card> CardDatabase
