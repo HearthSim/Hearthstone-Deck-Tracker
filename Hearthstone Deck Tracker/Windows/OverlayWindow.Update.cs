@@ -322,6 +322,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			for (var i = 0; i < handCount; i++)
 			{
 				_cardMarks[i].UpdateScaling();
+				_cardMarks[i].UpdateOpacity(Config.Instance.OpponentOpacity / 100);
 				var width = _cardMarks[i].Width * Config.Instance.OverlayOpponentScaling / 100;
 				var height = _cardMarks[i].Height * Config.Instance.OverlayOpponentScaling / 100;
 				Canvas.SetLeft(_cardMarks[i], Helper.GetScaledXPos(_cardMarkPos[handCount - 1][i].X, (int)Width, ScreenRatio) - width / 2);

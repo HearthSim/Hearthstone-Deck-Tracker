@@ -32,6 +32,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		public void UpdateScaling() => CombinedCardIcon.LayoutTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100, Config.Instance.OverlayOpponentScaling / 100);
+
+		public void UpdateOpacity(double opacity) => Opacity = opacity;
 	
 		public CardMark Mark
 		{
