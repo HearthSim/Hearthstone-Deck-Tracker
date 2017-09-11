@@ -249,7 +249,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return "-";
 				var wins = relevantGames.Count(g => g.Result == GameResult.Win);
 				var losses = relevantGames.Count(g => g.Result == GameResult.Loss);
-				return Math.Round(100.0 * wins / (wins + losses), 0) + "%";
+				var total = wins + losses;
+				if(total == 0)
+					return "-";
+				return Math.Round(100.0 * wins / total, 0) + "%";
 			}
 		}
 
@@ -263,7 +266,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return 0.0;
 				var wins = relevantGames.Count(g => g.Result == GameResult.Win);
 				var losses = relevantGames.Count(g => g.Result == GameResult.Loss);
-				return 100.0 * wins / (wins + losses);
+				var total = wins + losses;
+				if(total == 0)
+					return 0.0;
+				return 100.0 * wins / total;
 			}
 		}
 
