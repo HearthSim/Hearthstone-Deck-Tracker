@@ -741,5 +741,21 @@ namespace Hearthstone_Deck_Tracker
 				Log.Error(e);
 			}
 		}
+
+		public static bool TryGetAttribute<T>(object obj, out T attribute) where T : Attribute
+		{
+			var members = obj?.GetType().GetMember(obj.ToString());
+			if(members?.Length > 0)
+			{
+				var attributes = members[0].GetCustomAttributes(typeof(T), false);
+				if(attributes.Length > 0)
+				{
+					attribute = (T)attributes[0];
+					return true;
+				}
+			}
+			attribute = default(T);
+			return false;
+		}
 	}
 }

@@ -1,83 +1,142 @@
 ﻿#region
 
 using System;
-using System.Windows.Controls;
+using System.ComponentModel;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility.Attributes;
 using static System.Windows.Visibility;
-using static Hearthstone_Deck_Tracker.Enums.CardMark;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
-	/// <summary>
-	/// Interaction logic for CardMarker.xaml
-	/// </summary>
-	public partial class CardMarker : UserControl
+	public partial class CardMarker : INotifyPropertyChanged
 	{
-		protected CardMark _mark;
+		private int _cardAge;
+		private Visibility _cardAgeVisibility;
+		private int _costReduction;
+		private Visibility _costReductionVisibility;
+		private BitmapImage _icon;
+		private Visibility _iconVisibility;
+		private ScaleTransform _scaleTransform;
 
 		public CardMarker()
 		{
 			InitializeComponent();
-			UpdateScaling();
+			_scaleTransform = new ScaleTransform(1, 1);
 		}
 
-		public string Text
+		public int CardAge
 		{
-			get { return CardAge.Text; }
-			set { CardAge.Text = value; }
-		}
-
-		public void UpdateScaling() => CombinedCardIcon.LayoutTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100, Config.Instance.OverlayOpponentScaling / 100);
-
-		public void UpdateOpacity(double opacity) => Opacity = opacity;
-	
-		public CardMark Mark
-		{
-			get { return _mark; }
+			get => _cardAge;
 			set
 			{
-				_mark = value;
-				var source = "";
-				switch(_mark)
-				{
-					case Coin:
-						source = "/HearthstoneDeckTracker;component/Images/card-icon-coin.png";
-						break;
-					case Kept:
-						source = "/HearthstoneDeckTracker;component/Images/card-icon-keep.png";
-						break;
-					case Mulliganed:
-						source = "/HearthstoneDeckTracker;component/Images/card-icon-mulligan.png";
-						break;
-					case Returned:
-						source = "/HearthstoneDeckTracker;component/Images/card-icon-returned.png";
-						break;
-					case Created:
-						source = "/HearthstoneDeckTracker;component/Images/card-icon-created.png";
-						break;
-					default:
-						CardIcon.Visibility = Collapsed;
-						break;
-				}
-
-				if(source != "")
-				{
-					CardIcon.Source = new BitmapImage(new Uri(source, UriKind.Relative));
-					CardIcon.Visibility = Visible;
-				}
-				else
-					CardIcon.Visibility = Collapsed;
+				_cardAge = value;
+				OnPropertyChanged();
 			}
 		}
 
-		public void SetCostReduction(int i)
+		public Visibility CardAgeVisibility
 		{
-			TextCostReduction.Text = (-i).ToString();
-			TextCostReduction.Visibility = i > 0 ? Visible : Collapsed;
+			get => _cardAgeVisibility;
+			set
+			{
+				_cardAgeVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public BitmapImage Icon
+		{
+			get => _icon;
+			set
+			{
+				_icon = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public Visibility IconVisibility
+		{
+			get => _iconVisibility;
+			set
+			{
+				_iconVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public Visibility CostReductionVisibility
+		{
+			get => _costReductionVisibility;
+			set
+			{
+				_costReductionVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int CostReduction
+		{
+			get => _costReduction;
+			set
+			{
+				_costReduction = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public ScaleTransform ScaleTransform
+		{
+			get => _scaleTransform;
+			set
+			{
+				_scaleTransform = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public void UpdateIcon(CardMark mark)
+		{
+			if(Helper.TryGetAttribute<AssetNameAttribute>(mark, out var assetName) && assetName.Name != null)
+			{
+				var path = Path.Combine("/HearthstoneDeckTracker;component", assetName.Name);
+				Icon = new BitmapImage(new Uri(path, UriKind.Relative));
+				IconVisibility = Visible;
+			}
+			else
+				IconVisibility = Collapsed;
+		}
+
+		public void UpdateCardAge(int? cardAge)
+		{
+			if(cardAge.HasValue)
+			{
+				CardAge = cardAge.Value;
+				CardAgeVisibility = Visible;
+			}
+			else
+				CardAgeVisibility = Collapsed;
+		}
+
+		public void UpdateCostReduction(int costReduction)
+		{
+			CostReduction = -costReduction;
+			CostReductionVisibility = costReduction > 0 ? Visible : Collapsed;
+		}
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

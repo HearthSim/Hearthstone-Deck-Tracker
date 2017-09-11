@@ -6,15 +6,18 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              x:Class="Hearthstone_Deck_Tracker.Controls.CardMarker"
              mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="34" d:DesignWidth="36">
-    <Canvas x:Name="CombinedCardIcon">
+    <Canvas LayoutTransform="{Binding ScaleTransform}">
         <Canvas Width="32" Height="32">
             <Canvas.Background>
                <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/card-marker.png"/>
             </Canvas.Background>
-            <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="CardAge" FontSize="18" Text="0" Canvas.Left="0" Width="32" Height="32" Canvas.Top="0" TextAlignment="Center" />
+            <hearthstoneDeckTracker:HearthstoneTextBlock FontSize="18" Width="32" Height="32" TextAlignment="Center" 
+                                                         Text="{Binding CardAge}" Visibility="{Binding CardAgeVisibility}"/>
         </Canvas>
-        <Image x:Name="CardIcon" Width="16" Height="16" Canvas.Left="20" Canvas.Top="18" Source="/HearthstoneDeckTracker;component/Images/card-icon-coin.png" />
-        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="TextCostReduction" Fill="DodgerBlue" FontSize="13" Text="-1" Canvas.Left="17" Canvas.Top="-2"  Width="16" Height="16" TextAlignment="Right"/>
+        <Image Width="16" Height="16" Canvas.Left="20" Canvas.Top="18" Source="{Binding Icon}" Visibility="{Binding IconVisibility}"/>
+        <hearthstoneDeckTracker:HearthstoneTextBlock Fill="DodgerBlue" FontSize="13" Canvas.Left="17" Canvas.Top="-2"  Width="16" Height="16" TextAlignment="Right"
+                                                     Text="{Binding CostReduction}" Visibility="{Binding CostReductionVisibility}"/>
     </Canvas>
 </UserControl>

@@ -237,6 +237,7 @@
     <Compile Include="Controls\DeckImportingControl.xaml.cs">
       <DependentUpon>DeckImportingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility\Attributes\AssetNameAttribute.cs" />
     <Compile Include="FlyoutControls\DeckEditor\Enums\ClassFilter.cs" />
     <Compile Include="FlyoutControls\DeckEditor\Enums\CostFilter.cs" />
     <Compile Include="FlyoutControls\DeckEditor\Enums\DeckEditorErrors.cs" />

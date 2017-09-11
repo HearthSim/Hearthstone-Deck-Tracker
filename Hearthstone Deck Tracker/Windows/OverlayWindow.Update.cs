@@ -60,15 +60,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 					var entity = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(ZONE_POSITION) == i + 1);
 					if(entity == null)
 						continue;
-					_cardMarks[i].Text = !Config.Instance.HideOpponentCardAge ? entity.Info.Turn.ToString() : "";
+					if(!Config.Instance.HideOpponentCardAge)
+						_cardMarks[i].UpdateCardAge(entity.Info.Turn);
+					else 
+						_cardMarks[i].UpdateCardAge(null);
 					if(!Config.Instance.HideOpponentCardMarks)
 					{
-						_cardMarks[i].Mark = entity.Info.CardMark;
-						_cardMarks[i].SetCostReduction(entity.Info.CostReduction);
+						_cardMarks[i].UpdateIcon(entity.Info.CardMark);
+						_cardMarks[i].UpdateCostReduction(entity.Info.CostReduction);
 					}
 					else
-						_cardMarks[i].Mark = CardMark.None;
-					_cardMarks[i].Visibility = (_game.IsInMenu || (Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks))
+						_cardMarks[i].UpdateIcon(CardMark.None);
+					_cardMarks[i].Visibility = _game.IsInMenu || Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks
 												   ? Hidden : Visible;
 				}
 				else
@@ -319,10 +322,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Canvas.SetLeft(GridFlavorText, Width - GridFlavorText.ActualWidth - 10);
 			}
 			var handCount = _game.Opponent.HandCount > 10 ? 10 : _game.Opponent.HandCount;
+			var opponentScaling = Config.Instance.OverlayOpponentScaling / 100;
+			var opponentOpacity = Config.Instance.OpponentOpacity / 100;
 			for (var i = 0; i < handCount; i++)
 			{
-				_cardMarks[i].UpdateScaling();
-				_cardMarks[i].UpdateOpacity(Config.Instance.OpponentOpacity / 100);
+				_cardMarks[i].Opacity = opponentOpacity;
+				_cardMarks[i].ScaleTransform = new ScaleTransform(opponentScaling, opponentScaling);
 				var width = _cardMarks[i].Width * Config.Instance.OverlayOpponentScaling / 100;
 				var height = _cardMarks[i].Height * Config.Instance.OverlayOpponentScaling / 100;
 				Canvas.SetLeft(_cardMarks[i], Helper.GetScaledXPos(_cardMarkPos[handCount - 1][i].X, (int)Width, ScreenRatio) - width / 2);
