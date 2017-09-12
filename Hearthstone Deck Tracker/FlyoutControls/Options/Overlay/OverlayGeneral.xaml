@@ -37,19 +37,6 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxHideTimers_Checked"
                   Unchecked="CheckboxHideTimers_Unchecked" Margin="10,5,0,0" />
-        <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="{lex:Loc Options_Overlay_General_CheckBox_HideCardAge}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxHideOpponentCardAge_Checked"
-                  Unchecked="CheckboxHideOpponentCardAge_Unchecked" />
-        <CheckBox x:Name="CheckboxHideOpponentCardMarks" Content="{lex:Loc Options_Overlay_General_CheckBox_HideCardMarks}"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxHideOpponentCardMarks_Checked"
-                  Unchecked="CheckboxHideOpponentCardMarks_Unchecked"
-                  HorizontalAlignment="Left" />
-        <CheckBox x:Name="CheckboxHideSecrets" Content="{lex:Loc Options_Overlay_General_CheckBox_HideSecrets}"
-                  HorizontalAlignment="Left"
-                  VerticalAlignment="Top" Checked="CheckboxHideSecrets_Checked"
-                  Unchecked="CheckboxHideSecrets_Unchecked" Margin="10,5,0,0" />
         <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="{lex:Loc Options_Overlay_General_CheckBox_CardTooltips}"
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxOverlayCardToolTips_Checked"
