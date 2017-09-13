@@ -68,6 +68,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void DockPanel_Drop(object sender, DragEventArgs e)
 		{
 			var dir = PluginManager.PluginDirectory.FullName;
+			var prevCount = PluginManager.Instance.Plugins.Count;
 			try
 			{
 				if(e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -99,6 +100,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					if(plugins <= 0) 
 						return;
 					PluginManager.Instance.LoadPlugins(PluginManager.Instance.SyncPlugins());
+					if(prevCount == 0)
+					{
+						ListBoxPlugins.SelectedIndex = 0;
+						GroupBoxDetails.Visibility = Visibility.Visible;
+					}
 				}
 			}
 			catch(Exception ex)
