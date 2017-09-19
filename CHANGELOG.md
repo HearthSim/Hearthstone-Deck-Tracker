@@ -1,3 +1,16 @@
+## __Release v1.4.3 - 2017-09-19__
+
+__Updated for Hearthstone 9.1.0.20970__
+
+__New__:
+- Added support to use the windows native accent color.
+- Added hotkey functionality for toggling the "My Games" panel.
+
+__Changes__:
+- Deck codes can now also be pasted into the deck editor.
+- Several opponent overlay options have been moved from `general` to `opponent`.
+
+
 ## __Release v1.4.2 - 2017-09-05__
 
 - Fixed an issue where cards from the Classic set could not be set as arena rewards.
