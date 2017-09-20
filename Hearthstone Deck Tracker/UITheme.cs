@@ -107,7 +107,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
-			resourceDictionary = new ResourceDictionary { Source = new Uri(fileName, UriKind.Absolute) };
+			resourceDictionary = new ResourceDictionary { Source = new Uri(Path.GetFullPath(fileName), UriKind.Absolute) };
 
 			ThemeManager.AddAccent(WindowAccentName, resourceDictionary.Source);
 
