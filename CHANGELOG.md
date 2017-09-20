@@ -1,3 +1,8 @@
+## __Release v1.4.4 - 2017-09-20__
+
+Fixed a crash on startup when the config was set to be stored locally.
+
+
 ## __Release v1.4.3 - 2017-09-19__
 
 __Updated for Hearthstone 9.1.0.20970__
