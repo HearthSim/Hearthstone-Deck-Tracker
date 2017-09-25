@@ -17,9 +17,9 @@
                         </Rectangle>
                     </Button.Content>
                 </Button>
-                <TextBlock Text="{Binding Header}" TextWrapping="Wrap" Foreground="White" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Header}" TextWrapping="Wrap" Foreground="White" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5,0,0,0"/>
             </DockPanel>
         </Border>
-        <TextBlock Text="{Binding Text}" TextWrapping="Wrap" Foreground="White"/>
+        <TextBox Text="{Binding Text, Mode=OneWay}" TextWrapping="Wrap" Foreground="White" Background="Transparent" IsReadOnly="True" BorderThickness="0"/>
     </DockPanel>
 </UserControl>
