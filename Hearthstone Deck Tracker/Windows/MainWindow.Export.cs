@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -14,6 +13,8 @@ using MahApps.Metro.Controls.Dialogs;
 using static MahApps.Metro.Controls.Dialogs.MessageDialogStyle;
 using Clipboard = System.Windows.Clipboard;
 using System.Collections.Generic;
+using HearthDb;
+using HearthDb.Enums;
 
 #endregion
 
@@ -143,34 +144,65 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(deck == null || !deck.GetSelectedDeckVersion().Cards.Any())
 				return;
 
-			var english = true;
-			var altLang = Config.Instance.AlternativeLanguages.FirstOrDefault(x => x != Config.Instance.SelectedLanguage);
-			if(altLang != null || Config.Instance.SelectedLanguage != "enUS")
+			var primaryLanguage = Config.Instance.SelectedLanguage;
+			var alternativeLanguages = Config.Instance.AlternativeLanguages.Where(x => x != Config.Instance.SelectedLanguage).ToList();
+
+			// Copying action 
+			Action<string> CopyCardNames = new Action<string>(a =>
 			{
 				try
 				{
-					english = await this.ShowLanguageSelectionDialog(Config.Instance.SelectedLanguage == "enUS" ? altLang : Config.Instance.SelectedLanguage);
+					Enum.TryParse(a, out Locale myLang);
+
+					var names = deck.GetSelectedDeckVersion().Cards.ToSortedCardList()
+								.Select(c => (a == Helper.defaultLanguageShort ? c.Name : Cards.GetFromDbfId(c.DbfIf).GetLocName(myLang)) + (c.Count > 1 ? " x " + c.Count : ""))
+								.Aggregate((c, n) => c + Environment.NewLine + n);
+
+					Clipboard.SetDataObject(names);
+					this.ShowMessage("", "Copied card names to clipboard!").Forget();
+					Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					Log.Error(ex);
+					this.ShowMessage("", "Error copying card names to clipboard.").Forget();
 				}
-			}
+			});
+
 			try
 			{
-				var names =
-					deck.GetSelectedDeckVersion()
-					    .Cards.ToSortedCardList()
-					    .Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
-					    .Aggregate((c, n) => c + Environment.NewLine + n);
-				Clipboard.SetDataObject(names);
-				this.ShowMessage("", "copied names to clipboard").Forget();
-				Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
+				if(!alternativeLanguages.Any() && Config.Instance.SelectedLanguage == Helper.defaultLanguageShort)
+				{
+					// Instantly copy card names in english.
+					CopyCardNames.Invoke(primaryLanguage);
+				}
+				else if(!alternativeLanguages.Any() && Config.Instance.SelectedLanguage != Helper.defaultLanguageShort)
+				{
+					// Here show dialogue if primary language is diffrent than English and there is no alternative languages:
+					// - Possible selection: Primary Language, English.
+					var selectedLanguage = await this.ShowLanguageSelectionDialog(Config.Instance.SelectedLanguage);
+					if(selectedLanguage.isPrimaryLanguageSelected)
+						CopyCardNames.Invoke(selectedLanguage.PrimaryLanguage);
+					else
+						CopyCardNames.Invoke(selectedLanguage.FirstAlternativeLanguage);
+				}
+				else
+				{
+					// Here show dialogue with Primary + selected Alternative languages (1, 2 or 3 max).
+					var selectedLanguage = await this.ShowLanguageSelectionDialog(Config.Instance.SelectedLanguage, alternativeLanguages);
+					if(selectedLanguage.isPrimaryLanguageSelected)
+						CopyCardNames.Invoke(selectedLanguage.PrimaryLanguage);
+					else if(selectedLanguage.isFirstAlternativeLanguageSelected)
+						CopyCardNames.Invoke(selectedLanguage.FirstAlternativeLanguage);
+					else if(selectedLanguage.isSecondAlternativeLanguageSelected)
+						CopyCardNames.Invoke(selectedLanguage.SecondAlternativeLanguage);
+					else if(selectedLanguage.isThirdAlternativeLanguageSelected)
+						CopyCardNames.Invoke(selectedLanguage.ThirdAlternativeLanguage);
+				}
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				this.ShowMessage("", "Error copying card names to clipboard.").Forget();
 			}
 		}
 

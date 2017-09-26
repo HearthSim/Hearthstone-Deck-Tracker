@@ -61,8 +61,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const string LocLogConfigButtonInstructions = "MessageDialogs_LogConfig_Button_Instructions";
 		private const string LocLogConfigButtonClose = "MessageDialogs_LogConfig_Button_Close";
 
-		//LocUtil.Get()}
-
 		public static async Task<MessageDialogResult> ShowDeleteGameStatsMessage(this MetroWindow window, GameStats stats)
 			=> await window.ShowMessageAsync(LocUtil.Get(LocDeleteGameStatsTitle),
 				stats + Environment.NewLine + Environment.NewLine + LocUtil.Get(LocDeleteGameStatsSure),
@@ -282,16 +280,91 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return true;
 		}
 
-		public static async Task<bool> ShowLanguageSelectionDialog(this MetroWindow window, string altLang)
+		public static async Task<SelectLanguageOperation> ShowLanguageSelectionDialog(this MetroWindow window, string _primaryLanguage, List<string> _alternativeLanguages = null)
 		{
-			var english = await
-				window.ShowMessageAsync("Select language", "", AffirmativeAndNegative,
-										new Settings
-										{
-											AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
-											NegativeButtonText = Helper.LanguageDict.First(x => x.Value == altLang).Key
-										}) == MessageDialogResult.Affirmative;
-			return english;
+			_alternativeLanguages = _alternativeLanguages ?? new List<string>();
+			if(!_alternativeLanguages.Any() && _primaryLanguage != Helper.defaultLanguageShort)
+			{
+				var result = await window.ShowMessageAsync("Select language", "", AffirmativeAndNegative,
+					new Settings
+					{
+						AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == _primaryLanguage).Key,
+						NegativeButtonText = Helper.LanguageDict.First(x => x.Value == Helper.defaultLanguageShort).Key
+					});
+
+				return new SelectLanguageOperation
+				{
+					PrimaryLanguage = _primaryLanguage,
+					FirstAlternativeLanguage = Helper.defaultLanguageShort,
+
+					isPrimaryLanguageSelected = result == MessageDialogResult.Affirmative,
+					isFirstAlternativeLanguageSelected = result != MessageDialogResult.Affirmative
+				};
+			}
+			else if(_alternativeLanguages.Count == 1)
+			{
+				var result = await window.ShowMessageAsync("Select language", "", AffirmativeAndNegative,
+					new Settings
+					{
+						AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == _primaryLanguage).Key,
+						NegativeButtonText = Helper.LanguageDict.First(x => x.Value == _alternativeLanguages[0]).Key
+					});
+
+				return new SelectLanguageOperation
+				{
+					isPrimaryLanguageSelected = result == MessageDialogResult.Affirmative,
+					isFirstAlternativeLanguageSelected = result == MessageDialogResult.Negative,
+
+					PrimaryLanguage = _primaryLanguage,
+					FirstAlternativeLanguage = _alternativeLanguages[0]
+				};
+			}
+			else if(_alternativeLanguages.Count == 2)
+			{
+
+				var result = await window.ShowMessageAsync("Select language", "", AffirmativeAndNegativeAndSingleAuxiliary,
+					new Settings
+					{
+						AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == _primaryLanguage).Key,
+						NegativeButtonText = Helper.LanguageDict.First(x => x.Value == _alternativeLanguages[0]).Key,
+						FirstAuxiliaryButtonText = Helper.LanguageDict.First(x => x.Value == _alternativeLanguages[1]).Key
+					});
+
+				return new SelectLanguageOperation
+				{
+					isPrimaryLanguageSelected = result == MessageDialogResult.Affirmative,
+					isFirstAlternativeLanguageSelected = result == MessageDialogResult.Negative,
+					isSecondAlternativeLanguageSelected = result == MessageDialogResult.FirstAuxiliary,
+
+					PrimaryLanguage = _primaryLanguage,
+					FirstAlternativeLanguage = _alternativeLanguages[0],
+					SecondAlternativeLanguage = _alternativeLanguages[1]
+				};
+			}
+			else
+			{
+				var result = await window.ShowMessageAsync("Select language", "", AffirmativeAndNegativeAndDoubleAuxiliary,
+					new Settings
+					{
+						AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == _primaryLanguage).Key,
+						NegativeButtonText = Helper.LanguageDict.First(x => x.Value == _alternativeLanguages[0]).Key,
+						FirstAuxiliaryButtonText = Helper.LanguageDict.First(x => x.Value == _alternativeLanguages[1]).Key,
+						SecondAuxiliaryButtonText = Helper.LanguageDict.First(x => x.Value == _alternativeLanguages[2]).Key
+					});
+
+				return new SelectLanguageOperation
+				{
+					isPrimaryLanguageSelected = result == MessageDialogResult.Affirmative,
+					isFirstAlternativeLanguageSelected = result == MessageDialogResult.Negative,
+					isSecondAlternativeLanguageSelected = result == MessageDialogResult.FirstAuxiliary,
+					isThirdAlternativeLanguageSelected = result == MessageDialogResult.SecondAuxiliary,
+
+					PrimaryLanguage = _primaryLanguage,
+					FirstAlternativeLanguage = _alternativeLanguages[0],
+					SecondAlternativeLanguage = _alternativeLanguages[1],
+					ThirdAlternativeLanguage = _alternativeLanguages[2]
+				};
+			}
 		}
 
 		private static bool _awaitingMainWindowOpen;
@@ -336,5 +409,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public bool Cancelled { get; set; }
 		public bool SaveLocal { get; set; }
 		public bool Upload { get; set; }
+	}
+
+	public class SelectLanguageOperation
+	{
+		public string PrimaryLanguage { get; set; }
+		public string FirstAlternativeLanguage { get; set; }
+		public string SecondAlternativeLanguage { get; set; }
+		public string ThirdAlternativeLanguage { get; set; }
+
+		public bool isPrimaryLanguageSelected { get; set; }
+		public bool isFirstAlternativeLanguageSelected { get; set; }
+		public bool isSecondAlternativeLanguageSelected { get; set; }
+		public bool isThirdAlternativeLanguageSelected { get; set; }
 	}
 }

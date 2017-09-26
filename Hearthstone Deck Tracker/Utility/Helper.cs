@@ -41,6 +41,8 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static double DpiScalingX = 1.0, DpiScalingY = 1.0;
 
+		public const string defaultLanguageShort = "enUS";
+
 		public static readonly Dictionary<string, string> LanguageDict = new Dictionary<string, string>
 		{
 			{"English", "enUS"},
