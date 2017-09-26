@@ -690,6 +690,9 @@
       <DependentUpon>NewsBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindowControls\NewsBarViewModel.cs" />
+    <Compile Include="Windows\SelectLanguageDialog.xaml.cs">
+      <DependentUpon>SelectLanguageDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\WebImportingDialog.xaml.cs">
       <DependentUpon>WebImportingDialog.xaml</DependentUpon>
     </Compile>
@@ -1153,6 +1156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\MainWindowControls\NewsBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\SelectLanguageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

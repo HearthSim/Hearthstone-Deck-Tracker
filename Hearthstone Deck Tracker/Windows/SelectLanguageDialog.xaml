@@ -1,0 +1,26 @@
+﻿<dialogs:CustomDialog x:Class="Hearthstone_Deck_Tracker.Windows.SelectLanguageDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" 
+             Title="{lex:Loc SelectLanguageDialog_Title}" TextBlock.TextAlignment="Center">
+    <StackPanel Margin="0,15,0,0">
+        <StackPanel HorizontalAlignment="Center" Width="300">
+            <DockPanel Margin="0,2,0,0">
+                <ComboBox Name="LanguagesComboBox" SelectedIndex="0" Width="180"/>
+            </DockPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,0">
+            <Button Name="ButtonCopy" MinWidth="110" Style="{StaticResource AccentedSquareButtonStyle}" Click="ButtonCopy_OnClick">
+                <TextBlock Text="{lex:Loc SelectLanguageDialog_Button_Copy}"/>
+            </Button>
+            <Button Name="ButtonCancel" Content="{lex:Loc SelectLanguageDialog_Button_Cancel}" Width="110" Margin="20,0,0,0" Click="ButtonCancel_OnClick"/>
+        </StackPanel>
+    </StackPanel>
+</dialogs:CustomDialog>

@@ -61,8 +61,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const string LocLogConfigButtonInstructions = "MessageDialogs_LogConfig_Button_Instructions";
 		private const string LocLogConfigButtonClose = "MessageDialogs_LogConfig_Button_Close";
 
-		//LocUtil.Get()}
-
 		public static async Task<MessageDialogResult> ShowDeleteGameStatsMessage(this MetroWindow window, GameStats stats)
 			=> await window.ShowMessageAsync(LocUtil.Get(LocDeleteGameStatsTitle),
 				stats + Environment.NewLine + Environment.NewLine + LocUtil.Get(LocDeleteGameStatsSure),
@@ -282,16 +280,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return true;
 		}
 
-		public static async Task<bool> ShowLanguageSelectionDialog(this MetroWindow window, string altLang)
+		public static async Task<SelectLanguageOperation> ShowSelectLanguageDialog(this MetroWindow window)
 		{
-			var english = await
-				window.ShowMessageAsync("Select language", "", AffirmativeAndNegative,
-										new Settings
-										{
-											AffirmativeButtonText = Helper.LanguageDict.First(x => x.Value == "enUS").Key,
-											NegativeButtonText = Helper.LanguageDict.First(x => x.Value == altLang).Key
-										}) == MessageDialogResult.Affirmative;
-			return english;
+			var dialog = new SelectLanguageDialog();
+			await window.ShowMetroDialogAsync(dialog);
+			var result = await dialog.WaitForButtonPressAsync();
+			await window.HideMetroDialogAsync(dialog);
+			return result;
 		}
 
 		private static bool _awaitingMainWindowOpen;
@@ -336,5 +331,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public bool Cancelled { get; set; }
 		public bool SaveLocal { get; set; }
 		public bool Upload { get; set; }
+	}
+
+	public class SelectLanguageOperation
+	{
+		public string SelectedLanguage { get; set; }
+		public bool IsCanceled { get; set; }
 	}
 }
