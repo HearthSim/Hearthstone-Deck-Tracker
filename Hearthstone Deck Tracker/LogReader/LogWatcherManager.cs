@@ -80,6 +80,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			InitializeGameState(game);
 			_stop = false;
 			var logDirectory = Path.Combine(Config.Instance.HearthstoneDirectory, Config.Instance.HearthstoneLogsDirectoryName);
+			Log.Info($"Using Hearthstone log directory '{logDirectory}'");
 			_logWatcher.Start(logDirectory);
 		}
 
