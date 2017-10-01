@@ -15,6 +15,7 @@ using Clipboard = System.Windows.Clipboard;
 using System.Collections.Generic;
 using HearthDb;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -142,67 +143,30 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal async void ExportCardNamesToClipboard(Deck deck)
 		{
 			if(deck == null || !deck.GetSelectedDeckVersion().Cards.Any())
-				return;
-
-			var primaryLanguage = Config.Instance.SelectedLanguage;
-			var alternativeLanguages = Config.Instance.AlternativeLanguages.Where(x => x != Config.Instance.SelectedLanguage).ToList();
-
-			// Copying action 
-			Action<string> CopyCardNames = new Action<string>(a =>
 			{
-				try
-				{
-					Enum.TryParse(a, out Locale myLang);
-
-					var names = deck.GetSelectedDeckVersion().Cards.ToSortedCardList()
-								.Select(c => (a == Helper.defaultLanguageShort ? c.Name : Cards.GetFromDbfId(c.DbfIf).GetLocName(myLang)) + (c.Count > 1 ? " x " + c.Count : ""))
-								.Aggregate((c, n) => c + Environment.NewLine + n);
-
-					Clipboard.SetDataObject(names);
-					this.ShowMessage("", "Copied card names to clipboard!").Forget();
-					Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
-				}
-				catch (Exception ex)
-				{
-					Log.Error(ex);
-					this.ShowMessage("", "Error copying card names to clipboard.").Forget();
-				}
-			});
+				this.ShowMessage("", LocUtil.Get("ShowMessage_CopyCardNames_NoCards")).Forget();
+				return;
+			}
 
 			try
 			{
-				if(!alternativeLanguages.Any() && Config.Instance.SelectedLanguage == Helper.defaultLanguageShort)
+				var selectedLanguage = await this.ShowSelectLanguageDialog();
+				if(!selectedLanguage.isCanceled)
 				{
-					// Instantly copy card names in english.
-					CopyCardNames.Invoke(primaryLanguage);
-				}
-				else if(!alternativeLanguages.Any() && Config.Instance.SelectedLanguage != Helper.defaultLanguageShort)
-				{
-					// Here show dialogue if primary language is diffrent than English and there is no alternative languages:
-					// - Possible selection: Primary Language, English.
-					var selectedLanguage = await this.ShowLanguageSelectionDialog(Config.Instance.SelectedLanguage);
-					if(selectedLanguage.isPrimaryLanguageSelected)
-						CopyCardNames.Invoke(selectedLanguage.PrimaryLanguage);
-					else
-						CopyCardNames.Invoke(selectedLanguage.FirstAlternativeLanguage);
-				}
-				else
-				{
-					// Here show dialogue with Primary + selected Alternative languages (1, 2 or 3 max).
-					var selectedLanguage = await this.ShowLanguageSelectionDialog(Config.Instance.SelectedLanguage, alternativeLanguages);
-					if(selectedLanguage.isPrimaryLanguageSelected)
-						CopyCardNames.Invoke(selectedLanguage.PrimaryLanguage);
-					else if(selectedLanguage.isFirstAlternativeLanguageSelected)
-						CopyCardNames.Invoke(selectedLanguage.FirstAlternativeLanguage);
-					else if(selectedLanguage.isSecondAlternativeLanguageSelected)
-						CopyCardNames.Invoke(selectedLanguage.SecondAlternativeLanguage);
-					else if(selectedLanguage.isThirdAlternativeLanguageSelected)
-						CopyCardNames.Invoke(selectedLanguage.ThirdAlternativeLanguage);
+					Enum.TryParse(selectedLanguage.SelectedLanguage, out Locale myLang);
+					var names = deck.GetSelectedDeckVersion().Cards.ToSortedCardList()
+								.Select(c => (Cards.GetFromDbfId(c.DbfIf).GetLocName(myLang)) + (c.Count > 1 ? " x " + c.Count : ""))
+								.Aggregate((c, n) => c + Environment.NewLine + n);
+
+					Clipboard.SetDataObject(names);
+					this.ShowMessage("", LocUtil.Get("ShowMessage_CopyCardNames_Successful")).Forget();
+					Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
 				}
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
+				this.ShowMessage("", LocUtil.Get("ShowMessage_CopyCardNames_Error")).Forget();
 			}
 		}
 
