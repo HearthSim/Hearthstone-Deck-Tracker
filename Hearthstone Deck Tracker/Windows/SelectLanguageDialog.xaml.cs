@@ -14,8 +14,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public string SelectedLanguage => Helper.LanguageDict.FirstOrDefault(x => x.Key == LanguagesComboBox.SelectedItem.ToString()).Value ?? Helper.defaultLanguageShort;
 
 		public SelectLanguageDialog()
-        {
-            InitializeComponent();
+		{
+			InitializeComponent();
 
 			var LanguagesList = new List<string> {Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key};
 			LanguagesList.Add(Helper.LanguageDict.First(x => x.Value == Helper.defaultLanguageShort).Key);
