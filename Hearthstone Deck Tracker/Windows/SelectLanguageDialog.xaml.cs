@@ -8,7 +8,7 @@ using Hearthstone_Deck_Tracker.Windows;
 namespace Hearthstone_Deck_Tracker.FlyoutControls
 {
 	public partial class SelectLanguageDialog : CustomDialog
-    {
+	{
 		private readonly TaskCompletionSource<SelectLanguageOperation> _tcs = new TaskCompletionSource<SelectLanguageOperation>();
 		internal Task<SelectLanguageOperation> WaitForButtonPressAsync() => _tcs.Task;
 		public string SelectedLanguage => Helper.LanguageDict.FirstOrDefault(x => x.Key == LanguagesComboBox.SelectedItem.ToString()).Value ?? Helper.defaultLanguageShort;
