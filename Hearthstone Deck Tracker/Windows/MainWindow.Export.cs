@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using HearthDb;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Controls.Error;
 
 #endregion
 
@@ -159,14 +160,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 								.Aggregate((c, n) => c + Environment.NewLine + n);
 
 					Clipboard.SetDataObject(names);
-					this.ShowMessage("", LocUtil.Get("ShowMessage_CopyCardNames_Successful")).Forget();
 					Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
 				}
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				this.ShowMessage("", LocUtil.Get("ShowMessage_CopyCardNames_Error")).Forget();
+				ErrorManager.AddError("Error - Copying Card Names", LocUtil.Get("ShowMessage_CopyCardNames_Error"));
 			}
 		}
 

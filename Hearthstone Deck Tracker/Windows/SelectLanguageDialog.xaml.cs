@@ -17,14 +17,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			InitializeComponent();
 
-			var LanguagesList = new List<string> {Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key};
-			LanguagesList.Add(Helper.LanguageDict.First(x => x.Value == Helper.defaultLanguageShort).Key);
+			var LanguagesList = new List<string>{};
+			foreach(var lang in Helper.LanguageDict.Select((Values, i) => new {i, Values}))
+			{
+				LanguagesList.Add(lang.Values.Key);
+				if (lang.Values.Value == Config.Instance.SelectedLanguage)
+					LanguagesComboBox.SelectedIndex = lang.i;
+			}
 
-			foreach(var lang in Config.Instance.AlternativeLanguages)
-				LanguagesList.Add(Helper.LanguageDict.First(x => x.Value == lang).Key);		
-
-			// .Distinct() is removing duplicate English language, which is added by default.
-			LanguagesComboBox.ItemsSource = LanguagesList.Distinct();
+			LanguagesComboBox.ItemsSource = LanguagesList;
 		}
 
 		private void ButtonCopy_OnClick(object sender, RoutedEventArgs e) => CloseDialog(SelectedLanguage);
