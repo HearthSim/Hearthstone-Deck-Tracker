@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -14,6 +13,10 @@ using MahApps.Metro.Controls.Dialogs;
 using static MahApps.Metro.Controls.Dialogs.MessageDialogStyle;
 using Clipboard = System.Windows.Clipboard;
 using System.Collections.Generic;
+using HearthDb;
+using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Controls.Error;
 
 #endregion
 
@@ -141,36 +144,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal async void ExportCardNamesToClipboard(Deck deck)
 		{
 			if(deck == null || !deck.GetSelectedDeckVersion().Cards.Any())
-				return;
-
-			var english = true;
-			var altLang = Config.Instance.AlternativeLanguages.FirstOrDefault(x => x != Config.Instance.SelectedLanguage);
-			if(altLang != null || Config.Instance.SelectedLanguage != "enUS")
 			{
-				try
-				{
-					english = await this.ShowLanguageSelectionDialog(Config.Instance.SelectedLanguage == "enUS" ? altLang : Config.Instance.SelectedLanguage);
-				}
-				catch(Exception ex)
-				{
-					Log.Error(ex);
-				}
+				this.ShowMessage("", LocUtil.Get("ShowMessage_CopyCardNames_NoCards")).Forget();
+				return;
 			}
+
 			try
 			{
-				var names =
-					deck.GetSelectedDeckVersion()
-					    .Cards.ToSortedCardList()
-					    .Select(c => (english ? c.Name : c.LocalizedName) + (c.Count > 1 ? " x " + c.Count : ""))
-					    .Aggregate((c, n) => c + Environment.NewLine + n);
-				Clipboard.SetDataObject(names);
-				this.ShowMessage("", "copied names to clipboard").Forget();
-				Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
+				var selectedLanguage = await this.ShowSelectLanguageDialog();
+				if(!selectedLanguage.isCanceled)
+				{
+					Enum.TryParse(selectedLanguage.SelectedLanguage, out Locale myLang);
+					var names = deck.GetSelectedDeckVersion().Cards.ToSortedCardList()
+								.Select(c => (Cards.GetFromDbfId(c.DbfIf).GetLocName(myLang)) + (c.Count > 1 ? " x " + c.Count : ""))
+								.Aggregate((c, n) => c + Environment.NewLine + n);
+
+					Clipboard.SetDataObject(names);
+					Log.Info("Copied " + deck.GetDeckInfo() + " names to clipboard");
+				}
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				this.ShowMessage("", "Error copying card names to clipboard.").Forget();
+				ErrorManager.AddError("Error - Copying Card Names", LocUtil.Get("ShowMessage_CopyCardNames_Error"));
 			}
 		}
 
