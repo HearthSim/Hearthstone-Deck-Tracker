@@ -7,7 +7,7 @@ using Hearthstone_Deck_Tracker.Windows;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls
 {
-    public partial class SelectLanguageDialog : CustomDialog
+	public partial class SelectLanguageDialog : CustomDialog
     {
 		private readonly TaskCompletionSource<SelectLanguageOperation> _tcs = new TaskCompletionSource<SelectLanguageOperation>();
 		internal Task<SelectLanguageOperation> WaitForButtonPressAsync() => _tcs.Task;
@@ -17,15 +17,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			InitializeComponent();
 
-			var LanguagesList = new List<string>{};
-			foreach(var lang in Helper.LanguageDict.Select((Values, i) => new {i, Values}))
-			{
-				LanguagesList.Add(lang.Values.Key);
-				if (lang.Values.Value == Config.Instance.SelectedLanguage)
-					LanguagesComboBox.SelectedIndex = lang.i;
-			}
-
+			var LanguagesList = Helper.LanguageDict.Keys.ToList();
 			LanguagesComboBox.ItemsSource = LanguagesList;
+			LanguagesComboBox.SelectedIndex = LanguagesList.IndexOf(Helper.LanguageDict.First(x => x.Value == Config.Instance.SelectedLanguage).Key);
 		}
 
 		private void ButtonCopy_OnClick(object sender, RoutedEventArgs e) => CloseDialog(SelectedLanguage);
