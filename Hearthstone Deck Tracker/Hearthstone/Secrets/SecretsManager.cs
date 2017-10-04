@@ -121,7 +121,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				return card;
 			});
 
-			if(format == Format.Standard)
+			if(format == Format.Standard || gameMode == GameType.GT_ARENA)
 				cards = cards.Where(c => !wildSets.Contains(c.Set));
 			if(gameMode == GameType.GT_ARENA)
 				cards = cards.Where(c => !CardIds.Secrets.ArenaExcludes.Contains(c.Id));
