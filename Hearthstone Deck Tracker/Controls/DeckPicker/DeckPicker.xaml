@@ -102,6 +102,9 @@
             <Style TargetType="GridViewColumnHeader">
                 <Setter Property="Visibility" Value="Collapsed" />
             </Style>
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource MetroListViewItem}">
+                <Setter Property="Padding" Value="0"/>
+            </Style>
         </ListView.Resources>
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
@@ -204,6 +207,9 @@
         <ListView.Resources>
             <Style TargetType="GridViewColumnHeader">
                 <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+            <Style TargetType="ListViewItem" BasedOn="{StaticResource MetroListViewItem}">
+                <Setter Property="Padding" Value="0"/>
             </Style>
         </ListView.Resources>
     </ListView>

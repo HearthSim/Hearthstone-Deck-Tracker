@@ -7,8 +7,8 @@
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300" Height="52" Margin="0,-1,0,0">
-    <Border BorderBrush="{DynamicResource MenuItemDisabledBrush}" BorderThickness="0,1,0,1">
+             d:DesignHeight="300" d:DesignWidth="300" Height="52">
+    <Border BorderBrush="{DynamicResource MenuItemDisabledBrush}" BorderThickness="0,0,0,1">
         <DockPanel>
             <Image DockPanel.Dock="Left" Width="46" Height="46" Source="{Binding ClassImage}"
                    RenderOptions.BitmapScalingMode="Fant" />
