@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			};
 		}
 
-		public void SetDeck(Deck deck, bool isNewDeck) => ((DeckEditorViewModel)DataContext).SetDeck(deck, isNewDeck);
+		public void SetDeck(Deck deck, bool isNewDeck, Deck originalDeck) => ((DeckEditorViewModel)DataContext).SetDeck(deck, isNewDeck, originalDeck);
 
 		public void SetCards(IEnumerable<Card> cards) => ((DeckEditorViewModel)DataContext).SetCards(cards);
 

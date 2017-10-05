@@ -275,7 +275,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			imported.Cards.Clear();
 			foreach(var card in deck.Cards)
 				imported.Cards.Add(card);
-			ShowDeckEditorFlyout(imported, false);
+			ShowDeckEditorFlyout(imported, false, existingDeck);
 			Helper.SortCardCollection(ListViewDeck.Items, Config.Instance.CardSortingClassFirst);
 			ManaCurveMyDecks.UpdateValues();
 

@@ -564,11 +564,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/hearthsim-devs");
 
-		public void ShowDeckEditorFlyout(Deck deck, bool isNewDeck)
+		public void ShowDeckEditorFlyout(Deck deck, bool isNewDeck, Deck originalDeck = null)
 		{
 			if(deck == null)
 				return;
-			DeckEditorFlyout.SetDeck(deck, isNewDeck);
+			DeckEditorFlyout.SetDeck(deck, isNewDeck, originalDeck);
 			FlyoutDeckEditor.IsOpen = true;
 		}
 

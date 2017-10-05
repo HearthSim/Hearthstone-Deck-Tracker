@@ -58,9 +58,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 
 		public IEnumerable<Card> Cards => Deck.Cards;
 
-		public void SetDeck(Deck deck, bool isNewDeck)
+		public void SetDeck(Deck deck, bool isNewDeck, Deck originalDeck)
 		{
 			Deck = deck;
+			_originalDeck = originalDeck ?? deck;
 			var hasSaveOp = !isNewDeck && !deck.IsArenaDeck;
 			SelectedSaveOperation = hasSaveOp ? SaveOperations[1] : null;
 			SaveOperationSelectionVisibility = hasSaveOp ? Visibility.Visible : Visibility.Collapsed;
@@ -71,7 +72,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			get => _deck;
 			set
 			{
-				_originalDeck = value;
 				_deck = (Deck)value.Clone();
 				SetCards(value.GetSelectedDeckVersion().Cards);
 				OnPropertyChanged();
