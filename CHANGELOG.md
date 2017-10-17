@@ -1,3 +1,11 @@
+## __Release v1.5.0 - 2017-10-17__
+
+__Updated for Hearthstone 9.2.0.21517__
+
+__Fixes__:
+- Fixed an issue where Wild Secrets would show up in Arena.
+
+
 ## __Release v1.4.4 - 2017-09-20__
 
 Fixed a crash on startup when the config was set to be stored locally.
