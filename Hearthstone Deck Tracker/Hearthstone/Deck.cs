@@ -35,6 +35,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"Divine Shield",
 			"Freeze",
 			"Inspire",
+			"Lifesteal",
+			"Poisonous",
 			"Secret",
 			"Spellpower",
 			"Taunt",
