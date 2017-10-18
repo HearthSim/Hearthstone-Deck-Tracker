@@ -1,3 +1,8 @@
+## __Release v1.5.1 - 2017-10-18__
+
+- Fixed an issue where games played with the new Warlock hero would not be recorded correctly.
+
+
 ## __Release v1.5.0 - 2017-10-17__
 
 __Updated for Hearthstone 9.2.0.21517__
