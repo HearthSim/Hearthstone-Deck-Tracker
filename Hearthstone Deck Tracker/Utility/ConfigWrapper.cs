@@ -362,6 +362,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			set
 			{
 				Config.Instance.CheckForDevUpdates = value;
+				Config.Instance.AllowDevUpdates = null;
 				Config.Save();
 			}
 		}

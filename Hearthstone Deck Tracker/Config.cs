@@ -62,6 +62,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool AlternativeScreenCapture = false;
 
+		[DefaultValue(null)]
+		public bool? AllowDevUpdates = null;
+
 		[DefaultValue(true)]
 		public bool ArenaRewardDialog = true;
 

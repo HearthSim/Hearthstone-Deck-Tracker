@@ -317,6 +317,26 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_awaitingMainWindowOpen = false;
 		}
 
+		internal static async void ShowDevUpdatesMessage(this MetroWindow window)
+		{
+			while(window.Visibility != Visibility.Visible || window.WindowState == WindowState.Minimized)
+				await Task.Delay(1000);
+			var result = await window.ShowMessageAsync("Development updates",
+				"You just updated to a stable release but still have development updates enabled.\n"
+				+ "Keeping these enabled will automatically update HDT to the next development build once it becomes available.\n\n"
+				+ "Note: Development builds might be unstable. When in doubt click disable.",
+				AffirmativeAndNegative,
+				new Settings
+				{
+					AffirmativeButtonText = "Keep enabled",
+					NegativeButtonText = "Disable",
+				});
+			var allowDevUpdates = result == MessageDialogResult.Affirmative;
+			Config.Instance.AllowDevUpdates = allowDevUpdates;
+			Config.Instance.CheckForDevUpdates = allowDevUpdates;
+			Config.Save();
+		}
+
 		public class Settings : MetroDialogSettings
 		{
 			public Settings()
