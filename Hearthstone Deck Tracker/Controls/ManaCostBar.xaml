@@ -44,6 +44,14 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
+            <Rectangle Name="HeroesRect" Height="0" Stroke="#FFEAD595" StrokeThickness="-1">
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF9E7E1F" Offset="0.003" />
+                        <GradientStop Color="#FFEAD595" Offset="1" />
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
         </StackPanel>
         <TextBlock Name="TextBlockCount" FontWeight="SemiBold" Text= "0" Height="26" Foreground="Black"
                VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="12"/>
