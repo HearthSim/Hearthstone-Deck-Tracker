@@ -1,3 +1,12 @@
+## __Release v1.5.2 - 2017-10-26__
+
+__New__:
+- Our Twitch Overlay Extension is now available! (`options (advanced) > streaming > twitch extension`) 
+
+__Fixes__:
+- Fixed an issue where starting Battle.net/Hearthstone was not working with the Battle.net beta client.
+
+
 ## __Release v1.5.1 - 2017-10-18__
 
 - Fixed an issue where games played with the new Warlock hero would not be recorded correctly.
