@@ -45,11 +45,21 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			Log.Info("Authenticating with HSReplay.net...");
 			var url = Client.Value.GetAuthenticationUrl(new[] { Scope.ReadSocialAccounts }, Ports);
+			if(string.IsNullOrEmpty(url))
+			{
+				Log.Error("Authentication failed, could not create callback listener");
+				return false;
+			}
 			var callbackTask = Client.Value.ReceiveAuthenticationCallback(SuccessUrl, ErrorUrl);
 			if(!Helper.TryOpenUrl(url))
-				ErrorManager.AddError("Could not open brwser to complete authentication.", $"Please go to '{url}' to continue authentication.", true);
+				ErrorManager.AddError("Could not open browser to complete authentication.", $"Please go to '{url}' to continue authentication.", true);
 			Log.Info("Waiting for callback...");
 			var data = await callbackTask;
+			if(data == null)
+			{
+				Log.Error("Authentication failed, received no data");
+				return false;
+			}
 			Data.Value.Code = data.Code;
 			Data.Value.RedirectUrl = data.RedirectUrl;
 			Log.Info("Authentication complete");
