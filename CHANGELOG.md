@@ -1,3 +1,8 @@
+## __Release v1.5.3 - 2017-10-26__
+
+- Fixed an issue that could cause HDT to crash when trying to authenticate with HSReplay.net.
+
+
 ## __Release v1.5.2 - 2017-10-26__
 
 __New__:
