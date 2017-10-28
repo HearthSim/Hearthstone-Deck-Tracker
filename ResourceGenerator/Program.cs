@@ -17,6 +17,7 @@ namespace ResourceGenerator
 		private static WebClient WebClient => _webClient ?? (_webClient = new WebClient());
 		private static void Main(string[] args)
 		{
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 			var dir = args[0];
 			var tilesDir = Path.Combine(dir, args[1]);
 			var genDir = Path.Combine(dir, "Generated", args[1]);
