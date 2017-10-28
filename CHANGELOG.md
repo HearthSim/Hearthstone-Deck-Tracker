@@ -1,3 +1,8 @@
+## __Release v1.5.4 - 2017-10-28__
+
+- Fixed an issue that caused transformed cards to not be recognized correctly (e.g. Fatespinner or Shifter Zerus).
+
+
 ## __Release v1.5.3 - 2017-10-26__
 
 - Fixed an issue that could cause HDT to crash when trying to authenticate with HSReplay.net.
