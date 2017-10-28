@@ -29,7 +29,7 @@
                     <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step1_Success}"/>
                     <Run Text="{Binding HSReplayUserName}"/>
                 </TextBlock>
-                <TextBlock Margin="5,5,0,0" Visibility="{Binding OAuthError, Converter={StaticResource BoolToVisibility}}">
+                <TextBlock Margin="5,5,0,0" Visibility="{Binding OAuthError, Converter={StaticResource BoolToVisibility}}" TextWrapping="Wrap">
                     <Run Foreground="Red" Text="✖"/>
                     <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step1_Error}"/>
                 </TextBlock>

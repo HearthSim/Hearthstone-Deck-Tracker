@@ -44,7 +44,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static async Task<bool> Authenticate()
 		{
 			Log.Info("Authenticating with HSReplay.net...");
-			var url = Client.Value.GetAuthenticationUrl(new[] { Scope.ReadSocialAccounts }, Ports);
+			string url;
+			try
+			{
+				url = Client.Value.GetAuthenticationUrl(new[] { Scope.ReadSocialAccounts }, Ports);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return false;
+			}
 			if(string.IsNullOrEmpty(url))
 			{
 				Log.Error("Authentication failed, could not create callback listener");
