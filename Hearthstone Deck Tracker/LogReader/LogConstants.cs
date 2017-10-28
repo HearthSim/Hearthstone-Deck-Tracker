@@ -44,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				new Regex(@"TAG_CHANGE\ Entity=(?<entity>(.+))\ tag=(?<tag>(\w+))\ value=(?<value>(\w+))");
 
 			public static readonly Regex UpdatingEntityRegex =
-				new Regex(@"(SHOW_ENTITY|CHANGE_ENTITY)\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
+				new Regex(@"(?<type>(SHOW_ENTITY|CHANGE_ENTITY))\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
 		}
 	}
 }

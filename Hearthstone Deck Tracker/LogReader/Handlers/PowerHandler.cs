@@ -154,6 +154,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var match = UpdatingEntityRegex.Match(logLine);
 				var cardId = match.Groups["cardId"].Value;
 				var rawEntity = match.Groups["entity"].Value;
+				var type = match.Groups["type"].Value;
 				int entityId;
 				if(rawEntity.StartsWith("[") && EntityRegex.IsMatch(rawEntity))
 				{
@@ -166,7 +167,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					if(!game.Entities.ContainsKey(entityId))
 						game.Entities.Add(entityId, new Entity(entityId));
-					game.Entities[entityId].CardId = cardId;
+					if(type != "CHANGE_ENTITY" || string.IsNullOrEmpty(game.Entities[entityId].CardId))
+						game.Entities[entityId].CardId = cardId;
 					gameState.SetCurrentEntity(entityId);
 					if(gameState.DeterminedPlayers)
 						_tagChangeHandler.InvokeQueuedActions(game);
