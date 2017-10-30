@@ -111,14 +111,21 @@
                     <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Setup_Error}"/>
                 </TextBlock>
                 <Label Content="{lex:Loc Options_Streaming_TwitchExt_Status_Label_Stream}"/>
-                <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchStreamLive, Converter={StaticResource BoolToVisibility}}">
-                    <Run Foreground="Green" Text="✔️"/>
-                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Stream_Success}"/>
-                    (<Run Text="{Binding SelectedTwitchUser.Username}"/>)
-                </TextBlock>
-                <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchStreamLive, Converter={StaticResource InverseBoolToVisibility}}">
+                <StackPanel Visibility="{Binding TwitchAccountLinked, Converter={StaticResource BoolToVisibility}}">
+                    <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchStreamLive, Converter={StaticResource BoolToVisibility}}">
+                        <Run Foreground="Green" Text="✔️"/>
+                        <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Stream_Success}"/>
+                        (<Run Text="{Binding SelectedTwitchUser.Username}"/>)
+                    </TextBlock>
+                    <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchStreamLive, Converter={StaticResource InverseBoolToVisibility}}">
+                        <Run Foreground="Red" Text="✖"/>
+                        <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Stream_Error}"/>
+                        (<Run Text="{Binding SelectedTwitchUser.Username}"/>)
+                    </TextBlock>
+                </StackPanel>
+                <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchAccountLinked, Converter={StaticResource InverseBoolToVisibility}}">
                     <Run Foreground="Red" Text="✖"/>
-                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Stream_Error}"/>
+                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Stream_Not_Connected}"/>
                 </TextBlock>
             </UniformGrid>
             
