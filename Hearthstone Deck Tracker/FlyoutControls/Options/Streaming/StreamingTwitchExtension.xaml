@@ -18,12 +18,10 @@
     <StackPanel>
         <GroupBox Header="{lex:Loc Options_Streaming_TwitchExt_Label_Setup}">
             <StackPanel>
-                <TextBlock>
-                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Label_Step1}" FontWeight="SemiBold"/>
-                    <Hyperlink Command="{Binding AuthenticateCommand}">
-                        <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step1_Link}"/>
-                    </Hyperlink>
-                </TextBlock>
+                <DockPanel>
+                    <Label Content="{lex:Loc Options_Streaming_TwitchExt_Label_Step1}" FontWeight="SemiBold" DockPanel.Dock="Left"/>
+                    <Button Content="{lex:Loc Options_Streaming_TwitchExt_Step1_Link}" Command="{Binding AuthenticateCommand}"/>
+                </DockPanel>
                 <TextBlock Margin="5,5,0,0" Visibility="{Binding OAuthSuccess, Converter={StaticResource BoolToVisibility}}">
                     <Run Foreground="Green" Text="✔️"/>
                     <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step1_Success}"/>
@@ -33,12 +31,10 @@
                     <Run Foreground="Red" Text="✖"/>
                     <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step1_Error}"/>
                 </TextBlock>
-                <TextBlock Margin="0,5,0,0">
-                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Label_Step2}" FontWeight="SemiBold"/>
-                    <Hyperlink Command="{Binding LinkTwitchAccountCommand}">
-                        <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step2_Link}"/>
-                    </Hyperlink>
-                </TextBlock>
+                <DockPanel Margin="0,10,0,0">
+                    <Label Content="{lex:Loc Options_Streaming_TwitchExt_Label_Step2}" FontWeight="SemiBold" DockPanel.Dock="Left"/>
+                    <Button Content="{lex:Loc Options_Streaming_TwitchExt_Step2_Link}" Command="{Binding LinkTwitchAccountCommand}"/>
+                </DockPanel>
                 <StackPanel Visibility="{Binding OAuthSuccess, Converter={StaticResource BoolToVisibility}}" Orientation="Horizontal" Margin="0,5,0,0">
                     <StackPanel Visibility="{Binding TwitchAccountLinked, Converter={StaticResource BoolToVisibility}}" Orientation="Horizontal">
                         <TextBlock Margin="5,0,0,0" VerticalAlignment="Center">
@@ -68,12 +64,10 @@
                         </Rectangle>
                     </Button>
                 </StackPanel>
-                <TextBlock Margin="0,5,0,0">
-                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Label_Step3}" FontWeight="SemiBold"/>
-                    <Hyperlink Command="{Binding InstallTwitchExtensionCommand}">
-                        <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step3_Link}"/>
-                    </Hyperlink>
-                </TextBlock>
+                <DockPanel Margin="0,10,0,0">
+                    <Label Content="{lex:Loc Options_Streaming_TwitchExt_Label_Step3}" FontWeight="SemiBold" DockPanel.Dock="Left"/>
+                    <Button Content="{lex:Loc Options_Streaming_TwitchExt_Step3_Link}" Command="{Binding InstallTwitchExtensionCommand}"/>
+                </DockPanel>
                 <TextBlock Margin="0,10,0,0">
                     <Hyperlink Command="{Binding SetupGuideCommand}">
                         <Run Text="{lex:Loc Options_Streaming_TwitchExt_SetupGuide_Link}"/>
