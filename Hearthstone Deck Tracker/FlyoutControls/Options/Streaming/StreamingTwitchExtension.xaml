@@ -105,7 +105,7 @@
                     <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Setup_Error}"/>
                 </TextBlock>
                 <Label Content="{lex:Loc Options_Streaming_TwitchExt_Status_Label_Stream}"/>
-                <StackPanel Visibility="{Binding TwitchAccountLinked, Converter={StaticResource BoolToVisibility}}">
+                <StackPanel Visibility="{Binding TwitchAccountLinked, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Center">
                     <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchStreamLive, Converter={StaticResource BoolToVisibility}}">
                         <Run Foreground="Green" Text="✔️"/>
                         <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Stream_Success}"/>
