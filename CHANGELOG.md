@@ -1,3 +1,8 @@
+## __Release v1.5.5 - 2017-11-06__
+
+__Updated for Hearthstone 9.4.0.22115__
+
+
 ## __Release v1.5.4 - 2017-10-28__
 
 - Fixed an issue that caused transformed cards to not be recognized correctly (e.g. Fatespinner or Shifter Zerus).
