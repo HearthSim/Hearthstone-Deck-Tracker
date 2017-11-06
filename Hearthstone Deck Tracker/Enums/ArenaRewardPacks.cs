@@ -26,6 +26,9 @@ namespace Hearthstone_Deck_Tracker.Enums
 		JourneyToUngoro = CardSet.UNGORO,
 
 		[LocDescription("Enum_ArenaRewardPacks_KnightsOfTheFrozenThrone")]
-		KnightsOfTheFrozenThrone = CardSet.ICECROWN
+		KnightsOfTheFrozenThrone = CardSet.ICECROWN,
+
+		[LocDescription("Enum_ArenaRewardPacks_KoboldsAndCatacombs")]
+		Loot = CardSet.LOOTAPALOOZA,
 	}
 }
