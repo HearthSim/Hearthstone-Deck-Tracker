@@ -12,6 +12,7 @@
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:deckEditorEnums="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums"
+             xmlns:deckSetIcons="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckSetIcons"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="700">
     <UserControl.DataContext>
@@ -82,7 +83,7 @@
             <DockPanel Width="235">
                 <Border Height="26" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" DockPanel.Dock="Top">
                     <DockPanel>
-                        <controls:DeckSetIcons x:Name="DeckSetIcons" DockPanel.Dock="Right" Margin="0,0,2,0" Fill="{DynamicResource TextBrush}"/>
+                        <deckSetIcons:DeckSetIconsView x:Name="DeckSetIcons" DockPanel.Dock="Right" Margin="0,0,2,0" Fill="{DynamicResource TextBrush}"/>
                         <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" >
                             <TextBlock Text="{lex:LocTextUpper MainWindow_DeckBuilder_Label_Cards}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
                             <TextBlock VerticalAlignment="Center" Text="{Binding CardCount}" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>

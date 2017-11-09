@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:deckSetIcons="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckSetIcons"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -106,7 +107,7 @@
                                 Viewport="0,0,48,48" TileMode="Tile" ViewportUnits="Absolute"/>
                 </DockPanel.Background>
                 <!-- Set Icons -->
-                <controls1:DeckSetIcons x:Name="SetIcons" Fill="White" Margin="4,0" />
+                <deckSetIcons:DeckSetIconsView x:Name="SetIcons" Fill="White" Margin="4,0" />
                 <!-- Dust Info -->
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="4,0">
                     <Image Source="pack://application:,,,/Resources/dust.png" Height="20" Width="20"/>

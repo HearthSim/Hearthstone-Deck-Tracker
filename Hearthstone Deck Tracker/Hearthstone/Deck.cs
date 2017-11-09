@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
@@ -477,6 +478,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int GetNumCombo() => GetMechanicCount("Combo");
 
 		public bool ContainsSet(string set) => Cards.Any(card => card.Set == set);
+
+		public bool ContainsSet(CardSet set) => Cards.Any(card => card.CardSet == set);
 
 		public override string ToString() => $"{Name} ({Class})";
 

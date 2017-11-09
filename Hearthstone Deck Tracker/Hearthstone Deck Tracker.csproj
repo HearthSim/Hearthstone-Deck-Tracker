@@ -235,6 +235,8 @@
     <Compile Include="Controls\DeckImportingControl.xaml.cs">
       <DependentUpon>DeckImportingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeckSetIcons\DeckSetIconsViewModel.cs" />
+    <Compile Include="Controls\DeckSetIcons\SetIconVisibilityConverter.cs" />
     <Compile Include="Controls\Information\TwitchExtensionInfo.xaml.cs">
       <DependentUpon>TwitchExtensionInfo.xaml</DependentUpon>
     </Compile>
@@ -306,8 +308,8 @@
     <Compile Include="Controls\DeckPicker\DeckPickerItemLayouts\DeckPickerItemLayoutMinimal.xaml.cs">
       <DependentUpon>DeckPickerItemLayoutMinimal.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DeckSetIcons.xaml.cs">
-      <DependentUpon>DeckSetIcons.xaml</DependentUpon>
+    <Compile Include="Controls\DeckSetIcons\DeckSetIconsView.xaml.cs">
+      <DependentUpon>DeckSetIconsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\DeckHistory\DeckVersionChangeView.xaml.cs">
       <DependentUpon>DeckVersionChangeView.xaml</DependentUpon>
@@ -889,7 +891,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DeckSetIcons.xaml">
+    <Page Include="Controls\DeckSetIcons\DeckSetIconsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
