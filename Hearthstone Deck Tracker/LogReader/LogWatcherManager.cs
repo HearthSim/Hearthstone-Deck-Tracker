@@ -152,7 +152,5 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			}
 			Helper.UpdateEverything(_game);
 		}
-
-		public int GetTurnNumber() => _gameState.GetTurnNumber();
 	}
 }

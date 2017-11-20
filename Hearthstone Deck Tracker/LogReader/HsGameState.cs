@@ -42,9 +42,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		public int GetTurnNumber()
 		{
-			if(!_game.IsMulliganDone)
-				return 0;
-			return (_game.GameEntity?.GetTag(GameTag.TURN) + 1) / 2 ?? 0;
+			return _game.GetTurnNumber();
 		}
 
 		public void Reset()

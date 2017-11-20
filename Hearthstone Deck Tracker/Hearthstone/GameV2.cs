@@ -218,5 +218,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			StoredPlayerNames.Clear();
 			StoredGameStats = null;
 		}
+
+		public int GetTurnNumber()
+		{
+			if (!IsMulliganDone)
+				return 0;
+			return (GameEntity?.GetTag(GameTag.TURN) + 1) / 2 ?? 0;
+		}
 	}
 }
