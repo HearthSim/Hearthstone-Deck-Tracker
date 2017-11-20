@@ -331,9 +331,6 @@ namespace Hearthstone_Deck_Tracker
 			public static CapturableOverlayWindow CapturableOverlay;
 		}
 
-		//Todo: keep this state somewhere tlse
-		internal static int GetTurnNumber() => LogWatcherManger.GetTurnNumber();
-
 		internal static bool StatsOverviewInitialized => _statsOverview != null;
 	}
 }

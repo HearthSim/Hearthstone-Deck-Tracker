@@ -406,7 +406,7 @@ namespace Hearthstone_Deck_Tracker
 				else
 					_game.CurrentGameStats.OpponentName = _game.CurrentGameStats.OpponentHero;
 
-				_game.CurrentGameStats.Turns = Core.GetTurnNumber();
+				_game.CurrentGameStats.Turns = _game.GetTurnNumber();
 				if(Config.Instance.DiscardZeroTurnGame && _game.CurrentGameStats.Turns < 1)
 				{
 					Log.Info("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
@@ -619,7 +619,7 @@ namespace Hearthstone_Deck_Tracker
 
 				if(_game.CurrentGameStats != null)
 				{
-					_game.CurrentGameStats.Turns = Core.GetTurnNumber();
+					_game.CurrentGameStats.Turns = _game.GetTurnNumber();
 					if(Config.Instance.DiscardZeroTurnGame && _game.CurrentGameStats.Turns < 1)
 					{
 						Log.Info("Game has 0 turns, discarded. (DiscardZeroTurnGame)");
