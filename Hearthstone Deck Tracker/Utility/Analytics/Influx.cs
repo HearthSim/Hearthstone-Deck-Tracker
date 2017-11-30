@@ -32,6 +32,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("version", version.ToVersionString(true))
 				.Tag("new", isNew)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
+				.Tag("lang_card", Config.Instance.SelectedLanguage)
+				.Tag("lang_ui", Config.Instance.Localization.ToString())
 				.Field("num_plugins", numPlugins)
 				.Field("startup_duration", startupDuration);
 #if(SQUIRREL)
