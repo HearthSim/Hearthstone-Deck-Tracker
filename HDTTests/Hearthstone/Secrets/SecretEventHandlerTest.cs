@@ -32,7 +32,8 @@ namespace HDTTests.Hearthstone.Secrets
 			_secretMage2,
 			_secretPaladin1,
 			_secretPaladin2,
-			_opponentEntity;
+			_opponentEntity,
+			_opponentCardInHand1;
 
 		private Entity CreateNewEntity(string cardId)
 		{
@@ -82,6 +83,11 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.Entities.Add(2, _playerMinion1);
 			_game.Entities.Add(3, _opponentMinion1);
 			_game.Entities.Add(4, _opponentMinion2);
+
+			_opponentCardInHand1 = CreateNewEntity("");
+			_opponentCardInHand1.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
+			_opponentCardInHand1.SetTag(GameTag.ZONE, (int)Zone.HAND);
+			_game.Entities.Add(_opponentCardInHand1.Id, _opponentCardInHand1);
 
 			_secretHunter1 = CreateNewEntity("");
 			_secretHunter1.SetTag(GameTag.CLASS, (int)CardClass.HUNTER);
@@ -261,6 +267,16 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
+		}
+
+		[TestMethod]
+		public void SingleSecret_PlayerPlaysMinion_OpponentPlaysMinion()
+		{
+			_game.SecretsManager.HandleMinionPlayed();
+			_opponentCardInHand1.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
+			_game.SecretsManager.OnEntityRevealedAsMinion(_opponentCardInHand1);
+
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.HiddenCache, HunterSecrets.Snipe);
 		}
 
 		private void VerifySecrets(int index, List<string> allSecrets, params string[] triggered)
