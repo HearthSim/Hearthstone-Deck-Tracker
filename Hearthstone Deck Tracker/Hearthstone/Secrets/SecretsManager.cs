@@ -13,10 +13,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		public SecretsManager(IGame game)
 		{
 			Game = game;
-			Secrets = new List<Secret>();
 		}
-
-		public List<Secret> Secrets { get; }
 
 		protected override IGame Game { get; }
 		protected override bool HasActiveSecrets => Secrets.Count > 0;
@@ -36,7 +33,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				return false;
 			if(entity.HasCardId)
 				Exclude(entity.CardId, false);
-			Secrets.Add(new Secret(entity));
+			var secret = new Secret(entity);
+			Secrets.Add(secret);
+			OnNewSecret(secret);
 			OnSecretsChanged?.Invoke(GetSecretList());
 			Log.Info(entity.ToString());
 			return true;

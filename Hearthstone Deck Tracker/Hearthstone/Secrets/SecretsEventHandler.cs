@@ -12,10 +12,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private int _avengeDeathRattleCount;
 		private bool _awaitingAvenge;
 		private int _lastCompetitiveSpiritCheck;
+		private HashSet<Entity> EntititesInHandOnMinionsPlayed = new HashSet<Entity>();
 
 		private bool FreeSpaceOnBoard => Game.OpponentMinionCount < 7;
 		private bool FreeSpaceInHand => Game.OpponentHandCount < 10;
 		private bool HandleAction => HasActiveSecrets && Config.Instance.AutoGrayoutSecrets;
+		private bool IsAnyMinionInOpponentsHand => EntititesInHandOnMinionsPlayed.Any(entity => entity.IsMinion);
+
+		public List<Secret> Secrets { get; } = new List<Secret>();
 
 		protected abstract IGame Game { get; }
 		protected abstract bool HasActiveSecrets { get; }
@@ -27,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			_avengeDeathRattleCount = 0;
 			_awaitingAvenge = false;
 			_lastCompetitiveSpiritCheck = 0;
+			EntititesInHandOnMinionsPlayed.Clear();
 		}
 
 		public void HandleAttack(Entity attacker, Entity defender, bool fastOnly = false)
@@ -105,9 +110,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			var exclude = new List<string>();
 
-			//Hidden cache will only trigger if the opponent has a minion in hand. 
-			//We might not know this for certain - requires additional tracking logic.
-			//TODO: _game.SecretsManager.SetZero(Hunter.HiddenCache);
 			exclude.Add(Hunter.Snipe);
 			exclude.Add(Mage.PotionOfPolymorph);
 			exclude.Add(Paladin.Repentance);
@@ -117,6 +119,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(FreeSpaceInHand)
 				exclude.Add(Mage.FrozenClone);
+
+			//Hidden cache will only trigger if the opponent has a minion in hand. 
+			//We might not know this for certain - requires additional tracking logic.
+			var cardsInOpponentsHand = Game.Entities.Select(kvp => kvp.Value).Where(e => e.IsInHand && e.IsControlledBy(Game.Opponent.Id)).ToList();
+			foreach (var cardInOpponentsHand in cardsInOpponentsHand)
+			{
+				EntititesInHandOnMinionsPlayed.Add(cardInOpponentsHand);
+			}
+
+			if (IsAnyMinionInOpponentsHand)
+			{
+				exclude.Add(Hunter.HiddenCache);
+			}
 
 			Exclude(exclude);
 		}
@@ -240,6 +255,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(!HandleAction)
 				return;
 			Exclude(Hunter.DartTrap);
+		}
+
+		public void OnEntityRevealedAsMinion(Entity entity)
+		{
+			if (EntititesInHandOnMinionsPlayed.Contains(entity) && entity.IsMinion)
+				Exclude(Hunter.HiddenCache);
+		}
+
+		public void OnNewSecret(Secret secret)
+		{
+			if (secret.Entity.IsClass(CardClass.HUNTER))
+				EntititesInHandOnMinionsPlayed.Clear();
 		}
 	}
 }

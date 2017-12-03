@@ -178,8 +178,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void CardTypeChange(IHsGameState gameState, int id, IGame game, int value)
 		{
-			if(value == (int)CardType.HERO)
-				SetHeroAsync(id, game, gameState);
+			switch (value)
+			{
+				case (int)CardType.HERO:
+					SetHeroAsync(id, game, gameState);
+					break;
+				case (int)CardType.MINION:
+					MinionRevealed(id, game, gameState);
+					break;
+			}
 		}
 
 		private void PlaystateChange(IHsGameState gameState, int id, IGame game, int value)
@@ -535,6 +542,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return;
 				gameState.GameHandler.SetOpponentHero(Database.GetHeroNameFromId(entity.CardId));
 			}
+		}
+
+		private void MinionRevealed(int id, IGame game, IHsGameState gameState)
+		{
+			var entity = game.Entities[id];
+			game.SecretsManager.OnEntityRevealedAsMinion(entity);
 		}
 	}
 }
