@@ -39,6 +39,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					return CardIds.Secrets.Mage.All;
 				case (int)CardClass.PALADIN:
 					return CardIds.Secrets.Paladin.All;
+				case (int)CardClass.ROGUE:
+					return CardIds.Secrets.Rogue.All;
 				default:
 					return new List<string>();
 			}

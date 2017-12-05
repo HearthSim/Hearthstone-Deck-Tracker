@@ -57,10 +57,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Mage.IceBarrier);
 				}
 
+				if(freeSpaceOnBoard)
+					exclude.Add(Hunter.WanderingMonster);
+
 				exclude.Add(Hunter.ExplosiveTrap);
 
 				if(Game.IsMinionInPlay)
+				{
 					exclude.Add(Hunter.Misdirection);
+					exclude.Add(Rogue.SuddenBetrayal);
+				}
 
 				if(attacker.IsMinion)
 				{
@@ -111,6 +117,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			var exclude = new List<string>();
 
 			exclude.Add(Hunter.Snipe);
+			exclude.Add(Mage.ExplosiveRunes);
 			exclude.Add(Mage.PotionOfPolymorph);
 			exclude.Add(Paladin.Repentance);
 
@@ -147,6 +154,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			{
 				exclude.Add(Mage.Duplicate);
 				exclude.Add(Paladin.GetawayKodo);
+				exclude.Add(Rogue.CheatDeath);
 			}
 
 			var numDeathrattleMinions = 0;
@@ -207,7 +215,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(!HandleAction)
 				return;
 			if(entity.IsHero && entity.IsControlledBy(Game.Opponent.Id))
+			{
 				Exclude(Paladin.EyeForAnEye);
+				Exclude(Rogue.Evasion);
+			}
 		}
 
 		public void HandleTurnsInPlayChange(Entity entity, int turn)

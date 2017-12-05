@@ -86,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, Snipe, SnakeTrap, VenomstrikeTrap};
+				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
 				public static string BearTrap => Collectible.Hunter.BearTrap;
 				public static string CatTrick => Collectible.Hunter.CatTrick;
 				public static string DartTrap => Collectible.Hunter.DartTrap;
@@ -97,14 +97,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string Snipe => Collectible.Hunter.Snipe;
 				public static string SnakeTrap => Collectible.Hunter.SnakeTrap;
 				public static string VenomstrikeTrap => Collectible.Hunter.VenomstrikeTrap;
+				public static string WanderingMonster => Collectible.Hunter.WanderingMonster;
 			}
 
 			public static class Mage
 			{
-				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, PotionOfPolymorph, Spellbender, Vaporize};
+				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, PotionOfPolymorph, Spellbender, Vaporize};
 				public static string Counterspell => Collectible.Mage.Counterspell;
 				public static string Duplicate => Collectible.Mage.Duplicate;
 				public static string Effigy => Collectible.Mage.Effigy;
+				public static string ExplosiveRunes => Collectible.Mage.ExplosiveRunes;
 				public static string FrozenClone => Collectible.Mage.FrozenClone;
 				public static string IceBarrier => Collectible.Mage.IceBarrier;
 				public static string IceBlock => Collectible.Mage.IceBlock;
@@ -126,6 +128,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string Redemption => Collectible.Paladin.Redemption;
 				public static string Repentance => Collectible.Paladin.Repentance;
 				public static string SacredTrial => Collectible.Paladin.SacredTrial;
+			}
+
+			public static class Rogue
+			{
+				public static List<string> All => new List<string> {CheatDeath, Evasion, SuddenBetrayal};
+				public static string CheatDeath => Collectible.Rogue.CheatDeath;
+				public static string Evasion => Collectible.Rogue.Evasion;
+				public static string SuddenBetrayal => Collectible.Rogue.SuddenBetrayal;
 			}
 		}
 	}

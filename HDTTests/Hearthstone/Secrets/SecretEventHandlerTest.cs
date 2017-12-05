@@ -119,14 +119,14 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.HAND);
 			_game.SecretsManager.HandleAttack(_heroPlayer, _heroOpponent);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 
 			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleAttack(_heroPlayer, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
-				HunterSecrets.Misdirection);
+				HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 		}
@@ -137,7 +137,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
-				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection);
+				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 		}
@@ -187,7 +187,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_gameEventHandler.HandlePlayerMinionPlayed();
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 		}
 
