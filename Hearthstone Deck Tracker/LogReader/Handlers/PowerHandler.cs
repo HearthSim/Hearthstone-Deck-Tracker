@@ -239,7 +239,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, GetTargetCardId(match), 2);
 								break;
 							case Collectible.Shaman.Moorabi:
+							case Collectible.Rogue.SonyaShadowdancer:
 								AddKnownCardId(gameState, GetTargetCardId(match));
+								break;
+							case Collectible.Neutral.HoardingDragon:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin, 2);
+								break;
+							case Collectible.Priest.GildedGargoyle:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
+								break;
+							case Collectible.Druid.AstralTiger:
+								AddKnownCardId(gameState, Collectible.Druid.AstralTiger);
 								break;
 						}
 					}
@@ -251,13 +261,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, GetTargetCardId(match), 3);
 								break;
 							case Collectible.Rogue.BeneathTheGrounds:
-								AddKnownCardId(gameState, NonCollectible.Rogue.BeneaththeGrounds_AmbushToken, 3);
+								AddKnownCardId(gameState, NonCollectible.Rogue.BeneaththeGrounds_NerubianAmbushToken, 3);
 								break;
 							case Collectible.Warrior.IronJuggernaut:
 								AddKnownCardId(gameState, NonCollectible.Warrior.IronJuggernaut_BurrowingMineToken);
 								break;
 							case Collectible.Druid.Recycle:
 							case Collectible.Mage.ManicSoulcaster:
+							case Collectible.Neutral.ZolaTheGorgon:
 								AddKnownCardId(gameState, GetTargetCardId(match));
 								break;
 							case Collectible.Mage.ForgottenTorch:
@@ -292,6 +303,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Mage.GhastlyConjurer:
 								AddKnownCardId(gameState, Collectible.Mage.MirrorImage);
+								break;
+							case Collectible.Mage.DeckOfWonders:
+								AddKnownCardId(gameState, NonCollectible.Mage.DeckofWonders_ScrollOfWonderToken);
+								break;
+							case Collectible.Neutral.TheDarkness:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheDarkness_DarknessCandleToken, 3);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
