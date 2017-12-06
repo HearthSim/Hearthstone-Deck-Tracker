@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HunterSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Hunter;
 using MageSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Mage;
 using PaladinSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Paladin;
+using RogueSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Rogue;
 
 namespace HDTTests.Hearthstone.Secrets
 {
@@ -19,11 +20,13 @@ namespace HDTTests.Hearthstone.Secrets
 		private GameV2 _game;
 		private GameEventHandler _gameEventHandler;
 
-		private Entity _heroPlayer,
+		private Entity _gameEntity,
+			_heroPlayer,
 			_heroOpponent,
 			_playerSpell1,
 			_playerSpell2,
 			_playerMinion1,
+			_playerMinion2,
 			_opponentMinion1,
 			_opponentMinion2,
 			_secretHunter1,
@@ -32,6 +35,8 @@ namespace HDTTests.Hearthstone.Secrets
 			_secretMage2,
 			_secretPaladin1,
 			_secretPaladin2,
+			_secretRogue1,
+			_secretRogue2,
 			_opponentEntity,
 			_opponentCardInHand1;
 
@@ -49,23 +54,30 @@ namespace HDTTests.Hearthstone.Secrets
 			_gameEventHandler = new GameEventHandler(_game);
 
 			//Player_IDs are currently not quite representative of an actual game
+			_gameEntity = CreateNewEntity(null);
+			_gameEntity.Name = "GameEntity";
 			_heroPlayer = CreateNewEntity("HERO_01");
 			_heroPlayer.SetTag(GameTag.CARDTYPE, (int)CardType.HERO);
+			_heroPlayer.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
 			_heroOpponent = CreateNewEntity("HERO_02");
 			_heroOpponent.SetTag(GameTag.CARDTYPE, (int)CardType.HERO);
 			_heroOpponent.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
 			_opponentEntity = CreateNewEntity("");
 			_opponentEntity.SetTag(GameTag.PLAYER_ID, _heroOpponent.Id);
 
-			_game.Entities.Add(0, _heroPlayer);
+			_game.Entities.Add(0, _gameEntity);
+			_game.Entities.Add(1, _heroPlayer);
 			_game.Player.Id = _heroPlayer.Id;
-			_game.Entities.Add(1, _heroOpponent);
+			_game.Entities.Add(2, _heroOpponent);
 			_game.Opponent.Id = _heroOpponent.Id;
-			_game.Entities.Add(5, _opponentEntity);
+			_game.Entities.Add(3, _opponentEntity);
 
 			_playerMinion1 = CreateNewEntity("EX1_010");
 			_playerMinion1.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
 			_playerMinion1.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
+			_playerMinion2 = CreateNewEntity("EX1_011");
+			_playerMinion2.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
+			_playerMinion2.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
 			_opponentMinion1 = CreateNewEntity("EX1_020");
 			_opponentMinion1.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
 			_opponentMinion1.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
@@ -80,9 +92,10 @@ namespace HDTTests.Hearthstone.Secrets
 			_playerSpell2.SetTag(GameTag.CARDTYPE, (int)CardType.SPELL);
 			_playerSpell2.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
 
-			_game.Entities.Add(2, _playerMinion1);
-			_game.Entities.Add(3, _opponentMinion1);
-			_game.Entities.Add(4, _opponentMinion2);
+			_game.Entities.Add(4, _playerMinion1);
+			_game.Entities.Add(5, _playerMinion2);
+			_game.Entities.Add(6, _opponentMinion1);
+			_game.Entities.Add(7, _opponentMinion2);
 
 			_opponentCardInHand1 = CreateNewEntity("");
 			_opponentCardInHand1.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
@@ -107,10 +120,17 @@ namespace HDTTests.Hearthstone.Secrets
 			_secretPaladin2 = CreateNewEntity("");
 			_secretPaladin2.SetTag(GameTag.CLASS, (int)CardClass.PALADIN);
 			_secretPaladin2.SetTag(GameTag.SECRET, 1);
+			_secretRogue1 = CreateNewEntity("");
+			_secretRogue1.SetTag(GameTag.CLASS, (int)CardClass.ROGUE);
+			_secretRogue1.SetTag(GameTag.SECRET, 1);
+			_secretRogue2 = CreateNewEntity("");
+			_secretRogue2.SetTag(GameTag.CLASS, (int)CardClass.ROGUE);
+			_secretRogue2.SetTag(GameTag.SECRET, 1);
 
 			_gameEventHandler.HandleOpponentSecretPlayed(_secretHunter1, "", 0, 0, Zone.HAND, _secretHunter1.Id);
 			_gameEventHandler.HandleOpponentSecretPlayed(_secretMage1, "", 0, 0, Zone.HAND, _secretMage1.Id);
 			_gameEventHandler.HandleOpponentSecretPlayed(_secretPaladin1, "", 0, 0, Zone.HAND, _secretPaladin1.Id);
+			_gameEventHandler.HandleOpponentSecretPlayed(_secretRogue1, "", 0, 0, Zone.HAND, _secretRogue1.Id);
 		}
 
 
@@ -122,6 +142,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All);
 
 			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleAttack(_heroPlayer, _heroOpponent);
@@ -129,6 +150,7 @@ namespace HDTTests.Hearthstone.Secrets
 				HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
@@ -140,6 +162,15 @@ namespace HDTTests.Hearthstone.Secrets
 				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All);
+
+			_playerMinion2.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
+				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.SuddenBetrayal);
 		}
 
 		[TestMethod]
@@ -149,6 +180,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.SnakeTrap, HunterSecrets.VenomstrikeTrap);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
@@ -159,6 +191,7 @@ namespace HDTTests.Hearthstone.Secrets
 				HunterSecrets.VenomstrikeTrap);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
@@ -169,6 +202,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Redemption, PaladinSecrets.GetawayKodo);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.CheatDeath);
 		}
 
 		[TestMethod]
@@ -180,6 +214,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Avenge, PaladinSecrets.Redemption, PaladinSecrets.GetawayKodo);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.CheatDeath);
 		}
 
 		[TestMethod]
@@ -189,6 +224,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
@@ -198,6 +234,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.EyeForAnEye);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Evasion);
 		}
 
 		[TestMethod]
@@ -208,6 +245,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender, MageSecrets.ManaBind);
 			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
@@ -218,6 +256,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind);
 			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
@@ -228,6 +267,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.CompetitiveSpirit);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
@@ -237,6 +277,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
@@ -246,6 +287,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 
 			// minions can't actually hit themselves, but this works for the
 			// purposes of this test.
@@ -253,6 +295,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
@@ -262,11 +305,13 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 
 			_game.SecretsManager.HandleAttack(_opponentMinion1, _opponentMinion2);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
