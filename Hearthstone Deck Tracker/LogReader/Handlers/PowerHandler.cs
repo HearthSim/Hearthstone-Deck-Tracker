@@ -305,7 +305,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, Collectible.Mage.MirrorImage);
 								break;
 							case Collectible.Mage.DeckOfWonders:
-								AddKnownCardId(gameState, NonCollectible.Mage.DeckofWonders_ScrollOfWonderToken);
+								AddKnownCardId(gameState, NonCollectible.Mage.DeckofWonders_ScrollOfWonderToken, 5);
 								break;
 							case Collectible.Neutral.TheDarkness:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheDarkness_DarknessCandleToken, 3);
