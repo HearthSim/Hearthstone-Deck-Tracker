@@ -43,7 +43,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"Taunt",
 			"Windfury",
 			"Stealth",
-			"Recruit"
+			"Recruit",
+			"Discover"
 		};
 
 		private bool _archived;
