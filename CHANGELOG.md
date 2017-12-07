@@ -1,3 +1,14 @@
+## __Release v1.5.6 - 2017-12-07__
+
+__Updated for Kobolds and Catacombs__
+
+__Fixes__:
+- Fixed an issue where flavor text tooltips were barely readable in some cases.
+
+__Changes__:
+- Improved secret tracking logic for Hidden Cache.
+
+
 ## __Release v1.5.5 - 2017-11-06__
 
 __Updated for Hearthstone 9.4.0.22115__
