@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				if(Game.IsMinionInPlay)
 					exclude.Add(Hunter.Misdirection);
 
-				if(Game.PlayerMinionCount > 1)
+				if(attacker.IsMinion && Game.PlayerMinionCount > 1)
 					exclude.Add(Rogue.SuddenBetrayal);
 
 				if(attacker.IsMinion)

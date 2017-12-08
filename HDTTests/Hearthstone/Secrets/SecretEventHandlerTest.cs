@@ -145,6 +145,7 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(3, RogueSecrets.All);
 
 			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_playerMinion2.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleAttack(_heroPlayer, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
