@@ -26,8 +26,8 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			var cardName = card != null ? card.Name : "";
 			var name = string.IsNullOrEmpty(e.Name) ? cardName : e.Name;
 
-			_stdAttack = e.GetTag(ATK);
-			_health = e.GetTag(HEALTH);
+			_stdAttack = e.HasTag(HIDE_STATS) ? 0 : e.GetTag(ATK);
+			_health = e.HasTag(HIDE_STATS) ? 0 : e.GetTag(HEALTH);
 			_armor = e.GetTag(ARMOR);
 			_durability = e.GetTag(DURABILITY);
 			_damageTaken = e.GetTag(DAMAGE);

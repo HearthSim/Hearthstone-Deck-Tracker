@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using HearthDb;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HDTTests.BoardDamage
 {
@@ -178,6 +179,20 @@ namespace HDTTests.BoardDamage
 			Assert.AreEqual(8, eb.AttacksThisTurn(2).ToBoardCard().Attack);
 			Assert.AreEqual(4, eb.AttacksThisTurn(3).ToBoardCard().Attack);
 			Assert.AreEqual(4, eb.AttacksThisTurn(4).ToBoardCard().Attack);
+		}
+
+		[TestMethod]
+		public void AttackHealth_EntityHasHideStats()
+		{
+			var eb = new EntityBuilder(CardIds.NonCollectible.Neutral.TheDarkness_TheDarkness, 20, 20).InPlay();
+
+			var card = eb.ToBoardCard();
+			Assert.AreEqual(20, card.Attack);
+			Assert.AreEqual(20, card.Health);
+
+			var hidden = eb.HideStats().ToBoardCard();
+			Assert.AreEqual(0, hidden.Attack);
+			Assert.AreEqual(0, hidden.Health);
 		}
 
 		[TestMethod]

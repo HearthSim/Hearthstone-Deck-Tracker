@@ -155,6 +155,12 @@ namespace HDTTests.BoardDamage
 			return this;
 		}
 
+		public EntityBuilder HideStats()
+		{
+			_instance.SetTag(GameTag.HIDE_STATS, 1);
+			return this;
+		}
+
 		public Entity ToEntity()
 		{
 			if(string.IsNullOrWhiteSpace(_cardId))
