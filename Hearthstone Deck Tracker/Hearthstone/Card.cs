@@ -249,6 +249,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public int Cost { get; set; }
 
+		public bool HideStats => _dbCard?.Entity.GetTag(GameTag.HIDE_STATS) == 1;
+
 		[XmlIgnore]
 		public bool IsPlayableHeroCard => Type == "Hero" && CardSet != HearthDb.Enums.CardSet.CORE && CardSet != HearthDb.Enums.CardSet.HERO_SKINS;
 

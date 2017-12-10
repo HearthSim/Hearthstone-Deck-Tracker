@@ -244,7 +244,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected void AddLegendaryIcon(Rect rect) => AddChild(Required[ThemeElement.LegendaryIcon], rect);
 
 		protected virtual void AddCost() => AddCost(CostTextRect);
-		protected void AddCost(Rect rect) => AddText(Card.Cost, CostFontSize, rect, Card.ColorPlayer, NumbersTypeFace, 3.0, true);
+		protected void AddCost(Rect rect)
+		{
+			if(!Card.HideStats)
+				AddText(Card.Cost, CostFontSize, rect, Card.ColorPlayer, NumbersTypeFace, 3.0, true);
+		}
 
 		protected virtual void AddCardName() => AddCardName(new Rect(38, 8, FrameRect.Width - BoxRect.Width - 38, 34));
 		protected void AddCardName(Rect rect)
