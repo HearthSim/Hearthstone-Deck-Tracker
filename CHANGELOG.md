@@ -1,3 +1,14 @@
+## __Release vNext__
+
+__New:__
+- Added support for dungeon run decks.
+
+__Fixes:__
+- Fixed tracking for cards created by: Fal'dorei Strider, Kingsbane and Scroll of Wonders
+- Fixed an issue where Sudden Betrayal would sometimes grey out when attacking with the hero.
+- Fixed an issue where the The Darkness token would count towards the attack counter.
+
+
 ## __Release v1.5.6 - 2017-12-07__
 
 __Updated for Kobolds and Catacombs__
