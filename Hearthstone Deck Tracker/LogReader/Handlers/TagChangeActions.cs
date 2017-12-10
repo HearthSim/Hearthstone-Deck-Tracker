@@ -526,7 +526,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				if(!game.Entities.TryGetValue(id, out var entity))
 					return;
-				gameState.GameHandler.SetPlayerHero(Database.GetHeroNameFromId(entity.CardId));
+				gameState.GameHandler.SetPlayerHero(entity.CardId);
 				return;
 			}
 			if(game.OpponentEntity == null)
@@ -540,7 +540,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				if(!game.Entities.TryGetValue(id, out var entity))
 					return;
-				gameState.GameHandler.SetOpponentHero(Database.GetHeroNameFromId(entity.CardId));
+				gameState.GameHandler.SetOpponentHero(entity.CardId);
 			}
 		}
 

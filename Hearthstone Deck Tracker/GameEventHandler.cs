@@ -250,19 +250,23 @@ namespace Hearthstone_Deck_Tracker
 			_game.SecretsManager.HandleTurnsInPlayChange(entity, turn);
 		}
 
-		public void SetOpponentHero(string hero)
+		public void SetOpponentHero(string cardId)
 		{
+			var hero = Database.GetHeroNameFromId(cardId);
 			if(string.IsNullOrEmpty(hero))
 				return;
 			_game.Opponent.Class = hero;
-
 			if(_game.CurrentGameStats != null)
+			{
 				_game.CurrentGameStats.OpponentHero = hero;
+				_game.CurrentGameStats.OpponentHeroCardId = cardId;
+			}
 			Log.Info("Opponent=" + hero);
 		}
 
-		public void SetPlayerHero(string hero)
+		public void SetPlayerHero(string cardId)
 		{
+			var hero = Database.GetHeroNameFromId(cardId);
 			if(string.IsNullOrEmpty(hero))
 				return;
 			_game.Player.Class = hero;
@@ -1071,8 +1075,8 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentPlayToHand(Entity entity, string cardId, int turn, int id) => HandleOpponentPlayToHand(entity, cardId, turn, id);
 		void IGameHandler.HandleOpponentSecretTrigger(Entity entity, string cardId, int turn, int otherId) => HandleOpponentSecretTrigger(entity, cardId, turn, otherId);
 		void IGameHandler.HandleOpponentDeckDiscard(Entity entity, string cardId, int turn) => HandleOpponentDeckDiscard(entity, cardId, turn);
-		void IGameHandler.SetOpponentHero(string hero) => SetOpponentHero(hero);
-		void IGameHandler.SetPlayerHero(string hero) => SetPlayerHero(hero);
+		void IGameHandler.SetOpponentHero(string cardId) => SetOpponentHero(cardId);
+		void IGameHandler.SetPlayerHero(string cardId) => SetPlayerHero(cardId);
 		void IGameHandler.HandleOpponentHeroPower(string cardId, int turn) => HandleOpponentHeroPower(cardId, turn);
 		void IGameHandler.TurnStart(ActivePlayer player, int turnNumber) => TurnStart(player, turnNumber);
 		void IGameHandler.HandleGameStart(DateTime timestamp) => HandleGameStart(timestamp);
