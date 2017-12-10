@@ -15,6 +15,7 @@ using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Utility;
 using Hearthstone_Deck_Tracker.Utility;
@@ -482,6 +483,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string VersusLabel => LocUtil.Get("DeckCharts_Replays_Label_Vs");
 		public string UploadedTooltip => LocUtil.Get("DeckCharts_Tooltip_Uploaded");
 		public string NoReplayDataTooltip => LocUtil.Get("DeckCharts_Tooltip_NoReplayData");
+
+		public bool IsDungeonMatch => GameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(OpponentHeroCardId);
 
 		public void SetPlayerCards(Deck deck, List<Card> revealedCards) => SetPlayerCards(deck?.Cards, revealedCards);
 

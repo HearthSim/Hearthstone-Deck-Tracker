@@ -54,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private SerializableVersion _cachedVersion;
 		private Guid _deckId;
 		private bool? _isArenaDeck;
+		private bool? _isDungeonDeck;
 		private bool _isSelectedInGui;
 		private DateTime _lastCacheUpdate = DateTime.MinValue;
 		private string _name;
@@ -179,6 +180,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? false; }
 			set { _isArenaDeck = value; }
+		}
+
+		public bool IsDungeonDeck
+		{
+			get { return _isDungeonDeck ?? (_isDungeonDeck = CheckIfDungeonDeck()) ?? false; }
+			set { _isDungeonDeck = value; }
 		}
 
 		public bool IsBrawlDeck => Tags.Any(x => x.ToUpper().Contains("BRAWL"));
@@ -377,8 +384,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public List<Mechanic> Mechanics => _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList();
 
-		public bool IsDungeonDeck => Tags.Any(x => x.ToUpper().Contains("DUNGEON RUN"));
-
 		public object Clone() => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
 										  DeckId, HsId, SelectedVersion, _isArenaDeck, ArenaReward);
 
@@ -441,6 +446,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public bool? CheckIfArenaDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
+
+		public bool? CheckIfDungeonDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.IsDungeonMatch);
 
 		public Deck GetVersion(int major, int minor) => GetVersion(new SerializableVersion(major, minor));
 

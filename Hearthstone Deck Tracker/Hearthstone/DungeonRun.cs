@@ -17,9 +17,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				Cards = new ObservableCollection<Card>(cards.Select(Database.GetCardFromId)),
 				Class = playerClass,
+				IsDungeonDeck = true,
 				LastEdited = DateTime.Now
 			};
-			deck.Tags.Add("Dungeon Run");
 			deck.Name = Helper.ParseDeckNameTemplate(Config.Instance.DungeonRunDeckNameTemplate, deck);
 			return deck;
 		}
@@ -49,6 +49,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 			return null;
 		}
+
+		public static bool IsDungeonBoss(string cardId) => cardId != null && cardId.Contains("LOOT") && cardId.Contains("BOSS");
 
 		private static class DefaultDecks
 		{
