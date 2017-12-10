@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArenaWatcher.cs" />
+    <Compile Include="DungeonRunWatcher.cs" />
     <Compile Include="EventArgs\CardPickedEventArgs.cs" />
     <Compile Include="EventArgs\ChoicesChangedEventArgs.cs" />
     <Compile Include="EventArgs\CompleteDeckEventArgs.cs" />

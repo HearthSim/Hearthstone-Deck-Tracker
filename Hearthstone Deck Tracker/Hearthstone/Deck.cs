@@ -197,6 +197,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 												? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 12
 												   || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null;
 
+		public bool? IsDungeonRunCompleted => IsDungeonDeck
+												? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 8
+												   || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 1) as bool? : null;
+
 		public Guid DeckId
 		{
 			get { return _deckId == Guid.Empty ? (_deckId = Guid.NewGuid()) : _deckId; }
@@ -372,6 +376,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[XmlIgnore]
 		public List<Mechanic> Mechanics => _relevantMechanics.Select(x => new Mechanic(x, this)).Where(m => m.Count > 0).ToList();
+
+		public bool IsDungeonDeck => Tags.Any(x => x.ToUpper().Contains("DUNGEON RUN"));
 
 		public object Clone() => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
 										  DeckId, HsId, SelectedVersion, _isArenaDeck, ArenaReward);

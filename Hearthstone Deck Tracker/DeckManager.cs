@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Enums;
@@ -42,8 +43,8 @@ namespace Hearthstone_Deck_Tracker
 					await Task.Delay(100);
 				_waitingForClass = false;
 			}
-			var cardEntites = Core.Game.Player.RevealedEntities.Where(x => x.IsPlayableCard && !x.Info.Created && !x.Info.Stolen && x.Card.Collectible).GroupBy(x => x.CardId).ToList();
-			var notFound = cardEntites.Where(x => !deck.GetSelectedDeckVersion().Cards.Any(c => c.Id == x.Key && c.Count >= x.Count())).ToList();
+			var cardEntites = RevealedEntites;
+			var notFound = GetMissingCards(cardEntites, deck);
 			if(notFound.Any())
 			{
 				var activeVersion = deck.Version;
@@ -64,6 +65,13 @@ namespace Hearthstone_Deck_Tracker
 			else
 				NotFoundCards.Clear();
 		}
+
+		private static List<IGrouping<string, Entity>> RevealedEntites => Core.Game.Player.RevealedEntities
+			.Where(x => x.IsPlayableCard && !x.Info.Created && !x.Info.Stolen && x.Card.Collectible).GroupBy(x => x.CardId)
+			.ToList();
+
+		private static List<IGrouping<string, Entity>> GetMissingCards(List<IGrouping<string, Entity>> revealed, Deck deck) =>
+			revealed.Where(x => !deck.GetSelectedDeckVersion().Cards.Any(c => c.Id == x.Key && c.Count >= x.Count())).ToList();
 
 		private static async Task AutoSelectDeck(Deck currentDeck, string heroClass, GameMode mode, Format? currentFormat, List<IGrouping<string, Entity>> cardEntites = null)
 		{
@@ -365,6 +373,65 @@ namespace Hearthstone_Deck_Tracker
 			newVersion.Archived = false;
 			SaveDeck(newVersion, false);
 			DeckManagerEvents.OnDeckUpdated.Execute(newVersion);
+		}
+
+		public static void DungeonRunMatchStarted(bool newRun)
+		{
+			Log.Info($"Dungeon run detected! New={newRun}");
+			var playerClass = Core.Game.Player.Class;
+			var revealed = RevealedEntites;
+			var existingDeck = DeckList.Instance.Decks
+				.Where(x => x.IsDungeonDeck && x.Class == playerClass
+							&& !(x.IsDungeonRunCompleted ?? false)
+							&& GetMissingCards(revealed, x).Count == 0)
+				.OrderByDescending(x => x.LastEdited).FirstOrDefault();
+			if(existingDeck == null)
+			{
+				if(!newRun)
+					return;
+				var deck = DungeonRun.GetDefaultDeck(playerClass);
+				if(deck == null)
+					return;
+				DeckList.Instance.Decks.Add(deck);
+				DeckList.Save();
+				Core.MainWindow.DeckPickerList.UpdateDecks();
+				Core.MainWindow.SelectDeck(deck, true);
+			}
+			else if(!existingDeck.Equals(DeckList.Instance.ActiveDeck))
+				Core.MainWindow.SelectDeck(existingDeck, true);
+		}
+
+		public static void UpdateDungeonRunDeck(DungeonInfo info)
+		{
+			Log.Info("Dungeon run deck changed!");
+			var allCards = info.DbfIds.ToList();
+			if(info.PlayerChosenLoot > 0)
+			{
+				var loot = new[] { info.LootA, info.LootB, info.LootC };
+				var chosen = loot[info.PlayerChosenLoot - 1];
+				for(var i = 1; i < chosen.Count; i++)
+					allCards.Add(chosen[i]);
+			}
+			if(info.PlayerChosenTreasure > 0)
+				allCards.Add(info.Treasure[info.PlayerChosenTreasure - 1]);
+			var cards = allCards.GroupBy(x => x).Select(x =>
+			{
+				var card = Database.GetCardFromDbfId(x.Key, false);
+				card.Count = x.Count();
+				return card;
+			}).ToList();
+			var playerClass = ((CardClass)info.HeroCardClass).ToString().ToUpperInvariant();
+			var existing = DeckList.Instance.Decks.FirstOrDefault(x => x.IsDungeonDeck && x.Class.ToUpperInvariant() == playerClass
+																		&& !(x.IsDungeonRunCompleted ?? false)
+																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count)));
+			if(existing == null)
+				return;
+			existing.Cards.Clear();
+			Helper.SortCardCollection(cards, false);
+			foreach(var card in cards)
+				existing.Cards.Add(card);
+			existing.LastEdited = DateTime.Now;
+			DeckList.Save();
 		}
 	}
 

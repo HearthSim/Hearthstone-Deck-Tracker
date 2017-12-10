@@ -70,6 +70,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.CurrentMode == Mode.TAVERN_BRAWL)
 					Core.Game.CacheBrawlInfo();
 
+				if(game.CurrentMode == Mode.ADVENTURE || game.PreviousMode == Mode.ADVENTURE && game.CurrentMode == Mode.GAMEPLAY)
+					Watchers.DungeonRunWatcher.Run();
+				else
+					Watchers.DungeonRunWatcher.Stop();
+
 				API.GameEvents.OnModeChanged.Execute(game.CurrentMode);
 			}
 			else if(logLine.Line.Contains("Gameplay.Start"))

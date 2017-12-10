@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -69,11 +70,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			return Reflection.GetEditedDeck()?.Id ?? 0;
 		}
 
-		private static void AutoSelectDeckById(Mode mode)
+		private static async void AutoSelectDeckById(Mode mode)
 		{
 			var selectedDeckId = GetSelectedDeckId(mode);
 			if(selectedDeckId <= 0)
 			{
+				if(mode == ADVENTURE)
+				{
+					Log.Info("Waiting for possible dungeon run...");
+					while(Watchers.DungeonRunWatcher.Running)
+						await Task.Delay(500);
+					if(DeckList.Instance.ActiveDeck.IsDungeonDeck)
+						return;
+				}
 				Log.Info("No selected deck found, using no-deck mode");
 				Core.MainWindow.SelectDeck(null, true);
 				return;

@@ -140,6 +140,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Brawl {Date dd-MM HH:mm}")]
 		public string BrawlDeckNameTemplate = "Brawl {Date dd-MM HH:mm}";
 
+		[DefaultValue("Dungeon Run {Date dd-MM HH:mm}")]
+		public string DungeonRunDeckNameTemplate = "Dungeon Run {Date dd-MM HH:mm}";
+
 		[DefaultValue(false)]
 		public bool BringHsToForeground = false;
 
