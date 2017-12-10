@@ -2,6 +2,7 @@ using System.Linq;
 using System.IO;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CardIds = HearthDb.CardIds;
 
 namespace HDTTests.Hearthstone
 {
@@ -78,6 +79,13 @@ namespace HDTTests.Hearthstone
 		{
 			foreach(var card in Database.GetActualCards())
 				Assert.IsTrue(File.Exists("../../../../Resources/Tiles/" + card.Id + ".png"), card.Name);
+		}
+
+		[TestMethod]
+		public void DungeonBossTest()
+		{
+			var name = Database.GetHeroNameFromId(CardIds.NonCollectible.Warlock.XolTheUnscathedHeroic);
+			Assert.AreEqual("Xol the Unscathed", name);
 		}
 	}
 }
