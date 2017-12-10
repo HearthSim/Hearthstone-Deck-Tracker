@@ -251,6 +251,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Druid.AstralTiger:
 								AddKnownCardId(gameState, Collectible.Druid.AstralTiger);
 								break;
+							case Collectible.Rogue.Kingsbane:
+								AddKnownCardId(gameState, Collectible.Rogue.Kingsbane);
+								break;
 						}
 					}
 					else //POWER
