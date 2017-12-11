@@ -135,7 +135,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			try
 			{
-				var constructedDecks = DeckList.Instance.Decks.Where(x => !x.IsArenaDeck).ToList();
+				var constructedDecks = DeckList.Instance.Decks.Where(x => !x.IsArenaDeck && !x.IsDungeonDeck).ToList();
 				if(constructedDecks.Count == 0)
 					return;
 

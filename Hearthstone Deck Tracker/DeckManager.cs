@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker
 			_waitingForDraws--;
 			if(_waitingForDraws > 0)
 				return;
-			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived).ToList();
+			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived && !x.IsDungeonDeck).ToList();
 			if(currentDeck != null)
 				validDecks.Remove(currentDeck);
 			validDecks = validDecks.FilterByMode(mode, currentFormat);
@@ -128,7 +128,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private static bool AutoSelectDeckVersion(string heroClass, GameMode mode, Format? format, List<IGrouping<string, Entity>> cardEntites)
 		{
-			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived).ToList();
+			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived && !x.IsDungeonDeck).ToList();
 			validDecks = validDecks.FilterByMode(mode, format);
 			foreach(var deck in validDecks)
 			{
