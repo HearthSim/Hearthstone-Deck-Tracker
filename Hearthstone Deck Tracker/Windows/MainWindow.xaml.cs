@@ -508,7 +508,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateDeckList(deck);
 			ManaCurveMyDecks.SetDeck(deck);
 			UpdatePanelVersionComboBox(deck);
-			GroupBoxHsReplayDeckInfo.Visibility = deck?.IsArenaDeck == true ? Collapsed : Visible;
+			GroupBoxHsReplayDeckInfo.Visibility = deck?.IsArenaDeck == true || deck?.IsDungeonDeck == true ? Collapsed : Visible;
 			if(setActive)
 			{
 				Core.Overlay.ListViewPlayer.Items.Refresh();
