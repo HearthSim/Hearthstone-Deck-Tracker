@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
@@ -387,15 +388,8 @@ namespace Hearthstone_Deck_Tracker
 				.OrderByDescending(x => x.LastEdited).FirstOrDefault();
 			if(existingDeck == null)
 			{
-				if(!newRun)
-					return;
-				var deck = DungeonRun.GetDefaultDeck(playerClass);
-				if(deck == null)
-					return;
-				DeckList.Instance.Decks.Add(deck);
-				DeckList.Save();
-				Core.MainWindow.DeckPickerList.UpdateDecks();
-				Core.MainWindow.SelectDeck(deck, true);
+				if(newRun)
+					CreateDungeonDeck(playerClass);
 			}
 			else if(!existingDeck.Equals(DeckList.Instance.ActiveDeck))
 				Core.MainWindow.SelectDeck(existingDeck, true);
@@ -421,17 +415,30 @@ namespace Hearthstone_Deck_Tracker
 				return card;
 			}).ToList();
 			var playerClass = ((CardClass)info.HeroCardClass).ToString().ToUpperInvariant();
-			var existing = DeckList.Instance.Decks.FirstOrDefault(x => x.IsDungeonDeck && x.Class.ToUpperInvariant() == playerClass
+			var deck = DeckList.Instance.Decks.FirstOrDefault(x => x.IsDungeonDeck && x.Class.ToUpperInvariant() == playerClass
 																		&& !(x.IsDungeonRunCompleted ?? false)
 																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count)));
-			if(existing == null)
+			if(deck == null && (deck = CreateDungeonDeck(playerClass)) == null)
 				return;
-			existing.Cards.Clear();
+			deck.Cards.Clear();
 			Helper.SortCardCollection(cards, false);
 			foreach(var card in cards)
-				existing.Cards.Add(card);
-			existing.LastEdited = DateTime.Now;
+				deck.Cards.Add(card);
+			deck.LastEdited = DateTime.Now;
 			DeckList.Save();
+			Core.UpdatePlayerCards(true);
+		}
+
+		private static Deck CreateDungeonDeck(string playerClass)
+		{
+			var deck = DungeonRun.GetDefaultDeck(playerClass);
+			if(deck == null)
+				return null;
+			DeckList.Instance.Decks.Add(deck);
+			DeckList.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+			Core.MainWindow.SelectDeck(deck, true);
+			return deck;
 		}
 	}
 

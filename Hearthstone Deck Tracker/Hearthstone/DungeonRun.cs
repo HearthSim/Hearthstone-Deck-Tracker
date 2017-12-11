@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using static HearthDb.CardIds;
 
@@ -16,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var deck = new Deck
 			{
 				Cards = new ObservableCollection<Card>(cards.Select(Database.GetCardFromId)),
-				Class = playerClass,
+				Class = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(playerClass.ToLowerInvariant()),
 				IsDungeonDeck = true,
 				LastEdited = DateTime.Now
 			};
@@ -26,25 +27,25 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private static List<string> GetCards(string playerClass)
 		{
-			switch(playerClass)
+			switch(playerClass.ToUpperInvariant())
 			{
-				case "Rogue":
+				case "ROGUE":
 					return DefaultDecks.Rogue;
-				case "Warrior":
+				case "WARRIOR":
 					return DefaultDecks.Warrior;
-				case "Shaman":
+				case "SHAMAN":
 					return DefaultDecks.Shaman;
-				case "Paladin":
+				case "PALADIN":
 					return DefaultDecks.Paladin;
-				case "Hunter":
+				case "HUNTER":
 					return DefaultDecks.Hunter;
-				case "Druid":
+				case "DRUID":
 					return DefaultDecks.Druid;
-				case "Warlock":
+				case "WARLOCk":
 					return DefaultDecks.Warlock;
-				case "Mage":
+				case "MAGE":
 					return DefaultDecks.Mage;
-				case "Priest":
+				case "PRIEST":
 					return DefaultDecks.Priest;
 			}
 			return null;
