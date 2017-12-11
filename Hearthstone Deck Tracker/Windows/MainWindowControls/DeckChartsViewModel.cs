@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 					_deck.OnStatsUpdated += Update;
 				HasDeck = _deck != null;
 				Update();
+				OnPropertyChanged();
 			}
 		}
 
