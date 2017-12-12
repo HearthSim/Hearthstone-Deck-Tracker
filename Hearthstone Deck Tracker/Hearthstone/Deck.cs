@@ -447,7 +447,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool? CheckIfArenaDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
 
-		public bool? CheckIfDungeonDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.IsDungeonMatch);
+		public bool? CheckIfDungeonDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.IsDungeonMatch == true);
 
 		public Deck GetVersion(int major, int minor) => GetVersion(new SerializableVersion(major, minor));
 
