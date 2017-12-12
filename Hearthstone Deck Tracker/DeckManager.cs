@@ -391,9 +391,21 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(newRun)
 					CreateDungeonDeck(playerClass);
+				else
+				{
+					Log.Info("We don't have an existing deck for this run, but it's not a new run");
+					if(DeckList.Instance.ActiveDeck != null)
+					{
+						Log.Info("Switching to no deck mode");
+						Core.MainWindow.SelectDeck(null, true);
+					}
+				}
 			}
 			else if(!existingDeck.Equals(DeckList.Instance.ActiveDeck))
+			{
+				Log.Info($"Selecting existing deck: {existingDeck.Name}");
 				Core.MainWindow.SelectDeck(existingDeck, true);
+			}
 		}
 
 		public static void UpdateDungeonRunDeck(DungeonInfo info)
@@ -441,6 +453,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private static Deck CreateDungeonDeck(string playerClass)
 		{
+			Log.Info($"Creating new {playerClass} dungeon run deck");
 			var deck = DungeonRun.GetDefaultDeck(playerClass);
 			if(deck == null)
 				return null;
