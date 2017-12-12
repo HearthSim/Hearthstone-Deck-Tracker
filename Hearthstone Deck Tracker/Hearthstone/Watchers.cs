@@ -22,6 +22,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DungeonRunWatcher.DungeonInfoChanged += DeckManager.UpdateDungeonRunDeck;
 		}
 
+		internal static void Stop()
+		{
+			ArenaWatcher.Stop();
+			PackWatcher.Stop();
+			DungeonRunWatcher.Stop();
+		}
+
 		public static ArenaWatcher ArenaWatcher { get; } = new ArenaWatcher(new HearthMirrorArenaProvider());
 		public static PackOpeningWatcher PackWatcher { get; } = new PackOpeningWatcher(new HearthMirrorPackProvider());
 		public static DungeonRunWatcher DungeonRunWatcher { get; } = new DungeonRunWatcher(new GameDataProvider());
