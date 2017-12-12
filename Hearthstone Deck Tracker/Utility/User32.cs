@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -38,6 +39,8 @@ namespace Hearthstone_Deck_Tracker
 		private const int KeyUp = 0x2;
 		private static DateTime _lastCheck;
 		private static IntPtr _hsWindow;
+
+		private static readonly Dictionary<IntPtr, string> WindowNameCache = new Dictionary<IntPtr, string>();
 
 		private static readonly string[] WindowNames = {"Hearthstone", "하스스톤", "《爐石戰記》", "炉石传说"};
 
@@ -115,24 +118,36 @@ namespace Hearthstone_Deck_Tracker
 		public static IntPtr GetHearthstoneWindow()
 		{
 			if(DateTime.Now - _lastCheck < new TimeSpan(0, 0, 5) && _hsWindow == IntPtr.Zero)
-				return _hsWindow;
-			if(_hsWindow != IntPtr.Zero && IsWindow(_hsWindow))
-				return _hsWindow;
+				return IntPtr.Zero;
+			if(_hsWindow != IntPtr.Zero)
+			{
+				if(IsWindow(_hsWindow))
+					return _hsWindow;
+				_hsWindow = IntPtr.Zero;
+				WindowNameCache.Clear();
+			}
+
 			if(Config.Instance.UseAnyUnityWindow)
 			{
 				foreach(var process in Process.GetProcesses())
 				{
-					var sb = new StringBuilder(200);
-					GetClassName(process.MainWindowHandle, sb, 200);
-					if(!sb.ToString().Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
+					var handle = process.MainWindowHandle;
+					if(!WindowNameCache.TryGetValue(handle, out var name))
+					{
+						var sb = new StringBuilder(200);
+						GetClassName(handle, sb, 200);
+						name = sb.ToString();
+						if(!string.IsNullOrEmpty(name))
+							WindowNameCache[handle] = name;
+					}
+					if(!name.Equals("UnityWndClass", StringComparison.InvariantCultureIgnoreCase))
 						continue;
-					_hsWindow = process.MainWindowHandle;
+					_hsWindow = handle;
 					_lastCheck = DateTime.Now;
 					return _hsWindow;
 				}
-
-			_lastCheck = DateTime.Now;
-			return IntPtr.Zero;
+				_lastCheck = DateTime.Now;
+				return IntPtr.Zero;
 			}
 			_hsWindow = FindWindow("UnityWndClass", Config.Instance.HearthstoneWindowName);
 			if(_hsWindow != IntPtr.Zero)
