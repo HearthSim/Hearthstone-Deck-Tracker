@@ -484,8 +484,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string UploadedTooltip => LocUtil.Get("DeckCharts_Tooltip_Uploaded");
 		public string NoReplayDataTooltip => LocUtil.Get("DeckCharts_Tooltip_NoReplayData");
 
-		public bool? IsDungeonMatch => string.IsNullOrEmpty(OpponentHeroCardId) ? (bool?)null
-			: GameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(OpponentHeroCardId);
+		public bool IsDungeonMatch => GameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(OpponentHeroCardId);
 
 		public void SetPlayerCards(Deck deck, List<Card> revealedCards) => SetPlayerCards(deck?.Cards, revealedCards);
 

@@ -49,5 +49,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		Format? CurrentFormat { get; }
 		int ProposedAttacker { get; set; }
 		int ProposedDefender { get; set; }
+		bool? IsDungeonMatch { get; }
 	}
 }

@@ -77,9 +77,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				if(game.CurrentMode == ADVENTURE)
 				{
-					while(game.CurrentGameStats?.IsDungeonMatch == null)
+					while(game.IsDungeonMatch == null)
 						await Task.Delay(500);
-					if(game.CurrentGameStats.IsDungeonMatch.Value)
+					if(game.IsDungeonMatch.Value)
 						return;
 				}
 				Log.Info("No selected deck found, using no-deck mode");

@@ -66,5 +66,6 @@ namespace HDTTests.Hearthstone.Secrets
 		public Format? CurrentFormat { get; set; }
 		public int ProposedAttacker { get; set; }
 		public int ProposedDefender { get; set; }
+		public bool? IsDungeonMatch { get; set; }
 	}
 }
