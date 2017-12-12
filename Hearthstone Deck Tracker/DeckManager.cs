@@ -384,6 +384,7 @@ namespace Hearthstone_Deck_Tracker
 			var existingDeck = DeckList.Instance.Decks
 				.Where(x => x.IsDungeonDeck && x.Class == playerClass
 							&& !(x.IsDungeonRunCompleted ?? false)
+							&& (!newRun || x.Cards.Count == 10)
 							&& GetMissingCards(revealed, x).Count == 0)
 				.OrderByDescending(x => x.LastEdited).FirstOrDefault();
 			if(existingDeck == null)
