@@ -397,7 +397,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void UpdateDungeonRunDeck(DungeonInfo info)
 		{
-			Log.Info("Dungeon run deck changed!");
+			Log.Info("Found dungeon run deck!");
 			var allCards = info.DbfIds.ToList();
 			if(info.PlayerChosenLoot > 0)
 			{
@@ -419,7 +419,15 @@ namespace Hearthstone_Deck_Tracker
 																		&& !(x.IsDungeonRunCompleted ?? false)
 																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count)));
 			if(deck == null && (deck = CreateDungeonDeck(playerClass)) == null)
+			{
+				Log.Info($"No existing deck - can't find default deck for {playerClass}");
 				return;
+			}
+			if(cards.All(c => deck.Cards.Any(e => c.Id == e.Id && c.Count == e.Count)))
+			{
+				Log.Info("No new cards");
+				return;
+			}
 			deck.Cards.Clear();
 			Helper.SortCardCollection(cards, false);
 			foreach(var card in cards)
@@ -427,6 +435,7 @@ namespace Hearthstone_Deck_Tracker
 			deck.LastEdited = DateTime.Now;
 			DeckList.Save();
 			Core.UpdatePlayerCards(true);
+			Log.Info("Updated dungeon run deck");
 		}
 
 		private static Deck CreateDungeonDeck(string playerClass)
