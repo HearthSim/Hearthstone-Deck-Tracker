@@ -103,6 +103,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public int NumGames => Deck.GetRelevantGames().Count;
 
+		public bool Favorite => Deck.Tags.Any(x => x.ToUpperInvariant() == "FAVORITE");
+
 		#endregion
 	}
 }

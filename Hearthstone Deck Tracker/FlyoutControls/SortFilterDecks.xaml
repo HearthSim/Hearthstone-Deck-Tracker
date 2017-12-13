@@ -13,6 +13,10 @@
              d:DesignHeight="600" d:DesignWidth="245">
     <Grid>
         <DockPanel Margin="6,0,6,6">
+            <CheckBox Name="CheckBoxSortFavorites" Margin="5,5,0,0" DockPanel.Dock="Top"
+                      Checked="CheckBoxSortFavorites_OnChecked" Unchecked="CheckBoxSortFavorites_OnUnchecked">
+                <TextBlock Text="{lex:Loc SortFilter_CheckBox_SortFavoriteFirst}" TextWrapping="Wrap"/>
+            </CheckBox>
             <GroupBox Name="GroupBoxSortingAllConstructed" Header="{lex:Loc SortFilter_Label_Constructed}" DockPanel.Dock="Top">
                 <StackPanel>
                     <CheckBox Name="CheckBoxSortByClass" Content="{lex:Loc SortFilter_CheckBox_SortByClass}"

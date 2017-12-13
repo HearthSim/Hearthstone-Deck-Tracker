@@ -68,6 +68,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			SortFilterDecksFlyout.ComboboxDeckSorting.SelectedItem = Config.Instance.SelectedDeckSorting;
 			SortFilterDecksFlyout.CheckBoxSortByClass.IsChecked = Config.Instance.SortDecksByClass;
+			SortFilterDecksFlyout.CheckBoxSortFavorites.IsChecked = Config.Instance.SortDecksFavoritesFirst;
 			SortFilterDecksFlyout.ComboboxDeckSortingArena.SelectedItem = Config.Instance.SelectedDeckSortingArena;
 			SortFilterDecksFlyout.CheckBoxSortByClassArena.IsChecked = Config.Instance.SortDecksByClassArena;
 

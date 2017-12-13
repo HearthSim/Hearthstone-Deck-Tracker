@@ -393,5 +393,23 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		#endregion
+
+		private void CheckBoxSortFavorites_OnChecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksFavoritesFirst = true;
+			Config.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+		}
+
+		private void CheckBoxSortFavorites_OnUnchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.SortDecksFavoritesFirst = false;
+			Config.Save();
+			Core.MainWindow.DeckPickerList.UpdateDecks();
+		}
 	}
 }
