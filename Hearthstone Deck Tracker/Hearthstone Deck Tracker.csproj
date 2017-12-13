@@ -235,6 +235,7 @@
     <Compile Include="Controls\DeckImportingControl.xaml.cs">
       <DependentUpon>DeckImportingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeckPicker\DeckTypeIconConverter.cs" />
     <Compile Include="Controls\DeckSetIcons\DeckSetIconsViewModel.cs" />
     <Compile Include="Controls\DeckSetIcons\SetIconVisibilityConverter.cs" />
     <Compile Include="Controls\Information\TwitchExtensionInfo.xaml.cs">
