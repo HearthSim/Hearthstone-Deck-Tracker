@@ -87,6 +87,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxConstrucedUpdate.IsChecked = Config.Instance.ConstructedAutoUpdate;
 			TextBoxDungeonTemplate.Text = Config.Instance.DungeonRunDeckNameTemplate;
 			CheckBoxDungeonImport.IsChecked = Config.Instance.DungeonAutoImport;
+			CheckBoxDungeonIncludePassives.IsChecked = Config.Instance.DungeonRunIncludePassiveCards;
 			_initialized = true;
 		}
 
@@ -240,6 +241,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		private void CheckBoxDungeonIncludePassives_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DungeonRunIncludePassiveCards = true;
+			Config.Save();
+		}
+
+		private void CheckBoxDungeonIncludePassives_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DungeonRunIncludePassiveCards = false;
+			Config.Save();
 		}
 	}
 }

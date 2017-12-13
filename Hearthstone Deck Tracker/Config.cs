@@ -300,6 +300,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool DungeonAutoImport = true;
 
 		[DefaultValue(true)]
+		public bool DungeonRunIncludePassiveCards = true;
+
+		[DefaultValue(true)]
 		public bool EnterToSaveNote = true;
 
 		[DefaultValue(false)]

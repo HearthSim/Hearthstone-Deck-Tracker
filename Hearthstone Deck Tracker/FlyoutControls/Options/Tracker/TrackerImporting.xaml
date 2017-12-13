@@ -59,6 +59,8 @@
             <StackPanel>
                 <CheckBox x:Name="CheckBoxDungeonImport" Content="{lex:Loc Options_Tracker_Importing_Dungeon_CheckBox_Import}" Margin="10,5,0,0"
                           Checked="CheckBoxDungeonImport_Checked" Unchecked="CheckBoxDungeonImport_Unchecked" />
+                <CheckBox x:Name="CheckBoxDungeonIncludePassives" Content="{lex:Loc Options_Tracker_Importing_Dungeon_CheckBox_IncludePassives}" Margin="10,5,0,0"
+                          Checked="CheckBoxDungeonIncludePassives_Checked" Unchecked="CheckBoxDungeonIncludePassives_Unchecked" />
                 <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_DungeonTemplates}">
                     <DockPanel>
                         <TextBlock Text="{lex:LocText Key=Options_Tracker_Importing_Label_TemplatesFormat, Suffix=' \{Class}, {Date FORMAT}'}" DockPanel.Dock="Bottom"
