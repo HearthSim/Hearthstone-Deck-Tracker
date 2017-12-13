@@ -192,6 +192,7 @@ namespace Hearthstone_Deck_Tracker
 			if(classFirst)
 				view1.SortDescriptions.Add(new SortDescription(nameof(Card.IsClassCard), ListSortDirection.Descending));
 
+			view1.SortDescriptions.Add(new SortDescription(nameof(Card.HideStats), ListSortDirection.Descending));
 			view1.SortDescriptions.Add(new SortDescription(nameof(Card.Cost), ListSortDirection.Ascending));
 			view1.SortDescriptions.Add(new SortDescription(nameof(Card.LocalizedName), ListSortDirection.Ascending));
 		}
