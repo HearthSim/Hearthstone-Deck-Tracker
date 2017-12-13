@@ -18,8 +18,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	public partial class TrackerImporting : INotifyPropertyChanged
 	{
 		private bool _initialized;
-		private string _editButtonText = LocUtil.Get(LocEdit);
-		private bool _templateEditable;
+		private string _arenaEditButtonText = LocUtil.Get(LocEdit);
+		private bool _arenaTemplateEditable;
+		private string _dungeonEditButtonText = LocUtil.Get(LocEdit);
+		private bool _dungeonTemplateEditable;
 		private const string LocEdit = "Options_Tracker_Importing_Button_Edit";
 		private const string LocSave = "Options_Tracker_Importing_Button_Save";
 
@@ -28,22 +30,42 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			InitializeComponent();
 		}
 
-		public string EditButtonText
+		public string ArenaEditButtonText
 		{
-			get => _editButtonText;
+			get => _arenaEditButtonText;
 			set
 			{
-				_editButtonText = value;
+				_arenaEditButtonText = value;
 				OnPropertyChanged();
 			}
 		}
 
-		public bool TemplateEditable
+		public bool ArenaTemplateEditable
 		{
-			get => _templateEditable;
+			get => _arenaTemplateEditable;
 			set
 			{
-				_templateEditable = value;
+				_arenaTemplateEditable = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string DungeonEditButtonText
+		{
+			get => _dungeonEditButtonText;
+			set
+			{
+				_dungeonEditButtonText = value; 
+				OnPropertyChanged();
+			}
+		}
+
+		public bool DungeonTemplateEditable
+		{
+			get => _dungeonTemplateEditable;
+			set
+			{
+				_dungeonTemplateEditable = value; 
 				OnPropertyChanged();
 			}
 		}
@@ -63,6 +85,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			TextBoxArenaTemplate.Text = Config.Instance.ArenaDeckNameTemplate;
 			CheckBoxConstructedImportNew.IsChecked = Config.Instance.ConstructedAutoImportNew;
 			CheckBoxConstrucedUpdate.IsChecked = Config.Instance.ConstructedAutoUpdate;
+			TextBoxDungeonTemplate.Text = Config.Instance.DungeonRunDeckNameTemplate;
+			CheckBoxDungeonImport.IsChecked = Config.Instance.DungeonAutoImport;
 			_initialized = true;
 		}
 
@@ -114,19 +138,33 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private void BtnEditTemplate_Click(object sender, RoutedEventArgs e)
+		private void BtnEditTemplate_ClickDungeon(object sender, RoutedEventArgs e)
 		{
-			if(TemplateEditable)
+			if(DungeonTemplateEditable)
+			{
+				Config.Instance.DungeonRunDeckNameTemplate = TextBoxDungeonTemplate.Text;
+				Config.Save();
+			}
+			DungeonEditButtonText = LocUtil.Get(DungeonTemplateEditable ? LocEdit : LocSave);
+			DungeonTemplateEditable = !DungeonTemplateEditable;
+		}
+
+		private void TextBoxDungeonTemplate_OnTextChanged(object sender, TextChangedEventArgs e) 
+			=> TextBlockNamePreviewDungeon.Text = Helper.ParseDeckNameTemplate(TextBoxDungeonTemplate.Text, new Deck() {Class = "ClassName"});
+
+		private void BtnEditTemplate_ClickArena(object sender, RoutedEventArgs e)
+		{
+			if(ArenaTemplateEditable)
 			{
 				Config.Instance.ArenaDeckNameTemplate = TextBoxArenaTemplate.Text;
 				Config.Save();
 			}
-			EditButtonText = LocUtil.Get(TemplateEditable ? LocEdit : LocSave);
-			TemplateEditable = !TemplateEditable;
+			ArenaEditButtonText = LocUtil.Get(ArenaTemplateEditable ? LocEdit : LocSave);
+			ArenaTemplateEditable = !ArenaTemplateEditable;
 		}
 
 		private void TextBoxArenaTemplate_OnTextChanged(object sender, TextChangedEventArgs e) 
-			=> TextBlockNamePreview.Text = Helper.ParseDeckNameTemplate(TextBoxArenaTemplate.Text, new Deck() {Class = "ClassName"});
+			=> TextBlockNamePreviewArena.Text = Helper.ParseDeckNameTemplate(TextBoxArenaTemplate.Text, new Deck() {Class = "ClassName"});
 
 		private void ComboboxArenaImportingBehaviour_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -138,6 +176,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				Config.Instance.SelectedArenaImportingBehaviour = selected;
 				Config.Save();
 			}
+		}
+
+		private void CheckBoxDungeonImport_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DungeonAutoImport = true;
+			Config.Save();
+		}
+
+		private void CheckBoxDungeonImport_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.DungeonAutoImport = false;
+			Config.Save();
 		}
 
 		private void CheckBoxConstructedImportNew_Checked(object sender, RoutedEventArgs e)

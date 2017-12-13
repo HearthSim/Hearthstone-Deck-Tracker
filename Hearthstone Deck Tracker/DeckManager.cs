@@ -378,6 +378,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void DungeonRunMatchStarted(bool newRun)
 		{
+			if(!Config.Instance.DungeonAutoImport)
+				return;
 			Log.Info($"Dungeon run detected! New={newRun}");
 			var playerClass = Core.Game.Player.Class;
 			var revealed = RevealedEntites;
@@ -410,6 +412,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static void UpdateDungeonRunDeck(DungeonInfo info)
 		{
+			if(!Config.Instance.DungeonAutoImport)
+				return;
 			Log.Info("Found dungeon run deck!");
 			var allCards = info.DbfIds.ToList();
 			if(info.PlayerChosenLoot > 0)

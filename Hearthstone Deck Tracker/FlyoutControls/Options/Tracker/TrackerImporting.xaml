@@ -45,12 +45,33 @@
                                    ToolTip="{lex:Loc Options_Tracker_Importing_Label_ArenaTemplatesFormat_Tooltip}" />
                         <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
                             <TextBlock Text="{lex:Loc Options_Tracker_Importing_Label_TemplatesPreview}" />
-                            <TextBlock Name="TextBlockNamePreview" Margin="5,0,0,0" />
+                            <TextBlock Name="TextBlockNamePreviewArena" Margin="5,0,0,0" />
                         </DockPanel>
-                                    <Button Name="BtnEditTemplate" Content="{Binding EditButtonText}" DockPanel.Dock="Right"
-                                            Margin="5,0,0,0" Click="BtnEditTemplate_Click"/>
-                                    <TextBox Name="TextBoxArenaTemplate" IsEnabled="{Binding TemplateEditable}"
+                                    <Button Name="BtnEditTemplateArena" Content="{Binding ArenaEditButtonText}" DockPanel.Dock="Right"
+                                            Margin="5,0,0,0" Click="BtnEditTemplate_ClickArena"/>
+                                    <TextBox Name="TextBoxArenaTemplate" IsEnabled="{Binding ArenaTemplateEditable}"
                                  TextChanged="TextBoxArenaTemplate_OnTextChanged" />
+                    </DockPanel>
+                </GroupBox>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Dungeon}">
+            <StackPanel>
+                <CheckBox x:Name="CheckBoxDungeonImport" Content="{lex:Loc Options_Tracker_Importing_Dungeon_CheckBox_Import}" Margin="10,5,0,0"
+                          Checked="CheckBoxDungeonImport_Checked" Unchecked="CheckBoxDungeonImport_Unchecked" />
+                <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_DungeonTemplates}">
+                    <DockPanel>
+                        <TextBlock Text="{lex:LocText Key=Options_Tracker_Importing_Label_TemplatesFormat, Suffix=' \{Class}, {Date FORMAT}'}" DockPanel.Dock="Bottom"
+                                   Margin="0,5,0,0" TextWrapping="Wrap"
+                                   ToolTip="{lex:Loc Options_Tracker_Importing_Label_ArenaTemplatesFormat_Tooltip}" />
+                        <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
+                            <TextBlock Text="{lex:Loc Options_Tracker_Importing_Label_TemplatesPreview}" />
+                            <TextBlock Name="TextBlockNamePreviewDungeon" Margin="5,0,0,0" />
+                        </DockPanel>
+                                    <Button Name="BtnEditTemplateDungeon" Content="{Binding DungeonEditButtonText}" DockPanel.Dock="Right"
+                                            Margin="5,0,0,0" Click="BtnEditTemplate_ClickDungeon"/>
+                                    <TextBox Name="TextBoxDungeonTemplate" IsEnabled="{Binding DungeonTemplateEditable}"
+                                 TextChanged="TextBoxDungeonTemplate_OnTextChanged" />
                     </DockPanel>
                 </GroupBox>
             </StackPanel>

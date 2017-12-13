@@ -297,6 +297,9 @@ namespace Hearthstone_Deck_Tracker
 		public DisplayedTimeFrame DisplayedTimeFrame = DisplayedTimeFrame.AllTime;
 
 		[DefaultValue(true)]
+		public bool DungeonAutoImport = true;
+
+		[DefaultValue(true)]
 		public bool EnterToSaveNote = true;
 
 		[DefaultValue(false)]
