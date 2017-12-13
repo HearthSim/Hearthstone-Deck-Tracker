@@ -546,8 +546,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void MinionRevealed(int id, IGame game, IHsGameState gameState)
 		{
-			var entity = game.Entities[id];
-			game.SecretsManager.OnEntityRevealedAsMinion(entity);
+			if(game.Entities.TryGetValue(id, out var entity))
+				game.SecretsManager.OnEntityRevealedAsMinion(entity);
 		}
 	}
 }
