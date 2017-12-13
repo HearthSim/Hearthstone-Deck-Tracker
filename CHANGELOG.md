@@ -1,12 +1,16 @@
-## __Release vNext__
+## __Release v1.5.7 - 2017-12-13__
 
 __New:__
 - Added support for dungeon run decks.
+	- Settings for this can be found under `options (advanced) > tracker > importing`.
+- Added filters for dungeon and brawl decks to the decks list filters.
 
 __Fixes:__
-- Fixed tracking for cards created by: Fal'dorei Strider, Kingsbane and Scroll of Wonders
+- Fixed tracking for cards created by: Fal'dorei Strider, Kingsbane and Scroll of Wonders.
 - Fixed an issue where Sudden Betrayal would sometimes grey out when attacking with the hero.
 - Fixed an issue where the The Darkness token would count towards the attack counter.
+- Fixed a performance issue when "Advanced window search" was enabled.
+- Fixed several crashes.
 
 
 ## __Release v1.5.6 - 2017-12-07__
