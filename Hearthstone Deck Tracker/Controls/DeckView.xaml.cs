@@ -84,6 +84,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 				return "Brawl";
 			if(_allTags.Contains("adventure") || _allTags.Contains("pve"))
 				return "Adventure";
+			if(deck.IsDungeonDeck)
+				return "Dungeon";
 			if(deck.StandardViable)
 				return "Standard";
 			return "Wild";
@@ -101,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				RectIconArena.Visibility = Visible;
 			else if(_allTags.Contains("brawl"))
 				RectIconBrawl.Visibility = Visible;
-			else if(_allTags.Contains("adventure") || _allTags.Contains("pve"))
+			else if(_allTags.Contains("adventure") || _allTags.Contains("pve") || deck.IsDungeonDeck)
 				RectIconAdventure.Visibility = Visible;
 			else if(deck.StandardViable)
 				RectIconStandard.Visibility = Visible;
