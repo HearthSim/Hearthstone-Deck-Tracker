@@ -432,7 +432,7 @@ namespace Hearthstone_Deck_Tracker
 				return card;
 			}).ToList();
 			if(!Config.Instance.DungeonRunIncludePassiveCards)
-				cards.RemoveAll(c => c.HideStats);
+				cards.RemoveAll(c => !c.Collectible && c.HideStats);
 			var playerClass = ((CardClass)info.HeroCardClass).ToString().ToUpperInvariant();
 			var deck = DeckList.Instance.Decks.FirstOrDefault(x => x.IsDungeonDeck && x.Class.ToUpperInvariant() == playerClass
 																		&& !(x.IsDungeonRunCompleted ?? false)
