@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return DefaultDecks.Hunter;
 				case "DRUID":
 					return DefaultDecks.Druid;
-				case "WARLOCk":
+				case "WARLOCK":
 					return DefaultDecks.Warlock;
 				case "MAGE":
 					return DefaultDecks.Mage;
