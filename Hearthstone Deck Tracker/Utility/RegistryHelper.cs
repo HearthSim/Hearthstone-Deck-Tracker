@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Microsoft.Win32;
@@ -18,16 +19,30 @@ namespace Hearthstone_Deck_Tracker.Utility
 			var path = $"\"{_executablePath}\"";
 			if(!string.IsNullOrEmpty(_args))
 				path += " " + _args;
-			using(var key = GetRunKey())
-				key?.SetValue(KeyName, path);
-			Log.Info("Set AutoRun path to " + path);
+			try
+			{
+				using(var key = GetRunKey())
+					key?.SetValue(KeyName, path);
+				Log.Info("Set AutoRun path to " + path);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
 		}
 
 		public static void DeleteRunKey()
 		{
-			using(var key = GetRunKey())
-				key?.DeleteValue(KeyName, false);
-			Log.Info("Deleted AutoRun key");
+			try
+			{
+				using(var key = GetRunKey())
+					key?.DeleteValue(KeyName, false);
+				Log.Info("Deleted AutoRun key");
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
 		}
 
 		internal static void SetExecutablePath(string executablePath) => _executablePath = executablePath;
