@@ -1,3 +1,8 @@
+## __Release v1.5.8 - 2017-12-14__
+
+- Fixed an issue where Togwaggle and his King's Ransom would reveal more information than they should.
+
+
 ## __Release v1.5.7 - 2017-12-13__
 
 __New:__
