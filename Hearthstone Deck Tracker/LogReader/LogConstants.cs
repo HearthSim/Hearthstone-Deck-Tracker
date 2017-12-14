@@ -45,6 +45,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 			public static readonly Regex UpdatingEntityRegex =
 				new Regex(@"(?<type>(SHOW_ENTITY|CHANGE_ENTITY))\ -\ Updating\ Entity=(?<entity>(.+))\ CardID=(?<cardId>(\w*))");
+
+			public static readonly Regex HideEntityRegex = new Regex(@"HIDE_ENTITY\ -\ .* id=(?<id>(\d+))");
 		}
 	}
 }

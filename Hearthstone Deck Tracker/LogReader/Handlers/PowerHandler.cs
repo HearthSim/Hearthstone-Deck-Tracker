@@ -191,6 +191,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				_tagChangeHandler.TagChange(gameState, match.Groups["tag"].Value, gameState.CurrentEntityId, match.Groups["value"].Value, game, true);
 				creationTag = true;
 			}
+			else if(logLine.Contains("HIDE_ENTITY"))
+			{
+				var match = HideEntityRegex.Match(logLine);
+				if(match.Success)
+				{
+					var id = int.Parse(match.Groups["id"].Value);
+					if(game.Entities.TryGetValue(id, out var entity))
+						entity.Info.Hidden = true;
+				}
+			}
 			if(logLine.Contains("End Spectator"))
 				gameState.GameHandler.HandleGameEnd();
 			else if(logLine.Contains("BLOCK_START"))

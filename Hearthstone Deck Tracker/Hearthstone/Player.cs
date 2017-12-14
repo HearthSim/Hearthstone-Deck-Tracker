@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private DeckState GetDeckState()
 		{
 			var createdCardsInDeck =
-				Deck.Where(x => x.HasCardId && (x.Info.Created || x.Info.Stolen))
+				Deck.Where(x => x.HasCardId && (x.Info.Created || x.Info.Stolen) && !x.Info.Hidden)
 					.GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded})
 					.Select(g =>
 					{
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						return card;
 					});
 			var originalCardsInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Select(x => Enumerable.Repeat(x.Id, x.Count)).SelectMany(x => x).ToList();
-			var revealedNotInDeck = RevealedEntities.Where(x => !x.Info.Created && x.IsPlayableCard && ((!x.IsInDeck || x.Info.Stolen) && x.Info.OriginalController == Id)).ToList();
+			var revealedNotInDeck = RevealedEntities.Where(x => !x.Info.Created && x.IsPlayableCard && ((!x.IsInDeck || x.Info.Stolen) && x.Info.OriginalController == Id && !x.Info.Hidden)).ToList();
 			var removedFromDeck = new List<string>();
 			foreach(var e in revealedNotInDeck)
 			{
@@ -154,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public List<Card> OpponentCardList
-			=> RevealedEntities.Where(x => (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
+			=> RevealedEntities.Where(x => !x.Info.Hidden && (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
 										&& (x.GetTag(GameTag.CREATOR) == 1 || ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
 											&& x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck) && !(x.Info.Created && x.IsInSetAside))
 								.GroupBy(e => new { CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId, 
@@ -192,7 +192,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void Draw(Entity entity, int turn)
 		{
 			if(IsLocalPlayer)
+			{
 				UpdateKnownEntitesInDeck(entity.CardId);
+				entity.Info.Hidden = false;
+			}
 			if(!IsLocalPlayer)
 			{
 				if(_game.OpponentEntity?.GetTag(GameTag.MULLIGAN_STATE) == (int)HearthDb.Enums.Mulligan.DEALING)
