@@ -1,3 +1,8 @@
+## __Release v1.5.9 - 2017-12-15__
+
+- Fixed an issue where some other cards would no longer be tracked due to the previous update.
+
+
 ## __Release v1.5.8 - 2017-12-14__
 
 - Fixed an issue where Togwaggle and his King's Ransom would reveal more information than they should.
