@@ -62,7 +62,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						return card;
 					});
 			var originalCardsInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Select(x => Enumerable.Repeat(x.Id, x.Count)).SelectMany(x => x).ToList();
-			var revealedNotInDeck = RevealedEntities.Where(x => !x.Info.Created && x.IsPlayableCard && ((!x.IsInDeck || x.Info.Stolen) && x.Info.OriginalController == Id && !x.Info.Hidden)).ToList();
+			var revealedNotInDeck = RevealedEntities.Where(x => !x.Info.Created && x.IsPlayableCard
+																&& (!x.IsInDeck || x.Info.Stolen)
+																&& x.Info.OriginalController == Id
+																&& !(x.Info.Hidden && (x.IsInDeck || x.IsInHand))).ToList();
 			var removedFromDeck = new List<string>();
 			foreach(var e in revealedNotInDeck)
 			{
@@ -154,7 +157,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public List<Card> OpponentCardList
-			=> RevealedEntities.Where(x => !x.Info.Hidden && (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
+			=> RevealedEntities.Where(x => !(x.Info.Hidden && (x.IsInDeck || x.IsInHand)) && (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
 										&& (x.GetTag(GameTag.CREATOR) == 1 || ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
 											&& x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck) && !(x.Info.Created && x.IsInSetAside))
 								.GroupBy(e => new { CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId, 
