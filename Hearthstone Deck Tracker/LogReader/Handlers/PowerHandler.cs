@@ -356,6 +356,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				else if(logLine.Contains("BlockType=JOUST"))
 					gameState.JoustReveals = 2;
+				else if(logLine.Contains("BlockType=REVEAL_CARD"))
+					gameState.JoustReveals = 1;
 				else if(gameState.GameTriggerCount == 0 && logLine.Contains("BLOCK_START BlockType=TRIGGER Entity=GameEntity"))
 					gameState.GameTriggerCount++;
 			}
@@ -369,7 +371,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					_tagChangeHandler.InvokeQueuedActions(game);
 					gameState.SetupDone = true;
 				}
-				if(gameState.CurrentBlock?.Type == "JOUST")
+				if(gameState.CurrentBlock?.Type == "JOUST" || gameState.CurrentBlock?.Type == "REVEAL_CARD")
 				{
 					//make sure there are no more queued actions that might depend on JoustReveals
 					_tagChangeHandler.InvokeQueuedActions(game);
