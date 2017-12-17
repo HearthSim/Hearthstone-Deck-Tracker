@@ -1,3 +1,8 @@
+## __Release v1.5.10 - 2017-12-18__
+
+- Fixed tracking of cards created by: Dead Man's Hand, Psychic Scream, Spiteful Summoner, Dragon's Fury, and several others.
+
+
 ## __Release v1.5.9 - 2017-12-15__
 
 - Fixed an issue where some other cards would no longer be tracked due to the previous update.
