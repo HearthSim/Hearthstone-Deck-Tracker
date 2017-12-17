@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		void Reset();
 		void SetCurrentEntity(int id);
 		void ResetCurrentEntity();
-		void BlockStart(string type);
+		void BlockStart(string type, string cardId);
 		void BlockEnd();
 		Block CurrentBlock { get; }
 	}

@@ -193,12 +193,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(logLine.Contains("HIDE_ENTITY"))
 			{
-				var match = HideEntityRegex.Match(logLine);
-				if(match.Success)
+				if(gameState.CurrentBlock?.CardId == Collectible.Neutral.KingTogwaggle
+					|| gameState.CurrentBlock?.CardId == NonCollectible.Neutral.KingTogwaggle_KingsRansomToken)
 				{
-					var id = int.Parse(match.Groups["id"].Value);
-					if(game.Entities.TryGetValue(id, out var entity))
-						entity.Info.Hidden = true;
+					var match = HideEntityRegex.Match(logLine);
+					if(match.Success)
+					{
+						var id = int.Parse(match.Groups["id"].Value);
+						if(game.Entities.TryGetValue(id, out var entity))
+							entity.Info.Hidden = true;
+					}
 				}
 			}
 			if(logLine.Contains("End Spectator"))
@@ -207,7 +211,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				var match = BlockStartRegex.Match(logLine);
 				var blockType = match.Success ? match.Groups["type"].Value : null;
-				gameState.BlockStart(blockType);
+				var cardId = match.Success ? match.Groups["Id"].Value : null;
+				gameState.BlockStart(blockType, cardId);
 
 				if(match.Success && (blockType == "TRIGGER" || blockType == "POWER"))
 				{
