@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -7,6 +6,7 @@ using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.HsReplay.Data;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HSReplay;
 using HSReplay.Responses;

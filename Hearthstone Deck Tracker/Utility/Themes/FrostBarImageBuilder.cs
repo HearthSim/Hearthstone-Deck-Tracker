@@ -5,9 +5,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
 	public class FrostBarImageBuilder : CardBarImageBuilder
 	{
-		public FrostBarImageBuilder(Card card, string dir) : base(card, dir)
-		{
-		}
+		public FrostBarImageBuilder(Card card, string dir, double pixelsPerDip) : base(card, dir, pixelsPerDip) { }
 
 		protected override void AddCardImage() => AddCardImage(ImageRect.Move(-1, 0), false);
 

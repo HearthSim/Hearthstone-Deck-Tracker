@@ -13,10 +13,10 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public bool ArchivedClassVisible
 		{
-			get { return _archivedClassVisible; }
+			get => _archivedClassVisible;
 			set
 			{
 				_archivedClassVisible = value;
@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public bool SearchBarVisibile
 		{
-			get { return _searchBarVisibile; }
+			get => _searchBarVisibile;
 			set
 			{
 				_searchBarVisibile = value;
@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public ObservableCollection<DeckType> DeckTypeItems
 		{
-			get { return _deckTypeItems; }
+			get => _deckTypeItems;
 			set
 			{
 				_deckTypeItems = value;

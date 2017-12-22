@@ -30,6 +30,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected double CountFontSize = 17;
 		protected double TextFontSize = 13;
 		protected double CostFontSize = 20;
+	    protected double PixelsPerDip;
+
 
 		protected static readonly Rect FrameRect = new Rect(0, 0, 217, 34);
 		protected static readonly Rect GemRect = new Rect(0, 0, 34, 34);
@@ -73,9 +75,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{ThemeElement.LegendaryCountBox, new ThemeElementInfo("countbox_legendary.png", BoxRect)}
 		};
 
-		protected CardBarImageBuilder(Card card, string dir)
+		protected CardBarImageBuilder(Card card, string dir, double pixelsPerDip)
 		{
 			Card = card;
+		    PixelsPerDip = pixelsPerDip;
 			ThemeDir = dir;
 			TextTypeFace = Helper.LatinLanguages.Contains(Config.Instance.SelectedLanguage)
 							   ? NumbersTypeFace : new Typeface(new FontFamily(), FontStyles.Normal, FontWeights.Bold, FontStretches.Condensed);
@@ -219,16 +222,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		}
 
 		protected virtual SolidColorBrush CountTextBrush => new SolidColorBrush(Color.FromRgb(240, 195, 72));
+	    protected virtual SolidColorBrush ForegroundTextBrush => new SolidColorBrush(Color.FromRgb(255, 255, 255));
 
-		protected virtual void AddCountText() => AddCountText(CountTextRect);
+	    protected virtual void AddCountText() => AddCountText(CountTextRect);
 		protected void AddCountText(Rect rect)
 		{
 			var count = Math.Abs(Card.Count);
 			if(count <= 1)
 				return;
-			AddText(Math.Min(count, 9), CountFontSize, rect, CountTextBrush, NumbersTypeFace);
+			AddText(Math.Min(count, 9), CountFontSize, rect, CountTextBrush, NumbersTypeFace, ForegroundTextBrush);
 			if(count > 9)
-				AddText("+", 13, new Rect(rect.X + 5, 3, double.NaN, double.NaN), CountTextBrush, TextTypeFace);
+				AddText("+", 13, new Rect(rect.X + 5, 3, double.NaN, double.NaN), CountTextBrush, TextTypeFace, ForegroundTextBrush);
 		}
 
 		protected virtual void AddCreatedIcon() => AddCreatedIcon(Required[ThemeElement.CreatedIcon].Rectangle);
@@ -247,16 +251,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected void AddCost(Rect rect)
 		{
 			if(!Card.HideStats)
-				AddText(Card.Cost, CostFontSize, rect, Card.ColorPlayer, NumbersTypeFace, 3.0, true);
+				AddText(Card.Cost, CostFontSize, rect, Card.ColorPlayer, NumbersTypeFace, ForegroundTextBrush, 3.0, true);
 		}
 
 		protected virtual void AddCardName() => AddCardName(new Rect(38, 8, FrameRect.Width - BoxRect.Width - 38, 34));
-		protected void AddCardName(Rect rect)
-			=> AddText(Card.LocalizedName, TextFontSize, rect, Card.ColorPlayer, TextTypeFace);
+		protected void AddCardName(Rect rect) => AddText(Card.LocalizedName, TextFontSize, rect, Card.ColorPlayer, TextTypeFace, ForegroundTextBrush);
 
-		protected virtual void AddText(object obj, double size, Rect rect, Brush fill, Typeface typeface, double strokeThickness = 2.0, bool centered = false)
+		protected virtual void AddText(object obj, double size, Rect rect, Brush background, Typeface typeface, Brush foreground, double strokeThickness = 2.0, bool centered = false)
 		{
-			foreach(var d in CardTextImageBuilder.GetOutlinedText(obj.ToString(), size, rect, fill, Brushes.Black, typeface, 2.0, centered))
+			foreach(var d in CardTextImageBuilder.GetOutlinedText(obj.ToString(), size, rect, background, Brushes.Black, typeface, foreground, PixelsPerDip, strokeThickness, centered))
 				DrawingGroup.Children.Add(d);
 		}
 

@@ -7,8 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Properties;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -40,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public bool HasGames
 		{
-			get { return _hasGames; }
+			get => _hasGames;
 			private set
 			{
 				_hasGames = value;

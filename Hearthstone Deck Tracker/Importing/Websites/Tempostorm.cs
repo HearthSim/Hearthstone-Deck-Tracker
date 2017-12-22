@@ -32,9 +32,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					var jsonObject = JsonConvert.DeserializeObject<dynamic>(data);
 					if(jsonObject.error == null)
 					{
-						var deck = new Deck();
-
-						deck.Name = jsonObject.name.ToString();
+						var deck = new Deck {Name = jsonObject.name.ToString()};
 						var cards = jsonObject.cards;
 
 						foreach(var item in cards)

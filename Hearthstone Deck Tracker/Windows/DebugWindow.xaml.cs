@@ -168,14 +168,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(enumerable != null)
 					{
 						enumerable = enumerable.Where(x => x != null);
-						if(enumerable.Any())
-							val = enumerable.Select(x => x.ToString()).Aggregate((c, n) => c + ", " + n);
+						var objects = enumerable.ToList();
+						if(objects.Any())
+							val = objects.Select(x => x.ToString()).Aggregate((c, n) => c + ", " + n);
 					}
 					else if(collection != null)
 					{
 						var objects = collection.Cast<object>().Where(x => x != null);
-						if(objects.Any())
-							val = objects.Select(x => x.ToString()).Aggregate((c, n) => c + ", " + n);
+						var enumerable1 = objects.ToList();
+						if(enumerable1.Any())
+							val = enumerable1.Select(x => x.ToString()).Aggregate((c, n) => c + ", " + n);
 					}
 					else
 						val = propVal.ToString();
@@ -200,7 +202,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void OnItemCollapsed(object sender, RoutedEventArgs e)
 		{
 			var item = sender as TreeViewItem;
-			var header = item.Header.ToString();
+			var header = item?.Header.ToString();
 			if(_expanded.Contains(header))
 				_expanded.Remove(header);
 		}
@@ -208,7 +210,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void OnItemExpanded(object sender, RoutedEventArgs e)
 		{
 			var item = sender as TreeViewItem;
-			var header = item.Header.ToString();
+			var header = item?.Header.ToString();
 			if(_expanded.Contains(header) == false)
 				_expanded.Add(header);
 		}
@@ -217,8 +219,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			foreach(var item in TreeViewCards.Items)
 			{
-				var tvi = item as TreeViewItem;
-				tvi.IsExpanded = true;
+				if (item is TreeViewItem tvi)
+				    tvi.IsExpanded = true;
 			}
 		}
 
@@ -226,8 +228,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			foreach(var item in TreeViewCards.Items)
 			{
-				var tvi = item as TreeViewItem;
-				tvi.IsExpanded = false;
+				if (item is TreeViewItem tvi)
+				    tvi.IsExpanded = false;
 			}
 		}
 

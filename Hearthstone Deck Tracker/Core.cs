@@ -320,14 +320,14 @@ namespace Hearthstone_Deck_Tracker
 
 		public static class Windows
 		{
-			private static PlayerWindow _playerWindow;
-			private static OpponentWindow _opponentWindow;
-			private static TimerWindow _timerWindow;
+			private static Hearthstone_Deck_Tracker.Windows.PlayerWindow _playerWindow;
+			private static Hearthstone_Deck_Tracker.Windows.OpponentWindow _opponentWindow;
+			private static Hearthstone_Deck_Tracker.Windows.TimerWindow _timerWindow;
 			private static StatsWindow _statsWindow;
 
-			public static PlayerWindow PlayerWindow => _playerWindow ?? (_playerWindow = new PlayerWindow(Game));
-			public static OpponentWindow OpponentWindow => _opponentWindow ?? (_opponentWindow = new OpponentWindow(Game));
-			public static TimerWindow TimerWindow => _timerWindow ?? (_timerWindow = new TimerWindow(Config.Instance));
+			public static Hearthstone_Deck_Tracker.Windows.PlayerWindow PlayerWindow => _playerWindow ?? (_playerWindow = new Hearthstone_Deck_Tracker.Windows.PlayerWindow(Game));
+			public static Hearthstone_Deck_Tracker.Windows.OpponentWindow OpponentWindow => _opponentWindow ?? (_opponentWindow = new Hearthstone_Deck_Tracker.Windows.OpponentWindow(Game));
+			public static Hearthstone_Deck_Tracker.Windows.TimerWindow TimerWindow => _timerWindow ?? (_timerWindow = new Hearthstone_Deck_Tracker.Windows.TimerWindow(Config.Instance));
 			public static StatsWindow StatsWindow => _statsWindow ?? (_statsWindow = new StatsWindow());
 			public static CapturableOverlayWindow CapturableOverlay;
 		}

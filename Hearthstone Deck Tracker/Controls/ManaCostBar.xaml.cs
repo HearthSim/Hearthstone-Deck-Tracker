@@ -7,7 +7,7 @@ using System.Windows.Shapes;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Controls
 {
 	/// <summary>
 	/// Interaction logic for MultiProgressBar.xaml

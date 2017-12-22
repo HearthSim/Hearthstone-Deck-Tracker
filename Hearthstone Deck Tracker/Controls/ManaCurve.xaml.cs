@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker
 		private const string Hero = "Hero";
 		private const string LocMechanics = "ManaCurve_Button_Mechanics";
 		private const string LocHide = "ManaCurve_Button_Hide";
-		private readonly ManaCostBar[] _manaCostBars;
+		private readonly Controls.ManaCostBar[] _manaCostBars;
 		private Deck _deck;
 
 		public ManaCurve()

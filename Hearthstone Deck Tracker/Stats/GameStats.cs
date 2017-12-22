@@ -13,11 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using HearthDb.Enums;
 using HearthMirror.Objects;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Utility;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -75,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		//playerhero does not get loaded from xml for some reason
 		public string PlayerHero
 		{
-			get { return _playerHero; }
+			get => _playerHero;
 			set
 			{
 				_playerHero = value;
@@ -86,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public string OpponentHero
 		{
-			get { return _opponentHero; }
+			get => _opponentHero;
 			set
 			{
 				_opponentHero = value;
@@ -97,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public bool Coin
 		{
-			get { return _coin; }
+			get => _coin;
 			set
 			{
 				_coin = value;
@@ -108,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public GameMode GameMode
 		{
-			get { return _gameMode; }
+			get => _gameMode;
 			set { _gameMode = value;
 				OnPropertyChanged();
 			}
@@ -116,7 +115,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public GameResult Result
 		{
-			get { return _result; }
+			get => _result;
 			set { _result = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(ResultString));
@@ -126,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int Turns
 		{
-			get { return _turns; }
+			get => _turns;
 			set { _turns = value;
 				OnPropertyChanged();
 			}
@@ -137,7 +136,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public string Note
 		{
-			get { return _note; }
+			get => _note;
 			set
 			{
 				_note = value; 
@@ -149,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public string PlayerName
 		{
-			get { return _playerName; }
+			get => _playerName;
 			set { _playerName = value;
 				OnPropertyChanged();
 			}
@@ -157,7 +156,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public string OpponentName
 		{
-			get { return _opponentName; }
+			get => _opponentName;
 			set { _opponentName = value;
 				OnPropertyChanged();
 			}
@@ -169,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int Rank
 		{
-			get { return _rank; }
+			get => _rank;
 			set
 			{
 				_rank = value;
@@ -180,7 +179,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int Stars
 		{
-			get { return _stars; }
+			get => _stars;
 			set
 			{
 				_stars = value;
@@ -190,7 +189,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int LegendRank
 		{
-			get { return _legendRank; }
+			get => _legendRank;
 			set { _legendRank = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(RankString));
@@ -199,7 +198,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int OpponentLegendRank
 		{
-			get { return _opponentLegendRank; }
+			get => _opponentLegendRank;
 			set
 			{
 				_opponentLegendRank = value;
@@ -239,7 +238,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public Region Region
 		{
-			get { return _region; }
+			get => _region;
 			set { _region = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(RegionString));
@@ -248,10 +247,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public Format? Format
 		{
-			get
-			{
-				return (GameMode == GameMode.Ranked || GameMode == GameMode.Casual) ? (Format?)_format : null;
-			}
+			get => (GameMode == GameMode.Ranked || GameMode == GameMode.Casual) ? (Format?)_format : null;
 			set
 			{
 				if(value.HasValue)
@@ -268,11 +264,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 			{
 				if(_deckId.HasValue)
 					return _deckId.Value;
-				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckStats.Games.Any(g => g == this));
+				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckStats.Games.Any(g => Equals(g, this)));
 				_deckId = deck?.DeckId ?? Guid.Empty;
 				return _deckId.Value;
 			}
-			set { _deckId = value; }
+			set => _deckId = value;
 		}
 
 		public string DeckName
@@ -414,8 +410,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlIgnore]
 		public string GotCoin
 		{
-			get { return Coin ? "Yes" : "No"; }
-			set { Coin = value.ToLower() == "Yes"; }
+			get => Coin ? "Yes" : "No";
+			set => Coin = value.ToLower() == "Yes";
 		}
 
 		public HsReplayInfo HsReplay { get; set; } = new HsReplayInfo();
@@ -469,7 +465,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			Log.Info("Current Game ended after " + Turns + " turns");
 		}
 
-		public override string ToString() => $"[{GameMode}] {Result} VS. {OpponentName} ({OpponentHero}), {StartTime.ToString("g")}";
+		public override string ToString() => $"[{GameMode}] {Result} VS. {OpponentName} ({OpponentHero}), {StartTime:g}";
 
 		public long HsDeckId { get; set; }
 

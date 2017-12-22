@@ -1,0 +1,24 @@
+﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net471;netcoreapp2.0</TargetFrameworks>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>snKey.snk</AssemblyOriginatorKeyFile>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\HearthDb\HearthDb\HearthDb.csproj" />
+    <ProjectReference Include="..\..\HearthMirror\HearthMirror\HearthMirror.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web.HttpUtility">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.0.0\ref\netcoreapp2.0\System.Web.HttpUtility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -5,16 +5,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Properties;
+using Hearthstone_Deck_Tracker.Utility;
 using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 

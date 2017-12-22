@@ -7,9 +7,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 	public class DarkBarImageBuilder : CardBarImageBuilder
 	{
 		private readonly Rect _fadeRect = new Rect(34, 0, 183, 34);
-		public DarkBarImageBuilder(Card card, string dir) : base(card, dir)
-		{
-		}
+
+		public DarkBarImageBuilder(Card card, string dir, double pixelsPerDip) : base(card, dir, pixelsPerDip) { }
 
 		protected override void AddFadeOverlay() => AddFadeOverlay(_fadeRect, true);
 

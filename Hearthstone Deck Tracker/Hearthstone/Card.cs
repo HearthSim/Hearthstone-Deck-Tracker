@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Themes;
@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string Id
 		{
-			get { return _id; }
+			get => _id;
 			set
 			{
 				_id = value;
@@ -153,7 +153,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public int Count
 		{
-			get { return _count; }
+			get => _count;
 			set
 			{
 				_count = value;
@@ -174,8 +174,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string Text
 		{
-			get { return CleanUpText(_text); }
-			set { _text = value; }
+			get => CleanUpText(_text);
+			set => _text = value;
 		}
 
 		[XmlIgnore]
@@ -184,8 +184,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string EnglishText
 		{
-			get { return CleanUpText(string.IsNullOrEmpty(_englishText) ? Text : _englishText); }
-			set { _englishText =value; }
+			get => CleanUpText(string.IsNullOrEmpty(_englishText) ? Text : _englishText);
+			set => _englishText =value;
 		}
 
 		[XmlIgnore]
@@ -298,8 +298,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string LocalizedName
 		{
-			get { return string.IsNullOrEmpty(_localizedName) ? Name : _localizedName; }
-			set { _localizedName = value; }
+			get => string.IsNullOrEmpty(_localizedName) ? Name : _localizedName;
+			set => _localizedName = value;
 		}
 
 		public string[] EntourageCardIds => _dbCard != null ? _dbCard.EntourageCardIds : new string[0];
@@ -307,7 +307,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public int InHandCount
 		{
-			get { return _inHandCount; }
+			get => _inHandCount;
 			set
 			{
 				_inHandCount = value;
@@ -321,7 +321,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool IsCreated
 		{
-			get { return _isCreated; }
+			get => _isCreated;
 			set
 			{
 				_isCreated = value;
@@ -332,7 +332,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool WasDiscarded
 		{
-			get { return _wasDiscarded; }
+			get => _wasDiscarded;
 			set
 			{
 				_wasDiscarded = value;

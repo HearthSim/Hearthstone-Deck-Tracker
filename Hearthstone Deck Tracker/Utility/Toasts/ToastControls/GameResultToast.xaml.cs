@@ -8,8 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Stats;
 
 #endregion

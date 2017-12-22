@@ -7,6 +7,7 @@ using System.Timers;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
@@ -22,9 +23,9 @@ namespace Hearthstone_Deck_Tracker
 			OpponentSeconds = opponentSeconds;
 		}
 
-		public double Seconds { get; private set; }
-		public int PlayerSeconds { get; private set; }
-		public int OpponentSeconds { get; private set; }
+		public double Seconds { get; }
+		public int PlayerSeconds { get; }
+		public int OpponentSeconds { get; }
 	}
 
 	internal class TurnTimer

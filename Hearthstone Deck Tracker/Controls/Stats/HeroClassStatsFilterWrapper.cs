@@ -20,8 +20,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public override bool Equals(object obj)
 		{
-			var wrapper = obj as HeroClassStatsFilterWrapper;
-			return wrapper != null && HeroClass.Equals(wrapper.HeroClass);
+		  return obj is HeroClassStatsFilterWrapper wrapper && HeroClass.Equals(wrapper.HeroClass);
 		}
 
 		public override int GetHashCode() => HeroClass.GetHashCode();

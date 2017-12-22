@@ -2,8 +2,8 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Newtonsoft.Json;
 
@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public AccountStatus Status
 		{
-			get { return _status; }
+			get => _status;
 			set
 			{
 				_status = value; 

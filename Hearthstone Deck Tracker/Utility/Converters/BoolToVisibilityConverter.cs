@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Hearthstone_Deck_Tracker.Utility.Converters
 {
-	class BoolToVisibilityConverter : IValueConverter
+	public class BoolToVisibilityConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 		}
 	}
 
-	class InverseBoolToVisibilityConverter : IValueConverter
+	public class InverseBoolToVisibilityConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{

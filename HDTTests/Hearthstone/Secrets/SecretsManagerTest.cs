@@ -8,6 +8,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
+using Hearthstone_Deck_Tracker.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
 

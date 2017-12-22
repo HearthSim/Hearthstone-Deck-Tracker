@@ -35,7 +35,7 @@ using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Utility
 {
 	public static class Helper
 	{
@@ -230,7 +230,7 @@ namespace Hearthstone_Deck_Tracker
 			foreach(var folder in folders)
 			{
 				var name = Path.GetFileName(folder);
-				var dest = Path.Combine(destFolder, name);
+				var dest = Path.Combine(destFolder, name ?? throw new InvalidOperationException());
 				CopyFolder(folder, dest);
 			}
 		}
@@ -613,7 +613,7 @@ namespace Hearthstone_Deck_Tracker
 					yield return childT;
 					continue;
 				}
-				foreach(var childOfChild in FindLogicalDescendants<T>(filter, child))
+				foreach(var childOfChild in FindLogicalDescendants(filter, child))
 					yield return childOfChild;
 			}
 		}
@@ -657,7 +657,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(hex.StartsWith("#"))
 				hex = hex.Remove(0, 1);
-			if(string.IsNullOrEmpty(hex) || hex.Length != 6 || !Helper.IsHex(hex))
+			if(string.IsNullOrEmpty(hex) || hex.Length != 6 || !IsHex(hex))
 				return null;
 			var color = ColorTranslator.FromHtml("#" + hex);
 			return new SolidColorBrush(MediaColor.FromRgb(color.R, color.G, color.B));

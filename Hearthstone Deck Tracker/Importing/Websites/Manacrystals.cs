@@ -29,8 +29,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				}
 
 				// get metadata
-				deck.Name = HttpUtility.HtmlDecode(deckRoot.SelectSingleNode(".//h2/a").InnerText).Trim();							
-				var deckType = HttpUtility.HtmlDecode(deckInfo[0].SelectNodes(".//p")[2].InnerText).Trim();
+				deck.Name = HttpUtility.HtmlDecode(deckRoot.SelectSingleNode(".//h2/a").InnerText)?.Trim();							
+				var deckType = HttpUtility.HtmlDecode(deckInfo[0].SelectNodes(".//p")[2].InnerText)?.Trim();
 				if(!string.IsNullOrWhiteSpace(deckType) && Config.Instance.TagDecksOnImport)
 				{
 					if(!DeckList.Instance.AllTags.Contains(deckType))

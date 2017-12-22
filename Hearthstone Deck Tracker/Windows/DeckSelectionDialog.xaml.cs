@@ -10,7 +10,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Windows
 {
 	/// <summary>
 	/// Interaction logic for DeckSelectionDialog.xaml

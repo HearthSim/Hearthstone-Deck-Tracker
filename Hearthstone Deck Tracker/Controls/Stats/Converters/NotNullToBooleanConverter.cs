@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace Hearthstone_Deck_Tracker.Controls.Stats.Converters
 {
-	class NotNullToBooleanConverter : IValueConverter
+	public class NotNullToBooleanConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{

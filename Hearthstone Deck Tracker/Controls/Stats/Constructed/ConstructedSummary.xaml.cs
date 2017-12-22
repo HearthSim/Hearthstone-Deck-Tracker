@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 
 #endregion

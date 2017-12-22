@@ -50,10 +50,10 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		}
 
 		public string CardId { get; }
-		public bool Taunt { get; private set; }
+		public bool Taunt { get; }
 		public bool Charge { get; }
 		public bool Windfury { get; }
-		public string CardType { get; private set; }
+		public string CardType { get; }
 
 		public string Name { get; }
 		public int Attack { get; }
@@ -113,6 +113,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			return true;
 		}
 
+	    // ReSharper disable once InconsistentNaming
 		private int V07TRONAttack(bool active)
 		{
 			if(!active)

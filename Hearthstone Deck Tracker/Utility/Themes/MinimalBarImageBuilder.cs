@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
 	public class MinimalBarImageBuilder : CardBarImageBuilder
 	{
-		public MinimalBarImageBuilder(Card card, string dir) : base(card, dir)
+		public MinimalBarImageBuilder(Card card, string dir, double pixelsPerDip) : base(card, dir, pixelsPerDip)
 		{
 			CreatedIconOffset = -15;
 		}

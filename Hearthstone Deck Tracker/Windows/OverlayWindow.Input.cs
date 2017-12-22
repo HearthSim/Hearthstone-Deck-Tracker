@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,8 +8,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -129,7 +128,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 			}
 
-			if (_selectedUiElement is HearthstoneTextBlock timer)
+			if (_selectedUiElement is Controls.HearthstoneTextBlock timer)
 			{
 				if (timer.Equals(LblPlayerTurnTime))
 				{
@@ -149,10 +148,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					Canvas.SetLeft(_movableElements[timer], Width * Config.Instance.TimersHorizontalPosition / 100);
 
 					var playerTimer =
-						_movableElements.First(e => e.Key is HearthstoneTextBlock && ((HearthstoneTextBlock)e.Key).Name.Contains("Player")).Value;
+						_movableElements.First(e => e.Key is Controls.HearthstoneTextBlock && ((Controls.HearthstoneTextBlock)e.Key).Name.Contains("Player")).Value;
 					Canvas.SetTop(playerTimer, Height * Config.Instance.TimersVerticalPosition / 100 + Config.Instance.TimersVerticalSpacing);
 					Canvas.SetLeft(playerTimer, Width * Config.Instance.TimersHorizontalPosition / 100 + Config.Instance.TimersHorizontalSpacing);
-					return;
 				}
 			}
 		}
@@ -185,7 +183,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						_selectedUiElement = element.Key;
 						return;
 					}
-					if(element.Key is HearthstoneTextBlock && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
+					if(element.Key is Controls.HearthstoneTextBlock && PointInsideControl(relativePos, element.Value.ActualWidth, element.Value.ActualHeight))
 					{
 						_selectedUiElement = element.Key;
 						return;
@@ -235,7 +233,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						Canvas.SetLeft(movableElement.Value, Canvas.GetLeft(movableElement.Key));
 
 						var elementSize = GetUiElementSize(movableElement.Key);
-						if (movableElement.Key == BorderStackPanelPlayer)
+						if (Equals(movableElement.Key, BorderStackPanelPlayer))
 						{
 							if (!TrySetResizeGripHeight(movableElement.Value, Config.Instance.PlayerDeckHeight * Height / 100))
 							{
@@ -244,7 +242,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 							}
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width * Config.Instance.OverlayPlayerScaling/100 : 0;
 						}
-						else if (movableElement.Key == BorderStackPanelOpponent)
+						else if (Equals(movableElement.Key, BorderStackPanelOpponent))
 						{
 							if (!TrySetResizeGripHeight(movableElement.Value, Config.Instance.OpponentDeckHeight * Height / 100))
 							{
@@ -253,7 +251,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 							}
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width * Config.Instance.OverlayOpponentScaling / 100 : 0;
 						}
-						else if(movableElement.Key == StackPanelSecrets)
+						else if(Equals(movableElement.Key, StackPanelSecrets))
 						{
 							movableElement.Value.Height = StackPanelSecrets.ActualHeight > 0 ? StackPanelSecrets.ActualHeight : 0;
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width : 0;
@@ -308,7 +306,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return new Size(border.ActualWidth, border.ActualHeight);
 			if(element is Panel panel)
 				return new Size(panel.ActualWidth, panel.ActualHeight);
-			if (element is HearthstoneTextBlock block)
+			if (element is Controls.HearthstoneTextBlock block)
 				return new Size(block.ActualWidth, block.ActualHeight);
 			if(element is WotogCounter wotogIcons)
 				return new Size(wotogIcons.IconWidth * _wotogSize, wotogIcons.ActualHeight * _wotogSize);
@@ -339,8 +337,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
 				return;
 
-			var card = ToolTipCard.DataContext as Card;
-			if (card == null)
+		    if (!(ToolTipCard.DataContext is Card card))
 				return;
 
 			_game.SecretsManager.Toggle(card.Id);

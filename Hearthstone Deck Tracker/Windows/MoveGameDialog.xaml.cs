@@ -7,10 +7,11 @@ using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Windows
 {
 	/// <summary>
 	/// Interaction logic for MoveGameDialog.xaml
@@ -34,16 +35,14 @@ namespace Hearthstone_Deck_Tracker
 		{
 			foreach(var item in e.AddedItems)
 			{
-				var pickerItem = item as DeckPickerItem;
-				if(pickerItem == null)
+			    if(!(item is DeckPickerItem pickerItem))
 					continue;
 				DeckList.Instance.ActiveDeck = pickerItem.DataContext as Deck;
 				pickerItem.RefreshProperties();
 			}
 			foreach(var item in e.RemovedItems)
 				(item as DeckPickerItem)?.RefreshProperties();
-			var dpi = ListViewDecks.SelectedItem as DeckPickerItem;
-			if(dpi == null)
+		    if(!(ListViewDecks.SelectedItem is DeckPickerItem dpi))
 				return;
 			SelectedDeck = dpi.Deck;
 			ComboBoxVersions.Items.Clear();

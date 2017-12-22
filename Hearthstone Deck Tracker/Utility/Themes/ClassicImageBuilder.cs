@@ -10,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		private readonly Rect _imageRect = new Rect(108, 4, 108, 27);
 		private readonly Rect _costRect = new Rect(6, 1, 25, 34);
 
-		public ClassicBarImageBuilder(Card card, string dir) : base(card, dir)
+		public ClassicBarImageBuilder(Card card, string dir, double pixelsPerDip) : base(card, dir, pixelsPerDip)
 		{
 			ImageOffset = FadeOffset = CreatedIconOffset = -19;
 			CostFontSize = 18;

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
 
@@ -33,35 +33,21 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		public Visibility ImageVisiblity
 		{
-			get { return (Visibility)GetValue(ImageVisiblityProperty); }
-			set { SetValue(ImageVisiblityProperty, value); }
+			get => (Visibility)GetValue(ImageVisiblityProperty);
+			set => SetValue(ImageVisiblityProperty, value);
 		}
 
-		public string ClassName
-		{
-			get
-			{
-				var classStats = DataContext as ClassStats;
-				return classStats != null ? classStats.Class : Class;
-			}
-		}
+		public string ClassName => DataContext is ClassStats classStats ? classStats.Class : Class;
 
 		public string Class
 		{
-			get { return (string)GetValue(ClassProperty); }
-			set { SetValue(ClassProperty, value); }
+			get => (string)GetValue(ClassProperty);
+			set => SetValue(ClassProperty, value);
 		}
 
-		public BitmapImage ClassImage
-		{
-			get
-			{
-				var classStats = DataContext as ClassStats;
-				return classStats != null ? classStats.ClassImage : ImageCache.GetClassIcon(Class);
-			}
-		}
+		public BitmapImage ClassImage => DataContext is ClassStats classStats ? classStats.ClassImage : ImageCache.GetClassIcon(Class);
 
-		public event PropertyChangedEventHandler PropertyChanged;
+	    public event PropertyChangedEventHandler PropertyChanged;
 
 		private void ArenaClassStats_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{

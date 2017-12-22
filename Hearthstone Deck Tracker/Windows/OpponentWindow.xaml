@@ -1,11 +1,11 @@
-<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.OpponentWindow"
+<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.OpponentWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -30,8 +30,8 @@
     </controls:MetroWindow.IconTemplate>
     <Grid Name="WindowGrid">
         <StackPanel Name="StackPanelMain" Margin="0,1,0,0">
-            <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
-            <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding OpponentDeckMaxHeight, RelativeSource={RelativeSource AncestorType=local:OpponentWindow}}">
+            <controls1:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
+            <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding OpponentDeckMaxHeight, RelativeSource={RelativeSource AncestorType=windows:OpponentWindow}}">
                 <controls1:AnimatedCardList x:Name="ListViewOpponent" Background="Transparent" BorderThickness="0"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
                             ScrollViewer.VerticalScrollBarVisibility="Disabled" IsEnabled="False"
@@ -44,16 +44,16 @@
                 </controls1:AnimatedCardList>
             </Viewbox>
             <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.CardCounterFrame, Source={StaticResource ThemeManager}}">
-                <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25"/>
-                <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25"/>
+                <controls1:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25"/>
+                <controls1:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25"/>
             </Canvas>
             <Canvas Name="CanvasOpponentChance" HorizontalAlignment="Stretch" Height="71" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.OpponentChanceFrame, Source={StaticResource ThemeManager}}">
-                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25"/>
-                <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25"/>
-                <local:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25"/>
-                <local:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25"/>
+                <controls1:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25"/>
+                <controls1:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25"/>
+                <controls1:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25"/>
+                <controls1:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25"/>
             </Canvas>
-                <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
+                <controls1:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

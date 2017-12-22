@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Hearthstone_Deck_Tracker.Utility;
 using MahApps.Metro.Controls.Dialogs;
 
 namespace Hearthstone_Deck_Tracker.Windows

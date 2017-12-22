@@ -10,7 +10,7 @@ using Brushes = System.Windows.Media.Brushes;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Windows
 {
 	/// <summary>
 	/// Interaction logic for TimerWindow.xaml

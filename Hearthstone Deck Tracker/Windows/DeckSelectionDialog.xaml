@@ -1,4 +1,4 @@
-<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.DeckSelectionDialog"
+<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.DeckSelectionDialog"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"

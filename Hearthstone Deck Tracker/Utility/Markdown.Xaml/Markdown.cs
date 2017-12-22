@@ -191,39 +191,39 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 
 		public Style DocumentStyle
 		{
-			get { return (Style)GetValue(DocumentStyleProperty); }
-			set { SetValue(DocumentStyleProperty, value); }
+			get => (Style)GetValue(DocumentStyleProperty);
+			set => SetValue(DocumentStyleProperty, value);
 		}
 
 		public Style Heading1Style
 		{
-			get { return (Style)GetValue(Heading1StyleProperty); }
-			set { SetValue(Heading1StyleProperty, value); }
+			get => (Style)GetValue(Heading1StyleProperty);
+			set => SetValue(Heading1StyleProperty, value);
 		}
 
 		public Style Heading2Style
 		{
-			get { return (Style)GetValue(Heading2StyleProperty); }
-			set { SetValue(Heading2StyleProperty, value); }
+			get => (Style)GetValue(Heading2StyleProperty);
+			set => SetValue(Heading2StyleProperty, value);
 		}
 
 		public Style Heading3Style
 		{
-			get { return (Style)GetValue(Heading3StyleProperty); }
-			set { SetValue(Heading3StyleProperty, value); }
+			get => (Style)GetValue(Heading3StyleProperty);
+			set => SetValue(Heading3StyleProperty, value);
 		}
 
 		public Style Heading4Style
 		{
-			get { return (Style)GetValue(Heading4StyleProperty); }
-			set { SetValue(Heading4StyleProperty, value); }
+			get => (Style)GetValue(Heading4StyleProperty);
+			set => SetValue(Heading4StyleProperty, value);
 		}
 
 
 		public Style CodeStyle
 		{
-			get { return (Style)GetValue(CodeStyleProperty); }
-			set { SetValue(CodeStyleProperty, value); }
+			get => (Style)GetValue(CodeStyleProperty);
+			set => SetValue(CodeStyleProperty, value);
 		}
 
 		public FlowDocument Transform(string text)

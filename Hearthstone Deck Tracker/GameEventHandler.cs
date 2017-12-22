@@ -17,6 +17,7 @@ using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Replay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -25,6 +26,7 @@ using Hearthstone_Deck_Tracker.Windows;
 using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
+using CardIds = HearthDb.CardIds;
 
 #endregion
 
@@ -311,7 +313,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void HandleThaurissanCostReduction()
 		{
-			var thaurissans = _game.Opponent.Board.Where(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan && !x.HasTag(SILENCED)).ToList();
+			var thaurissans = _game.Opponent.Board.Where(x => x.CardId == CardIds.Collectible.Neutral.EmperorThaurissan && !x.HasTag(SILENCED)).ToList();
 			if(!thaurissans.Any())
 				return;
 
@@ -405,7 +407,7 @@ namespace Hearthstone_Deck_Tracker
 					_game.CurrentGameStats.PlayerName = player.Name;
 					_game.CurrentGameStats.Coin = !player.HasTag(FIRST_PLAYER);
 				}
-				if(opponent != null && CardIds.HeroIdDict.ContainsValue(_game.CurrentGameStats.OpponentHero))
+				if(opponent != null && Hearthstone.CardIds.HeroIdDict.ContainsValue(_game.CurrentGameStats.OpponentHero))
 					_game.CurrentGameStats.OpponentName = opponent.Name;
 				else
 					_game.CurrentGameStats.OpponentName = _game.CurrentGameStats.OpponentHero;
@@ -485,7 +487,7 @@ namespace Hearthstone_Deck_Tracker
 							}
 							if(discardDialog.Result == DiscardGameDialogResult.MoveToOther)
 							{
-								var moveDialog = new MoveGameDialog(DeckList.Instance.Decks.Where(d => d.Class == _game.CurrentGameStats.PlayerHero))
+								var moveDialog = new Windows.MoveGameDialog(DeckList.Instance.Decks.Where(d => d.Class == _game.CurrentGameStats.PlayerHero))
 								{
 									Topmost = true
 								};
@@ -528,7 +530,7 @@ namespace Hearthstone_Deck_Tracker
 					if(Config.Instance.ShowNoteDialogAfterGame && !Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 					{
 						_showedNoteDialog = true;
-						new NoteDialog(_game.CurrentGameStats);
+						new Windows.NoteDialog(_game.CurrentGameStats);
 					}
 					Log.Info("Assigned current game to deck: " + selectedDeck.Name);
 					_assignedDeck = selectedDeck;
@@ -582,7 +584,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private void LogEvent(string type, string id = "", int turn = 0, int from = -1, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
-			=> Log.Info($"{type} (id:{id} turn:{turn} from:{@from})", memberName, sourceFilePath);
+			=> Log.Info($"{type} (id:{id} turn:{turn} from:{from})", memberName, sourceFilePath);
 
 		public void HandleWin()
 		{
@@ -618,7 +620,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.ShowNoteDialogAfterGame && Config.Instance.NoteDialogDelayed && !_showedNoteDialog)
 				{
 					_showedNoteDialog = true;
-					new NoteDialog(_game.CurrentGameStats);
+					new Windows.NoteDialog(_game.CurrentGameStats);
 				}
 
 				if(_game.CurrentGameStats != null)
@@ -906,20 +908,19 @@ namespace Hearthstone_Deck_Tracker
 			_game.Opponent.StolenFromOpponent(entity, turn);
 			if(entity.IsSecret)
 			{
-				HeroClass heroClass;
-				var className = ((CardClass)entity.GetTag(CLASS)).ToString();
+			    var className = ((CardClass)entity.GetTag(CLASS)).ToString();
 				if(!string.IsNullOrEmpty(className))
 				{
 					className = className.Substring(0, 1).ToUpper() + className.Substring(1, className.Length - 1).ToLower();
-					if(!Enum.TryParse(className, out heroClass))
+					if(!Enum.TryParse<HeroClass>(className, out var _))
 					{
-						if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+						if(!Enum.TryParse<HeroClass>(_game.Opponent.Class, out var _))
 							return;
 					}
 				}
 				else
 				{
-					if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+					if(!Enum.TryParse<HeroClass>(_game.Opponent.Class, out var _))
 						return;
 				}
 				_game.SecretsManager.NewSecret(entity);
@@ -975,7 +976,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentGet(Entity entity, int turn, int id)
 		{
 			if(!_game.IsMulliganDone && entity.GetTag(ZONE_POSITION) == 5)
-				entity.CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoin;
+				entity.CardId = CardIds.NonCollectible.Neutral.TheCoin;
 			_game.Opponent.CreateInHand(entity, turn);
 			Core.UpdateOpponentCards();
 			GameEvents.OnOpponentGet.Execute();
@@ -1005,15 +1006,14 @@ namespace Hearthstone_Deck_Tracker
 					break;
 			}
 
-			HeroClass heroClass;
-			var className = ((CardClass)entity.GetTag(CLASS)).ToString();
+		    var className = ((CardClass)entity.GetTag(CLASS)).ToString();
 			if(!string.IsNullOrEmpty(className))
 			{
 				className = className.Substring(0, 1).ToUpper() + className.Substring(1, className.Length - 1).ToLower();
-				if(!Enum.TryParse(className, out heroClass) && !Enum.TryParse(_game.Opponent.Class, out heroClass))
+				if(!Enum.TryParse<HeroClass>(className, out var _) && !Enum.TryParse<HeroClass>(_game.Opponent.Class, out var _))
 					return;
 			}
-			else if(!Enum.TryParse(_game.Opponent.Class, out heroClass))
+			else if(!Enum.TryParse(_game.Opponent.Class, out HeroClass _))
 				return;
 			_game.SecretsManager.NewSecret(entity);
 			GameEvents.OnOpponentPlay.Execute(Database.GetCardFromId(cardId));
@@ -1066,12 +1066,12 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerPlay(Entity entity, string cardId, int turn) => HandlePlayerPlay(entity, cardId, turn);
 		void IGameHandler.HandlePlayerDeckDiscard(Entity entity, string cardId, int turn) => HandlePlayerDeckDiscard(entity, cardId, turn);
 		void IGameHandler.HandlePlayerHeroPower(string cardId, int turn) => HandlePlayerHeroPower(cardId, turn);
-		void IGameHandler.HandleOpponentPlay(Entity entity, string cardId, int @from, int turn) => HandleOpponentPlay(entity, cardId, @from, turn);
-		void IGameHandler.HandleOpponentHandDiscard(Entity entity, string cardId, int @from, int turn) => HandleOpponentHandDiscard(entity, cardId, @from, turn);
+		void IGameHandler.HandleOpponentPlay(Entity entity, string cardId, int from, int turn) => HandleOpponentPlay(entity, cardId, from, turn);
+		void IGameHandler.HandleOpponentHandDiscard(Entity entity, string cardId, int from, int turn) => HandleOpponentHandDiscard(entity, cardId, from, turn);
 		void IGameHandler.HandleOpponentDraw(Entity entity, int turn) => HandlOpponentDraw(entity, turn);
-		void IGameHandler.HandleOpponentMulligan(Entity entity, int @from) => HandleOpponentMulligan(entity, @from);
+		void IGameHandler.HandleOpponentMulligan(Entity entity, int from) => HandleOpponentMulligan(entity, from);
 		void IGameHandler.HandleOpponentGet(Entity entity, int turn, int id) => HandleOpponentGet(entity, turn, id);
-		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string cardId, int @from, int turn, Zone fromZone, int otherId) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromZone, otherId);
+		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, Zone fromZone, int otherId) => HandleOpponentSecretPlayed(entity, cardId, from, turn, fromZone, otherId);
 		void IGameHandler.HandleOpponentPlayToHand(Entity entity, string cardId, int turn, int id) => HandleOpponentPlayToHand(entity, cardId, turn, id);
 		void IGameHandler.HandleOpponentSecretTrigger(Entity entity, string cardId, int turn, int otherId) => HandleOpponentSecretTrigger(entity, cardId, turn, otherId);
 		void IGameHandler.HandleOpponentDeckDiscard(Entity entity, string cardId, int turn) => HandleOpponentDeckDiscard(entity, cardId, turn);

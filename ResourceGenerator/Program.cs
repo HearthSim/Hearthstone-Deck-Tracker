@@ -11,7 +11,7 @@ using nQuant;
 
 namespace ResourceGenerator
 {
-	internal class Program
+  internal class Program
 	{
 		private static WebClient _webClient;
 		private static WebClient WebClient => _webClient ?? (_webClient = new WebClient());
@@ -57,7 +57,7 @@ namespace ResourceGenerator
 			}
 		}
 
-		private static void DownloadTile(Card card, FileInfo img)
+		private static void DownloadTile(Card card, FileSystemInfo img)
 		{
 			Console.WriteLine($"Downloading missing image data for {card.Name} ({card.Id})");
 			try

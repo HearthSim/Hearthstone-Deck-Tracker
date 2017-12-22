@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
@@ -30,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		public ArenaRun SelectedRun
 		{
-			get { return _selectedRun ?? (DataGridArenaRuns.Items.IsEmpty ? null : (ArenaRun)DataGridArenaRuns.Items.GetItemAt(0)); }
+			get => _selectedRun ?? (DataGridArenaRuns.Items.IsEmpty ? null : (ArenaRun)DataGridArenaRuns.Items.GetItemAt(0));
 			set
 			{
 				if(value != null)
@@ -42,8 +43,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		private void ButtonEditRewards_OnClick(object sender, RoutedEventArgs e)
 		{
-			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
-			if(run == null)
+		    if(!(DataGridArenaRuns.SelectedItem is ArenaRun run))
 				return;
 			var rewardDialog = new ArenaRewardDialog(run.Deck) {WindowStartupLocation = WindowStartupLocation.CenterOwner};
 			rewardDialog.ShowDialog();
@@ -51,8 +51,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		private async void ButtonAddGame_OnClick(object sender, RoutedEventArgs e)
 		{
-			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
-			if(run == null)
+		    if(!(DataGridArenaRuns.SelectedItem is ArenaRun run))
 				return;
 			var window = Helper.GetParentWindow(this);
 			if(window == null)
@@ -78,8 +77,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		{
 			if(SelectedGame == null)
 				return;
-			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
-			if(run == null)
+		    if(!(DataGridArenaRuns.SelectedItem is ArenaRun run))
 				return;
 			var window = Helper.GetParentWindow(this);
 			if(await window.ShowDeleteGameStatsMessage(SelectedGame) != MessageDialogResult.Affirmative)
@@ -134,8 +132,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		private void ButtonShowDeck_OnClick(object sender, RoutedEventArgs e)
 		{
-			var run = DataGridArenaRuns.SelectedItem as ArenaRun;
-			if(run == null)
+		    if(!(DataGridArenaRuns.SelectedItem is ArenaRun run))
 				return;
 			Core.MainWindow.DeckFlyout.SetDeck(run.Deck, false);
 			Core.MainWindow.FlyoutDeck.Header = run.Deck.Name;

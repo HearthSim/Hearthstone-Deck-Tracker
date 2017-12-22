@@ -79,7 +79,7 @@ namespace HDTTests.BoardDamage
 		[TestMethod]
 		public void OneOpponentHeroAndOnePlayerHero()
 		{
-			var ents = new Dictionary<int, Entity>()
+			var ents = new Dictionary<int, Entity>
 			{
 				{4, _heroA}, {36, _heroB}
 			};
@@ -90,7 +90,7 @@ namespace HDTTests.BoardDamage
 		[TestMethod]
 		public void BothHerosAreMarkedAsNotPlayer()
 		{
-			var ents = new Dictionary<int, Entity>()
+			var ents = new Dictionary<int, Entity>
 			{
 				{4, _heroA}, {36, _heroB}
 			};

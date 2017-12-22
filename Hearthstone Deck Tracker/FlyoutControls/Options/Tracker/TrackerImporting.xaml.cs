@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
@@ -151,7 +151,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		}
 
 		private void TextBoxDungeonTemplate_OnTextChanged(object sender, TextChangedEventArgs e) 
-			=> TextBlockNamePreviewDungeon.Text = Helper.ParseDeckNameTemplate(TextBoxDungeonTemplate.Text, new Deck() {Class = "ClassName"});
+			=> TextBlockNamePreviewDungeon.Text = Helper.ParseDeckNameTemplate(TextBoxDungeonTemplate.Text, new Deck {Class = "ClassName"});
 
 		private void BtnEditTemplate_ClickArena(object sender, RoutedEventArgs e)
 		{
@@ -165,7 +165,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		}
 
 		private void TextBoxArenaTemplate_OnTextChanged(object sender, TextChangedEventArgs e) 
-			=> TextBlockNamePreviewArena.Text = Helper.ParseDeckNameTemplate(TextBoxArenaTemplate.Text, new Deck() {Class = "ClassName"});
+			=> TextBlockNamePreviewArena.Text = Helper.ParseDeckNameTemplate(TextBoxArenaTemplate.Text, new Deck {Class = "ClassName"});
 
 		private void ComboboxArenaImportingBehaviour_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{

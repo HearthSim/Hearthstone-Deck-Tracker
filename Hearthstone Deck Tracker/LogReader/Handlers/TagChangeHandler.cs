@@ -7,7 +7,6 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
-using Hearthstone_Deck_Tracker.Replay;
 
 #endregion
 
@@ -56,8 +55,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				var item = _creationTagActionQueue.Dequeue();
 				item.Item2?.Invoke();
-				Entity entity;
-				if(_creationTagActionQueue.All(x => x.Item1 != item.Item1) && game.Entities.TryGetValue(item.Item1, out entity))
+			    if(_creationTagActionQueue.All(x => x.Item1 != item.Item1) && game.Entities.TryGetValue(item.Item1, out var entity))
 					entity.Info.HasOutstandingTagChanges = false;
 			}
 		}

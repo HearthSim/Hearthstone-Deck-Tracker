@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 
 #endregion

@@ -21,19 +21,21 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				var deck = new Deck {Name = doc.DocumentNode.SelectSingleNode("//h1[@id='deck-title']").InnerText};
 
 				var cardList = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//table[@id='deck-guide']").Attributes["data-deck"].Value);
-				cardList = cardList.Replace("\"", "").Replace("[", "").Replace("]", "").Replace("\\", "");
+				cardList = cardList?.Replace("\"", "").Replace("[", "").Replace("]", "").Replace("\\", "");
 
-				foreach(var cardNode in cardList.Split(',').GroupBy(x => x))
+				if (cardList != null)
 				{
-					var card = Database.GetCardFromId(cardNode.Key);
-					card.Count = cardNode.Count();
-					deck.Cards.Add(card);
+					foreach (var cardNode in cardList.Split(',').GroupBy(x => x))
+					{
+					  var card = Database.GetCardFromId(cardNode.Key);
+					  card.Count = cardNode.Count();
+					  deck.Cards.Add(card);
 
-					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
+					  if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")
 						deck.Class = card.PlayerClass;
+					}
 				}
-
-				return deck;
+			    return deck;
 			}
 			catch (Exception e)
 			{

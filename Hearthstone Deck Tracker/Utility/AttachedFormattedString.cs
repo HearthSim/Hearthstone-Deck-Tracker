@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			var element = XElement.Parse("<w>" + Regex.Replace(value, @"\<(\w+?)\>", x => x.Captures[0].Value.ToLower()) + "</w>");
 			//descendantnodes is the only method that includes the XTexts, but it also includes the XTexts of the children XElements.
 			//so we gotta make sure the parent is the element we created to know these are the values we are after.
-			foreach (var n in element.DescendantNodes().Where(x => x.Parent.Name == "w"))
+			foreach (var n in element.DescendantNodes().Where(x => x.Parent?.Name == "w"))
 			{
 				if (n is XText text)
 				{

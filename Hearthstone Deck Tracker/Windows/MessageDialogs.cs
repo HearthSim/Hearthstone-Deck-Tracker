@@ -86,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var result = await Core.MainWindow.ShowMessageAsync(LocUtil.Get(LocRestartTitle), LocUtil.Get(LocRestartText),
 				AffirmativeAndNegative,
-				new Settings()
+				new Settings
 				{
 					AffirmativeButtonText = LocUtil.Get(LocRestartButtonRestart),
 					NegativeButtonText = LocUtil.Get(LocRestartButtonLater)
@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 							NegativeButtonText = LocUtil.Get(LocSavedFileButtonOpen)
 						});
 			if(result == MessageDialogResult.Negative)
-				Process.Start(Path.GetDirectoryName(fileName));
+				Process.Start(Path.GetDirectoryName(fileName) ?? throw new InvalidOperationException());
 		}
 
 		public static async Task ShowSavedAndUploadedFileMessage(this MainWindow window, string fileName, string url)

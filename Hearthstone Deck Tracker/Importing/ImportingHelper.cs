@@ -66,13 +66,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 				wc.Encoding = Encoding.UTF8;
 				wc.Headers.Add(HttpRequestHeader.ContentType, "application/json");
 
-				var response = "";
-				if(string.IsNullOrWhiteSpace(data))
-					response = await wc.DownloadStringTaskAsync(new Uri(url));
-				else
-					response = await wc.UploadStringTaskAsync(new Uri(url), data);
-
-				return response;
+			    return string.IsNullOrWhiteSpace(data) ? await wc.DownloadStringTaskAsync(new Uri(url)) : await wc.UploadStringTaskAsync(new Uri(url), data);
 			}
 		}
 

@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 
 namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 {
@@ -25,11 +25,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public ProgressIndicatorState ProgressState
 		{
-			get { return (ProgressIndicatorState) GetValue(ProgressStateProperty); }
-			set
-			{
-				SetValue(ProgressStateProperty, value);
-			}
+			get => (ProgressIndicatorState) GetValue(ProgressStateProperty);
+			set => SetValue(ProgressStateProperty, value);
 		}
 	}
 
@@ -45,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public ProgressIndicatorState State
 		{
-			get { return _state; }
+			get => _state;
 			set
 			{
 				if(_state == value)

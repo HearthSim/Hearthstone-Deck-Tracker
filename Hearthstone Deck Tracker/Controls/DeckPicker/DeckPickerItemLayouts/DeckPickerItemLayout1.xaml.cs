@@ -19,8 +19,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts
 
 		private void UseButton_OnPreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
-			var deck = DataContext as Deck;
-			if(deck == null)
+			if(!(DataContext is Deck deck))
 				return;
 			if(deck.Equals(DeckList.Instance.ActiveDeck))
 				return;

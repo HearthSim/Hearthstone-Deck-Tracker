@@ -35,11 +35,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			return $"{Name}{(tags.Any() ? $",{tags}" : "")} {fields} {Timestamp.ToUnixTime()}";
 		}
 
-		public string GetValueString(object value)
-		{
-			if(int.TryParse(value.ToString(), out var intValue))
-				return value.ToString();
-			return $"\"{Escape(value.ToString())}\"";
+		public string GetValueString(object value) {
+		    return int.TryParse(value.ToString(), out var _) ? value.ToString() : $"\"{Escape(value.ToString())}\"";
 		}
 	}
 }

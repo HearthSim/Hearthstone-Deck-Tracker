@@ -1,11 +1,8 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -46,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		{
 			var converted = false;
 
+		    // ReSharper disable once InconsistentNaming
 			var v0_3_21 = new Version(0, 3, 21, 0);
 
 			if(configVersion == null) // Config was created prior to version tracking being introduced (v0.3.20)
