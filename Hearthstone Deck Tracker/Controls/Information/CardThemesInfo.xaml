@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Information.CardThemesInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             mc:Ignorable="d" Unloaded="CardThemesInfo_OnUnloaded"
+             d:DesignHeight="300" d:DesignWidth="400">
+    <DockPanel>
+        <Label Content="Introducing card themes and animations!" FontWeight="SemiBold" DockPanel.Dock="Top" FontSize="18" HorizontalAlignment="Center"/>
+        <Separator DockPanel.Dock="Top"/>
+        <Label Content="Select your preferred theme:" FontSize="14" DockPanel.Dock="Top" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+        <Grid DockPanel.Dock="Top" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <RadioButton Content="Classic" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Checked="ToggleButton_OnChecked"/>
+            <Rectangle Fill="{Binding ClassicCard, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="217" Height="34" Grid.Row="0" Grid.Column="1" Margin="5"/>
+            <RadioButton Content="Dark" IsChecked="True" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Checked="ToggleButton_OnChecked"/>
+            <Rectangle Fill="{Binding DarkCard, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="217" Height="34" Grid.Row="1" Grid.Column="1" Margin="5"/>
+            <RadioButton Content="Frost" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Checked="ToggleButton_OnChecked"/>
+            <Rectangle Fill="{Binding FrostCard, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="217" Height="34" Grid.Row="2" Grid.Column="1" Margin="5"/>
+            <RadioButton Content="Minimal" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Checked="ToggleButton_OnChecked"/>
+            <Rectangle Fill="{Binding MinimalCard, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="217" Height="34" Grid.Row="3" Grid.Column="1" Margin="5"/>
+        </Grid>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+            <CheckBox Content="Rarity colored gems " IsChecked="{Binding RarityGems, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+            <CheckBox Content="Rarity colored frames" Margin="10,0,0,0" IsChecked="{Binding RarityFrames, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        </StackPanel>
+        <Label Content="See it action:" FontWeight="SemiBold" FontSize="14" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+        <TextBlock Text="You can change your selected theme at any time under 'options > tracker > appearance'." DockPanel.Dock="Bottom" Margin="5" FontSize="14" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+        <controls:AnimatedCardList x:Name="AnimatedCardList" HorizontalAlignment="Center"/>
+    </DockPanel>
+</UserControl>

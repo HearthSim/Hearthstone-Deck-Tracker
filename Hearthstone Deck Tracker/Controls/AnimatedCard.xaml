@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.AnimatedCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Storyboard x:Key="StoryboardFadeIn" Duration="0:0:1">
+            <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Height" From="0" To="34" Duration="0:0:0.5"/>
+            <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1"/>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardFadeInNoOpacity" Duration="0:0:1">
+            <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Height" From="0" To="34" Duration="0:0:0.5"/>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardFadeOut" Duration="0:0:0.7">
+            <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.7"/>
+            <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Height" From="34" To="0" Duration="0:0:0.4" BeginTime="0:0:0.3"/>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardFadeOutNoOpacity" Duration="0:0:0.7">
+            <DoubleAnimation Storyboard.TargetName="Grid" Storyboard.TargetProperty="Height" From="34" To="0" Duration="0:0:0.4"/>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardUpdate" Duration="0:0:1">
+            <DoubleAnimation Storyboard.TargetName="RectHighlight" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5"/>
+            <DoubleAnimation Storyboard.TargetName="RectHighlight" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5" BeginTime="0:0:0.5"/>
+        </Storyboard>
+    </UserControl.Resources>
+    <Grid Name="Grid">
+        <local:Card HasTooltip="{Binding Path=WindowCardToolTips, Source={StaticResource ConfigWrapper}}"/>
+        <Rectangle Name="RectHighlight" Fill="{Binding Highlight}" Height="34" Width="217" RenderOptions.BitmapScalingMode="Fant"
+                   Opacity="0" VerticalAlignment="Center" IsHitTestVisible="False" />
+    </Grid>
+</UserControl>

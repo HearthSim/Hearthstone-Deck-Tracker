@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.Constructed.ConstructedCharts"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:metroChart="clr-namespace:De.TorstenMandelkow.MetroChart;assembly=De.TorstenMandelkow.MetroChart"
+             xmlns:compiledStats="clr-namespace:Hearthstone_Deck_Tracker.Stats.CompiledStats"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <GroupBox Header="{lex:Loc Stats_Constructed_Charts_Label_Winrate}">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" PanningMode="HorizontalOnly">
+                    <DockPanel Height="300" MinWidth="300">
+                        <metroChart:RadialGaugeChart Background="Transparent" Margin="0,0,0,-10" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent" ChartLegendVisibility="Collapsed">
+                            <metroChart:RadialGaugeChart.Series>
+                                <metroChart:ChartSeries SeriesTitle="{lex:Loc Stats_Constructed_Charts_ChartTitle_Winrate}" DisplayMember="Name" ValueMember="Value" ItemsSource="{Binding Path=WinrateByCoin, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
+                            </metroChart:RadialGaugeChart.Series>
+                        </metroChart:RadialGaugeChart>
+                    </DockPanel>
+                </ScrollViewer>
+            </GroupBox>
+            <GroupBox Header="{lex:Loc Stats_Constructed_Charts_Label_ByClass}">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" PreviewMouseWheel="ForwardScrollEvent" PanningMode="HorizontalOnly">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <DockPanel Height="300" MinWidth="300" Grid.Column="0">
+                            <TextBlock Text="{lex:Loc Stats_Constructed_Charts_Label_WinrateAs}" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <metroChart:ClusteredColumnChart Background="Transparent" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
+                                <metroChart:ClusteredColumnChart.Series>
+                                    <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=AvgWinratePerClass, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
+                                </metroChart:ClusteredColumnChart.Series>
+                            </metroChart:ClusteredColumnChart>
+                        </DockPanel>
+                        <DockPanel Height="300" MinWidth="300" Grid.Column="1">
+                            <TextBlock Text="{lex:Loc Stats_Constructed_Charts_Label_WinrateAgainst}" Foreground="#FF666666" FontFamily="Segoe UI" FontSize="18" DockPanel.Dock="Top" Margin="20,0,0,0"/>
+                            <metroChart:ClusteredColumnChart Background="Transparent" ChartLegendVisibility="Collapsed" Margin="0,0,0,-30" ChartTitleVisibility="Collapsed" SelectedBrush="Transparent">
+                                <metroChart:ClusteredColumnChart.Series>
+                                    <metroChart:ChartSeries SeriesTitle=" " DisplayMember="Name" ValueMember="Value" BrushMember="Brush"  ItemsSource="{Binding Path=WinrateAgainstClass, Source={x:Static compiledStats:ConstructedStats.Instance}, IsAsync=True}"/>
+                                </metroChart:ClusteredColumnChart.Series>
+                            </metroChart:ClusteredColumnChart>
+                        </DockPanel>
+                    </Grid>
+                </ScrollViewer>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

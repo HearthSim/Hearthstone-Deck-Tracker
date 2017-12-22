@@ -1,0 +1,237 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Windows.MainWindowControls.MainWindowMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="600">
+    <UserControl.DataContext>
+        <local:MainWindowMenuViewModel/>
+    </UserControl.DataContext>
+    <UserControl.Resources>
+        <local:StaticCommands x:Key="StaticCommands"/>
+        <Style TargetType="Rectangle">
+            <Setter Property="Width" Value="16" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="Margin" Value="0,0,-10,0" />
+        </Style>
+        <Style TargetType="Image">
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="Margin" Value="3,0,0,0" />
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant" />
+        </Style>
+    </UserControl.Resources>
+    <Menu>
+        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_New}">
+            <MenuItem.Icon>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{StaticResource appbar_layer_add}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </MenuItem.Icon>
+            <MenuItem.Resources>
+                <!-- NOTE: Designer currently errors on this BasedOn, it is however completely valid. -->
+                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                    <Setter Property="Command" Value="{Binding NewDeckCommand}"/>
+                </Style>
+            </MenuItem.Resources>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Druid}" CommandParameter="Druid">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconDruidRound}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Hunter}" CommandParameter="Hunter">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconHunterRound}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Mage}" CommandParameter="Mage">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconMageRound}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Priest}" CommandParameter="Priest">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconPriestRound}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Paladin}" CommandParameter="Paladin">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconPaladinRound}"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Rogue}" CommandParameter="Rogue">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconRogueRound}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Shaman}" CommandParameter="Shaman">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconShamanRound}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Warlock}" CommandParameter="Warlock">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconWarlockRound}" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Warrior}" CommandParameter="Warrior">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconWarriorRound}" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck}" IsEnabled="{Binding HasSelectedDeck}" SubmenuOpened="Deck_OnSubmenuOpened">
+            <MenuItem.Icon>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{StaticResource appbar_layer}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </MenuItem.Icon>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditDeck}" Command="{Binding EditDeckCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditName}" Command="{Binding RenameDeckNameCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditNotes}" Command="{Binding EditNotesCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_EditTags}" Command="{Binding EditTagsCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_QuickSetTag}" ItemsSource="{Binding DeckTags}">
+                <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Name}" IsChecked="{Binding Selected}" Margin="-24,0,0,0" />
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_MoveToArena}" Command="{Binding MoveToArenaCommand}" Visibility="{Binding MoveToArenaVisibility}"/>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_MoveToContrstucted}" Command="{Binding MoveToConstructedCommand}" Visibility="{Binding MoveToConstructedVisibility}"/>
+            <Separator Visibility="{Binding SeparatorVisibility}"/>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_VersionHistory}" Command="{Binding DeckHistoryCommand}" Visibility="{Binding DeckHistoryVisibility}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_MissingCards}" Command="{Binding MissingCardsCommand}" Visibility="{Binding MissingCardsVisibility}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_UpdateWeb}" Command="{Binding UpdateFromWebCommand}" Visibility="{Binding UpdateFromWebVisibility}" />
+            <MenuItem Header="{Binding SetDeckUrlText}" Command="{Binding SetDeckUrlCommand}" Visibility="{Binding SetDeckUrlVisibility}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_OpenWebsite}" Command="{Binding OpenDeckUrlCommand}" Visibility="{Binding OpenDeckUrlVisibility}" />
+            <Separator />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Archive}" Command="{Binding ArchiveDeckCommand}" Visibility="{Binding ArchiveDeckVisibility}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Unarchive}" Command="{Binding UnarchiveDeckCommand}" Visibility="{Binding UnarchiveDeckVisibility}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_DeleteDeck}" Command="{Binding DeleteDeckCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Clone}">
+                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Clone_EntireDeck}" Command="{Binding CloneDeckCommand}" />
+                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Deck_Clone_Version}" Command="{Binding CloneDeckVersionCommand}" />
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import}">
+            <MenuItem.Icon>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{StaticResource appbar_download}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </MenuItem.Icon>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Web}" Command="{Binding ImportFromWebCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_DeckString}" Command="{Binding ImportFromDeckString}" />
+            <Separator/>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Constructed}" Command="{Binding ImportFromConstructedCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Arena}" Command="{Binding ImportFromArenaCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Brawl}" Command="{Binding ImportFromBrawlCommand}" />
+            <Separator/>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other}">
+                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_File}" Command="{Binding ImportFromFileCommand}" />
+                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_Ids}" Command="{Binding ImportFromIdStringCommand}" />
+                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_Clipboard}" Command="{Binding ImportFromClipboardCommand}" />
+                <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Import_Other_LastGame}" Command="{Binding ImportFromLastGameCommand}" />
+            </MenuItem>
+        </MenuItem>
+        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export}" IsEnabled="{Binding HasSelectedDeck}">
+            <MenuItem.Icon>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{StaticResource appbar_upload}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </MenuItem.Icon>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Hearthstone}" Command="{Binding ExportDeckCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Hearthstone_FromWeb}" Command="{Binding ExportFromWebCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Xml}" Command="{Binding SaveToDiskCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Ids}" Command="{Binding IdsToClipboardCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Clpiboard}" Command="{Binding NamesToClipboardCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Export_Screenshot}" Command="{Binding ScreenshotCommand}" />
+        </MenuItem>
+        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats}">
+            <MenuItem.Icon>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{StaticResource appbar_graph_line}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </MenuItem.Icon>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats_Arena}" Command="{Binding ArenaStatsCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats_Constructed}" Command="{Binding ConstructedStatsCommand}" />
+        </MenuItem>
+        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays}">
+            <MenuItem.Resources>
+                <CollectionViewSource x:Key="LatestReplaysCollection" Source="{Binding LatestReplays}"/>
+            </MenuItem.Resources>
+            <MenuItem.Icon>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{StaticResource appbar_chevron_right}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </MenuItem.Icon>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Latest}">
+                <MenuItem.ItemsSource>
+                    <CompositeCollection>
+                        <CollectionContainer Collection="{Binding Source={StaticResource LatestReplaysCollection}}"/>
+                        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins_Empty}" IsEnabled="False" Visibility="{Binding ReplaysEmptyVisibility}"></MenuItem>
+                    </CompositeCollection>
+                </MenuItem.ItemsSource>
+                <MenuItem.ItemContainerStyle>
+                    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                        <Setter Property="Command" Value="{Binding Source={StaticResource StaticCommands}, Path=OpenReplayCommand}"/>
+                        <Setter Property="CommandParameter" Value="{Binding}"/>
+                    </Style>
+                </MenuItem.ItemContainerStyle>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Stats}" Command="{Binding ReplayFromStatsCommand}" />
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_File}" Command="{Binding ReplayFromFileCommand}" />
+            <MenuItem Command="{Binding HsReplayNetCommand}">
+                <MenuItem.Header>
+                    <Grid Margin="-10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Separator Grid.Column="0"/>
+                        <TextBlock Grid.Column="1" Text="HSREPLAY.NET" IsEnabled="False" Margin="5,0"/>
+                        <Separator Grid.Column="2"/>
+                    </Grid>
+                </MenuItem.Header>
+            </MenuItem>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_ClaimAccount}"
+                Command="{Binding ClaimAccountCommand}" Visibility="{Binding ClaimAccountVisibility}"/>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_MyAccount}"
+                Command="{Binding MyAccountCommand}" Visibility="{Binding MyAccountVisibility}"/>
+        </MenuItem>
+        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins}" SubmenuOpened="Plugins_OnSubmenuOpened">
+            <MenuItem.Resources>
+                <CollectionViewSource x:Key="PluginsCollection" Source="{Binding PluginsMenuItems}"/>
+            </MenuItem.Resources>
+            <MenuItem.Icon>
+                <Rectangle Fill="{DynamicResource TextBrush}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Visual="{StaticResource appbar_puzzle_round}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </MenuItem.Icon>
+            <MenuItem.ItemsSource>
+                <CompositeCollection>
+                    <CollectionContainer Collection="{Binding Source={StaticResource PluginsCollection}}"/>
+                    <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins_Empty}" IsEnabled="False" Visibility="{Binding PluginsEmptyVisibility}"/>
+                </CompositeCollection>
+            </MenuItem.ItemsSource>
+        </MenuItem>
+    </Menu>
+</UserControl>

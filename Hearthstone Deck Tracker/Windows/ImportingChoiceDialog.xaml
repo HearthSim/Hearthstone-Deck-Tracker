@@ -1,0 +1,26 @@
+<dialogs:CustomDialog x:Class="Hearthstone_Deck_Tracker.Windows.ImportingChoiceDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" Title="{lex:Loc ImportingChoiceDialog_Title}" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel>
+        <TextBlock Text="{lex:Loc ImportingChoiceDialog_Label_Description}" Margin="0,35,0,15" FontSize="16"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Width="360" Margin="0,30,0,20" HorizontalAlignment="Right">
+            <Button Name="BtnExport" Height="37" Width="150" Style="{DynamicResource AccentedSquareButtonStyle}" Click="BtnExport_OnClick">
+                <TextBlock Text="{lex:Loc ImportingChoiceDialogg_Button_Export}"/>
+            </Button>
+            <Button Name="BtnSaveLocal" Height="37" Width="90"  Style="{DynamicResource AccentedSquareButtonStyle}" Margin="15,0,0,0"  Click="BtnSaveLocal_OnClick">
+                <TextBlock Text="{lex:Loc ImportingChoiceDialogg_Button_SaveLocal}"/>
+            </Button>
+            <Button Name="BtnCancel" Content="{lex:Loc ImportingChoiceDialog_Button_Cancel}" Height="37" Width="90" Margin="15,0,0,0" Click="BtnCancel_OnClick"/>
+        </StackPanel>
+    </StackPanel>
+</dialogs:CustomDialog>
+

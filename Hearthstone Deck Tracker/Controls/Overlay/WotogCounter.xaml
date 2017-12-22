@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d" Height="100" Width="{Binding IconWidth, RelativeSource={RelativeSource AncestorType=UserControl}}">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#3F3424"/>
+            <Setter Property="FontFamily" Value="/HearthstoneDeckTracker;component/Resources/#Chunkfive"/>
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid Visibility="{Binding JadeVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" Margin="-152,0,236.2,0">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-jade.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding Jade, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,15,24,40"/>
+            <TextBlock Text="{Binding Jade, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,53,24,2"/>
+        </Grid>
+        <Grid Visibility="{Binding CthunVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-cthun.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding Attack, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,15,24,40"/>
+            <TextBlock Text="{Binding Health, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,53,24,2"/>
+        </Grid>
+        <Grid Visibility="{Binding SpellsVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-spells.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding Spells, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,34,23,21"/>
+        </Grid>
+        <Grid Visibility="{Binding FullVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-cthun-spells.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding Attack, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,15,104,40" />
+            <TextBlock Text="{Binding Health, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,53,104,2" />
+            <TextBlock Text="{Binding Spells, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="158,34,18,21" />
+        </Grid>
+    </Grid>
+</UserControl>

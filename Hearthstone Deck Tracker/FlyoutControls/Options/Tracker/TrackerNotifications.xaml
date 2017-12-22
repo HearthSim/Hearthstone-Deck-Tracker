@@ -1,0 +1,47 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker.TrackerNotifications"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="300">
+    <StackPanel>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Notifications_Label_GameResult}">
+            <StackPanel>
+                <CheckBox Name="CheckBoxShowNotifications" Content="{lex:Loc Options_Tracker_Notifications_Label_ShowNotifications}"
+                          Checked="CheckBoxShowNotifications_OnChecked"
+                          Unchecked="CheckBoxShowNotifications_OnUnchecked" />
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0"
+                            IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxShowNotifications}">
+                    <TextBlock Text="{lex:Loc Options_Tracker_Notifications_Label_Duration}" VerticalAlignment="Center" />
+                    <TextBox x:Name="TextboxTimerAlert"
+                             HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
+                             Margin="5,0" TextWrapping="Wrap" Text="4" VerticalAlignment="Top"
+                             Width="40" TextChanged="TextboxTimerAlert_TextChanged"
+                             PreviewTextInput="TextboxTimerAlert_PreviewTextInput" />
+                    <TextBlock Text="{lex:Loc Options_Tracker_Notifications_Label_Duration2}" VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <CheckBox x:Name="CheckboxArenaRewardDialog"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxArenaRewardDialog_Checked"
+                  Unchecked="CheckboxArenaRewardDialog_Unchecked">
+                <TextBlock Text="{lex:Loc Options_Tracker_Notifications_Label_ArenaReward}" TextWrapping="Wrap"/>
+            </CheckBox>
+        <CheckBox x:Name="CheckboxNoteDialog"
+                  Content="{lex:Loc Options_Tracker_Notifications_Label_NoteDialog}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxNoteDialog_Checked"
+                  Unchecked="CheckboxNoteDialog_Unchecked" />
+        <CheckBox x:Name="CheckboxNoteDialogDelayed"
+                  Content="{lex:Loc Options_Tracker_Notifications_Label_NoteDialog_WaitMenu}"
+                  HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxNoteDialogDelay_Checked"
+                  Unchecked="CheckboxNoteDialogDelay_Unchecked" />
+    </StackPanel>
+</UserControl>

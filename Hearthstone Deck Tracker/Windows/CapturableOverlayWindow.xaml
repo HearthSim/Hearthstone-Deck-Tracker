@@ -1,0 +1,17 @@
+﻿<Window x:Class="Hearthstone_Deck_Tracker.Windows.CapturableOverlayWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" Background="{Binding BackgroundColor}"
+        Title="HDT - Capturable Overlay" WindowStyle="None"
+        StateChanged="CapturableOverlayWindow_OnStateChanged"
+        Icon="{StaticResource AppIcon}" ResizeMode="NoResize"
+        Activated="CapturableOverlayWindow_OnActivated" WindowState="Minimized"
+        Topmost="False" d:DesignWidth="400" d:DesignHeight="300">
+    <Grid Name="ContentGrid" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="{Binding ContentVisibility}">
+        <Grid.Background>
+            <VisualBrush AutoLayoutContent="True" TileMode="None" Stretch="None" AlignmentX="Left" AlignmentY="Top" Visual="{Binding Visual}"/>
+        </Grid.Background>
+    </Grid>
+</Window>

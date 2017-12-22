@@ -1,0 +1,123 @@
+﻿<dialogs:CustomDialog x:Class="Hearthstone_Deck_Tracker.FlyoutControls.AddGameDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" Title="{lex:Loc AddGameDialog_Title_AddNew}" Height="525" d:DesignWidth="450">
+    <dialogs:CustomDialog.Resources>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </dialogs:CustomDialog.Resources>
+    <StackPanel Margin="0,15,0,0">
+        <StackPanel HorizontalAlignment="Center" Width="300">
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Result}" Width="90"/>
+                <ComboBox Name="ComboBoxResult" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Vs}" Width="90"/>
+                <ComboBox Name="ComboBoxOpponent" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Mode}" Width="90"/>
+                <ComboBox Name="ComboBoxMode" SelectedIndex="0" SelectionChanged="ComboBoxMode_OnSelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0" Name="PanelFormat">
+                <Label Content="{lex:Loc AddGameDialog_Label_Format}" Width="90"/>
+                <ComboBox Name="ComboBoxFormat" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Region}" Width="90"/>
+                <ComboBox Name="ComboBoxRegion" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0" Name="PanelRank">
+                <Label Content="{lex:Loc AddGameDialog_Label_Rank}" Width="90"/>
+                <TextBox Name="TextBoxRank" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0" Name="PanelLegendRank">
+                <Label Content="{lex:Loc AddGameDialog_Label_LegendRank}" Width="90"/>
+                <TextBox Name="TextBoxLegendRank" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Coin}" Width="90"/>
+                <ComboBox Name="ComboBoxCoin" SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Conceded}" Width="90"/>
+                <ComboBox Name="ComboBoxConceded" SelectedIndex="1">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Turns}" Width="90"/>
+                <TextBox Name="TextBoxTurns" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Duration}" Width="90"/>
+                <TextBox Name="TextBoxDuration" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Note}" Width="90"/>
+                <TextBox Name="TextBoxNote" />
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Opponent}" Width="90"/>
+                <TextBox Name="TextBoxOppName" />
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="{lex:Loc AddGameDialog_Label_Player}" Width="90"/>
+                <TextBox Name="TextBoxPlayerName" />
+            </DockPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,0">
+            <Button Name="BtnSave"  Content="{lex:Loc AddGameDialog_Button_AddGame}" MinWidth="110" Style="{StaticResource AccentedSquareButtonStyle}" Click="BtnSave_OnClick"/>
+            <Button Name="BtnCancel" Content="{lex:Loc AddGameDialog_Button_Cancel}" Width="110" Margin="20,0,0,0" Click="BtnCancel_OnClick"/>
+        </StackPanel>
+    </StackPanel>
+</dialogs:CustomDialog>

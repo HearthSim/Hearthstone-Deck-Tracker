@@ -1,0 +1,54 @@
+<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.CrashDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:LocalizeDictionary.DesignCulture="en"
+        lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+        lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+        mc:Ignorable="d" BorderBrush="{DynamicResource AccentColorBrush}"
+        Title="{lex:Loc CrashDialog_Title}" Height="350" Width="600">
+    <DockPanel Margin="5">
+        <Label Content="{lex:Loc CrashDialog_Label_Crashed}" FontWeight="SemiBold" DockPanel.Dock="Top"/>
+        <DockPanel DockPanel.Dock="Top">
+            <DockPanel.Resources>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+            </DockPanel.Resources>
+            <Label Content="{lex:Loc CrashDialog_Label_Error}" DockPanel.Dock="Left"/>
+            <Button Name="ButtonShowStacktrace" Content="{lex:Loc CrashDialog_Button_StackTrace}" Width="130" DockPanel.Dock="Right" Margin="5,0,0,0" Click="ButtonShowStacktrace_OnClick" />
+            <TextBlock Text="{Binding ExceptionMessage, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}, Mode=OneWay}" TextTrimming="WordEllipsis" VerticalAlignment="Center"/>
+        </DockPanel>
+        <TextBox Name="TextBoxStackTrace" DockPanel.Dock="Top" Height="0" IsReadOnly="True" Margin="0,5,0,0" Visibility="Collapsed"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                 Text="{Binding FullExceptionText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}, Mode=OneWay}">
+            <TextBox.Resources>
+                <Storyboard x:Key="ShowStackTraceStoryboard" TargetName="TextBoxStackTrace">
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                    <DoubleAnimation To="120" Duration="0:0:0.3" Storyboard.TargetProperty="Height"/>
+                </Storyboard>
+                <Storyboard x:Key="HideStackTraceStoryboard">
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="TextBoxStackTrace">
+                        <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}"/>
+                    </ObjectAnimationUsingKeyFrames>
+                    <DoubleAnimation To="0" Duration="0:0:0.3" Storyboard.TargetProperty="Height" Storyboard.TargetName="TextBoxStackTrace"/>
+                </Storyboard>
+            </TextBox.Resources>
+        </TextBox>
+        <TextBlock Text="{lex:Loc CrashDialog_Text}" 
+                   Margin="5,5,0,0" TextWrapping="Wrap"  DockPanel.Dock="Top"/>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0" >
+            <Button Name="ButtonSend" Width="120" Click="ButtonSend_Click" Style="{StaticResource AccentedSquareButtonStyle}">
+                <TextBlock Text="{lex:Loc CrashDialog_Button_Send}"/>
+            </Button>
+            <Button Name="ButtonClose" Width="120" Margin="5,0,0,0" Click="ButtonClose_Click" Style="{StaticResource SquareButtonStyle}">
+                <TextBlock Text="{lex:Loc CrashDialog_Button_Close}"/>
+            </Button>
+        </StackPanel>
+        <TextBox Name="TextBoxDescription" controls:TextBoxHelper.Watermark="{lex:Loc CrashDialog_TextBox_Info_Watermark}" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,5,0,0"/>
+    </DockPanel>
+</controls:MetroWindow>
+

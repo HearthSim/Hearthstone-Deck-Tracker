@@ -1,0 +1,128 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming.StreamingTwitchExtension"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
+    </UserControl.Resources>
+    <StackPanel>
+        <GroupBox Header="{lex:Loc Options_Streaming_TwitchExt_Label_Setup}">
+            <StackPanel>
+                <DockPanel>
+                    <Label Content="{lex:Loc Options_Streaming_TwitchExt_Label_Step1}" FontWeight="SemiBold" DockPanel.Dock="Left"/>
+                    <Button Content="{lex:Loc Options_Streaming_TwitchExt_Step1_Link}" Command="{Binding AuthenticateCommand}"/>
+                </DockPanel>
+                <TextBlock Margin="5,5,0,0" Visibility="{Binding OAuthSuccess, Converter={StaticResource BoolToVisibility}}">
+                    <Run Foreground="Green" Text="✔️"/>
+                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step1_Success}"/>
+                    <Run Text="{Binding HSReplayUserName}"/>
+                </TextBlock>
+                <TextBlock Margin="5,5,0,0" Visibility="{Binding OAuthError, Converter={StaticResource BoolToVisibility}}" TextWrapping="Wrap">
+                    <Run Foreground="Red" Text="✖"/>
+                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step1_Error}"/>
+                </TextBlock>
+                <DockPanel Margin="0,10,0,0">
+                    <Label Content="{lex:Loc Options_Streaming_TwitchExt_Label_Step2}" FontWeight="SemiBold" DockPanel.Dock="Left"/>
+                    <Button Content="{lex:Loc Options_Streaming_TwitchExt_Step2_Link}" Command="{Binding LinkTwitchAccountCommand}"/>
+                </DockPanel>
+                <StackPanel Visibility="{Binding OAuthSuccess, Converter={StaticResource BoolToVisibility}}" Orientation="Horizontal" Margin="0,5,0,0">
+                    <StackPanel Visibility="{Binding TwitchAccountLinked, Converter={StaticResource BoolToVisibility}}" Orientation="Horizontal">
+                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center">
+                            <Run Foreground="Green" Text="✔️"/>
+                            <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step2_Success}"/>
+                        </TextBlock>
+                        <TextBlock Text="{Binding SelectedTwitchUser.Username}" Visibility="{Binding MultipleTwitchAccounts, Converter={StaticResource InverseBoolToVisibility}}" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                        <ComboBox Margin="5,0,0,0" SelectionChanged="TwitchAccountComboBox_OnSelectionChanged" SelectedItem="{Binding SelectedTwitchUser}" ItemsSource="{Binding AvailableTwitchAccounts}" Visibility="{Binding MultipleTwitchAccounts, Converter={StaticResource BoolToVisibility}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Username}"></TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Visibility="{Binding TwitchAccountLinked, Converter={StaticResource InverseBoolToVisibility}}" Orientation="Horizontal">
+                        <TextBlock Margin="5,0,0,0" VerticalAlignment="Center">
+                            <Run Foreground="Red" Text="✖"/>
+                            <Run Text="{lex:Loc Options_Streaming_TwitchExt_Step2_Error}"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <Button Style="{DynamicResource MetroCircleButtonStyle}" Width="26" Height="26" Margin="0,-5,-5,-5" Command="{Binding RefreshTwitchAccountsCommand}">
+                        <Rectangle Width="10" Height="12">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{DynamicResource appbar_refresh}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Button>
+                </StackPanel>
+                <DockPanel Margin="0,10,0,0">
+                    <Label Content="{lex:Loc Options_Streaming_TwitchExt_Label_Step3}" FontWeight="SemiBold" DockPanel.Dock="Left"/>
+                    <Button Content="{lex:Loc Options_Streaming_TwitchExt_Step3_Link}" Command="{Binding InstallTwitchExtensionCommand}"/>
+                </DockPanel>
+                <TextBlock Margin="0,10,0,0">
+                    <Hyperlink Command="{Binding SetupGuideCommand}">
+                        <Run Text="{lex:Loc Options_Streaming_TwitchExt_SetupGuide_Link}"/>
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+        </GroupBox>
+        <CheckBox Margin="5,15,0,0" IsEnabled="{Binding SetupComplete}" IsChecked="{Binding TwitchExtensionEnabled}" Content="{lex:Loc Options_Streaming_TwitchExt_CheckBox_Enable}"/>
+        <GroupBox Header="{lex:Loc Options_Streaming_TwitchExt_Label_Status}">
+            <UniformGrid Columns="2">
+                <UniformGrid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="Label">
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                    </Style>
+                </UniformGrid.Resources>
+                <Label Content="{lex:Loc Options_Streaming_TwitchExt_Status_Label_Enabled}"/>
+                <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchExtensionEnabled, Converter={StaticResource BoolToVisibility}}">
+                    <Run Foreground="Green" Text="✔️"/>
+                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Enabled_Success}"/>
+                </TextBlock>
+                <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchExtensionEnabled, Converter={StaticResource InverseBoolToVisibility}}">
+                    <Run Foreground="Red" Text="✖"/>
+                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Enabled_Error}"/>
+                </TextBlock>
+                <Label Content="{lex:Loc Options_Streaming_TwitchExt_Status_Label_Setup}"/>
+                <TextBlock Margin="5,0,0,0" Visibility="{Binding SetupComplete, Converter={StaticResource BoolToVisibility}}">
+                    <Run Foreground="Green" Text="✔️"/>
+                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Setup_Success}"/>
+                </TextBlock>
+                <TextBlock Margin="5,0,0,0" Visibility="{Binding SetupComplete, Converter={StaticResource InverseBoolToVisibility}}">
+                    <Run Foreground="Red" Text="✖"/>
+                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Setup_Error}"/>
+                </TextBlock>
+                <Label Content="{lex:Loc Options_Streaming_TwitchExt_Status_Label_Stream}"/>
+                <StackPanel Visibility="{Binding TwitchAccountLinked, Converter={StaticResource BoolToVisibility}}" VerticalAlignment="Center">
+                    <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchStreamLive, Converter={StaticResource BoolToVisibility}}">
+                        <Run Foreground="Green" Text="✔️"/>
+                        <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Stream_Success}"/>
+                        (<Run Text="{Binding SelectedTwitchUser.Username}"/>)
+                    </TextBlock>
+                    <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchStreamLive, Converter={StaticResource InverseBoolToVisibility}}">
+                        <Run Foreground="Red" Text="✖"/>
+                        <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Stream_Error}"/>
+                        (<Run Text="{Binding SelectedTwitchUser.Username}"/>)
+                    </TextBlock>
+                </StackPanel>
+                <TextBlock Margin="5,0,0,0" Visibility="{Binding TwitchAccountLinked, Converter={StaticResource InverseBoolToVisibility}}">
+                    <Run Foreground="Red" Text="✖"/>
+                    <Run Text="{lex:Loc Options_Streaming_TwitchExt_Status_Stream_Not_Connected}"/>
+                </TextBlock>
+            </UniformGrid>
+            
+        </GroupBox>
+    </StackPanel>
+</UserControl>

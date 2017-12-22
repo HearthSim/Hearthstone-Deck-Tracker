@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Stats.ArenaRewards"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="300">
+    <UserControl.Resources>
+        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+    </UserControl.Resources>
+    <StackPanel>
+        <UniformGrid Rows="1">
+            <GroupBox Header="{lex:Loc ArenaRewards_Label_Gold}">
+                <TextBox Name="TextBoxGold" ToolTip="{lex:Loc ArenaRewards_Label_Gold_Tooltip}" TextChanged="TextBoxGold_OnTextChanged"
+                    GotKeyboardFocus="TextBox_OnGotKeyboardFocus" GotMouseCapture="TextBox_OnGotMouseCapture"/>
+            </GroupBox>
+            <GroupBox Header="{lex:Loc ArenaRewards_Label_Dust}">
+                <TextBox Name="TextBoxDust" TextChanged="TextBoxDust_OnTextChanged"
+                    GotKeyboardFocus="TextBox_OnGotKeyboardFocus" GotMouseCapture="TextBox_OnGotMouseCapture"/>
+            </GroupBox>
+        </UniformGrid>
+        <GroupBox Header="{lex:Loc ArenaRewards_Label_Packs}">
+            <StackPanel>
+            <DockPanel>
+                <Label Content="#1:"/>
+                    <ComboBox Name="ComboBoxPack1" SelectedIndex="1" Margin="3,0,0,0" DockPanel.Dock="Top" SelectionChanged="ComboBoxPack1_OnSelectionChanged" ItemsSource="{Binding Source={enums:EnumValues {x:Type enums:ArenaRewardPacks}}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0">
+                <Label Content="#2:"/>
+                    <ComboBox Name="ComboBoxPack2" SelectedIndex="0" Margin="3,0,0,0" SelectionChanged="ComboBoxPack2_OnSelectionChanged" ItemsSource="{Binding Source={enums:EnumValues {x:Type enums:ArenaRewardPacks}}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="{lex:Loc ArenaRewards_Label_Cards}">
+            <StackPanel>
+                <DockPanel Margin="0,2,0,0" KeyboardNavigation.TabNavigation="Local">
+                    <Label Content="#1:" DockPanel.Dock="Left"/>
+                    <CheckBox Name="CheckBoxGolden1" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" TabIndex="2" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard1" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TabIndex="1" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                </DockPanel>
+                <DockPanel Margin="0,2,0,0" KeyboardNavigation.TabNavigation="Local">
+                    <Label Content="#2:" DockPanel.Dock="Left"/>
+                    <CheckBox Name="CheckBoxGolden2" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" TabIndex="2" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard2" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TabIndex="1" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                </DockPanel>
+                <DockPanel Margin="0,2,0,0" KeyboardNavigation.TabNavigation="Local">
+                    <Label Content="#3:" DockPanel.Dock="Left"/>
+                    <CheckBox Name="CheckBoxGolden3" Content="{lex:Loc ArenaRewards_Card_Label_Golden}" Margin="5,0,2,0" DockPanel.Dock="Right" TabIndex="2" Checked="CheckBoxGolden_OnChecked" Unchecked="CheckBoxGolden_OnUnchecked"/>
+                    <TextBox Name="TextBoxCard3" controls:TextBoxHelper.Watermark="{lex:Loc ArenaRewards_Card_Text_Watermark}" Margin="2,0,0,0" TabIndex="1" TextChanged="CardNamePrediction" PreviewKeyDown="TextBoxCard_OnPreviewKeyDown"/>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+        <UniformGrid>
+            <GroupBox Header="{lex:Loc ArenaRewards_Label_PaymentMethod}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <RadioButton Name="RadioButtonPaymentGold" Content="{lex:Loc ArenaRewards_Payment_Label_Gold}" IsChecked="True" Checked="RadioButtonPaymentGold_OnChecked"/>
+                    <RadioButton Name="RadioButtonPaymentMoney" Content="{lex:Loc ArenaRewards_Payment_Label_Money}" Margin="10,0,0,0" Checked="RadioButtonPaymentMoney_OnChecked"/>
+                </StackPanel>
+            </GroupBox>
+            <StackPanel VerticalAlignment="Center">
+                <CheckBox Name="CheckBoxShowAutomatically" Content="{lex:Loc ArenaRewards_Label_ShowAuto}" HorizontalAlignment="Center" IsChecked="{Binding Path=ArenaRewardDialog, Source={StaticResource ConfigWrapper}}"/>
+                <Button Style="{DynamicResource AccentedSquareButtonStyle}" Margin="5,5,5,0" Content="{lex:Loc ArenaRewards_Label_Save}" Click="ButtonSave_OnClick"/>
+            </StackPanel>
+            <Grid/>
+        </UniformGrid>
+    </StackPanel>
+</UserControl>

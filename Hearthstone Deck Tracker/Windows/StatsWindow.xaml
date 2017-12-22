@@ -1,0 +1,45 @@
+<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.StatsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:LocalizeDictionary.DesignCulture="en"
+        lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+        lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+        Icon="{StaticResource AppIcon}"
+        BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
+        SaveWindowPosition="True"
+        Title="{lex:Loc StatsWindow_Title}" Height="820" Width="1150">
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl Margin="{Binding TitleBarMargin, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
+            <controls:Flyout x:Name="FlyoutDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="{lex:Loc StatsWindow_Flyout_Label_OpponentDeck}">
+                <flyoutControls:DeckPanel x:Name="DeckFlyout" />
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Rectangle Margin="2" Opacity="0.7">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource hdticon}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Click="BtnSwitchToMainWindow_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_arrow_right_left_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:Loc StatsWindow_Button_MoveToMainWindow}" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <ContentControl Name="ContentControl"/>
+</controls:MetroWindow>

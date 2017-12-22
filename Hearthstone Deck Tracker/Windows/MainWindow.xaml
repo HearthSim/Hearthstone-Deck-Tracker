@@ -1,0 +1,292 @@
+<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+                      xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+                      xmlns:flyoutControls="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls"
+                      xmlns:error="clr-namespace:Hearthstone_Deck_Tracker.Controls.Error"
+                      xmlns:deckPicker="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckPicker"
+                      xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
+                      xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility.Updating"
+                      xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      xmlns:deckScreenshot="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot"
+                      xmlns:deckExport="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckExport"
+                      xmlns:mainWindowControls="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
+                      xmlns:deckHistory="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory"
+                      xmlns:deckEditor="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor"
+                      lex:LocalizeDictionary.DesignCulture="en"
+                      lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+                      lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+                      Title="Hearthstone Deck Tracker" Height="603" Width="1100"
+                      MinHeight="584" MinWidth="1100"
+                      Closing="Window_Closing"
+                      Icon="{StaticResource AppIcon}"
+                      StateChanged="MetroWindow_StateChanged" Loaded="MetroWindow_Loaded"
+                      PreviewKeyDown="MainWindow_OnPreviewKeyDown"
+                      Activated="MainWindow_OnActivated"
+                      Deactivated="MainWindow_OnDeactivated"
+                      BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" SizeChanged="MetroWindow_SizeChanged">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Rectangle Margin="2" Opacity="0.7">
+                <Rectangle.Fill>
+                    <VisualBrush Visual="{StaticResource hdticon}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </DataTemplate>
+    </controls:MetroWindow.IconTemplate>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Click="BtnErrors_OnClick" Visibility="{Binding ErrorIconVisibility, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_warning_circle}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{Binding ErrorCount, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}" />
+                </StackPanel>
+            </Button>
+            <Button Click="BtnOptions_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_settings}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:LocTextLower MainWindow_TitleBar_Options}" />
+                </StackPanel>
+            </Button>
+            <Button Click="BtnDiscord_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="14" Height="16" Margin="0,2,0,0">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_discord}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="discord" />
+                </StackPanel>
+            </Button>
+            <Button Click="BtnHelp_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="12" Height="14">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_question}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:LocTextLower MainWindow_TitleBar_Help}" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl Margin="{Binding TitleBarMargin, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+            <controls:Flyout x:Name="FlyoutWarnings" Position="Bottom" Panel.ZIndex="102" Width="auto" Height="auto">
+                <controls:Flyout.HeaderTemplate>
+                    <DataTemplate/>
+                </controls:Flyout.HeaderTemplate>
+                <flyoutControls:Warning x:Name="WarningFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutOptions" Position="Left" Panel.ZIndex="102" Header="{lex:Loc MainWindow_Flyout_Options_Header}"
+                         Width="600">
+                <flyoutControls:OptionsMain x:Name="Options"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHelp" Position="Left" Panel.ZIndex="102" Header="{lex:Loc MainWindow_Flyout_Help_Header}"
+                         Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <local:Help x:Name="Help" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeck" Position="Left" Panel.ZIndex="102" Width="250" Header="{lex:Loc MainWindow_Flyout_OpponentDeck_Header}">
+                <flyoutControls:DeckPanel x:Name="DeckFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutSortFilter" Header="{lex:Loc MainWindow_Flyout_SortFilter_Header}" Position="Right" Width="245" Height="auto" Panel.ZIndex="100">
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="SortFilterDecksFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutNotes" Header="{lex:Loc MainWindow_Flyout_Notes_Header}" Position="Right" Width="255" Height="auto"
+                         Panel.ZIndex="100">
+                <local:DeckNotes Width="auto" Height="auto" x:Name="DeckNotesEditor" Margin="3,0,0,0" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutMyDecksSetTags" Header="{lex:Loc MainWindow_Flyout_SetTags_Header}" Position="Right" Width="255"
+                         Height="auto" Panel.ZIndex="100">
+                <local:SortFilterDecks Width="auto" Height="auto" x:Name="TagControlEdit" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutErrors" Position="Top" Header="{lex:Loc MainWindow_Flyout_Errors_Header}">
+                <error:ErrorList DataContext="{Binding Errors, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}" VerticalAlignment="Center" MaxHeight="400"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutUpdateNotes" Header="{lex:Loc MainWindow_Flyout_UpdateNotes_Header}" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <flyoutControls:UpdateNotes x:Name="UpdateNotesControl"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutHsReplayNote" CloseButtonVisibility="Collapsed" Position="Left" Panel.ZIndex="0" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <controls:Flyout.HeaderTemplate>
+                    <DataTemplate/>
+                </controls:Flyout.HeaderTemplate>
+                <flyoutControls:HsReplayInfo x:Name="HsReplayInfoFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckImporting" Header="{lex:Loc MainWindow_Flyout_DeckImporting_Header}" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <controls1:DeckImportingControl x:Name="DeckImportingFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckEditor" Header="{lex:Loc MainWindow_Flyout_DeckEditor_Header}" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <deckEditor:DeckEditorView x:Name="DeckEditorFlyout" />
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckScreenshot" Header="{lex:Loc MainWindow_Flyout_DeckScreenshot_Header}" Position="Right" Panel.ZIndex="1" Width="300">
+                <deckScreenshot:DeckScreenshotView x:Name="DeckScreenshotFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckExport" Header="{lex:Loc MainWindow_Flyout_DeckExport_Header}" Position="Right" Panel.ZIndex="1" Width="550">
+                <deckExport:DeckExportView x:Name="DeckExportFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutDeckHistory" Header="{lex:Loc MainWindow_Flyout_VersionHistory_Header}" Position="Right" Panel.ZIndex="1" Width="245">
+                <deckHistory:DeckHistoryView x:Name="DeckHistoryFlyout"/>
+            </controls:Flyout>
+            <controls:Flyout x:Name="FlyoutStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
+                <controls:Flyout.HeaderTemplate>
+                    <DataTemplate>
+                        <DockPanel Margin="10,13,10,8">
+                            <Button Click="ButtonCloseStatsFlyout_OnClick" DockPanel.Dock="Right" Width="40" Height="40" VerticalAlignment="Center" Style="{DynamicResource MetroCircleButtonStyle}">
+                                <Rectangle Width="20" Height="15">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource appbar_arrow_left_white}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Button>
+                            <Button Click="ButtonSwitchStatsToNewWindow_OnClick" BorderBrush="Transparent" Background="Transparent" VerticalAlignment="Center" Opacity="0.8" DockPanel.Dock="Left">
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Width="16" Height="16" Margin="0,0,10,0">
+                                        <Rectangle.Fill>
+                                            <VisualBrush Visual="{StaticResource appbar_arrow_right_left_white}" />
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <TextBlock Text="{lex:Loc MainWindow_Flyout_Stats_Move}" FontWeight="Normal" />
+                                </StackPanel>
+                            </Button>
+                            <TextBlock Text="{lex:Loc MainWindow_Flyout_Stats_Header}" Foreground="White" Margin="15,0" FontSize="{StaticResource FlyoutHeaderFontSize}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                        </DockPanel>
+                    </DataTemplate>
+                </controls:Flyout.HeaderTemplate>
+                <ContentControl Name="StatsFlyoutContentControl"/>
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+    <DockPanel>
+        <StatusBar Name="StatusBarDev" DockPanel.Dock="Bottom" Visibility="Collapsed">
+            <StatusBarItem Margin="2,0,0,0">
+                <TextBlock FontSize="14">
+                    <Run FontWeight="SemiBold" Text="Development build (unstable) - join"/>
+                    <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkDevDiscord_OnClick">
+                        <Run Text="#hdt on the dev discord"/>
+                    </Hyperlink>
+                    <Run FontWeight="SemiBold" Text="for feedback/issues"/>
+                </TextBlock>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <CheckBox Foreground="White" Content="check for dev updates" FlowDirection="RightToLeft" 
+                    IsChecked="{Binding CheckForDevUpdates, Source={StaticResource ConfigWrapper}}" />
+            </StatusBarItem>
+        </StatusBar>
+        <StatusBar Name="StatusBarUpdate" DockPanel.Dock="Top" Margin="0,1,0,0" Visibility="{Binding Visibility, Source={x:Static utility:Updater.StatusBar}}">
+            <StatusBarItem Margin="10,0,0,0" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" FontSize="14">
+                        <Run FontWeight="SemiBold" Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_NewUpdateAvailable}"/>
+                        <Run FontWeight="SemiBold">-</Run>
+                        <Hyperlink Foreground="White" FontWeight="Bold" Click="HyperlinkUpdateNow_OnClick">
+                            <Run Text="{lex:LocTextUpper MainWindow_StatusBarUpdate_ClickToUpdate}"/>
+                        </Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+            </StatusBarItem>
+        </StatusBar>
+        <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top" Height="26" Margin="0,1,0,0" Visibility="Collapsed" />
+        <mainWindowControls:MainWindowMenuView x:Name="MainWindowMenu" DockPanel.Dock="Top"/>
+        <Separator DockPanel.Dock="Top" Panel.ZIndex="2" Margin="0,-1,0,0"/>
+        <DockPanel Margin="5">
+            <DockPanel Width="236" DockPanel.Dock="Right" Margin="5,0,0,0">
+                <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="0,0,0,5" Style="{StaticResource AccentedSquareButtonStyle}" DockPanel.Dock="Top">
+                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="{lex:LocTextUpper MainWindow_Button_StartHearthstone}" />
+                </Button>
+                <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Visibility="Collapsed" Margin="0,0,0,5" DockPanel.Dock="Top">
+                    <DockPanel>
+                        <TextBlock Text="{lex:LocTextUpper MainWindow_Label_SelectedVersion}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        <ComboBox Name="ComboBoxDeckVersion" SelectionChanged="ComboBoxDeckVersion_OnSelectionChanged" Margin="5,0,0,0">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding ShortVersionString}" FontWeight="SemiBold"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </DockPanel>
+                </Border>
+                <local:ManaCurve x:Name="ManaCurveMyDecks" Height="150" Margin="0,5,0,0" DockPanel.Dock="Bottom"/>
+                <ListView x:Name="ListViewDeck" Background="#696969"
+                                    Foreground="White" FontWeight="Bold" BorderThickness="1"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                    ScrollViewer.CanContentScroll="False" FontFamily="Arial"
+                                    HorizontalAlignment="Center" Width="236" Height="auto">
+                    <ListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Margin" Value="-4,-3,-3,0"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="BorderBrush" Value="Blue" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Resources>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <controls1:Card/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </DockPanel>
+            <DockPanel Name="MyGamesPanel" Width="380" DockPanel.Dock="Right" Margin="5,0,0,0">
+                <GroupBox x:Name="GroupBoxHsReplayDeckInfo" Header="{lex:LocTextUpper MainWindow_Header_GlobalDeckStatistics}" DockPanel.Dock="Top" Margin="0,0,0,5">
+                    <mainWindowControls:HsReplayDeckInfoView x:Name="HsReplayDeckInfo"/>
+                </GroupBox>
+                <GroupBox Margin="0,0,0,0" DockPanel.Dock="Top">
+                    <GroupBox.Header>
+                        <Grid>
+                            <TextBlock Text="{lex:LocTextUpper MainWindow_Header_MyGames}" Foreground="White"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" MouseDown="MyGamesFilters_OnClick">
+                                <StackPanel.Style>
+                                    <Style>
+                                        <Setter Property="StackPanel.Opacity" Value="0.7"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="StackPanel.IsMouseOver" Value="True">
+                                                <Setter Property="StackPanel.Opacity" Value="0.9"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <TextBlock Text="{lex:LocTextUpper MainWindow_MyGames_HasActiveFilters}" Foreground="White" DockPanel.Dock="Right" Margin="8,0" Opacity="1"
+                                    Visibility="{Binding ActiveFiltersWarningVisibility, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}"/>
+                                <Rectangle Width="16" Height="16" DockPanel.Dock="Right" Opacity="0.8">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Visual="{StaticResource appbar_settings}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox.Header>
+                    <mainWindowControls:DeckChartsView x:Name="DeckCharts" DockPanel.Dock="Top"/>
+                </GroupBox>
+            </DockPanel>
+            <Grid>
+                <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
+                <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray" 
+                       FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
+            </Grid>
+        </DockPanel>
+    </DockPanel>
+</controls:MetroWindow>

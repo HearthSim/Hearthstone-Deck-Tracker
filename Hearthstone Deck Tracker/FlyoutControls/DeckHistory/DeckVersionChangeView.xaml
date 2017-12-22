@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory.DeckVersionChangeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="{Binding Header}"  FontSize="12" VerticalAlignment="Center" TextAlignment="Center" FontWeight="Medium"/>
+        <ListView ItemsSource="{Binding Cards}" Foreground="White" FontWeight="Bold" BorderThickness="0"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            ScrollViewer.CanContentScroll="False" FontFamily="Arial" HorizontalAlignment="Stretch">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="-4,-3,-3,0"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="BorderBrush" Value="Blue" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <controls1:Card/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
+</UserControl>

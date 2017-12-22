@@ -1,0 +1,23 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             x:Class="Hearthstone_Deck_Tracker.Controls.CardMarker"
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="34" d:DesignWidth="36">
+    <Canvas LayoutTransform="{Binding ScaleTransform}">
+        <Canvas Width="32" Height="32">
+            <Canvas.Background>
+               <ImageBrush ImageSource="/HearthstoneDeckTracker;component/Images/card-marker.png"/>
+            </Canvas.Background>
+            <hearthstoneDeckTracker:HearthstoneTextBlock FontSize="18" Width="32" Height="32" TextAlignment="Center" 
+                                                         Text="{Binding CardAge}" Visibility="{Binding CardAgeVisibility}"/>
+        </Canvas>
+        <Image Width="16" Height="16" Canvas.Left="20" Canvas.Top="18" Source="{Binding Icon}" Visibility="{Binding IconVisibility}"/>
+        <hearthstoneDeckTracker:HearthstoneTextBlock Fill="DodgerBlue" FontSize="13" Canvas.Left="17" Canvas.Top="-2"  Width="16" Height="16" TextAlignment="Right"
+                                                     Text="{Binding CostReduction}" Visibility="{Binding CostReductionVisibility}"/>
+    </Canvas>
+</UserControl>

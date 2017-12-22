@@ -1,0 +1,90 @@
+﻿<Application x:Class="Hearthstone_Deck_Tracker.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             Startup="App_OnStartup"
+             DispatcherUnhandledException="App_DispatcherUnhandledException">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <Color x:Key="GrayTextColor1">#FF7F7F7F</Color>
+                    <Color x:Key="GrayTextColor2">#FFAAAAAA</Color>
+                    <SolidColorBrush x:Key="GrayTextColorBrush" Color="#FF7F7F7F"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <ImageSource x:Key="AppIcon">pack://siteoforigin:,,,/Images/HearthstoneDeckTracker.ico</ImageSource>
+                    <ImageSource x:Key="JoustScreenshot">Resources/joust-screenshot.jpg</ImageSource>
+                    <ImageSource x:Key="HsReplayInfo1">Resources/hsreplay_info_1.png</ImageSource>
+                    <ImageSource x:Key="HsReplayInfo2">Resources/hsreplay_info_2.png</ImageSource>
+                    <ImageSource x:Key="HsReplayInfo3">Resources/hsreplay_info_3.png</ImageSource>
+                    <ImageSource x:Key="HsReplayIcon">Resources/hsreplay_logo_blue.png</ImageSource>
+                    <ImageSource x:Key="HsReplayIconBlue">Resources/hsreplay_logo_blue.png</ImageSource>
+                    <ImageSource x:Key="HsReplayIconWhite">Resources/hsreplay_logo_white.png</ImageSource>
+                    <ImageSource x:Key="ClassIconDruidRound">Resources/ClassIcons/Round/druid.png</ImageSource>
+                    <ImageSource x:Key="ClassIconHunterRound">Resources/ClassIcons/Round/hunter.png</ImageSource>
+                    <ImageSource x:Key="ClassIconMageRound">Resources/ClassIcons/Round/mage.png</ImageSource>
+                    <ImageSource x:Key="ClassIconPaladinRound">Resources/ClassIcons/Round/paladin.png</ImageSource>
+                    <ImageSource x:Key="ClassIconPriestRound">Resources/ClassIcons/Round/priest.png</ImageSource>
+                    <ImageSource x:Key="ClassIconRogueRound">Resources/ClassIcons/Round/rogue.png</ImageSource>
+                    <ImageSource x:Key="ClassIconShamanRound">Resources/ClassIcons/Round/shaman.png</ImageSource>
+                    <ImageSource x:Key="ClassIconWarlockRound">Resources/ClassIcons/Round/warlock.png</ImageSource>
+                    <ImageSource x:Key="ClassIconWarriorRound">Resources/ClassIcons/Round/warrior.png</ImageSource>
+                    <ImageSource x:Key="DustIcon">Resources/dust.png</ImageSource>
+                    <ImageSource x:Key="TwitchExtDecklist">Resources/twitch_ext_decklist.png</ImageSource>
+                    <ImageSource x:Key="TwitchExtSecret">Resources/twitch_ext_secret.png</ImageSource>
+                </ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="Resources/Icons.xaml"/>
+                <ResourceDictionary>
+                    <utility:ConfigWrapper x:Key="ConfigWrapper"/>
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <Style TargetType="{x:Type Hyperlink}">
+                        <Setter Property="Foreground" Value="#FF47B1DF" />
+                    </Style>
+                    <Style TargetType="TextBlock" x:Key="WinrateGaugeTextStyle">
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="TextAlignment" Value="Center"/>
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Width" Value="80"/>
+                    </Style>
+                    <Style TargetType="wpf:Gauge" x:Key="WinrateGaugeStyle">
+                        <Setter Property="Width" Value="90"/>
+                        <Setter Property="Height" Value="90"/>
+                        <Setter Property="From" Value="0"/>
+                        <Setter Property="To" Value="100"/>
+                        <Setter Property="InnerRadius" Value="40"/>
+                        <Setter Property="Uses360Mode" Value="True"/>
+                        <Setter Property="LabelFormatter" Value="{Binding EmptyFormatter}"/>
+                        <Setter Property="GaugeActiveFill" Value="{DynamicResource AccentColorBrush}"/>
+                        <Setter Property="GaugeBackground" Value="{DynamicResource AccentColorBrush4}"/>
+                        <Setter Property="GaugeRenderTransform">
+                            <Setter.Value>
+                                <RotateTransform Angle="90"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style TargetType="ListView" BasedOn="{StaticResource MetroListView}">
+                        <Setter Property="ScrollViewer.PanningMode" Value="VerticalOnly"/>
+                        <EventSetter Event="ManipulationBoundaryFeedback" Handler="HandleManipulationBoundaryFeedback"/>
+                    </Style>
+                    <Style TargetType="ListBox" BasedOn="{StaticResource MetroListBox}">
+                        <Setter Property="ScrollViewer.PanningMode" Value="VerticalOnly"/>
+                        <EventSetter Event="ManipulationBoundaryFeedback" Handler="HandleManipulationBoundaryFeedback"/>
+                    </Style>
+                    <Style TargetType="ScrollViewer">
+                        <Setter Property="PanningMode" Value="VerticalOnly"/>
+                        <EventSetter Event="ManipulationBoundaryFeedback" Handler="HandleManipulationBoundaryFeedback"/>
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

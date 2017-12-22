@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Information.HsReplayStatisticsInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Information"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="650">
+    <DockPanel>
+        <Label Content="Global Statistics, Mulligan Guide Integration" FontWeight="SemiBold" DockPanel.Dock="Top" FontSize="18" HorizontalAlignment="Center"/>
+        <Separator DockPanel.Dock="Top"/>
+        <DockPanel MaxWidth="500" DockPanel.Dock="Top" Margin="0,0,0,10" >
+            <TextBlock Text="We made accessing global statistics and mulligan information about your favorite decks even easier!"
+                DockPanel.Dock="Top" Margin="10,10,10,0" FontSize="14" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+            <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="10,10,10,0">
+                <Image Source="{StaticResource HsReplayInfo3}" MaxWidth="500" />
+            </Border>
+            <TextBlock DockPanel.Dock="Top" TextAlignment="Center" Padding="0,0,0,10">
+                <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate"
+                    NavigateUri="{Binding SampleReplayUrl, RelativeSource={RelativeSource AncestorType=local:HsReplayStatisticsInfo}}">
+                    example deck page
+                </Hyperlink>
+            </TextBlock>
+            <Separator DockPanel.Dock="Top"/>
+            <DockPanel DockPanel.Dock="Top" Margin="10">
+                <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2" DockPanel.Dock="Left">
+                    <Image Source="{StaticResource HsReplayInfo1}" MaxWidth="250"/>
+                </Border>
+                <TextBlock Text="Decks with available data can be identified by the HSReplay.net icon next to the deck name."
+                    DockPanel.Dock="Bottom" Margin="10" FontSize="14" HorizontalAlignment="Center"
+                    TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Center"/>
+            </DockPanel>
+            <Separator DockPanel.Dock="Top"/>
+            <DockPanel DockPanel.Dock="Top" Margin="10">
+                <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="2" DockPanel.Dock="Right">
+                    <Image Source="{StaticResource HsReplayInfo2}" MaxWidth="200"/>
+                </Border>
+                <TextBlock Text="Selecting one of these decks will bring up a button above the decklist that takes you right to it."
+                DockPanel.Dock="Bottom" Margin="10" FontSize="14" HorizontalAlignment="Center"
+                TextWrapping="Wrap" TextAlignment="Right" VerticalAlignment="Center"/>
+            </DockPanel>
+        </DockPanel>
+        <Grid/>
+    </DockPanel>
+</UserControl>

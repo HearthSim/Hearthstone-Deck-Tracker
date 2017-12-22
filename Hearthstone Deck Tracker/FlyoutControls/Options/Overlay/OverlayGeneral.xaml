@@ -1,0 +1,140 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayGeneral"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="300">
+    <StackPanel>
+        <CheckBox x:Name="CheckboxHideOverlay" Content="{lex:Loc Options_Overlay_General_CheckBox_HideCompletely}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxHideOverlay_Checked"
+                  Unchecked="CheckboxHideOverlay_Unchecked" />
+        <CheckBox x:Name="CheckboxHideOverlayInMenu" Content="{lex:Loc Options_Overlay_General_CheckBox_HideInMenu}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxHideOverlayInMenu_Checked"
+                  Unchecked="CheckboxHideOverlayInMenu_Unchecked" />
+        <CheckBox x:Name="CheckboxHideOverlayInSpectator" Content="{lex:Loc Options_Overlay_General_CheckBox_HideInSpectator}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxHideOverlayInSpectator_Checked"
+                  Unchecked="CheckboxHideOverlayInSpectator_Unchecked" />
+        <CheckBox x:Name="CheckboxHideOverlayInBackground"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_HideInBackground}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxHideOverlayInBackground_Checked"
+                  Unchecked="CheckboxHideOverlayInBackground_Unchecked" />
+        <CheckBox x:Name="CheckboxHideDecksInOverlay" Content="{lex:Loc Options_Overlay_General_CheckBox_HideDecks}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top"
+                  Checked="CheckboxHideDecksInOverlay_Checked"
+                  Unchecked="CheckboxHideDecksInOverlay_Unchecked" />
+        <CheckBox x:Name="CheckboxHideTimers" Content="{lex:Loc Options_Overlay_General_CheckBox_HideTimers}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxHideTimers_Checked"
+                  Unchecked="CheckboxHideTimers_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="{lex:Loc Options_Overlay_General_CheckBox_CardTooltips}"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxOverlayCardToolTips_Checked"
+                  Unchecked="CheckboxOverlayCardToolTips_Unchecked"
+                  HorizontalAlignment="Left" />
+        <CheckBox x:Name="CheckboxOverlaySecretToolTipsOnly"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_SecretsOnly}" Margin="30,5,0,0"
+                  VerticalAlignment="Top"
+                  Checked="CheckboxOverlaySecretToolTipsOnly_Checked"
+                  Unchecked="CheckboxOverlaySecretToolTipsOnly_Unchecked"
+                  HorizontalAlignment="Left" />
+        <CheckBox x:Name="CheckboxOverlayAdditionalCardToolTips"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_AdditionalCardTooltips}" Margin="30,5,0,0"
+                  VerticalAlignment="Top"
+                  Checked="CheckboxOverlayAdditionalCardToolTips_Checked"
+                  Unchecked="CheckboxOverlayAdditionalCardToolTips_Unchecked"
+                  HorizontalAlignment="Left" />
+        <CheckBox x:Name="CheckBoxOverlayUseAnimations" Content="{lex:Loc Options_Overlay_General_CheckBox_CardAnimations}"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxOverlayUseAnimations_Checked"
+                  Unchecked="CheckboxOverlayUseAnimations_Unchecked"
+                  HorizontalAlignment="Left" />
+        <CheckBox x:Name="CheckboxOverlayCardMarkToolTips" Content="{lex:Loc Options_Overlay_General_CheckBox_CardMarkTooltips}"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  ToolTip="{lex:Loc Options_Overlay_General_CheckBox_CardMarkTooltips_Tooltip}"
+                  Checked="CheckboxOverlayCardMarkToolTips_Checked"
+                  Unchecked="CheckboxOverlayCardMarkToolTips_Unchecked"
+                  HorizontalAlignment="Left" />
+        <CheckBox x:Name="CheckboxAutoGrayoutSecrets"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_Secrets}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxAutoGrayoutSecrets_Checked"
+                  Unchecked="CheckboxAutoGrayoutSecrets_Unchecked" />
+        <CheckBox x:Name="CheckBoxRemoveSecrets"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_RemoveSecrets}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxRemoveSecrets_Checked"
+                  Unchecked="CheckBoxRemoveSecrets_Unchecked" />
+        <CheckBox x:Name="CheckboxKeepDecksVisible"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_NoResetAfterGame}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxKeepDecksVisible_Checked"
+                  Unchecked="CheckboxKeepDecksVisible_Unchecked" />
+        <CheckBox x:Name="CheckboxAlwaysShowGoldProgress"
+                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_GoldProgress}" HorizontalAlignment="Left"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxAlwaysShowGoldProgress_Checked"
+                  Unchecked="CheckboxAlwaysShowGoldProgress_Unchecked" />
+        <CheckBox Name="CheckBoxFlavorText"
+                  HorizontalAlignment="Left"
+                  ToolTip="{lex:Loc Options_Overlay_General_CheckBox_FlavorText_Tooltip}"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxFlavorText_Checked"
+                  Unchecked="CheckBoxFlavorText_Unchecked">
+                        <TextBlock Text="{lex:Loc Options_Overlay_General_CheckBox_FlavorText}" TextWrapping="Wrap" />
+                    </CheckBox>
+        <CheckBox Name="CheckBoxBatteryStatus" Content="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus}" HorizontalAlignment="Left"
+                  ToolTip="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus_Tooltip}"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckBoxBatteryStatus_Checked"
+                  Unchecked="CheckBoxBatteryStatus_Unchecked" />
+        <CheckBox x:Name="CheckBoxBatteryStatusText"
+                  IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxBatteryStatus}"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus_Percent}" Margin="30,5,0,0"
+                  VerticalAlignment="Top"
+                  Checked="CheckBoxBatteryStatusText_Checked"
+                  Unchecked="CheckBoxBatteryStatusText_Unchecked"
+                  HorizontalAlignment="Left" />
+        <DockPanel Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+            <Slider x:Name="SliderOverlayOpacity" Margin="5,5,0,0" VerticalAlignment="Center" Value="100"
+                    Width="150"
+                    ValueChanged="SliderOverlayOpacity_ValueChanged" DockPanel.Dock="Right" />
+            <Label Content="{lex:Loc Options_Overlay_General_Label_Opacity}"
+                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+                   HorizontalAlignment="Left" Margin="5,5,0,0"
+                   VerticalAlignment="Center" DockPanel.Dock="Left" />
+        </DockPanel>
+        <DockPanel Margin="5,5,0,0">
+            <Button Name="BtnUnlockOverlay" Content="{lex:Loc Options_Overlay_General_Button_UnlockOverlay}" Width="150"
+                    Click="BtnUnlockOverlay_Click" DockPanel.Dock="Right" />
+            <Label Content="{lex:Loc Options_Overlay_General_Label_MoveResize}" DockPanel.Dock="Left" />
+        </DockPanel>
+        <DockPanel Margin="5,5,0,0">
+            <Button x:Name="BtnResetOverlay" Content="{lex:Loc Options_Overlay_General_Button_Reset}" Width="150" Click="BtnResetOverlay_Click"
+                    DockPanel.Dock="Right" />
+            <Label Content="{lex:Loc Options_Overlay_General_Label_Reset}" DockPanel.Dock="Left" />
+        </DockPanel>
+    </StackPanel>
+</UserControl>

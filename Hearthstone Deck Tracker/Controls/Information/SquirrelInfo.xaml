@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Information.SquirrelInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <DockPanel>
+        <Label Name="LabelHeader" Content="New updater available!" FontWeight="SemiBold" DockPanel.Dock="Top" FontSize="18" HorizontalAlignment="Center"/>
+        <Separator DockPanel.Dock="Top"/>
+        <TabControl Name="TabControl" controls:TabControlHelper.Transition="Left">
+            <TabItem>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock TextWrapping="Wrap" FontSize="15" HorizontalAlignment="Center" Width="420">
+                        <Run>Hearthstone Deck Tracker now has a new and improved automated updater. This simplifies updating and fixes several long-standing installation and update issues.</Run>
+                        <LineBreak/><LineBreak/>
+                        <Run>We strongly recommend upgrading. Your settings and data will not be affected.</Run>
+                    </TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                        <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200" Click="ButtonUpgrade_OnClick">
+                            <TextBlock>Upgrade now</TextBlock>
+                        </Button>
+                        <Button Style="{DynamicResource SquareButtonStyle}" Margin="10,0,0,0" Width="200" Click="ButtonContinue_OnClick">
+                            <TextBlock>Maybe later</TextBlock>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock TextWrapping="Wrap" FontSize="15" HorizontalAlignment="Center" Width="420">
+                        <Run>After restarting, a new shortcut will be created on your desktop automatically.</Run>
+                        <LineBreak/><LineBreak/>
+                        <Run>You can safely delete your current HDT folder after the upgrade completes.</Run>
+                        <LineBreak/>
+                    </TextBlock>
+                    <Grid >
+                        <controls:MetroProgressBar Width="420" Height="30" Value="{Binding Progress, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Progress, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat='{}{0}%'}" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="18" Foreground="White"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                        <Button Name="ButtonRestart" Style="{DynamicResource AccentedSquareButtonStyle}" Width="200" Click="ButtonClose_OnClick" IsEnabled="False">
+                            <TextBlock>Restart now</TextBlock>
+                        </Button>
+                        <Button Name="ButtonBack" Style="{DynamicResource SquareButtonStyle}" Margin="10,0,0,0" Width="200" Click="ButtonBack_OnClick">
+                            <TextBlock>Back</TextBlock>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>
+
+
+
