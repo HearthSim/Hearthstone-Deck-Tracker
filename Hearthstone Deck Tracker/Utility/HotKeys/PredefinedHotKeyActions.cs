@@ -76,8 +76,12 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			if(!Core.Game.IsRunning)
 				return;
 			Config.Instance.HideSecrets = !Config.Instance.HideSecrets;
+			Core.MainWindow.Options.OptionsOverlayOpponent.CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
 			Config.Save();
-			Core.Overlay.UpdatePosition();
+			if(Config.Instance.HideSecrets)
+				Core.Overlay.HideSecrets();
+			else
+				Core.Overlay.UnhideSecrects();
 		}
 
 		[PredefinedHotKeyAction("Toggle overlay: timers", "Turns the timers on the overlay on or off (if the game is running).")]
