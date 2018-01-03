@@ -22,7 +22,6 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.ComponentModel.ListSortDirection;
 using static System.Windows.Visibility;
-using Clipboard = System.Windows.Clipboard;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListView = System.Windows.Controls.ListView;
 using Hearthstone_Deck_Tracker.Windows;
@@ -68,21 +67,24 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			ListViewClasses.ItemsSource = _classItems;
 			SelectedClasses = new ObservableCollection<HeroClassAll>();
 			_displayedDecks = new List<DeckPickerItem>();
-			DeckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Distinct().Take(6));
 		}
 
 		public List<DeckPickerItem> DisplayedDecks => _displayedDecks;
 
-		public List<Deck> SelectedDecks
-		{
-			get { return ListViewDecks.SelectedItems.Cast<DeckPickerItem>().Select(x => x.Deck).ToList(); }
-		}
+		public List<Deck> SelectedDecks => ListViewDecks.SelectedItems.Cast<DeckPickerItem>().Select(x => x.Deck).ToList();
 
 		public ObservableCollection<HeroClassAll> SelectedClasses { get; }
 
+		public void ReloadUI()
+		{
+			_deckTypeItems = null;
+			OnPropertyChanged(nameof(DeckTypeItems));
+			RefreshDisplayedDecks();
+		}
+
 		public bool ArchivedClassVisible
 		{
-			get { return _archivedClassVisible; }
+			get => _archivedClassVisible;
 			set
 			{
 				_archivedClassVisible = value;
@@ -92,7 +94,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public bool SearchBarVisibile
 		{
-			get { return _searchBarVisibile; }
+			get => _searchBarVisibile;
 			set
 			{
 				_searchBarVisibile = value;
@@ -107,15 +109,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Visibility VisibilitySearchBar => SearchBarVisibile ? Visible : Collapsed;
 
-		public ObservableCollection<DeckType> DeckTypeItems
-		{
-			get { return _deckTypeItems; }
-			set
-			{
-				_deckTypeItems = value;
-				OnPropertyChanged();
-			}
-		}
+		public ObservableCollection<DeckType> DeckTypeItems => _deckTypeItems ?? (_deckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Distinct().Take(6)));
 
 		public Deck ActiveDeck => DeckList.Instance.ActiveDeck;
 
