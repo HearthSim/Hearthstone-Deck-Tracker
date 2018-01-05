@@ -53,6 +53,7 @@ namespace Hearthstone_Deck_Tracker
 				CreateWindowsAccentStyle();
 
 			ThemeManager.ChangeAppStyle(Application.Current, CurrentAccent, CurrentTheme);
+			Core.MainWindow.DeckPickerList.UpdateDeckModeToggleButton();
 		}
 
 		public static void CreateWindowsAccentStyle(bool changeImmediately = false)
