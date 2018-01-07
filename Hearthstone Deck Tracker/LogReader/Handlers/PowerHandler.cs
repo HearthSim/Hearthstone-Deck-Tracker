@@ -334,6 +334,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.KingTogwaggle:
 								AddKnownCardId(gameState, NonCollectible.Neutral.KingTogwaggle_KingsRansomToken);
 								break;
+							case NonCollectible.Neutral.TheCandle:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCandle);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
