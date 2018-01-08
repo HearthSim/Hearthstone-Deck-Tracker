@@ -68,17 +68,20 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			ListViewClasses.ItemsSource = _classItems;
 			SelectedClasses = new ObservableCollection<HeroClassAll>();
 			_displayedDecks = new List<DeckPickerItem>();
-			DeckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Distinct().Take(6));
 		}
 
 		public List<DeckPickerItem> DisplayedDecks => _displayedDecks;
 
-		public List<Deck> SelectedDecks
-		{
-			get { return ListViewDecks.SelectedItems.Cast<DeckPickerItem>().Select(x => x.Deck).ToList(); }
-		}
+		public List<Deck> SelectedDecks => ListViewDecks.SelectedItems.Cast<DeckPickerItem>().Select(x => x.Deck).ToList();
 
 		public ObservableCollection<HeroClassAll> SelectedClasses { get; }
+
+		public void ReloadUI()
+		{
+			_deckTypeItems = null;
+			OnPropertyChanged(nameof(DeckTypeItems));
+			RefreshDisplayedDecks();
+		}
 
 		public bool ArchivedClassVisible
 		{
@@ -107,15 +110,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Visibility VisibilitySearchBar => SearchBarVisibile ? Visible : Collapsed;
 
-		public ObservableCollection<DeckType> DeckTypeItems
-		{
-			get => _deckTypeItems;
-			set
-			{
-				_deckTypeItems = value;
-				OnPropertyChanged();
-			}
-		}
+		public ObservableCollection<DeckType> DeckTypeItems => _deckTypeItems ?? (_deckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Distinct().Take(6)));
 
 		public Deck ActiveDeck => DeckList.Instance.ActiveDeck;
 

@@ -154,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		      }
 		    }
 
-		  foreach(var series in OpponentCollection)
+		    foreach(var series in OpponentCollection)
 				((ObservableValue)series.Values[0]).Value = opponents[series.Title];
 
 			var total = wins + losses;

@@ -7,11 +7,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 {
 	public class BoolToVisibilityConverter : IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			if(value as bool? ?? false)
-				return Visibility.Visible;
-			return Visibility.Collapsed;
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+		  return (value as bool? ?? false) ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -22,11 +19,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 
 	public class InverseBoolToVisibilityConverter : IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			if(value as bool? ?? false)
-				return Visibility.Collapsed;
-			return Visibility.Visible;
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+		  return (value as bool? ?? false) ? Visibility.Collapsed : Visibility.Visible;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -7,11 +7,6 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\HearthDb\HearthDb\HearthDb.csproj" />
-    <ProjectReference Include="..\..\HearthMirror\HearthMirror\HearthMirror.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 

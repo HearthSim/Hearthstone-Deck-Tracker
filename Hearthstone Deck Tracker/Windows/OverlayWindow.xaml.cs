@@ -168,6 +168,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		public void HideSecrets() => StackPanelSecrets.Visibility = Collapsed;
+		public void UnhideSecrects() => StackPanelSecrets.Visibility = Visible;
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{

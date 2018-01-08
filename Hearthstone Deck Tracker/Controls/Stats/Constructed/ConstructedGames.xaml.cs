@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		}
 
 		public List<GameStats> SelectedGames
-			=> _selectedGames ?? (_selectedGames = DataGridGames.SelectedItems.Cast<GameStats>().ToList());
+			=> _selectedGames ?? (_selectedGames = DataGridGames.SelectedItems?.Cast<GameStats>().ToList() ?? new List<GameStats>());
 
 		public GameStats SelectedGame { get; set; }
 

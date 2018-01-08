@@ -4,11 +4,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Resources;
 using System.Text;
+using SixLabors.ImageSharp;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -63,15 +63,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return GetImage(path.ToString());
 		}
 
-		public static readonly Dictionary<string, Bitmap> CardBitmaps = new Dictionary<string, Bitmap>();
+		public static readonly Dictionary<string, Image<Rgba32>> CardBitmaps = new Dictionary<string, Image<Rgba32>>();
 		public static readonly Dictionary<string, BitmapImage> CardBitmapImages = new Dictionary<string, BitmapImage>();
 		public static readonly List<string> LoadedSets = new List<string>();
 
 		public static BitmapImage GetCardImage(Card card)
 		{
-			if(CardBitmapImages.TryGetValue(card.Id, out BitmapImage bmpImg))
+			if(CardBitmapImages.TryGetValue(card.Id, out var bmpImg))
 				return bmpImg;
-			if(!CardBitmaps.TryGetValue(card.Id, out Bitmap bmp))
+			if(!CardBitmaps.TryGetValue(card.Id, out var bmp))
 				LoadResource(card, out bmp);
 			if(bmp != null)
 				bmpImg = bmp.ToImageSource();
@@ -79,14 +79,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return bmpImg;
 		}
 
-		public static Bitmap GetCardBitmap(Card card)
+		public static Image<Rgba32> GetCardBitmap(Card card)
 		{
-			if(!CardBitmaps.TryGetValue(card.Id, out Bitmap bmp))
+			if(!CardBitmaps.TryGetValue(card.Id, out var bmp))
 				LoadResource(card, out bmp);
 			return bmp;
 		}
 
-		private static void LoadResource(Card card, out Bitmap bitmap)
+		private static void LoadResource(Card card, out Image<Rgba32> bitmap)
 		{
 			bitmap = null;
 			var set = card.CardSet + (card.Collectible ? "" : "_NC");
@@ -100,10 +100,11 @@ namespace Hearthstone_Deck_Tracker.Utility
 			{
 				foreach(var entry in reader.OfType<DictionaryEntry>())
 				{
-					var key = entry.Key.ToString();
+				    var img = Image.Load((Stream) entry.Value);
+                    var key = entry.Key.ToString();
 					if(key == card.Id)
-						bitmap = (Bitmap)entry.Value;
-					CardBitmaps.Add(key, (Bitmap)entry.Value);
+						bitmap = img;
+					CardBitmaps.Add(key, img);
 				}
 			}
 		}

@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				return;
 			_showingUpdateMessage = true;
 
-			var settings = new MessageDialogs.Settings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
+			var settings = new MessageDialogs.Settings {AffirmativeButtonText = LocUtil.Get("Button_Download"), NegativeButtonText = LocUtil.Get("Button_Notnow")};
 			if(_release == null)
 			{
 				_showingUpdateMessage = false;
@@ -57,12 +57,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				Core.MainWindow.ActivateWindow();
 				while(Core.MainWindow.Visibility != Visibility.Visible || Core.MainWindow.WindowState == WindowState.Minimized)
 					await Task.Delay(100);
-				var betaString = beta ? " BETA" : "";
-				var result =
-					await
-						Core.MainWindow.ShowMessageAsync("New" + betaString + " Update available!",
-							"Press \"Download\" to automatically download.",
-							MessageDialogStyle.AffirmativeAndNegative, settings);
+				var updateString = beta ? LocUtil.Get("MainWindow_StatusBarUpdate_NewBETAUpdateAvailable") : LocUtil.Get("MainWindow_StatusBarUpdate_NewUpdateAvailable");
+				var result = await Core.MainWindow.ShowMessageAsync(updateString, LocUtil.Get("MainWindow_ShowMessage_UpdateDialog"), MessageDialogStyle.AffirmativeAndNegative, settings);
 
 				if(result == MessageDialogResult.Affirmative)
 					StartUpdate();

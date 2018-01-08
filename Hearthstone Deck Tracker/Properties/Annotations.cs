@@ -168,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.Properties
 	/// </syntax>
 	/// <examples><list>
 	/// <item><code>
-	/// [ContractAnnotation("=&gt; halt")]
+	/// [ContractAnnotation("=> halt")]
 	/// public void TerminationMethod()
 	/// </code></item>
 	/// <item><code>
@@ -176,16 +176,16 @@ namespace Hearthstone_Deck_Tracker.Properties
 	/// public void Assert(bool condition, string text) // regular assertion method
 	/// </code></item>
 	/// <item><code>
-	/// [ContractAnnotation("s:null =&gt; true")]
+	/// [ContractAnnotation("s:null => true")]
 	/// public bool IsNullOrEmpty(string s) // string.IsNullOrEmpty()
 	/// </code></item>
 	/// <item><code>
 	/// // A method that returns null if the parameter is null, and not null if the parameter is not null
-	/// [ContractAnnotation("null =&gt; null; notnull =&gt; notnull")]
+	/// [ContractAnnotation("null => null; notnull => notnull")]
 	/// public object Transform(object data) 
 	/// </code></item>
 	/// <item><code>
-	/// [ContractAnnotation("s:null=&gt;false; =&gt;true,result:notnull; =&gt;false, result:null")]
+	/// [ContractAnnotation("s:null=>false; =>true,result:notnull; =>false, result:null")]
 	/// public bool TryParse(string s, out Person result)
 	/// </code></item>
 	/// </list></examples>

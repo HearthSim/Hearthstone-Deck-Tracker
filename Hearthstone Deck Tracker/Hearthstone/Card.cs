@@ -246,7 +246,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string Name { get; set; }
 
-		[XmlIgnore]
+	  [XmlIgnore]
 		public int Cost { get; set; }
 
 		public bool HideStats => _dbCard?.Entity.GetTag(GameTag.HIDE_STATS) == 1;
@@ -392,9 +392,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(Id == null || Name == null)
 					return new DrawingBrush();
 				var cardImageObj = new CardImageObject(this);
-				if(CardImageCache.TryGetValue(Id, out Dictionary<int, CardImageObject> cache))
+				if(CardImageCache.TryGetValue(Id, out var cache))
 				{
-					if(cache.TryGetValue(cardImageObj.GetHashCode(), out CardImageObject cached))
+					if(cache.TryGetValue(cardImageObj.GetHashCode(), out var cached))
 						return cached.Image;
 				}
 				try
@@ -529,8 +529,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public override bool Equals(object obj)
 		{
-			var cardObj = obj as CardImageObject;
-			return cardObj != null && Equals(cardObj);
+		  return obj is CardImageObject cardObj && Equals(cardObj);
 		}
 
 		protected bool Equals(CardImageObject other)

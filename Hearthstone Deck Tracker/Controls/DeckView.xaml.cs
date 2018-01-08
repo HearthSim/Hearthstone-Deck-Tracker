@@ -60,8 +60,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private string GetTagText(Deck deck)
 		{
-			var predefined = new List<string>
-			{
+			var predefined = new List<string>() {
 				"Midrange",
 				"Aggro",
 				"Control",
@@ -122,8 +121,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				CardSet.LOE,
 				CardSet.CORE
 			}.Select(HearthDbConverter.SetConverter).ToList();
-			var nonCraftableCards = new List<string>
-			{
+			var nonCraftableCards = new List<string>() {
 				Neutral.Cthun,
 				Neutral.BeckonerOfEvil
 			};

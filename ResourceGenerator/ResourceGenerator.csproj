@@ -1,21 +1,22 @@
-﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net471</TargetFrameworks>
-		<SignAssembly>true</SignAssembly>
-		<AssemblyOriginatorKeyFile>snKey.snk</AssemblyOriginatorKeyFile>
+ 	  <TargetFrameworks>net471;netcoreapp2.0</TargetFrameworks>
+	  <WarningsAsErrors>NU1605</WarningsAsErrors>
+	  <NoWarn>1701;1702;1705;CS8002</NoWarn>
+	  <OutputType>Exe</OutputType>
+	  <StartupObject>ResourceGenerator.Program</StartupObject>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">
-	  <WarningsAsErrors>NU1605</WarningsAsErrors>
-	  <NoWarn>1701;1702;1705;CS8002</NoWarn>
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <OutputPath>bin\Debug\</OutputPath>
+	  <DefineConstants>TRACE;DEBUG</DefineConstants>
 	</PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="nQuant" Version="1.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="ORM-Monitor" Version="2.3.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0002" />
     <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj" />
   </ItemGroup>
 

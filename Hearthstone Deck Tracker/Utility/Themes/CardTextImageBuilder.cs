@@ -6,10 +6,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
 	public class CardTextImageBuilder
 	{
-		public static GeometryDrawing[] GetOutlinedText(string text, double maxFontSize, Rect rect, Brush background, Brush stroke, Typeface typeFace, Brush foreground, double pixelsPerDip,
+		public static GeometryDrawing[] GetOutlinedText(string text, double maxFontSize, Rect rect, Brush fill, Brush stroke, Typeface typeFace,
 												  double strokeThickness = 2, bool centered = false)
 		{
-			var fText = new FormattedText(text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, typeFace, maxFontSize, foreground, pixelsPerDip);
+			var fText = new FormattedText(text, CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, typeFace, maxFontSize, fill);
 			if(!double.IsNaN(rect.Width))
 			{
 				if(fText.Width > rect.Width)
@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			var drawings = new[]
 			{
 				new GeometryDrawing(stroke, new Pen(Brushes.Black, strokeThickness) {LineJoin = PenLineJoin.Round}, fText.BuildGeometry(point)),
-				new GeometryDrawing(background, new Pen(foreground, 0), fText.BuildGeometry(point))
+				new GeometryDrawing(fill, new Pen(Brushes.White, 0), fText.BuildGeometry(point))
 			};
 			return drawings;
 		}

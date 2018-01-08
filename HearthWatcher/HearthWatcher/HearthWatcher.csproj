@@ -6,9 +6,9 @@
 		<AssemblyOriginatorKeyFile>snKey.snk</AssemblyOriginatorKeyFile>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\HearthDb\HearthDb\HearthDb.csproj" />
-    <ProjectReference Include="..\..\HearthMirror\HearthMirror\HearthMirror.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\HearthDb\HearthDb\HearthDb.csproj" />
+	  <ProjectReference Include="..\..\HearthMirror\HearthMirror\HearthMirror.csproj" />
+	</ItemGroup>
 
 </Project>

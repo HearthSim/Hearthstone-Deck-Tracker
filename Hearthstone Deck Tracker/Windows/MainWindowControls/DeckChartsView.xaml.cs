@@ -10,5 +10,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		}
 
 		public void SetDeck(Deck deck) => ((DeckChartsViewModel)DataContext).Deck = deck;
+
+		public void ReloadUI() => ((DeckChartsViewModel)DataContext).Update();
 	}
 }
