@@ -1,39 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A3F20963-6093-4111-8449-A558C39A5CEF}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ResourceGenerator</RootNamespace>
-    <AssemblyName>ResourceGenerator</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>ResourceGenerator.Program</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <OutputPath>bin\Debug\</OutputPath>
-  </PropertyGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+ 	  <TargetFrameworks>net471;netcoreapp2.0</TargetFrameworks>
+	  <WarningsAsErrors>NU1605</WarningsAsErrors>
+	  <NoWarn>1701;1702;1705;CS8002</NoWarn>
+	  <OutputType>Exe</OutputType>
+	  <StartupObject>ResourceGenerator.Program</StartupObject>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net471|AnyCPU'">
+	  <PlatformTarget>AnyCPU</PlatformTarget>
+	  <OutputPath>bin\Debug\</OutputPath>
+	  <DefineConstants>TRACE;DEBUG</DefineConstants>
+	</PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
+    <PackageReference Include="ORM-Monitor" Version="2.3.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0002" />
+    <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj">
-      <Project>{7ed14243-e02b-4b94-af00-a67a62c282f0}</Project>
-      <Name>HearthDb</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
 </Project>
