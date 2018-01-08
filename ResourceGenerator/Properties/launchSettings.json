@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ResourceGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "\"D:\\Documents\\Visual Studio 2017\\Projects\\Hearthstone-Deck-Tracker2\\Hearthstone-Deck-Tracker\\Resources\" Tiles 0"
+    }
+  }
+}

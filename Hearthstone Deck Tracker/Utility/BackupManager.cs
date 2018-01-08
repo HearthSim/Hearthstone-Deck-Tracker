@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(!Directory.Exists(Config.Instance.BackupDir))
 				Directory.CreateDirectory(Config.Instance.BackupDir);
 			var dirInfo = new DirectoryInfo(Config.Instance.BackupDir);
-			var backupFileName = $"Backup_{DateTime.Today.ToString("ddMMyyyy")}.zip";
+			var backupFileName = $"Backup_{DateTime.Today:ddMMyyyy}.zip";
 
 			if (dirInfo.GetFiles().Any(x => x.Name == backupFileName))
 			{
@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			try
 			{
 				var backups = dirInfo.GetFiles("Backup_*");
-				while(backups.Count() > MaxBackups)
+				while(backups.Length > MaxBackups)
 				{
 					var oldest = backups.OrderBy(x => x.CreationTime).First();
 					Log.Info("Deleting old backup: " + oldest.Name);

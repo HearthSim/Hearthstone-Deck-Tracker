@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hearthstone Deck Tracker", "Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj", "{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTTests", "HDTTests\HDTTests.csproj", "{A99438AD-6733-4FDA-928C-30C37255FF1B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTUpdate", "HDTUpdate\HDTUpdate.csproj", "{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTUninstaller", "HDTUninstaller\HDTUninstaller.csproj", "{245A59F5-6E48-4B5B-B828-24A4C3EED309}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0CFB9662-B57B-488B-9270-CAEC01CDF1C6} = {0CFB9662-B57B-488B-9270-CAEC01CDF1C6}
+		{A2619CDE-7B45-4462-AD47-2A7C810551A6} = {A2619CDE-7B45-4462-AD47-2A7C810551A6}
+		{16B15FF0-E18C-40C9-97C8-99AFFBC13E6F} = {16B15FF0-E18C-40C9-97C8-99AFFBC13E6F}
+		{93E7D7F0-A84C-4BB0-BD68-EEC9F377F1AB} = {93E7D7F0-A84C-4BB0-BD68-EEC9F377F1AB}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{239EBA5D-709C-446C-93FD-40BBF9D5CBBF}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,87 +20,64 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		lib\HearthDb.dll = lib\HearthDb.dll
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthDb", "HearthDb\HearthDb\HearthDb.csproj", "{7ED14243-E02B-4B94-AF00-A67A62C282F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HearthDb", "..\..\Hearthstone-Deck-Tracker\HearthDb\HearthDb\HearthDb.csproj", "{A2619CDE-7B45-4462-AD47-2A7C810551A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthMirror", "HearthMirror\HearthMirror\HearthMirror.csproj", "{1694A2F8-645A-4263-A6AB-FC26323FD675}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HearthMirror", "..\..\Hearthstone-Deck-Tracker\HearthMirror\HearthMirror\HearthMirror.csproj", "{93E7D7F0-A84C-4BB0-BD68-EEC9F377F1AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HSReplay", "HSReplay-Api\HSReplay\HSReplay.csproj", "{A6264074-8A96-417C-9673-5EE7E9820B1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceGenerator", "..\..\Hearthstone-Deck-Tracker\ResourceGenerator\ResourceGenerator.csproj", "{58384215-5D17-4F14-A13F-DD98D68C5C1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthWatcher", "HearthWatcher\HearthWatcher.csproj", "{02E1843D-3F5D-45E0-9B16-1F28209EED82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HSReplay", "..\..\Hearthstone-Deck-Tracker\HSReplay\HSReplay\HSReplay.csproj", "{0CFB9662-B57B-488B-9270-CAEC01CDF1C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthWatcher.Test", "HearthWatcher.Test\HearthWatcher.Test.csproj", "{D081BCA4-14FD-4FBC-B92A-82574AB0478B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceGenerator", "ResourceGenerator\ResourceGenerator.csproj", "{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HearthWatcher", "..\..\Hearthstone-Deck-Tracker\HearthWatcher\HearthWatcher\HearthWatcher.csproj", "{16B15FF0-E18C-40C9-97C8-99AFFBC13E6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x86 = Debug|x86
-		Release|x86 = Release|x86
-		Squirrel|x86 = Squirrel|x86
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Squirrel|Any CPU = Squirrel|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Debug|x86.ActiveCfg = Debug|x86
-		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Debug|x86.Build.0 = Debug|x86
-		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Release|x86.ActiveCfg = Release|x86
-		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Release|x86.Build.0 = Release|x86
-		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Squirrel|x86.ActiveCfg = Squirrel|x86
-		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Squirrel|x86.Build.0 = Squirrel|x86
-		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Debug|x86.ActiveCfg = Debug|x86
-		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Debug|x86.Build.0 = Debug|x86
-		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Release|x86.ActiveCfg = Release|x86
-		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Release|x86.Build.0 = Release|x86
-		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Squirrel|x86.ActiveCfg = Squirrel|x86
-		{A99438AD-6733-4FDA-928C-30C37255FF1B}.Squirrel|x86.Build.0 = Squirrel|x86
-		{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}.Debug|x86.ActiveCfg = Debug|x86
-		{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}.Debug|x86.Build.0 = Debug|x86
-		{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}.Release|x86.ActiveCfg = Release|x86
-		{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}.Release|x86.Build.0 = Release|x86
-		{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}.Squirrel|x86.ActiveCfg = Squirrel|x86
-		{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}.Squirrel|x86.Build.0 = Squirrel|x86
-		{245A59F5-6E48-4B5B-B828-24A4C3EED309}.Debug|x86.ActiveCfg = Debug|x86
-		{245A59F5-6E48-4B5B-B828-24A4C3EED309}.Debug|x86.Build.0 = Debug|x86
-		{245A59F5-6E48-4B5B-B828-24A4C3EED309}.Release|x86.ActiveCfg = Release|x86
-		{245A59F5-6E48-4B5B-B828-24A4C3EED309}.Release|x86.Build.0 = Release|x86
-		{245A59F5-6E48-4B5B-B828-24A4C3EED309}.Squirrel|x86.ActiveCfg = Squirrel|x86
-		{245A59F5-6E48-4B5B-B828-24A4C3EED309}.Squirrel|x86.Build.0 = Squirrel|x86
-		{7ED14243-E02B-4B94-AF00-A67A62C282F0}.Debug|x86.ActiveCfg = Debug|x86
-		{7ED14243-E02B-4B94-AF00-A67A62C282F0}.Debug|x86.Build.0 = Debug|x86
-		{7ED14243-E02B-4B94-AF00-A67A62C282F0}.Release|x86.ActiveCfg = Release|x86
-		{7ED14243-E02B-4B94-AF00-A67A62C282F0}.Release|x86.Build.0 = Release|x86
-		{7ED14243-E02B-4B94-AF00-A67A62C282F0}.Squirrel|x86.ActiveCfg = Release|x86
-		{7ED14243-E02B-4B94-AF00-A67A62C282F0}.Squirrel|x86.Build.0 = Release|x86
-		{1694A2F8-645A-4263-A6AB-FC26323FD675}.Debug|x86.ActiveCfg = Debug|x86
-		{1694A2F8-645A-4263-A6AB-FC26323FD675}.Debug|x86.Build.0 = Debug|x86
-		{1694A2F8-645A-4263-A6AB-FC26323FD675}.Release|x86.ActiveCfg = Release|x86
-		{1694A2F8-645A-4263-A6AB-FC26323FD675}.Release|x86.Build.0 = Release|x86
-		{1694A2F8-645A-4263-A6AB-FC26323FD675}.Squirrel|x86.ActiveCfg = Release|x86
-		{1694A2F8-645A-4263-A6AB-FC26323FD675}.Squirrel|x86.Build.0 = Release|x86
-		{A6264074-8A96-417C-9673-5EE7E9820B1F}.Debug|x86.ActiveCfg = Debug|x86
-		{A6264074-8A96-417C-9673-5EE7E9820B1F}.Debug|x86.Build.0 = Debug|x86
-		{A6264074-8A96-417C-9673-5EE7E9820B1F}.Release|x86.ActiveCfg = Release|x86
-		{A6264074-8A96-417C-9673-5EE7E9820B1F}.Release|x86.Build.0 = Release|x86
-		{A6264074-8A96-417C-9673-5EE7E9820B1F}.Squirrel|x86.ActiveCfg = Release|x86
-		{A6264074-8A96-417C-9673-5EE7E9820B1F}.Squirrel|x86.Build.0 = Release|x86
-		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Debug|x86.ActiveCfg = Debug|x86
-		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Debug|x86.Build.0 = Debug|x86
-		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Release|x86.ActiveCfg = Release|x86
-		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Release|x86.Build.0 = Release|x86
-		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Squirrel|x86.ActiveCfg = Release|x86
-		{02E1843D-3F5D-45E0-9B16-1F28209EED82}.Squirrel|x86.Build.0 = Release|x86
-		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Debug|x86.ActiveCfg = Debug|x86
-		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Debug|x86.Build.0 = Debug|x86
-		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Release|x86.ActiveCfg = Release|x86
-		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Release|x86.Build.0 = Release|x86
-		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Squirrel|x86.ActiveCfg = Release|x86
-		{D081BCA4-14FD-4FBC-B92A-82574AB0478B}.Squirrel|x86.Build.0 = Release|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Debug|x86.ActiveCfg = Debug|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Debug|x86.Build.0 = Debug|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Release|x86.ActiveCfg = Release|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Release|x86.Build.0 = Release|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Squirrel|x86.ActiveCfg = Release|x86
-		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Squirrel|x86.Build.0 = Release|x86
+		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Squirrel|Any CPU.ActiveCfg = Squirrel|Any CPU
+		{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}.Squirrel|Any CPU.Build.0 = Squirrel|Any CPU
+		{A2619CDE-7B45-4462-AD47-2A7C810551A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2619CDE-7B45-4462-AD47-2A7C810551A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2619CDE-7B45-4462-AD47-2A7C810551A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2619CDE-7B45-4462-AD47-2A7C810551A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2619CDE-7B45-4462-AD47-2A7C810551A6}.Squirrel|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2619CDE-7B45-4462-AD47-2A7C810551A6}.Squirrel|Any CPU.Build.0 = Debug|Any CPU
+		{93E7D7F0-A84C-4BB0-BD68-EEC9F377F1AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E7D7F0-A84C-4BB0-BD68-EEC9F377F1AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93E7D7F0-A84C-4BB0-BD68-EEC9F377F1AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93E7D7F0-A84C-4BB0-BD68-EEC9F377F1AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93E7D7F0-A84C-4BB0-BD68-EEC9F377F1AB}.Squirrel|Any CPU.ActiveCfg = Debug|Any CPU
+		{93E7D7F0-A84C-4BB0-BD68-EEC9F377F1AB}.Squirrel|Any CPU.Build.0 = Debug|Any CPU
+		{58384215-5D17-4F14-A13F-DD98D68C5C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58384215-5D17-4F14-A13F-DD98D68C5C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58384215-5D17-4F14-A13F-DD98D68C5C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58384215-5D17-4F14-A13F-DD98D68C5C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58384215-5D17-4F14-A13F-DD98D68C5C1D}.Squirrel|Any CPU.ActiveCfg = Debug|Any CPU
+		{58384215-5D17-4F14-A13F-DD98D68C5C1D}.Squirrel|Any CPU.Build.0 = Debug|Any CPU
+		{0CFB9662-B57B-488B-9270-CAEC01CDF1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CFB9662-B57B-488B-9270-CAEC01CDF1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CFB9662-B57B-488B-9270-CAEC01CDF1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CFB9662-B57B-488B-9270-CAEC01CDF1C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CFB9662-B57B-488B-9270-CAEC01CDF1C6}.Squirrel|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CFB9662-B57B-488B-9270-CAEC01CDF1C6}.Squirrel|Any CPU.Build.0 = Debug|Any CPU
+		{16B15FF0-E18C-40C9-97C8-99AFFBC13E6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16B15FF0-E18C-40C9-97C8-99AFFBC13E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16B15FF0-E18C-40C9-97C8-99AFFBC13E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16B15FF0-E18C-40C9-97C8-99AFFBC13E6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16B15FF0-E18C-40C9-97C8-99AFFBC13E6F}.Squirrel|Any CPU.ActiveCfg = Debug|Any CPU
+		{16B15FF0-E18C-40C9-97C8-99AFFBC13E6F}.Squirrel|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1C99A429-291D-47F1-8141-24B1213DEB89}
 	EndGlobalSection
 EndGlobal
