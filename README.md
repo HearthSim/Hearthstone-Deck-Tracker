@@ -57,6 +57,7 @@ The app:
   - **Share** your decks by exporting them as xml files or id-strings (My Decks > More...). Both can be imported via New Deck > Import.  
 - **Notifications**: get notified when a game or a turn starts (either by the tray icon flashing or hearthstone popping up)  
 - **Customization**: Almost every feature can be turned on/off separately.
+- **Extensible via plugins**: [available plugins](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Available-Plugins)
 - **Stats per deck**:
   - Track the result of each game (win/loss), opponents, game mode and more
   - Win/loss rate vs each class.

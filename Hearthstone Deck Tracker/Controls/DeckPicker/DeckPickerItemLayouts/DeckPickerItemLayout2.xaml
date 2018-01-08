@@ -29,7 +29,7 @@
                     <StackPanel.Resources>
                         <deckPicker:DateConverter x:Key="DateConverter"></deckPicker:DateConverter>
                     </StackPanel.Resources>
-                    <TextBlock Text="{Binding StatsString, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}" HorizontalAlignment="Left"
+                    <TextBlock Text="{Binding StatsString}, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}" HorizontalAlignment="Left"
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="14" />
                     <TextBlock Text="{Binding LastPlayed, Converter={StaticResource DateConverter}}" HorizontalAlignment="Right"
                            Foreground="{DynamicResource GrayTextColorBrush}" FontSize="11" Margin="0, 3, 0, 0"

@@ -1,0 +1,15 @@
+﻿<Project ToolsVersion="15.0" Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net471;netcoreapp2.0</TargetFrameworks>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>snKey.snk</AssemblyOriginatorKeyFile>
+		<DelaySign>false</DelaySign>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj" />
+	  <ProjectReference Include="..\HearthMirror\HearthMirror\HearthMirror.csproj" />
+	</ItemGroup>
+
+</Project>

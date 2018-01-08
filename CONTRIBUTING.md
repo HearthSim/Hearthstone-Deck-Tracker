@@ -1,9 +1,10 @@
 ## Setup
-1. Download and install [Visual Studio Community 2017](https://www.visualstudio.com/downloads/)
-2. Download and install [Git](https://git-scm.com/download/win) (use git from windows command prompt OR use git and optional unix tools)
-3. Download the latest stable [nuget executable](https://dist.nuget.org/index.html), copy it to the base directory (where bootstrap.bat is)
-4. run bootstrap.bat, preferably from a command window to see any errors.
-5. Open the solution file, do a build to make sure everything is working properly. Restore nuget packages if necessary.
+1. Download and install [Visual Studio Community 2017](https://www.visualstudio.com/downloads/). During install, make sure ".NET desktop development" is checked.
+2. Download and install [Git](https://git-scm.com/download). During install, change "Use Git from Git Bash only" to one of the other two options, depending on your preference.
+3. Clone the repository by opening command prompt/powershell in the folder of your choice and typing `git clone https://github.com/HearthSim/Hearthstone-Deck-Tracker`.
+4. Download the recommended latest [nuget executable](https://dist.nuget.org/index.html) and copy it into your PATH, or where you cloned the git repository (where bootstrap.bat is).
+5. run bootstrap.bat, preferably from a command prompt/powershell window to see any errors.
+6. Open the solution file with VS17 and do a build to make sure everything is working properly.
 
 ## Creating Issues
 - Have a look at the [FAQ](https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/FAQ).
@@ -43,4 +44,4 @@ Want to help translate the app? Take a look at the [HDT-Localization repository]
 
 ### Need help?
 
-You can always ask for help on [Gitter](https://gitter.im/HearthSim/Hearthstone-Deck-Tracker) or the HearthSim IRC channel, `#Hearthsim` on [Freenode](https://freenode.net/).
+You can always ask for help on [Gitter](https://gitter.im/HearthSim/Hearthstone-Deck-Tracker), #hdt in the [Developer Discord](https://discord.gg/CBnAFhX), or the HearthSim IRC channel, `#Hearthsim` on [Freenode](https://freenode.net/).

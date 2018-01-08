@@ -1,3 +1,16 @@
+## __Release v1.5.11 - 2018-01-08__
+
+- Clean working directory to mirror Master layout.
+- Rewrote ResourceGenerator for async handling.
+- Downloads files 50% faster with considerable file size reduction.
+  Uses new Image format to replace Bitmap. Compiliant with .NET Core.
+- Updated framework .NET 4.7,1 and libraries to .NET 4.7.1 & .NET Core 2.0.
+- Revamped Pre/Postevent.bat file to better automate & installation for resource generation.
+- Fixed various hotpoints and related NPEs throughout ALL assemblies.
+- Updated build configuration for VSTools 15 which eliminates problems for binding references.
+- Refactored namespace locations particularly for xaml files and dependancies, so they match directory hierarchy locations.
+  Important for ms-build configuration v15.
+
 ## __Release v1.5.10 - 2017-12-18__
 
 - Fixed tracking of cards created by: Dead Man's Hand, Psychic Scream, Spiteful Summoner, Dragon's Fury, and several others.

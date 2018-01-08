@@ -89,9 +89,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var dialog = new OpenFileDialog
 				{
-					Title = "Select Replay File",
+					Title = @"Select Replay File",
 					DefaultExt = "*.hdtreplay",
-					Filter = "HDT Replay|*.hdtreplay",
+					Filter = @"HDT Replay|*.hdtreplay",
 					InitialDirectory = Config.Instance.ReplayDir
 				};
 				var dialogResult = dialog.ShowDialog();

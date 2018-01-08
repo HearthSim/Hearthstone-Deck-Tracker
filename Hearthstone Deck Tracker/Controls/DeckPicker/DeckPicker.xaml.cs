@@ -22,7 +22,6 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.ComponentModel.ListSortDirection;
 using static System.Windows.Visibility;
-using Clipboard = System.Windows.Clipboard;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using ListView = System.Windows.Controls.ListView;
 using Hearthstone_Deck_Tracker.Windows;
