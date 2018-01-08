@@ -19,7 +19,7 @@
     </UserControl.Resources>
     <ScrollViewer Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <DockPanel>
-            <Expander Name="ExpanderCharts" IsExpanded="{Binding ArenaSummaryChartsExpanded, Source={StaticResource ConfigWrapper}}" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Margin="5">
+            <Expander Name="ExpanderCharts" IsExpanded="{Binding ArenaSummaryChartsExpanded, Source={StaticResource ConfigWrapper}}" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{lex:LocTextUpper Stats_Arena_Summary_Label_Charts}" Foreground="White"/>

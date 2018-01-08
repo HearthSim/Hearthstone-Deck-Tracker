@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;

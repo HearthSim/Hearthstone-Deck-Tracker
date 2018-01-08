@@ -25,7 +25,7 @@
                                DockPanel.Dock="Left" />
                     <TextBlock Name="TextBlockStats" VerticalAlignment="Center"
                                Foreground="{DynamicResource GrayTextColorBrush}"
-                               Text="{Binding StatsString, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPickerItem}}"
+                               Text="{Binding StatsString}"
                                Margin="{Binding ElementName=TextBlockStats, Path=ActualWidth, Converter={StaticResource MarginConverterLeft}}" />
                     <Grid />
                 </DockPanel>
