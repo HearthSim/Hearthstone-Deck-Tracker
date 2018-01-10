@@ -229,9 +229,6 @@
     <Compile Include="Controls\CardToolTipControl.xaml.cs">
       <DependentUpon>CardToolTipControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ChartWinsByClass.xaml.cs">
-      <DependentUpon>ChartWinsByClass.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DeckImportingControl.xaml.cs">
       <DependentUpon>DeckImportingControl.xaml</DependentUpon>
     </Compile>
@@ -864,10 +861,6 @@
     <Page Include="Controls\CardToolTipControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ChartWinsByClass.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DeckImportingControl.xaml">
       <SubType>Designer</SubType>
