@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public string VersionString
 		{
-			get { return _versionString; }
+			get => _versionString;
 			set
 			{
 				_versionString = value;
@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public string LoadingString
 		{
-			get { return _loadingString; }
+			get => _loadingString;
 			set
 			{
 				_loadingString = value;
@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public Visibility SkipVisibility
 		{
-			get { return _skipVisibility; }
+			get => _skipVisibility;
 			set
 			{
 				if(value == _skipVisibility)
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public SolidColorBrush SkipBackground
 		{
-			get { return _skipBackground; }
+			get => _skipBackground;
 			set
 			{
 				if(Equals(value, _skipBackground))

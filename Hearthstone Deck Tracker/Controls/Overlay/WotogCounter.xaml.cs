@@ -3,7 +3,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 
 #endregion
 
@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public string Attack
 		{
-			get { return _attack; }
+			get => _attack;
 			set
 			{
 				if(value == _attack)
@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public string Health
 		{
-			get { return _health; }
+			get => _health;
 			set
 			{
 				if(value == _health)
@@ -52,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public string Spells
 		{
-			get { return _spells; }
+			get => _spells;
 			set
 			{
 				if(value == _spells)
@@ -64,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public string Jade
 		{
-			get { return _jade; }
+			get => _jade;
 			set {
 				if (value == _jade)
 					return;
@@ -75,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public WotogCounterStyle WotogCounterStyle
 		{
-			get { return _wotogCounterStyle; }
+			get => _wotogCounterStyle;
 			set
 			{
 				if(value == _wotogCounterStyle)
@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public WotogCounterStyle JadeCounterStyle
 		{
-			get { return _jadeCounterStyle; }
+			get => _jadeCounterStyle;
 			set {
 				if (value == _jadeCounterStyle)
 					return;

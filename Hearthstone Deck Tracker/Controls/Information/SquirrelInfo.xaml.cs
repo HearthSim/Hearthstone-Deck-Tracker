@@ -6,8 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 
 		public int Progress
 		{
-			get { return _progress; }
+			get => _progress;
 			set
 			{
 				if(value == _progress)

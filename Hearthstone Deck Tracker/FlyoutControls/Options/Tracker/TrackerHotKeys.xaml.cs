@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility.HotKeys;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public string ErrorText
 		{
-			get { return _errorText; }
+			get => _errorText;
 			set
 			{
 				_errorText = value;

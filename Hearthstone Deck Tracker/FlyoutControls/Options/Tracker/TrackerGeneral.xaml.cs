@@ -8,8 +8,9 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Properties;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -345,7 +346,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public Visibility RestartLabelVisibility
 		{
-			get { return _restartLabelVisibility; }
+			get => _restartLabelVisibility;
 			set
 			{
 				if(_restartLabelVisibility == value)

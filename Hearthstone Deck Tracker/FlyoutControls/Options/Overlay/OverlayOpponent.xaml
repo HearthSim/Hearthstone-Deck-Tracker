@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -136,7 +136,7 @@
                   Margin="10,5,0,10" VerticalAlignment="Top"
                   Checked="CheckboxHighlightDiscarded_Checked"
                   Unchecked="CheckboxHighlightDiscarded_Unchecked" />
-        <hearthstoneDeckTracker:ElementSorter x:Name="ElementSorterOpponent" Margin="10,5,10,10"
+        <controls:ElementSorter x:Name="ElementSorterOpponent" Margin="10,5,10,10"
                                               Height="auto" />
     </StackPanel>
 </UserControl>

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Windows"
         xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
         mc:Ignorable="d" Background="Transparent" AllowsTransparency="True"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -32,15 +33,15 @@
         <Rectangle Height="5" Width="40" Margin="200,200,0,0" Fill="Black"/>
         <Rectangle Height="5" Width="40" Margin="-200,200,0,0" Fill="Black" Visibility="{Binding SkipVisibility, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}"/>
         <Border BorderThickness="5" BorderBrush="Black" Background="White" CornerRadius="15" Margin="0,200,0,0" Width="180" Height="50">
-            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding LoadingString, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" FontWeight="Medium" Height="40" FontSize="26" VerticalAlignment="Center" TextAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
+            <controls:HearthstoneTextBlock Text="{Binding LoadingString, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" FontWeight="Medium" Height="40" FontSize="26" VerticalAlignment="Center" TextAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
         </Border>
         <Border BorderThickness="5" BorderBrush="Black" Background="White" CornerRadius="10" Margin="275,200,0,0" Width="80" Height="30">
-            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding VersionString, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" Height="26" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
+            <controls:HearthstoneTextBlock Text="{Binding VersionString, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" Height="26" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
         </Border>
         <Border BorderThickness="5" BorderBrush="Black" Background="{Binding SkipBackground, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" CornerRadius="10" Margin="-275,200,0,0" Width="80" Height="30" 
                 Visibility="{Binding SkipVisibility, RelativeSource={RelativeSource AncestorType=local:SplashScreenWindow}}" 
                 MouseDown="SkipBorder_OnMouseDown" MouseEnter="SkipBorder_OnMouseEnter" MouseLeave="SkipBorder_OnMouseLeave">
-            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:LocTextUpper SplashScreen_Button_Skip}" Height="26" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
+            <controls:HearthstoneTextBlock Text="{lex:LocTextUpper SplashScreen_Button_Skip}" Height="26" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Fill="{DynamicResource AccentColorBrush}"/>
         </Border>
     </Grid>
 </Window>

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 {
+	/// <inheritdoc />
 	/// <summary>
 	/// Event Args for the event that is fired after the hot key has been pressed.
 	/// </summary>
@@ -18,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Key = key;
 		}
 
-		public ModifierKeys Modifier { get; private set; }
-		public Keys Key { get; private set; }
+		public ModifierKeys Modifier { get; }
+		public Keys Key { get; }
 	}
 }

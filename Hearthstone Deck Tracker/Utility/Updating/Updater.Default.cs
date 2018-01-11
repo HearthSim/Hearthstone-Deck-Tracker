@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				return;
 			_showingUpdateMessage = true;
 
-			var settings = new MessageDialogs.Settings {AffirmativeButtonText = LocUtil.Get("Button_Download"), NegativeButtonText = LocUtil.Get("Button_Notnow")};
+			var settings = new MessageDialogs.Settings {AffirmativeButtonText = "Download", NegativeButtonText = "Not now"};
 			if(_release == null)
 			{
 				_showingUpdateMessage = false;

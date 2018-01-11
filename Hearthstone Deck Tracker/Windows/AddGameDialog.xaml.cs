@@ -12,13 +12,10 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
-using static System.Windows.Visibility;
-using static Hearthstone_Deck_Tracker.Enums.GameMode;
-using static Hearthstone_Deck_Tracker.Enums.YesNo;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker.FlyoutControls
+namespace Hearthstone_Deck_Tracker.Windows
 {
 	/// <summary>
 	/// Interaction logic for AddGameDialog.xaml
@@ -38,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			InitializeComponent();
 			ComboBoxResult.ItemsSource = new[] { GameResult.Win, GameResult.Loss, GameResult.Draw};
 			ComboBoxOpponent.ItemsSource = Enum.GetValues(typeof(HeroClass));
-			ComboBoxMode.ItemsSource = new[] {Ranked, Casual, Arena, Brawl, Friendly, Practice};
+			ComboBoxMode.ItemsSource = new[] {GameMode.Ranked, GameMode.Casual, GameMode.Arena, GameMode.Brawl, GameMode.Friendly, GameMode.Practice};
 			ComboBoxFormat.ItemsSource = new[] {Format.Standard, Format.Wild};
 			ComboBoxRegion.ItemsSource = new[] { Region.US, Region.EU, Region.ASIA, Region.CHINA};
 			ComboBoxCoin.ItemsSource = Enum.GetValues(typeof(YesNo));
@@ -52,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			var lastGame = deck.DeckStats.Games.LastOrDefault();
 			if(deck.IsArenaDeck)
 			{
-				ComboBoxMode.SelectedItem = Arena;
+				ComboBoxMode.SelectedItem = GameMode.Arena;
 				ComboBoxMode.IsEnabled = false;
 			}
 			else
@@ -64,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				{
 					ComboBoxFormat.SelectedItem = lastGame.Format;
 					ComboBoxMode.SelectedItem = lastGame.GameMode;
-					if(lastGame.GameMode == Ranked)
+					if(lastGame.GameMode == GameMode.Ranked)
 					{
 						TextBoxRank.Text = lastGame.Rank.ToString();
 						TextBoxLegendRank.Text = lastGame.LegendRank.ToString();
@@ -73,8 +70,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 			if(lastGame != null)
 			{
-				PanelRank.Visibility = PanelLegendRank.Visibility = lastGame.GameMode == Ranked ? Visible : Collapsed;
-				PanelFormat.Visibility = lastGame.GameMode == Ranked || lastGame.GameMode == Casual ? Visible : Collapsed;
+				PanelRank.Visibility = PanelLegendRank.Visibility = lastGame.GameMode == GameMode.Ranked ? Visibility.Visible : Visibility.Collapsed;
+				PanelFormat.Visibility = lastGame.GameMode == GameMode.Ranked || lastGame.GameMode == GameMode.Casual ? Visibility.Visible : Visibility.Collapsed;
 				TextBoxPlayerName.Text = lastGame.PlayerName;
 				if(lastGame.Region != Region.UNKNOWN)
 					ComboBoxRegion.SelectedItem = lastGame.Region;
@@ -97,15 +94,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ComboBoxMode.SelectedItem = game.GameMode;
 			ComboBoxFormat.SelectedItem = game.Format;
 			ComboBoxRegion.SelectedItem = game.Region;
-			if(game.GameMode == Ranked)
+			if(game.GameMode == GameMode.Ranked)
 			{
 				TextBoxRank.Text = game.Rank.ToString();
 				TextBoxLegendRank.Text = game.LegendRank.ToString();
 			}
-			PanelRank.Visibility = PanelLegendRank.Visibility = game.GameMode == Ranked ? Visible : Collapsed;
-			PanelFormat.Visibility = game.GameMode == Ranked || game.GameMode == Casual ? Visible : Collapsed;
-			ComboBoxCoin.SelectedItem = game.Coin ? Yes : No;
-			ComboBoxConceded.SelectedItem = game.WasConceded ? Yes : No;
+			PanelRank.Visibility = PanelLegendRank.Visibility = game.GameMode == GameMode.Ranked ? Visibility.Visible : Visibility.Collapsed;
+			PanelFormat.Visibility = game.GameMode == GameMode.Ranked || game.GameMode == GameMode.Casual ? Visibility.Visible : Visibility.Collapsed;
+			ComboBoxCoin.SelectedItem = game.Coin ? YesNo.Yes : YesNo.No;
+			ComboBoxConceded.SelectedItem = game.WasConceded ? YesNo.Yes : YesNo.No;
 			TextBoxTurns.Text = game.Turns.ToString();
 			TextBoxDuration.Text = game.Duration;
 			TextBoxDuration.IsEnabled = false;
@@ -136,17 +133,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				_game.Result = (GameResult)ComboBoxResult.SelectedItem;
 				_game.GameMode = (GameMode)ComboBoxMode.SelectedItem;
 				_game.OpponentHero = ComboBoxOpponent.SelectedValue.ToString();
-				_game.Coin = (YesNo)ComboBoxCoin.SelectedValue == Yes;
+				_game.Coin = (YesNo)ComboBoxCoin.SelectedValue == YesNo.Yes;
 				_game.Rank = rank;
 				_game.LegendRank = legendRank;
 				_game.Note = TextBoxNote.Text;
 				_game.OpponentName = TextBoxOppName.Text;
 				_game.PlayerName = TextBoxPlayerName.Text;
 				_game.Turns = turns;
-				_game.WasConceded = (YesNo)ComboBoxConceded.SelectedValue == Yes;
+				_game.WasConceded = (YesNo)ComboBoxConceded.SelectedValue == YesNo.Yes;
 				_game.Region = (Region)ComboBoxRegion.SelectedItem;
 				_game.HearthstoneBuild = Helper.GetHearthstoneBuild();
-				if(_game.GameMode == Casual || _game.GameMode == Ranked)
+				if(_game.GameMode == GameMode.Casual || _game.GameMode == GameMode.Ranked)
 					_game.Format = (Format)ComboBoxFormat.SelectedItem;
 				_tcs.SetResult(_game);
 			}
@@ -169,11 +166,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			if(IsLoaded)
 			{
-				var ranked = e.AddedItems.Contains(Ranked);
-				PanelRank.Visibility = PanelLegendRank.Visibility= ranked ? Visible : Collapsed;
+				var ranked = e.AddedItems.Contains(GameMode.Ranked);
+				PanelRank.Visibility = PanelLegendRank.Visibility= ranked ? Visibility.Visible : Visibility.Collapsed;
 
-				var format = ranked || e.AddedItems.Contains(Casual);
-				PanelFormat.Visibility = format ? Visible : Collapsed;
+				var format = ranked || e.AddedItems.Contains(GameMode.Casual);
+				PanelFormat.Visibility = format ? Visibility.Visible : Visibility.Collapsed;
 			}
 		}
 

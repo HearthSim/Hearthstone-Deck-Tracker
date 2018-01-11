@@ -20,8 +20,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				var deck = new Deck
 				{
 					Name =
-						HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header[@class='panel-heading']/h1[@class='panel-title']").InnerText)
-						           .Trim()
+						HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//header[@class='panel-heading']/h1[@class='panel-title']").InnerText)?.Trim()
 				};
 				var nodes = doc.DocumentNode.SelectNodes("//*[@id='list']/div/table/tbody/tr");
 

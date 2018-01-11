@@ -13,8 +13,9 @@ using System;
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
-namespace Hearthstone_Deck_Tracker.Annotations
+namespace Hearthstone_Deck_Tracker.Properties
 {
+	/// <inheritdoc />
 	/// <summary>
 	/// Indicates that the value of the marked element could be <c>null</c> sometimes,
 	/// so the check for <c>null</c> is necessary before its usage
@@ -33,6 +34,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Indicates that the value of the marked element could never be <c>null</c>
 	/// </summary>
@@ -48,10 +50,11 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Indicates that the marked method builds string by format pattern and (optional) arguments.
 	/// Parameter, which contains format string, should be given in constructor. The format string
-	/// should be in <see cref="string.Format(IFormatProvider,string,object[])"/>-like form
+	/// should be in <see cref="M:System.String.Format(System.IFormatProvider,System.String,System.Object[])" />-like form
 	/// </summary>
 	/// <example><code>
 	/// [StringFormatMethod("message")]
@@ -63,6 +66,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	[AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method)]
 	public sealed class StringFormatMethodAttribute : Attribute
 	{
+		/// <inheritdoc />
 		/// <param name="formatParameterName">
 		/// Specifies which parameter of an annotated method should be treated as format-string
 		/// </param>
@@ -71,13 +75,14 @@ namespace Hearthstone_Deck_Tracker.Annotations
 			FormatParameterName = formatParameterName;
 		}
 
-		public string FormatParameterName { get; private set; }
+		public string FormatParameterName { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Indicates that the function argument should be string literal and match one
 	/// of the parameters of the caller function. For example, ReSharper annotates
-	/// the parameter of <see cref="System.ArgumentNullException"/>
+	/// the parameter of <see cref="T:System.ArgumentNullException" />
 	/// </summary>
 	/// <example><code>
 	/// public void Foo(string param) {
@@ -90,42 +95,42 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
-	/// <summary>
-	/// Indicates that the method is contained in a type that implements
-	/// <see cref="System.ComponentModel.INotifyPropertyChanged"/> interface
-	/// and this method is used to notify that some property value changed
-	/// </summary>
-	/// <remarks>
-	/// The method should be non-static and conform to one of the supported signatures:
-	/// <list>
-	/// <item><c>NotifyChanged(string)</c></item>
-	/// <item><c>NotifyChanged(params string[])</c></item>
-	/// <item><c>NotifyChanged{T}(Expression{Func{T}})</c></item>
-	/// <item><c>NotifyChanged{T,U}(Expression{Func{T,U}})</c></item>
-	/// <item><c>SetProperty{T}(ref T, T, string)</c></item>
-	/// </list>
-	/// </remarks>
-	/// <example><code>
-	/// public class Foo : INotifyPropertyChanged {
-	///   public event PropertyChangedEventHandler PropertyChanged;
-	///   [NotifyPropertyChangedInvocator]
-	///   protected virtual void NotifyChanged(string propertyName) { ... }
-	///
-	///   private string _name;
-	///   public string Name {
-	///     get { return _name; }
-	///     set { _name = value; NotifyChanged("LastName"); /* Warning */ }
-	///   }
-	/// }
-	/// </code>
-	/// Examples of generated notifications:
-	/// <list>
-	/// <item><c>NotifyChanged("Property")</c></item>
-	/// <item><c>NotifyChanged(() =&gt; Property)</c></item>
-	/// <item><c>NotifyChanged((VM x) =&gt; x.Property)</c></item>
-	/// <item><c>SetProperty(ref myField, value, "Property")</c></item>
-	/// </list>
-	/// </example>
+	/// <inheritdoc />
+	///  <summary>
+	///  Indicates that the method is contained in a type that implements
+	///  <see cref="T:System.ComponentModel.INotifyPropertyChanged" /> interface
+	///  and this method is used to notify that some property value changed
+	///  </summary>
+	///  <remarks>
+	///  The method should be non-static and conform to one of the supported signatures:
+	///  <list>
+	///  <item><c>NotifyChanged(string)</c></item>
+	///  <item><c>NotifyChanged(params string[])</c></item>
+	///  <item><c>NotifyChanged{T}(Expression{Func{T}})</c></item>
+	///  <item><c>NotifyChanged{T,U}(Expression{Func{T,U}})</c></item>
+	///  <item><c>SetProperty{T}(ref T, T, string)</c></item>
+	///  </list>
+	///  </remarks>
+	///  <example><code>
+	///  public class Foo : INotifyPropertyChanged {
+	///    public event PropertyChangedEventHandler PropertyChanged;
+	///    [NotifyPropertyChangedInvocator]
+	///    protected virtual void NotifyChanged(string propertyName) { ... }
+	///    private string _name;
+	///    public string Name {
+	///      get { return _name; }
+	///      set { _name = value; NotifyChanged("LastName"); /* Warning */ }
+	///    }
+	///  }
+	///  </code>
+	///  Examples of generated notifications:
+	///  <list>
+	///  <item><c>NotifyChanged("Property")</c></item>
+	///  <item><c>NotifyChanged(() =&gt; Property)</c></item>
+	///  <item><c>NotifyChanged((VM x) =&gt; x.Property)</c></item>
+	///  <item><c>SetProperty(ref myField, value, "Property")</c></item>
+	///  </list>
+	///  </example>
 	[AttributeUsage(AttributeTargets.Method)]
 	public sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
 	{
@@ -138,9 +143,10 @@ namespace Hearthstone_Deck_Tracker.Annotations
 			ParameterName = parameterName;
 		}
 
-		public string ParameterName { get; private set; }
+		public string ParameterName { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Describes dependency between method input and output
 	/// </summary>
@@ -153,12 +159,12 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	/// <item>Output   ::= [ParameterName: Value]* {halt|stop|void|nothing|Value}</item>
 	/// <item>Value    ::= true | false | null | notnull | canbenull</item>
 	/// </list>
-	/// If method has single input parameter, it's name could be omitted.<br/>
+	/// If method has single input parameter, it's name could be omitted.<br />
 	/// Using <c>halt</c> (or <c>void</c>/<c>nothing</c>, which is the same)
-	/// for method output means that the methos doesn't return normally.<br/>
-	/// <c>canbenull</c> annotation is only applicable for output parameters.<br/>
+	/// for method output means that the methos doesn't return normally.<br />
+	/// <c>canbenull</c> annotation is only applicable for output parameters.<br />
 	/// You can use multiple <c>[ContractAnnotation]</c> for each FDT row,
-	/// or use single attribute with rows separated by semicolon.<br/>
+	/// or use single attribute with rows separated by semicolon.<br />
 	/// </syntax>
 	/// <examples><list>
 	/// <item><code>
@@ -196,10 +202,11 @@ namespace Hearthstone_Deck_Tracker.Annotations
 			ForceFullStates = forceFullStates;
 		}
 
-		public string Contract { get; private set; }
-		public bool ForceFullStates { get; private set; }
+		public string Contract { get; }
+		public bool ForceFullStates { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Indicates that marked element should be localized or not
 	/// </summary>
@@ -221,9 +228,10 @@ namespace Hearthstone_Deck_Tracker.Annotations
 			Required = required;
 		}
 
-		public bool Required { get; private set; }
+		public bool Required { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Indicates that the value of the marked type (or its derivatives)
 	/// cannot be compared using '==' or '!=' operators and <c>Equals()</c>
@@ -248,6 +256,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// When applied to a target attribute, specifies a requirement for any type marked
 	/// with the target attribute to implement or inherit specific type or types.
@@ -268,9 +277,10 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[NotNull]
-		public Type BaseType { get; private set; }
+		public Type BaseType { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Indicates that the marked symbol is used implicitly
 	/// (e.g. via reflection, in external library), so this symbol
@@ -297,10 +307,11 @@ namespace Hearthstone_Deck_Tracker.Annotations
 			TargetFlags = targetFlags;
 		}
 
-		public ImplicitUseKindFlags UseKindFlags { get; private set; }
-		public ImplicitUseTargetFlags TargetFlags { get; private set; }
+		public ImplicitUseKindFlags UseKindFlags { get; }
+		public ImplicitUseTargetFlags TargetFlags { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Should be used on attributes and causes ReSharper
 	/// to not mark symbols marked with such attributes as unused
@@ -328,10 +339,10 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[UsedImplicitly]
-		public ImplicitUseKindFlags UseKindFlags { get; private set; }
+		public ImplicitUseKindFlags UseKindFlags { get; }
 
 		[UsedImplicitly]
-		public ImplicitUseTargetFlags TargetFlags { get; private set; }
+		public ImplicitUseTargetFlags TargetFlags { get; }
 	}
 
 	[Flags]
@@ -373,6 +384,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		WithMembers = Itself | Members
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// This attribute is intended to mark publicly available API
 	/// which should not be removed and so is treated as used
@@ -390,9 +402,10 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[NotNull]
-		public string Comment { get; private set; }
+		public string Comment { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Tells code analysis engine if the parameter is completely handled
 	/// when the invoked method is on stack. If the parameter is a delegate,
@@ -405,6 +418,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Indicates that a method does not make any observable state changes.
 	/// The same as <c>System.Diagnostics.Contracts.PureAttribute</c>
@@ -421,6 +435,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Indicates that a parameter is a path to a file or a folder
 	/// within a web project. Path can be relative or absolute,
@@ -439,7 +454,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[NotNull]
-		public string BasePath { get; private set; }
+		public string BasePath { get; }
 	}
 
 	// ASP.NET MVC attributes
@@ -492,6 +507,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter
 	/// is an MVC action. If applied to a method, the MVC action name is calculated
@@ -511,9 +527,10 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[NotNull]
-		public string AnonymousProperty { get; private set; }
+		public string AnonymousProperty { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC area.
 	/// Use this attribute for custom wrappers similar to
@@ -532,9 +549,10 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[NotNull]
-		public string AnonymousProperty { get; private set; }
+		public string AnonymousProperty { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. If applied to a parameter, indicates that
 	/// the parameter is an MVC controller. If applied to a method,
@@ -555,9 +573,10 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[NotNull]
-		public string AnonymousProperty { get; private set; }
+		public string AnonymousProperty { get; }
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC Master.
 	/// Use this attribute for custom wrappers similar to
@@ -568,6 +587,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC model type.
 	/// Use this attribute for custom wrappers similar to
@@ -578,6 +598,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. If applied to a parameter, indicates that
 	/// the parameter is an MVC partial view. If applied to a method,
@@ -590,6 +611,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. Allows disabling all inspections
 	/// for MVC views within a class or a method.
@@ -599,6 +621,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC display template.
 	/// Use this attribute for custom wrappers similar to 
@@ -609,6 +632,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC editor template.
 	/// Use this attribute for custom wrappers similar to
@@ -619,6 +643,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC template.
 	/// Use this attribute for custom wrappers similar to
@@ -629,6 +654,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter
 	/// is an MVC view. If applied to a method, the MVC view name is calculated implicitly
@@ -640,6 +666,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	{
 	}
 
+	/// <inheritdoc />
 	/// <summary>
 	/// ASP.NET MVC attribute. When applied to a parameter of an attribute,
 	/// indicates that this parameter is an MVC action name
@@ -669,7 +696,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[NotNull]
-		public string Name { get; private set; }
+		public string Name { get; }
 	}
 
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
@@ -681,11 +708,12 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[NotNull]
-		public string Name { get; private set; }
+		public string Name { get; }
 	}
 
 	// Razor attributes
 
+	/// <inheritdoc />
 	/// <summary>
 	/// Razor attribute. Indicates that a parameter or a method is a Razor section.
 	/// Use this attribute for custom wrappers similar to 

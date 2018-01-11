@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 
 namespace Hearthstone_Deck_Tracker.Utility.Updating
 {
@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 
 		public Visibility Visibility
 		{
-			get { return _visibility; }
+			get => _visibility;
 			set
 			{
 				_visibility = value;

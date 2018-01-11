@@ -5,7 +5,7 @@ using Hearthstone_Deck_Tracker.Enums;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Controls
 {
 	/// <summary>
 	/// Interaction logic for ElementSorter.xaml

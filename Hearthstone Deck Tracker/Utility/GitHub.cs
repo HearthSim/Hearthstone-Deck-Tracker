@@ -40,24 +40,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		private static async Task<Release> GetLatestRelease(string user, string repo, bool preRelease)
 		{
-			try
+			string json;
+			using(var wc = new WebClient())
 			{
-				string json;
-				using(var wc = new WebClient())
-				{
-					wc.Headers.Add(HttpRequestHeader.UserAgent, user);
-					var url = $"https://api.github.com/repos/{user}/{repo}/releases";
-					if(!preRelease)
-						url += "/latest";
-					json = await wc.DownloadStringTaskAsync(url);
-				}
-				return preRelease ? JsonConvert.DeserializeObject<Release[]>(json).FirstOrDefault() 
-								  : JsonConvert.DeserializeObject<Release>(json);
+				wc.Headers.Add(HttpRequestHeader.UserAgent, user);
+				var url = $"https://api.github.com/repos/{user}/{repo}/releases";
+				if(!preRelease)
+				  url += "/latest";
+				json = await wc.DownloadStringTaskAsync(url);
 			}
-			catch(Exception ex)
-			{
-				throw ex;
-			}
+			return preRelease ? JsonConvert.DeserializeObject<Release[]>(json).FirstOrDefault() 
+			    : JsonConvert.DeserializeObject<Release>(json);
 		}
 
 		public static async Task<string> DownloadRelease(Release release, string downloadDirectory)

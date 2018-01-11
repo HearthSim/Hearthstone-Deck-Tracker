@@ -17,9 +17,8 @@ namespace HearthWatcher.LogReader
 			var match = regex.Match(line);
 			if(match.Success)
 			{
-				DateTime time;
 				var ts = match.Groups["ts"].Value;
-				if(DateTime.TryParse(ts, out time))
+				if(DateTime.TryParse(ts, out var time))
 				{
 					Time = DateTime.Today.Add(time.TimeOfDay);
 					if(Time > DateTime.Now)

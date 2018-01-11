@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				foreach(var cardNode in cardNodes)
 				{
 					var nameString = HttpUtility.HtmlDecode(cardNode.InnerText);
-					var match = Regex.Match(nameString, @"^\s*(.*)\s*(x 2)?\s*$");
+					var match = Regex.Match(nameString ?? throw new NullReferenceException(), @"^\s*(.*)\s*(x 2)?\s*$");
 
 					if(match.Success)
 					{

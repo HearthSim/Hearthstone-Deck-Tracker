@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Visible = true,
 				ContextMenu = new ContextMenu(),
-				Text = "Hearthstone Deck Tracker v" + (Helper.GetCurrentVersion() ?? new Version("0.0")).ToVersionString()
+				Text = @"Hearthstone Deck Tracker v" + (Helper.GetCurrentVersion() ?? new Version("0.0")).ToVersionString()
 			};
 
 			var iconFile = new FileInfo("Images/HearthstoneDeckTracker16.ico");

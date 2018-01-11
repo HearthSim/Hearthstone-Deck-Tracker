@@ -2,8 +2,8 @@
 
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts;
+using Hearthstone_Deck_Tracker.Properties;
 
 #endregion
 
@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 
 		public object ChartWinsControl
 		{
-			get { return _chartWinsControl; }
+			get => _chartWinsControl;
 			set
 			{
 				_chartWinsControl = value;

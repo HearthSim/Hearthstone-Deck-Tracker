@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
@@ -13,6 +12,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Importing.Game;
 using Hearthstone_Deck_Tracker.Importing.Game.ImportOptions;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -158,7 +158,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			_waitingForUserInput = true;
 			Log.Info("Waiting for user input...");
-			var dsDialog = new DeckSelectionDialog(decks);
+			var dsDialog = new Windows.DeckSelectionDialog(decks);
 			dsDialog.ShowDialog();
 
 			var selectedDeck = dsDialog.SelectedDeck;
@@ -249,8 +249,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					if(!updateExisting)
 						continue;
-					var existing = deck.SelectedImportOption as ExistingDeck;
-					if(existing == null)
+				    if(!(deck.SelectedImportOption is ExistingDeck existing))
 						continue;
 					var target = existing.Deck;
 					target.HsId = deck.Deck.Id;

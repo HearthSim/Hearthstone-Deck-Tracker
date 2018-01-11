@@ -147,7 +147,7 @@
             <controls:Flyout x:Name="FlyoutStats" Position="Left" Panel.ZIndex="1" Width="{Binding Width, RelativeSource={RelativeSource AncestorType=windows:MainWindow}}">
                 <controls:Flyout.HeaderTemplate>
                     <DataTemplate>
-                        <DockPanel>
+                        <DockPanel Margin="10,13,10,8">
                             <Button Click="ButtonCloseStatsFlyout_OnClick" DockPanel.Dock="Right" Width="40" Height="40" VerticalAlignment="Center" Style="{DynamicResource MetroCircleButtonStyle}">
                                 <Rectangle Width="20" Height="15">
                                     <Rectangle.Fill>

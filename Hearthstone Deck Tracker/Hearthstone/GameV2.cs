@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Mode CurrentMode
 		{
-			get { return _currentMode; }
+			get => _currentMode;
 			set
 			{
 				_currentMode = value;

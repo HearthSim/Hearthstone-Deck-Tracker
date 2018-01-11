@@ -44,7 +44,7 @@
             <!-- Deck Title/Header -->
             <Border BorderBrush="Black" BorderThickness="1" Height="40" Width="217" x:Name="DeckTitleContainer" DockPanel.Dock="Top">
                 <DockPanel Name="DeckTitlePanel" Height="40" Width="217" LastChildFill="True">
-                    <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Margin="4,2" Text="Deck title" TextAlignment="Left" VerticalAlignment="Bottom"/>
+                    <controls1:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Margin="4,2" Text="Deck title" TextAlignment="Left" VerticalAlignment="Bottom"/>
                 </DockPanel>
             </Border>
             <!-- Format/Tags -->

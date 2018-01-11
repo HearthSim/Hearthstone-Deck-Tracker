@@ -20,8 +20,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 
 		public Markdown Markdown
 		{
-			get { return (Markdown)GetValue(MarkdownProperty); }
-			set { SetValue(MarkdownProperty, value); }
+			get => (Markdown)GetValue(MarkdownProperty);
+			set => SetValue(MarkdownProperty, value);
 		}
 
 		/// <summary>

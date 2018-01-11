@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public ProgressIndicatorState ProgressState
 		{
-			get { return _progressState; }
+			get => _progressState;
 			set
 			{
 				if(_progressState == value)
@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public ReplayProgress Status
 		{
-			get { return _status; }
+			get => _status;
 			set
 			{
 				_status = value;

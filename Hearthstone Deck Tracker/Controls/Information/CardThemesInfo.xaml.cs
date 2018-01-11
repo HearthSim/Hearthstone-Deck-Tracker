@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 using CardIds = HearthDb.CardIds;
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 
 		public bool RarityGems
 		{
-			get { return Config.Instance.RarityCardGems; }
+			get => Config.Instance.RarityCardGems;
 			set
 			{
 				Config.Instance.RarityCardGems = value;
@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 
 		public bool RarityFrames
 		{
-			get { return Config.Instance.RarityCardFrames; }
+			get => Config.Instance.RarityCardFrames;
 			set
 			{
 				Config.Instance.RarityCardFrames = value;
@@ -135,8 +135,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		{
 			if(AnimatedCardList == null)
 				return;
-			var tb = sender as ToggleButton;
-			if(tb != null)
+			if(sender is ToggleButton tb)
 			{
 				var theme = tb.Content.ToString().ToLower();
 				ThemeManager.SetTheme(theme);

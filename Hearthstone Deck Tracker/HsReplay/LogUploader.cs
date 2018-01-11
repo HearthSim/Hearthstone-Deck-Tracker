@@ -102,8 +102,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 			public override bool Equals(object obj)
 			{
-				var uObj = obj as UploaderItem;
-				return uObj != null && Equals(uObj);
+			  return obj is UploaderItem uObj && Equals(uObj);
 			}
 
 			public override int GetHashCode() => Hash;

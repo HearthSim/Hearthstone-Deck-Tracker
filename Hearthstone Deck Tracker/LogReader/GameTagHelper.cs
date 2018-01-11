@@ -29,20 +29,17 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				case STEP:
 					return (int)ParseEnum<Step>(rawValue);
 				default:
-					int value;
-					int.TryParse(rawValue, out value);
+				  int.TryParse(rawValue, out var value);
 					return value;
 			}
 		}
 
 		public static TEnum ParseEnum<TEnum>(string value) where TEnum : struct, IComparable, IFormattable, IConvertible
 		{
-			TEnum tEnum;
-			if(Enum.TryParse(value, out tEnum))
+		    if(Enum.TryParse<TEnum>(value, out var tEnum))
 				return tEnum;
-			int i;
-			if(int.TryParse(value, out i) && Enum.IsDefined(typeof(TEnum), i))
-				tEnum = (TEnum)(object)i;
+			if (int.TryParse(value, out var i) && Enum.IsDefined(typeof(TEnum), i))
+			  tEnum = (TEnum)(object)i;
 			return tEnum;
 		}
 	}

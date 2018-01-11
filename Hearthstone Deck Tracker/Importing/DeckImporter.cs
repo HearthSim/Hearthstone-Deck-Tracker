@@ -46,20 +46,20 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 		public static List<HearthMirror.Objects.Deck> ConstructedDecksCache
 		{
-			get { return _constructedDecksCache ?? (_constructedDecksCache = GetConstructedDecks()); }
-			set { _constructedDecksCache = value; }
+			get => _constructedDecksCache ?? (_constructedDecksCache = GetConstructedDecks());
+			set => _constructedDecksCache = value;
 		}
 
 		public static ArenaInfo ArenaInfoCache
 		{
-			get { return _arenaInfoCache ?? (_arenaInfoCache = Reflection.GetArenaDeck()); }
-			set { _arenaInfoCache = value; }
+			get => _arenaInfoCache ?? (_arenaInfoCache = Reflection.GetArenaDeck());
+			set => _arenaInfoCache = value;
 		}
 
 		public static List<HearthMirror.Objects.Deck> BrawlDecksCache
 		{
-			get { return _brawlDecksCache ?? (_brawlDecksCache = GetBrawlDecks()); }
-			set { _brawlDecksCache = value; }
+			get => _brawlDecksCache ?? (_brawlDecksCache = GetBrawlDecks());
+			set => _brawlDecksCache = value;
 		}
 
 		public static async Task<Deck> Import(string url)

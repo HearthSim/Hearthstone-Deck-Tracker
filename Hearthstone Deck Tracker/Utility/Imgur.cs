@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Utility
 {
 	public static class Imgur
 	{

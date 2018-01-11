@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
 
@@ -30,8 +30,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 
 		public Visibility ImageVisiblity
 		{
-			get { return (Visibility)GetValue(ImageVisiblityProperty); }
-			set { SetValue(ImageVisiblityProperty, value); }
+			get => (Visibility)GetValue(ImageVisiblityProperty);
+			set => SetValue(ImageVisiblityProperty, value);
 		}
 
 		public string ClassName
@@ -45,8 +45,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 
 		public string Class
 		{
-			get { return (string)GetValue(ClassProperty); }
-			set { SetValue(ClassProperty, value); }
+			get => (string)GetValue(ClassProperty);
+			set => SetValue(ClassProperty, value);
 		}
 
 		public BitmapImage ClassImage

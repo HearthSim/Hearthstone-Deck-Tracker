@@ -228,7 +228,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void NoteDialog()
 		{
 			if(Core.Game.IsRunning && !Core.Game.IsInMenu)
-				new NoteDialog(Core.Game.CurrentGameStats).Show();
+				new Windows.NoteDialog(Core.Game.CurrentGameStats).Show();
 		}
 
 		[PredefinedHotKeyAction("Start Hearthstone", "Starts the Battle.net launcher and/or Hearthstone.")]

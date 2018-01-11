@@ -1,12 +1,12 @@
 ﻿#region
 
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using System;
 using System.Xml.Serialization;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Utility
 {
 	[XmlRoot("Version")]
 	public class SerializableVersion : IComparable
@@ -52,9 +52,9 @@ namespace Hearthstone_Deck_Tracker
 			return new Version(Major, Minor, Build, Revision).CompareTo(new Version(other.Major, other.Minor, other.Revision, other.Build));
 		}
 
-		public override string ToString() => string.Format("{0}.{1}.{2}.{3}", Major, Minor, Revision, Build);
+		public override string ToString() => $"{Major}.{Minor}.{Revision}.{Build}";
 
-		public string ToString(bool reverseRevBuild) => string.Format("{0}.{1}.{2}.{3}", Major, Minor, Build, Revision);
+		public string ToString(bool reverseRevBuild) => $"{Major}.{Minor}.{Build}.{Revision}";
 
 		/// <summary>
 		/// {M}: Major, {m}: Minor, {r}: Revision, {b}: Build
@@ -69,15 +69,10 @@ namespace Hearthstone_Deck_Tracker
 		public override bool Equals(object obj)
 		{
 			// If parameter is null return false.
-			if(obj == null)
-				return false;
-
 			// If parameter cannot be cast to Point return false.
-			var p = obj as SerializableVersion;
-			if((object)p == null)
-				return false;
-			// Return true if the fields match:
-			return Equals(p);
+		    // Return true if the fields match:
+	        var p = obj as SerializableVersion;
+			return (object) p != null && Equals(p);
 		}
 
 		public bool Equals(SerializableVersion sv)

@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using Hearthstone_Deck_Tracker.Controls.Stats.Arena;
 using Hearthstone_Deck_Tracker.Controls.Stats.Constructed;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 

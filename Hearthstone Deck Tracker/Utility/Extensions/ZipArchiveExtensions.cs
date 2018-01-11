@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Compression;
 
 namespace Hearthstone_Deck_Tracker.Utility.Extensions
@@ -19,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 				if(file.Name == "")
 				{
 					// Assuming Empty for Directory
-					Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
+					Directory.CreateDirectory(Path.GetDirectoryName(completeFileName) ?? throw new InvalidOperationException());
 					continue;
 				}
 				file.ExtractToFile(completeFileName, true);

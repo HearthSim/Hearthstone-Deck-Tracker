@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.Enums.GameTag;
@@ -184,7 +183,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					SetHeroAsync(id, game, gameState);
 					break;
 				case (int)CardType.MINION:
-					MinionRevealed(id, game, gameState);
+					MinionRevealed(id, game);
 					break;
 			}
 		}
@@ -244,7 +243,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(!gameState.SetupDone && (id <= maxId || game.GameEntity?.GetTag(STEP) == (int)Step.INVALID && entity.GetTag(ZONE_POSITION) < 5))
 					{
 						entity.Info.OriginalZone = DECK;
-						SimulateZoneChangesFromDeck(gameState, id, game, value, entity.CardId, maxId);
+						SimulateZoneChangesFromDeck(gameState, id, game, value, entity.CardId);
 					}
 					else
 						ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.CardId);
@@ -261,10 +260,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		}
 
 		// The last heropower is created after the last hero, therefore +1
-		private int GetMaxHeroPowerId(IGame game) => 
+		private static int GetMaxHeroPowerId(IGame game) => 
 			Math.Max(game.PlayerEntity?.GetTag(HERO_ENTITY) ?? 66, game.OpponentEntity?.GetTag(HERO_ENTITY) ?? 66) + 1;
 
-		private void SimulateZoneChangesFromDeck(IHsGameState gameState, int id, IGame game, int value, string cardId, int maxId)
+		private void SimulateZoneChangesFromDeck(IHsGameState gameState, int id, IGame game, int value, string cardId)
 		{
 			if(value == (int)DECK)
 				return;
@@ -414,8 +413,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler.HandlePlayerPlay(entity, cardId, gameState.GetTurnNumber());
 					else if(controller == game.Opponent.Id)
 					{
-						gameState.GameHandler.HandleOpponentPlay(entity, cardId, entity.GetTag(ZONE_POSITION),
-																 gameState.GetTurnNumber());
+						gameState.GameHandler.HandleOpponentPlay(entity, cardId, entity.GetTag(ZONE_POSITION), gameState.GetTurnNumber());
 					}
 					break;
 				case REMOVEDFROMGAME:
@@ -544,7 +542,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 		}
 
-		private void MinionRevealed(int id, IGame game, IHsGameState gameState)
+		private static void MinionRevealed(int id, IGame game)
 		{
 			if(game.Entities.TryGetValue(id, out var entity))
 				game.SecretsManager.OnEntityRevealedAsMinion(entity);

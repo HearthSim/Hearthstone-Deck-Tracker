@@ -3,6 +3,7 @@
 using System;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion

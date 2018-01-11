@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HtmlAgilityPack;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
@@ -48,10 +49,9 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 							{
 								if(nodes.Sum(x => int.Parse(x.Attributes["data-count"].Value)) == 30)
 									break;
-							}
-							catch
-							{
-							}
+							} catch {
+						        // ignored
+						    }
 						}
 						await Task.Delay(500);
 					}
@@ -62,12 +62,11 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 
 				foreach(var node in nodes)
 				{
-					int count;
-					int.TryParse(node.Attributes["data-count"].Value, out count);
+				    int.TryParse(node.Attributes["data-count"].Value, out var count);
 
-					var text = HttpUtility.HtmlDecode(node.InnerText).Trim();
+					var text = HttpUtility.HtmlDecode(node.InnerText)?.Trim();
 
-					var match = Regex.Match(text, @"^\d+\s*(.+?)\s*(x \d+)?$");
+					var match = Regex.Match(text ?? throw new InvalidOperationException(), @"^\d+\s*(.+?)\s*(x \d+)?$");
 
 					var name = "";
 					if(match.Success && match.Groups.Count == 3)

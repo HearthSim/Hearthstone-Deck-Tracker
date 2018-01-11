@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              mc:Ignorable="d" Width="200" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
@@ -24,10 +25,10 @@
                 <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0"
                        VerticalAlignment="Center" HorizontalAlignment="Center"
                        Visibility="{Binding ShowIconsInTooltip}" />
-                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Attack}" Grid.Column="0" FontSize="24"
+                <controls:HearthstoneTextBlock Text="{Binding Attack}" Grid.Column="0" FontSize="24"
                                             TextAlignment="Center"  Width="30" Height="33" Margin="5,2,0,0"
                                             Visibility="{Binding ShowIconsInTooltip}" />
-                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding LocalizedName}" Grid.Column="1" FontSize="14"
+                <controls:HearthstoneTextBlock Text="{Binding LocalizedName}" Grid.Column="1" FontSize="14"
                                             Height="35" Width="130"
                                             TextAlignment="Center" />
                 <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2"
@@ -36,7 +37,7 @@
                 <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="2"
                        VerticalAlignment="Center" HorizontalAlignment="Center"
                        Visibility="{Binding ShowIconsInTooltip}" />
-                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding ArmorDurabilityOrHealth}" Grid.Column="2" FontSize="24"
+                <controls:HearthstoneTextBlock Text="{Binding ArmorDurabilityOrHealth}" Grid.Column="2" FontSize="24"
                                             TextAlignment="Center" Margin="2,2,0,0"
                                             Width="33" Height="33" Visibility="{Binding ShowHealthValueInTooltip}" />
             </Grid>
@@ -48,7 +49,7 @@
                        Visibility="{Binding ShowAlternativeLanguageTextInTooltip}"
                        HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,10,10,0" TextAlignment="Center" />
             <Grid Grid.Row="3" Background="{DynamicResource AccentColorBrush}">
-                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding RaceOrType}" Width="200" FontSize="14"
+                <controls:HearthstoneTextBlock Text="{Binding RaceOrType}" Width="200" FontSize="14"
                                             Height="20" TextAlignment="Center" />
             </Grid>
         </Grid>

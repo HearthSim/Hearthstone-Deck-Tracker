@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		public static bool CardDbIncludeWildOnlyCards
 		{
-			get { return Config.Instance.CardDbIncludeWildOnlyCards; }
+			get => Config.Instance.CardDbIncludeWildOnlyCards;
 			set
 			{
 				Config.Instance.CardDbIncludeWildOnlyCards = value;
@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ArenaStatsShowLegends
 		{
-			get { return Config.Instance.ArenaStatsShowLegends; }
+			get => Config.Instance.ArenaStatsShowLegends;
 			set
 			{
 				Config.Instance.ArenaStatsShowLegends = value;
@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static DateTime? ArenaStatsTimeFrameCustomStart
 		{
-			get { return Config.Instance.ArenaStatsTimeFrameCustomStart; }
+			get => Config.Instance.ArenaStatsTimeFrameCustomStart;
 			set
 			{
 				Config.Instance.ArenaStatsTimeFrameCustomStart = value;
@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static DateTime? ArenaStatsTimeFrameCustomEnd
 		{
-			get { return Config.Instance.ArenaStatsTimeFrameCustomEnd; }
+			get => Config.Instance.ArenaStatsTimeFrameCustomEnd;
 			set
 			{
 				Config.Instance.ArenaStatsTimeFrameCustomEnd = value;
@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ArenaStatsIncludeArchived
 		{
-			get { return Config.Instance.ArenaStatsIncludeArchived; }
+			get => Config.Instance.ArenaStatsIncludeArchived;
 			set
 			{
 				Config.Instance.ArenaStatsIncludeArchived = value;
@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ArenaRewardDialog
 		{
-			get { return Config.Instance.ArenaRewardDialog; }
+			get => Config.Instance.ArenaRewardDialog;
 			set
 			{
 				Config.Instance.ArenaRewardDialog = value;
@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static int StatsWindowHeight
 		{
-			get { return Config.Instance.StatsWindowHeight; }
+			get => Config.Instance.StatsWindowHeight;
 			set
 			{
 				Config.Instance.StatsWindowHeight = value;
@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static int StatsWindowWidth
 		{
-			get { return Config.Instance.StatsWindowWidth; }
+			get => Config.Instance.StatsWindowWidth;
 			set
 			{
 				Config.Instance.StatsWindowWidth = value;
@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ArenaSummaryChartsExpanded
 		{
-			get { return Config.Instance.ArenaSummaryChartsExpanded; }
+			get => Config.Instance.ArenaSummaryChartsExpanded;
 			set
 			{
 				Config.Instance.ArenaSummaryChartsExpanded = value;
@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ConstructedSummaryChartsExpanded
 		{
-			get { return Config.Instance.ConstructedSummaryChartsExpanded; }
+			get => Config.Instance.ConstructedSummaryChartsExpanded;
 			set
 			{
 				Config.Instance.ConstructedSummaryChartsExpanded = value;
@@ -113,7 +113,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool DeckPickerWildIncludesStandard
 		{
-			get { return Config.Instance.DeckPickerWildIncludesStandard; }
+			get => Config.Instance.DeckPickerWildIncludesStandard;
 			set
 			{
 				Config.Instance.DeckPickerWildIncludesStandard = value;
@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ConstructedStatsIncludeArchived
 		{
-			get { return Config.Instance.ConstructedStatsIncludeArchived; }
+			get => Config.Instance.ConstructedStatsIncludeArchived;
 			set
 			{
 				Config.Instance.ConstructedStatsIncludeArchived = value;
@@ -134,7 +134,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ConstructedStatsAsPercent
 		{
-			get { return Config.Instance.ConstructedStatsAsPercent; }
+			get => Config.Instance.ConstructedStatsAsPercent;
 			set
 			{
 				Config.Instance.ConstructedStatsAsPercent = value;
@@ -143,7 +143,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 		public static DateTime? ConstructedStatsTimeFrameCustomStart
 		{
-			get { return Config.Instance.ConstructedStatsTimeFrameCustomStart; }
+			get => Config.Instance.ConstructedStatsTimeFrameCustomStart;
 			set
 			{
 				Config.Instance.ConstructedStatsTimeFrameCustomStart = value;
@@ -153,7 +153,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static DateTime? ConstructedStatsTimeFrameCustomEnd
 		{
-			get { return Config.Instance.ConstructedStatsTimeFrameCustomEnd; }
+			get => Config.Instance.ConstructedStatsTimeFrameCustomEnd;
 			set
 			{
 				Config.Instance.ConstructedStatsTimeFrameCustomEnd = value;
@@ -163,7 +163,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool StatsAutoRefresh
 		{
-			get { return Config.Instance.StatsAutoRefresh; }
+			get => Config.Instance.StatsAutoRefresh;
 			set
 			{
 				Config.Instance.StatsAutoRefresh = value;
@@ -173,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ConstructedStatsApplyTagFilters
 		{
-			get { return Config.Instance.ConstructedStatsApplyTagFilters; }
+			get => Config.Instance.ConstructedStatsApplyTagFilters;
 			set
 			{
 				Config.Instance.ConstructedStatsApplyTagFilters = value;
@@ -183,7 +183,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool HsReplayAutoUpload
 		{
-			get { return Config.Instance.HsReplayAutoUpload; }
+			get => Config.Instance.HsReplayAutoUpload;
 			set
 			{
 				Config.Instance.HsReplayAutoUpload = value;
@@ -194,7 +194,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool HsReplayUploadRanked
 		{
-			get { return Config.Instance.HsReplayUploadRanked; }
+			get => Config.Instance.HsReplayUploadRanked;
 			set
 			{
 				Config.Instance.HsReplayUploadRanked = value;
@@ -204,7 +204,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool HsReplayUploadCasual
 		{
-			get { return Config.Instance.HsReplayUploadCasual; }
+			get => Config.Instance.HsReplayUploadCasual;
 			set
 			{
 				Config.Instance.HsReplayUploadCasual = value;
@@ -214,7 +214,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool HsReplayUploadArena
 		{
-			get { return Config.Instance.HsReplayUploadArena; }
+			get => Config.Instance.HsReplayUploadArena;
 			set
 			{
 				Config.Instance.HsReplayUploadArena = value;
@@ -224,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool HsReplayUploadBrawl
 		{
-			get { return Config.Instance.HsReplayUploadBrawl; }
+			get => Config.Instance.HsReplayUploadBrawl;
 			set
 			{
 				Config.Instance.HsReplayUploadBrawl = value;
@@ -234,7 +234,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool HsReplayUploadFriendly
 		{
-			get { return Config.Instance.HsReplayUploadFriendly; }
+			get => Config.Instance.HsReplayUploadFriendly;
 			set
 			{
 				Config.Instance.HsReplayUploadFriendly = value;
@@ -244,7 +244,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool HsReplayUploadPractice
 		{
-			get { return Config.Instance.HsReplayUploadPractice; }
+			get => Config.Instance.HsReplayUploadPractice;
 			set
 			{
 				Config.Instance.HsReplayUploadPractice = value;
@@ -254,7 +254,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool HsReplayUploadSpectator
 		{
-			get { return Config.Instance.HsReplayUploadSpectator; }
+			get => Config.Instance.HsReplayUploadSpectator;
 			set
 			{
 				Config.Instance.HsReplayUploadSpectator = value;
@@ -291,7 +291,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static string ConstructedStatsRankFilterMin
 		{
-			get { return Config.Instance.ConstructedStatsRankFilterMin; }
+			get => Config.Instance.ConstructedStatsRankFilterMin;
 			set
 			{
 				Config.Instance.ConstructedStatsRankFilterMin = ValidateRank(value, false);
@@ -300,7 +300,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 		public static string ConstructedStatsRankFilterMax
 		{
-			get { return Config.Instance.ConstructedStatsRankFilterMax; }
+			get => Config.Instance.ConstructedStatsRankFilterMax;
 			set
 			{
 				Config.Instance.ConstructedStatsRankFilterMax = ValidateRank(value, true);
@@ -310,7 +310,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static string ConstructedStatsCustomSeasonMin
 		{
-			get { return Config.Instance.ConstructedStatsCustomSeasonMin.ToString(); }
+			get => Config.Instance.ConstructedStatsCustomSeasonMin.ToString();
 			set
 			{
 				Config.Instance.ConstructedStatsCustomSeasonMin = ValidateSeason(value, false) ?? 1;
@@ -319,7 +319,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 		public static string ConstructedStatsCustomSeasonMax
 		{
-			get { return Config.Instance.ConstructedStatsCustomSeasonMax.ToString(); }
+			get => Config.Instance.ConstructedStatsCustomSeasonMax.ToString();
 			set
 			{
 				Config.Instance.ConstructedStatsCustomSeasonMax = ValidateSeason(value, true);
@@ -329,7 +329,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static string ArenaStatsCustomSeasonMin
 		{
-			get { return Config.Instance.ArenaStatsCustomSeasonMin.ToString(); }
+			get => Config.Instance.ArenaStatsCustomSeasonMin.ToString();
 			set
 			{
 				Config.Instance.ArenaStatsCustomSeasonMin = ValidateSeason(value, false) ?? 1;
@@ -338,7 +338,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 		public static string ArenaStatsCustomSeasonMax
 		{
-			get { return Config.Instance.ArenaStatsCustomSeasonMax.ToString(); }
+			get => Config.Instance.ArenaStatsCustomSeasonMax.ToString();
 			set
 			{
 				Config.Instance.ArenaStatsCustomSeasonMax = ValidateSeason(value, true);
@@ -348,7 +348,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public bool HsReplayShareToast
 		{
-			get { return Config.Instance.ShowReplayShareToast; }
+			get => Config.Instance.ShowReplayShareToast;
 			set
 			{
 				Config.Instance.ShowReplayShareToast = value;
@@ -358,7 +358,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public bool CheckForDevUpdates
 		{
-			get { return Config.Instance.CheckForDevUpdates; }
+			get => Config.Instance.CheckForDevUpdates;
 			set
 			{
 				Config.Instance.CheckForDevUpdates = value;

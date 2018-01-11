@@ -1,9 +1,10 @@
-<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.TimerWindow"
+<controls:MetroWindow x:Class="Hearthstone_Deck_Tracker.Windows.TimerWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
                       xmlns:lex="http://wpflocalizeextension.codeplex.com"
+                      xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
                       lex:LocalizeDictionary.DesignCulture="en"
                       lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
                       lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -21,9 +22,9 @@
     </controls:MetroWindow.IconTemplate>
     <Grid>
         <StackPanel VerticalAlignment="Center">
-            <local:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="00:00" FontSize="20" TextAlignment="Center" Height="30"/>
-            <local:HearthstoneTextBlock x:Name="LblTurnTime" Text="01:15" FontSize="28" TextAlignment="Center" Height="45"/>
-            <local:HearthstoneTextBlock x:Name="LblPlayerTurnTime" Text="00:00" FontSize="20" TextAlignment="Center" Height="35"/>
+            <controls1:HearthstoneTextBlock x:Name="LblOpponentTurnTime" Text="00:00" FontSize="20" TextAlignment="Center" Height="30"/>
+            <controls1:HearthstoneTextBlock x:Name="LblTurnTime" Text="01:15" FontSize="28" TextAlignment="Center" Height="45"/>
+            <controls1:HearthstoneTextBlock x:Name="LblPlayerTurnTime" Text="00:00" FontSize="20" TextAlignment="Center" Height="35"/>
         </StackPanel>
     </Grid>
 </controls:MetroWindow>

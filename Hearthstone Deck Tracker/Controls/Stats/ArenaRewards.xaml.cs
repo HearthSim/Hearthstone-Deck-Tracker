@@ -254,8 +254,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public event RoutedEventHandler Save
 		{
-			add { AddHandler(SaveEvent, value); }
-			remove { RemoveHandler(SaveEvent, value); }
+			add => AddHandler(SaveEvent, value);
+			remove => RemoveHandler(SaveEvent, value);
 		}
 
 		private void ButtonSave_OnClick(object sender, RoutedEventArgs e) => RaiseEvent(new RoutedEventArgs(SaveEvent, this));
@@ -285,7 +285,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				}
 				return _cards;
 			}
-			set { _cards = value; }
+			set => _cards = value;
 		}
 
 		public ArenaRewardPacks[] Packs { get; set; } = new ArenaRewardPacks[2];

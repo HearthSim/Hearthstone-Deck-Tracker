@@ -55,12 +55,13 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		/// </summary>
 		public event EventHandler<KeyPressedEventArgs> KeyPressed;
 
+		/// <inheritdoc />
 		/// <summary>
 		/// Represents the window that is used internally to get the messages.
 		/// </summary>
-		private class Window : NativeWindow, IDisposable
+		private sealed class Window : NativeWindow, IDisposable
 		{
-			private static readonly int WM_HOTKEY = 0x0312;
+			private const int WM_HOTKEY = 0x0312;
 
 			public Window()
 			{
@@ -74,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 
 			#endregion
 
+			/// <inheritdoc />
 			/// <summary>
 			/// Overridden to get the notifications.
 			/// </summary>

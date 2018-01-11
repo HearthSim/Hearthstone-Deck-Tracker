@@ -154,3 +154,11 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+
+# =========================
+# Hearthstone Deck Tracker
+# =========================
+
+HDT-Localization/ 
+Resources/Generated/
+Resources/Tiles/

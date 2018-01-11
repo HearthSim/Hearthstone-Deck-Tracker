@@ -7,7 +7,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Utility
 {
 	public static class XmlManager<T>
 	{

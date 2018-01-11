@@ -6,18 +6,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Converters
 {
 	public class InverseBooleanConverter : IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			if(targetType != typeof(bool))
-				return null;
-			return !(bool)value;
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+		  return targetType != typeof(bool) ? (object) null : value != null && !(bool) value;
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			if(targetType != typeof(bool))
-				return null;
-			return !(bool)value;
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+		  return targetType != typeof(bool) ? (object) null : value != null && !(bool) value;
 		}
 	}
 }
