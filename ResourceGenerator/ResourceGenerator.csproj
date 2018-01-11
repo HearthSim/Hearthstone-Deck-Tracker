@@ -15,9 +15,24 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ORM-Monitor" Version="2.3.0" />
+    <PackageReference Include="ORM-Monitor" Version="2.3.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0002" />
     <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Paths.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Paths.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Paths.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Paths.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
