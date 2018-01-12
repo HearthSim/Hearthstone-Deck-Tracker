@@ -11,12 +11,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 		{
 			if(!overwrite)
 			{
-				archive.ExtractToDirectory(destinationDirectoryName, false);
+				archive.ExtractToDirectory(destinationDirectoryName);
 				return;
 			}
 			foreach(var file in archive.Entries)
 			{
-				var completeFileName = Path.Combine(destinationDirectoryName, file. FullName);
+				var completeFileName = Path.Combine(destinationDirectoryName, file.FullName);
 				if(file.Name == "")
 				{
 					// Assuming Empty for Directory
