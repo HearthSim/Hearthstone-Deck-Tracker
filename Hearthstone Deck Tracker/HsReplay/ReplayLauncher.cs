@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			try
 			{
 				using(var fs = new FileStream(path, FileMode.Open))
-				using(var archive = new ZipArchive(fs, ZipArchiveMode.Read))
+				using(var archive = new System.IO.Compression.ZipArchive(fs, ZipArchiveMode.Read))
 				using(var sr = new StreamReader(archive.GetEntry("output_log.txt")?.Open() ?? throw new InvalidOperationException()))
 					return sr.ReadToEnd().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
 			}
