@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public DateTime Time
 		{
-			get { return _time; }
+			get => _time;
 			set
 			{
 				_time = value;

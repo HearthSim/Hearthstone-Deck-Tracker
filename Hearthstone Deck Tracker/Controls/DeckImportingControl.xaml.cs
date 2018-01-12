@@ -6,11 +6,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Importing.Game;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static System.Windows.Visibility;
 using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Controls
@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public string Text
 		{
-			get { return _text; }
+			get => _text;
 			set
 			{
 				if(_text == value)
@@ -58,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public string ButtonStartHearthstoneText
 		{
-			get { return _text; }
+			get => _text;
 			set
 			{
 				if(_text == value)

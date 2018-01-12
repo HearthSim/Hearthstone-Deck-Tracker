@@ -11,8 +11,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 
 		public Deck Deck
 		{
-			get { return ((DeckExportViewModel)DataContext).Deck; }
-			set { ((DeckExportViewModel)DataContext).Deck = value; }
+			get => ((DeckExportViewModel)DataContext).Deck;
+			set => ((DeckExportViewModel)DataContext).Deck = value;
 		}
 	}
 }

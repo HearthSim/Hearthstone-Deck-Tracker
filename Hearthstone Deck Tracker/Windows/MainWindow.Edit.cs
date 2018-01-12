@@ -12,6 +12,7 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 

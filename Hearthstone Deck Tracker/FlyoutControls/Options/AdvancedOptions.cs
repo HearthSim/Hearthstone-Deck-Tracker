@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
-using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Properties;
 
 #endregion
 
@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 		public bool Show
 		{
-			get { return Config.Instance.AdvancedOptions; }
+			get => Config.Instance.AdvancedOptions;
 			set
 			{
 				Config.Instance.AdvancedOptions = value;

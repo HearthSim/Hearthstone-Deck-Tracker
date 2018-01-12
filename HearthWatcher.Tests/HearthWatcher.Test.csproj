@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A99438AD-6733-4FDA-928C-30C37255FF1B}</ProjectGuid>
+    <ProjectGuid>{D081BCA4-14FD-4FBC-B92A-82574AB0478B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HDTTests</RootNamespace>
-    <AssemblyName>HDTTests</AssemblyName>
+    <RootNamespace>HearthWatcher.Test</RootNamespace>
+    <AssemblyName>HearthWatcher.Test</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -26,8 +26,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7</LangVersion>
-    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,19 +35,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Squirrel|AnyCPU'">
-    <OutputPath>bin\Squirrel\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,52 +46,24 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
-          <Private>False</Private>
-        </Reference>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BoardDamage\BoardCardTest.cs" />
-    <Compile Include="BoardDamage\TestHelper.cs" />
-    <Compile Include="BoardDamage\BoardHeroTest.cs" />
-    <Compile Include="BoardDamage\PlayerBoardTest.cs" />
-    <Compile Include="BoardDamage\BoardStateTest.cs" />
-    <Compile Include="BoardDamage\EntityHelperTest.cs" />
-    <Compile Include="DeckImporting\DataGenerator.cs" />
-    <Compile Include="DeckImporting\DeckComparer.cs" />
-    <Compile Include="DeckImporting\DeckImportingTests.cs" />
-    <Compile Include="DeckImporting\TestData.cs" />
-    <Compile Include="Hearthstone\Secrets\MockGame.cs" />
-    <Compile Include="Hearthstone\Secrets\SecretsManagerTest.cs" />
-    <Compile Include="Hearthstone\Secrets\SecretTest.cs" />
-    <Compile Include="Hearthstone\GameTimeTest.cs" />
-    <Compile Include="Hearthstone\ParseCardStringTest.cs" />
-    <Compile Include="Hearthstone\Secrets\SecretEventHandlerTest.cs" />
-    <Compile Include="Hearthstone\LogReadingTest.cs" />
-    <Compile Include="Hearthstone\WebImportTest.cs" />
-    <Compile Include="Hearthstone\DeckTest.cs" />
-    <Compile Include="Hearthstone\CardDbTest.cs" />
+    <Compile Include="ArenaWatcherTests.cs" />
+    <Compile Include="LogLineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GameStatsTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj">
-      <Project>{7ed14243-e02b-4b94-af00-a67a62c282f0}</Project>
-      <Name>HearthDb</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HearthMirror\HearthMirror\HearthMirror.csproj">
+    <ProjectReference Include="..\..\HearthMirror\HearthMirror\HearthMirror.csproj">
       <Project>{1694a2f8-645a-4263-a6ab-fc26323fd675}</Project>
       <Name>HearthMirror</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj">
-      <Project>{e63a3f1c-e662-4e62-be43-af27cb9e953d}</Project>
-      <Name>Hearthstone Deck Tracker</Name>
+    <ProjectReference Include="..\HearthWatcher\HearthWatcher.csproj">
+      <Project>{02e1843d-3f5d-45e0-9b16-1f28209eed82}</Project>
+      <Name>HearthWatcher</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

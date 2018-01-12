@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return null;
-			if(Cards.All.TryGetValue(cardId, out HearthDb.Card dbCard))
+			if(Cards.All.TryGetValue(cardId, out var dbCard))
 				return new Card(dbCard);
 			Log.Warn("Could not find card with ID=" + cardId);
 			return UnknownCard;

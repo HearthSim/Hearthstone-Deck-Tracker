@@ -11,7 +11,7 @@ using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
-	public abstract class CardBarImageBuilder
+  public abstract class CardBarImageBuilder
 	{
 		protected Card Card;
 		protected string ThemeDir;

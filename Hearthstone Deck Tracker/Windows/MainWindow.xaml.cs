@@ -11,7 +11,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
@@ -21,6 +20,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
@@ -89,9 +89,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var dialog = new OpenFileDialog
 				{
-					Title = "Select Replay File",
+					Title = @"Select Replay File",
 					DefaultExt = "*.hdtreplay",
-					Filter = "HDT Replay|*.hdtreplay",
+					Filter = @"HDT Replay|*.hdtreplay",
 					InitialDirectory = Config.Instance.ReplayDir
 				};
 				var dialogResult = dialog.ShowDialog();

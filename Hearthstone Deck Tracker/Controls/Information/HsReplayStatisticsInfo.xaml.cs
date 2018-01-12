@@ -2,6 +2,7 @@
 
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 

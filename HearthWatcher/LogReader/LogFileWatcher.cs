@@ -96,8 +96,7 @@ namespace HearthWatcher.LogReader
 			var count = _lines.Count;
 			for(var i = 0; i < count; i++)
 			{
-				LogLine line;
-				if(_lines.TryDequeue(out line))
+			    if(_lines.TryDequeue(out var line))
 					yield return line;
 			}
 		}

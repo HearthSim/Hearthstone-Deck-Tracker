@@ -62,6 +62,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 			return x.Length - y.Length;
 		}
 
-		private int Utf8Compare(char x, char y) => Chars.IndexOf(x) - Chars.IndexOf(y);
+		private static int Utf8Compare(char x, char y) => Chars.IndexOf(x) - Chars.IndexOf(y);
 	}
 }

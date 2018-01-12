@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker
 		[XmlIgnore]
 		public Deck ActiveDeck
 		{
-			get { return _activeDeck; }
+			get => _activeDeck;
 			set
 			{
 				if(Equals(_activeDeck, value))

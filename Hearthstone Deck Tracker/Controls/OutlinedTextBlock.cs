@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Controls
 {
 	[ContentProperty("Text")]
 	public class OutlinedTextBlock : FrameworkElement
@@ -78,79 +78,82 @@ namespace Hearthstone_Deck_Tracker
 		public OutlinedTextBlock()
 		{
 			TextDecorations = new TextDecorationCollection();
-		}
+	        PixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
+	    }
 
-		public Brush Fill
+        public double PixelsPerDip { get; set; }
+
+	    public Brush Fill
 		{
-			get { return (Brush)GetValue(FillProperty); }
-			set { SetValue(FillProperty, value); }
+			get => (Brush)GetValue(FillProperty);
+			set => SetValue(FillProperty, value);
 		}
 
 		public FontFamily FontFamily
 		{
-			get { return (FontFamily)GetValue(FontFamilyProperty); }
-			set { SetValue(FontFamilyProperty, value); }
+			get => (FontFamily)GetValue(FontFamilyProperty);
+			set => SetValue(FontFamilyProperty, value);
 		}
 
 		[TypeConverter(typeof(FontSizeConverter))]
 		public double FontSize
 		{
-			get { return (double)GetValue(FontSizeProperty); }
-			set { SetValue(FontSizeProperty, value); }
+			get => (double)GetValue(FontSizeProperty);
+			set => SetValue(FontSizeProperty, value);
 		}
 
 		public FontStretch FontStretch
 		{
-			get { return (FontStretch)GetValue(FontStretchProperty); }
-			set { SetValue(FontStretchProperty, value); }
+			get => (FontStretch)GetValue(FontStretchProperty);
+			set => SetValue(FontStretchProperty, value);
 		}
 
 		public FontStyle FontStyle
 		{
-			get { return (FontStyle)GetValue(FontStyleProperty); }
-			set { SetValue(FontStyleProperty, value); }
+			get => (FontStyle)GetValue(FontStyleProperty);
+			set => SetValue(FontStyleProperty, value);
 		}
 
 		public FontWeight FontWeight
 		{
-			get { return (FontWeight)GetValue(FontWeightProperty); }
-			set { SetValue(FontWeightProperty, value); }
+			get => (FontWeight)GetValue(FontWeightProperty);
+			set => SetValue(FontWeightProperty, value);
 		}
 
 		public Brush Stroke
 		{
-			get { return (Brush)GetValue(StrokeProperty); }
-			set { SetValue(StrokeProperty, value); }
+			get => (Brush)GetValue(StrokeProperty);
+			set => SetValue(StrokeProperty, value);
 		}
 
 		public string Text
 		{
-			get { return (string)GetValue(TextProperty); }
-			set { SetValue(TextProperty, value); }
+			get => (string)GetValue(TextProperty);
+			set => SetValue(TextProperty, value);
 		}
 
 		public TextAlignment TextAlignment
 		{
-			get { return (TextAlignment)GetValue(TextAlignmentProperty); }
-			set { SetValue(TextAlignmentProperty, value); }
+			get => (TextAlignment)GetValue(TextAlignmentProperty);
+			set => SetValue(TextAlignmentProperty, value);
 		}
 
 		public TextDecorationCollection TextDecorations
 		{
-			get { return (TextDecorationCollection)GetValue(TextDecorationsProperty); }
-			set { SetValue(TextDecorationsProperty, value); }
+			get => (TextDecorationCollection)GetValue(TextDecorationsProperty);
+			set => SetValue(TextDecorationsProperty, value);
 		}
 
 		public TextTrimming TextTrimming
 		{
-			get { return (TextTrimming)GetValue(TextTrimmingProperty); }
-			set { SetValue(TextTrimmingProperty, value); }
+			get => (TextTrimming)GetValue(TextTrimmingProperty);
+			set => SetValue(TextTrimmingProperty, value);
 		}
 
 		public TextWrapping TextWrapping
 		{
-			get { return (TextWrapping)GetValue(TextWrappingProperty); }
-			set { SetValue(TextWrappingProperty, value); }
+			get => (TextWrapping)GetValue(TextWrappingProperty);
+			set => SetValue(TextWrappingProperty, value);
 		}
 
 		protected override void OnRender(DrawingContext drawingContext)
@@ -220,9 +223,9 @@ namespace Hearthstone_Deck_Tracker
 			if(_formattedText != null || Text == null)
 				return;
 
-			_formattedText = new FormattedText(Text, CultureInfo.CurrentUICulture, FlowDirection,
+	        _formattedText = new FormattedText(Text, CultureInfo.CurrentUICulture, FlowDirection,
 			                                   new Typeface(FontFamily, FontStyle, FontWeight, FontStretches.Condensed), FontSize, Brushes.Black, 
-											   null, TextFormattingMode.Ideal);
+											   null, TextFormattingMode.Ideal, PixelsPerDip);
 
 			UpdateFormattedText();
 		}

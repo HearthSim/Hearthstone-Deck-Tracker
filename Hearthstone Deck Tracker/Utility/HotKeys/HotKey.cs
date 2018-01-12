@@ -23,14 +23,13 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			Key = key;
 		}
 
-		public ModifierKeys Mod { get; set; } = ModifierKeys.None;
+		public ModifierKeys Mod { get; } = ModifierKeys.None;
 
-		public Keys Key { get; set; }
+		public Keys Key { get; }
 
 		public override bool Equals(object obj)
 		{
-			var hotKey = obj as HotKey;
-			return hotKey != null && Equals(hotKey);
+		    return obj is HotKey hotKey && Equals(hotKey);
 		}
 
 		public bool Equals(HotKey hotKey) => hotKey.Mod == Mod && hotKey.Key == Key;

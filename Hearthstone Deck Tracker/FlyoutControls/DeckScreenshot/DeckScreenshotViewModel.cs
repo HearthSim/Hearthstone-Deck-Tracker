@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
@@ -36,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public bool CardsOnly
 		{
-			get { return _cardsOnly; }
+			get => _cardsOnly;
 			set
 			{
 				_cardsOnly = value;
@@ -48,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public string DeckTitle
 		{
-			get { return _deck?.Name; }
+			get => _deck?.Name;
 			set
 			{
 				_deck.Name = value;
@@ -59,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public BitmapSource DeckImage
 		{
-			get { return _deckImage; }
+			get => _deckImage;
 			set
 			{
 				_deckImage = value;
@@ -69,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		private FileInfo SavedFile
 		{
-			get { return _savedFile; }
+			get => _savedFile;
 			set
 			{
 				_savedFile = value;
@@ -83,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public Deck Deck
 		{
-			get { return _deck; }
+			get => _deck;
 			set
 			{
 				if(value == null)
@@ -102,7 +101,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public string UploadButtonText
 		{
-			get { return _uploadButtonText; }
+			get => _uploadButtonText;
 			set
 			{
 				_uploadButtonText = value;
@@ -112,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public string CopyToClipboardButtonText
 		{
-			get { return _copyToClipboardButtonText; }
+			get => _copyToClipboardButtonText;
 			set
 			{
 				_copyToClipboardButtonText = value;
@@ -122,7 +121,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public Visibility UploadErrorVisibility
 		{
-			get { return _uploadErrorVisibility; }
+			get => _uploadErrorVisibility;
 			set
 			{
 				_uploadErrorVisibility = value;
@@ -132,7 +131,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public string ImgurUrl
 		{
-			get { return _imgurUrl; }
+			get => _imgurUrl;
 			set
 			{
 				_imgurUrl = value;
@@ -143,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public bool UploadButtonEnabled
 		{
-			get { return _uploadButtonEnabled; }
+			get => _uploadButtonEnabled;
 			set
 			{
 				_uploadButtonEnabled = value;

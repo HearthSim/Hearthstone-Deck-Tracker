@@ -1,5 +1,6 @@
 using System;
 using HearthMirror.Objects;
+using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
@@ -19,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return _hearthstoneBuild;
 				
 			}
-			set { _hearthstoneBuild = value; }
+			set => _hearthstoneBuild = value;
 		}
 
 		public override string ToString() 

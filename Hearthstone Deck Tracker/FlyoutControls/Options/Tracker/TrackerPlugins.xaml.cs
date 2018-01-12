@@ -1,17 +1,15 @@
 ﻿#region
 
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
-using MahApps.Metro.Controls.Dialogs;
 
 #endregion
 

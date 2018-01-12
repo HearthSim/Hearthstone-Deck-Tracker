@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -61,42 +62,42 @@
                 </Grid.RowDefinitions>
                 <Rectangle Fill="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Grid.Row="1"
                            Grid.ColumnSpan="8" Margin="1" />
-                <local:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0" />
+                <controls:ManaCostBar x:Name="ManaCostBar0" Width="auto" Height="auto" Grid.Column="0" Grid.Row="0" />
                 <TextBlock Text="0" FontSize="14" Grid.Column="0" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar1" Width="auto" Height="auto" Grid.Column="1" Grid.Row="0"
+                <controls:ManaCostBar x:Name="ManaCostBar1" Width="auto" Height="auto" Grid.Column="1" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
 
                 <TextBlock Text="1" FontSize="14" Grid.Column="1" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar2" Width="auto" Height="auto" Grid.Column="2" Grid.Row="0"
+                <controls:ManaCostBar x:Name="ManaCostBar2" Width="auto" Height="auto" Grid.Column="2" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
                 <TextBlock Text="2" FontSize="14" Grid.Column="2" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar3" Width="auto" Height="auto" Grid.Column="3" Grid.Row="0"
+                <controls:ManaCostBar x:Name="ManaCostBar3" Width="auto" Height="auto" Grid.Column="3" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
                 <TextBlock Text="3" FontSize="14" Grid.Column="3" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar4" Width="auto" Height="auto" Grid.Column="4" Grid.Row="0"
+                <controls:ManaCostBar x:Name="ManaCostBar4" Width="auto" Height="auto" Grid.Column="4" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
                 <TextBlock Text="4" FontSize="14" Grid.Column="4" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar5" Width="auto" Height="auto" Grid.Column="5" Grid.Row="0"
+                <controls:ManaCostBar x:Name="ManaCostBar5" Width="auto" Height="auto" Grid.Column="5" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
                 <TextBlock Text="5" FontSize="14" Grid.Column="5" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar6" Width="auto" Height="auto" Grid.Column="6" Grid.Row="0"
+                <controls:ManaCostBar x:Name="ManaCostBar6" Width="auto" Height="auto" Grid.Column="6" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
                 <TextBlock Text="6" FontSize="14" Grid.Column="6" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <local:ManaCostBar x:Name="ManaCostBar7" Width="auto" Height="auto" Grid.Column="7" Grid.Row="0"
+                <controls:ManaCostBar x:Name="ManaCostBar7" Width="auto" Height="auto" Grid.Column="7" Grid.Row="0"
                                    BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrush}}" />
                 <TextBlock Text="7" FontSize="14" Grid.Column="7" Grid.Row="1" FontWeight="SemiBold" Foreground="Black"
                            VerticalAlignment="Center" HorizontalAlignment="Center" />

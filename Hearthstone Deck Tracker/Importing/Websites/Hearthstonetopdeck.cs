@@ -20,9 +20,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				var doc = await ImportingHelper.GetHtmlDoc(url);
 
 				var deck = new Deck();
-				var dname = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode(
-					"//h1[contains(@class, 'panel-title')]").InnerText);
-				deck.Name = Regex.Replace(dname, @"\s+", " "); // remove sequence of tabs
+				var dname = HttpUtility.HtmlDecode(doc.DocumentNode.SelectSingleNode("//h1[contains(@class, 'panel-title')]").InnerText);
+				deck.Name = Regex.Replace(dname ?? throw new InvalidOperationException(), @"\s+", " "); // remove sequence of tabs
 
 				var cards = doc.DocumentNode.SelectNodes("//div[contains(@class, 'cardname')]/span");
 
@@ -32,9 +31,9 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				// get class and tags
 				if(deckInfo.Count == 3)
 				{
-					deck.Class = HttpUtility.HtmlDecode(deckInfo[1].InnerText).Trim();
+					deck.Class = HttpUtility.HtmlDecode(deckInfo[1].InnerText)?.Trim();
 
-					var decktype = HttpUtility.HtmlDecode(deckInfo[2].InnerText).Trim();
+					var decktype = HttpUtility.HtmlDecode(deckInfo[2].InnerText)?.Trim();
 					if(!string.IsNullOrWhiteSpace(decktype)
 						&& decktype != "None" && Config.Instance.TagDecksOnImport)
 					{
@@ -71,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				foreach(var cardNode in cards)
 				{
 					var nameString = HttpUtility.HtmlDecode(cardNode.InnerText);
-					var match = Regex.Match(nameString, @"^\s*(\d+)\s+(.*)\s*$");
+					var match = Regex.Match(nameString ?? throw new InvalidOperationException(), @"^\s*(\d+)\s+(.*)\s*$");
 
 					if(match.Success)
 					{

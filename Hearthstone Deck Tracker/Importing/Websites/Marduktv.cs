@@ -21,15 +21,14 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				var titleNode = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'header__title internal')]/div[contains(@class,'container')]/h1");
 				var cardNodes = doc.DocumentNode.SelectNodes("//ul[contains(@class,'list-unstyled cartas_list')]/li");
 
-				var deck = new Deck();
-				deck.Name = HttpUtility.HtmlDecode(titleNode.ChildNodes.FirstOrDefault(x => x.Name == "#text").InnerText);
+				var deck = new Deck {Name = HttpUtility.HtmlDecode(titleNode.ChildNodes.FirstOrDefault(x => x.Name == "#text")?.InnerText)};
 				foreach (var node in cardNodes)
 				{
 					var nameNode = node.SelectSingleNode("span[contains(@class,'cartas__name')]/a");
 					var countNode = node.SelectSingleNode("span[contains(@class,'cartas__qtd')]");
 					var validChild = countNode?.ChildNodes.SingleOrDefault(c => c.Name == "#text");
 
-					var id = nameNode.Attributes.FirstOrDefault(a => a.Name == "data-hcfw-card-id").Value;
+					var id = nameNode.Attributes.FirstOrDefault(a => a.Name == "data-hcfw-card-id")?.Value;
 					var count = validChild != null ? int.Parse(countNode.InnerText) : 1;
 
 					var card = Database.GetCardFromId(id);

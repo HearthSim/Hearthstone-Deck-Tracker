@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Media.Animation;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
-using MahApps.Metro;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -20,11 +18,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public string FullExceptionText => _exception.ToString();
 
-		private void ButtonSend_Click(object sender, RoutedEventArgs e)
+		private async void ButtonSend_Click(object sender, RoutedEventArgs e)
 		{
 			if(!string.IsNullOrEmpty(TextBoxDescription.Text))
 				_exception.Data.Add("description", TextBoxDescription.Text);
-			Sentry.CaptureException(_exception);
+			await Sentry.CaptureException(_exception);
 			Close();
 		}
 

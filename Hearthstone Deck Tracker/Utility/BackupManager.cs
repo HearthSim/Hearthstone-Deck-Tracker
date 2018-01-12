@@ -6,14 +6,13 @@ using System.IO.Compression;
 using System.Linq;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 #endregion
 
 namespace Hearthstone_Deck_Tracker.Utility
 {
-	public class BackupManager
+	public static class BackupManager
 	{
 		private const int MaxBackups = 7;
 		private static readonly string[] Files = {"PlayerDecks.xml", "DeckStats.xml", "DefaultDeckStats.xml", "config.xml", "HotKeys.xml"};
@@ -24,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			if(!Directory.Exists(Config.Instance.BackupDir))
 				Directory.CreateDirectory(Config.Instance.BackupDir);
 			var dirInfo = new DirectoryInfo(Config.Instance.BackupDir);
-			var backupFileName = $"Backup_{DateTime.Today.ToString("ddMMyyyy")}.zip";
+			var backupFileName = $"Backup_{DateTime.Today:ddMMyyyy}.zip";
 
 			if (dirInfo.GetFiles().Any(x => x.Name == backupFileName))
 			{
@@ -35,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			try
 			{
 				var backups = dirInfo.GetFiles("Backup_*");
-				while(backups.Count() > MaxBackups)
+				while(backups.Length > MaxBackups)
 				{
 					var oldest = backups.OrderBy(x => x.CreationTime).First();
 					Log.Info("Deleting old backup: " + oldest.Name);
@@ -63,14 +62,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 					fileName = $"{fileInfo.Name}_{count++}.{fileInfo.Extension}";
 
 				var backupFilePath = Path.Combine(Config.Instance.BackupDir, fileName);
-				using(var zip = ZipFile.Open(backupFilePath, ZipArchiveMode.Create))
+
+				using (var zip = ZipFile.Open(backupFilePath, ZipArchiveMode.Create))
 				{
-					foreach(var file in Files)
-					{
-						var path = Path.Combine(Config.Instance.DataDir, file);
-						if(File.Exists(path))
-							zip.CreateEntryFromFile(path, file);
-					}
+				  foreach (var file in Files)
+				  {
+					var path = Path.Combine(Config.Instance.DataDir, file);
+					if (File.Exists(path))
+					  zip.CreateEntryFromFile(path, file);
+				  }
 				}
 			}
 			catch(Exception ex)
@@ -85,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			{
 				var archive = new ZipArchive(backup.OpenRead(), ZipArchiveMode.Read);
 				if(files.Length == 0)
-					archive.ExtractToDirectory(Config.Instance.DataDir, true);
+					archive.ExtractToDirectory(Config.Instance.DataDir);
 				else
 				{
 					foreach(var file in files.Where(x => Files.Contains(x)))

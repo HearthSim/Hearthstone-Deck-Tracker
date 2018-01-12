@@ -8,12 +8,10 @@ using System.Windows.Media;
 using HearthDb;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
-using static HearthDb.CardIds;
-using static System.Windows.Visibility;
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Windows
 {
 	/// <summary>
 	/// Interaction logic for NoteDialog.xaml
@@ -61,10 +59,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void BtnDeck_Click(object sender, RoutedEventArgs e)
 		{
-			if(DeckListContainer.Visibility == Visible)
-				DeckPanelVisibility(Collapsed, 3, true);
+			if(DeckListContainer.Visibility == Visibility.Visible)
+				DeckPanelVisibility(Visibility.Collapsed, 3, true);
 			else
-				DeckPanelVisibility(Visible, 2, false);
+				DeckPanelVisibility(Visibility.Visible, 2, false);
 
 			TextBoxNote.Focus();
 		}
@@ -98,16 +96,12 @@ namespace Hearthstone_Deck_Tracker
 			public Brush TextColor { get; }
 			public int Cost { get; }
 
-			public NoteCard() : this(null)
-			{
-			}
-
-			public NoteCard(TrackedCard tracked)
+		  public NoteCard(TrackedCard tracked)
 			{
 				Card card = null;
 				if(tracked == null || !Cards.All.ContainsKey(tracked.Id))
 				{
-					card = Cards.All[NonCollectible.Neutral.Noooooooooooo];
+					card = Cards.All[CardIds.NonCollectible.Neutral.Noooooooooooo];
 					CountText = "x0";
 					TextColor = Brushes.Red;
 				}					

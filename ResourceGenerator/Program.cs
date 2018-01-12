@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Resources;
 using HearthDb;
 using HearthDb.Enums;
-using nQuant;
 
 namespace ResourceGenerator
 {

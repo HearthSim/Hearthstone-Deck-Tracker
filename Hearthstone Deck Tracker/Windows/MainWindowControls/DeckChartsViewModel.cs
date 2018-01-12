@@ -5,6 +5,7 @@ using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using LiveCharts;
 using LiveCharts.Defaults;
@@ -139,17 +140,21 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			var losses = 0;
 			var opponents = _playerClasses.ToDictionary(x => x, x => 0);
 
-			foreach(var game in Games)
-			{
-				if(opponents.ContainsKey(game.OpponentHero))
-					opponents[game.OpponentHero]++;
-				if(game.Result == GameResult.Win)
-					wins++;
-				else if(game.Result == GameResult.Loss)
-					losses++;
-			}
+		  if (Games != null)
+		    foreach (var game in Games) {
+		      if (opponents.ContainsKey(game.OpponentHero))
+		        opponents[game.OpponentHero]++;
+		      switch (game.Result) {
+		        case GameResult.Win:
+		          wins++;
+		          break;
+		        case GameResult.Loss:
+		          losses++;
+		          break;
+		      }
+		    }
 
-			foreach(var series in OpponentCollection)
+		    foreach(var series in OpponentCollection)
 				((ObservableValue)series.Values[0]).Value = opponents[series.Title];
 
 			var total = wins + losses;

@@ -8,10 +8,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using Point = System.Drawing.Point;
+// ReSharper disable InconsistentNaming
 
 #endregion
 
-namespace Hearthstone_Deck_Tracker
+namespace Hearthstone_Deck_Tracker.Utility
 {
 	public class User32
 	{
@@ -251,14 +252,11 @@ namespace Hearthstone_Deck_Tracker
 			private const int WH_MOUSE_LL = 14;
 			private const int WM_LBUTTONDOWN = 0x201;
 			private const int WM_LBUTTONUP = 0x0202;
-			private readonly WindowsHookHelper.HookDelegate _mouseDelegate;
-			private readonly IntPtr _mouseHandle;
+		    private readonly IntPtr _mouseHandle;
 			private bool _disposed;
 
-			public MouseInput()
-			{
-				_mouseDelegate = MouseHookDelegate; //crashes application if directly used for some reason
-				_mouseHandle = WindowsHookHelper.SetWindowsHookEx(WH_MOUSE_LL, _mouseDelegate, IntPtr.Zero, 0);
+			public MouseInput() {
+			  _mouseHandle = WindowsHookHelper.SetWindowsHookEx(WH_MOUSE_LL, MouseHookDelegate, IntPtr.Zero, 0);
 			}
 
 			public void Dispose() => Dispose(true);

@@ -156,7 +156,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 				return false;
 			if(Cards != null)
 			{
-				if(Cards.Count != other.Cards.Count)
+				if(other.Cards != null && Cards.Count != other.Cards.Count)
 					return false;
 				if(Cards.Any(card => !other.Cards.Any(card.SequenceEqual)))
 					return false;

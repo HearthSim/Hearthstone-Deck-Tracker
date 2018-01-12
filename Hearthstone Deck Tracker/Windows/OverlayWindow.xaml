@@ -1,9 +1,8 @@
 <Window x:Class="Hearthstone_Deck_Tracker.Windows.OverlayWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-        xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
         xmlns:windows="clr-namespace:Hearthstone_Deck_Tracker.Windows"
+        xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
         xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
         xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
         xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
@@ -30,19 +29,19 @@
                         <VisualBrush Visual="{Binding Path=BatteryStatusVisual, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                     </Rectangle.Fill>
                 </Rectangle>
-                <local:HearthstoneTextBlock VerticalAlignment="Center" Text="{Binding Path=BatteryStatusPercent, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                <controls:HearthstoneTextBlock VerticalAlignment="Center" Text="{Binding Path=BatteryStatusPercent, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
                                             Visibility ="{Binding Path=BatteryStatusTextVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
             </StackPanel>
-            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblOpponentTurnTime" Text="00:00" Canvas.Top="418"
+            <controls:HearthstoneTextBlock Visibility="Hidden" x:Name="LblOpponentTurnTime" Text="00:00" Canvas.Top="418"
                                         Canvas.Left="418" FontSize="20" />
-            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblTurnTime" Text="01:15" Canvas.Top="378"
+            <controls:HearthstoneTextBlock Visibility="Hidden" x:Name="LblTurnTime" Text="01:15" Canvas.Top="378"
                                         Canvas.Left="353" FontSize="28" />
-            <local:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="00:00" Canvas.Top="338"
+            <controls:HearthstoneTextBlock Visibility="Hidden" x:Name="LblPlayerTurnTime" Text="00:00" Canvas.Top="338"
                                         Canvas.Left="418" FontSize="20" />
             <Border Name="BorderStackPanelPlayer" Canvas.Left="604" Canvas.Top="203" Height="{Binding PlayerStackHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                 <StackPanel Name="StackPanelPlayer" Width="218" VerticalAlignment="{Binding PlayerStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
-                    <local:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Width="200" TextAlignment="Center" Text="Deck title" TextWrapping="Wrap"/>
-                    <local:HearthstoneTextBlock x:Name="LblWins" FontSize="14" Width="200" TextAlignment="Center" Text="0-0 (0%)"/>
+                    <controls:HearthstoneTextBlock x:Name="LblDeckTitle" FontSize="16" Width="200" TextAlignment="Center" Text="Deck title" TextWrapping="Wrap"/>
+                    <controls:HearthstoneTextBlock x:Name="LblWins" FontSize="14" Width="200" TextAlignment="Center" Text="0-0 (0%)"/>
                     <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding PlayerListHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                         <controls:AnimatedCardList x:Name="ListViewPlayer" Background="Transparent" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
@@ -51,19 +50,19 @@
                         </controls:AnimatedCardList>
                     </Viewbox>
                     <Canvas Name="CanvasPlayerCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.CardCounterFrame, Source={StaticResource ThemeManager}}">
-                        <local:HearthstoneTextBlock x:Name="LblCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
-                        <local:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
                     </Canvas>
                     <Canvas Name="CanvasPlayerChance" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.PlayerChanceFrame, Source={StaticResource ThemeManager}}">
-                        <local:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
-                        <local:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
                     </Canvas>
-                    <local:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
+                    <controls:HearthstoneTextBlock x:Name="LblPlayerFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
                 </StackPanel>
             </Border>
             <Border Name="BorderStackPanelOpponent" Canvas.Top="203" Canvas.Left="10" Height="{Binding OpponentStackHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                 <StackPanel Name="StackPanelOpponent" Width="218" VerticalAlignment="{Binding OpponentStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
-                <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
+                <controls:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
                 <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding OpponentListHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                     <controls:AnimatedCardList x:Name="ListViewOpponent" Background="Transparent" BorderThickness="0"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Width="221"
@@ -72,16 +71,16 @@
                     </controls:AnimatedCardList>
                 </Viewbox>
                     <Canvas Name="CanvasOpponentCount" HorizontalAlignment="Stretch" Height="40" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.CardCounterFrame, Source={StaticResource ThemeManager}}">
-                        <local:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
-                        <local:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblOpponentCardCount" FontSize="16" Text="0" Canvas.Left="57" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblOpponentDeckCount" FontSize="16" Text="30" Canvas.Left="152" Canvas.Top="8" TextAlignment="Center" Width="56" Height="25" />
                 </Canvas>
                     <Canvas Name="CanvasOpponentChance" HorizontalAlignment="Stretch" Height="71" Width="218" Margin="0,2" Background="{Binding CurrentTheme.OverlayTheme.OpponentChanceFrame, Source={StaticResource ThemeManager}}">
-                        <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
-                        <local:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
-                        <local:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25" />
-                        <local:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblOpponentDrawChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblOpponentDrawChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="8" TextAlignment="Right" Width="53" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25" />
+                        <controls:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25" />
                 </Canvas>
-                <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
+                <controls:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
                 </StackPanel>
             </Border>
 
@@ -122,7 +121,7 @@
             <Grid Name="GridFlavorText" Visibility="{Binding FlavorTextVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Panel.ZIndex="5" Width="298" Height="123">
                 <Image Source="../Resources/flavor_text.png" Margin="0,5,0,0"/>
                 <Image Source="../Resources/banner.png" Width="200" VerticalAlignment="Top"/>
-                <local:HearthstoneTextBlock Text="{Binding FlavorTextCardName, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" VerticalAlignment="Top" Margin="0,7,0,0"  HorizontalAlignment="Center" FontSize="14"/>
+                <controls:HearthstoneTextBlock Text="{Binding FlavorTextCardName, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" VerticalAlignment="Top" Margin="0,7,0,0"  HorizontalAlignment="Center" FontSize="14"/>
                 <TextBlock utility:AttachedFormattedString.FormattedText="{Binding FlavorText, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Margin="20,45,20,20" Foreground="Black" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Rectangle Name="RectPlayerHand0" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
@@ -150,24 +149,24 @@
                     <Image Grid.Column="1" Stretch="Fill" Source="/HearthstoneDeckTracker;component/Images/gold_progress_frame_center.png"/>
                     <Image Grid.Column="2" Source="/HearthstoneDeckTracker;component/Images/gold_progress_frame_right.png" />
                 </Grid>
-                <local:HearthstoneTextBlock x:Name="LblGoldProgress" Text="Wins: 0/3 (0/100G)" FontSize="16"
+                <controls:HearthstoneTextBlock x:Name="LblGoldProgress" Text="Wins: 0/3 (0/100G)" FontSize="16"
                                             TextAlignment="Left" VerticalAlignment="Center" Visibility="Visible"/>
             </Grid>
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Name="StackPanelWarning" Visibility="Collapsed">
-                    <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Label_Warning}" Margin="3" FontSize="16" Fill="Red"/>
-                    <local:HearthstoneTextBlock x:Name="LblWarning" Text="{lex:Loc Overlay_Label_CardsNotFound}" Margin="3" FontSize="16" Fill="White"/>
-                    <local:HearthstoneTextBlock x:Name="LblWarningCards" Text="" Margin="3" FontSize="16" Fill="White"/>
+                    <controls:HearthstoneTextBlock Text="{lex:Loc Overlay_Label_Warning}" Margin="3" FontSize="16" Fill="Red"/>
+                    <controls:HearthstoneTextBlock x:Name="LblWarning" Text="{lex:Loc Overlay_Label_CardsNotFound}" Margin="3" FontSize="16" Fill="White"/>
+                    <controls:HearthstoneTextBlock x:Name="LblWarningCards" Text="" Margin="3" FontSize="16" Fill="White"/>
                 </StackPanel>
-                <local:HearthstoneTextBlock x:Name="TextBlockRestartWarning" Text="{lex:Loc Overlay_Label_Restart}" Visibility="Collapsed" Margin="3" FontSize="16" Fill="Red"/>
+                <controls:HearthstoneTextBlock x:Name="TextBlockRestartWarning" Text="{lex:Loc Overlay_Label_Restart}" Visibility="Collapsed" Margin="3" FontSize="16" Fill="Red"/>
             </StackPanel>
             <Grid Name="IconBoardAttackOpponent" Canvas.Top="300" Canvas.Left="300" Width="75" Height="75">
                 <Image Source="/HearthstoneDeckTracker;component/Images/board_damage.png"/>
-                <local:HearthstoneTextBlock x:Name="TextBlockOpponentAttack" FontSize="24" Width="75" Height="75" Text="0" TextAlignment="Center" Margin="0,3,0,0"/>
+                <controls:HearthstoneTextBlock x:Name="TextBlockOpponentAttack" FontSize="24" Width="75" Height="75" Text="0" TextAlignment="Center" Margin="0,3,0,0"/>
             </Grid>
             <Grid Name="IconBoardAttackPlayer" Canvas.Top="300" Canvas.Left="350" Width="75" Height="75">
                 <Image Source="/HearthstoneDeckTracker;component/Images/board_damage.png"/>
-                <local:HearthstoneTextBlock x:Name="TextBlockPlayerAttack" FontSize="24" Width="75" Height="75" Text="0" TextAlignment="Center" Margin="0,3,0,0"/>
+                <controls:HearthstoneTextBlock x:Name="TextBlockPlayerAttack" FontSize="24" Width="75" Height="75" Text="0" TextAlignment="Center" Margin="0,3,0,0"/>
             </Grid>
             <overlay:WotogCounter x:Name="WotogIconsPlayer" Canvas.Top="200" Canvas.Left="450"/>
             <overlay:WotogCounter x:Name="WotogIconsOpponent" Canvas.Top="300" Canvas.Left="450"/>

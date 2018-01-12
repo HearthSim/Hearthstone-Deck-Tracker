@@ -207,7 +207,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Log.Info("Waiting for game...");
 				var result = await this.ShowMessageAsync("Importing arena deck", "Start Hearthstone and enter the 'Arena' screen.",
 					MessageDialogStyle.AffirmativeAndNegative,
-					new MessageDialogs.Settings() {AffirmativeButtonText = "Start Hearthstone", NegativeButtonText = "Cancel"});
+					new MessageDialogs.Settings {AffirmativeButtonText = "Start Hearthstone", NegativeButtonText = "Cancel"});
 				if(result == MessageDialogResult.Negative)
 					return;
 				Helper.StartHearthstoneAsync().Forget();
@@ -260,7 +260,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var result = await this.ShowMessageAsync("Deck already exists", "You seem to already have this deck.",
 					MessageDialogStyle.AffirmativeAndNegative,
-					new MessageDialogs.Settings() { AffirmativeButtonText = "Use existing", NegativeButtonText = "Import anyway" });
+					new MessageDialogs.Settings { AffirmativeButtonText = "Use existing", NegativeButtonText = "Import anyway" });
 				if(result == MessageDialogResult.Affirmative)
 				{
 					SelectDeck(existing, true);

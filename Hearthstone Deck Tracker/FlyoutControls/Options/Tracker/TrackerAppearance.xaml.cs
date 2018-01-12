@@ -55,8 +55,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			var accent = ComboboxAccent.SelectedItem as Accent;
-			if(accent != null)
+		    if(ComboboxAccent.SelectedItem is Accent accent)
 			{
 				Config.Instance.AccentName = accent.Name;
 				Config.Save();

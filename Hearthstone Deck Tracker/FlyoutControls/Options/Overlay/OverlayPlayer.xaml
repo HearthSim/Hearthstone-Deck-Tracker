@@ -8,6 +8,7 @@
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -107,7 +108,7 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxShowPlayerGet_Checked"
                   Unchecked="CheckboxShowPlayerGet_Unchecked" />
-        <hearthstoneDeckTracker:ElementSorter x:Name="ElementSorterPlayer" Margin="10,5,10,10"
+        <controls:ElementSorter x:Name="ElementSorterPlayer" Margin="10,5,10,10"
                                               Height="auto" />
     </StackPanel>
 </UserControl>

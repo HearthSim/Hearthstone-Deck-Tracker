@@ -3,8 +3,9 @@
 set SolutionDir=%~dp1
 set ProjectDir=%~dp2
 set TargetDir=%~dp3
-set SkipGitSync=%4
-set SkipResourceCopy=%5
+set DevEnvDir=%~dp4
+set SkipGitSync=%5
+set SkipResourceCopy=%6
 
 if "%SkipGitSync%"=="" (set SkipGitSync=0)
 if "%SkipResourceCopy%"=="" (set SkipResourceCopy=0)
@@ -12,6 +13,7 @@ if "%SkipResourceCopy%"=="" (set SkipResourceCopy=0)
 echo SolutionDir="%SolutionDir%"
 echo ProjectDir="%ProjectDir%"
 echo TargetDir="%TargetDir%""
+echo DevEnvDir="%DevEnvDir%"
 echo SkipGitSync="%SkipGitSync%"
 echo SkipResourceCopy="%SkipResourceCopy%"
 
@@ -93,12 +95,6 @@ if not exist "%TargetDir%Images\Tiles" (
 if not exist "%TargetDir%Images\Themes" (
 	echo Creating missing directory "%TargetDir%Images\Themes"
 	mkdir "%TargetDir%Images\Themes"
-	echo.
-)
-
-if exist "%SolutionDir%Resources\Generated\Tiles" if exist "%TargetDir%Images\Tiles" (
-	echo Copying Generated tiles from "%SolutionDir%Resources\Generated\Tiles" to "%TargetDir%Images\Tiles"
-	xcopy /E /Y /Q "%SolutionDir%Resources\Generated\Tiles" "%TargetDir%Images\Tiles"
 	echo.
 )
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
@@ -32,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 			var heroPlayed = heroes.Any() ? heroes.OrderByDescending(x => x.Value).First().Key : "Any";
 			var possibleTargets = DeckList.Instance.Decks.Where(d => d.Class == heroPlayed || heroPlayed == "Any");
-			var dialog = new MoveGameDialog(possibleTargets) {Owner = window};
+			var dialog = new Windows.MoveGameDialog(possibleTargets) {Owner = window};
 			dialog.ShowDialog();
 			if(dialog.SelectedDeck == null)
 				return;

@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility;
 using Point = System.Drawing.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
 

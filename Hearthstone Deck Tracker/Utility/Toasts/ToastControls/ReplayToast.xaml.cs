@@ -3,8 +3,8 @@
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 

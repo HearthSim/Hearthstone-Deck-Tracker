@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using Hearthstone_Deck_Tracker.Utility;
 using static HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone

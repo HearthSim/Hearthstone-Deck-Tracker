@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Hearthstone_Deck_Tracker.Utility;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
@@ -17,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public Deck Deck
 		{
-			set { ((DeckScreenshotViewModel)DataContext).Deck = value; }
+			set => ((DeckScreenshotViewModel)DataContext).Deck = value;
 		}
 
 		private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)

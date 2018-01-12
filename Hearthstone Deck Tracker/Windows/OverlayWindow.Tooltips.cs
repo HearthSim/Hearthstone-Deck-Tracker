@@ -2,7 +2,6 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using HearthDb.Enums;
@@ -10,6 +9,7 @@ using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -26,8 +26,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(!Config.Instance.AdditionalOverlayTooltips)
 				return;
-			var card = ToolTipCard.DataContext as Card;
-			if(card == null)
+		    if(!(ToolTipCard.DataContext is Card card))
 				return;
 			if(card.EntourageCardIds.Length == 0)
 			{
@@ -224,7 +223,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var offset = 0.0;
 			foreach(var child in stackPanel.Children)
 			{
-				if(child is HearthstoneTextBlock text)
+				if(child is Controls.HearthstoneTextBlock text)
 					offset += text.ActualHeight;
 				else
 				{
@@ -266,10 +265,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public string FlavorText
 		{
-			get
-			{
-				return string.IsNullOrEmpty(_flavorText) ? "-" : _flavorText;
-			}
+			get => string.IsNullOrEmpty(_flavorText) ? "-" : _flavorText;
 			set
 			{
 				if(value != _flavorText)
@@ -282,7 +278,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public string FlavorTextCardName
 		{
-			get { return _flavorTextCardName; }
+			get => _flavorTextCardName;
 			set
 			{
 				if(value != _flavorTextCardName)
@@ -295,7 +291,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public Visibility FlavorTextVisibility
 		{
-			get { return _flavorTextVisibility; }
+			get => _flavorTextVisibility;
 			set
 			{
 				if(value != _flavorTextVisibility)

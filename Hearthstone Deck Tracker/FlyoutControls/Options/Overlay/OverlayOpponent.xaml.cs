@@ -7,9 +7,10 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Properties;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -31,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		public double OpponentScaling
 		{
-			get { return Config.Instance.OverlayOpponentScaling; }
+			get => Config.Instance.OverlayOpponentScaling;
 			set
 			{
 				if(!_initialized)
@@ -52,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		public double SecretScaling
 		{
-			get { return Config.Instance.SecretsPanelScaling * 100; }
+			get => Config.Instance.SecretsPanelScaling * 100;
 			set
 			{
 				if(!_initialized)
@@ -98,23 +99,23 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				switch(panel)
 				{
 					case Enums.DeckPanel.Winrate:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, Config.Instance.ShowWinRateAgainst,
+						ElementSorterOpponent.AddItem(new Controls.ElementSorterItem(panel, Config.Instance.ShowWinRateAgainst,
 																			value => Config.Instance.ShowWinRateAgainst = value, false));
 						break;
 					case Enums.DeckPanel.Cards:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, !Config.Instance.HideOpponentCards,
+						ElementSorterOpponent.AddItem(new Controls.ElementSorterItem(panel, !Config.Instance.HideOpponentCards,
 																			value => Config.Instance.HideOpponentCards = !value, false));
 						break;
 					case Enums.DeckPanel.CardCounter:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, !Config.Instance.HideOpponentCardCount,
+						ElementSorterOpponent.AddItem(new Controls.ElementSorterItem(panel, !Config.Instance.HideOpponentCardCount,
 																			value => Config.Instance.HideOpponentCardCount = !value, false));
 						break;
 					case Enums.DeckPanel.DrawChances:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, !Config.Instance.HideOpponentDrawChances,
+						ElementSorterOpponent.AddItem(new Controls.ElementSorterItem(panel, !Config.Instance.HideOpponentDrawChances,
 																			value => Config.Instance.HideOpponentDrawChances = !value, false));
 						break;
 					case Enums.DeckPanel.Fatigue:
-						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, !Config.Instance.HideOpponentFatigueCount,
+						ElementSorterOpponent.AddItem(new Controls.ElementSorterItem(panel, !Config.Instance.HideOpponentFatigueCount,
 																			value => Config.Instance.HideOpponentFatigueCount = !value, false));
 						break;
 				}

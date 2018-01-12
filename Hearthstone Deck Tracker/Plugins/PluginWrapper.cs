@@ -6,8 +6,8 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public bool IsEnabled
 		{
-			get { return _isEnabled; }
+			get => _isEnabled;
 			set
 			{
 				if(value)

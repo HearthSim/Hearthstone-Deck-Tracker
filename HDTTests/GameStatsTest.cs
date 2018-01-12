@@ -1,5 +1,4 @@
 ﻿using System;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,10 +10,9 @@ namespace HDTTests
 		[TestMethod]
 		public void AgeStringTest()
 		{
-			var gameStats = new GameStats();
+		    var gameStats = new GameStats {StartTime = DateTime.Now};
 
-			gameStats.StartTime = DateTime.Now;
-			Assert.AreEqual("0 minutes ago", gameStats.Age);
+		    Assert.AreEqual("0 minutes ago", gameStats.Age);
 
 			gameStats.StartTime = DateTime.Now.AddSeconds(59);
 			Assert.AreEqual("0 minutes ago", gameStats.Age);

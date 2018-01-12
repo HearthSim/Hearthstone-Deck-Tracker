@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Compression;
 
 namespace Hearthstone_Deck_Tracker.Utility.Extensions
@@ -10,16 +11,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 		{
 			if(!overwrite)
 			{
-				archive.ExtractToDirectory(destinationDirectoryName);
+				archive.ExtractToDirectory(destinationDirectoryName, false);
 				return;
 			}
 			foreach(var file in archive.Entries)
 			{
-				var completeFileName = Path.Combine(destinationDirectoryName, file.FullName);
+				var completeFileName = Path.Combine(destinationDirectoryName, file. FullName);
 				if(file.Name == "")
 				{
 					// Assuming Empty for Directory
-					Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
+					Directory.CreateDirectory(Path.GetDirectoryName(completeFileName) ?? throw new InvalidOperationException());
 					continue;
 				}
 				file.ExtractToFile(completeFileName, true);

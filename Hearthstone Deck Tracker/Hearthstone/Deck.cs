@@ -11,10 +11,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.Stats;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.HsReplay.Utility;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
@@ -131,7 +131,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool Archived
 		{
-			get { return _archived; }
+			get => _archived;
 			set
 			{
 				_archived = value;
@@ -144,7 +144,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string Note
 		{
-			get { return _note; }
+			get => _note;
 			set
 			{
 				_note = value;
@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public SerializableVersion SelectedVersion
 		{
-			get { return VersionsIncludingSelf.Contains(_selectedVersion) ? _selectedVersion : Version; }
+			get => VersionsIncludingSelf.Contains(_selectedVersion) ? _selectedVersion : Version;
 			set
 			{
 				_selectedVersion = value;
@@ -168,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool IsSelectedInGui
 		{
-			get { return _isSelectedInGui; }
+			get => _isSelectedInGui;
 			set
 			{
 				_isSelectedInGui = value;
@@ -178,21 +178,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool IsArenaDeck
 		{
-			get { return _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? false; }
-			set { _isArenaDeck = value; }
+			get => _isArenaDeck ?? (_isArenaDeck = CheckIfArenaDeck()) ?? false;
+			set => _isArenaDeck = value;
 		}
 
 		public bool IsDungeonDeck
 		{
-			get { return _isDungeonDeck ?? (_isDungeonDeck = CheckIfDungeonDeck()) ?? false; }
-			set { _isDungeonDeck = value; }
+			get => _isDungeonDeck ?? (_isDungeonDeck = CheckIfDungeonDeck()) ?? false;
+			set => _isDungeonDeck = value;
 		}
 
 		public bool IsBrawlDeck => Tags.Any(x => x.ToUpper().Contains("BRAWL"));
 
 		public ArenaReward ArenaReward
 		{
-			get { return IsArenaDeck ? _arenaReward : null; }
+			get => IsArenaDeck ? _arenaReward : null;
 			set
 			{
 				if(IsArenaDeck)
@@ -210,13 +210,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Guid DeckId
 		{
-			get { return _deckId == Guid.Empty ? (_deckId = Guid.NewGuid()) : _deckId; }
-			set { _deckId = value; }
+			get => _deckId == Guid.Empty ? (_deckId = Guid.NewGuid()) : _deckId;
+			set => _deckId = value;
 		}
 
 		public string Name
 		{
-			get { return _name; }
+			get => _name;
 			set
 			{
 				_name = value;
@@ -308,7 +308,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlArrayItem(ElementName = "Tag")]
 		public List<string> Tags
 		{
-			get { return _tags; }
+			get => _tags;
 			set
 			{
 				_tags = value;

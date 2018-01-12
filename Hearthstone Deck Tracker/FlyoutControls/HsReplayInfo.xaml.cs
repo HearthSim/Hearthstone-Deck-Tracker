@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Navigation;
+using Hearthstone_Deck_Tracker.Utility;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls
 {
