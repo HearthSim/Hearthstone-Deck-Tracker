@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 	        PixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
 	    }
 
-		public double PixelsPerDip { get; set; }
+        public double PixelsPerDip { get; set; }
 
 	    public Brush Fill
 		{

@@ -177,3 +177,11 @@ HDT-Localization/
 .github
 Resources/Generated/
 Resources/Tiles/
+
+# =========================
+# Hearthstone Deck Tracker
+# =========================
+
+HDT-Localization/ 
+Resources/Generated/
+Resources/Tiles/

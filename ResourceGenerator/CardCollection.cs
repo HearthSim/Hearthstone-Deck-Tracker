@@ -2,10 +2,13 @@
 //  File:       CardCollection.cs
 //  Solution:   Hearthstone Deck Tracker
 //  Project:    ResourceGenerator
-//  Date:       01/08/2018
+//  Date:       01/13/2018
 //  Author:     Latency McLaughlin
-//  Copywrite:  Bio-Hazard Industries - 1998-2016
+//  Copywrite:  Bio-Hazard Industries - 1998-2018
 //  *****************************************************************************
+
+
+#region
 
 using System;
 using System.Collections.Generic;
@@ -13,47 +16,51 @@ using System.IO;
 using System.Resources;
 using HearthDb;
 
+#endregion
+
+
 namespace ResourceGenerator {
-  internal class CardCollection : List<Card>, IDisposable {
-	/// <inheritdoc cref="List{T}" />
-	/// <summary>
-	///  Constructor
-	/// </summary>
-	/// <param name="key"></param>
-	/// <param name="capacity"></param>
-    public CardCollection(string key)  : base(new List<Card>()) {
-      ResourceWriter = new ResourceWriter(Path.Combine(TargetPath(Program.Arguments), key + ".res"));
+  internal sealed class CardCollection : List<Card>, IDisposable {
+    /// <summary>
+    ///   TargetPath
+    /// </summary>
+    public static readonly Func<string[], string> TargetPath = args => Path.Combine(args[0], @"Generated");
+
+
+    /// <inheritdoc />
+    /// <summary>
+    ///   Constructor
+    /// </summary>
+    /// <param name="key"></param>
+    public CardCollection(string key) : base(new List<Card>()) {
+      Name = key;
     }
 
 
-    public static readonly Func<string[], string> TargetPath = args => Path.Combine(args[0], @"Generated", args[1]);
+    /// <summary>
+    ///   Name
+    /// </summary>
+    public string Name { get; }
 
-    public IResourceWriter ResourceWriter { get; private set; }
-    private readonly int _capacity;
-    // ReSharper disable once InconsistentNaming
-    internal int _completed;
+    /// <summary>
+    ///   DownloadCount
+    /// </summary>
+    public int DownloadCount { get; set; }
 
-    public int Completed {
-      get => _completed;
-      set {
-        _completed = value;
-        if (_completed == _capacity) {
-		  // Flush the stream
-          ResourceWriter.Close();
-		  ResourceWriter.Dispose();
-        }
-      }
-	}
+    /// <summary>
+    ///   ResourceWriter
+    /// </summary>
+    public IResourceWriter ResourceWriter { get; set; }
 
 
-	/// <inheritdoc />
-	/// <summary>
-	///  Dispose
-	/// </summary>
+    /// <inheritdoc />
+    /// <summary>
+    ///   Dispose
+    /// </summary>
     public void Dispose() {
       ResourceWriter?.Dispose();
       ResourceWriter = null;
-	  GC.Collect();
+      GC.Collect();
     }
   }
 }

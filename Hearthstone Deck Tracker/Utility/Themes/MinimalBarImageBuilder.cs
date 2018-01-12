@@ -18,12 +18,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected override void AddCardImage()
 		{
 			var bmp = ImageCache.GetCardBitmap(Card);
-			if(bmp == null)
-				return;
-            bmp.Mutate(context => {
-              context.GaussianBlur(2);
-            });
-			DrawingGroup.Children.Add(new ImageDrawing(bmp.ToImageSource(), FrameRect));
+		    bmp.Mutate(context => {
+		        context.GaussianBlur(2);
+		    });
+		    DrawingGroup.Children.Add(new ImageDrawing(bmp.ToImageSource(), FrameRect));
 		}
 
 		protected override void AddCountBox()

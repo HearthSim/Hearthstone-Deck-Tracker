@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using System.Windows.Media.Imaging;
 using SixLabors.ImageSharp;
 
@@ -8,7 +9,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 	{
 		// http://stackoverflow.com/a/1069509
 		// Load a WPF BitmapImage from a System.Drawing.Bitmap		
-		public static BitmapImage ToImageSource(this Image<Rgba32> bitmap)
+	    public static BitmapImage ToImageSource(this Image<Rgba32> bitmap)
 		{
 			using(var memory = new MemoryStream())
 			{

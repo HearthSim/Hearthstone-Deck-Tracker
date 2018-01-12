@@ -14,7 +14,7 @@
              d:DesignHeight="1600" d:DesignWidth="1200">
     <ScrollViewer Name="ScrollViewerMain" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
         <DockPanel>
-            <Expander Name="ExpanderCharts" IsExpanded="{Binding ConstructedSummaryChartsExpanded, Source={StaticResource ConfigWrapper}}" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+            <Expander Name="ExpanderCharts" IsExpanded="{Binding ConstructedSummaryChartsExpanded, Source={StaticResource ConfigWrapper}}" DockPanel.Dock="Top" BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1" Margin="5">
                 <Expander.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{lex:LocTextUpper Stats_Constructed_Summary_Label_Charts}" Foreground="White"/>

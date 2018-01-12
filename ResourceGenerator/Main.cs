@@ -2,24 +2,31 @@
 //  File:       Main.cs
 //  Solution:   Hearthstone Deck Tracker
 //  Project:    ResourceGenerator
-//  Date:       01/08/2018
+//  Date:       01/13/2018
 //  Author:     Latency McLaughlin
-//  Copywrite:  Bio-Hazard Industries - 1998-2016
+//  Copywrite:  Bio-Hazard Industries - 1998-2018
 //  *****************************************************************************
+
+
+#region
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ORM_Monitor;
+using ORM_Monitor.Events;
+
+#endregion
+
 
 namespace ResourceGenerator {
   internal static partial class Program {
     internal static string[] Arguments;
     internal static bool IsMsBuildInvoked;
+
 
     /// <summary>
     ///   Main entry point.
@@ -31,28 +38,24 @@ namespace ResourceGenerator {
         return;
       }
 
-      FileSystemWatcher mWatcher = null;
+      var tokenSource = new CancellationTokenSource();
+      var tasks = new List<TaskEvent>();
       Arguments = args;
       IsMsBuildInvoked = Arguments.Length == 4 && Arguments[3] == "msbuild";
+      ConsoleCancelEventHandler onCancel = null;
 
-      // ReSharper disable once ConvertToLocalFunction
-	  ConsoleCancelEventHandler onCancel = (o, e) => {
-	    e.Cancel = true;
-	    // ReSharper disable AccessToDisposedClosure
-		Monitor.Enter(_tokenSource);
-		_tokenSource.Cancel();
-		Monitor.Exit(_tokenSource);
-	    // ReSharper restore AccessToDisposedClosure
-	  };
-
-      var tasks = new List<TaskEvent>();
-
-	  try {
+      try {
         if (!IsMsBuildInvoked) {
           var t0 = new TaskEvent {
             Name = "t0",
+            Tag = tasks,
             OnRunning = (sender, tea) => {
               Console.WriteLine(@"Press `CTRL+C' to abort the process...");
+
+              onCancel = (o, e) => {
+                e.Cancel = true;
+                tea.TokenSource?.Cancel();
+              };
 
               // Establish an event handler to process key press events.
               Console.CancelKeyPress += onCancel;
@@ -65,8 +68,8 @@ namespace ResourceGenerator {
               }
             },
             OnExited = (sender, tea) => {
-              // ReSharper disable once AccessToModifiedClosure
-              tasks.Remove(sender as TaskEvent);
+              tea.Task.Dispose();
+              (tea.Tag as List<TaskEvent>)?.Remove((sender as ExitedEvent)?.TaskEvent);
             }
           };
 
@@ -78,32 +81,35 @@ namespace ResourceGenerator {
 
         var t1 = new TaskEvent {
           Name = "t1",
-		  OnRunning = (sender, tea) => {
-            mWatcher = CreateWatcher(Path.Combine(args[0], args[1]));
-            CreateResource(args, tea.TokenSource.Token);
-          },
-          OnCompleted = (sender, tea) => {
-            tea.TokenSource.Cancel();
+          Tag = tasks,
+          OnRunning = (sender, tea) => {
+            var options = new ParallelOptions {
+              MaxDegreeOfParallelism = Environment.ProcessorCount,
+              CancellationToken = tea.TokenSource.Token
+            };
+            var cardCount = InitializeCollection(out var setCollection);
 
-			if (!IsMsBuildInvoked)
-              Console.WriteLine($@"Downloaded information for {_downloadCount} files.");
+            CreateResources(args, options, setCollection);
+
+            if (!IsMsBuildInvoked) {
+              var dlCount = setCollection.Sum(kvp => kvp.Value.DownloadCount);
+              Console.WriteLine($@"Downloaded information for ({dlCount}/{cardCount}) file{(cardCount > 1 ? "s" : string.Empty)}.");
+            }
           },
-          OnExited = (sender, tea) => tasks.Remove(sender as TaskEvent)
+          OnExited = (sender, tea) => {
+            tea.Task.Dispose();
+            (tea.Tag as List<TaskEvent>)?.Remove((sender as ExitedEvent)?.TaskEvent);
+          }
         };
 
-	    tasks.Add(t1);
+        tasks.Add(t1);
         t1.AsyncMonitor();
 
-	    // Wait for any the tasks to finish and send the other one a cancellation signal.
-        var b = Task.WaitAny(tasks.Select(x => x.Task).ToArray(), _tokenSource.Token);
-		if (b == 0)
-		  Console.CancelKeyPress -= onCancel;
-		tasks[tasks.Count > 1 && b == 0 ? 1 : 0].Cancel();
-
-		// Wait for all to complete.
-	    Task.WaitAll(tasks.Select(y => y.Task).ToArray());
-
-        Debug.WriteLine(@"All Tasks Completed");
+        // Wait for any the tasks to finish and send the other one a cancellation signal.
+        var b = Task.WaitAny(tasks.Select(x => x.Task).ToArray(), tokenSource.Token);
+        if (b == 0)
+          Console.CancelKeyPress -= onCancel;
+        tasks[tasks.Count > 1 && b == 0 ? 1 : 0].Cancel();
       } catch (OperationCanceledException) {
         Debug.WriteLine("");
       } catch (Exception ex) {
@@ -113,20 +119,12 @@ namespace ResourceGenerator {
           Debug.Print($"   {ie.GetType().Name}: {ie.Message}");
           ie = ie.InnerException;
         }
-        //Environment.Exit(1);
       } finally {
-	    tasks.Clear();
-        tasks = null;
+        Task.WaitAll(tasks.Select(y => y.Task).ToArray());
 
-		Monitor.Enter(mWatcher);
-		mWatcher?.Dispose();
-		Monitor.Exit(mWatcher);
-        mWatcher = null;
+        Debug.WriteLine(@"All Tasks Completed");
 
-		Monitor.Enter(_tokenSource);
-        _tokenSource?.Dispose();
-		Monitor.Exit(_tokenSource);
-        _tokenSource = null;
+        tokenSource.Dispose();
 
         if (!IsMsBuildInvoked) {
           Console.WriteLine(@"Press any key to continue...");

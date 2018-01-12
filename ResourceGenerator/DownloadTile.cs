@@ -2,15 +2,18 @@
 //  File:       DownloadTile.cs
 //  Solution:   Hearthstone Deck Tracker
 //  Project:    ResourceGenerator
-//  Date:       01/08/2018
+//  Date:       01/13/2018
 //  Author:     Latency McLaughlin
-//  Copywrite:  Bio-Hazard Industries - 1998-2016
+//  Copywrite:  Bio-Hazard Industries - 1998-2018
 //  *****************************************************************************
 
+
+#region
+
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 using HearthDb;
 using HearthDb.Enums;
 using SixLabors.ImageSharp;
@@ -18,24 +21,28 @@ using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.Primitives;
 
+#endregion
+
+
 namespace ResourceGenerator {
   internal static partial class Program {
     /// <summary>
     ///   DownloadTile
     /// </summary>
+    /// <param name="kvp"></param>
     /// <param name="card"></param>
     /// <param name="overwrite"></param>
     /// <returns></returns>
-    private static async Task DownloadTile(Card card, bool overwrite) {
-      var img = new FileInfo(Path.Combine(CardCollection.TargetPath(Arguments), $"{card.Id}.png"));
+    private static void DownloadTile(KeyValuePair<CardSet, CardCollection> kvp, Card card, bool overwrite) {
+      var img = new FileInfo(Path.Combine(Arguments[0], Arguments[1], $"{card.Id}.png"));
       if (!card.Collectible && card.Type != CardType.MINION && card.Type != CardType.SPELL && card.Type != CardType.WEAPON)
         return;
 
-      if (!img.Exists || overwrite) {
+      if (!img.Exists || img.Length == 0 || overwrite) {
         if (!IsMsBuildInvoked)
-          Console.WriteLine($@"Downloading missing image data for set [{card.Set.ToString()}] - {card.Name} ({card.Id})");
+          Console.WriteLine($@"Downloading missing image data for set [{card.Set.ToString() + ']',13} - {card.Name,-30} ({card.Id})");
 
-        var data = await new WebClient().DownloadDataTaskAsync($"https://art.hearthstonejson.com/v1/tiles/{card.Id}.png");
+        var data = new WebClient().DownloadData($"https://art.hearthstonejson.com/v1/tiles/{card.Id}.png");
         using (var ms = new MemoryStream(data)) {
           var options = new ResizeOptions {
             Size = new Size(130, 34),
@@ -56,10 +63,9 @@ namespace ResourceGenerator {
             PngColorType = PngColorType.Palette
           };
           src.Save(Path.Combine(path, img.Name), encoder);
-		  // AddResource moved to the callback of mWatcher since there is a delay of inf. time for the filestream to be completely written.
+
+          kvp.Value.DownloadCount++;
         }
-      } else {
-        AddResource(card);
       }
     }
   }
