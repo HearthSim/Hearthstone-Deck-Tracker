@@ -21,5 +21,14 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 				Data = boardState,
 			};
 		}
+
+		public static Payload GameStart(BoardState boardState)
+		{
+			return new Payload
+			{
+				Type = DataType.GameStart,
+				Data = boardState.Player.Deck
+			};
+		}
 	}
 }

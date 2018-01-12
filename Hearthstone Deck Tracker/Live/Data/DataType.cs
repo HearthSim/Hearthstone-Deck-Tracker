@@ -8,6 +8,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		BoardState,
 
 		[EnumMember(Value = "game_end")]
-		GameEnd
+		GameEnd,
+
+		[EnumMember(Value = "game_start")]
+		GameStart
 	}
 }

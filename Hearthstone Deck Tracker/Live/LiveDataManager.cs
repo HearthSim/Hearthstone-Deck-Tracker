@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			if(!streaming)
 				return;
 			_running = true;
+			_sentGameStart = false;
 			BoardStateWatcher.Start();
 		}
 
@@ -48,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.Live
 		private static DateTime _lastSent = DateTime.MinValue;
 		private static int _currentHash;
 		private static bool _running;
+		private static bool _sentGameStart;
 
 		private static async void SendUpdate(Payload payload)
 		{
@@ -66,6 +68,11 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private static void OnNewBoardState(BoardState boardState)
 		{
+			if(!_sentGameStart)
+			{
+				SendUpdate(PayloadFactory.GameStart(boardState));
+				_sentGameStart = true;
+			}
 			SendUpdate(PayloadFactory.BoardState(boardState));
 		}
 	}
