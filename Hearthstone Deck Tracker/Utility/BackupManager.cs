@@ -12,7 +12,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Utility
 {
-	public static class BackupManager
+  public static class BackupManager
 	{
 		private const int MaxBackups = 7;
 		private static readonly string[] Files = {"PlayerDecks.xml", "DeckStats.xml", "DefaultDeckStats.xml", "config.xml", "HotKeys.xml"};

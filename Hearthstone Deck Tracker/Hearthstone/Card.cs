@@ -244,7 +244,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string Type { get; set; }
 
 		[XmlIgnore]
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
 	  [XmlIgnore]
 		public int Cost { get; set; }

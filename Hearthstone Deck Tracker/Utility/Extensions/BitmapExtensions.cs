@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Media.Imaging;
 using SixLabors.ImageSharp;
 

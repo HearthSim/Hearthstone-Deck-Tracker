@@ -4,7 +4,7 @@ using System.IO.Compression;
 
 namespace Hearthstone_Deck_Tracker.Utility.Extensions
 {
-	public static class ZipArchiveExtensions
+  public static class ZipArchiveExtensions
 	{
 		//http://stackoverflow.com/questions/14795197/forcefully-replacing-existing-files-during-extracting-file-using-system-io-compr
 		public static void ExtractToDirectory(this ZipArchive archive, string destinationDirectoryName, bool overwrite)
