@@ -1,3 +1,12 @@
+## __Release v1.5.11 - 2018-01-17__
+
+__Fixes__:
+- Fixed an issue where the "Toggle Secrets" hotkey wasn't working.
+- Fixed several issues with UI components not updating when changing languages/colors.
+- Fixed an issue where The Candle wasn't tracked correctly.
+- Fixed the image for Psychic Scream.
+
+
 ## __Release v1.5.10 - 2017-12-18__
 
 - Fixed tracking of cards created by: Dead Man's Hand, Psychic Scream, Spiteful Summoner, Dragon's Fury, and several others.
