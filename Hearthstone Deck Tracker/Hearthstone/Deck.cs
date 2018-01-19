@@ -563,6 +563,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OnPropertyChanged(nameof(VisibilityStats));
 			OnPropertyChanged(nameof(VisibilityNoStats));
 			OnStatsUpdated?.Invoke();
+			Core.MainWindow.DeckPickerList.RefreshDisplayedDecks();
 		}
 
 		public void UpdateWildIndicatorVisibility() => OnPropertyChanged(nameof(WildIndicatorVisibility));
