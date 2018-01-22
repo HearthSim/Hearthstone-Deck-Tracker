@@ -75,10 +75,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				else
 					Watchers.DungeonRunWatcher.Stop();
 
-				if (game.PlayerChallengeable)
-					Watchers.FriendlyChallengeWatcher.Run();
-				else
-					Watchers.FriendlyChallengeWatcher.Stop();
+				if (Config.Instance.FlashHsOnFriendlyChallenge)
+				{
+					if (game.PlayerChallengeable)
+						Watchers.FriendlyChallengeWatcher.Run();
+					else
+						Watchers.FriendlyChallengeWatcher.Stop(); 
+				}
 
 				API.GameEvents.OnModeChanged.Execute(game.CurrentMode);
 			}
