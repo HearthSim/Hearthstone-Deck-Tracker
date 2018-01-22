@@ -78,9 +78,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if (game.CurrentMode == Mode.HUB || game.CurrentMode == Mode.TOURNAMENT || game.CurrentMode == Mode.ADVENTURE
 					|| game.CurrentMode == Mode.TAVERN_BRAWL || game.CurrentMode == Mode.DRAFT || game.CurrentMode == Mode.PACKOPENING
 					|| game.CurrentMode == Mode.COLLECTIONMANAGER)
-					Watchers.FriendlyChallengeDialogVisibilityWatcher.Run();
+					Watchers.FriendlyChallengeWatcher.Run();
 				else
-					Watchers.FriendlyChallengeDialogVisibilityWatcher.Stop();
+					Watchers.FriendlyChallengeWatcher.Stop();
 
 				API.GameEvents.OnModeChanged.Execute(game.CurrentMode);
 			}

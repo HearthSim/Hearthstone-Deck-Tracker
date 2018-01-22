@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PackWatcher.NewPackEventHandler += (sender, args) => PackUploader.UploadPack(args.PackId, args.Cards);
 			DungeonRunWatcher.DungeonRunMatchStarted += DeckManager.DungeonRunMatchStarted;
 			DungeonRunWatcher.DungeonInfoChanged += DeckManager.UpdateDungeonRunDeck;
-			FriendlyChallengeDialogVisibilityWatcher.OnDialogVisibilityChanged += (sender, args) => { if (args.DialogVisible && Config.Instance.FlashHsOnFriendlyChallenge) User32.FlashHs(); };
+			FriendlyChallengeWatcher.OnDialogVisibilityChanged += (sender, args) => { if (args.DialogVisible && Config.Instance.FlashHsOnFriendlyChallenge) User32.FlashHs(); };
 		}
 
 		internal static void Stop()
@@ -28,13 +28,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ArenaWatcher.Stop();
 			PackWatcher.Stop();
 			DungeonRunWatcher.Stop();
-			FriendlyChallengeDialogVisibilityWatcher.Stop();
+			FriendlyChallengeWatcher.Stop();
 		}
 
 		public static ArenaWatcher ArenaWatcher { get; } = new ArenaWatcher(new HearthMirrorArenaProvider());
 		public static PackOpeningWatcher PackWatcher { get; } = new PackOpeningWatcher(new HearthMirrorPackProvider());
 		public static DungeonRunWatcher DungeonRunWatcher { get; } = new DungeonRunWatcher(new GameDataProvider());
-		public static FriendlyChallengeDialogVisibilityWatcher FriendlyChallengeDialogVisibilityWatcher { get; } = new FriendlyChallengeDialogVisibilityWatcher(new HearthMirrorFriendlyChallengeDialogVisibilityProvider());
+		public static FriendlyChallengeWatcher FriendlyChallengeWatcher { get; } = new FriendlyChallengeWatcher(new HearthMirrorFriendlyChallengeDialogVisibilityProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider

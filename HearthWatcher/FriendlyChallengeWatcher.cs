@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HearthWatcher
 {
-	public class FriendlyChallengeDialogVisibilityWatcher
+	public class FriendlyChallengeWatcher
 	{
 		public delegate void DialogVisibilityChangedEventHandler(object sender, DialogVisibilityEventArgs args);
 
@@ -15,7 +15,7 @@ namespace HearthWatcher
 		private bool _watch;
 		private bool _previousVisibilityValue;
 
-		public FriendlyChallengeDialogVisibilityWatcher(IDialogVisibilityProvider visibilityProvider, int delay = 500)
+		public FriendlyChallengeWatcher(IDialogVisibilityProvider visibilityProvider, int delay = 500)
 		{
 			_visibilityProvider = visibilityProvider ?? throw new ArgumentNullException(nameof(visibilityProvider));
 			_delay = delay;

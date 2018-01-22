@@ -67,7 +67,7 @@
     <Compile Include="EventArgs\CompleteDeckEventArgs.cs" />
     <Compile Include="EventArgs\DialogVisibilityEventArgs.cs" />
     <Compile Include="EventArgs\RewardsEventArgs.cs" />
-    <Compile Include="FriendlyChallengeDialogVisibilityWatcher.cs" />
+    <Compile Include="FriendlyChallengeWatcher.cs" />
     <Compile Include="LogReader\LogLine.cs" />
     <Compile Include="LogReader\LogFileWatcher.cs" />
     <Compile Include="LogReader\LogWatcherInfo.cs" />
