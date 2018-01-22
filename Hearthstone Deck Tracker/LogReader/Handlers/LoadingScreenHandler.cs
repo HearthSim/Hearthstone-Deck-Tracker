@@ -75,9 +75,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				else
 					Watchers.DungeonRunWatcher.Stop();
 
-				if (game.CurrentMode == Mode.HUB || game.CurrentMode == Mode.TOURNAMENT || game.CurrentMode == Mode.ADVENTURE
-					|| game.CurrentMode == Mode.TAVERN_BRAWL || game.CurrentMode == Mode.DRAFT || game.CurrentMode == Mode.PACKOPENING
-					|| game.CurrentMode == Mode.COLLECTIONMANAGER)
+				if (game.PlayerChallengeable)
 					Watchers.FriendlyChallengeWatcher.Run();
 				else
 					Watchers.FriendlyChallengeWatcher.Stop();
