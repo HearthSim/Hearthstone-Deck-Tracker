@@ -176,6 +176,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
+		private void CheckboxFlashHsOnChallenge_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.FlashHsOnFriendlyChallenge = true;
+			Config.Save();
+		}
+
+		private void CheckboxFlashHsOnChallenge_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.FlashHsOnFriendlyChallenge = false;
+			Config.Save();
+		}
+
 		private void CheckboxTimerAlert_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
