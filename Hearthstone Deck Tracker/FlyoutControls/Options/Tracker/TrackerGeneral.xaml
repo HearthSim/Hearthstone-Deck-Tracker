@@ -23,6 +23,10 @@
                       HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"
                       Checked="CheckboxFlashHs_Checked"
                       Unchecked="CheckboxFlashHs_Unchecked" />
+                <CheckBox x:Name="CheckboxFlashHsOnChallenge" Content="{lex:Loc Options_Tracker_General_CheckBox_Flash_Challenge}"
+                      HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                      Checked="CheckboxFlashHsOnChallenge_Checked"
+                      Unchecked="CheckboxFlashHsOnChallenge_Unchecked" />
                 <CheckBox x:Name="CheckboxBringHsToForegorund"
                       Content="{lex:Loc Options_Tracker_General_CheckBox_Popup}" HorizontalAlignment="Left"
                       Margin="10,5,0,0" VerticalAlignment="Top"
