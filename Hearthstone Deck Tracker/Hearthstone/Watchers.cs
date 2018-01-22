@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PackWatcher.NewPackEventHandler += (sender, args) => PackUploader.UploadPack(args.PackId, args.Cards);
 			DungeonRunWatcher.DungeonRunMatchStarted += DeckManager.DungeonRunMatchStarted;
 			DungeonRunWatcher.DungeonInfoChanged += DeckManager.UpdateDungeonRunDeck;
-			FriendlyChallengeWatcher.OnDialogVisibilityChanged += (sender, args) => { if (args.DialogVisible && Config.Instance.FlashHsOnFriendlyChallenge) User32.FlashHs(); };
+			FriendlyChallengeWatcher.OnDialogVisibilityChanged += OnFriendlyChallenge;
 		}
 
 		internal static void Stop()
@@ -29,6 +29,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PackWatcher.Stop();
 			DungeonRunWatcher.Stop();
 			FriendlyChallengeWatcher.Stop();
+		}
+
+		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.DialogVisibilityEventArgs args)
+		{
+			if (args.DialogVisible && Config.Instance.FlashHsOnFriendlyChallenge)
+				User32.FlashHs();
 		}
 
 		public static ArenaWatcher ArenaWatcher { get; } = new ArenaWatcher(new HearthMirrorArenaProvider());
