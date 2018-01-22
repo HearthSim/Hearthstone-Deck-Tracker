@@ -73,7 +73,7 @@
     <Compile Include="LogReader\LogWatcherInfo.cs" />
     <Compile Include="LogWatcher.cs" />
     <Compile Include="Providers\IArenaProvider.cs" />
-    <Compile Include="Providers\IDialogVisibilityProvider.cs" />
+    <Compile Include="Providers\IFriendlyChallengeProvider.cs" />
     <Compile Include="Providers\IPackProvider.cs" />
     <Compile Include="EventArgs\PackEventArgs.cs" />
     <Compile Include="PackOpeningWatcher.cs" />

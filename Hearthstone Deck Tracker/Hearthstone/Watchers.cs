@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PackWatcher.NewPackEventHandler += (sender, args) => PackUploader.UploadPack(args.PackId, args.Cards);
 			DungeonRunWatcher.DungeonRunMatchStarted += DeckManager.DungeonRunMatchStarted;
 			DungeonRunWatcher.DungeonInfoChanged += DeckManager.UpdateDungeonRunDeck;
-			FriendlyChallengeWatcher.OnDialogVisibilityChanged += OnFriendlyChallenge;
+			FriendlyChallengeWatcher.OnFriendlyChallenge += OnFriendlyChallenge;
 		}
 
 		internal static void Stop()
@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			FriendlyChallengeWatcher.Stop();
 		}
 
-		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.DialogVisibilityEventArgs args)
+		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.FriendlyChallengeEventArgs args)
 		{
 			if (args.DialogVisible && Config.Instance.FlashHsOnFriendlyChallenge)
 				User32.FlashHs();
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public HearthMirror.Objects.Card[] GetDraftChoices() => Reflection.GetArenaDraftChoices()?.ToArray();
 	}
 
-	public class HearthMirrorFriendlyChallengeProvider : IDialogVisibilityProvider
+	public class HearthMirrorFriendlyChallengeProvider : IFriendlyChallengeProvider
 	{
 		public bool DialogVisible => Reflection.IsFriendlyChallengeDialogVisible();
 	}

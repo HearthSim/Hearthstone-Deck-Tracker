@@ -7,32 +7,32 @@ namespace HearthWatcher
 {
 	public class FriendlyChallengeWatcher
 	{
-		public delegate void DialogVisibilityChangedEventHandler(object sender, DialogVisibilityEventArgs args);
+		public delegate void FriendlyChallengeEventHandler(object sender, FriendlyChallengeEventArgs args);
 
-		private readonly IDialogVisibilityProvider _visibilityProvider;
+		private readonly IFriendlyChallengeProvider _challengeProvider;
 		private readonly int _delay;
 		private bool _running;
 		private bool _watch;
 		private bool _previousVisibilityValue;
 
-		public FriendlyChallengeWatcher(IDialogVisibilityProvider visibilityProvider, int delay = 500)
+		public FriendlyChallengeWatcher(IFriendlyChallengeProvider challengeProvider, int delay = 500)
 		{
-			_visibilityProvider = visibilityProvider ?? throw new ArgumentNullException(nameof(visibilityProvider));
+			_challengeProvider = challengeProvider ?? throw new ArgumentNullException(nameof(challengeProvider));
 			_delay = delay;
 		}
 
-		public event DialogVisibilityChangedEventHandler OnDialogVisibilityChanged;
+		public event FriendlyChallengeEventHandler OnFriendlyChallenge;
 
 		public void Run()
 		{
 			_watch = true;
 			if (!_running)
-				CheckForDialogVisibility();
+				CheckForFriendlyChallenge();
 		}
 
 		public void Stop() => _watch = false;
 
-		private async void CheckForDialogVisibility()
+		private async void CheckForFriendlyChallenge()
 		{
 			_running = true;
 			while (_watch)
@@ -40,11 +40,11 @@ namespace HearthWatcher
 				await Task.Delay(_delay);
 				if (!_watch)
 					break;
-				var visible = _visibilityProvider.DialogVisible;
-				if (visible != _previousVisibilityValue)
+				var dialogVisible = _challengeProvider.DialogVisible;
+				if (dialogVisible != _previousVisibilityValue)
 				{
-					OnDialogVisibilityChanged?.Invoke(this, new DialogVisibilityEventArgs(visible));
-					_previousVisibilityValue = visible;
+					OnFriendlyChallenge?.Invoke(this, new FriendlyChallengeEventArgs(dialogVisible));
+					_previousVisibilityValue = dialogVisible;
 				}
 			}
 			_previousVisibilityValue = false;

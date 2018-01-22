@@ -1,6 +1,6 @@
 ﻿namespace HearthWatcher.Providers
 {
-	public interface IDialogVisibilityProvider
+	public interface IFriendlyChallengeProvider
 	{
 		bool DialogVisible { get; }
 	}
