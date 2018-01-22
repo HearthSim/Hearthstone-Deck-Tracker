@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static ArenaWatcher ArenaWatcher { get; } = new ArenaWatcher(new HearthMirrorArenaProvider());
 		public static PackOpeningWatcher PackWatcher { get; } = new PackOpeningWatcher(new HearthMirrorPackProvider());
 		public static DungeonRunWatcher DungeonRunWatcher { get; } = new DungeonRunWatcher(new GameDataProvider());
-		public static FriendlyChallengeWatcher FriendlyChallengeWatcher { get; } = new FriendlyChallengeWatcher(new HearthMirrorFriendlyChallengeDialogVisibilityProvider());
+		public static FriendlyChallengeWatcher FriendlyChallengeWatcher { get; } = new FriendlyChallengeWatcher(new HearthMirrorFriendlyChallengeProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider
@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public HearthMirror.Objects.Card[] GetDraftChoices() => Reflection.GetArenaDraftChoices()?.ToArray();
 	}
 
-	public class HearthMirrorFriendlyChallengeDialogVisibilityProvider : IDialogVisibilityProvider
+	public class HearthMirrorFriendlyChallengeProvider : IDialogVisibilityProvider
 	{
 		public bool DialogVisible => Reflection.IsFriendlyChallengeDialogVisible();
 	}
