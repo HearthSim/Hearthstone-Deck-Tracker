@@ -69,6 +69,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int ProposedAttacker { get; set; }
 		public int ProposedDefender { get; set; }
 
+		public bool PlayerChallengeable => CurrentMode == Mode.HUB || CurrentMode == Mode.TOURNAMENT || CurrentMode == Mode.ADVENTURE
+					|| CurrentMode == Mode.TAVERN_BRAWL || CurrentMode == Mode.DRAFT || CurrentMode == Mode.PACKOPENING
+					|| CurrentMode == Mode.COLLECTIONMANAGER;
+
 		public bool? IsDungeonMatch => string.IsNullOrEmpty(CurrentGameStats?.OpponentHeroCardId) || CurrentGameType == GameType.GT_UNKNOWN ? (bool?)null
 			: CurrentGameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(CurrentGameStats.OpponentHeroCardId);
 

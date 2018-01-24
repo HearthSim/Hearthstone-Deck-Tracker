@@ -50,5 +50,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		int ProposedAttacker { get; set; }
 		int ProposedDefender { get; set; }
 		bool? IsDungeonMatch { get; }
+		bool PlayerChallengeable { get; }
 	}
 }
