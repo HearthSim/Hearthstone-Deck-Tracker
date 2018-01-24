@@ -321,6 +321,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool FlashHsOnTurnStart = true;
 
 		[DefaultValue(false)]
+		public bool FlashHsOnFriendlyChallenge = false;
+
+		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
 
 		[DefaultValue(0.075)]

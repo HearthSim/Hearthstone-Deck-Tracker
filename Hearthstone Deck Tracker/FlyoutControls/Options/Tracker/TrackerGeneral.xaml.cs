@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxShowLastPlayedDate.IsChecked = Config.Instance.ShowLastPlayedDateOnDeck;
 			ComboBoxLastPlayedDateFormat.SelectedItem = Config.Instance.LastPlayedDateFormat;
 			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
+			CheckboxFlashHsOnChallenge.IsChecked = Config.Instance.FlashHsOnFriendlyChallenge;
 
 			if(Config.Instance.NonLatinUseDefaultFont == null)
 			{
@@ -173,6 +174,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.FlashHsOnTurnStart = false;
+			Config.Save();
+		}
+
+		private void CheckboxFlashHsOnChallenge_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.FlashHsOnFriendlyChallenge = true;
+			Config.Save();
+		}
+
+		private void CheckboxFlashHsOnChallenge_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.FlashHsOnFriendlyChallenge = false;
 			Config.Save();
 		}
 
