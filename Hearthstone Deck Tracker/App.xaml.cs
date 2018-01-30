@@ -1,8 +1,5 @@
 ﻿#region
 
-#region
-
-// ReSharper disable RedundantUsingDirective
 using System;
 using System.IO;
 using System.Linq;
@@ -13,9 +10,6 @@ using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
-using Squirrel;
-
-#endregion
 
 #endregion
 
@@ -24,7 +18,7 @@ namespace Hearthstone_Deck_Tracker
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>
-	public partial class App : Application
+	public partial class App
 	{
 		private static bool _createdReport;
 
