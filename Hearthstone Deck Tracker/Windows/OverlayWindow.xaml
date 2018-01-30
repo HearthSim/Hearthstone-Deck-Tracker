@@ -8,6 +8,7 @@
         xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
         xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -122,7 +123,8 @@
             <Grid Name="GridFlavorText" Visibility="{Binding FlavorTextVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Panel.ZIndex="5" Width="298" Height="123">
                 <Image Source="../Resources/flavor_text.png" Margin="0,5,0,0"/>
                 <Image Source="../Resources/banner.png" Width="200" VerticalAlignment="Top"/>
-                <local:HearthstoneTextBlock Text="{Binding FlavorTextCardName, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" VerticalAlignment="Top" Margin="0,7,0,0"  HorizontalAlignment="Center" FontSize="14"/>
+                <local:HearthstoneTextBlock Text="{Binding FlavorTextCardName, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" VerticalAlignment="Top" Margin="0,7,0,0"  HorizontalAlignment="Center" FontSize="14"
+                                            FontFamily="{Binding Source={x:Static hearthstone:Card.DefaultFont}}" FontWeight="{Binding Source={x:Static hearthstone:Card.DefaultFontWeight}}"/>
                 <TextBlock utility:AttachedFormattedString.FormattedText="{Binding FlavorText, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Margin="20,45,20,20" Foreground="Black" TextWrapping="Wrap" TextAlignment="Center" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
             <Rectangle Name="RectPlayerHand0" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>

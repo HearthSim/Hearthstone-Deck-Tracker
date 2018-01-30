@@ -205,7 +205,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 				}
 			}
-			if(logLine.Contains("End Spectator"))
+			if(logLine.Contains("End Spectator") && !game.IsInMenu)
 				gameState.GameHandler.HandleGameEnd();
 			else if(logLine.Contains("BLOCK_START"))
 			{
@@ -268,6 +268,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Rogue.Kingsbane:
 								AddKnownCardId(gameState, Collectible.Rogue.Kingsbane);
+								break;
+							case Collectible.Neutral.WeaselTunneler:
+								AddKnownCardId(gameState, Collectible.Neutral.WeaselTunneler);
 								break;
 						}
 					}

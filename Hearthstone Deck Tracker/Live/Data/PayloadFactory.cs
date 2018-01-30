@@ -22,12 +22,12 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 			};
 		}
 
-		public static Payload GameStart(BoardState boardState)
+		public static Payload GameStart(GameStart gameStart)
 		{
 			return new Payload
 			{
 				Type = DataType.GameStart,
-				Data = boardState.Player.Deck
+				Data = gameStart
 			};
 		}
 	}

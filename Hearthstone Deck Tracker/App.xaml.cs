@@ -1,30 +1,26 @@
 ﻿#region
 
-#region
-
-// ReSharper disable RedundantUsingDirective
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Hearthstone_Deck_Tracker.Controls.Error;
-using Hearthstone_Deck_Tracker.Plugins;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
-using Hearthstone_Deck_Tracker.Windows;
-using Squirrel;
+using HearthStone.DeckTracker.Errors;
+using HearthStone.DeckTracker.Plugins;
+using HearthStone.DeckTracker.Utility;
+using HearthStone.DeckTracker.Utility.Extensions;
+using HearthStone.DeckTracker.Windows;
 
 #endregion
 
-#endregion
-
-namespace Hearthstone_Deck_Tracker
+namespace HearthStone.DeckTracker
 {
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>
-	public partial class App : Application
+	public partial class App
 	{
 		private static bool _createdReport;
 
@@ -78,10 +74,22 @@ namespace Hearthstone_Deck_Tracker
 			}
 			e.Handled = true;
 		}
-
+		
 		private void App_OnStartup(object sender, StartupEventArgs e)
 		{
 			ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+      var tempDir = Path.GetTempPath();
+			var targetDir = Assembly.GetExecutingAssembly().Location;
+			
+			Console.WriteLine(@"Running Resource Generator!");
+			// <path> <folder> <IsOverwriten> [msbuild]
+			ResourceGenerator.Program.Run(new []{ $"{tempDir}Resources", "Tiles", "0", "msbuild" });
+			Console.WriteLine($@"Sucessfully generated tiles in '{tempDir}Resources\Generated'");
+
+      Console.WriteLine($@"Copying Generated tiles from '{tempDir}Resources\Generated' to '{targetDir}Images\Tiles'");
+			XCopy.Run($@"{tempDir}Resources\Generated", $@"{targetDir}Images\Tiles");
+			
 			Core.Initialize();
 		}
 

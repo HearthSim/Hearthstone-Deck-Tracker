@@ -96,18 +96,6 @@ if not exist "%TargetDir%Images\Themes" (
 	echo.
 )
 
-if exist "%SolutionDir%Resources\Generated\Tiles" if exist "%TargetDir%Images\Tiles" (
-	echo Copying Generated tiles from "%SolutionDir%Resources\Generated\Tiles" to "%TargetDir%Images\Tiles"
-	xcopy /E /Y /Q "%SolutionDir%Resources\Generated\Tiles" "%TargetDir%Images\Tiles"
-	echo.
-)
-
-if exist "%ProjectDir%Images\Themes" if exist "%TargetDir%Images\Themes" (
-	echo Copying Themes from "%ProjectDir%Images\Themes" to "%TargetDir%Images\Themes"
-	xcopy /E /Y /Q "%ProjectDir%Images\Themes" "%TargetDir%Images\Themes"
-	echo.
-)
-
 if exist "%SolutionDir%CHANGELOG.md" if exist "%ProjectDir%Resources" (
 	echo Copying "%SolutionDir%CHANGELOG.md" to "%ProjectDir%Resources"
 	xcopy /Y /Q "%SolutionDir%CHANGELOG.md" "%ProjectDir%Resources"

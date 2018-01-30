@@ -13,6 +13,6 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		public object Data { get; set; }
 
 		[JsonProperty("version")]
-		public int Version => 2;
+		public int Version => 3;
 	}
 }
