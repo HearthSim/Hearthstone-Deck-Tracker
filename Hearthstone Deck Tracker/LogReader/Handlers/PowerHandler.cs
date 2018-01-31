@@ -205,7 +205,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 				}
 			}
-			if(logLine.Contains("End Spectator"))
+			if(logLine.Contains("End Spectator") && !game.IsInMenu)
 				gameState.GameHandler.HandleGameEnd();
 			else if(logLine.Contains("BLOCK_START"))
 			{
