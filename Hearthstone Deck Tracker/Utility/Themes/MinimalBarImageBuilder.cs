@@ -1,11 +1,10 @@
-using System.IO;
-﻿using System.Drawing;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using HearthDb.Enums;
+using SixLabors.ImageSharp;
 
 namespace Hearthstone_Deck_Tracker.Utility.Themes
 {
@@ -19,10 +18,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected override void AddCardImage()
 		{
 			var bmp = ImageCache.GetCardBitmap(Card);
-			if(bmp == null)
-				return;
-			var img = new GaussianBlur(bmp).Process(2);
-			DrawingGroup.Children.Add(new ImageDrawing(img.ToImageSource(), FrameRect));
+			bmp.Mutate(context => {
+				context.GaussianBlur(2);
+			});
+			DrawingGroup.Children.Add(new ImageDrawing(bmp.ToImageSource(), FrameRect));
 		}
 
 		protected override void AddCountBox()
