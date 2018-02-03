@@ -18,12 +18,15 @@ namespace Hearthstone_Deck_Tracker.Live
 		private bool _running;
 		private BoardState _currentBoardState;
 		private DateTime _currentBoardStateTime = DateTime.MinValue;
+		private bool _invokedGameStart;
 		public event Action<BoardState> OnNewBoardState;
+		public event Action<GameStart> OnGameStart;
 
 		public void Stop()
 		{
 			_update = false;
 			_currentBoardState = null;
+			_invokedGameStart = false;
 		}
 
 		public async void Start()
@@ -39,6 +42,11 @@ namespace Hearthstone_Deck_Tracker.Live
 				var forceInvoke = delta > RepeatDelay && boardState != null && _currentBoardState != null;
 				if(forceInvoke || (!boardState?.Equals(_currentBoardState) ?? false))
 				{
+					if(!_invokedGameStart)
+					{
+						_invokedGameStart = true;
+						OnGameStart?.Invoke(GetGameStart(boardState));
+					}
 					OnNewBoardState?.Invoke(boardState);
 					_currentBoardState = boardState;
 					_currentBoardStateTime = DateTime.Now;
@@ -46,6 +54,22 @@ namespace Hearthstone_Deck_Tracker.Live
 				await Task.Delay(UpdateDelay);
 			}
 			_running = false;
+		}
+
+		private GameStart GetGameStart(BoardState boardState)
+		{
+			var format = Core.Game.CurrentFormat ?? Format.Wild;
+			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
+			var player = Core.Game.MatchInfo?.LocalPlayer;
+			var rank = format == Format.Standard ? player?.StandardRank : player?.WildRank;
+			var legendRank = format == Format.Standard ? player?.StandardLegendRank : player?.WildLegendRank;
+			return new GameStart
+			{
+				Deck = boardState.Player.Deck,
+				GameType = gameType,
+				Rank = rank ?? 0,
+				LegendRank = legendRank ?? 0
+			};
 		}
 
 		private BoardState GetBoardState()

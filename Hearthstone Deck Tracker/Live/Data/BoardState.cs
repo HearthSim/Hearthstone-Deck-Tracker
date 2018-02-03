@@ -5,6 +5,21 @@ using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Live.Data
 {
+	public class GameStart
+	{
+		[JsonProperty("deck")]
+		public BoardStateDeck Deck { get; set; }
+
+		[JsonProperty("rank")]
+		public int Rank { get; set; }
+
+		[JsonProperty("legend_rank")]
+		public int LegendRank { get; set; }
+
+		[JsonProperty("game_type")]
+		public BnetGameType GameType { get; set; }
+	}
+
 	public class BoardState
 	{
 		[JsonProperty("player")]
