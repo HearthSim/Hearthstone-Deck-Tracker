@@ -27,7 +27,7 @@
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Attack}" Grid.Column="0" FontSize="24"
                                             TextAlignment="Center"  Width="30" Height="33" Margin="5,2,0,0"
                                             Visibility="{Binding ShowIconsInTooltip}" />
-                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding LocalizedName}" Grid.Column="1" FontSize="14"
+                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding LocalizedName}" Grid.Column="1" FontSize="14" FontFamily="{Binding DefaultFont}" FontWeight="{Binding DefaultFontWeight}"
                                             Height="35" Width="130"
                                             TextAlignment="Center" />
                 <Image Source="../Resources/armor.png" Width="35" Height="35" Grid.Column="2"

@@ -112,6 +112,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public static OptionsMain OptionsMain { get; set; }
 
+		public static bool UseLatinFont() => LatinLanguages.Contains(Config.Instance.SelectedLanguage) || Config.Instance.NonLatinUseDefaultFont == false;
+
 		public static bool HearthstoneDirExists
 		{
 			get

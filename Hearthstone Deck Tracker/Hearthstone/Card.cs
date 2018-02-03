@@ -372,18 +372,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string CardFileName => Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "").Replace(",", "");
 
-		public FontFamily Font
-		{
-			get
-			{
-				var lang = Config.Instance.SelectedLanguage;
-				var font = new FontFamily();
-				// if the language uses a Latin script use Belwe font
-				if(Helper.LatinLanguages.Contains(lang) || Config.Instance.NonLatinUseDefaultFont == false)
-					font = new FontFamily(new Uri("pack://application:,,,/"), "./resources/#Belwe Bd BT");
-				return font;
-			}
-		}
+		public static FontFamily DefaultFont => Helper.UseLatinFont() ? new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#Chunkfive") : new FontFamily();
+
+		public static FontWeight DefaultFontWeight => Helper.UseLatinFont() ? FontWeights.Normal : FontWeights.Bold;
 
 		public DrawingBrush Background
 		{
