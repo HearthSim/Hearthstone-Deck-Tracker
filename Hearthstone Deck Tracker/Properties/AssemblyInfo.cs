@@ -16,7 +16,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HearthSim")]
 [assembly: AssemblyProduct("Hearthstone Deck Tracker")]
-[assembly: AssemblyCopyright("Copyright © HearthSim")]
+[assembly: AssemblyCopyright("Copyright © HearthSim 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
