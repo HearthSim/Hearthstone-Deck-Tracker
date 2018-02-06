@@ -1,3 +1,15 @@
+## __Release v1.5.12 - 2018-02-06__
+__Updated for Hearthstone 10.2.0.23180__
+
+__New__:
+- Added an option for Hearthstone to flash when receiving a friendly challenge `(options > tracker > general)`.
+
+__Fixes__:
+- Fixed an issue where stats on deck tiles would not update.
+- Fixed an issue where spectator games would somtimes be attached to the wrong decks.
+- Fixed an issue with the card tooltip font for some languages.
+
+
 ## __Release v1.5.11 - 2018-01-17__
 
 __Fixes__:
