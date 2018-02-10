@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -17,6 +18,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		public void Update(List<Hearthstone.Card> cards, bool reset)
+		{
+			UpdateAsync(cards, reset).Forget();
+		}
+
+		public async Task UpdateAsync(List<Hearthstone.Card> cards, bool reset)
 		{
 			try
 			{
@@ -61,8 +67,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 						newCards.Remove(newCard);
 					}
 				}
-				foreach(var card in toRemove)
-					RemoveCard(card.Item1, card.Item2);
+				await Task.WhenAll(toRemove.Select(card => RemoveCard(card.Item1, card.Item2)).ToArray());
 				foreach(var card in newCards)
 				{
 					var newCard = new AnimatedCard(card);
@@ -77,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		private async void RemoveCard(AnimatedCard card, bool fadeOut)
+		private async Task RemoveCard(AnimatedCard card, bool fadeOut)
 		{
 			if(fadeOut)
 				await card.FadeOut(card.Card.Count > 0);
