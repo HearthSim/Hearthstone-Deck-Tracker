@@ -269,6 +269,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Rogue.Kingsbane:
 								AddKnownCardId(gameState, Collectible.Rogue.Kingsbane);
 								break;
+							case Collectible.Neutral.WeaselTunneler:
+								AddKnownCardId(gameState, Collectible.Neutral.WeaselTunneler);
+								break;
 						}
 					}
 					else //POWER
