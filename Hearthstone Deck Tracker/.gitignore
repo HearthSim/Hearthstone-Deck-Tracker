@@ -18,6 +18,11 @@ build/
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
 
+# Visual Studio 2015 cache/options directory
+.vs/
+# Uncomment if you have tasks that create the project's static files in wwwroot
+#wwwroot/
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
@@ -95,6 +100,9 @@ publish/
 # Publish Web Output
 *.Publish.xml
 
+# NuGet is used in bootstrap.exe to retrieve packages
+nuget.exe
+
 # NuGet Packages Directory
 ## TODO: If you have NuGet Package Restore enabled, uncomment the next line
 #packages/
@@ -154,3 +162,18 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+Hearthstone Deck Tracker.sln.ide/*
+packages/*
+!packages/repositories.config
+
+Hearthstone Deck Tracker/Releases
+HearthDb/
+HearthMirror/
+Hearthstone Deck Tracker/Resources/CHANGELOG.md
+HSReplay/
+HSReplay-Api/
+Hearthstone Deck Tracker/Properties/Strings.*
+HDT-Localization/
+.github
+Resources/Generated/
+Resources/Tiles/

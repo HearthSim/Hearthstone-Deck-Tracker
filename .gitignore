@@ -170,9 +170,18 @@ Hearthstone Deck Tracker/Releases
 HearthDb/
 HearthMirror/
 Hearthstone Deck Tracker/Resources/CHANGELOG.md
+HSReplay/
 HSReplay-Api/
 Hearthstone Deck Tracker/Properties/Strings.*
 HDT-Localization/
+.github
+Resources/Generated/
+Resources/Tiles/
 
+# =========================
+# Hearthstone Deck Tracker
+# =========================
+
+HDT-Localization/ 
 Resources/Generated/
 Resources/Tiles/
