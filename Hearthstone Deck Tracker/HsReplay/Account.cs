@@ -46,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			UploadTokenHistory.Write("Deleting token");
 			UploadToken = string.Empty;
+			CollectionState.Clear();
 			Update(0, null);
 		}
 
@@ -74,6 +75,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public int Id { get; set; }
 
 		public DateTime LastUpdated { get; set; }
+
+		public Dictionary<string, SyncState> CollectionState { get; set; } = new Dictionary<string, SyncState>();
 
 		public override string ToString()
 		{
@@ -124,6 +127,22 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			{
 				Log.Error(ex);
 				return new Account();
+			}
+		}
+
+		public class SyncState
+		{
+			public DateTime Date { get; set; }
+			public int Hash { get; set; }
+
+			public SyncState(int hash)
+			{
+				Hash = hash;
+				Date = DateTime.Now;
+			}
+
+			public SyncState()
+			{
 			}
 		}
 

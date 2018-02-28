@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			HSReplayNetOAuth.UploadTokenClaimed += () => OnPropertyChanged(nameof(UploadTokenClaimed));
 			Account.Instance.TokenClaimedChanged += () => OnPropertyChanged(nameof(UploadTokenClaimed));
 			ConfigWrapper.ReplayAutoUploadChanged += () => OnPropertyChanged(nameof(ReplayUploadingEnabled));
+			ConfigWrapper.CollectionSyncingChanged += () => OnPropertyChanged(nameof(CollectionSyncingEnabled));
 			HSReplayNetHelper.Authenticating += EnableLoginButton;
 		}
 
@@ -128,6 +129,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			}
 		}
 
+		public ICommand EnableCollectionSyncingCommand => new Command(() => ConfigWrapper.CollectionSyncingEnabled = true);
+
 		public ICommand EnableReplayUploadingCommand => new Command(() => ConfigWrapper.HsReplayAutoUpload = true);
 
 		public ICommand PremiumInfoCommand => new Command(() =>
@@ -142,7 +145,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			Helper.TryOpenUrl(url);
 		});
 
+		public ICommand ClaimUploadTokenCommand => new Command(async () =>
+		{
+			ClaimTokenButtonEnabled = false;
+			if(!Account.Instance.TokenClaimed.HasValue)
+				await ApiWrapper.UpdateUploadTokenStatus();
+			if(Account.Instance.TokenClaimed == false)
+				await HSReplayNetOAuth.ClaimUploadToken(Account.Instance.UploadToken);
+			ClaimTokenButtonEnabled = true;
+		});
+
 		public bool ReplayUploadingEnabled => ConfigWrapper.HsReplayAutoUpload;
+
+		public bool CollectionSyncingEnabled => ConfigWrapper.CollectionSyncingEnabled;
 
 		public bool UploadTokenClaimed => Account.Instance.TokenClaimed ?? false;
 

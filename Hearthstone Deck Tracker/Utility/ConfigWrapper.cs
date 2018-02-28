@@ -12,6 +12,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	public class ConfigWrapper
 	{
 		public static event Action ReplayAutoUploadChanged;
+		public static event Action CollectionSyncingChanged;
 
 		public static bool CardDbIncludeWildOnlyCards
 		{
@@ -180,6 +181,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 			{
 				Config.Instance.ConstructedStatsApplyTagFilters = value;
 				Config.Save();
+			}
+		}
+
+		public static bool CollectionSyncingEnabled
+		{
+			get { return Config.Instance.SyncCollection; }
+			set
+			{
+				Config.Instance.SyncCollection = value;
+				Config.Save();
+				CollectionSyncingChanged?.Invoke();
 			}
 		}
 

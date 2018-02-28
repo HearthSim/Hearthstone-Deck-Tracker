@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay.Data;
 using Hearthstone_Deck_Tracker.Live.Data;
 using Hearthstone_Deck_Tracker.Utility;
@@ -30,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static event Action LoggedOut;
 		public static event Action TwitchUsersUpdated;
 		public static event Action AccountDataUpdated;
+		public static event Action CollectionUpdated;
 		public static event Action UploadTokenClaimed;
 
 		static HSReplayNetOAuth()
@@ -52,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			string url;
 			try
 			{
-				url = Client.Value.GetAuthenticationUrl(new[] { Scope.ReadSocialAccounts }, Ports);
+				url = Client.Value.GetAuthenticationUrl(new[] { Scope.ReadSocialAccounts, Scope.WriteCollection }, Ports);
 			}
 			catch(Exception e)
 			{
@@ -227,6 +229,27 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			catch(Exception e)
 			{
 				Log.Error(e);
+			}
+		}
+
+		public static async Task<bool> UpdateCollection(Collection collection)
+		{
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return false;
+				}
+				var response = await Client.Value.UploadCollection(collection, collection.AccountHi, collection.AccountLo);
+				Log.Debug(response);
+				CollectionUpdated?.Invoke();
+				return true;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return false;
 			}
 		}
 

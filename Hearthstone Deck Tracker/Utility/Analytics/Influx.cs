@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("version", version.ToVersionString(true))
 				.Tag("new", isNew)
 				.Tag("authenticated", authenticated)
+				.Tag("collection_syncing", Config.Instance.SyncCollection)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
 				.Tag("lang_card", Config.Instance.SelectedLanguage)
 				.Tag("lang_ui", Config.Instance.Localization.ToString())
@@ -130,6 +131,26 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_end_of_game_upload_error").Tag("reason", Regex.Escape(reason)).Build());
+		}
+
+		public static void OnCollectionSyncingBannerClicked(bool authenticated, bool collectionSynced)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_collectoin_syncing_banner_interaction")
+				.Tag("type", "click")
+				.Tag("authenticated", authenticated)
+				.Tag("collection_synced", collectionSynced);
+			WritePoint(point.Build());
+		}
+
+		public static void OnCollectionSyncingBannerClosed()
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_collectoin_syncing_banner_interaction")
+				.Tag("type", "close");
+			WritePoint(point.Build());
 		}
 
 		public static void OnHsReplayDataLoaded()

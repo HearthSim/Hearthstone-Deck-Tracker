@@ -750,6 +750,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
 
+		[DefaultValue(true)]
+		public bool ShowCollectionSyncingBanner = true;
+
 		[DefaultValue(false)]
 		public bool ShowDeckTitle = false;
 
@@ -842,6 +845,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue("#FF00FF")]
 		public string StreamingOverlayBackground = "#FF00FF";
+
+		[DefaultValue(true)]
+		public bool SyncCollection = true;
 
 		[DefaultValue(true)]
 		public bool TagDecksOnImport = true;

@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
@@ -637,5 +638,33 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			Influx.OnMainWindowDeactivated();
 		}
+
+		private void RemovableBanner_OnClick(object sender, EventArgs e)
+		{
+			var authenticated = HSReplayNetOAuth.IsAuthenticated;
+			var collectionSynced = Account.Instance.CollectionState.Any();
+			Influx.OnCollectionSyncingBannerClicked(authenticated, collectionSynced);
+			if(authenticated && collectionSynced)
+			{
+				var url = Helper.BuildHsReplayNetUrl("decks", "collection_syncing_banner");
+				Helper.TryOpenUrl(url);
+			}
+			else
+			{
+				Options.TreeViewItemHSReplayCollection.IsSelected = true;
+				FlyoutOptions.IsOpen = true;
+			}
+		}
+
+		private void RemovableBanner_OnClose(object sender, EventArgs e)
+		{
+			Influx.OnCollectionSyncingBannerClosed();
+			Config.Instance.ShowCollectionSyncingBanner = false;
+			Config.Save();
+			OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
+		}
+
+		public Visibility CollectionSyncingBannerVisbiility
+			=> Config.Instance.ShowCollectionSyncingBanner ? Visible : Collapsed;
 	}
 }

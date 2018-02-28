@@ -22,6 +22,7 @@
                     <TreeViewItem Name="TreeViewItemSearch" Header="{lex:LocText Options_Search_Header}" Selected="TreeViewItemSearch_OnSelected"></TreeViewItem>
                     <TreeViewItem Header="HSReplay.net">
                         <TreeViewItem Name="TreeViewItemHSReplayAccount" Header="My Account" Selected="TreeViewItemHSReplayAccount_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemHSReplayCollection" Header="Collection" Selected="TreeViewItemHSReplayCollection_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemHSReplayReplays" Header="Replays" Selected="TreeViewItemHSReplayReplays_OnSelected"/>
                     </TreeViewItem>
                     <TreeViewItem Header="{lex:LocText Options_Overlay_Header}">

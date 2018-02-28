@@ -291,12 +291,18 @@
                     <mainWindowControls:DeckChartsView x:Name="DeckCharts" DockPanel.Dock="Top"/>
                 </GroupBox>
             </DockPanel>
-            <Grid>
-                <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
-                <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray" 
-                       FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                       Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
-            </Grid>
+            <DockPanel>
+                <controls1:RemovableBanner DockPanel.Dock="Top" Click="RemovableBanner_OnClick" Close="RemovableBanner_OnClose"
+                                           Visibility="{Binding CollectionSyncingBannerVisbiility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
+                    <mainWindowControls:CollectionSyncingBannerView/>
+                </controls1:RemovableBanner>
+                <Grid Margin="0,2,0,0">
+                    <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
+                    <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray" 
+                           FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
+                </Grid>
+            </DockPanel>
         </DockPanel>
     </DockPanel>
 </controls:MetroWindow>

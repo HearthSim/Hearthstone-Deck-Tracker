@@ -238,11 +238,17 @@
     <Compile Include="Controls\Information\TwitchExtensionInfo.xaml.cs">
       <DependentUpon>TwitchExtensionInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RemovableBanner.xaml.cs">
+      <DependentUpon>RemovableBanner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StatusIndicator.xaml.cs">
       <DependentUpon>StatusIndicator.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\HSReplay\HSReplayAccount.xaml.cs">
       <DependentUpon>HSReplayAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\HSReplay\HSReplayCollection.xaml.cs">
+      <DependentUpon>HSReplayCollection.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\HSReplay\HSReplayReplays.xaml.cs">
       <DependentUpon>HSReplayReplays.xaml</DependentUpon>
@@ -693,6 +699,9 @@
     <Compile Include="Controls\DeckView.xaml.cs">
       <DependentUpon>DeckView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MainWindowControls\CollectionSyncingBannerView.xaml.cs">
+      <DependentUpon>CollectionSyncingBannerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\MainWindowControls\DeckChartsView.xaml.cs">
       <DependentUpon>DeckChartsView.xaml</DependentUpon>
     </Compile>
@@ -899,6 +908,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\RemovableBanner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\StatusIndicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1063,6 +1076,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\Options\HSReplay\HSReplayCollection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FlyoutControls\Options\HSReplay\HSReplayReplays.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1164,6 +1181,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DeckView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindowControls\CollectionSyncingBannerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

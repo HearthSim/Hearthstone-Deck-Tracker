@@ -1,6 +1,4 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -37,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly TrackerStats OptionsTrackerStats = new TrackerStats();
 		public readonly HSReplayAccount OptionsHSReplayAccount = new HSReplayAccount();
 		public readonly HSReplayReplays OptionsHSReplayReplays = new HSReplayReplays();
+		public readonly HSReplayCollection OptionsHSReplayCollection = new HSReplayCollection();
 		public readonly StreamingTwitchExtension OptionsStreamingTwitchExtension = new StreamingTwitchExtension();
 		public readonly StreamingCapturableOverlay OptionsStreamingCapturableOverlay = new StreamingCapturableOverlay();
 		public readonly OptionsSearch OptionsSearch = new OptionsSearch();
@@ -46,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		public OptionsMain()
 		{
-			_hsreplayOptions = new object[] { OptionsHSReplayAccount, OptionsHSReplayReplays };
+			_hsreplayOptions = new object[] { OptionsHSReplayAccount, OptionsHSReplayCollection ,OptionsHSReplayReplays };
 			InitializeComponent();
 			Helper.OptionsMain = this;
 			try
@@ -228,6 +227,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			ContentHeader = "Replays";
 			OptionsContent = OptionsHSReplayReplays;
+		}
+
+		private void TreeViewItemHSReplayCollection_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = "Collection";
+			OptionsContent = OptionsHSReplayCollection;
 		}
 	}
 }
