@@ -29,13 +29,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 {
 	public class GameStats : INotifyPropertyChanged
 	{
-		private const string LocAgeDay = "GameStats_Age_Day";
-		private const string LocAgeDays = "GameStats_Age_Days";
-		private const string LocAgeHour = "GameStats_Age_Hour";
-		private const string LocAgeHours = "GameStats_Age_Hours";
-		private const string LocAgeMinute = "GameStats_Age_Minute";
-		private const string LocAgeMinutes = "GameStats_Age_Minutes";
-
 		private Guid? _deckId;
 		private string _deckName;
 		private string _deckNameAndVersion;
@@ -370,46 +363,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int SortableDuration => (EndTime - StartTime).Minutes;
 
 		[XmlIgnore]
-		public string Age 
-		{
-			get
-			{
-				var duration = DateTime.Now - StartTime;
-				int time;
-				string str;
-				if(duration.TotalDays >= 2)
-				{
-					str = LocAgeDays;
-					time = (int)duration.TotalDays;
-				}
-				else if(duration.TotalDays >= 1)
-				{
-					str = LocAgeDay;
-					time = (int)duration.TotalDays;
-				}
-				else if(duration.TotalHours >= 2)
-				{
-					str = LocAgeHours;
-					time = (int)duration.TotalHours;
-				}
-				else if(duration.TotalHours >= 1)
-				{
-					str = LocAgeHour;
-					time = (int)duration.TotalHours;
-				}
-				else if(duration.TotalMinutes >= 2 || duration.TotalMinutes < 1)
-				{
-					str = LocAgeMinutes;
-					time = (int)duration.TotalMinutes;
-				}
-				else
-				{
-					str = LocAgeMinute;
-					time = (int)duration.TotalMinutes;
-				}
-				return string.Format(LocUtil.Get(str), time);
-			} 
-		}
+		public string Age => LocUtil.GetAge(StartTime);
 
 		[XmlIgnore]
 		public string GotCoin
