@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
@@ -14,29 +16,69 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static string CacheFilePath => Path.Combine(Config.Instance.DataDir, "hsreplay.cache");
 
 		private static readonly Lazy<Account> Lazy = new Lazy<Account>(Load);
-		private AccountStatus _status;
+		private bool? _tokenClaimed;
+
+		public event Action TokenClaimedChanged;
 
 		private Account()
 		{
+			HSReplayNetOAuth.AccountDataUpdated += () =>
+			{
+				Update(HSReplayNetOAuth.AccountData.Id, HSReplayNetOAuth.AccountData.Username);
+			};
+			HSReplayNetOAuth.UploadTokenClaimed += () =>
+			{
+				TokenClaimed = true;
+				Save();
+			};
+		}
+
+		public void Update(int id, string username)
+		{
+			Id = id;
+			Username = username;
+			LastUpdated = DateTime.Now;
+			OnPropertyChanged(nameof(Status));
+			Save();
+		}
+
+		public void Reset()
+		{
+			UploadTokenHistory.Write("Deleting token");
+			UploadToken = string.Empty;
+			Update(0, null);
 		}
 
 		public static Account Instance => Lazy.Value;
 
 		public string UploadToken { get; set; }
 
-		public AccountStatus Status
+		public bool? TokenClaimed
 		{
-			get { return _status; }
+			get => _tokenClaimed;
 			set
 			{
-				_status = value; 
-				OnPropertyChanged();
+				if(value != _tokenClaimed)
+				{
+					_tokenClaimed = value;
+					TokenClaimedChanged?.Invoke();
+				}
 			}
 		}
 
+		[JsonIgnore]
+		public AccountStatus Status => Id == 0 ? AccountStatus.Anonymous : AccountStatus.Registered;
+
 		public string Username { get; set; }
+
 		public int Id { get; set; }
+
 		public DateTime LastUpdated { get; set; }
+
+		public override string ToString()
+		{
+			return $"Id={Id}, Username={Username}, Token=****-{UploadToken.Split('-').Last()}";
+		}
 
 		public static bool Save()
 		{

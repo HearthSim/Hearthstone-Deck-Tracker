@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -19,6 +20,10 @@
                 </Border>
                 <TreeView Name="TreeViewOptions" MinWidth="150">
                     <TreeViewItem Name="TreeViewItemSearch" Header="{lex:LocText Options_Search_Header}" Selected="TreeViewItemSearch_OnSelected"></TreeViewItem>
+                    <TreeViewItem Header="HSReplay.net">
+                        <TreeViewItem Name="TreeViewItemHSReplayAccount" Header="My Account" Selected="TreeViewItemHSReplayAccount_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemHSReplayReplays" Header="Replays" Selected="TreeViewItemHSReplayReplays_OnSelected"/>
+                    </TreeViewItem>
                     <TreeViewItem Header="{lex:LocText Options_Overlay_Header}">
                         <TreeViewItem Name="TreeViewItemOverlayGeneral" Header="{lex:LocText Options_Overlay_General_Header}" Selected="TreeViewItemGeneralOverlay_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemOverlayDeckWindows" Header="{lex:LocText Options_Overlay_Windows_Header}" Selected="TreeViewItemOverlayDeckWindows_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
@@ -29,7 +34,6 @@
                     <TreeViewItem Header="{lex:LocText Options_Tracker_Header}">
                         <TreeViewItem Name="TreeViewItemTrackerGeneral" Header="{lex:LocText Options_Tracker_General_Header}" Selected="TreeViewItemTrackerGeneral_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerStats" Header="{lex:LocText Options_Tracker_Stats_Header}" Selected="TreeViewItemTrackerStats_OnSelected"/>
-                        <TreeViewItem Name="TreeViewItemTrackerReplays" Header="{lex:LocText Options_Tracker_Replays_Header}" Selected="TreeViewItemTrackerReplays_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerImporting" Header="{lex:LocText Options_Tracker_Importing_Header}" Selected="TreeViewItemTrackerImporting_OnSelected" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"/>
                         <TreeViewItem Name="TreeViewItemTrackerNotifications" Header="{lex:LocText Options_Tracker_Notifications_Header}" Selected="TreeViewItemTrackerNotifications_OnSelected"/>
                         <TreeViewItem Name="TreeViewItemTrackerPlugins" Header="{lex:LocText Options_Tracker_Plugins_Header}" Selected="TreeViewItemTrackerPlugins_OnSelected"/>
@@ -46,9 +50,23 @@
             </DockPanel>
         </Border>
         <GroupBox Header="{Binding ContentHeader}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ContentControl Content="{Binding OptionsContent}"/>
-            </ScrollViewer>
+            <StackPanel>
+                <StackPanel Visibility="{Binding HSReplayHeaderVisibility}">
+                    <Image Source="../../Resources/hsreplay_banner.jpg"
+                           RenderOptions.BitmapScalingMode="Fant"
+                           Margin="-4">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown" >
+                                <i:InvokeCommandAction Command="{Binding HSReplayBannerCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
+                    <Separator Margin="-5,5" Background="{DynamicResource AccentColorBrush}"/>
+                </StackPanel>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ContentControl Content="{Binding OptionsContent}"/>
+                </ScrollViewer>
+            </StackPanel>
         </GroupBox>
     </DockPanel>
 </UserControl>

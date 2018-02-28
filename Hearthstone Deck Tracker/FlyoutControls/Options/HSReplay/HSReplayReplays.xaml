@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay.HSReplayReplays"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel Margin="5">
+        <CheckBox Name="CheckBoxAutoUpload" Content="{lex:Loc Options_Tracker_Replays_CheckBox_Upload}" IsChecked="{Binding HsReplayAutoUpload, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Ranked}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadRanked, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+        <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Casual}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadCasual, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+        <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Arena}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadArena, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+        <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Brawl}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadBrawl, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+        <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Friendly}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadFriendly, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+        <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_AdventurePractice}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadPractice, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+        <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Spectator}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadSpectator, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+        <CheckBox Name="CheckBoxShowToast" Content="{lex:Loc Options_Tracker_Replays_CheckBox_ShareNotification}" Margin="0,5,0,0" IsChecked="{Binding HsReplayShareToast, Source={StaticResource ConfigWrapper}}"/>
+    </StackPanel>
+</UserControl>

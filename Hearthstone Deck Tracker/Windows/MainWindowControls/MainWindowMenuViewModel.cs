@@ -4,6 +4,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.HsReplay;
@@ -22,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		private const string LocLinkNew = "DeckPicker_ContextMenu_LinkNewUrl";
 
 		private IEnumerable<Deck> _decks;
+		private bool _loginButtonEnabled = true;
 		public MainWindow MainWindow => Core.MainWindow;
 
 		public IEnumerable<Deck> Decks
@@ -79,19 +81,24 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public ICommand ConstructedStatsCommand => new Command(() => MainWindow.ShowStats(false, false));
 		public ICommand ReplayFromStatsCommand => new Command(() => MainWindow.ShowStats(false, true));
 		public ICommand ReplayFromFileCommand => new Command(() => MainWindow.ShowReplayFromFileDialog());
-		public ICommand HsReplayNetCommand => new Command(() =>
+		public ICommand MyReplaysCommand => new Command(() =>
 		{
-			var url = Helper.BuildHsReplayNetUrl("/", "replaymenu");
-			Helper.TryOpenUrl(url);
-		});
-		public ICommand ClaimAccountCommand => new Command(() => MainWindow.StartClaimAccount());
-		public ICommand MyAccountCommand => new Command(() =>
-		{
-			var url = Helper.BuildHsReplayNetUrl("/games/mine", "myaccount");
+			var url = Helper.BuildHsReplayNetUrl("/games/mine", "menu");
 			Helper.TryOpenUrl(url);
 		});
 		public ICommand DeckHistoryCommand => new Command(() => MainWindow.ShowDeckHistoryFlyout());
 		public ICommand ImportFromDeckString => new Command(() => MainWindow.ImportFromClipboard());
+
+		public ICommand LoginCommand => new Command(async () =>
+		{
+			Helper.OptionsMain.TreeViewItemHSReplayAccount.IsSelected = true;
+			Core.MainWindow.FlyoutOptions.IsOpen = true;
+			await HSReplayNetHelper.TryAuthenticate();
+		});
+
+		public ICommand MetaCommand => new Command(() => Helper.TryOpenUrl(Helper.BuildHsReplayNetUrl("meta", "menu")));
+
+		public ICommand DecksCommand => new Command(() => Helper.TryOpenUrl(Helper.BuildHsReplayNetUrl("decks", "menu")));
 
 		public IEnumerable<SortFilterDecks.Tag> DeckTags => MainWindow?.TagControlEdit.Tags ?? new ObservableCollection<SortFilterDecks.Tag>();
 		public string SetDeckUrlText => LocUtil.Get(string.IsNullOrEmpty(Decks.FirstOrDefault()?.Url) ? LocLinkNew : LocLink, true);
@@ -100,8 +107,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public IEnumerable<MenuItem> PluginsMenuItems => PluginsWithMenu.Select(p => p.MenuItem);
 
 		public Visibility ReplaysEmptyVisibility => LatestReplays.Count == 0 ? Visible : Collapsed;
-		public Visibility ClaimAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Visible : Collapsed;
-		public Visibility MyAccountVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Collapsed : Visible;
+		public Visibility MyReplaysVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Collapsed : Visible;
 
 		public Visibility PluginsEmptyVisibility => PluginsWithMenu.Any() ? Collapsed : Visible;
 
@@ -116,7 +122,17 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public Visibility UnarchiveDeckVisibility => Decks.FirstOrDefault()?.Archived ?? false ? Visible : Collapsed;
 		public Visibility SeparatorVisibility => Decks.FirstOrDefault()?.IsArenaDeck ?? true ? Collapsed : Visible;
 		public Visibility DeckHistoryVisibility => Decks.FirstOrDefault()?.HasVersions ?? false ? Visible : Collapsed;
+		public Visibility LoginVisibility => HSReplayNetOAuth.IsAuthenticated ? Collapsed : Visible;
 
+		public bool LoginButtonEnabled
+		{
+			get => _loginButtonEnabled;
+			set
+			{
+				_loginButtonEnabled = value; 
+				OnPropertyChanged();
+			}
+		}
 
 		public MainWindowMenuViewModel()
 		{
@@ -132,11 +148,33 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			Account.Instance.PropertyChanged += (sender, e) =>
 			{
 				if(e.PropertyName == "Status")
-				{
-					OnPropertyChanged(nameof(ClaimAccountVisibility));
-					OnPropertyChanged(nameof(MyAccountVisibility));
-				}
+					OnPropertyChanged(nameof(MyReplaysVisibility));
 			};
+
+			HSReplayNetOAuth.AccountDataUpdated += UpdateHSReplayNetMenu;
+			HSReplayNetOAuth.LoggedOut += UpdateHSReplayNetMenu;
+			HSReplayNetHelper.Authenticating += EnableLoginButton;
+		}
+
+		private void EnableLoginButton(bool authenticating)
+		{
+			if(authenticating)
+			{
+				LoginButtonEnabled = false;
+				Task.Run(async () =>
+				{
+					await Task.Delay(5000);
+					LoginButtonEnabled = true;
+				}).Forget();
+			}
+			else
+				LoginButtonEnabled = true;
+		}
+
+		public void UpdateHSReplayNetMenu()
+		{
+			OnPropertyChanged(nameof(LoginVisibility));
+			OnPropertyChanged(nameof(MyReplaysVisibility));
 		}
 
 		public void DeckMenuOpened()

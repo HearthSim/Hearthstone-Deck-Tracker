@@ -6,8 +6,10 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options;
+using Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming;
 using Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker;
@@ -15,13 +17,8 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
-#endregion
-
 namespace Hearthstone_Deck_Tracker.FlyoutControls
 {
-	/// <summary>
-	/// Interaction logic for Options.xaml
-	/// </summary>
 	public partial class OptionsMain : INotifyPropertyChanged
 	{
 		public readonly OverlayDeckWindows OptionsOverlayDeckWindows = new OverlayDeckWindows();
@@ -38,15 +35,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly TrackerPlugins OptionsTrackerPlugins = new TrackerPlugins();
 		public readonly TrackerSettings OptionsTrackerSettings = new TrackerSettings();
 		public readonly TrackerStats OptionsTrackerStats = new TrackerStats();
-		public readonly TrackerReplays OptionsTrackerReplays = new TrackerReplays();
+		public readonly HSReplayAccount OptionsHSReplayAccount = new HSReplayAccount();
+		public readonly HSReplayReplays OptionsHSReplayReplays = new HSReplayReplays();
 		public readonly StreamingTwitchExtension OptionsStreamingTwitchExtension = new StreamingTwitchExtension();
 		public readonly StreamingCapturableOverlay OptionsStreamingCapturableOverlay = new StreamingCapturableOverlay();
 		public readonly OptionsSearch OptionsSearch = new OptionsSearch();
 		private string _contentHeader;
 		private object _optionsContent;
+		private readonly object[] _hsreplayOptions;
 
 		public OptionsMain()
 		{
+			_hsreplayOptions = new object[] { OptionsHSReplayAccount, OptionsHSReplayReplays };
 			InitializeComponent();
 			Helper.OptionsMain = this;
 			try
@@ -78,6 +78,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			{
 				_optionsContent = value;
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(HSReplayHeaderVisibility));
 			}
 		}
 
@@ -145,12 +146,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsContent = OptionsTrackerStats;
 		}
 
-		private void TreeViewItemTrackerReplays_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentHeader = LocUtil.Get("Options_Tracker_Replays_Header");
-			OptionsContent = OptionsTrackerReplays;
-		}
-
 		private void TreeViewItemTrackerImporting_OnSelected(object sender, RoutedEventArgs e)
 		{
 			ContentHeader = LocUtil.Get("Options_Tracker_Importing_Header");
@@ -216,5 +211,23 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		}
 
 		public bool TwitchExtensionMenuSelected => Equals(OptionsContent, OptionsStreamingTwitchExtension);
+
+		public Visibility HSReplayHeaderVisibility =>
+			_hsreplayOptions.Any(x => x == OptionsContent) ? Visibility.Visible : Visibility.Collapsed;
+
+		public ICommand HSReplayBannerCommand =>
+			new Command(() => Helper.TryOpenUrl(Helper.BuildHsReplayNetUrl("", "options_banner")));
+
+		private void TreeViewItemHSReplayAccount_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = "My Account";
+			OptionsContent = OptionsHSReplayAccount;
+		}
+
+		private void TreeViewItemHSReplayReplays_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = "Replays";
+			OptionsContent = OptionsHSReplayReplays;
+		}
 	}
 }

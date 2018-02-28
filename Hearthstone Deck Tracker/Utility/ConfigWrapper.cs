@@ -11,6 +11,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public class ConfigWrapper
 	{
+		public static event Action ReplayAutoUploadChanged;
+
 		public static bool CardDbIncludeWildOnlyCards
 		{
 			get { return Config.Instance.CardDbIncludeWildOnlyCards; }
@@ -189,6 +191,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.HsReplayAutoUpload = value;
 				Config.Save();
 				Influx.OnHsReplayAutoUploadChanged(value);
+				ReplayAutoUploadChanged?.Invoke();
 			}
 		}
 

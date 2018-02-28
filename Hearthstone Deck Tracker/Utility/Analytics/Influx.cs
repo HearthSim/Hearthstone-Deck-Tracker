@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static readonly List<int> MainWindowActivations = new List<int>();
 		private static DateTime? _lastMainWindowActivation;
 
-		public static void OnAppStart(Version version, bool isNew, int startupDuration, int numPlugins)
+		public static void OnAppStart(Version version, bool isNew, bool authenticated, int startupDuration, int numPlugins)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			var point = new InfluxPointBuilder("hdt_app_start")
 				.Tag("version", version.ToVersionString(true))
 				.Tag("new", isNew)
+				.Tag("authenticated", authenticated)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
 				.Tag("lang_card", Config.Instance.SelectedLanguage)
 				.Tag("lang_ui", Config.Instance.Localization.ToString())

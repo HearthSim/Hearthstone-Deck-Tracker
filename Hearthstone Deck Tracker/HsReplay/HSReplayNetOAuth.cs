@@ -26,6 +26,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private const string SuccessUrl = "https://hsdecktracker.net/hsreplaynet/oauth_success/";
 		private const string ErrorUrl = "https://hsdecktracker.net/hsreplaynet/oauth_error/";
 
+		public static event Action Authenticated;
+		public static event Action LoggedOut;
+		public static event Action TwitchUsersUpdated;
+		public static event Action AccountDataUpdated;
+		public static event Action UploadTokenClaimed;
 
 		static HSReplayNetOAuth()
 		{
@@ -71,10 +76,32 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			Data.Value.Code = data.Code;
 			Data.Value.RedirectUrl = data.RedirectUrl;
+			Data.Value.TokenData = null;
 			Log.Info("Authentication complete");
 			await UpdateToken();
 			Save();
+			Log.Info("Claiming upload token if necessary");
+			if(!Account.Instance.TokenClaimed.HasValue)
+				await ApiWrapper.UpdateUploadTokenStatus();
+			if(Account.Instance.TokenClaimed == false)
+				await ClaimUploadToken(Account.Instance.UploadToken);
+			Authenticated?.Invoke();
 			return true;
+		}
+
+		public static async Task Logout()
+		{
+			Serializer.DeleteCacheFile();
+			Data.Value.Account = null;
+			Data.Value.Code = null;
+			Data.Value.RedirectUrl = null;
+			Data.Value.TokenData = null;
+			Data.Value.TokenDataCreatedAt = DateTime.MinValue;
+			Data.Value.TwitchUsers = null;
+			Save();
+			Account.Instance.Reset();
+			await ApiWrapper.UpdateUploadTokenStatus();
+			LoggedOut?.Invoke();
 		}
 
 		public static async Task<bool> UpdateToken()
@@ -137,6 +164,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Data.Value.TwitchUsers = twitchAccounts;
 				Save();
 				Log.Info($"Saved {twitchAccounts.Count} account(s): {string.Join(", ", twitchAccounts.Select(x => x.Username))}");
+				TwitchUsersUpdated?.Invoke();
 				return twitchAccounts.Count != 0;
 			}
 			catch(Exception e)
@@ -160,6 +188,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Data.Value.Account = account;
 				Save();
 				Log.Info($"Found account: {account?.Username ?? "None"}");
+				AccountDataUpdated?.Invoke();
 				return account != null;
 			}
 			catch(Exception e)
@@ -198,6 +227,30 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			catch(Exception e)
 			{
 				Log.Error(e);
+			}
+		}
+
+		internal static async Task<bool> ClaimUploadToken(string token)
+		{
+			UploadTokenHistory.Write("Trying to claim " + token);
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return false;
+				}
+				var response = await Client.Value.ClaimUploadToken(token);
+				UploadTokenHistory.Write($"Claimed {token}: {response}");
+				Log.Debug(response);
+				UploadTokenClaimed?.Invoke();
+				return true;
+			}
+			catch(Exception e)
+			{
+				UploadTokenHistory.Write($"Error claming {token}\n" + e);
+				Log.Error(e);
+				return false;
 			}
 		}
 	}

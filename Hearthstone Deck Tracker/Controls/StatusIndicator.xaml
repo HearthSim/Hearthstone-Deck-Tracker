@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.StatusIndicator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <TextBlock TextAlignment="Center" FontWeight="SemiBold">
+        <Run Foreground="{Binding Color, Mode=OneWay}" Text="{Binding Icon, Mode=OneWay}"/>
+    </TextBlock>
+</UserControl>

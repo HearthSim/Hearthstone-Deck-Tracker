@@ -557,13 +557,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e) => Updater.StartUpdate();
 
-		internal void StartClaimAccount()
-		{
-			Options.OptionsTrackerReplays.ClaimAccount();
-			Options.TreeViewItemTrackerReplays.IsSelected = true;
-			FlyoutOptions.IsOpen = true;
-		}
-
 		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/hearthsim-devs");
 
 		public void ShowDeckEditorFlyout(Deck deck, bool isNewDeck)

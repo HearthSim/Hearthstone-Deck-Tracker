@@ -169,7 +169,7 @@
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats_Arena}" Command="{Binding ArenaStatsCommand}" />
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Stats_Constructed}" Command="{Binding ConstructedStatsCommand}" />
         </MenuItem>
-        <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays}">
+        <MenuItem Header="HSREPLAY.NET">
             <MenuItem.Resources>
                 <CollectionViewSource x:Key="LatestReplaysCollection" Source="{Binding LatestReplays}"/>
             </MenuItem.Resources>
@@ -180,6 +180,13 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
+            <MenuItem Header="LOGIN" Command="{Binding LoginCommand}" Visibility="{Binding LoginVisibility}"
+                      IsEnabled="{Binding LoginButtonEnabled}"/>
+            <Separator Visibility="{Binding LoginVisibility}"/>
+            <MenuItem Header="META" Command="{Binding MetaCommand}"/>
+            <MenuItem Header="DECKS" Command="{Binding DecksCommand}"/>
+            <MenuItem Header="MY REPLAYS" Command="{Binding MyReplaysCommand}" Visibility="{Binding MyReplaysVisibility}"/>
+            <Separator/>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Latest}">
                 <MenuItem.ItemsSource>
                     <CompositeCollection>
@@ -196,24 +203,6 @@
             </MenuItem>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Stats}" Command="{Binding ReplayFromStatsCommand}" />
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_File}" Command="{Binding ReplayFromFileCommand}" />
-            <MenuItem Command="{Binding HsReplayNetCommand}">
-                <MenuItem.Header>
-                    <Grid Margin="-10,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Separator Grid.Column="0"/>
-                        <TextBlock Grid.Column="1" Text="HSREPLAY.NET" IsEnabled="False" Margin="5,0"/>
-                        <Separator Grid.Column="2"/>
-                    </Grid>
-                </MenuItem.Header>
-            </MenuItem>
-            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_ClaimAccount}"
-                Command="{Binding ClaimAccountCommand}" Visibility="{Binding ClaimAccountVisibility}"/>
-            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_MyAccount}"
-                Command="{Binding MyAccountCommand}" Visibility="{Binding MyAccountVisibility}"/>
         </MenuItem>
         <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Plugins}" SubmenuOpened="Plugins_OnSubmenuOpened">
             <MenuItem.Resources>
