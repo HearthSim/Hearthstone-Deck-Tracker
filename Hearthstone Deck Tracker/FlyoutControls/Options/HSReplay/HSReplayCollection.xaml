@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
-             xmlns:hsReplay="clr-namespace:Hearthstone_Deck_Tracker.HsReplay"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="500" d:DesignWidth="500">
@@ -37,7 +36,7 @@
                                Visibility="{Binding CollectionUpToDate, Converter={StaticResource BoolToVisibility}}"/>
                     <TextBlock FontSize="14">
                         <Run Text="Last updated"/>
-                        <Run Text="{Binding LastSyncDate, Mode=OneWay}"/>
+                        <Run Text="{Binding SyncAge, Mode=OneWay}"/>
                     </TextBlock>
                 </StackPanel>
             </StackPanel>

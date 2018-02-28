@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			{
 				CollectionUpToDate = CollectionSyncingEnabled;
 				OnPropertyChanged(nameof(CollectionSynced));
-				OnPropertyChanged(nameof(LastSyncDate));
+				OnPropertyChanged(nameof(SyncAge));
 			};
 			ConfigWrapper.CollectionSyncingChanged += () =>
 				OnPropertyChanged(nameof(CollectionSyncingEnabled));
@@ -78,8 +78,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			}
 		}
 
-		public string LastSyncDate => CollectionSynced
-			? Account.Instance.CollectionState.Values.Max(x => x.Date).ToShortDateString()
+		public string SyncAge => CollectionSynced
+			? LocUtil.GetAge(Account.Instance.CollectionState.Values.Max(x => x.Date))
 			: string.Empty;
 
 		public object HSReplayDecksCommand => new Command(() =>
@@ -93,6 +93,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			get => ConfigWrapper.CollectionSyncingEnabled;
 			set => ConfigWrapper.CollectionSyncingEnabled = value;
 		}
+
+		public void UpdateSyncAge() => OnPropertyChanged(nameof(SyncAge));
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

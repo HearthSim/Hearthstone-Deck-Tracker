@@ -233,6 +233,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			ContentHeader = "Collection";
 			OptionsContent = OptionsHSReplayCollection;
+			OptionsHSReplayCollection.UpdateSyncAge();
 		}
 	}
 }
