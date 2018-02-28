@@ -23,13 +23,17 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			Authenticating?.Invoke(true);
 			if(await HSReplayNetOAuth.Authenticate())
 			{
-				if(await HSReplayNetOAuth.UpdateAccountData())
-					await SyncCollection();
-				else
-					ErrorManager.AddError("Could not load HSReplay.net account status", "Please try again later.");
+				if(!await HSReplayNetOAuth.UpdateAccountData())
+					ErrorManager.AddError("HSReplay.net Error",
+						"Could not load HSReplay.net account status."
+						+ " Please try again later.");
+				await SyncCollection();
 			}
 			else
-				ErrorManager.AddError("Could not authenticate with HSReplay.net", "Please try again later.");
+				ErrorManager.AddError("Could not authenticate with HSReplay.net",
+					"Please try running HDT as administrator "
+					+ "(right-click the exe and select 'Run as administrator').\n"
+					+ "If that does not help please try again later.", true);
 			Authenticating?.Invoke(false);
 		}
 
