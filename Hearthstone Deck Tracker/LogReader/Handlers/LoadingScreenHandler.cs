@@ -35,27 +35,30 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				game.CurrentMode = GetMode(match.Groups["curr"].Value);
 				game.PreviousMode = GetMode(match.Groups["prev"].Value);
 
-				if((DateTime.Now - logLine.Time).TotalSeconds < 5 && _lastAutoImport < logLine.Time
-					&& game.CurrentMode == Mode.TOURNAMENT)
+				if((DateTime.Now - logLine.Time).TotalSeconds < 5)
 				{
-					_lastAutoImport = logLine.Time;
-					var decks = DeckImporter.FromConstructed();
-					if(decks.Any() && (Config.Instance.ConstructedAutoImportNew || Config.Instance.ConstructedAutoUpdate))
+					if(_lastAutoImport < logLine.Time && game.CurrentMode == Mode.TOURNAMENT)
 					{
-						DeckManager.ImportDecks(decks, false, Config.Instance.ConstructedAutoImportNew,
-							Config.Instance.ConstructedAutoUpdate);
+						_lastAutoImport = logLine.Time;
+						var decks = DeckImporter.FromConstructed();
+						if(decks.Any() && (Config.Instance.ConstructedAutoImportNew || Config.Instance.ConstructedAutoUpdate))
+						{
+							DeckManager.ImportDecks(decks, false, Config.Instance.ConstructedAutoImportNew,
+								Config.Instance.ConstructedAutoUpdate);
+						}
 					}
+
+					if(game.PreviousMode == Mode.PACKOPENING
+						|| game.PreviousMode == Mode.COLLECTIONMANAGER
+						|| game.CurrentMode == Mode.COLLECTIONMANAGER)
+						CollectionHelper.UpdateCollection().Forget();
+
+					if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus)
+						CheckMirrorStatus();
 				}
 
 				if(game.PreviousMode == Mode.GAMEPLAY && game.CurrentMode != Mode.GAMEPLAY)
 					gameState.GameHandler.HandleInMenu();
-
-				if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus && (DateTime.Now - logLine.Time).TotalSeconds < 5)
-				{
-					CheckMirrorStatus();
-					if(CollectionHelper.IsAwaitingUpdate)
-						CollectionHelper.TryUpdateCollection().Forget();
-				}
 
 				if(game.CurrentMode == Mode.DRAFT)
 					Watchers.ArenaWatcher.Run();
