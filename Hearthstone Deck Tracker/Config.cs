@@ -781,9 +781,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowSplashScreen = true;
 
 		[DefaultValue(false)]
-		public bool ShowLogTab = false;
-
-		[DefaultValue(false)]
 		public bool ShowNoteDialogAfterGame = false;
 
 		[DefaultValue(false)]

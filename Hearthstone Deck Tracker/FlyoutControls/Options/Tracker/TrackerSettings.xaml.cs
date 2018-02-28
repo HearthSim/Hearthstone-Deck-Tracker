@@ -42,7 +42,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxCloseWithHearthstone.IsChecked = Config.Instance.CloseWithHearthstone;
 			CheckboxStartHearthstoneWithHDT.IsChecked = Config.Instance.StartHearthstoneWithHDT;
 			CheckboxAdvancedWindowSearch.IsChecked = Config.Instance.UseAnyUnityWindow;
-			CheckboxLogTab.IsChecked = Config.Instance.ShowLogTab;
 			CheckBoxShowSplashScreen.IsChecked = Config.Instance.ShowSplashScreen;
 			CheckboxStartWithWindows.IsChecked = Config.Instance.StartWithWindows;
 			CheckBoxAnalytics.IsChecked = Config.Instance.GoogleAnalytics;
@@ -211,24 +210,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.UseAnyUnityWindow = false;
-			Config.Save();
-		}
-
-		private void CheckboxLogTab_Checked(object sender, RoutedEventArgs e)
-		{
-			Helper.OptionsMain.TreeViewItemTrackerLogging.Visibility = Visibility.Visible;
-			if(!_initialized)
-				return;
-			Config.Instance.ShowLogTab = true;
-			Config.Save();
-		}
-
-		private void CheckboxLogTab_Unchecked(object sender, RoutedEventArgs e)
-		{
-			Helper.OptionsMain.TreeViewItemTrackerLogging.Visibility = Visibility.Collapsed;
-			if(!_initialized)
-				return;
-			Config.Instance.ShowLogTab = false;
 			Config.Save();
 		}
 
@@ -404,6 +385,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				await Core.MainWindow.ShowMessage("Restart required.", "Click ok to restart HDT");
 				Core.MainWindow.Restart();
 			}
+		}
+
+		private void ButtonDebugWindow_Click(object sender, RoutedEventArgs e)
+		{
+			new DebugWindow(Core.Game).Show();
 		}
 	}
 }

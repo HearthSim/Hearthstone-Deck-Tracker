@@ -587,9 +587,6 @@
     <Compile Include="FlyoutControls\Options\Tracker\TrackerImporting.xaml.cs">
       <DependentUpon>TrackerImporting.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutControls\Options\Tracker\TrackerLogging.xaml.cs">
-      <DependentUpon>TrackerLogging.xaml</DependentUpon>
-    </Compile>
     <Compile Include="FlyoutControls\Options\Tracker\TrackerPlugins.xaml.cs">
       <DependentUpon>TrackerPlugins.xaml</DependentUpon>
     </Compile>
@@ -1083,10 +1080,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\Options\Tracker\TrackerImporting.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="FlyoutControls\Options\Tracker\TrackerLogging.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

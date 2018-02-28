@@ -34,7 +34,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly TrackerGeneral OptionsTrackerGeneral = new TrackerGeneral();
 		public readonly TrackerHotKeys OptionsTrackerHotKeys = new TrackerHotKeys();
 		public readonly TrackerImporting OptionsTrackerImporting = new TrackerImporting();
-		public readonly TrackerLogging OptionsTrackerLogging = new TrackerLogging();
 		public readonly TrackerNotifications OptionsTrackerNotifications = new TrackerNotifications();
 		public readonly TrackerPlugins OptionsTrackerPlugins = new TrackerPlugins();
 		public readonly TrackerSettings OptionsTrackerSettings = new TrackerSettings();
@@ -91,9 +90,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsOverlayInteractivity.Load();
 			OptionsTrackerSettings.Load();
 			OptionsTrackerImporting.Load();
-			OptionsTrackerLogging.Load(game);
 			OptionsTrackerStats.Load();
-			OptionsTrackerLogging.Load(game);
 			OptionsTrackerGeneral.Load();
 			OptionsTrackerAppearance.Load();
 			OptionsTrackerBackups.Load();
@@ -194,12 +191,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		{
 			ContentHeader = LocUtil.Get("Options_Tracker_Settings_Header");
 			OptionsContent = OptionsTrackerSettings;
-		}
-
-		private void TreeViewItemTrackerLogging_OnSelected(object sender, RoutedEventArgs e)
-		{
-			ContentHeader = LocUtil.Get("Options_Tracker_Logging_Header");
-			OptionsContent = OptionsTrackerLogging;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

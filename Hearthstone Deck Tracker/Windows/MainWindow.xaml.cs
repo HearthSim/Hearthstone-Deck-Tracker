@@ -194,7 +194,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public MainWindow()
 		{
 			InitializeComponent();
-			Trace.Listeners.Add(new TextBoxTraceListener(Options.OptionsTrackerLogging.TextBoxLog));
 			TagControlEdit.StackPanelFilterOptions.Visibility = Collapsed;
 			TagControlEdit.GroupBoxSortingAllConstructed.Visibility = Collapsed;
 			TagControlEdit.GroupBoxSortingArena.Visibility = Collapsed;
