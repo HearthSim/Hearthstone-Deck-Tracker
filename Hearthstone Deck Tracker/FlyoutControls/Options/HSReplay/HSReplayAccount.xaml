@@ -65,7 +65,7 @@
                 <controls:StatusIndicator Grid.Row="1" Grid.Column="0"
                                           Success="{Binding CollectionSyncingEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 <StackPanel Grid.Row="1" Grid.Column="1">
-                    <TextBlock Text="Collection syncing"/>
+                    <TextBlock Text="Collection uploading"/>
                     <TextBlock FontSize="12" Visibility="{Binding CollectionSyncingEnabled, Converter={StaticResource InverseBoolToVisibility}}">
                         <Hyperlink Command="{Binding EnableCollectionSyncingCommand}">
                             <Run Text="Enable now" FontSize="12"/>

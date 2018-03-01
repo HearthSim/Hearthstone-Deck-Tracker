@@ -16,7 +16,7 @@
         <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="16">
             <Run Text="The easiest way to find the best decks for you!"/>
             <LineBreak/>
-            <Run Text="Just sync your collection with HSReplay.net" FontWeight="Normal" FontSize="15"/>
+            <Run Text="Just upload your collection to HSReplay.net" FontWeight="Normal" FontSize="15"/>
         </TextBlock>
         <Button Style="{DynamicResource AccentedSquareButtonStyle}" Margin="25" Width="200"
                 Visibility="{Binding IsAuthenticated, Converter={StaticResource InverseBoolToVisibility}}"
@@ -25,7 +25,7 @@
                 <TextBlock Text="Login"/>
         </Button>
         <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibility}}">
-            <CheckBox Content="Sync my collection" HorizontalAlignment="Center" Margin="0,10,0,70"
+            <CheckBox Content="Upload my collection automatically" HorizontalAlignment="Center" Margin="0,10,0,70"
                       IsChecked="{Binding CollectionSyncingEnabled}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0"
                         Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">

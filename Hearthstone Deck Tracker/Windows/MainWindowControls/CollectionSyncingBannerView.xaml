@@ -17,7 +17,7 @@
         <StackPanel VerticalAlignment="Center">
             <TextBlock Text="The easiest way to find the best decks for you!"
                        FontWeight="SemiBold" FontSize="16"/>
-            <TextBlock Text="Sync your collection with HSReplay.net." FontSize="14"
+            <TextBlock Text="Upload your collection to HSReplay.net." FontSize="14"
                        Visibility="{Binding CollectionSynced, Converter={StaticResource InverseBoolToVisibility}}"/>
             <TextBlock Text="HSReplay.net" FontSize="14"
                        Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}"/>
