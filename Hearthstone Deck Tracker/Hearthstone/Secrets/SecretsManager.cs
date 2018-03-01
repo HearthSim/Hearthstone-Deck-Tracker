@@ -120,7 +120,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				return card;
 			});
 
-			if(format == Format.Standard || gameMode == GameType.GT_ARENA)
+			//Temporarily remove Standard Secret filter for Wild Arena Fest Games
+			if(format == Format.Standard)
 				cards = cards.Where(c => !wildSets.Contains(c.Set));
 			if(gameMode == GameType.GT_ARENA)
 				cards = cards.Where(c => !CardIds.Secrets.ArenaExcludes.Contains(c.Id));
