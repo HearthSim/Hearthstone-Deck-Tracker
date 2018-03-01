@@ -299,6 +299,9 @@
     <Compile Include="Live\Data\BoardState.cs" />
     <Compile Include="Live\Data\DataType.cs" />
     <Compile Include="Live\Data\Payload.cs" />
+    <Compile Include="Utility\Toasts\ToastControls\BaseToast.xaml.cs">
+      <DependentUpon>BaseToast.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Twitch\TwitchApi.cs" />
     <Compile Include="Live\BoardStateWatcher.cs" />
     <Compile Include="Live\LiveDataManager.cs" />
@@ -1161,6 +1164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\Warning.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\Toasts\ToastControls\BaseToast.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
