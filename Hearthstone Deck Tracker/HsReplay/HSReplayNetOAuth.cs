@@ -68,7 +68,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			var callbackTask = Client.Value.ReceiveAuthenticationCallback(SuccessUrl, ErrorUrl);
 			if(!Helper.TryOpenUrl(url))
-				ErrorManager.AddError("Could not open browser to complete authentication.", $"Please go to '{url}' to continue authentication.", true);
+			{
+				ErrorManager.AddError("Could not open your browser.",
+					"Please open the following url in your browser to continue:\n\n" + url, true);
+			}
 			Log.Info("Waiting for callback...");
 			var data = await callbackTask;
 			if(data == null)
