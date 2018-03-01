@@ -351,53 +351,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public static async Task<Region> GetCurrentRegion()
 		{
-			try
+			for(var i = 0; i < 10; i++)
 			{
-				for(var i = 0; i < 10; i++)
+				var accId = HearthMirror.Reflection.GetAccountId();
+				if(accId != null)
 				{
-					var accId = HearthMirror.Reflection.GetAccountId();
-					if(accId != null)
-					{
-						var region = (Region)((accId.Hi >> 32) & 0xFF);
-						Log.Info("Region: " + region);
-						return region;
-					}
-					await Task.Delay(2000);
+					var region = (Region)((accId.Hi >> 32) & 0xFF);
+					Log.Info("Region: " + region);
+					return region;
 				}
-
-				var bnetAppData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Battle.net");
-				var files = new DirectoryInfo(bnetAppData).GetFiles();
-				var config = files.OrderByDescending(x => x.LastWriteTime).FirstOrDefault(x => Regex.IsMatch(x.Name, @"\w{8}\.config"));
-				if(config == null)
-				{
-					Log.Info("Bnet config not found, can't determine region.");
-					return Region.UNKNOWN;
-				}
-
-				string content;
-				using(var fs = new FileStream(config.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-				using(var reader = new StreamReader(fs))
-					content = reader.ReadToEnd();
-				dynamic json = JsonConvert.DeserializeObject(content);
-				var configRegion = (string)json.User.Client.PlayScreen.GameFamily.WTCG.LastSelectedGameRegion;
-				Log.Info("Region (from config): " + configRegion);
-				switch(configRegion)
-				{
-					case "EU":
-						return Region.EU;
-					case "US":
-						return Region.US;
-					case "KR":
-						return Region.ASIA;
-					case "CN":
-						return Region.CHINA;
-					default:
-						return Region.UNKNOWN;
-				}
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
+				await Task.Delay(2000);
 			}
 			return Region.UNKNOWN;
 		}
@@ -637,22 +600,6 @@ namespace Hearthstone_Deck_Tracker
 					await Task.Delay(delay);
 				}
 			}
-		}
-
-		public static Region GetRegionByServerIp(string ip)
-		{
-			if(string.IsNullOrEmpty(ip))
-				return Region.UNKNOWN;
-			if(ip.StartsWith("12.130"))
-				return Region.US;
-			if(ip.StartsWith("80.239"))
-				return Region.EU;
-			if(ip.StartsWith("117.52"))
-				return Region.ASIA;
-			if(ip.StartsWith("114.113"))
-				return Region.CHINA;
-			Log.Warn("Unknown IP: " + ip);
-			return Region.UNKNOWN;
 		}
 
 		public static SolidColorBrush BrushFromHex(string hex)

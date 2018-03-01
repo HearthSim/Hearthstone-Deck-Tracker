@@ -346,15 +346,6 @@ namespace Hearthstone_Deck_Tracker
 			_game.CacheGameType();
 			_game.CacheSpectator();
 			_game.MetaData.ServerInfo = Reflection.GetServerInfo();
-			if(!string.IsNullOrEmpty(_game.MetaData.ServerInfo?.Address))
-			{
-				var region = Helper.GetRegionByServerIp(_game.MetaData.ServerInfo.Address);
-				if(_game.CurrentRegion == Region.UNKNOWN || region == Region.CHINA)
-				{
-					_game.CurrentRegion = region;
-					Log.Info("Set current region to" + region);
-				}
-			}
 			TurnTimer.Instance.Start(_game).Forget();
 
 			var selectedDeck = DeckList.Instance.ActiveDeckVersion;
