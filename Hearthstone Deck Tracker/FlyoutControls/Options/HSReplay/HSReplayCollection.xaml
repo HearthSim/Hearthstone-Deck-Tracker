@@ -34,6 +34,8 @@
                 <StackPanel Margin="5,0,0,0">
                     <TextBlock FontSize="16" FontWeight="SemiBold" Text="Collection up-to-date!"
                                Visibility="{Binding CollectionUpToDate, Converter={StaticResource BoolToVisibility}}"/>
+                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Collection update queued..."
+                               Visibility="{Binding CollectionUpdateThrottled, Converter={StaticResource BoolToVisibility}}"/>
                     <TextBlock FontSize="14">
                         <Run Text="Last updated"/>
                         <Run Text="{Binding SyncAge, Mode=OneWay}"/>

@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public CollectionSyncingBannerView()
 		{
 			InitializeComponent();
-			HSReplayNetHelper.CollectionSynced += () => OnPropertyChanged(nameof(CollectionSynced));
+			HSReplayNetHelper.CollectionUploaded += () => OnPropertyChanged(nameof(CollectionSynced));
 			HSReplayNetOAuth.LoggedOut += () => OnPropertyChanged(nameof(CollectionSynced));
 		}
 

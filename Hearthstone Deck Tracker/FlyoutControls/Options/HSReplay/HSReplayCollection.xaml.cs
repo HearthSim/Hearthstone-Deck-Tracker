@@ -14,21 +14,31 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 	{
 		private bool _loginButtonEnabled = true;
 		private bool _collectionUpToDate;
+		private bool _collectionUpdateThrottled;
 
 		public HSReplayCollection()
 		{
 			InitializeComponent();
 			HSReplayNetOAuth.Authenticated += Update;
 			HSReplayNetOAuth.LoggedOut += Update;
-			HSReplayNetHelper.CollectionSynced += () =>
+			HSReplayNetHelper.CollectionUploaded += CollectionUpdated;
+			HSReplayNetHelper.CollectionAlreadyUpToDate += CollectionUpdated;
+			HSReplayNetHelper.CollectionUploadThrottled += () =>
 			{
-				CollectionUpToDate = CollectionSyncingEnabled;
-				OnPropertyChanged(nameof(CollectionSynced));
-				OnPropertyChanged(nameof(SyncAge));
+				CollectionUpToDate = false;
+				CollectionUpdateThrottled = true;
 			};
 			ConfigWrapper.CollectionSyncingChanged += () =>
 				OnPropertyChanged(nameof(CollectionSyncingEnabled));
 			HSReplayNetHelper.Authenticating += EnableLoginButton;
+		}
+
+		private void CollectionUpdated()
+		{
+			CollectionUpdateThrottled = false;
+			CollectionUpToDate = true;
+			OnPropertyChanged(nameof(CollectionSynced));
+			OnPropertyChanged(nameof(SyncAge));
 		}
 
 		private void EnableLoginButton(bool authenticating)
@@ -74,6 +84,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			set
 			{
 				_collectionUpToDate = value; 
+				OnPropertyChanged();
+			}
+		}
+
+		public bool CollectionUpdateThrottled
+		{
+			get => _collectionUpdateThrottled;
+			set
+			{
+				_collectionUpdateThrottled = value; 
 				OnPropertyChanged();
 			}
 		}

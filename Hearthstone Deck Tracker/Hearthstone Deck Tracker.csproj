@@ -264,6 +264,7 @@
     <Compile Include="HsReplay\HSReplayNetOAuth.cs" />
     <Compile Include="HsReplay\Data\OAuthData.cs" />
     <Compile Include="HsReplay\HSReplayNetHelper.cs" />
+    <Compile Include="Utility\RateLimiter.cs" />
     <Compile Include="HsReplay\UploadTokenHistory.cs" />
     <Compile Include="Live\Data\PayloadFactory.cs" />
     <Compile Include="Utility\JsonSerializer.cs" />
