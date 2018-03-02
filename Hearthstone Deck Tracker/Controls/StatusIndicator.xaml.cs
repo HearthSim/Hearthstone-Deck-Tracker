@@ -9,7 +9,15 @@ namespace Hearthstone_Deck_Tracker.Controls
 	public partial class StatusIndicator : INotifyPropertyChanged
 	{
 		public static readonly DependencyProperty SuccessProperty = DependencyProperty.Register(
-			"Success", typeof(bool), typeof(StatusIndicator), new FrameworkPropertyMetadata(OnSuccessChanged));
+			"Success", typeof(bool), typeof(StatusIndicator), new FrameworkPropertyMetadata(OnDependencyPropChanged));
+
+		public static readonly DependencyProperty SuccessColorProperty = DependencyProperty.Register("SuccessColor",
+			typeof(SolidColorBrush), typeof(StatusIndicator), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Green),
+				FrameworkPropertyMetadataOptions.AffectsRender, OnDependencyPropChanged));
+
+		public static readonly DependencyProperty ErrorColorProperty = DependencyProperty.Register("ErrorColor",
+			typeof(SolidColorBrush), typeof(StatusIndicator), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Red),
+				FrameworkPropertyMetadataOptions.AffectsRender, OnDependencyPropChanged));
 
 		public StatusIndicator()
 		{
@@ -22,14 +30,28 @@ namespace Hearthstone_Deck_Tracker.Controls
 			set => SetValue(SuccessProperty, value);
 		}
 
-		public SolidColorBrush Color => new SolidColorBrush(Success ? Colors.Green : Colors.Red);
+		public SolidColorBrush SuccessColor
+		{
+			get => (SolidColorBrush) GetValue(SuccessColorProperty);
+			set => SetValue(SuccessColorProperty, value);
+		}
+
+		public SolidColorBrush ErrorColor
+		{
+			get => (SolidColorBrush) GetValue(ErrorColorProperty);
+			set => SetValue(ErrorColorProperty, value);
+		}
+
+		public SolidColorBrush Color => Success ? SuccessColor : ErrorColor;
+
 		public string Icon => Success ? "✔" : "✖";
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private static void OnSuccessChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		private static void OnDependencyPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			if(d is StatusIndicator s) s.Update();
+			if(d is StatusIndicator s)
+				s.Update();
 		}
 
 		private void Update()
