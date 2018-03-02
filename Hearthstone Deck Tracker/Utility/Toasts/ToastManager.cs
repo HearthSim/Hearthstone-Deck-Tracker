@@ -16,6 +16,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 		private static readonly List<ToastHelper> Toasts = new List<ToastHelper>();
 		private static readonly Dictionary<ToastHelper, ToastHelper> GameResultToasts = new Dictionary<ToastHelper, ToastHelper>();
 
+		internal static void ShowCollectionUpdatedToast()
+		{
+			ShowToast(new ToastHelper(new CollectionUploadedToast()));
+		}
+
 		internal static void ShowGameResultToast(string deckName, GameStats game)
 		{
 			if(game == null)

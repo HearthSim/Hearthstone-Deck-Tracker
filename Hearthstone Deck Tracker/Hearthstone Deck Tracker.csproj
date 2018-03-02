@@ -302,6 +302,9 @@
     <Compile Include="Utility\Toasts\ToastControls\BaseToast.xaml.cs">
       <DependentUpon>BaseToast.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility\Toasts\ToastControls\CollectionUploadedToast.xaml.cs">
+      <DependentUpon>CollectionUploadedToast.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Twitch\TwitchApi.cs" />
     <Compile Include="Live\BoardStateWatcher.cs" />
     <Compile Include="Live\LiveDataManager.cs" />
@@ -1170,6 +1173,10 @@
     <Page Include="Utility\Toasts\ToastControls\BaseToast.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\Toasts\ToastControls\CollectionUploadedToast.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\CrashDialog.xaml">
       <SubType>Designer</SubType>

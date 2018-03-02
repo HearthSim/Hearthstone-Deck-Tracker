@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Toasts;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -13,6 +15,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			ConfigWrapper.CollectionSyncingChanged += () => SyncCollection().Forget();
 			CollectionHelper.OnCollectionChanged += () => SyncCollection().Forget();
+			if(!Account.Instance.CollectionState.Any())
+			{
+				void ShowToast()
+				{
+					ToastManager.ShowCollectionUpdatedToast();
+					CollectionSynced -= ShowToast;
+				}
+				CollectionSynced += ShowToast;
+			}
 		}
 
 		public static event Action CollectionSynced;
