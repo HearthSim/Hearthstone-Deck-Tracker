@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -11,9 +10,6 @@
              mc:Ignorable="d"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="600" d:DesignWidth="300">
-    <UserControl.Resources>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
-    </UserControl.Resources>
     <StackPanel>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Constructed}">
             <StackPanel>

@@ -4,14 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="500" d:DesignWidth="500">
-    <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
-        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
-    </UserControl.Resources>
     <StackPanel Margin="20">
         <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="16">
             <Run Text="The easiest way to find the best decks for you!"/>

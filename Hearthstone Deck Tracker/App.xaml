@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
+             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              Startup="App_OnStartup"
              DispatcherUnhandledException="App_DispatcherUnhandledException">
     <Application.Resources>
@@ -44,6 +46,9 @@
                 <ResourceDictionary>
                     <utility:ConfigWrapper x:Key="ConfigWrapper"/>
                     <utility:GlobalCommands x:Key="GlobalCommands"/>
+                    <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
+                    <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+                    <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
                 </ResourceDictionary>
                 <ResourceDictionary>
                     <Style TargetType="{x:Type Hyperlink}">

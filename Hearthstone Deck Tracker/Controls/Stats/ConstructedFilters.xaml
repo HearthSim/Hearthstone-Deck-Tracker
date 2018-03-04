@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
@@ -13,7 +12,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
     <UserControl.Resources>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <converters:CustomTimeframeVisibilityConverter x:Key="CustomTimeframeVisibilityConverter" />
         <converters:CustomTimeframeSeasonVisibilityConverter x:Key="CustomTimeframeSeasonVisibilityConverter" />
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />

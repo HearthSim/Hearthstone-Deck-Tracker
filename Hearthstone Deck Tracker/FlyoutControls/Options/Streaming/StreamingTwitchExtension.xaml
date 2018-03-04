@@ -4,17 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
-    <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
-        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
-    </UserControl.Resources>
     <StackPanel>
         <GroupBox Header="{lex:Loc Options_Streaming_TwitchExt_Label_Setup}">
             <StackPanel>

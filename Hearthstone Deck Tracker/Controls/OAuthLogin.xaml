@@ -6,10 +6,6 @@
              xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:s="clr-namespace:System;assembly=mscorlib"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <UserControl.Resources>
-        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
-    </UserControl.Resources>
     <StackPanel>
         <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200"
                 Command="{Binding LoginCommand}">

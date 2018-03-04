@@ -7,15 +7,10 @@
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
-             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
     <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
-        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
         <converters:GameStatsHasReplayConverter x:Key="CanViewReplayConverter" />
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <converters:LocalizationConverter x:Key="LocalizationConverter" />
     </UserControl.Resources>
     <UserControl.DataContext>

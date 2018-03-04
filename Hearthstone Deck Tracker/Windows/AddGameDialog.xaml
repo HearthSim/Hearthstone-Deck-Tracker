@@ -4,16 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="300" Title="{lex:Loc AddGameDialog_Title_AddNew}" Height="525" d:DesignWidth="450">
-    <dialogs:CustomDialog.Resources>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
-    </dialogs:CustomDialog.Resources>
     <StackPanel Margin="0,15,0,0">
         <StackPanel HorizontalAlignment="Center" Width="300">
             <DockPanel Margin="0,2,0,0">

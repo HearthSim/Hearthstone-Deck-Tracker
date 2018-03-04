@@ -11,9 +11,6 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="300">
-    <UserControl.Resources>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
-    </UserControl.Resources>
     <StackPanel>
         <UniformGrid Rows="1">
             <GroupBox Header="{lex:Loc ArenaRewards_Label_Gold}">

@@ -4,18 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="300">
-    <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
-    </UserControl.Resources>
     <StackPanel>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_Alerts}">
             <StackPanel>
@@ -129,7 +123,7 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0"
                   VerticalAlignment="Top" Checked="CheckBoxAutoArchiveArenaDecks_Checked"
                   Unchecked="CheckBoxAutoArchiveArenaDecks_Unchecked"/>
-        <DockPanel Margin="35,5,10,0" Visibility="{Binding Path=IsChecked, ElementName=CheckBoxShowLastPlayedDate, Converter={StaticResource BoolToVisibilityConverter}}">
+        <DockPanel Margin="35,5,10,0" Visibility="{Binding Path=IsChecked, ElementName=CheckBoxShowLastPlayedDate, Converter={StaticResource BoolToVisibility}}">
             <ComboBox DockPanel.Dock="Right" Name="ComboBoxLastPlayedDateFormat"  Margin="5,0,0,0" Width="150" HorizontalAlignment="Left"
                   SelectionChanged="ComboBoxLastPlayedDateFormat_OnSelectionChanged" >
                 <ComboBox.ItemTemplate>

@@ -4,14 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="500" d:DesignWidth="300">
-    <UserControl.Resources>
-        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
-    </UserControl.Resources>
     <StackPanel Margin="20">
         <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource InverseBoolToVisibility}}">
             <TextBlock TextWrapping="Wrap" TextAlignment="Center"
@@ -54,8 +49,6 @@
                     <Style TargetType="StackPanel">
                         <Setter Property="Margin" Value="5"/>
                     </Style>
-                    <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
-                    <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
                 </Grid.Resources>
                 <controls:StatusIndicator Grid.Row="0" Grid.Column="0" Success="True"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Margin="5">

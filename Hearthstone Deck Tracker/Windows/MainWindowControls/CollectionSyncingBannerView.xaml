@@ -3,14 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="100" d:DesignWidth="500">
-    <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
-        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
-    </UserControl.Resources>
     <DockPanel>
         <Image Source="{DynamicResource HsReplayIcon}" RenderOptions.BitmapScalingMode="Fant"
                Width="40" Height="40" DockPanel.Dock="Left" Margin="0,0,10,0"/>

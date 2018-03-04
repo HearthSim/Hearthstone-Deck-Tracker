@@ -9,7 +9,6 @@
              xmlns:mahapps="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:deckEditorEnums="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums"
              xmlns:deckSetIcons="clr-namespace:Hearthstone_Deck_Tracker.Controls.DeckSetIcons"
@@ -22,7 +21,6 @@
         <Style TargetType="ListViewItem">
             <Setter Property="Margin" Value="-4,-3,-3,0"/>
         </Style>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
         <ObjectDataProvider x:Key="CostFilterEnum" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="deckEditorEnums:CostFilter"/>
