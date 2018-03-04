@@ -8,7 +8,7 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
             <Button Name="Banner" DockPanel.Dock="Top" BorderThickness="1" HorizontalContentAlignment="Stretch"
-                    Style="{DynamicResource SquareButtonStyle}" Cursor="Hand" Padding="0"
+                    Style="{DynamicResource SquareButtonStyle}" Cursor="Hand" Padding="1"
                     Click="Banner_Click">
                 <Grid Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}">
                     <ContentPresenter/>

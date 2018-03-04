@@ -7,7 +7,7 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="100" d:DesignWidth="500">
     <DockPanel>
-        <Image Source="{DynamicResource HsReplayIcon}" RenderOptions.BitmapScalingMode="Fant"
+        <Image Source="{DynamicResource HsReplayIconWhite}" RenderOptions.BitmapScalingMode="Fant"
                Width="40" Height="40" DockPanel.Dock="Left" Margin="0,0,10,0"/>
         <StackPanel VerticalAlignment="Center">
             <TextBlock Text="The easiest way to find the best decks for you!"

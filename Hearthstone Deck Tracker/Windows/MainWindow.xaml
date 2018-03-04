@@ -293,8 +293,9 @@
             </DockPanel>
             <DockPanel>
                 <controls1:RemovableBanner DockPanel.Dock="Top" Click="RemovableBanner_OnClick" Close="RemovableBanner_OnClose"
+                                           Background="{StaticResource HSReplayNetBlue}" Foreground="White"
                                            Visibility="{Binding CollectionSyncingBannerVisbiility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
-                    <mainWindowControls:CollectionSyncingBannerView/>
+                    <mainWindowControls:CollectionSyncingBannerView Margin="8"/>
                 </controls1:RemovableBanner>
                 <Grid Margin="0,2,0,0">
                     <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
