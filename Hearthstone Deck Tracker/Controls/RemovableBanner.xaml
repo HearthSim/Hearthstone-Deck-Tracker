@@ -8,22 +8,16 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
             <Button Name="Banner" DockPanel.Dock="Top" BorderThickness="1" HorizontalContentAlignment="Stretch"
-                    Style="{DynamicResource SquareButtonStyle}" Cursor="Hand"
+                    Style="{DynamicResource SquareButtonStyle}" Cursor="Hand" Padding="0"
                     Click="Banner_Click">
-                <DockPanel>
-                    <Button VerticalAlignment="Center" Height="24" Width="24" DockPanel.Dock="Right"
-                            Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent"
-                            BorderThickness="0" Click="CloseButton_Click">
-                        <Button.Content>
-                            <Rectangle Width="8" Height="8">
-                                <Rectangle.Fill>
-                                    <VisualBrush Visual="{DynamicResource appbar_close}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Button.Content>
-                    </Button>
+                <Grid Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}">
                     <ContentPresenter/>
-                </DockPanel>
+                    <Button VerticalAlignment="Center" Height="24" Width="24" HorizontalAlignment="Right" Opacity="0.5"
+                            Style="{DynamicResource MetroCircleButtonStyle}" Background="Transparent"
+                            Margin="0,0,5,0" BorderThickness="0" Click="CloseButton_Click">
+                        <TextBlock Text="❌" Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    </Button>
+                </Grid>
             </Button>
         </ControlTemplate>
     </UserControl.Template>
