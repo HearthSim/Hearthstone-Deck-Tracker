@@ -63,14 +63,13 @@
                             <Setter Property="VerticalAlignment" Value="Center"/>
                             <Setter Property="FontWeight" Value="SemiBold"/>
                         </Style>
-                        <local:StaticCommands x:Key="StaticCommands"/>
                     </ItemsControl.Resources>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Name="ItemBorder"  BorderThickness="0,0,0,1" BorderBrush="{DynamicResource MenuItemDisabledBrush}">
                                 <Grid Cursor="Hand" Height="35" IsEnabled="{Binding Converter={StaticResource CanViewReplayConverter}, Path=.}">
                                     <Grid.InputBindings>
-                                        <MouseBinding MouseAction="LeftClick" Command="{Binding Source={StaticResource StaticCommands}, Path=OpenReplayCommand}"
+                                        <MouseBinding MouseAction="LeftClick" Command="{Binding Source={StaticResource GlobalCommands}, Path=OpenReplay}"
                                             CommandParameter="{Binding}"/>
                                     </Grid.InputBindings>
                                     <Grid.Style>

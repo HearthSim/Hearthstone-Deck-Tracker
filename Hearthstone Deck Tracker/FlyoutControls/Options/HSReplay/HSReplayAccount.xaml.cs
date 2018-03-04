@@ -15,7 +15,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 {
 	public partial class HSReplayAccount : INotifyPropertyChanged
 	{
-		private bool _loginButtonEnabled = true;
 		private bool _logoutButtonEnabled = true;
 		private bool _logoutTriggered;
 		private bool _claimTokenButtonEnabled;
@@ -37,29 +36,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			Account.Instance.TokenClaimedChanged += () => OnPropertyChanged(nameof(UploadTokenClaimed));
 			ConfigWrapper.ReplayAutoUploadChanged += () => OnPropertyChanged(nameof(ReplayUploadingEnabled));
 			ConfigWrapper.CollectionSyncingChanged += () => OnPropertyChanged(nameof(CollectionSyncingEnabled));
-			HSReplayNetHelper.Authenticating += EnableLoginButton;
 		}
 
-		private void EnableLoginButton(bool authenticating)
-		{
-			if(authenticating)
-			{
-				LoginButtonEnabled = false;
-				Task.Run(async () =>
-				{
-					await Task.Delay(5000);
-					LoginButtonEnabled = true;
-				}).Forget();
-			}
-			else
-				LoginButtonEnabled = true;
-		}
-
-		public Visibility LoginButtonVisibility => 
-			HSReplayNetOAuth.IsAuthenticated ? Collapsed : Visible;
-
-		public Visibility AccountStatusVisibility =>
-			HSReplayNetOAuth.IsAuthenticated ? Visible : Collapsed;
+		public bool IsAuthenticated => HSReplayNetOAuth.IsAuthenticated;
 
 		public Visibility ReplaysClaimedVisibility =>
 			Account.Instance.Status == Anonymous || HSReplayNetOAuth.IsAuthenticated ? Collapsed : Visible;
@@ -83,16 +62,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			}
 		}
 
-		public bool LoginButtonEnabled
-		{
-			get => _loginButtonEnabled;
-			set
-			{
-				_loginButtonEnabled = value;
-				OnPropertyChanged();
-			}
-		}
-
 		public bool LogoutButtonEnabled
 		{
 			get => _logoutButtonEnabled;
@@ -104,8 +73,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 		}
 
 		public string BattleTag => HSReplayNetOAuth.AccountData?.BattleTag ?? Account.Instance.Username ?? string.Empty;
-
-		public ICommand LoginCommand => new Command(async () => await HSReplayNetHelper.TryAuthenticate());
 
 		public ICommand LogoutCommand => new Command(async () =>
 		{
@@ -164,10 +131,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 		public void Update()
 		{
 			OnPropertyChanged(nameof(BattleTag));
-			OnPropertyChanged(nameof(AccountStatusVisibility));
+			OnPropertyChanged(nameof(IsAuthenticated));
 			OnPropertyChanged(nameof(ReplaysClaimedVisibility));
-			OnPropertyChanged(nameof(LoginButtonVisibility));
-			OnPropertyChanged(nameof(LoginButtonEnabled));
 			OnPropertyChanged(nameof(IsPremiumUser));
 		}
 

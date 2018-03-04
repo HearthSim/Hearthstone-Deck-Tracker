@@ -238,6 +238,9 @@
     <Compile Include="Controls\Information\TwitchExtensionInfo.xaml.cs">
       <DependentUpon>TwitchExtensionInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OAuthLogin.xaml.cs">
+      <DependentUpon>OAuthLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RemovableBanner.xaml.cs">
       <DependentUpon>RemovableBanner.xaml</DependentUpon>
     </Compile>
@@ -264,6 +267,7 @@
     <Compile Include="HsReplay\HSReplayNetOAuth.cs" />
     <Compile Include="HsReplay\Data\OAuthData.cs" />
     <Compile Include="HsReplay\HSReplayNetHelper.cs" />
+    <Compile Include="Utility\GlobalCommands.cs" />
     <Compile Include="Utility\RateLimiter.cs" />
     <Compile Include="HsReplay\UploadTokenHistory.cs" />
     <Compile Include="Live\Data\PayloadFactory.cs" />
@@ -914,6 +918,10 @@
     <Page Include="Controls\Information\TwitchExtensionInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\OAuthLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RemovableBanner.xaml">
       <SubType>Designer</SubType>

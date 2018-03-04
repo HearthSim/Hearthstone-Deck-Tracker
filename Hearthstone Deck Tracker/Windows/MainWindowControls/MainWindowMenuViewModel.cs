@@ -198,13 +198,4 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			OnPropertyChanged(nameof(PluginsEmptyVisibility));
 		}
 	}
-
-	public class StaticCommands
-	{
-		public static ICommand OpenReplayCommand => new Command<GameStats>(game =>
-		{
-			if(game != null)
-				ReplayLauncher.ShowReplay(game, true).Forget();
-		});
-	}
 }

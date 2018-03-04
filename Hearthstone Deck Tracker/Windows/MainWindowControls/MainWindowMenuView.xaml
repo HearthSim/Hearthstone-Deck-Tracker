@@ -11,7 +11,6 @@
         <local:MainWindowMenuViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
-        <local:StaticCommands x:Key="StaticCommands"/>
         <Style TargetType="Rectangle">
             <Setter Property="Width" Value="16" />
             <Setter Property="Height" Value="16" />
@@ -196,7 +195,7 @@
                 </MenuItem.ItemsSource>
                 <MenuItem.ItemContainerStyle>
                     <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
-                        <Setter Property="Command" Value="{Binding Source={StaticResource StaticCommands}, Path=OpenReplayCommand}"/>
+                        <Setter Property="Command" Value="{Binding Source={StaticResource GlobalCommands}, Path=OpenReplay}"/>
                         <Setter Property="CommandParameter" Value="{Binding}"/>
                     </Style>
                 </MenuItem.ItemContainerStyle>

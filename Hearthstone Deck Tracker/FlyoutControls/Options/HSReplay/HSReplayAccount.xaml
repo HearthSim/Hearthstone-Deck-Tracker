@@ -8,8 +8,12 @@
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="500" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+    </UserControl.Resources>
     <StackPanel Margin="20">
-        <StackPanel Visibility="{Binding LoginButtonVisibility}">
+        <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource InverseBoolToVisibility}}">
             <TextBlock TextWrapping="Wrap" TextAlignment="Center"
                        FontSize="16" FontWeight="SemiBold"
                        Text="Login to claim your replays and enable all HSReplay.net features."
@@ -24,13 +28,9 @@
                     <Run Text="{Binding BattleTag, Mode=OneWay}"/>
                 </Hyperlink>.
              </TextBlock>
-            <Button Style="{DynamicResource AccentedSquareButtonStyle}" Margin="25"
-                    Width="200" Command="{Binding LoginCommand}"
-                    IsEnabled="{Binding LoginButtonEnabled}">
-                    <TextBlock Text="Login"/>
-            </Button>
+            <controls:OAuthLogin Margin="25"/>
         </StackPanel>
-        <StackPanel Visibility="{Binding AccountStatusVisibility}">
+        <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibility}}">
             <Grid HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

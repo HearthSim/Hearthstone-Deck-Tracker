@@ -43,6 +43,7 @@
                 <ResourceDictionary Source="Resources/Icons.xaml"/>
                 <ResourceDictionary>
                     <utility:ConfigWrapper x:Key="ConfigWrapper"/>
+                    <utility:GlobalCommands x:Key="GlobalCommands"/>
                 </ResourceDictionary>
                 <ResourceDictionary>
                     <Style TargetType="{x:Type Hyperlink}">
