@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public Visibility UnarchiveDeckVisibility => Decks.FirstOrDefault()?.Archived ?? false ? Visible : Collapsed;
 		public Visibility SeparatorVisibility => Decks.FirstOrDefault()?.IsArenaDeck ?? true ? Collapsed : Visible;
 		public Visibility DeckHistoryVisibility => Decks.FirstOrDefault()?.HasVersions ?? false ? Visible : Collapsed;
-		public Visibility LoginVisibility => HSReplayNetOAuth.IsAuthenticated ? Collapsed : Visible;
+		public Visibility LoginVisibility => HSReplayNetOAuth.IsFullyAuthenticated ? Collapsed : Visible;
 
 		public bool LoginButtonEnabled
 		{

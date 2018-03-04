@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			OnPropertyChanged(nameof(CollectionSynced));
 		}
 
-		public bool IsAuthenticated => HSReplayNetOAuth.IsAuthenticated;
+		public bool IsAuthenticated => HSReplayNetOAuth.IsFullyAuthenticated;
 
 		public bool CollectionSynced => Account.Instance.CollectionState.Any();
 

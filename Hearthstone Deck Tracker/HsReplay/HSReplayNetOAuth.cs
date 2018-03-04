@@ -41,6 +41,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			Client = new Lazy<OAuthClient>(LoadClient);
 		}
 
+		private static readonly Scope[] _requiredScopes = { Scope.ReadSocialAccounts, Scope.WriteCollection };
+
 		private static OAuthClient LoadClient()
 		{
 			return new OAuthClient(HSReplayNetClientId, Helper.GetUserAgent(), Data.Value.TokenData);
@@ -54,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			string url;
 			try
 			{
-				url = Client.Value.GetAuthenticationUrl(new[] { Scope.ReadSocialAccounts, Scope.WriteCollection }, Ports);
+				url = Client.Value.GetAuthenticationUrl(_requiredScopes, Ports);
 			}
 			catch(Exception e)
 			{
@@ -203,7 +205,18 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static bool IsAuthenticated => !string.IsNullOrEmpty(Data.Value.Code);
+		public static bool IsFullyAuthenticated => IsAuthenticatedFor(_requiredScopes);
+
+		public static bool IsAuthenticatedFor(params Scope[] scopes)
+		{
+			if(string.IsNullOrEmpty(Data.Value.TokenData?.Scope))
+				return false;
+			var currentScopes = Data.Value.TokenData.Scope.Split(' ');
+			return scopes.All(s => currentScopes.Contains(s.Name));
+		}
+
+		public static bool IsAuthenticatedForAnything()
+			=> _requiredScopes.Any(scope => IsAuthenticatedFor(scope));
 
 		public static List<TwitchAccount> TwitchUsers => Data.Value.TwitchUsers;
 

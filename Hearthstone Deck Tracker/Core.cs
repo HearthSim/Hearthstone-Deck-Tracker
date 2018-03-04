@@ -151,7 +151,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
 				Helper.StartHearthstoneAsync().Forget();
 
-			if(HSReplayNetOAuth.IsAuthenticated)
+			if(HSReplayNetOAuth.IsAuthenticatedForAnything())
 				HSReplayNetHelper.UpdateAccount().Forget();
 
 			Initialized = true;
@@ -159,7 +159,7 @@ namespace Hearthstone_Deck_Tracker
 			Influx.OnAppStart(
 				Helper.GetCurrentVersion(),
 				newUser,
-				HSReplayNetOAuth.IsAuthenticated,
+				HSReplayNetOAuth.IsFullyAuthenticated,
 				(int)(DateTime.UtcNow - _startUpTime).TotalSeconds,
 				PluginManager.Instance.Plugins.Count
 			);

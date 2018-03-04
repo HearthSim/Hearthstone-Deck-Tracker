@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			HSReplayNetOAuth.LoggedOut += () => OnPropertyChanged(nameof(CollectionSynced));
 		}
 
-		public bool CollectionSynced => HSReplayNetOAuth.IsAuthenticated && Account.Instance.CollectionState.Any();
+		public bool CollectionSynced => HSReplayNetOAuth.IsFullyAuthenticated && Account.Instance.CollectionState.Any();
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

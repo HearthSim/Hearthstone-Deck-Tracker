@@ -1,7 +1,6 @@
 ﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.OAuthLogin"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:s="clr-namespace:System;assembly=mscorlib"

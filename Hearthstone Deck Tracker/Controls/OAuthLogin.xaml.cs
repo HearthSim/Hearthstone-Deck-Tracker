@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			HSReplayNetOAuth.LoggedOut += () => OnPropertyChanged(nameof(IsAuthenticated));
 		}
 
-		public bool IsAuthenticated => HSReplayNetOAuth.IsAuthenticated;
+		public bool IsAuthenticated => HSReplayNetOAuth.IsFullyAuthenticated;
 
 		public ICommand LoginCommand => new Command(() => HSReplayNetHelper.TryAuthenticate().Forget());
 

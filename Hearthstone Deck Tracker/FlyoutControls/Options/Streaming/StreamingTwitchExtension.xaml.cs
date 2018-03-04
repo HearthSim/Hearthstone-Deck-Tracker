@@ -12,6 +12,7 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Twitch;
+using HSReplay.OAuth;
 using HSReplay.OAuth.Data;
 
 namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
@@ -190,7 +191,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 
 		internal async void UpdateTwitchData()
 		{
-			OAuthSuccess = HSReplayNetOAuth.IsAuthenticated;
+			OAuthSuccess = HSReplayNetOAuth.IsAuthenticatedFor(Scope.ReadSocialAccounts);
 			AvailableTwitchAccounts = HSReplayNetOAuth.TwitchUsers;
 			var selected = Config.Instance.SelectedTwitchUser;
 			SelectedTwitchUser = AvailableTwitchAccounts?.FirstOrDefault(x => x.Id == selected || selected == 0);

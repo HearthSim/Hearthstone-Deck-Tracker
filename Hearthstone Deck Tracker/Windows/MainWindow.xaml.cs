@@ -641,7 +641,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void RemovableBanner_OnClick(object sender, EventArgs e)
 		{
-			var authenticated = HSReplayNetOAuth.IsAuthenticated;
+			var authenticated = HSReplayNetOAuth.IsFullyAuthenticated;
 			var collectionSynced = Account.Instance.CollectionState.Any();
 			Influx.OnCollectionSyncingBannerClicked(authenticated, collectionSynced);
 			if(authenticated && collectionSynced)

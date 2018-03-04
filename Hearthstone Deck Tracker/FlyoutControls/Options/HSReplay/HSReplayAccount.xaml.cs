@@ -38,13 +38,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			ConfigWrapper.CollectionSyncingChanged += () => OnPropertyChanged(nameof(CollectionSyncingEnabled));
 		}
 
-		public bool IsAuthenticated => HSReplayNetOAuth.IsAuthenticated;
+		public bool IsAuthenticated => HSReplayNetOAuth.IsFullyAuthenticated;
 
 		public Visibility ReplaysClaimedVisibility =>
-			Account.Instance.Status == Anonymous || HSReplayNetOAuth.IsAuthenticated ? Collapsed : Visible;
+			Account.Instance.Status == Anonymous || HSReplayNetOAuth.IsFullyAuthenticated ? Collapsed : Visible;
 
 		public Visibility LoginInfoVisibility =>
-			Account.Instance.Status == Anonymous || HSReplayNetOAuth.IsAuthenticated ? Visible : Collapsed;
+			Account.Instance.Status == Anonymous || HSReplayNetOAuth.IsFullyAuthenticated ? Visible : Collapsed;
 
 		public bool IsPremiumUser =>
 			HSReplayNetOAuth.AccountData?.IsPremium?.Equals("true", StringComparison.InvariantCultureIgnoreCase) ?? false;

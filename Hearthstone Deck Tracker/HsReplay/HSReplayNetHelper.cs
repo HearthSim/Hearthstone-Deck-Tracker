@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static async Task SyncCollection()
 		{
-			if(!Config.Instance.SyncCollection || !HSReplayNetOAuth.IsAuthenticated)
+			if(!Config.Instance.SyncCollection || !HSReplayNetOAuth.IsFullyAuthenticated)
 				return;
 			var collection = await CollectionHelper.GetCollection();
 			if(collection == null)
