@@ -14,6 +14,8 @@
                     <Color x:Key="GrayTextColor1">#FF7F7F7F</Color>
                     <Color x:Key="GrayTextColor2">#FFAAAAAA</Color>
                     <SolidColorBrush x:Key="GrayTextColorBrush" Color="#FF7F7F7F"/>
+                    <SolidColorBrush x:Key="HSReplayNetBlue" Color="#1D3657"/>
+                    <SolidColorBrush x:Key="HSReplayNetPremiumGold" Color="#FFB00D"/>
                 </ResourceDictionary>
                 <ResourceDictionary>
                     <ImageSource x:Key="AppIcon">pack://siteoforigin:,,,/Images/HearthstoneDeckTracker.ico</ImageSource>

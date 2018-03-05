@@ -235,6 +235,9 @@
     <Compile Include="Controls\DeckPicker\DeckTypeIconConverter.cs" />
     <Compile Include="Controls\DeckSetIcons\DeckSetIconsViewModel.cs" />
     <Compile Include="Controls\DeckSetIcons\SetIconVisibilityConverter.cs" />
+    <Compile Include="Controls\Information\CollectionSyncingInfo.xaml.cs">
+      <DependentUpon>CollectionSyncingInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Information\TwitchExtensionInfo.xaml.cs">
       <DependentUpon>TwitchExtensionInfo.xaml</DependentUpon>
     </Compile>
@@ -914,6 +917,10 @@
     <Page Include="Controls\DeckSetIcons\DeckSetIconsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Information\CollectionSyncingInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Information\TwitchExtensionInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
