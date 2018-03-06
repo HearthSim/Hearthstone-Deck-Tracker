@@ -21,9 +21,9 @@
                 <TreeView Name="TreeViewOptions" MinWidth="150">
                     <TreeViewItem Name="TreeViewItemSearch" Header="{lex:LocText Options_Search_Header}" Selected="TreeViewItemSearch_OnSelected"></TreeViewItem>
                     <TreeViewItem Header="HSReplay.net">
-                        <TreeViewItem Name="TreeViewItemHSReplayAccount" Header="My Account" Selected="TreeViewItemHSReplayAccount_OnSelected"/>
-                        <TreeViewItem Name="TreeViewItemHSReplayCollection" Header="Collection" Selected="TreeViewItemHSReplayCollection_OnSelected"/>
-                        <TreeViewItem Name="TreeViewItemHSReplayReplays" Header="Replays" Selected="TreeViewItemHSReplayReplays_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemHSReplayAccount" Header="{lex:Loc Options_HSReplay_Account_Header}" Selected="TreeViewItemHSReplayAccount_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemHSReplayCollection" Header="{lex:Loc Options_HSReplay_Collection_Header}" Selected="TreeViewItemHSReplayCollection_OnSelected"/>
+                        <TreeViewItem Name="TreeViewItemHSReplayReplays" Header="{lex:Loc Options_Tracker_Replays_Header}" Selected="TreeViewItemHSReplayReplays_OnSelected"/>
                     </TreeViewItem>
                     <TreeViewItem Header="{lex:LocText Options_Overlay_Header}">
                         <TreeViewItem Name="TreeViewItemOverlayGeneral" Header="{lex:LocText Options_Overlay_General_Header}" Selected="TreeViewItemGeneralOverlay_OnSelected"/>

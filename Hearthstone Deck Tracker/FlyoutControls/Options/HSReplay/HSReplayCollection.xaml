@@ -4,30 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="500" d:DesignWidth="500">
     <StackPanel Margin="20">
         <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="16">
-            <Run Text="The easiest way to find the best decks for you!"/>
+            <Run Text="{lex:Loc Options_HSReplay_Collection_HeaderText}"/>
             <LineBreak/>
-            <Run Text="Just upload your collection to HSReplay.net" FontWeight="Normal" FontSize="15"/>
+            <Run Text="{lex:Loc Options_HSReplay_Collection_HeaderText_Subtitle}" FontWeight="Normal" FontSize="15"/>
         </TextBlock>
         <controls:OAuthLogin Margin="25" Visibility="{Binding IsAuthenticated, Converter={StaticResource InverseBoolToVisibility}}"/>
         <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibility}}">
-            <CheckBox Content="Upload my collection automatically" HorizontalAlignment="Center" Margin="0,10,0,70"
+            <CheckBox Content="{lex:Loc Options_HSReplay_Collection_UploadSetting}" HorizontalAlignment="Center" Margin="0,10,0,70"
                       IsChecked="{Binding CollectionSyncingEnabled}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0"
                         Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">
                 <controls:StatusIndicator Success="{Binding CollectionSyncingEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                           VerticalAlignment="Center" FontSize="16"/>
                 <StackPanel Margin="5,0,0,0">
-                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Collection up-to-date!"
+                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="{lex:Loc Options_HSReplay_Collection_UpToDate}"
                                Visibility="{Binding CollectionUpToDate, Converter={StaticResource BoolToVisibility}}"/>
-                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="Collection update queued..."
+                    <TextBlock FontSize="16" FontWeight="SemiBold" Text="{lex:Loc Options_HSReplay_Collection_UpdatePending}"
                                Visibility="{Binding CollectionUpdateThrottled, Converter={StaticResource BoolToVisibility}}"/>
                     <TextBlock FontSize="14">
-                        <Run Text="Last updated"/>
+                        <Run Text="{lex:Loc Options_HSReplay_Collection_LastUpdated}"/>
                         <Run Text="{Binding SyncAge, Mode=OneWay}"/>
                     </TextBlock>
                 </StackPanel>
@@ -35,21 +36,21 @@
             <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="300" Margin="0,10,0,0"
                     Command="{Binding HSReplayDecksCommand}"
                     Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">
-                <TextBlock Text="Find decks on HSReplay.net"/>
+                <TextBlock Text="{lex:Loc Options_HSReplay_Collection_HSReplaynetDecks}"/>
             </Button>
             <StackPanel Visibility="{Binding CollectionSyncingEnabled, Converter={StaticResource BoolToVisibility}}">
                 <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="16"
                            Visibility="{Binding CollectionSynced, Converter={StaticResource InverseBoolToVisibility}}">
-                    <Run Text="Just one more step:" FontSize="14"/>
+                    <Run Text="{lex:Loc Options_HSReplay_Collection_OneMoreStep}" FontSize="14"/>:
                     <LineBreak/>
-                    <Run Text="Start Hearthstone and open your collection."/>
+                    <Run Text="{lex:Loc Options_HSReplay_Collection_OpenCollection}"/>
                 </TextBlock>
                 <TextBlock TextAlignment="Center" Opacity="0.5" Margin="0,70,0,0">
-                    <Run Text="Your collection will automatically update when:"/>
+                    <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfoHeader}"/>:
                     <LineBreak/>
-                    <Run Text="- Opening or closing your collection"/>
+                    - <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo1}"/>
                     <LineBreak/>
-                    <Run Text="- Closing the pack opening screen"/>
+                    - <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo2}"/>
                 </TextBlock>
             </StackPanel>
         </StackPanel>

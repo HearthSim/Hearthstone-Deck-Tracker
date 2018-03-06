@@ -179,12 +179,12 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
-            <MenuItem Header="LOGIN" Command="{Binding LoginCommand}" Visibility="{Binding LoginVisibility}"
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_HSReplay_Login}" Command="{Binding LoginCommand}" Visibility="{Binding LoginVisibility}"
                       IsEnabled="{Binding LoginButtonEnabled}"/>
             <Separator Visibility="{Binding LoginVisibility}"/>
-            <MenuItem Header="META" Command="{Binding MetaCommand}"/>
-            <MenuItem Header="DECKS" Command="{Binding DecksCommand}"/>
-            <MenuItem Header="MY REPLAYS" Command="{Binding MyReplaysCommand}" Visibility="{Binding MyReplaysVisibility}"/>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_HSReplay_Meta}" Command="{Binding MetaCommand}"/>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_HSReplay_Decks}" Command="{Binding DecksCommand}"/>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_HSReplay_MyReplays}" Command="{Binding MyReplaysCommand}" Visibility="{Binding MyReplaysVisibility}"/>
             <Separator/>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Replays_Latest}">
                 <MenuItem.ItemsSource>

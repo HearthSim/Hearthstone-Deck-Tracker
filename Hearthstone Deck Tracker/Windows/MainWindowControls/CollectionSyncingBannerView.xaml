@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="100" d:DesignWidth="500">
@@ -10,9 +11,9 @@
         <Image Source="{DynamicResource HsReplayIconWhite}" RenderOptions.BitmapScalingMode="Fant"
                Width="40" Height="40" DockPanel.Dock="Left" Margin="0,0,10,0"/>
         <StackPanel VerticalAlignment="Center">
-            <TextBlock Text="The easiest way to find the best decks for you!"
+            <TextBlock Text="{lex:Loc Banner_CollectionSyncing_Header}"
                        FontWeight="SemiBold" FontSize="16"/>
-            <TextBlock Text="Upload your collection to HSReplay.net." FontSize="14"
+            <TextBlock Text="{lex:Loc Banner_CollectionSyncing_Subtitle}" FontSize="14"
                        Visibility="{Binding CollectionSynced, Converter={StaticResource InverseBoolToVisibility}}"/>
             <TextBlock Text="HSReplay.net" FontSize="14"
                        Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}"/>

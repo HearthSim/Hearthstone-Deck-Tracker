@@ -219,19 +219,19 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void TreeViewItemHSReplayAccount_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentHeader = "My Account";
+			ContentHeader = LocUtil.Get("Options_HSReplay_Account_Header");
 			OptionsContent = OptionsHSReplayAccount;
 		}
 
 		private void TreeViewItemHSReplayReplays_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentHeader = "Replays";
+			ContentHeader = LocUtil.Get("Options_Tracker_Replays_Header");
 			OptionsContent = OptionsHSReplayReplays;
 		}
 
 		private void TreeViewItemHSReplayCollection_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentHeader = "Collection";
+			ContentHeader = LocUtil.Get("Options_HSReplay_Collection_Header");
 			OptionsContent = OptionsHSReplayCollection;
 			OptionsHSReplayCollection.UpdateSyncAge();
 		}
