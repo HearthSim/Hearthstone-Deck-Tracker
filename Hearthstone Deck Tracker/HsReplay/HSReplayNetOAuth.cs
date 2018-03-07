@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			Client = new Lazy<OAuthClient>(LoadClient);
 		}
 
-		private static readonly Scope[] _requiredScopes = { Scope.ReadSocialAccounts, Scope.WriteCollection };
+		private static readonly Scope[] _requiredScopes = { Scope.FullAccess };
 
 		private static OAuthClient LoadClient()
 		{
@@ -212,11 +212,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(string.IsNullOrEmpty(Data.Value.TokenData?.Scope))
 				return false;
 			var currentScopes = Data.Value.TokenData.Scope.Split(' ');
+			if(currentScopes.Contains(Scope.FullAccess.Name))
+				return true;
 			return scopes.All(s => currentScopes.Contains(s.Name));
 		}
 
 		public static bool IsAuthenticatedForAnything()
-			=> _requiredScopes.Any(scope => IsAuthenticatedFor(scope));
+			=> !string.IsNullOrEmpty(Data.Value.TokenData?.Scope);
 
 		public static List<TwitchAccount> TwitchUsers => Data.Value.TwitchUsers;
 
