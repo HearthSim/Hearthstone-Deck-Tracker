@@ -48,9 +48,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						}
 					}
 
-					if(game.PreviousMode == Mode.PACKOPENING
-						|| game.PreviousMode == Mode.COLLECTIONMANAGER
-						|| game.CurrentMode == Mode.COLLECTIONMANAGER)
+					if(game.PreviousMode == Mode.COLLECTIONMANAGER || game.CurrentMode == Mode.COLLECTIONMANAGER)
 						CollectionHelper.UpdateCollection().Forget();
 
 					if(game.CurrentMode == Mode.HUB && !_checkedMirrorStatus)

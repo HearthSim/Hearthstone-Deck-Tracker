@@ -45,13 +45,8 @@
                     <LineBreak/>
                     <Run Text="{lex:Loc Options_HSReplay_Collection_OpenCollection}"/>
                 </TextBlock>
-                <TextBlock TextAlignment="Center" Opacity="0.5" Margin="0,70,0,0">
-                    <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfoHeader}"/>:
-                    <LineBreak/>
-                    - <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo1}"/>
-                    <LineBreak/>
-                    - <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo2}"/>
-                </TextBlock>
+                <TextBlock TextAlignment="Center" Opacity="0.5" Margin="50,70,50,0" TextWrapping="Wrap"
+                           Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo}"/>
             </StackPanel>
         </StackPanel>
     </StackPanel>
