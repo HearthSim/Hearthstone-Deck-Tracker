@@ -14,9 +14,9 @@
             <TextBlock TextWrapping="Wrap" TextAlignment="Center" Margin="10" HorizontalAlignment="Center"
                        Foreground="White">
                 <Run FontWeight="SemiBold" FontSize="20"
-                     Text="Finding the best deck for you has never been this easy!"/>
+                     Text="New HSReplay.net Feature: Collection Uploading"/>
                 <LineBreak/>
-                <Run FontSize="16" Text="Just upload your collection to HSReplay.net"/>
+                <Run FontSize="16" Text="Finding your next deck has never been this easy!"/>
             </TextBlock>
         </Grid>
         <Rectangle Fill="{DynamicResource AccentColorBrush}" Height="1" Width="Auto" DockPanel.Dock="Top"/>
@@ -31,7 +31,14 @@
             </Button>
         </StackPanel>
         <StackPanel Margin="0,20,0,0">
-            <!--TODO -->
+            <TextBlock FontWeight="SemiBold" FontSize="14" TextAlignment="Center">
+                <Run Text="Tired of sifting through decks you can't play?"></Run>
+                <LineBreak/>
+                <Run Text="Just upload your collection and immediately see which cards you are missing for any deck!"></Run>
+            </TextBlock>
+            <Border BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Source="{StaticResource CollectionSyncingPromo}" MaxWidth="992"/>
+            </Border>
         </StackPanel>
     </DockPanel>
 </UserControl>
