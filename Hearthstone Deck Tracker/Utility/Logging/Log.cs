@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 		private static string _prevLine;
 		private static int _duplicateCount;
 		public static bool Initialized { get; private set; }
+		public static string CurrentLogFile { get; private set; }
 
 		internal static void Initialize()
 		{
@@ -74,7 +75,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 			}
 			try
 			{
-				Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));	
+				Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));
+				CurrentLogFile = logFile;
 			}
 			catch (Exception ex)
 			{
