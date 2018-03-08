@@ -362,7 +362,7 @@ namespace HDTTests.Hearthstone.Secrets
 			game.CurrentGameType = GameType.GT_ARENA;
 			game.CurrentFormat = Format.Wild; // Arena format is Wild
 			cards = secretsManager.GetSecretList();
-			var arenaSecrets = standardSecrets.Where(x => !ArenaExcludes.Contains(x)).ToList();
+			var arenaSecrets = wildSecrets.Where(x => !ArenaExcludes.Contains(x)).ToList();
 			Assert.AreEqual(arenaSecrets.Count, cards.Count);
 			foreach(var secret in arenaSecrets)
 				Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == secret));
