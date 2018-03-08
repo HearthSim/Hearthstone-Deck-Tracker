@@ -655,6 +655,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				Options.TreeViewItemHSReplayCollection.IsSelected = true;
 				FlyoutOptions.IsOpen = true;
+				HSReplayNetHelper.TryAuthenticate().Forget();
 			}
 		}
 
