@@ -224,6 +224,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				OnPropertyChanged(nameof(HsReplayButtonVisibility));
 				Influx.OnHsReplayDataLoaded();
 			};
+
+			HSReplayNetOAuth.Authenticated += ActivateWindow;
 		}
 
 		public void LoadAndUpdateDecks()
