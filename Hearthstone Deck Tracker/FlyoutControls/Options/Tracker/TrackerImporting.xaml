@@ -97,15 +97,6 @@
                 <CheckBox Name="CheckboxAutoSaveOnImport" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_AutoSave}" Margin="10,5,0,0"
                   Checked="CheckboxAutoSaveOnImport_OnChecked"
                   Unchecked="CheckboxAutoSaveOnImport_OnUnchecked" />
-                <CheckBox Name="CheckboxImportNetDeck" Content="{lex:Loc Options_Tracker_Importing_Web_CheckBox_AutoSaveNetDeck}" Margin="10,5,0,0"
-                  Checked="CheckboxImportNetDeck_OnChecked" Unchecked="CheckboxImportNetDeck_OnUnchecked" />
-                <TextBlock Margin="10,2,0,0">
-            <Hyperlink
-                NavigateUri="https://chrome.google.com/webstore/detail/netdeck/lpdbiakcpmcppnpchohihcbdnojlgeel"
-                RequestNavigate="Hyperlink_RequestNavigate">
-                <Run Text="{lex:Loc Options_Tracker_Importing_Web_Hyperlink_NetDeck}"/>
-            </Hyperlink>
-                </TextBlock>
             </StackPanel>
         </GroupBox>
     </StackPanel>

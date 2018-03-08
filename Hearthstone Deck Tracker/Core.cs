@@ -110,7 +110,6 @@ namespace Hearthstone_Deck_Tracker
 					MainWindow.ShowDevUpdatesMessage();
 #endif
 			}
-			NetDeck.CheckForChromeExtention();
 			DataIssueResolver.Run();
 
 #if(!SQUIRREL)
@@ -259,10 +258,6 @@ namespace Hearthstone_Deck_Tracker
 					if(Config.Instance.CloseWithHearthstone)
 						MainWindow.Close();
 				}
-
-				if(Config.Instance.NetDeckClipboardCheck.HasValue && Config.Instance.NetDeckClipboardCheck.Value && Initialized
-				   && !User32.IsHearthstoneInForeground())
-					NetDeck.CheckForClipboardImport();
 
 				await Task.Delay(UpdateDelay);
 			}

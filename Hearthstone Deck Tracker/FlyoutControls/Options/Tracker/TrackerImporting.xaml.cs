@@ -80,7 +80,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboboxPasteImporting.ItemsSource = Enum.GetValues(typeof(ImportingChoice));
 			ComboboxPasteImporting.SelectedItem = Config.Instance.PasteImportingChoice;
 			CheckboxTagOnImport.IsChecked = Config.Instance.TagDecksOnImport;
-			CheckboxImportNetDeck.IsChecked = Config.Instance.NetDeckClipboardCheck ?? false;
 			CheckboxAutoSaveOnImport.IsChecked = Config.Instance.AutoSaveOnImport;
 			TextBoxArenaTemplate.Text = Config.Instance.ArenaDeckNameTemplate;
 			CheckBoxConstructedImportNew.IsChecked = Config.Instance.ConstructedAutoImportNew;
@@ -104,22 +103,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.TagDecksOnImport = false;
-			Config.Save();
-		}
-
-		private void CheckboxImportNetDeck_OnChecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.NetDeckClipboardCheck = true;
-			Config.Save();
-		}
-
-		private void CheckboxImportNetDeck_OnUnchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.NetDeckClipboardCheck = false;
 			Config.Save();
 		}
 

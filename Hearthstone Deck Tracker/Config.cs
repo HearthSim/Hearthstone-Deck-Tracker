@@ -517,9 +517,6 @@ namespace Hearthstone_Deck_Tracker
 		public bool MinimizeToTray = false;
 
 		[DefaultValue(null)]
-		public bool? NetDeckClipboardCheck = null;
-
-		[DefaultValue(null)]
 		public bool? NonLatinUseDefaultFont = null;
 
 		[DefaultValue(false)]
