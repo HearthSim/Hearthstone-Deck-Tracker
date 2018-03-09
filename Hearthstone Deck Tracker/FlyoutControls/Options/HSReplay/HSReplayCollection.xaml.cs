@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 
@@ -72,7 +73,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 
 		public object HSReplayDecksCommand => new Command(() =>
 		{
-			var url = Helper.BuildHsReplayNetUrl("decks", "options_collection");
+			var dust = CollectionHelper.TryGetCollection(out var collection) ? collection.Dust : 0;
+			var url = Helper.BuildHsReplayNetUrl("decks", "options_collection", "maxDustCost=" + dust);
 			Helper.TryOpenUrl(url);
 		});
 

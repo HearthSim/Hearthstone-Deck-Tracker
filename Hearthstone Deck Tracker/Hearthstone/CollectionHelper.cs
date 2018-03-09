@@ -28,6 +28,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return collection;
 		}
 
+		public static bool TryGetCollection(out Collection collection)
+		{
+			collection = null;
+			var key = GetCurrentKey();
+			if(key == null)
+				return false;
+			return Collections.TryGetValue(key, out collection);
+		}
+
 		public static async Task UpdateCollection() => await UpdateCollection(GetCurrentKey());
 
 		private static async Task<bool> UpdateCollection(Key key)

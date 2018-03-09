@@ -508,7 +508,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static string BuildHsReplayNetUrl(string path, string campaign)
+		public static string BuildHsReplayNetUrl(string path, string campaign, params string[] fragments)
 		{
 			var url = "https://hsreplay.net";
 			if(!path.StartsWith("/"))
@@ -516,14 +516,16 @@ namespace Hearthstone_Deck_Tracker
 			url += path;
 			if(!url.EndsWith("/"))
 				url += "/";
-			return url + GetHsReplayNetUrlParams(campaign);
+			return url + GetHsReplayNetUrlParams(campaign, fragments);
 		}
 
-		public static string GetHsReplayNetUrlParams(string campaign)
+		public static string GetHsReplayNetUrlParams(string campaign, params string[] fragments)
 		{
 			var param = "?utm_source=hdt&utm_medium=client";
 			if(!string.IsNullOrEmpty(campaign))
 				param += "&utm_campaign=" + campaign;
+			if(fragments.Any())
+				param += "#" + string.Join("&", fragments);
 			return param;
 		}
 

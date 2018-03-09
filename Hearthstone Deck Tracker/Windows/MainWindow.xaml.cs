@@ -648,7 +648,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Influx.OnCollectionSyncingBannerClicked(authenticated, collectionSynced);
 			if(authenticated && collectionSynced)
 			{
-				var url = Helper.BuildHsReplayNetUrl("decks", "collection_syncing_banner");
+				var dust = CollectionHelper.TryGetCollection(out var collection) ? collection.Dust : 0;
+				var url = Helper.BuildHsReplayNetUrl("decks", "collection_syncing_banner", "maxDustCost=" + dust);
 				Helper.TryOpenUrl(url);
 			}
 			else
