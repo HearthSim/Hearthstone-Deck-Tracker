@@ -146,6 +146,7 @@ namespace Hearthstone_Deck_Tracker
 			LogWatcherManger.Start(Game).Forget();
 
 			NewsManager.LoadNews();
+			RemoteConfig.Instance.Load();
 			HotKeyManager.Load();
 
 			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)

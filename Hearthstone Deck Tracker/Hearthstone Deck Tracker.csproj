@@ -270,6 +270,7 @@
     <Compile Include="HsReplay\HSReplayNetOAuth.cs" />
     <Compile Include="HsReplay\Data\OAuthData.cs" />
     <Compile Include="HsReplay\HSReplayNetHelper.cs" />
+    <Compile Include="Utility\DataLoader.cs" />
     <Compile Include="Utility\GlobalCommands.cs" />
     <Compile Include="Utility\RateLimiter.cs" />
     <Compile Include="HsReplay\UploadTokenHistory.cs" />
@@ -307,6 +308,8 @@
     <Compile Include="Live\Data\BoardState.cs" />
     <Compile Include="Live\Data\DataType.cs" />
     <Compile Include="Live\Data\Payload.cs" />
+    <Compile Include="Utility\RemoteConfig.cs" />
+    <Compile Include="Utility\Singleton.cs" />
     <Compile Include="Utility\Toasts\ToastControls\BaseToast.xaml.cs">
       <DependentUpon>BaseToast.xaml</DependentUpon>
     </Compile>
