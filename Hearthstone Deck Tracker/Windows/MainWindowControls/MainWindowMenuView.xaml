@@ -173,9 +173,9 @@
                 <CollectionViewSource x:Key="LatestReplaysCollection" Source="{Binding LatestReplays}"/>
             </MenuItem.Resources>
             <MenuItem.Icon>
-                <Rectangle Fill="{DynamicResource TextBrush}">
+                <Rectangle Fill="{DynamicResource TextBrush}" Width="13.5" Height="17">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Visual="{StaticResource appbar_chevron_right}" />
+                        <VisualBrush Visual="{StaticResource appbar_hsreplay}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>
