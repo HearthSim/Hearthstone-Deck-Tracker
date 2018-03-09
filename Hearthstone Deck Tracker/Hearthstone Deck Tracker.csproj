@@ -733,6 +733,7 @@
       <DependentUpon>MainWindowMenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindowControls\MainWindowMenuViewModel.cs" />
+    <Compile Include="Utility\MarkupParser.cs" />
     <Compile Include="Windows\MainWindowControls\NewsBarView.xaml.cs">
       <DependentUpon>NewsBarView.xaml</DependentUpon>
     </Compile>
@@ -758,7 +759,6 @@
     <Compile Include="Utility\Imgur.cs" />
     <Compile Include="Utility\Markdown.Xaml\Markdown.cs" />
     <Compile Include="Utility\Markdown.Xaml\TextToFlowDocumentConverter.cs" />
-    <Compile Include="Utility\NewsManager.cs" />
     <Compile Include="Utility\Updating\Updater.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>

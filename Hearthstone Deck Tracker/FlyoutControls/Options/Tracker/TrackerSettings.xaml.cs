@@ -52,12 +52,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxDataSaveAppData.IsChecked = Config.Instance.SaveDataInAppData;
 #endif
 
-			_initialized = true;
-		}
+			CheckboxShowNewsBar.IsChecked = null;
 
-		private void TrackerSettings_Loaded(object sender, RoutedEventArgs e)
-		{
-			CheckboxShowNewsBar.IsChecked = Core.MainWindow.NewsBar.Visibility != Visibility.Collapsed;
+			ConfigWrapper.IgnoreNewsIdChanged += () =>
+			{
+				CheckboxShowNewsBar.IsChecked = ConfigWrapper.IgnoreNewsId == -1;
+			};
+			RemoteConfig.Instance.Loaded += data =>
+			{
+				CheckboxShowNewsBar.IsChecked = Config.Instance.IgnoreNewsId < data?.News.Id;
+			};
+
+			_initialized = true;
 		}
 
 		private void SaveConfig(bool updateOverlay)
@@ -341,7 +347,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!_initialized)
 				return;
-			Utility.NewsManager.ToggleNewsVisibility();
+			ConfigWrapper.IgnoreNewsId = ConfigWrapper.IgnoreNewsId == -1
+				? RemoteConfig.Instance.Data?.News?.Id ?? 0 : -1;
 		}
 
 		private void CheckboxAlternativeScreenCapture_Checked(object sender, RoutedEventArgs e)

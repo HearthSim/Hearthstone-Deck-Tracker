@@ -212,7 +212,7 @@
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
-        <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top" Height="26" Margin="0,1,0,0" Visibility="Collapsed" />
+        <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top"/>
         <mainWindowControls:MainWindowMenuView x:Name="MainWindowMenu" DockPanel.Dock="Top"/>
         <Separator DockPanel.Dock="Top" Panel.ZIndex="2" Margin="0,-1,0,0"/>
         <DockPanel Margin="5">

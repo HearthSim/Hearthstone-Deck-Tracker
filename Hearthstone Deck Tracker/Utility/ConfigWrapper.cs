@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		public static event Action ReplayAutoUploadChanged;
 		public static event Action CollectionSyncingChanged;
+		public static event Action IgnoreNewsIdChanged;
 
 		public static bool CardDbIncludeWildOnlyCards
 		{
@@ -379,6 +380,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.CheckForDevUpdates = value;
 				Config.Instance.AllowDevUpdates = null;
 				Config.Save();
+			}
+		}
+
+		public static int IgnoreNewsId
+		{
+			get => Config.Instance.IgnoreNewsId;
+			set
+			{
+				Config.Instance.IgnoreNewsId = value;
+				Config.Save();
+				IgnoreNewsIdChanged?.Invoke();
 			}
 		}
 

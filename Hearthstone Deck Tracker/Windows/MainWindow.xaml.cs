@@ -165,8 +165,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private double _heightChangeDueToSearchBox;
 		public const int SearchBoxHeight = 30;
 
-		public int StatusBarNewsHeight => 20;
-
 		public string IntroductionLabelText
 			=> Config.Instance.ConstructedAutoImportNew ? "ENTER THE 'PLAY' MENU TO AUTOMATICALLY IMPORT YOUR DECKS" : "ADD NEW DECKS BY CLICKING 'NEW' OR 'IMPORT'";
 

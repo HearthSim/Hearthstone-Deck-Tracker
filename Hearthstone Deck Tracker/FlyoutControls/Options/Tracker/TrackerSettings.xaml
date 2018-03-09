@@ -9,7 +9,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="300" Loaded="TrackerSettings_Loaded">
+             d:DesignHeight="600" d:DesignWidth="300">
     <StackPanel>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Settings_Label_Analytics}">
             <StackPanel>
