@@ -65,6 +65,16 @@
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="{lex:LocTextLower MainWindow_TitleBar_Options}" />
                 </StackPanel>
             </Button>
+            <Button Click="BtnTwitter_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="18" Height="16" Margin="0,2,0,0">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_twitter}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Margin="4" VerticalAlignment="Center" Text="twitter" />
+                </StackPanel>
+            </Button>
             <Button Click="BtnDiscord_OnClick">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="14" Height="16" Margin="0,2,0,0">
