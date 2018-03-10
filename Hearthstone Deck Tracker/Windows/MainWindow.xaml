@@ -296,7 +296,7 @@
                                            Background="{StaticResource HSReplayNetBlue}" Foreground="White"
                                            Visibility="{Binding CollectionSyncingBannerVisbiility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"
                                            Removable="{Binding CollectionSyncingBannerRemovable, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
-                    <mainWindowControls:CollectionSyncingBannerView Margin="8"/>
+                    <mainWindowControls:CollectionSyncingBannerView Margin="8" Container="{Binding ., RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"/>
                 </controls1:RemovableBanner>
                 <Grid Margin="0,2,0,0">
                     <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
