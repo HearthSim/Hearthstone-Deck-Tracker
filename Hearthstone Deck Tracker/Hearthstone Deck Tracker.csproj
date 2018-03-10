@@ -1378,7 +1378,7 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
-    <Resource Include="Resources\PH_promo1.png" />
+    <Resource Include="Resources\collection_promo.jpg" />
     <Resource Include="Resources\hsreplay_banner.jpg" />
     <Resource Include="Resources\twitch_ext_decklist.png" />
     <Resource Include="Resources\twitch_ext_secret.png" />

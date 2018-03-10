@@ -21,5 +21,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		});
 
 		public ICommand CloseCommand => new Command(() => Core.MainWindow.FlyoutUpdateNotes.IsOpen = false);
+
+		public ICommand DecksCommand => new Command(() =>
+		{
+			var url = Helper.BuildHsReplayNetUrl("decks", "update_notes");
+			Helper.TryOpenUrl(url);
+		});
 	}
 }
