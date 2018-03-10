@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -48,11 +47,18 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static async Task UpdateAccount()
 		{
-			await HSReplayNetOAuth.UpdateAccountData();
-			if(!Account.Instance.TokenClaimed.HasValue)
-				await ApiWrapper.UpdateUploadTokenStatus();
-			if(Account.Instance.TokenClaimed == false)
-				await HSReplayNetOAuth.ClaimUploadToken(Account.Instance.UploadToken);
+			if(HSReplayNetOAuth.IsAuthenticatedForAnything())
+			{
+				await HSReplayNetOAuth.UpdateAccountData();
+				if(string.IsNullOrEmpty(Account.Instance.UploadToken)
+					|| !Account.Instance.TokenClaimed.HasValue
+					|| (!HSReplayNetOAuth.AccountData?.UploadTokens.Contains(Account.Instance.UploadToken) ?? false))
+					await ApiWrapper.UpdateUploadTokenStatus();
+				if(Account.Instance.TokenClaimed == false && !string.IsNullOrEmpty(Account.Instance.UploadToken))
+					await HSReplayNetOAuth.ClaimUploadToken(Account.Instance.UploadToken);
+			}
+			else
+				ApiWrapper.UpdateUploadTokenStatus().Forget();
 		}
 
 		public static async Task SyncCollection()

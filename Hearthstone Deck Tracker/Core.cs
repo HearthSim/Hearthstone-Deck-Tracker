@@ -151,8 +151,7 @@ namespace Hearthstone_Deck_Tracker
 			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
 				Helper.StartHearthstoneAsync().Forget();
 
-			if(HSReplayNetOAuth.IsAuthenticatedForAnything())
-				HSReplayNetHelper.UpdateAccount().Forget();
+			HSReplayNetHelper.UpdateAccount().Forget();
 
 			Initialized = true;
 
