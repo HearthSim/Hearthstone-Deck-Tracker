@@ -235,6 +235,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable)); 
 			};
+
+			HSReplayNetOAuth.LoggedOut += () =>
+			{
+				OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
+				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
+			};
 		}
 
 		public void LoadAndUpdateDecks()
