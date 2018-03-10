@@ -365,6 +365,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(HeroClassStatsFilter.All)]
 		public HeroClassStatsFilter ArenaStatsClassFilter = HeroClassStatsFilter.All;
 
+		[DefaultValue(0)]
+		public int HideCollectionSyncingBanner = 0;
+
 		[DefaultValue(false)]
 		public bool HideDecksInOverlay = false;
 
@@ -749,9 +752,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
-
-		[DefaultValue(true)]
-		public bool ShowCollectionSyncingBanner = true;
 
 		[DefaultValue(false)]
 		public bool ShowDeckTitle = false;

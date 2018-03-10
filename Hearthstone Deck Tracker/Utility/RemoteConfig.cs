@@ -25,6 +25,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			[JsonProperty("news")]
 			public NewsData News { get; set; }
 
+			[JsonProperty("collection_banner")]
+			public CollectionBannerData CollectionBanner { get; set; }
+
 			internal class NewsData
 			{
 				[JsonProperty("id")]
@@ -32,6 +35,21 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				[JsonProperty("items")]
 				public List<string> Items { get; set; } = new List<string>();
+			}
+
+			internal class CollectionBannerData
+			{
+				[JsonProperty("visible")]
+				public bool Visible { get; set; }
+
+				[JsonProperty("removable_pre_sync")]
+				public bool RemovablePreSync { get; set; }
+
+				[JsonProperty("removable_post_sync")]
+				public bool RemovablePostSync { get; set; }
+
+				[JsonProperty("removal_id")]
+				public int RemovalId { get; set; }
 			}
 		}
 	}

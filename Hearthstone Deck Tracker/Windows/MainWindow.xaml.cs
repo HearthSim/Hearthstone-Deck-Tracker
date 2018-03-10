@@ -224,6 +224,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 
 			HSReplayNetOAuth.Authenticated += ActivateWindow;
+
+			RemoteConfig.Instance.Loaded += data =>
+			{
+				OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
+				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
+			};
+
+			HSReplayNetHelper.CollectionUploaded += () =>
+			{
+				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable)); 
+			};
 		}
 
 		public void LoadAndUpdateDecks()
@@ -661,12 +672,39 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void RemovableBanner_OnClose(object sender, EventArgs e)
 		{
 			Influx.OnCollectionSyncingBannerClosed();
-			Config.Instance.ShowCollectionSyncingBanner = false;
+			Config.Instance.HideCollectionSyncingBanner = CollectionBannerId;
 			Config.Save();
 			OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
 		}
 
 		public Visibility CollectionSyncingBannerVisbiility
-			=> Config.Instance.ShowCollectionSyncingBanner ? Visible : Collapsed;
+		{
+			get
+			{
+				if(!(RemoteConfig.Instance.Data?.CollectionBanner?.Visible ?? true))
+					return Collapsed;
+				if(Config.Instance.HideCollectionSyncingBanner >= CollectionBannerId)
+				{
+					var synced = Account.Instance.CollectionState.Any();
+					var removablePostSync = RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePostSync ?? false;
+					var removablePreSync = RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePreSync ?? false;
+					if(synced && removablePostSync || !synced && removablePreSync)
+						return Collapsed;
+				}
+				return Visible;
+			}
+		}
+
+		private int CollectionBannerId => RemoteConfig.Instance.Data?.CollectionBanner?.RemovalId ?? 0;
+
+		public bool CollectionSyncingBannerRemovable
+		{
+			get
+			{
+				var synced = Account.Instance.CollectionState.Any();
+				return !synced && (RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePreSync ?? false)
+					|| synced && (RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePostSync ?? false);
+			}
+		}
 	}
 }
