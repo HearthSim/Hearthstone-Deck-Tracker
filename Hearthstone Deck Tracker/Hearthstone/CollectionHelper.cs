@@ -45,10 +45,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return false;
 			Log.Debug("Updating collection...");
 			_lastUpdate = DateTime.Now;
-			var collection = await Task.Run(() => Reflection.GetFullCollection());
-			if(collection?.Cards.Any() ?? false)
+			var data = await Task.Run(() => new
 			{
-				Collections[key] = new Collection(key.Item1, key.Item2, collection);
+				Collection = Reflection.GetFullCollection(), 
+				BattleTag = Reflection.GetBattleTag()
+			});
+			if(data.Collection?.Cards.Any() ?? false)
+			{
+				Collections[key] = new Collection(key.Item1, key.Item2, data.BattleTag, data.Collection);
 				OnCollectionChanged?.Invoke();
 				Log.Debug("Updated collection!");
 				return true;

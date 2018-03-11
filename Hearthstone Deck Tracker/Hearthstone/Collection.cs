@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using LiveCharts.Helpers;
+using HearthMirror.Objects;
 using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Collection
 	{
-		public Collection(ulong accountHi, ulong accountLo, HearthMirror.Objects.Collection collection)
+		public Collection(ulong accountHi, ulong accountLo, BattleTag battleTag, HearthMirror.Objects.Collection collection)
 		{
 			AccountHi = accountHi;
 			AccountLo = accountLo;
+			BattleTag = $"{battleTag.Name}#{battleTag.Number}";
 			Cards = new SortedDictionary<int, int[]>(
 				collection.Cards.GroupBy(x => x.Id)
 					.ToDictionary(x => GetDbfId(x.Key),
@@ -29,6 +29,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[JsonIgnore]
 		public ulong AccountLo { get; }
+
+		[JsonIgnore]
+		public string BattleTag { get; }
 
 		[JsonProperty("collection")]
 		public SortedDictionary<int, int[]> Cards { get; }

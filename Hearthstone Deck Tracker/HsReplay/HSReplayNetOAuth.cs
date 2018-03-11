@@ -294,5 +294,27 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				return false;
 			}
 		}
+
+		internal static async Task<bool> ClaimBlizzardAccount(ulong accountHi, ulong accountLo, string battleTag)
+		{
+			var account = $"hi={accountHi}, lo={accountLo}, battleTag={battleTag}";
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return false;
+				}
+				var response = await Client.Value.ClaimBlizzardAccount(accountHi, accountLo, battleTag);
+				Log.Debug($"Claimed {account}: {response}");
+				return true;
+			}
+			catch(Exception e)
+			{
+				UploadTokenHistory.Write($"Error claming {account}\n" + e);
+				Log.Error(e);
+				return false;
+			}
+		}
 	}
 }

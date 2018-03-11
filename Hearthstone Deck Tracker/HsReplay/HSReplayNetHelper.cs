@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -69,7 +70,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(collection == null)
 				return;
 			var hash = collection.GetHashCode();
-			var account = collection.AccountHi + "-" + collection.AccountLo;
+			var hi = collection.AccountHi;
+			var lo = collection.AccountLo;
+			var account = hi + "-" + lo;
 			if(Account.Instance.CollectionState.TryGetValue(account, out var state) && state.Hash == hash)
 			{
 				Log.Debug("Collection ready up-to-date");
@@ -78,6 +81,17 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			await CollectionSyncLimiter.Run(async () =>
 			{
+				if(!HSReplayNetOAuth.AccountData?.BlizzardAccounts?.Any(x => x.AccountHi == hi && x.AccountLo == lo) ?? true)
+				{
+					var claimed = await HSReplayNetOAuth.ClaimBlizzardAccount(hi, lo, collection.BattleTag);
+					if(claimed)
+						HSReplayNetOAuth.UpdateAccountData().Forget();
+					else
+					{
+						ErrorManager.AddError("HSReplay.net error", $"Could not register your Blizzard account ({account}). Please try again later.");
+						return;
+					}
+				}
 				if(await HSReplayNetOAuth.UpdateCollection(collection))
 				{
 					Account.Instance.CollectionState[account] = new Account.SyncState(hash);
