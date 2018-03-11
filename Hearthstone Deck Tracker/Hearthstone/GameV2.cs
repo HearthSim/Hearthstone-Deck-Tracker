@@ -146,12 +146,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(!_matchInfoCacheInvalid)
 				return;
-			_matchInfoCacheInvalid = false;
 			MatchInfo matchInfo;
 			while((matchInfo = HearthMirror.Reflection.GetMatchInfo()) == null || matchInfo.LocalPlayer == null || matchInfo.OpposingPlayer == null)
 				await Task.Delay(1000);
 			Log.Info($"{matchInfo.LocalPlayer.Name} vs {matchInfo.OpposingPlayer.Name}");
 			_matchInfo = matchInfo;
+			_matchInfoCacheInvalid = false;
 			Player.Name = matchInfo.LocalPlayer.Name;
 			Opponent.Name = matchInfo.OpposingPlayer.Name;
 			Player.Id = matchInfo.LocalPlayer.Id;
