@@ -42,11 +42,13 @@
                 <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="16"
                            Visibility="{Binding CollectionSynced, Converter={StaticResource InverseBoolToVisibility}}">
                     <Run Text="{lex:Loc Options_HSReplay_Collection_OneMoreStep}" FontSize="14"/>:
+                <TextBlock TextAlignment="Center" Opacity="0.5" Margin="0,70,0,0" TextWrapping="Wrap">
+                    <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo_Header}" FontWeight="SemiBold"/>:
                     <LineBreak/>
-                    <Run Text="{lex:Loc Options_HSReplay_Collection_OpenCollection}"/>
+                    <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo_1}"/>
+                    <LineBreak/>
+                    <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo_2}"/>
                 </TextBlock>
-                <TextBlock TextAlignment="Center" Opacity="0.5" Margin="50,70,50,0" TextWrapping="Wrap"
-                           Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo}"/>
             </StackPanel>
         </StackPanel>
     </StackPanel>
