@@ -345,7 +345,8 @@ namespace HDTTests.Hearthstone.Secrets
 			secretsManager.NewSecret(hunterEntity);
 			Assert.AreEqual(3, secretsManager.Secrets.Count);
 
-			var wildSecrets = Paladin.All.Concat(Mage.All).Concat(Hunter.All).ToList();
+			var wildSecrets = Paladin.All.Where(x => x != Paladin.HandOfSalvation)
+				.Concat(Mage.All).Concat(Hunter.All).ToList();
 			var cards = secretsManager.GetSecretList();
 			Assert.AreEqual(wildSecrets.Count, cards.Count);
 			foreach(var secret in wildSecrets)
@@ -362,7 +363,7 @@ namespace HDTTests.Hearthstone.Secrets
 			game.CurrentGameType = GameType.GT_ARENA;
 			game.CurrentFormat = Format.Wild; // Arena format is Wild
 			cards = secretsManager.GetSecretList();
-			var arenaSecrets = standardSecrets.Where(x => !ArenaExcludes.Contains(x)).ToList();
+			var arenaSecrets = standardSecrets.Where(x => !ArenaExcludes.Contains(x)).Concat(ArenaOnly).ToList();
 			Assert.AreEqual(arenaSecrets.Count, cards.Count);
 			foreach(var secret in arenaSecrets)
 				Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == secret));
