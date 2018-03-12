@@ -303,52 +303,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static async Task StartHearthstoneAsync()
-		{
-			if(User32.GetHearthstoneWindow() != IntPtr.Zero)
-				return;
-			Core.MainWindow.BtnStartHearthstone.IsEnabled = false;
-			Core.TrayIcon.MenuItemUseNoDeck.Enabled = false;
-			try
-			{
-				var bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault() ?? Process.GetProcessesByName("Battle.net.beta").FirstOrDefault();
-				if(bnetProc == null)
-				{
-					Process.Start("battlenet://");
-
-					var foundBnetWindow = false;
-					Core.MainWindow.TextBlockBtnStartHearthstone.Text = "STARTING LAUNCHER...";
-					for(var i = 0; i < 40; i++)
-					{
-						bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault() ?? Process.GetProcessesByName("Battle.net.beta").FirstOrDefault();
-						if(bnetProc != null && bnetProc.MainWindowHandle != IntPtr.Zero)
-						{
-							foundBnetWindow = true;
-							break;
-						}
-						await Task.Delay(500);
-					}
-					Core.MainWindow.TextBlockBtnStartHearthstone.Text = "START LAUNCHER / HEARTHSTONE";
-					if(!foundBnetWindow)
-					{
-						Core.MainWindow.ShowMessageAsync("There was a problem starting the Battle.net Launcher",
-							"Starting the Battle.net launcher failed or was too slow. Please try again once it started or run Hearthstone manually.").Forget();
-						Core.MainWindow.BtnStartHearthstone.IsEnabled = true;
-						return;
-					}
-				}
-				await Task.Delay(2000);
-				Process.Start("battlenet://WTCG");
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
-			}
-
-			Core.TrayIcon.MenuItemUseNoDeck.Enabled = true;
-			Core.MainWindow.BtnStartHearthstone.IsEnabled = true;
-		}
-
 		public static async Task<Region> GetCurrentRegion()
 		{
 			for(var i = 0; i < 10; i++)

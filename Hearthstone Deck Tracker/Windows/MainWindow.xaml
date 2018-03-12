@@ -217,9 +217,7 @@
         <Separator DockPanel.Dock="Top" Panel.ZIndex="2" Margin="0,-1,0,0"/>
         <DockPanel Margin="5">
             <DockPanel Width="236" DockPanel.Dock="Right" Margin="5,0,0,0">
-                <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="0,0,0,5" Style="{StaticResource AccentedSquareButtonStyle}" DockPanel.Dock="Top">
-                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="{lex:LocTextUpper MainWindow_Button_StartHearthstone}" />
-                </Button>
+                <controls1:StartHearthstoneButton DockPanel.Dock="Top" Margin="0,0,0,5"/>
                 <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Visibility="Collapsed" Margin="0,0,0,5" DockPanel.Dock="Top">
                     <DockPanel>
                         <TextBlock Text="{lex:LocTextUpper MainWindow_Label_SelectedVersion}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>

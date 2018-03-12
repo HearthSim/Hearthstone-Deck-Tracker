@@ -159,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			BtnStartHearthstone.IsEnabled = false;
 			ButtonStartHearthstoneText = LocUtil.Get(StartHearthstoneWaitingText, true);
-			Helper.StartHearthstoneAsync().Forget();
+			HearthstoneRunner.StartHearthstone().Forget();
 			await Task.Delay(5000);
 			BtnStartHearthstone.IsEnabled = true;
 		}

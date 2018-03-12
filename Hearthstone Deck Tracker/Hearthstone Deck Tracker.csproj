@@ -247,6 +247,9 @@
     <Compile Include="Controls\RemovableBanner.xaml.cs">
       <DependentUpon>RemovableBanner.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StartHearthstoneButton.xaml.cs">
+      <DependentUpon>StartHearthstoneButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StatusIndicator.xaml.cs">
       <DependentUpon>StatusIndicator.xaml</DependentUpon>
     </Compile>
@@ -272,6 +275,7 @@
     <Compile Include="HsReplay\HSReplayNetHelper.cs" />
     <Compile Include="Utility\DataLoader.cs" />
     <Compile Include="Utility\GlobalCommands.cs" />
+    <Compile Include="Utility\HearthstoneRunner.cs" />
     <Compile Include="Utility\RateLimiter.cs" />
     <Compile Include="HsReplay\UploadTokenHistory.cs" />
     <Compile Include="Live\Data\PayloadFactory.cs" />
@@ -937,6 +941,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\StartHearthstoneButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\StatusIndicator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1378,6 +1386,7 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\hearthstone-icon.png" />
     <Resource Include="Resources\collection_promo.jpg" />
     <Resource Include="Resources\hsreplay_banner.jpg" />
     <Resource Include="Resources\twitch_ext_decklist.png" />

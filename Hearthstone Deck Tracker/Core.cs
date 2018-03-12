@@ -55,6 +55,8 @@ namespace Hearthstone_Deck_Tracker
 		internal static bool Update { get; set; }
 		internal static bool CanShutdown { get; set; }
 
+		internal static event Action<bool> GameIsRunningChanged;
+
 #pragma warning disable 1998
 		public static async void Initialize()
 #pragma warning restore 1998
@@ -149,7 +151,7 @@ namespace Hearthstone_Deck_Tracker
 			HotKeyManager.Load();
 
 			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
-				Helper.StartHearthstoneAsync().Forget();
+				HearthstoneRunner.StartHearthstone().Forget();
 
 			HSReplayNetHelper.UpdateAccount().Forget();
 
@@ -196,10 +198,10 @@ namespace Hearthstone_Deck_Tracker
 						Windows.CapturableOverlay?.UpdateContentVisibility();
 					}
 
-					MainWindow.BtnStartHearthstone.Visibility = Visibility.Collapsed;
 					TrayIcon.MenuItemStartHearthstone.Visible = false;
 
 					Game.IsRunning = true;
+					GameIsRunningChanged?.Invoke(true);
 
 					Helper.GameWindowState = User32.GetHearthstoneWindowState();
 					Windows.CapturableOverlay?.Update();
@@ -234,6 +236,7 @@ namespace Hearthstone_Deck_Tracker
 				else if(Game.IsRunning)
 				{
 					Game.IsRunning = false;
+					GameIsRunningChanged?.Invoke(false);
 					Overlay.ShowOverlay(false);
 					Watchers.Stop();
 					if(Windows.CapturableOverlay != null)
@@ -253,7 +256,6 @@ namespace Hearthstone_Deck_Tracker
 					Helper.ClearCachedHearthstoneBuild();
 					TurnTimer.Instance.Stop();
 
-					MainWindow.BtnStartHearthstone.Visibility = Visibility.Visible;
 					TrayIcon.MenuItemStartHearthstone.Visible = true;
 
 					if(Config.Instance.CloseWithHearthstone)
