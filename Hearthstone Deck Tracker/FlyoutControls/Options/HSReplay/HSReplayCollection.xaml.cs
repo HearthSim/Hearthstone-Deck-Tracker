@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Hearthstone_Deck_Tracker.Annotations;
@@ -27,6 +28,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			};
 			ConfigWrapper.CollectionSyncingChanged += () =>
 				OnPropertyChanged(nameof(CollectionSyncingEnabled));
+			ScheduledTaskRunner.Instance.Schedule(() => OnPropertyChanged(nameof(SyncAge)), TimeSpan.FromMinutes(1));
 		}
 
 		private void CollectionUpdated()
