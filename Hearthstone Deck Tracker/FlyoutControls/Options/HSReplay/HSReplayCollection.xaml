@@ -5,24 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="500" d:DesignWidth="500">
     <StackPanel Margin="20">
-        <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="16">
-            <Run Text="{lex:Loc Options_HSReplay_Collection_HeaderText}"/>
-            <LineBreak/>
-            <Run Text="{lex:Loc Options_HSReplay_Collection_HeaderText_Subtitle}" FontWeight="Normal" FontSize="15"/>
-        </TextBlock>
-        <controls:OAuthLogin Margin="25" Visibility="{Binding IsAuthenticated, Converter={StaticResource InverseBoolToVisibility}}"/>
+        <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource InverseBoolToVisibility}}">
+            <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="16">
+                <Run Text="{lex:Loc Options_HSReplay_Collection_HeaderText}"/>
+                <LineBreak/>
+                <Run Text="{lex:Loc Options_HSReplay_Collection_HeaderText_Subtitle}" FontWeight="Normal" FontSize="15"/>
+            </TextBlock>
+            <controls:OAuthLogin Margin="25"/>
+        </StackPanel>
         <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibility}}">
-            <CheckBox Content="{lex:Loc Options_HSReplay_Collection_UploadSetting}" HorizontalAlignment="Center" Margin="0,10,0,70"
-                      IsChecked="{Binding CollectionSyncingEnabled}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0"
                         Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">
                 <controls:StatusIndicator Success="{Binding CollectionSyncingEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                           VerticalAlignment="Center" FontSize="16"/>
-                <StackPanel Margin="5,0,0,0">
+                <StackPanel Margin="5,0,0,0" VerticalAlignment="Center">
                     <TextBlock FontSize="16" FontWeight="SemiBold" Text="{lex:Loc Options_HSReplay_Collection_UpToDate}"
                                Visibility="{Binding CollectionUpToDate, Converter={StaticResource BoolToVisibility}}"/>
                     <TextBlock FontSize="16" FontWeight="SemiBold" Text="{lex:Loc Options_HSReplay_Collection_UpdatePending}"
@@ -33,16 +35,31 @@
                     </TextBlock>
                 </StackPanel>
             </StackPanel>
-            <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="300" Margin="0,10,0,0"
-                    Command="{Binding HSReplayDecksCommand}"
-                    Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">
-                <TextBlock Text="{lex:Loc Options_HSReplay_Collection_HSReplaynetDecks}"/>
-            </Button>
-            <StackPanel Visibility="{Binding CollectionSyncingEnabled, Converter={StaticResource BoolToVisibility}}">
-                <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="16"
-                           Visibility="{Binding CollectionSynced, Converter={StaticResource InverseBoolToVisibility}}">
-                    <Run Text="{lex:Loc Options_HSReplay_Collection_OneMoreStep}" FontSize="14"/>:
-                <TextBlock TextAlignment="Center" Opacity="0.5" Margin="0,70,0,0" TextWrapping="Wrap">
+            <StackPanel Margin="0,30,0,0">
+                <StackPanel.Visibility>
+                    <MultiBinding Converter="{StaticResource BoolToVisibility}">
+                        <MultiBinding.ConverterParameter>
+                            <x:Array Type="{x:Type s:Boolean}">
+                                <s:Boolean>False</s:Boolean>
+                                <s:Boolean>True</s:Boolean>
+                            </x:Array>
+                        </MultiBinding.ConverterParameter>
+                        <Binding Path="CollectionSyncingEnabled"/>
+                        <Binding Path="CollectionSynced"/>
+                    </MultiBinding>
+                </StackPanel.Visibility>
+                <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="18" TextWrapping="Wrap">
+                    <Run Text="One more step to upload your collection:" FontSize="14" FontWeight="Normal"/>
+                    <LineBreak/>
+                    <Run Text="Start Hearthstone and open the collection"/>
+                </TextBlock>
+                <controls:StartHearthstoneButton Margin="0,20,0,0" Width="250"/>
+            </StackPanel>
+            <StackPanel Margin="0,50,0,0" Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">
+                <CheckBox Content="{lex:Loc Options_HSReplay_Collection_UploadSetting}" HorizontalAlignment="Center"
+                          IsChecked="{Binding CollectionSyncingEnabled}"/>
+                <TextBlock TextAlignment="Center" Opacity="0.5" Margin="0,10,0,0" TextWrapping="Wrap"
+                           Visibility="{Binding CollectionSyncingEnabled, Converter={StaticResource BoolToVisibility}}">
                     <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo_Header}" FontWeight="SemiBold"/>:
                     <LineBreak/>
                     <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo_1}"/>
@@ -50,6 +67,21 @@
                     <Run Text="{lex:Loc Options_HSReplay_Collection_UpdateInfo_2}"/>
                 </TextBlock>
             </StackPanel>
+            <CheckBox Content="{lex:Loc Options_HSReplay_Collection_UploadSetting}" HorizontalAlignment="Center"
+                      IsChecked="{Binding CollectionSyncingEnabled}">
+                <CheckBox.Visibility>
+                    <MultiBinding Converter="{StaticResource BoolToVisibility}">
+                        <MultiBinding.ConverterParameter>
+                            <x:Array Type="{x:Type s:Boolean}">
+                                <s:Boolean>True</s:Boolean>
+                                <s:Boolean>True</s:Boolean>
+                            </x:Array>
+                        </MultiBinding.ConverterParameter>
+                        <Binding Path="CollectionSyncingEnabled"/>
+                        <Binding Path="CollectionSynced"/>
+                    </MultiBinding>
+                </CheckBox.Visibility>
+            </CheckBox>
         </StackPanel>
     </StackPanel>
 </UserControl>
