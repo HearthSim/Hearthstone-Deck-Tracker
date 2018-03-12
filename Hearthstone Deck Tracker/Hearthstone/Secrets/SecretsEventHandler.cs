@@ -157,6 +157,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				exclude.Add(Rogue.CheatDeath);
 			}
 
+			if(Game.OpponentEntity.GetTag(GameTag.NUM_FRIENDLY_MINIONS_THAT_DIED_THIS_TURN) >= 1)
+				exclude.Add(Paladin.HandOfSalvation);
+
 			var numDeathrattleMinions = 0;
 			if(entity.IsActiveDeathrattle)
 			{

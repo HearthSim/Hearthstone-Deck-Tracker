@@ -75,6 +75,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Hunter.Snipe
 			};
 
+			public static List<string> ArenaOnly = new List<string>
+			{
+				Paladin.HandOfSalvation
+			};
+
 			public static List<string> FastCombat = new List<string>
 			{
 				Hunter.FreezingTrap,
@@ -119,11 +124,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Paladin
 			{
-				public static List<string> All => new List<string> {Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, NobleSacrifice, Redemption, Repentance, SacredTrial};
+				public static List<string> All => new List<string> {Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, HandOfSalvation, NobleSacrifice, Redemption, Repentance, SacredTrial};
 				public static string Avenge => Collectible.Paladin.Avenge;
 				public static string CompetitiveSpirit => Collectible.Paladin.CompetitiveSpirit;
 				public static string EyeForAnEye => Collectible.Paladin.EyeForAnEye;
 				public static string GetawayKodo => Collectible.Paladin.GetawayKodo;
+				public static string HandOfSalvation => NonCollectible.Paladin.HandOfSalvation;
 				public static string NobleSacrifice => Collectible.Paladin.NobleSacrifice;
 				public static string Redemption => Collectible.Paladin.Redemption;
 				public static string Repentance => Collectible.Paladin.Repentance;
