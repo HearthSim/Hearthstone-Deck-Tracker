@@ -149,13 +149,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			MatchInfo matchInfo;
 			while((matchInfo = HearthMirror.Reflection.GetMatchInfo()) == null || matchInfo.LocalPlayer == null || matchInfo.OpposingPlayer == null)
 				await Task.Delay(1000);
-			Log.Info($"{matchInfo.LocalPlayer.Name} vs {matchInfo.OpposingPlayer.Name}");
 			_matchInfo = matchInfo;
+			UpdatePlayers();
 			_matchInfoCacheInvalid = false;
-			Player.Name = matchInfo.LocalPlayer.Name;
-			Opponent.Name = matchInfo.OpposingPlayer.Name;
-			Player.Id = matchInfo.LocalPlayer.Id;
-			Opponent.Id = matchInfo.OpposingPlayer.Id;
+			Log.Info($"{Player.Name} vs {Opponent.Name}");
+		}
+
+		private void UpdatePlayers()
+		{
+			string GetName(MatchInfo.Player player)
+			{
+				if(player.BattleTag != null)
+					return $"{player.BattleTag.Name}#{player.BattleTag.Number}";
+				return player.Name;
+			}
+			Player.Name = GetName(_matchInfo.LocalPlayer);
+			Opponent.Name = GetName(_matchInfo.OpposingPlayer);
+			Player.Id = _matchInfo.LocalPlayer.Id;
+			Opponent.Id = _matchInfo.OpposingPlayer.Id;
 		}
 
 		internal async void CacheGameType()
@@ -177,12 +188,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Player.Reset();
 			Opponent.Reset();
 			if(!_matchInfoCacheInvalid && MatchInfo?.LocalPlayer != null && MatchInfo.OpposingPlayer != null)
-			{
-				Player.Name = MatchInfo.LocalPlayer.Name;
-				Opponent.Name = MatchInfo.OpposingPlayer.Name;
-				Player.Id = MatchInfo.LocalPlayer.Id;
-				Opponent.Id = MatchInfo.OpposingPlayer.Id;
-			}
+				UpdatePlayers();
 			ProposedAttacker = 0;
 			ProposedDefender = 0;
 			Entities.Clear();
