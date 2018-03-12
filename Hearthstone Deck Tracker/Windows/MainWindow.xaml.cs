@@ -661,17 +661,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var authenticated = HSReplayNetOAuth.IsFullyAuthenticated;
 			var collectionSynced = Account.Instance.CollectionState.Any();
 			Influx.OnCollectionSyncingBannerClicked(authenticated, collectionSynced);
-			if(authenticated && collectionSynced)
+			if(!authenticated || !collectionSynced)
+			{
+				Options.TreeViewItemHSReplayCollection.IsSelected = true;
+				FlyoutOptions.IsOpen = true;
+				if(!authenticated)
+					HSReplayNetHelper.TryAuthenticate().Forget();
+			}
+			else
 			{
 				var dust = CollectionHelper.TryGetCollection(out var collection) ? collection.Dust : 0;
 				var url = Helper.BuildHsReplayNetUrl("decks", "collection_syncing_banner", "maxDustCost=" + dust);
 				Helper.TryOpenUrl(url);
-			}
-			else
-			{
-				Options.TreeViewItemHSReplayCollection.IsSelected = true;
-				FlyoutOptions.IsOpen = true;
-				HSReplayNetHelper.TryAuthenticate().Forget();
 			}
 		}
 

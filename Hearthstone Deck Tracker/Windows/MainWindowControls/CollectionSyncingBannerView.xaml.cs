@@ -27,9 +27,12 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			InitializeComponent();
 			HSReplayNetHelper.CollectionUploaded += Update;
 			HSReplayNetOAuth.LoggedOut += Update;
+			HSReplayNetOAuth.Authenticated += Update;
 		}
 
-		public bool CollectionSynced => HSReplayNetOAuth.IsFullyAuthenticated && Account.Instance.CollectionState.Any();
+		public bool CollectionSynced => Account.Instance.CollectionState.Any();
+
+		public bool IsAuthenticated => HSReplayNetOAuth.IsFullyAuthenticated;
 
 		public string SyncAge => CollectionSynced
 			? LocUtil.GetAge(Account.Instance.CollectionState.Values.Max(x => x.Date))
@@ -53,6 +56,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		{
 			OnPropertyChanged(nameof(SyncAge));
 			OnPropertyChanged(nameof(CollectionSynced));
+			OnPropertyChanged(nameof(IsAuthenticated));
 		}
 	}
 }

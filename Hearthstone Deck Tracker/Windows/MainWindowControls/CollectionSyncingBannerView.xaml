@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:s="clr-namespace:System;assembly=mscorlib"
+             xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="100" d:DesignWidth="500">
@@ -17,8 +19,30 @@
             <TextBlock Text="{lex:Loc Banner_CollectionSyncing_Subtitle}" FontWeight="SemiBold" FontSize="16"
                        Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}"/>
             <TextBlock Text="{lex:Loc Banner_CollectionSyncing_Subtitle}" FontSize="14"
-                       Visibility="{Binding CollectionSynced, Converter={StaticResource InverseBoolToVisibility}}"/>
-           <StackPanel Orientation="Horizontal" Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">
+                       Visibility="{Binding IsAuthenticated, Converter={StaticResource InverseBoolToVisibility}}"/>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Visibility>
+                    <MultiBinding Converter="{StaticResource BoolToVisibility}">
+                        <MultiBinding.ConverterParameter>
+                            <x:Array Type="{x:Type s:Boolean}">
+                                <s:Boolean>False</s:Boolean>
+                                <s:Boolean>True</s:Boolean>
+                            </x:Array>
+                        </MultiBinding.ConverterParameter>
+                       <Binding Path="IsAuthenticated"/>
+                       <Binding Path="CollectionSynced"/>
+                    </MultiBinding>
+                </StackPanel.Visibility>
+                <TextBlock FontSize="14" VerticalAlignment="Center" Margin="0,0,0,0"
+                           Text="{lex:Loc Banner_CollectionSyncing_Subtitle_Authenticated}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Visibility>
+                    <MultiBinding Converter="{StaticResource BoolToVisibility}">
+                       <Binding Path="IsAuthenticated"/>
+                       <Binding Path="CollectionSynced"/>
+                    </MultiBinding>
+                </StackPanel.Visibility>
                 <controls:StatusIndicator Success="True" VerticalAlignment="Center" />
                 <TextBlock FontSize="14" Margin="5,0,0,0">
                     <Run Text="{lex:Loc Options_HSReplay_Collection_LastUpdated}"/>
