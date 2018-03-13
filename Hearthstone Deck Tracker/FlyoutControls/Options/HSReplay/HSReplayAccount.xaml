@@ -77,9 +77,9 @@
                     </TextBlock>
                 </StackPanel>
                 <controls:StatusIndicator Grid.Row="3" Grid.Column="0"
-                                          Visibility="{Binding UploadTokenClaimed, Converter={StaticResource InverseBoolToVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                          Success="{Binding UploadTokenClaimed, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                <StackPanel Grid.Row="3" Grid.Column="1" Margin="5" Visibility="{Binding UploadTokenClaimed, Converter={StaticResource InverseBoolToVisibility}}">
+                                          Visibility="{Binding UploadTokenUnclaimed, Converter={StaticResource BoolToVisibility}, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                          Success="False"/>
+                <StackPanel Grid.Row="3" Grid.Column="1" Margin="5" Visibility="{Binding UploadTokenUnclaimed, Converter={StaticResource BoolToVisibility}}">
                     <TextBlock Text="{lex:Loc Options_HSReplay_Account_ReplaysClaimed}"/>
                     <TextBlock FontSize="12" IsEnabled="{Binding ClaimTokenButtonEnabled}">
                         <Hyperlink Command="{Binding ClaimUploadTokenCommand}">

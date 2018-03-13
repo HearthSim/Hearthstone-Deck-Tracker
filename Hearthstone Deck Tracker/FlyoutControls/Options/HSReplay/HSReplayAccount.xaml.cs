@@ -1,13 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static System.Windows.Visibility;
 using static Hearthstone_Deck_Tracker.HsReplay.Enums.AccountStatus;
 
@@ -17,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 	{
 		private bool _logoutButtonEnabled = true;
 		private bool _logoutTriggered;
-		private bool _claimTokenButtonEnabled;
+		private bool _claimTokenButtonEnabled = true;
 
 		public HSReplayAccount()
 		{
@@ -32,8 +30,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 				Update();
 				LogoutTriggered = false;
 			};
-			HSReplayNetOAuth.UploadTokenClaimed += () => OnPropertyChanged(nameof(UploadTokenClaimed));
-			Account.Instance.TokenClaimedChanged += () => OnPropertyChanged(nameof(UploadTokenClaimed));
+			HSReplayNetOAuth.UploadTokenClaimed += () => OnPropertyChanged(nameof(UploadTokenUnclaimed));
+			Account.Instance.TokenClaimedChanged += () => OnPropertyChanged(nameof(UploadTokenUnclaimed));
 			ConfigWrapper.ReplayAutoUploadChanged += () => OnPropertyChanged(nameof(ReplayUploadingEnabled));
 			ConfigWrapper.CollectionSyncingChanged += () => OnPropertyChanged(nameof(CollectionSyncingEnabled));
 		}
@@ -126,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 
 		public bool CollectionSyncingEnabled => ConfigWrapper.CollectionSyncingEnabled;
 
-		public bool UploadTokenClaimed => Account.Instance.TokenClaimed ?? false;
+		public bool UploadTokenUnclaimed => IsAuthenticated && (!Account.Instance.TokenClaimed ?? true);
 
 		public void Update()
 		{
@@ -134,6 +132,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			OnPropertyChanged(nameof(IsAuthenticated));
 			OnPropertyChanged(nameof(ReplaysClaimedVisibility));
 			OnPropertyChanged(nameof(IsPremiumUser));
+			OnPropertyChanged(nameof(UploadTokenUnclaimed));
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
