@@ -9,6 +9,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	internal class HearthstoneRunner
 	{
+		private const int ProcCheckInterval = 500;
+		private const int ProcExistDuration = 7000;
+		private const int TryStartBnetDuration = 20000;
+		private const int StartBnetTries = TryStartBnetDuration / ProcCheckInterval;
+		private const int EventDelay = 2000;
+
 		private static bool _starting;
 		public static Action<bool> StartingHearthstone;
 
@@ -24,19 +30,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 				if(bnetProc == null)
 				{
 					Process.Start("battlenet://");
-					var foundBnetWindow = false;
-					for(var i = 0; i < 40; i++)
+					var foundDuration = 0;
+					for(var i = 0; i < StartBnetTries; i++)
 					{
 						bnetProc = GetProcess("Battle.net") ?? GetProcess("Battle.net.beta");
 						if(bnetProc != null && bnetProc.MainWindowHandle != IntPtr.Zero)
 						{
-							foundBnetWindow = true;
-							break;
+							if((foundDuration += ProcCheckInterval) >= ProcExistDuration)
+								break;
 						}
-
-						await Task.Delay(500);
+						await Task.Delay(ProcCheckInterval);
 					}
-					if(foundBnetWindow)
+					if(foundDuration == 0)
 					{
 						ErrorManager.AddError("Could not start Battle.net Launcher",
 							"Starting the Battle.net launcher failed or was too slow. "
@@ -44,8 +49,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 						return;
 					}
 				}
-
-				await Task.Delay(2000);
 				Process.Start("battlenet://WTCG");
 			}
 			catch(Exception ex)
@@ -55,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			finally
 			{
 				_starting = false;
-				await Task.Delay(2000);
+				await Task.Delay(EventDelay);
 				StartingHearthstone?.Invoke(false);
 			}
 		}
