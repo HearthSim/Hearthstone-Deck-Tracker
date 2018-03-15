@@ -667,11 +667,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					HSReplayNetHelper.TryAuthenticate().Forget();
 			}
 			else
-			{
-				var dust = CollectionHelper.TryGetCollection(out var collection) ? collection.Dust : 0;
-				var url = Helper.BuildHsReplayNetUrl("decks", "collection_syncing_banner", "maxDustCost=" + dust);
-				Helper.TryOpenUrl(url);
-			}
+				HSReplayNetHelper.OpenDecksUrlWithCollection("collection_syncing_banner");
 		}
 
 		private void RemovableBanner_OnClose(object sender, EventArgs e)

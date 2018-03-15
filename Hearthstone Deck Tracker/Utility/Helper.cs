@@ -310,7 +310,7 @@ namespace Hearthstone_Deck_Tracker
 				var accId = HearthMirror.Reflection.GetAccountId();
 				if(accId != null)
 				{
-					var region = (Region)((accId.Hi >> 32) & 0xFF);
+					var region = GetRegion(accId.Hi);
 					Log.Info("Region: " + region);
 					return region;
 				}
@@ -318,6 +318,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			return Region.UNKNOWN;
 		}
+
+		public static Region GetRegion(ulong accountHi) => (Region)((accountHi >> 32) & 0xFF);
 
 		private static bool FindHearthstoneDir()
 		{
@@ -462,7 +464,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static string BuildHsReplayNetUrl(string path, string campaign, params string[] fragments)
+		public static string BuildHsReplayNetUrl(string path, string campaign, IEnumerable<string> queryParams = null, IEnumerable<string> fragmentParams = null)
 		{
 			var url = "https://hsreplay.net";
 			if(!path.StartsWith("/"))
@@ -470,17 +472,25 @@ namespace Hearthstone_Deck_Tracker
 			url += path;
 			if(!url.EndsWith("/"))
 				url += "/";
-			return url + GetHsReplayNetUrlParams(campaign, fragments);
+			return url + GetHsReplayNetUrlParams(campaign, queryParams, fragmentParams);
 		}
 
-		public static string GetHsReplayNetUrlParams(string campaign, params string[] fragments)
+		public static string GetHsReplayNetUrlParams(string campaign, IEnumerable<string> queryParams = null, IEnumerable<string> fragmentParams = null)
 		{
-			var param = "?utm_source=hdt&utm_medium=client";
+			var query = new List<string>
+			{
+				"utm_source=hdt",
+				"utm_medium=client",
+			};
 			if(!string.IsNullOrEmpty(campaign))
-				param += "&utm_campaign=" + campaign;
-			if(fragments.Any())
-				param += "#" + string.Join("&", fragments);
-			return param;
+				query.Add("utm_campaign=" + campaign);
+			if(queryParams != null)
+				query.AddRange(queryParams);
+			var urlParams = "?" + string.Join("&", query);
+			var fragments = fragmentParams?.ToArray();
+			if(fragments?.Any() ?? false)
+				urlParams += "#" + string.Join("&", fragments);
+			return urlParams;
 		}
 
 		private static int? _hearthstoneBuild;

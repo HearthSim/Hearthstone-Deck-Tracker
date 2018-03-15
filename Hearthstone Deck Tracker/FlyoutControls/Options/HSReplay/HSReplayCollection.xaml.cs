@@ -73,12 +73,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			? LocUtil.GetAge(Account.Instance.CollectionState.Values.Max(x => x.Date))
 			: string.Empty;
 
-		public object HSReplayDecksCommand => new Command(() =>
-		{
-			var dust = CollectionHelper.TryGetCollection(out var collection) ? collection.Dust : 0;
-			var url = Helper.BuildHsReplayNetUrl("decks", "options_collection", "maxDustCost=" + dust);
-			Helper.TryOpenUrl(url);
-		});
+		public object HSReplayDecksCommand => new Command(()
+			=> HSReplayNetHelper.OpenDecksUrlWithCollection("collection_syncing_banner"));
 
 		public bool CollectionSyncingEnabled
 		{
