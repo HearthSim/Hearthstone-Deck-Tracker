@@ -1,3 +1,8 @@
+## __Release v1.5.14 - 2018-03-15__
+
+- Fixed an issue with the updater for the portable version.
+
+
 ## __Release v1.5.13 - 2018-03-12__
 __Updated for Hearthstone 10.4.0.23576__
 
