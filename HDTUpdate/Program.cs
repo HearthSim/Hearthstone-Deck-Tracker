@@ -14,6 +14,7 @@ namespace HDTUpdate
 		private static UpdatingState _state;
 		private static void Main(string[] args)
 		{
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 			Console.Title = "Hearthstone Deck Tracker Updater";
 			Console.CursorVisible = false;
 			if (args.Length != 2)
