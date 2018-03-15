@@ -51,9 +51,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			_initialized = true;
 		}
 
-		private void ReloadAfterChangeLanguage()
+		private void RefreshComboboxesAfterChangeLanguage()
 		{
-			Load();
 			refreshComboBox(ComboboxTheme);
 			refreshComboBox(ComboboxAccent);
 			refreshComboBox(ComboBoxIconSet);
@@ -209,7 +208,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 			LocUtil.UpdateCultureInfo();
 			UpdateUIAfterChangeLanguage();
-			ReloadAfterChangeLanguage();
+			RefreshComboboxesAfterChangeLanguage();
 		}
 
 		private void UpdateUIAfterChangeLanguage()
