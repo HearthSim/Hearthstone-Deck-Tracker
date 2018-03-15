@@ -76,6 +76,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(Account.Instance.CollectionState.TryGetValue(account, out var state) && state.Hash == hash)
 			{
 				Log.Debug("Collection ready up-to-date");
+				state.Date = DateTime.Now;
+				Account.Save();
 				CollectionAlreadyUpToDate?.Invoke();
 				return;
 			}

@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		{
 			InitializeComponent();
 			HSReplayNetHelper.CollectionUploaded += Update;
+			HSReplayNetHelper.CollectionAlreadyUpToDate += Update;
 			HSReplayNetOAuth.LoggedOut += Update;
 			HSReplayNetOAuth.Authenticated += Update;
 			ScheduledTaskRunner.Instance.Schedule(() => OnPropertyChanged(nameof(SyncAge)), TimeSpan.FromMinutes(1));
