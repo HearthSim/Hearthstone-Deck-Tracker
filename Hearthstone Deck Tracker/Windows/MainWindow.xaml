@@ -69,7 +69,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="18" Height="16" Margin="0,2,0,0">
                         <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_twitter}" />
+                            <VisualBrush Visual="{StaticResource appbar_twitter_white}" />
                         </Rectangle.Fill>
                     </Rectangle>
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="twitter" />
