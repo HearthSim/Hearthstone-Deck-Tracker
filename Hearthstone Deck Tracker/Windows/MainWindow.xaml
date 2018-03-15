@@ -79,7 +79,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="14" Height="16" Margin="0,2,0,0">
                         <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_discord}" />
+                            <VisualBrush Visual="{StaticResource appbar_discord_white}" />
                         </Rectangle.Fill>
                     </Rectangle>
                     <TextBlock Margin="4" VerticalAlignment="Center" Text="discord" />
