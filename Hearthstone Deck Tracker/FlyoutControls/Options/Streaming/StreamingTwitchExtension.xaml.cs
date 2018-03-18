@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -19,63 +18,29 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 {
 	public partial class StreamingTwitchExtension : INotifyPropertyChanged
 	{
-		private bool _oAuthSuccess;
-		private bool _oAuthError;
-		private string _hsreplayUserName;
+		private TwitchAccount _selectedTwitchUser;
 		private bool _twitchAccountLinked;
 		private bool _twitchStreamLive;
-		private List<TwitchAccount> _availableTwitchAccounts;
-		private TwitchAccount _selectedTwitchUser;
+
+		public string HSReplayUserName = HSReplayNetOAuth.AccountData?.Username;
 
 		public StreamingTwitchExtension()
 		{
 			InitializeComponent();
 			LiveDataManager.OnStreamingChecked += streaming => TwitchStreamLive = streaming;
+			HSReplayNetOAuth.AccountDataUpdated += () =>
+			{
+				UpdateAccountName();
+				RefreshTwitchAccounts();
+			};
+			HSReplayNetOAuth.LoggedOut += () => OnPropertyChanged(nameof(IsAuthenticated));
 		}
 
 		public SolidColorBrush SelectedColor => Helper.BrushFromHex(Config.Instance.StreamingOverlayBackground);
 
-		public ICommand AuthenticateCommand => new Command(async () =>
-		{
-			var success = await HSReplayNetOAuth.Authenticate();
-			if(success)
-			{
-				success = await RefreshHsreplayAccount();
-				RefreshTwitchAccounts();
-			}
-			OAuthSuccess = success;
-			OAuthError = !success;
-		});
+		public ICommand AuthenticateCommand => new Command(async () => await HSReplayNetHelper.TryAuthenticate());
 
-		public bool OAuthSuccess
-		{
-			get => _oAuthSuccess; set
-			{
-				_oAuthSuccess = value; 
-				OnPropertyChanged();
-				OnPropertyChanged(nameof(SetupComplete));
-			}
-		}
-
-		public bool OAuthError
-		{
-			get => _oAuthError; set
-			{
-				_oAuthError = value; 
-				OnPropertyChanged();
-			}
-		}
-
-		// ReSharper disable once InconsistentNaming
-		public string HSReplayUserName
-		{
-			get => _hsreplayUserName;
-			set
-			{
-				_hsreplayUserName = value; 
-				OnPropertyChanged();
-			}
-		}
+		public bool IsAuthenticated => HSReplayNetOAuth.IsAuthenticatedFor(Scope.ReadSocialAccounts);
 
 		public bool TwitchExtensionEnabled
 		{
@@ -100,30 +65,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			get => _twitchAccountLinked;
 			set
 			{
-				_twitchAccountLinked = value; 
+				_twitchAccountLinked = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(SetupComplete));
 			}
 		}
 
-		public bool SetupComplete => OAuthSuccess && TwitchAccountLinked;
+		public bool SetupComplete => IsAuthenticated && TwitchAccountLinked;
 
 		public bool TwitchStreamLive
 		{
 			get => _twitchStreamLive;
 			set
 			{
-				_twitchStreamLive = value; 
+				_twitchStreamLive = value;
 				OnPropertyChanged();
 			}
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public TwitchAccount SelectedTwitchUser
@@ -133,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			{
 				if(_selectedTwitchUser != value)
 				{
-					_selectedTwitchUser = value; 
+					_selectedTwitchUser = value;
 					OnPropertyChanged();
 					var newId = value?.Id ?? 0;
 					if(Config.Instance.SelectedTwitchUser != newId)
@@ -145,16 +102,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			}
 		}
 
-		public List<TwitchAccount> AvailableTwitchAccounts
-		{
-			get => _availableTwitchAccounts;
-			set
-			{
-				_availableTwitchAccounts = value; 
-				OnPropertyChanged();
-				OnPropertyChanged(nameof(MultipleTwitchAccounts));
-			}
-		}
+		public List<TwitchAccount> AvailableTwitchAccounts => HSReplayNetOAuth.TwitchUsers;
 
 		public bool MultipleTwitchAccounts => AvailableTwitchAccounts?.Count > 1;
 
@@ -168,9 +116,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 
 		public bool AwaitingTwitchAccountConnection { get; private set; }
 
-		public ICommand InstallTwitchExtensionCommand => new Command(() => Helper.TryOpenUrl("https://hsdecktracker.net/twitch/extension/"));
+		public ICommand InstallTwitchExtensionCommand =>
+			new Command(() => Helper.TryOpenUrl("https://hsdecktracker.net/twitch/extension/"));
 
 		public ICommand SetupGuideCommand => new Command(() => Helper.TryOpenUrl("https://hsdecktracker.net/twitch/setup/"));
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 
 		public async Task<bool> RefreshHsreplayAccount()
 		{
@@ -178,7 +135,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			if(success)
 				UpdateAccountName();
 			return success;
-
 		}
 
 		public async void RefreshTwitchAccounts()
@@ -191,8 +147,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 
 		internal async void UpdateTwitchData()
 		{
-			OAuthSuccess = HSReplayNetOAuth.IsAuthenticatedFor(Scope.ReadSocialAccounts);
-			AvailableTwitchAccounts = HSReplayNetOAuth.TwitchUsers;
+			OnPropertyChanged(nameof(IsAuthenticated));
+			OnPropertyChanged(nameof(AvailableTwitchAccounts));
+			OnPropertyChanged(nameof(MultipleTwitchAccounts));
 			var selected = Config.Instance.SelectedTwitchUser;
 			SelectedTwitchUser = AvailableTwitchAccounts?.FirstOrDefault(x => x.Id == selected || selected == 0);
 			TwitchAccountLinked = SelectedTwitchUser?.Id > 0;
@@ -202,7 +159,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 
 		internal void UpdateAccountName()
 		{
-			HSReplayUserName = HSReplayNetOAuth.AccountData?.Username;
+			OnPropertyChanged(nameof(HSReplayUserName));
 		}
 
 		private void TwitchAccountComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

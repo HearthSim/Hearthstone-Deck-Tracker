@@ -2,16 +2,22 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using HSReplay.OAuth;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
 	public partial class OAuthLogin : INotifyPropertyChanged
 	{
+		public static readonly DependencyProperty ScopeConsideredLoggedInProperty =
+			DependencyProperty.Register("ScopeConsideredLoggedIn", typeof(Scope), typeof(OAuthLogin),
+				new PropertyMetadata(default(Scope)));
+
 		private bool _isAuthenticating;
 		private bool _showContactUs;
 		private bool _showTryAgain;
@@ -24,7 +30,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			HSReplayNetOAuth.LoggedOut += () => OnPropertyChanged(nameof(IsAuthenticated));
 		}
 
-		public bool IsAuthenticated => HSReplayNetOAuth.IsFullyAuthenticated;
+		public bool IsAuthenticated => HSReplayNetOAuth.IsFullyAuthenticated
+										|| ScopeConsideredLoggedIn != null && HSReplayNetOAuth.IsAuthenticatedFor(ScopeConsideredLoggedIn);
 
 		public ICommand LoginCommand => new Command(() => HSReplayNetHelper.TryAuthenticate().Forget());
 
@@ -71,6 +78,12 @@ namespace Hearthstone_Deck_Tracker.Controls
 					OnPropertyChanged();
 				}
 			}
+		}
+
+		public Scope ScopeConsideredLoggedIn
+		{
+			get => (Scope) GetValue(ScopeConsideredLoggedInProperty);
+			set => SetValue(ScopeConsideredLoggedInProperty, value);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

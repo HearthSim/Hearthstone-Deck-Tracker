@@ -10,11 +10,11 @@
         <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200"
                 Command="{Binding LoginCommand}">
             <Button.Visibility>
-                <MultiBinding Converter="{StaticResource InverseBoolToVisibility}">
+                <MultiBinding Converter="{StaticResource BoolToVisibility}">
                     <MultiBinding.ConverterParameter>
                         <x:Array Type="{x:Type s:Boolean}">
                             <s:Boolean>True</s:Boolean>
-                            <s:Boolean>False</s:Boolean>
+                            <s:Boolean>True</s:Boolean>
                         </x:Array>
                     </MultiBinding.ConverterParameter>
                     <Binding Path="IsAuthenticated" />
