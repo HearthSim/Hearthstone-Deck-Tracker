@@ -42,16 +42,16 @@ redistribute and relicense external contributions to our various projects.
 
 ### How do I sign it?
 
-Contact any admin on our [Developer Discord](https://discord.gg/hearthsimd-devs) or send us an email at contact@hearthsim.net. Please include your Github username.
+Contact any admin on our [Developer Discord](https://discord.gg/hearthsim-devs) or send us an email at contact@hearthsim.net. Please include your Github username.
 
 ## Project approval
 
-For trivial changes or fixes (i.e. a couple lines of code) on new or eixsting issues and projects feel free to just open a PR.
+For trivial changes or fixes (i.e. a couple lines of code) on new or existing issues and projects feel free to just open a PR.
 
 We would like to avoid wasting your time, so for non-trivial changes or fixes please do one of the following before starting to work on it:
 - For work on an existing issue please comment on that issue and wait for approval.
 - If no issue exists, please open a new issue with the proposal and wait for approval.
-- Propose the project in #hdt on the [Developer Discord](https://discord.gg/CBnAFhX) and wait for approval.
+- Propose the project in #hdt on the [Developer Discord](https://discord.gg/hearthsim-devs) and wait for approval.
 
 ## Coding style
 
@@ -85,4 +85,4 @@ Want to help translate the app? Take a look at the [HDT-Localization repository]
 
 ## Need help?
 
-You can always ask for help on [Gitter](https://gitter.im/HearthSim/Hearthstone-Deck-Tracker), #hdt in the [Developer Discord](https://discord.gg/CBnAFhX), or the HearthSim IRC channel, `#Hearthsim` on [Freenode](https://freenode.net/).
+You can always ask for help on [Gitter](https://gitter.im/HearthSim/Hearthstone-Deck-Tracker), #hdt in the [Developer Discord](https://discord.gg/hearthsim-devs), or the HearthSim IRC channel, `#Hearthsim` on [Freenode](https://freenode.net/).
