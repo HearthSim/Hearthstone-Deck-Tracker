@@ -79,6 +79,14 @@ namespace Hearthstone_Deck_Tracker
 				_manaCostBars[i].SetTooltipValues(0, 0, 0, 0);
 			}
 		}
+		
+		public void ReloadUI()
+		{
+			int selectedIndex = ComboBoxStatType.SelectedIndex;
+			ComboBoxStatType.SelectedIndex = -1;
+			ComboBoxStatType.Items.Refresh();
+			ComboBoxStatType.SelectedIndex = selectedIndex;
+		}
 
 		public void UpdateValues()
 		{
