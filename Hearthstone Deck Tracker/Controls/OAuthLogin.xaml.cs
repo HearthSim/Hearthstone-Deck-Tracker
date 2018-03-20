@@ -22,6 +22,14 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private bool _showContactUs;
 		private bool _showTryAgain;
 
+		public static readonly DependencyProperty SuccessUrlProperty =
+			DependencyProperty.Register("SuccessUrl", typeof(string), typeof(OAuthLogin),
+				new PropertyMetadata(null));
+
+		public static readonly DependencyProperty ErrorUrlProperty =
+			DependencyProperty.Register("ErrorUrl", typeof(string), typeof(OAuthLogin),
+				new PropertyMetadata(null));
+
 		public OAuthLogin()
 		{
 			InitializeComponent();
@@ -31,9 +39,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		public bool IsAuthenticated => HSReplayNetOAuth.IsFullyAuthenticated
-										|| ScopeConsideredLoggedIn != null && HSReplayNetOAuth.IsAuthenticatedFor(ScopeConsideredLoggedIn);
+										|| ScopeConsideredLoggedIn != null
+										&& HSReplayNetOAuth.IsAuthenticatedFor(ScopeConsideredLoggedIn);
 
-		public ICommand LoginCommand => new Command(() => HSReplayNetHelper.TryAuthenticate().Forget());
+		public ICommand LoginCommand
+			=> new Command(() => HSReplayNetHelper.TryAuthenticate(SuccessUrl, ErrorUrl).Forget());
 
 		public ICommand TryAgainCommand => new Command(() =>
 		{
@@ -84,6 +94,18 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			get => (Scope) GetValue(ScopeConsideredLoggedInProperty);
 			set => SetValue(ScopeConsideredLoggedInProperty, value);
+		}
+
+		public string SuccessUrl
+		{
+			get => (string)GetValue(SuccessUrlProperty);
+			set => SetValue(SuccessUrlProperty, value);
+		}
+
+		public string ErrorUrl
+		{
+			get => (string)GetValue(ErrorUrlProperty);
+			set => SetValue(ErrorUrlProperty, value);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

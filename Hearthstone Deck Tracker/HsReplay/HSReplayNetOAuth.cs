@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static void Save() => Serializer.Save(Data.Value);
 
-		public static async Task<bool> Authenticate()
+		public static async Task<bool> Authenticate(string successUrl = null, string errorUrl = null)
 		{
 			Log.Info("Authenticating with HSReplay.net...");
 			string url;
@@ -68,7 +68,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Log.Error("Authentication failed, could not create callback listener");
 				return false;
 			}
-			var callbackTask = Client.Value.ReceiveAuthenticationCallback(SuccessUrl, ErrorUrl);
+			var callbackTask = Client.Value.ReceiveAuthenticationCallback(successUrl ?? SuccessUrl,
+				errorUrl ?? ErrorUrl);
 			if(!Helper.TryOpenUrl(url))
 			{
 				ErrorManager.AddError("Could not open your browser.",

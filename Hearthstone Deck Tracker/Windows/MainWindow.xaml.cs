@@ -664,7 +664,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Options.TreeViewItemHSReplayCollection.IsSelected = true;
 				FlyoutOptions.IsOpen = true;
 				if(!authenticated)
-					HSReplayNetHelper.TryAuthenticate().Forget();
+				{
+					var successUrl = Helper.BuildHsReplayNetUrl("decks", "collection_syncing_banner",
+						new[] { "modal=collection" });
+					HSReplayNetHelper.TryAuthenticate(successUrl).Forget();
+				}
 			}
 			else
 				HSReplayNetHelper.OpenDecksUrlWithCollection("collection_syncing_banner");

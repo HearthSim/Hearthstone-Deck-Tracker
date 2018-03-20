@@ -16,7 +16,7 @@
                 <LineBreak/>
                 <Run Text="{lex:Loc Options_HSReplay_Collection_HeaderText_Subtitle}" FontWeight="Normal" FontSize="15"/>
             </TextBlock>
-            <controls:OAuthLogin Margin="25"/>
+            <controls:OAuthLogin Margin="25" SuccessUrl="{Binding HSReplayDecksUrl, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
         </StackPanel>
         <StackPanel Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibility}}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0"

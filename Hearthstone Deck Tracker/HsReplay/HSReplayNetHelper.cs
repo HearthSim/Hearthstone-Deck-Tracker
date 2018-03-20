@@ -46,10 +46,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static event Action<bool> BlizzardAccountClaimed;
 		public static event Action<AuthenticationErrorType> AuthenticationError;
 
-		public static async Task TryAuthenticate()
+		public static async Task TryAuthenticate(string successUrl = null, string errorUrl = null)
 		{
 			Authenticating?.Invoke(true);
-			if(await HSReplayNetOAuth.Authenticate())
+			if(await HSReplayNetOAuth.Authenticate(successUrl, errorUrl))
 			{
 				if(!await HSReplayNetOAuth.UpdateAccountData())
 				{

@@ -82,6 +82,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			set => ConfigWrapper.CollectionSyncingEnabled = value;
 		}
 
+		public string HSReplayDecksUrl =>
+			Helper.BuildHsReplayNetUrl("decks", "oauth_login", new[] { "modal=collection" });
+
 		public void UpdateSyncAge() => OnPropertyChanged(nameof(SyncAge));
 
 		public event PropertyChangedEventHandler PropertyChanged;
