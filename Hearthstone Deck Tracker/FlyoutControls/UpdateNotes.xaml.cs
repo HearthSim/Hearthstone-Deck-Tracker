@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				infoControl = new HsReplayStatisticsInfo();
 			if(previousVersion < new Version(1, 5, 2) && IsStreamingSoftwareInstalled())
 				infoControl = new TwitchExtensionInfo();
-			if(previousVersion <= new Version(1, 15, 12))
+			if(previousVersion <= new Version(1, 15, 14))
 			{
 				ContentControlHighlight.Content = new CollectionSyncingInfo();
 				ButtonContinue.Visibility = Visibility.Collapsed;
