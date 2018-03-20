@@ -21,13 +21,14 @@
             </TextBlock>
         </Grid>
         <Rectangle Fill="{DynamicResource AccentColorBrush}" Height="1" Width="Auto" DockPanel.Dock="Top"/>
-        <StackPanel Margin="0,20,0,0" VerticalAlignment="Center">
+        <StackPanel Margin="30,20,30,0" VerticalAlignment="Center">
             <TextBlock FontWeight="SemiBold" FontSize="16" TextAlignment="Center" TextWrapping="Wrap"
                        Text="Immediately see which cards you are missing and which decks you can build!"/>
             <StackPanel HorizontalAlignment="Center">
                 <Border BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
                         HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
-                    <Image Source="{StaticResource CollectionPromo}" MaxWidth="771"/>
+                    <Image Source="{StaticResource CollectionPromo}" MaxWidth="1200"
+                           RenderOptions.BitmapScalingMode="Fant"/>
                 </Border>
                 <TextBlock HorizontalAlignment="Right">
                     <Run Text="Example from"/>
