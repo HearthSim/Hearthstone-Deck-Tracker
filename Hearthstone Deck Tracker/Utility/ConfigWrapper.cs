@@ -190,8 +190,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 			get { return Config.Instance.SyncCollection; }
 			set
 			{
-				Config.Instance.SyncCollection = value;
-				Config.Save();
+				if(Config.Instance.SyncCollection != value)
+				{
+					Config.Instance.SyncCollection = value;
+					Config.Save();
+					Influx.OnCollectionSyncingEnabled(value);
+				}
 				CollectionSyncingChanged?.Invoke();
 			}
 		}

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Toasts;
@@ -20,13 +21,30 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			CollectionSyncLimiter = new RateLimiter(3, TimeSpan.FromMinutes(2));
 			ConfigWrapper.CollectionSyncingChanged += () => SyncCollection().Forget();
 			CollectionHelper.OnCollectionChanged += () => SyncCollection().Forget();
-			CollectionUploaded += ToastManager.ShowCollectionUpdatedToast;
+			CollectionUploaded += () =>
+			{
+				ToastManager.ShowCollectionUpdatedToast();
+				Influx.OnCollectionSynced(true);
+			};
+			CollectionUploadError += () => Influx.OnCollectionSynced(false);
+			BlizzardAccountClaimed += Influx.OnBlizzardAccountClaimed;
+			AuthenticationError += Influx.OnOAuthLoginComplete;
+			Authenticating += authenticating =>
+			{
+				if(authenticating)
+					Influx.OnOAuthLoginInitiated();
+			};
+			HSReplayNetOAuth.LoggedOut += Influx.OnOAuthLogout;
+			HSReplayNetOAuth.Authenticated += () => Influx.OnOAuthLoginComplete(AuthenticationErrorType.None);
 		}
 
 		public static event Action CollectionUploaded;
+		public static event Action CollectionUploadError;
 		public static event Action CollectionUploadThrottled;
 		public static event Action CollectionAlreadyUpToDate;
 		public static event Action<bool> Authenticating;
+		public static event Action<bool> BlizzardAccountClaimed;
+		public static event Action<AuthenticationErrorType> AuthenticationError;
 
 		public static async Task TryAuthenticate()
 		{
@@ -34,16 +52,22 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(await HSReplayNetOAuth.Authenticate())
 			{
 				if(!await HSReplayNetOAuth.UpdateAccountData())
+				{
 					ErrorManager.AddError("HSReplay.net Error",
 						"Could not load HSReplay.net account status."
 						+ " Please try again later.");
+					AuthenticationError?.Invoke(AuthenticationErrorType.AccountData);
+				}
 				await SyncCollection();
 			}
 			else
+			{
 				ErrorManager.AddError("Could not authenticate with HSReplay.net",
 					"Please try running HDT as administrator "
 					+ "(right-click the exe and select 'Run as administrator').\n"
 					+ "If that does not help please try again later.", true);
+				AuthenticationError?.Invoke(AuthenticationErrorType.Authentication);
+			}
 			Authenticating?.Invoke(false);
 		}
 
@@ -87,6 +111,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(!HSReplayNetOAuth.AccountData?.BlizzardAccounts?.Any(x => x.AccountHi == hi && x.AccountLo == lo) ?? true)
 				{
 					var claimed = await HSReplayNetOAuth.ClaimBlizzardAccount(hi, lo, collection.BattleTag);
+					BlizzardAccountClaimed?.Invoke(claimed);
 					if(claimed)
 						HSReplayNetOAuth.UpdateAccountData().Forget();
 					else
@@ -103,7 +128,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					CollectionUploaded?.Invoke();
 				}
 				else
+				{
 					ErrorManager.AddError("HSReplay.net error", "Could not update your collection. Please try again later.");
+					CollectionUploadError?.Invoke();
+				}
 			}, () =>
 			{
 				Log.Debug("Waiting for rate limit...");
@@ -122,6 +150,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				query.Add($"hearthstone_account={(int)region}-{collection.AccountLo}");
 			}
 			Helper.TryOpenUrl(Helper.BuildHsReplayNetUrl("decks", campaign, query, fragments));
+		}
+
+		public enum AuthenticationErrorType
+		{
+			None,
+			Authentication,
+			AccountData
 		}
 	}
 }
