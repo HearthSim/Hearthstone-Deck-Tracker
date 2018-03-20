@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:controls1="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:s="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
@@ -49,9 +48,9 @@
                     </MultiBinding>
                 </StackPanel.Visibility>
                 <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="18" TextWrapping="Wrap">
-                    <Run Text="One more step to upload your collection:" FontSize="14" FontWeight="Normal"/>
+                    <Run Text="{lex:Loc Options_HSReplay_Collection_OneMoreStep}" FontSize="14" FontWeight="Normal"/>
                     <LineBreak/>
-                    <Run Text="Start Hearthstone and open the collection"/>
+                    <Run Text="{lex:Loc Options_HSReplay_Collection_OpenCollection}"/>
                 </TextBlock>
                 <controls:StartHearthstoneButton Margin="0,20,0,0" Width="250"/>
             </StackPanel>
