@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		static HSReplayNetHelper()
 		{
-			CollectionSyncLimiter = new RateLimiter(3, TimeSpan.FromMinutes(2));
+			CollectionSyncLimiter = new RateLimiter(6, TimeSpan.FromMinutes(2));
 			ConfigWrapper.CollectionSyncingChanged += () => SyncCollection().Forget();
 			CollectionHelper.OnCollectionChanged += () => SyncCollection().Forget();
 			CollectionUploaded += () =>
