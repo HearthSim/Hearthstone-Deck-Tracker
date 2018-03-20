@@ -141,15 +141,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static void OpenDecksUrlWithCollection(string campaign)
 		{
-			var dust = CollectionHelper.TryGetCollection(out var collection) ? collection.Dust : 0;
-			var fragments = new List<string> { "maxDustCost=" + dust };
 			var query = new List<string>();
-			if(collection != null)
+			if(CollectionHelper.TryGetCollection(out var collection) && collection != null)
 			{
 				var region = Helper.GetRegion(collection.AccountHi);
 				query.Add($"hearthstone_account={(int)region}-{collection.AccountLo}");
 			}
-			Helper.TryOpenUrl(Helper.BuildHsReplayNetUrl("decks", campaign, query, fragments));
+			Helper.TryOpenUrl(Helper.BuildHsReplayNetUrl("decks", campaign, query, new[] { "maxDustCost=0" }));
 		}
 
 		public enum AuthenticationErrorType
