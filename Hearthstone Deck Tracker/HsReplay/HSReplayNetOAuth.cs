@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -11,6 +13,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using HSReplay.OAuth;
 using HSReplay.OAuth.Data;
 using HSReplay.Responses;
+using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -296,7 +299,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		internal static async Task<bool> ClaimBlizzardAccount(ulong accountHi, ulong accountLo, string battleTag)
+		internal static async Task<ClaimBlizzardAccountResponse> ClaimBlizzardAccount(ulong accountHi, ulong accountLo,
+			string battleTag)
 		{
 			var account = $"hi={accountHi}, lo={accountLo}, battleTag={battleTag}";
 			try
@@ -304,18 +308,43 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(!await UpdateToken())
 				{
 					Log.Error("Could not update token data");
-					return false;
+					return ClaimBlizzardAccountResponse.Error;
 				}
+
 				var response = await Client.Value.ClaimBlizzardAccount(accountHi, accountLo, battleTag);
 				Log.Debug($"Claimed {account}: {response}");
-				return true;
+				return ClaimBlizzardAccountResponse.Success;
+			}
+			catch(WebException e)
+			{
+				Log.Error(e);
+				try
+				{
+					using(var stream = e.Response.GetResponseStream())
+					using(var reader = new StreamReader(stream))
+					{
+						var response = JsonConvert.DeserializeObject<dynamic>(reader.ReadToEnd());
+						if(response.error == "account_already_claimed")
+							return ClaimBlizzardAccountResponse.TokenAlreadyClaimed;
+					}
+				}
+				catch
+				{
+				}
+				return ClaimBlizzardAccountResponse.Error;
 			}
 			catch(Exception e)
 			{
-				UploadTokenHistory.Write($"Error claming {account}\n" + e);
 				Log.Error(e);
-				return false;
+				return ClaimBlizzardAccountResponse.Error;
 			}
+		}
+
+		internal enum ClaimBlizzardAccountResponse
+		{
+			Success,
+			Error,
+			TokenAlreadyClaimed
 		}
 	}
 }

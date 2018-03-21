@@ -110,13 +110,25 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			{
 				if(!HSReplayNetOAuth.AccountData?.BlizzardAccounts?.Any(x => x.AccountHi == hi && x.AccountLo == lo) ?? true)
 				{
-					var claimed = await HSReplayNetOAuth.ClaimBlizzardAccount(hi, lo, collection.BattleTag);
-					BlizzardAccountClaimed?.Invoke(claimed);
-					if(claimed)
+					var response = await HSReplayNetOAuth.ClaimBlizzardAccount(hi, lo, collection.BattleTag);
+					var success = response == HSReplayNetOAuth.ClaimBlizzardAccountResponse.Success;
+					BlizzardAccountClaimed?.Invoke(success);
+					if(success)
 						HSReplayNetOAuth.UpdateAccountData().Forget();
+					else if(response == HSReplayNetOAuth.ClaimBlizzardAccountResponse.TokenAlreadyClaimed)
+					{
+						ErrorManager.AddError("HSReplay.net error",
+							$"Your blizzard account ({collection.BattleTag}, {account}) is already attached to another"
+							+ " HSReplay.net Account. Please contact us at contact@hsreplay.net"
+							+ " if this is not correct.");
+						return;
+					}
 					else
 					{
-						ErrorManager.AddError("HSReplay.net error", $"Could not register your Blizzard account ({account}). Please try again later.");
+						ErrorManager.AddError("HSReplay.net error",
+							$"Could not attach your Blizzard account ({collection.BattleTag}, {account}) to"
+							+ $" HSReplay.net Account ({HSReplayNetOAuth.AccountData?.Username})."
+							+ " Please try again later or contact us at contact@hsreplay.net if this persists.");
 						return;
 					}
 				}
