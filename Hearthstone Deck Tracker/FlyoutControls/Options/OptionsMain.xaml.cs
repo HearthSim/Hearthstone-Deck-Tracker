@@ -197,7 +197,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void TreeViewItemStreamingTwitchExtension_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentHeader = "Twitch Extension";
+			ContentHeader = LocUtil.Get("Options_Streaming_TwitchExt_Header");
 			OptionsContent = OptionsStreamingTwitchExtension;
 			OptionsStreamingTwitchExtension.UpdateTwitchData();
 			OptionsStreamingTwitchExtension.UpdateAccountName();
@@ -205,7 +205,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void TreeViewItemStreamingCapturableOverlay_OnSelected(object sender, RoutedEventArgs e)
 		{
-			ContentHeader = "Capturable Overlay";
+			ContentHeader = LocUtil.Get("Options_Streaming_CaptureableOverlay_Header");
 			OptionsContent = OptionsStreamingCapturableOverlay;
 		}
 

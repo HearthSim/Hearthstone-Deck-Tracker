@@ -47,7 +47,7 @@
                 </StackPanel.Visibility>
                 <StackPanel Margin="0,0,0,10" Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock Margin="5,0,0,0" VerticalAlignment="Center"
-                               Text="Twitch account:" FontSize="15" FontWeight="SemiBold"/>
+                               Text="{lex:Loc Options_Streaming_TwitchExt_TwitchAccount}" FontSize="15" FontWeight="SemiBold"/>
                     <TextBlock Text="{Binding SelectedTwitchUser.Username}" VerticalAlignment="Center" Margin="3,0,0,0"
                                FontSize="15" FontWeight="SemiBold"
                                Visibility="{Binding MultipleTwitchAccounts, Converter={StaticResource InverseBoolToVisibility}}"/>
