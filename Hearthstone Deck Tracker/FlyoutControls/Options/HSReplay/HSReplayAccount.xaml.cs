@@ -131,6 +131,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			OnPropertyChanged(nameof(Username));
 			OnPropertyChanged(nameof(IsAuthenticated));
 			OnPropertyChanged(nameof(ReplaysClaimedVisibility));
+			OnPropertyChanged(nameof(LoginInfoVisibility));
 			OnPropertyChanged(nameof(IsPremiumUser));
 			OnPropertyChanged(nameof(UploadTokenUnclaimed));
 		}
