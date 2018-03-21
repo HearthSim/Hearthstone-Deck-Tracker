@@ -55,6 +55,7 @@
                 <controls:StartHearthstoneButton Margin="0,20,0,0" Width="250"/>
             </StackPanel>
             <Button Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Center"
+                    Command="{Binding HSReplayDecksCommand}"
                     BorderThickness="1" BorderBrush="White" Foreground="White" MinWidth="200"
                     Margin="0,40,0,0" Visibility="{Binding CollectionSynced, Converter={StaticResource BoolToVisibility}}">
                 <TextBlock Text="{lex:Loc Banner_CollectionSyncing_Subtitle}" VerticalAlignment="Center" TextWrapping="Wrap"
