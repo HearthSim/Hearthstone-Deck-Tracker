@@ -21,7 +21,7 @@
                 <LineBreak/>
                 <Run FontSize="15" FontWeight="Normal" Text="{lex:Loc Options_HSReplay_Account_ReplayInfo}"/>
                 <Hyperlink Command="{Binding AccountSettingsCommand}">
-                    <Run Text="{Binding BattleTag, Mode=OneWay}"/>
+                    <Run Text="{Binding Username, Mode=OneWay}"/>
                 </Hyperlink>.
              </TextBlock>
             <controls:OAuthLogin Margin="25"/>
@@ -54,7 +54,7 @@
                 <controls:StatusIndicator Grid.Row="0" Grid.Column="0" Success="True"/>
                 <TextBlock Grid.Row="0" Grid.Column="1" Margin="5">
                     <Run Text="{lex:Loc Options_HSReplay_Account_LoggedInAs}"/>
-                    <Run Text="{Binding BattleTag, Mode=OneWay}"/>
+                    <Run Text="{Binding Username, Mode=OneWay}"/>
                 </TextBlock>
                 <controls:StatusIndicator Grid.Row="1" Grid.Column="0"
                                           Success="{Binding CollectionSyncingEnabled, RelativeSource={RelativeSource AncestorType=UserControl}}"/>

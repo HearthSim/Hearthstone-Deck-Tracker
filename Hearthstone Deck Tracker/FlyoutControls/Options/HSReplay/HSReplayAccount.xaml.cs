@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			}
 		}
 
-		public string BattleTag => HSReplayNetOAuth.AccountData?.BattleTag ?? Account.Instance.Username ?? string.Empty;
+		public string Username => HSReplayNetOAuth.AccountData?.Username ?? Account.Instance.Username ?? string.Empty;
 
 		public ICommand LogoutCommand => new Command(async () =>
 		{
@@ -128,7 +128,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 
 		public void Update()
 		{
-			OnPropertyChanged(nameof(BattleTag));
+			OnPropertyChanged(nameof(Username));
 			OnPropertyChanged(nameof(IsAuthenticated));
 			OnPropertyChanged(nameof(ReplaysClaimedVisibility));
 			OnPropertyChanged(nameof(IsPremiumUser));
