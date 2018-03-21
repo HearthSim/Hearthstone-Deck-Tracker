@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			Account.Instance.Status == Anonymous || HSReplayNetOAuth.IsFullyAuthenticated ? Collapsed : Visible;
 
 		public Visibility LoginInfoVisibility =>
-			Account.Instance.Status == Anonymous || HSReplayNetOAuth.IsFullyAuthenticated ? Visible : Collapsed;
+			Account.Instance.Status == Anonymous && !HSReplayNetOAuth.IsFullyAuthenticated ? Visible : Collapsed;
 
 		public bool IsPremiumUser =>
 			HSReplayNetOAuth.AccountData?.IsPremium?.Equals("true", StringComparison.InvariantCultureIgnoreCase) ?? false;
