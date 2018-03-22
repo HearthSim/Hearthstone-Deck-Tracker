@@ -51,17 +51,34 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			_initialized = true;
 		}
 
+		private void RefreshComboboxesAfterChangeLanguage()
+		{
+			refreshComboBox(ComboboxTheme);
+			refreshComboBox(ComboboxAccent);
+			refreshComboBox(ComboBoxIconSet);
+			refreshComboBox(ComboBoxDeckLayout);
+			refreshComboBox(ComboBoxClassColors);
+			refreshComboBox(ComboBoxCardTheme);
+		}
+
+		private void refreshComboBox(ComboBox comboBox)
+		{
+			_initialized = false;
+			int selectedIndex = comboBox.SelectedIndex;
+			comboBox.SelectedIndex = -1;
+			comboBox.Items.Refresh();	
+			comboBox.SelectedIndex = selectedIndex;
+			_initialized = true;
+		}
+
 		private void ComboboxAccent_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			var accent = ComboboxAccent.SelectedItem as Accent;
-			if(accent != null)
-			{
-				Config.Instance.AccentName = accent.Name;
-				Config.Save();
-				UITheme.UpdateAccent();
-			}
+			Config.Instance.AccentName = accent.Name;
+			Config.Save();
+			UITheme.UpdateAccent();
 		}
 
 		private void ComboboxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -88,8 +105,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.CardBarTheme = ComboBoxCardTheme.SelectedItem.ToString().ToLowerInvariant();
-			Config.Save();
-			Utility.Themes.ThemeManager.SetTheme(Config.Instance.CardBarTheme);
+			if (Config.Instance.CardBarTheme != null)
+			{
+				Config.Save();
+				Utility.Themes.ThemeManager.SetTheme(Config.Instance.CardBarTheme);
+			}
 		}
 
 		private void ComboboxDeckLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -190,6 +210,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 			LocUtil.UpdateCultureInfo();
 			UpdateUIAfterChangeLanguage();
+			RefreshComboboxesAfterChangeLanguage();
 		}
 
 		private void UpdateUIAfterChangeLanguage()
