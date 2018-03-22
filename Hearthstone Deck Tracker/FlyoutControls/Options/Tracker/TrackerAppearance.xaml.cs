@@ -51,12 +51,32 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			_initialized = true;
 		}
 
+		private void RefreshComboboxesAfterChangeLanguage()
+		{
+			_initialized = false;
+			refreshComboBox(ComboboxTheme);
+			refreshComboBox(ComboboxAccent);
+			refreshComboBox(ComboBoxIconSet);
+			refreshComboBox(ComboBoxDeckLayout);
+			refreshComboBox(ComboBoxClassColors);
+			refreshComboBox(ComboBoxCardTheme);
+			_initialized = true;
+		}
+
+		private void refreshComboBox(ComboBox comboBox)
+		{
+			int selectedIndex = comboBox.SelectedIndex;
+			comboBox.SelectedIndex = -1;
+			comboBox.Items.Refresh();	
+			comboBox.SelectedIndex = selectedIndex;
+		}
+
 		private void ComboboxAccent_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
 			var accent = ComboboxAccent.SelectedItem as Accent;
-			if(accent != null)
+			if (accent != null)
 			{
 				Config.Instance.AccentName = accent.Name;
 				Config.Save();
@@ -190,6 +210,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 			LocUtil.UpdateCultureInfo();
 			UpdateUIAfterChangeLanguage();
+			RefreshComboboxesAfterChangeLanguage();
 		}
 
 		private void UpdateUIAfterChangeLanguage()
