@@ -53,22 +53,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void RefreshComboboxesAfterChangeLanguage()
 		{
+			_initialized = false;
 			refreshComboBox(ComboboxTheme);
 			refreshComboBox(ComboboxAccent);
 			refreshComboBox(ComboBoxIconSet);
 			refreshComboBox(ComboBoxDeckLayout);
 			refreshComboBox(ComboBoxClassColors);
 			refreshComboBox(ComboBoxCardTheme);
+			_initialized = true;
 		}
 
 		private void refreshComboBox(ComboBox comboBox)
 		{
-			_initialized = false;
 			int selectedIndex = comboBox.SelectedIndex;
 			comboBox.SelectedIndex = -1;
 			comboBox.Items.Refresh();	
 			comboBox.SelectedIndex = selectedIndex;
-			_initialized = true;
 		}
 
 		private void ComboboxAccent_SelectionChanged(object sender, SelectionChangedEventArgs e)
