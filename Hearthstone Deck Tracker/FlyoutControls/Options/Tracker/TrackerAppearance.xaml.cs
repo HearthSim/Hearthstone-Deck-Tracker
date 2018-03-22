@@ -63,15 +63,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void refreshComboBox(ComboBox comboBox)
 		{
+			_initialized = false;
 			int selectedIndex = comboBox.SelectedIndex;
 			comboBox.SelectedIndex = -1;
-			comboBox.Items.Refresh();
+			comboBox.Items.Refresh();	
 			comboBox.SelectedIndex = selectedIndex;
+			_initialized = true;
 		}
 
 		private void ComboboxAccent_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized || ComboboxAccent.SelectedItem == null)
+			if(!_initialized)
 				return;
 			var accent = ComboboxAccent.SelectedItem as Accent;
 			Config.Instance.AccentName = accent.Name;
@@ -81,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboboxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized || ComboboxTheme.SelectedItem == null)
+			if(!_initialized)
 				return;
 			Config.Instance.AppTheme = (MetroTheme)ComboboxTheme.SelectedItem;
 			Config.Save();
@@ -91,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboboxIconSet_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized || ComboBoxIconSet.SelectedItem == null || Config.Instance.ClassIconStyle == (IconStyle)ComboBoxIconSet.SelectedItem)
+			if(!_initialized)
 				return;
 			Config.Instance.ClassIconStyle = (IconStyle)ComboBoxIconSet.SelectedItem;
 			Config.Save();
@@ -100,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboBoxCardTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized || ComboBoxCardTheme.SelectedItem == null)
+			if(!_initialized)
 				return;
 			Config.Instance.CardBarTheme = ComboBoxCardTheme.SelectedItem.ToString().ToLowerInvariant();
 			if (Config.Instance.CardBarTheme != null)
@@ -112,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboboxDeckLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized || ComboBoxDeckLayout.SelectedItem == null || Config.Instance.DeckPickerItemLayout == (DeckLayout)ComboBoxDeckLayout.SelectedItem)
+			if(!_initialized)
 				return;
 			Config.Instance.DeckPickerItemLayout = (DeckLayout)ComboBoxDeckLayout.SelectedItem;
 			Config.Save();
@@ -140,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboBoxClassColors_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized || ComboBoxClassColors.SelectedItem == null)
+			if(!_initialized)
 				return;
 			Config.Instance.ClassColorScheme = (ClassColorScheme)ComboBoxClassColors.SelectedItem;
 			Config.Save();
@@ -202,7 +204,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboBoxLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized || ComboBoxLanguage.SelectedItem == null)
+			if(!_initialized)
 				return;
 			Config.Instance.Localization = (Language)ComboBoxLanguage.SelectedItem;
 			Config.Save();
