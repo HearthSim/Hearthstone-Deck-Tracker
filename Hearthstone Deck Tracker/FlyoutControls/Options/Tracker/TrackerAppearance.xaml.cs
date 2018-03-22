@@ -76,9 +76,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			var accent = ComboboxAccent.SelectedItem as Accent;
-			Config.Instance.AccentName = accent.Name;
-			Config.Save();
-			UITheme.UpdateAccent();
+			if (accent != null)
+			{
+				Config.Instance.AccentName = accent.Name;
+				Config.Save();
+				UITheme.UpdateAccent();
+			}
 		}
 
 		private void ComboboxTheme_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -105,11 +108,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.CardBarTheme = ComboBoxCardTheme.SelectedItem.ToString().ToLowerInvariant();
-			if (Config.Instance.CardBarTheme != null)
-			{
-				Config.Save();
-				Utility.Themes.ThemeManager.SetTheme(Config.Instance.CardBarTheme);
-			}
+			Config.Save();
+			Utility.Themes.ThemeManager.SetTheme(Config.Instance.CardBarTheme);
 		}
 
 		private void ComboboxDeckLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
