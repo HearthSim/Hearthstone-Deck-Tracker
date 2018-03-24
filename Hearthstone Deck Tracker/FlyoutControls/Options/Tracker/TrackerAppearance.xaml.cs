@@ -210,9 +210,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			// Deck Picker
 			Core.MainWindow.DeckPickerList.ReloadUI();
-			
-			// Mana Curve Combobox
-			Core.MainWindow.ManaCurveMyDecks.ReloadUI();
+
+			// Reload ComboBoxes
+			ComboBoxHelper.Update();
 		}
 
 		private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
