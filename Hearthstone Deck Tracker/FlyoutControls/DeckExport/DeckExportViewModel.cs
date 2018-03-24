@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 				return;
 			_updatingCollection = true;
 			var collection = await CollectionHelper.GetCollection();
-			if(!collection?.Any() ?? true)
+			if(!collection?.Cards.Any() ?? true)
 			{
 				_updatingCollection = false;
 				return;
@@ -55,8 +55,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 			var missingCards = new List<DustCostViewModel>();
 			foreach(var card in Deck.Cards)
 			{
-				collection.TryGetValue(card.Id, out var count);
-				var missingCount = card.Count - count;
+				collection.Cards.TryGetValue(card.DbfIf, out var counts);
+				var missingCount = card.Count - counts?.Sum(x => x) ?? 0;
 				if(missingCount > 0)
 				{
 					var missing = (Card)card.Clone();

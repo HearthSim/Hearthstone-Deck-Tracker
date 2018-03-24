@@ -6,16 +6,12 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="400">
-    <UserControl.Resources>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
-    </UserControl.Resources>
     <StackPanel>
         <CheckBox x:Name="CheckboxSameScaling"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

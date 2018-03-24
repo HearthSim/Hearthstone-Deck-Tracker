@@ -235,8 +235,32 @@
     <Compile Include="Controls\DeckPicker\DeckTypeIconConverter.cs" />
     <Compile Include="Controls\DeckSetIcons\DeckSetIconsViewModel.cs" />
     <Compile Include="Controls\DeckSetIcons\SetIconVisibilityConverter.cs" />
+    <Compile Include="Controls\Information\CollectionSyncingInfo.xaml.cs">
+      <DependentUpon>CollectionSyncingInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Information\TwitchExtensionInfo.xaml.cs">
       <DependentUpon>TwitchExtensionInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OAuthLogin.xaml.cs">
+      <DependentUpon>OAuthLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RemovableBanner.xaml.cs">
+      <DependentUpon>RemovableBanner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StartHearthstoneButton.xaml.cs">
+      <DependentUpon>StartHearthstoneButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StatusIndicator.xaml.cs">
+      <DependentUpon>StatusIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\HSReplay\HSReplayAccount.xaml.cs">
+      <DependentUpon>HSReplayAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\HSReplay\HSReplayCollection.xaml.cs">
+      <DependentUpon>HSReplayCollection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\HSReplay\HSReplayReplays.xaml.cs">
+      <DependentUpon>HSReplayReplays.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\Streaming\StreamingCapturableOverlay.xaml.cs">
       <DependentUpon>StreamingCapturableOverlay.xaml</DependentUpon>
@@ -244,9 +268,16 @@
     <Compile Include="FlyoutControls\Options\Streaming\StreamingTwitchExtension.xaml.cs">
       <DependentUpon>StreamingTwitchExtension.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hearthstone\Collection.cs" />
     <Compile Include="Hearthstone\DungeonRun.cs" />
     <Compile Include="HsReplay\HSReplayNetOAuth.cs" />
     <Compile Include="HsReplay\Data\OAuthData.cs" />
+    <Compile Include="HsReplay\HSReplayNetHelper.cs" />
+    <Compile Include="Utility\DataLoader.cs" />
+    <Compile Include="Utility\GlobalCommands.cs" />
+    <Compile Include="Utility\HearthstoneRunner.cs" />
+    <Compile Include="Utility\RateLimiter.cs" />
+    <Compile Include="HsReplay\UploadTokenHistory.cs" />
     <Compile Include="Live\Data\PayloadFactory.cs" />
     <Compile Include="Utility\JsonSerializer.cs" />
     <Compile Include="Utility\Attributes\AssetNameAttribute.cs" />
@@ -281,6 +312,15 @@
     <Compile Include="Live\Data\BoardState.cs" />
     <Compile Include="Live\Data\DataType.cs" />
     <Compile Include="Live\Data\Payload.cs" />
+    <Compile Include="Utility\RemoteConfig.cs" />
+    <Compile Include="Utility\Singleton.cs" />
+    <Compile Include="Utility\ScheduledTaskRunner.cs" />
+    <Compile Include="Utility\Toasts\ToastControls\BaseToast.xaml.cs">
+      <DependentUpon>BaseToast.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Toasts\ToastControls\CollectionUploadedToast.xaml.cs">
+      <DependentUpon>CollectionUploadedToast.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Twitch\TwitchApi.cs" />
     <Compile Include="Live\BoardStateWatcher.cs" />
     <Compile Include="Live\LiveDataManager.cs" />
@@ -512,9 +552,6 @@
     <Compile Include="Utility\Extensions\RectExtensions.cs" />
     <Compile Include="Utility\GaussianBlur.cs" />
     <Compile Include="Utility\Themes\CardBarImageBuilder.cs" />
-    <Compile Include="FlyoutControls\Options\Tracker\TrackerReplays.xaml.cs">
-      <DependentUpon>TrackerReplays.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Hearthstone\GameTime.cs" />
     <Compile Include="Hearthstone\HearthDbConverter.cs" />
     <Compile Include="Hearthstone\GameMetaData.cs" />
@@ -684,6 +721,9 @@
     <Compile Include="Controls\DeckView.xaml.cs">
       <DependentUpon>DeckView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\MainWindowControls\CollectionSyncingBannerView.xaml.cs">
+      <DependentUpon>CollectionSyncingBannerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\MainWindowControls\DeckChartsView.xaml.cs">
       <DependentUpon>DeckChartsView.xaml</DependentUpon>
     </Compile>
@@ -698,6 +738,7 @@
       <DependentUpon>MainWindowMenuView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindowControls\MainWindowMenuViewModel.cs" />
+    <Compile Include="Utility\MarkupParser.cs" />
     <Compile Include="Windows\MainWindowControls\NewsBarView.xaml.cs">
       <DependentUpon>NewsBarView.xaml</DependentUpon>
     </Compile>
@@ -723,7 +764,6 @@
     <Compile Include="Utility\Imgur.cs" />
     <Compile Include="Utility\Markdown.Xaml\Markdown.cs" />
     <Compile Include="Utility\Markdown.Xaml\TextToFlowDocumentConverter.cs" />
-    <Compile Include="Utility\NewsManager.cs" />
     <Compile Include="Utility\Updating\Updater.cs" />
     <Compile Include="Windows\AddGameDialog.xaml.cs">
       <DependentUpon>AddGameDialog.xaml</DependentUpon>
@@ -886,9 +926,29 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Information\CollectionSyncingInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Information\TwitchExtensionInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\OAuthLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RemovableBanner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StartHearthstoneButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StatusIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\DeckHistory\DeckVersionChangeView.xaml">
       <SubType>Designer</SubType>
@@ -1046,6 +1106,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FlyoutControls\Options\HSReplay\HSReplayAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\HSReplay\HSReplayCollection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\HSReplay\HSReplayReplays.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FlyoutControls\Options\OptionsMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1090,10 +1162,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FlyoutControls\Options\Tracker\TrackerReplays.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="FlyoutControls\Options\Tracker\TrackerStats.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1130,6 +1198,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Utility\Toasts\ToastControls\BaseToast.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\Toasts\ToastControls\CollectionUploadedToast.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Windows\CrashDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1147,6 +1223,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\DeckView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindowControls\CollectionSyncingBannerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1307,6 +1387,9 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\hearthstone-icon.png" />
+    <Resource Include="Resources\collection_promo.jpg" />
+    <Resource Include="Resources\hsreplay_banner.jpg" />
     <Resource Include="Resources\twitch_ext_decklist.png" />
     <Resource Include="Resources\twitch_ext_secret.png" />
     <Resource Include="Resources\hsreplay_info_3.png" />

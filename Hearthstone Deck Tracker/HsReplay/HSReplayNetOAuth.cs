@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay.Data;
 using Hearthstone_Deck_Tracker.Live.Data;
 using Hearthstone_Deck_Tracker.Utility;
@@ -10,6 +13,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using HSReplay.OAuth;
 using HSReplay.OAuth.Data;
 using HSReplay.Responses;
+using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -26,6 +30,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private const string SuccessUrl = "https://hsdecktracker.net/hsreplaynet/oauth_success/";
 		private const string ErrorUrl = "https://hsdecktracker.net/hsreplaynet/oauth_error/";
 
+		public static event Action Authenticated;
+		public static event Action LoggedOut;
+		public static event Action TwitchUsersUpdated;
+		public static event Action AccountDataUpdated;
+		public static event Action CollectionUpdated;
+		public static event Action UploadTokenClaimed;
 
 		static HSReplayNetOAuth()
 		{
@@ -34,6 +44,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			Client = new Lazy<OAuthClient>(LoadClient);
 		}
 
+		private static readonly Scope[] _requiredScopes = { Scope.FullAccess };
+
 		private static OAuthClient LoadClient()
 		{
 			return new OAuthClient(HSReplayNetClientId, Helper.GetUserAgent(), Data.Value.TokenData);
@@ -41,13 +53,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static void Save() => Serializer.Save(Data.Value);
 
-		public static async Task<bool> Authenticate()
+		public static async Task<bool> Authenticate(string successUrl = null, string errorUrl = null)
 		{
 			Log.Info("Authenticating with HSReplay.net...");
 			string url;
 			try
 			{
-				url = Client.Value.GetAuthenticationUrl(new[] { Scope.ReadSocialAccounts }, Ports);
+				url = Client.Value.GetAuthenticationUrl(_requiredScopes, Ports);
 			}
 			catch(Exception e)
 			{
@@ -59,9 +71,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Log.Error("Authentication failed, could not create callback listener");
 				return false;
 			}
-			var callbackTask = Client.Value.ReceiveAuthenticationCallback(SuccessUrl, ErrorUrl);
+			var callbackTask = Client.Value.ReceiveAuthenticationCallback(successUrl ?? SuccessUrl,
+				errorUrl ?? ErrorUrl);
 			if(!Helper.TryOpenUrl(url))
-				ErrorManager.AddError("Could not open browser to complete authentication.", $"Please go to '{url}' to continue authentication.", true);
+			{
+				ErrorManager.AddError("Could not open your browser.",
+					"Please open the following url in your browser to continue:\n\n" + url, true);
+			}
 			Log.Info("Waiting for callback...");
 			var data = await callbackTask;
 			if(data == null)
@@ -71,10 +87,32 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 			Data.Value.Code = data.Code;
 			Data.Value.RedirectUrl = data.RedirectUrl;
+			Data.Value.TokenData = null;
 			Log.Info("Authentication complete");
 			await UpdateToken();
 			Save();
+			Log.Info("Claiming upload token if necessary");
+			if(!Account.Instance.TokenClaimed.HasValue)
+				await ApiWrapper.UpdateUploadTokenStatus();
+			if(Account.Instance.TokenClaimed == false)
+				await ClaimUploadToken(Account.Instance.UploadToken);
+			Authenticated?.Invoke();
 			return true;
+		}
+
+		public static async Task Logout()
+		{
+			Serializer.DeleteCacheFile();
+			Data.Value.Account = null;
+			Data.Value.Code = null;
+			Data.Value.RedirectUrl = null;
+			Data.Value.TokenData = null;
+			Data.Value.TokenDataCreatedAt = DateTime.MinValue;
+			Data.Value.TwitchUsers = null;
+			Save();
+			Account.Instance.Reset();
+			await ApiWrapper.UpdateUploadTokenStatus();
+			LoggedOut?.Invoke();
 		}
 
 		public static async Task<bool> UpdateToken()
@@ -137,6 +175,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Data.Value.TwitchUsers = twitchAccounts;
 				Save();
 				Log.Info($"Saved {twitchAccounts.Count} account(s): {string.Join(", ", twitchAccounts.Select(x => x.Username))}");
+				TwitchUsersUpdated?.Invoke();
 				return twitchAccounts.Count != 0;
 			}
 			catch(Exception e)
@@ -160,6 +199,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				Data.Value.Account = account;
 				Save();
 				Log.Info($"Found account: {account?.Username ?? "None"}");
+				AccountDataUpdated?.Invoke();
 				return account != null;
 			}
 			catch(Exception e)
@@ -169,7 +209,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static bool IsAuthenticated => !string.IsNullOrEmpty(Data.Value.Code);
+		public static bool IsFullyAuthenticated => IsAuthenticatedFor(_requiredScopes);
+
+		public static bool IsAuthenticatedFor(params Scope[] scopes)
+		{
+			if(string.IsNullOrEmpty(Data.Value.TokenData?.Scope))
+				return false;
+			var currentScopes = Data.Value.TokenData.Scope.Split(' ');
+			if(currentScopes.Contains(Scope.FullAccess.Name))
+				return true;
+			return scopes.All(s => currentScopes.Contains(s.Name));
+		}
+
+		public static bool IsAuthenticatedForAnything()
+			=> !string.IsNullOrEmpty(Data.Value.TokenData?.Scope);
 
 		public static List<TwitchAccount> TwitchUsers => Data.Value.TwitchUsers;
 
@@ -199,6 +252,99 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			{
 				Log.Error(e);
 			}
+		}
+
+		public static async Task<bool> UpdateCollection(Collection collection)
+		{
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return false;
+				}
+				var response = await Client.Value.UploadCollection(collection, collection.AccountHi, collection.AccountLo);
+				Log.Debug(response);
+				CollectionUpdated?.Invoke();
+				return true;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return false;
+			}
+		}
+
+		internal static async Task<bool> ClaimUploadToken(string token)
+		{
+			UploadTokenHistory.Write("Trying to claim " + token);
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return false;
+				}
+				var response = await Client.Value.ClaimUploadToken(token);
+				UploadTokenHistory.Write($"Claimed {token}: {response}");
+				Log.Debug(response);
+				UploadTokenClaimed?.Invoke();
+				return true;
+			}
+			catch(Exception e)
+			{
+				UploadTokenHistory.Write($"Error claming {token}\n" + e);
+				Log.Error(e);
+				return false;
+			}
+		}
+
+		internal static async Task<ClaimBlizzardAccountResponse> ClaimBlizzardAccount(ulong accountHi, ulong accountLo,
+			string battleTag)
+		{
+			var account = $"hi={accountHi}, lo={accountLo}, battleTag={battleTag}";
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return ClaimBlizzardAccountResponse.Error;
+				}
+
+				var response = await Client.Value.ClaimBlizzardAccount(accountHi, accountLo, battleTag);
+				Log.Debug($"Claimed {account}: {response}");
+				return ClaimBlizzardAccountResponse.Success;
+			}
+			catch(WebException e)
+			{
+				Log.Error(e);
+				try
+				{
+					using(var stream = e.Response.GetResponseStream())
+					using(var reader = new StreamReader(stream))
+					{
+						var response = JsonConvert.DeserializeObject<dynamic>(reader.ReadToEnd());
+						if(response.error == "account_already_claimed")
+							return ClaimBlizzardAccountResponse.TokenAlreadyClaimed;
+					}
+				}
+				catch
+				{
+				}
+				return ClaimBlizzardAccountResponse.Error;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return ClaimBlizzardAccountResponse.Error;
+			}
+		}
+
+		internal enum ClaimBlizzardAccountResponse
+		{
+			Success,
+			Error,
+			TokenAlreadyClaimed
 		}
 	}
 }

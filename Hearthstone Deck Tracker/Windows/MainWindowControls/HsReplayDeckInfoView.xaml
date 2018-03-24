@@ -6,12 +6,9 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Windows.MainWindowControls"
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              mc:Ignorable="d" Name="DeckInfoControl"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
-        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
         <Storyboard x:Key="NoDataStoryboard">
             <DoubleAnimation Storyboard.TargetProperty="Height" To="40" Duration="0:0:0.2"/>
         </Storyboard>

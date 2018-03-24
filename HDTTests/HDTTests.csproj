@@ -116,7 +116,7 @@
     <Compile Include="Hearthstone\DeckTest.cs" />
     <Compile Include="Hearthstone\CardDbTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GameStatsTest.cs" />
+    <Compile Include="LocUtilTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj">

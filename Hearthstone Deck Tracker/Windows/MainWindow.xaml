@@ -212,14 +212,12 @@
                 </StackPanel>
             </StatusBarItem>
         </StatusBar>
-        <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top" Height="26" Margin="0,1,0,0" Visibility="Collapsed" />
+        <mainWindowControls:NewsBarView x:Name="NewsBar" DockPanel.Dock="Top"/>
         <mainWindowControls:MainWindowMenuView x:Name="MainWindowMenu" DockPanel.Dock="Top"/>
         <Separator DockPanel.Dock="Top" Panel.ZIndex="2" Margin="0,-1,0,0"/>
         <DockPanel Margin="5">
             <DockPanel Width="236" DockPanel.Dock="Right" Margin="5,0,0,0">
-                <Button Name="BtnStartHearthstone" Click="BtnStartHearthstone_Click" Margin="0,0,0,5" Style="{StaticResource AccentedSquareButtonStyle}" DockPanel.Dock="Top">
-                    <TextBlock Name="TextBlockBtnStartHearthstone" Text="{lex:LocTextUpper MainWindow_Button_StartHearthstone}" />
-                </Button>
+                <controls1:StartHearthstoneButton DockPanel.Dock="Top" Margin="0,0,0,5"/>
                 <Border Name="PanelVersionComboBox" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" Visibility="Collapsed" Margin="0,0,0,5" DockPanel.Dock="Top">
                     <DockPanel>
                         <TextBlock Text="{lex:LocTextUpper MainWindow_Label_SelectedVersion}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0"/>
@@ -291,12 +289,20 @@
                     <mainWindowControls:DeckChartsView x:Name="DeckCharts" DockPanel.Dock="Top"/>
                 </GroupBox>
             </DockPanel>
-            <Grid>
-                <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
-                <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray" 
-                       FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                       Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
-            </Grid>
+            <DockPanel>
+                <controls1:RemovableBanner DockPanel.Dock="Top" Click="RemovableBanner_OnClick" Close="RemovableBanner_OnClose"
+                                           Background="{StaticResource HSReplayNetBlue}" Foreground="White"
+                                           Visibility="{Binding CollectionSyncingBannerVisbiility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}"
+                                           Removable="{Binding CollectionSyncingBannerRemovable, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}">
+                    <mainWindowControls:CollectionSyncingBannerView Margin="8"/>
+                </controls1:RemovableBanner>
+                <Grid Margin="0,2,0,0">
+                    <deckPicker:DeckPicker x:Name="DeckPickerList" OnSelectedDeckChanged="DeckPickerList_OnSelectedDeckChanged" OnDoubleClick="DeckPickerList_OnOnDoubleClick"/>
+                    <Label Content="{Binding IntroductionLabelText, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" Foreground="DarkGray" 
+                           FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                           Visibility="{Binding IntroductionLabelVisibility, RelativeSource={RelativeSource AncestorType=controls:MetroWindow}}" />
+                </Grid>
+            </DockPanel>
         </DockPanel>
     </DockPanel>
 </controls:MetroWindow>

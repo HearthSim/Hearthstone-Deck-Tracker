@@ -11,6 +11,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public class ConfigWrapper
 	{
+		public static event Action ReplayAutoUploadChanged;
+		public static event Action CollectionSyncingChanged;
+		public static event Action IgnoreNewsIdChanged;
+
 		public static bool CardDbIncludeWildOnlyCards
 		{
 			get { return Config.Instance.CardDbIncludeWildOnlyCards; }
@@ -181,6 +185,21 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public static bool CollectionSyncingEnabled
+		{
+			get { return Config.Instance.SyncCollection; }
+			set
+			{
+				if(Config.Instance.SyncCollection != value)
+				{
+					Config.Instance.SyncCollection = value;
+					Config.Save();
+					Influx.OnCollectionSyncingEnabled(value);
+				}
+				CollectionSyncingChanged?.Invoke();
+			}
+		}
+
 		public static bool HsReplayAutoUpload
 		{
 			get { return Config.Instance.HsReplayAutoUpload; }
@@ -189,6 +208,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.HsReplayAutoUpload = value;
 				Config.Save();
 				Influx.OnHsReplayAutoUploadChanged(value);
+				ReplayAutoUploadChanged?.Invoke();
 			}
 		}
 
@@ -364,6 +384,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 				Config.Instance.CheckForDevUpdates = value;
 				Config.Instance.AllowDevUpdates = null;
 				Config.Save();
+			}
+		}
+
+		public static int IgnoreNewsId
+		{
+			get => Config.Instance.IgnoreNewsId;
+			set
+			{
+				Config.Instance.IgnoreNewsId = value;
+				Config.Save();
+				IgnoreNewsIdChanged?.Invoke();
 			}
 		}
 

@@ -11,7 +11,7 @@
     <UserControl.DataContext>
         <local:NewsBarViewModel/>
     </UserControl.DataContext>
-    <StatusBar>
+    <StatusBar Visibility="{Binding Visibility}" Height="26" Margin="0,1,0,0">
         <StatusBar.ItemsPanel>
             <ItemsPanelTemplate>
                 <Grid>

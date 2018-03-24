@@ -3,13 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="300"
              BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1">
-    <UserControl.Resources>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
-    </UserControl.Resources>
     <DockPanel>
         <Button Name="ButtonUp" Margin="5" DockPanel.Dock="Left" Click="ButtonUp_OnClick">
             <Path Fill="Black" Data="M 0 6 L 12 6 L 6 0 Z" />

@@ -21,8 +21,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static int? _pctHsReplayDataTotal;
 		private static readonly List<int> MainWindowActivations = new List<int>();
 		private static DateTime? _lastMainWindowActivation;
+		private static DateTime _oAuthInitiated;
 
-		public static void OnAppStart(Version version, bool isNew, int startupDuration, int numPlugins)
+		public static void OnAppStart(Version version, bool isNew, bool authenticated, int startupDuration, int numPlugins)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -31,6 +32,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			var point = new InfluxPointBuilder("hdt_app_start")
 				.Tag("version", version.ToVersionString(true))
 				.Tag("new", isNew)
+				.Tag("authenticated", authenticated)
+				.Tag("collection_syncing", Config.Instance.SyncCollection)
+				.Tag("collections_uploaded", Account.Instance.CollectionState.Count)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
 				.Tag("lang_card", Config.Instance.SelectedLanguage)
 				.Tag("lang_ui", Config.Instance.Localization.ToString())
@@ -129,6 +133,79 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			WritePoint(new InfluxPointBuilder("hdt_end_of_game_upload_error").Tag("reason", Regex.Escape(reason)).Build());
+		}
+
+		public static void OnCollectionSyncingBannerClicked(bool authenticated, bool collectionSynced)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_collection_syncing_banner_interaction")
+				.Tag("type", "click")
+				.Tag("authenticated", authenticated)
+				.Tag("collection_synced", collectionSynced);
+			WritePoint(point.Build());
+		}
+
+		public static void OnCollectionSyncingBannerClosed()
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_collection_syncing_banner_interaction")
+				.Tag("type", "close");
+			WritePoint(point.Build());
+		}
+
+		public static void OnBlizzardAccountClaimed(bool success)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_collection_syncing_account_claimed")
+				.Tag("success", success);
+			WritePoint(point.Build());
+		}
+
+		public static void OnCollectionSynced(bool success)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_collection_syncing_uploaded")
+				.Tag("success", success);
+			WritePoint(point.Build());
+		}
+
+		public static void OnCollectionSyncingEnabled(bool enabled)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_collection_syncing_enabled_changed")
+				.Tag("enabled", enabled);
+			WritePoint(point.Build());
+		}
+
+		public static void OnOAuthLoginInitiated()
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			_oAuthInitiated = DateTime.Now;
+		}
+
+		public static void OnOAuthLoginComplete(HSReplayNetHelper.AuthenticationErrorType error)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_oauth_login")
+				.Tag("error", error)
+				.Field("duration_ms", (int)(DateTime.Now - _oAuthInitiated).TotalMilliseconds);
+			WritePoint(point.Build());
+
+		}
+
+		public static void OnOAuthLogout()
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_oauth_logout");
+			WritePoint(point.Build());
 		}
 
 		public static void OnHsReplayDataLoaded()

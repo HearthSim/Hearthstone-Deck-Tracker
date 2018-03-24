@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls.BaseToast"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Background="{DynamicResource AccentColorBrush}"
+             MouseEnter="BorderReplay_OnMouseEnter" MouseLeave="BorderReplay_OnMouseLeave"
+             MouseLeftButtonUp="BorderReplay_OnMouseLeftButtonUp"
+             MinHeight="40" MinWidth="250">
+    <ContentPresenter/>
+</UserControl>

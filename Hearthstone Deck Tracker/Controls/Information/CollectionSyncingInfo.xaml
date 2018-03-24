@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Information.CollectionSyncingInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             mc:Ignorable="d" 
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignHeight="800" d:DesignWidth="900">
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" HorizontalAlignment="Stretch" Background="{StaticResource HSReplayNetBlue}">
+            <Image Source="{StaticResource HsReplayIconWhite}" Width="48" Height="48"
+                   HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"
+                   Margin="10,0,0,0"/>
+            <TextBlock TextWrapping="Wrap" TextAlignment="Center" Margin="10" HorizontalAlignment="Center"
+                       Foreground="White">
+                <Run FontWeight="SemiBold" FontSize="20"
+                     Text="{lex:Loc Banner_CollectionSyncing_Header}"/>
+                <LineBreak/>
+                <Run FontSize="16" Text="{lex:Loc Banner_CollectionSyncing_Subtitle}"/>
+            </TextBlock>
+        </Grid>
+        <Rectangle Fill="{DynamicResource AccentColorBrush}" Height="1" Width="Auto" DockPanel.Dock="Top"/>
+        <StackPanel Margin="30,20,30,0" VerticalAlignment="Center">
+            <TextBlock FontWeight="SemiBold" FontSize="16" TextAlignment="Center" TextWrapping="Wrap"
+                       Text="Immediately see which cards you are missing and which decks you can build!"/>
+            <StackPanel HorizontalAlignment="Center">
+                <Border BorderThickness="2" BorderBrush="{DynamicResource AccentColorBrush}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
+                    <Image Source="{StaticResource CollectionPromo}" MaxWidth="1200"
+                           RenderOptions.BitmapScalingMode="Fant"/>
+                </Border>
+                <TextBlock HorizontalAlignment="Right">
+                    <Run Text="Example from"/>
+                    <Hyperlink Command="{Binding DecksCommand}">
+                        <Run Text="https://hsreplay.net/decks/"/>
+                    </Hyperlink>
+                </TextBlock>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" Margin="0,30,0,0" DockPanel.Dock="Bottom" Orientation="Horizontal">
+                <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="250"
+                        Command="{Binding LoginCommand}">
+                    <TextBlock Text="Upload your collection now" FontSize="14"/>
+                </Button>
+                <Button Style="{DynamicResource SquareButtonStyle}" Width="250" Margin="10,0,0,0"
+                        Command="{Binding CloseCommand}">
+                    <TextBlock Text="Later" />
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</UserControl>
+
+
+

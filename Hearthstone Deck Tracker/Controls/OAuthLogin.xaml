@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.OAuthLogin"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:controls1="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:s="clr-namespace:System;assembly=mscorlib" 
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <StackPanel>
+        <Button Style="{DynamicResource AccentedSquareButtonStyle}" Width="200"
+                Command="{Binding LoginCommand}">
+            <Button.Visibility>
+                <MultiBinding Converter="{StaticResource BoolToVisibility}">
+                    <MultiBinding.ConverterParameter>
+                        <x:Array Type="{x:Type s:Boolean}">
+                            <s:Boolean>True</s:Boolean>
+                            <s:Boolean>True</s:Boolean>
+                        </x:Array>
+                    </MultiBinding.ConverterParameter>
+                    <Binding Path="IsAuthenticated" />
+                    <Binding Path="IsAuthenticating" />
+                </MultiBinding>
+            </Button.Visibility>
+            <TextBlock Text="{lex:Loc OAuthLogin_Login}"/>
+        </Button>
+        <StackPanel Visibility="{Binding IsAuthenticating, Converter={StaticResource BoolToVisibility}}">
+            <controls:ProgressRing IsActive="True" Width="24" Height="24" Margin="0,10,0,0"/>
+            <TextBlock Text="{lex:Loc OAuthLogin_WaitingForAuthorization}" Margin="0,10,0,0"
+                       TextAlignment="Center" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap"/>
+            <TextBlock TextAlignment="Center" Margin="0,0,0,0"
+                       Visibility="{Binding ShowTryAgain, Converter={StaticResource BoolToVisibility}}">
+                <Hyperlink Command="{Binding TryAgainCommand}">
+                    <Run Text="{lex:Loc OAuthLogin_TryAgain}"/>
+                </Hyperlink>
+            </TextBlock>
+            <TextBlock TextAlignment="Center" Margin="0,30,0,0"
+                       Visibility="{Binding ShowContactUs, Converter={StaticResource BoolToVisibility}}">
+                <Run Text="{lex:Loc OAuthLogin_ContactUs}"/>
+                <LineBreak/>
+                <Run Text="{lex:Loc OAuthLogin_Twitter}"/>:
+                <Hyperlink Command="{Binding OpenUrl, Source={StaticResource GlobalCommands}}"
+                           CommandParameter="https://twitter.com/HSReplayNet">
+                    <Run Text="@HSReplayNet"/>
+                </Hyperlink>
+                <LineBreak/>
+                <Run Text="{lex:Loc OAuthLogin_Email}"/>:
+                <Hyperlink Command="{Binding OpenUrl, Source={StaticResource GlobalCommands}}"
+                           CommandParameter="mailto:contact@hsreplay.net">
+                    <Run Text="contact@hsreplay.net"/>
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    Visibility="{Binding IsAuthenticated, Converter={StaticResource BoolToVisibility}}">
+            <controls1:StatusIndicator Success="True" Margin="0,0,5,0"/>
+            <TextBlock Text="{lex:Loc OAuthLogin_Success}" FontWeight="SemiBold" FontSize="14"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

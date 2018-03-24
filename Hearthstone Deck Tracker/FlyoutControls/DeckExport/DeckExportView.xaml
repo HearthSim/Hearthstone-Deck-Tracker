@@ -5,15 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.DeckExport"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="300">
-    <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
-        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
-    </UserControl.Resources>
     <UserControl.DataContext>
         <local:DeckExportViewModel/>
      </UserControl.DataContext>

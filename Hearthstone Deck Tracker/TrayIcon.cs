@@ -43,8 +43,9 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Log.Error($"Cant find tray icon at \"{iconFile.FullName}\"");
 
-			MenuItemStartHearthstone = new MenuItem(LocUtil.Get("TrayIcon_MenuItemStartHearthstone"), (sender, args) => Helper.StartHearthstoneAsync().Forget());
+			MenuItemStartHearthstone = new MenuItem(LocUtil.Get("TrayIcon_MenuItemStartHearthstone"), (sender, args) => HearthstoneRunner.StartHearthstone().Forget());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemStartHearthstone);
+			HearthstoneRunner.StartingHearthstone += starting => MenuItemStartHearthstone.Enabled = !starting;
 
 			MenuItemUseNoDeck = new MenuItem(LocUtil.Get("TrayIcon_MenuItemUseNoDeck"), (sender, args) => UseNoDeckContextMenu());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemUseNoDeck);

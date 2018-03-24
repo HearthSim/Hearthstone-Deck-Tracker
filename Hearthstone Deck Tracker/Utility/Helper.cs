@@ -303,52 +303,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static async Task StartHearthstoneAsync()
-		{
-			if(User32.GetHearthstoneWindow() != IntPtr.Zero)
-				return;
-			Core.MainWindow.BtnStartHearthstone.IsEnabled = false;
-			Core.TrayIcon.MenuItemUseNoDeck.Enabled = false;
-			try
-			{
-				var bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault() ?? Process.GetProcessesByName("Battle.net.beta").FirstOrDefault();
-				if(bnetProc == null)
-				{
-					Process.Start("battlenet://");
-
-					var foundBnetWindow = false;
-					Core.MainWindow.TextBlockBtnStartHearthstone.Text = "STARTING LAUNCHER...";
-					for(var i = 0; i < 40; i++)
-					{
-						bnetProc = Process.GetProcessesByName("Battle.net").FirstOrDefault() ?? Process.GetProcessesByName("Battle.net.beta").FirstOrDefault();
-						if(bnetProc != null && bnetProc.MainWindowHandle != IntPtr.Zero)
-						{
-							foundBnetWindow = true;
-							break;
-						}
-						await Task.Delay(500);
-					}
-					Core.MainWindow.TextBlockBtnStartHearthstone.Text = "START LAUNCHER / HEARTHSTONE";
-					if(!foundBnetWindow)
-					{
-						Core.MainWindow.ShowMessageAsync("There was a problem starting the Battle.net Launcher",
-							"Starting the Battle.net launcher failed or was too slow. Please try again once it started or run Hearthstone manually.").Forget();
-						Core.MainWindow.BtnStartHearthstone.IsEnabled = true;
-						return;
-					}
-				}
-				await Task.Delay(2000);
-				Process.Start("battlenet://WTCG");
-			}
-			catch(Exception ex)
-			{
-				Log.Error(ex);
-			}
-
-			Core.TrayIcon.MenuItemUseNoDeck.Enabled = true;
-			Core.MainWindow.BtnStartHearthstone.IsEnabled = true;
-		}
-
 		public static async Task<Region> GetCurrentRegion()
 		{
 			for(var i = 0; i < 10; i++)
@@ -356,7 +310,7 @@ namespace Hearthstone_Deck_Tracker
 				var accId = HearthMirror.Reflection.GetAccountId();
 				if(accId != null)
 				{
-					var region = (Region)((accId.Hi >> 32) & 0xFF);
+					var region = GetRegion(accId.Hi);
 					Log.Info("Region: " + region);
 					return region;
 				}
@@ -364,6 +318,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			return Region.UNKNOWN;
 		}
+
+		public static Region GetRegion(ulong accountHi) => (Region)((accountHi >> 32) & 0xFF);
 
 		private static bool FindHearthstoneDir()
 		{
@@ -508,23 +464,33 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static string BuildHsReplayNetUrl(string path, string campaign)
+		public static string BuildHsReplayNetUrl(string path, string campaign, IEnumerable<string> queryParams = null, IEnumerable<string> fragmentParams = null)
 		{
 			var url = "https://hsreplay.net";
 			if(!path.StartsWith("/"))
 				url += "/";
 			url += path;
-			if(!path.EndsWith("/"))
+			if(!url.EndsWith("/"))
 				url += "/";
-			return url + GetHsReplayNetUrlParams(campaign);
+			return url + GetHsReplayNetUrlParams(campaign, queryParams, fragmentParams);
 		}
 
-		public static string GetHsReplayNetUrlParams(string campaign)
+		public static string GetHsReplayNetUrlParams(string campaign, IEnumerable<string> queryParams = null, IEnumerable<string> fragmentParams = null)
 		{
-			var param = "?utm_source=hdt&utm_medium=client";
+			var query = new List<string>
+			{
+				"utm_source=hdt",
+				"utm_medium=client",
+			};
 			if(!string.IsNullOrEmpty(campaign))
-				param += "&utm_campaign=" + campaign;
-			return param;
+				query.Add("utm_campaign=" + campaign);
+			if(queryParams != null)
+				query.AddRange(queryParams);
+			var urlParams = "?" + string.Join("&", query);
+			var fragments = fragmentParams?.ToArray();
+			if(fragments?.Any() ?? false)
+				urlParams += "#" + string.Join("&", fragments);
+			return urlParams;
 		}
 
 		private static int? _hearthstoneBuild;

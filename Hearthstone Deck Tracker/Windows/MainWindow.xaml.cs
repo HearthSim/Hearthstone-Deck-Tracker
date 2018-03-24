@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Enums;
@@ -139,8 +140,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private void BtnStartHearthstone_Click(object sender, RoutedEventArgs e) => Helper.StartHearthstoneAsync().Forget();
-
 		private void ButtonCloseStatsFlyout_OnClick(object sender, RoutedEventArgs e) => FlyoutStats.IsOpen = false;
 
 		private async void ButtonSwitchStatsToNewWindow_OnClick(object sender, RoutedEventArgs e)
@@ -163,8 +162,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private double _heightChangeDueToSearchBox;
 		public const int SearchBoxHeight = 30;
-
-		public int StatusBarNewsHeight => 20;
 
 		public string IntroductionLabelText
 			=> Config.Instance.ConstructedAutoImportNew ? "ENTER THE 'PLAY' MENU TO AUTOMATICALLY IMPORT YOUR DECKS" : "ADD NEW DECKS BY CLICKING 'NEW' OR 'IMPORT'";
@@ -222,6 +219,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 				DeckPickerList.RefreshDisplayedDecks();
 				OnPropertyChanged(nameof(HsReplayButtonVisibility));
 				Influx.OnHsReplayDataLoaded();
+			};
+
+			HSReplayNetOAuth.Authenticated += ActivateWindow;
+
+			RemoteConfig.Instance.Loaded += data =>
+			{
+				OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
+				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
+			};
+
+			HSReplayNetHelper.CollectionUploaded += () =>
+			{
+				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable)); 
+			};
+
+			HSReplayNetOAuth.LoggedOut += () =>
+			{
+				OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
+				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
 			};
 		}
 
@@ -557,13 +573,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void HyperlinkUpdateNow_OnClick(object sender, RoutedEventArgs e) => Updater.StartUpdate();
 
-		internal void StartClaimAccount()
-		{
-			Options.OptionsTrackerReplays.ClaimAccount();
-			Options.TreeViewItemTrackerReplays.IsSelected = true;
-			FlyoutOptions.IsOpen = true;
-		}
-
 		private void HyperlinkDevDiscord_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl("https://discord.gg/hearthsim-devs");
 
 		public void ShowDeckEditorFlyout(Deck deck, bool isNewDeck)
@@ -643,6 +652,64 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void MainWindow_OnDeactivated(object sender, EventArgs e)
 		{
 			Influx.OnMainWindowDeactivated();
+		}
+
+		private void RemovableBanner_OnClick(object sender, EventArgs e)
+		{
+			var authenticated = HSReplayNetOAuth.IsFullyAuthenticated;
+			var collectionSynced = Account.Instance.CollectionState.Any();
+			Influx.OnCollectionSyncingBannerClicked(authenticated, collectionSynced);
+			if(!authenticated || !collectionSynced)
+			{
+				Options.TreeViewItemHSReplayCollection.IsSelected = true;
+				FlyoutOptions.IsOpen = true;
+				if(!authenticated)
+				{
+					var successUrl = Helper.BuildHsReplayNetUrl("decks", "collection_syncing_banner",
+						new[] { "modal=collection" });
+					HSReplayNetHelper.TryAuthenticate(successUrl).Forget();
+				}
+			}
+			else
+				HSReplayNetHelper.OpenDecksUrlWithCollection("collection_syncing_banner");
+		}
+
+		private void RemovableBanner_OnClose(object sender, EventArgs e)
+		{
+			Influx.OnCollectionSyncingBannerClosed();
+			Config.Instance.HideCollectionSyncingBanner = CollectionBannerId;
+			Config.Save();
+			OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
+		}
+
+		public Visibility CollectionSyncingBannerVisbiility
+		{
+			get
+			{
+				if(!(RemoteConfig.Instance.Data?.CollectionBanner?.Visible ?? true))
+					return Collapsed;
+				if(Config.Instance.HideCollectionSyncingBanner >= CollectionBannerId)
+				{
+					var synced = Account.Instance.CollectionState.Any();
+					var removablePostSync = RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePostSync ?? false;
+					var removablePreSync = RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePreSync ?? false;
+					if(synced && removablePostSync || !synced && removablePreSync)
+						return Collapsed;
+				}
+				return Visible;
+			}
+		}
+
+		private int CollectionBannerId => RemoteConfig.Instance.Data?.CollectionBanner?.RemovalId ?? 0;
+
+		public bool CollectionSyncingBannerRemovable
+		{
+			get
+			{
+				var synced = Account.Instance.CollectionState.Any();
+				return !synced && (RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePreSync ?? false)
+					|| synced && (RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePostSync ?? false);
+			}
 		}
 	}
 }

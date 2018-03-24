@@ -1,3 +1,12 @@
+## __Release v1.6.0 - 2018-03-21__
+
+__New__:
+- Added support to upload your collection to HSReplay.net.
+
+__Fixes__:
+- Fixed an issue where the "Start Hearthstone" button would not work correctly in some cases when the launcher was not running.
+
+
 ## __Release v1.5.14 - 2018-03-15__
 
 - Fixed an issue with the updater for the portable version.
@@ -6,7 +15,7 @@
 ## __Release v1.5.13 - 2018-03-12__
 __Updated for Hearthstone 10.4.0.23576__
 
-__Fixes:__:
+__Fixes__:
 - Fixed an issue where the player and opponent could sometimes be swapped.
 - Fixed an issue where mulliganed cards would sometimes be out of order in the deck list.
 - Fixed an issue where Weasel Tunneler was not tracked correctly.

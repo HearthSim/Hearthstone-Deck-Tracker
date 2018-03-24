@@ -4,18 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
-             xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Utility.Converters"
-             xmlns:enums="clr-namespace:Hearthstone_Deck_Tracker.Enums"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="700" d:DesignWidth="300">
-    <UserControl.Resources>
-        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <enums:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
-    </UserControl.Resources>
     <StackPanel>
         <DockPanel Margin="10,5,10,0">
             <Label Content="{lex:Loc Options_Tracker_Appearance_Label_Language}" HorizontalAlignment="Left"

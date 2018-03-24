@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.StartHearthstoneButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             Visibility="{Binding HearthstoneIsRunning, Converter={StaticResource InverseBoolToVisibility}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="300">
+    <Button Style="{StaticResource AccentedSquareButtonStyle}"
+            BorderThickness="1" IsEnabled="{Binding Enabled}"
+            Command="{Binding StartHearthstone}">
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <Image Source="{StaticResource HearthstoneIcon}" Width="34" Height="34"
+                   RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock VerticalAlignment="Center" Margin="5,0,0,0"
+                       FontSize="14" Text="{lex:LocTextUpper StartHearthstoneButton_Text}" />
+        </StackPanel>
+    </Button>
+</UserControl>

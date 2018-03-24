@@ -234,8 +234,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		[PredefinedHotKeyAction("Start Hearthstone", "Starts the Battle.net launcher and/or Hearthstone.")]
 		public static void StartHearthstone()
 		{
-			if(Core.MainWindow.BtnStartHearthstone.IsEnabled)
-				Helper.StartHearthstoneAsync().Forget();
+			HearthstoneRunner.StartHearthstone().Forget();
 		}
 
 		[PredefinedHotKeyAction("Show main window", "Brings up the main window.")]

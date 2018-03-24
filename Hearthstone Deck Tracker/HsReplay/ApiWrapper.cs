@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.HsReplay.Data;
-using Hearthstone_Deck_Tracker.HsReplay.Enums;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using HSReplay;
 using HSReplay.Responses;
@@ -23,6 +20,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			if(!string.IsNullOrEmpty(Account.Instance.UploadToken))
 				return Account.Instance.UploadToken;
+			UploadTokenHistory.Write("Trying to request new token");
 			string token;
 			try
 			{
@@ -34,43 +32,27 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			catch(Exception e)
 			{
 				Log.Error(e);
+				UploadTokenHistory.Write("Requesting new token failed:\n" + e);
 				throw new Exception("Webrequest to obtain upload-token failed.", e);
 			}
 			Account.Instance.UploadToken = token;
+			Account.Instance.TokenClaimed = false;
 			Account.Save();
+			UploadTokenHistory.Write("Received " + token);
 			Log.Info("Received new upload-token.");
 			return token;
 		}
 
-		public static async Task<string> GetClaimAccountUrl()
+		public static async Task UpdateUploadTokenStatus()
 		{
-			try
-			{
-				var token = await GetUploadToken();
-				Log.Info("Getting claim url...");
-				return await Client.GetClaimAccountUrl(token);
-			}
-			catch(Exception e)
-			{
-				Log.Error(e);
-				ErrorManager.AddError("Error claiming account", e.Message);
-			}
-			return null;
-		}
-
-		public static async Task UpdateAccountStatus()
-		{
-			Log.Info("Checking account status...");
+			Log.Info("Checking token status...");
 			try
 			{
 				var token = await GetUploadToken();
 				var accountStatus = await Client.GetAccountStatus(token);
-				Account.Instance.Id = accountStatus?.User?.Id ?? 0;
-				Account.Instance.Username = accountStatus?.User?.Username;
-				Account.Instance.Status = accountStatus?.User != null ? AccountStatus.Registered : AccountStatus.Anonymous;
-				Account.Instance.LastUpdated = DateTime.Now;
+				Account.Instance.TokenClaimed = accountStatus?.User != null;
 				Account.Save();
-				Log.Info($"Id={Account.Instance.Id}, Username={Account.Instance.Username}, Status={Account.Instance.Status}");
+				Log.Info($"Token is {(Account.Instance.TokenClaimed == true ? "" : "not ")}claimed");
 			}
 			catch(WebException ex)
 			{
@@ -78,17 +60,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				var response = ex.Response as HttpWebResponse;
 				if(response?.StatusCode == HttpStatusCode.NotFound && !_requestedNewToken)
 				{
+					Log.Info("Requesting new token");
 					_requestedNewToken = true;
-					Account.Instance.UploadToken = string.Empty;
-					await UpdateAccountStatus();
-					return;
+					Account.Instance.Reset();
+					await UpdateUploadTokenStatus();
 				}
-				ErrorManager.AddError("Error retrieving HSReplay account status", ex.Message);
 			}
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				ErrorManager.AddError("Error retrieving HSReplay account status", ex.Message);
 			}
 		}
 

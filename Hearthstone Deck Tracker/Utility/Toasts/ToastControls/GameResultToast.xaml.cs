@@ -16,26 +16,19 @@ using Hearthstone_Deck_Tracker.Stats;
 
 namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 {
-	/// <summary>
-	/// Interaction logic for GameResultToast.xaml
-	/// </summary>
-	public partial class GameResultToast : UserControl
+	public partial class GameResultToast : INotifyPropertyChanged
 	{
-		private const int ExpandedHeight = 141;
-		private const int ExpandedWidth = 350;
 		private readonly GameStats _game;
 		private bool _edited;
-		private bool _expanded;
+		private bool _showDetails;
 
 		public GameResultToast(string deckName, [NotNull] GameStats game)
 		{
-			InitializeComponent();
-			InitializeComponent();
 			DeckName = deckName;
 			_game = game;
-			ComboBoxResult.ItemsSource = new[] { GameResult.Win, GameResult.Loss };
-			ComboBoxFormat.ItemsSource = new[] { Enums.Format.Standard, Enums.Format.Wild };
-			ComboBoxGameMode.ItemsSource = new[]
+			Results = new[] { GameResult.Win, GameResult.Loss };
+			Formats = new[] { Enums.Format.Standard, Enums.Format.Wild };
+			Modes = new[]
 			{
 				GameMode.Arena,
 				GameMode.Brawl,
@@ -45,9 +38,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 				GameMode.Ranked,
 				GameMode.Spectator
 			};
+			InitializeComponent();
 		}
 
-		public string DeckName { get; set; }
+		public GameMode[] Modes { get; }
+
+		public Format[] Formats { get; }
+
+		public GameResult[] Results { get; }
+
+		public string DeckName { get; }
 
 		public HeroClassWrapper Opponent
 		{
@@ -98,6 +98,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public BitmapImage PlayerClassImage => ImageCache.GetClassIcon(_game.PlayerHero);
 
+		public bool ShowDetails
+		{
+			get => _showDetails;
+			set
+			{
+				_showDetails = value; 
+				OnPropertyChanged();
+			}
+		}
+
 		private void RectangleSettings_OnMouseDown(object sender, MouseButtonEventArgs e)
 		{
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
@@ -105,36 +115,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 			Core.MainWindow.ActivateWindow();
 		}
 
-		private void PanelSummary_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => Expand();
-
-		private void Expand()
-		{
-			if(_expanded)
-				return;
-			_expanded = true;
-			PanelSummary.Visibility = Visibility.Collapsed;
-			PanelDetailHeader.Visibility = Visibility.Visible;
-			PanelDetailBody.Visibility = Visibility.Visible;
-			Height = ExpandedHeight;
-			Width = ExpandedWidth;
-		}
+		private void PanelSummary_MouseLeftButtonUp(object sender, MouseButtonEventArgs e) => ShowDetails = true;
 
 		private void GameResultToast_OnUnloaded(object sender, RoutedEventArgs e)
 		{
 			if(_edited)
 				DeckStatsList.Save();
-		}
-
-		private void GameResultToast_OnMouseEnter(object sender, MouseEventArgs e)
-		{
-			if(!_expanded && Cursor != Cursors.Wait)
-				Cursor = Cursors.Hand;
-		}
-
-		private void GameResultToast_OnMouseLeave(object sender, MouseEventArgs e)
-		{
-			if(Cursor != Cursors.Wait)
-				Cursor = Cursors.Arrow;
 		}
 
 		private void RectangleClose_OnMouseDown(object sender, MouseButtonEventArgs e) => ToastManager.ForceCloseToast(this);
@@ -150,11 +136,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 			public string Class { get; }
 
-			public override bool Equals(object obj)
-			{
-				var hcw = obj as HeroClassWrapper;
-				return hcw != null && Equals(hcw);
-			}
+			public override bool Equals(object obj) => obj is HeroClassWrapper hcw && Equals(hcw);
 
 			protected bool Equals(HeroClassWrapper other) => string.Equals(Class, other.Class);
 
