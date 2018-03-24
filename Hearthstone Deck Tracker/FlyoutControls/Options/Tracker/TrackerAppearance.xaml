@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -16,7 +17,7 @@
                    VerticalAlignment="Top" />
             <ComboBox x:Name="ComboBoxLanguage" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboBoxLanguage_SelectionChanged">
+                      utility:ComboBoxHelper.SelectionChanged="ComboBoxLanguage_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
@@ -38,7 +39,7 @@
                    VerticalAlignment="Top" />
             <ComboBox x:Name="ComboboxTheme" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboboxTheme_SelectionChanged">
+                      utility:ComboBoxHelper.SelectionChanged="ComboboxTheme_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
@@ -51,7 +52,7 @@
                    VerticalAlignment="Top" />
             <ComboBox x:Name="ComboboxAccent" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboboxAccent_SelectionChanged">
+                      utility:ComboBoxHelper.SelectionChanged="ComboboxAccent_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
@@ -64,14 +65,14 @@
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
             <ComboBox x:Name="ComboBoxIconSet" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboboxIconSet_SelectionChanged" />
+                      utility:ComboBoxHelper.SelectionChanged="ComboboxIconSet_SelectionChanged" />
         </DockPanel>
         <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
             <Label Content="{lex:Loc Options_Tracker_Appearance_Label_ClassColors}" HorizontalAlignment="Left" VerticalAlignment="Top"
                    Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
             <ComboBox x:Name="ComboBoxClassColors" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboBoxClassColors_SelectionChanged">
+                      utility:ComboBoxHelper.SelectionChanged="ComboBoxClassColors_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
@@ -84,14 +85,14 @@
                    VerticalAlignment="Top" />
             <ComboBox x:Name="ComboBoxCardTheme" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboBoxCardTheme_SelectionChanged" />
+                      utility:ComboBoxHelper.SelectionChanged="ComboBoxCardTheme_SelectionChanged" />
         </DockPanel>
         <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
             <Label Content="{lex:Loc Options_Tracker_Appearance_Label_DeckLayout}" HorizontalAlignment="Left" VerticalAlignment="Top"
                    Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}" />
             <ComboBox x:Name="ComboBoxDeckLayout" HorizontalAlignment="Right"
                       VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboboxDeckLayout_SelectionChanged">
+                      utility:ComboBoxHelper.SelectionChanged="ComboboxDeckLayout_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>

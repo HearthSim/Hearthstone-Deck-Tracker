@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -31,7 +32,8 @@
             </Border>
 
 
-            <ComboBox Name="ComboBoxStatType" Height="28" Margin="0,-2,0,0" SelectionChanged="ComboBoxStatType_OnSelectionChanged">
+            <ComboBox Name="ComboBoxStatType" Height="28" Margin="0,-2,0,0"
+                      utility:ComboBoxHelper.SelectionChanged="ComboBoxStatType_OnSelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"
