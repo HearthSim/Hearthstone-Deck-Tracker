@@ -1596,9 +1596,7 @@
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>"$(ProjectDir)PreBuildEvent.bat" "$(ProjectDir)..\" "$(ProjectDir)" "$(TargetDir)" 0 0  
- 
-</PreBuildEvent>
+    <PreBuildEvent>powershell -executionPolicy bypass -command "&amp; '$(ProjectDir)PreBuild.ps1' -solution '$(ProjectDir)..\' -project '$(ProjectDir)' -target '$(TargetDir)'"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
