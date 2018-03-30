@@ -18,6 +18,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.HsReplay.Utility;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -368,8 +369,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlIgnore]
 		public string GotCoin
 		{
-			get { return Coin ? "Yes" : "No"; }
-			set { Coin = value.ToLower() == "Yes"; }
+			get { return Coin ? LocUtil.Get(nameof(Strings.Enum_YesNo_Yes)) : LocUtil.Get(nameof(Strings.Enum_YesNo_No)); }
+			set { Coin = value == LocUtil.Get(nameof(Strings.Enum_YesNo_Yes)); }
 		}
 
 		public HsReplayInfo HsReplay { get; set; } = new HsReplayInfo();
