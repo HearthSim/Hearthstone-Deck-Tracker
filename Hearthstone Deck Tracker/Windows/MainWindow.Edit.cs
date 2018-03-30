@@ -8,10 +8,12 @@ using System.Windows.Input;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
+using Hearthstone_Deck_Tracker.Properties;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -39,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(!decksList.Any())
 				return;
 
-			var settings = new MessageDialogs.Settings {AffirmativeButtonText = "Yes", NegativeButtonText = "No"};
+			var settings = new MessageDialogs.Settings {AffirmativeButtonText = LocUtil.Get(nameof(Strings.Enum_YesNo_Yes)), NegativeButtonText = LocUtil.Get(nameof(Strings.Enum_YesNo_No))};
 			var keepStatsInfo = Config.Instance.KeepStatsWhenDeletingDeck
 				                    ? "The stats will be kept (can be changed in options)"
 				                    : "The stats will be deleted (can be changed in options)";
