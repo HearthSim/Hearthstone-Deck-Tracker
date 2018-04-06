@@ -337,6 +337,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.KingTogwaggle:
 								AddKnownCardId(gameState, NonCollectible.Neutral.KingTogwaggle_KingsRansomToken);
 								break;
+							case NonCollectible.Rogue.ValeeratheHollow_ShadowReflectionToken:
+								if(cardId == Collectible.Druid.JadeIdol)
+									AddKnownCardId(gameState, Collectible.Druid.JadeIdol, 3);
+								break;
 							case NonCollectible.Neutral.TheCandle:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCandle);
 								break;
