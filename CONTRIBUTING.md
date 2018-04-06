@@ -2,8 +2,8 @@
 1. Download and install [Visual Studio Community 2017](https://www.visualstudio.com/downloads/). During install, make sure ".NET desktop development" is checked.
 2. Download and install [Git](https://git-scm.com/download). During install, change "Use Git from Git Bash only" to one of the other two options, depending on your preference.
 3. Clone the repository by opening command prompt/powershell in the folder of your choice and typing `git clone https://github.com/HearthSim/Hearthstone-Deck-Tracker`.
-4. Download the recommended latest [nuget executable](https://dist.nuget.org/index.html) and copy it into your PATH, or where you cloned the git repository (where bootstrap.bat is).
-5. run bootstrap.bat, preferably from a command prompt/powershell window to see any errors.
+4. Download the recommended latest [nuget executable](https://dist.nuget.org/index.html) and copy it into your PATH, or where you cloned the git repository (where bootstrap.ps1 is).
+5. run bootstrap.ps1, preferably from a powershell window to see any errors.
 6. Open the solution file with VS17 and do a build to make sure everything is working properly.
 
 # Creating Issues

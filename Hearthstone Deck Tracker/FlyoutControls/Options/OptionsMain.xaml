@@ -51,11 +51,9 @@
             </DockPanel>
         </Border>
         <GroupBox Header="{Binding ContentHeader}">
-            <StackPanel>
-                <StackPanel Visibility="{Binding HSReplayHeaderVisibility}">
-                    <Image Source="../../Resources/hsreplay_banner.jpg"
-                           RenderOptions.BitmapScalingMode="Fant"
-                           Margin="-4">
+            <DockPanel>
+                <StackPanel Visibility="{Binding HSReplayHeaderVisibility}" DockPanel.Dock="Top">
+                    <Image Source="../../Resources/hsreplay_banner.jpg" RenderOptions.BitmapScalingMode="Fant" Margin="-4">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDown" >
                                 <i:InvokeCommandAction Command="{Binding HSReplayBannerCommand}"/>
@@ -67,7 +65,7 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ContentControl Content="{Binding OptionsContent}"/>
                 </ScrollViewer>
-            </StackPanel>
+            </DockPanel>
         </GroupBox>
     </DockPanel>
 </UserControl>
