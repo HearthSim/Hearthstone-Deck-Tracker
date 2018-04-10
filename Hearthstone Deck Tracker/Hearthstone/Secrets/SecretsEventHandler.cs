@@ -131,14 +131,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			//We might not know this for certain - requires additional tracking logic.
 			var cardsInOpponentsHand = Game.Entities.Select(kvp => kvp.Value).Where(e => e.IsInHand && e.IsControlledBy(Game.Opponent.Id)).ToList();
 			foreach (var cardInOpponentsHand in cardsInOpponentsHand)
-			{
 				EntititesInHandOnMinionsPlayed.Add(cardInOpponentsHand);
-			}
 
 			if (IsAnyMinionInOpponentsHand)
-			{
 				exclude.Add(Hunter.HiddenCache);
-			}
 
 			Exclude(exclude);
 		}
@@ -242,6 +238,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			var exclude = new List<string>();
 
+			if(FreeSpaceOnBoard)
+			{
+				if(Game.OpponentEntity.GetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN) >= 2)
+					exclude.Add(Hunter.RatTrap);
+			}
+
+			if(FreeSpaceInHand)
+			{
+				if(Game.OpponentEntity.GetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN) >= 2)
+					exclude.Add(Paladin.HiddenWisdom);
+			}
+
 			if(entity.IsSpell)
 			{
 				exclude.Add(Mage.Counterspell);
@@ -261,6 +269,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			}
 			else if(entity.IsMinion && Game.PlayerMinionCount > 3)
 				exclude.Add(Paladin.SacredTrial);
+
 			Exclude(exclude);
 		}
 

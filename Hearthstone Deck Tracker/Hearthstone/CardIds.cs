@@ -91,7 +91,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
+				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, RatTrap, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
 				public static string BearTrap => Collectible.Hunter.BearTrap;
 				public static string CatTrick => Collectible.Hunter.CatTrick;
 				public static string DartTrap => Collectible.Hunter.DartTrap;
@@ -99,6 +99,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string FreezingTrap => Collectible.Hunter.FreezingTrap;
 				public static string HiddenCache => Collectible.Hunter.HiddenCache;
 				public static string Misdirection => Collectible.Hunter.Misdirection;
+				public static string RatTrap => Collectible.Hunter.RatTrap;
 				public static string Snipe => Collectible.Hunter.Snipe;
 				public static string SnakeTrap => Collectible.Hunter.SnakeTrap;
 				public static string VenomstrikeTrap => Collectible.Hunter.VenomstrikeTrap;
@@ -124,12 +125,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Paladin
 			{
-				public static List<string> All => new List<string> {Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, HandOfSalvation, NobleSacrifice, Redemption, Repentance, SacredTrial};
+				public static List<string> All => new List<string> {Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, HiddenWisdom, HandOfSalvation, NobleSacrifice, Redemption, Repentance, SacredTrial};
 				public static string Avenge => Collectible.Paladin.Avenge;
 				public static string CompetitiveSpirit => Collectible.Paladin.CompetitiveSpirit;
 				public static string EyeForAnEye => Collectible.Paladin.EyeForAnEye;
 				public static string GetawayKodo => Collectible.Paladin.GetawayKodo;
 				public static string HandOfSalvation => NonCollectible.Paladin.HandOfSalvation;
+				public static string HiddenWisdom => Collectible.Paladin.HiddenWisdom;
 				public static string NobleSacrifice => Collectible.Paladin.NobleSacrifice;
 				public static string Redemption => Collectible.Paladin.Redemption;
 				public static string Repentance => Collectible.Paladin.Repentance;
