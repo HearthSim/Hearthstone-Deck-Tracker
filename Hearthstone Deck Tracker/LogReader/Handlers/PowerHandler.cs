@@ -279,6 +279,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						switch(actionStartingCardId)
 						{
 							case Collectible.Rogue.GangUp:
+							case Collectible.Hunter.DireFrenzy:
 								AddKnownCardId(gameState, GetTargetCardId(match), 3);
 								break;
 							case Collectible.Rogue.BeneathTheGrounds:
@@ -290,6 +291,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Druid.Recycle:
 							case Collectible.Mage.ManicSoulcaster:
 							case Collectible.Neutral.ZolaTheGorgon:
+							case Collectible.Druid.Splintergraft:
+							//case Collectible.Priest.HolyWater: -- TODO
+							case Collectible.Neutral.BalefulBanker:
+							case Collectible.Neutral.DollmasterDorian:
 								AddKnownCardId(gameState, GetTargetCardId(match));
 								break;
 							case Collectible.Mage.ForgottenTorch:
@@ -340,6 +345,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case NonCollectible.Neutral.TheCandle:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCandle);
 								break;
+							//case Collectible.Rogue.Wanted: -- TODO
+							//	AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
+							//	break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
