@@ -33,6 +33,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Icecrown")]
 		ICECROWN = 1001,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Loot")]
-		LOOT = 1004
+		LOOT = 1004,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Gilneas")]
+		GILNEAS = 1125
 	}
 }

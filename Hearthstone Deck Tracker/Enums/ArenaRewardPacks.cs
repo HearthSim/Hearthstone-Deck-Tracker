@@ -30,5 +30,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_KoboldsAndCatacombs")]
 		Loot = CardSet.LOOTAPALOOZA,
+
+		[LocDescription("Enum_ArenaRewardPacks_Witchwood")]
+		Gilneas = CardSet.GILNEAS,
 	}
 }
