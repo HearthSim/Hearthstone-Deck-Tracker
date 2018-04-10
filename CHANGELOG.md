@@ -1,3 +1,11 @@
+## __Release v1.6.1 - 2018-04-10__
+
+__Updated for The Witchwood__
+
+__Fixes__:
+- Fixed an issue where the options menu was not scrollable.
+
+
 ## __Release v1.6.0 - 2018-03-21__
 
 __New__:
