@@ -53,8 +53,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => StateChange(value, gameState);
 				case TRANSFORMED_FROM_CARD:
 					return () => TransformedFromCardChange(id, value, game);
+				case CREATOR:
+				case DISPLAYED_CREATOR:
+					return () => CreatorChanged(id, value, game);
 			}
 			return null;
+		}
+
+		private void CreatorChanged(int id, int value, IGame game)
+		{
+			if(value == 0)
+				return;
+			if(game.Entities.TryGetValue(id, out var entity))
+				entity.Info.Created = true;
 		}
 
 		private void TransformedFromCardChange(int id, int value, IGame game)
