@@ -1,3 +1,8 @@
+## __Release v1.6.2 - 2018-04-12__
+
+__Updated for Standard rotation__
+
+
 ## __Release v1.6.1 - 2018-04-10__
 
 __Updated for The Witchwood__
