@@ -12,7 +12,7 @@
         <local:DeckExportViewModel/>
      </UserControl.DataContext>
      <TabControl>
-        <TabItem Header="Deck code">
+        <TabItem Header="{lex:Loc DeckExport_Header_DeckCode}">
             <DockPanel Margin="5">
                 <TextBlock DockPanel.Dock="Top" Text="{lex:Loc DeckExport_Label_Instructions}" FontWeight="Bold"/>
                 <TextBlock DockPanel.Dock="Top" Margin="5,0,0,0">
