@@ -240,13 +240,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(FreeSpaceOnBoard)
 			{
-				if(Game.OpponentEntity.GetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN) >= 2)
+				if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN) >= 3)
 					exclude.Add(Hunter.RatTrap);
 			}
 
 			if(FreeSpaceInHand)
 			{
-				if(Game.OpponentEntity.GetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN) >= 2)
+				if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN) >= 3)
 					exclude.Add(Paladin.HiddenWisdom);
 			}
 
