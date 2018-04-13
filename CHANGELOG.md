@@ -1,3 +1,14 @@
+## __Release v1.6.3 - 2018-04-13__
+
+__New__:
+- The opponent card list now tracks cards revealed by Cameleos.
+
+__Fixes__:
+- Fixed an issue where deck tracking would no longer work after playing Prince Liam.
+- Fixed an issue where secret tracking for Hidden Wisdom and Rat Trap did not work correctly.
+- Fixed an issue where Ice Block, Molten Giant and Coldlight Oracle were still considered Standard.
+
+
 ## __Release v1.6.2 - 2018-04-12__
 
 __Updated for Standard rotation__
