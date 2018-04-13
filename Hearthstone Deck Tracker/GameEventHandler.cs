@@ -857,6 +857,12 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentCreateInPlay.Execute(Database.GetCardFromId(cardId));
 		}
 
+		public void HandleChameleosReveal(string cardId)
+		{
+			_game.Opponent.ChameleosReveal(cardId);
+			Core.UpdateOpponentCards();
+		}
+
 		public void HandlePlayerJoust(Entity entity, string cardId, int turn)
 		{
 			_game.Player.JoustReveal(entity, turn);

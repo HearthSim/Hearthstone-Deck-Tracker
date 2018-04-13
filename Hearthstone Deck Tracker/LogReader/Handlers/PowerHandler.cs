@@ -167,8 +167,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					if(!game.Entities.ContainsKey(entityId))
 						game.Entities.Add(entityId, new Entity(entityId));
-					if(type != "CHANGE_ENTITY" || string.IsNullOrEmpty(game.Entities[entityId].CardId))
-						game.Entities[entityId].CardId = cardId;
+					var entity = game.Entities[entityId];
+					if(type != "CHANGE_ENTITY" || string.IsNullOrEmpty(entity.CardId))
+						entity.CardId = cardId;
+					if(type == "CHANGE_ENTITY" && entity.GetTag(GameTag.TRANSFORMED_FROM_CARD) == 46706)
+						gameState.ChameleosReveal = new Tuple<int, string>(entityId, cardId);
 					gameState.SetCurrentEntity(entityId);
 					if(gameState.DeterminedPlayers)
 						_tagChangeHandler.InvokeQueuedActions(game);
@@ -396,6 +399,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					_tagChangeHandler.InvokeQueuedActions(game);
 					gameState.JoustReveals = 0;
 				}
+
+				if(gameState.CurrentBlock?.Type == "TRIGGER"
+					&& (gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Chameleos_ShiftingEnchantment
+						|| gameState.CurrentBlock?.CardId == Collectible.Priest.Chameleos)
+					&& gameState.ChameleosReveal != null
+					&& game.Entities.TryGetValue(gameState.ChameleosReveal.Item1, out var chameleos)
+					&& chameleos.HasTag(GameTag.SHIFTING))
+				{
+					gameState.GameHandler.HandleChameleosReveal(gameState.ChameleosReveal.Item2);
+				}
+
+				gameState.ChameleosReveal = null;
 
 				gameState.BlockEnd();
 			}

@@ -319,6 +319,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(entity);
 		}
 
+		public void ChameleosReveal(string cardId)
+		{
+			if(InDeckPrecitions.All(x => x.CardId != cardId))
+				InDeckPrecitions.Add(new PredictedCard(cardId, 0));
+		}
+
 		public void JoustReveal(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;

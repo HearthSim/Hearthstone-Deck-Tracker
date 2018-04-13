@@ -81,5 +81,6 @@ namespace Hearthstone_Deck_Tracker
 		#endregion OpponentHandlers
 
 		void HandleEntityPredamage(Entity entity, int value);
+		void HandleChameleosReveal(string cardId);
 	}
 }

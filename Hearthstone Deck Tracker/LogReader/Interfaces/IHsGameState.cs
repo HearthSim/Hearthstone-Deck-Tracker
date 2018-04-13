@@ -3,8 +3,6 @@
 using System;
 using System.Collections.Generic;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Enums;
-using Hearthstone_Deck_Tracker.Replay;
 
 #endregion
 
@@ -36,5 +34,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		void BlockStart(string type, string cardId);
 		void BlockEnd();
 		Block CurrentBlock { get; }
+		Tuple<int, string> ChameleosReveal { get; set; }
 	}
 }
