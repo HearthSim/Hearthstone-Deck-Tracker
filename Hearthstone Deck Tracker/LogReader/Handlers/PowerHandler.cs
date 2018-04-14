@@ -236,6 +236,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					if(string.IsNullOrEmpty(actionStartingCardId))
 						return;
+					if(actionStartingCardId == Collectible.Shaman.Shudderwock)
+					{
+						var effectCardId = match.Groups["effectCardId"].Value;
+						if (!string.IsNullOrEmpty(effectCardId))
+							actionStartingCardId = effectCardId;
+					}
 					if(blockType == "TRIGGER")
 					{
 						switch(actionStartingCardId)
