@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.Enums.GameTag;
 using static HearthDb.Enums.PlayState;
 using static HearthDb.Enums.Zone;
+using CardIds = HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
@@ -65,7 +66,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(value == 0)
 				return;
 			if(game.Entities.TryGetValue(id, out var entity))
+			{
+				var displayedCreatorId = entity.GetTag(DISPLAYED_CREATOR);
+				if(game.Entities.TryGetValue(displayedCreatorId, out var displayedCreator))
+				{
+					// For some reason Far Sight sets DISPLAYED_CREATOR on the entity
+					if(displayedCreator.CardId == CardIds.Collectible.Shaman.FarSight)
+						return;
+				}
 				entity.Info.Created = true;
+			}
 		}
 
 		private void TransformedFromCardChange(int id, int value, IGame game)
