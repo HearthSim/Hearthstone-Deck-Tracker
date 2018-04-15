@@ -74,6 +74,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(displayedCreator.CardId == CardIds.Collectible.Shaman.FarSight)
 						return;
 				}
+
+				var creatorId = entity.GetTag(CREATOR);
+				if(creatorId == game.GameEntity?.Id)
+					return;
 				entity.Info.Created = true;
 			}
 		}
