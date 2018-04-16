@@ -141,7 +141,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				}
 				else
 				{
-					ErrorManager.AddError("HSReplay.net error", "Could not update your collection. Please try again later.");
+					ErrorManager.AddError("HSReplay.net error",
+						"Could not update your collection. Please try again later.\n"
+						+ "If this problem persists please try logging out and back in"
+						+ " under 'options > hsreplay.net > my account'");
 					CollectionUploadError?.Invoke();
 				}
 			}, () =>
