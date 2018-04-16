@@ -1,3 +1,11 @@
+## __Release v1.6.4 - 2018-04-17__
+
+__Fixes__:
+- Fixed an issue where cards in dungeon runs were not tracked correctly.
+- Fixed an issue where cards created by Shudderwock were not tracked correctly.
+- Fixed an issue where cards drawn by Far Sight were not tracked correctly.
+
+
 ## __Release v1.6.3 - 2018-04-13__
 
 __New__:
