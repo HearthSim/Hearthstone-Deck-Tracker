@@ -68,6 +68,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(game.Entities.TryGetValue(id, out var entity))
 			{
 				var displayedCreatorId = entity.GetTag(DISPLAYED_CREATOR);
+				if(displayedCreatorId == id)
+				{
+					// Some cards (e.g. Direhorn Hatchling) wrongfully set DISPLAYED_CREATOR
+					// on themselves instead of the created entity.
+					return;
+				}
 				if(game.Entities.TryGetValue(displayedCreatorId, out var displayedCreator))
 				{
 					// For some reason Far Sight sets DISPLAYED_CREATOR on the entity
@@ -76,6 +82,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 
 				var creatorId = entity.GetTag(CREATOR);
+				if(creatorId == id)
+				{
+					// Same precaution as for Direhorn Hatching above.
+					return;
+				}
 				if(creatorId == game.GameEntity?.Id)
 					return;
 				entity.Info.Created = true;
