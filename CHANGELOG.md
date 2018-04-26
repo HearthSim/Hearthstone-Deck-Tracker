@@ -1,3 +1,11 @@
+## __Release v1.6.5 - 2018-04-17__
+
+__Added support for Monster Hunt__
+
+__Fixes__:
+- Fixed an issue where Direhorn Hatchling was considered created after dying.
+
+
 ## __Release v1.6.4 - 2018-04-17__
 
 __Fixes__:

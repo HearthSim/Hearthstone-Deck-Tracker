@@ -52,7 +52,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{Collectible.Mage.JainaProudmoore, "Mage"},
 			{Collectible.Priest.AnduinWrynn, "Priest"},
 			{Collectible.Warlock.LordJaraxxus, "Jaraxxus"},
-			{Collectible.Neutral.MajordomoExecutus, "Ragnaros the Firelord"}
+			{Collectible.Neutral.MajordomoExecutus, "Ragnaros the Firelord"},
+			{"GILA_600", "Warrior"},
+			{"GILA_500", "Rogue"},
+			{"GILA_400", "Hunter"},
+			{"GILA_900", "Mage"},
 		};
 
 		public static readonly Dictionary<string, string> HeroNameDict = new Dictionary<string, string>

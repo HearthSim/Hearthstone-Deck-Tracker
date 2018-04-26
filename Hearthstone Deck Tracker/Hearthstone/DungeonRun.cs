@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using HearthDb.Enums;
 using static HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class DungeonRun
 	{
-		public static Deck GetDefaultDeck(string playerClass)
+		public static Deck GetDefaultDeck(string playerClass, CardSet set)
 		{
-			var cards = GetCards(playerClass);
+			var cards = GetCards(playerClass, set);
 			if(cards == null)
 				return null;
 			var deck = new Deck
@@ -21,39 +22,122 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				IsDungeonDeck = true,
 				LastEdited = DateTime.Now
 			};
-			deck.Name = Helper.ParseDeckNameTemplate(Config.Instance.DungeonRunDeckNameTemplate, deck);
+			//Hack to avoid multiple templates. Should be good enough 99.9% of the time.
+			var template = Config.Instance.DungeonRunDeckNameTemplate.Replace("Dungeon Run", "Monster Hunt");
+			deck.Name = Helper.ParseDeckNameTemplate(template, deck);
 			return deck;
 		}
 
-		private static List<string> GetCards(string playerClass)
+		private static List<string> GetCards(string playerClass, CardSet set)
 		{
-			switch(playerClass.ToUpperInvariant())
+			switch(set)
 			{
-				case "ROGUE":
-					return DefaultDecks.Rogue;
-				case "WARRIOR":
-					return DefaultDecks.Warrior;
-				case "SHAMAN":
-					return DefaultDecks.Shaman;
-				case "PALADIN":
-					return DefaultDecks.Paladin;
-				case "HUNTER":
-					return DefaultDecks.Hunter;
-				case "DRUID":
-					return DefaultDecks.Druid;
-				case "WARLOCK":
-					return DefaultDecks.Warlock;
-				case "MAGE":
-					return DefaultDecks.Mage;
-				case "PRIEST":
-					return DefaultDecks.Priest;
+				case CardSet.LOOTAPALOOZA:
+				{
+					switch(playerClass.ToUpperInvariant())
+					{
+						case "ROGUE":
+							return LootDefaultDecks.Rogue;
+						case "WARRIOR":
+							return LootDefaultDecks.Warrior;
+						case "SHAMAN":
+							return LootDefaultDecks.Shaman;
+						case "PALADIN":
+							return LootDefaultDecks.Paladin;
+						case "HUNTER":
+							return LootDefaultDecks.Hunter;
+						case "DRUID":
+							return LootDefaultDecks.Druid;
+						case "WARLOCK":
+							return LootDefaultDecks.Warlock;
+						case "MAGE":
+							return LootDefaultDecks.Mage;
+						case "PRIEST":
+							return LootDefaultDecks.Priest;
+					}
+				}
+					break;
+				case CardSet.GILNEAS:
+				{
+					switch(playerClass.ToUpperInvariant())
+					{
+						case "ROGUE":
+							return GilDefaultDecks.Rogue;
+						case "WARRIOR":
+							return GilDefaultDecks.Warrior;
+						case "HUNTER":
+							return GilDefaultDecks.Hunter;
+						case "MAGE":
+							return GilDefaultDecks.Mage;
+					}
+				}
+					break;
 			}
 			return null;
 		}
 
-		public static bool IsDungeonBoss(string cardId) => cardId != null && cardId.Contains("LOOT") && cardId.Contains("BOSS");
+		public static bool IsDungeonBoss(string cardId) => cardId != null && (cardId.Contains("LOOT") || cardId.Contains("GIL")) && cardId.Contains("BOSS");
 
-		private static class DefaultDecks
+		private static class GilDefaultDecks
+		{
+			public static List<string> Rogue => new List<string>
+			{
+				Collectible.Neutral.ElvenArcher,
+				Collectible.Rogue.SinisterStrike,
+				Collectible.Neutral.WorgenInfiltrator,
+				Collectible.Neutral.BloodsailRaider,
+				Collectible.Hunter.Glaivezooka,
+				Collectible.Hunter.SnakeTrap,
+				Collectible.Rogue.BlinkFox,
+				Collectible.Rogue.FanOfKnives,
+				Collectible.Neutral.HiredGun,
+				Collectible.Rogue.Si7Agent
+			};
+
+			public static List<string> Warrior => new List<string>
+			{
+				Collectible.Neutral.AbusiveSergeant,
+				NonCollectible.Neutral.ExtraPowder,
+				Collectible.Neutral.LowlySquire,
+				Collectible.Neutral.AmaniBerserker,
+				Collectible.Warrior.CruelTaskmaster,
+				Collectible.Warrior.RedbandWasp,
+				Collectible.Warrior.Bash,
+				Collectible.Warrior.FierceMonkey,
+				Collectible.Warrior.KingsDefender,
+				Collectible.Warrior.BloodhoofBrave
+			};
+
+			public static List<string> Hunter => new List<string>
+			{
+				Collectible.Hunter.FieryBat,
+				Collectible.Hunter.OnTheHunt,
+				Collectible.Neutral.SwampLeech,
+				Collectible.Hunter.CracklingRazormaw,
+				Collectible.Hunter.HuntingMastiff,
+				Collectible.Hunter.ForlornStalker,
+				Collectible.Hunter.KillCommand,
+				Collectible.Hunter.UnleashTheHounds,
+				Collectible.Hunter.Houndmaster,
+				Collectible.Neutral.SwiftMessenger
+			};
+
+			public static List<string> Mage => new List<string>
+			{
+				Collectible.Mage.ArcaneMissiles,
+				Collectible.Mage.ManaWyrm,
+				Collectible.Neutral.MadBomber,
+				Collectible.Mage.PrimordialGlyph,
+				Collectible.Mage.ShimmeringTempest,
+				Collectible.Mage.UnstablePortal,
+				Collectible.Mage.Spellslinger,
+				Collectible.Neutral.TinkmasterOverspark,
+				Collectible.Mage.WaterElemental,
+				Collectible.Neutral.Blingtron3000
+			};
+		}
+
+		private static class LootDefaultDecks
 		{
 			public static List<string> Rogue => new List<string>
 			{
