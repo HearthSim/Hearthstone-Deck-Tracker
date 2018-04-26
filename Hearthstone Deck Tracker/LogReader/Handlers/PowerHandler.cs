@@ -354,6 +354,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case NonCollectible.Neutral.TheCandle:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCandle);
 								break;
+							case NonCollectible.Neutral.CoinPouch:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SackOfCoins);
+								break;
+							case NonCollectible.Neutral.SackOfCoins:
+								AddKnownCardId(gameState, NonCollectible.Neutral.HeftySackOfCoins);
+								break;
 							//case Collectible.Rogue.Wanted: -- TODO
 							//	AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
 							//	break;
