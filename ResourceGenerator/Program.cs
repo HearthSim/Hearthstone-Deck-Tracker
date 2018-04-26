@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Resources;
 using HearthDb;
 using HearthDb.Enums;
-using nQuant;
 
 namespace ResourceGenerator
 {
@@ -25,7 +23,7 @@ namespace ResourceGenerator
 
 			foreach(var card in Cards.All)
 			{
-				if(card.Value.Set == CardSet.CHEAT)
+				if(card.Value.Set == CardSet.CHEAT || card.Value.Set == CardSet.SLUSH)
 					continue;
 				var key = card.Value.Set + (card.Value.Collectible ? "" : "_NC");
 				if(!dict.ContainsKey(key))
