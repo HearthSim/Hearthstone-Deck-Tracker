@@ -1,4 +1,4 @@
-## __Release v1.6.5 - 2018-04-17__
+## __Release v1.6.5 - 2018-04-27__
 
 __Added support for Monster Hunt__
 
