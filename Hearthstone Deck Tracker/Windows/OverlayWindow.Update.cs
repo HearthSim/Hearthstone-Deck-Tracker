@@ -117,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Collapsed : Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Collapsed : Visible;
 
-			var gameStarted = !_game.IsInMenu && _game.Entities.Count >= 67 && _game.Player.PlayerEntities.Any();
+			var gameStarted = !_game.IsInMenu && _game.SetupDone && _game.Player.PlayerEntities.Any();
 			SetCardCount(_game.Player.HandCount, !gameStarted ? 30 : _game.Player.DeckCount);
 
 			SetOpponentCardCount(_game.Opponent.HandCount, !gameStarted ? 30 : _game.Opponent.DeckCount);
@@ -170,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu ? Collapsed : Visible;
 
 			// do the calculation if at least one of the icons is visible
-			if (_game.Entities.Count > 67 && (IconBoardAttackPlayer.Visibility == Visible || IconBoardAttackOpponent.Visibility == Visible))
+			if (_game.SetupDone && (IconBoardAttackPlayer.Visibility == Visible || IconBoardAttackOpponent.Visibility == Visible))
 			{
 				var board = new BoardState();
 				TextBlockPlayerAttack.Text = board.Player.Damage.ToString();
