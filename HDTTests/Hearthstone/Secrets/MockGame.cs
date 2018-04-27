@@ -68,5 +68,6 @@ namespace HDTTests.Hearthstone.Secrets
 		public int ProposedDefender { get; set; }
 		public bool? IsDungeonMatch { get; set; }
 		public bool PlayerChallengeable { get; }
+		public bool SetupDone { get; set; }
 	}
 }

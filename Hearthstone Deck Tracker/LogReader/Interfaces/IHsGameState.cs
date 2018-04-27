@@ -23,7 +23,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		Dictionary<int, IList<string>> KnownCardIds { get; set; }
 		int LastCardPlayed { get; set; }
 		bool WasInProgress { get; set; }
-		bool SetupDone { get; set; }
 		int GameTriggerCount { get; set; }
 		Zone CurrentEntityZone { get; set; }
 		bool DeterminedPlayers { get; }

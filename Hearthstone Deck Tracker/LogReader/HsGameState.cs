@@ -35,7 +35,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public Dictionary<int, IList<string>> KnownCardIds { get; set; }
 		public int LastCardPlayed { get; set; }
 		public bool WasInProgress { get; set; }
-		public bool SetupDone { get; set; }
 		public int GameTriggerCount { get; set; }
 		public Zone CurrentEntityZone { get; set; }
 		public bool DeterminedPlayers => _game.Player.Id > 0 && _game.Opponent.Id > 0;
@@ -53,7 +52,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			KnownCardIds.Clear();
 			LastGameStart = DateTime.Now;
 			WasInProgress = false;
-			SetupDone = false;
 			CurrentEntityId = 0;
 			GameTriggerCount = 0;
 			CurrentBlock = null;

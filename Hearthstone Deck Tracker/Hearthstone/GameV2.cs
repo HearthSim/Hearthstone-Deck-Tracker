@@ -68,6 +68,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		internal GameStats StoredGameStats { get; set; }
 		public int ProposedAttacker { get; set; }
 		public int ProposedDefender { get; set; }
+		public bool SetupDone { get; set; }
 
 		public bool PlayerChallengeable => CurrentMode == Mode.HUB || CurrentMode == Mode.TOURNAMENT || CurrentMode == Mode.ADVENTURE
 					|| CurrentMode == Mode.TAVERN_BRAWL || CurrentMode == Mode.DRAFT || CurrentMode == Mode.PACKOPENING
@@ -194,6 +195,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Entities.Clear();
 			SavedReplay = false;
 			SecretsManager.Reset();
+			SetupDone = false;
 			_spectator = null;
 			_currentGameMode = GameMode.None;
 			_currentGameType = GameType.GT_UNKNOWN;

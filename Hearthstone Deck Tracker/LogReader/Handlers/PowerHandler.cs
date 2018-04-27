@@ -403,7 +403,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					gameState.GameTriggerCount += 10;
 					_tagChangeHandler.InvokeQueuedActions(game);
-					gameState.SetupDone = true;
+					game.SetupDone = true;
 				}
 				if(gameState.CurrentBlock?.Type == "JOUST" || gameState.CurrentBlock?.Type == "REVEAL_CARD")
 				{

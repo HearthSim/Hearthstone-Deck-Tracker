@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void TurnChange(IHsGameState gameState, IGame game)
 		{
-			if(!gameState.SetupDone || game.PlayerEntity == null)
+			if(!game.SetupDone || game.PlayerEntity == null)
 				return;
 			var activePlayer = game.PlayerEntity.HasTag(CURRENT_PLAYER) ? ActivePlayer.Player : ActivePlayer.Opponent;
 			if(activePlayer == ActivePlayer.Player)
@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void StepChange(IHsGameState gameState, IGame game)
 		{
-			if(gameState.SetupDone || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
+			if(game.SetupDone || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
 				return;
 			Log.Info("Game was already in progress.");
 			gameState.WasInProgress = true;
@@ -277,7 +277,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					break;
 				case Zone.INVALID:
 					var maxId = GetMaxHeroPowerId(game);
-					if(!gameState.SetupDone && (id <= maxId || game.GameEntity?.GetTag(STEP) == (int)Step.INVALID && entity.GetTag(ZONE_POSITION) < 5))
+					if(!game.SetupDone && (id <= maxId || game.GameEntity?.GetTag(STEP) == (int)Step.INVALID && entity.GetTag(ZONE_POSITION) < 5))
 					{
 						entity.Info.OriginalZone = DECK;
 						SimulateZoneChangesFromDeck(gameState, id, game, value, entity.CardId, maxId);
@@ -500,7 +500,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					break;
 				case SETASIDE:
 				case REMOVEDFROMGAME:
-					if(!gameState.SetupDone)
+					if(!game.SetupDone)
 					{
 						entity.Info.Created = true;
 						return;
