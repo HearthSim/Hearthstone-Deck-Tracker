@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static DateTime? _lastMainWindowActivation;
 		private static DateTime _oAuthInitiated;
 
-		public static void OnAppStart(Version version, bool isNew, bool authenticated, int startupDuration, int numPlugins)
+		public static void OnAppStart(Version version, bool isNew, bool authenticated, bool premium, int startupDuration, int numPlugins)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("version", version.ToVersionString(true))
 				.Tag("new", isNew)
 				.Tag("authenticated", authenticated)
+				.Tag("premium", premium)
 				.Tag("collection_syncing", Config.Instance.SyncCollection)
 				.Tag("collections_uploaded", Account.Instance.CollectionState.Count)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
