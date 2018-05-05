@@ -59,7 +59,11 @@ namespace Hearthstone_Deck_Tracker
 			MenuItemShow = new MenuItem(LocUtil.Get("TrayIcon_MenuItemShow"), (sender, args) => Core.MainWindow.ActivateWindow());
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemShow);
 
-			MenuItemExit = new MenuItem(LocUtil.Get("TrayIcon_MenuItemExit"), (sender, args) => Core.MainWindow.Close());
+			MenuItemExit = new MenuItem(LocUtil.Get("TrayIcon_MenuItemExit"), (sender, args) =>
+			{
+				Core.MainWindow.ExitRequestedFromTray = true;
+				Core.MainWindow.Close();
+			});
 			NotifyIcon.ContextMenu.MenuItems.Add(MenuItemExit);
 
 			NotifyIcon.MouseClick += (sender, args) =>
