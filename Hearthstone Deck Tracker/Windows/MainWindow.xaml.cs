@@ -159,6 +159,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 #region Properties
 
 		private bool _initialized => Core.Initialized;
+		public bool ExitRequestedFromTray;
 
 		private double _heightChangeDueToSearchBox;
 		public const int SearchBoxHeight = 30;
@@ -294,6 +295,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private async void Window_Closing(object sender, CancelEventArgs e)
 		{
+
+			if (!ExitRequestedFromTray && Config.Instance.CloseToTray)
+			{
+				MinimizeToTray();
+				e.Cancel = true;
+				return;
+			}
+
 			try
 			{
 				Log.Info("Shutting down...");
