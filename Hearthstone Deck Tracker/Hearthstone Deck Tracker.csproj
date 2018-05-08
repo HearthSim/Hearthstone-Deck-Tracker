@@ -1462,10 +1462,10 @@
     <Resource Include="Images\gold_progress_frame_left.png" />
     <Resource Include="Images\gold_progress_frame_right.png" />
     <Content Include="Images\HearthstoneDeckTracker.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\HearthstoneDeckTracker16.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Resources\mana.png" />
     <Resource Include="Resources\health.png" />

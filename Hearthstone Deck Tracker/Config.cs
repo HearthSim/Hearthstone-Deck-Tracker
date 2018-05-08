@@ -249,6 +249,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ClearLogFileAfterGame = true;
 
 		[DefaultValue(false)]
+		public bool CloseToTray = false;
+
+		[DefaultValue(false)]
 		public bool CloseWithHearthstone = false;
 
 		[DefaultValue(false)]

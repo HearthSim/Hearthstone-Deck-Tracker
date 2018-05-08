@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public void Load()
 		{
+			CheckboxCloseTray.IsChecked = Config.Instance.CloseToTray;
 			CheckboxMinimizeTray.IsChecked = Config.Instance.MinimizeToTray;
 			CheckboxStartMinimized.IsChecked = Config.Instance.StartMinimized;
 			CheckboxCheckForUpdates.IsChecked = Config.Instance.CheckForUpdates;
@@ -86,6 +87,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.MinimizeToTray = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxCloseTray_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.CloseToTray = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxCloseTray_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.CloseToTray = false;
 			SaveConfig(false);
 		}
 
