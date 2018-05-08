@@ -329,7 +329,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					.FirstOrDefault(x => x.grouping.Any())?
 					.grouping?.ToConstructedDeckStats();
 
-        public ConstructedDeckStats DeckStatsMostPlayed
+		public ConstructedDeckStats DeckStatsMostPlayed
 			=> GetFilteredGames(includeNoDeck: false)
 					.GroupBy(x => x.DeckId)
 					.Select(x => new { grouping = x, Count = x.Count() })
@@ -360,20 +360,19 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 		}
 
-        public string HighestRank => GetFilteredGames().OrderBy(x => x.SortableRank).FirstOrDefault()?.RankString;
+		public string HighestRank => GetFilteredGames().OrderBy(x => x.SortableRank).FirstOrDefault()?.RankString;
 
-        private double DeckPerformanceIndex(IEnumerable<GameStats> matches)
+		private double DeckPerformanceIndex(IEnumerable<GameStats> matches)
 		{
 			if(matches == null)
 				return 0;
 
-            var savedDeckMatches = matches.ToArray();
-
-			//performanceIndex = [ (WINS + LOSSES) / (LOSES + 1) ] * minimum_of(1, (WINS + LOSSES) / 10)		---with 10 acting as a threshold---
+			var savedDeckMatches = matches.ToArray();
+			
 			double performanceIndex = (savedDeckMatches.Count(g => g.Result == GameResult.Win) + savedDeckMatches.Count(g => g.Result == GameResult.Loss));
-            performanceIndex = (performanceIndex / (savedDeckMatches.Count(g => g.Result == GameResult.Loss) + 1)) * Math.Min(1, performanceIndex / 10);
+			performanceIndex = (performanceIndex / (savedDeckMatches.Count(g => g.Result == GameResult.Loss) + 1)) * Math.Min(1, performanceIndex / 10);
 
-            return performanceIndex;
+			return performanceIndex;
 		}
 	}
 }
