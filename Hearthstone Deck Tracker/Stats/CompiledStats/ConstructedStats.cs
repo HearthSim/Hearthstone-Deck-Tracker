@@ -366,14 +366,13 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			if(matches == null)
 				return 0;
+	
+			var savedDeckMatches = matches.ToArray();
 
-            var savedDeckMatches = matches.ToArray();
-
-			//performanceIndex = [ (WINS + LOSSES) / (LOSES + 1) ] * minimum_of(1, (WINS + LOSSES) / 10)		---with 10 acting as a threshold---
 			double performanceIndex = (savedDeckMatches.Count(g => g.Result == GameResult.Win) + savedDeckMatches.Count(g => g.Result == GameResult.Loss));
-            performanceIndex = (performanceIndex / (savedDeckMatches.Count(g => g.Result == GameResult.Loss) + 1)) * Math.Min(1, performanceIndex / 10);
+			performanceIndex = (performanceIndex / (savedDeckMatches.Count(g => g.Result == GameResult.Loss) + 1)) * Math.Min(1, performanceIndex / 10);
 
-            return performanceIndex;
+			return performanceIndex;
 		}
 	}
 }
