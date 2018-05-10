@@ -21,6 +21,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void AddItem(ElementSorterItem item) => StackPanel.Children.Add(item);
 
+		public void Clear() => StackPanel.Children.Clear();
+
 		public void MoveItem(ElementSorterItem item, SortDirection direction)
 		{
 			var index = StackPanel.Children.IndexOf(item) + (direction == SortDirection.Up ? -1 : 1);

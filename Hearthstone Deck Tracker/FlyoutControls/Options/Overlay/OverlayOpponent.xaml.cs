@@ -93,9 +93,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
 
 			ElementSorterOpponent.IsPlayer = false;
-			foreach(var panel in Config.Instance.DeckPanelOrderOpponent)
+			SetPanel();
+
+			Core.Overlay.UpdateOpponentLayout();
+			Core.Windows.OpponentWindow.UpdateOpponentLayout();
+			_initialized = true;
+		}
+
+		private void SetPanel()
+		{
+			foreach (var panel in Config.Instance.DeckPanelOrderOpponent)
 			{
-				switch(panel)
+				switch (panel)
 				{
 					case Enums.DeckPanel.Winrate:
 						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, Config.Instance.ShowWinRateAgainst,
@@ -119,9 +128,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 						break;
 				}
 			}
-			Core.Overlay.UpdateOpponentLayout();
-			Core.Windows.OpponentWindow.UpdateOpponentLayout();
-			_initialized = true;
+		}
+
+		public void ReloadUI()
+		{
+			ElementSorterOpponent.Clear();
+			SetPanel();
 		}
 
 		private void CheckboxHighlightDiscarded_Checked(object sender, RoutedEventArgs e)

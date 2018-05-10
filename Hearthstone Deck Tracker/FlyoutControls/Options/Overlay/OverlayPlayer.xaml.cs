@@ -73,9 +73,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			ComboBoxJade.SelectedItem = Config.Instance.PlayerJadeCounter;
 
 			ElementSorterPlayer.IsPlayer = true;
-			foreach(var panel in Config.Instance.DeckPanelOrderPlayer)
+			SetPanel();
+
+			_initialized = true;
+		}
+
+		private void SetPanel()
+		{
+			foreach (var panel in Config.Instance.DeckPanelOrderPlayer)
 			{
-				switch(panel)
+				switch (panel)
 				{
 					case Enums.DeckPanel.Cards:
 						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCards,
@@ -103,7 +110,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 						break;
 				}
 			}
-			_initialized = true;
+		}
+
+		public void ReloadUI()
+		{
+			ElementSorterPlayer.Clear();
+			SetPanel();
 		}
 
 		private void CheckboxHighlightCardsInHand_Checked(object sender, RoutedEventArgs e)
