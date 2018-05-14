@@ -102,9 +102,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private void SetPanel()
 		{
-			foreach (var panel in Config.Instance.DeckPanelOrderOpponent)
+			foreach(var panel in Config.Instance.DeckPanelOrderOpponent)
 			{
-				switch (panel)
+				switch(panel)
 				{
 					case Enums.DeckPanel.Winrate:
 						ElementSorterOpponent.AddItem(new ElementSorterItem(panel, Config.Instance.ShowWinRateAgainst,
