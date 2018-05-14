@@ -80,9 +80,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private void SetPanel()
 		{
-			foreach (var panel in Config.Instance.DeckPanelOrderPlayer)
+			foreach(var panel in Config.Instance.DeckPanelOrderPlayer)
 			{
-				switch (panel)
+				switch(panel)
 				{
 					case Enums.DeckPanel.Cards:
 						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCards,
