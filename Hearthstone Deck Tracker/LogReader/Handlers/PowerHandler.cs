@@ -242,6 +242,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if (!string.IsNullOrEmpty(effectCardId))
 							actionStartingCardId = effectCardId;
 					}
+					if(actionStartingCardId == NonCollectible.Rogue.ValeeratheHollow_ShadowReflectionToken)
+					{
+						actionStartingCardId = cardId;
+					}
 					if(blockType == "TRIGGER")
 					{
 						switch(actionStartingCardId)
