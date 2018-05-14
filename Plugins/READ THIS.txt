@@ -1,4 +1,0 @@
-PLUGINS INSTALLED TO THIS DIRECTORY WILL BE REMOVED!
-
-Please install your new plugins to '%AppData%/HearthstoneDeckTracker'.
-'options > tracker > plugins > plugins folder' will open that directory for you.
