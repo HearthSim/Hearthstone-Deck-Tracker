@@ -27,6 +27,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
 			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
+
+			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
+			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
+			CheckboxFlashHsOnChallenge.IsChecked = Config.Instance.FlashHsOnFriendlyChallenge;
+			CheckboxTimerAlert2.IsChecked = Config.Instance.TimerAlert;
+			TextboxTimerAlert2.Text = Config.Instance.TimerAlertSeconds.ToString();
+
 			_initialized = true;
 		}
 
@@ -124,6 +131,101 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ArenaRewardDialog = false;
 			Config.Save();
+		}
+
+		private void CheckboxBringHsToForegorund_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.BringHsToForeground = true;
+			Config.Save();
+		}
+
+		private void CheckboxBringHsToForegorund_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.BringHsToForeground = false;
+			Config.Save();
+		}
+
+		private void CheckboxFlashHs_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.FlashHsOnTurnStart = true;
+			Config.Save();
+		}
+
+		private void CheckboxFlashHs_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.FlashHsOnTurnStart = false;
+			Config.Save();
+		}
+
+		private void CheckboxFlashHsOnChallenge_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.FlashHsOnFriendlyChallenge = true;
+			Config.Save();
+		}
+
+		private void CheckboxFlashHsOnChallenge_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.FlashHsOnFriendlyChallenge = false;
+			Config.Save();
+		}
+
+		private void CheckboxTimerAlert2_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.TimerAlert = true;
+			TextboxTimerAlert2.IsEnabled = true;
+			Config.Save();
+		}
+
+		private void CheckboxTimerAlert2_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.TimerAlert = false;
+			TextboxTimerAlert2.IsEnabled = false;
+			Config.Save();
+		}
+
+		private void TextboxTimerAlert2_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (!_initialized || CheckboxTimerAlert2.IsChecked != true)
+				return;
+			if (int.TryParse(TextboxTimerAlert2.Text, out var mTimerAlertValue))
+			{
+				if (mTimerAlertValue < 0)
+				{
+					TextboxTimerAlert2.Text = "0";
+					mTimerAlertValue = 0;
+				}
+
+				if (mTimerAlertValue > 90)
+				{
+					TextboxTimerAlert2.Text = "90";
+					mTimerAlertValue = 90;
+				}
+
+				Config.Instance.TimerAlertSeconds = mTimerAlertValue;
+				Config.Save();
+			}
+		}
+
+		private void TextboxTimerAlert2_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			if (!char.IsDigit(e.Text, e.Text.Length - 1))
+				e.Handled = true;
 		}
 	}
 }

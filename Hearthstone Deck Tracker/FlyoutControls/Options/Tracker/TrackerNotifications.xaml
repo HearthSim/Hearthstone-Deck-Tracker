@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -10,6 +11,40 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <StackPanel>
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_Alerts}">
+            <StackPanel>
+                <CheckBox x:Name="CheckboxFlashHs" Content="{lex:Loc Options_Tracker_General_CheckBox_Flash}"
+                      HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"
+                      Checked="CheckboxFlashHs_Checked"
+                      Unchecked="CheckboxFlashHs_Unchecked" />
+                <CheckBox x:Name="CheckboxFlashHsOnChallenge" Content="{lex:Loc Options_Tracker_General_CheckBox_Flash_Challenge}"
+                      HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                      Checked="CheckboxFlashHsOnChallenge_Checked"
+                      Unchecked="CheckboxFlashHsOnChallenge_Unchecked" />
+                <CheckBox x:Name="CheckboxBringHsToForegorund"
+                      Content="{lex:Loc Options_Tracker_General_CheckBox_Popup}" HorizontalAlignment="Left"
+                      Margin="10,5,0,0" VerticalAlignment="Top"
+                      Checked="CheckboxBringHsToForegorund_Checked"
+                      Unchecked="CheckboxBringHsToForegorund_Unchecked" />
+                <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+                    <CheckBox x:Name="CheckboxTimerAlert2"
+                          HorizontalAlignment="Left" Margin="0,5,0,0"
+                          ToolTip="{lex:Loc Options_Tracker_General_Label_TimerAlert_Tooltip}"
+                          VerticalAlignment="Top" Checked="CheckboxTimerAlert2_Checked"
+                          Unchecked="CheckboxTimerAlert2_Unchecked">
+                        <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
+                            <Label Content="{lex:Loc Options_Tracker_General_Label_TimerAlert}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                            <TextBox x:Name="TextboxTimerAlert2"
+                             HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
+                             Margin="10,0,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"
+                             Width="60" TextChanged="TextboxTimerAlert2_TextChanged"
+                             PreviewTextInput="TextboxTimerAlert2_PreviewTextInput" />
+                            <Label Content="{lex:Loc Options_Tracker_General_Label_TimerAlert2}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
+                        </StackPanel>
+                    </CheckBox>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Notifications_Label_GameResult}">
             <StackPanel>
                 <CheckBox Name="CheckBoxShowNotifications" Content="{lex:Loc Options_Tracker_Notifications_Label_ShowNotifications}"
