@@ -253,6 +253,7 @@
     <Compile Include="Controls\StatusIndicator.xaml.cs">
       <DependentUpon>StatusIndicator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Enums\HsActionType.cs" />
     <Compile Include="FlyoutControls\Options\HSReplay\HSReplayAccount.xaml.cs">
       <DependentUpon>HSReplayAccount.xaml</DependentUpon>
     </Compile>

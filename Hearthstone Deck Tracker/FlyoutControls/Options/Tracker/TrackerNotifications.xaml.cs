@@ -28,9 +28,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 
-			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
-			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
-			CheckboxFlashHsOnChallenge.IsChecked = Config.Instance.FlashHsOnFriendlyChallenge;
+			CheckboxTurnAction.IsChecked = Config.Instance.TurnAction.HasValue;
+			CheckboxChallengeAction.IsChecked = Config.Instance.ChallengeAction.HasValue;
+
+			if (CheckboxTurnAction.IsChecked.Value)
+			{
+				//TODO
+			}
+
+			if (CheckboxChallengeAction.IsChecked.Value)
+			{
+				//TODO
+			}
+
+
 			CheckboxTimerAlert2.IsChecked = Config.Instance.TimerAlert;
 			TextboxTimerAlert2.Text = Config.Instance.TimerAlertSeconds.ToString();
 
@@ -133,51 +144,39 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private void CheckboxBringHsToForegorund_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxTurnAction_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
 				return;
-			Config.Instance.BringHsToForeground = true;
+			//TODO
+			//Config.Instance.BringHsToForeground = true;
 			Config.Save();
 		}
 
-		private void CheckboxBringHsToForegorund_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxTurnAction_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
 				return;
-			Config.Instance.BringHsToForeground = false;
+			//TODO
+			//Config.Instance.BringHsToForeground = false;
 			Config.Save();
 		}
 
-		private void CheckboxFlashHs_Checked(object sender, RoutedEventArgs e)
+		private void CheckboxChallengeAction_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
 				return;
-			Config.Instance.FlashHsOnTurnStart = true;
+			//TODO
+			//Config.Instance.FlashHsOnFriendlyChallenge = true;
 			Config.Save();
 		}
 
-		private void CheckboxFlashHs_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxChallengeAction_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
 				return;
-			Config.Instance.FlashHsOnTurnStart = false;
-			Config.Save();
-		}
-
-		private void CheckboxFlashHsOnChallenge_Checked(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.FlashHsOnFriendlyChallenge = true;
-			Config.Save();
-		}
-
-		private void CheckboxFlashHsOnChallenge_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.FlashHsOnFriendlyChallenge = false;
+			//TODO
+			//Config.Instance.FlashHsOnFriendlyChallenge = false;
 			Config.Save();
 		}
 

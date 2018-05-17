@@ -301,11 +301,13 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.SetPlayer(player);
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
 			{
-				if(Config.Instance.FlashHsOnTurnStart)
+				if (Config.Instance.TurnAction.HasValue)
+				{
 					User32.FlashHs();
 
-				if(Config.Instance.BringHsToForeground)
-					User32.BringHsToForeground();
+					if (Config.Instance.TurnAction.Value == HsActionType.Popup)
+						User32.BringHsToForeground();
+				}
 			}
 		}
 
@@ -332,10 +334,13 @@ namespace Hearthstone_Deck_Tracker
 			_lastGameStart = DateTime.Now;
 			Log.Info("--- Game start ---");
 
-			if(Config.Instance.FlashHsOnTurnStart)
+			if (Config.Instance.TurnAction.HasValue)
+			{
 				User32.FlashHs();
-			if(Config.Instance.BringHsToForeground)
-				User32.BringHsToForeground();
+
+				if (Config.Instance.TurnAction.Value == HsActionType.Popup)
+					User32.BringHsToForeground();
+			}
 			_lastTurnStart[0] = _lastTurnStart[1] = 0;
 			_arenaRewardDialog = null;
 			_showedNoteDialog = false;

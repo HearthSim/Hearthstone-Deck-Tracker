@@ -143,8 +143,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Dungeon Run {Date dd-MM HH:mm}")]
 		public string DungeonRunDeckNameTemplate = "Dungeon Run {Date dd-MM HH:mm}";
 
-		[DefaultValue(false)]
-		public bool BringHsToForeground = false;
+		[DefaultValue(HsActionType.Flash)]
+		public HsActionType? TurnAction = HsActionType.Flash;
+
+		[DefaultValue(HsActionType.Flash)]
+		public HsActionType? ChallengeAction = HsActionType.Flash;
 
 		[DefaultValue(false)]
 		public bool CardSortingClassFirst = false;
@@ -319,12 +322,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ExtraFeaturesSecrets = false;
-
-		[DefaultValue(true)]
-		public bool FlashHsOnTurnStart = true;
-
-		[DefaultValue(false)]
-		public bool FlashHsOnFriendlyChallenge = false;
 
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
