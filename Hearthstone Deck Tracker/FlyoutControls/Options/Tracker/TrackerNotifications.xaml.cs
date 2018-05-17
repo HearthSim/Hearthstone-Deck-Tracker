@@ -1,5 +1,6 @@
 ﻿#region
 
+using Hearthstone_Deck_Tracker.Enums;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,12 +34,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			if (CheckboxTurnAction.IsChecked.Value)
 			{
-				//TODO
+				ComboboxTurnAction.SelectedIndex = (int)Config.Instance.TurnAction.Value;
 			}
 
 			if (CheckboxChallengeAction.IsChecked.Value)
 			{
-				//TODO
+				ComboboxChallengeAction.SelectedIndex = (int)Config.Instance.ChallengeAction.Value;
 			}
 
 
@@ -148,17 +149,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!_initialized)
 				return;
-			//TODO
-			//Config.Instance.BringHsToForeground = true;
-			Config.Save();
+			//ComboboxTurnAction.SelectedIndex = 0;
 		}
 
 		private void CheckboxTurnAction_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
 				return;
-			//TODO
-			//Config.Instance.BringHsToForeground = false;
+			Config.Instance.TurnAction = null;
 			Config.Save();
 		}
 
@@ -166,17 +164,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!_initialized)
 				return;
-			//TODO
-			//Config.Instance.FlashHsOnFriendlyChallenge = true;
-			Config.Save();
+			//ComboboxChallengeAction.SelectedIndex = 0;
 		}
 
 		private void CheckboxChallengeAction_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
 				return;
-			//TODO
-			//Config.Instance.FlashHsOnFriendlyChallenge = false;
+			Config.Instance.ChallengeAction = null;
 			Config.Save();
 		}
 
@@ -225,6 +220,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!char.IsDigit(e.Text, e.Text.Length - 1))
 				e.Handled = true;
+		}
+
+		private void ComboboxTurnAction_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (!_initialized || !CheckboxTurnAction.IsChecked.Value)
+				return;
+			Config.Instance.TurnAction = (HsActionType)ComboboxTurnAction.SelectedIndex;
+			Config.Save();
+		}
+
+		private void ComboboxChallengeAction_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (!_initialized || !CheckboxChallengeAction.IsChecked.Value)
+				return;
+			Config.Instance.ChallengeAction = (HsActionType)ComboboxChallengeAction.SelectedIndex;
+			Config.Save();
 		}
 	}
 }

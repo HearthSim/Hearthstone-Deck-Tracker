@@ -20,7 +20,11 @@
                       Unchecked="CheckboxTurnAction_Unchecked" />
                     <ComboBox x:Name="ComboboxTurnAction"
                       HorizontalAlignment="Stretch" Margin="5,0,0,0"
-                      IsEnabled="{Binding ElementName=CheckboxTurnAction, Path=IsChecked}"/>
+                      SelectionChanged="ComboboxTurnAction_SelectionChanged"
+                      IsEnabled="{Binding ElementName=CheckboxTurnAction, Path=IsChecked}">
+                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Flash}" IsSelected="True"/>
+                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Popup}"/>
+                    </ComboBox>
                 </DockPanel>
                 <DockPanel>
                     <CheckBox x:Name="CheckboxChallengeAction"
@@ -29,7 +33,11 @@
                       Unchecked="CheckboxChallengeAction_Unchecked" />
                     <ComboBox x:Name="ComboboxChallengeAction"
                       HorizontalAlignment="Stretch" Margin="5,0,0,0"
-                      IsEnabled="{Binding ElementName=CheckboxChallengeAction, Path=IsChecked}"/>
+                      SelectionChanged="ComboboxChallengeAction_SelectionChanged"
+                      IsEnabled="{Binding ElementName=CheckboxChallengeAction, Path=IsChecked}">
+                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Flash_Challenge}" IsSelected="True"/>
+                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Popup}"/>
+                    </ComboBox>
                 </DockPanel>
                 <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
                     <CheckBox x:Name="CheckboxTimerAlert2"
