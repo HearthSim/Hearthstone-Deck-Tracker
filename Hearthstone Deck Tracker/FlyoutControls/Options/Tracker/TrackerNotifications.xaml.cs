@@ -29,12 +29,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
 
-			CheckboxTurnAction.IsChecked = Config.Instance.TurnAction.HasValue;
+			CheckboxTurnAction.IsChecked = Config.Instance.TurnStartAction.HasValue;
 			CheckboxChallengeAction.IsChecked = Config.Instance.ChallengeAction.HasValue;
 
 			if (CheckboxTurnAction.IsChecked.Value)
 			{
-				ComboboxTurnAction.SelectedIndex = (int)Config.Instance.TurnAction.Value;
+				ComboboxTurnAction.SelectedIndex = (int)Config.Instance.TurnStartAction.Value;
 			}
 			else
 			{
@@ -157,7 +157,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!_initialized)
 				return;
-			Config.Instance.TurnAction = (HsActionType)ComboboxTurnAction.SelectedIndex;
+			Config.Instance.TurnStartAction = (HsActionType)ComboboxTurnAction.SelectedIndex;
 			Config.Save();
 		}
 
@@ -165,7 +165,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!_initialized)
 				return;
-			Config.Instance.TurnAction = null;
+			Config.Instance.TurnStartAction = null;
 			Config.Save();
 		}
 
@@ -236,7 +236,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!_initialized || !CheckboxTurnAction.IsChecked.Value)
 				return;
-			Config.Instance.TurnAction = (HsActionType)ComboboxTurnAction.SelectedIndex;
+			Config.Instance.TurnStartAction = (HsActionType)ComboboxTurnAction.SelectedIndex;
 			Config.Save();
 		}
 
