@@ -36,7 +36,7 @@
                       SelectionChanged="ComboboxChallengeAction_SelectionChanged"
                       IsEnabled="{Binding ElementName=CheckboxChallengeAction, Path=IsChecked}">
                         <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Flash_Challenge}"/>
-                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Popup}"/>
+                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Popup_Challenge}"/>
                     </ComboBox>
                 </DockPanel>
                 <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
