@@ -36,10 +36,18 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				ComboboxTurnAction.SelectedIndex = (int)Config.Instance.TurnAction.Value;
 			}
+			else
+			{
+				ComboboxTurnAction.SelectedIndex = 0;
+			}
 
 			if (CheckboxChallengeAction.IsChecked.Value)
 			{
 				ComboboxChallengeAction.SelectedIndex = (int)Config.Instance.ChallengeAction.Value;
+			}
+			else
+			{
+				ComboboxChallengeAction.SelectedIndex = 0;
 			}
 
 
@@ -149,7 +157,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!_initialized)
 				return;
-			//ComboboxTurnAction.SelectedIndex = 0;
+			Config.Instance.TurnAction = (HsActionType)ComboboxTurnAction.SelectedIndex;
+			Config.Save();
 		}
 
 		private void CheckboxTurnAction_Unchecked(object sender, RoutedEventArgs e)
@@ -164,7 +173,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if (!_initialized)
 				return;
-			//ComboboxChallengeAction.SelectedIndex = 0;
+			Config.Instance.ChallengeAction = (HsActionType)ComboboxChallengeAction.SelectedIndex;
+			Config.Save();
 		}
 
 		private void CheckboxChallengeAction_Unchecked(object sender, RoutedEventArgs e)

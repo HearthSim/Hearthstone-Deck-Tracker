@@ -22,7 +22,7 @@
                       HorizontalAlignment="Stretch" Margin="5,0,0,0"
                       SelectionChanged="ComboboxTurnAction_SelectionChanged"
                       IsEnabled="{Binding ElementName=CheckboxTurnAction, Path=IsChecked}">
-                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Flash}" IsSelected="True"/>
+                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Flash}"/>
                         <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Popup}"/>
                     </ComboBox>
                 </DockPanel>
@@ -35,7 +35,7 @@
                       HorizontalAlignment="Stretch" Margin="5,0,0,0"
                       SelectionChanged="ComboboxChallengeAction_SelectionChanged"
                       IsEnabled="{Binding ElementName=CheckboxChallengeAction, Path=IsChecked}">
-                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Flash_Challenge}" IsSelected="True"/>
+                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Flash_Challenge}"/>
                         <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Popup}"/>
                     </ComboBox>
                 </DockPanel>
