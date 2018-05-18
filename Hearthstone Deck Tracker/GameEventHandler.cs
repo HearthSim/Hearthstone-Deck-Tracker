@@ -303,10 +303,15 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if (Config.Instance.TurnAction.HasValue)
 				{
-					User32.FlashHs();
-
-					if (Config.Instance.TurnAction.Value == HsActionType.Popup)
-						User32.BringHsToForeground();
+					switch (Config.Instance.TurnAction.Value)
+					{
+						case HsActionType.Flash:
+							User32.FlashHs();
+							break;
+						case HsActionType.Popup:
+							User32.BringHsToForeground();
+							break;
+					}
 				}
 			}
 		}
@@ -336,10 +341,15 @@ namespace Hearthstone_Deck_Tracker
 
 			if (Config.Instance.TurnAction.HasValue)
 			{
-				User32.FlashHs();
-
-				if (Config.Instance.TurnAction.Value == HsActionType.Popup)
-					User32.BringHsToForeground();
+				switch (Config.Instance.TurnAction.Value)
+				{
+					case HsActionType.Flash:
+						User32.FlashHs();
+						break;
+					case HsActionType.Popup:
+						User32.BringHsToForeground();
+						break;
+				}
 			}
 			_lastTurnStart[0] = _lastTurnStart[1] = 0;
 			_arenaRewardDialog = null;
