@@ -1,3 +1,13 @@
+## __Release v1.6.6 - 2018-05-22__
+__Updated for Hearthstone 11.1.1.24589__
+
+__New__:
+- Added an option to close HDT to the system tray. `(options > tracker > settings)`
+
+__Fixes__:
+- Fixed tracking for cards created by Shadow Reflection and several Monster Hunt cards.
+
+
 ## __Release v1.6.5 - 2018-04-27__
 
 __Added support for Monster Hunt__
