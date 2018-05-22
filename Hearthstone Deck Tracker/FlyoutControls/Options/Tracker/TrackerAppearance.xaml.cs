@@ -211,6 +211,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			// Deck Picker
 			Core.MainWindow.DeckPickerList.ReloadUI();
 
+			//Overlay Panel
+			Core.MainWindow.Options.OptionsOverlayPlayer.ReloadUI();
+			Core.MainWindow.Options.OptionsOverlayOpponent.ReloadUI();
+
 			// Reload ComboBoxes
 			ComboBoxHelper.Update();
 		}
