@@ -13,7 +13,7 @@
     <StackPanel>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Notifications_Label_Alerts}">
             <StackPanel>
-                <DockPanel Margin="0,0,5,5">
+                <DockPanel>
                     <Label Content="{lex:Loc Options_Tracker_Notifications_Label_TurnStart}"/>
                     <ComboBox x:Name="ComboboxTurnAction" HorizontalAlignment="Right" Width="150"
                       SelectionChanged="ComboboxTurnAction_SelectionChanged">
@@ -24,7 +24,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </DockPanel>
-                <DockPanel Margin="0,0,5,0">
+                <DockPanel Margin="0,5,0,0">
                     <Label Content="{lex:Loc Options_Tracker_Notifications_Label_FriendlyChallenge}"/>
                     <ComboBox x:Name="ComboboxChallengeAction" HorizontalAlignment="Right" Width="150"
                       SelectionChanged="ComboboxChallengeAction_SelectionChanged">
@@ -35,7 +35,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </DockPanel>
-                <DockPanel Margin="5,5,5,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+                <DockPanel Margin="0,5,0,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
                     <CheckBox x:Name="CheckboxTimerAlert2" HorizontalAlignment="Left"
                           ToolTip="{lex:Loc Options_Tracker_General_Label_TimerAlert_Tooltip}"
                           VerticalAlignment="Top" Checked="CheckboxTimerAlert2_Checked"
