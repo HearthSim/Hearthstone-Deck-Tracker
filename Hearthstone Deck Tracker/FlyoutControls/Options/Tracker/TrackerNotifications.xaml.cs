@@ -1,6 +1,8 @@
 ﻿#region
 
 using Hearthstone_Deck_Tracker.Enums;
+using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -28,27 +30,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxNoteDialogDelayed.IsChecked = Config.Instance.NoteDialogDelayed;
 			CheckboxNoteDialogDelayed.IsEnabled = Config.Instance.ShowNoteDialogAfterGame;
 			CheckboxArenaRewardDialog.IsChecked = Config.Instance.ArenaRewardDialog;
-
-			CheckboxTurnAction.IsChecked = Config.Instance.TurnStartAction.HasValue;
-			CheckboxChallengeAction.IsChecked = Config.Instance.ChallengeAction.HasValue;
-
-			if (CheckboxTurnAction.IsChecked.Value)
-			{
-				ComboboxTurnAction.SelectedIndex = (int)Config.Instance.TurnStartAction.Value;
-			}
-			else
-			{
-				ComboboxTurnAction.SelectedIndex = 0;
-			}
-
-			if (CheckboxChallengeAction.IsChecked.Value)
-			{
-				ComboboxChallengeAction.SelectedIndex = (int)Config.Instance.ChallengeAction.Value;
-			}
-			else
-			{
-				ComboboxChallengeAction.SelectedIndex = 0;
-			}
+			ComboboxTurnAction.ItemsSource = Enum.GetValues(typeof(HsActionType)).Cast<HsActionType>();
+			ComboboxTurnAction.SelectedIndex = (int)Config.Instance.TurnStartAction;
+			ComboboxChallengeAction.ItemsSource = Enum.GetValues(typeof(HsActionType)).Cast<HsActionType>();
+			ComboboxChallengeAction.SelectedIndex = (int)Config.Instance.ChallengeAction;
 
 
 			CheckboxTimerAlert2.IsChecked = Config.Instance.TimerAlert;
@@ -153,38 +138,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private void CheckboxTurnAction_Checked(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.TurnStartAction = (HsActionType)ComboboxTurnAction.SelectedIndex;
-			Config.Save();
-		}
-
-		private void CheckboxTurnAction_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.TurnStartAction = null;
-			Config.Save();
-		}
-
-		private void CheckboxChallengeAction_Checked(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.ChallengeAction = (HsActionType)ComboboxChallengeAction.SelectedIndex;
-			Config.Save();
-		}
-
-		private void CheckboxChallengeAction_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if (!_initialized)
-				return;
-			Config.Instance.ChallengeAction = null;
-			Config.Save();
-		}
-
 		private void CheckboxTimerAlert2_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
@@ -234,7 +187,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboboxTurnAction_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_initialized || !CheckboxTurnAction.IsChecked.Value)
+			if (!_initialized)
 				return;
 			Config.Instance.TurnStartAction = (HsActionType)ComboboxTurnAction.SelectedIndex;
 			Config.Save();
@@ -242,7 +195,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboboxChallengeAction_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_initialized || !CheckboxChallengeAction.IsChecked.Value)
+			if (!_initialized)
 				return;
 			Config.Instance.ChallengeAction = (HsActionType)ComboboxChallengeAction.SelectedIndex;
 			Config.Save();

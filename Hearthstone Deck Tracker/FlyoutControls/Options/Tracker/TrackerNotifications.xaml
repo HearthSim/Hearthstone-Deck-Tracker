@@ -11,45 +11,40 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="300">
     <StackPanel>
-        <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_Alerts}">
+        <GroupBox Header="{lex:LocTextUpper Options_Tracker_Notifications_Label_Alerts}">
             <StackPanel>
-                <DockPanel Margin="0,0,0,5">
-                    <CheckBox x:Name="CheckboxTurnAction"
-                      HorizontalAlignment="Left"
-                      Checked="CheckboxTurnAction_Checked"
-                      Unchecked="CheckboxTurnAction_Unchecked" />
-                    <ComboBox x:Name="ComboboxTurnAction"
-                      HorizontalAlignment="Stretch" Margin="5,0,0,0"
-                      SelectionChanged="ComboboxTurnAction_SelectionChanged"
-                      IsEnabled="{Binding ElementName=CheckboxTurnAction, Path=IsChecked}">
-                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Flash}"/>
-                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Popup}"/>
+                <DockPanel Margin="0,0,5,5">
+                    <Label Content="{lex:Loc Options_Tracker_Notifications_Label_TurnStart}"/>
+                    <ComboBox x:Name="ComboboxTurnAction" HorizontalAlignment="Right" Width="150"
+                      SelectionChanged="ComboboxTurnAction_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </DockPanel>
-                <DockPanel>
-                    <CheckBox x:Name="CheckboxChallengeAction"
-                      HorizontalAlignment="Left"
-                      Checked="CheckboxChallengeAction_Checked"
-                      Unchecked="CheckboxChallengeAction_Unchecked" />
-                    <ComboBox x:Name="ComboboxChallengeAction"
-                      HorizontalAlignment="Stretch" Margin="5,0,0,0"
-                      SelectionChanged="ComboboxChallengeAction_SelectionChanged"
-                      IsEnabled="{Binding ElementName=CheckboxChallengeAction, Path=IsChecked}">
-                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Flash_Challenge}"/>
-                        <ComboBoxItem Content="{lex:Loc Options_Tracker_General_CheckBox_Popup_Challenge}"/>
+                <DockPanel Margin="0,0,5,0">
+                    <Label Content="{lex:Loc Options_Tracker_Notifications_Label_FriendlyChallenge}"/>
+                    <ComboBox x:Name="ComboboxChallengeAction" HorizontalAlignment="Right" Width="150"
+                      SelectionChanged="ComboboxChallengeAction_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
                     </ComboBox>
                 </DockPanel>
-                <DockPanel Margin="10,5,10,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
-                    <CheckBox x:Name="CheckboxTimerAlert2"
-                          HorizontalAlignment="Left" Margin="0,5,0,0"
+                <DockPanel Margin="5,5,5,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}">
+                    <CheckBox x:Name="CheckboxTimerAlert2" HorizontalAlignment="Left"
                           ToolTip="{lex:Loc Options_Tracker_General_Label_TimerAlert_Tooltip}"
                           VerticalAlignment="Top" Checked="CheckboxTimerAlert2_Checked"
                           Unchecked="CheckboxTimerAlert2_Unchecked">
-                        <StackPanel Orientation="Horizontal" Margin="0,-5,0,0">
+                        <StackPanel Orientation="Horizontal" Margin="-5,0,0,0">
                             <Label Content="{lex:Loc Options_Tracker_General_Label_TimerAlert}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
                             <TextBox x:Name="TextboxTimerAlert2"
                              HorizontalAlignment="Right" Height="23" HorizontalContentAlignment="Center"
-                             Margin="10,0,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"
+                             Margin="0,0,0,0" TextWrapping="Wrap" Text="30" VerticalAlignment="Top"
                              Width="60" TextChanged="TextboxTimerAlert2_TextChanged"
                              PreviewTextInput="TextboxTimerAlert2_PreviewTextInput" />
                             <Label Content="{lex:Loc Options_Tracker_General_Label_TimerAlert2}" Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"/>
