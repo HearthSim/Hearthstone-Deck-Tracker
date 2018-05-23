@@ -144,10 +144,10 @@ namespace Hearthstone_Deck_Tracker
 		public string DungeonRunDeckNameTemplate = "Dungeon Run {Date dd-MM HH:mm}";
 
 		[DefaultValue(HsActionType.Flash)]
-		public HsActionType? TurnStartAction = HsActionType.Flash;
+		public HsActionType TurnStartAction = HsActionType.Flash;
 
 		[DefaultValue(HsActionType.Flash)]
-		public HsActionType? ChallengeAction = HsActionType.Flash;
+		public HsActionType ChallengeAction = HsActionType.Flash;
 
 		[DefaultValue(false)]
 		public bool CardSortingClassFirst = false;
