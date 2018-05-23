@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				else
 					Watchers.DungeonRunWatcher.Stop();
 
-				if(Config.Instance.ChallengeAction.HasValue)
+				if(Config.Instance.ChallengeAction != Enums.HsActionType.None)
 				{
 					if(game.PlayerChallengeable)
 						Watchers.FriendlyChallengeWatcher.Run();
