@@ -242,6 +242,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						if (!string.IsNullOrEmpty(effectCardId))
 							actionStartingCardId = effectCardId;
 					}
+					if(actionStartingCardId == NonCollectible.Rogue.ValeeratheHollow_ShadowReflectionToken)
+					{
+						actionStartingCardId = cardId;
+					}
 					if(blockType == "TRIGGER")
 					{
 						switch(actionStartingCardId)
@@ -359,6 +363,24 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case NonCollectible.Neutral.SackOfCoins:
 								AddKnownCardId(gameState, NonCollectible.Neutral.HeftySackOfCoins);
+								break;
+							case NonCollectible.Neutral.CreepyCurio:
+								AddKnownCardId(gameState, NonCollectible.Neutral.HauntedCurio);
+								break;
+							case NonCollectible.Neutral.HauntedCurio:
+								AddKnownCardId(gameState, NonCollectible.Neutral.CursedCurio);
+								break;
+							case NonCollectible.Neutral.OldMilitiaHorn:
+								AddKnownCardId(gameState, NonCollectible.Neutral.MilitiaHorn);
+								break;
+							case NonCollectible.Neutral.MilitiaHorn:
+								AddKnownCardId(gameState, NonCollectible.Neutral.VeteransMilitiaHorn);
+								break;
+							case NonCollectible.Neutral.SurlyMob:
+								AddKnownCardId(gameState, NonCollectible.Neutral.AngryMob);
+								break;
+							case NonCollectible.Neutral.AngryMob:
+								AddKnownCardId(gameState, NonCollectible.Neutral.CrazedMob);
 								break;
 							//case Collectible.Rogue.Wanted: -- TODO
 							//	AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
