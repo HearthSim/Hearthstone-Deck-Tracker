@@ -7,6 +7,7 @@
              xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -42,7 +43,7 @@
             <Label Content="{lex:LocText Options_Overlay_Player_Label_Cthun}" />
             <ComboBox x:Name="ComboBoxCthun" HorizontalAlignment="Right"
                       Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboBoxCthun_SelectionChanged">
+                      utility:ComboBoxHelper.SelectionChanged="ComboBoxCthun_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
@@ -54,7 +55,7 @@
             <Label Content="{lex:LocText Options_Overlay_Player_Label_Yogg}" />
             <ComboBox x:Name="ComboBoxSpells" HorizontalAlignment="Right"
                       Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboBoxSpells_SelectionChanged">
+                      utility:ComboBoxHelper.SelectionChanged="ComboBoxSpells_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
@@ -66,7 +67,7 @@
             <Label Content="{lex:LocText Options_Overlay_Player_Label_Jade}" />
             <ComboBox x:Name="ComboBoxJade" HorizontalAlignment="Right"
                       Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
-                      SelectionChanged="ComboBoxJade_SelectionChanged">
+                      utility:ComboBoxHelper.SelectionChanged="ComboBoxJade_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />

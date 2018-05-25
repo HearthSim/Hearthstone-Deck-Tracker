@@ -364,6 +364,24 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case NonCollectible.Neutral.SackOfCoins:
 								AddKnownCardId(gameState, NonCollectible.Neutral.HeftySackOfCoins);
 								break;
+							case NonCollectible.Neutral.CreepyCurio:
+								AddKnownCardId(gameState, NonCollectible.Neutral.HauntedCurio);
+								break;
+							case NonCollectible.Neutral.HauntedCurio:
+								AddKnownCardId(gameState, NonCollectible.Neutral.CursedCurio);
+								break;
+							case NonCollectible.Neutral.OldMilitiaHorn:
+								AddKnownCardId(gameState, NonCollectible.Neutral.MilitiaHorn);
+								break;
+							case NonCollectible.Neutral.MilitiaHorn:
+								AddKnownCardId(gameState, NonCollectible.Neutral.VeteransMilitiaHorn);
+								break;
+							case NonCollectible.Neutral.SurlyMob:
+								AddKnownCardId(gameState, NonCollectible.Neutral.AngryMob);
+								break;
+							case NonCollectible.Neutral.AngryMob:
+								AddKnownCardId(gameState, NonCollectible.Neutral.CrazedMob);
+								break;
 							//case Collectible.Rogue.Wanted: -- TODO
 							//	AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
 							//	break;
