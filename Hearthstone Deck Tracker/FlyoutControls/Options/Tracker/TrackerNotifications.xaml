@@ -58,7 +58,7 @@
                 <CheckBox Name="CheckBoxShowNotifications" Content="{lex:Loc Options_Tracker_Notifications_Label_ShowNotifications}"
                           Checked="CheckBoxShowNotifications_OnChecked"
                           Unchecked="CheckBoxShowNotifications_OnUnchecked" />
-                <StackPanel Orientation="Horizontal" Margin="0,5,0,0"
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0"
                             IsEnabled="{Binding Path=IsChecked, ElementName=CheckBoxShowNotifications}">
                     <TextBlock Text="{lex:Loc Options_Tracker_Notifications_Label_Duration}" VerticalAlignment="Center" />
                     <TextBox x:Name="TextboxTimerAlert"
