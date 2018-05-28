@@ -267,6 +267,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.DatesOnDeckFormat_Active = (DatesOnDeckFormat)ComboBoxDatesOnDeckFormat.SelectedItem;
 			Config.Save();
+			MessageDialogs.ShowRestartDialog();
 		}
 
 		private void CheckBoxAutoArchiveArenaDecks_Checked(object sender, RoutedEventArgs e)
