@@ -253,6 +253,7 @@
     <Compile Include="Controls\StatusIndicator.xaml.cs">
       <DependentUpon>StatusIndicator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Enums\ShowDateOnDecksOptions.cs" />
     <Compile Include="FlyoutControls\Options\HSReplay\HSReplayAccount.xaml.cs">
       <DependentUpon>HSReplayAccount.xaml</DependentUpon>
     </Compile>
@@ -460,7 +461,7 @@
     <Compile Include="Enums\EnumValuesExtension.cs" />
     <Compile Include="Enums\Format.cs" />
     <Compile Include="Enums\IconStyle.cs" />
-    <Compile Include="Enums\LastPlayedDateFormat.cs" />
+    <Compile Include="Enums\DatesOnDeckFormat.cs" />
     <Compile Include="Enums\MetroTheme.cs" />
     <Compile Include="Errors\ErrorItem.xaml.cs">
       <DependentUpon>ErrorItem.xaml</DependentUpon>

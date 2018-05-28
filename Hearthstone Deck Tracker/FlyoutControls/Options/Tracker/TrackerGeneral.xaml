@@ -114,25 +114,32 @@
                   VerticalAlignment="Top" Checked="CheckboxDeckPickerCaps_Checked"
                   Unchecked="CheckboxDeckPickerCaps_Unchecked"
                   ToolTip="{lex:Loc Options_Tracker_General_CheckBox_UpperCaseDeckNames_Tooltip}" />
-        <CheckBox x:Name="CheckBoxShowLastPlayedDate" Content="{lex:Loc Options_Tracker_General_CheckBox_LastPlayedDate}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckBoxShowLastPlayedDate_Checked"
-                  Unchecked="CheckBoxShowLastPlayedDate_Unchecked" />
-        <Separator Margin="0,5,0,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
-        <CheckBox x:Name="CheckBoxAutoArchiveArenaDecks" Content="{lex:Loc Options_Tracker_General_CheckBox_AutoArchiveArena}"
-                  HorizontalAlignment="Left" Margin="10,5,0,0"
-                  VerticalAlignment="Top" Checked="CheckBoxAutoArchiveArenaDecks_Checked"
-                  Unchecked="CheckBoxAutoArchiveArenaDecks_Unchecked"/>
-        <DockPanel Margin="35,5,10,0" Visibility="{Binding Path=IsChecked, ElementName=CheckBoxShowLastPlayedDate, Converter={StaticResource BoolToVisibility}}">
-            <ComboBox DockPanel.Dock="Right" Name="ComboBoxLastPlayedDateFormat"  Margin="5,0,0,0" Width="150" HorizontalAlignment="Left"
-                  SelectionChanged="ComboBoxLastPlayedDateFormat_OnSelectionChanged" >
+        <DockPanel Margin="5,5,5,0" Height="26">
+            <Label Content="Show Date On Decks:" Height="26" VerticalAlignment="Top" Width="123" HorizontalAlignment="Left" Margin="0"/>
+            <ComboBox DockPanel.Dock="Right" Name="ComboBoxDatesOnDecks" VerticalAlignment="Top" HorizontalAlignment="Right" Width="170" Margin="0"
+                SelectionChanged="ComboBoxDatesOnDecks_OnSelectionChanged" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <Label Content="{lex:Loc Options_Tracker_General_Label_Format}"/>
         </DockPanel>
+        <DockPanel Margin="35,5,10,0" Name="DatesOnDeckFormatPanel">
+            <Label Content="{lex:Loc Options_Tracker_General_Label_Format}"/>
+            <ComboBox DockPanel.Dock="Right" Name="ComboBoxDatesOnDeckFormat"  Margin="5,0,0,0" Width="150" HorizontalAlignment="Right"
+                  SelectionChanged="ComboBoxDatesOnDeckFormat_OnSelectionChanged" VerticalAlignment="Top" >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <Separator Margin="0,5,0,0" Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}" />
+        <CheckBox x:Name="CheckBoxAutoArchiveArenaDecks" Content="{lex:Loc Options_Tracker_General_CheckBox_AutoArchiveArena}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0"
+                  VerticalAlignment="Top" Checked="CheckBoxAutoArchiveArenaDecks_Checked"
+                  Unchecked="CheckBoxAutoArchiveArenaDecks_Unchecked"/>
     </StackPanel>
 </UserControl>

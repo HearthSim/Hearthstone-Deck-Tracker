@@ -42,13 +42,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			TextboxTimerAlert.Text = Config.Instance.TimerAlertSeconds.ToString();
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)");
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
-			ComboBoxLastPlayedDateFormat.ItemsSource = Enum.GetValues(typeof(LastPlayedDateFormat));
-			CheckBoxShowLastPlayedDate.IsChecked = Config.Instance.ShowLastPlayedDateOnDeck;
-			ComboBoxLastPlayedDateFormat.SelectedItem = Config.Instance.LastPlayedDateFormat;
+			ComboBoxDatesOnDecks.ItemsSource = Enum.GetValues(typeof(ShowDateOnDecksOptions));
+			ComboBoxDatesOnDecks.SelectedItem = Config.Instance.ShowDateOnDecksOptions_Active;
+			ComboBoxDatesOnDeckFormat.ItemsSource = Enum.GetValues(typeof(DatesOnDeckFormat));
+			ComboBoxDatesOnDeckFormat.SelectedItem = Config.Instance.DatesOnDeckFormat_Active;
+			DatesOnDeckFormatPanel.Visibility = Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
 			CheckboxFlashHsOnChallenge.IsChecked = Config.Instance.FlashHsOnFriendlyChallenge;
 
-			if(Config.Instance.NonLatinUseDefaultFont == null)
+			
+			if (Config.Instance.NonLatinUseDefaultFont == null)
 			{
 				Config.Instance.NonLatinUseDefaultFont = Helper.IsWindows10();
 				Config.Save();
@@ -125,8 +128,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized || CheckboxTimerAlert.IsChecked != true)
 				return;
-			int mTimerAlertValue;
-			if(int.TryParse(TextboxTimerAlert.Text, out mTimerAlertValue))
+			if(int.TryParse(TextboxTimerAlert.Text, out var mTimerAlertValue))
 			{
 				if(mTimerAlertValue < 0)
 				{
@@ -249,24 +251,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private void CheckBoxShowLastPlayedDate_Checked(object sender, RoutedEventArgs e)
+		private void ComboBoxDatesOnDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized)
+			if (!_initialized)
 				return;
-			Config.Instance.ShowLastPlayedDateOnDeck = true;
+			Config.Instance.ShowDateOnDecksOptions_Active = (ShowDateOnDecksOptions)ComboBoxDatesOnDecks.SelectedItem;
+			Config.Instance.ShowDateOnDeck = (Config.Instance.ShowDateOnDecksOptions_Active != ShowDateOnDecksOptions.show_no_date) ? true : false;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
 		}
 
-		private void CheckBoxShowLastPlayedDate_Unchecked(object sender, RoutedEventArgs e)
+		private void ComboBoxDatesOnDeckFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(!_initialized)
+			if (!_initialized)
 				return;
-			Config.Instance.ShowLastPlayedDateOnDeck = false;
+			Config.Instance.DatesOnDeckFormat_Active = (DatesOnDeckFormat)ComboBoxDatesOnDeckFormat.SelectedItem;
 			Config.Save();
-			MessageDialogs.ShowRestartDialog();
 		}
-
+		
 		private void CheckBoxAutoArchiveArenaDecks_Checked(object sender, RoutedEventArgs e)
 		{
 			if (!_initialized)
@@ -280,14 +282,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if (!_initialized)
 				return;
 			Config.Instance.AutoArchiveArenaDecks = false;
-			Config.Save();
-		}
-
-		private void ComboBoxLastPlayedDateFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.LastPlayedDateFormat = (LastPlayedDateFormat)ComboBoxLastPlayedDateFormat.SelectedItem;
 			Config.Save();
 		}
 

@@ -269,6 +269,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(-1)]
 		public int CustomWidth = -1;
 
+		[DefaultValue(DatesOnDeckFormat.DayMonthYear)]
+		public DatesOnDeckFormat DatesOnDeckFormat_Active = DatesOnDeckFormat.DayMonthYear;
+
 		[DefaultValue(false)]
 		public bool Debug = false;
 
@@ -500,9 +503,6 @@ namespace Hearthstone_Deck_Tracker
 		[Obsolete]
 		[DefaultValue("")]
 		public string LastDeck = "";
-
-		[DefaultValue(LastPlayedDateFormat.DayMonthYear)]
-		public LastPlayedDateFormat LastPlayedDateFormat = LastPlayedDateFormat.DayMonthYear;
 
 		[DefaultValue(Language.enUS)]
 		public Language Localization = Language.enUS;
@@ -756,6 +756,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
 
+		[DefaultValue(ShowDateOnDecksOptions.show_no_date)]
+		public ShowDateOnDecksOptions ShowDateOnDecksOptions_Active = ShowDateOnDecksOptions.show_no_date;
+
 		[DefaultValue(false)]
 		public bool ShowDeckTitle = false;
 
@@ -778,7 +781,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowInTaskbar = false;
 
 		[DefaultValue(false)]
-		public bool ShowLastPlayedDateOnDeck = false;
+		public bool ShowDateOnDeck = false;
 
 		[DefaultValue(true)]
 		public bool ShowSplashScreen = true;

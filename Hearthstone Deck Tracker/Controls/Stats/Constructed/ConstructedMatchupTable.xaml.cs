@@ -24,5 +24,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		{
 			InitializeComponent();
 		}
+
+		private void DataGridMatchups_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
+		}
 	}
 }

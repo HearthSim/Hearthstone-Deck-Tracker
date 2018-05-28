@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls.DeckPicker.DeckPickerItemLayouts;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Utility;
@@ -59,8 +60,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public string DataIndicatorTooltip => LocUtil.Get("DeckCharts_Tooltip_Uploaded");
 
-		public string LastTimePlayedTooltip => LocUtil.Get("DeckPicker_Deck_LastTimePlayed_Tooltip");
-
 		public string WildIndicatorTooltip => LocUtil.Get("DeckPicker_Deck_Wild_Tooltip");
 
 		public string ArchivedTooltip => LocUtil.Get("DeckPicker_Deck_Archived_Tooltip");
@@ -70,6 +69,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public string LegacyNoStatsStats => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_Stats");
 
 		public string StatsString => Deck.StatsString;
+
+		public string DateShownOnDeckTooltip { set; get; }
 
 		public void RefreshProperties()
 		{
@@ -97,6 +98,24 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public DateTime LastPlayed => Deck.LastPlayed;
 
 		public DateTime LastPlayedNewFirst => Deck.LastPlayedNewFirst;
+
+		public DateTime DateShownOnDeck
+		{
+			get
+			{
+				switch (Config.Instance.ShowDateOnDecksOptions_Active)
+				{
+					case ShowDateOnDecksOptions.show_last_played_date:
+						DateShownOnDeckTooltip = LocUtil.Get("DeckPicker_Deck_LastTimePlayed_Tooltip");
+						return Deck.LastPlayed;
+					case ShowDateOnDecksOptions.show_last_edited_date:
+						DateShownOnDeckTooltip = LocUtil.Get("DeckPicker_Deck_LastTimeEdited_Tooltip");
+						return Deck.LastEdited;
+					default:
+						return DateTime.MinValue;
+				}
+			}
+		}
 
 		public double WinPercent => Deck.WinPercent;
 
