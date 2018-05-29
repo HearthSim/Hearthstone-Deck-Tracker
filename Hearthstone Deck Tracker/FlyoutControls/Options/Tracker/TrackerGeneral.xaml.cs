@@ -49,9 +49,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			DatesOnDeckFormatPanel.Visibility = Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
 			CheckboxFlashHsOnChallenge.IsChecked = Config.Instance.FlashHsOnFriendlyChallenge;
-
 			
-			if (Config.Instance.NonLatinUseDefaultFont == null)
+			if(Config.Instance.NonLatinUseDefaultFont == null)
 			{
 				Config.Instance.NonLatinUseDefaultFont = Helper.IsWindows10();
 				Config.Save();
@@ -253,7 +252,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboBoxDatesOnDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.ShowDateOnDecksOptions_Active = (ShowDateOnDecksOptions)ComboBoxDatesOnDecks.SelectedItem;
 			Config.Instance.ShowDateOnDeck = (Config.Instance.ShowDateOnDecksOptions_Active != ShowDateOnDecksOptions.show_no_date) ? true : false;
@@ -263,7 +262,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboBoxDatesOnDeckFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.DatesOnDeckFormat_Active = (DatesOnDeckFormat)ComboBoxDatesOnDeckFormat.SelectedItem;
 			Config.Save();
@@ -272,7 +271,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckBoxAutoArchiveArenaDecks_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.AutoArchiveArenaDecks = true;
 			Config.Save();
@@ -280,7 +279,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckBoxAutoArchiveArenaDecks_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.AutoArchiveArenaDecks = false;
 			Config.Save();
