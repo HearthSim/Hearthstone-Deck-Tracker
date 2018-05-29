@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			get
 			{
-				switch (Config.Instance.ShowDateOnDecksOptions_Active)
+				switch(Config.Instance.ShowDateOnDecksOptions_Active)
 				{
 					case ShowDateOnDecksOptions.show_last_played_date:
 						DateShownOnDeckTooltip = LocUtil.Get("DeckPicker_Deck_LastTimePlayed_Tooltip");
