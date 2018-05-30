@@ -301,7 +301,7 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.SetPlayer(player);
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
 			{
-				switch (Config.Instance.TurnStartAction)
+				switch(Config.Instance.TurnStartAction)
 				{
 						case HsActionType.Flash:
 							User32.FlashHs();
@@ -336,7 +336,7 @@ namespace Hearthstone_Deck_Tracker
 			_lastGameStart = DateTime.Now;
 			Log.Info("--- Game start ---");
 
-			switch (Config.Instance.TurnStartAction)
+			switch(Config.Instance.TurnStartAction)
 			{
 				case HsActionType.Flash:
 					User32.FlashHs();

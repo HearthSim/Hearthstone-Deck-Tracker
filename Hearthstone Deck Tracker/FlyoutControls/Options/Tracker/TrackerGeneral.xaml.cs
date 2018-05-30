@@ -44,7 +44,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboBoxDateFormat.SelectedItem = Config.Instance.DateFormatActive;
 			DateFormatPanel.Visibility = Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
-			CheckboxFlashHsOnChallenge.IsChecked = Config.Instance.FlashHsOnFriendlyChallenge;
 			
 			if(Config.Instance.NonLatinUseDefaultFont == null)
 			{
@@ -110,101 +109,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.UseFullTextSearch = false;
-			Config.Save();
-		}
-
-		private void TextboxTimerAlert_PreviewTextInput(object sender, TextCompositionEventArgs e)
-		{
-			if(!char.IsDigit(e.Text, e.Text.Length - 1))
-				e.Handled = true;
-		}
-
-		private void TextboxTimerAlert_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			if(!_initialized || CheckboxTimerAlert.IsChecked != true)
-				return;
-			if(int.TryParse(TextboxTimerAlert.Text, out var mTimerAlertValue))
-			{
-				if(mTimerAlertValue < 0)
-				{
-					TextboxTimerAlert.Text = "0";
-					mTimerAlertValue = 0;
-				}
-
-				if(mTimerAlertValue > 90)
-				{
-					TextboxTimerAlert.Text = "90";
-					mTimerAlertValue = 90;
-				}
-
-				Config.Instance.TimerAlertSeconds = mTimerAlertValue;
-				Config.Save();
-			}
-		}
-
-		private void CheckboxBringHsToForegorund_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.BringHsToForeground = true;
-			Config.Save();
-		}
-
-		private void CheckboxBringHsToForegorund_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.BringHsToForeground = false;
-			Config.Save();
-		}
-
-		private void CheckboxFlashHs_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.FlashHsOnTurnStart = true;
-			Config.Save();
-		}
-
-		private void CheckboxFlashHs_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.FlashHsOnTurnStart = false;
-			Config.Save();
-		}
-
-		private void CheckboxFlashHsOnChallenge_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.FlashHsOnFriendlyChallenge = true;
-			Config.Save();
-		}
-
-		private void CheckboxFlashHsOnChallenge_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.FlashHsOnFriendlyChallenge = false;
-			Config.Save();
-		}
-
-		private void CheckboxTimerAlert_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.TimerAlert = true;
-			TextboxTimerAlert.IsEnabled = true;
-			Config.Save();
-		}
-
-		private void CheckboxTimerAlert_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.TimerAlert = false;
-			TextboxTimerAlert.IsEnabled = false;
 			Config.Save();
 		}
 

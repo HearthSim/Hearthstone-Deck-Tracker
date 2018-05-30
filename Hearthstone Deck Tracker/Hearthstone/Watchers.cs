@@ -33,9 +33,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.FriendlyChallengeEventArgs args)
 		{
-			if (args.DialogVisible)
+			if(args.DialogVisible)
 			{
-				switch (Config.Instance.ChallengeAction)
+				switch(Config.Instance.ChallengeAction)
 				{
 					case HsActionType.Flash:
 						User32.FlashHs();
