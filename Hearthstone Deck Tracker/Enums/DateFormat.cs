@@ -2,7 +2,7 @@
 
 namespace Hearthstone_Deck_Tracker.Enums
 {
-	public enum DatesOnDeckFormat
+	public enum DateFormat
 	{
 		[Description("dd/MM/yyyy")]
 		DayMonthYear,

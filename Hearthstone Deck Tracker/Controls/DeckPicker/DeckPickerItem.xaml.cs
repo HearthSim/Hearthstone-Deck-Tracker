@@ -70,7 +70,37 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public string StatsString => Deck.StatsString;
 
-		public string DateShownOnDeckTooltip { set; get; }
+		public string DateShownOnDeckTooltip
+		{
+			get
+			{
+				switch (Config.Instance.ShowDateOnDecksOptionsActive)
+				{
+					case ShowDateOnDecksOptions.showLastPlayedDate:
+						return LocUtil.Get("DeckPicker_Deck_LastTimePlayed_Tooltip");
+					case ShowDateOnDecksOptions.showLastEditedDate:
+						return LocUtil.Get("DeckPicker_Deck_LastTimeEdited_Tooltip");
+					default:
+						return null;
+				}
+			}
+		}
+
+		public DateTime DateShownOnDeck
+		{
+			get
+			{
+				switch(Config.Instance.ShowDateOnDecksOptionsActive)
+				{
+					case ShowDateOnDecksOptions.showLastPlayedDate:
+						return Deck.LastPlayed;
+					case ShowDateOnDecksOptions.showLastEditedDate:
+						return Deck.LastEdited;
+					default:
+						return DateTime.MinValue;
+				}
+			}
+		}
 
 		public void RefreshProperties()
 		{
@@ -98,24 +128,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public DateTime LastPlayed => Deck.LastPlayed;
 
 		public DateTime LastPlayedNewFirst => Deck.LastPlayedNewFirst;
-
-		public DateTime DateShownOnDeck
-		{
-			get
-			{
-				switch(Config.Instance.ShowDateOnDecksOptions_Active)
-				{
-					case ShowDateOnDecksOptions.show_last_played_date:
-						DateShownOnDeckTooltip = LocUtil.Get("DeckPicker_Deck_LastTimePlayed_Tooltip");
-						return Deck.LastPlayed;
-					case ShowDateOnDecksOptions.show_last_edited_date:
-						DateShownOnDeckTooltip = LocUtil.Get("DeckPicker_Deck_LastTimeEdited_Tooltip");
-						return Deck.LastEdited;
-					default:
-						return DateTime.MinValue;
-				}
-			}
-		}
 
 		public double WinPercent => Deck.WinPercent;
 

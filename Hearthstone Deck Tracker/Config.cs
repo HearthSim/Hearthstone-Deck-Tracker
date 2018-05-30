@@ -269,8 +269,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(-1)]
 		public int CustomWidth = -1;
 
-		[DefaultValue(DatesOnDeckFormat.DayMonthYear)]
-		public DatesOnDeckFormat DatesOnDeckFormat_Active = DatesOnDeckFormat.DayMonthYear;
+		[DefaultValue(DateFormat.DayMonthYear)]
+		public DateFormat DateFormatActive = DateFormat.DayMonthYear;
 
 		[DefaultValue(false)]
 		public bool Debug = false;
@@ -756,8 +756,8 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
 
-		[DefaultValue(ShowDateOnDecksOptions.show_no_date)]
-		public ShowDateOnDecksOptions ShowDateOnDecksOptions_Active = ShowDateOnDecksOptions.show_no_date;
+		[DefaultValue(ShowDateOnDecksOptions.showNoDate)]
+		public ShowDateOnDecksOptions ShowDateOnDecksOptionsActive = ShowDateOnDecksOptions.showNoDate;
 
 		[DefaultValue(false)]
 		public bool ShowDeckTitle = false;

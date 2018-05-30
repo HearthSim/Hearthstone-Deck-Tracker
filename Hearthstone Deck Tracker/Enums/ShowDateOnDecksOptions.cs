@@ -4,11 +4,11 @@ namespace Hearthstone_Deck_Tracker.Enums
 {
 	public enum ShowDateOnDecksOptions
 	{
-		[Description("Don't Show Date")]
-		show_no_date,
-		[Description("Last Time Played")]
-		show_last_played_date,
-		[Description("Last Time Edited")]
-		show_last_edited_date
+		[LocDescription("Enum_Show_No_Date")]
+		showNoDate,
+		[LocDescription("Enum_Last_Time_Played")]
+		showLastPlayedDate,
+		[LocDescription("Enum_Last_Time_Edited")]
+		showLastEditedDate
 	}
 }

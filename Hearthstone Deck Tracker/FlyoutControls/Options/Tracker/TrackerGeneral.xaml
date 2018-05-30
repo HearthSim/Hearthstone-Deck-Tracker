@@ -115,7 +115,7 @@
                   Unchecked="CheckboxDeckPickerCaps_Unchecked"
                   ToolTip="{lex:Loc Options_Tracker_General_CheckBox_UpperCaseDeckNames_Tooltip}" />
         <DockPanel Margin="5,5,5,0" Height="26">
-            <Label Content="Show Date On Decks:" Height="26" VerticalAlignment="Top" Width="123" HorizontalAlignment="Left" Margin="0"/>
+            <Label Content="{lex:Loc Options_Tracker_General_ComboBox_DateOnDecks}" Height="26" VerticalAlignment="Top" Width="123" HorizontalAlignment="Left" Margin="0"/>
             <ComboBox DockPanel.Dock="Right" Name="ComboBoxDatesOnDecks" VerticalAlignment="Top" HorizontalAlignment="Right" Width="170" Margin="0"
                 SelectionChanged="ComboBoxDatesOnDecks_OnSelectionChanged" >
                 <ComboBox.ItemTemplate>
@@ -125,10 +125,10 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </DockPanel>
-        <DockPanel Margin="35,5,10,0" Name="DatesOnDeckFormatPanel">
+        <DockPanel Margin="35,5,10,0" Name="DateFormatPanel">
             <Label Content="{lex:Loc Options_Tracker_General_Label_Format}"/>
-            <ComboBox DockPanel.Dock="Right" Name="ComboBoxDatesOnDeckFormat"  Margin="5,0,0,0" Width="150" HorizontalAlignment="Right"
-                  SelectionChanged="ComboBoxDatesOnDeckFormat_OnSelectionChanged" VerticalAlignment="Top" >
+            <ComboBox DockPanel.Dock="Right" Name="ComboBoxDateFormat"  Margin="5,0,0,0" Width="150" HorizontalAlignment="Right"
+                  SelectionChanged="ComboBoxDateFormat_OnSelectionChanged" VerticalAlignment="Top" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />

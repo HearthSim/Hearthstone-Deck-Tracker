@@ -43,10 +43,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)");
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
 			ComboBoxDatesOnDecks.ItemsSource = Enum.GetValues(typeof(ShowDateOnDecksOptions));
-			ComboBoxDatesOnDecks.SelectedItem = Config.Instance.ShowDateOnDecksOptions_Active;
-			ComboBoxDatesOnDeckFormat.ItemsSource = Enum.GetValues(typeof(DatesOnDeckFormat));
-			ComboBoxDatesOnDeckFormat.SelectedItem = Config.Instance.DatesOnDeckFormat_Active;
-			DatesOnDeckFormatPanel.Visibility = Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
+			ComboBoxDatesOnDecks.SelectedItem = Config.Instance.ShowDateOnDecksOptionsActive;
+			ComboBoxDateFormat.ItemsSource = Enum.GetValues(typeof(DateFormat));
+			ComboBoxDateFormat.SelectedItem = Config.Instance.DateFormatActive;
+			DateFormatPanel.Visibility = Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
 			CheckboxFlashHsOnChallenge.IsChecked = Config.Instance.FlashHsOnFriendlyChallenge;
 			
@@ -254,17 +254,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.ShowDateOnDecksOptions_Active = (ShowDateOnDecksOptions)ComboBoxDatesOnDecks.SelectedItem;
-			Config.Instance.ShowDateOnDeck = (Config.Instance.ShowDateOnDecksOptions_Active != ShowDateOnDecksOptions.show_no_date) ? true : false;
+			Config.Instance.ShowDateOnDecksOptionsActive = (ShowDateOnDecksOptions)ComboBoxDatesOnDecks.SelectedItem;
+			Config.Instance.ShowDateOnDeck = (Config.Instance.ShowDateOnDecksOptionsActive != ShowDateOnDecksOptions.showNoDate) ? true : false;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
 		}
 
-		private void ComboBoxDatesOnDeckFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void ComboBoxDateFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.DatesOnDeckFormat_Active = (DatesOnDeckFormat)ComboBoxDatesOnDeckFormat.SelectedItem;
+			Config.Instance.DateFormatActive = (DateFormat)ComboBoxDateFormat.SelectedItem;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
 		}
