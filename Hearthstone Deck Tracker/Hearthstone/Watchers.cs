@@ -33,8 +33,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.FriendlyChallengeEventArgs args)
 		{
-			if(args.DialogVisible && Config.Instance.FlashHsOnFriendlyChallenge)
-				User32.FlashHs();
+			if (args.DialogVisible)
+			{
+				switch (Config.Instance.ChallengeAction)
+				{
+					case HsActionType.Flash:
+						User32.FlashHs();
+						break;
+					case HsActionType.Popup:
+						User32.BringHsToForeground();
+						break;
+				}
+			}
 		}
 
 		public static ArenaWatcher ArenaWatcher { get; } = new ArenaWatcher(new HearthMirrorArenaProvider());

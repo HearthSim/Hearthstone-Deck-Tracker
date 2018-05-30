@@ -35,11 +35,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxAutoDeckDetection.IsChecked = Config.Instance.AutoDeckDetection;
 			CheckboxHideManaCurveMyDecks.IsChecked = Config.Instance.ManaCurveMyDecks;
 			CheckboxTrackerCardToolTips.IsChecked = Config.Instance.TrackerCardToolTips;
-			CheckboxBringHsToForegorund.IsChecked = Config.Instance.BringHsToForeground;
-			CheckboxFlashHs.IsChecked = Config.Instance.FlashHsOnTurnStart;
-			CheckboxTimerAlert.IsChecked = Config.Instance.TimerAlert;
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
-			TextboxTimerAlert.Text = Config.Instance.TimerAlertSeconds.ToString();
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)");
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
 			ComboBoxDatesOnDecks.ItemsSource = Enum.GetValues(typeof(ShowDateOnDecksOptions));
