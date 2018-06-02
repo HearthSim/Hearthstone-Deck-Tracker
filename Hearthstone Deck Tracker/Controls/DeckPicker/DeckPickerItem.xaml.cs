@@ -74,11 +74,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			get
 			{
-				switch (Config.Instance.ShowDateOnDecksOptionsActive)
+				switch (Config.Instance.SelectedDateOnDecks)
 				{
-					case ShowDateOnDecksOptions.showLastPlayedDate:
+					case DeckDateType.LastPlayed:
 						return LocUtil.Get("DeckPicker_Deck_LastTimePlayed_Tooltip");
-					case ShowDateOnDecksOptions.showLastEditedDate:
+					case DeckDateType.LastEdited:
 						return LocUtil.Get("DeckPicker_Deck_LastTimeEdited_Tooltip");
 					default:
 						return null;
@@ -90,11 +90,11 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		{
 			get
 			{
-				switch(Config.Instance.ShowDateOnDecksOptionsActive)
+				switch(Config.Instance.SelectedDateOnDecks)
 				{
-					case ShowDateOnDecksOptions.showLastPlayedDate:
+					case DeckDateType.LastPlayed:
 						return Deck.LastPlayed;
-					case ShowDateOnDecksOptions.showLastEditedDate:
+					case DeckDateType.LastEdited:
 						return Deck.LastEdited;
 					default:
 						return DateTime.MinValue;

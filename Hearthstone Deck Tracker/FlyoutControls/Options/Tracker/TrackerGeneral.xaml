@@ -81,8 +81,8 @@
                   Unchecked="CheckboxDeckPickerCaps_Unchecked"
                   ToolTip="{lex:Loc Options_Tracker_General_CheckBox_UpperCaseDeckNames_Tooltip}" />
         <DockPanel Margin="5,5,5,0" Height="26">
-            <Label Content="{lex:Loc Options_Tracker_General_ComboBox_DateOnDecks}" Height="26" VerticalAlignment="Top" Width="123" HorizontalAlignment="Left" Margin="0"/>
-            <ComboBox DockPanel.Dock="Right" Name="ComboBoxDatesOnDecks" VerticalAlignment="Top" HorizontalAlignment="Right" Width="170" Margin="0"
+            <Label Content="{lex:Loc Options_Tracker_General_ComboBox_DeckDateType}" Height="26" VerticalAlignment="Top" Width="123" HorizontalAlignment="Left" Margin="0"/>
+            <ComboBox DockPanel.Dock="Right" Name="ComboBoxDeckDateType" VerticalAlignment="Top" HorizontalAlignment="Right" Width="170" Margin="0"
                 SelectionChanged="ComboBoxDatesOnDecks_OnSelectionChanged" >
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

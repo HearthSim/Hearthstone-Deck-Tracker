@@ -38,10 +38,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)");
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
-			ComboBoxDatesOnDecks.ItemsSource = Enum.GetValues(typeof(ShowDateOnDecksOptions));
-			ComboBoxDatesOnDecks.SelectedItem = Config.Instance.ShowDateOnDecksOptionsActive;
+			ComboBoxDeckDateType.ItemsSource = Enum.GetValues(typeof(DeckDateType));
+			ComboBoxDeckDateType.SelectedItem = Config.Instance.SelectedDateOnDecks;
 			ComboBoxDateFormat.ItemsSource = Enum.GetValues(typeof(DateFormat));
-			ComboBoxDateFormat.SelectedItem = Config.Instance.DateFormatActive;
+			ComboBoxDateFormat.SelectedItem = Config.Instance.SelectedDateFormat;
 			DateFormatPanel.Visibility = Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
 			
@@ -154,8 +154,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.ShowDateOnDecksOptionsActive = (ShowDateOnDecksOptions)ComboBoxDatesOnDecks.SelectedItem;
-			Config.Instance.ShowDateOnDeck = (Config.Instance.ShowDateOnDecksOptionsActive != ShowDateOnDecksOptions.showNoDate) ? true : false;
+			Config.Instance.SelectedDateOnDecks = (DeckDateType)ComboBoxDeckDateType.SelectedItem;
+			Config.Instance.ShowDateOnDeck = (Config.Instance.SelectedDateOnDecks != DeckDateType.None) ? true : false;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
 		}
@@ -164,7 +164,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.DateFormatActive = (DateFormat)ComboBoxDateFormat.SelectedItem;
+			Config.Instance.SelectedDateFormat = (DateFormat)ComboBoxDateFormat.SelectedItem;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
 		}
