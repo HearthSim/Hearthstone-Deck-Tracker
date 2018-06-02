@@ -77,9 +77,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				switch (Config.Instance.SelectedDateOnDecks)
 				{
 					case DeckDateType.LastPlayed:
-						return LocUtil.Get("DeckPicker_Deck_LastTimePlayed_Tooltip");
+						return LocUtil.Get("DeckPicker_Deck_LastPlayed_Tooltip");
 					case DeckDateType.LastEdited:
-						return LocUtil.Get("DeckPicker_Deck_LastTimeEdited_Tooltip");
+						return LocUtil.Get("DeckPicker_Deck_LastEdited_Tooltip");
 					default:
 						return null;
 				}
