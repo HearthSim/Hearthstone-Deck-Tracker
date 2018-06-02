@@ -38,9 +38,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxClassCardsFirst.IsChecked = Config.Instance.CardSortingClassFirst;
 			ComboboxLanguages.ItemsSource = Helper.LanguageDict.Keys.Where(x => x != "English (Great Britain)");
 			CheckboxDeckPickerCaps.IsChecked = Config.Instance.DeckPickerCaps;
-			ComboBoxLastPlayedDateFormat.ItemsSource = Enum.GetValues(typeof(LastPlayedDateFormat));
-			CheckBoxShowLastPlayedDate.IsChecked = Config.Instance.ShowLastPlayedDateOnDeck;
-			ComboBoxLastPlayedDateFormat.SelectedItem = Config.Instance.LastPlayedDateFormat;
+			ComboBoxDeckDateType.ItemsSource = Enum.GetValues(typeof(DeckDateType));
+			ComboBoxDeckDateType.SelectedItem = Config.Instance.SelectedDateOnDecks;
+			ComboBoxDateFormat.ItemsSource = Enum.GetValues(typeof(DateFormat));
+			ComboBoxDateFormat.SelectedItem = Config.Instance.SelectedDateFormat;
+			DateFormatPanel.Visibility = Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
 			
 			if(Config.Instance.NonLatinUseDefaultFont == null)
@@ -109,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.UseFullTextSearch = false;
 			Config.Save();
 		}
-		
+
 		private void CheckBoxAutoUse_OnChecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
@@ -148,27 +150,28 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Save();
 		}
 
-		private void CheckBoxShowLastPlayedDate_Checked(object sender, RoutedEventArgs e)
+		private void ComboBoxDatesOnDecks_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.ShowLastPlayedDateOnDeck = true;
+			Config.Instance.SelectedDateOnDecks = (DeckDateType)ComboBoxDeckDateType.SelectedItem;
+			Config.Instance.ShowDateOnDeck = (Config.Instance.SelectedDateOnDecks != DeckDateType.None) ? true : false;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
 		}
 
-		private void CheckBoxShowLastPlayedDate_Unchecked(object sender, RoutedEventArgs e)
+		private void ComboBoxDateFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.ShowLastPlayedDateOnDeck = false;
+			Config.Instance.SelectedDateFormat = (DateFormat)ComboBoxDateFormat.SelectedItem;
 			Config.Save();
 			MessageDialogs.ShowRestartDialog();
 		}
 
 		private void CheckBoxAutoArchiveArenaDecks_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.AutoArchiveArenaDecks = true;
 			Config.Save();
@@ -176,17 +179,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckBoxAutoArchiveArenaDecks_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
-				return;
-			Config.Instance.AutoArchiveArenaDecks = false;
-			Config.Save();
-		}
-
-		private void ComboBoxLastPlayedDateFormat_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
 			if(!_initialized)
 				return;
-			Config.Instance.LastPlayedDateFormat = (LastPlayedDateFormat)ComboBoxLastPlayedDateFormat.SelectedItem;
+			Config.Instance.AutoArchiveArenaDecks = false;
 			Config.Save();
 		}
 

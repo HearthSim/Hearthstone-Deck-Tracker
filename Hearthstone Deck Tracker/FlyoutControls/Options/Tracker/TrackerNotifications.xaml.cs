@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxNoteDialog_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.ShowNoteDialogAfterGame = true;
 			CheckboxNoteDialogDelayed.IsEnabled = true;
@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxNoteDialog_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.ShowNoteDialogAfterGame = false;
 			CheckboxNoteDialogDelayed.IsEnabled = false;
@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxNoteDialogDelay_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.NoteDialogDelayed = false;
 			Config.Save();
@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxNoteDialogDelay_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.NoteDialogDelayed = true;
 			Config.Save();
@@ -124,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxArenaRewardDialog_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.ArenaRewardDialog = true;
 			Config.Save();
@@ -132,7 +132,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxArenaRewardDialog_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.ArenaRewardDialog = false;
 			Config.Save();
@@ -140,7 +140,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxTimerAlert2_Checked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.TimerAlert = true;
 			TextboxTimerAlert2.IsEnabled = true;
@@ -149,7 +149,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void CheckboxTimerAlert2_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.TimerAlert = false;
 			TextboxTimerAlert2.IsEnabled = false;
@@ -158,9 +158,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void TextboxTimerAlert2_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			if (!_initialized || CheckboxTimerAlert2.IsChecked != true)
+			if(!_initialized || CheckboxTimerAlert2.IsChecked != true)
 				return;
-			if (int.TryParse(TextboxTimerAlert2.Text, out var mTimerAlertValue))
+			if(int.TryParse(TextboxTimerAlert2.Text, out var mTimerAlertValue))
 			{
 				if (mTimerAlertValue < 0)
 				{
@@ -181,13 +181,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void TextboxTimerAlert2_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
-			if (!char.IsDigit(e.Text, e.Text.Length - 1))
+			if(!char.IsDigit(e.Text, e.Text.Length - 1))
 				e.Handled = true;
 		}
 
 		private void ComboboxTurnAction_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.TurnStartAction = (HsActionType)ComboboxTurnAction.SelectedIndex;
 			Config.Save();
@@ -195,7 +195,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ComboboxChallengeAction_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (!_initialized)
+			if(!_initialized)
 				return;
 			Config.Instance.ChallengeAction = (HsActionType)ComboboxChallengeAction.SelectedIndex;
 			Config.Save();

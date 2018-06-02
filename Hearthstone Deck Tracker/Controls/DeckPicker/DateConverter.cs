@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			var date = (DateTime)value;
 			if(date == DateTime.MinValue)
 				return "N/A";
-			return date.ToString(EnumDescriptionConverter.GetDescription(Config.Instance.LastPlayedDateFormat), culture);
+			return date.ToString(EnumDescriptionConverter.GetDescription(Config.Instance.SelectedDateFormat), culture);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
