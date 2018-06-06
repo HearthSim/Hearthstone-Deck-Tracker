@@ -41,13 +41,13 @@
                                     <TextBlock Text="{Binding Path=Plugin.Author}" FontWeight="Bold" TextWrapping="Wrap" Margin="4,0,0,0"/>
                                 </StackPanel>
                             </DockPanel>
-                            <Separator Foreground="{DynamicResource AccentColorBrush}" Margin="0,0,0,5"/>
+                            <Separator Foreground="{DynamicResource AccentColorBrush}" Margin="0,0,0,10"/>
                             <DockPanel>
                                 <Button Name="ButtonSettings"
                                         Content="{Binding Path=Plugin.ButtonText}"
                                         IsEnabled="{Binding Path=IsEnabled}"
                                         DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick"/>
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,5">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,15">
                                     <TextBlock Name="TextBlockDescription"
                                                Text="{Binding Path=Plugin.Description}"
                                                TextWrapping="Wrap" />
