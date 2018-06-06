@@ -8,58 +8,68 @@
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
-             mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="300">
-    <DockPanel AllowDrop="True" Drop="DockPanel_Drop">
-        <DockPanel DockPanel.Dock="Top" Height="150">
-            <StackPanel DockPanel.Dock="Right" Margin="5,0,0,0">
-                <Button Click="ButtonAvailablePlugins_OnClick" Content="{lex:Loc Options_Tracker_Plugins_Button_Avilable}" />
-                <Button Click="ButtonOpenPluginsFolder_OnClick" Content="{lex:Loc Options_Tracker_Plugins_Button_Folder}" Margin="0,5,0,0" />
-            </StackPanel>
-            <Border BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}">
-                <ListBox Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"
-                         SelectionMode="Single">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Path=Plugin.Name}" TextWrapping="Wrap">
-                                <TextBlock.Style>
-                                    <Style>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=IsEnabled}" Value="False">
-                                                <Setter Property="TextBlock.FontStyle" Value="Italic" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Border>
-        </DockPanel>
-        <GroupBox Name="GroupBoxDetails"
-                  Header="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.NameAndVersion}"
-                  Margin="0,10,0,0">
-            <DockPanel>
-                <controls:ToggleSwitch Margin="2" DockPanel.Dock="Top" OnLabel="{lex:Loc Options_Tracker_Plugins_Switch_Enabled}" 
-                                       OffLabel="{lex:Loc Options_Tracker_Plugins_Switch_Disabled}"
-                                       IsChecked="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}" />
-                <Separator DockPanel.Dock="Top" Margin="0,0,0,5" />
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-                    <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
-                    <TextBlock Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Author}"
-                               TextWrapping="Wrap" Margin="2,0,0,0" />
-                </StackPanel>
-                <Button Name="ButtonSettings"
-                        Content="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.ButtonText}"
-                        IsEnabled="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.IsEnabled}"
-                        DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick" Margin="0,2" />
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <TextBlock Name="TextBlockDescription"
-                               Text="{Binding ElementName=ListBoxPlugins, Path=SelectedItem.Plugin.Description}"
-                               TextWrapping="Wrap" />
-                </ScrollViewer>
-            </DockPanel>
-        </GroupBox>
-    </DockPanel>
+             mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="300">
+    <Grid AllowDrop="True" Drop="DockPanel_Drop">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="41"/>
+        </Grid.RowDefinitions>
+        <ListBox Grid.Row="0" Name="ListBoxPlugins" SelectionChanged="ListBoxPlugins_OnSelectionChanged"
+                 SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Focusable" Value="False"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Expander BorderThickness="0" Background="Transparent" controls:GroupBoxHelper.HeaderForeground="{DynamicResource IdealForegroundColorBrush}">
+                        <Expander.Header>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Path=Plugin.Name}"
+                                           TextWrapping="Wrap" HorizontalAlignment="Left"
+                                           VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16"/>
+                                <controls:ToggleSwitch HorizontalAlignment="Right" OnLabel="" OffLabel=""
+                                                       IsChecked="{Binding Path=IsEnabled}" />
+                            </DockPanel>
+                        </Expander.Header>
+                        <StackPanel>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Path=Plugin.VersionString}" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Path=Plugin.Author}" FontWeight="Bold" TextWrapping="Wrap" Margin="4,0,0,0"/>
+                                </StackPanel>
+                            </DockPanel>
+                            <Separator Foreground="{DynamicResource AccentColorBrush}" Margin="0,0,0,5"/>
+                            <DockPanel>
+                                <Button Name="ButtonSettings"
+                                        Content="{Binding Path=Plugin.ButtonText}"
+                                        IsEnabled="{Binding Path=IsEnabled}"
+                                        DockPanel.Dock="Bottom" Click="ButtonSettings_OnClick"/>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,0,0,5">
+                                    <TextBlock Name="TextBlockDescription"
+                                               Text="{Binding Path=Plugin.Description}"
+                                               TextWrapping="Wrap" />
+                                </ScrollViewer>
+                            </DockPanel>
+                        </StackPanel>
+                    </Expander>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Grid.Row="1">
+            <Separator Background="{DynamicResource AccentColorBrush}" DockPanel.Dock="Bottom" Margin="0"/>
+            <Grid Margin="0,4,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Click="ButtonOpenPluginsFolder_OnClick"
+                    Content="{lex:Loc Options_Tracker_Plugins_Button_Folder}" Margin="5"/>
+                <Button Grid.Column="1" Click="ButtonAvailablePlugins_OnClick"
+                    Content="{lex:Loc Options_Tracker_Plugins_Button_Avilable}" Margin="5"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
 </UserControl>
