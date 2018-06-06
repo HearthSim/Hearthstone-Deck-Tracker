@@ -26,7 +26,7 @@
                     <Expander BorderThickness="0" Background="Transparent" controls:GroupBoxHelper.HeaderForeground="{DynamicResource IdealForegroundColorBrush}">
                         <Expander.Header>
                             <DockPanel>
-                                <TextBlock Text="{Binding Path=Plugin.Name}"
+                                <TextBlock Text="{Binding Path=NameAndVersion}"
                                            TextWrapping="Wrap" HorizontalAlignment="Left"
                                            VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16"/>
                                 <controls:ToggleSwitch HorizontalAlignment="Right" OnLabel="" OffLabel=""
@@ -35,7 +35,7 @@
                         </Expander.Header>
                         <StackPanel>
                             <DockPanel>
-                                <TextBlock Text="{Binding Path=Plugin.VersionString}" HorizontalAlignment="Left" TextWrapping="Wrap"/>
+                                <!--<TextBlock Text="{Binding Path=Plugin.VersionString}" HorizontalAlignment="Left" TextWrapping="Wrap"/>-->
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                     <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
                                     <TextBlock Text="{Binding Path=Plugin.Author}" FontWeight="Bold" TextWrapping="Wrap" Margin="4,0,0,0"/>
