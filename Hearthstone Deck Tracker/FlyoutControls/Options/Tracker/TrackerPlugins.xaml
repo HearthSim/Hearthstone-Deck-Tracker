@@ -35,7 +35,6 @@
                         </Expander.Header>
                         <StackPanel>
                             <DockPanel>
-                                <!--<TextBlock Text="{Binding Path=Plugin.VersionString}" HorizontalAlignment="Left" TextWrapping="Wrap"/>-->
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                     <TextBlock Text="{lex:Loc Options_Tracker_Plugins_Label_CreatedBy}" TextWrapping="Wrap" />
                                     <TextBlock Text="{Binding Path=Plugin.Author}" FontWeight="Bold" TextWrapping="Wrap" Margin="4,0,0,0"/>
