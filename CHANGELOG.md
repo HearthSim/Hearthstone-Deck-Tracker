@@ -1,3 +1,15 @@
+## __Release v1.6.7 - 2018-06-10__
+__Updated for Taverns of Time event__
+
+__New__:
+- Redesigned the plugins menu (`options > tracker > plugins`).
+- Added an option to display the "last edited" date on decks (`options > tracker > general`).
+- Improved configuration for turn start and friendly challenge notifications (`options > tracker > notifications`). 
+
+__Fixes__:
+- Fixed an issue where cards were sometimes not permanently removed from the deck after patch 11.2.0.
+
+
 ## __Release v1.6.6 - 2018-05-22__
 __Updated for Hearthstone 11.1.1.24589__
 
