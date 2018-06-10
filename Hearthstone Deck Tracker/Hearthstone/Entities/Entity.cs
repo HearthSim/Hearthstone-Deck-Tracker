@@ -193,6 +193,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool WasTransformed => !string.IsNullOrEmpty(OriginalCardId);
 		public bool CreatedInDeck => OriginalZone == Zone.DECK;
 		public bool CreatedInHand => OriginalZone == Zone.HAND;
+		public bool? OriginalEntityWasCreated { get; internal set; }
 
 		public override string ToString()
 		{

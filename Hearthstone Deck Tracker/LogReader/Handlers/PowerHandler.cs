@@ -170,8 +170,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					var entity = game.Entities[entityId];
 					if(type != "CHANGE_ENTITY" || string.IsNullOrEmpty(entity.CardId))
 						entity.CardId = cardId;
-					if(type == "CHANGE_ENTITY" && entity.GetTag(GameTag.TRANSFORMED_FROM_CARD) == 46706)
-						gameState.ChameleosReveal = new Tuple<int, string>(entityId, cardId);
+					if(type == "CHANGE_ENTITY")
+					{
+						if(!entity.Info.OriginalEntityWasCreated.HasValue)
+							entity.Info.OriginalEntityWasCreated = entity.Info.Created;
+						if(entity.GetTag(GameTag.TRANSFORMED_FROM_CARD) == 46706)
+							gameState.ChameleosReveal = new Tuple<int, string>(entityId, cardId);
+					}
 					gameState.SetCurrentEntity(entityId);
 					if(gameState.DeterminedPlayers)
 						_tagChangeHandler.InvokeQueuedActions(game);

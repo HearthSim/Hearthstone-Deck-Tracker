@@ -62,7 +62,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						return card;
 					});
 			var originalCardsInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Select(x => Enumerable.Repeat(x.Id, x.Count)).SelectMany(x => x).ToList();
-			var revealedNotInDeck = RevealedEntities.Where(x => !x.Info.Created && x.IsPlayableCard
+			var revealedNotInDeck = RevealedEntities.Where(x => (!x.Info.Created || x.Info.OriginalEntityWasCreated == false)
+																&& x.IsPlayableCard
 																&& (!x.IsInDeck || x.Info.Stolen)
 																&& x.Info.OriginalController == Id
 																&& !(x.Info.Hidden && (x.IsInDeck || x.IsInHand))).ToList();
@@ -108,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}).ToList();
 
 		public IEnumerable<Card> RevealedCards
-			=> RevealedEntities.Where(x => !string.IsNullOrEmpty(x?.CardId) && !x.Info.Created && x.IsPlayableCard
+			=> RevealedEntities.Where(x => !string.IsNullOrEmpty(x?.CardId) && (!x.Info.Created || x.Info.OriginalEntityWasCreated == false) && x.IsPlayableCard
 									   && ((!x.IsInDeck && (!x.Info.Stolen || x.Info.OriginalController == Id)) || (x.Info.Stolen && x.Info.OriginalController == Id)))
 								.GroupBy(x => new {x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id})
 								.Select(x =>
