@@ -30,10 +30,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		public void Load()
 		{
 			ListBoxPlugins.ItemsSource = PluginManager.Instance.Plugins;
-			if(ListBoxPlugins.Items.Count > 0)
-				ListBoxPlugins.SelectedIndex = 0;
-			else
-				GroupBoxDetails.Visibility = Visibility.Hidden;
 		}
 
 		private void ListBoxPlugins_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -42,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		private void ButtonSettings_OnClick(object sender, RoutedEventArgs e)
 		{
-			(ListBoxPlugins.SelectedItem as PluginWrapper)?.OnButtonPress();
+			((sender as Control)?.DataContext as PluginWrapper)?.OnButtonPress();
 		}
 
 		private void ButtonAvailablePlugins_OnClick(object sender, RoutedEventArgs e) => Helper.TryOpenUrl(@"https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Available-Plugins");
@@ -100,11 +96,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 					if(plugins <= 0) 
 						return;
 					PluginManager.Instance.LoadPlugins(PluginManager.Instance.SyncPlugins());
-					if(prevCount == 0)
-					{
-						ListBoxPlugins.SelectedIndex = 0;
-						GroupBoxDetails.Visibility = Visibility.Visible;
-					}
 				}
 			}
 			catch(Exception ex)
