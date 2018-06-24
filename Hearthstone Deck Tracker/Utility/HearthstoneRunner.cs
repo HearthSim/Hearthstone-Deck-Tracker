@@ -50,7 +50,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 					}
 				}
 				if(bnetProc != null)
-					Process.Start(bnetProc.MainModule.FileName, "--exec=\"launch WTCG\""); 
+					Process.Start(bnetProc.MainModule.FileName, "--exec=\"launch WTCG\"");
+				else
+					ErrorManager.AddError("Could not launch Hearthstone",
+							"Please try again or launch Hearthstone manually.", true);
 			}
 			catch(Exception ex)
 			{
