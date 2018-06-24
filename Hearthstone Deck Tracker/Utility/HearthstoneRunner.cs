@@ -49,7 +49,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 						return;
 					}
 				}
-				Process.Start(bnetProc?.MainModule.FileName, "--exec=\"launch WTCG\"");
+				if(bnetProc != null)
+					Process.Start(bnetProc.MainModule.FileName, "--exec=\"launch WTCG\""); 
 			}
 			catch(Exception ex)
 			{
