@@ -1,3 +1,8 @@
+## __Release v1.6.8 - 2018-06-24__
+
+- Fixed an issue where Hearthstone was no longer starting via the integrated button.
+
+
 ## __Release v1.6.7 - 2018-06-10__
 __Updated for Taverns of Time event__
 
