@@ -62,9 +62,7 @@
                     </Image>
                     <Separator Margin="-5,5" Background="{DynamicResource AccentColorBrush}"/>
                 </StackPanel>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ContentControl Content="{Binding OptionsContent}"/>
-                </ScrollViewer>
+                <ContentControl Content="{Binding OptionsContent}"/>
             </DockPanel>
         </GroupBox>
     </DockPanel>
