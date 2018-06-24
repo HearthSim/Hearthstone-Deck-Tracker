@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 						return;
 					}
 				}
-				Process.Start("battlenet://WTCG");
+				Process.Start($"{bnetProc?.MainModule.FileName}", "--exec=\"launch WTCG\"");
 			}
 			catch(Exception ex)
 			{
