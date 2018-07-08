@@ -302,7 +302,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _localizedName = value; }
 		}
 
-		public string[] EntourageCardIds => _dbCard != null ? _dbCard.EntourageCardIds : new string[0];
+		public string[] EntourageCardIds
+		{
+			get
+			{
+				var entourageIds = _dbCard?.EntourageCardIds ?? new string[0];
+
+				return (CardIds.EntourageAdditionalCardIds.TryGetValue(_dbCard.Id, out string[] additionalIds)) ?
+					entourageIds.Union(additionalIds).ToArray() :
+					entourageIds;
+			}
+		}
+
 
 		[XmlIgnore]
 		public int InHandCount

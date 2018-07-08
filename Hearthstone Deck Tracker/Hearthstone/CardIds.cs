@@ -72,6 +72,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{"Priest", Collectible.Priest.AnduinWrynn}
 		};
 
+		// cards that should have an entourage list but don't in the game data
+		public static readonly Dictionary<string, string[]> EntourageAdditionalCardIds = new Dictionary<string, string[]>
+		{
+			{Collectible.Shaman.KalimosPrimalLord,
+				new string[]
+				{
+					NonCollectible.Shaman.KalimosPrimalLord_InvocationOfAir,
+					NonCollectible.Shaman.KalimosPrimalLord_InvocationOfEarth,
+					NonCollectible.Shaman.KalimosPrimalLord_InvocationOfFire,
+					NonCollectible.Shaman.KalimosPrimalLord_InvocationOfWater
+				}
+			}
+		};
+
 		public static class Secrets
 		{
 			public static List<string> ArenaExcludes = new List<string>
