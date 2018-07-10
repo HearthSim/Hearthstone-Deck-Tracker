@@ -1,3 +1,9 @@
+## __Release v1.6.9 - 2018-07-10__
+__Updated for Hearthstone 11.4.0.25252__
+
+- Fixed issues with collection syncing and arena drafting introduced by this patch.
+
+
 ## __Release v1.6.8 - 2018-06-24__
 
 - Fixed an issue where Hearthstone was no longer starting via the integrated button.
