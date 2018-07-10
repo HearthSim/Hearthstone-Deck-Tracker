@@ -44,7 +44,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboBoxDateFormat.SelectedItem = Config.Instance.SelectedDateFormat;
 			DateFormatPanel.Visibility = Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 			CheckboxShowMyGamesPanel.IsChecked = Config.Instance.ShowMyGamesPanel;
-			
+			CheckBoxAutoArchiveArenaDecks.IsChecked = Config.Instance.AutoArchiveArenaDecks;
+
 			if(Config.Instance.NonLatinUseDefaultFont == null)
 			{
 				Config.Instance.NonLatinUseDefaultFont = Helper.IsWindows10();
