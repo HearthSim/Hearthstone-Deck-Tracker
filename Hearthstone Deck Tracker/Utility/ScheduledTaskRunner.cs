@@ -45,8 +45,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			while(_tasks.Any())
 			{
 				var delay = _tasks.Values.Min(x => x.TimeRemaining);
-				if(delay > TimeSpan.Zero)
-					await Task.Delay(delay);
+				var millisecondsDelay = Math.Min(int.MaxValue, Math.Max(0, (int)delay.TotalMilliseconds));
+				if(millisecondsDelay > 0)
+					await Task.Delay(millisecondsDelay);
 				if(TasksChanged())
 					return;
 				foreach(var taskList in _tasks.Values.Where(x => x.ShouldRun))
