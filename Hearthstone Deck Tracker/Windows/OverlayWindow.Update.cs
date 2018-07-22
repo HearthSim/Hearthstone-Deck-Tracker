@@ -366,8 +366,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			TextBlockOpponentAttack.Margin = new Thickness(0, atkFontMarginTop, 0, 0);
 
 			if(Height > 0)
-			{
 				LblGoldProgress.FontSize = Height * 0.017;
+			if(atkFont > 0)
+			{
 				TextBlockPlayerAttack.FontSize = atkFont;
 				TextBlockOpponentAttack.FontSize = atkFont;
 			}
