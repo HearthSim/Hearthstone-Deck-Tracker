@@ -78,13 +78,21 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 				Trace.Listeners.Add(new TextWriterTraceListener(new StreamWriter(logFile, false)));
 				CurrentLogFile = logFile;
 			}
-			catch (Exception ex)
+			catch(Exception ex)
 			{
 				ErrorManager.AddError("Can not access log file.", ex.ToString());
 			}
+
 			Initialized = true;
-			foreach(var line in LogQueue)
-				Trace.WriteLine(line);
+			try
+			{
+				foreach(var line in LogQueue)
+					Trace.WriteLine(line);
+			}
+			catch(Exception e)
+			{
+				HandleWriteToTraceException(e);
+			}
 		}
 
 		public static void WriteLine(string msg, LogType type, [CallerMemberName] string memberName = "",
@@ -113,9 +121,24 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 		{
 			line = $"{DateTime.Now.ToLongTimeString()}|{line}";
 			if(Initialized)
-				Trace.WriteLine(line);
+			{
+				try
+				{
+					Trace.WriteLine(line);
+				}
+				catch(Exception e)
+				{
+					HandleWriteToTraceException(e);
+				}
+			}
 			else
 				LogQueue.Enqueue(line);
+		}
+
+		private static void HandleWriteToTraceException(Exception e)
+		{
+			if(e is IOException)
+				ErrorManager.AddError("Error writing to disk", e.Message);
 		}
 
 		public static void Debug(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
