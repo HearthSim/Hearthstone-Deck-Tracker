@@ -61,7 +61,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						card.HighlightInHand = Hand.Any(ce => ce.CardId == g.Key.CardId);
 						return card;
 					});
-			var originalCardsInDeck = DeckList.Instance.ActiveDeckVersion.Cards.Select(x => Enumerable.Repeat(x.Id, x.Count)).SelectMany(x => x).ToList();
+			var originalCardsInDeck = DeckList.Instance.ActiveDeckVersion.Cards
+				.Where(x => x.Count > 0)
+				.Select(x => Enumerable.Repeat(x.Id, x.Count))
+				.SelectMany(x => x).ToList();
 			var revealedNotInDeck = RevealedEntities.Where(x => (!x.Info.Created || x.Info.OriginalEntityWasCreated == false)
 																&& x.IsPlayableCard
 																&& (!x.IsInDeck || x.Info.Stolen)
