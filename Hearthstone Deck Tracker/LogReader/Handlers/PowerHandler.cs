@@ -256,7 +256,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						switch(actionStartingCardId)
 						{
 							case Collectible.Rogue.TradePrinceGallywix:
-								AddKnownCardId(gameState, game.Entities[gameState.LastCardPlayed].CardId);
+								if(!game.Entities.TryGetValue(gameState.LastCardPlayed, out var lastPlayed))
+									break;
+								AddKnownCardId(gameState, lastPlayed.CardId);
 								AddKnownCardId(gameState, NonCollectible.Neutral.TradePrinceGallywix_GallywixsCoinToken);
 								break;
 							case Collectible.Shaman.WhiteEyes:
