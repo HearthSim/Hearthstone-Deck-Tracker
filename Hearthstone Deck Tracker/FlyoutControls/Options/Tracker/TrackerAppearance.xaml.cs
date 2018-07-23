@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro;
 
@@ -60,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				Config.Instance.AccentName = accent.Name;
 				Config.Save();
-				UITheme.UpdateAccent();
+				UITheme.UpdateAccent().Forget();
 			}
 		}
 
@@ -70,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.AppTheme = (MetroTheme)ComboboxTheme.SelectedItem;
 			Config.Save();
-			UITheme.UpdateTheme();
+			UITheme.UpdateTheme().Forget();
 			Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();
 		}
 

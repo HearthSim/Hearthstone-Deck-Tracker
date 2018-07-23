@@ -653,7 +653,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void MainWindow_OnActivated(object sender, EventArgs e)
 		{
 			Influx.OnMainWindowActivated();
-			UITheme.RefreshWindowsAccent();
+			UITheme.RefreshWindowsAccent().Forget();
 			if(Options.TwitchExtensionMenuSelected && Options.OptionsStreamingTwitchExtension.AwaitingTwitchAccountConnection)
 				Options.OptionsStreamingTwitchExtension.RefreshTwitchAccounts();
 		}
