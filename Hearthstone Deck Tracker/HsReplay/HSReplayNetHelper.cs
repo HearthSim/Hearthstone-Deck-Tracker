@@ -119,7 +119,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					{
 						ErrorManager.AddError("HSReplay.net error",
 							$"Your blizzard account ({collection.BattleTag}, {account}) is already attached to another"
-							+ " HSReplay.net Account. Please contact us at contact@hsreplay.net"
+							+ " HSReplay.net Account. You are currently logged in as"
+							+ $" {HSReplayNetOAuth.AccountData.Username}. Please contact us at contact@hsreplay.net"
 							+ " if this is not correct.");
 						return;
 					}
