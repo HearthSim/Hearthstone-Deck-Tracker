@@ -10,6 +10,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public partial class CrashDialog
 	{
 		private readonly Exception _exception;
+		private bool _hasClickedSend;
+
 		public CrashDialog(Exception exception)
 		{
 			_exception = exception;
@@ -24,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(!string.IsNullOrEmpty(TextBoxDescription.Text))
 				_exception.Data.Add("description", TextBoxDescription.Text);
-			Sentry.CaptureException(_exception);
+			_hasClickedSend = true;
 			Close();
 		}
 
@@ -46,6 +48,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				
 				ButtonShowStacktrace.Content = "Show Stacktrace";
 			}
+		}
+
+		private void CrashDialog_Closed(object sender, EventArgs e)
+		{
+			if(Config.Instance.GoogleAnalytics || _hasClickedSend)
+				Sentry.CaptureException(_exception);
 		}
 	}
 }

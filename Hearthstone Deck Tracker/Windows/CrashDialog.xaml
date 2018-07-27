@@ -9,7 +9,8 @@
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
         mc:Ignorable="d" BorderBrush="{DynamicResource AccentColorBrush}"
-        Title="{lex:Loc CrashDialog_Title}" Height="350" Width="600">
+        Title="{lex:Loc CrashDialog_Title}" Height="350" Width="600"
+        Closed="CrashDialog_Closed">
     <DockPanel Margin="5">
         <Label Content="{lex:Loc CrashDialog_Label_Crashed}" FontWeight="SemiBold" DockPanel.Dock="Top"/>
         <DockPanel DockPanel.Dock="Top">
