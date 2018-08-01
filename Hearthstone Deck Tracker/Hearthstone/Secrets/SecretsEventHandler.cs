@@ -109,17 +109,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				HandleAttack(attacker, defender, true);
 		}
 
-		public void HandleMinionPlayed()
+		public void HandleMinionPlayed(Entity entity)
 		{
+			_targetedEntity = entity;
 			if(!HandleAction)
 				return;
-
+			
 			var exclude = new List<string>();
-
+			if(_targetedEntity != null)
+			{
+				exclude.Add(Mage.PotionOfPolymorph);
+				exclude.Add(Paladin.Repentance);
+			}
 			exclude.Add(Hunter.Snipe);
 			exclude.Add(Mage.ExplosiveRunes);
-			exclude.Add(Mage.PotionOfPolymorph);
-			exclude.Add(Paladin.Repentance);
 
 			if(FreeSpaceOnBoard)
 				exclude.Add(Mage.MirrorEntity);
