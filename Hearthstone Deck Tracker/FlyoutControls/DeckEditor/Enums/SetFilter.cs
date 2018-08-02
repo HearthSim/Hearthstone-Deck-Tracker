@@ -35,6 +35,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Loot")]
 		LOOT = 1004,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Gilneas")]
-		GILNEAS = 1125
+		GILNEAS = 1125,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Boomsday")]
+		BOOMSDAY = 1127,
 	}
 }

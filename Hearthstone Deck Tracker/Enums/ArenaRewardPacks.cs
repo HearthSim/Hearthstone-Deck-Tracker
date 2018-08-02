@@ -33,5 +33,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_Witchwood")]
 		Gilneas = CardSet.GILNEAS,
+
+		[LocDescription("Enum_ArenaRewardPacks_Boomsday")]
+		Boomsday = CardSet.GILNEAS,
 	}
 }

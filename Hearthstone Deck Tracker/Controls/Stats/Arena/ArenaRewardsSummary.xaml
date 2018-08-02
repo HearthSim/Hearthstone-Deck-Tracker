@@ -99,6 +99,10 @@
                     <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Gilneas, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountGilneas, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Boomsday, Suffix=' '}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountBoomsday, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>

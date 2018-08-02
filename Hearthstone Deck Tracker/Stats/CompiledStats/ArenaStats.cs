@@ -42,6 +42,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountGilneas => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.Gilneas));
 
+		public int PacksCountBoomsday => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.Boomsday));
+
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
 		public double PacksCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.PackCount).DefaultIfEmpty(0).Average(), 2);
