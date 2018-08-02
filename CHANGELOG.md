@@ -1,3 +1,11 @@
+## __Release v1.7.0 - 2018-08-02__
+__Updated for The Boomsday Project__
+
+ 
+- Fixed several crashes.
+- Tracking for cards created by Boomsday cards will follow in a later update.
+
+
 ## __Release v1.6.9 - 2018-07-10__
 __Updated for Hearthstone 11.4.0.25252__
 
