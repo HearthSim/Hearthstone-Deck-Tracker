@@ -1,7 +1,6 @@
-## __Release v1.7.0 - 2018-08-02__
+## __Release v1.7.1 - 2018-08-02__
 __Updated for The Boomsday Project__
 
- 
 - Fixed several crashes.
 - Tracking for cards created by Boomsday cards will follow in a later update.
 
