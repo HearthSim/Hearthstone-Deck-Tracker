@@ -76,6 +76,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			}
 			else
 			{
+				exclude.Add(Paladin.AutodefenseMatrix);
 				if(!fastOnly && freeSpaceOnBoard)
 				{
 					exclude.Add(Hunter.SnakeTrap);
