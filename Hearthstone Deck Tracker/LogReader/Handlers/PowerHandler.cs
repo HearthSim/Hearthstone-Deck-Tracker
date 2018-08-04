@@ -292,6 +292,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.WeaselTunneler:
 								AddKnownCardId(gameState, Collectible.Neutral.WeaselTunneler);
 								break;
+							case Collectible.Neutral.SparkDrill:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SparkDrill_SparkToken, 2);
+								break;
+							//TODO: Augmented Elekk
 						}
 					}
 					else //POWER
@@ -300,6 +304,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							case Collectible.Rogue.GangUp:
 							case Collectible.Hunter.DireFrenzy:
+							case Collectible.Rogue.LabRecruiter:
 								AddKnownCardId(gameState, GetTargetCardId(match), 3);
 								break;
 							case Collectible.Rogue.BeneathTheGrounds:
@@ -388,6 +393,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case NonCollectible.Neutral.AngryMob:
 								AddKnownCardId(gameState, NonCollectible.Neutral.CrazedMob);
+								break;
+							case Collectible.Neutral.SparkEngine:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SparkDrill_SparkToken);
+								break;
+							case Collectible.Priest.ExtraArms:
+								AddKnownCardId(gameState, NonCollectible.Priest.ExtraArms_MoreArmsToken);
+								break;
+							case Collectible.Neutral.SeaforiumBomber:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SeaforiumBomber_BombToken);
 								break;
 							//case Collectible.Rogue.Wanted: -- TODO
 							//	AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
