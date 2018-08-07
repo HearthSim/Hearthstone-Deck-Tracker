@@ -35,6 +35,6 @@ namespace Hearthstone_Deck_Tracker.Enums
 		Gilneas = CardSet.GILNEAS,
 
 		[LocDescription("Enum_ArenaRewardPacks_Boomsday")]
-		Boomsday = CardSet.GILNEAS,
+		Boomsday = CardSet.BOOMSDAY,
 	}
 }
