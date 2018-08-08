@@ -279,6 +279,7 @@
     <Compile Include="Utility\DataLoader.cs" />
     <Compile Include="Utility\GlobalCommands.cs" />
     <Compile Include="Utility\HearthstoneRunner.cs" />
+    <Compile Include="Utility\Kernel32.cs" />
     <Compile Include="Utility\RateLimiter.cs" />
     <Compile Include="HsReplay\UploadTokenHistory.cs" />
     <Compile Include="Live\Data\PayloadFactory.cs" />

@@ -22,6 +22,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.FlyoutControls;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using MahApps.Metro.Controls;
@@ -642,9 +643,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			try
 			{
-				var executable = new FileInfo(proc.MainModule.FileName);
 				var currentPath = Config.Instance.HearthstoneDirectory;
-				var procPath = executable.Directory?.FullName;
+				var procPath = Path.GetDirectoryName(Kernel32.GetProcessExePath(proc));
 				if(procPath != null && procPath != currentPath)
 				{
 					Log.Warn($"Current path (\"{currentPath}\") does not match the running Hearthstone process: \"{procPath}\". Updating path");
