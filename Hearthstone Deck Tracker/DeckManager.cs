@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
@@ -17,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
+using CardIds = HearthDb.CardIds;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 namespace Hearthstone_Deck_Tracker
@@ -35,6 +35,8 @@ namespace Hearthstone_Deck_Tracker
 		public static async Task DetectCurrentDeck()
 		{
 			var deck = DeckList.Instance.ActiveDeck;
+			if(deck == null && Core.Game.Player.SetAside.Any(x => x.CardId == CardIds.Collectible.Neutral.WhizbangTheWonderful))
+				deck = new Deck();
 			if(deck == null || deck.DeckId == IgnoredDeckId || _waitingForClass || _waitingForUserInput)
 				return;
 			if(string.IsNullOrEmpty(Core.Game.Player.Class))

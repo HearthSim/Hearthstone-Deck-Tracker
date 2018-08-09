@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using HearthDb.Enums;
 using HearthMirror;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -13,6 +14,7 @@ using Hearthstone_Deck_Tracker.Importing.Game;
 using Hearthstone_Deck_Tracker.Importing.Websites;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
+using CardIds = HearthDb.CardIds;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 
 #endregion
@@ -105,8 +107,16 @@ namespace Hearthstone_Deck_Tracker.Importing
 		}
 
 		private static List<HearthMirror.Objects.Deck> GetConstructedDecks()
-			=> Reflection.GetDecks()?.Where(x => x.Cards.Sum(c => c.Count) == 30 && x.Type != BrawlDeckType).ToList()
-				?? new List<HearthMirror.Objects.Deck>();
+			=> Reflection.GetDecks()?.Where(IsValidDeck).ToList() ?? new List<HearthMirror.Objects.Deck>();
+
+		private static bool IsValidDeck(HearthMirror.Objects.Deck deck)
+		{
+			if(deck.Type == BrawlDeckType)
+				return false;
+			var count = deck.Cards.Sum(c => c.Count);
+			return count == 30 || count == 1
+				&& deck.Cards.First().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful;
+		}
 
 		public static List<ImportedDeck> FromBrawl()
 		{
@@ -132,6 +142,27 @@ namespace Hearthstone_Deck_Tracker.Importing
 			var hsDecks = decks.ToList();
 			foreach (var deck in hsDecks)
 			{
+				if(deck.Cards.Count == 1 && deck.Cards.Single().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful)
+				{
+					var templateDecks = Reflection.GetTemplateDecks()?.Where(x => x.SortOrder < 2).Select(x =>
+					{
+						if(!Hearthstone.CardIds.CardClassHero.TryGetValue((CardClass)x.Class, out var hero))
+							return null;
+						return new HearthMirror.Objects.Deck
+						{
+							Id = x.DeckId,
+							Name = x.Title,
+							Cards = x.Cards,
+							Hero = hero
+						};
+					}).Where(x => x != null);
+					if(templateDecks != null)
+					{
+						importedDecks.AddRange(GetImportedDecks(templateDecks, localDecks));
+						continue;
+					}
+				}
+
 				var otherDecks = hsDecks.Except(new[] {deck});
 				var existing = localDecks.Where(x => otherDecks.All(d => d.Id != x.HsId)).Select(x =>
 					new
