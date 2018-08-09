@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case CARDTYPE:
 					return () => CardTypeChange(gameState, id, game, value);
 				case LAST_CARD_PLAYED:
-					return () => LastCardPlayedChange(gameState, value);
+					return () => LastCardPlayedChange(gameState, game, value);
 				case DEFENDING:
 					return () => DefendingChange(gameState, id, game, value);
 				case ATTACKING:
@@ -36,8 +36,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => ProposedDefenderChange(game, value);
 				case PROPOSED_ATTACKER:
 					return () => ProposedAttackerChange(game, value);
-				case NUM_MINIONS_PLAYED_THIS_TURN:
-					return () => NumMinionsPlayedThisTurnChange(gameState, game, value);
 				case PREDAMAGE:
 					return () => PredamageChange(gameState, id, game, value);
 				case NUM_TURNS_IN_PLAY:
@@ -138,7 +136,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			gameState.WasInProgress = true;
 		}
 
-		private void LastCardPlayedChange(IHsGameState gameState, int value) => gameState.LastCardPlayed = value;
+		private void LastCardPlayedChange(IHsGameState gameState, IGame game, int value)
+		{
+			gameState.LastCardPlayed = value;
+			if((game.PlayerEntity?.IsCurrentPlayer ?? false) && game.Entities.TryGetValue(value, out var entity)
+															&& entity.IsMinion)
+				gameState.GameHandler.HandlePlayerMinionPlayed();
+		}
 
 		private void DefendingChange(IHsGameState gameState, int id, IGame game, int value)
 		{
@@ -157,14 +161,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		private void ProposedDefenderChange(IGame game, int value) => game.ProposedDefender = value;
 
 		private void ProposedAttackerChange(IGame game, int value) => game.ProposedAttacker = value;
-
-		private void NumMinionsPlayedThisTurnChange(IHsGameState gameState, IGame game, int value)
-		{
-			if(value <= 0)
-				return;
-			if(game.PlayerEntity?.IsCurrentPlayer ?? false)
-				gameState.GameHandler.HandlePlayerMinionPlayed();
-		}
 
 		private void PredamageChange(IHsGameState gameState, int id, IGame game, int value)
 		{
