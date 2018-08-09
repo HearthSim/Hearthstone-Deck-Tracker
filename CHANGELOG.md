@@ -1,3 +1,16 @@
+## __Release v1.7.2 - 2018-08-09__
+
+__New__:
+- Added tracking for several Boomsday cards.
+- All possible decks for Whizbang are now automatically imported when his deck is found.
+
+__Fixes__:
+- Fixed an issue where Boomsday packs were missing as an arena reward.
+- Fixed an issue where Whizbang decks were not tracked correctly.
+- Fixed an issue where secrets would be ruled out when using Magnetic minions as a buff.
+- (Hopefully) Fixed "Uneven Permissons" issues in some cases.
+
+
 ## __Release v1.7.1 - 2018-08-02__
 __Updated for The Boomsday Project__
 
