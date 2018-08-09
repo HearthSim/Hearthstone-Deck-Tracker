@@ -89,6 +89,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				if(creatorId == game.GameEntity?.Id)
 					return;
+				// All cards created by Whizbang have a creator tag set
+				if(game.Entities.TryGetValue(creatorId, out var creator))
+				{
+					if(creator.CardId == CardIds.Collectible.Neutral.WhizbangTheWonderful)
+						return;
+				}
+				// The only way to detect the opposing Whizbang is:
+				// Id in [4, 5] and zone == SETASIDE
+				if((creatorId == 4 || creatorId == 5) && (creator?.IsInZone(SETASIDE) ?? false))
+					return;
 				entity.Info.Created = true;
 			}
 		}
