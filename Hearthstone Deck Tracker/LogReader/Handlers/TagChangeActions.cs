@@ -147,8 +147,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				var pos = entity.GetTag(ZONE_POSITION);
 				var neighbour = game.Player?.Board.FirstOrDefault(x => x.GetTag(ZONE_POSITION) == pos + 1);
-				if(neighbour != null && neighbour.Card.Race.Equals(Race.MECHANICAL.ToString(),
-						StringComparison.CurrentCultureIgnoreCase))
+				if(neighbour?.Card?.Race?.Equals(Race.MECHANICAL.ToString(),
+						StringComparison.CurrentCultureIgnoreCase) ?? false)
 					return;
 			}
 			gameState.GameHandler.HandlePlayerMinionPlayed();
