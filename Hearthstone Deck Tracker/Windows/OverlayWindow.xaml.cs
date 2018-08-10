@@ -109,7 +109,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(enable)
 			{
-				Show();
+				try
+				{
+					Show();
+				}
+				catch(InvalidOperationException e)
+				{
+					Log.Error(e);
+				}
 				if(User32.GetForegroundWindow() == new WindowInteropHelper(this).Handle)
 					User32.BringHsToForeground();
 			}
