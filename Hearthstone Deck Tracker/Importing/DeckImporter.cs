@@ -113,9 +113,18 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			if(deck.Type == BrawlDeckType)
 				return false;
-			var count = deck.Cards.Sum(c => c.Count);
-			return count == 30 || count == 1
-				&& deck.Cards.First().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful;
+			try
+			{
+				var count = deck.Cards.Sum(c => c.Count);
+				return count == 30 || count == 1
+					&& deck.Cards.First().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful;
+			}
+			catch(OverflowException e)
+			{
+				// Probably bad data from memory
+				Log.Error(e);
+				return false;
+			}
 		}
 
 		public static List<ImportedDeck> FromBrawl()
