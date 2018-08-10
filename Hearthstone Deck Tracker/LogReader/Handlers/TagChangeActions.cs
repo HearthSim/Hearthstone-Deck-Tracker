@@ -141,12 +141,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			gameState.LastCardPlayed = value;
 			if(!(game.PlayerEntity?.IsCurrentPlayer ?? false))
 				return;
-			if(!game.Entities.TryGetValue(value, out var entity) || !entity.IsMinion)
+			if(!game.Entities.TryGetValue(value, out var entity) || entity == null || !entity.IsMinion)
 				return;
 			if(entity.HasTag(MODULAR))
 			{
 				var pos = entity.GetTag(ZONE_POSITION);
-				var neighbour = game.Player.Board.FirstOrDefault(x => x.GetTag(ZONE_POSITION) == pos + 1);
+				var neighbour = game.Player?.Board.FirstOrDefault(x => x.GetTag(ZONE_POSITION) == pos + 1);
 				if(neighbour != null && neighbour.Card.Race.Equals(Race.MECHANICAL.ToString(),
 						StringComparison.CurrentCultureIgnoreCase))
 					return;
