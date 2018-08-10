@@ -1,3 +1,8 @@
+## __Release v1.7.3 - 2018-08-09__
+
+- Fixed several crashes.
+
+
 ## __Release v1.7.2 - 2018-08-09__
 
 __New__:
