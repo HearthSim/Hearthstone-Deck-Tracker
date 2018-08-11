@@ -29,6 +29,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_playerMinion2,
 			_opponentMinion1,
 			_opponentMinion2,
+			_opponentDivineShieldMinion,
 			_secretHunter1,
 			_secretHunter2,
 			_secretMage1,
@@ -84,6 +85,10 @@ namespace HDTTests.Hearthstone.Secrets
 			_opponentMinion2 = CreateNewEntity("EX1_021");
 			_opponentMinion2.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
 			_opponentMinion2.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
+			_opponentDivineShieldMinion = CreateNewEntity("EX1_008");
+			_opponentDivineShieldMinion.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
+			_opponentDivineShieldMinion.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
+			_opponentDivineShieldMinion.SetTag(GameTag.DIVINE_SHIELD, 1);
 			_playerSpell1 = CreateNewEntity("CS2_029");
 			_playerSpell1.SetTag(GameTag.CARDTYPE, (int)CardType.SPELL);
 			_playerSpell1.SetTag(GameTag.CARD_TARGET, _opponentMinion1.Id);
@@ -192,6 +197,17 @@ namespace HDTTests.Hearthstone.Secrets
 				HunterSecrets.VenomstrikeTrap);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice, PaladinSecrets.AutodefenseMatrix);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void SingleSecret_MinionToDivineShieldMinion_PlayerAttackTest()
+		{
+			_game.SecretsManager.HandleAttack(_playerMinion1, _opponentDivineShieldMinion);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap,
+				HunterSecrets.VenomstrikeTrap);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 			VerifySecrets(3, RogueSecrets.All);
 		}
 
