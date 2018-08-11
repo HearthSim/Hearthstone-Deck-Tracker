@@ -72,6 +72,12 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsInMenu)
 				return;
 
+			if(!_handledGameEnd)
+			{
+				Log.Warn("Game end has not been handled");
+				HandleGameEnd();
+			}
+
 			Log.Info("Game is now in menu.");
 			_game.IsInMenu = true;
 
