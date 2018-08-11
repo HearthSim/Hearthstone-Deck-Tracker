@@ -149,7 +149,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return;
 			MatchInfo matchInfo;
 			while((matchInfo = HearthMirror.Reflection.GetMatchInfo()) == null || matchInfo.LocalPlayer == null || matchInfo.OpposingPlayer == null)
+			{
+				Log.Info($"Waiting for matchInfo... (matchInfo={matchInfo}, localPlayer={matchInfo?.LocalPlayer}, opposingPlayer={matchInfo?.OpposingPlayer})");
 				await Task.Delay(1000);
+			}
 			_matchInfo = matchInfo;
 			UpdatePlayers();
 			_matchInfoCacheInvalid = false;
