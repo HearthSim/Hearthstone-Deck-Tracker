@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.Enums.GameTag;
@@ -92,11 +91,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					if(creator.CardId == CardIds.Collectible.Neutral.WhizbangTheWonderful)
 						return;
+					var controller = creator.GetTag(CONTROLLER);
+					var usingWhizbang = controller == game.Player?.Id
+										&& (game.PlayerEntity?.HasTag(WHIZBANG_DECK_ID) ?? false)
+										|| controller == game.Opponent?.Id
+										&& (game.OpponentEntity?.HasTag(WHIZBANG_DECK_ID) ?? false);
+					if(usingWhizbang && creator.IsInSetAside && creator.Info.OriginalZone == SETASIDE)
+						return;
 				}
-				// The only way to detect the opposing Whizbang is:
-				// Id in [4, 5] and zone == SETASIDE
-				if((creatorId == 4 || creatorId == 5) && (creator?.IsInZone(SETASIDE) ?? false))
-					return;
 				entity.Info.Created = true;
 			}
 		}
