@@ -54,8 +54,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case CREATOR:
 				case DISPLAYED_CREATOR:
 					return () => CreatorChanged(id, value, game);
+				case WHIZBANG_DECK_ID:
+					return () => WhizbangDeckIdChange(id, value, game);
 			}
 			return null;
+		}
+
+		private void WhizbangDeckIdChange(int id, int value, IGame game)
+		{
+			if(value == 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			if(!entity.IsPlayer)
+				return;
+			DeckManager.AutoSelectDeckById(game, value);
 		}
 
 		private void CreatorChanged(int id, int value, IGame game)

@@ -84,11 +84,12 @@ namespace Hearthstone_Deck_Tracker.Importing
 			return await MetaTagImporter.TryFindDeck(url);
 		}
 
-		public static List<ImportedDeck> FromConstructed()
+		public static List<ImportedDeck> FromConstructed(bool refreshCache = true)
 		{
 			try
 			{
-				ConstructedDecksCache = GetConstructedDecks();
+				if(refreshCache)
+					ConstructedDecksCache = GetConstructedDecks();
 				var newDecks = GetImportedDecks(ConstructedDecksCache, DeckList.Instance.Decks);
 				Log.Info($"Found {ConstructedDecksCache.Count} decks, {newDecks.Count} new");
 				foreach(var deck in newDecks)
