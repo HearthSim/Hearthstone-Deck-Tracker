@@ -1,3 +1,12 @@
+## __Release v1.7.5 - 2018-08-15__
+
+__Fixes__:
+- Fixed an issue where Autodefense Matrix would be greyed out when attacking minions with divine shield.
+- (Hopefully) Fixed an issue where the player and opponent decks could be swapped in some cases.
+- Fixed an issue where it would sometimes still be possible to tell that the opponent was playing a Whizbang deck. 
+- Improved automatic deck selection when playing the Whizbang deck.
+
+
 ## __Release v1.7.4 - 2018-08-09__
 
 - Fixed several crashes.
