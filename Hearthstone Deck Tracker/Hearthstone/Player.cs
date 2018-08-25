@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int Fatigue { get; set; }
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount { get; private set; }
+		public bool IsPlayingWhizbang { get; set; }
 
 		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin);
 		public int HandCount => Hand.Count();
