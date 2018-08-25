@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					var controller = creator.GetTag(CONTROLLER);
 					var usingWhizbang = controller == game.Player?.Id && game.Player.IsPlayingWhizbang
 										|| controller == game.Opponent?.Id && game.Opponent.IsPlayingWhizbang;
-					if(usingWhizbang && creator.IsInSetAside && creator.Info.OriginalZone == SETASIDE)
+					if(usingWhizbang && creator.IsInSetAside)
 						return;
 				}
 				entity.Info.Created = true;
