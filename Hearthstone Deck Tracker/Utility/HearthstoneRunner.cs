@@ -69,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		private static Process GetProcess(string name)
 		{
-			return Process.GetProcessesByName(name).FirstOrDefault();
+			return Process.GetProcessesByName(name).FirstOrDefault(x => x.MainWindowHandle != IntPtr.Zero);
 		}
 	}
 }
