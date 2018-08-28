@@ -257,7 +257,9 @@ namespace Hearthstone_Deck_Tracker
 						continue;
 					var target = existing.Deck;
 					target.HsId = deck.Deck.Id;
-					if(brawl && !target.Tags.Any(x => x.ToUpper().Contains("BRAWL")))
+					if(brawl && !target.Tags.Any(x => x.ToUpper().Contains("BRAWL"))
+							&& (target.DeckStats.Games.Count == 0
+								|| target.DeckStats.Games.All(g => g.GameMode == GameMode.Brawl)))
 						target.Tags.Add("Brawl");
 					if(target.Archived)
 					{
