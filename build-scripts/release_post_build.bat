@@ -13,3 +13,8 @@ ren "..\Hearthstone Deck Tracker\HearthstoneDeckTracker.exe.config" "Hearthstone
 xcopy /Y "*.dll" "..\Hearthstone Deck Tracker"
 xcopy /Y "..\..\..\..\HDTUpdate\bin\x86\Release\HDTUpdate.exe" "..\Hearthstone Deck Tracker"
 xcopy /Y "..\..\..\..\HDTUninstaller\bin\x86\Release\HDTUninstaller.exe" "..\Hearthstone Deck Tracker"
+xcopy /Y "HearthstoneDeckTracker.pdb" "..\Hearthstone Deck Tracker"
+xcopy /Y "HearthDb.pdb" "..\Hearthstone Deck Tracker"
+xcopy /Y "HearthMirror.pdb" "..\Hearthstone Deck Tracker"
+xcopy /Y "HearthWatcher.pdb" "..\Hearthstone Deck Tracker"
+xcopy /Y "HSReplay.pdb" "..\Hearthstone Deck Tracker"
