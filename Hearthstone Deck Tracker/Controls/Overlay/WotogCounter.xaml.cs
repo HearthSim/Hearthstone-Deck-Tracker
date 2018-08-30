@@ -16,9 +16,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private string _health = "6";
 		private string _spells = "0";
 		private string _jade = "1";
+		private string _alanna = "0";
 
 		private WotogCounterStyle _wotogCounterStyle;
 		private WotogCounterStyle _jadeCounterStyle;
+		private WotogCounterStyle _alannaCounterStyle;
 
 
 		public WotogCounter()
@@ -62,6 +64,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public string Alanna
+		{
+			get { return _alanna; }
+			set
+			{
+				if (value == _alanna)
+					return;
+				_alanna = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public string Jade
 		{
 			get { return _jade; }
@@ -99,9 +113,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public WotogCounterStyle AlannaCounterStyle
+		{
+			get { return _alannaCounterStyle; }
+			set
+			{
+				if (value == _alannaCounterStyle)
+					return;
+				_alannaCounterStyle = value;
+				OnPropertyChanged(nameof(AlannaVisibility));
+			}
+		}
+
 		public int IconWidth => WotogCounterStyle == WotogCounterStyle.Full ? 226 : 145;
 		public Visibility CthunVisibility => _forceShow || WotogCounterStyle == WotogCounterStyle.Cthun ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility SpellsVisibility => !_forceShow && WotogCounterStyle == WotogCounterStyle.Spells ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility AlannaVisibility => !_forceShow && AlannaCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility FullVisibility => !_forceShow && WotogCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility JadeVisibility => !_forceShow && JadeCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 
@@ -118,6 +145,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			_forceShow = force;
 			OnPropertyChanged(nameof(CthunVisibility));
 			OnPropertyChanged(nameof(SpellsVisibility));
+			OnPropertyChanged(nameof(AlannaVisibility));
 			OnPropertyChanged(nameof(FullVisibility));
 			OnPropertyChanged(nameof(JadeVisibility));
 		}

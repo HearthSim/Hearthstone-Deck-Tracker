@@ -19,11 +19,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static Entity PlayerArcaneGiant => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.ArcaneGiant && x.Info.OriginalZone != null);
 		public static Entity OpponentCthun => Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Neutral.Cthun);
 		public static Entity OpponentCthunProxy => Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.NonCollectible.Neutral.Cthun);
+		public static Entity PlayerAlanna => Core.Game.Player.PlayerEntities.FirstOrDefault(x => x.CardId == CardIds.Collectible.Mage.DragoncallerAlanna && x.Info.OriginalZone != null);
 		public static bool PlayerSeenCthun => Core.Game.PlayerEntity?.HasTag(SEEN_CTHUN) ?? false;
 		public static bool OpponentSeenCthun => Core.Game.OpponentEntity?.HasTag(SEEN_CTHUN) ?? false;
 		public static bool? CthunInDeck => DeckContains(CardIds.Collectible.Neutral.Cthun);
 		public static bool? YoggInDeck => DeckContains(CardIds.Collectible.Neutral.YoggSaronHopesEnd);
 		public static bool? ArcaneGiantInDeck => DeckContains(CardIds.Collectible.Neutral.ArcaneGiant);
+		public static bool? AlannaInDeck => DeckContains(CardIds.Collectible.Mage.DragoncallerAlanna);
 
 		public static bool PlayerSeenJade => Core.Game.PlayerEntity?.HasTag(JADE_GOLEM) ?? false;
 		public static int PlayerNextJadeGolem => PlayerSeenJade ? Math.Min(Core.Game.PlayerEntity.GetTag(JADE_GOLEM) + 1, 30) : 1;
@@ -33,6 +35,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ShowPlayerCthunCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
 					|| Config.Instance.PlayerCthunCounter == DisplayMode.Auto && PlayerSeenCthun);
+
+		public static bool ShowPlayerAlannaCounter => !Core.Game.IsInMenu && (
+			Config.Instance.PlayerAlannaCounter == DisplayMode.Always
+				|| (Config.Instance.PlayerAlannaCounter == DisplayMode.Auto && AlannaInDeck.HasValue && (PlayerAlanna != null || AlannaInDeck.Value)));
 
 		public static bool ShowPlayerSpellsCounter => !Core.Game.IsInMenu && (
 			Config.Instance.PlayerSpellsCounter == DisplayMode.Always

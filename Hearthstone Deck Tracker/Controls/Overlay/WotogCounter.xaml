@@ -17,21 +17,25 @@
         </Style>
     </UserControl.Resources>
     <Grid>
-        <Grid Visibility="{Binding JadeVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" Margin="-152,0,236.2,0">
+        <Grid Visibility="{Binding JadeVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" Margin="0,105,84,-105">
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-jade.png" RenderOptions.BitmapScalingMode="Fant"/>
             <TextBlock Text="{Binding Jade, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,15,24,40"/>
             <TextBlock Text="{Binding Jade, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,53,24,2"/>
         </Grid>
-        <Grid Visibility="{Binding CthunVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center">
+        <Grid Visibility="{Binding CthunVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" Margin="0,0,74,0">
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-cthun.png" RenderOptions.BitmapScalingMode="Fant"/>
             <TextBlock Text="{Binding Attack, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,15,24,40"/>
             <TextBlock Text="{Binding Health, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="71,53,24,2"/>
         </Grid>
-        <Grid Visibility="{Binding SpellsVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center">
+        <Grid Visibility="{Binding SpellsVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" Margin="0,0,81,0">
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-spells.png" RenderOptions.BitmapScalingMode="Fant"/>
             <TextBlock Text="{Binding Spells, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,34,23,21"/>
         </Grid>
-        <Grid Visibility="{Binding FullVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Grid Visibility="{Binding AlannaVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" Margin="0,206,81,-206">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-alanna.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding Alanna, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,34,23,21"/>
+        </Grid>
+        <Grid Visibility="{Binding FullVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0,0,-10,0">
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-cthun-spells.png" RenderOptions.BitmapScalingMode="Fant"/>
             <TextBlock Text="{Binding Attack, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,15,104,40" />
             <TextBlock Text="{Binding Health, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,53,104,2" />

@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int Fatigue { get; set; }
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount { get; private set; }
+		public int BigSpellsPlayedCount { get; private set; }
 		public bool IsPlayingWhizbang { get; set; }
 
 		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin);
@@ -53,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var createdCardsInDeck =
 				Deck.Where(x => x.HasCardId && (x.Info.Created || x.Info.Stolen) && !x.Info.Hidden)
-					.GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded})
+					.GroupBy(ce => new { ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded })
 					.Select(g =>
 					{
 						var card = Database.GetCardFromId(g.Key.CardId);
@@ -103,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		});
 
 		public IEnumerable<Card> KnownCardsInDeck
-			=> Deck.Where(x => x.HasCardId).GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen)}).Select(g =>
+			=> Deck.Where(x => x.HasCardId).GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen) }).Select(g =>
 			{
 				var card = Database.GetCardFromId(g.Key.CardId);
 				card.Count = g.Count();
@@ -115,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public IEnumerable<Card> RevealedCards
 			=> RevealedEntities.Where(x => !string.IsNullOrEmpty(x?.CardId) && (!x.Info.Created || x.Info.OriginalEntityWasCreated == false) && x.IsPlayableCard
 									   && ((!x.IsInDeck && (!x.Info.Stolen || x.Info.OriginalController == Id)) || (x.Info.Stolen && x.Info.OriginalController == Id)))
-								.GroupBy(x => new {x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id})
+								.GroupBy(x => new { x.CardId, Stolen = x.Info.Stolen && x.Info.OriginalController != Id })
 								.Select(x =>
 								{
 									var card = Database.GetCardFromId(x.Key.CardId);
@@ -165,10 +166,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			=> RevealedEntities.Where(x => !(x.Info.Hidden && (x.IsInDeck || x.IsInHand)) && (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
 										&& (x.GetTag(GameTag.CREATOR) == 1 || ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
 											&& x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck) && !(x.Info.Created && x.IsInSetAside))
-								.GroupBy(e => new { CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId, 
-													Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
-													Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
-													Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded})
+								.GroupBy(e => new {
+									CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId,
+									Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
+									Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
+									Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded
+								})
 								.Select(g =>
 								{
 									var card = Database.GetCardFromId(g.Key.CardId);
@@ -195,6 +198,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Fatigue = 0;
 			InDeckPrecitions.Clear();
 			SpellsPlayedCount = 0;
+			BigSpellsPlayedCount = 0;
 		}
 
 		public void Draw(Entity entity, int turn)
@@ -216,11 +220,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 
-		private void Log(Entity entity, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") 
+		private void Log(Entity entity, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
 			=> Log(entity.ToString(), memberName, sourceFilePath);
 
-		private void Log(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") 
-			=> Utility.Logging.Log.Info((IsLocalPlayer ? "[Player] "  : "[Opponent] ") + msg, memberName, sourceFilePath);
+		private void Log(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
+			=> Utility.Logging.Log.Info((IsLocalPlayer ? "[Player] " : "[Opponent] ") + msg, memberName, sourceFilePath);
 
 		public void Play(Entity entity, int turn)
 		{
@@ -228,11 +232,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				UpdateKnownEntitesInDeck(entity.CardId, entity.Info.Turn);
 			switch(entity.GetTag(GameTag.CARDTYPE))
 			{
-				case (int)CardType.TOKEN:
+				case(int)CardType.TOKEN:
 					entity.Info.Created = true;
 					break;
-				case (int)CardType.SPELL:
+				case(int)CardType.SPELL:
 					SpellsPlayedCount++;
+					if(Database.GetCardFromName(entity.Card.Name).Cost >= 5)
+					{
+						BigSpellsPlayedCount++;
+					}
 					break;
 			}
 			entity.Info.Hidden = false;

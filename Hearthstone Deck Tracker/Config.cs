@@ -431,6 +431,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode PlayerJadeCounter = DisplayMode.Auto;
 
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode PlayerAlannaCounter = DisplayMode.Auto;
+
 		[DefaultValue(false)]
 		public bool HidePlayerCardCount = false;
 
