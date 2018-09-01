@@ -12,9 +12,11 @@ build_script:
 - ps: >-
     $dev = ($Env:APPVEYOR_REPO_TAG -ne "true")
 
-    ./build-scripts/full.ps1 -version $Env:APPVEYOR_BUILD_VERSION -dev $dev
+    $genArtifacts = (!$Env:APPVEYOR_PULL_REQUEST_NUMBER)
 
-    if (!$dev) {
+    ./build-scripts/full.ps1 -version $Env:APPVEYOR_BUILD_VERSION -generateArtifacts $genArtifacts -dev $dev
+
+    if (!$dev -and (Test-Path ./builds)) {
       Copy-Item ./builds/*/* .
     }
 test:

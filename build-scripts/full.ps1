@@ -1,15 +1,24 @@
 Param(
     [Parameter(Mandatory=$True)]
     [string]$version,
+    [boolean]$generateArtifacts,
     [boolean]$dev = $true
 )
+
+$baseDir = $(Resolve-Path "$PSScriptRoot\..").Path
+
+if (!$generateArtifacts) {
+    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel-Dev\"
+    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
+    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
+    exit
+}
 
 $initialLocation = $(Get-Location).Path
 
 $DEV_LATEST = "https://api.github.com/repos/HearthSim/HDT-dev-builds/releases/latest"
 $PROD_LATEST = "https://api.github.com/repos/HearthSim/HDT-Releases/releases/latest"
 
-$baseDir = $(Resolve-Path "$PSScriptRoot\..").Path
 $assemblyInfoFile = "$baseDir\Hearthstone Deck Tracker\Properties\AssemblyInfo.cs"
 $buildDir = "$baseDir\Hearthstone Deck Tracker\bin\x86"
 $hdtReleaseDir = "$buildDir\Hearthstone Deck Tracker"
