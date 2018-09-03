@@ -99,6 +99,17 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </DockPanel>
+        <DockPanel Margin="5,5,5,0">
+            <Label Content="{lex:Loc Options_Overlay_Opponent_Label_PogoHopper}" />
+            <ComboBox x:Name="ComboBoxPogoHopper" HorizontalAlignment="Right"
+                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxPogoHopper_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
         <CheckBox x:Name="CheckboxHideOpponentCardAge" Content="{lex:Loc Options_Overlay_General_CheckBox_HideCardAge}"
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxHideOpponentCardAge_Checked"

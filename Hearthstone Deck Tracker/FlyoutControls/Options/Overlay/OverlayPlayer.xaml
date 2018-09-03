@@ -12,7 +12,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="310" d:DesignWidth="300">
     <StackPanel>
         <CheckBox x:Name="CheckboxSameScaling"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
@@ -68,6 +68,17 @@
             <ComboBox x:Name="ComboBoxJade" HorizontalAlignment="Right"
                       Margin="5,0,0,0" VerticalAlignment="Top" Width="150"
                       utility:ComboBoxHelper.SelectionChanged="ComboBoxJade_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
+        <DockPanel Margin="5,5,5,0">
+            <Label Content="{lex:Loc Options_Overlay_Player_Label_PogoHopper}" />
+            <ComboBox x:Name="ComboBoxPogoHopper" HorizontalAlignment="Right"
+                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxPogoHopper_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />

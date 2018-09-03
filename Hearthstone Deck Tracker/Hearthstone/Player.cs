@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount { get; private set; }
 		public bool IsPlayingWhizbang { get; set; }
+		public int PogoHopperPlayedCount {get; private set;}
 
 		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin);
 		public int HandCount => Hand.Count();
@@ -195,6 +196,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Fatigue = 0;
 			InDeckPrecitions.Clear();
 			SpellsPlayedCount = 0;
+			PogoHopperPlayedCount = 0;
 		}
 
 		public void Draw(Entity entity, int turn)
@@ -230,6 +232,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				case (int)CardType.TOKEN:
 					entity.Info.Created = true;
+					break;
+				case (int)CardType.MINION:
+					if (entity.CardId == HearthDb.CardIds.Collectible.Rogue.PogoHopper)
+					{
+						PogoHopperPlayedCount++;	
+					}
 					break;
 				case (int)CardType.SPELL:
 					SpellsPlayedCount++;

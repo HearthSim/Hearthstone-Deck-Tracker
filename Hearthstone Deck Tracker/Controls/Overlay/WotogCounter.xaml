@@ -31,6 +31,11 @@
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-spells.png" RenderOptions.BitmapScalingMode="Fant"/>
             <TextBlock Text="{Binding Spells, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,34,23,21"/>
         </Grid>
+        <Grid Visibility="{Binding PogoHopperVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" HorizontalAlignment="Center" Margin="-350,0,550,-0">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-pogo.png" RenderOptions.BitmapScalingMode="Fant" Margin="196,0,0,0"/>
+            <TextBlock Text="{Binding PogoHopper, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="269,11,25,44"/>
+            <TextBlock Text="{Binding PogoHopper, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="270,53,24,2"/>
+        </Grid>
         <Grid Visibility="{Binding FullVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-cthun-spells.png" RenderOptions.BitmapScalingMode="Fant"/>
             <TextBlock Text="{Binding Attack, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,15,104,40" />
