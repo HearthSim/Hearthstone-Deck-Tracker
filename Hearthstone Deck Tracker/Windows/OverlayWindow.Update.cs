@@ -212,8 +212,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsOpponent.Spells = _game.Opponent.SpellsPlayedCount.ToString();
 			if(showOpponentJadeCounter)
 				WotogIconsOpponent.Jade = WotogCounterHelper.OpponentNextJadeGolem.ToString();
-			if (showOpponentPogoHopperCounter && _game.Opponent.OpponentPogoHopperPlayedCount > 0)
-				WotogIconsOpponent.PogoHopper = ((_game.Opponent.OpponentPogoHopperPlayedCount + 1) * 2 - 1).ToString();
+			if (showOpponentPogoHopperCounter && _game.Opponent.PogoHopperPlayedCount > 0)
+				WotogIconsOpponent.PogoHopper = ((_game.Opponent.PogoHopperPlayedCount + 1) * 2 - 1).ToString();
 			WotogIconsOpponent.WotogCounterStyle = showOpponentCthunCounter && showOpponentSpellsCounter ? Full : (showOpponentCthunCounter ? Cthun : (showOpponentSpellsCounter ? Spells : None));
 			WotogIconsOpponent.JadeCounterStyle = showOpponentJadeCounter ? Full : None;
 			WotogIconsOpponent.PogoHopperCounterStyle = showOpponentPogoHopperCounter ? Full : None;

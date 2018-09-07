@@ -1391,7 +1391,7 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
-		<Resource Include="Images\icon-pogo.png" />
+    <Resource Include="Images\icon-pogo.png" />
     <Resource Include="Resources\hearthstone-icon.png" />
     <Resource Include="Resources\collection_promo.jpg" />
     <Resource Include="Resources\hsreplay_banner.jpg" />
