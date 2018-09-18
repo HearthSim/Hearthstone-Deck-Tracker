@@ -14,6 +14,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private int _lastCompetitiveSpiritCheck;
 		private HashSet<Entity> EntititesInHandOnMinionsPlayed = new HashSet<Entity>();
 
+		private int _lastPlayedMinionId;
+		protected List<string> SavedSecrets = new List<string>();
+
 		private bool FreeSpaceOnBoard => Game.OpponentMinionCount < 7;
 		private bool FreeSpaceInHand => Game.OpponentHandCount < 10;
 		private bool HandleAction => HasActiveSecrets && Config.Instance.AutoGrayoutSecrets;
@@ -25,6 +28,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		protected abstract bool HasActiveSecrets { get; }
 		public abstract bool Exclude(string cardId, bool invokeCallback = true);
 		public abstract void Exclude(List<string> cardIds);
+		public abstract void Refresh();
 
 		public virtual void Reset()
 		{
@@ -112,20 +116,29 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				HandleAttack(attacker, defender, true);
 		}
 
-		public void HandleMinionPlayed()
+		public void HandleMinionPlayed(Entity entity)
 		{
 			if(!HandleAction)
 				return;
 
+			_lastPlayedMinionId = entity.Id;
+
 			var exclude = new List<string>();
 
+			SaveSecret(Hunter.Snipe);
 			exclude.Add(Hunter.Snipe);
+			SaveSecret(Mage.ExplosiveRunes);
 			exclude.Add(Mage.ExplosiveRunes);
+			SaveSecret(Mage.PotionOfPolymorph);
 			exclude.Add(Mage.PotionOfPolymorph);
+			SaveSecret(Paladin.Repentance);
 			exclude.Add(Paladin.Repentance);
 
 			if(FreeSpaceOnBoard)
+			{
+				SaveSecret(Mage.MirrorEntity);
 				exclude.Add(Mage.MirrorEntity);
+			}
 
 			if(FreeSpaceInHand)
 				exclude.Add(Mage.FrozenClone);
@@ -142,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			Exclude(exclude);
 		}
 
-		public void HandleMinionDeath(Entity entity)
+		public void HandleOpponentMinionDeath(Entity entity)
 		{
 			if(!HandleAction)
 				return;
@@ -194,6 +207,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			Exclude(exclude);
 		}
 
+		public void HandlePlayerMinionDeath(Entity entity)
+		{
+			if(entity.Id == _lastPlayedMinionId && SavedSecrets.Count > 0)
+			{
+				foreach(var savedSecret in SavedSecrets)
+					foreach(var secret in Secrets)
+						secret.Include(savedSecret);
+				Refresh();
+			}
+		}
+
 		public async void HandleAvengeAsync(int deathRattleCount)
 		{
 			if(!HandleAction)
@@ -238,6 +262,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			if(!HandleAction)
 				return;
+
+			SavedSecrets.Clear();
 
 			var exclude = new List<string>();
 
@@ -293,6 +319,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			if (secret.Entity.IsClass(CardClass.HUNTER))
 				EntititesInHandOnMinionsPlayed.Clear();
+		}
+
+		public void SaveSecret(string secret)
+		{
+			if(!Secrets.Any(s => s.IsExcluded(secret)))
+				SavedSecrets.Add(secret);
+		}
+
+		public void HandleTurnStart()
+		{
+			SavedSecrets.Clear();
 		}
 	}
 }

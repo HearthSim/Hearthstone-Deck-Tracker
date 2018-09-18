@@ -216,16 +216,20 @@ namespace Hearthstone_Deck_Tracker
 				GameEvents.OnOpponentMinionAttack.Execute(attackInfo);
 		}
 
-		public void HandlePlayerMinionPlayed()
+		public void HandlePlayerMinionPlayed(Entity entity)
 		{
-			_game.SecretsManager.HandleMinionPlayed();
+			_game.SecretsManager.HandleMinionPlayed(entity);
 		}
 
 		public void HandleOpponentMinionDeath(Entity entity, int turn)
 		{
-			_game.SecretsManager.HandleMinionDeath(entity);
+			_game.SecretsManager.HandleOpponentMinionDeath(entity);
 		}
 
+		public void HandlePlayerMinionDeath(Entity entity)
+		{
+			_game.SecretsManager.HandlePlayerMinionDeath(entity);
+		}
 
 		public void HandleEntityPredamage(Entity entity, int value)
 		{
@@ -300,7 +304,10 @@ namespace Hearthstone_Deck_Tracker
 			var player = turn.Item1;
 			Log.Info($"--- {player} turn {turn.Item2} ---");
 			if(player == ActivePlayer.Player)
+			{
 				HandleThaurissanCostReduction();
+				_game.SecretsManager.HandleTurnStart();
+			}
 			GameEvents.OnTurnStart.Execute(player);
 			if(_turnQueue.Count > 0)
 				return;
@@ -848,10 +855,12 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentCreateInSetAside(Entity entity, int turn) => _game.Opponent.CreateInSetAside(entity, turn);
 
-		public void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn)
+		public void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)
 		{
 			_game.Player.PlayToGraveyard(entity, cardId, turn);
 			GameEvents.OnPlayerPlayToGraveyard.Execute((Card)entity.Card.Clone());
+			if(playersTurn && entity.IsMinion)
+				HandlePlayerMinionDeath(entity);
 		}
 
 		public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)

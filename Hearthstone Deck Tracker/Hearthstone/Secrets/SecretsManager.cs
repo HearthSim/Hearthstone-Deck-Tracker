@@ -27,6 +27,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			OnSecretsChanged?.Invoke(new List<Card>());
 		}
 
+		public override void Refresh()
+		{
+			OnSecretsChanged?.Invoke(GetSecretList());
+		}
+
 		public bool NewSecret(Entity entity)
 		{
 			if(entity == null || !entity.IsSecret || !entity.HasTag(GameTag.CLASS))
@@ -36,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			var secret = new Secret(entity);
 			Secrets.Add(secret);
 			OnNewSecret(secret);
-			OnSecretsChanged?.Invoke(GetSecretList());
+			Refresh();
 			Log.Info(entity.ToString());
 			return true;
 		}
@@ -51,8 +56,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				HandleFastCombat(entity);
 				Secrets.Remove(secret);
 				if(secret.Entity.HasCardId)
+				{ 
 					Exclude(secret.Entity.CardId, false);
-				OnSecretsChanged?.Invoke(GetSecretList());
+					SavedSecrets.Remove(secret.Entity.CardId);
+				}
+				Refresh();
 				return true;
 			}
 			Log.Info("Secret not found: " + entity);
@@ -73,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				secret.Exclude(cardId);
 			Log.Info("Excluded Secret " + cardId);
 			if(invokeCallback)
-				OnSecretsChanged?.Invoke(GetSecretList());
+				Refresh();
 			return true;
 		}
 
@@ -87,7 +95,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			}
 			else
 				Exclude(cardId, false);
-			OnSecretsChanged?.Invoke(GetSecretList());
+			Refresh();
 		}
 
 		public List<Card> GetSecretList()

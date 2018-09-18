@@ -60,11 +60,14 @@ namespace HDTTests.Hearthstone.Secrets
 			_heroPlayer = CreateNewEntity("HERO_01");
 			_heroPlayer.SetTag(GameTag.CARDTYPE, (int)CardType.HERO);
 			_heroPlayer.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
+			_heroPlayer.SetTag(GameTag.MULLIGAN_STATE, (int)Mulligan.DONE);
+			_heroPlayer.SetTag(GameTag.PLAYER_ID, _heroPlayer.Id);
 			_heroOpponent = CreateNewEntity("HERO_02");
 			_heroOpponent.SetTag(GameTag.CARDTYPE, (int)CardType.HERO);
 			_heroOpponent.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
 			_opponentEntity = CreateNewEntity("");
 			_opponentEntity.SetTag(GameTag.PLAYER_ID, _heroOpponent.Id);
+			_opponentEntity.SetTag(GameTag.MULLIGAN_STATE, (int)Mulligan.DONE);
 
 			_game.Entities.Add(0, _gameEntity);
 			_game.Entities.Add(1, _heroPlayer);
@@ -237,7 +240,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_MinionPlayed()
 		{
-			_gameEventHandler.HandlePlayerMinionPlayed();
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
@@ -334,11 +337,59 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_PlayerPlaysMinion_OpponentPlaysMinion()
 		{
-			_game.SecretsManager.HandleMinionPlayed();
+			_game.SecretsManager.HandleMinionPlayed(_playerMinion1);
 			_opponentCardInHand1.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
 			_game.SecretsManager.OnEntityRevealedAsMinion(_opponentCardInHand1);
 
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.HiddenCache, HunterSecrets.Snipe);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_MinionPlayed_MinionDied()
+		{
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion1);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.FrozenClone);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_MinionPlayed_SecretTriggered_MinionDied()
+		{
+			_gameEventHandler.HandleOpponentSecretPlayed(_secretMage2, "", 0, 0, Zone.HAND, _secretMage2.Id);
+			_secretMage2.CardId = MageSecrets.ExplosiveRunes;
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+			_gameEventHandler.HandleOpponentSecretTrigger(_secretMage2, "", 2, _secretMage1.Id);
+			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion1);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.FrozenClone);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_MinionPlayed_MinionDiedNextTurn()
+		{
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+			_gameEventHandler.TurnStart(Hearthstone_Deck_Tracker.Enums.ActivePlayer.Player, 2);
+			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion1);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_MinionPlayed_AnotherMinionDied()
+		{
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion2);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		private void VerifySecrets(int index, List<string> allSecrets, params string[] triggered)
