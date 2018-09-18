@@ -237,7 +237,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_MinionPlayed()
 		{
-			_gameEventHandler.HandlePlayerMinionPlayed();
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.Snipe);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
@@ -334,7 +334,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_PlayerPlaysMinion_OpponentPlaysMinion()
 		{
-			_game.SecretsManager.HandleMinionPlayed();
+			_game.SecretsManager.HandleMinionPlayed(_playerMinion1);
 			_opponentCardInHand1.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
 			_game.SecretsManager.OnEntityRevealedAsMinion(_opponentCardInHand1);
 

@@ -168,7 +168,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						StringComparison.CurrentCultureIgnoreCase) ?? false)
 					return;
 			}
-			gameState.GameHandler.HandlePlayerMinionPlayed();
+			gameState.GameHandler.HandlePlayerMinionPlayed(entity);
 		}
 
 		private void DefendingChange(IHsGameState gameState, int id, IGame game, int value)
@@ -453,7 +453,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					break;
 				case GRAVEYARD:
 					if(controller == game.Player.Id)
-						gameState.GameHandler.HandlePlayerPlayToGraveyard(entity, cardId, gameState.GetTurnNumber());
+						gameState.GameHandler.HandlePlayerPlayToGraveyard(entity, cardId, gameState.GetTurnNumber(), game.PlayerEntity?.IsCurrentPlayer ?? false);
 					else if(controller == game.Opponent.Id)
 						gameState.GameHandler.HandleOpponentPlayToGraveyard(entity, cardId, gameState.GetTurnNumber(), game.PlayerEntity?.IsCurrentPlayer ?? false);
 					break;

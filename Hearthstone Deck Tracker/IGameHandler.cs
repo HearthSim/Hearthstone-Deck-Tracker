@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentFatigue(int currentDamage);
 
 		void HandleOpponentJoust(Entity entity, string cardId, int turn);
-		void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn);
+		void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn);
 		void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn);
 		void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn);
 		void HandleOpponentCreateInPlay(Entity entity, string cardId, int turn);
@@ -54,7 +54,8 @@ namespace Hearthstone_Deck_Tracker
 
 		void HandleAttackingEntity(Entity entity);
 		void HandleDefendingEntity(Entity entity);
-		void HandlePlayerMinionPlayed();
+		void HandlePlayerMinionPlayed(Entity entity);
+		void HandlePlayerMinionDeath(Entity entity);
 		void HandleOpponentMinionDeath(Entity entity, int turn);
 		void HandleOpponentDamage(Entity entity);
 		void HandleTurnsInPlayChange(Entity entity, int turn);
