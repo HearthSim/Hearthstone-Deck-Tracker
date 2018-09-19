@@ -322,5 +322,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				SavedSecrets.Add(secret);
 		}
 
+		public void HandleTurnStart()
+		{
+			SavedSecrets.Clear();
+		}
 	}
 }

@@ -304,7 +304,10 @@ namespace Hearthstone_Deck_Tracker
 			var player = turn.Item1;
 			Log.Info($"--- {player} turn {turn.Item2} ---");
 			if(player == ActivePlayer.Player)
+			{
 				HandleThaurissanCostReduction();
+				_game.SecretsManager.HandleTurnStart();
+			}
 			GameEvents.OnTurnStart.Execute(player);
 			if(_turnQueue.Count > 0)
 				return;
