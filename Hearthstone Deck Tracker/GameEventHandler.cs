@@ -859,7 +859,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_game.Player.PlayToGraveyard(entity, cardId, turn);
 			GameEvents.OnPlayerPlayToGraveyard.Execute((Card)entity.Card.Clone());
-			if (playersTurn && entity.IsMinion)
+			if(playersTurn && entity.IsMinion)
 				HandlePlayerMinionDeath(entity);
 		}
 

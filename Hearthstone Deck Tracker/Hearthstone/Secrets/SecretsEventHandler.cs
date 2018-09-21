@@ -125,14 +125,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			var exclude = new List<string>();
 
-			SaveSecret(Hunter.Snipe);			exclude.Add(Hunter.Snipe);
-			SaveSecret(Mage.ExplosiveRunes);	exclude.Add(Mage.ExplosiveRunes);
-			SaveSecret(Mage.PotionOfPolymorph);	exclude.Add(Mage.PotionOfPolymorph);
-			SaveSecret(Paladin.Repentance);		exclude.Add(Paladin.Repentance); 
+			SaveSecret(Hunter.Snipe);
+			exclude.Add(Hunter.Snipe);
+			SaveSecret(Mage.ExplosiveRunes);
+			exclude.Add(Mage.ExplosiveRunes);
+			SaveSecret(Mage.PotionOfPolymorph);
+			exclude.Add(Mage.PotionOfPolymorph);
+			SaveSecret(Paladin.Repentance);
+			exclude.Add(Paladin.Repentance);
 
 			if(FreeSpaceOnBoard)
 			{
-				SaveSecret(Mage.MirrorEntity);	exclude.Add(Mage.MirrorEntity);
+				SaveSecret(Mage.MirrorEntity);
+				exclude.Add(Mage.MirrorEntity);
 			}
 
 			if(FreeSpaceInHand)
@@ -204,10 +209,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		public void HandlePlayerMinionDeath(Entity entity)
 		{
-			if (entity.Id == _lastPlayedMinionId && SavedSecrets.Count > 0)
+			if(entity.Id == _lastPlayedMinionId && SavedSecrets.Count > 0)
 			{
-				foreach (var savedSecret in SavedSecrets)
-					foreach (var secret in Secrets)
+				foreach(var savedSecret in SavedSecrets)
+					foreach(var secret in Secrets)
 						secret.Include(savedSecret);
 				Refresh();
 			}
@@ -318,7 +323,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		public void SaveSecret(string secret)
 		{
-			if (!Secrets.Any(s => s.IsExcluded(secret)))
+			if(!Secrets.Any(s => s.IsExcluded(secret)))
 				SavedSecrets.Add(secret);
 		}
 
