@@ -545,6 +545,7 @@
     <Compile Include="Utility\Exceptions\ExportingInterruptedException.cs" />
     <Compile Include="Utility\LocUtil.cs" />
     <Compile Include="Utility\ResourceMonitor.cs" />
+    <Compile Include="Utility\Twitch\TwitchApiHelper.cs" />
     <Compile Include="Utility\Updating\ReleaseUrls.cs" />
     <Compile Include="Utility\Updating\StatusBarHelper.cs" />
     <Compile Include="Importing\ClipboardImporter.cs" />

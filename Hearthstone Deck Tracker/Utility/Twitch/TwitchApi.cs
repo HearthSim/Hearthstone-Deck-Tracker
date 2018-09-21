@@ -14,32 +14,21 @@ namespace Hearthstone_Deck_Tracker.Utility.Twitch
 
 		private static readonly Dictionary<string, CacheObj> Cache = new Dictionary<string, CacheObj>();
 
-		public static async Task<string> GetVodUrl(int userId, DateTime gameStart)
-		{
-			var data = await GetDynamic(Urls.Videos(userId));
-			var latestVod = data.videos[0];
-			var diff = TimeZoneInfo.ConvertTimeToUtc(gameStart) - TimeZoneInfo.ConvertTimeToUtc((DateTime)latestVod.created_at);
-			return $"{latestVod.url}?t={diff.Hours}h{diff.Minutes}m{diff.Seconds}s";
-		}
-
-		public static async Task<int> GetUserId(string userName)
-		{
-			var data = await GetDynamic(Urls.User(userName));
-			return data.users[0]._id;
-		}
-
-		public static async Task<bool> IsStreaming(int userId)
-		{
-			var data = await GetDynamic(Urls.Stream(userId));
-			return data?.stream != null;
-		}
-
-		private static async Task<dynamic> GetDynamic(string url)
+		public static async Task<string> GetVodUrl(int userId)
 		{
 			try
 			{
-				var json = await GetData(url);
-				return JsonConvert.DeserializeObject<dynamic>(json);
+				var data = await GetData(Urls.Videos(userId));
+				var dynData = JsonConvert.DeserializeObject<dynamic>(data.Data);
+				if(dynData == null)
+					return null;
+				foreach(var video in dynData.videos)
+				{
+					if(video.status != "recording")
+						continue;
+					return TwitchApiHelper.GenerateTwitchVodUrl((string)video.url, (DateTime)video.created_at, data.Date);
+				}
+				return null;
 			}
 			catch(Exception e)
 			{
@@ -48,7 +37,22 @@ namespace Hearthstone_Deck_Tracker.Utility.Twitch
 			}
 		}
 
-		private static async Task<string> GetData(string url)
+		public static async Task<bool> IsStreaming(int userId)
+		{
+			try
+			{
+				var data = await GetData(Urls.Stream(userId));
+				var dynData = JsonConvert.DeserializeObject<dynamic>(data.Data);
+				return dynData?.stream != null;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return false;
+			}
+		}
+
+		private static async Task<ResponseData> GetData(string url)
 		{
 			if(Cache.TryGetValue(url, out var cache) && cache.Valid)
 				return cache.Data;
@@ -57,7 +61,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Twitch
 			using(var responseStream = response.GetResponseStream())
 			using(var reader = new StreamReader(responseStream))
 			{
-				var data = reader.ReadToEnd();
+				var date = DateTime.Parse(response.Headers.Get("date"));
+				var data = new ResponseData(reader.ReadToEnd(), date);
 				Cache[url] = new CacheObj(data);
 				return data;
 			}
@@ -76,14 +81,26 @@ namespace Hearthstone_Deck_Tracker.Utility.Twitch
 		{
 			private readonly DateTime _created;
 
-			public CacheObj(string data)
+			public CacheObj(ResponseData data)
 			{
 				_created = DateTime.Now;
 				Data = data;
 			}
 
 			public bool Valid => (DateTime.Now - _created).TotalSeconds < 5;
+			public ResponseData Data { get; }
+		}
+
+		private class ResponseData
+		{
+			public ResponseData(string data, DateTime date)
+			{
+				Data = data;
+				Date = date;
+			}
+
 			public string Data { get; }
+			public DateTime Date { get; }
 		}
 
 		private static class Urls

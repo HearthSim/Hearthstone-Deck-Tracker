@@ -1,5 +1,6 @@
 using System;
 using HearthMirror.Objects;
+using HSReplay;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
@@ -9,6 +10,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public GameServerInfo ServerInfo;
 		public DateTime EnqueueTime { get; set; }
 		public bool Reconnected { get; set; }
+		public UploadMetaData.TwitchVodData TwitchVodData { get; set; }
 
 		public int? HearthstoneBuild
 		{
@@ -31,7 +33,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			EnqueueTime = EnqueueTime,
 			HearthstoneBuild = HearthstoneBuild,
 			Reconnected = Reconnected,
-			ServerInfo = ServerInfo
+			ServerInfo = ServerInfo,
+			TwitchVodData = TwitchVodData
 		};
 	}
 }

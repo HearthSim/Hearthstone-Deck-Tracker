@@ -4,18 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using HearthDb.Enums;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
-using Hearthstone_Deck_Tracker.Replay;
+using Hearthstone_Deck_Tracker.HsReplay;
+using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Stats;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Hearthstone_Deck_Tracker.Windows;
-using MahApps.Metro.Controls.Dialogs;
+using Hearthstone_Deck_Tracker.Utility.Twitch;
+using HSReplay;
+using HSReplay.OAuth.Data;
 
 #endregion
 
@@ -37,6 +39,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsInMenu = true;
 			SecretsManager = new SecretsManager(this);
 			Reset();
+			LiveDataManager.OnStreamingChecked += async streaming =>
+			{
+				MetaData.TwitchVodData = await UpdateTwitchVodData(streaming);
+			};
+		}
+
+		private async Task<UploadMetaData.TwitchVodData> UpdateTwitchVodData(bool streaming)
+		{
+			if(!streaming)
+				return null;
+			bool Selected(TwitchAccount x) => x.Id == Config.Instance.SelectedTwitchUser;
+			var user = HSReplayNetOAuth.TwitchUsers?.FirstOrDefault(Selected);
+			if(user == null)
+				return null;
+			var url = await TwitchApi.GetVodUrl(user.Id);
+			if(url == null)
+				return null;
+			return new UploadMetaData.TwitchVodData
+			{
+				ChannelName = user.Username,
+				Url = url
+			};
 		}
 
 		public List<string> PowerLog { get; } = new List<string>();
