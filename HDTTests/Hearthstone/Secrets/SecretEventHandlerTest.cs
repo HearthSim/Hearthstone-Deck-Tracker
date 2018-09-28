@@ -34,6 +34,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_secretHunter2,
 			_secretMage1,
 			_secretMage2,
+			_secretMage3,
 			_secretPaladin1,
 			_secretPaladin2,
 			_secretRogue1,
@@ -122,6 +123,9 @@ namespace HDTTests.Hearthstone.Secrets
 			_secretMage2 = CreateNewEntity("");
 			_secretMage2.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
 			_secretMage2.SetTag(GameTag.SECRET, 1);
+			_secretMage3 = CreateNewEntity("");
+			_secretMage3.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
+			_secretMage3.SetTag(GameTag.SECRET, 1);
 			_secretPaladin1 = CreateNewEntity("");
 			_secretPaladin1.SetTag(GameTag.CLASS, (int)CardClass.PALADIN);
 			_secretPaladin1.SetTag(GameTag.SECRET, 1);
@@ -365,6 +369,23 @@ namespace HDTTests.Hearthstone.Secrets
 			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion1);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.FrozenClone);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_MinionPlayed_MultipleSecretTriggered_MinionDied()
+		{
+			_gameEventHandler.HandleOpponentSecretPlayed(_secretMage2, "", 0, 0, Zone.HAND, _secretMage2.Id);
+			_gameEventHandler.HandleOpponentSecretPlayed(_secretMage3, "", 0, 0, Zone.HAND, _secretMage3.Id);
+			_secretMage2.CardId = MageSecrets.PotionOfPolymorph;
+			_secretMage3.CardId = MageSecrets.ExplosiveRunes;
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+			_gameEventHandler.HandleOpponentSecretTrigger(_secretMage2, "", 2, _secretMage1.Id);
+			_gameEventHandler.HandleOpponentSecretTrigger(_secretMage3, "", 2, _secretMage2.Id);
+			_gameEventHandler.HandlePlayerMinionDeath(_playerMinion1);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.FrozenClone, MageSecrets.PotionOfPolymorph);
 			VerifySecrets(2, PaladinSecrets.All);
 			VerifySecrets(3, RogueSecrets.All);
 		}
