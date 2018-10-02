@@ -1,3 +1,17 @@
+## __Release v1.7.6 - 2018-10-02__
+__Updated for Hearthstone 12.2.0.26757__
+
+__New__:
+- Added a Pogo-Hopper counter for Rogues.
+
+__Fixes__:
+- Fixed an issue where starting Hearthstone would sometimes not work correctly.
+- Fixed an issue where standard decks could get tagged as "brawl".
+- Improved the secret detection when minions die (e.g. Explosive Runes and Potion of Polymorph).
+- Improved the way Whizbang decks are detected.
+- Improved stability when saving files.
+
+
 ## __Release v1.7.5 - 2018-08-15__
 
 __Fixes__:
