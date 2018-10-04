@@ -1,3 +1,9 @@
+## __Release v1.7.8 - 2018-10-04__
+
+__Fixes__:
+- Fixed more issues where deck tracking would not work in some game modes / at legend.
+
+
 ## __Release v1.7.7 - 2018-10-03__
 
 __Fixes__:
