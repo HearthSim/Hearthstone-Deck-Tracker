@@ -1,3 +1,9 @@
+## __Release v1.7.7 - 2018-10-03__
+
+__Fixes__:
+- Fixed an issue where deck tracking would not work correctly in some game modes.
+
+
 ## __Release v1.7.6 - 2018-10-02__
 __Updated for Hearthstone 12.2.0.26757__
 
