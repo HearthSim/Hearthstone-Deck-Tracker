@@ -23,10 +23,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				LastEdited = DateTime.Now
 			};
 			var template = GetDeckTemplate(set);
-			if(template is null)
-			{
+			if(template == null)
 				return null;
-			}
 			deck.Name = Helper.ParseDeckNameTemplate(template, deck);
 			return deck;
 		}
