@@ -22,12 +22,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				IsDungeonDeck = true,
 				LastEdited = DateTime.Now
 			};
-			var template = getDeckTemplate(set);
+			var template = GetDeckTemplate(set);
 			deck.Name = Helper.ParseDeckNameTemplate(template, deck);
 			return deck;
 		}
 
-		private static string getDeckTemplate(CardSet set)
+		private static string GetDeckTemplate(CardSet set)
 		{
 			switch(set)
 			{
