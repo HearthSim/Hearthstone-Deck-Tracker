@@ -516,7 +516,7 @@ namespace Hearthstone_Deck_Tracker
 			var deck = DungeonRun.GetDefaultDeck(playerClass, set);
 			if(deck == null)
 			{
-				Log.Info($"Could not find default deck for {playerClass}");
+				Log.Info($"Could not find default deck for {playerClass} in card set {set}");
 				return null;
 			}
 			DeckList.Instance.Decks.Add(deck);
