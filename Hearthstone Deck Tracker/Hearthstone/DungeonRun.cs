@@ -22,10 +22,24 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				IsDungeonDeck = true,
 				LastEdited = DateTime.Now
 			};
-			//Hack to avoid multiple templates. Should be good enough 99.9% of the time.
-			var template = Config.Instance.DungeonRunDeckNameTemplate.Replace("Dungeon Run", "Monster Hunt");
+			var template = GetDeckTemplate(set);
+			if(template == null)
+				return null;
 			deck.Name = Helper.ParseDeckNameTemplate(template, deck);
 			return deck;
+		}
+
+		private static string GetDeckTemplate(CardSet set)
+		{
+			switch(set)
+			{
+				case CardSet.LOOTAPALOOZA:
+					return Config.Instance.DungeonRunDeckNameTemplate;
+				case CardSet.GILNEAS:
+					return Config.Instance.MonsterHuntDeckNameTemplate;
+				default:
+					return null;
+			}
 		}
 
 		private static List<string> GetCards(string playerClass, CardSet set)
