@@ -1,3 +1,10 @@
+## __Release v1.7.9 - 2018-10-18__
+__Updated for Hearthstone 12.2.0.27358__
+
+__Fixes__:
+- Fixed an issue where Dungeon Run decks would not be named correctly.
+
+
 ## __Release v1.7.8 - 2018-10-04__
 
 __Fixes__:
