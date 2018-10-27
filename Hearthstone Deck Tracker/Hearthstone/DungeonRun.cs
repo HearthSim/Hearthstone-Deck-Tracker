@@ -253,8 +253,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static List<string> Mage = new List<string>
 			{
+				Collectible.Neutral.ArcaneAnomaly,
 				Collectible.Mage.ArcaneMissiles,
-				Collectible.Mage.ManaWyrm,
 				Collectible.Neutral.Doomsayer,
 				Collectible.Mage.Frostbolt,
 				Collectible.Mage.SorcerersApprentice,
