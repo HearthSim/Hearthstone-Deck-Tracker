@@ -138,12 +138,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static List<string> Mage => new List<string>
 			{
-				Collectible.Mage.ArcaneMissiles,
-				Collectible.Mage.ManaWyrm,
+				Collectible.Mage.BabblingBook,
 				Collectible.Neutral.MadBomber,
 				Collectible.Mage.PrimordialGlyph,
-				Collectible.Mage.ShimmeringTempest,
 				Collectible.Mage.UnstablePortal,
+				Collectible.Mage.Cinderstorm,
+				Collectible.Mage.Flamewaker,
 				Collectible.Mage.Spellslinger,
 				Collectible.Neutral.TinkmasterOverspark,
 				Collectible.Mage.WaterElemental,
@@ -253,8 +253,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static List<string> Mage = new List<string>
 			{
+				Collectible.Neutral.ArcaneAnomaly,
 				Collectible.Mage.ArcaneMissiles,
-				Collectible.Mage.ManaWyrm,
 				Collectible.Neutral.Doomsayer,
 				Collectible.Mage.Frostbolt,
 				Collectible.Mage.SorcerersApprentice,
