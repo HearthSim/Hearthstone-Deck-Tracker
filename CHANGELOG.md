@@ -1,3 +1,9 @@
+## __Release v1.7.10 - 2018-10-28__
+
+__Fixes__:
+- Fixed the Mage and Toki stater decks for Dungeon Run and Monster Hunt modes.
+
+
 ## __Release v1.7.9 - 2018-10-18__
 __Updated for Hearthstone 12.2.0.27358__
 
