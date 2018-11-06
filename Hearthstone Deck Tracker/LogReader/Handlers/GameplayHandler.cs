@@ -13,7 +13,7 @@ using static Hearthstone_Deck_Tracker.LogReader.LogConstants;
 
 namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
-	public class RachelleHandler
+	public class GameplayHandler
 	{
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{

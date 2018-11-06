@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 			new LogConfigItem("FullScreenFX", Console), 
 			new LogConfigItem("LoadingScreen", Console),
 			new LogConfigItem("Power", Console, true),
-			new LogConfigItem("Rachelle", Console)
+			new LogConfigItem("Gameplay", Console)
 		};
 		public static string[] Verbose => new [] { "Power" };
 	}

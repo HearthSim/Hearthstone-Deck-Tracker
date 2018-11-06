@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 	public class LogWatcherManager
 	{
 		private readonly PowerHandler _powerLineHandler = new PowerHandler();
-		private readonly RachelleHandler _rachelleHandler = new RachelleHandler();
+		private readonly GameplayHandler _rachelleHandler = new GameplayHandler();
 		private readonly ArenaHandler _arenaHandler = new ArenaHandler();
 		private readonly LoadingScreenHandler _loadingScreenHandler = new LoadingScreenHandler();
 		private readonly FullScreenFxHandler _fullScreenFxHandler = new FullScreenFxHandler();
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			ContainsFilters = new[] {"Begin Spectating", "Start Spectator", "End Spectator"}
 		};
 
-		public static LogWatcherInfo RachelleLogWatcherInfo => new LogWatcherInfo {Name = "Rachelle"};
+		public static LogWatcherInfo GameplayLogWatcherInfo => new LogWatcherInfo {Name = "Gameplay"};
 		public static LogWatcherInfo ArenaLogWatcherInfo => new LogWatcherInfo {Name = "Arena", Reset = false};
 		public static LogWatcherInfo LoadingScreenLogWatcherInfo => new LogWatcherInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded", "Gameplay" } };
 		public static LogWatcherInfo FullScreenFxLogWatcherInfo => new LogWatcherInfo { Name = "FullScreenFX", Reset = false};
@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			_logWatcher = new LogWatcher(new []
 			{
 				PowerLogWatcherInfo,
-				RachelleLogWatcherInfo,
+				GameplayLogWatcherInfo,
 				ArenaLogWatcherInfo,
 				LoadingScreenLogWatcherInfo,
 				FullScreenFxLogWatcherInfo
@@ -134,9 +134,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 							OnPowerLogLine.Execute(line.Line);
 						}
 						break;
-					case "Rachelle":
+					case "Gameplay":
 						_rachelleHandler.Handle(line.Line, _gameState, _game);
-						OnRachelleLogLine.Execute(line.Line);
+						OnGameplayLogLine.Execute(line.Line);
 						break;
 					case "Arena":
 						_arenaHandler.Handle(line, _gameState, _game);
