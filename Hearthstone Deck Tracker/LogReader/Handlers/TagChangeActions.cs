@@ -6,6 +6,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using static HearthDb.CardIds;
 using static HearthDb.Enums.GameTag;
 using static HearthDb.Enums.PlayState;
 using static HearthDb.Enums.Zone;
@@ -406,7 +407,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(controller == game.Player.Id)
 						gameState.GameHandler.HandlePlayerCreateInSetAside(entity, gameState.GetTurnNumber());
 					if(controller == game.Opponent.Id)
+					{
 						gameState.GameHandler.HandleOpponentCreateInSetAside(entity, gameState.GetTurnNumber());
+						if(gameState.CurrentBlock?.CardId == Collectible.Neutral.GrandArchivist
+							&& gameState.CurrentBlock.EntityDiscardedByArchivist != null)
+							gameState.CurrentBlock.EntityDiscardedByArchivist.CardId = entity.CardId;
+					}
 					break;
 				default:
 					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
@@ -553,6 +559,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							gameState.JoustReveals--;
 							break;
+						}
+						if (gameState.CurrentBlock?.CardId == Collectible.Neutral.GrandArchivist)
+						{
+							gameState.CurrentBlock.EntityDiscardedByArchivist = entity;
 						}
 						gameState.GameHandler.HandleOpponentRemoveFromDeck(entity, gameState.GetTurnNumber());
 					}
