@@ -90,6 +90,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public string Type { get; }
 		public string CardId { get; }
 
+		public Entity EntityDiscardedByArchivist { get; set; }
+
 		public Block(Block parent, int blockId, string type, string cardId)
 		{
 			Parent = parent;
