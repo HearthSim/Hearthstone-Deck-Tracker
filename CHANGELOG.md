@@ -1,3 +1,9 @@
+## __Release v1.7.12 - 2018-11-12__
+
+__Fixes__:
+- Fixed an issue where gold progress tracking was no longer working with Hearthstone 12.4.0.27641.
+
+
 ## __Release v1.7.11 - 2018-11-05__
 __Updated for Hearthstone 12.4.0.27405__
 
