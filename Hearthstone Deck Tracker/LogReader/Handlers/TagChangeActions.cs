@@ -409,10 +409,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(controller == game.Opponent.Id)
 					{
 						gameState.GameHandler.HandleOpponentCreateInSetAside(entity, gameState.GetTurnNumber());
-						if(gameState.CurrentBlock?.CardId == Collectible.Neutral.GrandArchivist)
-						{
+						if(gameState.CurrentBlock?.CardId == Collectible.Neutral.GrandArchivist
+							&& gameState.CurrentBlock.EntityDiscardedByArchivist != null)
 							gameState.CurrentBlock.EntityDiscardedByArchivist.CardId = entity.CardId;
-						}
 					}
 					break;
 				default:
