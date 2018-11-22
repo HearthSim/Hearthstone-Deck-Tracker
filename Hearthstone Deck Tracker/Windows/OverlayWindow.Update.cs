@@ -7,6 +7,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.LogReader.Handlers;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -221,9 +222,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateGoldProgress()
 		{
-			var region = (int)_game.CurrentRegion - 1;
+			var regionEnum = _game.CurrentRegion;
+			var region = (int)regionEnum- 1;
 			if (region < 0)
 				return;
+			GameplayHandler.ResetGoldProgress(regionEnum, true);
 			var wins = Config.Instance.GoldProgress[region];
 			if (wins >= 0)
 				LblGoldProgress.Text = $"Wins: {wins}/3 ({Config.Instance.GoldProgressTotal[region]}/100G)";
