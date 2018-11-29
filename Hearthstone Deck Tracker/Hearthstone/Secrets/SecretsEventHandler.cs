@@ -83,10 +83,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				if (!defender.HasTag(GameTag.DIVINE_SHIELD))
 					exclude.Add(Paladin.AutodefenseMatrix);
 
-				if(!fastOnly && freeSpaceOnBoard)
+				if(freeSpaceOnBoard)
 				{
-					exclude.Add(Hunter.SnakeTrap);
-					exclude.Add(Hunter.VenomstrikeTrap);
+					exclude.Add(Mage.SplittingImage);
+					if(!fastOnly)
+					{
+						exclude.Add(Hunter.SnakeTrap);
+						exclude.Add(Hunter.VenomstrikeTrap);
+					}
 				}
 
 				if(attacker.IsMinion)
