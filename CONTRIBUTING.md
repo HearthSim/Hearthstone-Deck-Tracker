@@ -42,7 +42,7 @@ redistribute and relicense external contributions to our various projects.
 
 ### How do I sign it?
 
-Contact any admin on our [Developer Discord](https://discord.gg/hearthsim-devs) or send us an email at contact@hearthsim.net. Please include your Github username.
+Our bot will comment with a link to sign it once you create your first PR.
 
 ## Project approval
 

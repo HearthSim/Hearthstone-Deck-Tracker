@@ -23,12 +23,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			var rawWins = GoldProgressRegex.Match(logLine).Groups["wins"].Value;
 			if(!int.TryParse(rawWins, out int wins))
 				return;
-			var timeZone = GetTimeZoneInfo(game.CurrentRegion);
-			if(timeZone != null)
-				UpdateGoldProgress(wins, game, timeZone);
+			UpdateGoldProgress(wins, game);
 		}
 
-		private TimeZoneInfo GetTimeZoneInfo(Region region)
+		private static TimeZoneInfo GetTimeZoneInfo(Region region)
 		{
 			try
 			{
@@ -54,17 +52,34 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			return null;
 		}
 
-		private void UpdateGoldProgress(int wins, IGame game, TimeZoneInfo timeZone)
+		public static void ResetGoldProgress(Region regionEnum, bool saveConfig)
 		{
-			try
+			var timeZone = GetTimeZoneInfo(regionEnum);
+			if(timeZone == null)
+				return;
+			var date = ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
+			var region = (int)regionEnum - 1;
+			bool reset = false;
+			lock(Config.Instance.GoldProgressLastReset)
 			{
-				var region = (int)game.CurrentRegion - 1;
-				var date = ConvertTimeFromUtc(DateTime.UtcNow, timeZone).Date;
 				if(Config.Instance.GoldProgressLastReset[region].Date != date)
 				{
 					Config.Instance.GoldProgressTotal[region] = 0;
 					Config.Instance.GoldProgressLastReset[region] = date;
+					reset = true;
 				}
+			}
+			if(saveConfig && reset)
+				Config.Save();
+		}
+
+		private void UpdateGoldProgress(int wins, IGame game)
+		{
+			try
+			{
+				var regionEnum = game.CurrentRegion;
+				var region = (int)regionEnum - 1;
+				ResetGoldProgress(regionEnum, false);
 				Config.Instance.GoldProgress[region] = wins == 3 ? 0 : wins;
 				if(wins == 3)
 					Config.Instance.GoldProgressTotal[region] += 10;

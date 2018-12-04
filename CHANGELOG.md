@@ -1,3 +1,11 @@
+## __Release v1.7.13 - 2018-11-29__
+__Updated for Rastakhan's Rumble__
+
+__Fixes__:
+- Fixed an issue where spells played by an opposing Grand Archivist were not tracked.
+- Fixed an issue where the gold tracker would not reset correctly sometimes.
+
+
 ## __Release v1.7.12 - 2018-11-12__
 
 __Fixes__:
