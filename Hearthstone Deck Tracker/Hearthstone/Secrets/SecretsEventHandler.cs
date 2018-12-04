@@ -75,7 +75,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				if(attacker.IsMinion)
 				{
 					exclude.Add(Mage.Vaporize);
-					exclude.Add(Hunter.FreezingTrap);
+					if(attacker.Health >= 1)
+						exclude.Add(Hunter.FreezingTrap);
 				}
 			}
 			else
