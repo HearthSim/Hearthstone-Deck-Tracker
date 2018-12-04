@@ -140,7 +140,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Mage
 			{
-				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, PotionOfPolymorph, Spellbender, Vaporize};
+				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, PotionOfPolymorph, Spellbender, SplittingImage, Vaporize};
 				public static string Counterspell => Collectible.Mage.Counterspell;
 				public static string Duplicate => Collectible.Mage.Duplicate;
 				public static string Effigy => Collectible.Mage.Effigy;
@@ -152,6 +152,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string MirrorEntity => Collectible.Mage.MirrorEntity;
 				public static string PotionOfPolymorph => Collectible.Mage.PotionOfPolymorph;
 				public static string Spellbender => Collectible.Mage.Spellbender;
+				public static string SplittingImage => Collectible.Mage.SplittingImage;
 				public static string Vaporize => Collectible.Mage.Vaporize;
 			}
 

@@ -296,6 +296,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.SparkDrill_SparkToken, 2);
 								break;
 							//TODO: Augmented Elekk
+							case Collectible.Neutral.HakkarTheSoulflayer:
+								AddKnownCardId(gameState, NonCollectible.Neutral.HakkartheSoulflayer_CorruptedBloodToken, 2);
+								break;
+							//TODO: Gral, the Shark?
+							case Collectible.Paladin.ImmortalPrelate:
+								AddKnownCardId(gameState, Collectible.Paladin.ImmortalPrelate);
+								break;
 						}
 					}
 					else //POWER
@@ -320,6 +327,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							//case Collectible.Priest.HolyWater: -- TODO
 							case Collectible.Neutral.BalefulBanker:
 							case Collectible.Neutral.DollmasterDorian:
+							case Collectible.Priest.Seance:
 								AddKnownCardId(gameState, GetTargetCardId(match));
 								break;
 							case Collectible.Mage.ForgottenTorch:
@@ -406,6 +414,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							//case Collectible.Rogue.Wanted: -- TODO
 							//	AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
 							//	break;
+							//TODO: Hex Lord Malacrass
+							//TODO: Krag'wa, the Frog
+							case Collectible.Hunter.HalazziTheLynx:
+								AddKnownCardId(gameState, NonCollectible.Hunter.Springpaw_LynxToken, 10);
+								break;
+							case Collectible.Neutral.BananaBuffoon:
+								AddKnownCardId(gameState, NonCollectible.Neutral.BananaBuffoon_BananasToken, 2);
+								break;
+							case Collectible.Neutral.BootyBayBookie:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
