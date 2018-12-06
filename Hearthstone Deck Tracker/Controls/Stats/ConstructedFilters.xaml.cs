@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		public bool ActiveDeckOnlyIsEnabled => !DeckList.Instance.ActiveDeck?.IsArenaDeck ?? false;
 
 		public string ActiveDeckOnlyToolTip
-			=>DeckList.Instance.ActiveDeck == null
+			=> DeckList.Instance.ActiveDeck == null
 					? "No active deck" : (DeckList.Instance.ActiveDeck.IsArenaDeck ? "Active deck is an arena deck" : "Deck: " + DeckList.Instance.ActiveDeck.Name);
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -90,6 +90,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(Config.Instance.ConstructedStatsActiveDeckOnly && (DeckList.Instance.ActiveDeck?.IsArenaDeck ?? true))
 			{
 				Config.Instance.ConstructedStatsActiveDeckOnly = false;
+				Overview.FiltersActive = true;
 				Config.Save();
 				CheckBoxDecks.GetBindingExpression(ToggleButton.IsCheckedProperty)?.UpdateTarget();
 			}
@@ -101,6 +102,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
+			Overview.FiltersActive = true;
 			Config.Instance.ConstructedStatsTimeFrameFilter = (DisplayedTimeFrame)ComboBoxTimeframe.SelectedItem;
 			Config.Save();
 			_updateCallback?.Invoke();
@@ -110,6 +112,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
+			Overview.FiltersActive = true;
 			Config.Instance.ConstructedStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
 			Config.Save();
 			_updateCallback?.Invoke();
@@ -119,6 +122,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
+			Overview.FiltersActive = true;
 			_updateCallback?.Invoke();
 		}
 
@@ -126,6 +130,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
+			Overview.FiltersActive = true;
 			Config.Instance.ConstructedStatsRegionFilter = (RegionAll)ComboBoxRegion.SelectedItem;
 			Config.Save();
 			_updateCallback?.Invoke();
@@ -135,6 +140,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
+			Overview.FiltersActive = true;
 			Config.Instance.ConstructedStatsModeFilter = (GameMode)ComboBoxMode.SelectedItem;
 			Config.Save();
 			_updateCallback?.Invoke();
@@ -146,6 +152,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		{
 			if(!_initialized)
 				return;
+			Overview.FiltersActive = true;
 			Config.Instance.ConstructedStatsCoinFilter = (AllYesNo)ComboBoxCoin.SelectedItem;
 			Config.Save();
 			_updateCallback?.Invoke();
@@ -156,6 +163,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			_updateCallback?.Invoke();
+			Overview.FiltersActive = true;
 		}
 
 		[NotifyPropertyChangedInvocator]
@@ -169,6 +177,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			Config.Instance.ConstructedStatsFormatFilter = (Format)ComboBoxFormat.SelectedItem;
+			Overview.FiltersActive = true;
 			Config.Save();
 			_updateCallback?.Invoke();
 		}
@@ -184,6 +193,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			Config.Instance.ConstructedStatsResultFilter = (GameResultAll)ComboBoxResult.SelectedItem;
+			Overview.FiltersActive = true;
 			Config.Save();
 			_updateCallback?.Invoke();
 		}
@@ -193,6 +203,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			Config.Instance.ConstructedStatsOpponentClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxOpponentClass.SelectedItem).HeroClass;
+			Overview.FiltersActive = true;
 			Config.Save();
 			_updateCallback?.Invoke();
 		}
@@ -295,6 +306,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				nameof(Config.Instance.ConstructedStatsApplyTagFilters)
 			}.ForEach(Config.Instance.Reset);
 			Config.Save();
+			Config.Instance.FiltersActive = false;
 		}
 
 		private void TextBox_OnEnter(object sender, KeyEventArgs e)

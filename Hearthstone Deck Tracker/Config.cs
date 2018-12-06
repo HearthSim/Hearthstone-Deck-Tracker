@@ -837,6 +837,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool StatsOverallApplyTagFilters = false;
 
+		[DefaultValue(false)]
+		public bool FiltersActive = false;
+
 		[DefaultValue(FilterDeckMode.WithDeck)]
 		public FilterDeckMode StatsOverallFilterDeckMode = FilterDeckMode.WithDeck;
 

@@ -18,6 +18,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	{
 		private readonly ArenaAdvancedCharts _arenaAdvancedCharts = new ArenaAdvancedCharts();
 		private readonly bool _initialized;
+		private readonly string _activeFilters = "Filters Active";
+		private readonly string _inactiveFilters = "Filters Offline";
 
 		public Overview()
 		{
@@ -28,6 +30,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ConstructedFilters.CheckBoxDecks.Unchecked += (sender, args) => ConstructedSummary.UpdateContent();
 			_initialized = true;
 		}
+
+		public static bool FiltersActive { get; set; } = new bool();
 
 		public ArenaStatsSummary ArenaStatsSummary { get; } = new ArenaStatsSummary();
 
@@ -56,16 +60,40 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(TreeViewItemConstructedGames.IsSelected)
 			{
 				ConstructedStats.Instance.UpdateGames();
+				if(FiltersActive)
+				{
+					FilterStatusTextbox.Content = _activeFilters;
+				}
+				else
+				{
+					FilterStatusTextbox.Content = _inactiveFilters;
+				}
 				return;
 			}
 			if(TreeViewItemConstructedSummary.IsSelected || TreeViewItemConstructed.IsSelected)
 			{
 				ConstructedStats.Instance.UpdateConstructedStats();
+				if(FiltersActive)
+				{
+					FilterStatusTextbox.Content = _activeFilters;
+				}
+				else
+				{
+					FilterStatusTextbox.Content = _inactiveFilters;
+				}
 				return;
 			}
 			if(TreeViewItemConstructedCharts.IsSelected)
 			{
 				ConstructedStats.Instance.UpdateConstructedCharts();
+				if(FiltersActive)
+				{
+					FilterStatusTextbox.Content = _activeFilters;
+				}
+				else
+				{
+					FilterStatusTextbox.Content = _inactiveFilters;
+				}
 				return;
 			}
 			ArenaStats.Instance.UpdateArenaStats();
@@ -73,6 +101,38 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			{
 				ArenaStats.Instance.UpdateArenaStatsHighlights();
 				ArenaStats.Instance.UpdateArenaRewards();
+				if(FiltersActive)
+				{
+					FilterStatusTextbox.Content = _activeFilters;
+				}
+				else
+				{
+					FilterStatusTextbox.Content = _inactiveFilters;
+				}
+			}
+
+			if(TreeViewItemArenaRunsOverview.IsSelected)
+			{
+				if(FiltersActive)
+				{
+					FilterStatusTextbox.Content = _activeFilters;
+				}
+				else
+				{
+					FilterStatusTextbox.Content = _inactiveFilters;
+				}
+			}
+
+			if(TreeViewItemArenaRunsAdvanced.IsSelected)
+			{
+				if(FiltersActive)
+				{
+					FilterStatusTextbox.Content = _activeFilters;
+				}
+				else
+				{
+					FilterStatusTextbox.Content = _inactiveFilters;
+				}
 			}
 		}
 
@@ -135,7 +195,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				ContentControlFilter.Content = ArenaFilters;
 			else if(selected.Equals(TreeViewItemConstructed)
 					|| (Helper.GetVisualParent<TreeViewItem>(selected)?.Equals(TreeViewItemConstructed) ?? false))
-				ContentControlFilter.Content = ConstructedFilters;
+				ContentControlFilter.Content = ConstructedFilters;	
 		}
 
 		private void ButtonRefresh_OnClick(object sender, RoutedEventArgs e) => UpdateStats();
@@ -154,6 +214,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				ArenaFilters.Reset();
 				ArenaFilters = new ArenaFilters(UpdateCallBack);
 				ContentControlFilter.Content = ArenaFilters;
+				FiltersActive = false;
+				UpdateStats();
 			}
 			else if(ContentControlFilter.Content is ConstructedFilters)
 			{
@@ -162,6 +224,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				ContentControlFilter.Content = ConstructedFilters;
 				ConstructedFilters.CheckBoxDecks.Checked += (s, args) => ConstructedSummary.UpdateContent();
 				ConstructedFilters.CheckBoxDecks.Unchecked += (s, args) => ConstructedSummary.UpdateContent();
+				FiltersActive = false;
+				UpdateStats();
 			}
 			else
 				return;

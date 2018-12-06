@@ -12,7 +12,10 @@
     <DockPanel>
         <DockPanel>
             <GroupBox Header="Filter Status" DockPanel.Dock="Top" Height="55" RenderTransformOrigin="0.497,0.275">
-                <TextBlock Name="FilterStatusTextbox" Text="Active" DockPanel.Dock="Top"></TextBlock>
+                <ContentControl Name="FilterStatusTextbox">
+                    <TextBlock Name="FilterStatusText" Text="Active" DockPanel.Dock="Top"></TextBlock>
+                </ContentControl>
+                
             </GroupBox>
 
             <GroupBox Header="{lex:LocTextUpper Stats_Overview_Label_Menu}" DockPanel.Dock="Top">

@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			Config.Instance.ArenaStatsTimeFrameFilter = (DisplayedTimeFrame)ComboBoxTimeframe.SelectedItem;
+			Overview.FiltersActive = true;
 			Config.Save();
 			_updateCallback?.Invoke();
 		}
@@ -56,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			Config.Instance.ArenaStatsClassFilter = ((HeroClassStatsFilterWrapper)ComboBoxClass.SelectedItem).HeroClass;
+			Overview.FiltersActive = true;
 			Config.Save();
 			_updateCallback?.Invoke();
 		}
@@ -65,6 +67,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			_updateCallback?.Invoke();
+			Overview.FiltersActive = true;
 		}
 
 		private void ComboBoxRegion_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -72,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			Config.Instance.ArenaStatsRegionFilter = (RegionAll)ComboBoxRegion.SelectedItem;
+			Overview.FiltersActive = true;
 			Config.Save();
 			_updateCallback?.Invoke();
 		}
@@ -81,6 +85,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			_updateCallback?.Invoke();
+			Overview.FiltersActive = true;
 		}
 
 		private void CheckBoxArchived_OnUnchecked(object sender, RoutedEventArgs e)
@@ -88,6 +93,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(!_initialized)
 				return;
 			_updateCallback?.Invoke();
+			Overview.FiltersActive = true;
 		}
 
 		public void Reset()
@@ -102,6 +108,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				nameof(Config.Instance.ArenaStatsIncludeArchived)
 			}.ForEach(Config.Instance.Reset);
 			Config.Save();
+			Overview.FiltersActive = false;
 		}
 
 		private async void TextBoxCustomSeasonMin_OnLostFocus(object sender, RoutedEventArgs e)
