@@ -351,6 +351,19 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
+		public void MultipleSecrets_MinionToHero_ExplosiveTrapTriggered_MinionDied_PlayerAttackTest()
+		{
+			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_playerMinion1.SetTag(GameTag.HEALTH, -1);
+			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap,
+				HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
 		public void MultipleSecrets_MinionPlayed_MinionDied()
 		{
 			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
