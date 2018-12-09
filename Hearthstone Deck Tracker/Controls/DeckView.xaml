@@ -93,7 +93,7 @@
                             <VisualBrush Visual="{StaticResource hdticon}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBlock Margin="4,0" FontSize="14" Height="20" Foreground="White">hsdecktracker.net</TextBlock>
+                    <TextBlock Margin="4,0" FontSize="14" Height="20" Foreground="White">HSReplay.net</TextBlock>
                 </StackPanel>
             </Border>
             <!-- Sets/Dust Panel -->
