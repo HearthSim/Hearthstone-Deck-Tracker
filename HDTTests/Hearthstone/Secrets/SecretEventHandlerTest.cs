@@ -150,6 +150,7 @@ namespace HDTTests.Hearthstone.Secrets
 		public void SingleSecret_HeroToHero_PlayerAttackTest()
 		{
 			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.HAND);
+			_heroPlayer.SetTag(GameTag.HEALTH, Database.GetCardFromId(_heroPlayer.CardId).Health);
 			_game.SecretsManager.HandleAttack(_heroPlayer, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
@@ -170,6 +171,7 @@ namespace HDTTests.Hearthstone.Secrets
 		public void SingleSecret_MinionToHero_PlayerAttackTest()
 		{
 			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_playerMinion1.SetTag(GameTag.HEALTH, Database.GetCardFromId(_playerMinion1.CardId).Health);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
@@ -346,6 +348,19 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.OnEntityRevealedAsMinion(_opponentCardInHand1);
 
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.HiddenCache, HunterSecrets.Snipe);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_MinionToHero_ExplosiveTrapTriggered_MinionDied_PlayerAttackTest()
+		{
+			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_playerMinion1.SetTag(GameTag.HEALTH, -1);
+			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap,
+				HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
