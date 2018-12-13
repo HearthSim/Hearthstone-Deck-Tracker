@@ -430,12 +430,14 @@ namespace Hearthstone_Deck_Tracker
 			if(!Config.Instance.DungeonAutoImport)
 				return;
 			Log.Info($"Dungeon run detected! New={newRun}");
-			var playerClass = Core.Game.Player.Class;
+			var playerClass = Core.Game.Player.Board.FirstOrDefault(x => x.IsHero)?.Card.PlayerClass;
+			if(playerClass == null)
+				return;
 			var revealed = RevealedEntites;
 			var existingDeck = DeckList.Instance.Decks
 				.Where(x => x.IsDungeonDeck && x.Class == playerClass
 							&& !(x.IsDungeonRunCompleted ?? false)
-							&& (!newRun || x.Cards.Count == 10)
+							&& (!newRun || x.Cards.Count == 10 || x.Cards.Count == 11)
 							&& GetMissingCards(revealed, x).Count == 0)
 				.OrderByDescending(x => x.LastEdited).FirstOrDefault();
 			if(existingDeck == null)
@@ -512,11 +514,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private static Deck CreateDungeonDeck(string playerClass, CardSet set)
 		{
-			Log.Info($"Creating new {playerClass} dungeon run deck (CardSet={set})");
-			var deck = DungeonRun.GetDefaultDeck(playerClass, set);
+			var shrine = Core.Game.Player.Board.FirstOrDefault(x => x.HasTag(GameTag.SHRINE))?.CardId;
+			Log.Info($"Creating new {playerClass} dungeon run deck (CardSet={set}, Shrine={shrine})");
+			var deck = DungeonRun.GetDefaultDeck(playerClass, set, shrine);
 			if(deck == null)
 			{
-				Log.Info($"Could not find default deck for {playerClass} in card set {set}");
+				Log.Info($"Could not find default deck for {playerClass} in card set {set} with Shrine={shrine}");
 				return null;
 			}
 			DeckList.Instance.Decks.Add(deck);

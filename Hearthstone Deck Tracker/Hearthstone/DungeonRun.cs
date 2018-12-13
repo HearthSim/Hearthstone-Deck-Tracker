@@ -10,9 +10,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class DungeonRun
 	{
-		public static Deck GetDefaultDeck(string playerClass, CardSet set)
+		public static Deck GetDefaultDeck(string playerClass, CardSet set, string shrineCardId = null)
 		{
-			var cards = GetCards(playerClass, set);
+			var cards = GetCards(playerClass, set, shrineCardId);
 			if(cards == null)
 				return null;
 			var deck = new Deck
@@ -37,12 +37,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return Config.Instance.DungeonRunDeckNameTemplate;
 				case CardSet.GILNEAS:
 					return Config.Instance.MonsterHuntDeckNameTemplate;
+				case CardSet.TROLL:
+					return Config.Instance.RumbleRunDeckNameTemplate;
 				default:
 					return null;
 			}
 		}
 
-		private static List<string> GetCards(string playerClass, CardSet set)
+		private static List<string> GetCards(string playerClass, CardSet set, string shrineCardId = null)
 		{
 			switch(set)
 			{
@@ -86,11 +88,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					}
 				}
 					break;
+				case CardSet.TROLL:
+				{
+					switch(playerClass.ToUpperInvariant())
+					{
+						case "ROGUE":
+							return TrlDefaultDecks.Rogue.FirstOrDefault(x => x.Contains(shrineCardId));
+						case "WARRIOR":
+							return TrlDefaultDecks.Warrior.FirstOrDefault(x => x.Contains(shrineCardId));
+						case "SHAMAN":
+							return TrlDefaultDecks.Shaman.FirstOrDefault(x => x.Contains(shrineCardId));
+						case "PALADIN":
+							return TrlDefaultDecks.Paladin.FirstOrDefault(x => x.Contains(shrineCardId));
+						case "HUNTER":
+							return TrlDefaultDecks.Hunter.FirstOrDefault(x => x.Contains(shrineCardId));
+						case "DRUID":
+							return TrlDefaultDecks.Druid.FirstOrDefault(x => x.Contains(shrineCardId));
+						case "WARLOCK":
+							return TrlDefaultDecks.Warlock.FirstOrDefault(x => x.Contains(shrineCardId));
+						case "MAGE":
+							return TrlDefaultDecks.Mage.FirstOrDefault(x => x.Contains(shrineCardId));
+						case "PRIEST":
+							return TrlDefaultDecks.Priest.FirstOrDefault(x => x.Contains(shrineCardId));
+					}
+				}
+					break;
 			}
 			return null;
 		}
 
-		public static bool IsDungeonBoss(string cardId) => cardId != null && (cardId.Contains("LOOT") || cardId.Contains("GIL")) && cardId.Contains("BOSS");
+		public static bool IsDungeonBoss(string cardId) => cardId != null && (cardId.Contains("LOOT") || cardId.Contains("GIL") || cardId.Contains("TRL")) && cardId.Contains("BOSS");
 
 		private static class GilDefaultDecks
 		{
@@ -277,6 +304,424 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collectible.Priest.AuchenaiSoulpriest,
 				Collectible.Priest.Lightspawn,
 				Collectible.Priest.HolyNova,
+			};
+		}
+
+		private static class TrlDefaultDecks
+		{
+			public static List<string>[] Rogue => new[]
+			{
+				new List<string>
+				{
+					NonCollectible.Rogue.BottledTerror,
+					Collectible.Rogue.Buccaneer,
+					Collectible.Rogue.DefiasRingleader,
+					Collectible.Rogue.ShadowSensei,
+					Collectible.Rogue.CrazedChemist,
+					Collectible.Neutral.SouthseaDeckhand,
+					Collectible.Neutral.CaptainsParrot,
+					Collectible.Neutral.SharkfinFan,
+					Collectible.Neutral.ShipsCannon,
+					Collectible.Neutral.HenchClanThug,
+					Collectible.Neutral.SaltyDog,
+				},
+				new List<string>
+				{
+					NonCollectible.Rogue.TreasureFromBelow,
+					Collectible.Rogue.Preparation,
+					Collectible.Rogue.CounterfeitCoin,
+					Collectible.Rogue.Backstab,
+					Collectible.Rogue.Conceal,
+					Collectible.Rogue.UndercityValiant,
+					Collectible.Rogue.Betrayal,
+					Collectible.Rogue.ObsidianShard,
+					Collectible.Neutral.SmallTimeBuccaneer,
+					Collectible.Neutral.SouthseaDeckhand,
+					Collectible.Neutral.BloodsailRaider,
+				},
+				new List<string>
+				{
+					NonCollectible.Rogue.PiratesMark,
+					Collectible.Rogue.Backstab,
+					Collectible.Rogue.CounterfeitCoin,
+					Collectible.Neutral.ArcaneAnomaly,
+					Collectible.Rogue.SinisterStrike,
+					Collectible.Rogue.Betrayal,
+					Collectible.Neutral.KoboldGeomancer,
+					Collectible.Neutral.Spellzerker,
+					Collectible.Rogue.FanOfKnives,
+					Collectible.Rogue.AcademicEspionage,
+					Collectible.Rogue.TombPillager,
+				}
+
+			};
+
+			public static List<string>[] Warrior => new[]
+			{
+				new List<string>
+				{
+					NonCollectible.Warrior.AkalisChampion,
+					Collectible.Warrior.EterniumRover,
+					Collectible.Warrior.Armorsmith,
+					Collectible.Warrior.DrywhiskerArmorer,
+					Collectible.Warrior.FieryWarAxe,
+					Collectible.Warrior.MountainfireArmor,
+					Collectible.Warrior.EmberscaleDrake,
+					Collectible.Neutral.Waterboy,
+					Collectible.Neutral.HiredGun,
+					Collectible.Neutral.HalfTimeScavenger,
+					Collectible.Neutral.DragonmawScorcher,
+				},
+				new List<string>
+				{
+					NonCollectible.Warrior.AkalisWarDrum,
+					Collectible.Warrior.DragonRoar,
+					Collectible.Neutral.FaerieDragon,
+					Collectible.Neutral.FiretreeWitchdoctor,
+					Collectible.Neutral.NetherspiteHistorian,
+					Collectible.Warrior.FieryWarAxe,
+					Collectible.Neutral.NightmareAmalgam,
+					Collectible.Neutral.EbonDragonsmith,
+					Collectible.Neutral.TwilightGuardian,
+					Collectible.Warrior.EmberscaleDrake,
+					Collectible.Neutral.BoneDrake,
+				},
+				new List<string>
+				{
+					NonCollectible.Warrior.AkalisHorn,
+					Collectible.Warrior.InnerRage,
+					Collectible.Warrior.Warbot,
+					Collectible.Warrior.Rampage,
+					Collectible.Warrior.CruelTaskmaster,
+					Collectible.Warrior.FieryWarAxe,
+					Collectible.Warrior.BloodhoofBrave,
+					Collectible.Neutral.MasterSwordsmith,
+					Collectible.Neutral.AmaniBerserker,
+					Collectible.Neutral.RagingWorgen,
+					Collectible.Neutral.FrostwolfWarlord,
+				},
+			};
+
+			public static List<string>[] Shaman => new[]
+			{
+				new List<string>
+				{
+					NonCollectible.Shaman.KragwasLure,
+					Collectible.Shaman.ForkedLightning,
+					Collectible.Shaman.StormforgedAxe,
+					Collectible.Shaman.UnboundElemental,
+					Collectible.Shaman.LightningStorm,
+					Collectible.Shaman.JinyuWaterspeaker,
+					Collectible.Shaman.FireguardDestroyer,
+					Collectible.Neutral.MurlocRaider,
+					Collectible.Neutral.DeadscaleKnight,
+					Collectible.Neutral.HugeToad,
+					Collectible.Neutral.TarCreeper,
+				},
+				new List<string>
+				{
+					NonCollectible.Shaman.TributeFromTheTides,
+					Collectible.Shaman.BlazingInvocation,
+					Collectible.Shaman.TotemicSmash,
+					Collectible.Shaman.HotSpringGuardian,
+					Collectible.Shaman.LightningStorm,
+					Collectible.Shaman.Windspeaker,
+					Collectible.Shaman.FireElemental,
+					Collectible.Neutral.EmeraldReaver,
+					Collectible.Neutral.FireFly,
+					Collectible.Neutral.MurlocTidehunter,
+					Collectible.Neutral.BelligerentGnome,
+				},
+				new List<string>
+				{
+					NonCollectible.Shaman.KragwasGrace,
+					Collectible.Shaman.Wartbringer,
+					Collectible.Shaman.Crackle,
+					Collectible.Shaman.LavaShock,
+					Collectible.Shaman.MaelstromPortal,
+					Collectible.Shaman.FarSight,
+					Collectible.Shaman.FeralSpirit,
+					Collectible.Shaman.CallInTheFinishers,
+					Collectible.Shaman.RainOfToads,
+					Collectible.Neutral.ManaAddict,
+					Collectible.Neutral.BananaBuffoon,
+				},
+			};
+
+			public static List<string>[] Paladin => new[]
+			{
+				new List<string>
+				{
+					NonCollectible.Paladin.ShirvallahsProtection,
+					Collectible.Paladin.DivineStrength,
+					Collectible.Paladin.MeanstreetMarshal,
+					Collectible.Paladin.GrimestreetOutfitter,
+					Collectible.Paladin.ParagonOfLight,
+					Collectible.Paladin.FarrakiBattleaxe,
+					Collectible.Neutral.ElvenArcher,
+					Collectible.Neutral.InjuredKvaldir,
+					Collectible.Neutral.BelligerentGnome,
+					Collectible.Neutral.ArenaFanatic,
+					Collectible.Neutral.StormwindKnight,
+				},
+				new List<string>
+				{
+					NonCollectible.Paladin.ShirvallahsVengeance,
+					Collectible.Paladin.Bloodclaw,
+					Collectible.Paladin.FlashOfLight,
+					Collectible.Paladin.SealOfLight,
+					Collectible.Paladin.BenevolentDjinn,
+					Collectible.Paladin.TruesilverChampion,
+					Collectible.Paladin.ChillbladeChampion,
+					Collectible.Neutral.Crystallizer,
+					Collectible.Neutral.MadBomber,
+					Collectible.Neutral.HappyGhoul,
+					Collectible.Neutral.MadderBomber
+				},
+				new List<string>
+				{
+					NonCollectible.Paladin.ShirvallahsGrace,
+					Collectible.Neutral.ArgentSquire,
+					Collectible.Paladin.DivineStrength,
+					Collectible.Paladin.HandOfProtection,
+					Collectible.Paladin.FlashOfLight,
+					Collectible.Paladin.PotionOfHeroism,
+					Collectible.Paladin.PrimalfinChampion,
+					Collectible.Neutral.BananaBuffoon,
+					Collectible.Paladin.SealOfChampions,
+					Collectible.Paladin.BlessingOfKings,
+					Collectible.Paladin.TruesilverChampion
+				},
+			};
+
+			public static List<string>[] Hunter => new[]
+			{
+				new List<string>
+				{
+					NonCollectible.Hunter.HalazzisTrap,
+					Collectible.Hunter.Candleshot,
+					Collectible.Hunter.ArcaneShot,
+					Collectible.Hunter.HuntersMark,
+					Collectible.Hunter.SecretPlan,
+					Collectible.Hunter.ExplosiveTrap,
+					Collectible.Hunter.QuickShot,
+					Collectible.Hunter.AnimalCompanion,
+					Collectible.Hunter.BloodscalpStrategist,
+					Collectible.Hunter.BaitedArrow,
+					Collectible.Neutral.BurglyBully,
+				},
+				new List<string>
+				{
+					NonCollectible.Hunter.HalazzisHunt,
+					Collectible.Hunter.HuntersMark,
+					Collectible.Hunter.Glaivezooka,
+					Collectible.Hunter.GoblinPrank,
+					Collectible.Hunter.Houndmaster,
+					Collectible.Hunter.SavannahHighmane,
+					Collectible.Neutral.GurubashiChicken,
+					Collectible.Neutral.DireWolfAlpha,
+					Collectible.Neutral.JunglePanther,
+					Collectible.Neutral.Wolfrider,
+					Collectible.Neutral.StranglethornTiger,
+				},
+				new List<string>
+				{
+					NonCollectible.Hunter.HalazzisGuise,
+					Collectible.Hunter.JeweledMacaw,
+					Collectible.Hunter.Springpaw,
+					Collectible.Hunter.Webspinner,
+					Collectible.Hunter.KillCommand,
+					Collectible.Hunter.RatPack,
+					Collectible.Hunter.BaitedArrow,
+					Collectible.Neutral.DireWolfAlpha,
+					Collectible.Neutral.SilverbackPatriarch,
+					Collectible.Neutral.UntamedBeastmaster,
+					Collectible.Neutral.OasisSnapjaw,
+				},
+			};
+
+			public static List<string>[] Druid => new[]
+			{
+				new List<string>
+				{
+					NonCollectible.Druid.GonksArmament,
+					Collectible.Druid.ForbiddenAncient,
+					Collectible.Druid.LesserJasperSpellstone,
+					Collectible.Neutral.LowlySquire,
+					Collectible.Neutral.Waterboy,
+					Collectible.Druid.Wrath,
+					Collectible.Druid.FerociousHowl,
+					Collectible.Druid.GroveTender,
+					Collectible.Neutral.HalfTimeScavenger,
+					Collectible.Druid.IronwoodGolem,
+					Collectible.Neutral.SnapjawShellfighter,
+				},
+				new List<string>
+				{
+					NonCollectible.Druid.GonksMark,
+					Collectible.Druid.EnchantedRaven,
+					Collectible.Druid.PowerOfTheWild,
+					Collectible.Druid.WitchwoodApple,
+					Collectible.Druid.MountedRaptor,
+					Collectible.Druid.Swipe,
+					Collectible.Neutral.WaxElemental,
+					Collectible.Neutral.BloodfenRaptor,
+					Collectible.Neutral.InfestedTauren,
+					Collectible.Neutral.StormwindKnight,
+					Collectible.Neutral.ArenaPatron,
+				},
+				new List<string>
+				{
+					NonCollectible.Druid.BondsOfBalance,
+					Collectible.Druid.Pounce,
+					Collectible.Druid.Claw,
+					Collectible.Druid.EnchantedRaven,
+					Collectible.Druid.PowerOfTheWild,
+					Collectible.Druid.SavageStriker,
+					Collectible.Druid.Gnash,
+					Collectible.Druid.Bite,
+					Collectible.Druid.SavageCombatant,
+					Collectible.Neutral.Waterboy,
+					Collectible.Neutral.SharkfinFan,
+				},
+			};
+
+			public static List<string>[] Warlock => new[]
+			{
+				new List<string>
+				{
+					NonCollectible.Warlock.BloodPact,
+					Collectible.Warlock.Voidwalker,
+					Collectible.Warlock.MistressOfPain,
+					Collectible.Warlock.Demonfire,
+					Collectible.Warlock.Duskbat,
+					Collectible.Warlock.ImpLosion,
+					Collectible.Warlock.LesserAmethystSpellstone,
+					Collectible.Warlock.FiendishCircle,
+					Collectible.Warlock.BaneOfDoom,
+					Collectible.Neutral.BananaBuffoon,
+					Collectible.Neutral.VioletIllusionist,
+				},
+				new List<string>
+				{
+					NonCollectible.Warlock.DarkReliquary,
+					Collectible.Warlock.Shriek,
+					Collectible.Warlock.Soulfire,
+					Collectible.Warlock.Voidwalker,
+					Collectible.Warlock.Succubus,
+					Collectible.Warlock.DarkshireLibrarian,
+					Collectible.Warlock.RecklessDiretroll,
+					Collectible.Warlock.LakkariFelhound,
+					Collectible.Warlock.Soulwarden,
+					Collectible.Neutral.BelligerentGnome,
+					Collectible.Neutral.BananaBuffoon,
+				},
+				new List<string>
+				{
+					NonCollectible.Warlock.HireeksHunger,
+					Collectible.Warlock.FlameImp,
+					Collectible.Warlock.CallOfTheVoid,
+					Collectible.Warlock.SpiritBomb,
+					Collectible.Warlock.UnlicensedApothecary,
+					Collectible.Warlock.BloodWitch,
+					Collectible.Warlock.Hellfire,
+					Collectible.Neutral.KnifeJuggler,
+					Collectible.Neutral.Waterboy,
+					Collectible.Neutral.ImpMaster,
+					Collectible.Neutral.BlackwaldPixie,
+				}
+			};
+
+			public static List<string>[] Mage => new[]
+			{
+				new List<string>
+				{
+					NonCollectible.Mage.JanalaisMantle,
+					Collectible.Mage.ShiftingScroll,
+					Collectible.Mage.BabblingBook,
+					Collectible.Mage.ShimmeringTempest,
+					Collectible.Mage.ExplosiveRunes,
+					Collectible.Mage.Spellslinger,
+					Collectible.Mage.GhastlyConjurer,
+					Collectible.Mage.BlastWave,
+					Collectible.Neutral.TournamentAttendee,
+					Collectible.Neutral.Brainstormer,
+					Collectible.Neutral.KabalChemist,
+				},
+				new List<string>
+				{
+					NonCollectible.Mage.JanalaisFlame,
+					Collectible.Mage.ArcaneBlast,
+					Collectible.Mage.FallenHero,
+					Collectible.Mage.Cinderstorm,
+					Collectible.Mage.DalaranAspirant,
+					Collectible.Mage.Fireball,
+					Collectible.Neutral.AcherusVeteran,
+					Collectible.Neutral.FlameJuggler,
+					Collectible.Neutral.BlackwaldPixie,
+					Collectible.Neutral.DragonhawkRider,
+					Collectible.Neutral.FirePlumePhoenix,
+				},
+				new List<string>
+				{
+					NonCollectible.Mage.JanalaisProgeny,
+					Collectible.Mage.FreezingPotion,
+					Collectible.Neutral.ArcaneAnomaly,
+					Collectible.Mage.Frostbolt,
+					Collectible.Mage.Snowchugger,
+					Collectible.Neutral.VolatileElemental,
+					Collectible.Neutral.HyldnirFrostrider,
+					Collectible.Mage.ConeOfCold,
+					Collectible.Neutral.IceCreamPeddler,
+					Collectible.Mage.WaterElemental,
+					Collectible.Neutral.FrostElemental
+				},
+			};
+
+			public static List<string>[] Priest => new[]
+			{
+				new List<string>
+				{
+					NonCollectible.Priest.BwonsamdisSanctum,
+					Collectible.Priest.CrystallineOracle,
+					Collectible.Priest.SpiritLash,
+					Collectible.Priest.MuseumCurator,
+					Collectible.Priest.DeadRinger,
+					Collectible.Priest.ShiftingShade,
+					Collectible.Priest.TortollanShellraiser,
+					Collectible.Neutral.MistressOfMixtures,
+					Collectible.Neutral.HarvestGolem,
+					Collectible.Neutral.ShallowGravedigger,
+					Collectible.Neutral.TombLurker
+				},
+				new List<string>
+				{
+					NonCollectible.Priest.BwonsamdisTome,
+					Collectible.Priest.PsionicProbe,
+					Collectible.Priest.PowerWordShield,
+					Collectible.Priest.SpiritLash,
+					Collectible.Priest.SandDrudge,
+					Collectible.Priest.GildedGargoyle,
+					Collectible.Priest.Mindgames,
+					Collectible.Neutral.ArcaneAnomaly,
+					Collectible.Neutral.ClockworkGnome,
+					Collectible.Neutral.WildPyromancer,
+					Collectible.Neutral.BananaBuffoon,
+				},
+				new List<string>
+				{
+					NonCollectible.Priest.BwonsamdisCovenant,
+					Collectible.Priest.CircleOfHealing,
+					Collectible.Priest.Regenerate,
+					Collectible.Priest.FlashHeal,
+					Collectible.Neutral.InjuredKvaldir,
+					Collectible.Priest.LightOfTheNaaru,
+					Collectible.Neutral.VoodooDoctor,
+					Collectible.Neutral.GadgetzanSocialite,
+					Collectible.Neutral.Waterboy,
+					Collectible.Neutral.EarthenRingFarseer,
+					Collectible.Neutral.InjuredBlademaster
+				},
 			};
 		}
 	}

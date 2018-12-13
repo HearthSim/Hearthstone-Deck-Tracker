@@ -14,7 +14,9 @@ namespace HearthWatcher
 		bool InAiMatch { get; }
 		bool InAdventureScreen { get; }
 		string OpponentHeroId { get; }
+		int OpponentHeroHealth { get; }
 	}
+
 	public class DungeonRunWatcher
 	{
 		private readonly IGameDataProvider _dataProvider;
@@ -46,9 +48,9 @@ namespace HearthWatcher
 		private async void Watch()
 		{
 			Running = true;
-			_prevCards = new List<int>[] { null, null };
-			_prevLootChoice = new[] { 0, 0 };
-			_prevTreasureChoice = new[] { 0, 0 };
+			_prevCards = new List<int>[] { null, null, null };
+			_prevLootChoice = new[] { 0, 0, 0 };
+			_prevTreasureChoice = new[] { 0, 0, 0 };
 			while(_watch)
 			{
 				await Task.Delay(_delay);
@@ -109,9 +111,10 @@ namespace HearthWatcher
 			{
 				if(Cards.All.TryGetValue(_dataProvider.OpponentHeroId, out var card))
 				{
-					if(new [] {CardSet.LOOTAPALOOZA, CardSet.GILNEAS}.Contains(card.Set) && card.Id.Contains("BOSS"))
+					if(new [] {CardSet.LOOTAPALOOZA, CardSet.GILNEAS}.Contains(card.Set) && card.Id.Contains("BOSS") || card.Set == CardSet.TROLL && card.Id.EndsWith("h"))
 					{
-						var newRun = _initialOpponents.Contains(_dataProvider.OpponentHeroId);
+						var newRun = _initialOpponents.Contains(_dataProvider.OpponentHeroId)
+									|| _dataProvider.OpponentHeroHealth == 10;
 						DungeonRunMatchStarted?.Invoke(newRun);
 						return true;
 					}
