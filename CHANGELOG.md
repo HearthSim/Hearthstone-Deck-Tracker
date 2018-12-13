@@ -1,4 +1,4 @@
-## __Release v1.7.14 - 2018-12-13__
+## __Release v1.7.15 - 2018-12-13__
 
 __New__:
 - Added support for Rumble Run.
