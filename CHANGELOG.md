@@ -1,3 +1,12 @@
+## __Release v1.7.14 - 2018-12-13__
+
+__New__:
+- Added support for Rumble Run.
+
+__Fixes__:
+- Fixed an issue where Freezing Trap and Bear Trap would sometimes be incorrectly greyed out.
+
+
 ## __Release v1.7.13 - 2018-11-29__
 __Updated for Rastakhan's Rumble__
 
