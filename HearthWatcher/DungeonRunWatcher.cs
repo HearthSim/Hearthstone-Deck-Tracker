@@ -103,7 +103,7 @@ namespace HearthWatcher
 				}
 				else
 				{
-					_prevCards = new List<int>[] { null, null };
+					_prevCards = new List<int>[] { null, null, null };
 				}
 
 			}
