@@ -144,7 +144,7 @@ namespace Hearthstone_Deck_Tracker
 				MainWindow.ShowLogConfigUpdateFailedMessage().Forget();
 			else if(LogConfigUpdater.LogConfigUpdated && Game.IsRunning)
 			{
-				MainWindow.ShowMessageAsync("Hearthstone restart required", "The log.config file has been updated. HDT may not work properly until Hearthstone has been restarted.").Forget();
+				ShowRestartRequiredMessageAsync().Forget();
 				Overlay.ShowRestartRequiredWarning();
 			}
 			LogWatcherManger.Start(Game).Forget();
@@ -167,6 +167,14 @@ namespace Hearthstone_Deck_Tracker
 				(int)(DateTime.UtcNow - _startUpTime).TotalSeconds,
 				PluginManager.Instance.Plugins.Count
 			);
+		}
+
+		private static async Task ShowRestartRequiredMessageAsync()
+		{
+			MainWindow.ActivateWindow();
+			while(MainWindow.Visibility != Visibility.Visible || MainWindow.WindowState == WindowState.Minimized)
+				await Task.Delay(100);
+			await MainWindow.ShowMessageAsync("Hearthstone restart required", "The log.config file has been updated. HDT may not work properly until Hearthstone has been restarted.");
 		}
 
 		private static async void UpdateOverlayAsync()

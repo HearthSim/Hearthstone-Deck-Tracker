@@ -146,6 +146,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Monster Hunt {Date dd-MM HH:mm}")]
 		public string MonsterHuntDeckNameTemplate = "Monster Hunt {Date dd-MM HH:mm}";
 
+		[DefaultValue("Rumble Run {Date dd-MM HH:mm}")]
+		public string RumbleRunDeckNameTemplate = "Rumble Run {Date dd-MM HH:mm}";
+
 		[DefaultValue(HsActionType.Flash)]
 		public HsActionType TurnStartAction = HsActionType.Flash;
 
