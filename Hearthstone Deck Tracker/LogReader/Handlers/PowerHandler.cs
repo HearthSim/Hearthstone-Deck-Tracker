@@ -138,6 +138,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								Log.Info($"Found known cardId for entity {id}: {cardId}");
 								gameState.KnownCardIds[blockId.Value].Remove(cardId);
 							}
+							gameState.LastAddedCardId = cardId;
+						}
+						else if(blockId.HasValue && !gameState.KnownCardIds.ContainsKey(blockId.Value))
+						{
+							//Augmented Elekk
+							if(gameState.CurrentBlock.CardId == "BOT_559")
+							{
+								cardId = gameState.LastAddedCardId;
+								if(!string.IsNullOrEmpty(cardId))
+								{
+									Log.Info($"Found known cardId for entity {id}: {cardId}");
+								}
+							}
 						}
 					}
 					game.Entities.Add(id, new Entity(id) {CardId = cardId});
