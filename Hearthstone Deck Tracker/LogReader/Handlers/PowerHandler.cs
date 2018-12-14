@@ -142,8 +142,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						}
 						else if(blockId.HasValue && !gameState.KnownCardIds.ContainsKey(blockId.Value))
 						{
-							//Augmented Elekk
-							if(gameState.CurrentBlock.CardId == "BOT_559")
+							if(gameState.CurrentBlock.CardId == Collectible.Neutral.AugmentedElekk)
 							{
 								cardId = gameState.LastAddedCardId;
 								if(!string.IsNullOrEmpty(cardId))
