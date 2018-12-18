@@ -138,17 +138,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								Log.Info($"Found known cardId for entity {id}: {cardId}");
 								gameState.KnownCardIds[blockId.Value].Remove(cardId);
 							}
-							gameState.LastAddedCardId = cardId;
+							if(gameState.CurrentBlock.Parent != null)
+								gameState.CurrentBlock.Parent.LastAddedCardId = cardId;
 						}
 						else if(blockId.HasValue && !gameState.KnownCardIds.ContainsKey(blockId.Value))
 						{
 							if(gameState.CurrentBlock.CardId == Collectible.Neutral.AugmentedElekk)
 							{
-								cardId = gameState.LastAddedCardId;
+								if(gameState.CurrentBlock.Parent != null)
+									cardId = gameState.CurrentBlock.Parent.LastAddedCardId;
+
 								if(!string.IsNullOrEmpty(cardId))
-								{
 									Log.Info($"Found known cardId for entity {id}: {cardId}");
-								}
 							}
 						}
 					}
