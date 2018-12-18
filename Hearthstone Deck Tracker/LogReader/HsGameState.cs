@@ -34,7 +34,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int JoustReveals { get; set; }
 		public Dictionary<int, IList<string>> KnownCardIds { get; set; }
 		public int LastCardPlayed { get; set; }
-		public string LastAddedCardId { get; set; }
 		public bool WasInProgress { get; set; }
 		public int GameTriggerCount { get; set; }
 		public Zone CurrentEntityZone { get; set; }
@@ -91,6 +90,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public string Type { get; }
 		public string CardId { get; }
 
+		public string LastAddedCardId { get; set; }
 		public Entity EntityDiscardedByArchivist { get; set; }
 
 		public Block(Block parent, int blockId, string type, string cardId)
