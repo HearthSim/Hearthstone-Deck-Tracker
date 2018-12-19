@@ -1,3 +1,7 @@
+## __Release v1.7.16 - 2018-12-19__
+__Updated for Hearthstone 13.0.3.28329__
+
+
 ## __Release v1.7.15 - 2018-12-13__
 
 __New__:
