@@ -62,16 +62,24 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 
 		private static void WriteLogConfig(LogConfig logConfig)
 		{
-			try
+			if(File.Exists(LogConfigPath))
 			{
-				// ReSharper disable once ObjectCreationAsStatement
-				if(File.Exists(LogConfigPath))
-					new FileInfo(LogConfigPath) {IsReadOnly = false};
+				try
+				{
+					// ReSharper disable once ObjectCreationAsStatement
+					new FileInfo(LogConfigPath) { IsReadOnly = false };
+				}
+				catch(Exception e)
+				{
+					Log.Error("Could not remove read-only from log.config:\n" + e);
+				}
 			}
-			catch(Exception e)
+			else if (!Directory.Exists(HearthstoneAppData))
 			{
-				Log.Error("Could not remove read-only from log.config:\n" + e);
+				Directory.CreateDirectory(HearthstoneAppData);
+				Log.Info(@"Created directory %LocalAppData%\Blizzard\Hearthstone");
 			}
+
 			Log.Info("Updating log.config");
 			using(var sw = new StreamWriter(LogConfigPath))
 				sw.Write(string.Concat(logConfig.Items));
