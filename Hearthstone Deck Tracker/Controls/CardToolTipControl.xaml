@@ -51,6 +51,10 @@
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding RaceOrType}" Width="200" FontSize="14"
                                             Height="20" TextAlignment="Center" />
             </Grid>
+			<Grid Grid.Row="4" Background="{DynamicResource AccentColorBrush}" Margin="0,20,0,-20">
+                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Set}" Width="200" FontSize="14"
+                                            Height="20" TextAlignment="Center" />
+            </Grid>
         </Grid>
     </Border>
 </UserControl>
