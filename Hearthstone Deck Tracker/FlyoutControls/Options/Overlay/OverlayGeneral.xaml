@@ -54,6 +54,12 @@
                   Checked="CheckboxOverlayAdditionalCardToolTips_Checked"
                   Unchecked="CheckboxOverlayAdditionalCardToolTips_Unchecked"
                   HorizontalAlignment="Left" />
+        <CheckBox x:Name="CheckboxOverlaySetToolTips"
+                  Content="{lex:Loc Options_Overlay_General_CheckBox_SetTooltips}" Margin="30,5,0,0"
+                  VerticalAlignment="Top"
+                  Checked="CheckboxOverlaySetToolTips_Checked"
+                  Unchecked="CheckboxOverlaySetToolTips_Unchecked"
+                  HorizontalAlignment="Left" />
         <CheckBox x:Name="CheckBoxOverlayUseAnimations" Content="{lex:Loc Options_Overlay_General_CheckBox_CardAnimations}"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
