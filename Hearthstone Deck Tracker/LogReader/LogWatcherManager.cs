@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private readonly LogWatcher _logWatcher;
 		private bool _stop;
 
+		public static LogWatcherInfo AchievementsLogWatcherInfo => new LogWatcherInfo { Name = "Achievements" };
 		public static LogWatcherInfo PowerLogWatcherInfo => new LogWatcherInfo
 		{
 			Name = "Power",
@@ -47,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			_logWatcher = new LogWatcher(new []
 			{
+				AchievementsLogWatcherInfo,
 				PowerLogWatcherInfo,
 				GameplayLogWatcherInfo,
 				ArenaLogWatcherInfo,
@@ -125,6 +127,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 				_game.GameTime.Time = line.Time;
 				switch(line.Namespace)
 				{
+					case "Achievements":
+						OnAchievementsLogLine.Execute(line.Line);
+						break;
 					case "Power":
 						if(line.LineContent.StartsWith("GameState."))
 							_game.PowerLog.Add(line.Line);
