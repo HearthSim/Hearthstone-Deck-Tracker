@@ -104,7 +104,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			public static List<string> ArenaExcludes = new List<string>
 			{
-				Hunter.Snipe
+
 			};
 
 			public static List<string> ArenaOnly = new List<string>
