@@ -2,6 +2,7 @@
 {
 	public class LogEvents
 	{
+		public static readonly ActionList<string> OnAchievementsLogLine = new ActionList<string>();
 		public static readonly ActionList<string> OnArenaLogLine = new ActionList<string>();
 		public static readonly ActionList<string> OnAssetLogLine = new ActionList<string>();
 		public static readonly ActionList<string> OnBobLogLine = new ActionList<string>();
