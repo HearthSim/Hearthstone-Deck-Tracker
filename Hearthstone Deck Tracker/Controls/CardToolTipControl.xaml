@@ -52,7 +52,7 @@
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding RaceOrType}" Width="200" FontSize="14"
                                             Height="20" TextAlignment="Center" />
             </Grid>
-			<Grid Grid.Row="4" Name="CardSetToolTip" Background="{DynamicResource AccentColorBrush}">
+            <Grid Grid.Row="4" Name="CardSetToolTip" Background="{DynamicResource AccentColorBrush}">
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Set}" Width="200" FontSize="14"
                                             Height="20" TextAlignment="Center" />
             </Grid>
