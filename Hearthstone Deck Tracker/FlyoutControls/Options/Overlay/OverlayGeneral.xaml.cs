@@ -37,6 +37,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxOverlayCardToolTips.IsChecked = Config.Instance.OverlayCardToolTips;
 			CheckboxOverlayAdditionalCardToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
 			CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
+			CheckboxOverlaySetToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
+			CheckboxOverlaySetToolTips.IsChecked = Config.Instance.OverlaySetToolTips;
 			CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
 			CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
 			CheckboxAlwaysShowGoldProgress.IsChecked = Config.Instance.AlwaysShowGoldProgress;
@@ -68,6 +70,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.AdditionalOverlayTooltips = false;
+			SaveConfig(false);
+		}
+
+		private void CheckboxOverlaySetToolTips_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlaySetToolTips = true;
+			SaveConfig(false);
+		}
+
+		private void CheckboxOverlaySetToolTips_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.OverlaySetToolTips = false;
 			SaveConfig(false);
 		}
 
@@ -134,6 +152,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.OverlayCardToolTips = true;
 			CheckboxOverlayAdditionalCardToolTips.IsEnabled = true;
 			CheckboxOverlaySecretToolTipsOnly.IsEnabled = true;
+			CheckboxOverlaySetToolTips.IsEnabled = true;
 			SaveConfig(true);
 		}
 
@@ -146,6 +165,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxOverlayAdditionalCardToolTips.IsEnabled = false;
 			CheckboxOverlaySecretToolTipsOnly.IsEnabled = false;
 			CheckboxOverlaySecretToolTipsOnly.IsChecked = false;
+			CheckboxOverlaySetToolTips.IsEnabled = false;
+			CheckboxOverlaySetToolTips.IsChecked = false;
 			SaveConfig(true);
 		}
 

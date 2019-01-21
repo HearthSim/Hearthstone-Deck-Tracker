@@ -14,6 +14,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="{DynamicResource AccentColorBrush}">
                 <Grid.ColumnDefinitions>
@@ -49,6 +50,10 @@
                        HorizontalAlignment="Center" TextWrapping="Wrap" Margin="10,10,10,0" TextAlignment="Center" />
             <Grid Grid.Row="3" Background="{DynamicResource AccentColorBrush}">
                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding RaceOrType}" Width="200" FontSize="14"
+                                            Height="20" TextAlignment="Center" />
+            </Grid>
+            <Grid Grid.Row="4" Name="CardSetToolTip" Background="{DynamicResource AccentColorBrush}">
+                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Set}" Width="200" FontSize="14"
                                             Height="20" TextAlignment="Center" />
             </Grid>
         </Grid>

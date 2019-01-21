@@ -54,6 +54,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool AdditionalOverlayTooltips = false;
 
 		[DefaultValue(false)]
+		public bool OverlaySetToolTips = false;
+
+		[DefaultValue(false)]
 		public bool AdvancedOptions = false;
 
 		[DefaultValue(true)]

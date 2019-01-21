@@ -40,6 +40,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var tooltip = new CardToolTipControl();
 				tooltip.SetValue(DataContextProperty, Database.GetCardFromId(id));
+				tooltip.CardSetToolTip.Visibility = Config.Instance.OverlaySetToolTips ? Visible : Collapsed;
 				StackPanelAdditionalTooltips.Children.Add(tooltip);
 			}
 
@@ -69,6 +70,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var relativeCardMark = _cardMarks.Select(x => new {Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y))});
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly)
 								 ? Visible : Hidden;
+			ToolTipCard.CardSetToolTip.Visibility = Config.Instance.OverlaySetToolTips ? Visible : Collapsed;
 
 			var cardMark =
 				relativeCardMark.FirstOrDefault(
