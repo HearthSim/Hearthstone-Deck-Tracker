@@ -315,15 +315,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					NonCollectible.Rogue.BottledTerror,
 					Collectible.Rogue.Buccaneer,
+					Collectible.Rogue.ColdBlood,
 					Collectible.Rogue.DefiasRingleader,
 					Collectible.Rogue.ShadowSensei,
-					Collectible.Rogue.CrazedChemist,
+					Collectible.Neutral.AbusiveSergeant,
 					Collectible.Neutral.SouthseaDeckhand,
 					Collectible.Neutral.CaptainsParrot,
 					Collectible.Neutral.SharkfinFan,
 					Collectible.Neutral.ShipsCannon,
 					Collectible.Neutral.HenchClanThug,
-					Collectible.Neutral.SaltyDog,
 				},
 				new List<string>
 				{
@@ -390,15 +390,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					NonCollectible.Warrior.AkalisHorn,
 					Collectible.Warrior.InnerRage,
+					Collectible.Warrior.NzothsFirstMate,
 					Collectible.Warrior.Warbot,
+					Collectible.Warrior.Execute,
 					Collectible.Warrior.Rampage,
 					Collectible.Warrior.CruelTaskmaster,
-					Collectible.Warrior.FieryWarAxe,
 					Collectible.Warrior.BloodhoofBrave,
-					Collectible.Neutral.MasterSwordsmith,
 					Collectible.Neutral.AmaniBerserker,
+					Collectible.Neutral.Deathspeaker,
 					Collectible.Neutral.RagingWorgen,
-					Collectible.Neutral.FrostwolfWarlord,
 				},
 			};
 
@@ -425,12 +425,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Shaman.TotemicSmash,
 					Collectible.Shaman.HotSpringGuardian,
 					Collectible.Shaman.LightningStorm,
-					Collectible.Shaman.Windspeaker,
 					Collectible.Shaman.FireElemental,
 					Collectible.Neutral.EmeraldReaver,
 					Collectible.Neutral.FireFly,
-					Collectible.Neutral.MurlocTidehunter,
+					Collectible.Neutral.BilefinTidehunter,
 					Collectible.Neutral.BelligerentGnome,
+					Collectible.Neutral.SaroniteChainGang,
 				},
 				new List<string>
 				{
@@ -514,15 +514,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					NonCollectible.Hunter.HalazzisHunt,
 					Collectible.Hunter.HuntersMark,
+					Collectible.Hunter.Alleycat,
+					Collectible.Hunter.Springpaw,
 					Collectible.Hunter.Glaivezooka,
-					Collectible.Hunter.GoblinPrank,
+					Collectible.Hunter.ScavengingHyena,
+					Collectible.Hunter.AnimalCompanion,
+					Collectible.Hunter.CaveHydra,
 					Collectible.Hunter.Houndmaster,
 					Collectible.Hunter.SavannahHighmane,
-					Collectible.Neutral.GurubashiChicken,
 					Collectible.Neutral.DireWolfAlpha,
-					Collectible.Neutral.JunglePanther,
-					Collectible.Neutral.Wolfrider,
-					Collectible.Neutral.StranglethornTiger,
 				},
 				new List<string>
 				{
@@ -637,8 +637,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				new List<string>
 				{
 					NonCollectible.Mage.JanalaisMantle,
-					Collectible.Mage.ShiftingScroll,
 					Collectible.Mage.BabblingBook,
+					Collectible.Mage.ArcaneExplosion,
 					Collectible.Mage.ShimmeringTempest,
 					Collectible.Mage.ExplosiveRunes,
 					Collectible.Mage.Spellslinger,
