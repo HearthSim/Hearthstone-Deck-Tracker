@@ -1,3 +1,18 @@
+## **Release v1.8.0 - 2018-02-05**
+**Updated for Hearthstone 13.2.0.28855**
+
+**New**:
+- Added an option to display the set of a card in the tooltip. (`options > overlay > general`)
+
+**Changes**:
+- Updated Rumble Run decks for recent changes.
+
+**Fixes**:
+- Fixed an issue where cards created by Augmented Elekk were not tracked.
+- Fixed an issue where Snipe was excluded from the possible secret in Arena.
+- Fixed several set icons.
+
+
 ## __Release v1.7.16 - 2018-12-19__
 __Updated for Hearthstone 13.0.3.28329__
 
