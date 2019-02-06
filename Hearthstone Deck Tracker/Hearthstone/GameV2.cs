@@ -87,7 +87,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<Card> DrawnLastGame { get; set; }
 		public Dictionary<int, Entity> Entities { get; } = new Dictionary<int, Entity>();
 		public GameMetaData MetaData { get; } = new GameMetaData();
-		internal List<Tuple<int, List<string>>> StoredPowerLogs { get; } = new List<Tuple<int, List<string>>>();
+		internal List<Tuple<uint, List<string>>> StoredPowerLogs { get; } = new List<Tuple<uint, List<string>>>();
 		internal Dictionary<int, string> StoredPlayerNames { get; } = new Dictionary<int, string>();
 		internal GameStats StoredGameStats { get; set; }
 		public int ProposedAttacker { get; set; }
@@ -243,7 +243,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(MetaData.ServerInfo.GameHandle == 0)
 				return;
 			Log.Info($"Storing PowerLog for gameId={MetaData.ServerInfo.GameHandle}");
-			StoredPowerLogs.Add(new Tuple<int, List<string>>(MetaData.ServerInfo.GameHandle, new List<string>(PowerLog)));
+			StoredPowerLogs.Add(new Tuple<uint, List<string>>(MetaData.ServerInfo.GameHandle, new List<string>(PowerLog)));
 			if(Player.Id != -1 && !StoredPlayerNames.ContainsKey(Player.Id))
 				StoredPlayerNames.Add(Player.Id, Player.Name);
 			if(Opponent.Id != -1 && !StoredPlayerNames.ContainsKey(Opponent.Id))
