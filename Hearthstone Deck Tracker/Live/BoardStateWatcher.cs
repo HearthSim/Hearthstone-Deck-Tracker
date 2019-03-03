@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Live.Data;
+using Hearthstone_Deck_Tracker.Utility.Twitch;
 
 namespace Hearthstone_Deck_Tracker.Live
 {
@@ -29,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			_invokedGameStart = false;
 		}
 
-		public async void Start(string streamerLanguage)
+		public async void Start()
 		{
 			if(_running)
 				return;
@@ -45,6 +46,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					if(!_invokedGameStart)
 					{
 						_invokedGameStart = true;
+						var streamerLanguage = await TwitchApi.GetStreamerLanguage(Config.Instance.SelectedTwitchUser);
 						OnGameStart?.Invoke(GetGameStart(boardState, streamerLanguage));
 					}
 					OnNewBoardState?.Invoke(boardState);

@@ -34,8 +34,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			if(!streaming)
 				return;
 			_running = true;
-			var streamerLanguage = await TwitchApi.GetStreamerLanguage(Config.Instance.SelectedTwitchUser);
-			BoardStateWatcher.Start(streamerLanguage);
+			BoardStateWatcher.Start();
 		}
 
 		public static void Stop()
