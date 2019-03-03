@@ -18,9 +18,6 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 
 		[JsonProperty("game_type")]
 		public BnetGameType GameType { get; set; }
-
-		[JsonProperty("streamer_language")]
-		public string StreamerLanguage { get; set; }
 	}
 
 	public class BoardState

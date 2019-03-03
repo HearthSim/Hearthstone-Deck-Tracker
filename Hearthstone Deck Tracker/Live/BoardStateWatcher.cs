@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			_invokedGameStart = false;
 		}
 
-		public async void Start(string streamerLanguage)
+		public async void Start()
 		{
 			if(_running)
 				return;
@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					if(!_invokedGameStart)
 					{
 						_invokedGameStart = true;
-						OnGameStart?.Invoke(GetGameStart(boardState, streamerLanguage));
+						OnGameStart?.Invoke(GetGameStart(boardState));
 					}
 					OnNewBoardState?.Invoke(boardState);
 					_currentBoardState = boardState;
@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			_running = false;
 		}
 
-		private GameStart GetGameStart(BoardState boardState, string streamerLanguage)
+		private GameStart GetGameStart(BoardState boardState)
 		{
 			var format = Core.Game.CurrentFormat ?? Format.Wild;
 			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
@@ -68,8 +68,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				Deck = boardState.Player.Deck,
 				GameType = gameType,
 				Rank = rank ?? 0,
-				LegendRank = legendRank ?? 0,
-				StreamerLanguage = streamerLanguage ?? ""
+				LegendRank = legendRank ?? 0
 			};
 		}
 
