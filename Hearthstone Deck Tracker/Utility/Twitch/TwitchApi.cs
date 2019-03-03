@@ -11,6 +11,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Twitch
 	public class TwitchApi
 	{
 		private const string ClientId = "yhwtsycu5d6zwi2kkfkwe95fjc69x5";
+		private const string StreamDataKey = "StreamData";
 
 		private static readonly Dictionary<string, CacheObj> Cache = new Dictionary<string, CacheObj>();
 
@@ -43,13 +44,33 @@ namespace Hearthstone_Deck_Tracker.Utility.Twitch
 			{
 				var data = await GetData(Urls.Stream(userId));
 				var dynData = JsonConvert.DeserializeObject<dynamic>(data.Data);
-				return dynData?.stream != null;
+				bool isStreaming = dynData?.stream != null;
+				if(isStreaming)
+				{
+					Cache[StreamDataKey] = new CacheObj(data);
+				}
+				return isStreaming;
 			}
 			catch(Exception e)
 			{
 				Log.Error(e);
 				return false;
 			}
+		}
+
+		public static async Task<string> GetStreamerLanguage(int userId)
+		{
+			string streamData;
+			if(Cache.TryGetValue(StreamDataKey, out var cache) && cache.Valid)
+				streamData = cache.Data.Data;
+			else
+			{
+				var data = await GetData(Urls.Stream(userId));
+				streamData = data.Data;
+			}
+			var dynData = JsonConvert.DeserializeObject<dynamic>(streamData);
+			var language = dynData?.stream?.channel?.language;
+			return language ?? "";
 		}
 
 		private static async Task<ResponseData> GetData(string url)

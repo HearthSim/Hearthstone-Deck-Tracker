@@ -56,10 +56,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var url = await TwitchApi.GetVodUrl(user.Id);
 			if(url == null)
 				return null;
+			var streamerLanguage = await TwitchApi.GetStreamerLanguage(user.Id);
 			return new UploadMetaData.TwitchVodData
 			{
 				ChannelName = user.Username,
-				Url = url
+				Url = url,
+				Language = streamerLanguage
 			};
 		}
 
