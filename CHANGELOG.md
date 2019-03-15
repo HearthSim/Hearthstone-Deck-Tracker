@@ -1,7 +1,12 @@
-## **Release v1.8.1 - 2018-03-04**
+## **Release v1.8.2 - 2019-03-15**
+**Updated for Hearthstone 13.4.0.29349**
+
+
+## **Release v1.8.1 - 2019-03-04**
 - Added additional features for Twitch VODs on HSReplay.net.
 
-## **Release v1.8.0 - 2018-02-05**
+
+## **Release v1.8.0 - 2019-02-05**
 **Updated for Hearthstone 13.2.0.28855**
 
 **New**:
