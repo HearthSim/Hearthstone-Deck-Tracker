@@ -309,7 +309,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.SparkDrill_SparkToken, 2);
 								break;
 							//TODO: Augmented Elekk
-							case Collectible.Neutral.HakkarTheSoulflayer:
+							case NonCollectible.Neutral.HakkartheSoulflayer_CorruptedBloodToken:
 								AddKnownCardId(gameState, NonCollectible.Neutral.HakkartheSoulflayer_CorruptedBloodToken, 2);
 								break;
 							//TODO: Gral, the Shark?
