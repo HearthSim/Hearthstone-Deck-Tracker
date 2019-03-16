@@ -1,3 +1,9 @@
+## **Release v1.8.3 - 2019-03-16**
+**Fixes**:
+- Fixed an issue where Hakkar's Corrupted Blood would not be tracked correctly.
+- Fixed an issue with detecting the Twitch stream language for HSReplay.net intregration.
+
+
 ## **Release v1.8.2 - 2019-03-15**
 **Updated for Hearthstone 13.4.0.29349**
 
