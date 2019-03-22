@@ -97,19 +97,19 @@
                 </StackPanel>
             </Border>
             <!-- Sets/Dust Panel -->
-            <DockPanel Height="34"  Width="217" Margin="0,2,0,0" x:Name="SetDustPanel" DockPanel.Dock="Bottom">
+            <DockPanel MinHeight="34" Width="217" x:Name="SetDustPanel" DockPanel.Dock="Bottom">
                 <DockPanel.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Resources/tactile_noise.png" 
                                 Stretch="None" ViewboxUnits="Absolute" AlignmentX="Left" AlignmentY="Top"
                                 Viewport="0,0,48,48" TileMode="Tile" ViewportUnits="Absolute"/>
                 </DockPanel.Background>
-                <!-- Set Icons -->
-                <deckSetIcons:DeckSetIconsView x:Name="SetIcons" Fill="White" Margin="4,0" />
                 <!-- Dust Info -->
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right" Margin="4,0">
+                <StackPanel Orientation="Horizontal" Margin="4,6,4,4" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <Image Source="pack://application:,,,/Resources/dust.png" Height="20" Width="20"/>
                     <TextBlock x:Name="LblDustCost" Margin="2,0" FontSize="14" Foreground="White" VerticalAlignment="Center">12800</TextBlock>
                 </StackPanel>
+                <!-- Set Icons -->
+                <deckSetIcons:DeckSetIconsView x:Name="SetIcons" Fill="White" Margin="2,4" VerticalAlignment="Center" Padding="2" />
             </DockPanel>
             <!-- Card List -->
             <Viewbox Name="ViewBoxPlayer" StretchDirection="DownOnly" Stretch="Fill">
