@@ -79,13 +79,13 @@
         </GroupBox>
         <GroupBox Header="{lex:LocTextUpper MainWindow_DeckBuilder_Header_Deck}" Margin="10,5,5,5">
             <DockPanel Width="235">
-                <Border Height="26" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" DockPanel.Dock="Top">
+                <Border MinHeight="26" BorderThickness="1" BorderBrush="{DynamicResource TextBrush}" DockPanel.Dock="Top">
                     <DockPanel>
-                        <deckSetIcons:DeckSetIconsView x:Name="DeckSetIcons" DockPanel.Dock="Right" Margin="0,0,2,0" Fill="{DynamicResource TextBrush}"/>
-                        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" >
+                        <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Top" Margin="0,3">
                             <TextBlock Text="{lex:LocTextUpper MainWindow_DeckBuilder_Label_Cards}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
                             <TextBlock VerticalAlignment="Center" Text="{Binding CardCount}" FontWeight="SemiBold" FontSize="14" Margin="5,0,0,0"/>
                         </StackPanel>
+                        <deckSetIcons:DeckSetIconsView x:Name="DeckSetIcons" Margin="2,4,2,2" Fill="{DynamicResource TextBrush}" HorizontalContentAlignment="Right" />
                     </DockPanel>
                 </Border>
                 <hearthstoneDeckTracker:ManaCurve x:Name="ManaCurve" DockPanel.Dock="Bottom" Height="150" />
