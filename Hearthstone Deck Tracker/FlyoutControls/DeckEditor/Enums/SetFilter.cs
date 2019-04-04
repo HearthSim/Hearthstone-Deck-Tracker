@@ -40,5 +40,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		BOOMSDAY = 1127,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Troll")]
 		TROLL = 1129,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Dalaran")]
+		DALARAN = 1130,
 	}
 }

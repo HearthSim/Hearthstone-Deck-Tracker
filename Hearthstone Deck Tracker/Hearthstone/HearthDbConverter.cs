@@ -40,7 +40,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1004, "Kobolds and Catacombs"},
 			{1125, "The Witchwood"},
 			{1127, "The Boomsday Project"},
-			{1129, "Rastakhan's Rumble"}
+			{1129, "Rastakhan's Rumble"},
+			{1130, "Rise of Shadows"}
 		};
 
 		public static string ConvertClass(CardClass cardClass) => (int)cardClass < 2 || (int)cardClass > 10
