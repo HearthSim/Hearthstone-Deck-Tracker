@@ -136,24 +136,24 @@ namespace Hearthstone_Deck_Tracker.Controls
 			switch(klass.ToLowerInvariant())
 			{
 				case "druid":
-					return Druid.MalfurionStormrage;
+					return Druid.MalfurionStormrageHero;
 				case "hunter":
-					return Hunter.Rexxar;
+					return Hunter.RexxarHero;
 				case "mage":
-					return Mage.JainaProudmoore;
+					return Mage.JainaProudmooreHero;
 				case "paladin":
-					return Paladin.UtherLightbringer;
+					return Paladin.UtherLightbringerHero;
 				case "priest":
-					return Priest.AnduinWrynn;
+					return Priest.AnduinWrynnHero;
 				case "rogue":
-					return Rogue.ValeeraSanguinar;
+					return Rogue.ValeeraSanguinarHero;
 				case "shaman":
-					return Shaman.Thrall;
+					return Shaman.ThrallHero;
 				case "warlock":
-					return Warlock.Guldan;
+					return Warlock.GuldanHero;
 				case "warrior":
 				default:
-					return Warrior.GarroshHellscream;
+					return Warrior.GarroshHellscreamHero;
 			}
 		}
 	}

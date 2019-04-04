@@ -43,15 +43,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static readonly Dictionary<string, string> HeroIdDict = new Dictionary<string, string>
 		{
-			{Collectible.Warrior.GarroshHellscream, "Warrior"},
-			{Collectible.Shaman.Thrall, "Shaman"},
-			{Collectible.Rogue.ValeeraSanguinar, "Rogue"},
-			{Collectible.Paladin.UtherLightbringer, "Paladin"},
-			{Collectible.Hunter.Rexxar, "Hunter"},
-			{Collectible.Druid.MalfurionStormrage, "Druid"},
-			{Collectible.Warlock.Guldan, "Warlock"},
-			{Collectible.Mage.JainaProudmoore, "Mage"},
-			{Collectible.Priest.AnduinWrynn, "Priest"},
+			{Collectible.Warrior.GarroshHellscreamHero, "Warrior"},
+			{Collectible.Shaman.ThrallHero, "Shaman"},
+			{Collectible.Rogue.ValeeraSanguinarHero, "Rogue"},
+			{Collectible.Paladin.UtherLightbringerHero, "Paladin"},
+			{Collectible.Hunter.RexxarHero, "Hunter"},
+			{Collectible.Druid.MalfurionStormrageHero, "Druid"},
+			{Collectible.Warlock.GuldanHero, "Warlock"},
+			{Collectible.Mage.JainaProudmooreHero, "Mage"},
+			{Collectible.Priest.AnduinWrynnHero, "Priest"},
 			{Collectible.Warlock.LordJaraxxus, "Jaraxxus"},
 			{Collectible.Neutral.MajordomoExecutus, "Ragnaros the Firelord"},
 			{"GILA_600", "Warrior"},
@@ -62,28 +62,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static readonly Dictionary<string, string> HeroNameDict = new Dictionary<string, string>
 		{
-			{"Warrior", Collectible.Warrior.GarroshHellscream},
-			{"Shaman", Collectible.Shaman.Thrall},
-			{"Rogue", Collectible.Rogue.ValeeraSanguinar},
-			{"Paladin", Collectible.Paladin.UtherLightbringer},
-			{"Hunter", Collectible.Hunter.Rexxar},
-			{"Druid", Collectible.Druid.MalfurionStormrage},
-			{"Warlock", Collectible.Warlock.Guldan},
-			{"Mage", Collectible.Mage.JainaProudmoore},
-			{"Priest", Collectible.Priest.AnduinWrynn}
+			{"Warrior", Collectible.Warrior.GarroshHellscreamHero},
+			{"Shaman", Collectible.Shaman.ThrallHero},
+			{"Rogue", Collectible.Rogue.ValeeraSanguinarHero},
+			{"Paladin", Collectible.Paladin.UtherLightbringerHero},
+			{"Hunter", Collectible.Hunter.RexxarHero},
+			{"Druid", Collectible.Druid.MalfurionStormrageHero},
+			{"Warlock", Collectible.Warlock.GuldanHero},
+			{"Mage", Collectible.Mage.JainaProudmooreHero},
+			{"Priest", Collectible.Priest.AnduinWrynnHero}
 		};
 
 		public static readonly Dictionary<CardClass, string> CardClassHero = new Dictionary<CardClass, string>
 		{
-			{CardClass.WARRIOR, Collectible.Warrior.GarroshHellscream},
-			{CardClass.SHAMAN, Collectible.Shaman.Thrall},
-			{CardClass.ROGUE, Collectible.Rogue.ValeeraSanguinar},
-			{CardClass.PALADIN, Collectible.Paladin.UtherLightbringer},
-			{CardClass.HUNTER, Collectible.Hunter.Rexxar},
-			{CardClass.DRUID, Collectible.Druid.MalfurionStormrage},
-			{CardClass.WARLOCK, Collectible.Warlock.Guldan},
-			{CardClass.MAGE, Collectible.Mage.JainaProudmoore},
-			{CardClass.PRIEST, Collectible.Priest.AnduinWrynn}
+			{CardClass.WARRIOR, Collectible.Warrior.GarroshHellscreamHero},
+			{CardClass.SHAMAN, Collectible.Shaman.ThrallHero},
+			{CardClass.ROGUE, Collectible.Rogue.ValeeraSanguinarHero},
+			{CardClass.PALADIN, Collectible.Paladin.UtherLightbringerHero},
+			{CardClass.HUNTER, Collectible.Hunter.RexxarHero},
+			{CardClass.DRUID, Collectible.Druid.MalfurionStormrageHero},
+			{CardClass.WARLOCK, Collectible.Warlock.GuldanHero},
+			{CardClass.MAGE, Collectible.Mage.JainaProudmooreHero},
+			{CardClass.PRIEST, Collectible.Priest.AnduinWrynnHero}
 		};
 
 		// cards that should have an entourage list but don't in the game data
