@@ -1,3 +1,7 @@
+## **Release v1.8.4 - 2019-04-04**
+__Updated for Rise of Shadows__
+
+
 ## **Release v1.8.3 - 2019-03-16**
 **Fixes**:
 - Fixed an issue where Hakkar's Corrupted Blood would not be tracked correctly.
