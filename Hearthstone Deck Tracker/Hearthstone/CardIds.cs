@@ -158,7 +158,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Paladin
 			{
-				public static List<string> All => new List<string> {AutodefenseMatrix, Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, HiddenWisdom, HandOfSalvation, NobleSacrifice, Redemption, Repentance, SacredTrial};
+				public static List<string> All => new List<string> {AutodefenseMatrix, Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, HiddenWisdom, HandOfSalvation, NeverSurrender, NobleSacrifice, Redemption, Repentance, SacredTrial};
 				public static string AutodefenseMatrix => Collectible.Paladin.AutodefenseMatrix;
 				public static string Avenge => Collectible.Paladin.Avenge;
 				public static string CompetitiveSpirit => Collectible.Paladin.CompetitiveSpirit;
@@ -166,6 +166,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string GetawayKodo => Collectible.Paladin.GetawayKodo;
 				public static string HandOfSalvation => NonCollectible.Paladin.HandOfSalvation;
 				public static string HiddenWisdom => Collectible.Paladin.HiddenWisdom;
+				public static string NeverSurrender => Collectible.Paladin.NeverSurrender;
 				public static string NobleSacrifice => Collectible.Paladin.NobleSacrifice;
 				public static string Redemption => Collectible.Paladin.Redemption;
 				public static string Repentance => Collectible.Paladin.Repentance;

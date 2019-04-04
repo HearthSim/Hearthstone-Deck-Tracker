@@ -287,6 +287,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(entity.IsSpell)
 			{
 				exclude.Add(Mage.Counterspell);
+				exclude.Add(Paladin.NeverSurrender);
 
 				if(Game.OpponentHandCount < 10)
 					exclude.Add(Mage.ManaBind);
