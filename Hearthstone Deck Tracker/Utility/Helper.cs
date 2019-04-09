@@ -77,7 +77,8 @@ namespace Hearthstone_Deck_Tracker
 		{
 			CardSet.BRM, CardSet.LOE, CardSet.TGT, CardSet.HOF,
 			CardSet.FP1, CardSet.PE1, CardSet.PROMO,
-			CardSet.KARA, CardSet.OG, CardSet.GANGS
+			CardSet.KARA, CardSet.OG, CardSet.GANGS,
+			CardSet.UNGORO, CardSet.ICECROWN, CardSet.LOOTAPALOOZA
 		}.Select(HearthDbConverter.SetConverter).ToArray();
 
 		private static bool? _hearthstoneDirExists;
