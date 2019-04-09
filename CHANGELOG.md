@@ -1,3 +1,7 @@
+## **Release v1.8.5 - 2019-04-09**
+__Updated for Year of the Dragon__
+
+
 ## **Release v1.8.4 - 2019-04-04**
 __Updated for Rise of Shadows__
 
