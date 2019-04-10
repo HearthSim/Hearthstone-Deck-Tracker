@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HearthDb.Enums;
 using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Utility
@@ -28,6 +29,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			[JsonProperty("collection_banner")]
 			public CollectionBannerData CollectionBanner { get; set; }
 
+			[JsonProperty("arena")]
+			public ArenaData Arena { get; set; }
+
 			internal class NewsData
 			{
 				[JsonProperty("id")]
@@ -50,6 +54,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				[JsonProperty("removal_id")]
 				public int RemovalId { get; set; }
+			}
+
+			internal class ArenaData
+			{
+				[JsonProperty("current_sets")]
+				public List<CardSet> CurrentSets { get; set; }
+
+				[JsonProperty("exclusive_secrets")]
+				public List<string> ExclusiveSecrets { get; set; }
+
+				[JsonProperty("banned_secrets")]
+				public List<string> BannedSecrets { get; set; }
 			}
 		}
 	}

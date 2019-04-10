@@ -102,16 +102,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static class Secrets
 		{
-			public static List<string> ArenaExcludes = new List<string>
-			{
-
-			};
-
-			public static List<string> ArenaOnly = new List<string>
-			{
-				Paladin.HandOfSalvation
-			};
-
 			public static List<string> FastCombat = new List<string>
 			{
 				Hunter.FreezingTrap,

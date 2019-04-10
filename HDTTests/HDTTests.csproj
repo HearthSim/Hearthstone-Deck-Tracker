@@ -105,6 +105,7 @@
     <Compile Include="DeckImporting\DeckComparer.cs" />
     <Compile Include="DeckImporting\DeckImportingTests.cs" />
     <Compile Include="DeckImporting\TestData.cs" />
+    <Compile Include="Hearthstone\Secrets\MockArenaSettings.cs" />
     <Compile Include="Hearthstone\Secrets\MockGame.cs" />
     <Compile Include="Hearthstone\Secrets\SecretsManagerTest.cs" />
     <Compile Include="Hearthstone\Secrets\SecretTest.cs" />

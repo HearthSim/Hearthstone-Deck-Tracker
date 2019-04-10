@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Player = new Player(this, true);
 			Opponent = new Player(this, false);
 			IsInMenu = true;
-			SecretsManager = new SecretsManager(this);
+			SecretsManager = new SecretsManager(this, new RemoteArenaSettings());
 			Reset();
 			LiveDataManager.OnStreamingChecked += async streaming =>
 			{
