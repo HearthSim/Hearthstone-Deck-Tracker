@@ -1,3 +1,9 @@
+## **Release v1.8.6 - 2019-04-11**
+**Fixes**:
+- Fixed an issue where an incorrect list of secrets would be displayed in Arena.
+- Fixed an issue where tooltips were not working correctly for some cards.
+
+
 ## **Release v1.8.5 - 2019-04-09**
 __Updated for Year of the Dragon__
 
