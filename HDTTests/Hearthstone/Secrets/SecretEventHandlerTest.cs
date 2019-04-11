@@ -270,13 +270,25 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender, MageSecrets.ManaBind);
-			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender);
+			VerifySecrets(2, PaladinSecrets.All);
 			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]
 		public void SingleSecret_NoMinionTarget_SpellPlayed()
 		{
+			_game.SecretsManager.HandleCardPlayed(_playerSpell2);
+			_game.GameTime.Time += TimeSpan.FromSeconds(1);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void SingleSecret_MinionOnBoard_NoMinionTarget_SpellPlayed()
+		{
+			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleCardPlayed(_playerSpell2);
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
