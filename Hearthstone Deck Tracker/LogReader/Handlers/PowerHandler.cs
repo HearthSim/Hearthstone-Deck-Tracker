@@ -138,19 +138,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								Log.Info($"Found known cardId for entity {id}: {cardId}");
 								gameState.KnownCardIds[blockId.Value].Remove(cardId);
 							}
-							if(gameState.CurrentBlock.Parent != null)
-								gameState.CurrentBlock.Parent.LastAddedCardId = cardId;
-						}
-						else if(blockId.HasValue && !gameState.KnownCardIds.ContainsKey(blockId.Value))
-						{
-							if(gameState.CurrentBlock.CardId == Collectible.Neutral.AugmentedElekk)
-							{
-								if(gameState.CurrentBlock.Parent != null)
-									cardId = gameState.CurrentBlock.Parent.LastAddedCardId;
-
-								if(!string.IsNullOrEmpty(cardId))
-									Log.Info($"Found known cardId for entity {id}: {cardId}");
-							}
 						}
 					}
 					game.Entities.Add(id, new Entity(id) {CardId = cardId});
@@ -233,7 +220,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var match = BlockStartRegex.Match(logLine);
 				var blockType = match.Success ? match.Groups["type"].Value : null;
 				var cardId = match.Success ? match.Groups["Id"].Value : null;
-				gameState.BlockStart(blockType, cardId);
+				var target = GetTargetCardId(match);
+				gameState.BlockStart(blockType, cardId, target);
 
 				if(match.Success && (blockType == "TRIGGER" || blockType == "POWER"))
 				{
@@ -249,7 +237,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 					if(string.IsNullOrEmpty(actionStartingCardId))
 					{
-						if(game.Entities.TryGetValue(actionStartingEntityId, out Entity actionEntity))
+						if(game.Entities.TryGetValue(actionStartingEntityId, out var actionEntity))
 							actionStartingCardId = actionEntity.CardId;
 					}
 					if(string.IsNullOrEmpty(actionStartingCardId))
@@ -263,6 +251,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(actionStartingCardId == NonCollectible.Rogue.ValeeratheHollow_ShadowReflectionToken)
 					{
 						actionStartingCardId = cardId;
+					}
+					if(blockType == "TRIGGER" && actionStartingCardId == Collectible.Neutral.AugmentedElekk)
+					{
+						if(gameState.CurrentBlock.Parent != null)
+						{
+							actionStartingCardId = gameState.CurrentBlock.Parent.CardId;
+							blockType = gameState.CurrentBlock.Parent.Type;
+							target = gameState.CurrentBlock.Parent.Target;
+						}
 					}
 					if(blockType == "TRIGGER")
 					{
@@ -284,11 +281,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Warrior.DirehornHatchling_DirehornMatriarchToken);
 								break;
 							case Collectible.Mage.FrozenClone:
-								AddKnownCardId(gameState, GetTargetCardId(match), 2);
+								AddKnownCardId(gameState, target, 2);
 								break;
 							case Collectible.Shaman.Moorabi:
 							case Collectible.Rogue.SonyaShadowdancer:
-								AddKnownCardId(gameState, GetTargetCardId(match));
+								AddKnownCardId(gameState, target);
 								break;
 							case Collectible.Neutral.HoardingDragon:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin, 2);
@@ -308,13 +305,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.SparkDrill:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SparkDrill_SparkToken, 2);
 								break;
-							//TODO: Augmented Elekk
 							case NonCollectible.Neutral.HakkartheSoulflayer_CorruptedBloodToken:
 								AddKnownCardId(gameState, NonCollectible.Neutral.HakkartheSoulflayer_CorruptedBloodToken, 2);
 								break;
 							//TODO: Gral, the Shark?
 							case Collectible.Paladin.ImmortalPrelate:
 								AddKnownCardId(gameState, Collectible.Paladin.ImmortalPrelate);
+								break;
+							case Collectible.Warrior.Wrenchcalibur:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SeaforiumBomber_BombToken);
 								break;
 						}
 					}
@@ -325,7 +324,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Rogue.GangUp:
 							case Collectible.Hunter.DireFrenzy:
 							case Collectible.Rogue.LabRecruiter:
-								AddKnownCardId(gameState, GetTargetCardId(match), 3);
+								AddKnownCardId(gameState, target, 3);
 								break;
 							case Collectible.Rogue.BeneathTheGrounds:
 								AddKnownCardId(gameState, NonCollectible.Rogue.BeneaththeGrounds_NerubianAmbushToken, 3);
@@ -341,7 +340,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.BalefulBanker:
 							case Collectible.Neutral.DollmasterDorian:
 							case Collectible.Priest.Seance:
-								AddKnownCardId(gameState, GetTargetCardId(match));
+								AddKnownCardId(gameState, target);
 								break;
 							case Collectible.Mage.ForgottenTorch:
 								AddKnownCardId(gameState, NonCollectible.Mage.ForgottenTorch_RoaringTorchToken);
@@ -422,6 +421,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Priest.ExtraArms_MoreArmsToken);
 								break;
 							case Collectible.Neutral.SeaforiumBomber:
+							case Collectible.Warrior.ClockworkGoblin:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SeaforiumBomber_BombToken);
 								break;
 							//case Collectible.Rogue.Wanted: -- TODO
@@ -437,6 +437,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Neutral.BootyBayBookie:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin);
+								break;
+							case Collectible.Neutral.PortalKeeper:
+							case Collectible.Neutral.PortalOverfiend:
+								AddKnownCardId(gameState, NonCollectible.Neutral.PortalKeeper_FelhoundPortalToken);
+								break;
+							case Collectible.Rogue.TogwagglesScheme:
+								AddKnownCardId(gameState, target);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
