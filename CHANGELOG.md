@@ -1,3 +1,9 @@
+## **Release v1.8.7 - 2019-04-13**
+**Fixes**:
+- Fixed various interactions with Augmented Elekk.
+- Fixed an issue where Never surrender would be greyed out with no minions on the board.
+
+
 ## **Release v1.8.6 - 2019-04-11**
 **Fixes**:
 - Fixed an issue where an incorrect list of secrets would be displayed in Arena.
