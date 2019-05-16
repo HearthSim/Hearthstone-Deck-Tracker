@@ -1,3 +1,8 @@
+## **Release v1.8.8 - 2019-05-16**
+**Updated for Hearthstone 14.2.0.30795**
+- Full support for the Dalaran Heist adventure will follow with a later update!
+
+
 ## **Release v1.8.7 - 2019-04-13**
 **Fixes**:
 - Fixed various interactions with Augmented Elekk.
