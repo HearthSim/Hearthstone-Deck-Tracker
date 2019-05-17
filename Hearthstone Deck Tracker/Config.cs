@@ -152,6 +152,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Rumble Run {Date dd-MM HH:mm}")]
 		public string RumbleRunDeckNameTemplate = "Rumble Run {Date dd-MM HH:mm}";
 
+		[DefaultValue("Dalaran Heist {Date dd-MM HH:mm}")]
+		public string DalaranHeistDeckNameTemplate = "Dalaran Heist {Date dd-MM HH:mm}";
+
 		[DefaultValue(HsActionType.Flash)]
 		public HsActionType TurnStartAction = HsActionType.Flash;
 

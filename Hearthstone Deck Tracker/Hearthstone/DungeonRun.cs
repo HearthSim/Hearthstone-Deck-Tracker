@@ -15,9 +15,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var cards = GetCards(playerClass, set, shrineCardId);
 			if(cards == null)
 				return null;
+			return GetDeck(playerClass, set, cards.Select(Database.GetCardFromId));
+		}
+
+		public static Deck GetDeckFromDbfIds(string playerClass, CardSet set, IEnumerable<int> dbfIds)
+		{
+			return GetDeck(playerClass, set, dbfIds.Select(dbfId => Database.GetCardFromDbfId(dbfId)));
+		}
+
+		public static Deck GetDeck(string playerClass, CardSet set, IEnumerable<Card> cards)
+		{
 			var deck = new Deck
 			{
-				Cards = new ObservableCollection<Card>(cards.Select(Database.GetCardFromId)),
+				Cards = new ObservableCollection<Card>(cards),
 				Class = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(playerClass.ToLowerInvariant()),
 				IsDungeonDeck = true,
 				LastEdited = DateTime.Now
@@ -39,6 +49,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return Config.Instance.MonsterHuntDeckNameTemplate;
 				case CardSet.TROLL:
 					return Config.Instance.RumbleRunDeckNameTemplate;
+				case CardSet.DALARAN:
+					return Config.Instance.DalaranHeistDeckNameTemplate;
 				default:
 					return null;
 			}

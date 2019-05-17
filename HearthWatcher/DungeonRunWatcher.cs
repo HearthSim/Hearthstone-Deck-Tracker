@@ -48,15 +48,15 @@ namespace HearthWatcher
 		private async void Watch()
 		{
 			Running = true;
-			_prevCards = new List<int>[] { null, null, null };
-			_prevLootChoice = new[] { 0, 0, 0 };
-			_prevTreasureChoice = new[] { 0, 0, 0 };
+			_prevCards = new List<int>[] { null, null, null, null, null };
+			_prevLootChoice = new[] { 0, 0, 0, 0, 0 };
+			_prevTreasureChoice = new[] { 0, 0, 0, 0, 0 };
 			while(_watch)
 			{
 				await Task.Delay(_delay);
 				if(!_watch)
 					break;
-				if(Update())
+				if(await Update())
 					break;
 			}
 			Running = false;
@@ -73,52 +73,64 @@ namespace HearthWatcher
 			CardIds.NonCollectible.Druid.RottoothHeroic,
 		};
 
-		public bool Update()
+		public async Task<bool> Update()
 		{
 			if(_dataProvider.InAdventureScreen)
 			{
-				var dungeonInfo = Reflection.GetDungeonInfo();
-				if(dungeonInfo != null)
-				{
-					for(var i = 0; i < dungeonInfo.Length; i++)
-					{
-						if(dungeonInfo[i]?.RunActive ?? false)
-						{
-							if(_prevCards[i] == null || !dungeonInfo[i].DbfIds.SequenceEqual(_prevCards[i])
-								|| _prevLootChoice[i] != dungeonInfo[i].PlayerChosenLoot
-								|| _prevTreasureChoice[i] != dungeonInfo[i].PlayerChosenTreasure)
-							{
-								_prevCards[i] = dungeonInfo[i].DbfIds.ToList();
-								_prevLootChoice[i] = dungeonInfo[i].PlayerChosenLoot;
-								_prevTreasureChoice[i] = dungeonInfo[i].PlayerChosenTreasure;
-								DungeonInfoChanged?.Invoke(dungeonInfo[i]);
-							}
-						}
-						else
-							_prevCards[i] = null;
-					}
-
-					if(_prevLootChoice.All(x => x > 0) && _prevTreasureChoice.All(x => x > 0))
-						return true;
-				}
-				else
-				{
-					_prevCards = new List<int>[] { null, null, null };
-				}
-
+				var shouldBreak = UpdateDungeonInfo();
+				if(shouldBreak)
+					return true;
 			}
 			else if(_dataProvider.InAiMatch && !string.IsNullOrEmpty(_dataProvider.OpponentHeroId))
 			{
 				if(Cards.All.TryGetValue(_dataProvider.OpponentHeroId, out var card))
 				{
-					if(new [] {CardSet.LOOTAPALOOZA, CardSet.GILNEAS}.Contains(card.Set) && card.Id.Contains("BOSS") || card.Set == CardSet.TROLL && card.Id.EndsWith("h"))
+					if(new [] {CardSet.LOOTAPALOOZA, CardSet.GILNEAS, CardSet.DALARAN}.Contains(card.Set) && card.Id.Contains("BOSS") || card.Set == CardSet.TROLL && card.Id.EndsWith("h"))
 					{
+						if(card.Set == CardSet.DALARAN)
+						{
+							UpdateDungeonInfo();
+							await Task.Delay(500);
+						}
 						var newRun = _initialOpponents.Contains(_dataProvider.OpponentHeroId)
 									|| _dataProvider.OpponentHeroHealth == 10;
 						DungeonRunMatchStarted?.Invoke(newRun);
 						return true;
 					}
 				}
+			}
+			return false;
+		}
+
+		public bool UpdateDungeonInfo()
+		{
+			var dungeonInfo = Reflection.GetDungeonInfo();
+			if(dungeonInfo != null)
+			{
+				for(var i = 0; i < dungeonInfo.Length; i++)
+				{
+					if(dungeonInfo[i] != null && (dungeonInfo[i].RunActive || dungeonInfo[i].SelectedDeckId != 0))
+					{
+						if(_prevCards[i] == null || !(dungeonInfo[i].DbfIds?.SequenceEqual(_prevCards[i]) ?? false)
+							|| _prevLootChoice[i] != dungeonInfo[i].PlayerChosenLoot
+							|| _prevTreasureChoice[i] != dungeonInfo[i].PlayerChosenTreasure)
+						{
+							_prevCards[i] = dungeonInfo[i].DbfIds?.ToList();
+							_prevLootChoice[i] = dungeonInfo[i].PlayerChosenLoot;
+							_prevTreasureChoice[i] = dungeonInfo[i].PlayerChosenTreasure;
+							DungeonInfoChanged?.Invoke(dungeonInfo[i]);
+						}
+					}
+					else
+						_prevCards[i] = null;
+				}
+
+				if(_prevLootChoice.All(x => x > 0) && _prevTreasureChoice.All(x => x > 0))
+					return true;
+			}
+			else
+			{
+				_prevCards = new List<int>[] { null, null, null, null, null };
 			}
 			return false;
 		}

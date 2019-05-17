@@ -18,8 +18,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			ArenaWatcher.OnCompleteDeck += (sender, args) => DeckManager.AutoImportArena(Config.Instance.SelectedArenaImportingBehaviour ?? ArenaImportingBehaviour.AutoImportSave, args.Info);
 			PackWatcher.NewPackEventHandler += (sender, args) => PackUploader.UploadPack(args.PackId, args.Cards);
-			DungeonRunWatcher.DungeonRunMatchStarted += DeckManager.DungeonRunMatchStarted;
-			DungeonRunWatcher.DungeonInfoChanged += DeckManager.UpdateDungeonRunDeck;
+			DungeonRunWatcher.DungeonRunMatchStarted += newRun => DeckManager.DungeonRunMatchStarted(newRun);
+			DungeonRunWatcher.DungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo);
 			FriendlyChallengeWatcher.OnFriendlyChallenge += OnFriendlyChallenge;
 		}
 
