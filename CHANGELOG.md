@@ -1,3 +1,7 @@
+## **Release v1.8.11 - 2019-06-03**
+**Updated for Hearthstone 14.4.0.31268**
+
+
 ## **Release v1.8.10 - 2019-05-27**
 **Updated for Hearthstone 14.2.2.31022**
 - Added deck tracking support for the Dalaran Heist adventure
