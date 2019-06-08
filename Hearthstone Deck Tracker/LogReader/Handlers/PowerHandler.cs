@@ -125,6 +125,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var id = int.Parse(match.Groups["id"].Value);
 				var cardId = match.Groups["cardId"].Value;
 				var zone = GameTagHelper.ParseEnum<Zone>(match.Groups["zone"].Value);
+				var guessedCardId = false;
 				if(!game.Entities.ContainsKey(id))
 				{
 					if(string.IsNullOrEmpty(cardId) && zone != Zone.SETASIDE)
@@ -137,10 +138,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							{
 								Log.Info($"Found known cardId for entity {id}: {cardId}");
 								gameState.KnownCardIds[blockId.Value].Remove(cardId);
+								guessedCardId = true;
 							}
 						}
 					}
-					game.Entities.Add(id, new Entity(id) {CardId = cardId});
+					var entity = new Entity(id) { CardId = cardId };
+					if(guessedCardId)
+						entity.Info.GuessedCardState = GuessedCardState.Guessed;
+					game.Entities.Add(id, entity);
 				}
 				gameState.SetCurrentEntity(id);
 				if(gameState.DeterminedPlayers)
@@ -169,7 +174,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						game.Entities.Add(entityId, new Entity(entityId));
 					var entity = game.Entities[entityId];
 					if(type != "CHANGE_ENTITY" || string.IsNullOrEmpty(entity.CardId))
+					{
 						entity.CardId = cardId;
+						if(entity.Info.GuessedCardState != GuessedCardState.None)
+							entity.Info.GuessedCardState = GuessedCardState.Revealed;
+					}
 					if(type == "CHANGE_ENTITY")
 					{
 						if(!entity.Info.OriginalEntityWasCreated.HasValue)
@@ -201,16 +210,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			}
 			else if(logLine.Contains("HIDE_ENTITY"))
 			{
-				if(gameState.CurrentBlock?.CardId == Collectible.Neutral.KingTogwaggle
-					|| gameState.CurrentBlock?.CardId == NonCollectible.Neutral.KingTogwaggle_KingsRansomToken)
+				var match = HideEntityRegex.Match(logLine);
+				if(match.Success)
 				{
-					var match = HideEntityRegex.Match(logLine);
-					if(match.Success)
+					var id = int.Parse(match.Groups["id"].Value);
+					if(game.Entities.TryGetValue(id, out var entity))
 					{
-						var id = int.Parse(match.Groups["id"].Value);
-						if(game.Entities.TryGetValue(id, out var entity))
+						if(entity.Info.GuessedCardState == GuessedCardState.Revealed)
+							entity.Info.GuessedCardState = GuessedCardState.Guessed;
+						if(gameState.CurrentBlock?.CardId == Collectible.Neutral.KingTogwaggle
+							|| gameState.CurrentBlock?.CardId == NonCollectible.Neutral.KingTogwaggle_KingsRansomToken)
+						{
 							entity.Info.Hidden = true;
-					}
+						}
+					 }
 				}
 			}
 			if(logLine.Contains("End Spectator") && !game.IsInMenu)

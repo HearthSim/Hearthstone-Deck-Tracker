@@ -163,11 +163,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public List<Card> OpponentCardList
-			=> RevealedEntities.Where(x => !(x.Info.Hidden && (x.IsInDeck || x.IsInHand)) && (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
-										&& (x.GetTag(GameTag.CREATOR) == 1 || ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
-											&& x.Info.OriginalController == Id) || x.IsInHand || x.IsInDeck) && !(x.Info.Created && x.IsInSetAside))
+			=> RevealedEntities.Where(x => !(x.Info.GuessedCardState == GuessedCardState.None && x.Info.Hidden && (x.IsInDeck || x.IsInHand))
+										&& (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
+										&& (x.GetTag(GameTag.CREATOR) == 1
+											|| ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
+												&& x.Info.OriginalController == Id)
+											|| x.IsInHand || x.IsInDeck)
+										&& !(x.Info.Created && x.IsInSetAside && x.Info.GuessedCardState != GuessedCardState.Guessed))
 								.GroupBy(e => new { CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId, 
-													Hidden = (e.IsInHand || e.IsInDeck) && e.IsControlledBy(Id),
+													Hidden = (e.IsInHand || e.IsInDeck || (e.IsInSetAside && e.Info.GuessedCardState == GuessedCardState.Guessed)) && e.IsControlledBy(Id),
 													Created = e.Info.Created || (e.Info.Stolen && e.Info.OriginalController != Id),
 													Discarded = e.Info.Discarded && Config.Instance.HighlightDiscarded})
 								.Select(g =>

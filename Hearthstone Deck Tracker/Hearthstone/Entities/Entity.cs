@@ -194,6 +194,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool CreatedInDeck => OriginalZone == Zone.DECK;
 		public bool CreatedInHand => OriginalZone == Zone.HAND;
 		public bool? OriginalEntityWasCreated { get; internal set; }
+		public GuessedCardState GuessedCardState { get; set; } = GuessedCardState.None;
 
 		public override string ToString()
 		{
@@ -221,6 +222,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				sb.Append(", OriginalController=" + OriginalController);
 			if(!string.IsNullOrEmpty(OriginalCardId))
 				sb.Append(", OriginalCardId=" + OriginalCardId);
+			if(GuessedCardState != GuessedCardState.None)
+				sb.Append(", guessedCardState=" + GuessedCardState);
 			return sb.ToString();
 		}
 	}
