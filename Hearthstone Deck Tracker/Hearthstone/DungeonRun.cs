@@ -604,7 +604,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					NonCollectible.Warlock.BloodPact,
 					Collectible.Warlock.Voidwalker,
-					Collectible.Warlock.MistressOfPain,
+					Collectible.Warlock.QueenOfPain,
 					Collectible.Warlock.Demonfire,
 					Collectible.Warlock.Duskbat,
 					Collectible.Warlock.ImpLosion,
@@ -620,7 +620,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Warlock.Shriek,
 					Collectible.Warlock.Soulfire,
 					Collectible.Warlock.Voidwalker,
-					Collectible.Warlock.Succubus,
+					Collectible.Warlock.Felstalker,
 					Collectible.Warlock.DarkshireLibrarian,
 					Collectible.Warlock.RecklessDiretroll,
 					Collectible.Warlock.LakkariFelhound,
