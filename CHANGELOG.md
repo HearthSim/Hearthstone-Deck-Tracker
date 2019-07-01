@@ -1,3 +1,7 @@
+## **Release v1.8.13 - 2019-07-01**
+**Updated for Hearthstone 14.6.0.31761**
+
+
 ## **Release v1.8.12 - 2019-06-18**
 **Fixes**:
 - Fixed a couple of minor issues causing more information to be revealed than intended.
