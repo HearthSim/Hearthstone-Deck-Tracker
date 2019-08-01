@@ -1,3 +1,7 @@
+## **Release v1.8.14 - 2019-08-01**
+**Updated for Saviors of Uldum**
+
+
 ## **Release v1.8.13 - 2019-07-01**
 **Updated for Hearthstone 14.6.0.31761**
 
