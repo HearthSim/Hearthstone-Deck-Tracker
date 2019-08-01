@@ -42,5 +42,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_Dalaran")]
 		Dalaran = CardSet.DALARAN,
+
+		[LocDescription("Enum_ArenaRewardPacks_Uldum")]
+		Uldum = CardSet.ULDUM,
 	}
 }
