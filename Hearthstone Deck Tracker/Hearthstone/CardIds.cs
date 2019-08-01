@@ -113,7 +113,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, RatTrap, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
+				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, PressurePlate, RatTrap, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
 				public static string BearTrap => Collectible.Hunter.BearTrap;
 				public static string CatTrick => Collectible.Hunter.CatTrick;
 				public static string DartTrap => Collectible.Hunter.DartTrap;
@@ -121,6 +121,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string FreezingTrap => Collectible.Hunter.FreezingTrap;
 				public static string HiddenCache => Collectible.Hunter.HiddenCache;
 				public static string Misdirection => Collectible.Hunter.Misdirection;
+				public static string PressurePlate => Collectible.Hunter.PressurePlate;
 				public static string RatTrap => Collectible.Hunter.RatTrap;
 				public static string Snipe => Collectible.Hunter.Snipe;
 				public static string SnakeTrap => Collectible.Hunter.SnakeTrap;
@@ -130,11 +131,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Mage
 			{
-				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, PotionOfPolymorph, Spellbender, SplittingImage, Vaporize};
+				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FlameWard, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, PotionOfPolymorph, Spellbender, SplittingImage, Vaporize};
 				public static string Counterspell => Collectible.Mage.Counterspell;
 				public static string Duplicate => Collectible.Mage.Duplicate;
 				public static string Effigy => Collectible.Mage.Effigy;
 				public static string ExplosiveRunes => Collectible.Mage.ExplosiveRunes;
+				public static string FlameWard => Collectible.Mage.FlameWard;
 				public static string FrozenClone => Collectible.Mage.FrozenClone;
 				public static string IceBarrier => Collectible.Mage.IceBarrier;
 				public static string IceBlock => Collectible.Mage.IceBlock;

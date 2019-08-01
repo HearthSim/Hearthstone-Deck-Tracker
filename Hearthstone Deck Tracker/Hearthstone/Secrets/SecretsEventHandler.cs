@@ -75,6 +75,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				if(attacker.IsMinion)
 				{
 					exclude.Add(Mage.Vaporize);
+					exclude.Add(Mage.FlameWard);
 					if(attacker.Health >= 1)
 						exclude.Add(Hunter.FreezingTrap);
 				}
@@ -289,7 +290,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				exclude.Add(Mage.Counterspell);
 
 				if(Game.OpponentMinionCount > 0)
+				{
 					exclude.Add(Paladin.NeverSurrender);
+					exclude.Add(Hunter.PressurePlate);
+				}
 
 				if(Game.OpponentHandCount < 10)
 					exclude.Add(Mage.ManaBind);

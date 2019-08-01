@@ -175,7 +175,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 			VerifySecrets(3, RogueSecrets.All);
 
@@ -183,7 +183,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.SuddenBetrayal);
 		}
@@ -291,7 +291,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleCardPlayed(_playerSpell2);
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.PressurePlate);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender);
 			VerifySecrets(3, RogueSecrets.All);
@@ -370,7 +370,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 			VerifySecrets(3, RogueSecrets.All);
 		}
