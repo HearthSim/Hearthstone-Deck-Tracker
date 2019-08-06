@@ -290,10 +290,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				exclude.Add(Mage.Counterspell);
 
 				if(Game.OpponentMinionCount > 0)
-				{
 					exclude.Add(Paladin.NeverSurrender);
-					exclude.Add(Hunter.PressurePlate);
-				}
 
 				if(Game.OpponentHandCount < 10)
 					exclude.Add(Mage.ManaBind);
@@ -307,6 +304,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 						exclude.Add(Mage.Spellbender);
 					exclude.Add(Hunter.CatTrick);
 				}
+
+				if (Game.PlayerMinionCount > 0)
+					exclude.Add(Hunter.PressurePlate);
 			}
 			else if(entity.IsMinion && Game.PlayerMinionCount > 3)
 				exclude.Add(Paladin.SacredTrial);

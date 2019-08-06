@@ -291,7 +291,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleCardPlayed(_playerSpell2);
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.PressurePlate);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender);
 			VerifySecrets(3, RogueSecrets.All);
