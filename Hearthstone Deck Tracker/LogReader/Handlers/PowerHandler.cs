@@ -458,6 +458,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Rogue.TogwagglesScheme:
 								AddKnownCardId(gameState, target);
 								break;
+							case Collectible.Paladin.SandwaspQueen:
+								AddKnownCardId(gameState, NonCollectible.Paladin.SandwaspQueen_SandwaspToken, 2);
+								break;
+							case Collectible.Rogue.ShadowOfDeath:
+								AddKnownCardId(gameState, NonCollectible.Rogue.ShadowofDeath_ShadowToken, 3);
+								break;
+							case Collectible.Warlock.Impbalming:
+								AddKnownCardId(gameState, NonCollectible.Warlock.Impbalming_WorthlessImpToken, 3);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
