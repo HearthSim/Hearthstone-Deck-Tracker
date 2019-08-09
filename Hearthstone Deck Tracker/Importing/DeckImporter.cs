@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using HearthDb.Enums;
 using HearthMirror;
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -16,6 +15,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using CardIds = HearthDb.CardIds;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -154,21 +154,23 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{
 				if(deck.Cards.Count == 1 && deck.Cards.Single().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful)
 				{
-					var templateDecks = Reflection.GetTemplateDecks()?.Where(x => x.SortOrder < 2).Select(x =>
+					var data = RemoteConfig.Instance.Data;
+					if (data != null)
 					{
-						if(!Hearthstone.CardIds.CardClassHero.TryGetValue((CardClass)x.Class, out var hero))
-							return null;
-						return new HearthMirror.Objects.Deck
+						var whizbangDecks = data.WhizbangDecks.Select(x =>
 						{
-							Id = x.DeckId,
-							Name = x.Title,
-							Cards = x.Cards,
-							Hero = hero
-						};
-					}).Where(x => x != null);
-					if(templateDecks != null)
-					{
-						importedDecks.AddRange(GetImportedDecks(templateDecks, localDecks));
+							if(!Hearthstone.CardIds.CardClassHero.TryGetValue(x.Class, out var hero))
+								return null;
+							return new HearthMirror.Objects.Deck
+							{
+								Id = x.DeckId,
+								Name = x.Title,
+								Cards = x.Cards.Select(c => new HearthMirror.Objects.Card(Database.GetCardFromDbfId(c.DbfId).Id, c.Count, false)).ToList(),
+								Hero = hero,
+							};
+						}).Where(x => x != null);
+
+						importedDecks.AddRange(GetImportedDecks(whizbangDecks, localDecks));
 						continue;
 					}
 				}
