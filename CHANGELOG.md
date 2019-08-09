@@ -1,3 +1,11 @@
+## **Release v1.8.15 - 2019-08-08**
+**Added support for several Saviors of Uldum cards**
+
+**Fixes**:
+- Fixed an issue where Whizbang decks would not be imported or detected correctly.
+- Fixed an issue where Pressure Plate secret detection was not working correctly.
+
+
 ## **Release v1.8.14 - 2019-08-01**
 **Updated for Saviors of Uldum**
 
