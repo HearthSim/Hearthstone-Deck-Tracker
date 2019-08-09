@@ -2,6 +2,7 @@
 
 using System.Reflection;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -61,3 +62,5 @@ using System.Windows;
 [assembly: NeutralResourcesLanguage("en")]
 
 [assembly: AssemblyMetadata("SquirrelAwareVersion", "1")]
+
+[assembly: InternalsVisibleTo("ResourceGenerator")]

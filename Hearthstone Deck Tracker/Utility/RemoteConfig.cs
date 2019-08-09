@@ -32,6 +32,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			[JsonProperty("arena")]
 			public ArenaData Arena { get; set; }
 
+			[JsonProperty("whizbang_decks")]
+			public List<WhizbangDeck> WhizbangDecks { get; set; }
+
 			internal class NewsData
 			{
 				[JsonProperty("id")]
@@ -66,6 +69,31 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				[JsonProperty("banned_secrets")]
 				public List<string> BannedSecrets { get; set; }
+			}
+
+			internal class WhizbangDeck
+			{
+
+				[JsonProperty("title")]
+				public string Title { get; set; }
+
+				[JsonProperty("class")]
+				public CardClass Class { get; set; }
+
+				[JsonProperty("deck_id")]
+				public int DeckId { get; set; }
+
+				[JsonProperty("cards")]
+				public List<RemoteConfigCard> Cards { get; set; }
+			}
+
+			internal class RemoteConfigCard
+			{
+				[JsonProperty("dbf_id")]
+				public int DbfId { get; set; }
+
+				[JsonProperty("count")]
+				public int Count { get; set; }
 			}
 		}
 	}
