@@ -1,3 +1,7 @@
+## **Release v1.8.16 - 2019-08-26**
+**Updated for Hearthstone 15.0.4.33402**
+
+
 ## **Release v1.8.15 - 2019-08-08**
 **Added support for several Saviors of Uldum cards**
 
