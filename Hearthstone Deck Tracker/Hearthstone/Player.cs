@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int SpellsPlayedCount { get; private set; }
 		public bool IsPlayingWhizbang { get; set; }
 		public int PogoHopperPlayedCount {get; private set;}
+		public string LastDiedMinionCardId { get; set; }
 
 		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoin);
 		public int HandCount => Hand.Count();
@@ -390,6 +391,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void PlayToGraveyard(Entity entity, string cardId, int turn)
 		{
 			entity.Info.Turn = turn;
+			if(entity.IsMinion)
+				LastDiedMinionCardId = cardId;
 			Log(entity);
 		}
 
