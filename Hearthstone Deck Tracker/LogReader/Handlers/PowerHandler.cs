@@ -234,6 +234,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var blockType = match.Success ? match.Groups["type"].Value : null;
 				var cardId = match.Success ? match.Groups["Id"].Value : null;
 				var target = GetTargetCardId(match);
+				var correspondPlayer = match.Success ? int.Parse(match.Groups["player"].Value) : -1;
 				gameState.BlockStart(blockType, cardId, target);
 
 				if(match.Success && (blockType == "TRIGGER" || blockType == "POWER"))
@@ -328,6 +329,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warrior.Wrenchcalibur:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SeaforiumBomber_BombToken);
 								break;
+							case Collectible.Priest.SpiritOfTheDead:
+								if(correspondPlayer == game.Player.Id)
+									AddKnownCardId(gameState, game.Player.LastDiedMinionCardId);
+								else if(correspondPlayer == game.Opponent.Id)
+									AddKnownCardId(gameState, game.Opponent.LastDiedMinionCardId);
+								break;
+
 						}
 					}
 					else //POWER
