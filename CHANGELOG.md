@@ -1,3 +1,10 @@
+## **Release v1.8.17 - 2019-09-10**
+**Updated for Hearthstone 15.2.0.33717**
+
+**New**:
+- Added tracking support for minions shuffled by Spirit of the Dead.
+
+
 ## **Release v1.8.16 - 2019-08-26**
 **Updated for Hearthstone 15.0.4.33402**
 
