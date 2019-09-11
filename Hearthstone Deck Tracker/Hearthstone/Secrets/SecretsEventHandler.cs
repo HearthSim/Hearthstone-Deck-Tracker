@@ -304,12 +304,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 						exclude.Add(Mage.Spellbender);
 					exclude.Add(Hunter.CatTrick);
 				}
-
-				if (Game.PlayerMinionCount > 0)
-					exclude.Add(Hunter.PressurePlate);
 			}
 			else if(entity.IsMinion && Game.PlayerMinionCount > 3)
 				exclude.Add(Paladin.SacredTrial);
+
+			Exclude(exclude);
+		}
+
+		/// <summary>
+		/// Not like other secrets, 'Pressure Plate' is triggered after a spell takes effect, rather than when the spell is played.
+		/// This method is called when a spell is moved from 'PLAY' to "GRAVEYARD", to handle the checking logic for secrets like 'Pressure Plate'.
+		/// </summary>
+		public void HandleSpellCasted(Entity entity)
+		{
+			if(!HandleAction || !entity.IsSpell)
+				return;
+
+			var exclude = new List<string>();
+
+			if(Game.PlayerMinionCount > 0)
+				exclude.Add(Hunter.PressurePlate);
 
 			Exclude(exclude);
 		}

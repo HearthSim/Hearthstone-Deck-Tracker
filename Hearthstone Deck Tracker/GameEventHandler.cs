@@ -861,6 +861,9 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnPlayerPlayToGraveyard.Execute((Card)entity.Card.Clone());
 			if(playersTurn && entity.IsMinion)
 				HandlePlayerMinionDeath(entity);
+
+			if(playersTurn && entity.IsSpell)
+				_game.SecretsManager.HandleSpellCasted(entity);
 		}
 
 		public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)

@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			=> Entities.FirstOrDefault(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id))).Value != null;
 
 		public int OpponentMinionCount => Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Opponent.Id)));
-		public int PlayerMinionCount => Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Player.Id)));
+		public int PlayerMinionCount => Entities.Count(x => (x.Value.IsInPlay && x.Value.IsMinion && x.Value.IsControlledBy(Player.Id) && !x.Value.HasTag(GameTag.TO_BE_DESTROYED)));
 		public int OpponentHandCount => Entities.Count(x => x.Value.IsInHand && x.Value.IsControlledBy(Opponent.Id));
 
 		public Player Player { get; set; }
