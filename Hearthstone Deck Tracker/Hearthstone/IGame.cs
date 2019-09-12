@@ -44,6 +44,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		int OpponentMinionCount { get; }
 		int OpponentHandCount { get; }
 		bool IsMinionInPlay { get; }
+		bool IsPlayerMinionInPlay { get; }
 		int PlayerMinionCount { get; }
 		GameType CurrentGameType { get; }
 		Format? CurrentFormat { get; }

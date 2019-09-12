@@ -25,8 +25,11 @@ namespace HDTTests.Hearthstone.Secrets
 			_heroOpponent,
 			_playerSpell1,
 			_playerSpell2,
+			_playerSpell3,
+			_playerSpell4,
 			_playerMinion1,
 			_playerMinion2,
+			_playerMinion3,
 			_opponentMinion1,
 			_opponentMinion2,
 			_opponentDivineShieldMinion,
@@ -83,6 +86,9 @@ namespace HDTTests.Hearthstone.Secrets
 			_playerMinion2 = CreateNewEntity("EX1_011");
 			_playerMinion2.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
 			_playerMinion2.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
+			_playerMinion3 = CreateNewEntity("NEW1_033"); // Leokk
+			_playerMinion3.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
+			_playerMinion3.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
 			_opponentMinion1 = CreateNewEntity("EX1_020");
 			_opponentMinion1.SetTag(GameTag.CARDTYPE, (int)CardType.MINION);
 			_opponentMinion1.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
@@ -100,11 +106,19 @@ namespace HDTTests.Hearthstone.Secrets
 			_playerSpell2 = CreateNewEntity("CS2_025");
 			_playerSpell2.SetTag(GameTag.CARDTYPE, (int)CardType.SPELL);
 			_playerSpell2.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
+			_playerSpell3 = CreateNewEntity("NEW1_031"); // Animal Companion
+			_playerSpell3.SetTag(GameTag.CARDTYPE, (int)CardType.SPELL);
+			_playerSpell3.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
+			_playerSpell4 = CreateNewEntity("EX1_407"); // Brawl
+			_playerSpell4.SetTag(GameTag.CARDTYPE, (int)CardType.SPELL);
+			_playerSpell4.SetTag(GameTag.CONTROLLER, _heroPlayer.Id);
 
-			_game.Entities.Add(4, _playerMinion1);
-			_game.Entities.Add(5, _playerMinion2);
-			_game.Entities.Add(6, _opponentMinion1);
-			_game.Entities.Add(7, _opponentMinion2);
+
+			_game.Entities.Add(_playerMinion1.Id, _playerMinion1);
+			_game.Entities.Add(_playerMinion2.Id, _playerMinion2);
+			_game.Entities.Add(_playerMinion3.Id, _playerMinion3);
+			_game.Entities.Add(_opponentMinion1.Id, _opponentMinion1);
+			_game.Entities.Add(_opponentMinion2.Id, _opponentMinion2);
 
 			_opponentCardInHand1 = CreateNewEntity("");
 			_opponentCardInHand1.SetTag(GameTag.CONTROLLER, _heroOpponent.Id);
@@ -360,6 +374,39 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.OnEntityRevealedAsMinion(_opponentCardInHand1);
 
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.HiddenCache, HunterSecrets.Snipe);
+		}
+
+		[TestMethod]
+		public void SingleSecret_NoMinionInPlay_SpellSummonsMinion()
+		{
+			// simulate 'Animal Companion' is played and 'Leokk' is summoned
+			_game.SecretsManager.HandleCardPlayed(_playerSpell3);
+			_game.GameTime.Time += TimeSpan.FromSeconds(1);
+			_playerMinion3.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_game.SecretsManager.HandleSpellCasted(_playerSpell3);
+
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.PressurePlate);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void SingleSecret_MinionInPlay_SpellKillsAllFriendlyMinion()
+		{
+			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+
+			// simulate 'Brawl' is played and the player lose
+			_game.SecretsManager.HandleCardPlayed(_playerSpell4);
+			_game.GameTime.Time += TimeSpan.FromSeconds(1);
+			_playerMinion1.SetTag(GameTag.TO_BE_DESTROYED, 1);
+			_game.SecretsManager.HandleSpellCasted(_playerSpell4);
+
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		[TestMethod]

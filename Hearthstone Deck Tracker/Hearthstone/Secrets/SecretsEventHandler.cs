@@ -322,7 +322,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			var exclude = new List<string>();
 
-			if(Game.PlayerMinionCount > 0)
+			if(Game.IsPlayerMinionInPlay)
 				exclude.Add(Hunter.PressurePlate);
 
 			Exclude(exclude);
