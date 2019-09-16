@@ -66,18 +66,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 				exclude.Add(Hunter.ExplosiveTrap);
 
-				if(Game.IsMinionInPlay)
+				if(!attacker.HasTag(GameTag.SHOULDEXITCOMBAT) && Game.IsMinionInPlay)
 					exclude.Add(Hunter.Misdirection);
-
-				if(attacker.IsMinion && Game.PlayerMinionCount > 1)
-					exclude.Add(Rogue.SuddenBetrayal);
 
 				if(attacker.IsMinion)
 				{
-					exclude.Add(Mage.Vaporize);
-					exclude.Add(Mage.FlameWard);
-					if(attacker.Health >= 1)
+					// attacker is not exiting combat(e.g., because of Vaporize or Freezing Trap)
+					// nor it is mortally wounded(e.g., caused by ExplosiveTrap)
+					if(!attacker.HasTag(GameTag.SHOULDEXITCOMBAT) && attacker.Health >= 1)
+					{
+						if(Game.PlayerMinionCount > 1)
+							exclude.Add(Rogue.SuddenBetrayal);
+
+						exclude.Add(Mage.FlameWard);
 						exclude.Add(Hunter.FreezingTrap);
+						exclude.Add(Mage.Vaporize);
+					}
 				}
 			}
 			else
