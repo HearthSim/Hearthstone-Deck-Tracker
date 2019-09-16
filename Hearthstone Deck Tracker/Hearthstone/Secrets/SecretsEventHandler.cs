@@ -54,36 +54,35 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(defender.IsHero)
 			{
-				if(!fastOnly)
+				if(!fastOnly && attacker.Health >= 1)
 				{
-					if(freeSpaceOnBoard && attacker.Health >= 1)
+					if(freeSpaceOnBoard)
 						exclude.Add(Hunter.BearTrap);
-					exclude.Add(Mage.IceBarrier);
-				}
 
-				if(freeSpaceOnBoard)
-					exclude.Add(Hunter.WanderingMonster);
-
-				exclude.Add(Hunter.ExplosiveTrap);
-				
-				if(Game.Entities.Values.Any(x =>
+					if(Game.Entities.Values.Any(x =>
 													x.IsInPlay &&
 													(x.IsHero || x.IsMinion) &&
 													!x.HasTag(GameTag.IMMUNE) &&
 													x != attacker &&
 													x != defender))
-					exclude.Add(Hunter.Misdirection);
+						exclude.Add(Hunter.Misdirection);
 
-				if(attacker.IsMinion && Game.PlayerMinionCount > 1)
-					exclude.Add(Rogue.SuddenBetrayal);
+					if(attacker.IsMinion)
+					{
+						if(Game.PlayerMinionCount > 1)
+							exclude.Add(Rogue.SuddenBetrayal);
 
-				if(attacker.IsMinion)
-				{
-					exclude.Add(Mage.Vaporize);
-					exclude.Add(Mage.FlameWard);
-					if(attacker.Health >= 1)
+						exclude.Add(Mage.FlameWard);
 						exclude.Add(Hunter.FreezingTrap);
+						exclude.Add(Mage.Vaporize);
+					}
 				}
+
+				if(freeSpaceOnBoard)
+					exclude.Add(Hunter.WanderingMonster);
+
+				exclude.Add(Mage.IceBarrier);
+				exclude.Add(Hunter.ExplosiveTrap);
 			}
 			else
 			{
@@ -95,11 +94,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				{
 					exclude.Add(Mage.SplittingImage);
 					exclude.Add(Hunter.PackTactics);
-					if(!fastOnly)
-					{
-						exclude.Add(Hunter.SnakeTrap);
-						exclude.Add(Hunter.VenomstrikeTrap);
-					}
+					exclude.Add(Hunter.SnakeTrap);
+					exclude.Add(Hunter.VenomstrikeTrap);
 				}
 
 				if(attacker.IsMinion)

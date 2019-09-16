@@ -399,7 +399,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap,
 				HunterSecrets.WanderingMonster);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 			VerifySecrets(3, RogueSecrets.All);
 		}
@@ -467,6 +467,45 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(1, MageSecrets.All, MageSecrets.ExplosiveRunes, MageSecrets.MirrorEntity, MageSecrets.PotionOfPolymorph, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Repentance);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush);
+		}
+
+
+		[TestMethod]
+		public void MultipleSecrets_MinionToHero_VaporizeTriggered_PlayerAttackTest()
+		{
+			_gameEventHandler.HandleOpponentSecretPlayed(_secretMage2, "", 0, 0, Zone.HAND, _secretMage2.Id);
+			_secretMage2.CardId = MageSecrets.Vaporize;
+
+			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_playerMinion1.SetTag(GameTag.HEALTH, Database.GetCardFromId(_playerMinion1.CardId).Health);
+			_game.ProposedAttacker = _playerMinion1.Id;
+			_game.ProposedDefender = _heroOpponent.Id;
+			_gameEventHandler.HandleOpponentSecretTrigger(_secretMage2, "", 2, _secretMage2.Id);
+
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap, HunterSecrets.WanderingMonster);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.Vaporize, MageSecrets.IceBarrier);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_MinionToMinion_FreezingTrapTriggered_PlayerAttackTest()
+		{
+			_gameEventHandler.HandleOpponentSecretPlayed(_secretHunter2, "", 0, 0, Zone.HAND, _secretHunter2.Id);
+			_secretHunter2.CardId = HunterSecrets.FreezingTrap;
+
+			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_playerMinion1.SetTag(GameTag.HEALTH, Database.GetCardFromId(_playerMinion1.CardId).Health);
+			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_opponentMinion1.SetTag(GameTag.HEALTH, Database.GetCardFromId(_opponentMinion1.CardId).Health);
+			_game.ProposedAttacker = _playerMinion1.Id;
+			_game.ProposedDefender = _opponentMinion1.Id;
+			_gameEventHandler.HandleOpponentSecretTrigger(_secretHunter2, "", 2, _secretHunter2.Id);
+
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.PackTactics, HunterSecrets.SnakeTrap, HunterSecrets.VenomstrikeTrap);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.SplittingImage);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.AutodefenseMatrix, PaladinSecrets.NobleSacrifice);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Bamboozle);
 		}
 
 		private void VerifySecrets(int index, List<string> allSecrets, params string[] triggered)
