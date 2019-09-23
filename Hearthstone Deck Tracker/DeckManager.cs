@@ -425,12 +425,17 @@ namespace Hearthstone_Deck_Tracker
 			DeckManagerEvents.OnDeckUpdated.Execute(newVersion);
 		}
 
-		public static void DungeonRunMatchStarted(bool newRun, bool recursive = false)
+		public static void DungeonRunMatchStarted(bool newRun, CardSet set, bool recursive = false)
 		{
 			if(!Config.Instance.DungeonAutoImport)
 				return;
 			Log.Info($"Dungeon run detected! New={newRun}, Recursive={recursive}");
-			var playerClass = Core.Game.Player.Board.FirstOrDefault(x => x.IsHero)?.Card.PlayerClass;
+			var boardHero = Core.Game.Player.Board.FirstOrDefault(x => x.IsHero)?.Card;
+			if(boardHero == null)
+				return;
+			var playerClass = set == CardSet.ULDUM
+				? DungeonRun.GetUldumHeroPlayerClass(boardHero.PlayerClass)
+				: boardHero.PlayerClass;
 			if(playerClass == null)
 				return;
 			var revealed = RevealedEntites;
@@ -445,13 +450,12 @@ namespace Hearthstone_Deck_Tracker
 				if(newRun)
 				{
 					var hero = Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero)?.CardId;
-					var set = Database.GetCardFromId(hero)?.CardSet ?? CardSet.INVALID;
-					if (set == CardSet.DALARAN)
+					if (set == CardSet.DALARAN || set == CardSet.ULDUM)
 					{
 						Watchers.DungeonRunWatcher.UpdateDungeonInfo();
 						if(!recursive)
 						{
-							DungeonRunMatchStarted(newRun, true);
+							DungeonRunMatchStarted(newRun, set, true);
 							return;
 						}
 					}
@@ -479,7 +483,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!Config.Instance.DungeonAutoImport)
 				return;
-			Log.Info("Found dungeon run deck!");
+			Log.Info($"Found dungeon run deck Set={((CardSet)info.CardSet).ToString()}");
 			var baseDeck = info.SelectedDeck ?? new List<int>();
 			var allCards = info.DbfIds?.ToList() ?? new List<int>();
 			if (baseDeck.All(x => allCards.Contains(x)))
@@ -504,21 +508,39 @@ namespace Hearthstone_Deck_Tracker
 				card.Count = x.Count();
 				return card;
 			}).Where(x => x != null).ToList();
+
+			var loadoutCardId = info.LoadoutCardId;
+			var loadout = loadoutCardId != null ? Database.GetCardFromId(loadoutCardId) : null;
+			if (loadout != null && !allCards.Contains(loadout.DbfIf)) {
+				cards.Add(loadout);
+			}
+
 			if(!Config.Instance.DungeonRunIncludePassiveCards)
 				cards.RemoveAll(c => !c.Collectible && c.HideStats);
 
-			string playerClass = null;
-			if(allCards.Count == 10)
-				playerClass = allCards.Select(x => Database.GetCardFromDbfId(x).PlayerClass).FirstOrDefault(x => x != null)?.ToUpperInvariant();
-			if (playerClass == null)
-				playerClass = ((CardClass)info.HeroCardClass).ToString().ToUpperInvariant();
+			var cardSet = (CardSet)info.CardSet;
 
-			var deck = DeckList.Instance.Decks.FirstOrDefault(x => x.IsDungeonDeck && x.Class.ToUpperInvariant() == playerClass
+			string playerClass = null;
+			if (cardSet == CardSet.ULDUM && loadout != null)
+				playerClass = DungeonRun.GetUldumHeroPlayerClass(loadout.PlayerClass);
+			else
+			{
+				if(allCards.Count == 10)
+					playerClass = allCards.Select(x => Database.GetCardFromDbfId(x).PlayerClass).FirstOrDefault(x => x != null)?.ToUpperInvariant();
+				if (playerClass == null)
+					playerClass = ((CardClass)info.HeroCardClass).ToString().ToUpperInvariant();
+			}
+
+			var deck = DeckList.Instance.Decks.FirstOrDefault(x => x.IsDungeonDeck && x.Class.ToUpperInvariant() == playerClass.ToUpperInvariant()
 																		&& !(x.IsDungeonRunCompleted ?? false)
 																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count)));
-			if(deck == null && (deck = CreateDungeonDeck(playerClass, (CardSet)info.CardSet, info.SelectedDeck)) == null)
+			if(deck == null && (deck = CreateDungeonDeck(playerClass, cardSet, info.SelectedDeck, loadout)) == null)
 			{
 				Log.Info($"No existing deck - can't find default deck for {playerClass}");
+				return;
+			}
+			if(!info.RunActive && (cardSet == CardSet.ULDUM || cardSet == CardSet.DALARAN)) {
+				Log.Info($"Inactive run for Set={cardSet.ToString()} - this is a new run");
 				return;
 			}
 			if(cards.All(c => deck.Cards.Any(e => c.Id == e.Id && c.Count == e.Count)))
@@ -536,7 +558,7 @@ namespace Hearthstone_Deck_Tracker
 			Log.Info("Updated dungeon run deck");
 		}
 
-		private static Deck CreateDungeonDeck(string playerClass, CardSet set, List<int> selectedDeck = null)
+		private static Deck CreateDungeonDeck(string playerClass, CardSet set, List<int> selectedDeck = null, Card loadout= null)
 		{
 			var shrine = Core.Game.Player.Board.FirstOrDefault(x => x.HasTag(GameTag.SHRINE))?.CardId;
 			Log.Info($"Creating new {playerClass} dungeon run deck (CardSet={set}, Shrine={shrine}, SelectedDeck={selectedDeck != null})");
@@ -548,6 +570,8 @@ namespace Hearthstone_Deck_Tracker
 				Log.Info($"Could not find default deck for {playerClass} in card set {set} with Shrine={shrine}");
 				return null;
 			}
+			if (loadout != null && selectedDeck != null && !selectedDeck.Contains(loadout.DbfIf))
+				deck.Cards.Add(loadout);
 			DeckList.Instance.Decks.Add(deck);
 			DeckList.Save();
 			Core.MainWindow.DeckPickerList.UpdateDecks();

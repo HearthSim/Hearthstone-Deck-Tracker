@@ -155,6 +155,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Dalaran Heist {Date dd-MM HH:mm}")]
 		public string DalaranHeistDeckNameTemplate = "Dalaran Heist {Date dd-MM HH:mm}";
 
+		[DefaultValue("Tombs of Terror {Date dd-MM HH:mm}")]
+		public string TombsOfTerrorDeckNameTemplate = "Tombs of Terror {Date dd-MM HH:mm}";
+
 		[DefaultValue(HsActionType.Flash)]
 		public HsActionType TurnStartAction = HsActionType.Flash;
 

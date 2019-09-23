@@ -28,7 +28,7 @@ namespace HearthWatcher
 		private int[] _prevTreasureChoice;
 
 		public event Action<DungeonInfo> DungeonInfoChanged;
-		public event Action<bool> DungeonRunMatchStarted;
+		public event Action<bool, CardSet> DungeonRunMatchStarted;
 
 		public DungeonRunWatcher(IGameDataProvider dataProvider, int delay = 500)
 		{
@@ -48,9 +48,9 @@ namespace HearthWatcher
 		private async void Watch()
 		{
 			Running = true;
-			_prevCards = new List<int>[] { null, null, null, null, null };
-			_prevLootChoice = new[] { 0, 0, 0, 0, 0 };
-			_prevTreasureChoice = new[] { 0, 0, 0, 0, 0 };
+			_prevCards = new List<int>[] { null, null, null, null, null, null, null };
+			_prevLootChoice = new[] { 0, 0, 0, 0, 0, 0, 0 };
+			_prevTreasureChoice = new[] { 0, 0, 0, 0, 0, 0, 0 };
 			while(_watch)
 			{
 				await Task.Delay(_delay);
@@ -85,7 +85,7 @@ namespace HearthWatcher
 			{
 				if(Cards.All.TryGetValue(_dataProvider.OpponentHeroId, out var card))
 				{
-					if(new [] {CardSet.LOOTAPALOOZA, CardSet.GILNEAS, CardSet.DALARAN}.Contains(card.Set) && card.Id.Contains("BOSS") || card.Set == CardSet.TROLL && card.Id.EndsWith("h"))
+					if(new [] {CardSet.LOOTAPALOOZA, CardSet.GILNEAS, CardSet.DALARAN, CardSet.ULDUM}.Contains(card.Set) && card.Id.Contains("BOSS") || card.Set == CardSet.TROLL && card.Id.EndsWith("h"))
 					{
 						if(card.Set == CardSet.DALARAN)
 						{
@@ -94,7 +94,7 @@ namespace HearthWatcher
 						}
 						var newRun = _initialOpponents.Contains(_dataProvider.OpponentHeroId)
 									|| _dataProvider.OpponentHeroHealth == 10;
-						DungeonRunMatchStarted?.Invoke(newRun);
+						DungeonRunMatchStarted?.Invoke(newRun, card.Set);
 						return true;
 					}
 				}
@@ -111,11 +111,11 @@ namespace HearthWatcher
 				{
 					if(dungeonInfo[i] != null && (dungeonInfo[i].RunActive || dungeonInfo[i].SelectedDeckId != 0))
 					{
-						if(_prevCards[i] == null || !(dungeonInfo[i].DbfIds?.SequenceEqual(_prevCards[i]) ?? false)
+						if(_prevCards[i] == null || _prevCards[i].Count != (dungeonInfo[i].DbfIds?.Count ?? 0)
 							|| _prevLootChoice[i] != dungeonInfo[i].PlayerChosenLoot
 							|| _prevTreasureChoice[i] != dungeonInfo[i].PlayerChosenTreasure)
 						{
-							_prevCards[i] = dungeonInfo[i].DbfIds?.ToList();
+							_prevCards[i] = dungeonInfo[i].DbfIds?.ToList() ?? new List<int>();
 							_prevLootChoice[i] = dungeonInfo[i].PlayerChosenLoot;
 							_prevTreasureChoice[i] = dungeonInfo[i].PlayerChosenTreasure;
 							DungeonInfoChanged?.Invoke(dungeonInfo[i]);
@@ -130,7 +130,7 @@ namespace HearthWatcher
 			}
 			else
 			{
-				_prevCards = new List<int>[] { null, null, null, null, null };
+				_prevCards = new List<int>[] { null, null, null, null, null, null, null };
 			}
 			return false;
 		}

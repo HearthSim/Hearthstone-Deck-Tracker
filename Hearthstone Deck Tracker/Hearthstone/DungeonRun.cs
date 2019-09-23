@@ -51,6 +51,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return Config.Instance.RumbleRunDeckNameTemplate;
 				case CardSet.DALARAN:
 					return Config.Instance.DalaranHeistDeckNameTemplate;
+				case CardSet.ULDUM:
+					return Config.Instance.TombsOfTerrorDeckNameTemplate;
 				default:
 					return null;
 			}
@@ -127,6 +129,27 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					break;
 			}
 			return null;
+		}
+
+		public static string GetUldumHeroPlayerClass(string identifier)
+		{
+			switch(identifier)
+			{
+				case "Mage":
+				case "Rogue":
+					return "Mage";
+				case "Paladin":
+				case "Shaman":
+					return "Paladin";
+				case "Druid":
+				case "Priest":
+					return "Druid";
+				case "Hunter":
+				case "Warrior":
+					return "Hunter";
+				default:
+					return null;
+			}
 		}
 
 		public static bool IsDungeonBoss(string cardId) => cardId != null && (cardId.Contains("LOOT") || cardId.Contains("GIL") || cardId.Contains("TRL")) && cardId.Contains("BOSS");
