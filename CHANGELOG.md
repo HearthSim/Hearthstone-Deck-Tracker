@@ -1,3 +1,7 @@
+## **Release v1.8.18 - 2019-09-23**
+**Added support for Tombs of Terror**
+
+
 ## **Release v1.8.17 - 2019-09-10**
 **Updated for Hearthstone 15.2.0.33717**
 
