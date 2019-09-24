@@ -1,3 +1,8 @@
+## **Release v1.8.19 - 2019-09-23**
+**Fixes**:
+- Fixed an issue causing HDT to occasionally crash when importing Tombs of Terror decks.
+
+
 ## **Release v1.8.18 - 2019-09-23**
 **Added support for Tombs of Terror**
 
