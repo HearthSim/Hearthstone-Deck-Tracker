@@ -56,9 +56,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 		{
 			if(x == y)
 				return 0;
-			var val = x.Zip(y, Utf8Compare).FirstOrDefault(v => v != 0);
-			if(val != 0)
-				return val;
+			var val1 = x.ToLower().Zip(y.ToLower(), Utf8Compare).FirstOrDefault(v => v != 0);
+			if(val1 != 0)
+				return val1;
+			var val2 = x.Zip(y, Utf8Compare).FirstOrDefault(v => v != 0);
+			if(val2 != 0)
+				return val2;
 			return x.Length - y.Length;
 		}
 
