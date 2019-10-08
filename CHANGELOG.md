@@ -1,3 +1,9 @@
+## **Release v1.8.21 - 2019-10-08**
+**Fixes**:
+- Fixed an issue introduced with 15.4.0.34670 where Arena Decks would not be imported. 
+- Fixed an issue introduced with 15.4.0.34670 where Adventure Decks would not be imported. 
+
+
 ## **Release v1.8.20 - 2019-10-08**
 **Updated for Hearthstone 15.4.0.34670**
 
