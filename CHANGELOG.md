@@ -1,3 +1,14 @@
+## **Release v1.8.20 - 2019-10-08**
+**Updated for Hearthstone 15.4.0.34670**
+
+**Fixes**:
+- Fixed an issue introduced with 15.4.0.34670 where HDT would hang when starting Hearthstone. 
+
+**Outstanding issues:**
+- Adventure deck detection broke with 15.4.0.34670. We are hoping we can fix this soon.
+- There might be more issues introduced by the patch that we missed so far. Please let us know if you find any.
+
+
 ## **Release v1.8.19 - 2019-09-23**
 **Fixes**:
 - Fixed an issue causing HDT to occasionally crash when importing Tombs of Terror decks.
