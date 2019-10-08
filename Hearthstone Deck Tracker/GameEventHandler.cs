@@ -328,7 +328,10 @@ namespace Hearthstone_Deck_Tracker
 
 		private void HandleThaurissanCostReduction()
 		{
-			var thaurissans = _game.Opponent.Board.Where(x => x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan && !x.HasTag(SILENCED)).ToList();
+			var thaurissans = _game.Opponent.Board.Where(x =>
+				(x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissanFP2
+					|| x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissanWILD_EVENT)
+				&& !x.HasTag(SILENCED)).ToList();
 			if(!thaurissans.Any())
 				return;
 

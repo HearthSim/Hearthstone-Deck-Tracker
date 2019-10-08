@@ -181,7 +181,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collectible.Warrior.Bash,
 				Collectible.Warrior.FierceMonkey,
 				Collectible.Warrior.KingsDefender,
-				Collectible.Warrior.BloodhoofBrave
+				Collectible.Warrior.BloodhoofBraveOG
 			};
 
 			public static List<string> Hunter => new List<string>
@@ -190,7 +190,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collectible.Hunter.OnTheHunt,
 				Collectible.Neutral.SwampLeech,
 				Collectible.Hunter.CracklingRazormaw,
-				Collectible.Hunter.HuntingMastiff,
+				Collectible.Hunter.Toxmonger_HuntingMastiffToken,
 				Collectible.Hunter.ForlornStalker,
 				Collectible.Hunter.KillCommand,
 				Collectible.Hunter.UnleashTheHounds,
@@ -200,12 +200,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static List<string> Mage => new List<string>
 			{
-				Collectible.Mage.BabblingBook,
+				Collectible.Mage.BabblingBookKARA,
 				Collectible.Neutral.MadBomber,
 				Collectible.Mage.PrimordialGlyph,
 				Collectible.Mage.UnstablePortal,
 				Collectible.Mage.Cinderstorm,
-				Collectible.Mage.Flamewaker,
+				Collectible.Mage.FlamewakerFP2,
 				Collectible.Mage.Spellslinger,
 				Collectible.Neutral.TinkmasterOverspark,
 				Collectible.Mage.WaterElemental,
@@ -430,7 +430,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Warrior.Execute,
 					Collectible.Warrior.Rampage,
 					Collectible.Warrior.CruelTaskmaster,
-					Collectible.Warrior.BloodhoofBrave,
+					Collectible.Warrior.BloodhoofBraveOG,
 					Collectible.Neutral.AmaniBerserker,
 					Collectible.Neutral.Deathspeaker,
 					Collectible.Neutral.RagingWorgen,
@@ -672,7 +672,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				new List<string>
 				{
 					NonCollectible.Mage.JanalaisMantle,
-					Collectible.Mage.BabblingBook,
+					Collectible.Mage.BabblingBookKARA,
 					Collectible.Mage.ArcaneExplosion,
 					Collectible.Mage.ShimmeringTempest,
 					Collectible.Mage.ExplosiveRunes,

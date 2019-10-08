@@ -152,7 +152,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				public static List<string> All => new List<string> {AutodefenseMatrix, Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, HiddenWisdom, HandOfSalvation, NeverSurrender, NobleSacrifice, Redemption, Repentance, SacredTrial};
 				public static string AutodefenseMatrix => Collectible.Paladin.AutodefenseMatrix;
-				public static string Avenge => Collectible.Paladin.Avenge;
+				public static string Avenge => Collectible.Paladin.AvengeWILD_EVENT;
 				public static string CompetitiveSpirit => Collectible.Paladin.CompetitiveSpirit;
 				public static string EyeForAnEye => Collectible.Paladin.EyeForAnEye;
 				public static string GetawayKodo => Collectible.Paladin.GetawayKodo;
