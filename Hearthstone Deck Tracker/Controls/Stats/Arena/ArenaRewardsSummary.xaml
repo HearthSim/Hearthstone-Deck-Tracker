@@ -115,6 +115,10 @@
                     <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Uldum, Suffix=' '}"/>
                     <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountUldum, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{lex:LocText Key=Stats_Arena_Rewards_Label_Packs_Dragons, Suffix=' '}"/>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Path=PacksCountDragons, Source={x:Static compiledStats:ArenaStats.Instance}, IsAsync=True}"/>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
         <Rectangle Height="Auto" Width="1" Fill="{DynamicResource TextBrush}"/>

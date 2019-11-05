@@ -44,5 +44,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		DALARAN = 1130,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Uldum")]
 		ULDUM = 1158,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Dragons")]
+		DRAGONS = 1347,
 	}
 }
