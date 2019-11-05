@@ -1,3 +1,7 @@
+## **Release v1.8.22 - 2019-11-05**
+**Updated for Hearthstone 15.6.0.35747**
+
+
 ## **Release v1.8.21 - 2019-10-08**
 **Fixes**:
 - Fixed an issue introduced with 15.4.0.34670 where Arena Decks would not be imported. 
