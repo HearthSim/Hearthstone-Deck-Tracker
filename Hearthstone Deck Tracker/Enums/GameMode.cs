@@ -12,6 +12,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 		Arena,
 		[LocDescription("Enum_GameMode_Brawl")]
 		Brawl,
+		[LocDescription("Enum_GameMode_Battlegrounds")]
+		Battlegrounds,
 		[LocDescription("Enum_GameMode_Friendly")]
 		Friendly,
 		[LocDescription("Enum_GameMode_Practice")]

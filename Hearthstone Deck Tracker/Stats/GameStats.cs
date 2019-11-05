@@ -45,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private string _playerName;
 		private string _opponentName;
 		private int _rank;
+		private int _battlegroundsRating;
 		private int _stars;
 		private int _legendRank;
 		private Region _region;
@@ -188,6 +189,17 @@ namespace Hearthstone_Deck_Tracker.Stats
 			set { _legendRank = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(RankString));
+			}
+		}
+
+		public int BattlegroundsRating
+		{
+			get { return _battlegroundsRating; }
+			set
+			{
+				_battlegroundsRating = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(BattlegroundsRating));
 			}
 		}
 

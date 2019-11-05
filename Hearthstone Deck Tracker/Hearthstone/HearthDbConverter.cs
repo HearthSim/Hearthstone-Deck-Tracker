@@ -91,6 +91,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return GameMode.Friendly;
 				case GameType.GT_ARENA:
 					return GameMode.Arena;
+				case GameType.GT_BATTLEGROUNDS:
+					return GameMode.Battlegrounds;
 				case GameType.GT_RANKED:
 					return GameMode.Ranked;
 				case GameType.GT_CASUAL:
@@ -118,6 +120,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return format == Format.Standard ? BGT_RANKED_STANDARD : BGT_RANKED_WILD;
 				case GameMode.Casual:
 					return format == Format.Standard ? BGT_CASUAL_STANDARD : BGT_CASUAL_WILD;
+				case GameMode.Battlegrounds:
+					return BGT_BATTLEGROUNDS;
 				case GameMode.Brawl:
 					return BGT_TAVERNBRAWL_PVP;
 				case GameMode.Friendly:
@@ -190,6 +194,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return BGT_FSG_BRAWL_2P_COOP;
 				case GameType.GT_FSG_BRAWL_VS_FRIEND:
 					return BGT_FSG_BRAWL_VS_FRIEND;
+				case GameType.GT_BATTLEGROUNDS:
+					return BGT_BATTLEGROUNDS;
 				default:
 					return BGT_UNKNOWN;
 			}

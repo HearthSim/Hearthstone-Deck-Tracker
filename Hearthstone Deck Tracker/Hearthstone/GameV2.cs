@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private MatchInfo _matchInfo;
 		private Mode _currentMode;
 		private BrawlInfo _brawlInfo;
+		private BattlegroundRatingInfo _battlegroundsRatingInfo;
 
 		public GameV2()
 		{
@@ -98,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool PlayerChallengeable => CurrentMode == Mode.HUB || CurrentMode == Mode.TOURNAMENT || CurrentMode == Mode.ADVENTURE
 					|| CurrentMode == Mode.TAVERN_BRAWL || CurrentMode == Mode.DRAFT || CurrentMode == Mode.PACKOPENING
-					|| CurrentMode == Mode.COLLECTIONMANAGER;
+					|| CurrentMode == Mode.COLLECTIONMANAGER || CurrentMode == Mode.BACON;
 
 		public bool? IsDungeonMatch => string.IsNullOrEmpty(CurrentGameStats?.OpponentHeroCardId) || CurrentGameType == GameType.GT_UNKNOWN ? (bool?)null
 			: CurrentGameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(CurrentGameStats.OpponentHeroCardId);
@@ -169,6 +170,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public BrawlInfo BrawlInfo => _brawlInfo ?? (_brawlInfo = HearthMirror.Reflection.GetBrawlInfo());
 
+		public BattlegroundRatingInfo BattlegroundsRatingInfo => _battlegroundsRatingInfo ?? (_battlegroundsRatingInfo = HearthMirror.Reflection.GetBattlegroundRatingInfo());
+
 		internal async void CacheMatchInfo()
 		{
 			if(!_matchInfoCacheInvalid)
@@ -208,6 +211,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		internal void CacheSpectator() => _spectator = HearthMirror.Reflection.IsSpectating();
 
 		internal void CacheBrawlInfo() => _brawlInfo = HearthMirror.Reflection.GetBrawlInfo();
+
+		internal void CacheBattlegroundRatingInfo() => _battlegroundsRatingInfo = HearthMirror.Reflection.GetBattlegroundRatingInfo();
 
 		internal void InvalidateMatchInfoCache() => _matchInfoCacheInvalid = true;
 

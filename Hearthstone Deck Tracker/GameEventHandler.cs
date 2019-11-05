@@ -65,7 +65,8 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Ranked && Config.Instance.HsReplayUploadRanked
 											 || _game.CurrentGameMode == Friendly && Config.Instance.HsReplayUploadFriendly
 											 || _game.CurrentGameMode == Casual && Config.Instance.HsReplayUploadCasual
-											 || _game.CurrentGameMode == Spectator && Config.Instance.HsReplayUploadSpectator;
+											 || _game.CurrentGameMode == Spectator && Config.Instance.HsReplayUploadSpectator
+											 || _game.CurrentGameMode == Battlegrounds && Config.Instance.HsReplayUploadBattlegrounds;
 
 		public void HandleInMenu()
 		{
@@ -457,6 +458,10 @@ namespace Hearthstone_Deck_Tracker
 				{
 					_game.CurrentGameStats.BrawlWins = _game.BrawlInfo.Wins;
 					_game.CurrentGameStats.BrawlLosses = _game.BrawlInfo.Losses;
+				}
+				else if (_game.CurrentGameMode == Battlegrounds && _game.BattlegroundsRatingInfo != null)
+				{
+					_game.CurrentGameStats.BattlegroundsRating = _game.BattlegroundsRatingInfo.Rating;
 				}
 				_game.CurrentGameStats.GameType = _game.CurrentGameType;
 				_game.CurrentGameStats.ServerInfo = _game.MetaData.ServerInfo;

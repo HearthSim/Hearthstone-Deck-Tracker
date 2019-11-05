@@ -92,16 +92,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelSecrets.Opacity = Config.Instance.SecretsOpacity / 100;
 			Opacity = Config.Instance.OverlayOpacity / 100;
 
+			var inBattlegrounds = _game.CurrentGameMode == GameMode.Battlegrounds;
+			var hideDeck = Config.Instance.HideDecksInOverlay || inBattlegrounds || (Config.Instance.HideInMenu && _game.IsInMenu);
+
 			if (!_playerCardsHidden)
 			{
-				StackPanelPlayer.Visibility = (Config.Instance.HideDecksInOverlay || (Config.Instance.HideInMenu && _game.IsInMenu)) && !_uiMovable
-												  ? Collapsed : Visible;
+				StackPanelPlayer.Visibility =  hideDeck && !_uiMovable ? Collapsed : Visible;
 			}
 
 			if (!_opponentCardsHidden)
 			{
-				StackPanelOpponent.Visibility = (Config.Instance.HideDecksInOverlay || (Config.Instance.HideInMenu && _game.IsInMenu))
-												&& !_uiMovable ? Collapsed : Visible;
+				StackPanelOpponent.Visibility = hideDeck && !_uiMovable ? Collapsed : Visible;
 			}
 
 			CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Collapsed : Visible;
