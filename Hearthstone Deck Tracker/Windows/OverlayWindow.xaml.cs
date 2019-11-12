@@ -17,6 +17,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
+using HearthDb.Enums;
 
 #endregion
 
@@ -159,7 +160,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void ShowSecrets(List<Card> secrets, bool force = false)
 		{
-			if(Config.Instance.HideSecrets && !force)
+			if((Config.Instance.HideSecrets || _game.CurrentGameType == GameType.GT_BATTLEGROUNDS) && !force)
 				return;
 
 			StackPanelSecrets.Children.Clear();
