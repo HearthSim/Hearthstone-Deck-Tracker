@@ -57,6 +57,11 @@ namespace HDTTests.Hearthstone.Secrets
 			throw new NotImplementedException();
 		}
 
+		public void SnapshotBattlegroundsBoardState()
+		{
+			throw new NotImplementedException();
+		}
+
 		public SecretsManager SecretsManager { get; set; }
 		public int OpponentMinionCount { get; set; }
 		public int OpponentHandCount { get; set; }

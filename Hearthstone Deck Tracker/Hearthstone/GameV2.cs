@@ -96,6 +96,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int ProposedAttacker { get; set; }
 		public int ProposedDefender { get; set; }
 		public bool SetupDone { get; set; }
+		public Dictionary<string, Entity[]> LastKnownBattlegroundsBoardState { get; } = new Dictionary<string, Entity[]>();
 
 		public bool PlayerChallengeable => CurrentMode == Mode.HUB || CurrentMode == Mode.TOURNAMENT || CurrentMode == Mode.ADVENTURE
 					|| CurrentMode == Mode.TAVERN_BRAWL || CurrentMode == Mode.DRAFT || CurrentMode == Mode.PACKOPENING
@@ -237,6 +238,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!IsInMenu && resetStats)
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			PowerLog.Clear();
+			LastKnownBattlegroundsBoardState.Clear();
 
 			if(Core.Game != null && Core.Overlay != null)
 			{
@@ -273,6 +275,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if (!IsMulliganDone)
 				return 0;
 			return (GameEntity?.GetTag(GameTag.TURN) + 1) / 2 ?? 0;
+		}
+
+		public void SnapshotBattlegroundsBoardState()
+		{
+			var opponentHero = Entities.Values
+				.Where(x => x.IsHero && x.IsInZone(Zone.PLAY) && x.IsControlledBy(Opponent.Id))
+				.FirstOrDefault();
+			if(opponentHero == null)
+				return;
+			var entities = Entities.Values
+				.Where(x => x.IsMinion && x.IsInZone(Zone.PLAY) && x.IsControlledBy(Opponent.Id))
+				.Select(x => x.Clone())
+				.ToArray();
+			LastKnownBattlegroundsBoardState[opponentHero.CardId] = entities;
 		}
 	}
 }

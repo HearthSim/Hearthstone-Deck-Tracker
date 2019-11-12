@@ -500,6 +500,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						}
 					}
 				}
+				else if (blockType == "ATTACK")
+				{
+					if (game.CurrentGameType == GameType.GT_BATTLEGROUNDS && !gameState.SeenAttackBlockThisTurn)
+						game.SnapshotBattlegroundsBoardState();
+					gameState.SeenAttackBlockThisTurn = true;
+				}
 				else if(logLine.Contains("BlockType=JOUST"))
 					gameState.JoustReveals = 2;
 				else if(logLine.Contains("BlockType=REVEAL_CARD"))

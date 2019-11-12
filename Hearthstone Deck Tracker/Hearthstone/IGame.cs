@@ -52,5 +52,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		bool? IsDungeonMatch { get; }
 		bool PlayerChallengeable { get; }
 		bool SetupDone { get; set; }
+		void SnapshotBattlegroundsBoardState();
 	}
 }

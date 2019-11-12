@@ -28,8 +28,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			Id = id;
 		}
 
+		private Entity(int id, Dictionary<GameTag, int> tags, Card cachedCard)
+		{
+			Id = id;
+			Tags = tags;
+			_cachedCard = Card;
+		}
+
+		public Entity Clone()
+		{
+			var entity = new Entity(Id, new Dictionary<GameTag, int>(Tags), (Card)_cachedCard?.Clone())
+			{
+				Name = Name,
+				CardId = CardId,
+			};
+			entity._info = Info?.CloneWithNewEntity(entity) ?? new EntityInfo(entity);
+			return entity;
+		}
+
 		[NonSerialized]
-		private readonly EntityInfo _info;
+		private EntityInfo _info;
 		public EntityInfo Info => _info;
 		public Dictionary<GameTag, int> Tags { get; set; }
 		public string Name { get; set; }
@@ -149,6 +167,26 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public EntityInfo(Entity entity)
 		{
 			_entity = entity;
+		}
+
+		public EntityInfo CloneWithNewEntity(Entity entity)
+		{
+			return new EntityInfo(entity)
+			{
+				Turn = Turn,
+				Discarded = Discarded,
+				Returned = Returned,
+				Mulliganed = Mulliganed,
+				Created = Created,
+				HasOutstandingTagChanges = HasOutstandingTagChanges,
+				OriginalController = OriginalController,
+				Hidden = Hidden,
+				CostReduction = CostReduction,
+				OriginalZone = OriginalZone,
+				OriginalCardId = OriginalCardId,
+				OriginalEntityWasCreated = OriginalEntityWasCreated,
+				GuessedCardState = GuessedCardState
+			};
 		}
 
 		public int Turn { get; set; }

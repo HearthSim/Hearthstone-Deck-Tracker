@@ -137,6 +137,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void TurnChange(IHsGameState gameState, IGame game)
 		{
+			gameState.SeenAttackBlockThisTurn = false;
 			if(!game.SetupDone || game.PlayerEntity == null)
 				return;
 			var activePlayer = game.PlayerEntity.HasTag(CURRENT_PLAYER) ? ActivePlayer.Player : ActivePlayer.Opponent;
