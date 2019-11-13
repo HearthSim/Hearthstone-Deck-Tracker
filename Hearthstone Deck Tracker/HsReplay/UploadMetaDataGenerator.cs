@@ -6,6 +6,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay.Utility;
 using Hearthstone_Deck_Tracker.Stats;
 using HSReplay;
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.HsReplay
 {
@@ -14,11 +15,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static UploadMetaData Generate(GameMetaData gameMetaData, GameStats game)
 		{
 			var metaData = new UploadMetaData();
-			var playerInfo = GetPlayerInfo(game);
-			if(playerInfo != null)
+			var players = GetPlayerInfo(game);
+			if (players != null)
 			{
-				metaData.Player1 = playerInfo.Player1;
-				metaData.Player2 = playerInfo.Player2;
+				if (game.GameType == GameType.GT_BATTLEGROUNDS)
+					metaData.Players = players;
+				else
+				{
+					metaData.Player1 = players.FirstOrDefault(x => x.Id == 1);
+					metaData.Player2 = players.FirstOrDefault(x => x.Id == 2);
+				}
 			}
 			if(!string.IsNullOrEmpty(gameMetaData?.ServerInfo?.Address))
 				metaData.ServerIp = gameMetaData.ServerInfo.Address;
@@ -43,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			metaData.SpectatorMode = game?.GameMode == GameMode.Spectator;
 			metaData.Reconnected = gameMetaData?.Reconnected ?? false;
 			metaData.Resumable = gameMetaData?.ServerInfo?.Resumable ?? false;
-			metaData.FriendlyPlayerId = game?.FriendlyPlayerId > 0 ? game.FriendlyPlayerId : (playerInfo?.FriendlyPlayerId > 0 ? playerInfo?.FriendlyPlayerId : null);
+			metaData.FriendlyPlayerId = game?.FriendlyPlayerId > 0 ? game.FriendlyPlayerId : (int?)null;
 			var scenarioId = game?.ScenarioId ?? gameMetaData?.ServerInfo?.Mission;
 			if(scenarioId > 0)
 				metaData.ScenarioId = scenarioId;
@@ -63,13 +69,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			return metaData;
 		}
 
-		private static PlayerInfo GetPlayerInfo(GameStats game)
+		private static List<UploadMetaData.Player> GetPlayerInfo(GameStats game)
 		{
 			if(game == null || game.FriendlyPlayerId == 0)
 				return null;
 
 			var friendly = new UploadMetaData.Player();
 			var opposing = new UploadMetaData.Player();
+
+			friendly.Id = game.FriendlyPlayerId;
+			opposing.Id = game.OpponentPlayerId;
 
 			if(game.Rank > 0)
 				friendly.Rank = game.Rank;
@@ -111,8 +120,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(game.OpponentCardbackId > 0)
 				opposing.Cardback = game.OpponentCardbackId;
 
-			return new PlayerInfo(game.FriendlyPlayerId == 1 ? friendly : opposing,
-				game.FriendlyPlayerId == 2 ? friendly : opposing);
+			return new List<UploadMetaData.Player>() {
+				friendly,
+				opposing
+			};
 		}
 	}
 

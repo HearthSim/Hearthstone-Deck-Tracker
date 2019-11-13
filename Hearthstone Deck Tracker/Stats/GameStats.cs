@@ -223,6 +223,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int FriendlyPlayerId { get; set; }
 
+		public int OpponentPlayerId { get; set; }
+
 		public int ScenarioId { get; set; }
 
 		public GameServerInfo ServerInfo { get; set; }
@@ -516,6 +518,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializePlayerCardbackId() => PlayerCardbackId > 0;
 		public bool ShouldSerializeOpponentCardbackId() => OpponentCardbackId > 0;
 		public bool ShouldSerializeFriendlyPlayerId() => FriendlyPlayerId > 0;
+		public bool ShouldSerializeOpponentPlayerId() => OpponentPlayerId > 0;
 		public bool ShouldSerializeScenarioId() => ScenarioId > 0;
 		public bool ShouldSerializeServerInfo() => ServerInfo != null;
 		public bool ShouldSerializeHsReplay() => HsReplay.UploadTries > 0 || HsReplay.Uploaded;
@@ -527,6 +530,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeArenaLosses() => ArenaLosses > 0;
 		public bool ShouldSerializeBrawlWins() => BrawlWins > 0;
 		public bool ShouldSerializeBrawlLosses() => BrawlLosses > 0;
+		public bool ShouldSerializeBattlegroundsRating() => BattlegroundsRating > 0;
 
 
 		public event PropertyChangedEventHandler PropertyChanged;
