@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		public void Handle(LogLine logLine, IGame game)
 		{
 			var match = LogConstants.BeginBlurRegex.Match(logLine.Line);
-			if(match.Success && game.IsInMenu && new[] {TAVERN_BRAWL, TOURNAMENT, DRAFT, FRIENDLY, ADVENTURE}.Contains(game.CurrentMode))
+			if(match.Success && game.IsInMenu && new[] {TAVERN_BRAWL, TOURNAMENT, DRAFT, FRIENDLY, ADVENTURE, BACON}.Contains(game.CurrentMode))
 			{
 				game.MetaData.EnqueueTime = logLine.Time;
 				Log.Info($"Now in queue ({logLine.Time})");
@@ -42,6 +42,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					DeckManager.AutoSelectDeckById(game, GetSelectedDeckId(game.CurrentMode));
 				else if(game.CurrentMode == DRAFT)
 					AutoSelectArenaDeck();
+				else if(game.CurrentMode == BACON)
+					Core.MainWindow.SelectDeck(null, true);
 			}
 		}
 

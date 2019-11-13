@@ -79,6 +79,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private static async Task AutoSelectDeck(Deck currentDeck, string heroClass, GameMode mode, Format? currentFormat, List<IGrouping<string, Entity>> cardEntites = null)
 		{
+			if(mode == GameMode.Battlegrounds)
+			{
+				Log.Info("Switching to no-deck mode for battlegrounds");
+				Core.MainWindow.SelectDeck(null, true);
+				return;
+			}
 			_waitingForDraws++;
 			await Task.Delay(500);
 			_waitingForDraws--;
