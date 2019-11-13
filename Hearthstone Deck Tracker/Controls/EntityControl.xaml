@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.EntityControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             mc:Ignorable="d" Width="181" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
+        <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" ClipToBounds="True">
+                <local:Card DataContext="{Binding Card}" Margin="-32,0,0,0" />
+            </Grid>
+            <TextBlock Name="CardTextBlock"
+                Text="{Binding Effects, RelativeSource={RelativeSource AncestorType=local:EntityControl}}"
+                Grid.Row="1" FontSize="14" Foreground="{DynamicResource TextBrush}"
+                VerticalAlignment="Top" FontWeight="Medium" HorizontalAlignment="Center" TextWrapping="Wrap" Margin="5,0,5,0" TextAlignment="Center" />
+            <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Source="../Resources/damage.png" Width="35" Height="35" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Attack}" Grid.Column="0" FontSize="24" TextAlignment="Center"  Width="30" Height="33" Margin="5,2,0,0" />
+                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Card.Race}" Grid.Column="1" FontSize="14" Height="35" Width="111" TextAlignment="Center" />
+                <Image Source="../Resources/health.png" Width="35" Height="35" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding Path=Health, RelativeSource={RelativeSource AncestorType=local:EntityControl}}"
+                    Grid.Column="2" FontSize="24" TextAlignment="Center" Margin="2,2,0,0" Width="33" Height="33" />
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

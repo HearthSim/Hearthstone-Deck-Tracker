@@ -181,7 +181,20 @@
             <Rectangle Name="BattlegroundsTile5" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
             <Rectangle Name="BattlegroundsTile6" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
             <Rectangle Name="BattlegroundsTile7" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-        </Canvas>
+            <StackPanel Name="BattlegroundsPanel" Visibility="Collapsed" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Battlegrounds_Label_LastKnown}" FontSize="16" Margin="0,0,5,0"/>
+                    <local:HearthstoneTextBlock x:Name="BattlegroundsOpponent" FontSize="16"/>
+                </StackPanel>
+                <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <Style TargetType="controls:EntityControl">
+                            <Setter Property="Margin" Value="0,0,10,0"/>
+                        </Style>
+                    </StackPanel.Resources>
+                </StackPanel>
+            </StackPanel>
+            </Canvas>
         </Border>
     </Grid>
 </Window>

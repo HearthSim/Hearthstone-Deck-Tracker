@@ -151,6 +151,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 				GoldProgressGrid.Visibility = Collapsed;
 
+			if (_game.IsInMenu || !inBattlegrounds)
+				BattlegroundsPanel.Visibility = Collapsed;
+
 			UpdateIcons();
 
 			SetDeckTitle();

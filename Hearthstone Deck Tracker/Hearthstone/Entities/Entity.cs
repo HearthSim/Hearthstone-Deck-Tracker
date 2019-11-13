@@ -28,16 +28,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			Id = id;
 		}
 
-		private Entity(int id, Dictionary<GameTag, int> tags, Card cachedCard)
+		private Entity(int id, Dictionary<GameTag, int> tags)
 		{
 			Id = id;
 			Tags = tags;
-			_cachedCard = Card;
 		}
 
 		public Entity Clone()
 		{
-			var entity = new Entity(Id, new Dictionary<GameTag, int>(Tags), (Card)_cachedCard?.Clone())
+			var entity = new Entity(Id, new Dictionary<GameTag, int>(Tags))
 			{
 				Name = Name,
 				CardId = CardId,

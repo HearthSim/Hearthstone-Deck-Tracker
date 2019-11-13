@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Point = System.Drawing.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
+using Hearthstone_Deck_Tracker.Controls;
 
 #endregion
 
@@ -210,6 +211,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(_game.CurrentGameType == GameType.GT_BATTLEGROUNDS)
 			{
+				var isHoveringLeaderboard = false;
 				for(var i = 0; i < _leaderboardIcons.Count; i++)
 				{
 					if(ReactContains(_leaderboardIcons[i], relativeCanvas))
@@ -219,8 +221,26 @@ namespace Hearthstone_Deck_Tracker.Windows
 							break;
 						if(!_game.LastKnownBattlegroundsBoardState.TryGetValue(entity.CardId, out var state))
 							break;
+						BattlegroundsBoard.Children.Clear();
+						foreach(var e in state)
+							BattlegroundsBoard.Children.Add(new EntityControl(e));
+						BattlegroundsOpponent.Text = entity.Card.LocalizedName;
+						isHoveringLeaderboard = true;
 						break;
 					}
+				}
+				if(isHoveringLeaderboard)
+				{
+					Canvas.SetTop(BattlegroundsPanel, Height * 0.01);
+					Canvas.SetLeft(BattlegroundsPanel, Helper.GetScaledXPos(0.05, (int)Width, ScreenRatio));
+					BattlegroundsPanel.Visibility = Visibility.Visible;
+					var scale = Math.Min(1.5, Height / 1080);
+					BattlegroundsPanel.RenderTransform = new ScaleTransform(scale, scale, 0, 0);
+				}
+				else
+				{
+					BattlegroundsBoard.Children.Clear();
+					BattlegroundsPanel.Visibility = Visibility.Collapsed;
 				}
 			}
 		}
