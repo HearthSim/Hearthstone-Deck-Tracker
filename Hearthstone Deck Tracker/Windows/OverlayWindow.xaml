@@ -173,8 +173,15 @@
             </Grid>
             <overlay:WotogCounter x:Name="WotogIconsPlayer" Canvas.Top="200" Canvas.Left="450"/>
             <overlay:WotogCounter x:Name="WotogIconsOpponent" Canvas.Top="300" Canvas.Left="450"/>
+            <Rectangle Name="BattlegroundsTile0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+            <Rectangle Name="BattlegroundsTile1" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+            <Rectangle Name="BattlegroundsTile2" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+            <Rectangle Name="BattlegroundsTile3" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+            <Rectangle Name="BattlegroundsTile4" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+            <Rectangle Name="BattlegroundsTile5" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+            <Rectangle Name="BattlegroundsTile6" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+            <Rectangle Name="BattlegroundsTile7" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
         </Canvas>
         </Border>
-
     </Grid>
 </Window>

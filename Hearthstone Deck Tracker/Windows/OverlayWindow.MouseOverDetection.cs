@@ -80,6 +80,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(Config.Instance.Debug)
 					AddCardDebugOverlay(_playerHand[i], GetPlayerCardPosition(i, playerHandCount));
 			}
+
+			var leaderboardTop = Height * 0.15;
+			for(var i = 0; i < _leaderboardIcons.Count; i++)
+			{
+				_leaderboardIcons[i].Visibility = isGameOver || _game.CurrentGameType != GameType.GT_BATTLEGROUNDS
+					? Visibility.Collapsed
+					: Visibility.Visible;
+				Canvas.SetTop(_leaderboardIcons[i], leaderboardTop + BattlegroundsTileHeight * i);
+				Canvas.SetLeft(_leaderboardIcons[i], Helper.GetScaledXPos(0.001 * (_leaderboardIcons.Count - i - 1), (int)Width, ScreenRatio));
+			}
 		}
 
 		private bool IsGameOver => _game.IsInMenu || _game.GameEntity == null || _game.GameEntity.GetTag(GameTag.STATE) == (int)State.COMPLETE;
@@ -197,6 +207,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 				GameEvents.OnMouseOverOff.Execute();
 			_currentMouseOverTarget = null;
 			FlavorTextVisibility = Visibility.Collapsed;
+
+			if(_game.CurrentGameType == GameType.GT_BATTLEGROUNDS)
+			{
+				for(var i = 0; i < _leaderboardIcons.Count; i++)
+				{
+					if(ReactContains(_leaderboardIcons[i], relativeCanvas))
+					{
+						var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
+						if(entity == null)
+							break;
+						if(!_game.LastKnownBattlegroundsBoardState.TryGetValue(entity.CardId, out var state))
+							break;
+						break;
+					}
+				}
+			}
 		}
 
 		public System.Windows.Point GetPlayerCardPosition(int position, int count)
@@ -255,6 +281,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var rotated = transform.Transform(location);
 			return rotated.X > rectCorner.X && rotated.X < rectCorner.X + rect.Width && rotated.Y > rectCorner.Y
 				   && rotated.Y < rectCorner.Y + rect.Height;
+		}
+
+		public bool ReactContains(Rectangle rect, System.Windows.Point location)
+		{
+			var rectCorner = new System.Windows.Point(Canvas.GetLeft(rect), Canvas.GetTop(rect));
+			return location.X > rectCorner.X && location.X < rectCorner.X + rect.Width && location.Y > rectCorner.Y
+				   && location.Y < rectCorner.Y + rect.Height;
 		}
 	}
 }

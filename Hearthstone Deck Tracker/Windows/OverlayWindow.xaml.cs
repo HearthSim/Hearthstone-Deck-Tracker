@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly List<Ellipse> _oppBoard = new List<Ellipse>();
 		private readonly List<Ellipse> _playerBoard = new List<Ellipse>();
 		private readonly List<Rectangle> _playerHand = new List<Rectangle>();
+		private readonly List<Rectangle> _leaderboardIcons = new List<Rectangle>();
 		private bool? _isFriendsListOpen;
 		private string _lastToolTipCardId;
 		private bool _lmbDown;
@@ -105,6 +106,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public VerticalAlignment OpponentStackPanelAlignment
 			=> Config.Instance.OverlayCenterOpponentStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;
+
+		public double BattlegroundsTileHeight => Height * 0.69 / 8;
+		public double BattlegroundsTileWidth => BattlegroundsTileHeight;
 
 		public void ShowOverlay(bool enable)
 		{

@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
+using HearthDb.Enums;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -82,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var oppBoard = Core.Game.Opponent.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			var playerBoard = Core.Game.Player.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
-			if(!_game.IsInMenu && _game.IsMulliganDone && User32.IsHearthstoneInForeground() && IsVisible)
+			if(!_game.IsInMenu && (_game.IsMulliganDone || _game.CurrentGameType == GameType.GT_BATTLEGROUNDS) && User32.IsHearthstoneInForeground() && IsVisible)
 				DetectMouseOver(playerBoard, oppBoard);
 			else
 				FlavorTextVisibility = Collapsed;
@@ -157,7 +158,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			UpdateElementSizes();
 			UpdateElementPositions();
-
 
 			if (Core.Windows.PlayerWindow.Visibility == Visible)
 				Core.Windows.PlayerWindow.Update();
@@ -353,6 +353,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(PlayerListHeight));
 			OnPropertyChanged(nameof(OpponentStackHeight));
 			OnPropertyChanged(nameof(OpponentListHeight));
+			OnPropertyChanged(nameof(BattlegroundsTileHeight));
+			OnPropertyChanged(nameof(BattlegroundsTileWidth));
 			//Gold progress
 			RectGoldDisplay.Height = GoldFrameHeight;
 			RectGoldDisplay.Width = GoldFrameWidth;
