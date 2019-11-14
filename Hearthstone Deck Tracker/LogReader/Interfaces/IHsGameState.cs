@@ -34,6 +34,5 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		void BlockEnd();
 		Block CurrentBlock { get; }
 		Tuple<int, string> ChameleosReveal { get; set; }
-		bool SeenAttackBlockThisTurn { get; set; }
 	}
 }

@@ -39,7 +39,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public Zone CurrentEntityZone { get; set; }
 		public bool DeterminedPlayers => _game.Player.Id > 0 && _game.Opponent.Id > 0;
 		public Tuple<int, string> ChameleosReveal { get; set; }
-		public bool SeenAttackBlockThisTurn { get; set; }
 
 		public int GetTurnNumber()
 		{

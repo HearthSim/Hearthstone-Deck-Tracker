@@ -288,6 +288,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.Where(x => x.IsMinion && x.IsInZone(Zone.PLAY) && x.IsControlledBy(Opponent.Id))
 				.Select(x => x.Clone())
 				.ToArray();
+			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with {entities.Length} entities");
 			LastKnownBattlegroundsBoardState[opponentHero.CardId] = entities;
 		}
 	}
