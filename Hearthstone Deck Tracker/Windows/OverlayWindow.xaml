@@ -185,6 +185,8 @@
                 <StackPanel Orientation="Horizontal">
                     <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Battlegrounds_Label_LastKnown}" FontSize="16" Margin="0,0,5,0"/>
                     <local:HearthstoneTextBlock x:Name="BattlegroundsOpponent" FontSize="16"/>
+                    <local:HearthstoneTextBlock Text="-" FontSize="16" Margin="5,0,5,0"/>
+                    <local:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16"/>
                 </StackPanel>
                 <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal">
                     <StackPanel.Resources>

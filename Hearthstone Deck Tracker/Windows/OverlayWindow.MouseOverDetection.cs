@@ -14,6 +14,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Point = System.Drawing.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
 using Hearthstone_Deck_Tracker.Controls;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -222,8 +223,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 						if(!_game.LastKnownBattlegroundsBoardState.TryGetValue(entity.CardId, out var state))
 							break;
 						BattlegroundsBoard.Children.Clear();
-						foreach(var e in state)
+						foreach(var e in state.Entities)
 							BattlegroundsBoard.Children.Add(new EntityControl(e));
+						var age = _game.GetTurnNumber() - state.Turn;
+						BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
 						BattlegroundsOpponent.Text = entity.Card.LocalizedName;
 						isHoveringLeaderboard = true;
 						break;

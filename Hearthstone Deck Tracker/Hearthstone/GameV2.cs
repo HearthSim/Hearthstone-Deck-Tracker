@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int ProposedAttacker { get; set; }
 		public int ProposedDefender { get; set; }
 		public bool SetupDone { get; set; }
-		public Dictionary<string, Entity[]> LastKnownBattlegroundsBoardState { get; } = new Dictionary<string, Entity[]>();
+		public Dictionary<string, BoardSnapshot> LastKnownBattlegroundsBoardState { get; } = new Dictionary<string, BoardSnapshot>();
 
 		public bool PlayerChallengeable => CurrentMode == Mode.HUB || CurrentMode == Mode.TOURNAMENT || CurrentMode == Mode.ADVENTURE
 					|| CurrentMode == Mode.TAVERN_BRAWL || CurrentMode == Mode.DRAFT || CurrentMode == Mode.PACKOPENING
@@ -140,6 +140,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
+				if(_currentGameType == GameType.GT_BATTLEGROUNDS)
+					return true;
 				var player = Entities.FirstOrDefault(x => x.Value.IsPlayer);
 				var opponent = Entities.FirstOrDefault(x => x.Value.HasTag(GameTag.PLAYER_ID) && !x.Value.IsPlayer);
 				if(player.Value == null || opponent.Value == null)
@@ -289,7 +291,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.Select(x => x.Clone())
 				.ToArray();
 			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with {entities.Length} entities");
-			LastKnownBattlegroundsBoardState[opponentHero.CardId] = entities;
+			LastKnownBattlegroundsBoardState[opponentHero.CardId] = new BoardSnapshot(entities, GetTurnNumber());
 		}
 	}
 }
