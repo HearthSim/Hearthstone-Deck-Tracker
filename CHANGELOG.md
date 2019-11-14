@@ -1,3 +1,12 @@
+## **Release v1.9.0 - 2019-11-14**
+**New: Battlegrounds Support**:
+- Hovering an opponent in the sidebar will now display their last known board state.
+
+**Fixes**:
+- Fixed an issue where the arena dialog would show up after a Battlegrounds match if an arena deck was previously selected.
+- The secret panel has been temporarily disabled in Battlegrounds, until it is fixed to work correctly.
+
+
 ## **Release v1.8.22 - 2019-11-05**
 **Updated for Hearthstone 15.6.0.35747**
 
