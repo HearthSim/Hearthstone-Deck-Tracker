@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Plugins;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Windows;
@@ -82,6 +83,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void App_OnStartup(object sender, StartupEventArgs e)
 		{
+			Shell32.SetCurrentProcessExplicitAppUserModelID("com.squirrel.HearthstoneDeckTracker.HearthstoneDeckTracker");
 			ShutdownMode = ShutdownMode.OnExplicitShutdown;
 			Core.Initialize();
 		}
