@@ -324,6 +324,7 @@
     <Compile Include="Live\Data\DataType.cs" />
     <Compile Include="Live\Data\Payload.cs" />
     <Compile Include="Utility\RemoteConfig.cs" />
+    <Compile Include="Utility\Shell32.cs" />
     <Compile Include="Utility\Singleton.cs" />
     <Compile Include="Utility\ScheduledTaskRunner.cs" />
     <Compile Include="Utility\Toasts\ToastControls\BaseToast.xaml.cs">
