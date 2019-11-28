@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxFlavorText.IsChecked = Config.Instance.ShowFlavorText;
 			CheckBoxOverlayUseAnimations.IsChecked = Config.Instance.OverlayCardAnimations;
 			CheckBoxRemoveSecrets.IsChecked = Config.Instance.RemoveSecretsFromList;
+			CheckboxShowBattlegroundsTiers.IsChecked = Config.Instance.ShowBattlegroundsTiers;
 			_initialized = true;
 		}
 
@@ -247,6 +248,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.HideTimers = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxShowBattlegroundsTiers_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTiers = true;
+			SaveConfig(true);
+		}
+
+		private void CheckboxShowBattlegroundsTiers_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTiers = false;
 			SaveConfig(true);
 		}
 

@@ -71,6 +71,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public Rarity Rarity;
 
+		[XmlIgnore]
+		public bool BaconCard;
+
 		public Card()
 		{
 			Count = 1;
@@ -78,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Card(string id, string playerClass, Rarity rarity, string type, string name, int cost, string localizedName, int inHandCount,
 		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability,
-		            string artist, string set, List<string> alternativeNames = null, List<string> alternativeTexts = null, HearthDb.Card dbCard = null)
+		            string artist, string set, bool baconCard, List<string> alternativeNames = null, List<string> alternativeTexts = null, HearthDb.Card dbCard = null)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -98,6 +101,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Mechanics = mechanics;
 			Artist = artist;
 			Set = set;
+			BaconCard = baconCard;
 			if(alternativeNames != null)
 				AlternativeNames = alternativeNames;
 			if(alternativeTexts != null)
@@ -120,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public Card(HearthDb.Card dbCard)
+		public Card(HearthDb.Card dbCard, bool baconCard = false)
 		{
 			_dbCard = dbCard;
 			Id = dbCard.Id;
@@ -140,6 +144,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Mechanics = dbCard.Mechanics;
 			Artist = dbCard.ArtistName;
 			Set = HearthDbConverter.SetConverter(dbCard.Set);
+			BaconCard = baconCard;
 			foreach(var altLangStr in Config.Instance.AlternativeLanguages)
 			{
 				if(Enum.TryParse(altLangStr, out Locale altLang))
@@ -387,6 +392,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static FontWeight DefaultFontWeight => Helper.UseLatinFont() ? FontWeights.Normal : FontWeights.Bold;
 
+		private CardBarImageBuilder GetImageBuilder()
+		{
+			if(BaconCard)
+			{
+				var theme = ThemeManager.FindTheme("dark");
+				if(theme != null)
+					return new DarkBarImageBuilder(this, theme.Directory);
+			}
+			return ThemeManager.GetBarImageBuilder(this);
+		}
+
 		public DrawingBrush Background
 		{
 			get
@@ -394,14 +410,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(Id == null || Name == null)
 					return new DrawingBrush();
 				var cardImageObj = new CardImageObject(this);
-				if(CardImageCache.TryGetValue(Id, out Dictionary<int, CardImageObject> cache))
+				if(CardImageCache.TryGetValue(Id, out var cache))
 				{
-					if(cache.TryGetValue(cardImageObj.GetHashCode(), out CardImageObject cached))
+					if(cache.TryGetValue(cardImageObj.GetHashCode(), out var cached))
 						return cached.Image;
 				}
 				try
 				{
-					var image = ThemeManager.GetBarImageBuilder(this).Build();
+					var image = GetImageBuilder().Build();
 					if (image.CanFreeze)
 						image.Freeze();
 					cardImageObj = new CardImageObject(image, this);
@@ -439,7 +455,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool Collectible => _dbCard?.Collectible ?? false;
 
 		public object Clone() => new Card(Id, PlayerClass, Rarity, Type, Name, Cost, LocalizedName, InHandCount, Count, _text, EnglishText, Attack,
-										  Health, Race, Mechanics, Durability, Artist, Set, AlternativeNames, AlternativeTexts, _dbCard);
+										  Health, Race, Mechanics, Durability, Artist, Set, BaconCard, AlternativeNames, AlternativeTexts, _dbCard);
 
 		public override string ToString() => Name + "(" + Count + ")";
 
@@ -512,6 +528,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool Created { get; }
 		public string Theme { get; }
 		public int TextColorHash { get; }
+		public bool BaconCard { get; }
 
 		public CardImageObject(DrawingBrush image, Card card) : this(card)
 		{
@@ -527,6 +544,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Theme = ThemeManager.CurrentTheme?.Name;
 			TextColorHash = card.ColorPlayer.Color.GetHashCode();
 			Created = card.IsCreated;
+			BaconCard = card.BaconCard;
 		}
 
 		public override bool Equals(object obj)
@@ -550,6 +568,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				hashCode = (hashCode * 397) ^ (Theme?.GetHashCode() ?? 0);
 				hashCode = (hashCode * 397) ^ TextColorHash;
 				hashCode = (hashCode * 397) ^ Created.GetHashCode();
+				hashCode = (hashCode * 397) ^ BaconCard.GetHashCode();
 				return hashCode;
 			}
 		}

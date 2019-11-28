@@ -15,7 +15,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" ClipToBounds="True">
-                <local:Card DataContext="{Binding Card}" Margin="-32,0,0,0" />
+                <local:Card DataContext="{Binding Card, RelativeSource={RelativeSource AncestorType=local:EntityControl}}" Margin="-32,0,0,0" />
             </Grid>
             <TextBlock Name="CardTextBlock"
                 Text="{Binding Effects, RelativeSource={RelativeSource AncestorType=local:EntityControl}}"

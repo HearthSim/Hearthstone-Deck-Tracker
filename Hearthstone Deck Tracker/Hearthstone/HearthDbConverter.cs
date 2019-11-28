@@ -74,6 +74,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return "Goblin";
 				case Race.PET:
 					return "Beast";
+				case Race.MECHANICAL:
+					return "Mech";
 				default:
 					return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(race.ToString().ToLowerInvariant());
 			}

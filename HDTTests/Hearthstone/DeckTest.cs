@@ -16,15 +16,15 @@ namespace HDTTests.Hearthstone
 			Deck d1 = new Deck();
 			Deck d2 = new Deck();
 			//just in d1
-			d1.Cards.Add(new Card("ID_1", "", Rarity.FREE, "", "ID 1", 0, "", 0, 1, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+			d1.Cards.Add(new Card("ID_1", "", Rarity.FREE, "", "ID 1", 0, "", 0, 1, "", "", 0, 0, "", new string[] { }, 0, "", "", false));
 			//in both but diff count
-			d1.Cards.Add(new Card("ID_2", "", Rarity.FREE, "", "ID 2", 0, "", 0, 2, "", "", 0, 0, "", new string[] { }, 0, "", ""));
-			d2.Cards.Add(new Card("ID_2", "", Rarity.FREE, "", "ID 2", 0, "", 0, 3, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+			d1.Cards.Add(new Card("ID_2", "", Rarity.FREE, "", "ID 2", 0, "", 0, 2, "", "", 0, 0, "", new string[] { }, 0, "", "", false));
+			d2.Cards.Add(new Card("ID_2", "", Rarity.FREE, "", "ID 2", 0, "", 0, 3, "", "", 0, 0, "", new string[] { }, 0, "", "", false));
 			//just in d2
-			d2.Cards.Add(new Card("ID_3", "", Rarity.FREE, "", "ID 3", 0, "", 0, 2, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+			d2.Cards.Add(new Card("ID_3", "", Rarity.FREE, "", "ID 3", 0, "", 0, 2, "", "", 0, 0, "", new string[] { }, 0, "", "", false));
 			//in bth and same cont
-			d1.Cards.Add(new Card("ID_4", "", Rarity.FREE, "", "ID 4", 0, "", 0, 5, "", "", 0, 0, "", new string[] { }, 0, "", ""));
-			d2.Cards.Add(new Card("ID_4", "", Rarity.FREE, "", "ID 4", 0, "", 0, 5, "", "", 0, 0, "", new string[] { }, 0, "", ""));
+			d1.Cards.Add(new Card("ID_4", "", Rarity.FREE, "", "ID 4", 0, "", 0, 5, "", "", 0, 0, "", new string[] { }, 0, "", "", false));
+			d2.Cards.Add(new Card("ID_4", "", Rarity.FREE, "", "ID 4", 0, "", 0, 5, "", "", 0, 0, "", new string[] { }, 0, "", "", false));
 
 			IEnumerable<Card> result = d1 - d2;
 

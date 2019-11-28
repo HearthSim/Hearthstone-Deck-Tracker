@@ -2,7 +2,6 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using HearthDb.Enums;
@@ -67,14 +66,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var relativePlayerDeckPos = ViewBoxPlayer.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeOpponentDeckPos = ViewBoxOpponent.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeSecretsPos = StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y));
-			var relativeCardMark = _cardMarks.Select(x => new {Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y))});
+			var relativeCardMark = _cardMarks.Select(x => new { Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y)) });
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly)
 								 ? Visible : Hidden;
 			ToolTipCard.CardSetToolTip.Visibility = Config.Instance.OverlaySetToolTips ? Visible : Collapsed;
 
 			var cardMark =
 				relativeCardMark.FirstOrDefault(
-											    x =>
+												x =>
 												x.Label.IsVisible && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight, new Thickness(3, 1, 7, 1)));
 			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
 			{
@@ -161,6 +160,49 @@ namespace Hearthstone_Deck_Tracker.Windows
 				SetTooltipPosition(topOffset, StackPanelSecrets);
 
 				ToolTipCard.Visibility = Config.Instance.OverlaySecretToolTipsOnly ? Visible : visibility;
+			}
+			else if(BattlegroundsTierlistPanel.Visibility == Visible && _currentTierlist > 0)
+			{
+				var found = false;
+				foreach(var group in BgCardGroups)
+				{
+					var cardList = group.Cards;
+					if(!group.IsVisible || !cardList.IsVisible)
+						continue;
+					var relativePos = cardList.PointFromScreen(new Point(pos.X, pos.Y));
+					if (PointInsideControl(relativePos, cardList.ActualWidth, cardList.ActualHeight))
+					{
+						var cards = cardList.ItemsControl.Items;
+						var cardSize = cardList.ActualHeight / cards.Count;
+						var cardIndex = (int)(relativePos.Y / cardSize);
+						if(cardIndex < 0 || cardIndex >= cards.Count)
+							return;
+						var card = cards.GetItemAt(cardIndex) as AnimatedCard;
+						if(card == null)
+							return;
+						ToolTipCard.SetValue(DataContextProperty, card.GetValue(DataContextProperty));
+
+						//offset is affected by scaling
+						var cardListPos = cardList.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+						var topOffset = cardListPos.Y + cardIndex * cardSize * _scale;
+
+						//prevent tooltip from going outside of the overlay
+						if(topOffset + ToolTipCard.ActualHeight > Height)
+							topOffset = Height - ToolTipCard.ActualHeight;
+
+						Canvas.SetTop(ToolTipCard, topOffset);
+						Canvas.SetLeft(ToolTipCard, cardListPos.X - ToolTipCard.ActualWidth + 22);
+
+						ToolTipCard.Visibility = visibility;
+						found = true;
+					}
+				}
+
+				if(!found)
+				{
+					ToolTipCard.Visibility = Hidden;
+					HideAdditionalToolTips();
+				}
 			}
 			else
 			{

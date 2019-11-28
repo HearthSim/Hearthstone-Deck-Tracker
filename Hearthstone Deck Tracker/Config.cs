@@ -774,6 +774,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool ShowBatteryLifePercent = false;
 
+		[DefaultValue(true)]
+		public bool ShowBattlegroundsTiers = true;
+
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
 

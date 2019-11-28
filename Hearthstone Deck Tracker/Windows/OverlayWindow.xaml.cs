@@ -5,19 +5,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Controls;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Controls.Overlay;
 
 #endregion
 
@@ -44,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly List<Ellipse> _playerBoard = new List<Ellipse>();
 		private readonly List<Rectangle> _playerHand = new List<Rectangle>();
 		private readonly List<Rectangle> _leaderboardIcons = new List<Rectangle>();
+		private readonly List<BattlegroundsTier> _tierlistIcons = new List<BattlegroundsTier>();
 		private bool? _isFriendsListOpen;
 		private string _lastToolTipCardId;
 		private bool _lmbDown;

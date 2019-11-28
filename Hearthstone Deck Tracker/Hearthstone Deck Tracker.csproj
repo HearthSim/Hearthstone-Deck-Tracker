@@ -247,6 +247,12 @@
     <Compile Include="Controls\OAuthLogin.xaml.cs">
       <DependentUpon>OAuthLogin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\BattlegroundsCardsGroup.xaml.cs">
+      <DependentUpon>BattlegroundsCardsGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Overlay\BattlegroundsTier.xaml.cs">
+      <DependentUpon>BattlegroundsTier.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RemovableBanner.xaml.cs">
       <DependentUpon>RemovableBanner.xaml</DependentUpon>
     </Compile>
@@ -273,6 +279,7 @@
     <Compile Include="FlyoutControls\Options\Streaming\StreamingTwitchExtension.xaml.cs">
       <DependentUpon>StreamingTwitchExtension.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hearthstone\BattlegroundsDb.cs" />
     <Compile Include="Hearthstone\BoardSnapshot.cs" />
     <Compile Include="Hearthstone\Collection.cs" />
     <Compile Include="Hearthstone\DungeonRun.cs" />
@@ -284,6 +291,7 @@
     <Compile Include="HsReplay\HSReplayNetHelper.cs" />
     <Compile Include="Utility\ComboBoxHelper.cs" />
     <Compile Include="Utility\DataLoader.cs" />
+    <Compile Include="Utility\DelayedMouseOver.cs" />
     <Compile Include="Utility\GlobalCommands.cs" />
     <Compile Include="Utility\HearthstoneRunner.cs" />
     <Compile Include="Utility\Kernel32.cs" />
@@ -955,6 +963,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Overlay\BattlegroundsCardsGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\BattlegroundsTier.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\RemovableBanner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1555,6 +1571,14 @@
     <Resource Include="Images\icon-spells.png" />
     <Resource Include="Resources\embroidery.png" />
     <Resource Include="Resources\tactile_noise.png" />
+    <Resource Include="Resources\tier-1.png" />
+    <Resource Include="Resources\tier-2.png" />
+    <Resource Include="Resources\tier-3.png" />
+    <Resource Include="Resources\tier-4.png" />
+    <Resource Include="Resources\tier-5.png" />
+    <Resource Include="Resources\tier-6.png" />
+    <Resource Include="Resources\tier-glow.png" />
+    <Resource Include="Resources\tier-x.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

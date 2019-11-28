@@ -151,8 +151,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 				GoldProgressGrid.Visibility = Collapsed;
 
-			if (_game.IsInMenu || !inBattlegrounds)
+			if(_game.IsInMenu || !inBattlegrounds)
+			{
 				BattlegroundsPanel.Visibility = Collapsed;
+				BattlegroundsTierlistPanel.Visibility = Collapsed;
+				_currentTierlist = 0;
+			}
+			else
+			{
+				var showBattlegroundsPanel = Config.Instance.ShowBattlegroundsTiers;
+				BattlegroundsTierlistPanel.Visibility = showBattlegroundsPanel ? Visible : Collapsed;
+			}
 
 			UpdateIcons();
 
@@ -273,7 +282,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			try
 			{
 				if(Visibility == Visible)
+				{
 					UpdateCardTooltip();
+					UpdateBattlegroundsOverlay();
+				}
 			}
 			catch (Exception ex)
 			{
@@ -301,6 +313,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 																	Config.Instance.OverlayOpponentScaling / 100);
 			StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
 		}
+
+		private double _scale = 1;
 
 		private void UpdateElementPositions()
 		{
@@ -330,6 +344,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(GoldProgressGrid, Width - RectGoldDisplay.ActualWidth - GoldFrameOffset - GoldProgressGrid.ActualWidth - 10);
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
+
+			if (Config.Instance.ShowBattlegroundsTiers)
+			{
+				Canvas.SetRight(BattlegroundsTierlistPanel, 0);
+				Canvas.SetTop(BattlegroundsTierlistPanel, 0);
+				var scale = Math.Max(0.8, Math.Min(1.3, Height / 1080));
+				if (scale != _scale)
+				{
+					BattlegroundsTierlistPanel.RenderTransform = new ScaleTransform(scale, scale, BattlegroundsTierlistPanel.ActualWidth, 0);
+					_scale = scale;
+				}
+			}
+
 			if (Config.Instance.ShowFlavorText)
 			{
 				Canvas.SetTop(GridFlavorText, Height - GridFlavorText.ActualHeight - 10);

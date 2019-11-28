@@ -37,6 +37,10 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxHideTimers_Checked"
                   Unchecked="CheckboxHideTimers_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowBattlegroundsTiers" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsTiers}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTiers_Checked"
+                  Unchecked="CheckboxShowBattlegroundsTiers_Unchecked" Margin="10,5,0,0" />
         <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="{lex:Loc Options_Overlay_General_CheckBox_CardTooltips}"
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxOverlayCardToolTips_Checked"

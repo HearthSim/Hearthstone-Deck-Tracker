@@ -13,6 +13,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			InitializeComponent();
 			DataContext = entity;
+			Card = (Hearthstone.Card)entity.Card.Clone();
+			Card.BaconCard = true;
 		}
 
 		public Entity Entity => (Entity)DataContext;
@@ -38,5 +40,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		public int Health => Entity?.GetTag(GameTag.HEALTH) ?? 0;
+
+		public Hearthstone.Card Card { get; }
 	}
 }

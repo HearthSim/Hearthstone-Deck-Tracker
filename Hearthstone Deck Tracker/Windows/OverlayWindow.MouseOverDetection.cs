@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -11,10 +10,12 @@ using System.Windows.Shapes;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.API;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using Point = System.Drawing.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using System.Collections.ObjectModel;
+using Hearthstone_Deck_Tracker.Controls.Overlay;
 
 #endregion
 
@@ -22,7 +23,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class OverlayWindow
 	{
-		private Entity _currentMouseOverTarget;
+		private DelayedMouseOver _entityMouseOver = new DelayedMouseOver(Config.Instance.OverlayMouseOverTriggerDelay);
+		private DelayedMouseOver _battlegroundsTiersMouseOver = new DelayedMouseOver(30, 5);
 		public double BoardWidth => Width;
 		public double BoardHeight => Height * 0.158;
 		public double MinionWidth => Width * 0.63 / 7 * ScreenRatio;
@@ -30,7 +32,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double CardHeight => Height * 0.189;
 		private const int MaxHandSize = 10;
 		private const int MaxBoardSize = 7;
-		private System.Windows.Point CenterOfHand => new System.Windows.Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
+		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
+
+		private Lazy<BattlegroundsDb> _bgDb = new Lazy<BattlegroundsDb>();
 
 		public Thickness MinionMargin
 		{
@@ -96,14 +100,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private bool IsGameOver => _game.IsInMenu || _game.GameEntity == null || _game.GameEntity.GetTag(GameTag.STATE) == (int)State.COMPLETE;
 
-		private double GetCardAngle(int playerHandCount, System.Windows.Point pos, int i)
+		private double GetCardAngle(int playerHandCount, Point pos, int i)
 		{
 			var extraRotation = playerHandCount == 7 ? 0 : playerHandCount > 4 ? ((playerHandCount) % 2) : 1;
 			var direction = pos.X > CenterOfHand.X ? -1 + (extraRotation * 0.3 * (playerHandCount - i) * Math.Max(1, i - 7)) : 1;
 			return (CenterOfHand.Y - pos.Y) / Height * 600 * direction * (1 + Math.Sqrt(10.0 / (i + 1)) * 0.08);
 		}
 
-		private void AddCardDebugOverlay(Rectangle cardRect, System.Windows.Point pos)
+		private void AddCardDebugOverlay(Rectangle cardRect, Point pos)
 		{
 			cardRect.Stroke = Brushes.Red;
 			cardRect.StrokeThickness = 1;
@@ -122,24 +126,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var lbl = new Label {Content = entity.Card.Name, Foreground = Brushes.White};
 			_debugBoardObjects.Add(lbl);
 			CanvasInfo.Children.Add(lbl);
-			var pos = entityEllipse.TransformToAncestor(CanvasInfo).Transform(new System.Windows.Point(0, 0));
+			var pos = entityEllipse.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
 			Canvas.SetTop(lbl, pos.Y + 10);
 			Canvas.SetLeft(lbl, pos.X + 10);
 		}
 
-		private async void DelayedMouseOverDetection(Entity entity, Action action)
+		private Point GetCursorPos()
 		{
-			var mousePos = User32.GetMousePos();
-			await Task.Delay(Config.Instance.OverlayMouseOverTriggerDelay);
-			if(Distance(User32.GetMousePos(), mousePos) > 3)
+			try
 			{
-				FlavorTextVisibility = Visibility.Collapsed;
-				_currentMouseOverTarget = null;
-				return;
+				var pos = User32.GetMousePos();
+				return CanvasInfo.PointFromScreen(new Point(pos.X, pos.Y));
 			}
-			if(_currentMouseOverTarget != entity)
-				return;
-			action?.Invoke();
+			catch(InvalidOperationException)
+			{
+				return new Point(-1, -1);
+			}
 		}
 
 		private void DetectMouseOver(List<Entity> playerBoard, List<Entity> oppBoard)
@@ -149,42 +151,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 				FlavorTextVisibility = Visibility.Collapsed;
 				return;
 			}
-			var pos = User32.GetMousePos();
-			System.Windows.Point relativeCanvas;
-			try
-			{
-				relativeCanvas = CanvasInfo.PointFromScreen(new System.Windows.Point(pos.X, pos.Y));
-			}
-			catch(InvalidOperationException)
-			{
+			var relativeCanvas = GetCursorPos();
+			if(relativeCanvas.X == -1 && relativeCanvas.Y == -1)
 				return;
-			}
 			for(var i = 0; i < 7; i++)
 			{
 				if(oppBoard.Count > i && EllipseContains(_oppBoard[i], relativeCanvas))
 				{
 					var entity = oppBoard[i];
-					if(_currentMouseOverTarget == entity)
-						return;
-					_currentMouseOverTarget = entity;
-					DelayedMouseOverDetection(entity, () =>
+					_entityMouseOver.DelayedMouseOverDetection(oppBoard[i], () =>
 					{
 						SetFlavorTextEntity(entity);
 						GameEvents.OnOpponentMinionMouseOver.Execute(entity.Card);
-					});
+					}, () => FlavorTextVisibility = Visibility.Collapsed);
 					return;
 				}
 				if(playerBoard.Count > i && EllipseContains(_playerBoard[i], relativeCanvas))
 				{
 					var entity = playerBoard[i];
-					if(_currentMouseOverTarget == entity)
-						return;
-					_currentMouseOverTarget = entity;
-					DelayedMouseOverDetection(entity, () =>
+					_entityMouseOver.DelayedMouseOverDetection(entity, () =>
 					{
 						SetFlavorTextEntity(entity);
 						GameEvents.OnPlayerMinionMouseOver.Execute(entity.Card);
-					});
+					}, () => FlavorTextVisibility = Visibility.Collapsed);
 					return;
 				}
 			}
@@ -194,61 +183,140 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(RotatedRectContains(_playerHand[i], relativeCanvas))
 				{
 					var entity = Core.Game.Player.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == i+1);
-					if(entity == null || _currentMouseOverTarget == entity)
+					if(entity == null)
 						return;
-					_currentMouseOverTarget = entity;
-					DelayedMouseOverDetection(entity, () =>
+					_entityMouseOver.DelayedMouseOverDetection(entity, () =>
 					{
 						SetFlavorTextEntity(entity);
 						GameEvents.OnPlayerHandMouseOver.Execute(entity.Card);
-					});
-					return;
+					}, () => FlavorTextVisibility = Visibility.Collapsed);
 				}
 			}
-			if(_currentMouseOverTarget != null)
+			if(_entityMouseOver.HasCurrent)
 				GameEvents.OnMouseOverOff.Execute();
-			_currentMouseOverTarget = null;
+			_entityMouseOver.Clear();
 			FlavorTextVisibility = Visibility.Collapsed;
+		}
 
-			if(_game.CurrentGameType == GameType.GT_BATTLEGROUNDS)
+		private int _currentTierlist = 0;
+
+		public ObservableCollection<BattlegroundsCardsGroup> BgCardGroups { get; set; } = new ObservableCollection<BattlegroundsCardsGroup>() { };
+
+		private void UpdateBattlegroundsOverlay()
+		{
+			var cursorPos = GetCursorPos();
+			if(cursorPos.X == -1 && cursorPos.Y == -1)
+				return;
+			var isHoveringLeaderboard = false;
+			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{
-				var isHoveringLeaderboard = false;
-				for(var i = 0; i < _leaderboardIcons.Count; i++)
+				if(ElementContains(_leaderboardIcons[i], cursorPos))
 				{
-					if(ReactContains(_leaderboardIcons[i], relativeCanvas))
-					{
-						var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
-						if(entity == null)
-							break;
-						if(!_game.LastKnownBattlegroundsBoardState.TryGetValue(entity.CardId, out var state))
-							break;
-						BattlegroundsBoard.Children.Clear();
-						foreach(var e in state.Entities)
-							BattlegroundsBoard.Children.Add(new EntityControl(e));
-						var age = _game.GetTurnNumber() - state.Turn;
-						BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
-						BattlegroundsOpponent.Text = entity.Card.LocalizedName;
-						isHoveringLeaderboard = true;
+					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
+					if(entity == null)
 						break;
-					}
-				}
-				if(isHoveringLeaderboard)
-				{
-					Canvas.SetTop(BattlegroundsPanel, Height * 0.01);
-					Canvas.SetLeft(BattlegroundsPanel, Helper.GetScaledXPos(0.05, (int)Width, ScreenRatio));
-					BattlegroundsPanel.Visibility = Visibility.Visible;
-					var scale = Math.Min(1.5, Height / 1080);
-					BattlegroundsPanel.RenderTransform = new ScaleTransform(scale, scale, 0, 0);
-				}
-				else
-				{
+					if(!_game.LastKnownBattlegroundsBoardState.TryGetValue(entity.CardId, out var state))
+						break;
 					BattlegroundsBoard.Children.Clear();
-					BattlegroundsPanel.Visibility = Visibility.Collapsed;
+					foreach(var e in state.Entities)
+						BattlegroundsBoard.Children.Add(new EntityControl(e));
+					var age = _game.GetTurnNumber() - state.Turn;
+					BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
+					BattlegroundsOpponent.Text = entity.Card.LocalizedName;
+					isHoveringLeaderboard = true;
+					break;
+				}
+			}
+			if(isHoveringLeaderboard)
+			{
+				Canvas.SetTop(BattlegroundsPanel, Height * 0.01);
+				Canvas.SetLeft(BattlegroundsPanel, Helper.GetScaledXPos(0.05, (int)Width, ScreenRatio));
+				BattlegroundsPanel.Visibility = Visibility.Visible;
+				var scale = Math.Min(1.5, Height / 1080);
+				BattlegroundsPanel.RenderTransform = new ScaleTransform(scale, scale, 0, 0);
+			}
+			else
+			{
+				BattlegroundsBoard.Children.Clear();
+				BattlegroundsPanel.Visibility = Visibility.Collapsed;
+			}
+			if(Config.Instance.ShowBattlegroundsTiers)
+			{
+				for(var i = 0; i < 6; i++)
+				{
+					var tier = i + 1;
+					if(ElementContains(_tierlistIcons[i], cursorPos))
+						_battlegroundsTiersMouseOver.DelayedMouseOverDetection(_tierlistIcons[i], () => UpdateCurrentTierList(tier));
+				}
+				if(ElementContains(BgHideTierlist, cursorPos))
+					_battlegroundsTiersMouseOver.DelayedMouseOverDetection(BgHideTierlist, () => UpdateCurrentTierList(0));
+			}
+			else
+				UpdateCurrentTierList(0);
+		}
+
+
+		private bool AddOrUpdateBgCardGroup(string title, List<Hearthstone.Card> cards)
+		{
+			var addedNew = false;
+			var existing = BgCardGroups.FirstOrDefault(x => x.Title == title);
+			if(existing == null)
+			{
+				existing = new BattlegroundsCardsGroup() { Title = title };
+				BgCardGroups.Add(existing);
+				addedNew = true;
+			}
+			var sortedCards = cards
+				.OrderBy(x => x.LocalizedName)
+				.ToList();
+			existing.UpdateCards(sortedCards);
+			return addedNew;
+		}
+
+		private void UpdateCurrentTierList(int tier)
+		{
+			if (_currentTierlist == tier)
+				return;
+			_currentTierlist = tier;
+			foreach(var item in _tierlistIcons)
+				item.Active = tier == item.Tier;
+			if(tier < 1 || tier > 6)
+			{
+				for(var i = 0; i < 6; i++)
+					_tierlistIcons[i].Opacity = 1;
+				BgHideTierlist.Opacity = 0.3;
+				BgCardGroups.Clear();
+				return;
+			}
+			BgHideTierlist.Opacity = 1;
+			for(var i = 0; i < 6; i++)
+				_tierlistIcons[i].Opacity = i == tier -1 ? 1 : 0.5;
+
+			var resort = false;
+			foreach(var race in _bgDb.Value.Races)
+			{
+				var title = race == Race.INVALID ? "Other" : HearthDbConverter.RaceConverter(race);
+				var cards = _bgDb.Value.GetCards(tier, race);
+				if(cards.Count == 0)
+					BgCardGroups.FirstOrDefault(x => x.Title == title)?.Hide();
+				else
+					resort |= AddOrUpdateBgCardGroup(title, cards);
+			}
+
+			if (resort)
+			{
+				var items = BgCardGroups.ToList()
+					.OrderBy(x => string.IsNullOrEmpty(x.Title))
+					.ThenBy(x => x.Title);
+				foreach(var item in items)
+				{
+					BgCardGroups.Remove(item);
+					BgCardGroups.Add(item);
 				}
 			}
 		}
 
-		public System.Windows.Point GetPlayerCardPosition(int position, int count)
+		public Point GetPlayerCardPosition(int position, int count)
 		{
 			var cardWidth = 0.0f;
 			var center = 0.0f;
@@ -268,7 +336,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var y = 1f;
 			if (count > 1)
 				y = y + (float)Math.Pow(Math.Abs(position - count / 2), 2) / (4 * count) * 0.11f * setAngle + rightYOffset * 0.0009f;
-			return new System.Windows.Point(x, y * CenterOfHand.Y);
+			return new Point(x, y * CenterOfHand.Y);
 		}
 
 		private float GetCardSpacing(int count)
@@ -280,23 +348,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return cardWidth;
 		}
 
-		private double Distance(Point p1, Point p2) => Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2);
-
-		public bool EllipseContains(Ellipse ellipse, System.Windows.Point location)
+		public bool EllipseContains(Ellipse ellipse, Point location)
 		{
-			var pos = ellipse.TransformToAncestor(CanvasInfo).Transform(new System.Windows.Point(0, 0));
-			var center = new System.Windows.Point(pos.X + ellipse.Width / 2, pos.Y + ellipse.Height / 2);
+			var pos = ellipse.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+			var center = new Point(pos.X + ellipse.Width / 2, pos.Y + ellipse.Height / 2);
 			var radiusX = ellipse.Width / 2;
 			var radiusY = ellipse.Height / 2;
 			if (radiusX <= 0.0 || radiusY <= 0.0)
 				return false;
-			var normalized = new System.Windows.Point(location.X - center.X, location.Y - center.Y);
+			var normalized = new Point(location.X - center.X, location.Y - center.Y);
 			return ((normalized.X * normalized.X) / (radiusX * radiusX)) + ((normalized.Y * normalized.Y) / (radiusY * radiusY)) <= 1.0;
 		}
 
-		public bool RotatedRectContains(Rectangle rect, System.Windows.Point location)
+		public bool RotatedRectContains(Rectangle rect, Point location)
 		{
-			var rectCorner = new System.Windows.Point(Canvas.GetLeft(rect), Canvas.GetTop(rect));
+			var rectCorner = new Point(Canvas.GetLeft(rect), Canvas.GetTop(rect));
 			var rectRotation = rect.RenderTransform as RotateTransform;
 			if(rectRotation == null)
 				return false;
@@ -306,11 +372,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				   && rotated.Y < rectCorner.Y + rect.Height;
 		}
 
-		public bool ReactContains(Rectangle rect, System.Windows.Point location)
+		public bool ElementContains(FrameworkElement element, Point location)
 		{
-			var rectCorner = new System.Windows.Point(Canvas.GetLeft(rect), Canvas.GetTop(rect));
-			return location.X > rectCorner.X && location.X < rectCorner.X + rect.Width && location.Y > rectCorner.Y
-				   && location.Y < rectCorner.Y + rect.Height;
+			if(!element.IsVisible)
+				return false;
+			var point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+			return location.X > point.X && location.X < point.X + element.ActualWidth && location.Y > point.Y
+				   && location.Y < point.Y + element.ActualHeight;
 		}
 	}
 }

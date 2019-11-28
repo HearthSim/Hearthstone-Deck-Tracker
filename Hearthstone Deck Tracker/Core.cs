@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker
 {
 	public static class Core
 	{
-		internal const int UpdateDelay = 100;
+		internal const int UpdateDelay = 16;
 		private static TrayIcon _trayIcon;
 		private static OverlayWindow _overlay;
 		private static Overview _statsOverview;
