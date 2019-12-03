@@ -1,3 +1,11 @@
+## **Release v1.9.1 - 2019-12-03**
+**New**:
+- Added a new overlay for Battlegrounds, showing minions available in each tavern tier.
+
+**Fixes**:
+- Fixed an issue where pinned shortcuts would not work across updates.
+
+
 ## **Release v1.9.0 - 2019-11-14**
 **New: Battlegrounds Support**:
 - Hovering an opponent in the sidebar will now display their last known board state.
