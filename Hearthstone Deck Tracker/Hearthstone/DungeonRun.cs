@@ -181,7 +181,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collectible.Warrior.Bash,
 				Collectible.Warrior.FierceMonkey,
 				Collectible.Warrior.KingsDefender,
-				Collectible.Warrior.BloodhoofBraveOG
+				Collectible.Warrior.BloodhoofBrave
 			};
 
 			public static List<string> Hunter => new List<string>
@@ -200,12 +200,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static List<string> Mage => new List<string>
 			{
-				Collectible.Mage.BabblingBookKARA,
+				Collectible.Mage.BabblingBook,
 				Collectible.Neutral.MadBomber,
 				Collectible.Mage.PrimordialGlyph,
 				Collectible.Mage.UnstablePortal,
 				Collectible.Mage.Cinderstorm,
-				Collectible.Mage.FlamewakerFP2,
+				Collectible.Mage.Flamewaker,
 				Collectible.Mage.Spellslinger,
 				Collectible.Neutral.TinkmasterOverspark,
 				Collectible.Mage.WaterElemental,
@@ -430,7 +430,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Warrior.Execute,
 					Collectible.Warrior.Rampage,
 					Collectible.Warrior.CruelTaskmaster,
-					Collectible.Warrior.BloodhoofBraveOG,
+					Collectible.Warrior.BloodhoofBrave,
 					Collectible.Neutral.AmaniBerserker,
 					Collectible.Neutral.Deathspeaker,
 					Collectible.Neutral.RagingWorgen,
@@ -672,7 +672,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				new List<string>
 				{
 					NonCollectible.Mage.JanalaisMantle,
-					Collectible.Mage.BabblingBookKARA,
+					Collectible.Mage.BabblingBook,
 					Collectible.Mage.ArcaneExplosion,
 					Collectible.Mage.ShimmeringTempest,
 					Collectible.Mage.ExplosiveRunes,
