@@ -113,7 +113,6 @@
     <Compile Include="Hearthstone\ParseCardStringTest.cs" />
     <Compile Include="Hearthstone\Secrets\SecretEventHandlerTest.cs" />
     <Compile Include="Hearthstone\LogReadingTest.cs" />
-    <Compile Include="Hearthstone\WebImportTest.cs" />
     <Compile Include="Hearthstone\DeckTest.cs" />
     <Compile Include="Hearthstone\CardDbTest.cs" />
     <Compile Include="HsReplay\Utility\ShortIdHelperTests.cs" />
