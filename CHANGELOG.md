@@ -1,3 +1,7 @@
+## **Release v1.9.2 - 2019-12-05**
+**Updated for Descent of Dragons**
+
+
 ## **Release v1.9.1 - 2019-12-03**
 **New**:
 - Added a new overlay for Battlegrounds, showing minions available in each tavern tier.
