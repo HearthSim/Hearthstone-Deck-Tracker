@@ -45,6 +45,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			return _game.GetTurnNumber();
 		}
 
+		public int Turn => _game.GameEntity.GetTag(GameTag.TURN);
+
 		public void Reset()
 		{
 			GameEnded = false;
@@ -90,6 +92,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public string Type { get; }
 		public string CardId { get; }
 		public string Target { get; }
+
+		public bool HasFullEntityHeroPackets { get; set; }
 
 		public Entity EntityDiscardedByArchivist { get; set; }
 

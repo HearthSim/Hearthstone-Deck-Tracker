@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case FATIGUE:
 					return () => FatigueChange(gameState, value, game, id);
 				case STEP:
-					return () => StepChange(gameState, game, (Step)value);
+					return () => StepChange(gameState, game);
 				case TURN:
 					return () => TurnChange(gameState, game);
 				case STATE:
@@ -146,16 +146,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.OpponentUsedHeroPower = false;
 		}
 
-		private void StepChange(IHsGameState gameState, IGame game, Step step)
+		private void StepChange(IHsGameState gameState, IGame game)
 		{
-			if(game.CurrentGameType == GameType.GT_BATTLEGROUNDS && step == Step.MAIN_READY && game.Opponent?.Id > 0)
-			{
-				var opponentHero = game.Entities.Values
-					.Where(x => x.IsHero && x.IsInZone(PLAY) && x.IsControlledBy(game.Opponent.Id))
-					.FirstOrDefault();
-				if(opponentHero?.CardId != null && opponentHero.CardId != NonCollectible.Neutral.BobsTavernTavernBrawl)
-					game.SnapshotBattlegroundsBoardState();
-			}
 			if(game.SetupDone || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
 				return;
 			Log.Info("Game was already in progress.");

@@ -146,6 +146,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(guessedCardId)
 						entity.Info.GuessedCardState = GuessedCardState.Guessed;
 					game.Entities.Add(id, entity);
+
+					if(gameState.CurrentBlock != null && (entity.CardId?.ToUpper().Contains("HERO") ?? false))
+						gameState.CurrentBlock.HasFullEntityHeroPackets = true;
 				}
 				gameState.SetCurrentEntity(id);
 				if(gameState.DeterminedPlayers)
@@ -533,8 +536,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					gameState.GameHandler.HandleChameleosReveal(gameState.ChameleosReveal.Item2);
 				}
-
 				gameState.ChameleosReveal = null;
+
+				if(gameState.CurrentBlock?.Type == "TRIGGER"
+					&& gameState.CurrentBlock?.CardId == NonCollectible.Neutral.Baconshop8playerenchantTavernBrawl
+					&& gameState.CurrentBlock?.HasFullEntityHeroPackets == true
+					&& gameState.Turn % 2 == 0)
+				{
+					game.SnapshotBattlegroundsBoardState();
+				}
 
 				gameState.BlockEnd();
 			}

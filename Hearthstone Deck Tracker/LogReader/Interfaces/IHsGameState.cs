@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		int GameTriggerCount { get; set; }
 		Zone CurrentEntityZone { get; set; }
 		bool DeterminedPlayers { get; }
+		int Turn { get; }
 		int GetTurnNumber();
 		void Reset();
 		void SetCurrentEntity(int id);
