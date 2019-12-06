@@ -17,15 +17,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public BattlegroundsDb()
 		{
-			Update(RemoteConfig.Instance.Data.BattlegroundsTagOverrides);
-			RemoteConfig.Instance.Loaded += d => Update(d.BattlegroundsTagOverrides);
+			Update(RemoteConfig.Instance.Data?.BattlegroundsTagOverrides);
+			RemoteConfig.Instance.Loaded += d => Update(d?.BattlegroundsTagOverrides);
 		}
 
 		private void Update(List<RemoteConfig.ConfigData.TagOverride> tagOverrides)
 		{
 			var overrides = new Dictionary<int, Tuple<GameTag, int>>();
-			foreach(var tagOverride in tagOverrides)
-				overrides[tagOverride.DbfId] = new Tuple<GameTag, int>(tagOverride.Tag, tagOverride.Value);
+			if (tagOverrides != null)
+			{
+				foreach(var tagOverride in tagOverrides)
+					overrides[tagOverride.DbfId] = new Tuple<GameTag, int>(tagOverride.Tag, tagOverride.Value);
+			}
 			Func<HearthDb.Card, GameTag, int> getTag = (HearthDb.Card card, GameTag tag) =>
 			{
 				if(overrides.TryGetValue(card.DbfId, out var tagOverride) && tagOverride.Item1 == tag)
