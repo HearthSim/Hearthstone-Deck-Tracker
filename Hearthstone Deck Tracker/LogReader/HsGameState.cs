@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			return _game.GetTurnNumber();
 		}
 
-		public int Turn => _game.GameEntity.GetTag(GameTag.TURN);
+		public int Turn => _game?.GameEntity?.GetTag(GameTag.TURN) ?? 0;
 
 		public void Reset()
 		{
