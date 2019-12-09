@@ -1,3 +1,8 @@
+## **Release v1.9.3 - 2019-12-09**
+**Fixes**:
+- Fixed an issue where the last known board state in Battlegrounds was not always reliably tracked.
+
+
 ## **Release v1.9.2 - 2019-12-05**
 **Updated for Descent of Dragons**
 
