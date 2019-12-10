@@ -1,3 +1,12 @@
+## **Release v1.9.5 - 2019-12-10**
+**Changes**:
+- Added card tracking for serveral new Descent of Dragons cards.
+- The Battlegrounds minion tiers overlay now fades out when hovering opponents in the leaderboard.
+
+**Fixes**:
+- Fixed an issue where Galakrond was not tracked correctly.
+
+
 ## **Release v1.9.4 - 2019-12-09**
 **Fixes**:
 - Potentially fixed an issue where the battlegrounds overlay would go off screen.
