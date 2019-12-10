@@ -101,7 +101,12 @@ namespace Hearthstone_Deck_Tracker.Live
 
 			var deck = DeckList.Instance.ActiveDeck;
 			var games = deck?.GetRelevantGames();
-			var fullDeckList = DeckList.Instance.ActiveDeckVersion?.Cards.ToDictionary(x => x.DbfIf, x => x.Count);
+			var fullDeckList = new Dictionary<int, int>();
+			if (DeckList.Instance.ActiveDeckVersion != null)
+			{
+				foreach(var card in DeckList.Instance.ActiveDeckVersion.Cards)
+					fullDeckList[card.DbfIf] = card.Count;
+			}
 			int FullCount(int dbfId) => fullDeckList == null ? 0 : fullDeckList.TryGetValue(dbfId, out var count) ? count : 0;
 
 			var playerCardsDict = new List<int[]>();
