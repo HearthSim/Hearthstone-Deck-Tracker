@@ -105,6 +105,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsQuest => HasTag(GameTag.QUEST);
 
 		[JsonIgnore]
+		public bool IsSideQuest => HasTag(GameTag.SIDEQUEST);
+
+		[JsonIgnore]
 		public Card Card => _cachedCard ??
 			(_cachedCard = Database.GetCardFromId(CardId) ??
 				new Card(string.Empty, null, Rarity.FREE, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "", "", false));

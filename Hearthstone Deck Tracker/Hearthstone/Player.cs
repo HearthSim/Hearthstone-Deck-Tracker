@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public IEnumerable<Entity> Deck => PlayerEntities.Where(x => x.IsInDeck);
 		public IEnumerable<Entity> Graveyard => PlayerEntities.Where(x => x.IsInGraveyard);
 		public IEnumerable<Entity> Secrets => PlayerEntities.Where(x => x.IsInSecret && x.IsSecret);
-		public IEnumerable<Entity> Quests => PlayerEntities.Where(x => x.IsInSecret && x.IsQuest);
+		public IEnumerable<Entity> Quests => PlayerEntities.Where(x => x.IsInSecret && (x.IsQuest || x.IsSideQuest));
 		public IEnumerable<Entity> SetAside => PlayerEntities.Where(x => x.IsInSetAside);
 
 		public List<PredictedCard> InDeckPrecitions { get; } = new List<PredictedCard>();
