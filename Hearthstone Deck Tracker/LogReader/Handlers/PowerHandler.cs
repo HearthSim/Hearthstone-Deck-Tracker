@@ -338,6 +338,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								else if(correspondPlayer == game.Opponent.Id)
 									AddKnownCardId(gameState, game.Opponent.LastDiedMinionCardId);
 								break;
+							case Collectible.Druid.SecureTheDeck:
+								AddKnownCardId(gameState, Collectible.Druid.Claw, 3);
+								break;
+							case Collectible.Rogue.Waxadred:
+								AddKnownCardId(gameState, NonCollectible.Rogue.Waxadred_WaxadredsCandleToken);
+								break;
+							case Collectible.Neutral.BadLuckAlbatross:
+								AddKnownCardId(gameState, NonCollectible.Invalid.BadLuckAlbatross_AlbatrossToken);
+								break;
 
 						}
 					}
@@ -477,6 +486,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Warlock.Impbalming:
 								AddKnownCardId(gameState, NonCollectible.Warlock.Impbalming_WorthlessImpToken, 3);
+								break;
+							case Collectible.Druid.YseraUnleashed:
+								AddKnownCardId(gameState, NonCollectible.Druid.YseraUnleashed_DreamPortalToken, 7);
+								break;
+							case Collectible.Rogue.BloodsailFlybooter:
+								AddKnownCardId(gameState, NonCollectible.Rogue.BloodsailFlybooter_SkyPirateToken, 2);
+								break;
+							case Collectible.Rogue.UmbralSkulker:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoin, 3);
+								break;
+							case Collectible.Neutral.Sathrovarr:
+								AddKnownCardId(gameState, target, 3);
+								break;
+							case Collectible.Neutral.DragonBreeder:
+								AddKnownCardId(gameState, target);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
