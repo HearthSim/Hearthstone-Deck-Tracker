@@ -176,7 +176,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(!game.Entities.ContainsKey(entityId))
 						game.Entities.Add(entityId, new Entity(entityId));
 					var entity = game.Entities[entityId];
-					if(type != "CHANGE_ENTITY" || string.IsNullOrEmpty(entity.CardId))
+					if(string.IsNullOrEmpty(entity.CardId))
 					{
 						entity.CardId = cardId;
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
