@@ -349,12 +349,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				Canvas.SetRight(BattlegroundsTierlistPanel, 0);
 				Canvas.SetTop(BattlegroundsTierlistPanel, 0);
-				var scale = Math.Max(0.8, Math.Min(1.3, Height / 1080));
-				if (scale != _scale)
-				{
-					BattlegroundsTierlistPanel.RenderTransform = new ScaleTransform(scale, scale, BattlegroundsTierlistPanel.ActualWidth, 0);
-					_scale = scale;
-				}
+				_scale = Math.Max(0.8, Math.Min(1.3, Height / 1080));
+				BattlegroundsTierlistPanel.RenderTransform = new ScaleTransform(_scale, _scale, BattlegroundsTierlistPanel.ActualWidth, 0);
 			}
 
 			if (Config.Instance.ShowFlavorText)
