@@ -207,11 +207,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
 				return;
-			var isHoveringLeaderboard = false;
+			var showMinions = false;
+			var hideTierlist = false;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{
 				if(ElementContains(_leaderboardIcons[i], cursorPos))
 				{
+					hideTierlist = true;
 					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
 					if(entity == null)
 						break;
@@ -223,11 +225,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					var age = _game.GetTurnNumber() - state.Turn;
 					BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
 					BattlegroundsOpponent.Text = entity.Card.LocalizedName;
-					isHoveringLeaderboard = true;
+					showMinions = true;
 					break;
 				}
 			}
-			if(isHoveringLeaderboard)
+			if(showMinions)
 			{
 				Canvas.SetTop(BattlegroundsPanel, Height * 0.01);
 				Canvas.SetLeft(BattlegroundsPanel, Helper.GetScaledXPos(0.05, (int)Width, ScreenRatio));
@@ -240,6 +242,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				BattlegroundsBoard.Children.Clear();
 				BattlegroundsPanel.Visibility = Visibility.Collapsed;
 			}
+			BattlegroundsTierlistPanel.Opacity = hideTierlist ? 0.3 : 1;
 			if(Config.Instance.ShowBattlegroundsTiers)
 			{
 				for(var i = 0; i < 6; i++)
