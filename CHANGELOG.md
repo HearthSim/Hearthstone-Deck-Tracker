@@ -1,3 +1,10 @@
+## **Release v1.9.4 - 2019-12-09**
+**Fixes**:
+- Potentially fixed an issue where the battlegrounds overlay would go off screen.
+- Fixed an issue where HDT would crash when showing tooltips for certain cards.
+- Fixed an issue where HDT would cause a crash during some battlegrounds games.
+
+
 ## **Release v1.9.3 - 2019-12-09**
 **Fixes**:
 - Fixed an issue where the last known board state in Battlegrounds was not always reliably tracked.
