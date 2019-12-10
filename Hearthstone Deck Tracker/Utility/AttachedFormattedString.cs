@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -32,8 +33,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 		{
 			if(value == null)
 				 yield break;
-			//<w> is a wrapper so it gets read as an XElement
-			var element = XElement.Parse("<w>" + Regex.Replace(value, @"\<(\w+?)\>", x => x.Captures[0].Value.ToLower()) + "</w>");
+
+			XElement element;
+			try
+			{
+				//<w> is a wrapper so it gets read as an XElement
+				element = XElement.Parse("<w>" + Regex.Replace(value, @"\<(\w+?)\>", x => x.Captures[0].Value.ToLower()) + "</w>");
+			}
+			catch(Exception e)
+			{
+				Logging.Log.Error(e);
+				yield break;
+			}
 			//descendantnodes is the only method that includes the XTexts, but it also includes the XTexts of the children XElements.
 			//so we gotta make sure the parent is the element we created to know these are the values we are after.
 			foreach (var n in element.DescendantNodes().Where(x => x.Parent.Name == "w"))
