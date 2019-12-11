@@ -132,7 +132,7 @@ namespace HearthWatcher.LogReader
 								if(line.StartsWith("D "))
 								{
 									var next = sr.Peek();
-									if(!sr.EndOfStream && !(next == 'D' || next == 'W'))
+									if(!sr.EndOfStream && !(next == 'D' || next == 'W' || next == 'E'))
 										break;
 									var logLine = new LogLine(Info.Name, line);
 									if((!Info.HasFilters || (Info.StartsWithFilters?.Any(x => logLine.LineContent.StartsWith(x)) ?? false)
