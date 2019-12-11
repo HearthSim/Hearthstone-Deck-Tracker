@@ -1,3 +1,8 @@
+## **Release v1.9.6 - 2019-12-11**
+**Fixes**:
+- Fixed an issue that was causing HDT to stop tracking cards and stats under certain conditions.
+
+
 ## **Release v1.9.5 - 2019-12-10**
 **Changes**:
 - Added card tracking for serveral new Descent of Dragons cards.
