@@ -1,3 +1,7 @@
+## **Release v1.9.7 - 2019-12-19**
+**Updated for Hearthstone 16.0.5.38377**
+
+
 ## **Release v1.9.6 - 2019-12-11**
 **Fixes**:
 - Fixed an issue that was causing HDT to stop tracking cards and stats under certain conditions.
