@@ -345,7 +345,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Rogue.Waxadred_WaxadredsCandleToken);
 								break;
 							case Collectible.Neutral.BadLuckAlbatross:
-								AddKnownCardId(gameState, NonCollectible.Invalid.BadLuckAlbatross_AlbatrossToken);
+								AddKnownCardId(gameState, NonCollectible.Neutral.BadLuckAlbatross_AlbatrossToken);
 								break;
 
 						}
