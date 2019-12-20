@@ -413,6 +413,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentPogoHopperCounter = DisplayMode.Auto;
 
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode OpponentGalakrondCounter = DisplayMode.Auto;
+
 		[DefaultValue(false)]
 		public bool HideOpponentCardAge = false;
 
@@ -454,6 +457,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode PlayerPogoHopperCounter = DisplayMode.Auto;
+
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode PlayerGalakrondCounter = DisplayMode.Auto;
 
 		[DefaultValue(false)]
 		public bool HidePlayerCards = false;

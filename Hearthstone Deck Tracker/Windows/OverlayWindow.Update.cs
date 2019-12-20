@@ -196,6 +196,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showPlayerSpellsCounter = WotogCounterHelper.ShowPlayerSpellsCounter;
 			var showPlayerJadeCounter = WotogCounterHelper.ShowPlayerJadeCounter;
 			var showPlayerPogoHopperCounter = WotogCounterHelper.ShowPlayerPogoHopperCounter;
+			var showPlayerGalakrondCounter = WotogCounterHelper.ShowPlayerGalakrondCounter;
 			if(showPlayerCthunCounter)
 			{
 				var proxy = WotogCounterHelper.PlayerCthunProxy;
@@ -208,14 +209,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsPlayer.Jade = WotogCounterHelper.PlayerNextJadeGolem.ToString();
 			if(showPlayerPogoHopperCounter)
 				WotogIconsPlayer.PogoHopper = ((_game.Player.PogoHopperPlayedCount + 1 ) * 2 - 1).ToString();
+			if(showPlayerGalakrondCounter)
+				WotogIconsPlayer.Galakrond = WotogCounterHelper.PlayerGalakrondInvokeCounter.ToString();
 			WotogIconsPlayer.WotogCounterStyle = showPlayerCthunCounter && showPlayerSpellsCounter ? Full : (showPlayerCthunCounter ? Cthun : (showPlayerSpellsCounter ? Spells : None));
 			WotogIconsPlayer.JadeCounterStyle = showPlayerJadeCounter ? Full : None;
 			WotogIconsPlayer.PogoHopperCounterStyle = showPlayerPogoHopperCounter ? Full : None;
+			WotogIconsPlayer.GalakrondCounterStyle = showPlayerGalakrondCounter ? Full : None;
 
 			var showOpponentCthunCounter = WotogCounterHelper.ShowOpponentCthunCounter;
 			var showOpponentSpellsCounter = WotogCounterHelper.ShowOpponentSpellsCounter;
 			var showOpponentJadeCounter = WotogCounterHelper.ShowOpponentJadeCounter;
 			var showOpponentPogoHopperCounter = WotogCounterHelper.ShowOpponentPogoHopperCounter;
+			var showOpponentGalakrondCounter = WotogCounterHelper.ShowOpponentGalakrondCounter;
 			if(showOpponentCthunCounter)
 			{
 				var proxy = WotogCounterHelper.OpponentCthunProxy;
@@ -228,9 +233,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsOpponent.Jade = WotogCounterHelper.OpponentNextJadeGolem.ToString();
 			if (showOpponentPogoHopperCounter)
 				WotogIconsOpponent.PogoHopper = ((_game.Opponent.PogoHopperPlayedCount + 1) * 2 - 1).ToString();
+			if(showOpponentGalakrondCounter)
+				WotogIconsOpponent.Galakrond = WotogCounterHelper.OpponentGalakrondInvokeCounter.ToString();
 			WotogIconsOpponent.WotogCounterStyle = showOpponentCthunCounter && showOpponentSpellsCounter ? Full : (showOpponentCthunCounter ? Cthun : (showOpponentSpellsCounter ? Spells : None));
 			WotogIconsOpponent.JadeCounterStyle = showOpponentJadeCounter ? Full : None;
 			WotogIconsOpponent.PogoHopperCounterStyle = showOpponentPogoHopperCounter ? Full : None;
+			WotogIconsOpponent.GalakrondCounterStyle = showOpponentGalakrondCounter ? Full : None;
 		}
 
 		private void UpdateGoldProgress()

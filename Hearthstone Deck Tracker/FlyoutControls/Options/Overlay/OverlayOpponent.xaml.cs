@@ -90,6 +90,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			ComboBoxJade.SelectedItem = Config.Instance.OpponentJadeCounter;
 			ComboBoxPogoHopper.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxPogoHopper.SelectedItem = Config.Instance.OpponentPogoHopperCounter;
+			ComboBoxGalakrond.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
+			ComboBoxGalakrond.SelectedItem = Config.Instance.OpponentGalakrondCounter;
 			CheckboxHideOpponentCardAge.IsChecked = Config.Instance.HideOpponentCardAge;
 			CheckboxHideOpponentCardMarks.IsChecked = Config.Instance.HideOpponentCardMarks;
 			CheckboxHideSecrets.IsChecked = Config.Instance.HideSecrets;
@@ -338,6 +340,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if (!_initialized)
 				return;
 			Config.Instance.OpponentPogoHopperCounter = (DisplayMode)ComboBoxPogoHopper.SelectedItem;
+			Config.Save();
+		}
+
+		private void ComboBoxGalakrond_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.OpponentGalakrondCounter = (DisplayMode)ComboBoxGalakrond.SelectedItem;
 			Config.Save();
 		}
 	}

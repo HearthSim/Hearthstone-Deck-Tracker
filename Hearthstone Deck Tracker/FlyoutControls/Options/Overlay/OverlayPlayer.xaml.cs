@@ -73,6 +73,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			ComboBoxJade.SelectedItem = Config.Instance.PlayerJadeCounter;
 			ComboBoxPogoHopper.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
 			ComboBoxPogoHopper.SelectedItem = Config.Instance.PlayerPogoHopperCounter;
+			ComboBoxGalakrond.ItemsSource = Enum.GetValues(typeof(DisplayMode)).Cast<DisplayMode>();
+			ComboBoxGalakrond.SelectedItem = Config.Instance.PlayerGalakrondCounter;
 
 
 			ElementSorterPlayer.IsPlayer = true;
@@ -300,6 +302,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if (!_initialized)
 				return;
 			Config.Instance.PlayerPogoHopperCounter = (DisplayMode)ComboBoxPogoHopper.SelectedItem;
+			Config.Save();
+		}
+
+		private void ComboBoxGalakrond_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (!_initialized)
+				return;
+			Config.Instance.PlayerGalakrondCounter = (DisplayMode)ComboBoxGalakrond.SelectedItem;
 			Config.Save();
 		}
 	}

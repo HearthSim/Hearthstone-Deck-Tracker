@@ -86,6 +86,17 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </DockPanel>
+        <DockPanel Margin="5,5,5,0">
+            <Label Content="{lex:Loc Options_Overlay_Player_Label_Galakrond}" />
+            <ComboBox x:Name="ComboBoxGalakrond" HorizontalAlignment="Right"
+                      Margin="5,0,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="ComboBoxGalakrond_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
         <CheckBox x:Name="CheckBoxAttack"
                   Content="{lex:LocText Options_Overlay_Player_CheckBox_Attack}" HorizontalAlignment="Left"
                   Margin="10,5,0,0" VerticalAlignment="Top"

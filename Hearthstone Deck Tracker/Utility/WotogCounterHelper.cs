@@ -1,13 +1,10 @@
-﻿#region
-
-using System.Linq;
+﻿using System.Linq;
 using HearthDb;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using System;
 using static HearthDb.Enums.GameTag;
-
-#endregion
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Utility
 {
@@ -35,6 +32,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool OpponentSeenJade => Core.Game.OpponentEntity?.HasTag(JADE_GOLEM) ?? false;
 		public static int OpponentNextJadeGolem => OpponentSeenJade ? Math.Min(Core.Game.OpponentEntity.GetTag(JADE_GOLEM) + 1, 30) : 1;
+		public static int PlayerGalakrondInvokeCounter => Core.Game.PlayerEntity?.GetTag(INVOKE_COUNTER) ?? 0;
+		public static int OpponentGalakrondInvokeCounter => Core.Game.OpponentEntity?.GetTag(INVOKE_COUNTER) ?? 0;
 
 		public static bool ShowPlayerCthunCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
 					|| Config.Instance.PlayerCthunCounter == DisplayMode.Auto && PlayerSeenCthun);
@@ -42,6 +41,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static bool ShowPlayerPogoHopperCounter => !Core.Game.IsInMenu && (
 			Config.Instance.PlayerPogoHopperCounter == DisplayMode.Always
 				|| (Config.Instance.PlayerPogoHopperCounter == DisplayMode.Auto && PogoHopperInDeck.HasValue && (PlayerPogoHopper != null || PogoHopperInDeck.Value)));
+
+		public static bool ShowPlayerGalakrondCounter => !Core.Game.IsInMenu && (
+			Config.Instance.PlayerGalakrondCounter == DisplayMode.Always
+				|| (Config.Instance.PlayerGalakrondCounter == DisplayMode.Auto && (Core.Game.PlayerEntity?.HasTag(PROXY_GALAKROND) ?? false)));
+		public static bool ShowOpponentGalakrondCounter => !Core.Game.IsInMenu && (
+			Config.Instance.OpponentGalakrondCounter == DisplayMode.Always
+				|| (Config.Instance.OpponentGalakrondCounter == DisplayMode.Auto && (Core.Game.OpponentEntity?.HasTag(INVOKE_COUNTER) ?? false)));
 
 		public static bool ShowPlayerSpellsCounter => !Core.Game.IsInMenu && (
 			Config.Instance.PlayerSpellsCounter == DisplayMode.Always
