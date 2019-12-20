@@ -1,3 +1,11 @@
+## **Release v1.9.8 - 2019-12-20**
+**New**:
+- Added a new counter for Galakrond invocations.
+
+**Changes**:
+- Turn timers are now always hidden while playing Battlegrounds.
+
+
 ## **Release v1.9.7 - 2019-12-19**
 **Updated for Hearthstone 16.0.5.38377**
 
