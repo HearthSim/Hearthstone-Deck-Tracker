@@ -125,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.Reset(nameof(Config.TimersHorizontalPosition));
 			Config.Instance.Reset(nameof(Config.TimersHorizontalSpacing));
 
-			Config.Instance.Reset(nameof(Config.TimersHorizontalSpacing));
+			Config.Instance.Reset(nameof(Config.TimersVerticalPosition));
 			Config.Instance.Reset(nameof(Config.TimersVerticalSpacing));
 
 			Config.Instance.Reset(nameof(Config.SecretsTop));
