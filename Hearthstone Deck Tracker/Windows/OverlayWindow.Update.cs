@@ -88,6 +88,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 				FlavorTextVisibility = Collapsed;
 
+			UpdateClickableElements();
+
 			StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
 			StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
 			StackPanelSecrets.Opacity = Config.Instance.SecretsOpacity / 100;

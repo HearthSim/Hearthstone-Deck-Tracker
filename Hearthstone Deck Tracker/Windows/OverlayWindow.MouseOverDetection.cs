@@ -351,6 +351,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return cardWidth;
 		}
 
+		private void UpdateClickableElements()
+		{
+			var cursorPos = GetCursorPos();
+			if(cursorPos.X == -1 && cursorPos.Y == -1)
+				return;
+			var hoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos));
+			SetClickthrough(hoveredIndex < 0);
+		}
+
 		public bool EllipseContains(Ellipse ellipse, Point location)
 		{
 			var pos = ellipse.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));

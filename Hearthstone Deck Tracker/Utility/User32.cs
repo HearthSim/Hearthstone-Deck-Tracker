@@ -28,6 +28,7 @@ namespace Hearthstone_Deck_Tracker
 		public const int WsExTransparent = 0x00000020;
 		public const int WsExToolWindow = 0x00000080;
 		public const int WsExTopmost = 0x00000008;
+		public const int WsExNoActivate = 0x08000000;
 		private const int GwlExstyle = (-20);
 		private const int GwlStyle = -16;
 		private const int WsMinimize = 0x20000000;
@@ -93,6 +94,8 @@ namespace Hearthstone_Deck_Tracker
 		public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
 		public static void SetWindowExStyle(IntPtr hwnd, int style) => SetWindowLong(hwnd, GwlExstyle, GetWindowLong(hwnd, GwlExstyle) | style);
+
+		public static void RemoveWindowExStyle(IntPtr hwnd, int style) => SetWindowLong(hwnd, GwlExstyle, GetWindowLong(hwnd, GwlExstyle) & ~style);
 
 		public static bool IsHearthstoneInForeground() => GetForegroundWindow() == GetHearthstoneWindow();
 

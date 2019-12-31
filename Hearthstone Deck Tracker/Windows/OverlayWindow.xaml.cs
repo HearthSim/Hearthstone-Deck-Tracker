@@ -37,6 +37,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly List<UIElement> _debugBoardObjects = new List<UIElement>();
 		private readonly GameV2 _game;
 		private readonly Dictionary<UIElement, ResizeGrip> _movableElements = new Dictionary<UIElement, ResizeGrip>();
+		private readonly List<FrameworkElement> _clickableElements = new List<FrameworkElement>();
 		private readonly int _offsetX;
 		private readonly int _offsetY;
 		private readonly List<Ellipse> _oppBoard = new List<Ellipse>();
@@ -151,9 +152,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void Window_SourceInitialized_1(object sender, EventArgs e)
 		{
 			var hwnd = new WindowInteropHelper(this).Handle;
-			User32.SetWindowExStyle(hwnd, User32.WsExTransparent | User32.WsExToolWindow);
+			User32.SetWindowExStyle(hwnd, User32.WsExToolWindow | User32.WsExNoActivate | User32.WsExTransparent);
 		}
 
+		private void SetClickthrough(bool clickthrough)
+		{
+			var hwnd = new WindowInteropHelper(this).Handle;
+			if(clickthrough)
+				User32.SetWindowExStyle(hwnd, User32.WsExTransparent);
+			else
+				User32.RemoveWindowExStyle(hwnd, User32.WsExTransparent);
+		}
 
 		public void HideTimers() => LblPlayerTurnTime.Visibility = LblOpponentTurnTime.Visibility = LblTurnTime.Visibility = Hidden;
 
