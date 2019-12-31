@@ -26,7 +26,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public string ImageSrc => $"/HearthstoneDeckTracker;component/Resources/tier-{Tier}.png";
 
-
 		public int Tier
 		{
 			get { return (int)GetValue(TierProperty); }
@@ -43,8 +42,45 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			set
 			{
 				SetValue(ActiveProperty, value);
+				Update();
 			}
 		}
 
+		private bool _faded;
+
+		public void SetFaded(bool faded)
+		{
+			_faded = faded;
+			Update();
+		}
+
+		private void Update()
+		{
+			ImageTierRemove.Visibility = _hovering && Active ? Visibility.Visible : Visibility.Collapsed;
+			Glow.Visibility = Active || _hovering ? Visibility.Visible : Visibility.Collapsed;
+			Glow.Opacity = Active ? 1 : 0.5;
+			ImageTier.Opacity = GetOpacity();
+		}
+
+		private double GetOpacity()
+		{
+			if(Active || _hovering || !_faded)
+				return 1;
+			return 0.3;
+		}
+
+		private bool _hovering;
+
+		private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			_hovering = true;
+			Update();
+		}
+
+		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			_hovering = false;
+			Update();
+		}
 	}
 }

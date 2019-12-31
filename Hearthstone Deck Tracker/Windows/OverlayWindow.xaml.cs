@@ -217,5 +217,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void ShowRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Visible;
 
 		public void HideRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Collapsed;
+
+		private void BgTier_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			var tier = ((BattlegroundsTier)sender).Tier;
+			UpdateCurrentTierList(tier == _currentTierlist ? 0 : tier);
+		}
 	}
 }

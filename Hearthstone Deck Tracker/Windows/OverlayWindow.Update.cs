@@ -163,6 +163,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var showBattlegroundsPanel = Config.Instance.ShowBattlegroundsTiers;
 				BattlegroundsTierlistPanel.Visibility = showBattlegroundsPanel ? Visible : Collapsed;
+				if(!showBattlegroundsPanel)
+					UpdateCurrentTierList(0);
 			}
 
 			UpdateIcons();

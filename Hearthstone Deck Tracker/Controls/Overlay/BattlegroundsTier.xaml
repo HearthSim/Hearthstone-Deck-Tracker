@@ -6,10 +6,12 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              mc:Ignorable="d" 
              Width="53" Height="53"
+             Cursor="Hand"
+             MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Image Source="/HearthstoneDeckTracker;component/Resources/tier-glow.png" Width="53" Height="53"
-                Visibility="{Binding Active, Converter={StaticResource BoolToVisibility}, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTier}}"/>
-        <Image Source="{Binding ImageSrc, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTier}}" Width="48" Height="48" />
+        <Image Name="Glow" Visibility="Collapsed" Source="/HearthstoneDeckTracker;component/Resources/tier-glow.png" Width="53" Height="53" />
+        <Image Name="ImageTier" Source="{Binding ImageSrc, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTier}}" Width="48" Height="48" RenderOptions.BitmapScalingMode="Fant" />
+        <Image Name="ImageTierRemove" Visibility="Collapsed" Source="/HearthstoneDeckTracker;component/Resources/tier-x.png" Width="48" Height="48" RenderOptions.BitmapScalingMode="Fant" />
     </Grid>
 </UserControl>

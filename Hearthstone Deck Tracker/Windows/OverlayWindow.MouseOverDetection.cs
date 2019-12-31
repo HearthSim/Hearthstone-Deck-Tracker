@@ -243,21 +243,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				BattlegroundsPanel.Visibility = Visibility.Collapsed;
 			}
 			BattlegroundsTierlistPanel.Opacity = hideTierlist ? 0.3 : 1;
-			if(Config.Instance.ShowBattlegroundsTiers)
-			{
-				for(var i = 0; i < 6; i++)
-				{
-					var tier = i + 1;
-					if(ElementContains(_tierlistIcons[i], cursorPos))
-						_battlegroundsTiersMouseOver.DelayedMouseOverDetection(_tierlistIcons[i], () => UpdateCurrentTierList(tier));
-				}
-				if(ElementContains(BgHideTierlist, cursorPos))
-					_battlegroundsTiersMouseOver.DelayedMouseOverDetection(BgHideTierlist, () => UpdateCurrentTierList(0));
-			}
-			else
-				UpdateCurrentTierList(0);
 		}
-
 
 		private bool AddOrUpdateBgCardGroup(string title, List<Hearthstone.Card> cards)
 		{
@@ -286,14 +272,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(tier < 1 || tier > 6)
 			{
 				for(var i = 0; i < 6; i++)
-					_tierlistIcons[i].Opacity = 1;
-				BgHideTierlist.Opacity = 0.3;
+					_tierlistIcons[i].SetFaded(false);
 				BgCardGroups.Clear();
 				return;
 			}
-			BgHideTierlist.Opacity = 1;
 			for(var i = 0; i < 6; i++)
-				_tierlistIcons[i].Opacity = i == tier -1 ? 1 : 0.5;
+				_tierlistIcons[i].SetFaded(i != tier - 1);
 
 			var resort = false;
 			foreach(var race in _bgDb.Value.Races)

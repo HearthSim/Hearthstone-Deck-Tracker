@@ -183,14 +183,13 @@
                 <Rectangle Name="BattlegroundsTile7" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <StackPanel Name="BattlegroundsTierlistPanel" Canvas.Right="0" Canvas.Top="0">
                     <Border BorderBrush="#141617" BorderThickness="1" Background="#23272a">
-                        <StackPanel Orientation="Horizontal">
-                            <overlay:BattlegroundsTier x:Name="BgTier1" Tier="1"/>
-                            <overlay:BattlegroundsTier x:Name="BgTier2" Tier="2"/>
-                            <overlay:BattlegroundsTier x:Name="BgTier3" Tier="3"/>
-                            <overlay:BattlegroundsTier x:Name="BgTier4" Tier="4"/>
-                            <overlay:BattlegroundsTier x:Name="BgTier5" Tier="5"/>
-                            <overlay:BattlegroundsTier x:Name="BgTier6" Tier="6"/>
-                            <Image Name="BgHideTierlist" Source="../Resources/tier-x.png" Height="48" Width="48" Opacity="0.3" />
+                        <StackPanel Name="BgTierIcons" Orientation="Horizontal">
+                            <overlay:BattlegroundsTier x:Name="BgTier1" Tier="1" MouseUp="BgTier_MouseUp"/>
+                            <overlay:BattlegroundsTier x:Name="BgTier2" Tier="2" MouseUp="BgTier_MouseUp"/>
+                            <overlay:BattlegroundsTier x:Name="BgTier3" Tier="3" MouseUp="BgTier_MouseUp"/>
+                            <overlay:BattlegroundsTier x:Name="BgTier4" Tier="4" MouseUp="BgTier_MouseUp"/>
+                            <overlay:BattlegroundsTier x:Name="BgTier5" Tier="5" MouseUp="BgTier_MouseUp"/>
+                            <overlay:BattlegroundsTier x:Name="BgTier6" Tier="6" MouseUp="BgTier_MouseUp"/>
                         </StackPanel>
                     </Border>
                     <ItemsControl HorizontalAlignment="Right" Margin="0,0,6,0"
