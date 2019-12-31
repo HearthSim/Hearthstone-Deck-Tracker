@@ -726,6 +726,29 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentFatigue.Execute(currentDamage);
 		}
 
+		public void HandleBeginMulligan()
+		{
+			if(_game.CurrentGameType == GameType.GT_BATTLEGROUNDS)
+				HandleBattlegroundsStart();
+		}
+
+		private async void HandleBattlegroundsStart()
+		{
+			for(var i = 0; i < 10; i++)
+			{
+				await Task.Delay(500);
+				var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && x.HasTag(BACON_HERO_CAN_BE_DRAFTED));
+				if(heroes.Count() < 2)
+					continue;
+				await Task.Delay(500);
+				if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
+					break;
+				var heroIds = heroes.Select(x => x.Card.DbfIf).ToArray();
+				ToastManager.ShowBattlegroundsToast(heroIds);
+				break;
+			}
+		}
+
 		#region Player
 
 		public void HandlePlayerGetToDeck(Entity entity, string cardId, int turn)

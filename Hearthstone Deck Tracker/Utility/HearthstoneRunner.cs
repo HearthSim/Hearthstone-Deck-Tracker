@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Controls.Error;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Toasts;
 
 namespace Hearthstone_Deck_Tracker.Utility
 {

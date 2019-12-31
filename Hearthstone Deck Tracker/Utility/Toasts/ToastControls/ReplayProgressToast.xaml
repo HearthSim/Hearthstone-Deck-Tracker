@@ -5,13 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls"
              mc:Ignorable="d" MouseLeftButtonUp="ReplayProgressToast_OnMouseLeftButtonUp"
-             Height="40" Width="250">
-     <local:BaseToast CloseOnClick="False">
-        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <local:ProgressIndicator Width="24" Height="24" ProgressState="{Binding ProgressState, RelativeSource={RelativeSource AncestorType=UserControl}}" DockPanel.Dock="Left"/>
-            <TextBlock Text="HSReplay.net" DockPanel.Dock="Bottom" Foreground="White" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0,-5,0,0" FontSize="12"/>
-            <TextBlock Text="{Binding StatusText, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="White" Width="137" 
-                       TextAlignment="Center" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0" FontSize="15"/>
-        </DockPanel>
-     </local:BaseToast>
+             MinHeight="40" MinWidth="250" Background="{DynamicResource AccentColorBrush}">
+    <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <local:ProgressIndicator Width="24" Height="24" ProgressState="{Binding ProgressState, RelativeSource={RelativeSource AncestorType=UserControl}}" DockPanel.Dock="Left"/>
+        <TextBlock Text="HSReplay.net" DockPanel.Dock="Bottom" Foreground="White" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0,-5,0,0" FontSize="12"/>
+        <TextBlock Text="{Binding StatusText, RelativeSource={RelativeSource AncestorType=UserControl}}" Foreground="White" Width="137" 
+                   TextAlignment="Center" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0" FontSize="15"/>
+    </DockPanel>
 </UserControl>

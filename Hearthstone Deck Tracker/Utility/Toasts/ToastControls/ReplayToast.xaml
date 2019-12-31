@@ -3,21 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:toastControls="clr-namespace:Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls"
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown"
              mc:Ignorable="d" 
-             Height="40" Width="250">
-    <toastControls:BaseToast Clicked="BorderReplay_OnMouseLeftButtonUp">
-        <Grid VerticalAlignment="Center" Margin="10,0">
-            <Image Source="{StaticResource HsReplayIconWhite}" Height="28" Width="28"
-                   HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
-            <StackPanel VerticalAlignment="Center" Margin="5,0">
-                <TextBlock Foreground="White" TextAlignment="Center"
-                           LineHeight="15" LineStackingStrategy="BlockLineHeight">
-                    <Run Text="Share the Replay!" FontWeight="SemiBold" FontSize="15"/>
-                    <LineBreak/>
-                    <Run Text="HSReplay.net" FontSize="12"/>
-                </TextBlock>
-            </StackPanel>
-        </Grid>
-    </toastControls:BaseToast>
+             Height="40" Width="250" Background="{DynamicResource AccentColorBrush}">
+    <Grid VerticalAlignment="Center" Margin="10,0">
+        <Image Source="{StaticResource HsReplayIconWhite}" Height="28" Width="28"
+               HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
+        <StackPanel VerticalAlignment="Center" Margin="5,0">
+            <TextBlock Foreground="White" TextAlignment="Center"
+                       LineHeight="15" LineStackingStrategy="BlockLineHeight">
+                <Run Text="Share the Replay!" FontWeight="SemiBold" FontSize="15"/>
+                <LineBreak/>
+                <Run Text="HSReplay.net" FontSize="12"/>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
 </UserControl>

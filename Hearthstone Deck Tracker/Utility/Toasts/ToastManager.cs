@@ -6,6 +6,9 @@ using System.Linq;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls;
+using System.Windows.Media;
+using System.Drawing;
+using System.Windows;
 
 #endregion
 
@@ -16,6 +19,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 		private static readonly List<ToastHelper> Toasts = new List<ToastHelper>();
 		private static readonly Dictionary<ToastHelper, ToastHelper> GameResultToasts = new Dictionary<ToastHelper, ToastHelper>();
 
+		internal static void ShowBattlegroundsToast(int[] heroDbfIds)
+		{
+			var th = new ToastHelper(new BattlegroundsToast(heroDbfIds));
+			ShowToast(th, 6);
+		}
+
 		internal static void ShowCollectionUpdatedToast()
 		{
 			ShowToast(new ToastHelper(new CollectionUploadedToast()));
@@ -25,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 		{
 			if(game == null)
 				return;
-			var result = new ToastHelper(new GameResultToast(deckName, game));
+			var result = new ToastHelper(new GameResultToast(deckName, game), false);
 			if(Config.Instance.ShowReplayShareToast)
 			{
 				var replay = new ToastHelper(new ReplayToast(game));
@@ -40,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 		internal static Action<ReplayProgress> ShowReplayProgressToast()
 		{
 			var progressControl = new ReplayProgressToast();
-			var toast = new ToastHelper(progressControl);
+			var toast = new ToastHelper(progressControl, false);
 			ShowToast(toast, 20000);
 			return status => progressControl.Status = status;
 		}
@@ -71,9 +80,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 
 		internal static void UpdateToasts()
 		{
+			var hsWindow = User32.GetHearthstoneWindow();
+			var hsRect = hsWindow == IntPtr.Zero ? (Rectangle?)null : User32.GetHearthstoneRect(true);
+			var bottom = hsRect?.Bottom ?? SystemParameters.WorkArea.Bottom;
+			var right = hsRect?.Right ?? SystemParameters.WorkArea.Right;
 			var offset = 0;
 			foreach(var toast in Toasts)
-				offset = toast.SetPosition(offset);
+				offset = toast.SetPosition(bottom, right, offset);
 		}
 	}
 }

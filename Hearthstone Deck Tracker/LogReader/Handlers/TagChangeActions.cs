@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case FATIGUE:
 					return () => FatigueChange(gameState, value, game, id);
 				case STEP:
-					return () => StepChange(gameState, game);
+					return () => StepChange(value, gameState, game);
 				case TURN:
 					return () => TurnChange(gameState, game);
 				case STATE:
@@ -146,8 +146,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.OpponentUsedHeroPower = false;
 		}
 
-		private void StepChange(IHsGameState gameState, IGame game)
+		private void StepChange(int value, IHsGameState gameState, IGame game)
 		{
+			if((Step)value == Step.BEGIN_MULLIGAN)
+				gameState.GameHandler.HandleBeginMulligan();
 			if(game.SetupDone || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
 				return;
 			Log.Info("Game was already in progress.");

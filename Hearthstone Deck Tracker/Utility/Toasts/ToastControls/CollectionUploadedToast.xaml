@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:toastControls="clr-namespace:Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             MouseUp="CollectionUploadedToast_OnClicked" Height="40" Width="250"
+             Background="{DynamicResource AccentColorBrush}"
              mc:Ignorable="d">
-    <toastControls:BaseToast Clicked="CollectionUploadedToast_OnClicked" Height="40">
         <Grid VerticalAlignment="Center" Margin="10,0">
             <Image Source="{StaticResource HsReplayIconWhite}" Height="28" Width="28"
                    HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
@@ -21,5 +21,4 @@
             <controls:StatusIndicator Success="True" SuccessColor="Lime" FontSize="16"
                                       VerticalAlignment="Center" HorizontalAlignment="Right"/>
         </Grid>
-    </toastControls:BaseToast>
 </UserControl>

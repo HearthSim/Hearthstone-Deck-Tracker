@@ -335,8 +335,8 @@
     <Compile Include="Utility\Shell32.cs" />
     <Compile Include="Utility\Singleton.cs" />
     <Compile Include="Utility\ScheduledTaskRunner.cs" />
-    <Compile Include="Utility\Toasts\ToastControls\BaseToast.xaml.cs">
-      <DependentUpon>BaseToast.xaml</DependentUpon>
+    <Compile Include="Utility\Toasts\ToastControls\BattlegroundsToast.xaml.cs">
+      <DependentUpon>BattlegroundsToast.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility\Toasts\ToastControls\CollectionUploadedToast.xaml.cs">
       <DependentUpon>CollectionUploadedToast.xaml</DependentUpon>
@@ -1231,9 +1231,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Utility\Toasts\ToastControls\BaseToast.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Utility\Toasts\ToastControls\BattlegroundsToast.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Utility\Toasts\ToastControls\CollectionUploadedToast.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -1580,6 +1580,7 @@
     <Resource Include="Resources\tier-6.png" />
     <Resource Include="Resources\tier-glow.png" />
     <Resource Include="Resources\tier-x.png" />
+    <Resource Include="Resources\bgs-toast-background.jpg" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

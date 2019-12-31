@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 			_game = game;
 		}
 
-		private async void BorderReplay_OnMouseLeftButtonUp(object sender, EventArgs e)
+		private async void UserControl_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			await Task.Delay(500);
 			ReplayLauncher.ShowReplay(_game, true).Forget();

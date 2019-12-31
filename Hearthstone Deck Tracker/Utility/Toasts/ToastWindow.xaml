@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Utility.Toasts"
         mc:Ignorable="d" ShowInTaskbar="False"
         WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Topmost="True"
-        BorderThickness="1" BorderBrush="{DynamicResource AccentColorBrush}"
         SizeToContent="WidthAndHeight" SourceInitialized="Window_SourceInitialized" 
+        MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave"
+        MouseLeftButtonUp="Window_MouseLeftButtonUp"
         Width="10" Height="10"
         Title="ToastWindow">
     <Window.Resources>

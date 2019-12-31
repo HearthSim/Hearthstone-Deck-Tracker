@@ -14,9 +14,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 		private bool _forceClose;
 		private DateTime _startUpTime;
 
-		public ToastHelper(UserControl control)
+		public ToastHelper(UserControl control, bool closeOnClick = true)
 		{
 			_window = new ToastWindow(control);
+			_window.CloseOnClick = closeOnClick;
 			ToastType = control.GetType();
 		}
 
@@ -54,13 +55,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 			await _window.FadeOut();
 		}
 
-		public int SetPosition(int offset)
+		public int SetPosition(double bottom, double right, int offset)
 		{
-			_window.Left = SystemParameters.WorkArea.Right - _window.Width - 5;
+			_window.Left = right - _window.Width - 5;
 			if(_window.IsMouseOver)
-				return (int)(SystemParameters.WorkArea.Bottom - _window.Top);
+				return (int)(bottom - _window.Top);
 			offset += (int)_window.Height + 5;
-			_window.Top = _window.IsMouseOver ? _window.Top : SystemParameters.WorkArea.Bottom - offset;
+			_window.Top = _window.IsMouseOver ? _window.Top : bottom - offset;
 			return offset;
 		}
 
