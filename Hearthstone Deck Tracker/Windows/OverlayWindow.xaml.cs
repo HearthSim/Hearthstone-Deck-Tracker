@@ -232,7 +232,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void HideBattlegroundsHeroPanel()
 		{
-			(FindResource("StoryboardHeroPanelOut") as Storyboard)?.Begin();
+			var heroPanelOut = FindResource("StoryboardHeroPanelOut") as Storyboard;
+			if(heroPanelOut == null)
+				return;
+			heroPanelOut.Completed += (obj, args) => ShowBattlegroundsMinionsPanel();
+			heroPanelOut.Begin();
+		}
+
+		internal void ShowBattlegroundsMinionsPanel()
+		{
+			if(!Config.Instance.ShowBattlegroundsTiers)
+				return;
+			if(_game.CurrentGameMode != Enums.GameMode.Battlegrounds)
+				return;
+			if(Canvas.GetTop(BattlegroundsMinionsPanel) == 0)
+				return;
+			(FindResource("StoryboardBgsMinionsIn") as Storyboard)?.Begin();
+		}
+
+		internal void HideBattlegroundsMinionsPanel()
+		{
+			BattlegroundsMinionsPanel.Reset();
+			if (Canvas.GetTop(BattlegroundsMinionsPanel) == 0)
+				(FindResource("StoryboardBgsMinionsOut") as Storyboard)?.Begin();
 		}
 	}
 }

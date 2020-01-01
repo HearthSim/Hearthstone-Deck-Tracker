@@ -155,16 +155,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(_game.IsInMenu || !inBattlegrounds)
 			{
-				BattlegroundsPanel.Visibility = Collapsed;
-				BattlegroundsMinionsPanel.Visibility = Collapsed;
-				BattlegroundsMinionsPanel.Reset();
-			}
-			else
-			{
-				var showBattlegroundsPanel = Config.Instance.ShowBattlegroundsTiers;
-				BattlegroundsMinionsPanel.Visibility = showBattlegroundsPanel ? Visible : Collapsed;
-				if(!showBattlegroundsPanel)
-					BattlegroundsMinionsPanel.Reset();
+				BattlegroundsLeaderboard.Visibility = Collapsed;
+				HideBattlegroundsMinionsPanel();
 			}
 
 			UpdateIcons();
@@ -361,7 +353,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (Config.Instance.ShowBattlegroundsTiers)
 			{
 				Canvas.SetRight(BattlegroundsMinionsPanel, 0);
-				Canvas.SetTop(BattlegroundsMinionsPanel, 0);
 				_scale = Math.Max(0.8, Math.Min(1.3, Height / 1080));
 				BattlegroundsMinionsPanel.RenderTransform = new ScaleTransform(_scale, _scale, BattlegroundsMinionsPanel.ActualWidth, 0);
 			}
