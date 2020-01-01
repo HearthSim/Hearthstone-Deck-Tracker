@@ -33,6 +33,7 @@ using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using MediaColor = System.Windows.Media.Color;
 using Region = Hearthstone_Deck_Tracker.Enums.Region;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using System.Web;
 
 #endregion
 
@@ -684,6 +685,12 @@ namespace Hearthstone_Deck_Tracker
 			const string name = "HDTPortable";
 #endif
 			return name + "/" + GetCurrentVersion();
+		}
+
+		internal static void OpenBattlegroundsHeroPicker(int[] heroIds)
+		{
+			var encodedIds = HttpUtility.UrlEncode(string.Join(",", heroIds));
+			Process.Start($"https://hsreplay.net/battlegrounds/heroes/#heroes={encodedIds}");
 		}
 	}
 }

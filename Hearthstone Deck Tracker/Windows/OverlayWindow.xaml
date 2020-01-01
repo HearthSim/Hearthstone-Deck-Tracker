@@ -18,6 +18,16 @@
         WindowStyle="None" Topmost="True" Closing="Window_Closing">
     <Window.Resources>
         <themes:ThemeManager x:Key="ThemeManager"/>
+        <Storyboard x:Key="StoryboardHeroPanelIn">
+            <DoubleAnimation From="-120" To="0" Duration="0:0:0.5" Storyboard.TargetName="HeroNotificationPanel" Storyboard.TargetProperty="(Canvas.Top)">
+                <DoubleAnimation.EasingFunction>
+                    <ElasticEase EasingMode="EaseOut" Oscillations="2" Springiness="5" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Key="StoryboardHeroPanelOut">
+            <DoubleAnimation To="-120" Duration="0:0:0.2" Storyboard.TargetName="HeroNotificationPanel" Storyboard.TargetProperty="(Canvas.Top)" />
+        </Storyboard>
     </Window.Resources>
     <Grid Name="GridMain">
         <Border BorderThickness="1" BorderBrush="Transparent">
@@ -210,6 +220,7 @@
                         </StackPanel.Resources>
                     </StackPanel>
                 </StackPanel>
+                <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Canvas.Top="-120"/>
             </Canvas>
         </Border>
     </Grid>

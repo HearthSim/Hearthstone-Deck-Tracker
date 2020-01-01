@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using System.Web;
 using System.Windows.Media.Animation;
 
 namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
@@ -26,8 +24,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		private void UserControl_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			var heroIds = HttpUtility.UrlEncode(string.Join(",", _heroDbfIds));
-			Process.Start($"https://hsreplay.net/battlegrounds/drafthelper/#heroesOffered={heroIds}&step=pick");
+			Helper.OpenBattlegroundsHeroPicker(_heroDbfIds);
 		}
 	}
 }

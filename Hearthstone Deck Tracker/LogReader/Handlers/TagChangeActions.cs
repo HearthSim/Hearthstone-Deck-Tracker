@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case FATIGUE:
 					return () => FatigueChange(gameState, value, game, id);
 				case STEP:
-					return () => StepChange(value, gameState, game);
+					return () => StepChange(value, prevValue, gameState, game);
 				case TURN:
 					return () => TurnChange(gameState, game);
 				case STATE:
@@ -57,8 +57,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => CreatorChanged(id, value, game);
 				case WHIZBANG_DECK_ID:
 					return () => WhizbangDeckIdChange(id, value, game);
+				case MULLIGAN_STATE:
+					return () => MulliganStateChange(id, value, game, gameState);
 			}
 			return null;
+		}
+
+		private void MulliganStateChange(int id, int value, IGame game, IHsGameState gameState)
+		{
+			if(value == 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			if(entity.IsPlayer && (Mulligan)value == Mulligan.DONE)
+				gameState.GameHandler.HandlePlayerMulliganDone();
 		}
 
 		private void WhizbangDeckIdChange(int id, int value, IGame game)
@@ -146,7 +158,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.OpponentUsedHeroPower = false;
 		}
 
-		private void StepChange(int value, IHsGameState gameState, IGame game)
+		private void StepChange(int value, int prevValue, IHsGameState gameState, IGame game)
 		{
 			if((Step)value == Step.BEGIN_MULLIGAN)
 				gameState.GameHandler.HandleBeginMulligan();

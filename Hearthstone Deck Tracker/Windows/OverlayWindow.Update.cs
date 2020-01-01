@@ -181,7 +181,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Core.Windows.OpponentWindow.Update();
 		}
 
-
 		private void UpdateIcons()
 		{
 			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu ? Collapsed : Visible;
@@ -356,6 +355,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(GoldProgressGrid, Width - RectGoldDisplay.ActualWidth - GoldFrameOffset - GoldProgressGrid.ActualWidth - 10);
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
+
+			Canvas.SetLeft(HeroNotificationPanel, Width / 2 - HeroNotificationPanel.ActualWidth / 2);
 
 			if (Config.Instance.ShowBattlegroundsTiers)
 			{

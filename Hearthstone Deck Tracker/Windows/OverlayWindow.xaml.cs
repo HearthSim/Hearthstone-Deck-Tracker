@@ -17,6 +17,8 @@ using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
+using System.Windows.Media.Animation;
+using System.Windows.Controls;
 
 #endregion
 
@@ -155,13 +157,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 			User32.SetWindowExStyle(hwnd, User32.WsExToolWindow | User32.WsExNoActivate | User32.WsExTransparent);
 		}
 
-		private void SetClickthrough(bool clickthrough)
+		private bool _clickthrough = false;
+		private bool SetClickthrough(bool clickthrough)
 		{
+			if(_clickthrough == clickthrough)
+				return false;
+			_clickthrough = clickthrough;
 			var hwnd = new WindowInteropHelper(this).Handle;
 			if(clickthrough)
 				User32.SetWindowExStyle(hwnd, User32.WsExTransparent);
 			else
 				User32.RemoveWindowExStyle(hwnd, User32.WsExTransparent);
+			return true;
 		}
 
 		public void HideTimers() => LblPlayerTurnTime.Visibility = LblOpponentTurnTime.Visibility = LblTurnTime.Visibility = Hidden;
@@ -222,6 +229,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var tier = ((BattlegroundsTier)sender).Tier;
 			UpdateCurrentTierList(tier == _currentTierlist ? 0 : tier);
+		}
+
+		internal void ShowBattlegroundsHeroPanel(int[] heroIds)
+		{
+			HeroNotificationPanel.HeroIds = heroIds;
+			(FindResource("StoryboardHeroPanelIn") as Storyboard)?.Begin();
+		}
+
+		internal void HideBattlegroundsHeroPanel()
+		{
+			(FindResource("StoryboardHeroPanelOut") as Storyboard)?.Begin();
 		}
 	}
 }

@@ -732,11 +732,17 @@ namespace Hearthstone_Deck_Tracker
 				HandleBattlegroundsStart();
 		}
 
+		public void HandlePlayerMulliganDone()
+		{
+			if(_game.CurrentGameType == GameType.GT_BATTLEGROUNDS)
+				Core.Overlay.HideBattlegroundsHeroPanel();
+		}
+
 		private async void HandleBattlegroundsStart()
 		{
 			for(var i = 0; i < 10; i++)
 			{
-				await Task.Delay(500);
+				await Task.Delay(1000);
 				var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && x.HasTag(BACON_HERO_CAN_BE_DRAFTED));
 				if(heroes.Count() < 2)
 					continue;
@@ -744,7 +750,14 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
 					break;
 				var heroIds = heroes.Select(x => x.Card.DbfIf).ToArray();
-				ToastManager.ShowBattlegroundsToast(heroIds);
+				if(Config.Instance.HideOverlay)
+					ToastManager.ShowBattlegroundsToast(heroIds);
+				else
+				{
+					// Wait for the game to fade in
+					await Task.Delay(2000);
+					Core.Overlay.ShowBattlegroundsHeroPanel(heroIds);
+				}
 				break;
 			}
 		}

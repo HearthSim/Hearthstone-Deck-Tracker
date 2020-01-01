@@ -242,6 +242,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				BattlegroundsBoard.Children.Clear();
 				BattlegroundsPanel.Visibility = Visibility.Collapsed;
 			}
+			// Only hide the tiers, if we're out of mulligan
+			if(hideTierlist && _game.GameEntity?.GetTag(GameTag.STEP) > (int)Step.BEGIN_MULLIGAN)
+				hideTierlist = false;
 			BattlegroundsTierlistPanel.Opacity = hideTierlist ? 0.3 : 1;
 		}
 

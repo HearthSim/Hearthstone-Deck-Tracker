@@ -84,5 +84,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleEntityPredamage(Entity entity, int value);
 		void HandleChameleosReveal(string cardId);
 		void HandleBeginMulligan();
+		void HandlePlayerMulliganDone();
 	}
 }

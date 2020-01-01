@@ -250,6 +250,9 @@
     <Compile Include="Controls\Overlay\BattlegroundsCardsGroup.xaml.cs">
       <DependentUpon>BattlegroundsCardsGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\BattlegroundsHeroPanel.xaml.cs">
+      <DependentUpon>BattlegroundsHeroPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\BattlegroundsTier.xaml.cs">
       <DependentUpon>BattlegroundsTier.xaml</DependentUpon>
     </Compile>
@@ -294,6 +297,7 @@
     <Compile Include="Utility\DelayedMouseOver.cs" />
     <Compile Include="Utility\GlobalCommands.cs" />
     <Compile Include="Utility\HearthstoneRunner.cs" />
+    <Compile Include="Utility\IgnoreSizeDecorator.cs" />
     <Compile Include="Utility\Kernel32.cs" />
     <Compile Include="Utility\RateLimiter.cs" />
     <Compile Include="HsReplay\UploadTokenHistory.cs" />
@@ -964,6 +968,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Overlay\BattlegroundsCardsGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\BattlegroundsHeroPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
