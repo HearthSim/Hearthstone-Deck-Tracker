@@ -46,7 +46,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly List<Ellipse> _playerBoard = new List<Ellipse>();
 		private readonly List<Rectangle> _playerHand = new List<Rectangle>();
 		private readonly List<Rectangle> _leaderboardIcons = new List<Rectangle>();
-		private readonly List<BattlegroundsTier> _tierlistIcons = new List<BattlegroundsTier>();
 		private bool? _isFriendsListOpen;
 		private string _lastToolTipCardId;
 		private bool _lmbDown;
@@ -224,12 +223,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void ShowRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Visible;
 
 		public void HideRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Collapsed;
-
-		private void BgTier_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			var tier = ((BattlegroundsTier)sender).Tier;
-			UpdateCurrentTierList(tier == _currentTierlist ? 0 : tier);
-		}
 
 		internal void ShowBattlegroundsHeroPanel(int[] heroIds)
 		{

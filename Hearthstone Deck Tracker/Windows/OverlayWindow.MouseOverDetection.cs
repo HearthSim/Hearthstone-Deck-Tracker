@@ -14,8 +14,6 @@ using Rectangle = System.Windows.Shapes.Rectangle;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Hearthstone;
-using System.Collections.ObjectModel;
-using Hearthstone_Deck_Tracker.Controls.Overlay;
 
 #endregion
 
@@ -33,8 +31,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int MaxHandSize = 10;
 		private const int MaxBoardSize = 7;
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
-
-		private Lazy<BattlegroundsDb> _bgDb = new Lazy<BattlegroundsDb>();
 
 		public Thickness MinionMargin
 		{
@@ -198,22 +194,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlavorTextVisibility = Visibility.Collapsed;
 		}
 
-		private int _currentTierlist = 0;
-
-		public ObservableCollection<BattlegroundsCardsGroup> BgCardGroups { get; set; } = new ObservableCollection<BattlegroundsCardsGroup>() { };
-
 		private void UpdateBattlegroundsOverlay()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
 				return;
 			var showMinions = false;
-			var hideTierlist = false;
+			var fadeBgsMinionsList = false;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{
 				if(ElementContains(_leaderboardIcons[i], cursorPos))
 				{
-					hideTierlist = true;
+					fadeBgsMinionsList = true;
 					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
 					if(entity == null)
 						break;
@@ -242,68 +234,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 				BattlegroundsBoard.Children.Clear();
 				BattlegroundsPanel.Visibility = Visibility.Collapsed;
 			}
-			// Only hide the tiers, if we're out of mulligan
-			if(hideTierlist && _game.GameEntity?.GetTag(GameTag.STEP) > (int)Step.BEGIN_MULLIGAN)
-				hideTierlist = false;
-			BattlegroundsTierlistPanel.Opacity = hideTierlist ? 0.3 : 1;
-		}
-
-		private bool AddOrUpdateBgCardGroup(string title, List<Hearthstone.Card> cards)
-		{
-			var addedNew = false;
-			var existing = BgCardGroups.FirstOrDefault(x => x.Title == title);
-			if(existing == null)
-			{
-				existing = new BattlegroundsCardsGroup() { Title = title };
-				BgCardGroups.Add(existing);
-				addedNew = true;
-			}
-			var sortedCards = cards
-				.OrderBy(x => x.LocalizedName)
-				.ToList();
-			existing.UpdateCards(sortedCards);
-			return addedNew;
-		}
-
-		private void UpdateCurrentTierList(int tier)
-		{
-			if (_currentTierlist == tier)
-				return;
-			_currentTierlist = tier;
-			foreach(var item in _tierlistIcons)
-				item.Active = tier == item.Tier;
-			if(tier < 1 || tier > 6)
-			{
-				for(var i = 0; i < 6; i++)
-					_tierlistIcons[i].SetFaded(false);
-				BgCardGroups.Clear();
-				return;
-			}
-			for(var i = 0; i < 6; i++)
-				_tierlistIcons[i].SetFaded(i != tier - 1);
-
-			var resort = false;
-			foreach(var race in _bgDb.Value.Races)
-			{
-				var title = race == Race.INVALID ? "Other" : HearthDbConverter.RaceConverter(race);
-				var cards = _bgDb.Value.GetCards(tier, race);
-				if(cards.Count == 0)
-					BgCardGroups.FirstOrDefault(x => x.Title == title)?.Hide();
-				else
-					resort |= AddOrUpdateBgCardGroup(title, cards);
-			}
-
-			if (resort)
-			{
-				var items = BgCardGroups.ToList()
-					.OrderBy(x => string.IsNullOrEmpty(x.Title))
-					.ThenBy(x => x.Title);
-				foreach(var item in items)
-				{
-					BgCardGroups.Remove(item);
-					BgCardGroups.Add(item);
-				}
-			}
+			// Only fade the minions, if we're out of mulligan
+			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
+				fadeBgsMinionsList = false;
+			BattlegroundsMinionsPanel.Opacity = fadeBgsMinionsList ? 0.3 : 1;
 		}
 
 		public Point GetPlayerCardPosition(int position, int count)

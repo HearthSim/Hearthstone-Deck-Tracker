@@ -1,8 +1,4 @@
-﻿using HearthDb;
-using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Controls;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -59,15 +55,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				BattlegroundsTile5,
 				BattlegroundsTile6,
 				BattlegroundsTile7,
-			});
-			_tierlistIcons.AddRange(new[]
-			{
-				BgTier1,
-				BgTier2,
-				BgTier3,
-				BgTier4,
-				BgTier5,
-				BgTier6,
 			});
 
 			const double tWidth = 1024.0;
@@ -160,7 +147,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_movableElements.Add(WotogIconsOpponent, new ResizeGrip());
 			_movableElements.Add(LblPlayerTurnTime, new ResizeGrip());
 
-			_clickableElements.Add(BgTierIcons);
+			_clickableElements.Add(BattlegroundsMinionsPanel.BgTierIcons);
 			_clickableElements.Add(HeroNotificationPanel);
 		}
 	}

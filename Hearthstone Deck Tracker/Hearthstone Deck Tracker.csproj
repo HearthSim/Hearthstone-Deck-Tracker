@@ -253,6 +253,9 @@
     <Compile Include="Controls\Overlay\BattlegroundsHeroPanel.xaml.cs">
       <DependentUpon>BattlegroundsHeroPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\BattlegroundsMinions.xaml.cs">
+      <DependentUpon>BattlegroundsMinions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\BattlegroundsTier.xaml.cs">
       <DependentUpon>BattlegroundsTier.xaml</DependentUpon>
     </Compile>
@@ -972,6 +975,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Overlay\BattlegroundsHeroPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\BattlegroundsMinions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
