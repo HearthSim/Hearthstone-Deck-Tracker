@@ -22,13 +22,17 @@
             <utility:IgnoreSizeDecorator>
                 <Image Name="BackgroundImage" Source="{StaticResource BgsToastBackground}" Opacity="0.5" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant"/>
             </utility:IgnoreSizeDecorator>
-            <StackPanel Margin="20, 10, 20, 15">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image Source="{StaticResource HsReplayIconWhite}" Height="40" Width="40"
+            <StackPanel Margin="10">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0">
+                    <Image Source="{StaticResource HsReplayIconWhite}" Height="20" Width="20"
                            HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
-                    <TextBlock Text="HSReplay.net Battlegrounds Guide" Foreground="White" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center"/>
+                    <TextBlock Text="HSReplay.net Battlegrounds" Foreground="White" FontWeight="SemiBold" FontSize="17" VerticalAlignment="Center"/>
                 </StackPanel>
-                <TextBlock Text="Step 1: Pick the right hero" Foreground="White" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Separator Margin="0,5"/>
+                <TextBlock Foreground="White" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Run Text="Step 1:" FontWeight="SemiBold" />
+                    <Run Text="Choose the right hero"/>
+                </TextBlock>
             </StackPanel>
         </Grid>
     </Border>
