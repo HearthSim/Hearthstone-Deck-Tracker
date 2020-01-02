@@ -18,26 +18,6 @@
         WindowStyle="None" Topmost="True" Closing="Window_Closing">
     <Window.Resources>
         <themes:ThemeManager x:Key="ThemeManager"/>
-        <Storyboard x:Key="StoryboardHeroPanelIn">
-            <DoubleAnimation From="-120" To="0" Duration="0:0:0.5" Storyboard.TargetName="HeroNotificationPanel" Storyboard.TargetProperty="(Canvas.Top)">
-                <DoubleAnimation.EasingFunction>
-                    <ElasticEase EasingMode="EaseOut" Oscillations="2" Springiness="5" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-        </Storyboard>
-        <Storyboard x:Key="StoryboardHeroPanelOut">
-            <DoubleAnimation To="-120" Duration="0:0:0.2" Storyboard.TargetName="HeroNotificationPanel" Storyboard.TargetProperty="(Canvas.Top)" />
-        </Storyboard>
-        <Storyboard x:Key="StoryboardBgsMinionsIn">
-            <DoubleAnimation To="0" Duration="0:0:0.5" Storyboard.TargetName="BattlegroundsMinionsPanel" Storyboard.TargetProperty="(Canvas.Top)">
-                <DoubleAnimation.EasingFunction>
-                    <ElasticEase EasingMode="EaseOut" Oscillations="2" Springiness="5" />
-                </DoubleAnimation.EasingFunction>
-            </DoubleAnimation>
-        </Storyboard>
-        <Storyboard x:Key="StoryboardBgsMinionsOut">
-            <DoubleAnimation To="-80" Duration="0:0:0.2" Storyboard.TargetName="BattlegroundsMinionsPanel" Storyboard.TargetProperty="(Canvas.Top)" />
-        </Storyboard>
     </Window.Resources>
     <Grid Name="GridMain">
         <Border BorderThickness="1" BorderBrush="Transparent">
@@ -140,7 +120,7 @@
                         <Ellipse Name="EllipseBoardPlayer6" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                     </StackPanel>
                 </Grid>
-                <Grid Name="GridFlavorText" Visibility="{Binding FlavorTextVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Panel.ZIndex="5" Width="298" Height="123">
+                <Grid Name="GridFlavorText" Visibility="{Binding FlavorTextVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Panel.ZIndex="5" Width="298" Height="123" Canvas.Left="-338">
                     <Image Source="../Resources/flavor_text.png"/>
                     <Image Source="../Resources/banner.png" Width="200" VerticalAlignment="Top"/>
                     <local:HearthstoneTextBlock Text="{Binding FlavorTextCardName, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" VerticalAlignment="Top" Margin="0,7,0,0"  HorizontalAlignment="Center" FontSize="14"
@@ -201,7 +181,7 @@
                 <Rectangle Name="BattlegroundsTile5" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <Rectangle Name="BattlegroundsTile6" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <Rectangle Name="BattlegroundsTile7" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel" Canvas.Top="-80" Canvas.Right="0"/>
+                <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel" Canvas.Right="0" Visibility="Collapsed"/>
                 <StackPanel Name="BattlegroundsLeaderboard" Visibility="Collapsed" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Battlegrounds_Label_LastKnown}" FontSize="16" Margin="0,0,5,0"/>
@@ -217,7 +197,7 @@
                         </StackPanel.Resources>
                     </StackPanel>
                 </StackPanel>
-                <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Canvas.Top="-120"/>
+                <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
             </Canvas>
         </Border>
     </Grid>

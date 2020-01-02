@@ -742,20 +742,23 @@ namespace Hearthstone_Deck_Tracker
 		{
 			for(var i = 0; i < 10; i++)
 			{
-				await Task.Delay(1000);
+				await Task.Delay(500);
 				var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && x.HasTag(BACON_HERO_CAN_BE_DRAFTED));
 				if(heroes.Count() < 2)
 					continue;
 				await Task.Delay(500);
 				if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
+				{
+					Core.Overlay.ShowBattlegroundsMinionsPanel();
 					break;
+				}
 				var heroIds = heroes.Select(x => x.Card.DbfIf).ToArray();
 				if(Config.Instance.HideOverlay)
 					ToastManager.ShowBattlegroundsToast(heroIds);
 				else
 				{
 					// Wait for the game to fade in
-					await Task.Delay(2000);
+					await Task.Delay(3000);
 					Core.Overlay.ShowBattlegroundsHeroPanel(heroIds);
 				}
 				break;

@@ -302,6 +302,9 @@
     <Compile Include="Utility\HearthstoneRunner.cs" />
     <Compile Include="Utility\IgnoreSizeDecorator.cs" />
     <Compile Include="Utility\Kernel32.cs" />
+    <Compile Include="Utility\Overlay\AnimationType.cs" />
+    <Compile Include="Utility\Overlay\OverlayAnimationUtils.cs" />
+    <Compile Include="Utility\Overlay\Side.cs" />
     <Compile Include="Utility\RateLimiter.cs" />
     <Compile Include="HsReplay\UploadTokenHistory.cs" />
     <Compile Include="Live\Data\PayloadFactory.cs" />
@@ -771,6 +774,7 @@
       <DependentUpon>NewsBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainWindowControls\NewsBarViewModel.cs" />
+    <Compile Include="Utility\Overlay\OverlayElementBehavior.cs" />
     <Compile Include="Windows\SelectLanguageDialog.xaml.cs">
       <DependentUpon>SelectLanguageDialog.xaml</DependentUpon>
     </Compile>

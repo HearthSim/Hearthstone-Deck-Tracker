@@ -257,7 +257,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTiers = true;
 			SaveConfig(true);
-			Core.Overlay.ShowBattlegroundsMinionsPanel();
+			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+				Core.Overlay.ShowBattlegroundsMinionsPanel();
 		}
 
 		private void CheckboxShowBattlegroundsTiers_Unchecked(object sender, RoutedEventArgs e)
@@ -266,7 +267,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTiers = false;
 			SaveConfig(true);
-			Core.Overlay.HideBattlegroundsMinionsPanel();
+			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+				Core.Overlay.HideBattlegroundsMinionsPanel();
 		}
 
 		private void SliderOverlayOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

@@ -16,9 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Controls.Overlay;
-using System.Windows.Media.Animation;
-using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Utility;
 
 #endregion
 
@@ -58,10 +56,34 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private UIElement _selectedUiElement;
 		private bool _uiMovable;
 
+		private OverlayElementBehavior _heroNotificationBehavior;
+		private OverlayElementBehavior _bgsMinionsPanelBehavior;
+
 		public OverlayWindow(GameV2 game)
 		{
 			_game = game;
 			InitializeComponent();
+
+			_heroNotificationBehavior = new OverlayElementBehavior(HeroNotificationPanel)
+			{
+				GetRight = () => 0,
+				GetBottom = () => Height * 0.04,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Bottom,
+				HideCallback = () => ShowBattlegroundsMinionsPanel(),
+				EntranceAnimation = AnimationType.Bounce,
+				ExitAnimation = AnimationType.Slide,
+			};
+
+			_bgsMinionsPanelBehavior = new OverlayElementBehavior(BattlegroundsMinionsPanel)
+			{
+				GetRight = () => 0,
+				GetTop = () => 0,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Bounce,
+				ExitAnimation = AnimationType.Slide,
+			};
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
 				HookMouse();
@@ -227,34 +249,27 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void ShowBattlegroundsHeroPanel(int[] heroIds)
 		{
 			HeroNotificationPanel.HeroIds = heroIds;
-			(FindResource("StoryboardHeroPanelIn") as Storyboard)?.Begin();
+			_heroNotificationBehavior.Show();
 		}
 
 		internal void HideBattlegroundsHeroPanel()
 		{
-			var heroPanelOut = FindResource("StoryboardHeroPanelOut") as Storyboard;
-			if(heroPanelOut == null)
-				return;
-			heroPanelOut.Completed += (obj, args) => ShowBattlegroundsMinionsPanel();
-			heroPanelOut.Begin();
+			_heroNotificationBehavior.Hide();
 		}
 
 		internal void ShowBattlegroundsMinionsPanel()
 		{
 			if(!Config.Instance.ShowBattlegroundsTiers)
 				return;
-			if(_game.CurrentGameMode != Enums.GameMode.Battlegrounds)
-				return;
-			if(Canvas.GetTop(BattlegroundsMinionsPanel) == 0)
-				return;
-			(FindResource("StoryboardBgsMinionsIn") as Storyboard)?.Begin();
+			_bgsMinionsPanelBehavior.Show();
 		}
 
 		internal void HideBattlegroundsMinionsPanel()
 		{
+			if(!BattlegroundsMinionsPanel.IsVisible)
+				return;
 			BattlegroundsMinionsPanel.Reset();
-			if (Canvas.GetTop(BattlegroundsMinionsPanel) == 0)
-				(FindResource("StoryboardBgsMinionsOut") as Storyboard)?.Begin();
+			_bgsMinionsPanelBehavior.Hide();
 		}
 	}
 }

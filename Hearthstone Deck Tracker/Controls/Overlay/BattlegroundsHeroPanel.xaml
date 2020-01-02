@@ -7,6 +7,7 @@
              Background="#361637" Cursor="Hand"
              MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
              MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
+             Margin="5"
              mc:Ignorable="d">
     <UserControl.Resources>
         <Storyboard x:Key="StoryboardNormal">
@@ -16,19 +17,19 @@
             <DoubleAnimation To="0.8" Duration="0:0:0.2" Storyboard.TargetName="BackgroundImage" Storyboard.TargetProperty="Opacity" />
         </Storyboard>
     </UserControl.Resources>
-    <Border BorderThickness="1,0,1,1" BorderBrush="White">
-    <Grid>
-        <utility:IgnoreSizeDecorator>
-            <Image Name="BackgroundImage" Source="{StaticResource BgsToastBackground}" Opacity="0.5" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant"/>
-        </utility:IgnoreSizeDecorator>
-        <StackPanel Margin="20, 10, 20, 15">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Image Source="{StaticResource HsReplayIconWhite}" Height="40" Width="40"
-                       HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
-                <TextBlock Text="HSReplay.net Battlegrounds Guide" Foreground="White" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center"/>
+    <Border BorderThickness="1" BorderBrush="White">
+        <Grid>
+            <utility:IgnoreSizeDecorator>
+                <Image Name="BackgroundImage" Source="{StaticResource BgsToastBackground}" Opacity="0.5" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant"/>
+            </utility:IgnoreSizeDecorator>
+            <StackPanel Margin="20, 10, 20, 15">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Image Source="{StaticResource HsReplayIconWhite}" Height="40" Width="40"
+                           HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
+                    <TextBlock Text="HSReplay.net Battlegrounds Guide" Foreground="White" FontWeight="SemiBold" FontSize="18" VerticalAlignment="Center"/>
+                </StackPanel>
+                <TextBlock Text="Step 1: Pick the right hero" Foreground="White" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </StackPanel>
-            <TextBlock Text="Step 1: Pick the right hero" Foreground="White" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        </StackPanel>
-    </Grid>
+        </Grid>
     </Border>
 </UserControl>

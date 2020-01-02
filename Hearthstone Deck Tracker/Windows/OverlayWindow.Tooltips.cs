@@ -184,7 +184,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 						//offset is affected by scaling
 						var cardListPos = cardList.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-						var topOffset = cardListPos.Y + cardIndex * cardSize * _scale;
+						var topOffset = cardListPos.Y + cardIndex * cardSize * AutoScaling;
 
 						//prevent tooltip from going outside of the overlay
 						if(topOffset + ToolTipCard.ActualHeight > Height)

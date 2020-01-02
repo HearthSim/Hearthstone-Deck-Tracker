@@ -280,6 +280,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 
 			UpdateElementSizes();
+			ApplyAutoScaling();
 			UpdateElementPositions();
 
 			try
@@ -317,7 +318,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
 		}
 
-		private double _scale = 1;
+		public double AutoScaling { get; set; } = 1;
 
 		private void UpdateElementPositions()
 		{
@@ -347,15 +348,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(GoldProgressGrid, Width - RectGoldDisplay.ActualWidth - GoldFrameOffset - GoldProgressGrid.ActualWidth - 10);
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
-
-			Canvas.SetLeft(HeroNotificationPanel, Width / 2 - HeroNotificationPanel.ActualWidth / 2);
-
-			if (Config.Instance.ShowBattlegroundsTiers)
-			{
-				Canvas.SetRight(BattlegroundsMinionsPanel, 0);
-				_scale = Math.Max(0.8, Math.Min(1.3, Height / 1080));
-				BattlegroundsMinionsPanel.RenderTransform = new ScaleTransform(_scale, _scale, BattlegroundsMinionsPanel.ActualWidth, 0);
-			}
 
 			if (Config.Instance.ShowFlavorText)
 			{
@@ -423,6 +415,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsOpponent.RenderTransform = new ScaleTransform(wotogSize, wotogSize);
 				_wotogSize = wotogSize;
 			}
+		}
+
+		public void ApplyAutoScaling()
+		{
+			AutoScaling = Math.Max(0.8, Math.Min(1.3, Height / 1080));
+
+			_bgsMinionsPanelBehavior.UpdatePosition();
+			_bgsMinionsPanelBehavior.UpdateScaling();
+
+			_heroNotificationBehavior.UpdatePosition();
+			_heroNotificationBehavior.UpdateScaling();
 		}
 
 		public void UpdateStackPanelAlignment()
