@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			set
 			{
 				SetValue(ActiveProperty, value);
-				Update();
+				Update(!value);
 			}
 		}
 
@@ -50,13 +50,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public void SetFaded(bool faded)
 		{
+			if(faded == _faded || Active)
+				return;
 			_faded = faded;
-			Update();
+			Update(true);
 		}
 
-		private void Update()
+		private void Update(bool updateRemove)
 		{
-			ImageTierRemove.Visibility = _hovering && Active ? Visibility.Visible : Visibility.Collapsed;
+			if(updateRemove)
+				ImageTierRemove.Visibility = _hovering && Active ? Visibility.Visible : Visibility.Collapsed;
 			Glow.Visibility = Active || _hovering ? Visibility.Visible : Visibility.Collapsed;
 			Glow.Opacity = Active ? 1 : 0.5;
 			ImageTier.Opacity = GetOpacity();
@@ -74,13 +77,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			_hovering = true;
-			Update();
+			Update(true);
 		}
 
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			_hovering = false;
-			Update();
+			Update(true);
 		}
 	}
 }
