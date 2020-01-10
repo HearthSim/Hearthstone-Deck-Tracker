@@ -1,3 +1,7 @@
+## **Release v1.9.9 - 2019-01-09**
+**Updated for Hearthstone 16.0.8.39282**
+
+
 ## **Release v1.9.8 - 2019-12-20**
 **New**:
 - Added a new counter for Galakrond invocations.
