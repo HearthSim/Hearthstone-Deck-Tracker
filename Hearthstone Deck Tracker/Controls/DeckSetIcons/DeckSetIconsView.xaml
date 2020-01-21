@@ -238,5 +238,13 @@
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_dragons}" />
             </Rectangle.Fill>
         </Rectangle>
+        <Rectangle Name="RectIconYOTD" ToolTip="{lex:Loc DeckSetIcons_Tooltip_YOTD}">
+            <Rectangle.Visibility>
+                <Binding Path="Deck" Converter="{StaticResource SetIconVisibilityConverter}" ConverterParameter="{x:Static enums:CardSet.YEAR_OF_THE_DRAGON}"/>
+            </Rectangle.Visibility>
+            <Rectangle.Fill>
+                <VisualBrush Stretch="Uniform" Visual="{StaticResource set_dragons}" />
+            </Rectangle.Fill>
+        </Rectangle>
     </WrapPanel>
 </UserControl>

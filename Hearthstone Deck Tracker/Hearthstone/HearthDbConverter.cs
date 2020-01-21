@@ -44,6 +44,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1130, "Rise of Shadows"},
 			{1158, "Saviors of Uldum"},
 			{1347, "Descent of Dragons"},
+			{1403, "Galakrond's Awakening"},
 			{1439, "Wild Event"},
 		};
 

@@ -46,5 +46,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		ULDUM = 1158,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Dragons")]
 		DRAGONS = 1347,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_YOTD")]
+		YEAR_OF_THE_DRAGON = 1403,
 	}
 }
