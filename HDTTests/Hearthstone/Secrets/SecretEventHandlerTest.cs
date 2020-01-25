@@ -174,7 +174,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_playerMinion1.SetTag(GameTag.HEALTH, Database.GetCardFromId(_playerMinion1.CardId).Health);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.BearTrap, HunterSecrets.ExplosiveTrap,
-				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
+				HunterSecrets.FreezingTrap, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 			VerifySecrets(3, RogueSecrets.All);
@@ -363,13 +363,31 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
+		public void SingleSecret_MinionToHero_PlayerImmune_PlayerAttackTest()
+		{
+			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_heroPlayer.SetTag(GameTag.IMMUNE, 1);
+			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap, HunterSecrets.WanderingMonster);
+		}
+
+		[TestMethod]
+		public void SingleSecret_HeroToHero_MinionImmune_PlayerAttackTest()
+		{
+			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
+			_playerMinion1.SetTag(GameTag.IMMUNE, 1);
+			_game.SecretsManager.HandleAttack(_heroPlayer, _heroOpponent);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap, HunterSecrets.WanderingMonster);
+		}
+
+		[TestMethod]
 		public void MultipleSecrets_MinionToHero_ExplosiveTrapTriggered_MinionDied_PlayerAttackTest()
 		{
 			_playerMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_playerMinion1.SetTag(GameTag.HEALTH, -1);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.ExplosiveTrap,
-				HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
+				HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
 			VerifySecrets(3, RogueSecrets.All);
