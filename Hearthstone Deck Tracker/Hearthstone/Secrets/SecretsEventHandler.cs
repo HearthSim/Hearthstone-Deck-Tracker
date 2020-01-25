@@ -72,7 +72,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 													!x.HasTag(GameTag.IMMUNE) &&
 													x != attacker &&
 													x != defender))
-				//if (Game.IsMinionInPlay)
 					exclude.Add(Hunter.Misdirection);
 
 				if(attacker.IsMinion && Game.PlayerMinionCount > 1)
