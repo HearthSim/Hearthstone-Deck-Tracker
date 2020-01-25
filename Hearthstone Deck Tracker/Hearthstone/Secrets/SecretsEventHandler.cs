@@ -65,13 +65,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Hunter.WanderingMonster);
 
 				exclude.Add(Hunter.ExplosiveTrap);
-
-				if(Game.Entities.FirstOrDefault(x =>
-													x.Value.IsInPlay &&
-													(x.Value.IsHero || x.Value.IsMinion) &&
-													!x.Value.HasTag(GameTag.IMMUNE) &&
-													x.Value != attacker &&
-													x.Value != defender).Value != null)
+				
+				if(Game.Entities.Values.Any(x =>
+													x.IsInPlay &&
+													(x.IsHero || x.IsMinion) &&
+													!x.HasTag(GameTag.IMMUNE) &&
+													x != attacker &&
+													x != defender))
+				//if (Game.IsMinionInPlay)
 					exclude.Add(Hunter.Misdirection);
 
 				if(attacker.IsMinion && Game.PlayerMinionCount > 1)
