@@ -1,3 +1,10 @@
+## **Release v1.9.11 - 2020-02-26**
+**Updated for Hearthstone 16.4.0.42174**
+
+**Fixed**:
+- Fixed an issue where Misdirection secret detection would not work correctly with immune targets.
+
+
 ## **Release v1.9.10 - 2020-01-21**
 **Updated for Hearthstone 16.2.0.39954**
 
