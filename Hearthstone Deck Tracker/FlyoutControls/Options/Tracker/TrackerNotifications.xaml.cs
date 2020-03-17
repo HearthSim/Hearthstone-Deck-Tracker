@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboboxTurnAction.SelectedIndex = (int)Config.Instance.TurnStartAction;
 			ComboboxChallengeAction.ItemsSource = Enum.GetValues(typeof(HsActionType)).Cast<HsActionType>();
 			ComboboxChallengeAction.SelectedIndex = (int)Config.Instance.ChallengeAction;
-
+			CheckboxBattlegrounds.IsChecked = Config.Instance.ShowBattlegroundsToast;
 
 			CheckboxTimerAlert2.IsChecked = Config.Instance.TimerAlert;
 			TextboxTimerAlert2.Text = Config.Instance.TimerAlertSeconds.ToString();
@@ -198,6 +198,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.ChallengeAction = (HsActionType)ComboboxChallengeAction.SelectedIndex;
+			Config.Save();
+		}
+
+		private void CheckboxBattlegrounds_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsToast = true;
+			Config.Save();
+		}
+
+		private void CheckboxBattlegrounds_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsToast = false;
 			Config.Save();
 		}
 	}

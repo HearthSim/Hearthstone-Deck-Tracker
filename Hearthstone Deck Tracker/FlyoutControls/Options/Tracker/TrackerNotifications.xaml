@@ -86,5 +86,10 @@
                   HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxNoteDialogDelay_Checked"
                   Unchecked="CheckboxNoteDialogDelay_Unchecked" />
+        <CheckBox x:Name="CheckboxBattlegrounds"
+                  Content="Show notification at start of Battlegrounds game"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxBattlegrounds_Checked"
+                  Unchecked="CheckboxBattlegrounds_Unchecked" />
     </StackPanel>
 </UserControl>

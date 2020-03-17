@@ -740,6 +740,9 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void HandleBattlegroundsStart()
 		{
+			if(!Config.Instance.ShowBattlegroundsToast)
+				return;
+
 			for(var i = 0; i < 10; i++)
 			{
 				await Task.Delay(500);

@@ -829,6 +829,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowReplayShareToast = true;
 
 		[DefaultValue(true)]
+		public bool ShowBattlegroundsToast = true;
+
+		[DefaultValue(true)]
 		public bool SortDecksByClass = true;
 
 		[DefaultValue(false)]
