@@ -755,15 +755,16 @@ namespace Hearthstone_Deck_Tracker
 					Core.Overlay.ShowBattlegroundsMinionsPanel();
 					break;
 				}
+
 				var heroIds = heroes.Select(x => x.Card.DbfIf).ToArray();
+
+				// Wait for the game to fade in
+				await Task.Delay(3000);
+
 				if(Config.Instance.HideOverlay)
 					ToastManager.ShowBattlegroundsToast(heroIds);
 				else
-				{
-					// Wait for the game to fade in
-					await Task.Delay(3000);
 					Core.Overlay.ShowBattlegroundsHeroPanel(heroIds);
-				}
 				break;
 			}
 		}
