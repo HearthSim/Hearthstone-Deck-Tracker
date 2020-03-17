@@ -45,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1158, "Saviors of Uldum"},
 			{1347, "Descent of Dragons"},
 			{1403, "Galakrond's Awakening"},
+			{1414, "Ashes of Outland"},
 			{1439, "Wild Event"},
 		};
 
