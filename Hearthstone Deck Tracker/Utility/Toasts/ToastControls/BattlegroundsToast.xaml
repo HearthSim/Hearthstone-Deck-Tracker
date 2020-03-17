@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
              mc:Ignorable="d" Background="#361637"
              BorderBrush="White" BorderThickness="1"
              MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
              MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
-             MinHeight="60" MinWidth="250">
+             MinHeight="60">
     <UserControl.Resources>
         <Storyboard x:Key="StoryboardNormal">
             <DoubleAnimation To="0.5" Duration="0:0:0.2" Storyboard.TargetName="BackgroundImage" Storyboard.TargetProperty="Opacity" />
@@ -17,18 +18,20 @@
         </Storyboard>
     </UserControl.Resources>
     <Grid ClipToBounds="True" Margin="1">
-        <Image Name="BackgroundImage" Source="{StaticResource BgsToastBackground}" Width="257" Opacity="0.5" RenderOptions.BitmapScalingMode="Fant" Margin="-8,-15,-3,-31"/>
-        <Grid VerticalAlignment="Center" Margin="10,0">
+            <utility:IgnoreSizeDecorator>
+                <Image Name="BackgroundImage" Source="{StaticResource BgsToastBackground}" Opacity="0.5" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant"/>
+            </utility:IgnoreSizeDecorator>
+        <DockPanel VerticalAlignment="Center" Margin="10,0">
             <Image Source="{StaticResource HsReplayIconWhite}" Height="28" Width="28"
                    HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
-            <StackPanel VerticalAlignment="Center" Margin="5,0">
-                <TextBlock Foreground="White" TextAlignment="Center"
+            <Grid>
+                <TextBlock Foreground="White" TextAlignment="Center" Margin="20,0"
                            LineHeight="15" LineStackingStrategy="BlockLineHeight">
-                    <Run Text="Choose Your Hero" FontWeight="SemiBold" FontSize="17"/>
+                    <Run Text="Compare Heroes" FontWeight="SemiBold" FontSize="17"/>
                     <LineBreak/>
                     <Run Text="HSReplay.net - Battlegrounds" FontSize="12"/>
                 </TextBlock>
-            </StackPanel>
-        </Grid>
+            </Grid>
+        </DockPanel>
     </Grid>
 </UserControl>

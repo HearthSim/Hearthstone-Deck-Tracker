@@ -7,7 +7,7 @@
              Background="#361637" Cursor="Hand"
              MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
              MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
-             Margin="5"
+             Margin="5" MinHeight="60"
              mc:Ignorable="d">
     <UserControl.Resources>
         <Storyboard x:Key="StoryboardNormal">
@@ -22,18 +22,18 @@
             <utility:IgnoreSizeDecorator>
                 <Image Name="BackgroundImage" Source="{StaticResource BgsToastBackground}" Opacity="0.5" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant"/>
             </utility:IgnoreSizeDecorator>
-            <StackPanel Margin="10">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5,0">
-                    <Image Source="{StaticResource HsReplayIconWhite}" Height="20" Width="20"
-                           HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
-                    <TextBlock Text="HSReplay.net Battlegrounds" Foreground="White" FontWeight="SemiBold" FontSize="17" VerticalAlignment="Center"/>
-                </StackPanel>
-                <Separator Margin="0,5"/>
-                <TextBlock Foreground="White" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Run Text="Step 1:" FontWeight="SemiBold" />
-                    <Run Text="Choose the right hero"/>
-                </TextBlock>
-            </StackPanel>
+            <DockPanel Margin="10" VerticalAlignment="Center">
+                <Image Source="{StaticResource HsReplayIconWhite}" Height="28" Width="28"
+                       HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="Fant"/>
+                <Grid>
+                    <TextBlock Foreground="White" TextAlignment="Center" Margin="20,0"
+                               LineHeight="15" LineStackingStrategy="BlockLineHeight">
+                        <Run Text="Compare Heroes" FontWeight="SemiBold" FontSize="17"/>
+                        <LineBreak/>
+                        <Run Text="HSReplay.net - Battlegrounds" FontSize="12"/>
+                    </TextBlock>
+                </Grid>
+            </DockPanel>
         </Grid>
     </Border>
 </UserControl>
