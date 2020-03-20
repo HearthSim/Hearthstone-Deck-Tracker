@@ -783,6 +783,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowBattlegroundsTiers = true;
 
+		[DefaultValue(true)]
+		public bool ShowBattlegroundsTurnCounter = true;
+
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
 

@@ -325,6 +325,7 @@ namespace Hearthstone_Deck_Tracker
 							break;
 				}
 			}
+			Core.Overlay.TurnCounter.UpdateTurn(turn.Item2);
 		}
 
 		private void HandleThaurissanCostReduction()
@@ -752,7 +753,7 @@ namespace Hearthstone_Deck_Tracker
 				await Task.Delay(500);
 				if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
 				{
-					Core.Overlay.ShowBattlegroundsMinionsPanel();
+					Core.Overlay.ShowBgsTopBar();
 					break;
 				}
 

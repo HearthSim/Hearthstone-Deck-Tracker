@@ -156,7 +156,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(_game.IsInMenu || !inBattlegrounds)
 			{
 				BattlegroundsLeaderboard.Visibility = Collapsed;
-				HideBattlegroundsMinionsPanel();
+				HideBgsTopBar();
 			}
 
 			UpdateIcons();
@@ -421,8 +421,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			AutoScaling = Math.Max(0.8, Math.Min(1.3, Height / 1080));
 
-			_bgsMinionsPanelBehavior.UpdatePosition();
-			_bgsMinionsPanelBehavior.UpdateScaling();
+			_bgsTopBarBehavior.UpdatePosition();
+			_bgsTopBarBehavior.UpdateScaling();
 
 			_heroNotificationBehavior.UpdatePosition();
 			_heroNotificationBehavior.UpdateScaling();

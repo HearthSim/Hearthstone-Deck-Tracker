@@ -237,7 +237,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			// Only fade the minions, if we're out of mulligan
 			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
 				fadeBgsMinionsList = false;
-			BattlegroundsMinionsPanel.Opacity = fadeBgsMinionsList ? 0.3 : 1;
+			BgsTopBar.Opacity = fadeBgsMinionsList ? 0.3 : 1;
 		}
 
 		public Point GetPlayerCardPosition(int position, int count)

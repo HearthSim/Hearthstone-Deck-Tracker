@@ -181,7 +181,10 @@
                 <Rectangle Name="BattlegroundsTile5" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <Rectangle Name="BattlegroundsTile6" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <Rectangle Name="BattlegroundsTile7" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel" Canvas.Right="0" Visibility="Collapsed"/>
+                <StackPanel Name="BgsTopBar" Visibility="Collapsed" Orientation="Horizontal" Canvas.Top="0" Canvas.Right="0">
+                    <overlay:TurnCounter x:Name="TurnCounter" Margin="0,0,2,0"  Height="55" VerticalAlignment="Top" />
+                    <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel" />
+                </StackPanel>
                 <StackPanel Name="BattlegroundsLeaderboard" Visibility="Collapsed" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Battlegrounds_Label_LastKnown}" FontSize="16" Margin="0,0,5,0"/>

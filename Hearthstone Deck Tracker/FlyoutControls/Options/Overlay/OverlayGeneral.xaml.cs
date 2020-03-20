@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckBoxOverlayUseAnimations.IsChecked = Config.Instance.OverlayCardAnimations;
 			CheckBoxRemoveSecrets.IsChecked = Config.Instance.RemoveSecretsFromList;
 			CheckboxShowBattlegroundsTiers.IsChecked = Config.Instance.ShowBattlegroundsTiers;
+			CheckboxShowBattlegroundsTurnCounter.IsChecked = Config.Instance.ShowBattlegroundsTurnCounter;
 			_initialized = true;
 		}
 
@@ -258,7 +259,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsTiers = true;
 			SaveConfig(true);
 			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
-				Core.Overlay.ShowBattlegroundsMinionsPanel();
+				Core.Overlay.BattlegroundsMinionsPanel.Visibility = Visibility.Visible;
 		}
 
 		private void CheckboxShowBattlegroundsTiers_Unchecked(object sender, RoutedEventArgs e)
@@ -268,7 +269,27 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBattlegroundsTiers = false;
 			SaveConfig(true);
 			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
-				Core.Overlay.HideBattlegroundsMinionsPanel();
+				Core.Overlay.BattlegroundsMinionsPanel.Visibility = Visibility.Collapsed;
+		}
+
+		private void CheckboxShowBattlegroundsTurnCounter_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTurnCounter = true;
+			SaveConfig(true);
+			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+				Core.Overlay.TurnCounter.Visibility = Visibility.Visible;
+		}
+
+		private void CheckboxShowBattlegroundsTurnCounter_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowBattlegroundsTurnCounter = false;
+			SaveConfig(true);
+			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+				Core.Overlay.TurnCounter.Visibility = Visibility.Collapsed;
 		}
 
 		private void SliderOverlayOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

@@ -259,6 +259,9 @@
     <Compile Include="Controls\Overlay\BattlegroundsTier.xaml.cs">
       <DependentUpon>BattlegroundsTier.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\TurnCounter.xaml.cs">
+      <DependentUpon>TurnCounter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RemovableBanner.xaml.cs">
       <DependentUpon>RemovableBanner.xaml</DependentUpon>
     </Compile>
@@ -987,6 +990,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Overlay\BattlegroundsTier.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\TurnCounter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -41,6 +41,10 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTiers_Checked"
                   Unchecked="CheckboxShowBattlegroundsTiers_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowBattlegroundsTurnCounter" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsTurnCounter}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTurnCounter_Checked"
+                  Unchecked="CheckboxShowBattlegroundsTurnCounter_Unchecked" Margin="10,5,0,0" />
         <CheckBox x:Name="CheckboxOverlayCardToolTips" Content="{lex:Loc Options_Overlay_General_CheckBox_CardTooltips}"
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxOverlayCardToolTips_Checked"

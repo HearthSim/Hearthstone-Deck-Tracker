@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private bool _uiMovable;
 
 		private OverlayElementBehavior _heroNotificationBehavior;
-		private OverlayElementBehavior _bgsMinionsPanelBehavior;
+		private OverlayElementBehavior _bgsTopBarBehavior;
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -70,18 +70,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 				GetBottom = () => Height * 0.04,
 				GetScaling = () => AutoScaling,
 				AnchorSide = Side.Bottom,
-				HideCallback = () => ShowBattlegroundsMinionsPanel(),
-				EntranceAnimation = AnimationType.Bounce,
+				HideCallback = () => {
+					ShowBgsTopBar();
+				},
+				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
 			};
 
-			_bgsMinionsPanelBehavior = new OverlayElementBehavior(BattlegroundsMinionsPanel)
+			_bgsTopBarBehavior = new OverlayElementBehavior(BgsTopBar)
 			{
 				GetRight = () => 0,
 				GetTop = () => 0,
 				GetScaling = () => AutoScaling,
 				AnchorSide = Side.Top,
-				EntranceAnimation = AnimationType.Bounce,
+				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
 			};
 
@@ -257,19 +259,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_heroNotificationBehavior.Hide();
 		}
 
-		internal void ShowBattlegroundsMinionsPanel()
+		internal void ShowBgsTopBar()
 		{
-			if(!Config.Instance.ShowBattlegroundsTiers)
-				return;
-			_bgsMinionsPanelBehavior.Show();
+			_bgsTopBarBehavior.Show();
 		}
 
-		internal void HideBattlegroundsMinionsPanel()
+		internal void HideBgsTopBar()
 		{
-			if(!BattlegroundsMinionsPanel.IsVisible)
-				return;
 			BattlegroundsMinionsPanel.Reset();
-			_bgsMinionsPanelBehavior.Hide();
+			_bgsTopBarBehavior.Hide();
 		}
 	}
 }
