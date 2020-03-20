@@ -277,7 +277,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
 				return;
-			var hoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos));
+			var hoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos, AutoScaling));
 			SetClickthrough(hoveredIndex < 0);
 		}
 
@@ -305,13 +305,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				   && rotated.Y < rectCorner.Y + rect.Height;
 		}
 
-		public bool ElementContains(FrameworkElement element, Point location)
+		public bool ElementContains(FrameworkElement element, Point location, double scaling = 1)
 		{
 			if(!element.IsVisible)
 				return false;
 			var point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-			return location.X > point.X && location.X < point.X + element.ActualWidth && location.Y > point.Y
-				   && location.Y < point.Y + element.ActualHeight;
+			var contains= location.X > point.X && location.X < point.X + element.ActualWidth * scaling && location.Y > point.Y
+				   && location.Y < point.Y + element.ActualHeight * scaling;
+			return contains;
 		}
 	}
 }
