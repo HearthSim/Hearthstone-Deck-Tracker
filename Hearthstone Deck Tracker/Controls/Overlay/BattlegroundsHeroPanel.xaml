@@ -4,6 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              Background="#361637" Cursor="Hand"
              MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
              MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
@@ -28,9 +32,9 @@
                 <Grid>
                     <TextBlock Foreground="White" TextAlignment="Center" Margin="20,0"
                                LineHeight="15" LineStackingStrategy="BlockLineHeight">
-                        <Run Text="Compare Heroes" FontWeight="SemiBold" FontSize="17"/>
+                        <Run Text="{lex:Loc Toast_Battlegrounds_Compare_Heroes}" FontWeight="SemiBold" FontSize="17"/>
                         <LineBreak/>
-                        <Run Text="HSReplay.net - Battlegrounds" FontSize="12"/>
+                        <Run Text="{lex:Loc Toast_Battlegrounds_HSReplaynet}" FontSize="12"/>
                     </TextBlock>
                 </Grid>
             </DockPanel>

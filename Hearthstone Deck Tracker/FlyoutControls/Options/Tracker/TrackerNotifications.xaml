@@ -87,7 +87,7 @@
                   Checked="CheckboxNoteDialogDelay_Checked"
                   Unchecked="CheckboxNoteDialogDelay_Unchecked" />
         <CheckBox x:Name="CheckboxBattlegrounds"
-                  Content="Show notification at start of Battlegrounds game"
+                  Content="{lex:Loc Options_Tracker_Notifications_Label_Battlegrounds_Hero}"
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxBattlegrounds_Checked"
                   Unchecked="CheckboxBattlegrounds_Unchecked" />
