@@ -127,37 +127,7 @@
   <data name="health" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\health.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="druid_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\druid_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="hunter_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hunter_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mage_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mage_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="paladin_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\paladin_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="priest_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\priest_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="rogue_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\rogue_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="shaman_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shaman_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="warlock_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\warlock_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="warrior_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\warrior_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="armor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\armor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="jaraxxus_small" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\jaraxxus_small.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

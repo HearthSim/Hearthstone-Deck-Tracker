@@ -1529,17 +1529,7 @@
     <Resource Include="Resources\mana.png" />
     <Resource Include="Resources\health.png" />
     <Resource Include="Resources\damage.png" />
-    <Resource Include="Resources\druid_small.png" />
-    <Resource Include="Resources\hunter_small.png" />
-    <Resource Include="Resources\mage_small.png" />
-    <Resource Include="Resources\paladin_small.png" />
-    <Resource Include="Resources\priest_small.png" />
-    <Resource Include="Resources\rogue_small.png" />
-    <Resource Include="Resources\shaman_small.png" />
-    <Resource Include="Resources\warlock_small.png" />
-    <Resource Include="Resources\warrior_small.png" />
     <Resource Include="Resources\armor.png" />
-    <Resource Include="Resources\jaraxxus_small.png" />
     <Resource Include="Resources\ClassIcons\Square\druid.png" />
     <Resource Include="Resources\ClassIcons\Square\hunter.png" />
     <Resource Include="Resources\ClassIcons\Square\mage.png" />
