@@ -49,8 +49,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1439, "Wild Event"},
 		};
 
-		public static string ConvertClass(CardClass cardClass) => (int)cardClass < 2 || (int)cardClass > 10
-																	  ? null : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(cardClass.ToString().ToLowerInvariant());
+		public static string ConvertClass(CardClass cardClass)
+		{
+			if(cardClass == CardClass.DEMONHUNTER)
+				return "DemonHunter";
+			return (int)cardClass < 2 || (int)cardClass > 10
+				  ? null : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(cardClass.ToString().ToLowerInvariant());
+		}
 
 		public static string CardTypeConverter(CardType type)
 		{

@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static BitmapImage Archived => GetClassIcon(HeroClassAll.Archived);
 		public static BitmapImage ArchivedBlack => GetImage("ClassIcons/General/BaseLight/archived.png");
+		public static BitmapImage DemonHunter => GetClassIcon(HeroClassAll.DemonHunter);
 		public static BitmapImage Druid => GetClassIcon(HeroClassAll.Druid);
 		public static BitmapImage Hunter => GetClassIcon(HeroClassAll.Hunter);
 		public static BitmapImage Mage => GetClassIcon(HeroClassAll.Mage);

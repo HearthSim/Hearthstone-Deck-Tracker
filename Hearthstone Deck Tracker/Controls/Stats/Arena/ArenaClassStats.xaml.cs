@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Stats.CompiledStats;
 using Hearthstone_Deck_Tracker.Utility;
 
@@ -22,9 +23,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 		                                                                                               new PropertyMetadata(
 			                                                                                               Visibility.Visible));
 
-		public static readonly DependencyProperty ClassProperty = DependencyProperty.Register("Class", typeof(string),
+		public static readonly DependencyProperty ClassProperty = DependencyProperty.Register("Class", typeof(HeroClassAll?),
 		                                                                                      typeof(ArenaClassStats),
-		                                                                                      new PropertyMetadata(default(string)));
+		                                                                                      new PropertyMetadata(null));
 
 		public ArenaClassStats()
 		{
@@ -42,13 +43,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			get
 			{
 				var classStats = DataContext as ClassStats;
-				return classStats != null ? classStats.Class : Class;
+				return classStats != null ? LocUtil.Get(classStats.Class) : Class != null ? EnumDescriptionConverter.GetDescription(Class) : "";
 			}
 		}
 
-		public string Class
+		public HeroClassAll? Class
 		{
-			get { return (string)GetValue(ClassProperty); }
+			get { return (HeroClassAll?)GetValue(ClassProperty); }
 			set { SetValue(ClassProperty, value); }
 		}
 
@@ -57,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			get
 			{
 				var classStats = DataContext as ClassStats;
-				return classStats != null ? classStats.ClassImage : ImageCache.GetClassIcon(Class);
+				return classStats != null ? classStats.ClassImage : ImageCache.GetClassIcon(Class ?? HeroClassAll.Warrior);
 			}
 		}
 

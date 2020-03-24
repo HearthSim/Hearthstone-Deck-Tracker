@@ -15,6 +15,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			_games = games;
 		}
 
+		public MatchupStats DemonHunter => GetMatchupStats(HeroClass.DemonHunter);
 		public MatchupStats Druid => GetMatchupStats(HeroClass.Druid);
 		public MatchupStats Hunter => GetMatchupStats(HeroClass.Hunter);
 		public MatchupStats Mage => GetMatchupStats(HeroClass.Mage);

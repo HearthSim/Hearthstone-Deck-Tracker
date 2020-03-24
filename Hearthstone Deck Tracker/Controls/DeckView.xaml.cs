@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 					if(_allTags.Contains(tag.ToLowerInvariant()))
 						return tag;
 
-			return deck.Class;
+			return LocUtil.Get(deck.Class);
 		}
 
 		private string GetFormatText(Deck deck)
@@ -137,6 +137,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			{
 				case "druid":
 					return Druid.MalfurionStormrageHero;
+				case "demonhunter":
+					return Demonhunter.IllidanStormrageHero;
 				case "hunter":
 					return Hunter.RexxarHero;
 				case "mage":

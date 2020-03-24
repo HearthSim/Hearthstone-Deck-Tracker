@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		private bool _hasDeck;
 
 		private readonly string[] _playerClasses =
-			{ "Druid", "Hunter", "Mage", "Paladin", "Priest", "Shaman", "Rogue", "Warlock", "Warrior" };
+			{ "DemonHunter", "Druid", "Hunter", "Mage", "Paladin", "Priest", "Shaman", "Rogue", "Warlock", "Warrior" };
 
 		public SeriesCollection OpponentCollection { get; }
 

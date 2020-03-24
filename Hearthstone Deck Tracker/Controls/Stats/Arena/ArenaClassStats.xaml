@@ -38,7 +38,7 @@
     <StackPanel Orientation="Horizontal">
         <StackPanel Margin="5,0,10,0" VerticalAlignment="Center" Visibility="{Binding Path=ImageVisiblity, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <Image Source="{Binding Path=ClassImage, RelativeSource={RelativeSource AncestorType=UserControl}}" Width="48" Height="48" RenderOptions.BitmapScalingMode="Fant"/>
-            <TextBlock Text="{Binding Path=ClassName, RelativeSource={RelativeSource AncestorType=UserControl}}" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding Path=ClassName, RelativeSource={RelativeSource AncestorType=UserControl}}" FontWeight="SemiBold" HorizontalAlignment="Center" MaxWidth="60" TextWrapping="Wrap"/>
         </StackPanel>
         <StackPanel>
             <StackPanel Orientation="Horizontal">

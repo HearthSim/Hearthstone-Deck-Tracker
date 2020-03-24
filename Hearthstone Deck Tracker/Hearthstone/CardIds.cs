@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static readonly Dictionary<string, string> HeroIdDict = new Dictionary<string, string>
 		{
+			{Collectible.Demonhunter.IllidanStormrageHero, "DemonHunter"},
 			{Collectible.Warrior.GarroshHellscreamHero, "Warrior"},
 			{Collectible.Shaman.ThrallHero, "Shaman"},
 			{Collectible.Rogue.ValeeraSanguinarHero, "Rogue"},
@@ -70,7 +71,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{"Druid", Collectible.Druid.MalfurionStormrageHero},
 			{"Warlock", Collectible.Warlock.GuldanHero},
 			{"Mage", Collectible.Mage.JainaProudmooreHero},
-			{"Priest", Collectible.Priest.AnduinWrynnHero}
+			{"Priest", Collectible.Priest.AnduinWrynnHero},
+			{"DemonHunter", Collectible.Demonhunter.IllidanStormrageHero},
 		};
 
 		public static readonly Dictionary<CardClass, string> CardClassHero = new Dictionary<CardClass, string>
@@ -83,7 +85,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{CardClass.DRUID, Collectible.Druid.MalfurionStormrageHero},
 			{CardClass.WARLOCK, Collectible.Warlock.GuldanHero},
 			{CardClass.MAGE, Collectible.Mage.JainaProudmooreHero},
-			{CardClass.PRIEST, Collectible.Priest.AnduinWrynnHero}
+			{CardClass.PRIEST, Collectible.Priest.AnduinWrynnHero},
+			{CardClass.DEMONHUNTER, Collectible.Demonhunter.IllidanStormrageHero}
 		};
 
 		// cards that should have an entourage list but don't in the game data

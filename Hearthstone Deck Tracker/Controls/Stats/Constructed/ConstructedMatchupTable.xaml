@@ -26,6 +26,19 @@
                     </DataTemplate>
                 </DataGridTemplateColumn.CellTemplate>
             </DataGridTemplateColumn>
+            <DataGridTextColumn Binding="{Binding DemonHunter.Summary}" MinWidth="47">
+                <DataGridTextColumn.HeaderTemplate>
+                    <DataTemplate>
+                        <Image RenderOptions.BitmapScalingMode="Fant" Source="{x:Static utility:ImageCache.DemonHunter}" ToolTip="{lex:Loc DemonHunter}" Width="24" Height="24" />
+                    </DataTemplate>
+                </DataGridTextColumn.HeaderTemplate>
+                <DataGridTextColumn.ElementStyle>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="Foreground" Value="{Binding DemonHunter.WinRateTextBrush}" />
+                    </Style>
+                </DataGridTextColumn.ElementStyle>
+            </DataGridTextColumn>
             <DataGridTextColumn Binding="{Binding Druid.Summary}" MinWidth="47">
                 <DataGridTextColumn.HeaderTemplate>
                     <DataTemplate>

@@ -86,6 +86,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Dictionary<string, MediaColor> ClassicClassColors = new Dictionary<string, MediaColor>
 		{
+			{"DemonHunter", MediaColor.FromArgb(0xFF, 0xA3, 0x30, 0xC9)}, //#A330C9, 
 			{"Druid", MediaColor.FromArgb(0xFF, 0xFF, 0x7D, 0x0A)}, //#FF7D0A, 
 			{"Death Knight", MediaColor.FromArgb(0xFF, 0xC4, 0x1F, 0x3B)}, //#C41F3B,
 			{"Hunter", MediaColor.FromArgb(0xFF, 0xAB, 0xD4, 0x73)}, //#ABD473,
@@ -101,6 +102,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static Dictionary<string, MediaColor> HearthStatsClassColors = new Dictionary<string, MediaColor>
 		{
+			{"DemonHunter", MediaColor.FromArgb(0xFF, 0xA3, 0x30, 0xC9)}, //#A330C9, 
 			{"Druid", MediaColor.FromArgb(0xFF, 0x62, 0x31, 0x13)}, //#623113,
 			{"Death Knight", MediaColor.FromArgb(0xFF, 0xC4, 0x1F, 0x3B)}, //#C41F3B,
 			{"Hunter", MediaColor.FromArgb(0xFF, 0x20, 0x8D, 0x43)}, //#208D43,

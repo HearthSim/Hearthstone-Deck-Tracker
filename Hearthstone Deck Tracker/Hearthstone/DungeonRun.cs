@@ -66,6 +66,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					switch(playerClass.ToUpperInvariant())
 					{
+						// Todo: Add Demon Hunter
 						case "ROGUE":
 							return LootDefaultDecks.Rogue;
 						case "WARRIOR":
@@ -91,6 +92,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					switch(playerClass.ToUpperInvariant())
 					{
+						// Todo: Add Demon Hunter
 						case "ROGUE":
 							return GilDefaultDecks.Rogue;
 						case "WARRIOR":
@@ -106,6 +108,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					switch(playerClass.ToUpperInvariant())
 					{
+						// Todo: Add Demon Hunter
 						case "ROGUE":
 							return TrlDefaultDecks.Rogue.FirstOrDefault(x => x.Contains(shrineCardId));
 						case "WARRIOR":
@@ -135,6 +138,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			switch(identifier)
 			{
+				// Todo: Add Demon Hunter
 				case "Mage":
 				case "Rogue":
 					return "Mage";

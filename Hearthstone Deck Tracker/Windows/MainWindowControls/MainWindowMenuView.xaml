@@ -38,6 +38,11 @@
                     <Setter Property="Command" Value="{Binding NewDeckCommand}"/>
                 </Style>
             </MenuItem.Resources>
+            <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_DemonHunter}" CommandParameter="DemonHunter">
+                <MenuItem.Icon>
+                    <Image Source="{StaticResource ClassIconDemonHunterRound}" />
+                </MenuItem.Icon>
+            </MenuItem>
             <MenuItem Header="{lex:LocTextUpper MainWindow_Menu_Class_Druid}" CommandParameter="Druid">
                 <MenuItem.Icon>
                     <Image Source="{StaticResource ClassIconDruidRound}" />

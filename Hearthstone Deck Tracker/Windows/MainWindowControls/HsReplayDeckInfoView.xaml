@@ -69,6 +69,12 @@
                             </Style>
                         </UniformGrid.Resources>
                         <StackPanel>
+                            <Image Source="{StaticResource ClassIconDemonHunterRound}"/>
+                            <TextBlock>
+                                <Run Text="{Binding MatchupData.DemonHunter, Mode=OneWay}"/>%
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel>
                             <Image Source="{StaticResource ClassIconDruidRound}"/>
                             <TextBlock>
                                 <Run Text="{Binding MatchupData.Druid, Mode=OneWay}"/>%

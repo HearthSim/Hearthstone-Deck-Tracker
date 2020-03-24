@@ -79,7 +79,7 @@ namespace HDTTests.Hearthstone
 		{
 			foreach(var card in Database.GetActualCards())
 			{
-				if(card.Id == "FB_Champs_ULD_169")
+				if(card.Id == "FB_Champs_ULD_169" || card.Id == "LOOT_526e")
 				{
 					// Art for this appears to be missing as of 2020-02-26
 					continue;

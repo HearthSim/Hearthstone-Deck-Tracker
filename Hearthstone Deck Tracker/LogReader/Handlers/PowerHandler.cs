@@ -282,6 +282,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						switch(actionStartingCardId)
 						{
+							// Todo: Add Demon Hunter
 							case Collectible.Rogue.TradePrinceGallywix:
 								if(!game.Entities.TryGetValue(gameState.LastCardPlayed, out var lastPlayed))
 									break;
@@ -354,6 +355,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						switch(actionStartingCardId)
 						{
+							// Todo: Add Demon Hunter
 							case Collectible.Rogue.GangUp:
 							case Collectible.Hunter.DireFrenzy:
 							case Collectible.Rogue.LabRecruiter:

@@ -1446,6 +1446,8 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\ClassIcons\Square\demonhunter.png" />
+    <Resource Include="Resources\ClassIcons\Round\demonhunter.png" />
     <Resource Include="Images\icon-pogo.png" />
     <Resource Include="Resources\hearthstone-icon.png" />
     <Resource Include="Resources\collection_promo.jpg" />
