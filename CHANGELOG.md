@@ -1,3 +1,12 @@
+## **Release v1.10.0 - 2020-03-25**
+**New**:
+- Added a turn counter on the Battlegrounds overlay (`options > overlay > general`)
+- Added a notification at the start of Battlegrounds games to see the HSReplay.net Hero Tier List filtered to the hero choices (`options > tracker > notifications`).
+
+**Changes**:
+- The Battlegrounds overlay is now clickable rather than hover activated.
+
+
 ## **Release v1.9.12 - 2020-03-17**
 **Updated for Hearthstone 16.6.0.43246**
 
