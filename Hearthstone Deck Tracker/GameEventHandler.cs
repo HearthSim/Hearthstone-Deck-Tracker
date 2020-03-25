@@ -741,33 +741,38 @@ namespace Hearthstone_Deck_Tracker
 
 		private async void HandleBattlegroundsStart()
 		{
-			if(!Config.Instance.ShowBattlegroundsToast)
-				return;
-
-			for(var i = 0; i < 10; i++)
+			if(Config.Instance.ShowBattlegroundsToast)
 			{
-				await Task.Delay(500);
-				var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && x.HasTag(BACON_HERO_CAN_BE_DRAFTED));
-				if(heroes.Count() < 2)
-					continue;
-				await Task.Delay(500);
-				if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
+				for(var i = 0; i < 10; i++)
 				{
-					Core.Overlay.ShowBgsTopBar();
+					await Task.Delay(500);
+					var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && x.HasTag(BACON_HERO_CAN_BE_DRAFTED));
+					if(heroes.Count() < 2)
+						continue;
+					await Task.Delay(500);
+					if(_game.GameEntity?.GetTag(STEP) != (int)Step.BEGIN_MULLIGAN)
+					{
+						Core.Overlay.ShowBgsTopBar();
+						break;
+					}
+
+					var heroIds = heroes.Select(x => x.Card.DbfIf).ToArray();
+
+					// Wait for the game to fade in
+					await Task.Delay(3000);
+
+					if(Config.Instance.HideOverlay)
+					{
+						ToastManager.ShowBattlegroundsToast(heroIds);
+						Core.Overlay.ShowBgsTopBar();
+					}
+					else
+						Core.Overlay.ShowBattlegroundsHeroPanel(heroIds);
 					break;
 				}
-
-				var heroIds = heroes.Select(x => x.Card.DbfIf).ToArray();
-
-				// Wait for the game to fade in
-				await Task.Delay(3000);
-
-				if(Config.Instance.HideOverlay)
-					ToastManager.ShowBattlegroundsToast(heroIds);
-				else
-					Core.Overlay.ShowBattlegroundsHeroPanel(heroIds);
-				break;
 			}
+			else
+				Core.Overlay.ShowBgsTopBar();
 		}
 
 		#region Player
