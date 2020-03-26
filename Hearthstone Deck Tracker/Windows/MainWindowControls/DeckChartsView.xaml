@@ -25,7 +25,7 @@
                         FlowDirection="RightToLeft" to make resizing based on legend work properly with LegendLocation="Right"
                         LocalizedChartLegend sets FlowDirection="LeftToRight" again
                     -->
-                    <wpf:PieChart DataTooltip="{x:Null}" Hoverable="False" Width="250" Height="180" 
+                    <wpf:PieChart DataTooltip="{x:Null}" Hoverable="False" Width="250" Height="200" 
                         Series="{Binding OpponentCollection}" StartingRotationAngle="0" LegendLocation="Right" FlowDirection="RightToLeft">
                         <wpf:PieChart.ChartLegend>
                             <local:LocalizedChartLegend/>
