@@ -692,7 +692,7 @@ namespace Hearthstone_Deck_Tracker
 		internal static void OpenBattlegroundsHeroPicker(int[] heroIds)
 		{
 			var encodedIds = HttpUtility.UrlEncode(string.Join(",", heroIds));
-			Process.Start($"https://hsreplay.net/battlegrounds/heroes/#heroes={encodedIds}");
+			Process.Start($"{BuildHsReplayNetUrl("battlegrounds/heroes", "bgs_toast")}#heroes={encodedIds}");
 		}
 	}
 }
