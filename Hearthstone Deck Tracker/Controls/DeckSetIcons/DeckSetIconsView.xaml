@@ -257,5 +257,13 @@
                 <VisualBrush Stretch="Uniform" Visual="{StaticResource set_blacktemple}" />
             </Rectangle.Fill>
         </Rectangle>
+        <Rectangle Name="RectIconDemonHunterInitiate" ToolTip="{lex:Loc DeckSetIcons_Tooltip_DemonHunterInitiate}">
+            <Rectangle.Visibility>
+                <Binding Path="Deck" Converter="{StaticResource SetIconVisibilityConverter}" ConverterParameter="{x:Static enums:CardSet.DEMON_HUNTER_INITIATE}"/>
+            </Rectangle.Visibility>
+            <Rectangle.Fill>
+                <VisualBrush Stretch="Uniform" Visual="{StaticResource set_blacktemple}" />
+            </Rectangle.Fill>
+        </Rectangle>
     </WrapPanel>
 </UserControl>

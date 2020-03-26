@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1403, "Galakrond's Awakening"},
 			{1414, "Ashes of Outland"},
 			{1439, "Wild Event"},
+			{1463, "Demon Hunter Initiate"},
 		};
 
 		public static string ConvertClass(CardClass cardClass)

@@ -50,5 +50,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		YEAR_OF_THE_DRAGON = 1403,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_BlackTemple")]
 		BLACK_TEMPLE = 1414,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_DemonHunterInitiate")]
+		DEMON_HUNTER_INITIATE = 1463,
 	}
 }
