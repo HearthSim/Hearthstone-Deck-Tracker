@@ -1542,7 +1542,6 @@
     <Resource Include="Resources\ClassIcons\Square\warlock.png" />
     <Resource Include="Resources\ClassIcons\Square\warrior.png" />
     <Resource Include="Resources\archived_marker.png" />
-    <Resource Include="Resources\ClassIcons\Round\deathknight.png" />
     <Resource Include="Resources\ClassIcons\Round\druid.png" />
     <Resource Include="Resources\ClassIcons\Round\hunter.png" />
     <Resource Include="Resources\ClassIcons\Round\mage.png" />
