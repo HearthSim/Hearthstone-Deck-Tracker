@@ -49,9 +49,9 @@
                     </TextBlock>
                     <wpf:Gauge Value="{Binding MatchupData.TotalValue, Mode=OneWay}" Style="{StaticResource WinrateGaugeStyle}"/>
                 </Grid>
-                <StackPanel Margin="20,0,0,0">
+                <StackPanel Margin="10,0,0,0">
                     <TextBlock Text="{lex:LocTextUpper HsReplayDeckInfo_Label_Machtups}" FontWeight="SemiBold" TextAlignment="Center"/>
-                    <UniformGrid Width="200" Margin="0,5,0,0">
+                    <UniformGrid Width="230" Margin="0,5,0,0">
                         <UniformGrid.Resources>
                             <Style TargetType="Image">
                                 <Setter Property="Width" Value="24"/>
