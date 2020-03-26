@@ -1,3 +1,12 @@
+## **Release v1.10.1 - 2020-03-26**
+**Updated for Ashes of Outland**
+- Added basic support for Demon Hunter
+- Updated for Battlegrounds changes
+- Updated for Hall of Fame changes
+
+This update should restore the basic functionality. Support for Demon Hunter card interactions and the new Ranked system coming soon.
+
+
 ## **Release v1.10.0 - 2020-03-25**
 **New**:
 - Added a turn counter on the Battlegrounds overlay (`options > overlay > general`)
