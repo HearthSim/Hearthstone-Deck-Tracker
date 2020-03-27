@@ -55,6 +55,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ComboBoxOpponentClass.ItemsSource =
 				Enum.GetValues(typeof(HeroClassStatsFilter)).Cast<HeroClassStatsFilter>().Select(x => new HeroClassStatsFilterWrapper(x));
 			ComboBoxOpponentClass.SelectedItem = new HeroClassStatsFilterWrapper(Config.Instance.ConstructedStatsOpponentClassFilter);
+
+			ComboBoxLeague.ItemsSource = Enum.GetValues(typeof(League));
+			ComboBoxLeague.SelectedItem = Config.Instance.ConstructedStatsLeagueFilter;
+
 			TextBoxOpponentName.Text = Config.Instance.ConstructedStatsOpponentNameFilter;
 			TextBoxNote.Text = Config.Instance.ConstructedStatsNoteFilter;
 			TextBoxTurnsMin.Text = Config.Instance.ConstructedStatsTurnsFilterMin.ToString();
@@ -65,7 +69,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		}
 
 		public Visibility RankFilterVisibility
+			=> Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked && Config.Instance.ConstructedStatsLeagueFilter == League.Legacy ? Visibility.Visible : Visibility.Collapsed;
+
+		public Visibility LeagueFilterVisibility
 			=> Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked ? Visibility.Visible : Visibility.Collapsed;
+
+		public Visibility LeagueFilterHintVisibility
+			=> Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked
+				&& Config.Instance.ShowLeagueFilterHint ? Visibility.Visible : Visibility.Collapsed;
 
 		public Visibility FormatFilterVisibility
 			=> Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked || Config.Instance.ConstructedStatsModeFilter == GameMode.Casual
@@ -139,6 +150,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			Config.Save();
 			_updateCallback?.Invoke();
 			OnPropertyChanged(nameof(RankFilterVisibility));
+			OnPropertyChanged(nameof(LeagueFilterVisibility));
+			OnPropertyChanged(nameof(LeagueFilterHintVisibility));
 			OnPropertyChanged(nameof(FormatFilterVisibility));
 		}
 
@@ -333,6 +346,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				return;
 			_updateCallback?.Invoke();
 			Core.StatsOverview.ConstructedGames.UpdateAddGameButton();
+		}
+
+		private void ComboBoxLeague_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			var newValue = (League)ComboBoxLeague.SelectedItem;
+			Config.Instance.ConstructedStatsLeagueFilter = newValue;
+			if (newValue != League.All)
+				Config.Instance.ShowLeagueFilterHint = false;
+			Config.Save();
+			OnPropertyChanged(nameof(RankFilterVisibility));
+			OnPropertyChanged(nameof(LeagueFilterHintVisibility));
+			_updateCallback?.Invoke();
 		}
 	}
 }

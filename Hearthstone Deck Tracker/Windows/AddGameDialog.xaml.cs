@@ -60,6 +60,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				ComboBoxMode.IsEnabled = true;
 				TextBoxRank.IsEnabled = true;
 				TextBoxLegendRank.IsEnabled = true;
+				TextBoxLeagueId.IsEnabled = true;
+				TextBoxStarLevel.IsEnabled = true;
 				if(lastGame != null)
 				{
 					ComboBoxFormat.SelectedItem = lastGame.Format;
@@ -68,6 +70,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 					{
 						TextBoxRank.Text = lastGame.Rank.ToString();
 						TextBoxLegendRank.Text = lastGame.LegendRank.ToString();
+						TextBoxLeagueId.Text = lastGame.LeagueId.ToString();
+						TextBoxStarLevel.Text = lastGame.StarLevel.ToString();
 					}
 				}
 			}
@@ -101,6 +105,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			{
 				TextBoxRank.Text = game.Rank.ToString();
 				TextBoxLegendRank.Text = game.LegendRank.ToString();
+				TextBoxLeagueId.Text = game.LeagueId.ToString();
+				TextBoxStarLevel.Text = game.StarLevel.ToString();
 			}
 			PanelRank.Visibility = PanelLegendRank.Visibility = game.GameMode == Ranked ? Visible : Collapsed;
 			PanelFormat.Visibility = game.GameMode == Ranked || game.GameMode == Casual ? Visible : Collapsed;
@@ -123,6 +129,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			{
 				int.TryParse(TextBoxDuration.Text, out var duration);
 				int.TryParse(TextBoxRank.Text, out var rank);
+				int.TryParse(TextBoxStarLevel.Text, out var starLevel);
+				int.TryParse(TextBoxLeagueId.Text, out var leagueId);
 				int.TryParse(TextBoxLegendRank.Text, out var legendRank);
 				int.TryParse(TextBoxTurns.Text, out var turns);
 				if(!_editing)
@@ -138,6 +146,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 				_game.OpponentHero = ComboBoxOpponent.SelectedValue.ToString();
 				_game.Coin = (YesNo)ComboBoxCoin.SelectedValue == Yes;
 				_game.Rank = rank;
+				_game.StarLevel = starLevel;
+				_game.LeagueId = leagueId;
 				_game.LegendRank = legendRank;
 				_game.Note = TextBoxNote.Text;
 				_game.OpponentName = TextBoxOppName.Text;

@@ -9,7 +9,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
-             d:DesignHeight="300" Title="{lex:Loc AddGameDialog_Title_AddNew}" Height="525" d:DesignWidth="450">
+             d:DesignHeight="300" Title="{lex:Loc AddGameDialog_Title_AddNew}" Height="600" d:DesignWidth="750">
     <StackPanel Margin="0,15,0,0">
         <StackPanel HorizontalAlignment="Center" Width="300">
             <DockPanel Margin="0,2,0,0">
@@ -61,6 +61,14 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0" Name="PanelLeagueId">
+                <Label Content="League Id:" Width="90"/>
+                <TextBox Name="TextBoxLeagueId" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
+            </DockPanel>
+            <DockPanel Margin="0,2,0,0" Name="PanelStarLevel">
+                <Label Content="Star Level:" Width="90"/>
+                <TextBox Name="TextBoxStarLevel" Text="0" PreviewTextInput="TextBox_PreviewTextInput"/>
             </DockPanel>
             <DockPanel Margin="0,2,0,0" Name="PanelRank">
                 <Label Content="{lex:Loc AddGameDialog_Label_Rank}" Width="90"/>

@@ -42,7 +42,7 @@
                     </TreeViewItem>
                 </TreeView>
             </GroupBox>
-            <GroupBox Width="180">
+            <GroupBox Width="230">
                 <GroupBox.Header>
                     <DockPanel>
                         <Button Name="ButtonMore" Style="{DynamicResource MetroCircleButtonStyle}" Content="..." Foreground="White" 

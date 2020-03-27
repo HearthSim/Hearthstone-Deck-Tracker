@@ -45,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private string _playerName;
 		private string _opponentName;
 		private int _rank;
+		private int _starLevel;
 		private int _battlegroundsRating;
 		private int _stars;
 		private int _legendRank;
@@ -173,6 +174,17 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
+		public int StarLevel
+		{
+			get { return _starLevel; }
+			set
+			{
+				_starLevel = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(RankString));
+			}
+		}
+
 		public int Stars
 		{
 			get { return _stars; }
@@ -213,7 +225,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
+
 		public int OpponentRank { get; set; }
+
+		public int OpponentStarLevel { get; set; }
+
+		public int LeagueId { get; set; }
+
+		public int StarMultiplier { get; set; }
 
 		public int? HearthstoneBuild { get; set; }
 		
@@ -338,10 +357,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool HasLegendRank => LegendRank > 0;
 
 		[XmlIgnore]
-		public string RankString => GameMode == GameMode.Ranked ? (HasLegendRank ? $"L{LegendRank}" : (HasRank ? Rank.ToString() : "-")) : "-";
+		public string RankString => GameMode == GameMode.Ranked ? RankTranslator.GetRankString(LeagueId, StarLevel, Rank, LegendRank) : "-";
 
 		[XmlIgnore]
-		public int SortableRank => GameMode == GameMode.Ranked ? (HasLegendRank ? -int.MaxValue + LegendRank : (HasRank ? Rank : int.MaxValue)) : int.MaxValue;
+		public int SortableRank => GameMode == GameMode.Ranked ? (HasLegendRank ? -int.MaxValue + LegendRank : (HasRank ? Rank : (StarLevel > 0 ? -StarLevel : int.MaxValue))) : int.MaxValue;
 
 		[XmlIgnore]
 		public string ResultString => Result + (WasConceded ? "*" : "");
@@ -531,6 +550,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeBrawlWins() => BrawlWins > 0;
 		public bool ShouldSerializeBrawlLosses() => BrawlLosses > 0;
 		public bool ShouldSerializeBattlegroundsRating() => BattlegroundsRating > 0;
+		public bool ShouldSerializeStarLevel() => StarLevel > 0;
+		public bool ShouldSerializeOpponentStarLevel() => OpponentStarLevel > 0;
+		public bool ShouldSerializeLeagueId() => LeagueId > 0;
+		public bool ShouldSerializeStarMultiplier() => StarMultiplier > 0;
 
 
 		public event PropertyChangedEventHandler PropertyChanged;

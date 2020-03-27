@@ -66,6 +66,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				metaData.LadderSeason = game.RankedSeasonId;
 			if(gameMetaData?.TwitchVodData != null)
 				metaData.TwitchVod = gameMetaData.TwitchVodData;
+			if(game?.LeagueId > 0)
+				metaData.LeagueId = game.LeagueId;
 			return metaData;
 		}
 
@@ -80,14 +82,30 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			friendly.Id = game.FriendlyPlayerId;
 			opposing.Id = game.OpponentPlayerId;
 
-			if(game.Rank > 0)
-				friendly.Rank = game.Rank;
-			if(game.LegendRank > 0)
-				friendly.LegendRank = game.LegendRank;
 			if(game.PlayerCardbackId > 0)
 				friendly.Cardback = game.PlayerCardbackId;
-			if(game.Stars > 0)
-				friendly.Stars = game.Stars;
+
+			if(game.GameMode == GameMode.Ranked)
+			{
+				if(game.Rank > 0)
+					friendly.Rank = game.Rank;
+				if(game.LegendRank > 0)
+					friendly.LegendRank = game.LegendRank;
+				if(game.Stars > 0)
+					friendly.Stars = game.Stars;
+				if(game.StarLevel > 0)
+					friendly.StarLevel = game.StarLevel;
+				if(game.StarMultiplier > 0)
+					friendly.StarMultiplier = game.StarMultiplier;
+
+				if(game.OpponentRank > 0)
+					opposing.Rank = game.OpponentRank;
+				if(game.OpponentLegendRank > 0)
+					opposing.LegendRank = game.OpponentLegendRank;
+				if(game.OpponentStarLevel > 0)
+					opposing.StarLevel = game.OpponentStarLevel;
+			}
+
 			if(game.GameMode == GameMode.Battlegrounds)
 			{
 				if(game.BattlegroundsRating > 0)
@@ -113,10 +131,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(game.BrawlLosses > 0)
 					friendly.Losses = game.BrawlLosses;
 			}
-			if(game.OpponentRank > 0)
-				opposing.Rank = game.OpponentRank;
-			if(game.OpponentLegendRank > 0)
-				opposing.LegendRank = game.OpponentLegendRank;
 			if(game.OpponentCardbackId > 0)
 				opposing.Cardback = game.OpponentCardbackId;
 

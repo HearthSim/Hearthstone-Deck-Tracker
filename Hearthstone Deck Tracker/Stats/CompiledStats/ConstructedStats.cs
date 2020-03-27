@@ -23,17 +23,17 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public IEnumerable<GameStats> GetFilteredGames(bool archived = true, bool playerClass = true, bool region = true,
-													   bool timeFrame = true, bool mode = true, bool rank = true, bool format = true, 
+													   bool timeFrame = true, bool mode = true, bool league = true, bool rank = true, bool format = true, 
 													   bool turns = true, bool coin = true, bool result = true, bool oppClass = true, 
 													   bool oppName = true, bool note = true, bool tags = true, bool includeNoDeck = true)
 		{
 			var decks = Config.Instance.ConstructedStatsActiveDeckOnly && DeckList.Instance.ActiveDeck != null ? new[] {DeckList.Instance.ActiveDeck} : DeckList.Instance.Decks.ToArray();
-			return GetFilteredGames(decks, archived, playerClass, region, timeFrame, mode, rank, format, turns, coin, result,
+			return GetFilteredGames(decks, archived, playerClass, region, timeFrame, mode, league, rank, format, turns, coin, result,
 									oppClass, oppName, note, tags, includeNoDeck);
 		}
 
 		public IEnumerable<GameStats> GetFilteredGames(IEnumerable<Deck> decks, bool archived = true, bool playerClass = true, bool region = true,
-													   bool timeframe = true, bool mode = true, bool rank = true, 
+													   bool timeframe = true, bool mode = true, bool league = true, bool rank = true, 
 													   bool format = true, bool turns = true, bool coin = true,
 													   bool result = true, bool oppClass = true, bool oppName = true,
 													   bool note = true, bool tags = true, bool includeNoDeck = true)
@@ -96,35 +96,67 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 			if(mode && Config.Instance.ConstructedStatsModeFilter != GameMode.All)
 				filtered = filtered.Where(x => x.GameMode == Config.Instance.ConstructedStatsModeFilter);
-			if(rank && Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked)
+			if(league && Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked)
 			{
-				var min = Config.Instance.ConstructedStatsRankFilterMin;
-				if(min != "L1")
+				switch(Config.Instance.ConstructedStatsLeagueFilter)
 				{
-					int minValue;
-					if(min.StartsWith("L"))
-					{
-						if(int.TryParse(min.Substring(1), out minValue))
-							filtered = filtered.Where(x => !x.HasLegendRank || x.LegendRank >= minValue);
-					}
-					else if(int.TryParse(min, out minValue))
-						filtered = filtered.Where(x => !x.HasLegendRank && (!x.HasRank || x.Rank >= minValue));
-					
+					case League.All:
+						filtered = filtered.Where(g => g.LeagueId >= 5);
+						break;
+					case League.Bronze:
+						filtered = filtered.Where(g => g.LeagueId >= 5 && g.StarLevel >= 1 && g.StarLevel <= 10);
+						break;
+					case League.Silver:
+						filtered = filtered.Where(g => g.LeagueId >= 5 && g.StarLevel >= 11 && g.StarLevel <= 20);
+						break;
+					case League.Gold:
+						filtered = filtered.Where(g => g.LeagueId >= 5 && g.StarLevel >= 21 && g.StarLevel <= 30);
+						break;
+					case League.Platinum:
+						filtered = filtered.Where(g => g.LeagueId >= 5 && g.StarLevel >= 31 && g.StarLevel <= 40);
+						break;
+					case League.Diamond:
+						filtered = filtered.Where(g => g.LeagueId >= 5 && g.StarLevel >= 41 && g.StarLevel <= 50);
+						break;
+					case League.Legend:
+						filtered = filtered.Where(g => g.LeagueId >= 5 && g.HasLegendRank);
+						break;
+					case League.Legacy:
+						filtered = filtered.Where(g => g.LeagueId < 5);
+						break;
 				}
-				var max = Config.Instance.ConstructedStatsRankFilterMax;
-				if(!string.IsNullOrEmpty(max))
+
+				if(rank && Config.Instance.ConstructedStatsLeagueFilter == League.Legacy)
 				{
-					int maxValue;
-					if(max.StartsWith("L"))
+					var min = Config.Instance.ConstructedStatsRankFilterMin;
+					if(min != "L1")
 					{
-						if(int.TryParse(max.Substring(1), out maxValue))
-							filtered = filtered.Where(x => x.HasLegendRank && x.LegendRank <= maxValue);
+						int minValue;
+						if(min.StartsWith("L"))
+						{
+							if(int.TryParse(min.Substring(1), out minValue))
+								filtered = filtered.Where(x => !x.HasLegendRank || x.LegendRank >= minValue);
+						}
+						else if(int.TryParse(min, out minValue))
+							filtered = filtered.Where(x => !x.HasLegendRank && (!x.HasRank || x.Rank >= minValue));
+						
 					}
-					else if(int.TryParse(max, out maxValue))
-						filtered = filtered.Where(x => x.HasLegendRank || x.HasRank && x.Rank <= maxValue);
-					
+					var max = Config.Instance.ConstructedStatsRankFilterMax;
+					if(!string.IsNullOrEmpty(max))
+					{
+						int maxValue;
+						if(max.StartsWith("L"))
+						{
+							if(int.TryParse(max.Substring(1), out maxValue))
+								filtered = filtered.Where(x => x.HasLegendRank && x.LegendRank <= maxValue);
+						}
+						else if(int.TryParse(max, out maxValue))
+							filtered = filtered.Where(x => x.HasLegendRank || x.HasRank && x.Rank <= maxValue);
+						
+					}
 				}
 			}
+
 			if(format && Config.Instance.ConstructedStatsFormatFilter != Format.All
 			   && (Config.Instance.ConstructedStatsModeFilter == GameMode.Ranked
 			   || Config.Instance.ConstructedStatsModeFilter == GameMode.Casual))

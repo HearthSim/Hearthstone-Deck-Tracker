@@ -120,6 +120,23 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </DockPanel>
+        <Border BorderThickness="1,0,0,0" BorderBrush="Yellow" Margin="5,5,5,0" Visibility="{Binding LeagueFilterHintVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <TextBlock Margin="5,0,0,0" TextWrapping="Wrap">
+            <Run FontWeight="Bold" Text="{lex:Loc Stats_Constructed_Filters_Text_League_Hint1}"/>
+            <LineBreak/>
+            <Run Text="{lex:Loc Stats_Constructed_Filters_Text_League_Hint2}"/>
+            </TextBlock>
+        </Border>
+        <DockPanel Margin="0,5,0,0" Visibility="{Binding LeagueFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
+            <Label Content="{lex:Loc Stats_Constructed_Filters_Label_League}" Width="60"/>
+            <ComboBox Name="ComboBoxLeague" SelectedIndex="0" SelectionChanged="ComboBoxLeague_OnSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=., Converter={StaticResource EnumDescriptionConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </DockPanel>
         <DockPanel Margin="0,5,0,0" Visibility="{Binding RankFilterVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}">
             <Label Content="{lex:Loc Stats_Constructed_Filters_Label_Rank}" Width="60"/>
             <Grid VerticalAlignment="Center">

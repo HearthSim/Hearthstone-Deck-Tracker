@@ -175,14 +175,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public BattlegroundRatingInfo BattlegroundsRatingInfo => _battlegroundsRatingInfo ?? (_battlegroundsRatingInfo = HearthMirror.Reflection.GetBattlegroundRatingInfo());
 
+		private bool IsValidPlayerInfo(MatchInfo.Player playerInfo)
+		{
+			var valid = playerInfo != null && playerInfo.Name != null && (CurrentGameMode != GameMode.Ranked || playerInfo.Standard.StarLevel != null);
+			Log.Debug($"valid={valid}, gameMode={CurrentGameMode}, player={playerInfo?.Name}, starLevel={playerInfo?.Standard.StarLevel}");
+			return valid;
+		}
+
 		internal async void CacheMatchInfo()
 		{
 			if(!_matchInfoCacheInvalid)
 				return;
 			MatchInfo matchInfo;
-			while((matchInfo = HearthMirror.Reflection.GetMatchInfo()) == null || matchInfo.LocalPlayer == null || matchInfo.OpposingPlayer == null)
+			while((matchInfo = HearthMirror.Reflection.GetMatchInfo()) == null || !IsValidPlayerInfo(matchInfo.LocalPlayer) || !IsValidPlayerInfo(matchInfo.OpposingPlayer))
 			{
-				Log.Info($"Waiting for matchInfo... (matchInfo={matchInfo}, localPlayer={matchInfo?.LocalPlayer}, opposingPlayer={matchInfo?.OpposingPlayer})");
+				Log.Info($"Waiting for matchInfo... (matchInfo={matchInfo}, localPlayer={matchInfo?.LocalPlayer?.Name}, opposingPlayer={matchInfo?.OpposingPlayer?.Name})");
 				await Task.Delay(1000);
 			}
 			_matchInfo = matchInfo;

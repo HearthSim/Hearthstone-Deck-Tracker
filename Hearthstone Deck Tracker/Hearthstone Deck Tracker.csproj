@@ -273,6 +273,7 @@
     </Compile>
     <Compile Include="Enums\DeckDateType.cs" />
     <Compile Include="Enums\HsActionType.cs" />
+    <Compile Include="Enums\League.cs" />
     <Compile Include="FlyoutControls\Options\HSReplay\HSReplayAccount.xaml.cs">
       <DependentUpon>HSReplayAccount.xaml</DependentUpon>
     </Compile>
@@ -293,6 +294,7 @@
     <Compile Include="Hearthstone\Collection.cs" />
     <Compile Include="Hearthstone\DungeonRun.cs" />
     <Compile Include="Hearthstone\Entities\GuessedCardState.cs" />
+    <Compile Include="Hearthstone\RankTranslator.cs" />
     <Compile Include="Hearthstone\Secrets\ArenaSettingsProvider.cs" />
     <Compile Include="Hearthstone\Secrets\RemoteArenaSettings.cs" />
     <Compile Include="HsReplay\HSReplayNetOAuth.cs" />

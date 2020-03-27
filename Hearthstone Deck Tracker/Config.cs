@@ -206,6 +206,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(GameMode.All)]
 		public GameMode ConstructedStatsModeFilter = GameMode.All;
 
+		[DefaultValue(League.All)]
+		public League ConstructedStatsLeagueFilter = League.All;
+
 		[DefaultValue(DisplayedTimeFrame.CurrentSeason)]
 		public DisplayedTimeFrame ConstructedStatsTimeFrameFilter = DisplayedTimeFrame.CurrentSeason;
 
@@ -833,6 +836,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ShowBattlegroundsToast = true;
+
+		[DefaultValue(true)]
+		public bool ShowLeagueFilterHint = true;
 
 		[DefaultValue(true)]
 		public bool SortDecksByClass = true;

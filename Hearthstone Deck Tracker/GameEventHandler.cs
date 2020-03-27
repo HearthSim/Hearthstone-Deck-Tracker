@@ -444,11 +444,20 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.CurrentGameMode == Ranked && _game.MatchInfo != null)
 				{
 					var wild = _game.CurrentFormat == Format.Wild;
-					_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
-					_game.CurrentGameStats.OpponentRank = wild ? _game.MatchInfo.OpposingPlayer.WildRank : _game.MatchInfo.OpposingPlayer.StandardRank;
-					_game.CurrentGameStats.LegendRank = wild ? _game.MatchInfo.LocalPlayer.WildLegendRank : _game.MatchInfo.LocalPlayer.StandardLegendRank;
-					_game.CurrentGameStats.OpponentLegendRank = wild ? _game.MatchInfo.OpposingPlayer.WildLegendRank : _game.MatchInfo.OpposingPlayer.StandardLegendRank;
-					_game.CurrentGameStats.Stars = wild ? _game.MatchInfo.LocalPlayer.WildStars : _game.MatchInfo.LocalPlayer.StandardStars;
+					var playerInfo = wild ? _game.MatchInfo.LocalPlayer.Wild : _game.MatchInfo.LocalPlayer.Standard;
+					var opponentInfo = wild ? _game.MatchInfo.OpposingPlayer.Wild : _game.MatchInfo.OpposingPlayer.Standard;
+					_game.CurrentGameStats.LeagueId = playerInfo.LeagueId ?? 0;
+					if (playerInfo.LeagueId < 5)
+					{
+						_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
+						_game.CurrentGameStats.OpponentRank = wild ? _game.MatchInfo.OpposingPlayer.WildRank : _game.MatchInfo.OpposingPlayer.StandardRank;
+					}
+					_game.CurrentGameStats.StarLevel = playerInfo.StarLevel ?? 0;
+					_game.CurrentGameStats.StarMultiplier = playerInfo.StarMultipier ?? 0;
+					_game.CurrentGameStats.Stars = playerInfo.Stars ?? 0;
+					_game.CurrentGameStats.OpponentStarLevel = opponentInfo.StarLevel ?? 0;
+					_game.CurrentGameStats.LegendRank = playerInfo.LegendRank ?? 0;
+					_game.CurrentGameStats.OpponentLegendRank = opponentInfo.LegendRank ?? 0;
 				}
 				else if(_game.CurrentGameMode == Arena)
 				{
