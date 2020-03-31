@@ -17,6 +17,8 @@
 		[LocDescription("Enum_League_Legend")]
 		Legend,
 		[LocDescription("Enum_League_Legacy")]
-		Legacy
+		Legacy,
+		[LocDescription("Enum_League_Legacy_All")]
+		LegacyAll
 	}
 }

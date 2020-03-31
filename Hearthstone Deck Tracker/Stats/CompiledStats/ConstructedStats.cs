@@ -124,6 +124,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					case League.Legacy:
 						filtered = filtered.Where(g => g.LeagueId < 5);
 						break;
+					case League.LegacyAll:
+						break;
 				}
 
 				if(rank && Config.Instance.ConstructedStatsLeagueFilter == League.Legacy)
