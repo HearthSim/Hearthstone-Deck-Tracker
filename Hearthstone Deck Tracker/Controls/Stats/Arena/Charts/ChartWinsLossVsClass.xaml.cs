@@ -29,20 +29,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 		}
 
 		public IEnumerable<WinChartData> SeriesSourceWins
-		{
-			get
-			{
-				return
-					Enumerable.Range(0, 9)
-					          .Select(
-					                  n =>
-					                  new WinChartData
-					                  {
-						                  Index = Enum.GetNames(typeof(HeroClass))[n],
-						                  ItemsSource = ArenaStats.Instance.WinLossVsClass[n]
-					                  });
-			}
-		}
+			=> Enum.GetValues(typeof(HeroClass)).Cast<Enum>()
+				.Select(EnumDescriptionConverter.GetDescription)
+				.Select((name, index) => new WinChartData
+				{
+					Index = name,
+					ItemsSource = ArenaStats.Instance.WinLossVsClass[index]
+				});
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
