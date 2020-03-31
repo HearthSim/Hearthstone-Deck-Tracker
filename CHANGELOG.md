@@ -1,3 +1,12 @@
+## **Release v1.10.2 - 2020-03-30**
+**Added support for the new constructed rank system**:
+- Added a "League" filter under `STATS > CONSTRUCTED`, when the Game Mode is set to Ranked, to show games played in a specific league.
+- Games played in the old rank system can still be found by selecting "Legacy" in the League filter.
+
+**Fixes**:
+- Fixed various layout issues introduced by the addition of Demon Hunter and the new rank system.
+
+
 ## **Release v1.10.1 - 2020-03-26**
 **Updated for Ashes of Outland**
 - Added basic support for Demon Hunter
