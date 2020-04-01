@@ -118,6 +118,8 @@ namespace Hearthstone_Deck_Tracker.Live
 					playerCardsDict.Add(new []{card.DbfIf, card.Count, inDeck});
 				}
 			}
+			var format = Core.Game.CurrentFormat ?? Format.Wild;
+			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
 
 			return new BoardState
 			{
@@ -163,6 +165,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					Quest = Quest(opponent.Quests.FirstOrDefault()),
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
+				GameType = gameType,
 			};
 		}
 	}

@@ -28,11 +28,16 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("opponent")]
 		public BoardStatePlayer Opponent { get; set; }
 
+		[JsonProperty("game_type")]
+		public BnetGameType GameType { get; set; }
+
 		public bool Equals(BoardState boardState)
 		{
 			if(!Player?.Equals(boardState?.Player) ?? false)
 				return false;
 			if(!Opponent?.Equals(boardState?.Opponent) ?? false)
+				return false;
+			if(GameType != boardState.GameType)
 				return false;
 			return true;
 		}
