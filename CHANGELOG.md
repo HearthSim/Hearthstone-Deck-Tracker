@@ -1,3 +1,12 @@
+## **Release v1.10.3 - 2020-04-02**
+**Changes**:
+- Added a "All Leagues + Legacy" filter option to the constructed stats League filter.
+
+**Fixes**:
+- Fixed an issue where Warrior was missing from the Arena Win/Loss chart.
+- Fixed an issue where Demon Hunter decks were not imported correctly.
+
+
 ## **Release v1.10.2 - 2020-03-30**
 **Added support for the new constructed rank system**:
 - Added a "League" filter under `STATS > CONSTRUCTED`, when the Game Mode is set to Ranked, to show games played in a specific league.
