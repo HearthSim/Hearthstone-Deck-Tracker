@@ -24,7 +24,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 				Log.Error("No hero found for id " + deck.Hero);
 				return;
 			}
-			Class = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(hero.PlayerClass.ToLower());
+			var lowerClass = hero.PlayerClass.ToLower();
+			Class = lowerClass == "demonhunter" ? "DemonHunter" : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(lowerClass);
 
 			var localOptions = localDecks.Where(d => d.Class == Class && !d.Archived && !d.IsArenaDeck)
 				.Select(x => new ExistingDeck(x, deck));
