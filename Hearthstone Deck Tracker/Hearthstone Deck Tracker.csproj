@@ -114,6 +114,15 @@
     <Reference Include="DeltaCompressionDotNet.PatchApi, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3e8888ee913ed789, processorArchitecture=MSIL">
       <HintPath>..\packages\DeltaCompressionDotNet.1.1.0\lib\net20\DeltaCompressionDotNet.PatchApi.dll</HintPath>
     </Reference>
+    <Reference Include="HearthDb">
+      <HintPath>..\lib\HearthDb.dll</HintPath>
+    </Reference>
+    <Reference Include="HearthMirror">
+      <HintPath>..\lib\HearthMirror.dll</HintPath>
+    </Reference>
+    <Reference Include="HSReplay">
+      <HintPath>..\lib\HSReplay.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -1635,21 +1644,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HearthDb\HearthDb\HearthDb.csproj">
-      <Project>{7ed14243-e02b-4b94-af00-a67a62c282f0}</Project>
-      <Name>HearthDb</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HearthMirror\HearthMirror\HearthMirror.csproj">
-      <Project>{1694a2f8-645a-4263-a6ab-fc26323fd675}</Project>
-      <Name>HearthMirror</Name>
-    </ProjectReference>
     <ProjectReference Include="..\HearthWatcher\HearthWatcher.csproj">
       <Project>{02e1843d-3f5d-45e0-9b16-1f28209eed82}</Project>
       <Name>HearthWatcher</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HSReplay-Api\HSReplay\HSReplay.csproj">
-      <Project>{a6264074-8a96-417c-9673-5ee7e9820b1f}</Project>
-      <Name>HSReplay</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

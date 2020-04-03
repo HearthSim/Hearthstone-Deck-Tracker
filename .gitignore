@@ -176,3 +176,6 @@ HDT-Localization/
 
 Resources/Generated/
 Resources/Tiles/
+/lib/HSReplay.dll
+/lib/HearthMirror.dll
+/lib/HearthDb.dll

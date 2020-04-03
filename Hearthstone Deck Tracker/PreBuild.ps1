@@ -43,10 +43,16 @@ function SyncRepo($name, $localDir, $branch = "origin/master") {
 	}
 }
 
+function FetchLib($name) {
+	"Fetching $name..."
+	$url = "https://libs.hearthsim.net/hdt/$name.dll"
+	(New-Object Net.WebClient).DownloadFile($url, "$solution\lib\$name.dll")
+}
+
 if(-not $skipGitSync) {
-	SyncRepo "HearthSim/HearthDb" "HearthDb"
-	SyncRepo "HearthSim/HearthMirror" "HearthMirror"
-	SyncRepo "HearthSim/HSReplay-API-Client" "HSReplay-Api"
+	FetchLib "HearthDb"
+	FetchLib "HearthMirror"
+	FetchLib "HSReplay"
 	SyncRepo "HearthSim/HDT-Localization" "HDT-Localization"
 }
 
