@@ -1,3 +1,8 @@
+## **Release v1.10.4 - 2020-04-04**
+**Fixes**:
+- Fixed an issue where the deck tracker would stop working when playing against opponents appearing as offline.
+
+
 ## **Release v1.10.3 - 2020-04-02**
 **Changes**:
 - Added a "All Leagues + Legacy" filter option to the constructed stats League filter.
