@@ -60,6 +60,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				game.PlayerDeckVersion = targetVersion;
 				game.DeckId = targetDeck.DeckId;
 				game.DeckName = targetDeck.Name;
+				game.DeckNameAndVersion = targetDeck.GetVersion(targetVersion).NameAndVersion;
 				targetDeck.DeckStats.Games.Add(game);
 			}
 			DeckStatsList.Save();
