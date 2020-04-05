@@ -1,3 +1,9 @@
+## **Release v1.10.5 - 2020-04-04**
+**Fixes**:
+- Fixed an issue where the deck tracker would stop working when playing AI games, caused by an oversight in v1.10.4.
+- Fixed an issue where moving a game between decks would not update the deck in the games list.
+
+
 ## **Release v1.10.4 - 2020-04-04**
 **Fixes**:
 - Fixed an issue where the deck tracker would stop working when playing against opponents appearing as offline.
