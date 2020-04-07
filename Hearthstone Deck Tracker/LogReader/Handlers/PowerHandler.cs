@@ -348,7 +348,33 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.BadLuckAlbatross:
 								AddKnownCardId(gameState, NonCollectible.Neutral.BadLuckAlbatross_AlbatrossToken);
 								break;
-
+							case Collectible.Priest.ReliquaryOfSouls:
+								AddKnownCardId(gameState, NonCollectible.Priest.ReliquaryofSouls_ReliquaryPrimeToken);
+								break;
+							case Collectible.Mage.AstromancerSolarian:
+								AddKnownCardId(gameState, NonCollectible.Mage.AstromancerSolarian_SolarianPrimeToken);
+								break;
+							case Collectible.Warlock.KanrethadEbonlocke:
+								AddKnownCardId(gameState, NonCollectible.Warlock.KanrethadEbonlocke_KanrethadPrimeToken);
+								break;
+							case Collectible.Paladin.MurgurMurgurgle:
+								AddKnownCardId(gameState, NonCollectible.Paladin.MurgurMurgurgle_MurgurglePrimeToken);
+								break;
+							case Collectible.Rogue.Akama:
+								AddKnownCardId(gameState, NonCollectible.Rogue.Akama_AkamaPrimeToken);
+								break;
+							case Collectible.Druid.ArchsporeMsshifn:
+								AddKnownCardId(gameState, NonCollectible.Druid.ArchsporeMsshifn_MsshifnPrimeToken);
+								break;
+							case Collectible.Shaman.LadyVashj:
+								AddKnownCardId(gameState, NonCollectible.Shaman.LadyVashj_VashjPrimeToken);
+								break;
+							case Collectible.Hunter.ZixorApexPredator:
+								AddKnownCardId(gameState, NonCollectible.Hunter.ZixorApexPredator_ZixorPrimeToken);
+								break;
+							case Collectible.Warrior.KargathBladefist:
+								AddKnownCardId(gameState, NonCollectible.Warrior.KargathBladefist_KargathPrimeToken);
+								break;
 						}
 					}
 					else //POWER
