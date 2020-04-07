@@ -87,12 +87,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			}
 			else
 			{
+				exclude.Add(Rogue.Bamboozle);
 				if (!defender.HasTag(GameTag.DIVINE_SHIELD))
 					exclude.Add(Paladin.AutodefenseMatrix);
 
 				if(freeSpaceOnBoard)
 				{
 					exclude.Add(Mage.SplittingImage);
+					exclude.Add(Hunter.PackTactics);
 					if(!fastOnly)
 					{
 						exclude.Add(Hunter.SnakeTrap);
@@ -149,6 +151,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			{
 				SaveSecret(Mage.MirrorEntity);
 				exclude.Add(Mage.MirrorEntity);
+				SaveSecret(Rogue.Ambush);
+				exclude.Add(Rogue.Ambush);
 			}
 
 			if(FreeSpaceInHand)
@@ -298,7 +302,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Paladin.NeverSurrender);
 
 				if(Game.OpponentHandCount < 10)
+				{
+					exclude.Add(Rogue.DirtyTricks);
 					exclude.Add(Mage.ManaBind);
+				}
 
 				if(Game.OpponentMinionCount < 7)
 				{
@@ -308,6 +315,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 						&& Game.Entities.TryGetValue(entity.GetTag(GameTag.CARD_TARGET), out Entity target) && target.IsMinion)
 						exclude.Add(Mage.Spellbender);
 					exclude.Add(Hunter.CatTrick);
+					exclude.Add(Mage.NetherwindPortal);
 				}
 
 				if (Game.PlayerMinionCount > 0)

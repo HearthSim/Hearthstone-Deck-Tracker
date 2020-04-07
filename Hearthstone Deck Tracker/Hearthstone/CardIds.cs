@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Hunter
 			{
-				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, PressurePlate, RatTrap, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
+				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, PackTactics, PressurePlate, RatTrap, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
 				public static string BearTrap => Collectible.Hunter.BearTrap;
 				public static string CatTrick => Collectible.Hunter.CatTrick;
 				public static string DartTrap => Collectible.Hunter.DartTrap;
@@ -124,6 +124,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string FreezingTrap => Collectible.Hunter.FreezingTrap;
 				public static string HiddenCache => Collectible.Hunter.HiddenCache;
 				public static string Misdirection => Collectible.Hunter.Misdirection;
+				public static string PackTactics => Collectible.Hunter.PackTactics;
 				public static string PressurePlate => Collectible.Hunter.PressurePlate;
 				public static string RatTrap => Collectible.Hunter.RatTrap;
 				public static string Snipe => Collectible.Hunter.Snipe;
@@ -145,6 +146,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string IceBlock => Collectible.Mage.IceBlock;
 				public static string ManaBind => Collectible.Mage.ManaBind;
 				public static string MirrorEntity => Collectible.Mage.MirrorEntity;
+				public static string NetherwindPortal => Collectible.Mage.NetherwindPortal;
 				public static string PotionOfPolymorph => Collectible.Mage.PotionOfPolymorph;
 				public static string Spellbender => Collectible.Mage.Spellbender;
 				public static string SplittingImage => Collectible.Mage.SplittingImage;
@@ -170,8 +172,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Rogue
 			{
-				public static List<string> All => new List<string> {CheatDeath, Evasion, SuddenBetrayal};
+				public static List<string> All => new List<string> {Ambush, Bamboozle, CheatDeath, DirtyTricks, Evasion, SuddenBetrayal};
+				public static string Ambush => Collectible.Rogue.Ambush;
+				public static string Bamboozle => Collectible.Rogue.Bamboozle;
 				public static string CheatDeath => Collectible.Rogue.CheatDeath;
+				public static string DirtyTricks => Collectible.Rogue.DirtyTricks;
 				public static string Evasion => Collectible.Rogue.Evasion;
 				public static string SuddenBetrayal => Collectible.Rogue.SuddenBetrayal;
 			}
