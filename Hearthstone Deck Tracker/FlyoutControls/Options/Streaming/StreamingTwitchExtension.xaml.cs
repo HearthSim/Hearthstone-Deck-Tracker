@@ -150,11 +150,25 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			OnPropertyChanged(nameof(IsAuthenticated));
 			OnPropertyChanged(nameof(AvailableTwitchAccounts));
 			OnPropertyChanged(nameof(MultipleTwitchAccounts));
+			VerifySelectedTwitchUser();
 			var selected = Config.Instance.SelectedTwitchUser;
 			SelectedTwitchUser = AvailableTwitchAccounts?.FirstOrDefault(x => x.Id == selected || selected == 0);
 			TwitchAccountLinked = SelectedTwitchUser?.Id > 0;
 			if(TwitchAccountLinked)
 				TwitchStreamLive = await TwitchApi.IsStreaming(SelectedTwitchUser.Id);
+		}
+
+		private void VerifySelectedTwitchUser()
+		{
+			if(Config.Instance.SelectedTwitchUser == 0)
+				return;
+			if((AvailableTwitchAccounts?.Count ?? 0) == 0)
+				return;
+			if(AvailableTwitchAccounts.All(x => x.Id != Config.Instance.SelectedTwitchUser))
+			{
+				Config.Instance.SelectedTwitchUser = 0;
+				Config.Save();
+			}
 		}
 
 		internal void UpdateAccountName()
