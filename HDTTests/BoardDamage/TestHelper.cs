@@ -53,6 +53,12 @@ namespace HDTTests.BoardDamage
 			return this;
 		}
 
+		public EntityBuilder Dormant()
+		{
+			_instance.SetTag(GameTag.DORMANT, 1);
+			return this;
+		}
+
 		public EntityBuilder AttacksThisTurn(int value)
 		{
 			_instance.SetTag(GameTag.NUM_ATTACKS_THIS_TURN, value);
