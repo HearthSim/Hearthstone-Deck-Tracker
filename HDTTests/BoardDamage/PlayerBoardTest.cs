@@ -25,6 +25,7 @@ namespace HDTTests.BoardDamage
 			_cards.Add(new EntityBuilder("", 3, 1).InPlay().Charge().ToEntity());
 			_cards.Add(new EntityBuilder("", 3, 1).InPlay().Windfury().ToEntity());
 			_cards.Add(new EntityBuilder("", 2, 2).InPlay().Exhausted().ToEntity());
+			_cards.Add(new EntityBuilder("", 2, 2).InPlay().ZeroTurnsInPlay().ToEntity());
 			_cards.Add(new EntityBuilder("", 10, 10).InPlay().Dormant().ToEntity());
 		}
 
@@ -39,7 +40,7 @@ namespace HDTTests.BoardDamage
 		public void Damage_NotActive()
 		{
 			var board = new PlayerBoard(_cards, false);
-			Assert.AreEqual(22, board.Damage);
+			Assert.AreEqual(24, board.Damage);
 		}
 
 		[TestMethod]
@@ -47,7 +48,7 @@ namespace HDTTests.BoardDamage
 		public void IgnoreSetaside()
 		{
 			var board = new PlayerBoard(_cards, true);
-			Assert.AreEqual(7, board.Cards.Count);
+			Assert.AreEqual(8, board.Cards.Count);
 		}
 
 		[TestMethod]
@@ -55,7 +56,7 @@ namespace HDTTests.BoardDamage
 		{
 			_cards.Add(new EntityBuilder("", 3, 3).Graveyard().ToEntity());
 			var board = new PlayerBoard(_cards, true);
-			Assert.AreEqual(7, board.Cards.Count);
+			Assert.AreEqual(8, board.Cards.Count);
 		}
 
 		[TestMethod]

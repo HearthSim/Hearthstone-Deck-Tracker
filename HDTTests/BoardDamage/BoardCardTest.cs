@@ -127,6 +127,14 @@ namespace HDTTests.BoardDamage
 		}
 
 		[TestMethod]
+		public void DontInclude_NumTurnInPlayZero()
+		{
+			var card = _minion.ZeroTurnsInPlay().ToBoardCard();
+			Assert.IsTrue(card.Exhausted);
+			Assert.IsFalse(card.Include);
+		}
+
+		[TestMethod]
 		public void Attack_WithWindfury()
 		{
 			var card = _minion.Windfury().ToBoardCard();

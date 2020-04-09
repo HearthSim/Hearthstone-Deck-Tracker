@@ -20,6 +20,7 @@ namespace HDTTests.BoardDamage
 			_instance = new Entity();
 			_instance.SetTag(GameTag.ATK, attack);
 			_instance.SetTag(GameTag.HEALTH, health);
+			_instance.SetTag(GameTag.NUM_TURNS_IN_PLAY, 1);
 			_cardId = cardid;
 		}
 
@@ -50,6 +51,12 @@ namespace HDTTests.BoardDamage
 		public EntityBuilder Exhausted()
 		{
 			_instance.SetTag(GameTag.EXHAUSTED, 1);
+			return this;
+		}
+
+		public EntityBuilder ZeroTurnsInPlay()
+		{
+			_instance.SetTag(GameTag.NUM_TURNS_IN_PLAY, 0);
 			return this;
 		}
 
