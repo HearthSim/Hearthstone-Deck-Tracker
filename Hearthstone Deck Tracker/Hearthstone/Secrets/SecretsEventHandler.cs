@@ -138,14 +138,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			var exclude = new List<string>();
 
-			SaveSecret(Hunter.Snipe);
-			exclude.Add(Hunter.Snipe);
-			SaveSecret(Mage.ExplosiveRunes);
-			exclude.Add(Mage.ExplosiveRunes);
-			SaveSecret(Mage.PotionOfPolymorph);
-			exclude.Add(Mage.PotionOfPolymorph);
-			SaveSecret(Paladin.Repentance);
-			exclude.Add(Paladin.Repentance);
+			if(!entity.HasTag(GameTag.DORMANT))
+			{
+				SaveSecret(Hunter.Snipe);
+				exclude.Add(Hunter.Snipe);
+				SaveSecret(Mage.ExplosiveRunes);
+				exclude.Add(Mage.ExplosiveRunes);
+				SaveSecret(Mage.PotionOfPolymorph);
+				exclude.Add(Mage.PotionOfPolymorph);
+				SaveSecret(Paladin.Repentance);
+				exclude.Add(Paladin.Repentance);
+			}
 
 			if(FreeSpaceOnBoard)
 			{

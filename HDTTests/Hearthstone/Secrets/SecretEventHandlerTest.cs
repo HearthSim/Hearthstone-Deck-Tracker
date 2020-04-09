@@ -254,6 +254,17 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
+		public void SingleSecret_DormantMinionPlayed()
+		{
+			_playerMinion1.SetTag(GameTag.DORMANT, 1);
+			_gameEventHandler.HandlePlayerMinionPlayed(_playerMinion1);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.MirrorEntity, MageSecrets.FrozenClone);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Ambush);
+		}
+
+		[TestMethod]
 		public void SingleSecret_OpponentDamage()
 		{
 			_gameEventHandler.HandleOpponentDamage(_heroOpponent);
