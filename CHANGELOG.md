@@ -1,3 +1,14 @@
+## **Release v1.10.7 - 2020-04-09**
+**Updated for 17.0.0.45310**
+
+**Fixes**:
+- Fixed an issue where Snipe, Explosive Runes, Potion of Polymorph and Repentance would get greyed out when playing a dormant minion.
+- Fixed an issue where dormant minions would sometimes count towards damage on board.
+- Fixed an issue where Al'ar, when resurrected from his ashes, would count towards damage on board.
+- Fixed an issue where linked Twitch accounts were not detected correctly in some cases.
+- Fixed an issue where the global statistics panel would not show data for new decks (due to local caching, this may take up to 24 hours to update).
+
+
 ## **Release v1.10.6 - 2020-04-07**
 **Updated for Year of the Phoenix**
 
