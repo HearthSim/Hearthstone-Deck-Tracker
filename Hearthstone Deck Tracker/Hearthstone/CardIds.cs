@@ -135,7 +135,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Mage
 			{
-				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FlameWard, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, PotionOfPolymorph, Spellbender, SplittingImage, Vaporize};
+				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FlameWard, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, NetherwindPortal, PotionOfPolymorph, Spellbender, SplittingImage, Vaporize};
 				public static string Counterspell => Collectible.Mage.Counterspell;
 				public static string Duplicate => Collectible.Mage.Duplicate;
 				public static string Effigy => Collectible.Mage.Effigy;
