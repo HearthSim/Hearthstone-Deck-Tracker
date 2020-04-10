@@ -28,14 +28,16 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			_loaded = true;
 		}
 
-		public PluginWrapper(string fileName, IPlugin plugin)
+		public PluginWrapper(string fileName, IPlugin plugin, string assemblyName)
 		{
 			FileName = fileName;
 			Plugin = plugin;
+			AssemblyName = assemblyName;
 		}
 
 		public string FileName { get; set; }
 		public IPlugin Plugin { get; set; }
+		public string AssemblyName { get; set; }
 
 		public MenuItem MenuItem
 		{
