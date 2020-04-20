@@ -179,6 +179,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(string.IsNullOrEmpty(entity.CardId))
 					{
 						entity.CardId = cardId;
+					}
+					if(type == "SHOW_ENTITY")
+					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
 					}
