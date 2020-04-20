@@ -1,3 +1,11 @@
+## **Release v1.10.8 - 2020-04-20**
+**Updated for 17.0.2.45932**
+
+**Fixes**:
+- Fixed an issue where Netherwind Portal was missing from the secret helper.
+- Plugins should now be less likely to cause crashes.
+
+
 ## **Release v1.10.7 - 2020-04-09**
 **Updated for 17.0.0.45310**
 
