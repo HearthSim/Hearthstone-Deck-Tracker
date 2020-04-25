@@ -105,7 +105,7 @@ nuget pack "$PSScriptRoot\hdt.nuspec" -Version $packageVersion -Properties Confi
 $icon = "$buildDir\Squirrel\Images\HearthstoneDeckTracker.ico"
 $nupkg = "$buildDir\SquirrelNu\HearthstoneDeckTracker.$packageVersion.nupkg"
 $certInfo = "/tr http://timestamp.digicert.com /a /f $cert /p $Env:CERT_PASSWORD"
-& $squirrel --releasify $nupkg --releaseDir=$output --setupIcon=$icon --icon=$icon --no-msi -n $certInfo | Out-Default
+& $squirrel --releasify $nupkg --releaseDir=$output --setupIcon=$icon --icon=$icon --no-msi -n $certInfo --framework-version=net472 | Out-Default
 & $signtool sign /tr "http://timestamp.digicert.com" /a /f $cert /p $Env:CERT_PASSWORD "$output\Setup.exe" | Out-Default
 Move-Item "$output\Setup.exe" "$output\HDT-Installer.exe"
 

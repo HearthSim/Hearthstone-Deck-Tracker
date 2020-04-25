@@ -12,7 +12,7 @@
     <dependencies />
   </metadata>
   <files>
-    <file src="..\Hearthstone Deck Tracker\bin\x86\Squirrel-Clean\*.*" target="lib\net45\" />
-    <file src="..\Hearthstone Deck Tracker\bin\x86\Squirrel-Clean\**\*.*" target="lib\net45\" />
+    <file src="..\Hearthstone Deck Tracker\bin\x86\Squirrel-Clean\*.*" target="lib\net472\" />
+    <file src="..\Hearthstone Deck Tracker\bin\x86\Squirrel-Clean\**\*.*" target="lib\net472\" />
   </files>
 </package>
