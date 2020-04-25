@@ -91,6 +91,9 @@
                         <Setter Property="ScrollViewer.PanningMode" Value="VerticalOnly"/>
                         <EventSetter Event="ManipulationBoundaryFeedback" Handler="HandleManipulationBoundaryFeedback"/>
                     </Style>
+                    <Style TargetType="GroupBox" BasedOn="{StaticResource MetroGroupBox}">
+                        <Setter Property="Margin" Value="5"/>
+                    </Style>
                     <Style TargetType="ScrollViewer">
                         <Setter Property="PanningMode" Value="VerticalOnly"/>
                         <EventSetter Event="ManipulationBoundaryFeedback" Handler="HandleManipulationBoundaryFeedback"/>
