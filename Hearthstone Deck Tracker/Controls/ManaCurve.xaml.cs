@@ -157,6 +157,11 @@ namespace Hearthstone_Deck_Tracker
 						minions[statValue] += card.Count;
 						counts[statValue] += card.Count;
 					}
+					else if(card.Type == Weapon)
+					{
+						weapons[statValue] += card.Count;
+						counts[statValue] += card.Count;
+					}
 				}
 			}
 			var max = 0;
