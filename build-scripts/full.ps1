@@ -87,7 +87,7 @@ if (!$dev) {
 
 # Create squirrel build
 $url = if ($dev) { $DEV_LATEST } else { $PROD_LATEST }
-$json = (Invoke-WebRequest $url).Content | ConvertFrom-Json
+$json = (Invoke-WebRequest $url -UseBasicParsing).Content | ConvertFrom-Json
 $wc = New-Object System.Net.WebClient
 $oldFullPkg = $null
 foreach ($asset in $json.assets) {
