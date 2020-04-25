@@ -10,7 +10,7 @@ install:
 - ps: Invoke-Expression "./bootstrap.ps1"
 build_script:
 - ps: >-
-    $dev = $false
+    $dev = ($Env:APPVEYOR_REPO_TAG -ne "true")
 
     $genArtifacts = (!$Env:APPVEYOR_PULL_REQUEST_NUMBER)
 
