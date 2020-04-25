@@ -202,11 +202,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 				FlyoutWarnings.IsOpen = false;
 				Config.Instance.CheckConfigWarnings();
 			};
-#if(DEBUG)
-			Title += " [DEBUG]";
-#endif
 #if(DEV)
 			StatusBarDev.Visibility = Visible;
+			Title += " [DEV]";
+#elif(DEBUG)
+			Title += " [DEBUG]";
 #endif
 			Config.Instance.OnConfigWarning += warning =>
 			{
