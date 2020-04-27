@@ -211,7 +211,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void OnAttackEvent()
 		{
-			if(_game.CurrentGameMode == Battlegrounds && Config.Instance.RunBobsBuddy)
+			if(_game.CurrentGameMode == Battlegrounds && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
 			{
 				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())
 					.UpdateAttackingEntities(_attackingEntity, _defendingEntity);
