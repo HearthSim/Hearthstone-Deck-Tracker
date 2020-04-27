@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal static Minion GetMinionFromEntity(Entity entity, IEnumerable<Entity> attachedEntities) 
 		{
-			var minion = Minion.FromHearthDbCardID(entity.CardId);
+			var minion = Minion.FromHearthDbCardID(entity.Info.LatestCardId);
 
 			minion.baseAttack = entity.GetTag(GameTag.ATK);
 			minion.baseHealth = entity.GetTag(GameTag.HEALTH);
