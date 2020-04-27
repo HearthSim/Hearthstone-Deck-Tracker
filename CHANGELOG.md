@@ -1,4 +1,4 @@
-## **Release v1.11.0 - 2020-04-27**
+## **Release v1.11.1 - 2020-04-27**
 **New**:
 - Added Bob's Buddy: A Battlegrounds combat simulator showing the likelihood to win, tie or lose.  [Learn more.](https://articles.hsreplay.net/2020/04/24/introducing-bobs-buddy/)
 
