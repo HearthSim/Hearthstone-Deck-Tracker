@@ -31,6 +31,7 @@ function FetchLib($name) {
 FetchLib "HearthDb"
 FetchLib "HearthMirror"
 FetchLib "HSReplay"
+FetchLib "BobsBuddy"
 
 git clone "https://github.com/HearthSim/HDT-Localization" "HDT-Localization"
 

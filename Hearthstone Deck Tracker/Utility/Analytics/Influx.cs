@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
+using BobsBuddy;
+using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Plugins;
@@ -247,13 +249,52 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			_lastMainWindowActivation = null;
 		}
 
-		private static async void WritePoint(InfluxPoint point)
+		public static void OnBobsBuddySimulationCompleted(CombatResult result, TestOutput output, int turn)
 		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_bb_combat_result_v2")
+				.Tag("result", result.ToString())
+				.Tag("turn", turn)
+				.Tag("exit_condition", output.myExitCondition.ToString())
+				.Tag("thread_count", BobsBuddyInvoker.ThreadCount)
+				.Field("iterations", output.simulationCount)
+				.Field("result_win", result == CombatResult.Win ? 1 : 0)
+				.Field("result_tie", result == CombatResult.Tie ? 1 : 0)
+				.Field("result_loss", result == CombatResult.Loss ? 1 : 0)
+				.Field("win_rate", output.winRate * 100)
+				.Field("tie_rate", output.tieRate * 100)
+				.Field("loss_rate", output.lossRate * 100);
+			_queue.Add(point.Build());
+		}
+
+		public static void OnBobsBuddyEnabledChanged(bool newState)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_bb_enabled_changed").Tag("new_state", newState).Build());
+		}
+
+		private static List<InfluxPoint> _queue = new List<InfluxPoint>();
+		public static void SendQueuedMetrics()
+		{
+			if(!_queue.Any())
+				return;
+			WritePoints(_queue);
+			_queue.Clear();
+		}
+
+		private static void WritePoint(InfluxPoint point) => WritePoints(new[] { point });
+
+		private static async void WritePoints(IEnumerable<InfluxPoint> points)
+		{
+			if(!points.Any())
+				return;
 			try
 			{
 				using(var client = new UdpClient())
 				{
-					var line = point.ToLineProtocol();
+					var line = string.Join("\n", points.Select(x => x.ToLineProtocol()));
 					var data = Encoding.UTF8.GetBytes(line);
 					var length = await client.SendAsync(data, data.Length, "metrics.hearthsim.net", 8091);
 					Log.Debug(line + " - " +  length);

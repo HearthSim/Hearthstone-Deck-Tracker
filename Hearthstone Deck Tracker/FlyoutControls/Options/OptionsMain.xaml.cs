@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly HSReplayCollection OptionsHSReplayCollection = new HSReplayCollection();
 		public readonly StreamingTwitchExtension OptionsStreamingTwitchExtension = new StreamingTwitchExtension();
 		public readonly StreamingCapturableOverlay OptionsStreamingCapturableOverlay = new StreamingCapturableOverlay();
+		public readonly OverlayBattlegrounds OptionsOverlayBattlegrounds = new OverlayBattlegrounds();
 		public readonly OptionsSearch OptionsSearch = new OptionsSearch();
 		private string _contentHeader;
 		private object _optionsContent;
@@ -95,6 +96,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsTrackerAppearance.Load();
 			OptionsTrackerBackups.Load();
 			OptionsTrackerNotifications.Load();
+			OptionsOverlayBattlegrounds.Load();
 		}
 
 		private void TreeViewItemSearch_OnSelected(object sender, RoutedEventArgs e)
@@ -234,6 +236,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ContentHeader = LocUtil.Get("Options_HSReplay_Collection_Header");
 			OptionsContent = OptionsHSReplayCollection;
 			OptionsHSReplayCollection.UpdateSyncAge();
+		}
+
+		private void TreeViewItemBattlegroundsOverlay_OnSelected(object sender, RoutedEventArgs e)
+		{
+			ContentHeader = LocUtil.Get("Options_Overlay_Battlegrounds_Header");
+			OptionsContent = OptionsOverlayBattlegrounds;
+			OptionsOverlayBattlegrounds.UpdateDisabledState();
 		}
 	}
 }

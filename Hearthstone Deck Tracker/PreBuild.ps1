@@ -53,6 +53,7 @@ if(-not $skipGitSync) {
 	FetchLib "HearthDb"
 	FetchLib "HearthMirror"
 	FetchLib "HSReplay"
+	FetchLib "BobsBuddy"
 	SyncRepo "HearthSim/HDT-Localization" "HDT-Localization"
 }
 

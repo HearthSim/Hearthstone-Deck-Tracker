@@ -1,0 +1,40 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayBattlegrounds"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="300">
+    <StackPanel>
+        <CheckBox x:Name="CheckboxShowBattlegroundsTiers" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsTiers}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTiers_Checked"
+                  Unchecked="CheckboxShowBattlegroundsTiers_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowBattlegroundsTurnCounter" Content="{lex:Loc Options_Overlay_General_CheckBox_BattlegroundsTurnCounter}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowBattlegroundsTurnCounter_Checked"
+                  Unchecked="CheckboxShowBattlegroundsTurnCounter_Unchecked" Margin="10,5,0,0" />
+        <GroupBox Header="{lex:LocTextUpper Options_Overlay_Battlegrounds_Label_BobsBuddy}" Margin="5,10,5,5">
+            <StackPanel>
+                <TextBlock Name="TextBobsBuddyDisabled" Foreground="Yellow" Visibility="Collapsed" Margin="0,0,0,5"/>
+                <CheckBox x:Name="CheckboxRunCombatSimulations" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_RunCombatSimulations}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top" Checked="CheckboxRunCombatSimulations_Checked"
+                          Unchecked="CheckboxRunCombatSimulations_Unchecked" Margin="0" />
+                <CheckBox x:Name="CheckboxShowResultsDuringCombat" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowDuringCombat}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top" Checked="CheckboxShowResultsDuringCombat_Checked"
+                          Unchecked="CheckboxShowResultsDuringCombat_Unchecked" Margin="0,5,0,0" />
+                <CheckBox x:Name="CheckboxShowResultsDuringShopping" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowDuringShopping}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top" Checked="CheckboxShowResultsDuringShopping_Checked"
+                          Unchecked="CheckboxShowResultsDuringShopping_Unchecked" Margin="0,5,0,0" />
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</UserControl>

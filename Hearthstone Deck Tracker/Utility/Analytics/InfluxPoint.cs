@@ -37,8 +37,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		public string GetValueString(object value)
 		{
-			if(int.TryParse(value.ToString(), out var intValue))
-				return value.ToString();
+			var valStr = value.ToString();
+			if(int.TryParse(valStr, out var intValue) || double.TryParse(valStr, out var floatValue))
+				return valStr;
 			return $"\"{Escape(value.ToString())}\"";
 		}
 	}

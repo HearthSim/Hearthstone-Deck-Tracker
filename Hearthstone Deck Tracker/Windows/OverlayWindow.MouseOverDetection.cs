@@ -238,6 +238,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
 				fadeBgsMinionsList = false;
 			BgsTopBar.Opacity = fadeBgsMinionsList ? 0.3 : 1;
+			BobsBuddyDisplay.Opacity = fadeBgsMinionsList ? 0.3 : 1;
 		}
 
 		public Point GetPlayerCardPosition(int position, int count)

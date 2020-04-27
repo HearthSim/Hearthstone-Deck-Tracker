@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void Show()
 		{
-			if(Element.IsVisible)
+			if(Element.Visibility == Visible)
 				return;
 
 			var finalPosition = GetAnchorSideOffset();
@@ -136,8 +136,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void Hide()
 		{
-			if(!Element.IsVisible)
+			if(Element.Visibility == Collapsed)
 				return;
+
 			var sb = CreateStoryboard(ExitAnimation, GetHiddenOffset());
 			sb.Completed += (obj, args) =>
 			{

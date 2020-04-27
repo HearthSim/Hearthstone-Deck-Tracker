@@ -58,6 +58,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private OverlayElementBehavior _heroNotificationBehavior;
 		private OverlayElementBehavior _bgsTopBarBehavior;
+		private OverlayElementBehavior _bgsBobsBuddyBehavior;
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -80,6 +81,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_bgsTopBarBehavior = new OverlayElementBehavior(BgsTopBar)
 			{
 				GetRight = () => 0,
+				GetTop = () => 0,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+			};
+
+			_bgsBobsBuddyBehavior = new OverlayElementBehavior(BobsBuddyDisplay)
+			{
+				GetLeft = () => Width / 2 - BobsBuddyDisplay.ActualWidth * AutoScaling / 2,
 				GetTop = () => 0,
 				GetScaling = () => AutoScaling,
 				AnchorSide = Side.Top,
@@ -263,7 +274,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			TurnCounter.Visibility = Config.Instance.ShowBattlegroundsTurnCounter ? Visible : Collapsed;
 			BattlegroundsMinionsPanel.Visibility = Config.Instance.ShowBattlegroundsTiers ? Visible : Collapsed;
+
 			_bgsTopBarBehavior.Show();
+			ShowBobsBuddyPanel();
 		}
 
 		internal void HideBgsTopBar()
@@ -271,6 +284,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsMinionsPanel.Reset();
 			_bgsTopBarBehavior.Hide();
 			TurnCounter.UpdateTurn(1);
+			HideBobsBuddyPanel();
+		}
+
+		internal void ShowBobsBuddyPanel()
+		{
+			if(!Config.Instance.RunBobsBuddy)
+				return;
+			if(RemoteConfig.Instance.Data?.BobsBuddy?.Disabled ?? false)
+				return;
+			_bgsBobsBuddyBehavior.Show();
+		}
+
+		internal void HideBobsBuddyPanel()
+		{
+			_bgsBobsBuddyBehavior.Hide();
+			BobsBuddyDisplay.ResetDisplays();
 		}
 	}
 }

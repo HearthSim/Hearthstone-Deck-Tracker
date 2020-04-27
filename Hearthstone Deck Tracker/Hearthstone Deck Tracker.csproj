@@ -130,6 +130,9 @@
     <Reference Include="HSReplay">
       <HintPath>..\lib\HSReplay.dll</HintPath>
     </Reference>
+    <Reference Include="BobsBuddy">
+      <HintPath>..\lib\BobsBuddy.dll</HintPath>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.23.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.23\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
@@ -224,6 +227,10 @@
     <Compile Include="API\GameEvents.cs" />
     <Compile Include="API\LogEvents.cs" />
     <Compile Include="API\PredamageInfo.cs" />
+    <Compile Include="BobsBuddy\BobsBuddyInvoker.cs" />
+    <Compile Include="BobsBuddy\BobsBuddyUtils.cs" />
+    <Compile Include="BobsBuddy\CombatResult.cs" />
+    <Compile Include="BobsBuddy\LethalResult.cs" />
     <Compile Include="Controls\AnimatedCard.xaml.cs">
       <DependentUpon>AnimatedCard.xaml</DependentUpon>
     </Compile>
@@ -269,6 +276,12 @@
     <Compile Include="Controls\Overlay\BattlegroundsTier.xaml.cs">
       <DependentUpon>BattlegroundsTier.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BobsBuddy\BobsBuddyErrorState.cs" />
+    <Compile Include="Controls\Overlay\BobsBuddyPanel.xaml.cs">
+      <DependentUpon>BobsBuddyPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BobsBuddy\BobsBuddyState.cs" />
+    <Compile Include="BobsBuddy\StatusMessageConverter.cs" />
     <Compile Include="Controls\Overlay\TurnCounter.xaml.cs">
       <DependentUpon>TurnCounter.xaml</DependentUpon>
     </Compile>
@@ -292,6 +305,9 @@
     </Compile>
     <Compile Include="FlyoutControls\Options\HSReplay\HSReplayReplays.xaml.cs">
       <DependentUpon>HSReplayReplays.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FlyoutControls\Options\Overlay\OverlayBattlegrounds.xaml.cs">
+      <DependentUpon>OverlayBattlegrounds.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutControls\Options\Streaming\StreamingCapturableOverlay.xaml.cs">
       <DependentUpon>StreamingCapturableOverlay.xaml</DependentUpon>
@@ -1005,6 +1021,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Overlay\BobsBuddyPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Overlay\TurnCounter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1196,6 +1216,10 @@
     <Page Include="FlyoutControls\Options\OptionsSearch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutControls\Options\Overlay\OverlayBattlegrounds.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="FlyoutControls\Options\Streaming\StreamingCapturableOverlay.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -38,6 +38,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			[JsonProperty("battlegrounds_tag_overrides")]
 			public List <TagOverride> BattlegroundsTagOverrides { get; set; }
 
+			[JsonProperty("bobs_buddy")]
+			public BobsBuddyData BobsBuddy { get; set; }
+
 			internal class NewsData
 			{
 				[JsonProperty("id")]
@@ -110,6 +113,21 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				[JsonProperty("value")]
 				public int Value { get; set; }
+			}
+
+			internal class BobsBuddyData
+			{
+				[JsonProperty("disabled")]
+				public bool Disabled { get; set; }
+
+				[JsonProperty("min_required_version")]
+				public string MinRequiredVersion { get; set; }
+
+				[JsonProperty("sentry_reporting")]
+				public bool SentryReporting { get; set; }
+
+				[JsonProperty("metric_sampling")]
+				public double MetricSampling { get; set; }
 			}
 		}
 	}

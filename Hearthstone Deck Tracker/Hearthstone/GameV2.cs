@@ -13,7 +13,6 @@ using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Stats;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.Twitch;
 using HSReplay;

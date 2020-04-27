@@ -25,6 +25,7 @@ using Hearthstone_Deck_Tracker.Windows;
 using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
+using Hearthstone_Deck_Tracker.BobsBuddy;
 
 #endregion
 
@@ -148,7 +149,7 @@ namespace Hearthstone_Deck_Tracker
 					var log = powerLog.ToArray();
 					var validationResult = LogValidator.Validate(log);
 					if(validationResult.IsValid)
-						LogUploader.Upload(log, (GameMetaData)_game.MetaData.Clone(), _game.CurrentGameStats).Forget();
+						await LogUploader.Upload(log, (GameMetaData)_game.MetaData.Clone(), _game.CurrentGameStats);
 					else 
 					{
 						Log.Error("Invalid log: " + validationResult.Reason);
@@ -210,6 +211,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private void OnAttackEvent()
 		{
+			if(_game.CurrentGameMode == Battlegrounds && Config.Instance.RunBobsBuddy)
+			{
+				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())
+					.UpdateAttackingEntities(_attackingEntity, _defendingEntity);
+			}
+
 			var attackInfo = new AttackInfo((Card)_attackingEntity.Card.Clone(), (Card)_defendingEntity.Card.Clone());
 			if(_attackingEntity.IsControlledBy(_game.Player.Id))
 				GameEvents.OnPlayerMinionAttack.Execute(attackInfo);
@@ -315,6 +322,8 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.SetPlayer(player);
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
 			{
+				if(_game.CurrentGameMode == Battlegrounds && _game.CurrentGameStats != null && turn.Item2 > 1)
+					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1).StartShopping(true);
 				switch(Config.Instance.TurnStartAction)
 				{
 						case HsActionType.Flash:
@@ -411,6 +420,11 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.HideTimers();
 				DeckManager.ResetAutoSelectCount();
 				LiveDataManager.Stop();
+				if(_game.CurrentGameMode == Battlegrounds)
+				{
+					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())
+						.StartShopping(!_game.CurrentGameStats.WasConceded);
+				}
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
 				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
@@ -592,13 +606,17 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.StoredGameStats != null)
 					_game.CurrentGameStats.StartTime = _game.StoredGameStats.StartTime;
 
-				await SaveReplays();
-
 				if(Config.Instance.ShowGameResultNotifications && RecordCurrentGameMode)
 				{
 					var deckName = _assignedDeck == null ? "No deck - " + _game.CurrentGameStats.PlayerHero : _assignedDeck.NameAndVersion;
 					ToastManager.ShowGameResultToast(deckName, _game.CurrentGameStats);
 				}
+
+				await SaveReplays();
+
+				if(_game.CurrentGameStats.GameType == GameType.GT_BATTLEGROUNDS)
+					Sentry.SendQueuedBobsBuddyEvents(_game.CurrentGameStats.HsReplay.UploadId);
+				Influx.SendQueuedMetrics();
 			}
 			catch(Exception ex)
 			{

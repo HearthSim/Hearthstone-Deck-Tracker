@@ -138,6 +138,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool IsControlledBy(int controllerId) => HasTag(GameTag.CONTROLLER) && GetTag(GameTag.CONTROLLER) == controllerId;
 
+		public bool IsAttachedTo(int entityId) => GetTag(GameTag.ATTACHED) == entityId;
+
 		public bool IsClass(CardClass cardClass) => GetTag(GameTag.CLASS) == (int)cardClass;
 
 		public bool HasTag(GameTag tag) => GetTag(tag) > 0;

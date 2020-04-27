@@ -789,6 +789,18 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowBattlegroundsTurnCounter = true;
 
+		[DefaultValue(true)]
+		public bool RunBobsBuddy = true;
+
+		[DefaultValue(true)]
+		public bool ShowBobsBuddyDuringCombat = true;
+
+		[DefaultValue(false)]
+		public bool ShowBobsBuddyDuringShopping = false;
+
+		[DefaultValue(false)]
+		public bool SeenBobsBuddyInfo = false;
+
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
 
