@@ -168,6 +168,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 	public class EntityInfo
 	{
 		private readonly Entity _entity;
+		private string _latestCardId;
+
 		public EntityInfo(Entity entity)
 		{
 			_entity = entity;
@@ -189,7 +191,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				OriginalZone = OriginalZone,
 				OriginalCardId = OriginalCardId,
 				OriginalEntityWasCreated = OriginalEntityWasCreated,
-				GuessedCardState = GuessedCardState
+				GuessedCardState = GuessedCardState,
+				LatestCardId = LatestCardId
 			};
 		}
 
@@ -238,6 +241,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool? OriginalEntityWasCreated { get; internal set; }
 		public GuessedCardState GuessedCardState { get; set; } = GuessedCardState.None;
 
+		public string LatestCardId
+		{
+			get => _latestCardId ?? _entity.CardId;
+			set => _latestCardId = value;
+		}
+
 		public override string ToString()
 		{
 			var sb = new StringBuilder();
@@ -266,6 +275,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				sb.Append(", OriginalCardId=" + OriginalCardId);
 			if(GuessedCardState != GuessedCardState.None)
 				sb.Append(", guessedCardState=" + GuessedCardState);
+			if(!string.IsNullOrEmpty(LatestCardId))
+				sb.Append(", latestCardId=" + LatestCardId);
 			return sb.ToString();
 		}
 	}
