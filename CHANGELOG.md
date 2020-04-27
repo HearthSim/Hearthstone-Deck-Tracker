@@ -1,3 +1,16 @@
+## **Release v1.11.0 - 2020-04-27**
+**New**:
+- Added Bob's Buddy: A Battlegrounds combat simulator showing the likelihood to win, tie or lose.  [Learn more.](https://articles.hsreplay.net/2020/04/24/introducing-bobs-buddy/)
+
+**Fixes**:
+- Fixed an issue where running other deck trackers in parallel may have caused HDT to stop working in some cases.
+- Fixed an issue causing several created cards (e.g. Bombs) to not be tracked correctly. 
+- Fixed an issue where weapons were not correctly accounted for in the attacak mana curve.
+
+**Notes**:
+- This version upgrades to .NET Framework 4.7.2, which means installations of Windows 7 and Windows 8 that are not updated to Service Pack 1 will no longer be able to run HDT.
+- This version updates several dependencies, causing some Plugins to no longer load.
+
 ## **Release v1.10.8 - 2020-04-20**
 **Updated for 17.0.2.45932**
 
