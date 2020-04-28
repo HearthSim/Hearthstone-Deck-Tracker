@@ -48,6 +48,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return minion;
 		}
 
+		internal static bool HeroPowerUsed(Entity heroPower)
+			=> heroPower != null && (heroPower.HasTag(GameTag.EXHAUSTED) || heroPower.HasTag(GameTag.PENDING_TRIGGER));
+
 		internal static IOrderedEnumerable<Entity> GetOrderedMinions(IEnumerable<Entity> board)
 			=> board.Where(x => x.IsMinion).Select(x => x.Clone()).OrderBy(x => x.GetTag(GameTag.ZONE_POSITION));
 

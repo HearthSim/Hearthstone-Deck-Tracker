@@ -259,12 +259,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			var playerHeroPower = _game.Player.Board.FirstOrDefault(x => x.IsHeroPower);
 			var opponentHeroPower = _game.Opponent.Board.FirstOrDefault(x => x.IsHeroPower);
-			var playerUsedHeroPower = playerHeroPower?.HasTag(GameTag.EXHAUSTED) ?? playerHeroPower?.HasTag(GameTag.PENDING_TRIGGER) ?? false;
-			var opponentUsedHeroPower = opponentHeroPower?.HasTag(GameTag.EXHAUSTED) ?? opponentHeroPower?.HasTag(GameTag.PENDING_TRIGGER) ?? false;
 			input.playerPowerID = playerHeroPower?.CardId ?? "";
 			input.opponentPowerID = opponentHeroPower?.CardId ?? "";
 
-			input.setHeroPower(playerUsedHeroPower, opponentUsedHeroPower);
+			input.setHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
 
 			input.setupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
 
