@@ -16,6 +16,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
 using static Hearthstone_Deck_Tracker.BobsBuddy.BobsBuddyUtils;
+using BobsBuddy.Simulation;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
@@ -316,7 +317,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog($"Running simulations with MaxIterations={Iterations} and ThreadCount={ThreadCount}...");
 
 				var start = DateTime.Now;
-				_output = await Simulator.simulateMultiThreaded(_input, Iterations, ThreadCount);
+				_output = await new SimulationRunner().simulateMultiThreaded(_input, Iterations, ThreadCount);
 				DebugLog("----- Simulation Output -----");
 				DebugLog($"Duration={(DateTime.Now - start).TotalMilliseconds}ms, " +
 					$"ExitCondition={_output.myExitCondition}, " +
