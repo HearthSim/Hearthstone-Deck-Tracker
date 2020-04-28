@@ -118,6 +118,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(State >= BobsBuddyState.Combat)
 				{
 					DebugLog($"{_instanceKey} already in {State} state. Exiting");
+					return;
 				}
 				State = BobsBuddyState.Combat;
 				SnapshotBoardState(_game.GetTurnNumber());
@@ -181,6 +182,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(State == BobsBuddyState.Shopping)
 				{
 					DebugLog($"{_instanceKey} already in shopping state. Exiting");
+					return;
 				}
 				State = BobsBuddyState.Shopping;
 
