@@ -1,4 +1,4 @@
-## **Release v1.11.2 - 2020-04-27**
+## **Release v1.11.3 - 2020-04-29**
 **New**:
 - Added Bob's Buddy: A Battlegrounds combat simulator showing the likelihood to win, tie or lose.  [Learn more.](https://articles.hsreplay.net/2020/04/24/introducing-bobs-buddy/)
 
@@ -10,7 +10,7 @@
 **Notes**:
 - This version upgrades to .NET Framework 4.7.2, which means installations of Windows 7 and Windows 8 that are not updated to Service Pack 1 will no longer be able to run HDT.
 - This version updates several dependencies, causing some Plugins to no longer load.
-- Releases v1.11.0-v1.11.1 contained various updates and fixes to Bob's Buddy
+- Releases v1.11.0-v1.11.2 contained various updates and fixes to Bob's Buddy
 
 
 ## **Release v1.10.8 - 2020-04-20**
