@@ -85,5 +85,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleChameleosReveal(string cardId);
 		void HandleBeginMulligan();
 		void HandlePlayerMulliganDone();
+		void HandleCardCopy();
 	}
 }
