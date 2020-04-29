@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
@@ -59,8 +60,28 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => WhizbangDeckIdChange(id, value, game);
 				case MULLIGAN_STATE:
 					return () => MulliganStateChange(id, value, game, gameState);
+				case COPIED_FROM_ENTITY_ID:
+					return () => OnCardCopy(id, value, game, gameState);
 			}
 			return null;
+		}
+
+		private void OnCardCopy(int id, int value, IGame game, IHsGameState gameState)
+		{
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			if(entity.IsControlledBy(game.Opponent.Id))
+				return;
+			if(!game.Entities.TryGetValue(value, out var targetEntity))
+				return;
+
+			if(string.IsNullOrEmpty(targetEntity.CardId) && targetEntity.IsInHand)
+			{
+				targetEntity.CardId = entity.CardId;
+				targetEntity.Info.GuessedCardState = GuessedCardState.Guessed;
+
+				gameState.GameHandler.HandleCardCopy();
+			}
 		}
 
 		private void MulliganStateChange(int id, int value, IGame game, IHsGameState gameState)

@@ -974,6 +974,11 @@ namespace Hearthstone_Deck_Tracker
 			Core.UpdateOpponentCards();
 		}
 
+		public void HandleCardCopy()
+		{
+			Core.UpdateOpponentCards();
+		}
+
 		public void HandlePlayerJoust(Entity entity, string cardId, int turn)
 		{
 			_game.Player.JoustReveal(entity, turn);
