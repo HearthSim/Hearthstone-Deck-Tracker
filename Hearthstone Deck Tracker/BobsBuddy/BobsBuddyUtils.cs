@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BobsBuddy;
+using BobsBuddy.Simulation;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
 
@@ -62,5 +64,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			=> Log.Debug($"{m.minionName}: mechDeathCount={m.mechDeathCount}," +
 				$"mechDeathCountGold={m.mechDeathCountGold}, " +
 				$"plantDeathCount={m.plantDeathCount} ");
+
+		private static string _versionString;
+		internal static string VersionString => _versionString ?? (_versionString = "v" + typeof(SimulationRunner).Assembly.GetName().Version.ToVersionString());
 	}
 }
