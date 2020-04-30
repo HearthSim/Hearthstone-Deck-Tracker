@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public void DebugLog(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
 		{
 			Log.Info(msg, memberName, sourceFilePath);
-			_debugLog.Add($"{memberName} >> {msg}");
+			_debugLog.Add($"{DateTime.Now.ToLongTimeString()}|{memberName} >> {msg}");
 		}
 
 		private readonly string _instanceKey;
