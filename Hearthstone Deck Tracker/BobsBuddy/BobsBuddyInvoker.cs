@@ -299,12 +299,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				DebugLog("----- Simulation Input -----");
 				DebugLog($"Player: heroPower={_input.playerPowerID}, used={_input.heroPowerInfo?.myUsedPower}");
-				_input.mySide.ForEach(LogMinionStats);
-				_input.mySide.ForEach(LogMinionDeathrattles);
+				foreach(var minion in _input.mySide)
+					DebugLog(minion.ToString());
 
 				DebugLog($"Opponent: heroPower={_input.opponentPowerID}, used={_input.heroPowerInfo?.theirUsedPower}");
-				_input.theirSide.ForEach(LogMinionStats);
-				_input.theirSide.ForEach(LogMinionDeathrattles);
+				foreach(var minion in _input.theirSide)
+					DebugLog(minion.ToString());
 
 				if(_input.secretsAndPriorities.Count() > 0)
 				{

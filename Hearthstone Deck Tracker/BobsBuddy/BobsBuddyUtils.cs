@@ -56,15 +56,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal static IOrderedEnumerable<Entity> GetOrderedMinions(IEnumerable<Entity> board)
 			=> board.Where(x => x.IsMinion).Select(x => x.Clone()).OrderBy(x => x.GetTag(GameTag.ZONE_POSITION));
 
-		internal static void LogMinionStats(Minion m)
-			=> Log.Debug($"{m.minionName} basestats (with static effects): ({m.baseAttack}, {m.baseHealth}), " +
-				$"double on effects ({m.attack()}, {m.health()})");
-
-		internal static void LogMinionDeathrattles(Minion m)
-			=> Log.Debug($"{m.minionName}: mechDeathCount={m.mechDeathCount}," +
-				$"mechDeathCountGold={m.mechDeathCountGold}, " +
-				$"plantDeathCount={m.plantDeathCount} ");
-
 		private static string _versionString;
 		internal static string VersionString => _versionString ?? (_versionString = "v" + typeof(SimulationRunner).Assembly.GetName().Version.ToVersionString());
 	}
