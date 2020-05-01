@@ -67,11 +67,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				Log = debugLog
 			};
 
-			BobsBuddyEvents.Enqueue(new SentryEvent(msg)
+			var bbEvent = new SentryEvent(msg)
 			{
 				Level = ErrorLevel.Warning,
-				Extra = data
-			});
+				Extra = data,
+			};
+
+			bbEvent.Fingerprint.Add(result);
+			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
+
+			BobsBuddyEvents.Enqueue(bbEvent);
 		}
 
 		public static void SendQueuedBobsBuddyEvents(string shortId)
