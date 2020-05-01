@@ -1,3 +1,8 @@
+## **Release v1.11.7 - 2020-04-30**
+**Fixes**:
+- Fixed an issue where golden minions in Battlegrounds could lead to incorrect outcome predictions.
+
+
 ## **Release v1.11.6 - 2020-04-29**
 **New**:
 - Added Bob's Buddy: A Battlegrounds combat simulator showing the likelihood to win, tie or lose.  [Learn more.](https://articles.hsreplay.net/2020/04/24/introducing-bobs-buddy/)
