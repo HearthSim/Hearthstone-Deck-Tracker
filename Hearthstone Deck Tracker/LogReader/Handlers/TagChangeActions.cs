@@ -75,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.TryGetValue(value, out var targetEntity))
 				return;
 
-			if(string.IsNullOrEmpty(targetEntity.CardId) && targetEntity.IsInHand)
+			if(string.IsNullOrEmpty(targetEntity.CardId))
 			{
 				targetEntity.CardId = entity.CardId;
 				targetEntity.Info.GuessedCardState = GuessedCardState.Guessed;
