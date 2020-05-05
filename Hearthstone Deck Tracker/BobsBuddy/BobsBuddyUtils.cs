@@ -41,11 +41,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			// Putricide hero power
 			if(attachedEntities.Any(x => x.CardId == RagePotion))
-				minion.baseAttack += 10;
+				minion.receivesPutricidePower = true;
 
 			// Lich King hero power
 			if(attachedEntities.Any(x => x.CardId == RebornRite))
-				minion.reborn = true;
+				minion.receivesLichKingPower = true;
 
 			return minion;
 		}
