@@ -1,3 +1,9 @@
+## **Release v1.11.8 - 2020-05-05**
+**Changes**:
+- Added Tracking for cards copied by e.g. Maname Lazul and Mind Vision.
+- Improved Bob's Buddy prediction accuracy.
+
+
 ## **Release v1.11.7 - 2020-04-30**
 **Fixes**:
 - Fixed an issue where golden minions in Battlegrounds could lead to incorrect outcome predictions.
