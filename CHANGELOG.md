@@ -1,3 +1,8 @@
+## **Release v1.11.9 - 2020-05-06**
+**Fixes**:
+- Fixed an issue where some Deathrattle interactions were not handled correctly in Bob's Buddy.
+
+
 ## **Release v1.11.8 - 2020-05-05**
 **Changes**:
 - Added Tracking for cards copied by e.g. Maname Lazul and Mind Vision.
