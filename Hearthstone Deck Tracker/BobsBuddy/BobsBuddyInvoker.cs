@@ -146,7 +146,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 				}
 
-				if(result.simulationCount <= 500 && result.myExitCondition == Simulator.exitConditions.Time)
+				if(result.simulationCount <= 500 && result.myExitCondition == Simulator.ExitConditions.Time)
 				{
 					DebugLog("Could not perform enough simulations. Displaying error state and exiting.");
 					_errorState = BobsBuddyErrorState.NotEnoughData;
@@ -255,7 +255,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				input.opponentHealth = 1000;
 			}
-			var playerTechLevel = playerHero.GetTag(GameTag.PLAYER_TECH_LEVEL);	
+			var playerTechLevel = playerHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 			var opponentTechLevel = oppHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 			input.setTiers(playerTechLevel, opponentTechLevel);
 
@@ -286,7 +286,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				.Where(x => x.IsAttachedTo(entityId) && (x.IsInPlay || x.IsInSetAside || x.IsInGraveyard))
 				.Select(x => x.Clone());
 
-		private async Task<TestOutput> RunSimulation() 
+		private async Task<TestOutput> RunSimulation()
 		{
 			DebugLog("Running simulations...");
 			if(_input == null)
@@ -298,11 +298,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			try
 			{
 				DebugLog("----- Simulation Input -----");
-				DebugLog($"Player: heroPower={_input.playerPowerID}, used={_input.heroPowerInfo?.myUsedPower}");
+				DebugLog($"Player: heroPower={_input.playerPowerID}, used={_input.heroPowerInfo?.PlayerActivatedPower}");
 				foreach(var minion in _input.mySide)
 					DebugLog(minion.ToString());
 
-				DebugLog($"Opponent: heroPower={_input.opponentPowerID}, used={_input.heroPowerInfo?.theirUsedPower}");
+				DebugLog($"Opponent: heroPower={_input.opponentPowerID}, used={_input.heroPowerInfo?.OpponentActivatedPower}");
 				foreach(var minion in _input.theirSide)
 					DebugLog(minion.ToString());
 
@@ -317,7 +317,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog($"Running simulations with MaxIterations={Iterations} and ThreadCount={ThreadCount}...");
 
 				var start = DateTime.Now;
-				_output = await new SimulationRunner().simulateMultiThreaded(_input, Iterations, ThreadCount);
+				_output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount);
 				DebugLog("----- Simulation Output -----");
 				DebugLog($"Duration={(DateTime.Now - start).TotalMilliseconds}ms, " +
 					$"ExitCondition={_output.myExitCondition}, " +
