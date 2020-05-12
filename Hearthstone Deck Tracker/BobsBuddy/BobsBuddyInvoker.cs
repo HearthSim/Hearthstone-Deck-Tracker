@@ -250,14 +250,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 		
-			input.setHealths(playerHero.Health, oppHero.Health);
+			input.SetHealths(playerHero.Health, oppHero.Health);
 			if(input.opponentHealth <= 0)
 			{
 				input.opponentHealth = 1000;
 			}
 			var playerTechLevel = playerHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 			var opponentTechLevel = oppHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
-			input.setTiers(playerTechLevel, opponentTechLevel);
+			input.SetTiers(playerTechLevel, opponentTechLevel);
 
 			var playerHeroPower = _game.Player.Board.FirstOrDefault(x => x.IsHeroPower);
 			var opponentHeroPower = _game.Opponent.Board.FirstOrDefault(x => x.IsHeroPower);
@@ -265,15 +265,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			input.opponentPowerID = opponentHeroPower?.CardId ?? "";
 			//possible above should just defualt to kel'thuzad because KT doesn't have a power, but if it does have a power and hte id's "" then need below
 			input.opponentPowerID = input.opponentPowerID == "" ? "kel'thuzad" : input.opponentPowerID;
-			input.setHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
+			input.SetHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
 
-			input.setupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
+			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
 
 			foreach(var m in GetOrderedMinions(_game.Player.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
-				m.addToBackOfList(input.mySide, simulator);
+				m.AddToBackOfList(input.mySide, simulator);
 
 			foreach(var m in GetOrderedMinions(_game.Opponent.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
-				m.addToBackOfList(input.theirSide, simulator);
+				m.AddToBackOfList(input.theirSide, simulator);
 
 			_input = input;
 			_turn = turn;
