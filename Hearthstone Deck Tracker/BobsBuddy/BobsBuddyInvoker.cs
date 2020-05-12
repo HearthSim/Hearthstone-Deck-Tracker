@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -147,7 +146,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 				}
 
-				if(result.simulationCount <= 500 && result.myExitCondition == Simulator.exitConditions.Time)
+				if(result.simulationCount <= 500 && result.myExitCondition == Simulator.ExitConditions.Time)
 				{
 					DebugLog("Could not perform enough simulations. Displaying error state and exiting.");
 					_errorState = BobsBuddyErrorState.NotEnoughData;
@@ -251,29 +250,29 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 		
-			input.setHealths(playerHero.Health, oppHero.Health);
+			input.SetHealths(playerHero.Health, oppHero.Health);
 			if(input.opponentHealth <= 0)
 			{
 				input.opponentHealth = 1000;
 			}
-			var playerTechLevel = playerHero.GetTag(GameTag.PLAYER_TECH_LEVEL);	
+			var playerTechLevel = playerHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 			var opponentTechLevel = oppHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
-			input.setTiers(playerTechLevel, opponentTechLevel);
+			input.SetTiers(playerTechLevel, opponentTechLevel);
 
 			var playerHeroPower = _game.Player.Board.FirstOrDefault(x => x.IsHeroPower);
 			var opponentHeroPower = _game.Opponent.Board.FirstOrDefault(x => x.IsHeroPower);
-			input.playerPowerID = playerHeroPower?.CardId ?? "";
-			input.opponentPowerID = opponentHeroPower?.CardId ?? "";
+		
+			input.SetPowerID(playerHeroPower?.CardId ?? "", opponentHeroPower?.CardId ?? "");
+			
+			input.SetHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
 
-			input.setHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
-
-			input.setupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
+			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
 
 			foreach(var m in GetOrderedMinions(_game.Player.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
-				m.addToBackOfList(input.mySide, simulator);
+				m.AddToBackOfList(input.mySide, simulator);
 
 			foreach(var m in GetOrderedMinions(_game.Opponent.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
-				m.addToBackOfList(input.theirSide, simulator);
+				m.AddToBackOfList(input.theirSide, simulator);
 
 			_input = input;
 			_turn = turn;
@@ -286,7 +285,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				.Where(x => x.IsAttachedTo(entityId) && (x.IsInPlay || x.IsInSetAside || x.IsInGraveyard))
 				.Select(x => x.Clone());
 
-		private async Task<TestOutput> RunSimulation() 
+		private async Task<TestOutput> RunSimulation()
 		{
 			DebugLog("Running simulations...");
 			if(_input == null)
@@ -298,11 +297,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			try
 			{
 				DebugLog("----- Simulation Input -----");
-				DebugLog($"Player: heroPower={_input.playerPowerID}, used={_input.heroPowerInfo?.myUsedPower}");
+				DebugLog($"Player: heroPower={_input.playerPowerID}, used={_input.heroPowerInfo?.PlayerActivatedPower}");
 				foreach(var minion in _input.mySide)
 					DebugLog(minion.ToString());
 
-				DebugLog($"Opponent: heroPower={_input.opponentPowerID}, used={_input.heroPowerInfo?.theirUsedPower}");
+				DebugLog($"Opponent: heroPower={_input.opponentPowerID}, used={_input.heroPowerInfo?.OpponentActivatedPower}");
 				foreach(var minion in _input.theirSide)
 					DebugLog(minion.ToString());
 
@@ -317,7 +316,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog($"Running simulations with MaxIterations={Iterations} and ThreadCount={ThreadCount}...");
 
 				var start = DateTime.Now;
-				_output = await new SimulationRunner().simulateMultiThreaded(_input, Iterations, ThreadCount);
+				_output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount);
 				DebugLog("----- Simulation Output -----");
 				DebugLog($"Duration={(DateTime.Now - start).TotalMilliseconds}ms, " +
 					$"ExitCondition={_output.myExitCondition}, " +
