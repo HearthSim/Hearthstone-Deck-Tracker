@@ -40,9 +40,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		};
 
 		public static LogWatcherInfo GameplayLogWatcherInfo => new LogWatcherInfo {Name = "Gameplay"};
-		public static LogWatcherInfo ArenaLogWatcherInfo => new LogWatcherInfo {Name = "Arena", Reset = false};
+		public static LogWatcherInfo ArenaLogWatcherInfo => new LogWatcherInfo {Name = "Arena" };
 		public static LogWatcherInfo LoadingScreenLogWatcherInfo => new LogWatcherInfo {Name = "LoadingScreen", StartsWithFilters = new[] {"LoadingScreen.OnSceneLoaded", "Gameplay" } };
-		public static LogWatcherInfo FullScreenFxLogWatcherInfo => new LogWatcherInfo { Name = "FullScreenFX", Reset = false};
+		public static LogWatcherInfo FullScreenFxLogWatcherInfo => new LogWatcherInfo { Name = "FullScreenFX" };
 
 		public LogWatcherManager()
 		{
