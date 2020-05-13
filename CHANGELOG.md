@@ -1,3 +1,15 @@
+## **Release v1.12.0 - 2020-05-13**
+**Updated for 17.2.0.47374**
+
+**Notes**:
+- Hearthstone 17.2 introduced major internal changes. We think we got everything working again, but please let us know if you encounter issues with this release.
+- Some card images added with 17.2 may still be missing. These will be added with the next update.
+
+**Changes**:
+- Improved Bob's Buddy prediction accuracy.
+- Potentially fixed an issue causing decks to not be selected at the start of a game.
+
+
 ## **Release v1.11.9 - 2020-05-06**
 **Fixes**:
 - Fixed an issue where some Deathrattle interactions were not handled correctly in Bob's Buddy.
