@@ -417,7 +417,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			|| result == LethalResult.OpponentDied && _output.theirDeathRate == 0;
 
 		private bool OpposingKelThuzadDied(LethalResult result)
-			=> result == LethalResult.OpponentDied && _input.opponentPowerID == "";
+			=> result == LethalResult.OpponentDied && _input.OpponentIsKelThuzad();
 
 		private void AlertWithLastInputOutput(string result)
 		{
