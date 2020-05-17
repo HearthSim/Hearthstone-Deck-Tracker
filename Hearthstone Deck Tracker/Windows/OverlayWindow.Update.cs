@@ -177,7 +177,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var inBattlegrounds = _game.CurrentGameMode == GameMode.Battlegrounds;
 
-			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu || inBattlegrounds? Collapsed : Visible;
+			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu || inBattlegrounds ? Collapsed : Visible;
 			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu || inBattlegrounds ? Collapsed : Visible;
 
 			// do the calculation if at least one of the icons is visible
