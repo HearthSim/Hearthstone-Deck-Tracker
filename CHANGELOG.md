@@ -1,4 +1,4 @@
-## **Release v1.12.1 - 2020-05-18**
+## **Release v1.12.2 - 2020-05-18**
 **Updated for Hearthstone 17.2.1.48313**
 
 **Changes**:
