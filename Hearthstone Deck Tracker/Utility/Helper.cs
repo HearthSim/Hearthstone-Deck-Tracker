@@ -695,5 +695,16 @@ namespace Hearthstone_Deck_Tracker
 			var encodedIds = HttpUtility.UrlEncode(string.Join(",", heroIds));
 			TryOpenUrl($"{BuildHsReplayNetUrl("battlegrounds/heroes", "bgs_toast")}#heroes={encodedIds}");
 		}
+		public static async Task<T> RetryWhileNull<T>(Func<T> func, int tries = 5, int delay = 150) where T : class
+		{
+			for(var i = 0; i < tries; i++)
+			{
+				var value = func.Invoke();
+				if(value != null)
+					return value;
+				await Task.Delay(delay);
+			}
+			return null;
+		}
 	}
 }

@@ -98,6 +98,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(game.StarMultiplier > 0)
 					friendly.StarMultiplier = game.StarMultiplier;
 
+				if(game.StarsAfter > 0)
+					friendly.StarsAfter = game.StarsAfter;
+				if(game.StarLevelAfter > 0)
+					friendly.StarLevelAfter = game.StarLevelAfter;
+				if(game.LegendRankAfter > 0)
+					friendly.LegendRankAfter = game.LegendRankAfter;
+
 				if(game.OpponentRank > 0)
 					opposing.Rank = game.OpponentRank;
 				if(game.OpponentLegendRank > 0)
@@ -110,6 +117,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			{
 				if(game.BattlegroundsRating > 0)
 					friendly.BattlegroundsRating = game.BattlegroundsRating;
+				if(game.BattlegroundsRatingAfter > 0)
+					friendly.BattlegroundsRatingAfter = game.BattlegroundsRatingAfter;
 			}
 			else if(game.PlayerCards.Sum(x => x.Count) == 30 || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
 			{

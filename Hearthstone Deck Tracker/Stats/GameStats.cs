@@ -184,6 +184,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				OnPropertyChanged(nameof(RankString));
 			}
 		}
+		public int StarLevelAfter { get; set; }
 
 		public int Stars
 		{
@@ -194,6 +195,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 				OnPropertyChanged();
 			}
 		}
+		public int StarsAfter { get; set; }
 
 		public int LegendRank
 		{
@@ -204,6 +206,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
+		public int LegendRankAfter { get; set; }
+
 		public int BattlegroundsRating
 		{
 			get { return _battlegroundsRating; }
@@ -211,9 +215,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 			{
 				_battlegroundsRating = value;
 				OnPropertyChanged();
-				OnPropertyChanged(nameof(BattlegroundsRating));
 			}
 		}
+
+		public int BattlegroundsRatingAfter { get; set; }
 
 		public int OpponentLegendRank
 		{
@@ -529,7 +534,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeOpponentCards() => OpponentCards.Any();
 		public bool ShouldSerializeRank() => Rank > 0;
 		public bool ShouldSerializeStars() => Stars > 0;
+		public bool ShouldSerializeStarsAfter() => StarsAfter > 0;
 		public bool ShouldSerializeLegendRank() => LegendRank > 0;
+		public bool ShouldSerializeLegendRankAfter() => LegendRankAfter > 0;
 		public bool ShouldSerializeOpponentRank() => OpponentRank > 0;
 		public bool ShouldSerializeOpponentLegendRank() => OpponentLegendRank > 0;
 		public bool ShouldSerializeRegion() => Region != Region.UNKNOWN;
@@ -550,7 +557,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeBrawlWins() => BrawlWins > 0;
 		public bool ShouldSerializeBrawlLosses() => BrawlLosses > 0;
 		public bool ShouldSerializeBattlegroundsRating() => BattlegroundsRating > 0;
+		public bool ShouldSerializeBattlegroundsRatingAfter() => BattlegroundsRatingAfter > 0;
 		public bool ShouldSerializeStarLevel() => StarLevel > 0;
+		public bool ShouldSerializeStarLevelAfter() => StarLevelAfter > 0;
 		public bool ShouldSerializeOpponentStarLevel() => OpponentStarLevel > 0;
 		public bool ShouldSerializeLeagueId() => LeagueId > 0;
 		public bool ShouldSerializeStarMultiplier() => StarMultiplier > 0;

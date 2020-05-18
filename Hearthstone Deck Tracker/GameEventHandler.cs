@@ -126,47 +126,53 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		private bool _savedReplay;
-		private async Task SaveReplays()
+		private async Task SaveReplays(GameStats gs)
 		{
-			if(!_savedReplay && _game.CurrentGameStats != null)
+			if(gs == null || _savedReplay)
+				return;
+			_savedReplay = true;
+
+			var complete = await LogIsComplete();
+
+			if(complete && gs.GameMode == Ranked)
+				await UpdatePostGameRanks(gs);
+
+			if(complete && gs.GameMode == Battlegrounds)
+				await UpdatePostGameRating(gs);
+
+			var powerLog = new List<string>();
+			foreach(var stored in _game.StoredPowerLogs.Where(x => x.Item1 == _game.MetaData.ServerInfo.GameHandle))
+				powerLog.AddRange(stored.Item2);
+			powerLog.AddRange(_game.PowerLog);
+
+			var createGameCount = 0;
+			powerLog = powerLog.TakeWhile(x => !(x.Contains("CREATE_GAME") && createGameCount++ == 1)).ToList();
+
+			if(Config.Instance.RecordReplays && RecordCurrentGameMode && _game.Entities.Count > 0 && !_game.SavedReplay && gs.ReplayFile == null)
+				gs.ReplayFile = ReplayMaker.SaveToDisk(gs, powerLog);
+
+			if(Config.Instance.HsReplayAutoUpload && UploadCurrentGameMode)
 			{
-				_savedReplay = true;
-				await LogIsComplete();
-				var powerLog = new List<string>();
-				foreach(var stored in _game.StoredPowerLogs.Where(x => x.Item1 == _game.MetaData.ServerInfo.GameHandle))
-					powerLog.AddRange(stored.Item2);
-				powerLog.AddRange(_game.PowerLog);
-
-				var createGameCount = 0;
-				powerLog = powerLog.TakeWhile(x => !(x.Contains("CREATE_GAME") && createGameCount++ == 1)).ToList();
-
-				if(Config.Instance.RecordReplays && RecordCurrentGameMode && _game.Entities.Count > 0 && !_game.SavedReplay
-					&& _game.CurrentGameStats.ReplayFile == null)
-					_game.CurrentGameStats.ReplayFile = ReplayMaker.SaveToDisk(_game.CurrentGameStats, powerLog);
-
-				if(Config.Instance.HsReplayAutoUpload && UploadCurrentGameMode)
+				var log = powerLog.ToArray();
+				var validationResult = LogValidator.Validate(log);
+				if(validationResult.IsValid)
+					await LogUploader.Upload(log, (GameMetaData)_game.MetaData.Clone(), gs);
+				else 
 				{
-					var log = powerLog.ToArray();
-					var validationResult = LogValidator.Validate(log);
-					if(validationResult.IsValid)
-						await LogUploader.Upload(log, (GameMetaData)_game.MetaData.Clone(), _game.CurrentGameStats);
-					else 
-					{
-						Log.Error("Invalid log: " + validationResult.Reason);
-						Influx.OnEndOfGameUploadError(validationResult.Reason);
-					}
+					Log.Error("Invalid log: " + validationResult.Reason);
+					Influx.OnEndOfGameUploadError(validationResult.Reason);
 				}
 			}
 		}
 
-		private async Task LogIsComplete()
+		private async Task<bool> LogIsComplete()
 		{
 			if(LogContainsGoldRewardState || _game.CurrentGameMode == Practice && LogContainsStateComplete)
-				return;
+				return true;
 			Log.Info("GOLD_REWARD_STATE not found");
 			await Task.Delay(500);
 			if(LogContainsStateComplete || _game.IsInMenu)
-				return;
+				return LogContainsStateComplete;
 			Log.Info("STATE COMPLETE not found");
 			for(var i = 0; i < 5; i++)
 			{
@@ -175,6 +181,32 @@ namespace Hearthstone_Deck_Tracker
 					break;
 				Log.Info($"Waiting for STATE COMPLETE... ({i})");
 			}
+			return LogContainsStateComplete;
+		}
+
+		private async Task UpdatePostGameRanks(GameStats gs)
+		{
+			var medalInfo = await Helper.RetryWhileNull(Reflection.GetMedalInfo);
+			if(medalInfo == null)
+			{
+				Log.Warn("Could not get MedalInfo");
+				return;
+			}
+			var data = gs.Format == Format.Wild ? medalInfo.Wild : medalInfo.Standard;
+			gs.StarsAfter = data.Stars;
+			gs.StarLevelAfter = data.StarLevel;
+			gs.LegendRankAfter = data.LegendRank;
+		}
+
+		private async Task UpdatePostGameRating(GameStats gs)
+		{
+			var data = await Helper.RetryWhileNull(Reflection.GetBaconRatingChangeData);
+			if(data == null)
+			{
+				Log.Warn("Could not get battlegrounds rating");
+				return;
+			}
+			gs.BattlegroundsRatingAfter = data.NewRating;
 		}
 
 		private bool LogContainsGoldRewardState
@@ -612,7 +644,7 @@ namespace Hearthstone_Deck_Tracker
 					ToastManager.ShowGameResultToast(deckName, _game.CurrentGameStats);
 				}
 
-				await SaveReplays();
+				await SaveReplays(_game.CurrentGameStats);
 
 				if(_game.CurrentGameStats.GameType == GameType.GT_BATTLEGROUNDS)
 					Sentry.SendQueuedBobsBuddyEvents(_game.CurrentGameStats.HsReplay.UploadId);
