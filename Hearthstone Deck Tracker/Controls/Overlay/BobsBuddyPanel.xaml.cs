@@ -201,27 +201,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					lossRate += difference;
 				}
 			}
-			if(playerLethal + opponentLethal >= 1)
-			{
-				if(Math.Abs(1 - (playerLethal + opponentLethal)) > .00001)
-				{
-					var difference = 1 - (winRate + tieRate + lossRate);
-					if(playerLethal > opponentLethal)
-					{
-						playerLethal += difference;
-					}
-					else
-					{
-						opponentLethal += difference;
-					}
-				}
-			}
 
-			if(lethalWinStartedEqual)
+			if(lethalWinStartedEqual || playerLethal > winRate)
 			{
 				playerLethal = winRate;
 			}
-			if(lethalLossStartedEqual)
+			if(lethalLossStartedEqual || opponentLethal > lossRate)
 			{
 				opponentLethal = lossRate;
 			}
@@ -230,8 +215,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			WinRateDisplay = string.Format("{0:0.#%}", winRate);
 			TieRateDisplay = string.Format("{0:0.#%}", tieRate);
 			LossRateDisplay = string.Format("{0:0.#%}", lossRate);
-			PlayerLethalDisplay = string.Format("{0:0.#%}", RoundAwayFromZeroOrOne(playerLethal));
-			OpponentLethalDisplay = string.Format("{0:0.#%}", RoundAwayFromZeroOrOne(opponentLethal));
+			PlayerLethalDisplay = string.Format("{0:0.#%}", playerLethal);
+			OpponentLethalDisplay = string.Format("{0:0.#%}", opponentLethal);
 
 			PlayerLethalOpacity = playerLethal > 0 ? 1 : 0.3;
 			OpponentLethalOpacity = opponentLethal > 0 ? 1 : 0.3;
