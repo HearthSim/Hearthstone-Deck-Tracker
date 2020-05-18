@@ -1,5 +1,14 @@
+## **Release v1.12.1 - 2020-05-18**
+**Updated for Hearthstone 17.2.1.48313**
+
+**Changes**:
+- The attack counters are now automatically hidden while in Battlegrounds.
+- Fixed a rounding issue where the Bob's Buddy lethal chance could exceed the chance to win.
+- Improved Bob's Buddy prediction accuracy.
+
+
 ## **Release v1.12.0 - 2020-05-13**
-**Updated for 17.2.0.47374**
+**Updated for Hearthstone 17.2.0.47374**
 
 **Notes**:
 - Hearthstone 17.2 introduced major internal changes. We think we got everything working again, but please let us know if you encounter issues with this release.
