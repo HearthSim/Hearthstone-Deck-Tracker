@@ -62,6 +62,11 @@ namespace HDTTests.Hearthstone.Secrets
 			throw new NotImplementedException();
 		}
 
+		public int GetTurnNumber()
+		{
+			throw new NotImplementedException();
+		}
+
 		public SecretsManager SecretsManager { get; set; }
 		public int OpponentMinionCount { get; set; }
 		public int OpponentHandCount { get; set; }

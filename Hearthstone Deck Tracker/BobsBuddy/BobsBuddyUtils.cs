@@ -15,8 +15,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const string ReplicatingMenace = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantment;
 		private const string ReplicatingMenace_Golden = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantmentTavernBrawl;
 		private const string LivingSpores = NonCollectible.Neutral.LivingSporesToken2;
-		private const string RagePotion = NonCollectible.Neutral.RagePotion_RagePotionEnchantmentTavernBrawl;
-		private const string RebornRite = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
+		private const string RagePotionEnchantment = NonCollectible.Neutral.RagePotion_RagePotionEnchantmentTavernBrawl;
+		private const string RebornRiteEnchmantment = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
+		internal const string RagePotion = NonCollectible.Neutral.RagePotionTavernBrawl;
+		internal const string RebornRite = NonCollectible.Neutral.RebornRitesTavernBrawl;
 
 		internal static Minion GetMinionFromEntity(Entity entity, IEnumerable<Entity> attachedEntities) 
 		{
@@ -40,11 +42,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.plantDeathCount = attachedEntities.Count(x => x.CardId == LivingSpores);
 
 			// Putricide hero power
-			if(attachedEntities.Any(x => x.CardId == RagePotion))
+			if(attachedEntities.Any(x => x.CardId == RagePotionEnchantment))
 				minion.receivesPutricidePower = true;
 
 			// Lich King hero power
-			if(attachedEntities.Any(x => x.CardId == RebornRite))
+			if(attachedEntities.Any(x => x.CardId == RebornRiteEnchmantment))
 				minion.receivesLichKingPower = true;
 
 			return minion;

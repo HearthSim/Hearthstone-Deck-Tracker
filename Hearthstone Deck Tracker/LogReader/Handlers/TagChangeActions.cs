@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -62,8 +63,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => MulliganStateChange(id, value, game, gameState);
 				case COPIED_FROM_ENTITY_ID:
 					return () => OnCardCopy(id, value, game, gameState);
+				case TAG_SCRIPT_DATA_NUM_1:
+					return () => OnTagScriptDataNum1(id, value, game, gameState);
 			}
 			return null;
+		}
+
+		private void OnTagScriptDataNum1(int id, int value, IGame game, IHsGameState gameState)
+		{
+			if(game.CurrentGameMode != GameMode.Battlegrounds)
+				return;
+			var block = gameState.CurrentBlock;
+			if(block.Type != "TRIGGER" || block.CardId != NonCollectible.Neutral.Baconshop8playerenchantTavernBrawl || value != 1)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			if(!entity.IsHeroPower || entity.IsControlledBy(game.Player.Id))
+				return;
+
+			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+				.HeroPowerTriggered(entity.CardId);
 		}
 
 		private void OnCardCopy(int id, int value, IGame game, IHsGameState gameState)

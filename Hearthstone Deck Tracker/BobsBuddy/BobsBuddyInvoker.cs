@@ -11,7 +11,6 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
-using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
 using static Hearthstone_Deck_Tracker.BobsBuddy.BobsBuddyUtils;
@@ -23,6 +22,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 	{
 		private const int Iterations = 10_000;
 		private const int StateChangeDelay = 500;
+		private const int HeroPowerTriggerTimeout = 5000;
 		internal static int ThreadCount => Environment.ProcessorCount / 2;
 
 		private readonly GameV2 _game;
@@ -37,6 +37,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private int _turn;
 		private readonly List<string> _debugLog = new List<string>();
 
+		private MinionHeroPowerTrigger _minionHeroPowerTrigger;
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
 
@@ -108,6 +109,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return true;
 		}
 
+		internal void HeroPowerTriggered(string heroPowerId)
+		{
+			if(_minionHeroPowerTrigger != null && _minionHeroPowerTrigger.HeroPowerId == heroPowerId)
+				_minionHeroPowerTrigger.Tsc.SetResult(null);
+		}
+
 		public async void StartCombat()
 		{
 			try
@@ -137,6 +144,23 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Setting UI state to combat...");
 				BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
 				BobsBuddyDisplay.HidePercentagesShowSpinners();
+
+				if(_minionHeroPowerTrigger != null)
+				{
+					var minion = _minionHeroPowerTrigger.Minion;
+					var start = DateTime.Now;
+					DebugLog($"Waiting for hero power ({_minionHeroPowerTrigger.HeroPowerId}) trigger for {minion.minionName}...");
+					var completedTask = await Task.WhenAny(_minionHeroPowerTrigger.Tsc.Task, Task.Delay(HeroPowerTriggerTimeout));
+					var duration = (DateTime.Now - start).TotalMilliseconds;
+					if(completedTask != _minionHeroPowerTrigger.Tsc.Task)
+					{
+						DebugLog($"Found no hero power trigger after {duration}ms. Resetting receivedHeroPower on {minion.minionName}");
+						minion.receivesLichKingPower = false;
+						minion.receivesPutricidePower = false;
+					}
+					else
+						DebugLog($"Found hero power trigger for {minion.minionName} after {duration}ms");
+				}
 
 				DebugLog("Running simulation...");
 				var result = await RunSimulation();
@@ -272,7 +296,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				m.AddToBackOfList(input.mySide, simulator);
 
 			foreach(var m in GetOrderedMinions(_game.Opponent.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
+			{
 				m.AddToBackOfList(input.theirSide, simulator);
+
+				if(m.receivesLichKingPower)
+					_minionHeroPowerTrigger = new MinionHeroPowerTrigger(m, RebornRite);
+				else if(m.receivesPutricidePower)
+					_minionHeroPowerTrigger = new MinionHeroPowerTrigger(m, RagePotion);
+			}
 
 			_input = input;
 			_turn = turn;
