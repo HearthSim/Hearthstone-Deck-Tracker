@@ -186,6 +186,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						SetFlavorTextEntity(entity);
 						GameEvents.OnPlayerHandMouseOver.Execute(entity.Card);
 					}, () => FlavorTextVisibility = Visibility.Collapsed);
+					return;
 				}
 			}
 			if(_entityMouseOver.HasCurrent)
