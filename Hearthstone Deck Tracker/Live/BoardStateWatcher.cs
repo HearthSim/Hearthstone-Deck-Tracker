@@ -72,29 +72,45 @@ namespace Hearthstone_Deck_Tracker.Live
 			};
 		}
 
+		private int DbfId(Entity e)
+		{
+			if(e == null)
+				return 0;
+			var card = e.Info.LatestCardId == e.CardId
+				? e.Card
+				: Database.GetCardFromId(e.Info.LatestCardId);
+			return card.DbfIf;
+		}
+
+		private int ZonePosition(Entity e) => e.GetTag(GameTag.ZONE_POSITION);
+
+		private int[] SortedDbfIds(IEnumerable<Entity> entities) => entities.OrderBy(ZonePosition).Select(DbfId).ToArray();
+
+		private int HeroId(Entity playerEntity) => playerEntity.GetTag(GameTag.HERO_ENTITY);
+
+		private int WeaponId(Entity playerEntity) => playerEntity.GetTag(GameTag.WEAPON);
+
+		private Entity Find(Player p, int entityId) => p.PlayerEntities.FirstOrDefault(x => x.Id == entityId);
+
+		private Entity FindHeroPower(Player p) => p.PlayerEntities.FirstOrDefault(x => x.IsHeroPower && x.IsInPlay);
+
+		private BoardStateQuest Quest(Entity questEntity)
+		{
+			if(questEntity == null)
+				return null;
+			return new BoardStateQuest
+			{
+				DbfId = questEntity.Card.DbfIf,
+				Progress = questEntity.GetTag(GameTag.QUEST_PROGRESS),
+				Total = questEntity.GetTag(GameTag.QUEST_PROGRESS_TOTAL)
+			};
+		}
+
 		private BoardState GetBoardState()
 		{
 			if(Core.Game.PlayerEntity == null || Core.Game.OpponentEntity == null)
 				return null;
 
-			int ZonePosition(Entity e) => e.GetTag(GameTag.ZONE_POSITION);
-			int DbfId(Entity e) => e?.Card.DbfIf ?? 0;
-			int[] SortedDbfIds(IEnumerable<Entity> entities) => entities.OrderBy(ZonePosition).Select(DbfId).ToArray();
-			int HeroId(Entity playerEntity) => playerEntity.GetTag(GameTag.HERO_ENTITY);
-			int WeaponId(Entity playerEntity) => playerEntity.GetTag(GameTag.WEAPON);
-			Entity Find(Player p, int entityId) => p.PlayerEntities.FirstOrDefault(x => x.Id == entityId);
-			Entity FindHeroPower(Player p) => p.PlayerEntities.FirstOrDefault(x => x.IsHeroPower && x.IsInPlay);
-			BoardStateQuest Quest(Entity questEntity)
-			{
-				if(questEntity == null)
-					return null;
-				return new BoardStateQuest
-				{
-					DbfId = questEntity.Card.DbfIf,
-					Progress = questEntity.GetTag(GameTag.QUEST_PROGRESS),
-					Total = questEntity.GetTag(GameTag.QUEST_PROGRESS_TOTAL)
-				};
-			}
 
 			var player = Core.Game.Player;
 			var opponent = Core.Game.Opponent;
