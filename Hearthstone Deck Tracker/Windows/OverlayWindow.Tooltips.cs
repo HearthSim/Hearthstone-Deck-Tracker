@@ -354,10 +354,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			try
 			{
-				if(!Config.Instance.ShowFlavorText || string.IsNullOrEmpty(entity?.Card?.FormattedFlavorText))
+				if(!Config.Instance.ShowFlavorText || entity == null)
 					return;
-				FlavorText = entity.Card.FormattedFlavorText;
-				FlavorTextCardName = entity.Card.LocalizedName;
+				var card = entity.Info.LatestCardId == entity.CardId
+					? entity.Card
+					: Database.GetCardFromId(entity.Info.LatestCardId);
+				if(string.IsNullOrEmpty(card?.FormattedFlavorText))
+					return;
+				FlavorText = card.FormattedFlavorText;
+				FlavorTextCardName = card.LocalizedName;
 				FlavorTextVisibility = Visible;
 			}
 			catch(Exception e)
