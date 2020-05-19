@@ -37,7 +37,7 @@
             Visibility="{Binding VisibilitySearchBar, RelativeSource={RelativeSource AncestorType=deckPicker:DeckPicker}}"
             BorderThickness="1" DockPanel.Dock="Top" Margin="0,0,0,2" BorderBrush="{DynamicResource TextBrush}">
             <TextBox Name="TextBoxSearchBar" controls1:TextBoxHelper.Watermark="{lex:Loc DeckPicker_Text_Search_Watermark}"
-                     controls1:TextBoxHelper.IsWaitingForData="True" PreviewKeyDown="TextBoxSearchBar_OnPreviewKeyDown" />
+                     PreviewKeyDown="TextBoxSearchBar_OnPreviewKeyDown" />
         </Border>
         <Border BorderThickness="1"
                 Width="40" Height="40" DockPanel.Dock="Right" Margin="2,-2,0,0"
