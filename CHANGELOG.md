@@ -1,4 +1,4 @@
-## **Release v1.12.4 - 2020-05-20**
+## **Release v1.12.5 - 2020-05-20**
 
 **Fixes**:
 - Fixed an issue where HDT had unnecessarily high CPU/GPU usage in some cases.
