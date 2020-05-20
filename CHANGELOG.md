@@ -1,3 +1,19 @@
+## **Release v1.12.3 - 2020-05-20**
+
+**Fixes**:
+- Fixed an issue where HDT had unnecessarily high CPU/GPU usage in some cases.
+- Fixed an issue where flavor text tooltips were not working correctly for cards held in hand.
+- Fixed an issue where flavor text tooltips were not working correctly with transformed minions.
+- Fixed an issue where card tooltips in the Twitch Extension were not working correctly with transformed minions.
+- Fixed several issues where the secret helper would not correctly handle minions that died during an attack.
+
+**Bob's Buddy**:
+- Fixed an issue where Start of Combat triggers for Kel'Thuzad were not handled correctly (this was recently fixed in Hearthstone).
+- Fixed an issue where opposing Lich King / Putricide were considered to have used their hero power when they did not.
+- Fixed an issue where Fiendish Servant was not able to target the same minion twice.
+- Fixed an issue where Khadgar would incorrectly duplicate minions with Reborn.
+
+
 ## **Release v1.12.2 - 2020-05-18**
 **Updated for Hearthstone 17.2.1.48313**
 
