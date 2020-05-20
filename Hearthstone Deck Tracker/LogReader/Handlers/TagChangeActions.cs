@@ -73,6 +73,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(game.CurrentGameMode != GameMode.Battlegrounds)
 				return;
+			if(game.CurrentGameStats == null)
+				return;
 			var block = gameState.CurrentBlock;
 			if(block == null || block.Type != "TRIGGER" || block.CardId != NonCollectible.Neutral.Baconshop8playerenchantTavernBrawl || value != 1)
 				return;
