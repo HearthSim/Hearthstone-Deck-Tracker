@@ -69,10 +69,23 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(!Config.Instance.HideOpponentCardMarks)
 					{
 						_cardMarks[i].UpdateIcon(entity.Info.CardMark);
+						if(entity.Info.CardMark == CardMark.Created)
+						{
+							var creatorId = entity.Info.GetCreatorId();
+							if(creatorId > 0 && _game.Entities.TryGetValue(creatorId, out var creator))
+								_cardMarks[i].UpdateSourceCard(creator.Card);
+							else
+								_cardMarks[i].UpdateSourceCard(null);
+						}
+						else
+							_cardMarks[i].UpdateSourceCard(null);
 						_cardMarks[i].UpdateCostReduction(entity.Info.CostReduction);
 					}
 					else
+					{
 						_cardMarks[i].UpdateIcon(CardMark.None);
+						_cardMarks[i].UpdateSourceCard(null);
+					}
 					_cardMarks[i].Visibility = _game.IsInMenu || Config.Instance.HideOpponentCardAge && Config.Instance.HideOpponentCardMarks
 												   ? Hidden : Visible;
 				}

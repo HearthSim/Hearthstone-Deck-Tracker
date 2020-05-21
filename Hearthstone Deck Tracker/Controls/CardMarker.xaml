@@ -16,7 +16,17 @@
             <hearthstoneDeckTracker:HearthstoneTextBlock FontSize="18" Width="32" Height="32" TextAlignment="Center" 
                                                          Text="{Binding CardAge}" Visibility="{Binding CardAgeVisibility}"/>
         </Canvas>
-        <Image Width="16" Height="16" Canvas.Left="20" Canvas.Top="18" Source="{Binding Icon}" Visibility="{Binding IconVisibility}"/>
+        <Border Canvas.Left="4" Canvas.Top="32" BorderThickness="2" CornerRadius="3" BorderBrush="#141617" Visibility="{Binding SourceCardVisibility}">
+            <Grid>
+                <Rectangle Width="20" Height="20">
+                    <Rectangle.Fill>
+                        <ImageBrush ImageSource="{Binding SourceCardBitmap}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Image Width="16" Height="16" Margin="-8" HorizontalAlignment="Left" VerticalAlignment="Top" Source="{Binding Icon}" />
+            </Grid>
+        </Border>
+        <Image Width="16" Height="16" Canvas.Left="18" Canvas.Top="18" Source="{Binding Icon}" Visibility="{Binding IconVisibility}"/>
         <hearthstoneDeckTracker:HearthstoneTextBlock Fill="DodgerBlue" FontSize="13" Canvas.Left="17" Canvas.Top="-2"  Width="16" Height="16" TextAlignment="Right"
                                                      Text="{Binding CostReduction}" Visibility="{Binding CostReductionVisibility}"/>
     </Canvas>

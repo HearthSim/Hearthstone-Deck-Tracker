@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Attributes;
 using static System.Windows.Visibility;
 
@@ -18,12 +20,14 @@ namespace Hearthstone_Deck_Tracker.Controls
 {
 	public partial class CardMarker : INotifyPropertyChanged
 	{
+		private static readonly Int32Rect CropRect = new Int32Rect() { Height = 34, Width = 34, X = 55, Y = 0 };
+
 		private int _cardAge;
 		private Visibility _cardAgeVisibility;
 		private int _costReduction;
 		private Visibility _costReductionVisibility;
 		private BitmapImage _icon;
-		private Visibility _iconVisibility;
+		private BitmapSource _sourceCardBitmap;
 		private ScaleTransform _scaleTransform;
 
 		public CardMarker()
@@ -59,18 +63,23 @@ namespace Hearthstone_Deck_Tracker.Controls
 			{
 				_icon = value;
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(IconVisibility));
 			}
 		}
 
-		public Visibility IconVisibility
+		public BitmapSource SourceCardBitmap
 		{
-			get => _iconVisibility;
+			get => _sourceCardBitmap;
 			set
 			{
-				_iconVisibility = value;
+				_sourceCardBitmap = value;
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(SourceCardVisibility));
+				OnPropertyChanged(nameof(IconVisibility));
 			}
 		}
+
+		public Visibility IconVisibility => Icon != null && SourceCard == null ? Visible : Collapsed;
 
 		public Visibility CostReductionVisibility
 		{
@@ -81,6 +90,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 				OnPropertyChanged();
 			}
 		}
+
+		public Visibility SourceCardVisibility => SourceCardBitmap == null ? Collapsed : Visible;
 
 		public int CostReduction
 		{
@@ -102,6 +113,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
+		public Hearthstone.Card SourceCard { get; set; }
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void UpdateIcon(CardMark mark)
@@ -110,10 +123,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 			{
 				var path = Path.Combine("/HearthstoneDeckTracker;component", assetName.Name);
 				Icon = new BitmapImage(new Uri(path, UriKind.Relative));
-				IconVisibility = Visible;
 			}
 			else
-				IconVisibility = Collapsed;
+				Icon = null;
 		}
 
 		public void UpdateCardAge(int? cardAge)
@@ -131,6 +143,14 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			CostReduction = -costReduction;
 			CostReductionVisibility = costReduction > 0 ? Visible : Collapsed;
+		}
+
+		public void UpdateSourceCard(Hearthstone.Card card)
+		{
+			if(SourceCard == card)
+				return;
+			SourceCard = card;
+			SourceCardBitmap = card != null ? SourceCardBitmap = new CroppedBitmap(ImageCache.GetCardImage(card), CropRect) : null;
 		}
 
 		[NotifyPropertyChangedInvocator]

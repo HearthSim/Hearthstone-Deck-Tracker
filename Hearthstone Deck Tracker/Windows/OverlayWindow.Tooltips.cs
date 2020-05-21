@@ -70,6 +70,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly)
 								 ? Visible : Hidden;
 			ToolTipCard.CardSetToolTip.Visibility = Config.Instance.OverlaySetToolTips ? Visible : Collapsed;
+			ToolTipCard.CreatedByVisibility = Collapsed;
 
 			var cardMark =
 				relativeCardMark.FirstOrDefault(
@@ -79,14 +80,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				var index = _cardMarks.IndexOf(cardMark.Label);
 				var card = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == index + 1 && x.HasCardId && !x.Info.Hidden)?.Card;
-				if(card != null)
+				var creatorCard = _cardMarks[index].SourceCard;
+				if(card != null || creatorCard != null)
 				{
-					ToolTipCard.SetValue(DataContextProperty, card);
-					var topOffset = Canvas.GetTop(_cardMarks[index]) + _cardMarks[index].ActualHeight;
-					var leftOffset = Canvas.GetLeft(_cardMarks[index]) + _cardMarks[index].ActualWidth * index;
+					ToolTipCard.SetValue(DataContextProperty, card ?? creatorCard);
+					var offset = _cardMarks[index].ActualHeight * 1.25;
+					var topOffset = Canvas.GetTop(_cardMarks[index]) + offset;
+					var leftOffset = Canvas.GetLeft(_cardMarks[index]) + offset;
 					Canvas.SetTop(ToolTipCard, topOffset);
 					Canvas.SetLeft(ToolTipCard, leftOffset);
 					ToolTipCard.Visibility = Config.Instance.OverlayCardMarkToolTips ? Visible : Hidden;
+					ToolTipCard.CreatedByVisibility = card != null ? Collapsed : Visible;
+				}
+				else
+				{
+					ToolTipCard.Visibility = Hidden;
+					ToolTipCard.CreatedByVisibility = Collapsed;
 				}
 			}
 			//player card tooltips

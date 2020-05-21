@@ -224,6 +224,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			OriginalCardId = Database.GetCardFromDbfId(dbfId).Id;
 		}
 
+		public int GetCreatorId()
+		{
+			if(Hidden)
+				return 0;
+			var creatorId = _entity.GetTag(GameTag.DISPLAYED_CREATOR);
+			if(creatorId == 0)
+				creatorId = _entity.GetTag(GameTag.CREATOR);
+			return creatorId;
+		}
+
 		public bool Discarded { get; set; }
 		public bool Returned { get; set; }
 		public bool Mulliganed { get; set; }
