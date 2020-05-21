@@ -23,6 +23,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const int Iterations = 10_000;
 		private const int StateChangeDelay = 500;
 		private const int HeroPowerTriggerTimeout = 5000;
+		private const int MaxTime = 1_500;
+		private const int MaxTimeForComplexBoards = 3_000;
+
 		internal static int ThreadCount => Environment.ProcessorCount / 2;
 
 		private readonly GameV2 _game;
@@ -347,7 +350,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog($"Running simulations with MaxIterations={Iterations} and ThreadCount={ThreadCount}...");
 
 				var start = DateTime.Now;
-				_output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount);
+
+				int timeAlloted = _input.mySide.Count >= 6 || _input.theirSide.Count >= 6 ? MaxTimeForComplexBoards : MaxTime;
+				_output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount, timeAlloted);
+
 				DebugLog("----- Simulation Output -----");
 				DebugLog($"Duration={(DateTime.Now - start).TotalMilliseconds}ms, " +
 					$"ExitCondition={_output.myExitCondition}, " +
