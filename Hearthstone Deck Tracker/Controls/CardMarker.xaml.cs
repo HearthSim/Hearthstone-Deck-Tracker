@@ -150,7 +150,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			if(SourceCard == card)
 				return;
 			SourceCard = card;
-			SourceCardBitmap = card != null ? SourceCardBitmap = new CroppedBitmap(ImageCache.GetCardImage(card), CropRect) : null;
+			var cardTile = card != null ? ImageCache.GetCardImage(card) : null;
+			SourceCardBitmap = cardTile != null ? new CroppedBitmap(cardTile, CropRect) : null;
 		}
 
 		[NotifyPropertyChangedInvocator]
