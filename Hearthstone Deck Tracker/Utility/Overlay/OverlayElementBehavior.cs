@@ -15,6 +15,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 	public class OverlayElementBehavior
 	{
 		private bool _animating;
+		private double _currentScaling = 1;
 
 		public FrameworkElement Element { get; }
 
@@ -104,7 +105,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var centerX = GetLeft == null ? Element.ActualWidth : 0;
 			var centerY = GetTop == null ? Element.ActualHeight : 0;
 			var scaling = GetScaling?.Invoke() ?? 1;
-			Element.RenderTransform = new ScaleTransform(scaling, scaling, centerX, centerY);
+			if (_currentScaling != scaling)
+			{
+				_currentScaling = scaling;
+				Element.RenderTransform = new ScaleTransform(scaling, scaling, centerX, centerY);
+			}
 		}
 
 		public void Show()
