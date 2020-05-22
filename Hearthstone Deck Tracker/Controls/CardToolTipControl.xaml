@@ -13,7 +13,10 @@
              mc:Ignorable="d" Width="200" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
-        <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc CardTooltip_Label_CreatedBy}" FontSize="16" Visibility="{Binding CreatedByVisibility, RelativeSource={RelativeSource AncestorType=local:CardToolTipControl}}"/>
+        <Border CornerRadius="3,3,0,0" HorizontalAlignment="Left" Background="{DynamicResource AccentColorBrush}">
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc CardTooltip_Label_CreatedBy}" FontSize="16" Margin="8,3"
+                Visibility="{Binding CreatedByVisibility, RelativeSource={RelativeSource AncestorType=local:CardToolTipControl}}"/>
+        </Border>
         <Border BorderBrush="{DynamicResource AccentColorBrush}" BorderThickness="1">
             <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
                 <Grid.RowDefinitions>
