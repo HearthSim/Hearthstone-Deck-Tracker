@@ -1,3 +1,16 @@
+## **Release v1.12.6 - 2020-05-25**
+
+**New**:
+- Opponent hand icons now display the card they have been created by.
+
+**Fixes**:
+- Fixed an issue causing high GPU usage during Battlegrounds games.
+
+**Bob's Buddy**:
+- Increased the maximum amount of time simulations are allowed to run for complex boards.
+- Fixed an issue where Reborn minions could trigger effects on themselves.
+
+
 ## **Release v1.12.5 - 2020-05-20**
 
 **Fixes**:
