@@ -25,6 +25,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const int HeroPowerTriggerTimeout = 5000;
 		private const int MaxTime = 1_500;
 		private const int MaxTimeForComplexBoards = 3_000;
+		private const int MinimumSimulationsToReportSentry = 2500;
 
 		internal static int ThreadCount => Environment.ProcessorCount / 2;
 
@@ -413,6 +414,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_input.opponentPowerID == NonCollectible.Neutral.PrestidigitationTavernBrawl)
 			{
 				DebugLog("Opponent was Akazamarak. Currently not reporting. Exiting.");
+				return;
+			}
+
+			if(_output.simulationCount < MinimumSimulationsToReportSentry)
+			{
+				DebugLog("Did not complete enough simulations to report terminal cases. Exiting.");
 				return;
 			}
 
