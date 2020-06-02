@@ -646,7 +646,7 @@ namespace Hearthstone_Deck_Tracker
 
 				await SaveReplays(_game.CurrentGameStats);
 
-				if(_game.CurrentGameStats.GameType == GameType.GT_BATTLEGROUNDS)
+				if(_game.CurrentGameStats.GameType == GameType.GT_BATTLEGROUNDS && LogContainsStateComplete)
 					Sentry.SendQueuedBobsBuddyEvents(_game.CurrentGameStats.HsReplay.UploadId);
 				Influx.SendQueuedMetrics();
 			}
