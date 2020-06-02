@@ -85,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			{
 				if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
 				{
-					BobsBuddyEvents.Clear();
+					ClearBobsBuddyEvents();
 					break;
 				}
 				var e = BobsBuddyEvents.Dequeue();
@@ -94,6 +94,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				BobsBuddyEventsSent++;
 			}
 		}
+
+		public static void ClearBobsBuddyEvents() => BobsBuddyEvents.Clear();
 
 		private class BobsBuddyData
 		{
