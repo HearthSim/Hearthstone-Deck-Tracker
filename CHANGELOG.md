@@ -1,3 +1,11 @@
+## **Release v1.12.7 - 2020-06-03**
+
+**Bob's Buddy**:
+- Fixed an issue where multiple Deathrattles triggering simultaneously would sometimes not resolve correctly (e.g. in Exodia builds).
+- Fixed an issue where Professor Putricide's Hero Power was applied twice in some cases.
+- Fixed an issue where Mal'Ganis' aura was sometimes not applied correctly.
+
+
 ## **Release v1.12.6 - 2020-05-25**
 
 **New**:
