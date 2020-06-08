@@ -160,7 +160,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					{
 						DebugLog($"Found no hero power trigger after {duration}ms. Resetting receivedHeroPower on {minion.minionName}");
 						minion.receivesLichKingPower = false;
-						minion.receivesPutricidePower = false;
 					}
 					else
 						DebugLog($"Found hero power trigger for {minion.minionName} after {duration}ms");
@@ -305,8 +304,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				if(m.receivesLichKingPower)
 					_minionHeroPowerTrigger = new MinionHeroPowerTrigger(m, RebornRite);
-				else if(m.receivesPutricidePower)
-					_minionHeroPowerTrigger = new MinionHeroPowerTrigger(m, RagePotion);
 			}
 
 			_input = input;
