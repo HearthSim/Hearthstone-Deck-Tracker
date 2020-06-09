@@ -1,5 +1,6 @@
 ﻿using HearthDb;
 using HearthDb.Enums;
+using HearthMirror;
 using Hearthstone_Deck_Tracker.Utility;
 using System;
 using System.Collections.Generic;
@@ -75,5 +76,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return new List<Card>();
 			return cards;
 		}
+
+		public IEnumerable<Race> AvailableRaces => Reflection.GetAvailableBattlegroundsRaces()?.Cast<Race>() ?? Races;
 	}
 }

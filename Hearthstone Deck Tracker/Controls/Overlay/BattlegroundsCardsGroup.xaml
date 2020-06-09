@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:hearthstone_deck_tracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderBrush="#141617" BorderThickness="1" Background="#23272a" Margin="0,5,0,0" Width="196">
@@ -18,7 +22,10 @@
                  />
             </Border>
             <Grid Grid.Row="0" ClipToBounds="True" Margin="5">
-                <controls:AnimatedCardList x:Name="Cards" Margin="-33,0,0,0"/>
+                <controls:AnimatedCardList x:Name="Cards" Margin="-33,0,0,0"
+                    Visibility="{Binding CardsVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"/>
+                <TextBlock Text="{lex:Loc BattlegroundsCards_Tribe_NotAvailable}" Foreground="White" Opacity="0.4" TextAlignment="Center" FontWeight="SemiBold"
+                    Visibility="{Binding UnavailableVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"/>
             </Grid>
         </StackPanel>
     </Border>

@@ -25,15 +25,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void BgTier_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			var tier = ((BattlegroundsTier)sender).Tier;
-			Update(tier == ActiveTier ? 0 : tier);
+			Update(tier == ActiveTier ? 0 : tier, _db.Value.AvailableRaces);
 		}
 
 		public void Reset()
 		{
-			Update(0);
+			Update(0, _db.Value.Races);
 		}
 
-		private bool AddOrUpdateBgCardGroup(string title, List<Hearthstone.Card> cards)
+		private bool AddOrUpdateBgCardGroup(string title, List<Hearthstone.Card> cards, bool available)
 		{
 			var addedNew = false;
 			var existing = Groups.FirstOrDefault(x => x.Title == title);
@@ -46,11 +46,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var sortedCards = cards
 				.OrderBy(x => x.LocalizedName)
 				.ToList();
-			existing.UpdateCards(sortedCards);
+			existing.UpdateCards(sortedCards, available);
 			return addedNew;
 		}
 
-		private void Update(int tier)
+		private void Update(int tier, IEnumerable<Race> availableRaces)
 		{
 			if (ActiveTier == tier)
 				return;
@@ -75,13 +75,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				if(cards.Count == 0)
 					Groups.FirstOrDefault(x => x.Title == title)?.Hide();
 				else
-					resort |= AddOrUpdateBgCardGroup(title, cards);
+				{
+					var available = race == Race.ALL || race == Race.INVALID || availableRaces.Contains(race);
+					resort |= AddOrUpdateBgCardGroup(title, cards, available);
+				}
 			}
 
 			if (resort)
 			{
 				var items = Groups.ToList()
-					.OrderBy(x => string.IsNullOrEmpty(x.Title))
+					.OrderBy(x => string.IsNullOrEmpty(x.Title) || x.Title == "Other")
 					.ThenBy(x => x.Title);
 				foreach(var item in items)
 				{
