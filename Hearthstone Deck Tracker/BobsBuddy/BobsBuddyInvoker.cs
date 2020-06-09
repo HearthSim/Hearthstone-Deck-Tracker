@@ -296,11 +296,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
 
 			foreach(var m in GetOrderedMinions(_game.Player.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
-				m.AddToBackOfList(input.mySide, simulator);
+				m.AddToBackOfList(input.playerSide, simulator);
 
 			foreach(var m in GetOrderedMinions(_game.Opponent.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
 			{
-				m.AddToBackOfList(input.theirSide, simulator);
+				m.AddToBackOfList(input.opponentSide, simulator);
 
 				if(m.receivesLichKingPower)
 					_minionHeroPowerTrigger = new MinionHeroPowerTrigger(m, RebornRite);
@@ -330,11 +330,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				DebugLog("----- Simulation Input -----");
 				DebugLog($"Player: heroPower={_input.playerPowerID}, used={_input.heroPowerInfo?.PlayerActivatedPower}");
-				foreach(var minion in _input.mySide)
+				foreach(var minion in _input.playerSide)
 					DebugLog(minion.ToString());
 
 				DebugLog($"Opponent: heroPower={_input.opponentPowerID}, used={_input.heroPowerInfo?.OpponentActivatedPower}");
-				foreach(var minion in _input.theirSide)
+				foreach(var minion in _input.opponentSide)
 					DebugLog(minion.ToString());
 
 				if(_input.secretsAndPriorities.Count() > 0)
@@ -349,7 +349,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				var start = DateTime.Now;
 
-				int timeAlloted = _input.mySide.Count >= 6 || _input.theirSide.Count >= 6 ? MaxTimeForComplexBoards : MaxTime;
+				int timeAlloted = _input.playerSide.Count >= 6 || _input.opponentSide.Count >= 6 ? MaxTimeForComplexBoards : MaxTime;
 				_output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount, timeAlloted);
 
 				DebugLog("----- Simulation Output -----");
