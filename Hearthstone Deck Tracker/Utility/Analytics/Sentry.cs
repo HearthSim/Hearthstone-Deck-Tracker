@@ -41,8 +41,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		}
 
 		private const int MaxBobsBuddyEvents = 10;
+		private const int MaxBobsBuddyExceptions = 1;
 		private static int BobsBuddyEventsSent;
+		private static int BobsBuddyExceptionsSent;
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
+
 		public static void QueueBobsBuddyTerminalCase(TestInput testInput, TestOutput output, string result, int turn, List<string> debugLog)
 		{
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
@@ -93,6 +96,36 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				Client.Capture(e);
 				BobsBuddyEventsSent++;
 			}
+		}
+
+		public static void CaptureBobsBuddyException(Exception ex, TestInput input, int turn, List<string> debugLog)
+		{
+			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptions)
+				return;
+			BobsBuddyExceptionsSent++;
+
+			// Clean up data
+			input.RemoveSelfReferencesFromMinions();
+
+			var data = new BobsBuddyData()
+			{
+				ShortId = "",
+				Turn = turn,
+				ThreadCount = BobsBuddyInvoker.ThreadCount,
+				Input = input,
+				Log = debugLog
+			};
+
+			var bbEvent = new SentryEvent(ex)
+			{
+				Level = ErrorLevel.Warning,
+				Extra = data,
+			};
+
+			bbEvent.Message = $"BobsBuddy {BobsBuddyUtils.VersionString}: {bbEvent.Message}";
+			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
+
+			BobsBuddyEvents.Enqueue(bbEvent);
 		}
 
 		public static void ClearBobsBuddyEvents() => BobsBuddyEvents.Clear();

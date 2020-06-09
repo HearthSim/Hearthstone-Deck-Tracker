@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private readonly Random _rnd = new Random();
 
 		private static BobsBuddyPanel BobsBuddyDisplay => Core.Overlay.BobsBuddyDisplay;
+		private static bool ReportErrors => RemoteConfig.Instance.Data?.BobsBuddy?.SentryReporting ?? false;
 
 		private Entity _attackingHero;
 		private Entity _defendingHero;
@@ -195,6 +196,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				DebugLog(e.ToString());
 				Log.Error(e);
+				if(ReportErrors)
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _debugLog);
 				return;
 			}
 		}
@@ -226,6 +229,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				DebugLog(e.ToString());
 				Log.Error(e);
+				if(ReportErrors)
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _debugLog);
 				return;
 			}
 		}
@@ -369,6 +374,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				DebugLog(e.ToString());
 				Log.Error(e);
+				if(ReportErrors)
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _debugLog);
 				return null;
 			}
 		}
@@ -421,11 +428,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			var metricSampling = RemoteConfig.Instance.Data?.BobsBuddy?.MetricSampling ?? 0;
-			var reportErrors = RemoteConfig.Instance.Data?.BobsBuddy?.SentryReporting ?? false;
 
-			DebugLog($"metricSampling={metricSampling}, reportErrors={reportErrors}");
+			DebugLog($"metricSampling={metricSampling}, reportErrors={ReportErrors}");
 
-			if(!reportErrors && metricSampling == 0)
+			if(!ReportErrors && metricSampling == 0)
 			{
 				DebugLog("Nothign to report. Exiting.");
 				return;
@@ -439,7 +445,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(metricSampling > 0 && _rnd.NextDouble() < metricSampling)
 				Influx.OnBobsBuddySimulationCompleted(result, _output, _turn);
 
-			if(reportErrors)
+			if(ReportErrors)
 			{
 				if(IsIncorrectCombatResult(result))
 					AlertWithLastInputOutput(result.ToString());
