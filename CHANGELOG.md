@@ -1,3 +1,15 @@
+## **Release v1.12.8 - 2020-06-09**
+**Updated for Hearthstone 17.4.0.49534**
+
+**Changes**:
+- The minion list in Battlegrounds games will now only show races available in the current game.
+
+**Bob's Buddy**:
+- Added initial support for all new minions added in this Hearthstone patch (Pirates).
+- Fixed various minor issues related to Kangor's Apprentice's Deathrattle.
+- Fixed an issue where Siegebreaker's aura wasn't working correctly.
+
+
 ## **Release v1.12.7 - 2020-06-03**
 
 **Bob's Buddy**:
