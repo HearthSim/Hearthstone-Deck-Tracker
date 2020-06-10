@@ -25,7 +25,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void BgTier_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			var tier = ((BattlegroundsTier)sender).Tier;
-			Update(tier == ActiveTier ? 0 : tier, _db.Value.AvailableRaces);
+			var races = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? _db.Value.Races;
+			Update(tier == ActiveTier ? 0 : tier, races);
 		}
 
 		public void Reset()

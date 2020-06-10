@@ -220,6 +220,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int BattlegroundsRatingAfter { get; set; }
 
+		public HashSet<Race> BattlegroundsRaces { get; set; }
+
 		public int OpponentLegendRank
 		{
 			get { return _opponentLegendRank; }
@@ -563,6 +565,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeOpponentStarLevel() => OpponentStarLevel > 0;
 		public bool ShouldSerializeLeagueId() => LeagueId > 0;
 		public bool ShouldSerializeStarMultiplier() => StarMultiplier > 0;
+		public bool ShouldSerializeBattlegroundsRaces() => BattlegroundsRaces?.Count > 0;
 
 
 		public event PropertyChangedEventHandler PropertyChanged;

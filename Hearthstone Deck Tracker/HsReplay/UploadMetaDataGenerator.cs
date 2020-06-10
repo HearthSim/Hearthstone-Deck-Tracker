@@ -68,6 +68,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				metaData.TwitchVod = gameMetaData.TwitchVodData;
 			if(game?.LeagueId > 0)
 				metaData.LeagueId = game.LeagueId;
+			if(game?.GameMode == GameMode.Battlegrounds)
+				metaData.BattlegroundsRaces = game.BattlegroundsRaces?.Cast<int>().OrderBy(x => x).ToArray();
 			return metaData;
 		}
 

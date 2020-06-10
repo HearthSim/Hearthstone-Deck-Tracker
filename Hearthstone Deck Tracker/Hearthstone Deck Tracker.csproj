@@ -317,6 +317,7 @@
       <DependentUpon>StreamingTwitchExtension.xaml</DependentUpon>
     </Compile>
     <Compile Include="Hearthstone\BattlegroundsDb.cs" />
+    <Compile Include="Hearthstone\BattlegroundsUtils.cs" />
     <Compile Include="Hearthstone\BoardSnapshot.cs" />
     <Compile Include="Hearthstone\Collection.cs" />
     <Compile Include="Hearthstone\DungeonRun.cs" />
