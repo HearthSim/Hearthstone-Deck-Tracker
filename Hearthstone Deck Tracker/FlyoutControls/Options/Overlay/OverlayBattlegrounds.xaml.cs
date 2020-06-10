@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTiers = true;
 			SaveConfig(true);
-			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.BattlegroundsMinionsPanel.Visibility = Visibility.Visible;
 		}
 
@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTiers = false;
 			SaveConfig(true);
-			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.BattlegroundsMinionsPanel.Visibility = Visibility.Collapsed;
 		}
 
@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTurnCounter = true;
 			SaveConfig(true);
-			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.TurnCounter.Visibility = Visibility.Visible;
 		}
 
@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowBattlegroundsTurnCounter = false;
 			SaveConfig(true);
-			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.TurnCounter.Visibility = Visibility.Collapsed;
 		}
 
@@ -115,7 +115,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowResultsDuringCombat.IsEnabled = true;
 			CheckboxShowResultsDuringShopping.IsEnabled = true;
 			SaveConfig(true);
-			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.ShowBobsBuddyPanel();
 			Influx.OnBobsBuddyEnabledChanged(true);
 		}
@@ -128,7 +128,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowResultsDuringCombat.IsEnabled = false;
 			CheckboxShowResultsDuringShopping.IsEnabled = false;
 			SaveConfig(true);
-			if(Core.Game.CurrentGameMode == Enums.GameMode.Battlegrounds)
+			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.HideBobsBuddyPanel();
 			Influx.OnBobsBuddyEnabledChanged(false);
 		}

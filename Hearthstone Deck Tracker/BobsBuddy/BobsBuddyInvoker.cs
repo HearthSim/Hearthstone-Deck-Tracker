@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		public bool ShouldRun()
 		{
-			if(!Config.Instance.RunBobsBuddy || _game.CurrentGameMode != GameMode.Battlegrounds)
+			if(!Config.Instance.RunBobsBuddy || !_game.IsBattlegroundsMatch)
 				return false;
 			if(RemoteConfig.Instance.Data?.BobsBuddy?.Disabled ?? false)
 				return false;

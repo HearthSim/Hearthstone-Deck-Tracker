@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var players = GetPlayerInfo(game);
 			if (players != null)
 			{
-				if (game.GameType == GameType.GT_BATTLEGROUNDS)
+				if (game.GameMode == GameMode.Battlegrounds)
 					metaData.Players = players;
 				else
 				{
@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(game?.StartTime > DateTime.MinValue)
 				metaData.MatchStart = game.StartTime.ToString("o");
 			if(game != null)
-				metaData.GameType = game.GameType != GameType.GT_UNKNOWN ? (int)HearthDbConverter.GetBnetGameType(game.GameType, game.Format) : (int)HearthDbConverter.GetGameType(game.GameMode, game.Format);
+				metaData.GameType = (int)HearthDbConverter.GetBnetGameType(game.GameType, game.Format);
 			if(game?.Format != null)
 				metaData.Format = (int)HearthDbConverter.GetFormatType(game.Format);
 			metaData.SpectatorMode = game?.GameMode == GameMode.Spectator;

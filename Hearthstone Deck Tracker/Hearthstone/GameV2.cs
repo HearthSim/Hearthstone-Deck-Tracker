@@ -104,6 +104,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool? IsDungeonMatch => string.IsNullOrEmpty(CurrentGameStats?.OpponentHeroCardId) || CurrentGameType == GameType.GT_UNKNOWN ? (bool?)null
 			: CurrentGameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(CurrentGameStats.OpponentHeroCardId);
 
+		public bool IsBattlegroundsMatch => CurrentGameType == GameType.GT_BATTLEGROUNDS || CurrentGameType == GameType.GT_BATTLEGROUNDS_FRIENDLY;
+
 		public Mode CurrentMode
 		{
 			get { return _currentMode; }
@@ -139,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			get
 			{
-				if(_currentGameType == GameType.GT_BATTLEGROUNDS)
+				if(IsBattlegroundsMatch)
 					return true;
 				var player = Entities.FirstOrDefault(x => x.Value.IsPlayer);
 				var opponent = Entities.FirstOrDefault(x => x.Value.HasTag(GameTag.PLAYER_ID) && !x.Value.IsPlayer);

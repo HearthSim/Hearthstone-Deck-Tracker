@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var oppBoard = Core.Game.Opponent.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			var playerBoard = Core.Game.Player.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
-			if(!_game.IsInMenu && (_game.IsMulliganDone || _game.CurrentGameType == GameType.GT_BATTLEGROUNDS) && User32.IsHearthstoneInForeground() && IsVisible)
+			if(!_game.IsInMenu && (_game.IsMulliganDone || _game.IsBattlegroundsMatch) && User32.IsHearthstoneInForeground() && IsVisible)
 				DetectMouseOver(playerBoard, oppBoard);
 			else
 				FlavorTextVisibility = Collapsed;
@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelSecrets.Opacity = Config.Instance.SecretsOpacity / 100;
 			Opacity = Config.Instance.OverlayOpacity / 100;
 
-			var inBattlegrounds = _game.CurrentGameMode == GameMode.Battlegrounds;
+			var inBattlegrounds = _game.IsBattlegroundsMatch;
 			var hideDeck = Config.Instance.HideDecksInOverlay || inBattlegrounds || (Config.Instance.HideInMenu && _game.IsInMenu);
 
 			if (!_playerCardsHidden)
@@ -188,7 +188,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateIcons()
 		{
-			var inBattlegrounds = _game.CurrentGameMode == GameMode.Battlegrounds;
+			var inBattlegrounds = _game.IsBattlegroundsMatch;
 
 			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu || inBattlegrounds ? Collapsed : Visible;
 			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu || inBattlegrounds ? Collapsed : Visible;

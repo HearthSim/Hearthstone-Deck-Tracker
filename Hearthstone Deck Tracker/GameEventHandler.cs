@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Friendly && Config.Instance.HsReplayUploadFriendly
 											 || _game.CurrentGameMode == Casual && Config.Instance.HsReplayUploadCasual
 											 || _game.CurrentGameMode == Spectator && Config.Instance.HsReplayUploadSpectator
-											 || _game.CurrentGameMode == Battlegrounds && Config.Instance.HsReplayUploadBattlegrounds;
+											 || _game.IsBattlegroundsMatch && Config.Instance.HsReplayUploadBattlegrounds;
 
 		public void HandleInMenu()
 		{
@@ -243,7 +243,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void OnAttackEvent()
 		{
-			if(_game.CurrentGameMode == Battlegrounds && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
+			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
 			{
 				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())
 					.UpdateAttackingEntities(_attackingEntity, _defendingEntity);
@@ -354,7 +354,7 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.SetPlayer(player);
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
 			{
-				if(_game.CurrentGameMode == Battlegrounds && _game.CurrentGameStats != null && turn.Item2 > 1)
+				if(_game.IsBattlegroundsMatch && _game.CurrentGameStats != null && turn.Item2 > 1)
 					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1).StartShopping(true);
 				switch(Config.Instance.TurnStartAction)
 				{
@@ -452,7 +452,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.HideTimers();
 				DeckManager.ResetAutoSelectCount();
 				LiveDataManager.Stop();
-				if(_game.CurrentGameMode == Battlegrounds)
+				if(_game.IsBattlegroundsMatch)
 				{
 					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())
 						.StartShopping(!_game.CurrentGameStats.WasConceded);
@@ -515,7 +515,7 @@ namespace Hearthstone_Deck_Tracker
 					_game.CurrentGameStats.BrawlWins = _game.BrawlInfo.Wins;
 					_game.CurrentGameStats.BrawlLosses = _game.BrawlInfo.Losses;
 				}
-				else if (_game.CurrentGameMode == Battlegrounds && _game.BattlegroundsRatingInfo != null)
+				else if (_game.IsBattlegroundsMatch && _game.BattlegroundsRatingInfo != null)
 				{
 					_game.CurrentGameStats.BattlegroundsRating = _game.BattlegroundsRatingInfo.Rating;
 				}
@@ -646,7 +646,7 @@ namespace Hearthstone_Deck_Tracker
 
 				await SaveReplays(_game.CurrentGameStats);
 
-				if(_game.CurrentGameStats.GameType == GameType.GT_BATTLEGROUNDS)
+				if(_game.IsBattlegroundsMatch)
 				{
 					if(LogContainsStateComplete)
 						Sentry.SendQueuedBobsBuddyEvents(_game.CurrentGameStats.HsReplay.UploadId);
@@ -794,13 +794,13 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleBeginMulligan()
 		{
-			if(_game.CurrentGameType == GameType.GT_BATTLEGROUNDS)
+			if(_game.IsBattlegroundsMatch)
 				HandleBattlegroundsStart();
 		}
 
 		public void HandlePlayerMulliganDone()
 		{
-			if(_game.CurrentGameType == GameType.GT_BATTLEGROUNDS)
+			if(_game.IsBattlegroundsMatch)
 				Core.Overlay.HideBattlegroundsHeroPanel();
 		}
 
