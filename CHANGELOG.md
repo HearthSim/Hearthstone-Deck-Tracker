@@ -1,3 +1,10 @@
+## **Release v1.12.9 - 2020-06-11**
+
+**Bob's Buddy**:
+- Fixed an issue with the attack timing for Skallywag's Deathrattle and Arcane Canon.
+- Fixed an issue with resolving multiple Deathrattles at once.
+
+
 ## **Release v1.12.8 - 2020-06-09**
 **Updated for Hearthstone 17.4.0.49534**
 
