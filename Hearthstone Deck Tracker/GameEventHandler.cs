@@ -416,9 +416,6 @@ namespace Hearthstone_Deck_Tracker
 			_game.CacheGameType();
 			_game.CacheSpectator();
 
-			if(_game.IsBattlegroundsMatch && _game.CurrentGameStats != null)
-				_game.CurrentGameStats.BattlegroundsRaces = BattlegroundsUtils.GetAvailableRaces(_game.CurrentGameStats.GameId);
-
 			_game.MetaData.ServerInfo = Reflection.GetServerInfo();
 			TurnTimer.Instance.Start(_game).Forget();
 
@@ -799,7 +796,12 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleBeginMulligan()
 		{
 			if(_game.IsBattlegroundsMatch)
+			{
 				HandleBattlegroundsStart();
+
+				if(_game.CurrentGameStats != null)
+					_game.CurrentGameStats.BattlegroundsRaces = BattlegroundsUtils.GetAvailableRaces(_game.CurrentGameStats.GameId);
+			}
 		}
 
 		public void HandlePlayerMulliganDone()

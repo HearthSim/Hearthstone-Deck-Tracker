@@ -17,7 +17,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!_availableRacesCache.TryGetValue(gameId.Value, out var races))
 			{
 				races = AvailableRaces;
-				if (races != null)
+				// Before initialized this contains only contains Race.INVALID
+				if (races != null && races.Count > 1)
 					_availableRacesCache[gameId.Value] = races;
 			}
 			return races;
