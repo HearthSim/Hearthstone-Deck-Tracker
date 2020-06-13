@@ -1,3 +1,11 @@
+## **Release v1.12.10 - 2020-06-13**
+
+**Bob's Buddy**:
+- Fixed an issue with the interaction between Scallywag and Monstrous Macaw.
+- Fixed an issue where Arcane Canon would sometimes not detect its neighbouring minions correctly.
+- Fixed an issue where Khadgar would not correctly work with The Beast's Deathrattle.
+
+
 ## **Release v1.12.9 - 2020-06-11**
 
 **Bob's Buddy**:
