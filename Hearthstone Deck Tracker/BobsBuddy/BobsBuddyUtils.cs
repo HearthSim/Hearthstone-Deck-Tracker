@@ -34,6 +34,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.tier = entity.GetTag(GameTag.TECH_LEVEL);
 			minion.reborn = entity.HasTag(GameTag.REBORN);
 
+			//Vanilla health
+			if(minion.golden && Minion.cardIdsWithoutPremiumImplementations.Contains(entity.Info.LatestCardId))
+				minion.vanillaHealth *= 2;
+
 			// Attached Deathrattles
 			minion.mechDeathCount = attachedEntities.Count(x => x.CardId == ReplicatingMenace);
 			minion.mechDeathCountGold = attachedEntities.Count(x => x.CardId == ReplicatingMenace_Golden);
