@@ -274,6 +274,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 
+			input.availableRaces = BattlegroundsUtils.GetAvailableRaces(_currentGameId).ToList();
+
 			var oppHero = _game.Opponent.Board.FirstOrDefault(x => x.IsHero);
 			var playerHero = _game.Player.Board.FirstOrDefault(x => x.IsHero);
 			if(oppHero == null || playerHero == null)
