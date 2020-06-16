@@ -51,6 +51,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			return addedNew;
 		}
 
+		private static readonly List<Hearthstone.Card> NeutralClassifiedRaceCards = new List<Hearthstone.Card>()
+		{
+			Database.GetCardFromId(HearthDb.CardIds.Collectible.Neutral.Zoobot)
+		};
+
+		private IEnumerable<Hearthstone.Card> GetUnavailableRaceCards(IEnumerable<Race> availableRaces)
+		{
+			return NeutralClassifiedRaceCards.Where(x => x.RaceEnum != null && !availableRaces.Contains(x.RaceEnum.Value)).ToList();
+		}
+
 		private void Update(int tier, IEnumerable<Race> availableRaces)
 		{
 			if (ActiveTier == tier)
@@ -69,10 +79,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				_tierIcons[i].SetFaded(i != tier - 1);
 
 			var resort = false;
+			
 			foreach(var race in _db.Value.Races)
 			{
 				var title = race == Race.INVALID ? "Other" : HearthDbConverter.RaceConverter(race);
+
 				var cards = _db.Value.GetCards(tier, race);
+				if(race == Race.INVALID)
+					cards.AddRange(GetUnavailableRaceCards(availableRaces));
 				if(cards.Count == 0)
 					Groups.FirstOrDefault(x => x.Title == title)?.Hide();
 				else

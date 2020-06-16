@@ -233,6 +233,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public CardSet? CardSet => _dbCard?.Set;
 
+		public Race? RaceEnum => _dbCard?.Race;
+
 		[XmlIgnore]
 		public string Race { get; set; }
 
