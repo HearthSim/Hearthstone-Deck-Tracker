@@ -1,3 +1,14 @@
+## **Release v1.12.11 - 2020-06-15**
+
+**Fixes**:
+- Fixed an issue where Zoobot would not show up in the Minions list in Battlegrounds games without Mechs.
+
+**Bob's Buddy**:
+- Fixed an issue with the interaction between Illidans Hero Power and Arcane Canon.
+- Random summons are now restricted to the tribes available during the game.
+- Fixed an issue where auras that increase health were not correctly removed.
+
+
 ## **Release v1.12.10 - 2020-06-13**
 
 **Bob's Buddy**:
