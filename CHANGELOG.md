@@ -1,3 +1,14 @@
+## **Release v1.12.12 - 2020-06-18**
+**Updated for Hearthstone 17.4.1.51510**
+
+**Fixes**:
+ - Fixed an issue where Zoobot might get duplicated in the minions list in Battlegrounds games without Mechs.
+
+**Bob's Buddy**:
+- Fixed an issue where Bob's Buddy was not working when spectating Battlegrounds games.
+- Fixed more issues related to auras that increase health.
+
+
 ## **Release v1.12.11 - 2020-06-15**
 
 **Fixes**:
