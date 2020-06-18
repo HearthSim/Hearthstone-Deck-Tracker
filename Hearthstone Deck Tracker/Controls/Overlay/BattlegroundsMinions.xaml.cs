@@ -84,9 +84,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				var title = race == Race.INVALID ? "Other" : HearthDbConverter.RaceConverter(race);
 
-				var cards = _db.Value.GetCards(tier, race);
+				var cards = _db.Value.GetCards(tier, race).ToList();
+
 				if(race == Race.INVALID)
-					cards.AddRange(GetUnavailableRaceCards(availableRaces));
+					cards.AddRange(GetUnavailableRaceCards(availableRaces).Where(x => x.TechLevel == tier));
 				if(cards.Count == 0)
 					Groups.FirstOrDefault(x => x.Title == title)?.Hide();
 				else
