@@ -426,6 +426,9 @@ namespace Hearthstone_Deck_Tracker
 			Core.Windows.CapturableOverlay?.UpdateContentVisibility();
 			GameEvents.OnGameStart.Execute();
 			LiveDataManager.WatchBoardState();
+
+			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
+				Core.Overlay.ShowBgsTopBar();
 		}
 
 		private void HandleAdventureRestart()
