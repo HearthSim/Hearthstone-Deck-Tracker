@@ -250,12 +250,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			_lastMainWindowActivation = null;
 		}
 
-		public static void OnBobsBuddySimulationCompleted(CombatResult result, TestOutput output, int turn)
+		public static void OnBobsBuddySimulationCompleted(CombatResult result, TestOutput output, int turn, bool terminalCase)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;
 			var point = new InfluxPointBuilder("hdt_bb_combat_result_v2")
 				.Tag("result", result.ToString())
+				.Tag("terminal_case", terminalCase.ToString())
 				.Tag("turn", turn)
 				.Tag("exit_condition", output.myExitCondition.ToString())
 				.Tag("thread_count", BobsBuddyInvoker.ThreadCount)
