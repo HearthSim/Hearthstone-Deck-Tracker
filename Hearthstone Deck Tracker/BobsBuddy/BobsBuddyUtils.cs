@@ -20,13 +20,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal static Minion GetMinionFromEntity(Entity entity, IEnumerable<Entity> attachedEntities) 
 		{
-			var minion = Minion.FromHearthDbCardID(entity.Info.LatestCardId);
+			var minion = MinionFactory.GetMinionFromCardid(entity.Info.LatestCardId);
 
 			minion.baseAttack = entity.GetTag(GameTag.ATK);
 			minion.baseHealth = entity.GetTag(GameTag.HEALTH);
 			minion.taunt = entity.HasTag(GameTag.TAUNT);
 			minion.div = entity.HasTag(GameTag.DIVINE_SHIELD);
-			minion.cleave = Minion.cardIDsWithCleave.Contains(minion.cardID);
+			minion.cleave = MinionFactory.cardIDsWithCleave.Contains(minion.cardID);
 			minion.poisonous = entity.HasTag(GameTag.POISONOUS);
 			minion.windfury = entity.HasTag(GameTag.WINDFURY);
 			minion.golden = entity.HasTag(GameTag.PREMIUM);
@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.reborn = entity.HasTag(GameTag.REBORN);
 
 			//Vanilla health
-			if(minion.golden && Minion.cardIdsWithoutPremiumImplementations.Contains(entity.Info.LatestCardId))
+			if(minion.golden && MinionFactory.cardIdsWithoutPremiumImplementations.Contains(entity.Info.LatestCardId))
 				minion.vanillaHealth *= 2;
 
 			// Attached Deathrattles
