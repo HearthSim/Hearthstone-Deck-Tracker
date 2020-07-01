@@ -1,3 +1,5 @@
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 if (Test-Path "nuget.exe") {
 	Invoke-Expression "./nuget restore"
 }
