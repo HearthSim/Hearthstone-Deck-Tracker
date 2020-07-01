@@ -1,3 +1,5 @@
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 param(
 	[Parameter(Mandatory=$true)]
 	[string]$solution,
