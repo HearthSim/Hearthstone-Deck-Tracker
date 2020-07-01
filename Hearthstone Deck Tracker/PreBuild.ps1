@@ -18,6 +18,8 @@ param(
 "Skip git sync: $skipGitSync"
 "Skip resource copy: $skipResourceCopy`n"
 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 function CopyFiles($source, $files, $target) {
 	if((Test-Path $source) -and (Test-Path $target)) {
 		"`nCopying files from $source to $target"
