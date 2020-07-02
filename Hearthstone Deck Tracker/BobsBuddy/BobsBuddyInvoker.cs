@@ -458,7 +458,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			DebugLog($"result={result}, lethalResult={lethalResult}");
 
-			var terminalCase = False;
+			var terminalCase = false;
 			if (IsIncorrectCombatResult(result))
 			{
 				terminalCase = true;
