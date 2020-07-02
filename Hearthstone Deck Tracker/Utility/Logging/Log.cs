@@ -95,6 +95,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 			}
 		}
 
+		public static event Action<string> OnLogLine;
+
 		public static void WriteLine(string msg, LogType type, [CallerMemberName] string memberName = "",
 									 [CallerFilePath] string sourceFilePath = "")
 		{
@@ -125,6 +127,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 				try
 				{
 					Trace.WriteLine(line);
+					OnLogLine?.Invoke(line);
 				}
 				catch(Exception e)
 				{

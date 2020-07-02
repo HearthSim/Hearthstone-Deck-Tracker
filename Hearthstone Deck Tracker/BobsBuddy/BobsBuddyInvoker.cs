@@ -40,7 +40,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private TestOutput _output;
 		private TestInput _input;
 		private int _turn;
-		private readonly List<string> _debugLog = new List<string>();
+		const int LogLinesKept = 300;
+		private static List<string> _recentHDTLog = new List<string>();
 
 		private MinionHeroPowerTrigger _minionHeroPowerTrigger;
 		private static Guid _currentGameId;
@@ -67,10 +68,23 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public void DebugLog(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
 		{
 			Log.Info(msg, memberName, sourceFilePath);
-			_debugLog.Add($"{DateTime.Now.ToLongTimeString()}|{memberName} >> {msg}");
 		}
 
 		private readonly string _instanceKey;
+
+		static BobsBuddyInvoker()
+		{
+			Log.OnLogLine += AddHDTLogLine;
+		}
+
+		static void AddHDTLogLine(string toLog)
+		{
+			
+			if(_recentHDTLog.Count >= LogLinesKept)
+				_recentHDTLog.RemoveAt(0);
+			_recentHDTLog.Add(toLog);
+		}
+
 		private BobsBuddyInvoker(string key)
 		{
 			_game = Core.Game;
@@ -197,7 +211,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _debugLog);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog);
 				return;
 			}
 		}
@@ -230,7 +244,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _debugLog);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog);
 				return;
 			}
 		}
@@ -377,7 +391,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog(e.ToString());
 				Log.Error(e);
 				if(ReportErrors)
-					Sentry.CaptureBobsBuddyException(e, _input, _turn, _debugLog);
+					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog);
 				return null;
 			}
 		}
@@ -472,7 +486,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			DebugLog($"Queueing alert... (valid input: {_input != null})");
 			if(_input != null)
-				Sentry.QueueBobsBuddyTerminalCase(_input, _output, result, _turn, _debugLog);
+				Sentry.QueueBobsBuddyTerminalCase(_input, _output, result, _turn, _recentHDTLog);
 		}
 	}
 }
