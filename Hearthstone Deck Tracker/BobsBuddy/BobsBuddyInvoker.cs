@@ -449,7 +449,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			if(!ReportErrors && metricSampling == 0)
 			{
-				DebugLog("Nothign to report. Exiting.");
+				DebugLog("Nothing to report. Exiting.");
 				return;
 			}
 
@@ -458,16 +458,22 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			DebugLog($"result={result}, lethalResult={lethalResult}");
 
-			if(metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(result, _output, _turn);
-
-			if(ReportErrors)
+			var terminalCase = false;
+			if (IsIncorrectCombatResult(result))
 			{
-				if(IsIncorrectCombatResult(result))
+				terminalCase = true;
+				if (ReportErrors)
 					AlertWithLastInputOutput(result.ToString());
-				if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
+			}
+			if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
+			{
+				terminalCase = true;
+				if (ReportErrors)
 					AlertWithLastInputOutput(lethalResult.ToString());
 			}
+
+			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
+				Influx.OnBobsBuddySimulationCompleted(result, _output, _turn, terminalCase);
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)
