@@ -1,3 +1,12 @@
+## **Release v1.12.13 - 2020-07-02**
+
+**Bob's Buddy**:
+- Fixed an issue where King Bagurgle triggered by Monstrous Macaw would buff itself.
+- Fixed an issue where duplicate Hero Powers would not stack (e.g. Deathwing vs Sir Finnley).
+- Fixed an issue where Deflect-o-Bot Divine Shield trigger did not correctly interact with Deathrattles.
+- Updated Khadgar to be able to duplicate minions with Reborn (this was a server-side change by Blizzard).
+
+
 ## **Release v1.12.12 - 2020-06-18**
 **Updated for Hearthstone 17.4.1.51510**
 
