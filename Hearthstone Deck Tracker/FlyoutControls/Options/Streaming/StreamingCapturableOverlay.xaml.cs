@@ -64,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 
 
 		private void Hyperlink_OnClick(object sender, RoutedEventArgs e) 
-			=> Helper.TryOpenUrl("https://github.com/HearthSim/Hearthstone-Deck-Tracker/wiki/Streaming-Instructions");
+			=> Helper.TryOpenUrl("https://help.hearthsim.net/en/articles/4109898-how-can-i-capture-the-hearthstone-deck-tracker-for-streaming");
 
 		private void CheckBoxDisableOpacityTransition_Checked(object sender, RoutedEventArgs e)
 		{
