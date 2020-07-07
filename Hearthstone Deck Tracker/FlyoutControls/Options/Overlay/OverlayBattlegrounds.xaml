@@ -36,5 +36,10 @@
                           Unchecked="CheckboxShowResultsDuringShopping_Unchecked" Margin="0,5,0,0" />
             </StackPanel>
         </GroupBox>
+        <Button x:Name="OverlayHelpButton"
+            Click="OverlayHelpButtonClick"
+            Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
+            Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
+            Content="{lex:LocText Options_Tracker_Capture_Battlegrounds_Overlay}"/>
     </StackPanel>
 </UserControl>
