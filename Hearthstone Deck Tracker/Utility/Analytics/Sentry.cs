@@ -53,7 +53,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			// Clean up data
 			testInput.RemoveSelfReferencesFromMinions();
 			output.ClearListsForReporting(); //ignoring for some temporary debugging
-			output.results.Clear();
 
 			var msg = new SentryMessage($"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}");
 
