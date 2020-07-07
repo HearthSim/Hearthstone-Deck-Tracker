@@ -164,5 +164,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBobsBuddyDuringShopping = false;
 			SaveConfig(true);
 		}
+
+		private void OverlayHelpButtonClick(object sender, RoutedEventArgs e)
+		{
+			e.Handled = true;
+			Core.MainWindow.Options.TreeViewItemStreamingCapturableOverlay.IsSelected = true;
+		}
 	}
 }
