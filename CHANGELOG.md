@@ -1,3 +1,9 @@
+## **Release v1.12.14 - 2020-07-08**
+
+**Bob's Buddy**:
+- Fixed an issue where Khadgar paired with a Scallywag would summon too few Sky Pirates.
+
+
 ## **Release v1.12.13 - 2020-07-02**
 
 **Bob's Buddy**:
