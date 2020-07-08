@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
 using static Hearthstone_Deck_Tracker.BobsBuddy.BobsBuddyUtils;
 using BobsBuddy.Simulation;
+using System.Text.RegularExpressions;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
@@ -40,12 +41,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private TestOutput _output;
 		private TestInput _input;
 		private int _turn;
-		const int LogLinesKept = 300;
+		const int LogLinesKept = 100;
 		private static List<string> _recentHDTLog = new List<string>();
 
 		private MinionHeroPowerTrigger _minionHeroPowerTrigger;
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
+		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
+
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn)
 		{
@@ -79,7 +82,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		static void AddHDTLogLine(string toLog)
 		{
-			
+			if(_debuglineToIgnore.IsMatch(toLog))
+				return;
 			if(_recentHDTLog.Count >= LogLinesKept)
 				_recentHDTLog.RemoveAt(0);
 			_recentHDTLog.Add(toLog);

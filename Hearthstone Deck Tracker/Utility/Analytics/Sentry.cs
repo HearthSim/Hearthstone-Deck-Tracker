@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				ExitCondition = output.myExitCondition.ToString(),
 				Input = testInput,
 				Output = output,
-				Log = debugLog
+				Log = ReverseAndClone(debugLog)
 			};
 
 			var bbEvent = new SentryEvent(msg)
@@ -105,14 +105,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			// Clean up data
 			input.RemoveSelfReferencesFromMinions();
-
 			var data = new BobsBuddyData()
 			{
 				ShortId = "",
 				Turn = turn,
 				ThreadCount = BobsBuddyInvoker.ThreadCount,
 				Input = input,
-				Log = debugLog
+				Log = ReverseAndClone(debugLog)
 			};
 
 			var bbEvent = new SentryEvent(ex)
@@ -125,6 +124,13 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
 
 			BobsBuddyEvents.Enqueue(bbEvent);
+		}
+
+		private static List<string> ReverseAndClone(List<string> toReverseAndClone)
+		{
+			var toReturn = toReverseAndClone.ToList();
+			toReturn.Reverse();
+			return toReturn;
 		}
 
 		public static void ClearBobsBuddyEvents() => BobsBuddyEvents.Clear();
