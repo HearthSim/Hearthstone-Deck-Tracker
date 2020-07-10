@@ -232,7 +232,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 			}
 			if(logLine.Contains("End Spectator") && !game.IsInMenu)
-				gameState.GameHandler.HandleGameEnd();
+				gameState.GameHandler.HandleGameEnd(false);
 			else if(logLine.Contains("BLOCK_START"))
 			{
 				var match = BlockStartRegex.Match(logLine);
