@@ -6,6 +6,8 @@ using System.Linq;
 using BobsBuddy;
 using BobsBuddy.Simulation;
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using SharpRaven;
@@ -46,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static int BobsBuddyExceptionsSent;
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 
-		public static void QueueBobsBuddyTerminalCase(TestInput testInput, TestOutput output, string result, int turn, List<string> debugLog)
+		public static void QueueBobsBuddyTerminalCase(TestInput testInput, TestOutput output, string result, int turn, List<string> debugLog, Region region)
 		{
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
 				return;
@@ -66,7 +68,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				ExitCondition = output.myExitCondition.ToString(),
 				Input = testInput,
 				Output = output,
-				Log = ReverseAndClone(debugLog)
+				Log = ReverseAndClone(debugLog),
+				Region = region
 			};
 
 			var bbEvent = new SentryEvent(msg)
@@ -74,6 +77,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				Level = ErrorLevel.Warning,
 				Extra = data,
 			};
+
+			bbEvent.Tags.Add("region", data.Region.ToString());
 
 			bbEvent.Fingerprint.Add(result);
 			bbEvent.Fingerprint.Add(BobsBuddyUtils.VersionString);
@@ -145,6 +150,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			public string ExitCondition { get; set; }
 			public TestInput Input { get; set; }
 			public TestOutput Output { get; set; }
+
+			public Region Region { get; set; }
 
 			public List<string> Log { get; set; }
 			public string Replay => $"https://hsreplay.net/replay/{ShortId}#turn={Turn}b";
