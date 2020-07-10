@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!_handledGameEnd)
 			{
 				Log.Warn("Game end has not been handled");
-				HandleGameEnd();
+				HandleGameEnd(false);
 			}
 
 			Log.Info("Game is now in menu.");
@@ -437,12 +437,12 @@ namespace Hearthstone_Deck_Tracker
 			Log.Info("Adventure was restarted. Simulating game end.");
 			HandleConcede();
 			HandleLoss();
-			HandleGameEnd();
+			HandleGameEnd(false);
 			HandleInMenu();
 		}
 
 #pragma warning disable 4014
-		public async void HandleGameEnd()
+		public async void HandleGameEnd(bool stateComplete)
 		{
 			try
 			{
@@ -456,7 +456,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.HideTimers();
 				DeckManager.ResetAutoSelectCount();
 				LiveDataManager.Stop();
-				if(_game.IsBattlegroundsMatch)
+				if(_game.IsBattlegroundsMatch && stateComplete)
 				{
 					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())
 						.StartShopping(!_game.CurrentGameStats.WasConceded);
@@ -1240,7 +1240,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentHeroPower(string cardId, int turn) => HandleOpponentHeroPower(cardId, turn);
 		void IGameHandler.TurnStart(ActivePlayer player, int turnNumber) => TurnStart(player, turnNumber);
 		void IGameHandler.HandleGameStart(DateTime timestamp) => HandleGameStart(timestamp);
-		void IGameHandler.HandleGameEnd() => HandleGameEnd();
+		void IGameHandler.HandleGameEnd(bool stateComplete) => HandleGameEnd(stateComplete);
 		void IGameHandler.HandleLoss() => HandleLoss();
 		void IGameHandler.HandleWin() => HandleWin();
 		void IGameHandler.HandleTied() => HandleTied();

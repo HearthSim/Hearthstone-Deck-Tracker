@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerGetToDeck(Entity entity, string cardId, int turn);
 		void TurnStart(ActivePlayer player, int turnNumber);
 		void HandleGameStart(DateTime startTime);
-		void HandleGameEnd();
+		void HandleGameEnd(bool stateComplete);
 		void HandleLoss();
 		void HandleWin();
 		void HandleTied();

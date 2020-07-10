@@ -185,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(value != (int)State.COMPLETE)
 				return;
-			gameState.GameHandler.HandleGameEnd();
+			gameState.GameHandler.HandleGameEnd(true);
 			gameState.GameEnded = true;
 		}
 
