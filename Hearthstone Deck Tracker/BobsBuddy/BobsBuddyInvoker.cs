@@ -496,7 +496,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			DebugLog($"Queueing alert... (valid input: {_input != null})");
 			if(_input != null)
-				Sentry.QueueBobsBuddyTerminalCase(_input, _output, result, _turn, _recentHDTLog);
+				Sentry.QueueBobsBuddyTerminalCase(_input, _output, result, _turn, _recentHDTLog, _game.CurrentRegion);
 		}
 	}
 }
