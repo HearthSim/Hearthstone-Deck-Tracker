@@ -1,3 +1,12 @@
+## **Release v1.12.15 - 2020-07-14**
+**Updated for Hearthstone 17.6.0.53261**
+
+**Bob's Buddy**:
+-Fixed an issue where Khadgar-copied Sky Pirates wouldn't trigger Arcane Cannons.
+-Fixed an issue where Waxrider Toggwaggle would be able to save itself after being hit by a cleave minion (in response to Blizzard server-side changes).
+-Fixed an issue where a Baron Rivendare killed in the same attack as a Deathrattle minion wouldn't double the Deathrattle.
+
+
 ## **Release v1.12.14 - 2020-07-08**
 
 **Bob's Buddy**:
