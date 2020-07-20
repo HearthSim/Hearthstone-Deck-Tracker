@@ -176,41 +176,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal)
 		{
 			ShowPercentagesHideSpinners();
-			bool lethalWinStartedEqual = winRate == playerLethal;
-			bool lethalLossStartedEqual = lossRate == opponentLethal;
-
-			winRate = AdjustNumberForDisplay(winRate);
-			tieRate = AdjustNumberForDisplay(tieRate);
-			lossRate = AdjustNumberForDisplay(lossRate);
-			playerLethal = AdjustNumberForDisplay(playerLethal);
-			opponentLethal = AdjustNumberForDisplay(opponentLethal);
-
-			if(Math.Abs(1 - (winRate + tieRate + lossRate)) > .00001)
-			{
-				var difference = 1 - (winRate + tieRate + lossRate);
-				if(winRate > tieRate && winRate > lossRate)
-				{
-					winRate += difference;
-				}
-				else if(tieRate > winRate && tieRate > lossRate)
-				{
-					tieRate += difference;
-				}
-				else
-				{
-					lossRate += difference;
-				}
-			}
-
-			if(lethalWinStartedEqual || playerLethal > winRate)
-			{
-				playerLethal = winRate;
-			}
-			if(lethalLossStartedEqual || opponentLethal > lossRate)
-			{
-				opponentLethal = lossRate;
-			}
-
 
 			WinRateDisplay = string.Format("{0:0.#%}", winRate);
 			TieRateDisplay = string.Format("{0:0.#%}", tieRate);
@@ -220,22 +185,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			PlayerLethalOpacity = playerLethal > 0 ? 1 : 0.3;
 			OpponentLethalOpacity = opponentLethal > 0 ? 1 : 0.3;
-		}
-
-		const double RoundingPrecision = 0.001;
-		private double AdjustNumberForDisplay(double input)
-		{
-			double toReturn = RoundAwayFromZeroOrOne(input);
-			return Math.Round(toReturn, 3);
-
-		}
-		private double RoundAwayFromZeroOrOne(double value)
-		{
-		   if(value < RoundingPrecision && value != 0)
-				   return RoundingPrecision;
-		   if(value > 1 - RoundingPrecision && value != 1)
-				   return 1 - RoundingPrecision;
-		   return value;
 		}
 
 		/// <summary>
