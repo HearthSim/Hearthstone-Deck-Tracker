@@ -4,13 +4,14 @@ pull_requests:
 branches:
   only:
   - master
+  - dev
 image: Visual Studio 2017
 shallow_clone: true
 install:
 - ps: Invoke-Expression "./bootstrap.ps1"
 build_script:
 - ps: >-
-    $dev = $false
+    $dev = ($Env:APPVEYOR_REPO_BRANCH -eq "dev")
 
     $genArtifacts = (!$Env:APPVEYOR_PULL_REQUEST_NUMBER)
 
