@@ -1,3 +1,9 @@
+## **Release v1.12.17 - 2020-07-20**
+
+**Fixes**:
+- Fixed an issue where HDT would not correctly start on Windows 10, version 2004.
+
+
 ## **Release v1.12.16 - 2020-07-14**
 **Updated for Hearthstone 17.6.0.53261**
 
