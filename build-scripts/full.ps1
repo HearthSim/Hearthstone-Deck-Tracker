@@ -56,15 +56,15 @@ $assemblyInfo = $versionRegex.Replace($assemblyInfo, 'Version("' + "$major.$mino
 
 # Build
 if ($dev) {
-    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel\"
+    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel\" /p:StopOnFirstFailure=true
 }
 else {
-    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
+    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86" /p:StopOnFirstFailure=true
     Set-Location "$buildDir\Release"
     .$PSScriptRoot/release_post_build.bat
     Set-Location $PSScriptRoot
 
-    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
+    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86" /p:StopOnFirstFailure=true
 }
 Set-Location "$buildDir/Squirrel"
 .$PSScriptRoot/squirrel_post_build.bat
