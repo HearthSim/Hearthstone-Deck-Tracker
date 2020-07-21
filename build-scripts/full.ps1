@@ -1,6 +1,6 @@
 Param(
     [Parameter(Mandatory=$True)]
-    [string]$version,
+    [int]$buildNumber,
     [boolean]$generateArtifacts,
     [boolean]$dev = $true
 )
@@ -29,25 +29,29 @@ $cert = "$baseDir\cert.pfx"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+# Read version number from AssemblyInfo
+$assemblyInfo = [IO.File]::ReadAllText($assemblyInfoFile)
+$versionRegex = New-Object System.Text.RegularExpressions.Regex('Version\(\"(\d+)\.(\d+)\.(\d+)*"\)')
+$match = $versionRegex.Match($assemblyInfo)
+if(!$match.Success) {
+    throw "Version number not found in AssemblyInfo"
+}
+
+$major = $match.Groups[1].Value
+$minor = $match.Groups[2].Value
+$patch = $match.Groups[3].Value
 
 # Construct package version
-$parts = $version.Split(".")
-$major = $parts[0]
-$minor = $parts[1]
-$patch = $parts[2]
-$build = $parts[3]
 if ($dev) {
     $patch = [int]$patch + 1
 }
 $packageVersion = "$major.$minor.$patch"
 if ($dev) {
-    $packageVersion = "$packageVersion-dev$build"
+    $packageVersion = "$packageVersion-dev$buildNumber"
 }
 
 # Update AssemblyInfo.cs with the new version
-$assemblyInfo = [IO.File]::ReadAllText($assemblyInfoFile)
-$versionRegex = New-Object System.Text.RegularExpressions.Regex ('Version\(\"[\d\.]*"\)')
-$assemblyInfo = $versionRegex.Replace($assemblyInfo, 'Version("' + "$major.$minor.$patch.$build" + '")')
+$assemblyInfo = $versionRegex.Replace($assemblyInfo, 'Version("' + "$major.$minor.$patch.$buildNumber" + '")')
 [IO.File]::WriteAllText($assemblyInfoFile, $assemblyInfo)
 
 # Build

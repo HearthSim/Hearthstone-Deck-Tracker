@@ -1,0 +1,26 @@
+name: Main
+
+on:
+  push:
+    branches: [master, github-actions]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: microsoft/setup-msbuild@v1.0.0
+
+      - name: Bootstrap
+        run: ./bootstrap.ps1
+        shell: powershell
+
+      - name: Build
+        run: |
+          $build = 5000 + $Env:GITHUB_RUN_ID
+          $dev = $true
+          $genArtifacts = $true
+          ./build-scripts/full.ps1 -buildNumber $build -generateArtifacts $genArtifacts -dev $dev
+        shell: powershell
