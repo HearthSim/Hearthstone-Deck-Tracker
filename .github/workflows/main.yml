@@ -19,7 +19,7 @@ jobs:
 
       - name: Build
         run: |
-          $build = 5000 + $Env:GITHUB_RUN_ID
+          $build = 5000 + $Env:GITHUB_RUN_NUMBER
           $dev = $true
           $genArtifacts = $true
           ./build-scripts/full.ps1 -buildNumber $build -generateArtifacts $genArtifacts -dev $dev
