@@ -4,6 +4,10 @@ on:
   push:
     branches: [master, github-actions]
 
+defaults:
+  run:
+    shell: powershell
+
 jobs:
   build:
     runs-on: windows-latest
@@ -15,15 +19,33 @@ jobs:
 
       - name: Bootstrap
         run: ./bootstrap.ps1
-        shell: powershell
+
+      - name: Update version
+        id: version
+        run: |
+          $buildNumber = 5000 + $Env:GITHUB_RUN_NUMBER
+          $packageVersion = ./build-scripts/update_version.ps1 -buildNumber $buildNumber -dev $true
+          echo "::set-output name=packageVersion::$packageVersion"
 
       - name: Build
         run: |
-          $build = 5000 + $Env:GITHUB_RUN_NUMBER
+          msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel-Dev\"
+          msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
+          msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
+
+      - uses: Malcolmnixon/Setup-VSTest@v3
+
+      - name: Test
+        run: |
+          vstest.console "HearthWatcher.Test\bin\x86\Release\HearthWatcher.Test.dll"
+          vstest.console "HDTTests\bin\x86\Release\HDTTests.dll"
+
+      - name: Package
+        run: |
           $dev = $true
           $genArtifacts = $true
-          ./build-scripts/full.ps1 -buildNumber $build -generateArtifacts $genArtifacts -dev $dev
-        shell: powershell
+          $packageVersion = ${{ steps.version.outputs.packageVersion }}
+          ./build-scripts/package.ps1 -packageVersion $packageVersion -generateArtifacts $genArtifacts -dev $dev
         env:
           CERT: ${{ secrets.CERT }}
           CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
