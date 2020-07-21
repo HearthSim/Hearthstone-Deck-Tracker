@@ -24,3 +24,6 @@ jobs:
           $genArtifacts = $true
           ./build-scripts/full.ps1 -buildNumber $build -generateArtifacts $genArtifacts -dev $dev
         shell: powershell
+        env:
+          CERT: ${{ secrets.CERT }}
+          CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
