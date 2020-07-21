@@ -44,7 +44,7 @@ jobs:
         run: |
           $dev = $true
           $genArtifacts = $true
-          $packageVersion = ${{ steps.version.outputs.packageVersion }}
+          $packageVersion = "${{ steps.version.outputs.packageVersion }}"
           ./build-scripts/package.ps1 -packageVersion $packageVersion -generateArtifacts $genArtifacts -dev $dev
         env:
           CERT: ${{ secrets.CERT }}
