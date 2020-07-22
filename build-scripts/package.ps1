@@ -1,7 +1,6 @@
 Param(
     [Parameter(Mandatory=$True)]
     [string]$packageVersion,
-    [boolean]$generateArtifacts,
     [boolean]$dev = $true
 )
 

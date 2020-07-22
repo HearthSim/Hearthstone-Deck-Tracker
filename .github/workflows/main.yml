@@ -13,27 +13,35 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - uses: microsoft/setup-msbuild@v1.0.0
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.0.0
 
-      - name: Bootstrap
+      - name: Run Bootstrap
         run: ./bootstrap.ps1
 
       - name: Update version
         id: version
+        # if: startsWith(github.ref, 'refs/tags/v')
         run: |
           $buildNumber = 5000 + $Env:GITHUB_RUN_NUMBER
-          $packageVersion = ./build-scripts/update_version.ps1 -buildNumber $buildNumber -dev $true
+          $packageVersion = ./build-scripts/update_version.ps1 -dev $true -buildNumber $buildNumber
           echo "::set-output name=packageVersion::$packageVersion"
 
-      - name: Build
-        run: |
-          msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel-Dev\"
-          msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
-          msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
+      - name: Build (Release)
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
 
-      - uses: Malcolmnixon/Setup-VSTest@v3
+      # - name: Build (Squirrel)
+      #   if: startsWith(github.ref, 'refs/tags/v')
+      #   run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
+
+      - name: Build (Dev)
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel\"
+
+      - name: Setup VSTest
+        uses: Malcolmnixon/Setup-VSTest@v3
 
       - name: Test
         run: |
@@ -41,11 +49,14 @@ jobs:
           vstest.console "HDTTests\bin\x86\Release\HDTTests.dll"
 
       - name: Package
-        run: |
-          $dev = $true
-          $genArtifacts = $true
-          $packageVersion = "${{ steps.version.outputs.packageVersion }}"
-          ./build-scripts/package.ps1 -packageVersion $packageVersion -generateArtifacts $genArtifacts -dev $dev
+        # if: startsWith(github.ref, 'refs/tags/v')
+        run: ./build-scripts/package.ps1 -dev $true -packageVersion ${{ steps.version.outputs.packageVersion }}
         env:
           CERT: ${{ secrets.CERT }}
           CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
+
+      - name: Release
+        # if: startsWith(github.ref, 'refs/tags/v')
+        run: ./build-scripts/github_release.ps1 -type dev -packageVersion ${{ steps.version.outputs.packageVersion }}
+        env:
+          HDT_GITHUB_TOKEN: ${{ secrets.HDT_GITHUB_TOKEN }}
