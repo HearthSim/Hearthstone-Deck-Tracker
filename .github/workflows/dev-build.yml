@@ -1,0 +1,52 @@
+name: Dev Build
+
+on: [workflow_dispatch]
+
+defaults:
+  run:
+    shell: powershell
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.0.0
+
+      - name: Run Bootstrap
+        run: ./bootstrap.ps1
+
+      - name: Update version
+        id: version
+        run: |
+          $packageVersion = ./build-scripts/update_version.ps1 -dev $true -buildNumber $Env:GITHUB_RUN_NUMBER
+          echo "::set-output name=packageVersion::$packageVersion"
+
+      - name: Build (Release)
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
+
+      - name: Setup VSTest
+        uses: Malcolmnixon/Setup-VSTest@v3
+
+      - name: Test
+        run: |
+          vstest.console "HearthWatcher.Test\bin\x86\Release\HearthWatcher.Test.dll"
+          vstest.console "HDTTests\bin\x86\Release\HDTTests.dll"
+
+      - name: Build (Dev)
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel\"
+
+      - name: Package
+        run: ./build-scripts/package.ps1 -dev $true -packageVersion ${{ steps.version.outputs.packageVersion }}
+        env:
+          CERT: ${{ secrets.CERT }}
+          CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
+
+      - name: Release
+        run: ./build-scripts/github_release.ps1 -type dev -packageVersion ${{ steps.version.outputs.packageVersion }}
+        env:
+          HDT_GITHUB_TOKEN: ${{ secrets.HDT_GITHUB_TOKEN }}

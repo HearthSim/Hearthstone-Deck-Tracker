@@ -1,25 +1,16 @@
 Param(
     [Parameter(Mandatory=$True)]
-    [string]$version,
-    [boolean]$generateArtifacts,
+    [string]$packageVersion,
     [boolean]$dev = $true
 )
 
 $baseDir = $(Resolve-Path "$PSScriptRoot\..").Path
-
-if (!$generateArtifacts) {
-    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel-Dev\"
-    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
-    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
-    exit
-}
 
 $initialLocation = $(Get-Location).Path
 
 $DEV_LATEST = "https://api.github.com/repos/HearthSim/HDT-dev-builds/releases/latest"
 $PROD_LATEST = "https://api.github.com/repos/HearthSim/HDT-Releases/releases/latest"
 
-$assemblyInfoFile = "$baseDir\Hearthstone Deck Tracker\Properties\AssemblyInfo.cs"
 $buildDir = "$baseDir\Hearthstone Deck Tracker\bin\x86"
 $hdtReleaseDir = "$buildDir\Hearthstone Deck Tracker"
 $squirrelTools = "$baseDir\packages\squirrel.windows.1.9.1\tools"
@@ -29,38 +20,11 @@ $cert = "$baseDir\cert.pfx"
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-
-# Construct package version
-$parts = $version.Split(".")
-$major = $parts[0]
-$minor = $parts[1]
-$patch = $parts[2]
-$build = $parts[3]
-if ($dev) {
-    $patch = [int]$patch + 1
-}
-$packageVersion = "$major.$minor.$patch"
-if ($dev) {
-    $packageVersion = "$packageVersion-dev$build"
-}
-
-# Update AssemblyInfo.cs with the new version
-$assemblyInfo = [IO.File]::ReadAllText($assemblyInfoFile)
-$versionRegex = New-Object System.Text.RegularExpressions.Regex ('Version\(\"[\d\.]*"\)')
-$assemblyInfo = $versionRegex.Replace($assemblyInfo, 'Version("' + "$major.$minor.$patch.$build" + '")')
-[IO.File]::WriteAllText($assemblyInfoFile, $assemblyInfo)
-
-# Build
-if ($dev) {
-    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Debug /p:Platform="x86" /p:DefineConstants='"DEBUG;DEV;SQUIRREL;TRACE"' /p:OutputPath="bin\x86\Squirrel\"
-}
-else {
-    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
+# Run post build scripts
+if (!$dev) {
     Set-Location "$buildDir\Release"
     .$PSScriptRoot/release_post_build.bat
     Set-Location $PSScriptRoot
-
-    msbuild "$baseDir\Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
 }
 Set-Location "$buildDir/Squirrel"
 .$PSScriptRoot/squirrel_post_build.bat

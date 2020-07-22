@@ -2,7 +2,7 @@ if exist hs-card-tiles (
   rd /s /q hs-card-tiles
 )
 
-git clone --depth=1 https://github.com/HearthSim/hs-card-tiles.git
+git clone -q --depth=1 https://github.com/HearthSim/hs-card-tiles.git
 
 if not exist "Resources/Tiles" (
   mkdir "Resources/Tiles"

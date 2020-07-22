@@ -1,0 +1,63 @@
+name: Main
+
+on: [push]
+
+defaults:
+  run:
+    shell: powershell
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.0.0
+
+      - name: Run Bootstrap
+        run: ./bootstrap.ps1
+
+      - name: Update version
+        id: version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          $buildNumber = 5000 + $Env:GITHUB_RUN_NUMBER
+          $packageVersion = ./build-scripts/update_version.ps1 -dev $false -buildNumber $buildNumber
+          echo "::set-output name=packageVersion::$packageVersion"
+
+      - name: Build (Release)
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Release /p:Platform="x86"
+
+      - name: Setup VSTest
+        uses: Malcolmnixon/Setup-VSTest@v3
+
+      - name: Test
+        run: |
+          vstest.console "HearthWatcher.Test\bin\x86\Release\HearthWatcher.Test.dll"
+          vstest.console "HDTTests\bin\x86\Release\HDTTests.dll"
+
+      - name: Build (Squirrel)
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: msbuild "./Hearthstone Deck Tracker.sln" /p:Configuration=Squirrel /p:Platform="x86"
+
+      - name: Package
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: ./build-scripts/package.ps1 -dev $false -packageVersion ${{ steps.version.outputs.packageVersion }}
+        env:
+          CERT: ${{ secrets.CERT }}
+          CERT_PASSWORD: ${{ secrets.CERT_PASSWORD }}
+
+      - name: Release (Squirrel)
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: ./build-scripts/github_release.ps1 -type squirrel -packageVersion ${{ steps.version.outputs.packageVersion }}
+        env:
+          HDT_GITHUB_TOKEN: ${{ secrets.HDT_GITHUB_TOKEN }}
+
+      - name: Release (Portable)
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: ./build-scripts/github_release.ps1 -type portable -packageVersion ${{ steps.version.outputs.packageVersion }}
+        env:
+          HDT_GITHUB_TOKEN: ${{ secrets.HDT_GITHUB_TOKEN }}
