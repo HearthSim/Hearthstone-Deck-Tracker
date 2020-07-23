@@ -1,0 +1,33 @@
+name: Asia Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Tag Name"
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v1
+
+      - name: Download Assets
+        run: node ./build-scripts/download-release-assets.js ${{ github.event.inputs.tag_name }}
+
+      - name: Publish
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: "ap-northeast-2"
+          SOURCE_DIR: "tmp_asset_downloads"
