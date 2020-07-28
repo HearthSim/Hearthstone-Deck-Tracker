@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			var deck = DeckList.Instance.ActiveDeck;
 			var games = deck?.GetRelevantGames();
 			var fullDeckList = new Dictionary<int, int>();
-			if (DeckList.Instance.ActiveDeckVersion != null)
+			if(DeckList.Instance.ActiveDeckVersion != null)
 			{
 				foreach(var card in DeckList.Instance.ActiveDeckVersion.Cards)
 					fullDeckList[card.DbfIf] = card.Count;
@@ -131,7 +131,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				foreach(var card in player.GetPlayerCardList(false, false, false).Where(x => !x.Jousted))
 				{
 					var inDeck = card.IsCreated ? 0 : FullCount(card.DbfIf);
-					playerCardsDict.Add(new []{card.DbfIf, card.Count, inDeck});
+					playerCardsDict.Add(new[] { card.DbfIf, card.Count, inDeck });
 				}
 			}
 			var format = Core.Game.CurrentFormat ?? Format.Wild;
@@ -144,7 +144,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					Board = SortedDbfIds(player.Board.Where(x => x.IsMinion)),
 					Deck = new BoardStateDeck
 					{
-						Cards =  playerCardsDict,
+						Cards = playerCardsDict,
 						Name = deck?.Name,
 						Format = (deck?.IsWildDeck ?? false) ? FormatType.FT_WILD : FormatType.FT_STANDARD,
 						Hero = Database.GetHeroCardFromClass(deck?.Class)?.DbfIf ?? 0,
