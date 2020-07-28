@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 				return false;
 			if(GameType != boardState.GameType)
 				return false;
-			if(!BobsBuddyOutput?.Equals(boardState?.BobsBuddyOutput)?? false)
+			if(!BobsBuddyOutput?.Equals(boardState?.BobsBuddyOutput) ?? false)
 				return false;
 			return true;
 		}
