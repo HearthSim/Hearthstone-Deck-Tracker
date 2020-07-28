@@ -49,8 +49,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
 		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
 
-
-		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn)
+		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
 			if(_currentGameId != gameId)
 			{
@@ -60,7 +59,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_currentGameId = gameId;
 
 			var key = $"{gameId}_{turn}";
-			if(!_instances.TryGetValue(key, out var instance))
+			
+			if(!_instances.TryGetValue(key, out var instance) && createInstanceIfNoneFound)
 			{
 				instance = new BobsBuddyInvoker(key);
 				_instances[key] = instance;
@@ -498,5 +498,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_input != null)
 				Sentry.QueueBobsBuddyTerminalCase(_input, _output, result, _turn, _recentHDTLog, _game.CurrentRegion);
 		}
+
+		public TestOutput GetOutput() => _output;
+
+		public BobsBuddyErrorState CurrentErrorState() => _errorState;
+
+		public BobsBuddyState CurrentState() => _state;
 	}
 }
