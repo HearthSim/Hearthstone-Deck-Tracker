@@ -38,7 +38,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private Entity _attackingHero;
 		private Entity _defendingHero;
-		private TestOutput _output;
 		private TestInput _input;
 		private int _turn;
 		const int LogLinesKept = 100;
@@ -95,10 +94,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			_instanceKey = key;
 		}
 
-		private BobsBuddyErrorState _errorState = BobsBuddyErrorState.None;
 
-		private BobsBuddyState _state = BobsBuddyState.Initial;
-		private BobsBuddyState State
+		public TestOutput Output { get; private set; }
+
+		public BobsBuddyErrorState ErrorState { get; private set; }
+
+		private BobsBuddyState _state;
+
+		public BobsBuddyState State
 		{
 			get => _state;
 			set
@@ -114,7 +117,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return false;
 			if(RemoteConfig.Instance.Data?.BobsBuddy?.Disabled ?? false)
 				return false;
-			if(_errorState == BobsBuddyErrorState.None)
+			if(ErrorState == BobsBuddyErrorState.None)
 			{
 				var verStr = RemoteConfig.Instance.Data?.BobsBuddy?.MinRequiredVersion;
 				if(Version.TryParse(verStr, out var requiredVersion))
@@ -122,12 +125,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					if(requiredVersion > Helper.GetCurrentVersion())
 					{
 						DebugLog($"Update to {requiredVersion} required. Not running simulations.");
-						_errorState = BobsBuddyErrorState.UpdateRequired;
+						ErrorState = BobsBuddyErrorState.UpdateRequired;
 						BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.UpdateRequired);
 					}
 				}
 			}
-			if(_errorState == BobsBuddyErrorState.UpdateRequired)
+			if(ErrorState == BobsBuddyErrorState.UpdateRequired)
 				return false;
 			return true;
 		}
@@ -195,7 +198,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(result.simulationCount <= 500 && result.myExitCondition == Simulator.ExitConditions.Time)
 				{
 					DebugLog("Could not perform enough simulations. Displaying error state and exiting.");
-					_errorState = BobsBuddyErrorState.NotEnoughData;
+					ErrorState = BobsBuddyErrorState.NotEnoughData;
 					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.NotEnoughData);
 				}
 				else
@@ -255,10 +258,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private bool HasErrorState([CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
 		{
-			if(_errorState == BobsBuddyErrorState.None)
+			if(ErrorState == BobsBuddyErrorState.None)
 				return false;
-			BobsBuddyDisplay.SetErrorState(_errorState);
-			DebugLog($"ErrorState={_errorState}");
+			BobsBuddyDisplay.SetErrorState(ErrorState);
+			DebugLog($"ErrorState={ErrorState}");
 			return true;
 		}
 
@@ -281,13 +284,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			if(_game.Player.Board.Any(IsUnknownCard) || _game.Opponent.Board.Any(IsUnknownCard))
 			{
-				_errorState = BobsBuddyErrorState.UnkownCards;
+				ErrorState = BobsBuddyErrorState.UnkownCards;
 				DebugLog("Board has unknown cards. Exiting.");
 				return;
 			}
 			if(_game.Opponent.Secrets.Any())
 			{
-				_errorState = BobsBuddyErrorState.SecretsNotSupported;
+				ErrorState = BobsBuddyErrorState.SecretsNotSupported;
 				DebugLog("Opponent has secrets in play. Exiting.");
 				return;
 			}
@@ -375,20 +378,20 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				var start = DateTime.Now;
 
 				int timeAlloted = _input.playerSide.Count >= 6 || _input.opponentSide.Count >= 6 ? MaxTimeForComplexBoards : MaxTime;
-				_output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount, timeAlloted);
+				Output = await new SimulationRunner().SimulateMultiThreaded(_input, Iterations, ThreadCount, timeAlloted);
 
 				DebugLog("----- Simulation Output -----");
 				DebugLog($"Duration={(DateTime.Now - start).TotalMilliseconds}ms, " +
-					$"ExitCondition={_output.myExitCondition}, " +
-					$"Iterations={_output.simulationCount}");
-				DebugLog($"WinRate={_output.winRate * 100}% " +
-					$"(Lethal={_output.theirDeathRate * 100}%), " +
-					$"TieRate={_output.tieRate * 100}%, " +
-					$"LossRate={_output.lossRate * 100}% " +
-					$"(Lethal={_output.myDeathRate * 100}%)");
+					$"ExitCondition={Output.myExitCondition}, " +
+					$"Iterations={Output.simulationCount}");
+				DebugLog($"WinRate={Output.winRate * 100}% " +
+					$"(Lethal={Output.theirDeathRate * 100}%), " +
+					$"TieRate={Output.tieRate * 100}%, " +
+					$"LossRate={Output.lossRate * 100}% " +
+					$"(Lethal={Output.myDeathRate * 100}%)");
 				DebugLog("----- End of Output -----");
 
-				return _output;
+				return Output;
 			}
 			catch(Exception e)
 			{
@@ -428,7 +431,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private void ValidateSimulationResult()
 		{
 			DebugLog("Validating results...");
-			if(_output == null)
+			if(Output == null)
 			{
 				DebugLog("_lastSimulationResult is null. Exiting");
 				return;
@@ -441,7 +444,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 
-			if(_output.simulationCount < MinimumSimulationsToReportSentry)
+			if(Output.simulationCount < MinimumSimulationsToReportSentry)
 			{
 				DebugLog("Did not complete enough simulations to report terminal cases. Exiting.");
 				return;
@@ -477,17 +480,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(result, _output, _turn, terminalCase);
+				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, terminalCase);
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)
-			=> result == CombatResult.Tie && _output.tieRate == 0
-			|| result == CombatResult.Win && _output.winRate == 0
-			|| result == CombatResult.Loss && _output.lossRate == 0;
+			=> result == CombatResult.Tie && Output.tieRate == 0
+			|| result == CombatResult.Win && Output.winRate == 0
+			|| result == CombatResult.Loss && Output.lossRate == 0;
 
 		private bool IsIncorrectLethalResult(LethalResult result)
-			=> result == LethalResult.FriendlyDied && _output.myDeathRate == 0
-			|| result == LethalResult.OpponentDied && _output.theirDeathRate == 0;
+			=> result == LethalResult.FriendlyDied && Output.myDeathRate == 0
+			|| result == LethalResult.OpponentDied && Output.theirDeathRate == 0;
 
 		private bool OpposingKelThuzadDied(LethalResult result)
 			=> result == LethalResult.OpponentDied && _input.OpponentIsKelThuzad();
@@ -496,13 +499,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			DebugLog($"Queueing alert... (valid input: {_input != null})");
 			if(_input != null)
-				Sentry.QueueBobsBuddyTerminalCase(_input, _output, result, _turn, _recentHDTLog, _game.CurrentRegion);
+				Sentry.QueueBobsBuddyTerminalCase(_input, Output, result, _turn, _recentHDTLog, _game.CurrentRegion);
 		}
 
-		public TestOutput GetOutput() => _output;
-
-		public BobsBuddyErrorState CurrentErrorState() => _errorState;
-
-		public BobsBuddyState CurrentState() => _state;
 	}
 }
