@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Windows;
+using BobsBuddy.Simulation;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.BobsBuddy;
 using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Live.Data
@@ -31,6 +35,9 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("game_type")]
 		public BnetGameType GameType { get; set; }
 
+		[JsonProperty("bobs_buddy_state")]
+		public BobsBuddyState BobsBuddyOutput { get; set; }
+
 		public bool Equals(BoardState boardState)
 		{
 			if(!Player?.Equals(boardState?.Player) ?? false)
@@ -38,6 +45,8 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 			if(!Opponent?.Equals(boardState?.Opponent) ?? false)
 				return false;
 			if(GameType != boardState.GameType)
+				return false;
+			if(!BobsBuddyOutput?.Equals(boardState?.BobsBuddyOutput)?? false)
 				return false;
 			return true;
 		}
@@ -89,6 +98,44 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 			if(!Deck?.Equals(other.Deck) ?? false)
 				return false;
 			if(!Quest?.Equals(other.Quest) ?? false)
+				return false;
+			return true;
+		}
+	}
+
+	public class BobsBuddyState
+	{
+		[JsonProperty("player_lethal_rate")]
+		public float PlayerLethalRate { get; set; }
+
+		[JsonProperty("win_rate")]
+		public float WinRate { get; set; }
+
+		[JsonProperty("tie_rate")]
+		public float TieRate { get; set; }
+
+		[JsonProperty("loss_rate")]
+		public float LossRate { get; set; }
+
+		[JsonProperty("opponent_lethal_rate")]
+		public float OpponentLethalRate { get; set; }
+
+		[JsonProperty("simulation_state")]
+		public TwitchSimulationState SimulationState {get; set;}
+
+		public bool Equals(BobsBuddyState other)
+		{
+			if(other == null)
+				return false;
+			if(PlayerLethalRate != other.PlayerLethalRate)
+				return false;
+			if(WinRate != other.WinRate)
+				return false;
+			if(TieRate != other.TieRate)
+				return false;
+			if(LossRate != other.LossRate)
+				return false;
+			if(OpponentLethalRate != other.OpponentLethalRate)
 				return false;
 			return true;
 		}
