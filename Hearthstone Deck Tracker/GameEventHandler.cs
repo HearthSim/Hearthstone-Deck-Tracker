@@ -245,7 +245,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
 			{
-				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())
+				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?
 					.UpdateAttackingEntities(_attackingEntity, _defendingEntity);
 			}
 
@@ -355,7 +355,7 @@ namespace Hearthstone_Deck_Tracker
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
 			{
 				if(_game.IsBattlegroundsMatch && _game.CurrentGameStats != null && turn.Item2 > 1)
-					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1).StartShopping(true);
+					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShopping(true);
 				switch(Config.Instance.TurnStartAction)
 				{
 						case HsActionType.Flash:
@@ -458,7 +458,7 @@ namespace Hearthstone_Deck_Tracker
 				LiveDataManager.Stop();
 				if(_game.IsBattlegroundsMatch && stateComplete)
 				{
-					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())
+					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?
 						.StartShopping(!_game.CurrentGameStats.WasConceded);
 				}
 				Log.Info("Game ended...");

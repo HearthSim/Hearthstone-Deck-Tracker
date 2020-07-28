@@ -600,7 +600,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					game.SnapshotBattlegroundsBoardState();
 					if(game.CurrentGameStats != null)
 					{
-						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())
+						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
 							.StartCombat();
 					}
 				}

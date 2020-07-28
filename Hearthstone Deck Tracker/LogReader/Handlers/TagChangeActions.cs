@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!entity.IsHeroPower || entity.IsControlledBy(game.Player.Id))
 				return;
 
-			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())
+			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?
 				.HeroPowerTriggered(entity.CardId);
 		}
 
