@@ -623,7 +623,17 @@ namespace Hearthstone_Deck_Tracker
 		{
 			{MultiClassGroup.GRIMY_GOONS, new[] {CardClass.HUNTER, CardClass.PALADIN, CardClass.WARRIOR}},
 			{MultiClassGroup.JADE_LOTUS, new[] {CardClass.DRUID, CardClass.ROGUE, CardClass.SHAMAN}},
-			{MultiClassGroup.KABAL, new[] {CardClass.MAGE, CardClass.PRIEST, CardClass.WARLOCK}}
+			{MultiClassGroup.KABAL, new[] {CardClass.MAGE, CardClass.PRIEST, CardClass.WARLOCK}},
+			{MultiClassGroup.DRUID_HUNTER, new []{CardClass.DRUID, CardClass.HUNTER}},
+			{MultiClassGroup.DRUID_SHAMAN, new []{CardClass.DRUID, CardClass.SHAMAN}},
+			{MultiClassGroup.HUNTER_DEMONHUNTER, new []{CardClass.HUNTER, CardClass.DEMONHUNTER}},
+			{MultiClassGroup.MAGE_ROGUE, new [] {CardClass.MAGE, CardClass.ROGUE}},
+			{MultiClassGroup.MAGE_SHAMAN, new []{CardClass.MAGE, CardClass.SHAMAN}},
+			{MultiClassGroup.PALADIN_PRIEST, new []{CardClass.PALADIN, CardClass.PRIEST}},
+			{MultiClassGroup.PALADIN_WARRIOR, new []{CardClass.PALADIN, CardClass.WARRIOR}},
+			{MultiClassGroup.PRIEST_WARLOCK, new []{ CardClass.PRIEST, CardClass.WARLOCK}},
+			{MultiClassGroup.ROGUE_WARRIOR, new []{CardClass.ROGUE, CardClass.WARRIOR}},
+			{MultiClassGroup.WARLOCK_DEMONHUNTER, new []{CardClass.WARLOCK, CardClass.DEMONHUNTER}},
 		};
 
 		public static IEnumerable<FileInfo> GetFileInfos(string path, bool subDir)

@@ -106,7 +106,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		{
 			get
 			{
-				var cards = _allCards.Where(x => x.PlayerClass == null || x.PlayerClass == Deck.Class);
+				var cards = _allCards.Where(x => x.PlayerClass == null || x.IsClass(Deck.Class));
 				if(!string.IsNullOrEmpty(SearchText))
 				{
 					var input = CleanString(SearchText).ToLowerInvariant();
