@@ -1,3 +1,7 @@
+## **Release v1.13.0 - 2020-07-20**
+**Updated for Scholomance Academy**
+
+
 ## **Release v1.12.17 - 2020-07-20**
 
 **Fixes**:
