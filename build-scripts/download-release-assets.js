@@ -84,11 +84,11 @@ async function run() {
 	await downloadFile("HDT-Releases", "HDT-Installer.exe");
 	await downloadFile(
 		"HDT-Releases",
-		`HearthstonDeckTracker-${version}-delta.nupkg`
+		`HearthstoneDeckTracker-${version}-delta.nupkg`
 	);
 	await downloadFile(
 		"HDT-Releases",
-		`HearthstonDeckTracker-${version}-full.nupkg`
+		`HearthstoneDeckTracker-${version}-full.nupkg`
 	);
 	await downloadFile(
 		"Hearthstone-Deck-Tracker",
