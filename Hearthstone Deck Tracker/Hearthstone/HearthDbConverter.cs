@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1414, "Ashes of Outland"},
 			{1439, "Wild Event"},
 			{1463, "Demon Hunter Initiate"},
+			{1443, "Scholomance Academy"},
 		};
 
 		public static string ConvertClass(CardClass cardClass)

@@ -52,5 +52,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		BLACK_TEMPLE = 1414,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_DemonHunterInitiate")]
 		DEMON_HUNTER_INITIATE = 1463,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Scholomance")]
+		SCHOLOMANCE = 1443,
 	}
 }
