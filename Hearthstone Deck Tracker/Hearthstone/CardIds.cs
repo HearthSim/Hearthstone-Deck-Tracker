@@ -11,6 +11,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class CardIds
 	{
+		public const int KeyMasterAlabasterDbfId = 61174;
+
 		// todo: conditional deathrattle summons: Voidcaller
 		public static readonly Dictionary<string, int> DeathrattleSummonCardIds = new Dictionary<string, int>
 		{

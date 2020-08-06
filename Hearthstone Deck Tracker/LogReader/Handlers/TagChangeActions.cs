@@ -101,6 +101,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				targetEntity.CardId = entity.CardId;
 				targetEntity.Info.GuessedCardState = GuessedCardState.Guessed;
 
+				if(entity.GetTag(CREATOR_DBID) == Hearthstone.CardIds.KeyMasterAlabasterDbfId)
+					targetEntity.Info.Hidden = false;
+
 				gameState.GameHandler.HandleCardCopy();
 			}
 		}
