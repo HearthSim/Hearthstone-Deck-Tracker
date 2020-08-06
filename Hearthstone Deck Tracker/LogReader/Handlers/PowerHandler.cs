@@ -377,6 +377,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warrior.KargathBladefist:
 								AddKnownCardId(gameState, NonCollectible.Warrior.KargathBladefist_KargathPrimeToken);
 								break;
+							case Collectible.Neutral.SneakyDelinquent:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SneakyDelinquent_SpectralDelinquentToken);
+								break;
+							case Collectible.Neutral.FishyFlyer:
+								AddKnownCardId(gameState, NonCollectible.Neutral.FishyFlyer_SpectralFlyerToken);
+								break;
+							case Collectible.Neutral.SmugSenior:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SmugSenior_SpectralSeniorToken);
+								break;
 						}
 					}
 					else //POWER
