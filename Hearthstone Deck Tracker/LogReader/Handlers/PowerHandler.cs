@@ -412,6 +412,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 										actionStartingEntity.Info.StoredCardIds.Add(lastPlayedEntity.CardId);
 								}
 								break;
+							case Collectible.Shaman.DiligentNotetaker:
+								if(game.Entities.TryGetValue(gameState.LastCardPlayed, out var lastPlayedEntity1) && lastPlayedEntity1.CardId != null)
+									AddKnownCardId(gameState, lastPlayedEntity1.CardId);
+								break;
 						}
 					}
 					else //POWER
