@@ -351,9 +351,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				SavedSecrets.Add(secret);
 		}
 
-		public void HandleTurnStart()
+		public void HandlePlayerTurnStart()
 		{
 			SavedSecrets.Clear();
+		}
+
+		public void HandleOpponentTurnStart()
+		{
+			// This triggers regardless of cards in hand
+			if (Game.Player.CardsPlayedThisTurn > 0)
+				Exclude(Rogue.Plagiarize);
 		}
 	}
 }

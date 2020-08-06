@@ -172,12 +172,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 			public static class Rogue
 			{
-				public static List<string> All => new List<string> {Ambush, Bamboozle, CheatDeath, DirtyTricks, Evasion, SuddenBetrayal};
+				public static List<string> All => new List<string> {Ambush, Bamboozle, CheatDeath, DirtyTricks, Evasion, Plagiarize, SuddenBetrayal};
 				public static string Ambush => Collectible.Rogue.Ambush;
 				public static string Bamboozle => Collectible.Rogue.Bamboozle;
 				public static string CheatDeath => Collectible.Rogue.CheatDeath;
 				public static string DirtyTricks => Collectible.Rogue.DirtyTricks;
 				public static string Evasion => Collectible.Rogue.Evasion;
+				public static string Plagiarize => Collectible.Rogue.Plagiarize;
 				public static string SuddenBetrayal => Collectible.Rogue.SuddenBetrayal;
 			}
 		}

@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int Fatigue { get; set; }
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount { get; private set; }
+		public int CardsPlayedThisTurn { get; private set; }
 		public bool IsPlayingWhizbang { get; set; }
 		public int PogoHopperPlayedCount {get; private set;}
 		public string LastDiedMinionCardId { get; set; }
@@ -251,7 +252,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Hidden = false;
 			entity.Info.Turn = turn;
 			entity.Info.CostReduction = 0;
+			CardsPlayedThisTurn++;
 			Log(entity);
+		}
+
+		public void OnTurnStart()
+		{
+			CardsPlayedThisTurn = 0;
 		}
 
 		public void DeckToPlay(Entity entity, int turn)

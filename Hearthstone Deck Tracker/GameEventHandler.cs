@@ -345,8 +345,14 @@ namespace Hearthstone_Deck_Tracker
 			Log.Info($"--- {player} turn {turn.Item2} ---");
 			if(player == ActivePlayer.Player)
 			{
+				_game.Player.OnTurnStart();
 				HandleThaurissanCostReduction();
-				_game.SecretsManager.HandleTurnStart();
+				_game.SecretsManager.HandlePlayerTurnStart();
+			}
+			else if (player == ActivePlayer.Opponent)
+			{
+				_game.Opponent.OnTurnStart();
+				_game.SecretsManager.HandleOpponentTurnStart();
 			}
 			GameEvents.OnTurnStart.Execute(player);
 			if(_turnQueue.Count > 0)
