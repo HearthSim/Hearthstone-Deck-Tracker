@@ -253,11 +253,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 					var actionStartingCardId = match.Groups["cardId"].Value.Trim();
 					var actionStartingEntityId = int.Parse(match.Groups["id"].Value);
+					Entity actionStartingEntity = null;
 
 					if(string.IsNullOrEmpty(actionStartingCardId))
 					{
-						if(game.Entities.TryGetValue(actionStartingEntityId, out var actionEntity))
-							actionStartingCardId = actionEntity.CardId;
+						if(game.Entities.TryGetValue(actionStartingEntityId, out actionStartingEntity))
+							actionStartingCardId = actionStartingEntity.CardId;
 					}
 					if(string.IsNullOrEmpty(actionStartingCardId))
 						return;
@@ -385,6 +386,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Neutral.SmugSenior:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SmugSenior_SpectralSeniorToken);
+								break;
+							case Collectible.Rogue.Plagiarize:
+								if (actionStartingEntity != null)
+								{
+									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Opponent : game.Player;
+									foreach(var card in player.CardsPlayedThisTurn)
+										AddKnownCardId(gameState, card);
+								}
 								break;
 						}
 					}

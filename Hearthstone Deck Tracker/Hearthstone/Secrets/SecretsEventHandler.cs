@@ -359,7 +359,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		public void HandleOpponentTurnStart()
 		{
 			// This triggers regardless of cards in hand
-			if (Game.Player.CardsPlayedThisTurn > 0)
+			if (Game.Player.CardsPlayedThisTurn.Count > 0)
 				Exclude(Rogue.Plagiarize);
 		}
 	}
