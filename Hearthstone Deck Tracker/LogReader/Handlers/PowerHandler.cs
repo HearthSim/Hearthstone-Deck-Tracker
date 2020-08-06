@@ -400,6 +400,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								if(actionStartingEntity != null && actionStartingEntity.IsControlledBy(game.Opponent.Id) && game.Player.LastDrawnCardId != null)
 									AddKnownCardId(gameState, game.Player.LastDrawnCardId);
 								break;
+							case Collectible.Neutral.EducatedElekk:
+								if(actionStartingEntity != null)
+								{
+									if(actionStartingEntity.IsInGraveyard)
+									{
+										foreach(var card in actionStartingEntity.Info.StoredCardIds)
+											AddKnownCardId(gameState, card);
+									}
+									else if(game.Entities.TryGetValue(gameState.LastCardPlayed, out var lastPlayedEntity) && lastPlayedEntity.CardId != null)
+										actionStartingEntity.Info.StoredCardIds.Add(lastPlayedEntity.CardId);
+								}
+								break;
 						}
 					}
 					else //POWER
