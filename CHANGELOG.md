@@ -1,3 +1,10 @@
+## **Release v1.13.1 - 2020-08-06**
+
+**Changes**:
+- Added support for Plagiarize.
+- Added tracking support for most Scholomance Academy cards.
+
+
 ## **Release v1.13.0 - 2020-07-20**
 **Updated for Scholomance Academy**
 
