@@ -394,8 +394,8 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_PlayerTurnStart_OpponentPlayedCards_PlagerizeTriggered()
 		{
-			_game.Opponent.Play(_opponentMinion1, 1);
-			_game.SecretsManager.HandlePlayerTurnStart();
+			_game.Player.Play(_opponentMinion1, 1);
+			_game.SecretsManager.HandleOpponentTurnStart();
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
@@ -405,9 +405,9 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_PlayerTurnStart_OpponentPlayedNoCards_PlagerizeNotTriggered()
 		{
-			_game.Opponent.Play(_opponentMinion1, 1);
-			_game.Opponent.OnTurnStart();
-			_game.SecretsManager.HandlePlayerTurnStart();
+			_game.Player.Play(_opponentMinion1, 1);
+			_game.Player.OnTurnStart();
+			_game.SecretsManager.HandleOpponentTurnStart();
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
