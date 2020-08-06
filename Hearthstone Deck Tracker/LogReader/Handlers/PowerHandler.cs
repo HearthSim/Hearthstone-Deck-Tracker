@@ -532,6 +532,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.DragonBreeder:
 								AddKnownCardId(gameState, target);
 								break;
+							case Collectible.Warlock.SchoolSpirits:
+							case Collectible.Warlock.SoulShear:
+							case Collectible.Warlock.SpiritJailer:
+							case Collectible.Demonhunter.Marrowslicer:
+								AddKnownCardId(gameState, NonCollectible.Warlock.SchoolSpirits_SoulFragmentToken, 2);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
