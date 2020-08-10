@@ -53,7 +53,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private static readonly List<Hearthstone.Card> NeutralClassifiedRaceCards = new List<Hearthstone.Card>()
 		{
-			Database.GetCardFromId(HearthDb.CardIds.Collectible.Neutral.Zoobot)
 		};
 
 		private IEnumerable<Hearthstone.Card> GetUnavailableRaceCards(IEnumerable<Race> availableRaces)
