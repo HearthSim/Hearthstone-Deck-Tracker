@@ -24,6 +24,12 @@ namespace HearthWatcher.LogReader
 		private DateTime _startingPoint;
 		private bool _stop;
 		private Thread _thread;
+		/**
+		 * When the Millhouse hero power is logged in the korean localization there is a line break in the entity name.
+		 * This causes the parser to get stuck on this broken line and stop reading new power information.
+		 */
+		 const int KoreanMillhouseBugHack = 54253;
+		
 
 		public LogFileWatcher(LogWatcherInfo info)
 		{
@@ -144,7 +150,7 @@ namespace HearthWatcher.LogReader
 								if(line.StartsWith("D "))
 								{
 									var next = sr.Peek();
-									if(!sr.EndOfStream && !(next == 'D' || next == 'W' || next == 'E'))
+									if(!sr.EndOfStream && !(next == 'D' || next == 'W' || next == 'E' || next == KoreanMillhouseBugHack))
 										break;
 									var logLine = new LogLine(Info.Name, line);
 									if((!Info.HasFilters || (Info.StartsWithFilters?.Any(x => logLine.LineContent.StartsWith(x)) ?? false)
