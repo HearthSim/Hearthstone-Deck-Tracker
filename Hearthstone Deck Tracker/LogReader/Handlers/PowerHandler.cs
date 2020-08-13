@@ -21,6 +21,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	{
 		private readonly TagChangeHandler _tagChangeHandler = new TagChangeHandler();
 		private readonly List<Entity> _tmpEntities = new List<Entity>();
+		const string TransferStudentToken = Collectible.Neutral.TransferStudent + "t";
 
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
@@ -123,7 +124,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				var match = CreationRegex.Match(logLine);
 				var id = int.Parse(match.Groups["id"].Value);
-				var cardId = match.Groups["cardId"].Value;
+				var cardId = EnsureValidCardID(match.Groups["cardId"].Value);
 				var zone = GameTagHelper.ParseEnum<Zone>(match.Groups["zone"].Value);
 				var guessedCardId = false;
 				if(!game.Entities.ContainsKey(id))
@@ -160,7 +161,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			else if(UpdatingEntityRegex.IsMatch(logLine))
 			{
 				var match = UpdatingEntityRegex.Match(logLine);
-				var cardId = match.Groups["cardId"].Value;
+				var cardId = EnsureValidCardID(match.Groups["cardId"].Value);
 				var rawEntity = match.Groups["entity"].Value;
 				var type = match.Groups["type"].Value;
 				int entityId;
@@ -660,6 +661,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				_tagChangeHandler.InvokeQueuedActions(game);
 			if(!creationTag)
 				gameState.ResetCurrentEntity();
+		}
+
+		private static string EnsureValidCardID(string cardId)
+		{
+			if(!string.IsNullOrEmpty(cardId) && cardId.StartsWith(TransferStudentToken) && !cardId.EndsWith("e"))
+				return Collectible.Neutral.TransferStudent;
+			return cardId;
 		}
 
 		private static string GetTargetCardId(Match match)
