@@ -29,6 +29,12 @@
             <Setter Property="MinWidth" Value="60"/>
             <Setter Property="Margin" Value="5"/>
         </Style>
+        <Style x:Key="AverageDamageStyle" TargetType="StackPanel">
+            <Setter Property= "Background" Value="#141617"/>
+            <Setter Property="Height" Value="56"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="MinWidth" Value="82"/>
+        </Style>
         <Style x:Key="SeparatorStyle" TargetType="Rectangle">
             <Setter Property="Fill" Value="#393D3F"/>
             <Setter Property="Width" Value="1"/>
@@ -50,17 +56,31 @@
         </Style>
         <Storyboard x:Key="StoryboardExpand">
             <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="ResultPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
         <Storyboard x:Key="StoryboardCollapse">
             <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="ResultPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
     </UserControl.Resources>
-    <StackPanel>
-        <StackPanel.Background>
-            <!-- To ensure consistent hover events -->
+    <StackPanel Orientation="Horizontal">
+
+        <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 8, 5" Visibility="{Binding PercentagesVisibility}">
+            <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
+                <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E"  Opacity="{Binding PlayerLethalOpacity}" />
+            </Border>
+            <local:HearthstoneTextBlock Text="{Binding PlayerLethalDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <StackPanel>
+            <StackPanel.Background>
+                <!-- To ensure consistent hover events -->
             <SolidColorBrush Color="Black" Opacity="0.01"/>
         </StackPanel.Background>
         <Border Background="#141617" BorderThickness="0" BorderBrush="{x:Null}" CornerRadius="0 0 3 3">
+            
             <StackPanel>
                 <Border Name="ResultPanel" BorderThickness="0 0 0 1" BorderBrush="#393D3F" Height="0">
                     <StackPanel Orientation="Horizontal">
@@ -137,6 +157,7 @@
                 </Border>
             </StackPanel>
         </Border>
+            
         <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding InfoVisibility}" MaxWidth="352">
             <Grid>
                 <StackPanel Margin="10">
@@ -160,5 +181,13 @@
                 </Rectangle>
             </Grid>
         </Border>
+    </StackPanel>
+        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="8, 0, 5, 5" Height="56" Background="#141617"  Visibility="{Binding PercentagesVisibility}">
+            <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
+                <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Opacity="{Binding PlayerLethalOpacity}"  />
+            </Border>
+            <local:HearthstoneTextBlock Text="{Binding PlayerLethalDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
+        </StackPanel>
     </StackPanel>
 </UserControl>
