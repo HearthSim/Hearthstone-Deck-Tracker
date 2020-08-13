@@ -2,11 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
         Title="DebugWindow" Height="300" Width="300">
     <Grid>
         <TabControl Name="TabControlDebug">
             <TabItem Header="Cards">
                 <DockPanel Margin="0,2">
+                    <overlay:BobsBuddyPanel Margin="50" x:Name="BBPanel"/>
+
                     <WrapPanel DockPanel.Dock="Top">
                         <Button Name="ExpandAllBtn" Click="ExpandAllBtn_Click" Margin="2,0">Expand All</Button>
                         <Button Name="CollapseAllBtn" Click="CollapseAllBtn_Click" Margin="2,0">Collapse All</Button>

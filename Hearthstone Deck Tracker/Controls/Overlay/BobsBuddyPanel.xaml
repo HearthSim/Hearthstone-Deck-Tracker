@@ -29,6 +29,22 @@
             <Setter Property="MinWidth" Value="60"/>
             <Setter Property="Margin" Value="5"/>
         </Style>
+        <Style x:Key="SpacerStyle" TargetType="Grid">
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="Black" Opacity="0.01"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="AverageDamageBorderStyle" TargetType="Border">
+            <Setter Property="Height" Value="56"/>
+            <Setter Property="MinWidth" Value="82"/>
+            <Setter Property="CornerRadius" Value="0 0 3 3"/>
+            <Setter Property="Background" Value="#141617"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        
         <Style x:Key="SeparatorStyle" TargetType="Rectangle">
             <Setter Property="Fill" Value="#393D3F"/>
             <Setter Property="Width" Value="1"/>
@@ -48,6 +64,22 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Storyboard x:Key="StoryboardExpandAverageDamage">
+            <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
+        </Storyboard>
+        <Storyboard x:Key="StoryboardCollapseAverageDamage">
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
+        </Storyboard>
+        <Storyboard x:Key="StoryboardExpandAverageDamageInstant">
+            <DoubleAnimation To="55" Duration="0:0:0" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="55" Duration="0:0:0" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
+        </Storyboard>
+        <Storyboard x:Key="StoryboardCollapseAverageDamageInstant">
+            <DoubleAnimation To="0" Duration="0:0:0" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="0" Duration="0:0:0" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
+        </Storyboard>
         <Storyboard x:Key="StoryboardExpand">
             <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="ResultPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
@@ -55,66 +87,78 @@
             <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="ResultPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
     </UserControl.Resources>
-    <StackPanel>
-        <StackPanel.Background>
-            <!-- To ensure consistent hover events -->
-            <SolidColorBrush Color="Black" Opacity="0.01"/>
-        </StackPanel.Background>
-        <Border Background="#141617" BorderThickness="0" BorderBrush="{x:Null}" CornerRadius="0 0 3 3">
+    <StackPanel x:Name="MainPanel" Orientation="Horizontal" ToolTipService.InitialShowDelay="2000" ToolTipService.ShowDuration="100000">
+        <Border x:Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageBorderStyle}" Margin="5, 0, 0, 5" Background="#141617" Height="0" MouseEnter="AverageDamageTakenPanel_MouseEnter" MouseLeave="AverageDamageTakenPanel_MouseLeave">
             <StackPanel>
-                <Border Name="ResultPanel" BorderThickness="0 0 0 1" BorderBrush="#393D3F" Height="0">
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Style="{StaticResource ContainerStyle}" Opacity="{Binding PlayerLethalOpacity}">
-                            <Border Style="{StaticResource LabelContainerStyle}" >
-                                <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" />
-                            </Border>
-                            <local:HearthstoneTextBlock Text="{Binding PlayerLethalDisplay}" FontSize="17" Opacity="0.85"
-                                VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
-                        </StackPanel>
-                        <StackPanel Background="#23272A" Orientation="Horizontal">
-                            <StackPanel Style="{StaticResource ContainerStyle}">
-                                <Border Style="{StaticResource LabelContainerStyle}" >
-                                    <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Win}" Style="{StaticResource LabelTextStyle}" Foreground="#8AC66E" />
-                                </Border>
-                                <local:HearthstoneTextBlock Text="{Binding WinRateDisplay}" FontSize="21"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
-                            </StackPanel>
-                            <Rectangle Style="{StaticResource SeparatorStyle}" />
-                            <StackPanel Style="{StaticResource ContainerStyle}">
-                                <Border Style="{StaticResource LabelContainerStyle}" >
-                                    <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Tie}" Style="{StaticResource LabelTextStyle}" Foreground="White" Opacity=".7" />
-                                </Border>
-                                <Grid>
-                                    <local:HearthstoneTextBlock Text="{Binding TieRateDisplay}" FontSize="21"
-                                        VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
-                                    <controls:ProgressRing IsActive="True" Foreground="White" Width="20" Height="20" Visibility="{Binding SpinnerVisibility}"/>
-                                </Grid>
-                            </StackPanel>
-                            <Rectangle Style="{StaticResource SeparatorStyle}" />
-                            <StackPanel Style="{StaticResource ContainerStyle}">
-                                <Border Style="{StaticResource LabelContainerStyle}" >
-                                    <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Loss}" Style="{StaticResource LabelTextStyle}" Foreground="#C66E6E" />
-                                </Border>
-                                <local:HearthstoneTextBlock Text="{Binding LossRateDisplay}" FontSize="21"
-                                    VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Style="{StaticResource ContainerStyle}" Opacity="{Binding OpponentLethalOpacity}">
-                            <Border Style="{StaticResource LabelContainerStyle}" >
-                                <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" />
-                            </Border>
-                            <local:HearthstoneTextBlock Text="{Binding OpponentLethalDisplay}" FontSize="17" Opacity="0.85"
-                                VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
-                        </StackPanel>
-                    </StackPanel>
+                <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0">
+                    <TextBlock Text= "{lex:Loc BobsBuddyPanel_Label_AVG}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Visibility="Visible" Opacity="{Binding PlayerAverageDamageOpacity}" />
                 </Border>
-                <Border BorderThickness="0" BorderBrush="{x:Null}" MouseDown="BottomBar_MouseDown" Cursor="Hand" MaxWidth="352">
-                    <Border.Background>
-                        <!-- For Cursor=Hand to work correctly -->
-                        <SolidColorBrush Color="Black" Opacity="0.001"/>
-                    </Border.Background>
-                    <Grid Margin="5">
-                        <TextBlock MinHeight="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                <local:HearthstoneTextBlock Text="{Binding AverageDamageGivenDisplay}" FontSize="17" Opacity="{Binding PlayerAverageDamageOpacity}"
+                            VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+        <Grid Style="{StaticResource SpacerStyle}"/>
+        <StackPanel>
+            <StackPanel.Background>
+                <!-- To ensure consistent hover events -->
+                <SolidColorBrush Color="Black" Opacity="0.01"/>
+            </StackPanel.Background>
+            <Border Background="#141617" BorderThickness="0" BorderBrush="{x:Null}" CornerRadius="0 0 3 3">
+
+                <StackPanel>
+                    <Border Name="ResultPanel" BorderThickness="0 0 0 1" BorderBrush="#393D3F" Height="0">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Style="{StaticResource ContainerStyle}" Opacity="{Binding PlayerLethalOpacity}">
+                                <Border Style="{StaticResource LabelContainerStyle}" >
+                                    <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" />
+                                </Border>
+                                <local:HearthstoneTextBlock Text="{Binding PlayerLethalDisplay}" FontSize="17" Opacity="0.85"
+                                VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
+                            </StackPanel>
+                            <StackPanel Background="#23272A" Orientation="Horizontal">
+                                <StackPanel Style="{StaticResource ContainerStyle}">
+                                    <Border Style="{StaticResource LabelContainerStyle}" >
+                                        <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Win}" Style="{StaticResource LabelTextStyle}" Foreground="#8AC66E" />
+                                    </Border>
+                                    <local:HearthstoneTextBlock Text="{Binding WinRateDisplay}" FontSize="21"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
+                                </StackPanel>
+                                <Rectangle Style="{StaticResource SeparatorStyle}" />
+                                <StackPanel Style="{StaticResource ContainerStyle}">
+                                    <Border Style="{StaticResource LabelContainerStyle}" >
+                                        <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Tie}" Style="{StaticResource LabelTextStyle}" Foreground="White" Opacity=".7" />
+                                    </Border>
+                                    <Grid>
+                                        <local:HearthstoneTextBlock Text="{Binding TieRateDisplay}" FontSize="21"
+                                        VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
+                                        <controls:ProgressRing IsActive="True" Foreground="White" Width="20" Height="20" Visibility="{Binding SpinnerVisibility}"/>
+                                    </Grid>
+                                </StackPanel>
+                                <Rectangle Style="{StaticResource SeparatorStyle}" />
+                                <StackPanel Style="{StaticResource ContainerStyle}">
+                                    <Border Style="{StaticResource LabelContainerStyle}" >
+                                        <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Loss}" Style="{StaticResource LabelTextStyle}" Foreground="#C66E6E" />
+                                    </Border>
+                                    <local:HearthstoneTextBlock Text="{Binding LossRateDisplay}" FontSize="21"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource ContainerStyle}" Opacity="{Binding OpponentLethalOpacity}">
+                                <Border Style="{StaticResource LabelContainerStyle}" >
+                                    <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" />
+                                </Border>
+                                <local:HearthstoneTextBlock Text="{Binding OpponentLethalDisplay}" FontSize="17" Opacity="0.85"
+                                VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border BorderThickness="0" BorderBrush="{x:Null}" MouseDown="BottomBar_MouseDown" Cursor="Hand" MaxWidth="352">
+                        <Border.Background>
+                            <!-- For Cursor=Hand to work correctly -->
+                            <SolidColorBrush Color="Black" Opacity="0.001"/>
+                        </Border.Background>
+                        <Grid Margin="5">
+                            <TextBlock MinHeight="20" HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Background="Transparent" Foreground="White" FontSize="14" Margin="25,0" TextWrapping="Wrap">
                                     <Rectangle Width="16" Height="16" Style="{StaticResource StatusBarIconStyle}" Visibility="{Binding WarningIconVisibility}" MouseDown="Settings_MouseDown" Margin="0,0,0,-2">
                                         <Rectangle.Fill>
@@ -122,43 +166,73 @@
                                         </Rectangle.Fill>
                                     </Rectangle>
                                    <Run Text="{Binding StatusMessage, Mode=OneWay}"/>
-                        </TextBlock>
-                        <Rectangle Width="12" Height="18" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Left" Visibility="{Binding SettingsVisibility}" MouseDown="Question_MouseDown">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_question}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <Rectangle Width="20" Height="20" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" Visibility="{Binding SettingsVisibility}" MouseDown="Settings_MouseDown">
-                            <Rectangle.Fill>
-                                <VisualBrush Visual="{StaticResource appbar_settings}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </Grid>
-                </Border>
-            </StackPanel>
-        </Border>
-        <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding InfoVisibility}" MaxWidth="352">
-            <Grid>
-                <StackPanel Margin="10">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{lex:Loc BobsBuddyPanel_Info_Title}" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                        <Border Background="{DynamicResource AccentBaseColorBrush}" VerticalAlignment="Center" Margin="5,0,0,0" CornerRadius="3">
-                            <TextBlock Text="{lex:LocTextUpper Label_Beta}" Foreground="White" FontSize="12" FontWeight="Bold" Margin="4,1,4,2"/>
-                        </Border>
-                    </StackPanel>
-                    <TextBlock Foreground="White" FontSize="14" TextWrapping="Wrap">
+                            </TextBlock>
+                            <Rectangle Width="12" Height="18" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Left" Visibility="{Binding SettingsVisibility}" MouseDown="Question_MouseDown">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_question}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <Rectangle Width="20" Height="20" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" Visibility="{Binding SettingsVisibility}" MouseDown="Settings_MouseDown">
+                                <Rectangle.Fill>
+                                    <VisualBrush Visual="{StaticResource appbar_settings}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding InfoVisibility}" MaxWidth="352">
+                <Grid>
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{lex:Loc BobsBuddyPanel_Info_Title}" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                            <Border Background="{DynamicResource AccentBaseColorBrush}" VerticalAlignment="Center" Margin="5,0,0,0" CornerRadius="3">
+                                <TextBlock Text="{lex:LocTextUpper Label_Beta}" Foreground="White" FontSize="12" FontWeight="Bold" Margin="4,1,4,2"/>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Foreground="White" FontSize="14" TextWrapping="Wrap">
                         <Run Text="{lex:Loc BobsBuddyPanel_Info_Description}"/>
                         <Hyperlink Command="{Binding OpenUrl, Source={StaticResource GlobalCommands}}" CommandParameter="https://articles.hsreplay.net/2020/04/24/introducing-bobs-buddy/">
                             <Run Text="{lex:Loc BobsBuddyPanel_Info_Link_LearnMore}"/>
                         </Hyperlink>
-                    </TextBlock>
-                </StackPanel>
-                <Rectangle Width="14" Height="14" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" MouseDown="Close_MouseDown">
-                    <Rectangle.Fill>
-                        <VisualBrush Visual="{StaticResource appbar_close_white}" />
-                    </Rectangle.Fill>
-                </Rectangle>
-            </Grid>
+                        </TextBlock>
+                    </StackPanel>
+                    <Rectangle Width="14" Height="14" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" MouseDown="Close_MouseDown">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_close_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+            </Border>
+            <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding AverageDamageInfoVisibility}" MaxWidth="352">
+                <Grid>
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{lex:Loc AverageDamage_Info_Title}" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                        <TextBlock Foreground="White" FontSize="14" TextWrapping="Wrap">
+                        <Run Text="{lex:Loc AverageDamage_Info_Description}"/>
+                        </TextBlock>
+                    </StackPanel>
+                    <Rectangle Width="14" Height="14" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" MouseDown="CloseAverageDamageInfo_MouseDown" Visibility="{Binding CloseAverageDamageInfoVisibility}">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_close_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+            </Border>
+        </StackPanel>
+
+        <Grid Style="{StaticResource SpacerStyle}"/>
+            <Border x:Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageBorderStyle}" Margin="5, 0, 0, 5" Background="#141617" Height="0" MouseEnter="AverageDamageTakenPanel_MouseEnter" MouseLeave="AverageDamageTakenPanel_MouseLeave">
+            <StackPanel>
+                <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0">
+                    <TextBlock Text="{lex:Loc BobsBuddyPanel_Label_AVG}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
+                </Border>
+                <local:HearthstoneTextBlock Text="{Binding AverageDamageTakenDisplay}" FontSize="17" Opacity="{Binding OpponentAverageDamageOpacity}"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible"/>
+            </StackPanel>
         </Border>
     </StackPanel>
 </UserControl>
