@@ -1,10 +1,12 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media.Animation;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
@@ -173,9 +175,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal)
+		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{
 			ShowPercentagesHideSpinners();
+
+			for(int i=0; i < possibleResults.Count; i++)
+			{
+				Console.WriteLine("possibility " + i + " was " + possibleResults[i]);
+			}
 
 			WinRateDisplay = string.Format("{0:0.#%}", winRate);
 			TieRateDisplay = string.Format("{0:0.#%}", tieRate);
@@ -185,6 +192,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			PlayerLethalOpacity = playerLethal > 0 ? 1 : 0.3;
 			OpponentLethalOpacity = opponentLethal > 0 ? 1 : 0.3;
+		}
+
+		internal void SetAverageDamage(List<int> possibleResults)
+		{
+			float count = possibleResults.Count;
+			int lowerBound = possibleResults[(int)(.2 * count)];
+			int upperBound = possibleResults[(int)(.8 * count)];
+			Console.WriteLine("lowerbound " + lowerBound + " upper " + upperBound);
+
 		}
 
 		/// <summary>

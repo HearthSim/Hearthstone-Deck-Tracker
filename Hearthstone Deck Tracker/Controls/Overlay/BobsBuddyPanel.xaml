@@ -69,7 +69,7 @@
 
         <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 8, 5" Visibility="{Binding PercentagesVisibility}">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
-                <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E"  Opacity="{Binding PlayerLethalOpacity}" />
+                <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E"  Opacity="{Binding PlayerLethalOpacity}" />
             </Border>
             <local:HearthstoneTextBlock Text="{Binding PlayerLethalDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -184,7 +184,7 @@
     </StackPanel>
         <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="8, 0, 5, 5" Height="56" Background="#141617"  Visibility="{Binding PercentagesVisibility}">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
-                <TextBlock Text="{lex:LocTextUpper BobsBuddyPanel_Label_Lethal}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Opacity="{Binding PlayerLethalOpacity}"  />
+                <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Opacity="{Binding PlayerLethalOpacity}"  />
             </Border>
             <local:HearthstoneTextBlock Text="{Binding PlayerLethalDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
