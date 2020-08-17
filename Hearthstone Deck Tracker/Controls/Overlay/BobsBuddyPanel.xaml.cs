@@ -285,6 +285,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private bool _showingResults = false;
 		public void ShowResults(bool show)
 		{
+			SetTooltipOffset();
 			if(ErrorState != BobsBuddyErrorState.None)
 				show = false;
 
