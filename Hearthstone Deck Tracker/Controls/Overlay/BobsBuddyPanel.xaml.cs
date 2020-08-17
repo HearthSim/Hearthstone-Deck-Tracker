@@ -74,6 +74,39 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private string _averageDamageGivenDisplay;
+		public string AverageDamageGivenDisplay
+		{
+			get => _averageDamageGivenDisplay;
+			set
+			{
+				_averageDamageGivenDisplay = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private string _averageDamageTakenDisplay;
+		public string AverageDamageTakenDisplay
+		{
+			get => _averageDamageTakenDisplay;
+			set
+			{
+				_averageDamageTakenDisplay = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private float _tooltipOffset;
+		public float TooltipOffset
+		{
+			get => _tooltipOffset;
+			set
+			{
+				_tooltipOffset = value;
+				OnPropertyChanged();
+			}
+		}
+
 		private BobsBuddyState _state;
 		public BobsBuddyState State
 		{
@@ -178,12 +211,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{
 			ShowPercentagesHideSpinners();
-
-			for(int i=0; i < possibleResults.Count; i++)
-			{
-				Console.WriteLine("possibility " + i + " was " + possibleResults[i]);
-			}
-
+			SetAverageDamage(possibleResults);
 			WinRateDisplay = string.Format("{0:0.#%}", winRate);
 			TieRateDisplay = string.Format("{0:0.#%}", tieRate);
 			LossRateDisplay = string.Format("{0:0.#%}", lossRate);
@@ -199,6 +227,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			float count = possibleResults.Count;
 			int lowerBound = possibleResults[(int)(.2 * count)];
 			int upperBound = possibleResults[(int)(.8 * count)];
+			var res = lowerBound != upperBound ? string.Format("{0}, {1}", lowerBound, upperBound) : upperBound.ToString();
+			AverageDamageGivenDisplay = res;
+			AverageDamageTakenDisplay = res;
 			Console.WriteLine("lowerbound " + lowerBound + " upper " + upperBound);
 
 		}
@@ -312,6 +343,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				else if(CanMinimize)
 					ShowResults(false);
 			}
+		}
+
+		public void SetTooltipOffset()
+		{
+			if(AverageDamageTooltip.ActualWidth != 0)
+				TooltipOffset = (float)(42 - (AverageDamageTooltip.ActualWidth / 2));
 		}
 
 		private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)

@@ -66,14 +66,24 @@
         </Storyboard>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
-
+        <Grid>
         <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 8, 5" Visibility="{Binding PercentagesVisibility}">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                 <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E"  Opacity="{Binding PlayerLethalOpacity}" />
             </Border>
-            <local:HearthstoneTextBlock Text="{Binding PlayerLethalDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
+            <local:HearthstoneTextBlock Text="{Binding AverageDamageGivenDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <StackPanel.ToolTip>
+                    <ToolTip x:Name="AverageDamageTooltip" Placement="Bottom" HorizontalOffset="{Binding TooltipOffset}" Background="Transparent" BorderThickness="0">
+                        
+                        <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding AverageDamageTooltipVisibility}" MaxHeight="30">
+                            <local:HearthstoneTextBlock Text="Middle 80% of outcomes." FontSize="14" />
+                        </Border>
+                    </ToolTip>
+                </StackPanel.ToolTip>
         </StackPanel>
+       
+        </Grid>
         <StackPanel>
             <StackPanel.Background>
                 <!-- To ensure consistent hover events -->
@@ -81,7 +91,7 @@
         </StackPanel.Background>
         <Border Background="#141617" BorderThickness="0" BorderBrush="{x:Null}" CornerRadius="0 0 3 3">
             
-            <StackPanel>
+            <StackPanel> 
                 <Border Name="ResultPanel" BorderThickness="0 0 0 1" BorderBrush="#393D3F" Height="0">
                     <StackPanel Orientation="Horizontal">
                         <StackPanel Style="{StaticResource ContainerStyle}" Opacity="{Binding PlayerLethalOpacity}">
@@ -186,8 +196,17 @@
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                 <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Opacity="{Binding PlayerLethalOpacity}"  />
             </Border>
-            <local:HearthstoneTextBlock Text="{Binding PlayerLethalDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
+            <local:HearthstoneTextBlock Text="{Binding AverageDamageTakenDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
+            <StackPanel.ToolTip>
+                <ToolTip Placement="Bottom" HorizontalOffset="{Binding TooltipOffset}" Background="Transparent" BorderThickness="0">
+
+                    <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding AverageDamageTooltipVisibility}" MaxHeight="30">
+                        <local:HearthstoneTextBlock Text="Middle 80% of outcomes." FontSize="14" />
+                    </Border>
+                </ToolTip>
+            </StackPanel.ToolTip>
         </StackPanel>
+        
     </StackPanel>
 </UserControl>
