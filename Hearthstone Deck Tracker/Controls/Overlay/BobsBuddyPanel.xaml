@@ -69,9 +69,9 @@
         <Grid>
         <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 8, 5" Visibility="{Binding PercentagesVisibility}">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
-                <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E"  Opacity="{Binding PlayerLethalOpacity}" />
+                    <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E"  Opacity="{Binding PlayerAverageDamageOpacity}" />
             </Border>
-            <local:HearthstoneTextBlock Text="{Binding AverageDamageGivenDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
+                <local:HearthstoneTextBlock Text="{Binding AverageDamageGivenDisplay}" FontSize="17" Opacity="{Binding PlayerAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <StackPanel.ToolTip>
                     <ToolTip x:Name="AverageDamageTooltip" Placement="Bottom" HorizontalOffset="{Binding TooltipOffset}" Background="Transparent" BorderThickness="0">
@@ -194,9 +194,9 @@
     </StackPanel>
         <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="8, 0, 5, 5" Height="56" Background="#141617"  Visibility="{Binding PercentagesVisibility}">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
-                <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Opacity="{Binding PlayerLethalOpacity}"  />
+                <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Opacity="{Binding OpponentAverageDamageOpacity}"  />
             </Border>
-            <local:HearthstoneTextBlock Text="{Binding AverageDamageTakenDisplay}" FontSize="17" Opacity="{Binding PlayerLethalOpacity}"
+            <local:HearthstoneTextBlock Text="{Binding AverageDamageTakenDisplay}" FontSize="17" Opacity="{Binding OpponentAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}" />
             <StackPanel.ToolTip>
                 <ToolTip Placement="Bottom" HorizontalOffset="{Binding TooltipOffset}" Background="Transparent" BorderThickness="0">

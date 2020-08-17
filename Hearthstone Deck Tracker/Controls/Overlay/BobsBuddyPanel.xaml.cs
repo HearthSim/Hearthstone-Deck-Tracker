@@ -3,6 +3,7 @@ using Hearthstone_Deck_Tracker.BobsBuddy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -190,6 +191,28 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private double _playerAverageDamageOpacity;
+		public double PlayerAverageDamageOpacity
+		{
+			get => _playerAverageDamageOpacity;
+			set
+			{
+				_playerAverageDamageOpacity = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private double _opponentAverageDamageOpacity;
+		public double OpponentAverageDamageOpacity
+		{
+			get => _opponentAverageDamageOpacity;
+			set
+			{
+				_opponentAverageDamageOpacity = value;
+				OnPropertyChanged();
+			}
+		}
+
 		private Visibility _settingsVisibility = Visibility.Collapsed;
 		public Visibility SettingsVisibility
 		{
@@ -228,6 +251,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			PlayerLethalOpacity = playerLethal > 0 ? 1 : 0.3;
 			OpponentLethalOpacity = opponentLethal > 0 ? 1 : 0.3;
+
+			PlayerAverageDamageOpacity = possibleResults.Where(x => x > 0).Any() ? 1 : 0.3;
+			OpponentAverageDamageOpacity = possibleResults.Where(x => x < 0).Any() ? 1 : 0.3;
 		}
 
 		internal void SetLastOutcome(int lastOutcome) => _lastCombatResult = lastOutcome;
