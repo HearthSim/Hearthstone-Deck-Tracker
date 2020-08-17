@@ -283,10 +283,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			WinRateDisplay = "-";
 			LossRateDisplay = "-";
 			TieRateDisplay = "-";
+			PlayerLethalDisplay = "-";
+			OpponentLethalDisplay = "-";
 			AverageDamageGivenDisplay = "-";
 			AverageDamageTakenDisplay = "-";
-			PlayerLethalOpacity = 0;
-			OpponentLethalOpacity = 0;
+			PlayerLethalOpacity = SoftLabelOpacity;
+			OpponentLethalOpacity = SoftLabelOpacity;
+			PlayerAverageDamageOpacity = SoftLabelOpacity;
+			OpponentAverageDamageOpacity = SoftLabelOpacity;
 			State = BobsBuddyState.Initial;
 			ClearErrorState();
 			ShowResults(false);
