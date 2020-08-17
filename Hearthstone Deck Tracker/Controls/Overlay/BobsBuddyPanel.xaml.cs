@@ -118,6 +118,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				_state = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(StatusMessage));
+				OnPropertyChanged(nameof(AverageDamageTooltipMessage));
 			}
 		}
 
@@ -136,7 +137,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private List<int> _lastCombatPossibilities;
+
+		private int _lastCombatResult = 0;
+
 		public string StatusMessage => StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults);
+
+		public string AverageDamageTooltipMessage => AverageDamageTooltipMessageConverter.GetAverageDamagetTooltipMessage(State, _lastCombatResult, _lastCombatPossibilities);
 
 		public Visibility WarningIconVisibility => ErrorState == BobsBuddyErrorState.None ? Visibility.Collapsed : Visibility.Visible;
 
@@ -211,6 +218,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{
 			ShowPercentagesHideSpinners();
+			_lastCombatPossibilities = possibleResults;
 			SetAverageDamage(possibleResults);
 			WinRateDisplay = string.Format("{0:0.#%}", winRate);
 			TieRateDisplay = string.Format("{0:0.#%}", tieRate);
@@ -221,6 +229,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PlayerLethalOpacity = playerLethal > 0 ? 1 : 0.3;
 			OpponentLethalOpacity = opponentLethal > 0 ? 1 : 0.3;
 		}
+
+		internal void SetLastOutcome(int lastOutcome) => _lastCombatResult = lastOutcome;
 
 		internal void SetAverageDamage(List<int> possibleResults)
 		{
@@ -240,9 +250,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		/// 
 		internal void ResetDisplays() 
 		{
+			if(_lastCombatPossibilities != null)
+				_lastCombatPossibilities.Clear();
 			WinRateDisplay = "-";
 			LossRateDisplay = "-";
 			TieRateDisplay = "-";
+			AverageDamageGivenDisplay = "-";
+			AverageDamageTakenDisplay = "-";
 			PlayerLethalOpacity = 0;
 			OpponentLethalOpacity = 0;
 			State = BobsBuddyState.Initial;
@@ -250,6 +264,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			ShowResults(false);
 			ShowPercentagesHideSpinners();
 			OnPropertyChanged(nameof(StatusMessage));
+			OnPropertyChanged(nameof(AverageDamageTooltipMessage));
 		}
 
 		internal void HidePercentagesShowSpinners() 
@@ -268,13 +283,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		}
 
 		private bool _showingResults = false;
-		private void ShowResults(bool show)
+		public void ShowResults(bool show)
 		{
 			if(ErrorState != BobsBuddyErrorState.None)
 				show = false;
 
 			_showingResults = show;
 			OnPropertyChanged(nameof(StatusMessage));
+			OnPropertyChanged(nameof(AverageDamageTooltipMessage));
 
 			if(show)
 				(FindResource("StoryboardExpand") as Storyboard)?.Begin();

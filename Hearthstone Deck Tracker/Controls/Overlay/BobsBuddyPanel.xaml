@@ -77,7 +77,7 @@
                     <ToolTip x:Name="AverageDamageTooltip" Placement="Bottom" HorizontalOffset="{Binding TooltipOffset}" Background="Transparent" BorderThickness="0">
                         
                         <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding AverageDamageTooltipVisibility}" MaxHeight="30">
-                            <local:HearthstoneTextBlock Text="Middle 80% of outcomes." FontSize="14" />
+                            <local:HearthstoneTextBlock Text="{Binding AverageDamageTooltipMessage}" FontSize="14" />
                         </Border>
                     </ToolTip>
                 </StackPanel.ToolTip>
@@ -202,7 +202,7 @@
                 <ToolTip Placement="Bottom" HorizontalOffset="{Binding TooltipOffset}" Background="Transparent" BorderThickness="0">
 
                     <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding AverageDamageTooltipVisibility}" MaxHeight="30">
-                        <local:HearthstoneTextBlock Text="Middle 80% of outcomes." FontSize="14" />
+                        <local:HearthstoneTextBlock Text="{Binding AverageDamageTooltipMessage}" FontSize="14" />
                     </Border>
                 </ToolTip>
             </StackPanel.ToolTip>
