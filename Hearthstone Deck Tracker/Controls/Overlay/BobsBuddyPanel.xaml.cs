@@ -142,6 +142,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private int _lastCombatResult = 0;
 
+		const float SoftLabelOpacity = 0.3f;
+
 		public string StatusMessage => StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults);
 
 		public string AverageDamageTooltipMessage => AverageDamageTooltipMessageConverter.GetAverageDamagetTooltipMessage(State, _lastCombatResult, _lastCombatPossibilities);
@@ -249,11 +251,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PlayerLethalDisplay = string.Format("{0:0.#%}", playerLethal);
 			OpponentLethalDisplay = string.Format("{0:0.#%}", opponentLethal);
 
-			PlayerLethalOpacity = playerLethal > 0 ? 1 : 0.3;
-			OpponentLethalOpacity = opponentLethal > 0 ? 1 : 0.3;
+			PlayerLethalOpacity = playerLethal > 0 ? 1 : SoftLabelOpacity;
+			OpponentLethalOpacity = opponentLethal > 0 ? 1 : SoftLabelOpacity;
 
-			PlayerAverageDamageOpacity = possibleResults.Where(x => x > 0).Any() ? 1 : 0.3;
-			OpponentAverageDamageOpacity = possibleResults.Where(x => x < 0).Any() ? 1 : 0.3;
+			PlayerAverageDamageOpacity = possibleResults.Where(x => x > 0).Any() ? 1 : SoftLabelOpacity;
+			OpponentAverageDamageOpacity = possibleResults.Where(x => x < 0).Any() ? 1 : SoftLabelOpacity;
 		}
 
 		internal void SetLastOutcome(int lastOutcome) => _lastCombatResult = lastOutcome;
