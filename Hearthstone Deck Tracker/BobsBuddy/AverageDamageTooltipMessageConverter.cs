@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				case BobsBuddyState.Combat:
 					return "Middle 80% of outcomes.";
 				case BobsBuddyState.Shopping:
-					var betterThanPortion = possibilities.Where(x => x < lastCombatResult).Count() / possibilities.Count;
+					var betterThanPortion = (float)possibilities.Where(x => x < lastCombatResult).Count() / possibilities.Count;
 					var positiveLastResult = Math.Abs(lastCombatResult);
 					var description = lastCombatResult > 0 ? string.Format("Dealing {0} damage", positiveLastResult) : lastCombatResult < 0 ? string.Format("Taking {0} damage", positiveLastResult) : "Tying";
 
