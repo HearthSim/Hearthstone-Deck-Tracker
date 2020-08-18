@@ -194,7 +194,7 @@
     </StackPanel>
         <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="8, 0, 5, 5" Height="56" Background="#141617" Visibility="{Binding AverageDamageVisibility}">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
-                <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
+                <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
             </Border>
             <local:HearthstoneTextBlock Text="{Binding AverageDamageTakenDisplay}" FontSize="17" Opacity="{Binding OpponentAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}"/>
