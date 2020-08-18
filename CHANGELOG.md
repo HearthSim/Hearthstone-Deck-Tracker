@@ -1,3 +1,12 @@
+## **Release v1.13.2 - 2020-08-18**
+**Updated for Hearthstone 18.0.2.56359**
+
+**Fixes**:
+- Fixed an issue where Zoobot would still appear on the Battlegrounds minion list.
+- Fixed an issue where HDT would not work while playing Millhouse Manastorm with the Korean localization of Hearthstone.
+- Fixed an issue where drawing Transfer Student would add another copy to the deck.
+
+
 ## **Release v1.13.1 - 2020-08-06**
 
 **Changes**:
