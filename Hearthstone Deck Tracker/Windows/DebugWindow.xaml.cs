@@ -33,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			InitializeComponent();
 			_update = true;
 			Closing += (sender, args) => _update = false;
+			BBPanel.ShowResults(true);
 			Update();
 		}
 
