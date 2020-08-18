@@ -274,6 +274,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		internal void SetAverageDamage(List<int> possibleResults)
 		{
+			SetTooltipOffset();
 			float count = possibleResults.Count;
 			int lowerBound = possibleResults[(int)(.2 * count)];
 			int upperBound = possibleResults[(int)(.8 * count)];
@@ -304,6 +305,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PlayerAverageDamageOpacity = SoftLabelOpacity;
 			OpponentAverageDamageOpacity = SoftLabelOpacity;
 			State = BobsBuddyState.Initial;
+			SetTooltipOffset();
 			ClearErrorState();
 			ShowResults(false);
 			ShowPercentagesHideSpinners();
@@ -341,6 +343,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				(FindResource("StoryboardExpand") as Storyboard)?.Begin();
 			else
 				(FindResource("StoryboardCollapse") as Storyboard)?.Begin();
+		}
+
+		void SetTooltipOffset()
+		{
+			TooltipOffset = AverageDamageGivenPanel.ActualWidth > 0 ? ((float)AverageDamageGivenPanel.ActualWidth / 2) - (400 / 2) : -159;
 		}
 
 		internal void SetState(BobsBuddyState state)
