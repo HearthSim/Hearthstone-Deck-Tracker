@@ -248,6 +248,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private Visibility GetAverageDamageVisibility() => Config.Instance.ShowAverageDamage ? Visibility.Visible : Visibility.Collapsed;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -328,7 +329,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private bool _showingResults = false;
 		public void ShowResults(bool show)
 		{
-			SetTooltipOffset();
 			if(ErrorState != BobsBuddyErrorState.None)
 				show = false;
 
@@ -409,7 +409,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public void SetTooltipOffset()
 		{
 			if(AverageDamageTooltip.ActualWidth != 0)
-				TooltipOffset = (float)(42 - (AverageDamageTooltip.ActualWidth / 2));
+				TooltipOffset = (float)((AverageDamageTakenPanel.ActualWidth/2) - (AverageDamageTooltip.ActualWidth / 2));
+			Console.WriteLine("SETTING TOOLTIP OFFSET TO " + TooltipOffset + " actual widht " + AverageDamageTooltip.ActualWidth);
 		}
 
 		private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -442,6 +443,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				Config.Instance.SeenBobsBuddyInfo = true;
 				Config.Save();
 			}
+		}
+
+		private void AverageDamageGivenPanel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			OnPropertyChanged(AverageDamageTooltipMessage);
+			SetTooltipOffset();
 		}
 	}
 }
