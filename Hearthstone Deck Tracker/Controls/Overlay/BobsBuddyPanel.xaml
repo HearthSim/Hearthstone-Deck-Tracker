@@ -67,7 +67,7 @@
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
         <Grid>
-        <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 8, 5" Height="56" MouseEnter="AverageDamageGivenPanel_MouseEnter">
+        <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 8, 5" Height="56" MouseEnter="AverageDamageGivenPanel_MouseEnter" Visibility="{Binding AverageDamageVisibility}">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                     <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Visibility="{Binding PercentagesVisibility}" Opacity="{Binding PlayerAverageDamageOpacity}" />
             </Border>
@@ -192,7 +192,7 @@
             </Grid>
         </Border>
     </StackPanel>
-        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="8, 0, 5, 5" Height="56" Background="#141617">
+        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="8, 0, 5, 5" Height="56" Background="#141617" Visibility="{Binding AverageDamageVisibility}">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                 <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
             </Border>

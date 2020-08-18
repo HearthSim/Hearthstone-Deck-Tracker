@@ -34,6 +34,11 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top" Checked="CheckboxShowResultsDuringShopping_Checked"
                           Unchecked="CheckboxShowResultsDuringShopping_Unchecked" Margin="0,5,0,0" />
+                <CheckBox x:Name="CheckboxShowAverageDamage" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowAverageDamage}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top" Checked="CheckboxShowAverageDamage_Checked"
+                          Unchecked="CheckboxShowAverageDamage_Unchecked" Margin="0,5,0,0" />
+                
             </StackPanel>
         </GroupBox>
         <Button x:Name="OverlayHelpButton"

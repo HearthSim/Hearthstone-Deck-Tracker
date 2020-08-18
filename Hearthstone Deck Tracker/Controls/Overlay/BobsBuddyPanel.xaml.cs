@@ -171,6 +171,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private Visibility _averageDamageVisibiltiy = Config.Instance.ShowAverageDamage ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility AverageDamageVisibility
+		{
+			get => _averageDamageVisibiltiy;
+			set
+			{
+				_averageDamageVisibiltiy = value;
+				OnPropertyChanged();
+			}
+		}
+
 		private double _playerLethalOpacity;
 		public double PlayerLethalOpacity
 		{
@@ -321,6 +332,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			if(ErrorState != BobsBuddyErrorState.None)
 				show = false;
 
+			AverageDamageVisibility = GetAverageDamageVisibility();
 			_showingResults = show;
 			OnPropertyChanged(nameof(StatusMessage));
 			OnPropertyChanged(nameof(AverageDamageTooltipMessage));
