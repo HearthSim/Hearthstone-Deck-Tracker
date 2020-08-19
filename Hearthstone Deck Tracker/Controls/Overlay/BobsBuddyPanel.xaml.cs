@@ -275,15 +275,29 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		internal void SetAverageDamage(List<int> possibleResults)
 		{
 			SetTooltipOffset();
-			float count = possibleResults.Count;
-			int lowerBound = possibleResults[(int)(.2 * count)];
-			int upperBound = possibleResults[(int)(.8 * count)];
-			var res = lowerBound != upperBound ? string.Format("{0}, {1}", lowerBound, upperBound) : upperBound.ToString();
-			AverageDamageGivenDisplay = res;
-			AverageDamageTakenDisplay = res;
-			Console.WriteLine("lowerbound " + lowerBound + " upper " + upperBound);
+			var playerDamageDealtPossibilities = possibleResults.Where(x => x > 0).ToList();
+			var opponentSortedDamageDealtPossibilites = possibleResults.Where(x => x < 0).Select(y => y * -1).ToList();
+			opponentSortedDamageDealtPossibilites.Sort((x, y) => x.CompareTo(y));
+			
+			var playerDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(playerDamageDealtPossibilities);
+			var opponentDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(opponentSortedDamageDealtPossibilites);
 
+			PlayerAverageDamageOpacity = playerDamageDealtBounds == null ? SoftLabelOpacity : 1;
+			OpponentAverageDamageOpacity = opponentDamageDealtBounds == null ? SoftLabelOpacity : 1;
+
+			AverageDamageGivenDisplay = FormatDamageBoundsFrom(playerDamageDealtBounds);
+			AverageDamageTakenDisplay = FormatDamageBoundsFrom(opponentDamageDealtBounds);
 		}
+
+		private List<int> GetTwentiethAndEightiethPercentileFor(List<int> possibleResults)
+		{
+			var count = possibleResults.Count;
+			if(count == 0)
+				return null;
+			return new List<int>() { possibleResults[(int)Math.Floor(.2 * count)], possibleResults[(int)Math.Floor(.8 * count)] };
+		}
+
+		private string FormatDamageBoundsFrom(List<int> from) => from == null ? "N/A" : from[0] == from[1] ? from[0].ToString() : string.Format("{0}–{1}", from[0], from[1]);
 
 		/// <summary>
 		/// called when user enters a new game of BG
