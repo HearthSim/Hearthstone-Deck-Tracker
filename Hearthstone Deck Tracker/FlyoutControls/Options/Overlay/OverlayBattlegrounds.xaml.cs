@@ -174,6 +174,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
+			Core.Overlay.BobsBuddyDisplay.ExpandAverageDamagePanels();
 			Config.Instance.ShowAverageDamage = true;
 			Config.Instance.ShowAverageDamageOnHover = false;
 			CheckboxOnlyShowAverageDamageOnHover.IsChecked = false;

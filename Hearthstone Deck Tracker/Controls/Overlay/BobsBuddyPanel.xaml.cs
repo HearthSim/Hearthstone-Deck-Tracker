@@ -416,6 +416,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			=> InCombatPhase && !Config.Instance.ShowBobsBuddyDuringCombat
 			|| InShoppingPhase && !Config.Instance.ShowBobsBuddyDuringShopping;
 
+		public void ExpandAverageDamagePanels() => (FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
+
+		public void CollapseAverageDamagePanels() => (FindResource("StoryboardCollapseAverageDamage") as Storyboard)?.Begin();
+
 		private void BottomBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			if(InCombatPhase || InShoppingPhase)
@@ -431,14 +435,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			SettingsVisibility = Visibility.Visible;
 			if(Config.Instance.ShowAverageDamageOnHover)
-				(FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
+				ExpandAverageDamagePanels();
 		}
 
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Collapsed;
 			if(Config.Instance.ShowAverageDamageOnHover)
-				(FindResource("StoryboardCollapseAverageDamage") as Storyboard)?.Begin();
+				CollapseAverageDamagePanels();
 		}
 
 		private void Question_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
