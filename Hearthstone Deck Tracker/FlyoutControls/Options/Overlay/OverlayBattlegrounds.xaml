@@ -38,6 +38,10 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top" Checked="CheckboxShowAverageDamage_Checked"
                           Unchecked="CheckboxShowAverageDamage_Unchecked" Margin="0,5,0,0" />
+                <CheckBox x:Name="CheckboxOnlyShowAverageDamageOnHover" Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowAverageDamageOnHover}"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top" Checked="CheckboxOnlyShowAverageDamageOnHover_Checked"
+                          Unchecked="CheckboxOnlyShowAverageDamageOnHover_Unchecked" Margin="0,5,0,0" />
                 
             </StackPanel>
         </GroupBox>

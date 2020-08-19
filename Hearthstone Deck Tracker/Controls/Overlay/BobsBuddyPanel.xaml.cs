@@ -248,7 +248,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private Visibility GetAverageDamageVisibility() => Config.Instance.ShowAverageDamage ? Visibility.Visible : Visibility.Collapsed;
+		private Visibility GetAverageDamageVisibility() => Config.Instance.ShowAverageDamage || Config.Instance.ShowAverageDamageOnHover ? Visibility.Visible : Visibility.Collapsed;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -430,11 +430,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Visible;
+			if(Config.Instance.ShowAverageDamageOnHover)
+				(FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
 		}
 
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Collapsed;
+			if(Config.Instance.ShowAverageDamageOnHover)
+				(FindResource("StoryboardCollapseAverageDamage") as Storyboard)?.Begin();
 		}
 
 		private void Question_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

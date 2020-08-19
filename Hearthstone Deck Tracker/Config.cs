@@ -802,6 +802,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowAverageDamage = true;
 
 		[DefaultValue(false)]
+		public bool ShowAverageDamageOnHover = false;
+
+		[DefaultValue(false)]
 		public bool SeenBobsBuddyInfo = false;
 
 		[DefaultValue(false)]

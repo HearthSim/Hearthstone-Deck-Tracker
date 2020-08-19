@@ -175,6 +175,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ShowAverageDamage = true;
+			Config.Instance.ShowAverageDamageOnHover = false;
+			CheckboxOnlyShowAverageDamageOnHover.IsChecked = false;
 			SaveConfig(true);
 		}
 
@@ -183,6 +185,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ShowAverageDamage = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxOnlyShowAverageDamageOnHover_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowAverageDamageOnHover = true;
+			Config.Instance.ShowAverageDamage = false;
+			CheckboxShowAverageDamage.IsChecked = false;
+			SaveConfig(true);
+		}
+
+		private void CheckboxOnlyShowAverageDamageOnHover_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowAverageDamageOnHover = false;
 			SaveConfig(true);
 		}
 
