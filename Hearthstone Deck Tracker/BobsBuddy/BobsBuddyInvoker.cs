@@ -42,11 +42,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private int _turn;
 		const int LogLinesKept = 100;
 		private static List<string> _recentHDTLog = new List<string>();
+		private static Dictionary<int, Minion> _currentOpponentMinions = null;
 
 		private MinionHeroPowerTrigger _minionHeroPowerTrigger;
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
 		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
+		private const string LichKingHeroPowerId = "TB_BaconShop_HP_024";
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
@@ -141,6 +143,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				_minionHeroPowerTrigger.Tsc.SetResult(null);
 		}
 
+		internal void MinionGainedReborn(int id)
+		{
+			if(_currentOpponentMinions != null && _currentOpponentMinions.TryGetValue(id, out var toGetReborn))
+				toGetReborn.receivesLichKingPower = true;
+		}
+
 		public async void StartCombat()
 		{
 			try
@@ -187,6 +195,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						DebugLog($"Found hero power trigger for {minion.minionName} after {duration}ms");
 				}
 
+				if(_game.Opponent.Board.FirstOrDefault(x => x.IsHeroPower)?.CardId.Contains(LichKingHeroPowerId) ?? false)
+					await Task.Delay(2000);
+				_currentOpponentMinions = null;
 				DebugLog("Running simulation...");
 				var result = await RunSimulation();
 				if(result == null)
@@ -326,12 +337,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			foreach(var m in GetOrderedMinions(_game.Player.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
 				m.AddToBackOfList(input.playerSide, simulator);
 
+			_currentOpponentMinions = new Dictionary<int, Minion>();
 			foreach(var m in GetOrderedMinions(_game.Opponent.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
 			{
 				m.AddToBackOfList(input.opponentSide, simulator);
 
 				if(m.receivesLichKingPower)
 					_minionHeroPowerTrigger = new MinionHeroPowerTrigger(m, RebornRite);
+				_currentOpponentMinions[m.game_id] = m;
 			}
 
 			_input = input;
