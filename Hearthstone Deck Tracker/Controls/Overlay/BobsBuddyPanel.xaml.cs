@@ -431,11 +431,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public void AttemptToExpandAverageDamagePanels()
+		{
+			if(State != BobsBuddyState.Initial)
+				ExpandAverageDamagePanels();
+		}
+
 		private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Visible;
-			if(!Config.Instance.AlwaysShowAverageDamage && State != BobsBuddyState.Initial)
-				ExpandAverageDamagePanels();
+			AttemptToExpandAverageDamagePanels();
 		}
 
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
