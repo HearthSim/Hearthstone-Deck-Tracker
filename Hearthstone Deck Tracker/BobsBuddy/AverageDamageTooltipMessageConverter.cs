@@ -14,29 +14,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(possibilities == null || possibilities.Count == 0)
 				return "Waiting for combat";
 
-			switch(state)
-			{
-				case BobsBuddyState.Initial:
-						return "Waiting for combat";
-				case BobsBuddyState.Combat:
-					return "Middle 80% of outcomes.";
-				case BobsBuddyState.Shopping:
-					var betterThanPortion = (float)possibilities.Where(x => x < lastCombatResult).Count() / (float)possibilities.Count;
-					var positiveLastResult = Math.Abs(lastCombatResult);
-					var description = lastCombatResult > 0 ? string.Format("Dealing {0} damage", positiveLastResult) : lastCombatResult < 0 ? string.Format("Taking {0} damage", positiveLastResult) : "Tying";
+			return "80% DMG";
 
-					if(!possibilities.Where(x => x != lastCombatResult).Any())
-						return description + " was the only possible outcome";
-					//else if(betterThanPortion == 0)
-					//	return description + " was the worst possible outcome";
-					//else if(!possibilities.Where(x => x > lastCombatResult).Any())
-					//	return description + " was the best possible outcome";
-					if(betterThanPortion > .5)
-						return string.Format(description + " was better than {0:0.#%} of outcomes.", betterThanPortion);
-					else
-						return string.Format(description + " was worse than {0:0.#%} of outcomes.", 1-betterThanPortion);
-			}
-			return "";
 		}
 	}
 }
