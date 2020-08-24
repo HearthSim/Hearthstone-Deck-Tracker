@@ -37,8 +37,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowResultsDuringShopping.IsChecked = Config.Instance.ShowBobsBuddyDuringShopping;
 			CheckboxShowResultsDuringShopping.IsEnabled = Config.Instance.RunBobsBuddy;
 
-			CheckboxShowAverageDamage.IsChecked = Config.Instance.ShowAverageDamage;
-			CheckboxShowAverageDamage.IsEnabled = Config.Instance.RunBobsBuddy;
+			CheckboxAlwaysShowAverageDamage.IsChecked = Config.Instance.AlwaysShowAverageDamage;
+			CheckboxAlwaysShowAverageDamage.IsEnabled = Config.Instance.RunBobsBuddy;
 
 			_initialized = true;
 		}
@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			TextBobsBuddyDisabled.Visibility = enabled ? Visibility.Collapsed : Visibility.Visible;
 			CheckboxShowResultsDuringCombat.IsEnabled = enabled && Config.Instance.RunBobsBuddy;
 			CheckboxShowResultsDuringShopping.IsEnabled = enabled && Config.Instance.RunBobsBuddy;
-			CheckboxShowAverageDamage.IsEnabled = enabled && Config.Instance.RunBobsBuddy;
+			CheckboxAlwaysShowAverageDamage.IsEnabled = enabled && Config.Instance.RunBobsBuddy;
 		}
 
 		private void SaveConfig(bool updateOverlay)
@@ -170,40 +170,20 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Instance.ShowBobsBuddyDuringShopping = false;
 			SaveConfig(true);
 		}
-		private void CheckboxShowAverageDamage_Checked(object sender, RoutedEventArgs e)
+
+		private void CheckboxAlwaysShowAverageDamage_Checked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Core.Overlay.BobsBuddyDisplay.ExpandAverageDamagePanels();
-			Config.Instance.ShowAverageDamage = true;
-			Config.Instance.ShowAverageDamageOnHover = false;
-			CheckboxOnlyShowAverageDamageOnHover.IsChecked = false;
+			Config.Instance.AlwaysShowAverageDamage = true;
 			SaveConfig(true);
 		}
 
-		private void CheckboxShowAverageDamage_Unchecked(object sender, RoutedEventArgs e)
+		private void CheckboxAlwaysShowAverageDamage_Unchecked(object sender, RoutedEventArgs e)
 		{
 			if(!_initialized)
 				return;
-			Config.Instance.ShowAverageDamage = false;
-			SaveConfig(true);
-		}
-
-		private void CheckboxOnlyShowAverageDamageOnHover_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowAverageDamageOnHover = true;
-			Config.Instance.ShowAverageDamage = false;
-			CheckboxShowAverageDamage.IsChecked = false;
-			SaveConfig(true);
-		}
-
-		private void CheckboxOnlyShowAverageDamageOnHover_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.ShowAverageDamageOnHover = false;
+			Config.Instance.AlwaysShowAverageDamage = false;
 			SaveConfig(true);
 		}
 

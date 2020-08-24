@@ -64,20 +64,16 @@
         </Storyboard>
         <Storyboard x:Key="StoryboardExpand">
             <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="ResultPanel" Storyboard.TargetProperty="Height" />
-            <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
-            <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
         <Storyboard x:Key="StoryboardCollapse">
             <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="ResultPanel" Storyboard.TargetProperty="Height" />
-            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
-            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
         <Grid>
-            <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 8, 5" Height="56" Visibility="{Binding AverageDamageVisibility}">
+            <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 8, 5" Height="0" Visibility= "Visible">
                 <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
-                    <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Visibility="{Binding PercentagesVisibility}" Opacity="{Binding PlayerAverageDamageOpacity}" />
+                    <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Visibility="Visible" Opacity="{Binding PlayerAverageDamageOpacity}" />
                 </Border>
                 <local:HearthstoneTextBlock Text="{Binding AverageDamageGivenDisplay}" FontSize="17" Opacity="{Binding PlayerAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -85,7 +81,7 @@
                     <ToolTip Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="{Binding TooltipOffset}">
                         <!--(82/2) - (400/2)-->
                         <Grid Width="400">
-                            <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding AverageDamageTooltipVisibility}" Height="auto">
+                            <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding PercentagesVisibility}" Height="auto">
                                 <local:HearthstoneTextBlock FontSize="12" Text="{Binding AverageDamageTooltipMessage}" MaxHeight="15"/>
                             </Border>
                         </Grid>
@@ -203,17 +199,17 @@
                 </Grid>
             </Border>
         </StackPanel>
-        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="8, 0, 5, 5" Height="56" Background="#141617" Visibility="{Binding AverageDamageVisibility}">
+        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="8, 0, 5, 5" Height="0" Background="#141617" Visibility="Visible">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                 <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
             </Border>
             <local:HearthstoneTextBlock Text="{Binding AverageDamageTakenDisplay}" FontSize="17" Opacity="{Binding OpponentAverageDamageOpacity}"
-                                VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PercentagesVisibility}"/>
+                                VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible"/>
             <StackPanel.ToolTip>
                 <ToolTip Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="{Binding TooltipOffset}">
                     <!--(82/2) - (400/2)-->
                     <Grid Width="400">
-                        <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding AverageDamageTooltipVisibility}" Height="auto">
+                        <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding PercentagesVisibility}" Height="auto">
                             <local:HearthstoneTextBlock FontSize="12" Text="{Binding AverageDamageTooltipMessage}" MaxHeight="15"/>
                         </Border>
                     </Grid>

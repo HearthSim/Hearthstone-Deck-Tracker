@@ -171,17 +171,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private Visibility _averageDamageVisibiltiy = Config.Instance.ShowAverageDamage ? Visibility.Visible : Visibility.Collapsed;
-		public Visibility AverageDamageVisibility
-		{
-			get => _averageDamageVisibiltiy;
-			set
-			{
-				_averageDamageVisibiltiy = value;
-				OnPropertyChanged();
-			}
-		}
-
 		private double _playerLethalOpacity;
 		public double PlayerLethalOpacity
 		{
@@ -247,8 +236,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				OnPropertyChanged();
 			}
 		}
-
-		private Visibility GetAverageDamageVisibility() => Config.Instance.ShowAverageDamage || Config.Instance.ShowAverageDamageOnHover ? Visibility.Visible : Visibility.Collapsed;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -348,15 +335,28 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			if(ErrorState != BobsBuddyErrorState.None)
 				show = false;
 
-			AverageDamageVisibility = GetAverageDamageVisibility();
 			_showingResults = show;
 			OnPropertyChanged(nameof(StatusMessage));
 			OnPropertyChanged(nameof(AverageDamageTooltipMessage));
 
 			if(show)
-				(FindResource("StoryboardExpand") as Storyboard)?.Begin();
+				ExpandPanel();
 			else
-				(FindResource("StoryboardCollapse") as Storyboard)?.Begin();
+				CollapsePanel();
+		}
+
+		void ExpandPanel()
+		{
+			(FindResource("StoryboardExpand") as Storyboard)?.Begin();
+			if(Config.Instance.AlwaysShowAverageDamage)
+				ExpandAverageDamagePanels();
+		}
+
+		void CollapsePanel()
+		{
+			(FindResource("StoryboardCollapse") as Storyboard)?.Begin();
+			if(Config.Instance.AlwaysShowAverageDamage)
+				CollapseAverageDamagePanels();
 		}
 
 		void SetTooltipOffset()
@@ -434,14 +434,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Visible;
-			if(Config.Instance.ShowAverageDamageOnHover)
+			if(!Config.Instance.AlwaysShowAverageDamage && State != BobsBuddyState.Initial)
 				ExpandAverageDamagePanels();
 		}
 
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Collapsed;
-			if(Config.Instance.ShowAverageDamageOnHover)
+			if(!Config.Instance.AlwaysShowAverageDamage)
 				CollapseAverageDamagePanels();
 		}
 
