@@ -55,12 +55,12 @@
             </Style.Triggers>
         </Style>
         <Storyboard x:Key="StoryboardExpandAverageDamage">
-            <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
-            <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="55" Duration="0:0:0" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="55" Duration="0:0:0" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
         <Storyboard x:Key="StoryboardCollapseAverageDamage">
-            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
-            <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="0" Duration="0:0:0" Storyboard.TargetName="AverageDamageGivenPanel" Storyboard.TargetProperty="Height" />
+            <DoubleAnimation To="0" Duration="0:0:0" Storyboard.TargetName="AverageDamageTakenPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
         <Storyboard x:Key="StoryboardExpand">
             <DoubleAnimation To="55" Duration="0:0:0.2" Storyboard.TargetName="ResultPanel" Storyboard.TargetProperty="Height" />
