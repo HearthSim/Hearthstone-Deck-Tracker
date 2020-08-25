@@ -31,6 +31,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Mode _currentMode;
 		private BrawlInfo _brawlInfo;
 		private BattlegroundRatingInfo _battlegroundsRatingInfo;
+		const string UntransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseekerTavernBrawl1;
+		const string TransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseeker_ArannaUnleashedTokenTavernBrawl;
+		private Dictionary<string, string> _lastKnownBoardStateLookup = new Dictionary<string, string>()
+		{
+			{ TransformedArannaCardid, UntransformedArannaCardid}
+		};
 
 		public GameV2()
 		{
@@ -301,7 +307,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.Select(x => x.Clone())
 				.ToArray();
 			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with {entities.Length} entities");
-			LastKnownBattlegroundsBoardState[opponentHero.CardId] = new BoardSnapshot(entities, GetTurnNumber());
+			LastKnownBattlegroundsBoardState[GetCorrectLastKnownBoardStateCardId(opponentHero.CardId)] = new BoardSnapshot(entities, GetTurnNumber());
 		}
+
+		internal string GetCorrectLastKnownBoardStateCardId(string cardId) => _lastKnownBoardStateLookup.TryGetValue(cardId, out var mapped) ? mapped : cardId;
 	}
 }

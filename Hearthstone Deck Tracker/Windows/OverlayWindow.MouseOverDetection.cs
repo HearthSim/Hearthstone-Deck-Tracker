@@ -210,7 +210,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
 					if(entity == null)
 						break;
-					if(!_game.LastKnownBattlegroundsBoardState.TryGetValue(entity.CardId, out var state))
+					if(!_game.LastKnownBattlegroundsBoardState.TryGetValue(_game.GetCorrectLastKnownBoardStateCardId(entity.CardId), out var state))
 						break;
 					BattlegroundsBoard.Children.Clear();
 					foreach(var e in state.Entities)
