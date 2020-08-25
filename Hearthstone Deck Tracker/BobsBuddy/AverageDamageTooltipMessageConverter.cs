@@ -14,7 +14,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(possibilities == null || possibilities.Count == 0)
 				return "Waiting for combat";
 
-			return "80% DMG";
+			switch(state)
+			{
+				case BobsBuddyState.Initial:
+					return "Waiting for combat";
+				case BobsBuddyState.Combat:
+					return "80% DMG";
+				case BobsBuddyState.Shopping:
+					return "Middle 80% percentile of damage";
+			}
+			return "";
 
 		}
 	}
