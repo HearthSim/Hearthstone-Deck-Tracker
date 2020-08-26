@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		SecretsManager SecretsManager { get; }
 		int OpponentMinionCount { get; }
 		int OpponentHandCount { get; }
+		int OpponentSecretCount { get; }
 		bool IsMinionInPlay { get; }
 		int PlayerMinionCount { get; }
 		GameType CurrentGameType { get; }
