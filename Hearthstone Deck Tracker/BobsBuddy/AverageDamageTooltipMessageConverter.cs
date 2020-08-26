@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				case BobsBuddyState.Initial:
 					return "Waiting for combat";
 				case BobsBuddyState.Combat:
-					return "80% DMG";
+					return "Middle 80% percentile of damage";
 				case BobsBuddyState.Shopping:
 					return "Middle 80% percentile of damage";
 			}
