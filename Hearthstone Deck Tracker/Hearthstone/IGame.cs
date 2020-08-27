@@ -1,6 +1,7 @@
 #region
 
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Threading.Tasks;
 using HearthDb.Enums;
 using HearthMirror.Objects;
@@ -53,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		bool PlayerChallengeable { get; }
 		bool SetupDone { get; set; }
 		void SnapshotBattlegroundsBoardState();
+		BoardSnapshot GetBattlegroundsBoardStateFor(string cardId);
 		int GetTurnNumber();
 	}
 }
