@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LastKnownBoardState.Clear();
 		}
 
-		internal string GetCorrectLastKnownBoardStateCardId(string cardId) => _lastKnownBoardStateLookup.TryGetValue(cardId, out var mapped) ? mapped : cardId;
+		internal string GetCorrectLastKnownBoardStateCardId(string cardId) => cardId != null && _lastKnownBoardStateLookup.TryGetValue(cardId, out var mapped) ? mapped : cardId;
 
 	}
 }
