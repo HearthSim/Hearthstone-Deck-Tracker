@@ -66,24 +66,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case TAG_SCRIPT_DATA_NUM_1:
 					return () => OnTagScriptDataNum1(id, value, game, gameState);
 				case REBORN:
-					return () => RebornChange(id, value, game);
+					return () => OnRebornChange(id, value, game);
 			}
 			return null;
 		}
 
-		private void RebornChange(int id, int value, IGame game)
+		private void OnRebornChange(int id, int value, IGame game)
 		{
+			if(game.CurrentGameMode != GameMode.Battlegrounds)
+				return;
 			if(value != 1)
 				return;
-			foreach(var x in game.Entities)
-			{
-				if(x.Value.Id == id)
-				{
-					BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?
-				.MinionGainedReborn(x.Value.Id);
-					break;
-				}
-			}
+			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.SetMinionReborn(id);
 		}
 
 		private void OnTagScriptDataNum1(int id, int value, IGame game, IHsGameState gameState)
