@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
@@ -23,6 +24,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private bool IsAnyMinionInOpponentsHand => EntititesInHandOnMinionsPlayed.Any(entity => entity.IsMinion);
 
 		public List<Secret> Secrets { get; } = new List<Secret>();
+
+		private List<Entity> _triggeredSecrets = new List<Entity>();
+
+		const string CounterSpellCardId = HearthDb.CardIds.Collectible.Mage.Counterspell;
 
 		protected abstract IGame Game { get; }
 		protected abstract bool HasActiveSecrets { get; }
@@ -272,6 +277,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			Exclude(Paladin.CompetitiveSpirit);
 		}
 
+		public void SecretTriggered(Entity secret) => _triggeredSecrets.Add(secret);
+
 		public async void HandleCardPlayed(Entity entity)
 		{
 			if(!HandleAction)
@@ -295,7 +302,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(entity.IsSpell)
 			{
+				_triggeredSecrets.Clear();
+				if(Game.OpponentSecretCount > 1)
+					await Game.GameTime.WaitForDuration(750);
+
 				exclude.Add(Mage.Counterspell);
+
+				//Need to test below to see verify the netherspell behaviour is replicated by other "When opponent casts spell" secrets
+				if(_triggeredSecrets.FirstOrDefault(x => x.CardId == CounterSpellCardId) != null)
+					return;
 
 				if(Game.OpponentMinionCount > 0)
 					exclude.Add(Paladin.NeverSurrender);
