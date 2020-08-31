@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-	public class BattlegroundsBoardState
+	internal class BattlegroundsBoardState
 	{
 		Dictionary<string, BoardSnapshot> LastKnownBoardState { get; } = new Dictionary<string, BoardSnapshot>();
 
@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			_game = game;
 		}
 
-		public void UpdateSnapshot()
+		public void SnapshotCurrentBoard()
 		{
 			var opponentHero = _game.Entities.Values
 				.Where(x => x.IsHero && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Opponent.Id))
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.Select(x => x.Clone())
 				.ToArray();
 			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with {entities.Length} entities");
-			LastKnownBoardState[GetCorrectLastKnownBoardStateCardId(opponentHero.CardId)] = new BoardSnapshot(entities, _game.GetTurnNumber());
+			LastKnownBoardState[GetBattlegroundsBoardState(opponentHero.CardId)] = new BoardSnapshot(entities, _game.GetTurnNumber());
 		}
 
 		public BoardSnapshot GetSnapshot(string opponentHeroCardId) => LastKnownBoardState.TryGetValue(opponentHeroCardId, out var state) ? state : null;
@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LastKnownBoardState.Clear();
 		}
 
-		internal string GetCorrectLastKnownBoardStateCardId(string cardId) => cardId != null && _lastKnownBoardStateLookup.TryGetValue(cardId, out var mapped) ? mapped : cardId;
+		private string GetBattlegroundsBoardState(string opponentHeroCardId) => opponentHeroCardId != null && _lastKnownBoardStateLookup.TryGetValue(opponentHeroCardId, out var mapped) ? mapped : opponentHeroCardId;
 
 	}
 }

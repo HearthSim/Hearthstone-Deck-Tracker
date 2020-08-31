@@ -290,7 +290,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return (GameEntity?.GetTag(GameTag.TURN) + 1) / 2 ?? 0;
 		}
 
-		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState.UpdateSnapshot();
+		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState.SnapshotCurrentBoard();
 
 		public BoardSnapshot GetBattlegroundsBoardStateFor(string cardId) => _battlegroundsBoardState.GetSnapshot(cardId);
 	}	
