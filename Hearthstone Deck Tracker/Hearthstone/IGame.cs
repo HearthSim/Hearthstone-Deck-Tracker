@@ -1,7 +1,6 @@
 #region
 
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Threading.Tasks;
 using HearthDb.Enums;
 using HearthMirror.Objects;
