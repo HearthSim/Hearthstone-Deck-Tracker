@@ -46,6 +46,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(attachedEntities.Any(x => x.CardId == RebornRiteEnchmantment))
 				minion.receivesLichKingPower = true;
 
+			minion.game_id = entity.Id;
+
 			return minion;
 		}
 
