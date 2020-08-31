@@ -41,14 +41,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LastKnownBoardState[GetBattlegroundsBoardState(opponentHero.CardId)] = new BoardSnapshot(entities, _game.GetTurnNumber());
 		}
 
-		public BoardSnapshot GetSnapshot(string opponentHeroCardId) => LastKnownBoardState.TryGetValue(opponentHeroCardId, out var state) ? state : null;
+		public BoardSnapshot GetSnapshot(string opponentHeroCardId) => opponentHeroCardId != null && LastKnownBoardState.TryGetValue(GetCorrectBoardstateHeroId(opponentHeroCardId), out var state) ? state : null;
 
 		public void Reset()
 		{
 			LastKnownBoardState.Clear();
 		}
 
-		private string GetBattlegroundsBoardState(string opponentHeroCardId) => opponentHeroCardId != null && _lastKnownBoardStateLookup.TryGetValue(opponentHeroCardId, out var mapped) ? mapped : opponentHeroCardId;
+		private string GetBattlegroundsBoardState(string opponentHeroCardId) => opponentHeroCardId != null ? GetCorrectBoardstateHeroId(opponentHeroCardId) : opponentHeroCardId;
+
+		private string GetCorrectBoardstateHeroId(string heroId) => _lastKnownBoardStateLookup.TryGetValue(heroId, out var mapped) ? mapped : heroId;
 
 	}
 }
