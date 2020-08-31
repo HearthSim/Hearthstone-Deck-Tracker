@@ -71,7 +71,7 @@
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
         <Grid>
-            <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 8, 5" Height="0" Visibility= "Visible" ToolTipService.InitialShowDelay="2000">
+            <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 0, 5" Height="0" Visibility= "Visible" ToolTipService.InitialShowDelay="2000">
                 <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                     <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Visibility="Visible" Opacity="{Binding PlayerAverageDamageOpacity}" />
                 </Border>
@@ -91,6 +91,12 @@
             </StackPanel>
 
         </Grid>
+        <StackPanel Width="8">
+            <StackPanel.Background>
+                <!-- To ensure consistent hover events -->
+                <SolidColorBrush Color="Black" Opacity="0.01"/>
+            </StackPanel.Background>
+        </StackPanel>
         <StackPanel>
             <StackPanel.Background>
                 <!-- To ensure consistent hover events -->
@@ -199,7 +205,14 @@
                 </Grid>
             </Border>
         </StackPanel>
-        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="8, 0, 5, 5" Height="0" Background="#141617" Visibility="Visible" ToolTipService.InitialShowDelay="2000">
+
+        <StackPanel Width="8">
+            <StackPanel.Background>
+                <!-- To ensure consistent hover events -->
+                <SolidColorBrush Color="Black" Opacity="0.01"/>
+            </StackPanel.Background>
+        </StackPanel>
+        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="0, 0, 5, 5" Height="0" Background="#141617" Visibility="Visible" ToolTipService.InitialShowDelay="2000">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                 <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
             </Border>
