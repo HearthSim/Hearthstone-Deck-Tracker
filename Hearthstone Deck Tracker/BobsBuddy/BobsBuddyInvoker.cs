@@ -147,9 +147,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal void SetMinionReborn(int entityId)
 		{
-			if(_currentOpponentMinions.TryGetValue(entityId, out var rebornMinion))
-				if(rebornMinion != null)
-					rebornMinion.receivesLichKingPower = true;
+			if(_currentOpponentMinions.TryGetValue(entityId, out var rebornMinion) && rebornMinion != null)
+				rebornMinion.receivesLichKingPower = true;
 		}
 
 		public async void StartCombat()
