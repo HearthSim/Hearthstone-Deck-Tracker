@@ -33,7 +33,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BattlegroundRatingInfo _battlegroundsRatingInfo;
 		private BattlegroundsBoardState _battlegroundsBoardState;
 
-
 		public GameV2()
 		{
 			Player = new Player(this, true);
