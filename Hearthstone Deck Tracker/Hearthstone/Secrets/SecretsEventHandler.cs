@@ -10,6 +10,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 	public abstract class SecretsEventHandler
 	{
 		private const int AvengeDelay = 50;
+		private const int MultiSecretResolveDelay = 750;
 		private int _avengeDeathRattleCount;
 		private bool _awaitingAvenge;
 		private int _lastCompetitiveSpiritCheck;
@@ -26,8 +27,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		public List<Secret> Secrets { get; } = new List<Secret>();
 
 		private List<Entity> _triggeredSecrets = new List<Entity>();
-
-		const string CounterSpellCardId = HearthDb.CardIds.Collectible.Mage.Counterspell;
 
 		protected abstract IGame Game { get; }
 		protected abstract bool HasActiveSecrets { get; }
@@ -304,12 +303,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			{
 				_triggeredSecrets.Clear();
 				if(Game.OpponentSecretCount > 1)
-					await Game.GameTime.WaitForDuration(750);
+					await Game.GameTime.WaitForDuration(MultiSecretResolveDelay);
 
 				exclude.Add(Mage.Counterspell);
 
-				//Need to test below to see verify the netherspell behaviour is replicated by other "When opponent casts spell" secrets
-				if(_triggeredSecrets.FirstOrDefault(x => x.CardId == CounterSpellCardId) != null)
+				if(_triggeredSecrets.FirstOrDefault(x => x.CardId == HearthDb.CardIds.Collectible.Mage.Counterspell) != null)
 					return;
 
 				if(Game.OpponentMinionCount > 0)
