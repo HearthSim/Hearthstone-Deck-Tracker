@@ -85,6 +85,6 @@ namespace HDTTests.Hearthstone.Secrets
 		public bool PlayerChallengeable { get; }
 		public bool SetupDone { get; set; }
 
-		public int OpponentSecretCount => throw new NotImplementedException();
+		public int OpponentSecretCount { get; set; }
 	}
 }

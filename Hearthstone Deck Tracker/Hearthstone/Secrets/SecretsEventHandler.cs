@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
@@ -307,8 +306,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 				exclude.Add(Mage.Counterspell);
 
-				if(_triggeredSecrets.FirstOrDefault(x => x.CardId == HearthDb.CardIds.Collectible.Mage.Counterspell) != null)
+				if(_triggeredSecrets.FirstOrDefault(x => x.CardId == Mage.Counterspell) != null)
+				{
+					Exclude(exclude);
 					return;
+				}
+
 
 				if(Game.OpponentMinionCount > 0)
 					exclude.Add(Paladin.NeverSurrender);
