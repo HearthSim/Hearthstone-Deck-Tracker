@@ -312,7 +312,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					return;
 				}
 
-
 				if(Game.OpponentMinionCount > 0)
 					exclude.Add(Paladin.NeverSurrender);
 
