@@ -316,6 +316,7 @@
     <Compile Include="FlyoutControls\Options\Streaming\StreamingTwitchExtension.xaml.cs">
       <DependentUpon>StreamingTwitchExtension.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Hearthstone\BattlegroundsBoardState.cs" />
     <Compile Include="Hearthstone\BattlegroundsDb.cs" />
     <Compile Include="Hearthstone\BattlegroundsUtils.cs" />
     <Compile Include="Hearthstone\BoardSnapshot.cs" />

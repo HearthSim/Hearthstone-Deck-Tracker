@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Mode _currentMode;
 		private BrawlInfo _brawlInfo;
 		private BattlegroundRatingInfo _battlegroundsRatingInfo;
+		private BattlegroundsBoardState _battlegroundsBoardState;
 
 		public GameV2()
 		{
@@ -38,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Opponent = new Player(this, false);
 			IsInMenu = true;
 			SecretsManager = new SecretsManager(this, new RemoteArenaSettings());
+			_battlegroundsBoardState = new BattlegroundsBoardState(this);
 			Reset();
 			LiveDataManager.OnStreamingChecked += async streaming =>
 			{
@@ -96,7 +98,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int ProposedAttacker { get; set; }
 		public int ProposedDefender { get; set; }
 		public bool SetupDone { get; set; }
-		public Dictionary<string, BoardSnapshot> LastKnownBattlegroundsBoardState { get; } = new Dictionary<string, BoardSnapshot>();
 
 		public bool PlayerChallengeable => CurrentMode == Mode.HUB || CurrentMode == Mode.TOURNAMENT || CurrentMode == Mode.ADVENTURE
 					|| CurrentMode == Mode.TAVERN_BRAWL || CurrentMode == Mode.DRAFT || CurrentMode == Mode.PACKOPENING
@@ -250,7 +251,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!IsInMenu && resetStats)
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			PowerLog.Clear();
-			LastKnownBattlegroundsBoardState.Clear();
+			_battlegroundsBoardState.Reset();
 
 			if(Core.Game != null && Core.Overlay != null)
 			{
@@ -289,19 +290,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return (GameEntity?.GetTag(GameTag.TURN) + 1) / 2 ?? 0;
 		}
 
-		public void SnapshotBattlegroundsBoardState()
-		{
-			var opponentHero = Entities.Values
-				.Where(x => x.IsHero && x.IsInZone(Zone.PLAY) && x.IsControlledBy(Opponent.Id))
-				.FirstOrDefault();
-			if(opponentHero == null)
-				return;
-			var entities = Entities.Values
-				.Where(x => x.IsMinion && x.IsInZone(Zone.PLAY) && x.IsControlledBy(Opponent.Id))
-				.Select(x => x.Clone())
-				.ToArray();
-			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with {entities.Length} entities");
-			LastKnownBattlegroundsBoardState[opponentHero.CardId] = new BoardSnapshot(entities, GetTurnNumber());
-		}
-	}
+		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState.SnapshotCurrentBoard();
+
+		public BoardSnapshot GetBattlegroundsBoardStateFor(string cardId) => _battlegroundsBoardState.GetSnapshot(cardId);
+	}	
 }
