@@ -375,6 +375,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void SecretTriggered(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
+			_game.SecretsManager.SecretTriggered(entity);
 			Log(entity);
 		}
 

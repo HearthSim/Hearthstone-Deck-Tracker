@@ -5,6 +5,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HunterSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Hunter;
 using MageSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Mage;
@@ -114,12 +115,14 @@ namespace HDTTests.Hearthstone.Secrets
 			_secretHunter1 = CreateNewEntity("");
 			_secretHunter1.SetTag(GameTag.CLASS, (int)CardClass.HUNTER);
 			_secretHunter1.SetTag(GameTag.SECRET, 1);
+			_secretHunter1.SetTag(GameTag.ZONE, (int)Zone.SECRET);
 			_secretHunter2 = CreateNewEntity("");
 			_secretHunter2.SetTag(GameTag.CLASS, (int)CardClass.HUNTER);
 			_secretHunter2.SetTag(GameTag.SECRET, 1);
 			_secretMage1 = CreateNewEntity("");
 			_secretMage1.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
 			_secretMage1.SetTag(GameTag.SECRET, 1);
+			_secretMage1.SetTag(GameTag.ZONE, (int)Zone.SECRET);
 			_secretMage2 = CreateNewEntity("");
 			_secretMage2.SetTag(GameTag.CLASS, (int)CardClass.MAGE);
 			_secretMage2.SetTag(GameTag.SECRET, 1);
@@ -129,20 +132,30 @@ namespace HDTTests.Hearthstone.Secrets
 			_secretPaladin1 = CreateNewEntity("");
 			_secretPaladin1.SetTag(GameTag.CLASS, (int)CardClass.PALADIN);
 			_secretPaladin1.SetTag(GameTag.SECRET, 1);
+			_secretPaladin1.SetTag(GameTag.ZONE, (int)Zone.SECRET);
 			_secretPaladin2 = CreateNewEntity("");
 			_secretPaladin2.SetTag(GameTag.CLASS, (int)CardClass.PALADIN);
 			_secretPaladin2.SetTag(GameTag.SECRET, 1);
 			_secretRogue1 = CreateNewEntity("");
 			_secretRogue1.SetTag(GameTag.CLASS, (int)CardClass.ROGUE);
 			_secretRogue1.SetTag(GameTag.SECRET, 1);
+			_secretRogue1.SetTag(GameTag.ZONE, (int)Zone.SECRET);
 			_secretRogue2 = CreateNewEntity("");
 			_secretRogue2.SetTag(GameTag.CLASS, (int)CardClass.ROGUE);
 			_secretRogue2.SetTag(GameTag.SECRET, 1);
 
 			_gameEventHandler.HandleOpponentSecretPlayed(_secretHunter1, "", 0, 0, Zone.HAND, _secretHunter1.Id);
+			_game.Entities[_secretHunter1.Id] = _secretHunter1;
+
 			_gameEventHandler.HandleOpponentSecretPlayed(_secretMage1, "", 0, 0, Zone.HAND, _secretMage1.Id);
+			_game.Entities[_secretMage1.Id] = _secretMage1;
+
 			_gameEventHandler.HandleOpponentSecretPlayed(_secretPaladin1, "", 0, 0, Zone.HAND, _secretPaladin1.Id);
+			_game.Entities[_secretPaladin1.Id] = _secretPaladin1;
+
 			_gameEventHandler.HandleOpponentSecretPlayed(_secretRogue1, "", 0, 0, Zone.HAND, _secretRogue1.Id);
+			_game.Entities[_secretRogue1.Id] = _secretRogue1;
+
 		}
 
 
@@ -436,6 +449,22 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(1, MageSecrets.All, MageSecrets.FrozenClone);
 			VerifySecrets(2, PaladinSecrets.All);
 			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void MultipleSecrets_SpellPlayedCounterspellTriggered_SpellTriggeredSecretsNotExcludedAsync()
+		{
+			var mockegame = new MockGame();
+			mockegame.GameTime = new GameTime();
+			mockegame.OpponentSecretCount = 2;
+			mockegame.SecretsManager = new SecretsManager(mockegame, null);
+			mockegame.SecretsManager.Secrets.Add(new Secret(_secretHunter1));
+			mockegame.SecretsManager.Secrets.Add(new Secret(_secretMage1));
+			mockegame.SecretsManager.HandleCardPlayed(_playerSpell2);
+			mockegame.SecretsManager.SecretTriggered(CreateNewEntity(MageSecrets.Counterspell));
+			mockegame.GameTime.Time += TimeSpan.FromSeconds(1);
+			Assert.IsTrue(mockegame.SecretsManager.Secrets[1].IsExcluded(MageSecrets.Counterspell));
+			Assert.IsFalse(mockegame.SecretsManager.Secrets[1].IsExcluded(MageSecrets.NetherwindPortal));
 		}
 
 		//[TestMethod]

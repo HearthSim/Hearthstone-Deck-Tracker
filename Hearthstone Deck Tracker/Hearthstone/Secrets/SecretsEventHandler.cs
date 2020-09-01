@@ -9,6 +9,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 	public abstract class SecretsEventHandler
 	{
 		private const int AvengeDelay = 50;
+		private const int MultiSecretResolveDelay = 750;
 		private int _avengeDeathRattleCount;
 		private bool _awaitingAvenge;
 		private int _lastCompetitiveSpiritCheck;
@@ -23,6 +24,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private bool IsAnyMinionInOpponentsHand => EntititesInHandOnMinionsPlayed.Any(entity => entity.IsMinion);
 
 		public List<Secret> Secrets { get; } = new List<Secret>();
+
+		private List<Entity> _triggeredSecrets = new List<Entity>();
 
 		protected abstract IGame Game { get; }
 		protected abstract bool HasActiveSecrets { get; }
@@ -272,6 +275,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			Exclude(Paladin.CompetitiveSpirit);
 		}
 
+		public void SecretTriggered(Entity secret) => _triggeredSecrets.Add(secret);
+
 		public async void HandleCardPlayed(Entity entity)
 		{
 			if(!HandleAction)
@@ -295,7 +300,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(entity.IsSpell)
 			{
+				_triggeredSecrets.Clear();
+				if(Game.OpponentSecretCount > 1)
+					await Game.GameTime.WaitForDuration(MultiSecretResolveDelay);
+
 				exclude.Add(Mage.Counterspell);
+
+				if(_triggeredSecrets.FirstOrDefault(x => x.CardId == Mage.Counterspell) != null)
+				{
+					Exclude(exclude);
+					return;
+				}
 
 				if(Game.OpponentMinionCount > 0)
 					exclude.Add(Paladin.NeverSurrender);
