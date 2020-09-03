@@ -51,6 +51,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
 		private const string LichKingHeroPowerId = NonCollectible.Neutral.RebornRitesTavernBrawl;
 		private const string LichKingHeroPowerEnchantmentId = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
+		private static bool _removedLichKingHeroPowerFromMinion = false;
+
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
@@ -148,7 +150,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		internal void SetMinionReborn(int entityId)
 		{
 			if(_currentOpponentMinions.TryGetValue(entityId, out var rebornMinion) && rebornMinion != null)
+			{
+				if(rebornMinion.receivesLichKingPower)
+					DebugLog($"Giving receivesLichKingHeroPower to {rebornMinion.minionName} which already had it.");
+				else
+					DebugLog($"Giving Giving receivesLichKingHeroPower to {rebornMinion.minionName} which already did not already have it.");
 				rebornMinion.receivesLichKingPower = true;
+			}
 		}
 
 		public async void StartCombat()
@@ -181,6 +189,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
 				BobsBuddyDisplay.HidePercentagesShowSpinners();
 
+				_removedLichKingHeroPowerFromMinion = false;
 				if(_minionHeroPowerTrigger != null)
 				{
 					var minion = _minionHeroPowerTrigger.Minion;
@@ -192,9 +201,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					{
 						DebugLog($"Found no hero power trigger after {duration}ms. Resetting receivedHeroPower on {minion.minionName}");
 						minion.receivesLichKingPower = false;
+						_removedLichKingHeroPowerFromMinion = true;
 					}
 					else
+					{
 						DebugLog($"Found hero power trigger for {minion.minionName} after {duration}ms");
+					}
 				}
 
 				if(_game.Opponent.Board.Any(x => x.CardId == LichKingHeroPowerId || x.CardId == LichKingHeroPowerEnchantmentId))
@@ -494,7 +506,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, terminalCase);
+				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, terminalCase, _removedLichKingHeroPowerFromMinion);
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)
