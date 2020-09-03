@@ -1,3 +1,9 @@
+## **Release v1.13.4 - 2020-09-03**
+
+**Bob's Buddy**
+- Added additional instrumentation to track down Lich King prediction inaccuracies.
+
+
 ## **Release v1.13.3 - 2020-09-01**
 
 **Fixes**:
