@@ -106,6 +106,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptions)
 				return;
+			if(input == null)
+				return;
 			BobsBuddyExceptionsSent++;
 
 			// Clean up data
