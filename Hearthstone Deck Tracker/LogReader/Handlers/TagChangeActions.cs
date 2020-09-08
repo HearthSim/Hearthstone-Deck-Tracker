@@ -73,6 +73,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private void OnRebornChange(int id, int value, IGame game)
 		{
+			if(game.CurrentGameStats == null)
+				return;
 			if(game.CurrentGameMode != GameMode.Battlegrounds)
 				return;
 			if(value != 1)
