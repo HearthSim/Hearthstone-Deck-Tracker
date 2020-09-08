@@ -1,3 +1,10 @@
+## **Release v1.13.5 - 2020-09-08**
+**Updated for Hearthstone 18.2.0.58213**
+
+**Fixes**:
+- Fixed an issue where Bob's Buddy might crash when facing Lich King.
+
+
 ## **Release v1.13.4 - 2020-09-03**
 
 **Bob's Buddy**
