@@ -123,6 +123,7 @@
     <Compile Include="Hearthstone\DeckTest.cs" />
     <Compile Include="Hearthstone\CardDbTest.cs" />
     <Compile Include="HsReplay\Utility\ShortIdHelperTests.cs" />
+    <Compile Include="ImageDownloading\ImageDownloading.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LocUtilTests.cs" />
     <Compile Include="Utility\Twitch\TwitchApiHelperTests.cs" />
