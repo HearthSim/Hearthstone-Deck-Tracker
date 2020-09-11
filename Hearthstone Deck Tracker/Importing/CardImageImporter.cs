@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hearthstone_Deck_Tracker.Utility.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,14 +20,22 @@ namespace Hearthstone_Deck_Tracker.Importing
 			CheckForAndAddImageFolder();
 		}
 
-		static WebClient client = new WebClient();
 		public static async Task DownloadCardAsync(string cardId)
 		{
 			var requestUrl = string.Format($"{HearthstoneArtUrl}/{cardId}.jpg");
 			var storageUrl = string.Format($"{StoreImagesPath}\\{cardId}.jpg");
-			using(client)
+			Log.Info($"Starting download for {cardId}");
+			try
 			{
-				await client.DownloadFileTaskAsync(new Uri(requestUrl), storageUrl);
+				using(WebClient client = new WebClient())
+				{
+					await client.DownloadFileTaskAsync(new Uri(requestUrl), storageUrl);
+					Log.Info($"Finished downloading {cardId}");
+				}
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine(e.Message + " was the error :(");
 			}
 		}
 
