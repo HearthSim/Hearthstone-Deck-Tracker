@@ -261,6 +261,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("exit_condition", output.myExitCondition.ToString())
 				.Tag("thread_count", BobsBuddyInvoker.ThreadCount)
 				.Tag("removed_lich_king", removedLichKingHeroPowerFromMinion)
+				.Tag("can_remove_lich_king", BobsBuddyInvoker.CanRemoveLichKing)
 				.Field("iterations", output.simulationCount)
 				.Field("result_win", result == CombatResult.Win ? 1 : 0)
 				.Field("result_tie", result == CombatResult.Tie ? 1 : 0)

@@ -128,6 +128,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				[JsonProperty("metric_sampling")]
 				public double MetricSampling { get; set; }
+
+				[JsonProperty("can_remove_lich_king")]
+				public bool CanRemoveLichKing { get; set; }
 			}
 		}
 	}
