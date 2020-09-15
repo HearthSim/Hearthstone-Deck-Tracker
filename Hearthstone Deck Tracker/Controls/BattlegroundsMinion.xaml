@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.BattlegroundsMinion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls" xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d"
+             d:DesignHeight="256" d:DesignWidth="256">
+    <Canvas Width="256" Height="256">
+        <Image HorizontalAlignment="Center" Width="256" Height="256" Source="C:\Users\Eleven 'O N\AppData\Roaming\HearthstoneDeckTracker\Images\BGS_069.jpg">
+            <Image.Clip>
+                <EllipseGeometry
+                      RadiusX="87"
+                             RadiusY="120"
+                        Center="128,128"/>
+            </Image.Clip>
+        </Image>
+        <Image Height="340" Width="288" Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\border.png" Canvas.Left="-17" Canvas.Top="-36"/>
+
+        <hearthstoneDeckTracker:HearthstoneTextBlock Text="5" Width="33" Height="33" FontSize="26" TextAlignment="Center" FontWeight="Bold" Canvas.Left="54" Canvas.Top="183"></hearthstoneDeckTracker:HearthstoneTextBlock>
+        <hearthstoneDeckTracker:HearthstoneTextBlock Text="5" Width="33" Height="33" FontSize="26" TextAlignment="Center" FontWeight="Bold" Canvas.Left="171" Canvas.Top="183"></hearthstoneDeckTracker:HearthstoneTextBlock>
+        <Image Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\poisonous.png" Visibility="{Binding PoisonousVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
+        <Image Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\divine-shield.png" Canvas.Left="-36" Canvas.Top="-24" Height="311" Width="325"/>
+    </Canvas>
+    <!--<Grid>
+        <Grid>
+            <Grid.Background>
+
+                <ImageBrush ImageSource="C:\Users\Eleven 'O N\AppData\Roaming\HearthstoneDeckTracker\Images\BGS_069.jpg"></ImageBrush>
+
+            </Grid.Background>
+            <Grid.Clip>
+                <EllipseGeometry Center="150, 150" RadiusX="105" RadiusY="145" />
+            </Grid.Clip>
+        </Grid>
+        <Grid Margin="-26,-48,-15,-77">
+            <Grid.Background>
+                <ImageBrush ImageSource="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\border.png"></ImageBrush>
+            </Grid.Background>
+        </Grid>
+    </Grid>-->
+</UserControl>
