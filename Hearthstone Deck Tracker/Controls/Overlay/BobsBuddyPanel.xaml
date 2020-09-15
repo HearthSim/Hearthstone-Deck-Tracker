@@ -77,17 +77,6 @@
                 </Border>
                 <local:HearthstoneTextBlock Text="{Binding AverageDamageGivenDisplay}" FontSize="17" Opacity="{Binding PlayerAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <StackPanel.ToolTip>
-                    <ToolTip Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="{Binding TooltipOffset}">
-                        <!--(82/2) - (400/2)-->
-                        <Grid Width="400">
-                            <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding PercentagesVisibility}" Height="auto">
-                                <local:HearthstoneTextBlock FontSize="12" Text="{Binding AverageDamageTooltipMessage}" MaxHeight="15"/>
-                            </Border>
-                        </Grid>
-                    </ToolTip>
-
-                </StackPanel.ToolTip>
             </StackPanel>
 
         </Grid>
@@ -218,18 +207,17 @@
             </Border>
             <local:HearthstoneTextBlock Text="{Binding AverageDamageTakenDisplay}" FontSize="17" Opacity="{Binding OpponentAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible"/>
-            <StackPanel.ToolTip>
-                <ToolTip Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="{Binding TooltipOffset}">
-                    <!--(82/2) - (400/2)-->
-                    <Grid Width="400">
-                        <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding PercentagesVisibility}" Height="auto">
-                            <local:HearthstoneTextBlock FontSize="12" Text="{Binding AverageDamageTooltipMessage}" MaxHeight="15"/>
-                        </Border>
-                    </Grid>
-                </ToolTip>
-
-            </StackPanel.ToolTip>
         </StackPanel>
+        <StackPanel.ToolTip>
+            <ToolTip Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="{Binding TooltipOffset}">
+                <!--(82/2) - (400/2)-->
+                <Grid Width="400">
+                    <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding PercentagesVisibility}" Height="auto">
+                        <local:HearthstoneTextBlock FontSize="12" Text="{Binding AverageDamageTooltipMessage}" MaxHeight="15"/>
+                    </Border>
+                </Grid>
+            </ToolTip>
 
+        </StackPanel.ToolTip>
     </StackPanel>
 </UserControl>
