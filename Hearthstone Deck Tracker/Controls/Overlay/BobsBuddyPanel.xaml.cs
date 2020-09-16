@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -226,7 +227,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private Visibility _averageDamageTooltipVisibility = Visibility.Hidden;
+		public Visibility AverageDamageTooltipVisibility
+		{
+			get => _averageDamageTooltipVisibility;
+			set
+			{
+				_averageDamageTooltipVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		private bool _resultsPanelExpanded = false;
 
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{
@@ -253,7 +267,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var playerDamageDealtPossibilities = possibleResults.Where(x => x > 0).ToList();
 			var opponentSortedDamageDealtPossibilites = possibleResults.Where(x => x < 0).Select(y => y * -1).ToList();
 			opponentSortedDamageDealtPossibilites.Sort((x, y) => x.CompareTo(y));
-			
+
 			var playerDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(playerDamageDealtPossibilities);
 			var opponentDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(opponentSortedDamageDealtPossibilites);
 
@@ -278,7 +292,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		/// called when user enters a new game of BG
 		/// </summary>
 		/// 
-		internal void ResetDisplays() 
+		internal void ResetDisplays()
 		{
 			if(_lastCombatPossibilities != null)
 				_lastCombatPossibilities.Clear();
@@ -301,7 +315,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OnPropertyChanged(nameof(AverageDamageTooltipMessage));
 		}
 
-		internal void HidePercentagesShowSpinners() 
+		internal void HidePercentagesShowSpinners()
 		{
 			SpinnerVisibility = Visibility.Visible;
 			PercentagesVisibility = Visibility.Collapsed;
@@ -335,6 +349,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		void ExpandPanel()
 		{
 			(FindResource("StoryboardExpand") as Storyboard)?.Begin();
+			_resultsPanelExpanded = true;
 			if(Config.Instance.AlwaysShowAverageDamage)
 				ExpandAverageDamagePanels();
 		}
@@ -342,6 +357,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		void CollapsePanel()
 		{
 			(FindResource("StoryboardCollapse") as Storyboard)?.Begin();
+			_resultsPanelExpanded = false;
 			if(Config.Instance.AlwaysShowAverageDamage)
 				CollapseAverageDamagePanels();
 		}
@@ -398,24 +414,41 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			=> InCombatPhase && !Config.Instance.ShowBobsBuddyDuringCombat
 			|| InShoppingPhase && !Config.Instance.ShowBobsBuddyDuringShopping;
 
-		public void ExpandAverageDamagePanels() => (FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
+		public async Task ExpandAverageDamagePanels()
+		{
+			(FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
 
-		public void CollapseAverageDamagePanels() => (FindResource("StoryboardCollapseAverageDamage") as Storyboard)?.Begin();
+			await Task.Delay(200);
+			AverageDamageTooltipVisibility = Visibility.Visible;
+		}
+
+		public void CollapseAverageDamagePanels()
+		{
+			(FindResource("StoryboardCollapseAverageDamage") as Storyboard)?.Begin();
+			AverageDamageTooltipVisibility = Visibility.Hidden;
+		}
 
 		private void BottomBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			if(InCombatPhase || InShoppingPhase)
 			{
 				if(!_showingResults)
+				{
 					ShowResults(true);
+					ExpandAverageDamagePanels();
+				}
 				else if(CanMinimize)
+				{
 					ShowResults(false);
+					CollapseAverageDamagePanels();
+
+				}
 			}
 		}
 
 		public void AttemptToExpandAverageDamagePanels()
 		{
-			if(State != BobsBuddyState.Initial)
+			if(State != BobsBuddyState.Initial && _resultsPanelExpanded)
 				ExpandAverageDamagePanels();
 		}
 

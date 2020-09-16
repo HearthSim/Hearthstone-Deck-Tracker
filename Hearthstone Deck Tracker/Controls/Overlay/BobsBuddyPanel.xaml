@@ -209,7 +209,7 @@
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible"/>
         </StackPanel>
         <StackPanel.ToolTip>
-            <ToolTip Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="-172" VerticalOffset="-38">
+            <ToolTip Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="-172" VerticalOffset="-38" Visibility="{Binding AverageDamageTooltipVisibility}">
                 <!--(82/2) - (400/2)-->
                 <Grid Width="400">
                     <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding PercentagesVisibility}" Height="auto">
