@@ -461,6 +461,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Collapsed;
+			DamageTooltip.IsOpen = false;
 			if(!Config.Instance.AlwaysShowAverageDamage)
 				CollapseAverageDamagePanels();
 		}
@@ -485,6 +486,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				Config.Instance.SeenBobsBuddyInfo = true;
 				Config.Save();
 			}
+		}
+
+		private void AverageDamageTakenPanel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			DamageTooltip.PlacementTarget = MainPanel;	
+			DamageTooltip.IsOpen = true;
 		}
 	}
 }

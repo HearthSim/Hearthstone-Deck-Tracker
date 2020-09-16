@@ -69,9 +69,9 @@
             <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="ResultPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
     </UserControl.Resources>
-    <StackPanel Orientation="Horizontal" ToolTipService.InitialShowDelay="2000" ToolTipService.ShowDuration="100000">
+    <StackPanel x:Name="MainPanel" Orientation="Horizontal" ToolTipService.InitialShowDelay="2000" ToolTipService.ShowDuration="100000">
         <Grid>
-            <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 0, 5" Height="0" Visibility= "Visible">
+            <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 0, 5" Height="0" Visibility= "Visible" MouseEnter="AverageDamageTakenPanel_MouseEnter">
                 <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                     <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Visibility="Visible" Opacity="{Binding PlayerAverageDamageOpacity}" />
                 </Border>
@@ -201,7 +201,7 @@
                 <SolidColorBrush Color="Black" Opacity="0.01"/>
             </StackPanel.Background>
         </StackPanel>
-        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="0, 0, 5, 5" Height="0" Background="#141617" Visibility="Visible" ToolTipService.InitialShowDelay="750">
+        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="0, 0, 5, 5" Height="0" Background="#141617" Visibility="Visible" MouseEnter="AverageDamageTakenPanel_MouseEnter">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                 <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
             </Border>
@@ -209,7 +209,7 @@
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible"/>
         </StackPanel>
         <StackPanel.ToolTip>
-            <ToolTip Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="-172" VerticalOffset="-38" Visibility="{Binding AverageDamageTooltipVisibility}">
+            <ToolTip x:Name="DamageTooltip" Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="-172" VerticalOffset="-38" Visibility="{Binding AverageDamageTooltipVisibility}">
                 <!--(82/2) - (400/2)-->
                 <Grid Width="400">
                     <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding PercentagesVisibility}" Height="auto">
