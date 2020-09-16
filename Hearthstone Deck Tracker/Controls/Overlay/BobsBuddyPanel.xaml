@@ -69,7 +69,7 @@
             <DoubleAnimation To="0" Duration="0:0:0.2" Storyboard.TargetName="ResultPanel" Storyboard.TargetProperty="Height" />
         </Storyboard>
     </UserControl.Resources>
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Horizontal" ToolTipService.InitialShowDelay="2000" ToolTipService.ShowDuration="100000">
         <Grid>
             <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 0, 5" Height="0" Visibility= "Visible" ToolTipService.InitialShowDelay="750">
                 <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
