@@ -14,6 +14,7 @@ using Rectangle = System.Windows.Shapes.Rectangle;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Importing;
 
 #endregion
 
@@ -195,7 +196,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlavorTextVisibility = Visibility.Collapsed;
 		}
 
-		private void UpdateBattlegroundsOverlay()
+		private async void UpdateBattlegroundsOverlay()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
@@ -214,8 +215,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(state == null)
 						break;
 					BattlegroundsBoard.Children.Clear();
+					await CardImageImporter.FinishDownloadingEntites(state.Entities);
 					foreach(var e in state.Entities)
-						BattlegroundsBoard.Children.Add(new EntityControl(e));
+						BattlegroundsBoard.Children.Add(new BattlegroundsMinion(e));
 					var age = _game.GetTurnNumber() - state.Turn;
 					BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
 					BattlegroundsOpponent.Text = entity.Card.LocalizedName;
