@@ -20,8 +20,8 @@
 
         <hearthstoneDeckTracker:HearthstoneTextBlock Text="5" Width="33" Height="33" FontSize="26" TextAlignment="Center" FontWeight="Bold" Canvas.Left="54" Canvas.Top="183"></hearthstoneDeckTracker:HearthstoneTextBlock>
         <hearthstoneDeckTracker:HearthstoneTextBlock Text="5" Width="33" Height="33" FontSize="26" TextAlignment="Center" FontWeight="Bold" Canvas.Left="171" Canvas.Top="183"></hearthstoneDeckTracker:HearthstoneTextBlock>
+        <Image Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\divine-shield.png" Visibility="{Binding DivineShieldVisibility}" Canvas.Left="-36" Canvas.Top="-24" Height="311" Width="325"/>
         <Image Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\poisonous.png" Visibility="{Binding PoisonousVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
-        <Image Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\divine-shield.png" Canvas.Left="-36" Canvas.Top="-24" Height="311" Width="325"/>
     </Canvas>
     <!--<Grid>
         <Grid>
