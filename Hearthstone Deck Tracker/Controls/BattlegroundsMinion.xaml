@@ -9,7 +9,8 @@
              d:DesignHeight="256" d:DesignWidth="256">
     <Viewbox Width="125" Height="125">
     <Canvas Width="256" Height="256">
-        <Image HorizontalAlignment="Center" Width="256" Height="256" Source="C:\Users\Eleven 'O N\AppData\Roaming\HearthstoneDeckTracker\Images\BGS_069.jpg">
+        
+        <Image HorizontalAlignment="Center" Width="256" Height="256" Source="{Binding CardImagePath}">
             <Image.Clip>
                 <EllipseGeometry
                       RadiusX="87"
