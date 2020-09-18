@@ -238,6 +238,9 @@
     <Compile Include="Controls\AnimatedCardList.xaml.cs">
       <DependentUpon>AnimatedCardList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BattlegroundsMinion.xaml.cs">
+      <DependentUpon>BattlegroundsMinion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Card.xaml.cs">
       <DependentUpon>Card.xaml</DependentUpon>
     </Compile>
@@ -955,6 +958,10 @@
     <Page Include="Controls\AnimatedCardList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BattlegroundsMinion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Card.xaml">
       <SubType>Designer</SubType>
