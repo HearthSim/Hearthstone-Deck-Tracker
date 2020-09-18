@@ -32,14 +32,25 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public string CardImagePath { get; set; }
 
+		public string AttackDisplay { get; set; }
+
+		public string HealthDisplay { get; set; }
+
 		private Entity _entity;
 
 		public BattlegroundsMinion(Entity entity)
 		{
 			_entity = entity;
 			SetEffectVisibilites();
+			SetDisplayValues();
 			CardImagePath = CardImageImporter.StoragePathFor(entity.CardId);
 			InitializeComponent();
+		}
+
+		private void SetDisplayValues()
+		{
+			AttackDisplay = _entity.Attack.ToString();
+			HealthDisplay = _entity.Health.ToString();
 		}
 
 		private void SetEffectVisibilites()
