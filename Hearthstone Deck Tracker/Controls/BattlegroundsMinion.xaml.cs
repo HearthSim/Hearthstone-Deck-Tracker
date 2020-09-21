@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -36,6 +37,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public string HealthDisplay { get; set; }
 
+		public Brush AttackBrush { get; set; }
+
+		public Brush HealthBrush { get; set; }
+
 		private Entity _entity;
 
 		public BattlegroundsMinion(Entity entity)
@@ -43,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			_entity = entity;
 			SetEffectVisibilites();
 			SetDisplayValues();
+			SetAttackHealthBrush();
 			CardImagePath = CardImageImporter.StoragePathFor(entity.CardId);
 			InitializeComponent();
 		}
@@ -80,6 +86,22 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 
 
+		}
+
+		private void SetAttackHealthBrush()
+		{
+			if(HearthDb.Cards.All.TryGetValue(_entity.CardId, out var baseEntity))
+			{
+				var originalAttack = _entity.HasTag(GameTag.PREMIUM) ? baseEntity.Attack * 2 : baseEntity.Attack;
+				var originalHealth = _entity.HasTag(GameTag.PREMIUM) ? baseEntity.Health * 2 : baseEntity.Health;
+				AttackBrush = _entity.Attack == originalAttack ? new SolidBrush(Color.White) : new SolidBrush(Color.Green);
+				HealthBrush = _entity.Health == originalHealth ? new SolidBrush(Color.White) : new SolidBrush(Color.Green);
+			}
+			else
+			{
+				AttackBrush = new SolidBrush(Color.White);
+				HealthBrush = new SolidBrush(Color.White);
+			}
 		}
 
 		private void SetVisibility(Visibility setFor, bool makeVisibile) => setFor = makeVisibile ? Visibility.Visible : Visibility.Hidden;

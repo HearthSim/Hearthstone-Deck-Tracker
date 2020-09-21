@@ -8,24 +8,30 @@
              mc:Ignorable="d"
              d:DesignHeight="256" d:DesignWidth="256">
     <Viewbox Width="125" Height="125">
-    <Canvas Width="256" Height="256">
-        
-        <Image HorizontalAlignment="Center" Width="256" Height="256" Source="{Binding CardImagePath}">
-            <Image.Clip>
-                <EllipseGeometry
+        <Canvas Width="256" Height="256">
+
+            <Image HorizontalAlignment="Center" Width="256" Height="256" Source="{Binding CardImagePath}">
+                <Image.Clip>
+                    <EllipseGeometry
                       RadiusX="87"
                              RadiusY="120"
                         Center="128,128"/>
-            </Image.Clip>
-        </Image>
-        <Image Height="340" Width="288" Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\border.png" Canvas.Left="-17" Canvas.Top="-36"/>
+                </Image.Clip>
+            </Image>
+            <Image Height="340" Width="288" Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\border.png" Canvas.Left="-17" Canvas.Top="-36"/>
 
-        <hearthstoneDeckTracker:HearthstoneTextBlock Text="5" Width="33" Height="33" FontSize="26" TextAlignment="Center" FontWeight="Bold" Canvas.Left="54" Canvas.Top="183"></hearthstoneDeckTracker:HearthstoneTextBlock>
-        <hearthstoneDeckTracker:HearthstoneTextBlock Text="5" Width="33" Height="33" FontSize="26" TextAlignment="Center" FontWeight="Bold" Canvas.Left="171" Canvas.Top="183"></hearthstoneDeckTracker:HearthstoneTextBlock>
-        <Image Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\divine-shield.png" Visibility="{Binding DivineShieldVisibility}" Canvas.Left="-36" Canvas.Top="-24" Height="311" Width="325"/>
-        <Image Source="C:\Dev\Hearthstone-Deck-Tracker\Hearthstone Deck Tracker\Resources\poisonous.png" Visibility="{Binding PoisonousVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
-
-        
-    </Canvas>
+            <Image Source="{StaticResource Taunt}" Visibility="{Binding TauntVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource PremiumTaunt}" Visibility="{Binding PremiumTauntVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource MinionBorder}" Visibility="{Binding BorderVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource PremiumMinionBorder}" Visibility="{Binding PremiumBorderVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource Deathrattle}" Visibility="{Binding DeathrattleVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource Legendary}" Visibility="{Binding LegendaryBorderVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource PremiumLegendary}" Visibility="{Binding PremiumLegendaryBorderVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource Poisonous}" Visibility="{Binding PoisonousVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource DivineShield}" Visibility="{Binding DivineShieldVisibility}" Canvas.Left="-36" Canvas.Top="-24" Height="311" Width="325"/>
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding AttackDisplay}" Fill="{Binding AttackBrush}" Width="50" Height="50" FontSize="30" TextAlignment="Center" FontWeight="Bold" Canvas.Left="45" Canvas.Top="175"></hearthstoneDeckTracker:HearthstoneTextBlock>
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding HealthDisplay}" Fill="{Binding HealthBrush}" Width="50" Height="50" FontSize="30" TextAlignment="Center" FontWeight="Bold" Canvas.Left="162" Canvas.Top="179"></hearthstoneDeckTracker:HearthstoneTextBlock>
+        </Canvas>
     </Viewbox>
+    
 </UserControl>
