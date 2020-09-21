@@ -30,9 +30,9 @@
             <Image Source="{StaticResource PremiumLegendary}" Visibility="{Binding PremiumLegendaryBorderVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
             <Image Source="{StaticResource Poisonous}" Visibility="{Binding PoisonousVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
             <Image Source="{StaticResource DivineShield}" Visibility="{Binding DivineShieldVisibility}" Canvas.Left="-36" Canvas.Top="-24" Height="311" Width="325"/>
-            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding AttackDisplay}" Fill="{Binding AttackBrush}" Width="50" Height="50" FontSize="30" TextAlignment="Center" FontWeight="Bold" Canvas.Left="45" Canvas.Top="175"></hearthstoneDeckTracker:HearthstoneTextBlock>
-            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding HealthDisplay}" Fill="{Binding HealthBrush}" Width="50" Height="50" FontSize="30" TextAlignment="Center" FontWeight="Bold" Canvas.Left="162" Canvas.Top="179"></hearthstoneDeckTracker:HearthstoneTextBlock>
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding AttackDisplay}" Fill="{Binding AttackBrush}" Width="75" Height="75" FontSize="50" TextAlignment="Center" FontWeight="Bold" Canvas.Left="26" Canvas.Top="165"></hearthstoneDeckTracker:HearthstoneTextBlock>
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding HealthDisplay}" Fill="{Binding HealthBrush}" Width="75" Height="75" FontSize="50" TextAlignment="Center" FontWeight="Bold" Canvas.Left="149" Canvas.Top="165"></hearthstoneDeckTracker:HearthstoneTextBlock>
         </Canvas>
     </Viewbox>
-    
+
 </UserControl>

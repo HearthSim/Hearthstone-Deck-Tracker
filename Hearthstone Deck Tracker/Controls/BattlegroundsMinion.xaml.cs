@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows;
+using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Importing;
@@ -43,6 +43,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private Entity _entity;
 
+		private Color white = Color.FromScRgb(255, 255, 255, 255);
+
+		private Color green = Color.FromScRgb(255, 0, 255, 33);
+
 		public BattlegroundsMinion(Entity entity)
 		{
 			_entity = entity;
@@ -83,9 +87,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 				TauntVisibility = _entity.HasTag(GameTag.TAUNT) ? Visibility.Visible : Visibility.Hidden;
 				PremiumTauntVisibility = Visibility.Hidden;
 			}
-
-
-
 		}
 
 		private void SetAttackHealthBrush()
@@ -94,13 +95,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 			{
 				var originalAttack = _entity.HasTag(GameTag.PREMIUM) ? baseEntity.Attack * 2 : baseEntity.Attack;
 				var originalHealth = _entity.HasTag(GameTag.PREMIUM) ? baseEntity.Health * 2 : baseEntity.Health;
-				AttackBrush = _entity.Attack == originalAttack ? new SolidBrush(Color.White) : new SolidBrush(Color.Green);
-				HealthBrush = _entity.Health == originalHealth ? new SolidBrush(Color.White) : new SolidBrush(Color.Green);
+				AttackBrush = _entity.Attack == originalAttack ? new SolidColorBrush(white) : new SolidColorBrush(green);
+				HealthBrush = _entity.Health == originalHealth ? new SolidColorBrush(white) : new SolidColorBrush(green);
 			}
 			else
 			{
-				AttackBrush = new SolidBrush(Color.White);
-				HealthBrush = new SolidBrush(Color.White);
+				AttackBrush = new SolidColorBrush(white);
+				HealthBrush = new SolidColorBrush(white);
 			}
 		}
 
