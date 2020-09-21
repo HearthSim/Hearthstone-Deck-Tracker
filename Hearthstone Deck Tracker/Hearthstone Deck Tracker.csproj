@@ -1500,6 +1500,16 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\deathrattle.png" />
+    <Resource Include="Resources\taunt.png" />
+    <Resource Include="Resources\poisonous.png" />
+    <Resource Include="Resources\legendary_premium.png" />
+    <Resource Include="Resources\legendary.png" />
+    <Resource Include="Resources\border_premium.png" />
+    <Resource Include="Resources\border.png" />
+    <Resource Include="Resources\taunt_premium.png" />
+    <Resource Include="Resources\divine-shield.png" />
+    <None Include="Resources\Image1.bmp" />
     <Resource Include="Resources\ClassIcons\Square\demonhunter.png" />
     <Resource Include="Resources\ClassIcons\Round\demonhunter.png" />
     <Resource Include="Images\icon-pogo.png" />

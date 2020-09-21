@@ -42,6 +42,15 @@
                     <ImageSource x:Key="CollectionPromo">Resources/collection_promo.jpg</ImageSource>
                     <ImageSource x:Key="HearthstoneIcon">Resources/hearthstone-icon.png</ImageSource>
                     <ImageSource x:Key="BgsToastBackground">Resources/bgs-toast-background.jpg</ImageSource>
+                    <ImageSource x:Key="DivineShield">Resources/divine-shield.png</ImageSource>
+                    <ImageSource x:Key="MinionBorder">Resources/border.png</ImageSource>
+                    <ImageSource x:Key="PremiumMinionBorder">Resources/border_premium.png</ImageSource>
+                    <ImageSource x:Key="Deathrattle">Resources/deathrattle.png</ImageSource>
+                    <ImageSource x:Key="Legendary">Resources/legendary.png</ImageSource>
+                    <ImageSource x:Key="PremiumLegendary">Resources/legendary_premium.png</ImageSource>
+                    <ImageSource x:Key="Poisonous">Resources/poisonous.png</ImageSource>
+                    <ImageSource x:Key="Taunt">Resources/taunt.png</ImageSource>
+                    <ImageSource x:Key="PremiumTaunt">Resources/taunt_premium.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
