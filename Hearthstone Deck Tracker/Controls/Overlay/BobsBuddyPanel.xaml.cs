@@ -109,7 +109,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				_state = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(StatusMessage));
-				OnPropertyChanged(nameof(AverageDamageTooltipMessage));
 			}
 		}
 
@@ -135,8 +134,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		const float SoftLabelOpacity = 0.3f;
 
 		public string StatusMessage => StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults);
-
-		public string AverageDamageTooltipMessage => AverageDamageTooltipMessageConverter.GetAverageDamagetTooltipMessage(State, _lastCombatResult, _lastCombatPossibilities);
 
 		public Visibility WarningIconVisibility => ErrorState == BobsBuddyErrorState.None ? Visibility.Collapsed : Visibility.Visible;
 
@@ -227,17 +224,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private Visibility _averageDamageTooltipVisibility = Visibility.Hidden;
-		public Visibility AverageDamageTooltipVisibility
-		{
-			get => _averageDamageTooltipVisibility;
-			set
-			{
-				_averageDamageTooltipVisibility = value;
-				OnPropertyChanged();
-			}
-		}
-
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		private bool _resultsPanelExpanded = false;
@@ -312,7 +298,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			ShowResults(false);
 			ShowPercentagesHideSpinners();
 			OnPropertyChanged(nameof(StatusMessage));
-			OnPropertyChanged(nameof(AverageDamageTooltipMessage));
 		}
 
 		internal void HidePercentagesShowSpinners()
@@ -338,7 +323,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			_showingResults = show;
 			OnPropertyChanged(nameof(StatusMessage));
-			OnPropertyChanged(nameof(AverageDamageTooltipMessage));
 
 			if(show)
 				ExpandPanel();
@@ -419,13 +403,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			(FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
 
 			await Task.Delay(200);
-			AverageDamageTooltipVisibility = Visibility.Visible;
 		}
 
 		public void CollapseAverageDamagePanels()
 		{
 			(FindResource("StoryboardCollapseAverageDamage") as Storyboard)?.Begin();
-			AverageDamageTooltipVisibility = Visibility.Hidden;
 		}
 
 		private void BottomBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -461,7 +443,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Collapsed;
-			DamageTooltip.IsOpen = false;
 			if(!Config.Instance.AlwaysShowAverageDamage)
 				CollapseAverageDamagePanels();
 		}
@@ -490,8 +471,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void AverageDamageTakenPanel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			DamageTooltip.PlacementTarget = MainPanel;	
-			DamageTooltip.IsOpen = true;
 		}
 	}
 }

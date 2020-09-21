@@ -208,20 +208,6 @@
             <local:HearthstoneTextBlock Text="{Binding AverageDamageTakenDisplay}" FontSize="17" Opacity="{Binding OpponentAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible"/>
         </StackPanel>
-        <StackPanel.ToolTip>
-            <ToolTip x:Name="DamageTooltip" Placement="Bottom" Background="Transparent" BorderThickness="0" HorizontalOffset="-64" VerticalOffset="-38" Visibility="{Binding AverageDamageTooltipVisibility}">
-                <!--(82/2) - (400/2)-->
-                <Grid Width="750">
-                    <Border HorizontalAlignment="Left" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding PercentagesVisibility}" Height="auto">
-                        <local:HearthstoneTextBlock FontSize="12" Text="{Binding AverageDamageTooltipMessage}" MaxHeight="15"/>
-                    </Border>
-
-                    <Border HorizontalAlignment="Center" Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,-300,0" Visibility="{Binding PercentagesVisibility}" Height="auto">
-                        <local:HearthstoneTextBlock FontSize="12" Text="{Binding AverageDamageTooltipMessage}" MaxHeight="15"/>
-                    </Border>
-                </Grid>
-            </ToolTip>
-
-        </StackPanel.ToolTip>
+       
     </StackPanel>
 </UserControl>
