@@ -193,6 +193,24 @@
                     </Rectangle>
                 </Grid>
             </Border>
+            <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding InfoVisibility}" MaxWidth="352">
+                <Grid>
+                    <StackPanel Margin="10">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Average Damage" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                        <TextBlock Foreground="White" FontSize="14" TextWrapping="Wrap">
+                        <Run Text="These panels show the middle 80th percentile of possible damage outcomes."/>
+                        </TextBlock>
+                    </StackPanel>
+                    <Rectangle Width="14" Height="14" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" MouseDown="CloseAverageDamageInfo_MouseDown">
+                        <Rectangle.Fill>
+                            <VisualBrush Visual="{StaticResource appbar_close_white}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Grid>
+            </Border>
+            
         </StackPanel>
 
         <StackPanel Width="8">
