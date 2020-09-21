@@ -805,6 +805,12 @@ namespace Hearthstone_Deck_Tracker
 		public bool SeenBobsBuddyInfo = false;
 
 		[DefaultValue(false)]
+		public bool SeenBobsBuddyAverageDamageInfo = false;
+
+		[DefaultValue(false)]
+		public bool BobsBuddyAverageDamageInfoClosed = false;
+
+		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;
 
 		[DefaultValue(DeckDateType.None)]

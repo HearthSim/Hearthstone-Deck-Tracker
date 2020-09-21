@@ -224,6 +224,28 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private Visibility _averageDamageInfoVisibility = Config.Instance.SeenBobsBuddyAverageDamageInfo ? Visibility.Collapsed : Visibility.Visible;
+		public Visibility AverageDamageInfoVisibility
+		{
+			get => _averageDamageInfoVisibility;
+			set
+			{
+				_averageDamageInfoVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _closeAverageDamageInfoVisibility;
+		public Visibility CloseAverageDamageInfoVisibility
+		{
+			get => _closeAverageDamageInfoVisibility;
+			set
+			{
+				_closeAverageDamageInfoVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		private bool _resultsPanelExpanded = false;
@@ -401,7 +423,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public async Task ExpandAverageDamagePanels()
 		{
 			(FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
-
 			await Task.Delay(200);
 		}
 
@@ -428,16 +449,21 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public void AttemptToExpandAverageDamagePanels()
+		public void AttemptToExpandAverageDamagePanels(bool attemptShowAverageDamageInfo)
 		{
 			if(State != BobsBuddyState.Initial && _resultsPanelExpanded)
+			{
 				ExpandAverageDamagePanels();
+				if(attemptShowAverageDamageInfo && !Config.Instance.BobsBuddyAverageDamageInfoClosed)
+					AverageDamageInfoVisibility = Visibility.Visible;
+
+			}
 		}
 
 		private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Visible;
-			AttemptToExpandAverageDamagePanels();
+			AttemptToExpandAverageDamagePanels(true);
 		}
 
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -471,6 +497,23 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void AverageDamageTakenPanel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
+		}
+
+		private void CloseAverageDamageInfo_MouseDown(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			Console.WriteLine("went to close av damage");
+			CloseAverageDamageInfoVisibility = Visibility.Hidden;
+			AverageDamageInfoVisibility = Visibility.Hidden;
+
+		}
+
+		private void UpdateSeenAverageDamageInfo()
+		{
+			if(!Config.Instance.SeenBobsBuddyAverageDamageInfo)
+			{
+				Config.Instance.SeenBobsBuddyAverageDamageInfo = true;
+				Config.Save();
+			}
 		}
 	}
 }
