@@ -43,9 +43,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private Entity _entity;
 
-		private Color white = Color.FromScRgb(255, 255, 255, 255);
+		private Color white = Color.FromScRgb(1, 1, 1, 1);
 
-		private Color green = Color.FromScRgb(255, 0, 255, 33);
+		private Color green = Color.FromScRgb(1, .109f, .89f, .109f);
 
 		public BattlegroundsMinion(Entity entity)
 		{
