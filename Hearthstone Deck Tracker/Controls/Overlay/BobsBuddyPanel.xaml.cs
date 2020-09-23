@@ -241,6 +241,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private bool _resultsPanelExpanded = false;
 
+		private static List<int> _playerDamageDealtBounds;
+		private static List<int> _opponentDamageDealtBounds;
+
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{
 			ShowPercentagesHideSpinners();
@@ -259,7 +262,33 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OpponentAverageDamageOpacity = possibleResults.Where(x => x < 0).Any() ? 1 : SoftLabelOpacity;
 		}
 
-		internal void SetLastOutcome(int lastOutcome) => _lastCombatResult = lastOutcome;
+
+		internal void SetLastOutcome(int lastOutcome)
+		{
+			_lastCombatResult = lastOutcome;
+			CheckIfDamageOutcomeOutsideEightyPercent();
+		}
+
+
+		private void CheckIfDamageOutcomeOutsideEightyPercent()
+		{
+			if(_lastCombatResult < 0 && _opponentDamageDealtBounds != null)
+			{
+				if(_lastCombatResult < _opponentDamageDealtBounds[0] || _lastCombatResult > _opponentDamageDealtBounds[1])
+				{
+					if(!Config.Instance.BobsBuddyAverageDamageInfoClosed)
+						AttemptToExpandAverageDamagePanels(true);
+				}
+			}
+			else if(_lastCombatResult > 0 && _playerDamageDealtBounds != null)
+			{
+				if(_lastCombatResult < _playerDamageDealtBounds[0] || _lastCombatResult > _playerDamageDealtBounds[1])
+				{
+					if(!Config.Instance.BobsBuddyAverageDamageInfoClosed)
+						AttemptToExpandAverageDamagePanels(true);
+				}
+			}
+		}
 
 		internal void SetAverageDamage(List<int> possibleResults)
 		{
@@ -267,14 +296,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var opponentSortedDamageDealtPossibilites = possibleResults.Where(x => x < 0).Select(y => y * -1).ToList();
 			opponentSortedDamageDealtPossibilites.Sort((x, y) => x.CompareTo(y));
 
-			var playerDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(playerDamageDealtPossibilities);
-			var opponentDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(opponentSortedDamageDealtPossibilites);
+			_playerDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(playerDamageDealtPossibilities);
+			_opponentDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(opponentSortedDamageDealtPossibilites);
 
-			PlayerAverageDamageOpacity = playerDamageDealtBounds == null ? SoftLabelOpacity : 1;
-			OpponentAverageDamageOpacity = opponentDamageDealtBounds == null ? SoftLabelOpacity : 1;
+			PlayerAverageDamageOpacity = _playerDamageDealtBounds == null ? SoftLabelOpacity : 1;
+			OpponentAverageDamageOpacity = _opponentDamageDealtBounds == null ? SoftLabelOpacity : 1;
 
-			AverageDamageGivenDisplay = FormatDamageBoundsFrom(playerDamageDealtBounds);
-			AverageDamageTakenDisplay = FormatDamageBoundsFrom(opponentDamageDealtBounds);
+			AverageDamageGivenDisplay = FormatDamageBoundsFrom(_playerDamageDealtBounds);
+			AverageDamageTakenDisplay = FormatDamageBoundsFrom(_opponentDamageDealtBounds);
 		}
 
 		private List<int> GetTwentiethAndEightiethPercentileFor(List<int> possibleResults)
@@ -444,6 +473,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			if(State != BobsBuddyState.Initial && _resultsPanelExpanded)
 			{
+				UpdateSeenAverageDamage();
 				ExpandAverageDamagePanels();
 				if(attemptShowAverageDamageInfo && !Config.Instance.BobsBuddyAverageDamageInfoClosed)
 					AverageDamageInfoVisibility = Visibility.Visible;
@@ -501,11 +531,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		}
 
-		private void UpdateSeenAverageDamageInfo()
+		private void UpdateSeenAverageDamage()
 		{
-			if(!Config.Instance.SeenBobsBuddyAverageDamageInfo)
+			if(!Config.Instance.SeenBobsBuddyAverageDamage)
 			{
-				Config.Instance.SeenBobsBuddyAverageDamageInfo = true;
+				Config.Instance.SeenBobsBuddyAverageDamage = true;
 				Config.Save();
 			}
 		}

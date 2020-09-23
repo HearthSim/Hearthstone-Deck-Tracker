@@ -805,7 +805,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool SeenBobsBuddyInfo = false;
 
 		[DefaultValue(false)]
-		public bool SeenBobsBuddyAverageDamageInfo = false;
+		public bool SeenBobsBuddyAverageDamage = false;
 
 		[DefaultValue(false)]
 		public bool BobsBuddyAverageDamageInfoClosed = false;
