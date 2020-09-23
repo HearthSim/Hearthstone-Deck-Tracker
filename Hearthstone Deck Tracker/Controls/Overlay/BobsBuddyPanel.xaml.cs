@@ -314,7 +314,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			return new List<int>() { possibleResults[(int)Math.Floor(.2 * count)], possibleResults[(int)Math.Floor(.8 * count)] };
 		}
 
-		private string FormatDamageBoundsFrom(List<int> from) => from == null ? "N/A" : from[0] == from[1] ? from[0].ToString() : string.Format("{0}–{1}", from[0], from[1]);
+		private string FormatDamageBoundsFrom(List<int> from) => from == null ? "0" : from[0] == from[1] ? from[0].ToString() : string.Format("{0}–{1}", from[0], from[1]);
 
 		/// <summary>
 		/// called when user enters a new game of BG
