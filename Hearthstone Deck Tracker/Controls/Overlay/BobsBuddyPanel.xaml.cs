@@ -17,6 +17,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 	{
 		public BobsBuddyPanel()
 		{
+			Config.Instance.SeenBobsBuddyAverageDamage = false;
+			Config.Instance.BobsBuddyAverageDamageInfoClosed = false;
+			Config.Save();
 			InitializeComponent();
 			ResetDisplays();
 		}
@@ -224,7 +227,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private Visibility _averageDamageInfoVisibility = Visibility.Hidden;
+		private Visibility _averageDamageInfoVisibility = Visibility.Collapsed;
 		public Visibility AverageDamageInfoVisibility
 		{
 			get => _averageDamageInfoVisibility;
@@ -281,20 +284,20 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void CheckIfDamageOutcomeOutsideEightyPercent()
 		{
+			if(Config.Instance.SeenBobsBuddyAverageDamage)
+				return;
 			if(_lastCombatResult < 0 && _opponentDamageDealtBounds != null)
 			{
 				if(_lastCombatResult < _opponentDamageDealtBounds[0] || _lastCombatResult > _opponentDamageDealtBounds[1])
 				{
-					if(!Config.Instance.BobsBuddyAverageDamageInfoClosed)
-						AttemptToExpandAverageDamagePanels(true);
+					AttemptToExpandAverageDamagePanels(true);
 				}
 			}
 			else if(_lastCombatResult > 0 && _playerDamageDealtBounds != null)
 			{
 				if(_lastCombatResult < _playerDamageDealtBounds[0] || _lastCombatResult > _playerDamageDealtBounds[1])
 				{
-					if(!Config.Instance.BobsBuddyAverageDamageInfoClosed)
-						AttemptToExpandAverageDamagePanels(true);
+					AttemptToExpandAverageDamagePanels(true);
 				}
 			}
 		}
@@ -499,7 +502,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Collapsed;
-			AverageDamageInfoVisibility = Visibility.Hidden;
+			AverageDamageInfoVisibility = Visibility.Collapsed;
 			if(!Config.Instance.AlwaysShowAverageDamage)
 				CollapseAverageDamagePanels();
 		}
@@ -536,7 +539,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Console.WriteLine("went to close av damage");
 			Config.Instance.BobsBuddyAverageDamageInfoClosed = true;
 			Config.Save();
-			AverageDamageInfoVisibility = Visibility.Hidden;
+			AverageDamageInfoVisibility = Visibility.Collapsed;
 			CloseAverageDamageInfoVisibility = Visibility.Collapsed;
 
 		}
@@ -553,7 +556,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void AverageDamageTakenPanel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			if(Config.Instance.BobsBuddyAverageDamageInfoClosed)
-				AverageDamageInfoVisibility = Visibility.Hidden;
+				AverageDamageInfoVisibility = Visibility.Collapsed;
 		}
 	}
 }
