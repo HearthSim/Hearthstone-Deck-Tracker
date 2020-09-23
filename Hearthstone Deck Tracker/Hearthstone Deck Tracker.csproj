@@ -232,7 +232,6 @@
     <Compile Include="BobsBuddy\CombatResult.cs" />
     <Compile Include="BobsBuddy\LethalResult.cs" />
     <Compile Include="BobsBuddy\MinionHeroPowerTrigger.cs" />
-    <Compile Include="BobsBuddy\AverageDamageTooltipMessageConverter.cs" />
     <Compile Include="Controls\AnimatedCard.xaml.cs">
       <DependentUpon>AnimatedCard.xaml</DependentUpon>
     </Compile>
