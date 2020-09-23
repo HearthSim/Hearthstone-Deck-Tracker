@@ -224,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private Visibility _averageDamageInfoVisibility = Config.Instance.SeenBobsBuddyAverageDamageInfo ? Visibility.Collapsed : Visibility.Visible;
+		private Visibility _averageDamageInfoVisibility = Visibility.Hidden;
 		public Visibility AverageDamageInfoVisibility
 		{
 			get => _averageDamageInfoVisibility;
@@ -460,6 +460,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Collapsed;
+			AverageDamageInfoVisibility = Visibility.Hidden;
 			if(!Config.Instance.AlwaysShowAverageDamage)
 				CollapseAverageDamagePanels();
 		}
@@ -488,6 +489,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void AverageDamageTakenPanel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
+			AverageDamageInfoVisibility = Visibility.Visible;
 		}
 
 		private void CloseAverageDamageInfo_MouseDown(object sender, System.Windows.Input.MouseEventArgs e)
@@ -506,6 +508,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				Config.Instance.SeenBobsBuddyAverageDamageInfo = true;
 				Config.Save();
 			}
+		}
+
+		private void AverageDamageTakenPanel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			if(Config.Instance.BobsBuddyAverageDamageInfoClosed)
+				AverageDamageInfoVisibility = Visibility.Hidden;
 		}
 	}
 }

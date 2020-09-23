@@ -71,7 +71,7 @@
     </UserControl.Resources>
     <StackPanel x:Name="MainPanel" Orientation="Horizontal" ToolTipService.InitialShowDelay="2000" ToolTipService.ShowDuration="100000">
         <Grid>
-            <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 0, 5" Height="0" Visibility= "Visible" MouseEnter="AverageDamageTakenPanel_MouseEnter">
+            <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 0, 5" Height="0" Visibility= "Visible" MouseEnter="AverageDamageTakenPanel_MouseEnter" MouseLeave="AverageDamageTakenPanel_MouseLeave">
                 <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                     <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Visibility="Visible" Opacity="{Binding PlayerAverageDamageOpacity}" />
                 </Border>
@@ -193,7 +193,7 @@
                     </Rectangle>
                 </Grid>
             </Border>
-            <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding InfoVisibility}" MaxWidth="352">
+            <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding AverageDamageInfoVisibility}" MaxWidth="352">
                 <Grid>
                     <StackPanel Margin="10">
                         <StackPanel Orientation="Horizontal">
@@ -219,7 +219,7 @@
                 <SolidColorBrush Color="Black" Opacity="0.01"/>
             </StackPanel.Background>
         </StackPanel>
-        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="0, 0, 5, 5" Height="0" Background="#141617" Visibility="Visible" MouseEnter="AverageDamageTakenPanel_MouseEnter">
+        <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="0, 0, 5, 5" Height="0" Background="#141617" Visibility="Visible" MouseEnter="AverageDamageTakenPanel_MouseEnter" MouseLeave="AverageDamageTakenPanel_MouseLeave">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
                 <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
             </Border>
