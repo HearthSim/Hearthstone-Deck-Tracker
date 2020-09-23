@@ -235,7 +235,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public Visibility CloseAverageDamageInfoVisibility => Config.Instance.BobsBuddyAverageDamageInfoClosed ? Visibility.Hidden : Visibility.Visible;
+		private Visibility _closeAverageDamageInfoVisibility = Config.Instance.BobsBuddyAverageDamageInfoClosed ? Visibility.Collapsed : Visibility.Visible;
+		public Visibility CloseAverageDamageInfoVisibility
+		{
+			get => _closeAverageDamageInfoVisibility;
+			set
+			{
+				_closeAverageDamageInfoVisibility = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -528,6 +537,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Config.Instance.BobsBuddyAverageDamageInfoClosed = true;
 			Config.Save();
 			AverageDamageInfoVisibility = Visibility.Hidden;
+			CloseAverageDamageInfoVisibility = Visibility.Collapsed;
 
 		}
 
