@@ -235,16 +235,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private Visibility _closeAverageDamageInfoVisibility;
-		public Visibility CloseAverageDamageInfoVisibility
-		{
-			get => _closeAverageDamageInfoVisibility;
-			set
-			{
-				_closeAverageDamageInfoVisibility = value;
-				OnPropertyChanged();
-			}
-		}
+		public Visibility CloseAverageDamageInfoVisibility => Config.Instance.BobsBuddyAverageDamageInfoClosed ? Visibility.Hidden : Visibility.Visible;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -502,7 +493,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void CloseAverageDamageInfo_MouseDown(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			Console.WriteLine("went to close av damage");
-			CloseAverageDamageInfoVisibility = Visibility.Hidden;
+			Config.Instance.BobsBuddyAverageDamageInfoClosed = true;
+			Config.Save();
 			AverageDamageInfoVisibility = Visibility.Hidden;
 
 		}

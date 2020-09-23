@@ -203,7 +203,7 @@
                         <Run Text="These panels show the middle 80th percentile of possible damage outcomes."/>
                         </TextBlock>
                     </StackPanel>
-                    <Rectangle Width="14" Height="14" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" MouseDown="CloseAverageDamageInfo_MouseDown">
+                    <Rectangle Width="14" Height="14" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" MouseDown="CloseAverageDamageInfo_MouseDown" Visibility="{Binding CloseAverageDamageInfoVisibility}">
                         <Rectangle.Fill>
                             <VisualBrush Visual="{StaticResource appbar_close_white}" />
                         </Rectangle.Fill>
