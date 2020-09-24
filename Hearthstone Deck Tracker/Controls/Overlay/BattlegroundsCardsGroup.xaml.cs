@@ -36,30 +36,38 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public Visibility TitleVisibility => string.IsNullOrEmpty(Title) ? Visibility.Collapsed : Visibility.Visible;
 
-		private bool _available;
-		public bool Available
+		private Visibility _unavailableRacesVisibility = Visibility.Collapsed;
+		public Visibility UnavailableRacesVisibility
 		{
-			get => _available;
+			get => _unavailableRacesVisibility;
 			set
 			{
-				if(_available == value)
-					return;
-				_available = value;
+				_unavailableRacesVisibility = value;
 				OnPropertyChanged();
-				OnPropertyChanged(nameof(CardsVisibility));
-				OnPropertyChanged(nameof(UnavailableVisibility));
 			}
 		}
 
-		public Visibility CardsVisibility => Available ? Visibility.Visible : Visibility.Collapsed;
-
-		public Visibility UnavailableVisibility => Available ? Visibility.Collapsed : Visibility.Visible;
-
-		public void UpdateCards(List<Hearthstone.Card> cards, bool available)
+		private string _unavailableRacesText;
+		public string UnavailableRacesText
 		{
-			Available = available;
+			get => _unavailableRacesText;
+			set
+			{
+				_unavailableRacesText = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public void UpdateCards(List<Hearthstone.Card> cards)
+		{
 			Cards.Update(cards, true);
 			Visibility = Visibility.Visible;
+		}
+
+		public void SetUnaivalableRaceContainer(string unavailableRaces)
+		{
+			UnavailableRacesVisibility = Visibility.Visible;
+			UnavailableRacesText = unavailableRaces;
 		}
 
 		public void Hide()
