@@ -54,6 +54,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static bool _removedLichKingHeroPowerFromMinion = false;
 		public static bool CanRemoveLichKing => RemoteConfig.Instance.Data?.BobsBuddy?.CanRemoveLichKing ?? false;
 
+		private static int _lastRecordedDamageDealt = 0;
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
@@ -267,6 +268,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(HasErrorState())
 					return;
 
+				BobsBuddyDisplay.SetLastOutcome(GetLastCombatDamageDealt());
 				DebugLog("Setting UI state to shopping");
 				BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
 
@@ -299,6 +301,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			DebugLog($"Updating entities with attacker={attacker.Card.Name}, defender={defender.Card.Name}");
 			_defendingHero = defender;
 			_attackingHero = attacker;
+			_lastRecordedDamageDealt = attacker.Attack;
 		}
 
 		private bool IsUnknownCard(Entity e) => e?.Card.Id == Database.UnknownCardId;
@@ -428,6 +431,19 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(ReportErrors)
 					Sentry.CaptureBobsBuddyException(e, _input, _turn, _recentHDTLog);
 				return null;
+			}
+		}
+
+		private int GetLastCombatDamageDealt()
+		{
+			switch(GetLastCombatResult())
+			{
+				case CombatResult.Win:
+					return _lastRecordedDamageDealt;
+				case CombatResult.Loss:
+					return _lastRecordedDamageDealt * -1;
+				default:
+					return 0;
 			}
 		}
 
