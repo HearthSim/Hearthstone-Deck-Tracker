@@ -454,8 +454,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public async Task ExpandAverageDamagePanels()
 		{
-			(FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
 			await Task.Delay(200);
+			(FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
 		}
 
 		public void CollapseAverageDamagePanels()
@@ -469,8 +469,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				if(!_showingResults)
 				{
-					ShowResults(true);
 					ExpandAverageDamagePanels();
+					ShowResults(true);
 				}
 				else if(CanMinimize)
 				{
