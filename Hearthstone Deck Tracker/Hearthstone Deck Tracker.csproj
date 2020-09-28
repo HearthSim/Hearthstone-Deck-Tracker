@@ -295,6 +295,9 @@
     <Compile Include="Controls\StatusIndicator.xaml.cs">
       <DependentUpon>StatusIndicator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UnavailableBattlegroundsTypes.xaml.cs">
+      <DependentUpon>UnavailableBattlegroundsTypes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\DeckDateType.cs" />
     <Compile Include="Enums\HsActionType.cs" />
     <Compile Include="Enums\League.cs" />
@@ -1041,6 +1044,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\StatusIndicator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\UnavailableBattlegroundsTypes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

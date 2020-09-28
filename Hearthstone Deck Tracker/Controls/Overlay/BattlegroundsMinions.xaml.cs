@@ -34,18 +34,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Update(0, _db.Value.Races);
 		}
 
-		private bool AddOrUpdateUnavailableRacesGroup(string title, string unavailableRaces)
+		private void UpdateUnavailableRaces(string unavailableRaces)
 		{
-			var existing = Groups.FirstOrDefault(x => x.Title == title);
-			var addedNew = false;
-			if(existing == null)
-			{
-				existing = new BattlegroundsCardsGroup() { Title = title };
-				Groups.Add(existing);
-				addedNew = true;
-			}
-			existing.SetUnaivalableRaceContainer(unavailableRaces);
-			return addedNew;
+			UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Visible;
+			UnavailableTypes.UnavailableRacesText = unavailableRaces;
 		}
 
 		private bool AddOrUpdateBgCardGroup(string title, List<Hearthstone.Card> cards, bool available)
@@ -86,6 +78,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				for(var i = 0; i < 6; i++)
 					_tierIcons[i].SetFaded(false);
 				Groups.Clear();
+				UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Collapsed;
 				return;
 			}
 			for(var i = 0; i < 6; i++)
@@ -94,7 +87,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var resort = false;
 
 			var unavailableRaces = string.Join(", ", _db.Value.Races.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL).Select(x => HearthDbConverter.RaceConverter(x)));
-			resort |= AddOrUpdateUnavailableRacesGroup("Missing Minion Types", unavailableRaces);
+			UpdateUnavailableRaces(unavailableRaces);
 
 			foreach(var race in _db.Value.Races)
 			{

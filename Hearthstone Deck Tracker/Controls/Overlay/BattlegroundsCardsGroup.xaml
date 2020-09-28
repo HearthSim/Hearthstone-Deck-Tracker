@@ -23,7 +23,6 @@
             </Border>
             <Grid Grid.Row="0" ClipToBounds="True" Margin="5">
                 <controls:AnimatedCardList x:Name="Cards" Margin="-33,0,0,0"/>
-                <TextBlock Text="{Binding UnavailableRacesText, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}" Foreground="White" Opacity="0.4" FontWeight="SemiBold" Visibility="{Binding UnavailableRacesVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"/>
             </Grid>
         </StackPanel>
     </Border>
