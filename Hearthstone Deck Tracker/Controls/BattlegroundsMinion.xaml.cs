@@ -104,7 +104,5 @@ namespace Hearthstone_Deck_Tracker.Controls
 				HealthBrush = new SolidColorBrush(white);
 			}
 		}
-
-		private void SetVisibility(Visibility setFor, bool makeVisibile) => setFor = makeVisibile ? Visibility.Visible : Visibility.Hidden;
 	}
 }

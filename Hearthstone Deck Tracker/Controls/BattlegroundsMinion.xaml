@@ -17,10 +17,7 @@
             <Image Source="{StaticResource PremiumTaunt}" Visibility="{Binding PremiumTauntVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
             <Image HorizontalAlignment="Center" Width="256" Height="256" Source="{Binding CardImagePath}">
                 <Image.Clip>
-                    <EllipseGeometry
-                      RadiusX="87"
-                             RadiusY="120"
-                        Center="128,128"/>
+                    <EllipseGeometry RadiusX="87" RadiusY="120" Center="128,128"/>
                 </Image.Clip>
             </Image>
             <Image Source="{StaticResource MinionBorder}" Visibility="{Binding BorderVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
