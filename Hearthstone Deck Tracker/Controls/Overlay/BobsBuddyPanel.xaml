@@ -78,7 +78,6 @@
                 <local:HearthstoneTextBlock Text="{Binding AverageDamageGivenDisplay}" FontSize="17" Opacity="{Binding PlayerAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </StackPanel>
-
         </Grid>
         <StackPanel Width="8">
             <StackPanel.Background>
@@ -210,7 +209,6 @@
                     </Rectangle>
                 </Grid>
             </Border>
-            
         </StackPanel>
 
         <StackPanel Width="8">

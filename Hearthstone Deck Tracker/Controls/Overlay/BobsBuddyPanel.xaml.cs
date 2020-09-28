@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media.Animation;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
@@ -17,9 +16,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 	{
 		public BobsBuddyPanel()
 		{
-			Config.Instance.SeenBobsBuddyAverageDamage = false;
-			Config.Instance.BobsBuddyAverageDamageInfoClosed = false;
-			Config.Save();
 			InitializeComponent();
 			ResetDisplays();
 		}
@@ -278,28 +274,30 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		internal void SetLastOutcome(int lastOutcome)
 		{
 			_lastCombatResult = lastOutcome;
-			CheckIfDamageOutcomeOutsideEightyPercent();
+			if(IsDamageOutcomeOutsideEightyPercent())
+				AttemptToExpandAverageDamagePanels(true);
 		}
 
 
-		private void CheckIfDamageOutcomeOutsideEightyPercent()
+		private bool IsDamageOutcomeOutsideEightyPercent()
 		{
 			if(Config.Instance.SeenBobsBuddyAverageDamage)
-				return;
+				return false;
 			if(_lastCombatResult < 0 && _opponentDamageDealtBounds != null)
 			{
 				if(_lastCombatResult < _opponentDamageDealtBounds[0] || _lastCombatResult > _opponentDamageDealtBounds[1])
 				{
-					AttemptToExpandAverageDamagePanels(true);
+					return true;
 				}
 			}
 			else if(_lastCombatResult > 0 && _playerDamageDealtBounds != null)
 			{
 				if(_lastCombatResult < _playerDamageDealtBounds[0] || _lastCombatResult > _playerDamageDealtBounds[1])
 				{
-					AttemptToExpandAverageDamagePanels(true);
+					return true;
 				}
 			}
+			return false;
 		}
 
 		internal void SetAverageDamage(List<int> possibleResults)
@@ -322,11 +320,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			var count = possibleResults.Count;
 			if(count == 0)
-				return null;
-			return new List<int>() { possibleResults[(int)Math.Floor(.2 * count)], possibleResults[(int)Math.Floor(.8 * count)] };
+				return new List<int>() { 0 };
+			return new List<int>()
+			{
+				possibleResults[(int)Math.Floor(.2 * count)],
+				possibleResults[(int)Math.Floor(.8 * count)]
+			};
 		}
 
-		private string FormatDamageBoundsFrom(List<int> from) => from == null ? "0" : from[0] == from[1] ? from[0].ToString() : string.Format("{0}–{1}", from[0], from[1]);
+		private string FormatDamageBoundsFrom(List<int> from) => string.Join("–", from.Distinct());
 
 		/// <summary>
 		/// called when user enters a new game of BG
