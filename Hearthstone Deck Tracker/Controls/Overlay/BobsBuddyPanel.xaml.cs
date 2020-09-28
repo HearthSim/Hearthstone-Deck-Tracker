@@ -476,7 +476,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				{
 					ShowResults(false);
 					CollapseAverageDamagePanels();
-
 				}
 			}
 		}
@@ -489,7 +488,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				ExpandAverageDamagePanels();
 				if(attemptShowAverageDamageInfo && !Config.Instance.BobsBuddyAverageDamageInfoClosed)
 					AverageDamageInfoVisibility = Visibility.Visible;
-
 			}
 		}
 
@@ -536,12 +534,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void CloseAverageDamageInfo_MouseDown(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			Console.WriteLine("went to close av damage");
 			Config.Instance.BobsBuddyAverageDamageInfoClosed = true;
 			Config.Save();
 			AverageDamageInfoVisibility = Visibility.Collapsed;
 			CloseAverageDamageInfoVisibility = Visibility.Collapsed;
-
 		}
 
 		private void UpdateSeenAverageDamage()

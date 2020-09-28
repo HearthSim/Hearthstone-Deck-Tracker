@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Web.UI.WebControls;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
@@ -194,6 +193,5 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			e.Handled = true;
 			Core.MainWindow.Options.TreeViewItemStreamingCapturableOverlay.IsSelected = true;
 		}
-
 	}
 }

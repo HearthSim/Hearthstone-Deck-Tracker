@@ -38,7 +38,6 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top" Checked="CheckboxAlwaysShowAverageDamage_Checked"
                           Unchecked="CheckboxAlwaysShowAverageDamage_Unchecked" Margin="0,5,0,0" />
-                
             </StackPanel>
         </GroupBox>
         <Button x:Name="OverlayHelpButton"
