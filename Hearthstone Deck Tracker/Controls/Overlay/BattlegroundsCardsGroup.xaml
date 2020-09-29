@@ -22,10 +22,7 @@
                  />
             </Border>
             <Grid Grid.Row="0" ClipToBounds="True" Margin="5">
-                <controls:AnimatedCardList x:Name="Cards" Margin="-33,0,0,0"
-                    Visibility="{Binding CardsVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"/>
-                <TextBlock Text="{lex:Loc BattlegroundsCards_Tribe_NotAvailable}" Foreground="White" Opacity="0.4" TextAlignment="Center" FontWeight="SemiBold"
-                    Visibility="{Binding UnavailableVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsCardsGroup}}"/>
+                <controls:AnimatedCardList x:Name="Cards" Margin="-33,0,0,0"/>
             </Grid>
         </StackPanel>
     </Border>

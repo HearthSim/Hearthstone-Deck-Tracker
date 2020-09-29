@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              mc:Ignorable="d">
     <StackPanel Name="BattlegroundsTierlistPanel" Canvas.Right="0" Canvas.Top="0">
         <Border BorderBrush="#141617" BorderThickness="1" Background="#23272a">
@@ -18,5 +19,6 @@
         </Border>
         <ItemsControl HorizontalAlignment="Right" Margin="0,0,6,0"
             ItemsSource="{Binding Groups, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"/>
+        <controls:UnavailableBattlegroundsTypes x:Name="UnavailableTypes" HorizontalAlignment="Right"/>
     </StackPanel>
 </UserControl>

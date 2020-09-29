@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Update(0, _db.Value.Races);
 		}
 
-		private bool AddOrUpdateBgCardGroup(string title, List<Hearthstone.Card> cards, bool available)
+		private bool AddOrUpdateBgCardGroup(string title, List<Hearthstone.Card> cards)
 		{
 			var addedNew = false;
 			var existing = Groups.FirstOrDefault(x => x.Title == title);
@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var sortedCards = cards
 				.OrderBy(x => x.LocalizedName)
 				.ToList();
-			existing.UpdateCards(sortedCards, available);
+			existing.UpdateCards(sortedCards);
 			return addedNew;
 		}
 
@@ -72,13 +72,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				for(var i = 0; i < 6; i++)
 					_tierIcons[i].SetFaded(false);
 				Groups.Clear();
+				UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Collapsed;
 				return;
 			}
 			for(var i = 0; i < 6; i++)
 				_tierIcons[i].SetFaded(i != tier - 1);
 
 			var resort = false;
-			
+
+			var unavailableRaces = string.Join(", ", _db.Value.Races.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL).Select(x => HearthDbConverter.RaceConverter(x)));
+			UnavailableTypes.UnavailableTypesVisibility = System.Windows.Visibility.Visible;
+			UnavailableTypes.UnavailableRacesText = unavailableRaces;
+
 			foreach(var race in _db.Value.Races)
 			{
 				var title = race == Race.INVALID ? "Other" : HearthDbConverter.RaceConverter(race);
@@ -91,8 +96,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					Groups.FirstOrDefault(x => x.Title == title)?.Hide();
 				else
 				{
-					var available = race == Race.ALL || race == Race.INVALID || availableRaces.Contains(race);
-					resort |= AddOrUpdateBgCardGroup(title, cards, available);
+					if(race == Race.ALL || race == Race.INVALID || availableRaces.Contains(race))
+						resort |= AddOrUpdateBgCardGroup(title, cards);
 				}
 			}
 
