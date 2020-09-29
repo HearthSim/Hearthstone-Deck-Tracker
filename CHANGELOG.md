@@ -1,3 +1,7 @@
+## **Release v1.13.6 - 2020-09-29**
+**Updated for Hearthstone 18.4.0.60352**
+
+
 ## **Release v1.13.5 - 2020-09-08**
 **Updated for Hearthstone 18.2.0.58213**
 
