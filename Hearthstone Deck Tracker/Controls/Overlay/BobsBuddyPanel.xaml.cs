@@ -266,8 +266,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PlayerLethalOpacity = playerLethal > 0 ? 1 : SoftLabelOpacity;
 			OpponentLethalOpacity = opponentLethal > 0 ? 1 : SoftLabelOpacity;
 
-			PlayerAverageDamageOpacity = possibleResults.Where(x => x > 0).Any() ? 1 : SoftLabelOpacity;
-			OpponentAverageDamageOpacity = possibleResults.Where(x => x < 0).Any() ? 1 : SoftLabelOpacity;
+			PlayerAverageDamageOpacity = possibleResults.Any(x => x > 0) ? 1 : SoftLabelOpacity;
+			OpponentAverageDamageOpacity = possibleResults.Any(x => x < 0) ? 1 : SoftLabelOpacity;
 		}
 
 
