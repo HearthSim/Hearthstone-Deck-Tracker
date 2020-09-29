@@ -19,6 +19,6 @@
         </Border>
         <ItemsControl HorizontalAlignment="Right" Margin="0,0,6,0"
             ItemsSource="{Binding Groups, RelativeSource={RelativeSource AncestorType=local:BattlegroundsMinions}}"/>
-        <controls:UnavailableBattlegroundsTypes x:Name="UnavailableTypes" HorizontalAlignment="Right"></controls:UnavailableBattlegroundsTypes>
+        <controls:UnavailableBattlegroundsTypes x:Name="UnavailableTypes" HorizontalAlignment="Right"/>
     </StackPanel>
 </UserControl>
