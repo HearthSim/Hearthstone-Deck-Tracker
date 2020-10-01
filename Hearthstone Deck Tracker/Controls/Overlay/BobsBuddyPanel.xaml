@@ -29,6 +29,14 @@
             <Setter Property="MinWidth" Value="60"/>
             <Setter Property="Margin" Value="5"/>
         </Style>
+        <Style x:Key="SpacerStyle" TargetType="Grid">
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="Black" Opacity="0.01"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="AverageDamageStyle" TargetType="StackPanel">
             <Setter Property= "Background" Value="#141617"/>
             <Setter Property="Height" Value="56"/>
@@ -87,12 +95,7 @@
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </StackPanel>
         </Grid>
-        <StackPanel Width="8">
-            <StackPanel.Background>
-                <!-- To ensure consistent hover events -->
-                <SolidColorBrush Color="Black" Opacity="0.01"/>
-            </StackPanel.Background>
-        </StackPanel>
+        <Grid Style="{StaticResource SpacerStyle}"/>
         <StackPanel>
             <StackPanel.Background>
                 <!-- To ensure consistent hover events -->
@@ -219,12 +222,7 @@
             </Border>
         </StackPanel>
 
-        <StackPanel Width="8">
-            <StackPanel.Background>
-                <!-- To ensure consistent hover events -->
-                <SolidColorBrush Color="Black" Opacity="0.01"/>
-            </StackPanel.Background>
-        </StackPanel>
+        <Grid Style="{StaticResource SpacerStyle}"/>
         <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="0, 0, 5, 5" Height="0" Background="#141617" Visibility="Visible" MouseEnter="AverageDamageTakenPanel_MouseEnter" MouseLeave="AverageDamageTakenPanel_MouseLeave">
             <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" CornerRadius="3">
                 <TextBlock Text="{lex:Loc BobsBuddyPanel_Label_AVG}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
