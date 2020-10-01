@@ -80,8 +80,8 @@
     <StackPanel x:Name="MainPanel" Orientation="Horizontal" ToolTipService.InitialShowDelay="2000" ToolTipService.ShowDuration="100000">
         <Grid>
             <StackPanel Name="AverageDamageGivenPanel" Style="{StaticResource AverageDamageStyle}" Margin="5, 0, 0, 5" Height="0" Visibility= "Visible" MouseEnter="AverageDamageTakenPanel_MouseEnter" MouseLeave="AverageDamageTakenPanel_MouseLeave">
-                <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
-                    <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Visibility="Visible" Opacity="{Binding PlayerAverageDamageOpacity}" />
+                <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" CornerRadius="3">
+                    <TextBlock Text= "{lex:Loc BobsBuddyPanel_Label_AVG}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#8AC66E" Visibility="Visible" Opacity="{Binding PlayerAverageDamageOpacity}" />
                 </Border>
                 <local:HearthstoneTextBlock Text="{Binding AverageDamageGivenDisplay}" FontSize="17" Opacity="{Binding PlayerAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -204,10 +204,10 @@
                 <Grid>
                     <StackPanel Margin="10">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Average Damage" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="{lex:Loc AverageDamage_Info_Title}" Foreground="White" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                         <TextBlock Foreground="White" FontSize="14" TextWrapping="Wrap">
-                        <Run Text="These panels show the middle 80th percentile of possible damage outcomes."/>
+                        <Run Text="{lex:Loc AverageDamage_Info_Description}"/>
                         </TextBlock>
                     </StackPanel>
                     <Rectangle Width="14" Height="14" Style="{StaticResource StatusBarIconStyle}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" MouseDown="CloseAverageDamageInfo_MouseDown" Visibility="{Binding CloseAverageDamageInfoVisibility}">
@@ -226,8 +226,8 @@
             </StackPanel.Background>
         </StackPanel>
         <StackPanel Name="AverageDamageTakenPanel" Style="{StaticResource AverageDamageStyle}" Margin="0, 0, 5, 5" Height="0" Background="#141617" Visibility="Visible" MouseEnter="AverageDamageTakenPanel_MouseEnter" MouseLeave="AverageDamageTakenPanel_MouseLeave">
-            <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" >
-                <TextBlock Text="AVG DMG" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
+            <Border Style="{StaticResource LabelContainerStyle}" Margin="0, 5, 0, 0" CornerRadius="3">
+                <TextBlock Text="{lex:Loc BobsBuddyPanel_Label_AVG}" Style="{StaticResource LethalLabelTextStyle}" Foreground="#C66E6E" Opacity="{Binding OpponentAverageDamageOpacity}"/>
             </Border>
             <local:HearthstoneTextBlock Text="{Binding AverageDamageTakenDisplay}" FontSize="17" Opacity="{Binding OpponentAverageDamageOpacity}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Visible"/>
