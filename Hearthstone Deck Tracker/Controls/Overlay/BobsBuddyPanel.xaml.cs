@@ -275,7 +275,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			_lastCombatResult = lastOutcome;
 			if(IsDamageOutcomeOutsideEightyPercent())
-				AttemptToExpandAverageDamagePanels(true);
+				AttemptToExpandAverageDamagePanels(true, true);
 		}
 
 
@@ -388,7 +388,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			if(show)
 				ExpandPanel();
 			else
+			{
+				SlideAverageDamagePanels(false);
+				AverageDamageInfoVisibility = Visibility.Collapsed;
 				CollapsePanel();
+			}
 		}
 
 		void ExpandPanel()
@@ -396,7 +400,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			(FindResource("StoryboardExpand") as Storyboard)?.Begin();
 			_resultsPanelExpanded = true;
 			if(Config.Instance.AlwaysShowAverageDamage)
-				ExpandAverageDamagePanels();
+				SlideAverageDamagePanels(true);
 		}
 
 		void CollapsePanel()
@@ -404,7 +408,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			(FindResource("StoryboardCollapse") as Storyboard)?.Begin();
 			_resultsPanelExpanded = false;
 			if(Config.Instance.AlwaysShowAverageDamage)
-				CollapseAverageDamagePanels();
+				SlideAverageDamagePanels(false);
 		}
 
 		internal void SetState(BobsBuddyState state)
@@ -454,21 +458,26 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		}
 
 		private bool InCombatPhase => State == BobsBuddyState.Combat;
-		private bool InShoppingPhase => State == BobsBuddyState.Shopping;
+		private bool InShoppingPhase => State == BobsBuddyState.Shopping; 
 		private bool CanMinimize
 			=> InCombatPhase && !Config.Instance.ShowBobsBuddyDuringCombat
 			|| InShoppingPhase && !Config.Instance.ShowBobsBuddyDuringShopping;
 
-		public async Task ExpandAverageDamagePanels()
+		public void SlideAverageDamagePanels(bool show)
 		{
-			await Task.Delay(200);
-			(FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
+			if(show)
+				(FindResource("StoryboardExpandAverageDamage") as Storyboard)?.Begin();
+			else
+				(FindResource("StoryboardCollapseAverageDamage") as Storyboard)?.Begin();
 		}
 
-		public void CollapseAverageDamagePanels()
+		public void ShowAverageDamagesPanels(bool show)
 		{
-			(FindResource("StoryboardCollapseAverageDamage") as Storyboard)?.Begin();
-		}
+			if(show)
+				(FindResource("StoryboardExpandAverageDamageInstant") as Storyboard)?.Begin();
+			else
+				(FindResource("StoryboardCollapseAverageDamageInstant") as Storyboard)?.Begin();
+		} 
 
 		private void BottomBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
@@ -476,32 +485,42 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				if(!_showingResults)
 				{
-					ExpandAverageDamagePanels();
+					SlideAverageDamagePanels(true);
 					ShowResults(true);
+					AttemptToShowAverageDamageInfo();
 				}
 				else if(CanMinimize)
 				{
 					ShowResults(false);
-					CollapseAverageDamagePanels();
+					SlideAverageDamagePanels(false);
 				}
 			}
 		}
 
-		public void AttemptToExpandAverageDamagePanels(bool attemptShowAverageDamageInfo)
+		public void AttemptToExpandAverageDamagePanels(bool slide, bool attemptShowAverageDamageInfo)
 		{
 			if(State != BobsBuddyState.Initial && _resultsPanelExpanded)
 			{
 				UpdateSeenAverageDamage();
-				ExpandAverageDamagePanels();
-				if(attemptShowAverageDamageInfo && !Config.Instance.BobsBuddyAverageDamageInfoClosed)
-					AverageDamageInfoVisibility = Visibility.Visible;
+				if(slide)
+					SlideAverageDamagePanels(true);
+				else
+					ShowAverageDamagesPanels(true);
+				if(attemptShowAverageDamageInfo)
+					AttemptToShowAverageDamageInfo();
 			}
+		}
+
+		private void AttemptToShowAverageDamageInfo()
+		{
+			if(!Config.Instance.BobsBuddyAverageDamageInfoClosed)
+				AverageDamageInfoVisibility = Visibility.Visible;
 		}
 
 		private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			SettingsVisibility = Visibility.Visible;
-			AttemptToExpandAverageDamagePanels(true);
+			AttemptToExpandAverageDamagePanels(false, true);
 		}
 
 		private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -509,7 +528,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			SettingsVisibility = Visibility.Collapsed;
 			AverageDamageInfoVisibility = Visibility.Collapsed;
 			if(!Config.Instance.AlwaysShowAverageDamage)
-				CollapseAverageDamagePanels();
+				ShowAverageDamagesPanels(false);
 		}
 
 		private void Question_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

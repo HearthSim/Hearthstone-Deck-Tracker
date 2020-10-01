@@ -175,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.AlwaysShowAverageDamage = true;
-			Core.Overlay.BobsBuddyDisplay.AttemptToExpandAverageDamagePanels(false);
+			Core.Overlay.BobsBuddyDisplay.AttemptToExpandAverageDamagePanels(false, false);
 			SaveConfig(true);
 		}
 
@@ -184,7 +184,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.AlwaysShowAverageDamage = false;
-			Core.Overlay.BobsBuddyDisplay.CollapseAverageDamagePanels();
+			Core.Overlay.BobsBuddyDisplay.ShowAverageDamagesPanels(false);
 			SaveConfig(true);
 		}
 
