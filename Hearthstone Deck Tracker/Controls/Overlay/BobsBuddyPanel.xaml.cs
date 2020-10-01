@@ -338,13 +338,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			if(_lastCombatPossibilities != null)
 				_lastCombatPossibilities.Clear();
-			WinRateDisplay = "-";
-			LossRateDisplay = "-";
-			TieRateDisplay = "-";
-			PlayerLethalDisplay = "-";
-			OpponentLethalDisplay = "-";
-			AverageDamageGivenDisplay = "-";
-			AverageDamageTakenDisplay = "-";
+			ResetText();
 			PlayerLethalOpacity = SoftLabelOpacity;
 			OpponentLethalOpacity = SoftLabelOpacity;
 			PlayerAverageDamageOpacity = SoftLabelOpacity;
@@ -354,6 +348,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			ShowResults(false);
 			ShowPercentagesHideSpinners();
 			OnPropertyChanged(nameof(StatusMessage));
+		}
+
+		internal void ResetText()
+		{
+			WinRateDisplay = "-";
+			LossRateDisplay = "-";
+			TieRateDisplay = "-";
+			PlayerLethalDisplay = "-";
+			OpponentLethalDisplay = "-";
+			AverageDamageGivenDisplay = "-";
+			AverageDamageTakenDisplay = "-";
 		}
 
 		internal void HidePercentagesShowSpinners()

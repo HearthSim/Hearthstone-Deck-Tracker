@@ -189,6 +189,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				DebugLog("Setting UI state to combat...");
 				BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
+				BobsBuddyDisplay.ResetText();
 				BobsBuddyDisplay.HidePercentagesShowSpinners();
 
 				_removedLichKingHeroPowerFromMinion = false;
