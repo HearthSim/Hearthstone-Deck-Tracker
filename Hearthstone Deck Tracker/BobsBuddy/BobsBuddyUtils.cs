@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.cleave = MinionFactory.cardIDsWithCleave.Contains(minion.cardID);
 			minion.poisonous = entity.HasTag(GameTag.POISONOUS);
 			minion.windfury = entity.HasTag(GameTag.WINDFURY);
-			minion.megaWindfury = entity.HasTag(GameTag.MEGA_WINDFURY);
+			minion.megaWindfury = entity.HasTag(GameTag.MEGA_WINDFURY) || MinionFactory.cardIdsWithMegaWindfury.Contains(entity.CardId);
 			minion.golden = entity.HasTag(GameTag.PREMIUM);
 			minion.tier = entity.GetTag(GameTag.TECH_LEVEL);
 			minion.reborn = entity.HasTag(GameTag.REBORN);
@@ -48,6 +48,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				minion.receivesLichKingPower = true;
 
 			minion.game_id = entity.Id;
+
+			Log.Info($"Added {entity.Name}, ({minion.baseAttack}, {minion.baseHealth}, controller {entity.GetTag(GameTag.CONTROLLER)}, creator {entity.Info.GetCreatorId()}.");
 
 			return minion;
 		}
