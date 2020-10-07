@@ -354,7 +354,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
 
-			foreach(var m in GetOrderedMinions(_game.Player.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
+			foreach(var m in GetOrderedMinions(_game.Player.Board).Where(e => e.IsControlledBy(_game.Player.Id)).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
 				m.AddToBackOfList(input.playerSide, simulator);
 
 			foreach(var m in GetOrderedMinions(_game.Opponent.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
