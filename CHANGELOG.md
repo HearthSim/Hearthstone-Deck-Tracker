@@ -1,3 +1,10 @@
+## **Release v1.13.7 - 2020-10-07**
+
+**Bob's Buddy**
+-Add information about the average damage given and taken in combat.
+-Fix an issue where Wildfire Elemental would sometimes damage the wrong minion.
+-Fix an issue where golden Crackling Cyclone's would sometimes not get Mega Windfury.
+
 ## **Release v1.13.6 - 2020-09-29**
 **Updated for Hearthstone 18.4.0.60352**
 
