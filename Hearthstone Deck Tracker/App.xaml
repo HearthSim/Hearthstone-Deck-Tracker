@@ -51,6 +51,7 @@
                     <ImageSource x:Key="Poisonous">Resources/poisonous.png</ImageSource>
                     <ImageSource x:Key="Taunt">Resources/taunt.png</ImageSource>
                     <ImageSource x:Key="PremiumTaunt">Resources/taunt_premium.png</ImageSource>
+                    <ImageSource x:Key="FacelessManipulator">Resources/faceless_manipulator.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

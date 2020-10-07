@@ -1500,6 +1500,7 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\faceless_manipulator.png" />
     <Resource Include="Resources\deathrattle.png" />
     <Resource Include="Resources\taunt.png" />
     <Resource Include="Resources\poisonous.png" />
