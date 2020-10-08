@@ -47,13 +47,15 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private Color green = Color.FromScRgb(1, .109f, .89f, .109f);
 
+		const string FacelessManipulatorSource = "Resources/faceless_manipulator.png";
+
 		public BattlegroundsMinion(Entity entity)
 		{
 			_entity = entity;
 			SetEffectVisibilites();
 			SetDisplayValues();
 			SetAttackHealthBrush();
-			CardImagePath = CardImageImporter.StoragePathFor(entity.CardId);
+			CardImagePath = CardImageImporter.CardImageIsSuccessfullyDownloaded(entity) ? CardImageImporter.StoragePathFor(entity.CardId) : FacelessManipulatorSource;
 			InitializeComponent();
 		}
 
