@@ -22,15 +22,17 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			if(!Directory.Exists(StoreImagesPath))
 				Directory.CreateDirectory(StoreImagesPath);
+			DeleteFailedDownloads();
 			_succesfullyDownloadedImages.AddRange(GetCurrentlyStoredCardids());
 		}
 
-		public static async Task FinishDownloadingEntites(Entity[] entities)
+
+		public static void CheckFinishedDownloads(Entity[] entities)
 		{
 			var toAwait = new List<Task>();
 			foreach(var entity in entities)
 			{
-				if(CardImageIsDownloaded(entity))
+				if(CardImageIsSuccessfullyDownloaded(entity))
 				{
 					continue;
 				}
@@ -39,7 +41,11 @@ namespace Hearthstone_Deck_Tracker.Importing
 					if(task.IsCompleted)
 					{
 						_inProcessDownloads.Remove(entity.CardId);
-						_succesfullyDownloadedImages.Add(entity.CardId);
+
+						if(!task.IsFaulted && !task.IsCanceled)
+							_succesfullyDownloadedImages.Add(entity.CardId);
+						else
+							File.Delete(StoragePathFor(entity.CardId));
 						continue;
 					}
 					else
@@ -53,10 +59,9 @@ namespace Hearthstone_Deck_Tracker.Importing
 					DownloadCard(entity.CardId);
 				}
 			}
-			await Task.WhenAll(toAwait);
 		}
 
-		private static bool CardImageIsDownloaded(Entity entity) => _succesfullyDownloadedImages.Contains(entity.CardId);
+		public static bool CardImageIsSuccessfullyDownloaded(Entity entity) => _succesfullyDownloadedImages.Contains(entity.CardId);
 
 		public static void StartDownloadsFor(Entity[] entites) => entites.Where(x => !_succesfullyDownloadedImages.Contains(x.CardId)).ToList().ForEach(x => DownloadCard(x.CardId));
 
@@ -89,6 +94,19 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			var toReturn = GetStoredImagesContent().Select(x => Path.GetFileNameWithoutExtension(x)).ToList();
 			return toReturn;
+		}
+
+		private static void DeleteFailedDownloads()
+		{
+			try
+			{
+				var dirInfo = new DirectoryInfo(StoreImagesPath);
+				dirInfo.GetFiles().Where(x => x.Length == 0).ToList().ForEach(x => File.Delete(x.FullName));
+			}
+			catch(Exception e)
+			{
+				Log.Error($"Failed to delete improperly downloaded files. Error message: {e.Message}.");
+			}
 		}
 
 		static List<string> GetStoredImagesContent()

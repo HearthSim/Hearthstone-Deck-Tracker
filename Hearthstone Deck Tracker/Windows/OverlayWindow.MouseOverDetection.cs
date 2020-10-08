@@ -215,7 +215,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(state == null)
 						break;
 					BattlegroundsBoard.Children.Clear();
-					await CardImageImporter.FinishDownloadingEntites(state.Entities);
+					CardImageImporter.CheckFinishedDownloads(state.Entities);
 					foreach(var e in state.Entities)
 						BattlegroundsBoard.Children.Add(new BattlegroundsMinion(e));
 					var age = _game.GetTurnNumber() - state.Turn;
