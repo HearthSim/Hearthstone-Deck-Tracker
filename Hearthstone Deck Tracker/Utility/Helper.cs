@@ -702,8 +702,17 @@ namespace Hearthstone_Deck_Tracker
 
 		internal static void OpenBattlegroundsHeroPicker(int[] heroIds)
 		{
-			var encodedIds = HttpUtility.UrlEncode(string.Join(",", heroIds));
-			TryOpenUrl($"{BuildHsReplayNetUrl("battlegrounds/heroes", "bgs_toast")}#heroes={encodedIds}");
+			var encodedHeroIds = HttpUtility.UrlEncode(string.Join(",", heroIds));
+			var url = $"{BuildHsReplayNetUrl("battlegrounds/heroes", "bgs_toast")}#heroes={encodedHeroIds}";
+			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId);
+			if(availableRaces?.Count > 0)
+			{
+				var availableRacesAsList = availableRaces.ToList();
+				availableRacesAsList.Sort((x, y) => ((int)x).CompareTo((int)y));
+				url += $"&minionTypes={HttpUtility.UrlEncode(string.Join(",", availableRacesAsList.Select(type => type.ToString())))}";
+
+			}
+			TryOpenUrl(url);
 		}
 		public static async Task<T> RetryWhileNull<T>(Func<T> func, int tries = 5, int delay = 150) where T : class
 		{
