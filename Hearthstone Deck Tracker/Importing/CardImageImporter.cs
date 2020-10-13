@@ -90,11 +90,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			}
 		}
 
-		public static List<string> GetCurrentlyStoredCardids()
-		{
-			var toReturn = GetStoredImagesContent().Select(x => Path.GetFileNameWithoutExtension(x)).ToList();
-			return toReturn;
-		}
+		public static IEnumerable<string> GetCurrentlyStoredCardIds() => GetStoredImagesContent().Select(Path.GetFileNameWithoutExtension);
 
 		private static void DeleteFailedDownloads()
 		{
