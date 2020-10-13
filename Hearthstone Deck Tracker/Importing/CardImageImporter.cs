@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			if(!Directory.Exists(StoreImagesPath))
 				Directory.CreateDirectory(StoreImagesPath);
 			DeleteFailedDownloads();
-			_succesfullyDownloadedImages.AddRange(GetCurrentlyStoredCardids());
+			_succesfullyDownloadedImages.AddRange(GetCurrentlyStoredCardIds());
 		}
 
 
@@ -73,14 +73,12 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			if(CardDownloadStartedOrFinished(cardId))
 				return;
-			var requestUrl = $"{HearthstoneArtUrl}/{cardId}.jpg";
-			var storageUrl = StoragePathFor(cardId);
 			Log.Info($"Starting download for {cardId}");
 			try
 			{
 				using(WebClient client = new WebClient())
 				{
-					_inProcessDownloads[cardId] = client.DownloadFileTaskAsync(new Uri(requestUrl), storageUrl);
+					_inProcessDownloads[cardId] = client.DownloadFileTaskAsync(new Uri($"{HearthstoneArtUrl}/{cardId}.jpg"), StoragePathFor(cardId));
 					Log.Info($"Started downloading {cardId}");
 				}
 			}
@@ -97,11 +95,17 @@ namespace Hearthstone_Deck_Tracker.Importing
 			try
 			{
 				var dirInfo = new DirectoryInfo(StoreImagesPath);
-				dirInfo.GetFiles().Where(x => x.Length == 0).ToList().ForEach(x => File.Delete(x.FullName));
-			}
-			catch(Exception e)
-			{
-				Log.Error($"Failed to delete improperly downloaded files. Error message: {e.Message}.");
+				foreach(var file in dirInfo.GetFiles().Where(x => x.Length == 0))
+				{
+					try
+					{
+						File.Delete(file.FullName);
+					}
+					catch(Exception e)
+					{
+						Log.Error($"Unable to delete improperly downloaded file {file.FullName}: {e.Message}");
+					}
+				}
 			}
 		}
 

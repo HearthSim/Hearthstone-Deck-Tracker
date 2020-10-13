@@ -196,7 +196,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlavorTextVisibility = Visibility.Collapsed;
 		}
 
-		private async void UpdateBattlegroundsOverlay()
+		private void UpdateBattlegroundsOverlay()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
