@@ -3,6 +3,7 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -11,12 +12,8 @@ using System.Threading.Tasks;
 namespace HDTTests.ImageDownloading
 {
 	[TestClass]
-	public class ImageDownloading
+	public class ImageDownloadingTests
 	{
-		[TestMethod]
-		public void ReadDirectoryContents()
-		{
-			CardImageImporter.GetCurrentlyStoredCardids();
-		}
+		
 	}
 }
