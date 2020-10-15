@@ -1,3 +1,6 @@
+## **Release v1.13.8 - 2020-09-08**
+**Updated for Hearthstone 18.4.2.62331**
+
 ## **Release v1.13.7 - 2020-10-07**
 
 **Bob's Buddy**
