@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
@@ -34,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_update = true;
 			Closing += (sender, args) => _update = false;
 			BBPanel.ShowResults(true);
+			BattlegroundsBoard.Children.Add(new BattlegroundsMinion(new Entity(0) { CardId = "CS2_231" }));
 			Update();
 		}
 
