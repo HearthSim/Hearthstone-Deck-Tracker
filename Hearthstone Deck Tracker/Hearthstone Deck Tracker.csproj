@@ -337,7 +337,6 @@
     <Compile Include="HsReplay\HSReplayNetHelper.cs" />
     <Compile Include="Utility\Assets\AssetDownloader.cs" />
     <Compile Include="Utility\Assets\AssetDownloaders.cs" />
-    <Compile Include="Importing\IAssetDownloader.cs" />
     <Compile Include="Utility\ComboBoxHelper.cs" />
     <Compile Include="Utility\DataLoader.cs" />
     <Compile Include="Utility\DelayedMouseOver.cs" />
