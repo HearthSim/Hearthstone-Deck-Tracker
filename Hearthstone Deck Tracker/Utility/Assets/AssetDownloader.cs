@@ -17,13 +17,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		private string _url;
 		private Func<string, string> _keyConverter;
 		private static List<string> _succesfullyDownloadedImages = new List<string>();
-		private static Dictionary<string, Task> _inProcessDownloads = new Dictionary<string, Task>();
+		private static Dictionary<string, Task<bool>> _inProcessDownloads = new Dictionary<string, Task<bool>>();
 
 		/// <exception cref="ArgumentException">Thrown when directory cannot be accessed or created.</exception>
 		/// <param name="storageDestination">Destination for assets to be stored.</param>
-
-		/*Temporary directory where files are placed when downloads start. Once notified of task complete, check if they were downloaded successfully. if so, move. if not, delete.
-		 *Also check and clean out  temp directory on class initialization */
 
 		public AssetDownloader(string storageDestination, string url, Func<string, string> keyConverter)
 		{
@@ -34,16 +31,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			TryCreateDirectory(_storageDestiniation);
 			TryCreateDirectory(_inProgressDestination);
 			TryCleanDirectory(_inProgressDestination);
-			try
-			{
-				if(!Directory.Exists(_storageDestiniation))
-					Directory.CreateDirectory(_storageDestiniation);
-			}
-			catch(Exception e)
-			{
-				throw new ArgumentException($"Could not create new storage directory {_storageDestiniation}.", e);
-			}
-			DeleteFailedDownloads();
 			_succesfullyDownloadedImages.AddRange(GetCurrentlyStoredFileNames());
 		}
 
@@ -81,32 +68,33 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 		}
 
-		public Task DownloadAsset(string fileKey)
+		public Task<bool> DownloadAsset(string fileKey)
 		{
 			if(_inProcessDownloads.TryGetValue(fileKey, out var inProgressDownload))
 				return inProgressDownload;
 			var storagePath = StoragePathFor(fileKey);
 			var inProgressPath = InProgressPathFor(fileKey);
-			Log.Info($"Starting downloading {fileKey}");
-			try
-			{
-				using(WebClient client = new WebClient())
+			Log.Info($"Starting download for {fileKey}.");
+			_inProcessDownloads[fileKey] = Task.Run(async () => {
+				try
 				{
-					var downloadTask = client.DownloadFileTaskAsync($"{_url}/{_keyConverter(fileKey)}", inProgressPath);
-					Log.Info($"Started downloading {fileKey}");
-					_inProcessDownloads[fileKey] = downloadTask;
-					CleanupDownload(fileKey, downloadTask, inProgressPath, storagePath);
-					return downloadTask;
+					using(WebClient client = new WebClient())
+					{
+						var downloadTask = client.DownloadFileTaskAsync($"{_url}/{_keyConverter(fileKey)}", inProgressPath);
+						Log.Info($"Waiting to cleanup {fileKey}.");
+						return await CleanupDownload(fileKey, downloadTask, inProgressPath, storagePath);
+					}
 				}
-			}
-			catch(Exception e)
-			{
-				Log.Error($"Unable to download {fileKey}: {e.Message}");
-				return null;
-			}
+				catch(Exception e)
+				{
+					Log.Error($"Unable to download {fileKey}: {e.Message}");
+					return false;
+				}
+			});
+			return _inProcessDownloads[fileKey];
 		}
 
-		private async void CleanupDownload(string fileKey, Task toAwait, string inProgressPath, string finalPath)
+		private async Task<bool> CleanupDownload(string fileKey, Task toAwait, string inProgressPath, string finalPath)
 		{
 			await toAwait;
 			_inProcessDownloads.Remove(fileKey);
@@ -116,6 +104,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 				try
 				{
 					File.Move(inProgressPath, finalPath);
+					return true;
 				}
 				catch(Exception e)
 				{
@@ -133,6 +122,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 					Log.Error($"Couldn't delete {fileKey} at path {inProgressPath}: {e.Message}");
 				}
 			}
+			return false;
 		}
 
 		public bool HasAsset(string fileName) => _succesfullyDownloadedImages.Contains(fileName);
@@ -142,29 +132,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		public string StoragePathFor(string fileKey) => Path.Combine(_storageDestiniation, _keyConverter(fileKey));
 
 		private string InProgressPathFor(string fileKey) => Path.Combine(_inProgressDestination, _keyConverter(fileKey));
-
-		private void DeleteFailedDownloads()
-		{
-			try
-			{
-				var dirInfo = new DirectoryInfo(_storageDestiniation);
-				foreach(var file in dirInfo.GetFiles().Where(x => x.Length == 0))
-				{
-					try
-					{
-						File.Delete(file.FullName);
-					}
-					catch(Exception e)
-					{
-						Log.Error($"Unable to delete improperly downloaded file {file.FullName}: {e.Message}");
-					}
-				}
-			}
-			catch(Exception e)
-			{
-				Log.Error($"Unable to delete failed downloads.");
-			}
-		}
 
 		public IEnumerable<string> GetCurrentlyStoredFileNames() => GetStoredImagesContent().Select(Path.GetFileNameWithoutExtension);
 
