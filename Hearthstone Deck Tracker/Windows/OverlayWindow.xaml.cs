@@ -59,6 +59,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _heroNotificationBehavior;
 		private OverlayElementBehavior _bgsTopBarBehavior;
 		private OverlayElementBehavior _bgsBobsBuddyBehavior;
+		private OverlayElementBehavior _bgsPastOpponentBoardBehavior;
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -96,6 +97,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				AnchorSide = Side.Top,
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide,
+			};
+
+			_bgsPastOpponentBoardBehavior = new OverlayElementBehavior(PastOpponentBoardDisplay)
+			{
+				GetLeft = () => Width / 2 - PastOpponentBoardDisplay.ActualWidth * AutoScaling / 2,
+				GetTop = () => 0,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Top,
 			};
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
