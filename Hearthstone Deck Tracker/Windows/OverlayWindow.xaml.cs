@@ -105,6 +105,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				GetTop = () => 0,
 				GetScaling = () => AutoScaling,
 				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Instant,
+				ExitAnimation = AnimationType.Instant,
 			};
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)

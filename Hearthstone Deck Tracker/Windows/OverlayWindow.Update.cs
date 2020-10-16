@@ -168,7 +168,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(_game.IsInMenu || !inBattlegrounds)
 			{
-				BattlegroundsLeaderboard.Visibility = Collapsed;
 				HideBgsTopBar();
 			}
 

@@ -186,27 +186,23 @@
                     <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel"/>
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
-                <Grid x:Name="PastOpponentBoardDisplay">
-                <Border Background="#23272A" CornerRadius="3" BorderBrush="#404345" BorderThickness="1">
-                <StackPanel Name="BattlegroundsLeaderboard" Visibility="Collapsed" Orientation="Vertical" Margin="18 0 0 0">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20 0">
-                        <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Battlegrounds_Label_LastKnown}" FontSize="16"/>
-                        <local:HearthstoneTextBlock x:Name="BattlegroundsOpponent" FontSize="16"/>
-                        <local:HearthstoneTextBlock Text="-" FontSize="16" Margin="5,0,5,0"/>
-                        <local:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16"/>
-                    </StackPanel>
-                    
-                    <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 11 0 0">
-                        <StackPanel.Resources>
-                            <Style TargetType="controls:BattlegroundsMinion">
-                                <Setter Property="Margin" Value="0,0,-10,20"/>
+                <Border Name="PastOpponentBoardDisplay" Background="#23272A" CornerRadius="3" BorderBrush="#404345" BorderThickness="1" Canvas.Top="0" Canvas.Right="0">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="20 0">
+                            <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Battlegrounds_Label_LastKnown}" FontSize="16"/>
+                            <local:HearthstoneTextBlock x:Name="BattlegroundsOpponent" FontSize="16" Margin="5,0,0,0"/>
+                            <local:HearthstoneTextBlock Text="-" FontSize="16" Margin="5,0,5,0"/>
+                            <local:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16"/>
+                        </StackPanel>
+                        <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 11 10 0" Height="145">
+                            <StackPanel.Resources>
+                                <Style TargetType="controls:BattlegroundsMinion">
+                                    <Setter Property="Margin" Value="0,0,-10,20"/>
                                 </Style>
-                        </StackPanel.Resources>
+                            </StackPanel.Resources>
+                        </StackPanel>
                     </StackPanel>
-                  
-                </StackPanel>
-        </Border>
-                </Grid>
+                </Border>
                 <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
             </Canvas>
         </Border>

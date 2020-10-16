@@ -226,16 +226,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			if(showMinions)
 			{
-				Canvas.SetTop(BattlegroundsLeaderboard, Height * 0.01);
-				Canvas.SetLeft(BattlegroundsLeaderboard, Helper.GetScaledXPos(0.05, (int)Width, ScreenRatio));
-				BattlegroundsLeaderboard.Visibility = Visibility.Visible;
-				var scale = Math.Min(1.5, Height / 1080);
-				BattlegroundsLeaderboard.RenderTransform = new ScaleTransform(scale, scale, 0, 0);
+				_bgsPastOpponentBoardBehavior.Show();
 			}
 			else
 			{
+				_bgsPastOpponentBoardBehavior.Hide();
 				BattlegroundsBoard.Children.Clear();
-				BattlegroundsLeaderboard.Visibility = Visibility.Collapsed;
 			}
 			// Only fade the minions, if we're out of mulligan
 			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)

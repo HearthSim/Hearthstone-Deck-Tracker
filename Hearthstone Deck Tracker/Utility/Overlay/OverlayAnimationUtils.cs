@@ -23,6 +23,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 					};
 				case AnimationType.Slide:
 					return new DoubleAnimation(to, new Duration(TimeSpan.FromMilliseconds(200)));
+				case AnimationType.Instant:
+					return new DoubleAnimation(to, new Duration(TimeSpan.Zero));
 					
 			}
 
