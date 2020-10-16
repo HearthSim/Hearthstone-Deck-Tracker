@@ -183,25 +183,29 @@
                 <Rectangle Name="BattlegroundsTile7" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <StackPanel Name="BgsTopBar" Visibility="Collapsed" Orientation="Horizontal" Canvas.Top="0" Canvas.Right="0">
                     <overlay:TurnCounter x:Name="TurnCounter" Margin="0,0,2,0"  Height="55" VerticalAlignment="Top" />
-                    <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel" />
+                    <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel"/>
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed" />
+                <Border Background="#23272A" Margin="500 0 0 0">
                 <StackPanel Name="BattlegroundsLeaderboard" Visibility="Collapsed" Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Battlegrounds_Label_LastKnown}" FontSize="16" Margin="0,0,5,0"/>
                         <local:HearthstoneTextBlock x:Name="BattlegroundsOpponent" FontSize="16"/>
                         <local:HearthstoneTextBlock Text="-" FontSize="16" Margin="5,0,5,0"/>
                         <local:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16"/>
                     </StackPanel>
-                    <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal">
+                    
+                    <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center">
                         <StackPanel.Resources>
                             <Style TargetType="controls:BattlegroundsMinion">
                                 <Setter Property="Margin" Value="0,0,-10,0"/>
-                            </Style>
+                                </Style>
                         </StackPanel.Resources>
                     </StackPanel>
+                  
                 </StackPanel>
-                <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
+        </Border>
+        <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
             </Canvas>
         </Border>
     </Grid>
