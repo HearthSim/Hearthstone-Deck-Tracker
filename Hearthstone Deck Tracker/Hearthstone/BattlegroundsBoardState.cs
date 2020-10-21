@@ -25,7 +25,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void SnapshotCurrentBoard()
 		{
-
 			var opponentHero = _game.Entities.Values
 				.Where(x => x.IsHero && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Opponent.Id))
 				.FirstOrDefault();
