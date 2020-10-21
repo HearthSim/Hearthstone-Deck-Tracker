@@ -34,8 +34,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				.Where(x => x.IsMinion && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Opponent.Id))
 				.Select(x => x.Clone())
 				.ToArray();
-			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with {entities.Length} entities");
-			LastKnownBoardState[GetBattlegroundsBoardState(opponentHero.CardId)] = new BoardSnapshot(entities, _game.GetTurnNumber());
+			var correctedHero = opponentHero.CardId != null ? GetCorrectBoardstateHeroId(opponentHero.CardId) : opponentHero.CardId;
+			Log.Info($"Snapshotting board state for {opponentHero.Card.Name} with cardid {opponentHero.CardId} (corrected={correctedHero}) with {entities.Length} entities");
+			LastKnownBoardState[correctedHero] = new BoardSnapshot(entities, _game.GetTurnNumber());
 		}
 
 		public BoardSnapshot GetSnapshot(string opponentHeroCardId) => opponentHeroCardId != null && LastKnownBoardState.TryGetValue(GetCorrectBoardstateHeroId(opponentHeroCardId), out var state) ? state : null;
@@ -44,8 +45,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			LastKnownBoardState.Clear();
 		}
-
-		private string GetBattlegroundsBoardState(string opponentHeroCardId) => opponentHeroCardId != null ? GetCorrectBoardstateHeroId(opponentHeroCardId) : opponentHeroCardId;
 
 		private string GetCorrectBoardstateHeroId(string heroId) => _lastKnownBoardStateLookup.TryGetValue(heroId, out var mapped) ? mapped : heroId;
 

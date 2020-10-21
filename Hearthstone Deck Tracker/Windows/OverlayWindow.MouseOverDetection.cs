@@ -86,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var leaderboardTop = Height * 0.15;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{
-				_leaderboardIcons[i].Visibility = isGameOver || _game.CurrentGameType != GameType.GT_BATTLEGROUNDS
+				_leaderboardIcons[i].Visibility = isGameOver || !_game.IsBattlegroundsMatch
 					? Visibility.Collapsed
 					: Visibility.Visible;
 				Canvas.SetTop(_leaderboardIcons[i], leaderboardTop + BattlegroundsTileHeight * i);
