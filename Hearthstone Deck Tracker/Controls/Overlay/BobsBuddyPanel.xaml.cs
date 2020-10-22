@@ -1,5 +1,6 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -251,6 +252,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private static List<int> _playerDamageDealtBounds;
 		private static List<int> _opponentDamageDealtBounds;
+
+		public void HideFullPanel() => MainPanel.Visibility = Visibility.Hidden;
+
+		public async void ShowFullPanelAsync()
+		{
+			if(!Config.Instance.RunBobsBuddy)
+				return;
+			if(RemoteConfig.Instance.Data?.BobsBuddy?.Disabled ?? false)
+				return;
+			//Await here so if they're mousing over a bunch of different heroes it doesn't stutter.
+			await Task.Delay(300);
+			MainPanel.Visibility = Visibility.Visible;
+		}
 
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{

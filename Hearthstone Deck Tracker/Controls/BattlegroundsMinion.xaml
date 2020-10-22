@@ -8,7 +8,7 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
              d:DesignHeight="256" d:DesignWidth="256">
-    <Viewbox Width="125" Height="125">
+    <Viewbox Width="110" Height="110">
         <Canvas Width="256" Height="256">
             <Image Source="{StaticResource Taunt}" Visibility="{Binding TauntVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>
             <Image Source="{StaticResource PremiumTaunt}" Visibility="{Binding PremiumTauntVisibility}" Canvas.Left="-24" Canvas.Top="-36"/>

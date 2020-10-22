@@ -219,19 +219,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 						BattlegroundsBoard.Children.Add(new BattlegroundsMinion(e));
 					var age = _game.GetTurnNumber() - state.Turn;
 					BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
-					BattlegroundsOpponent.Text = entity.Card.LocalizedName;
 					showMinions = true;
 					break;
 				}
 			}
 			if(showMinions)
 			{
+				Core.Overlay.BobsBuddyDisplay.HideFullPanel();
 				_bgsPastOpponentBoardBehavior.Show();
 			}
 			else
 			{
 				_bgsPastOpponentBoardBehavior.Hide();
 				BattlegroundsBoard.Children.Clear();
+				Core.Overlay.BobsBuddyDisplay.ShowFullPanelAsync();
 			}
 			// Only fade the minions, if we're out of mulligan
 			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)

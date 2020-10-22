@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 			if(_entity.HasTag(GameTag.PREMIUM))
 			{
-				PremiumLegendaryBorderVisibility = _entity.GetTag(GameTag.RARITY) == (int)Rarity.LEGENDARY ? Visibility.Visible : Visibility.Hidden;
+				PremiumLegendaryBorderVisibility = _entity.Card.Rarity == Rarity.LEGENDARY ? Visibility.Visible : Visibility.Hidden;
 				PremiumBorderVisibility = Visibility.Visible;
 				BorderVisibility = Visibility.Hidden;
 				LegendaryBorderVisibility = Visibility.Hidden;
@@ -115,7 +115,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				PremiumLegendaryBorderVisibility = Visibility.Hidden;
 				PremiumBorderVisibility = Visibility.Hidden;
 				BorderVisibility = Visibility.Visible;
-				LegendaryBorderVisibility = _entity.GetTag(GameTag.RARITY) == (int)Rarity.LEGENDARY ? Visibility.Visible : Visibility.Hidden;
+				LegendaryBorderVisibility = _entity.Card.Rarity == Rarity.LEGENDARY ? Visibility.Visible : Visibility.Hidden;
 				TauntVisibility = _entity.HasTag(GameTag.TAUNT) ? Visibility.Visible : Visibility.Hidden;
 				PremiumTauntVisibility = Visibility.Hidden;
 			}
