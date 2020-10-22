@@ -188,13 +188,13 @@
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
                 <StackPanel Width="1000" Name="PastOpponentBoardDisplay" Canvas.Top="0" Canvas.Right="0">
                     <StackPanel HorizontalAlignment="Center">
-                        <Border Background="#23272A" CornerRadius="3" BorderBrush="#404345" BorderThickness="1" Opacity=".9">
+                        <Border Background="#23272A" BorderBrush="#404345" BorderThickness="1 1 0 1" Opacity=".9">
                             <StackPanel Orientation="Vertical">
 
-                                <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 11 10 0">
+                                <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 0 20 0">
                                     <StackPanel.Resources>
                                         <Style TargetType="controls:BattlegroundsMinion">
-                                            <Setter Property="Margin" Value="0,0,-10,20"/>
+                                            <Setter Property="Margin" Value="0,20,-10,20"/>
                                         </Style>
                                     </StackPanel.Resources>
                                 </StackPanel>
