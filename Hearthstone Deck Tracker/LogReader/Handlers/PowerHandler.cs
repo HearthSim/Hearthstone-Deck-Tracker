@@ -493,29 +493,29 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case NonCollectible.Neutral.TheCandle:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCandle);
 								break;
-							case NonCollectible.Neutral.CoinPouch:
-								AddKnownCardId(gameState, NonCollectible.Neutral.SackOfCoins);
+							case NonCollectible.Neutral.CoinPouchGILNEAS:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SackOfCoinsGILNEAS);
 								break;
-							case NonCollectible.Neutral.SackOfCoins:
-								AddKnownCardId(gameState, NonCollectible.Neutral.HeftySackOfCoins);
+							case NonCollectible.Neutral.SackOfCoinsGILNEAS:
+								AddKnownCardId(gameState, NonCollectible.Neutral.HeftySackOfCoinsGILNEAS);
 								break;
-							case NonCollectible.Neutral.CreepyCurio:
-								AddKnownCardId(gameState, NonCollectible.Neutral.HauntedCurio);
+							case NonCollectible.Neutral.CreepyCurioGILNEAS:
+								AddKnownCardId(gameState, NonCollectible.Neutral.HauntedCurioGILNEAS);
 								break;
-							case NonCollectible.Neutral.HauntedCurio:
-								AddKnownCardId(gameState, NonCollectible.Neutral.CursedCurio);
+							case NonCollectible.Neutral.HauntedCurioGILNEAS:
+								AddKnownCardId(gameState, NonCollectible.Neutral.CursedCurioGILNEAS);
 								break;
-							case NonCollectible.Neutral.OldMilitiaHorn:
-								AddKnownCardId(gameState, NonCollectible.Neutral.MilitiaHorn);
+							case NonCollectible.Neutral.OldMilitiaHornGILNEAS:
+								AddKnownCardId(gameState, NonCollectible.Neutral.MilitiaHornGILNEAS);
 								break;
-							case NonCollectible.Neutral.MilitiaHorn:
-								AddKnownCardId(gameState, NonCollectible.Neutral.VeteransMilitiaHorn);
+							case NonCollectible.Neutral.MilitiaHornGILNEAS:
+								AddKnownCardId(gameState, NonCollectible.Neutral.VeteransMilitiaHornGILNEAS);
 								break;
-							case NonCollectible.Neutral.SurlyMob:
-								AddKnownCardId(gameState, NonCollectible.Neutral.AngryMob);
+							case NonCollectible.Neutral.SurlyMobGILNEAS:
+								AddKnownCardId(gameState, NonCollectible.Neutral.AngryMobGILNEAS);
 								break;
-							case NonCollectible.Neutral.AngryMob:
-								AddKnownCardId(gameState, NonCollectible.Neutral.CrazedMob);
+							case NonCollectible.Neutral.AngryMobGILNEAS:
+								AddKnownCardId(gameState, NonCollectible.Neutral.CrazedMobGILNEAS);
 								break;
 							case Collectible.Neutral.SparkEngine:
 								AddKnownCardId(gameState, NonCollectible.Neutral.SparkDrill_SparkToken);
