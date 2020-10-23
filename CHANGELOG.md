@@ -1,3 +1,8 @@
+## **Release v1.13.9 - 2020-10-22**
+**Updated for Hearthstone 18.6.0.63160**
+-Fix an issue where past known Battlegrounds boards wouldn't appear in custom lobbies.
+-Support for Duels game mode will be coming soon!
+
 ## **Release v1.13.8 - 2020-09-08**
 **Updated for Hearthstone 18.4.2.62331**
 
