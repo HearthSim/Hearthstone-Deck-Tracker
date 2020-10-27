@@ -20,6 +20,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PackWatcher.NewPackEventHandler += (sender, args) => PackUploader.UploadPack(args.PackId, args.Cards);
 			DungeonRunWatcher.DungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set);
 			DungeonRunWatcher.DungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo);
+			PVPDungeonRunWatcher.PVPDungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set);
+			PVPDungeonRunWatcher.PVPDungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo);
 			FriendlyChallengeWatcher.OnFriendlyChallenge += OnFriendlyChallenge;
 		}
 
@@ -28,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			ArenaWatcher.Stop();
 			PackWatcher.Stop();
 			DungeonRunWatcher.Stop();
+			PVPDungeonRunWatcher.Stop();
 			FriendlyChallengeWatcher.Stop();
 		}
 
@@ -50,6 +53,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static ArenaWatcher ArenaWatcher { get; } = new ArenaWatcher(new HearthMirrorArenaProvider());
 		public static PackOpeningWatcher PackWatcher { get; } = new PackOpeningWatcher(new HearthMirrorPackProvider());
 		public static DungeonRunWatcher DungeonRunWatcher { get; } = new DungeonRunWatcher(new GameDataProvider());
+		public static PVPDungeonRunWatcher PVPDungeonRunWatcher { get; } = new PVPDungeonRunWatcher(new GameDataProvider());
 		public static FriendlyChallengeWatcher FriendlyChallengeWatcher { get; } = new FriendlyChallengeWatcher(new HearthMirrorFriendlyChallengeProvider());
 	}
 
@@ -57,6 +61,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public bool InAiMatch => Core.Game.CurrentMode == Mode.GAMEPLAY && Core.Game.MatchInfo?.GameType == (int)GameType.GT_VS_AI;
 		public bool InAdventureScreen => Core.Game.CurrentMode == Mode.ADVENTURE;
+		public bool InPVPDungeonRunScreen
+		{
+			get {
+				return Core.Game.CurrentMode == Mode.PVP_DUNGEON_RUN || (Core.Game.CurrentMode == Mode.GAMEPLAY && Core.Game.PreviousMode == Mode.PVP_DUNGEON_RUN);
+				return Core.Game.CurrentMode == Mode.PVP_DUNGEON_RUN; }
+		}
 		public string OpponentHeroId => Core.Game.Opponent.Board.FirstOrDefault(x => x.IsHero)?.CardId;
 		public int OpponentHeroHealth => Core.Game.Opponent.Board.FirstOrDefault(x => x.IsHero)?.GetTag(GameTag.HEALTH) ?? 0;
 	}
