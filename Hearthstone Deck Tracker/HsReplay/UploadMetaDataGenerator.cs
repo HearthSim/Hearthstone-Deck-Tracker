@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(game.BattlegroundsRatingAfter > 0)
 					friendly.BattlegroundsRatingAfter = game.BattlegroundsRatingAfter;
 			}
-			else if(game.PlayerCards.Sum(x => x.Count) == 30 || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
+			else if(game.PlayerCards.Sum(x => x.Count) == 30 || game.IsPVPDungeonMatch || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
 			{
 				friendly.DeckList = game.PlayerCards.Where(x => x.Id != Database.UnknownCardId).SelectMany(x => Enumerable.Repeat(x.Id, x.Count)).ToArray();
 				if(game.HsDeckId > 0)

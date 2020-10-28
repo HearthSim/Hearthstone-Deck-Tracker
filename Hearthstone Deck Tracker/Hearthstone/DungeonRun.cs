@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var deck = new Deck
 			{
 				Cards = new ObservableCollection<Card>(cards),
-				Class = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(playerClass.ToLowerInvariant()),
+				Class = playerClass.ToLower() == "demonhunter" ? "DemonHunter" : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(playerClass.ToLowerInvariant()),
 				IsDungeonDeck = true,
 				LastEdited = DateTime.Now
 			};
@@ -53,6 +53,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return Config.Instance.DalaranHeistDeckNameTemplate;
 				case CardSet.ULDUM:
 					return Config.Instance.TombsOfTerrorDeckNameTemplate;
+				case CardSet.DARKMOON_FAIRE:
+					return Config.Instance.PVPDungeonRunDeckNameTemplate;
 				default:
 					return null;
 			}

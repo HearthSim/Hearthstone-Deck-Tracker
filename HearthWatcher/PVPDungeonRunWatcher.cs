@@ -7,6 +7,7 @@ using HearthDb.Enums;
 using HearthMirror;
 using HearthMirror.Objects;
 
+
 namespace HearthWatcher
 {
 	public class PVPDungeonRunWatcher
@@ -59,12 +60,12 @@ namespace HearthWatcher
 			if(_dataProvider.InPVPDungeonRunScreen)
 			{
 				var shouldBreak = UpdatePVPDungeonInfo();
-				if(_prevCards != null)
-				{
-					PVPDungeonRunMatchStarted.Invoke(_prevCards.Count == 16, CardSet.NONE);
-				}
 				if(shouldBreak)
 					return true;
+			}
+			else if(_dataProvider.InPVPDungeonRunMatch)
+			{
+				PVPDungeonRunMatchStarted.Invoke(false, CardSet.DARKMOON_FAIRE);
 			}
 			return false;
 		}
@@ -74,7 +75,7 @@ namespace HearthWatcher
 			var pvpDungeonInfo = Reflection.GetPVPDungeonInfo();
 			if(pvpDungeonInfo != null)
 			{
-				if(pvpDungeonInfo.RunActive || pvpDungeonInfo.SelectedDeckId != 0)
+				if(pvpDungeonInfo.RunActive)
 				{
 					if(_prevCards == null || _prevCards.Count != (pvpDungeonInfo.DbfIds?.Count ?? 0) || _prevLootChoice != pvpDungeonInfo.PlayerChosenLoot || _prevTreasureChoice != pvpDungeonInfo.PlayerChosenTreasure)
 					{
@@ -84,11 +85,26 @@ namespace HearthWatcher
 						PVPDungeonInfoChanged?.Invoke(pvpDungeonInfo);
 					}
 				}
+				else if(!string.IsNullOrEmpty(pvpDungeonInfo.LoadoutCardId))
+				{
+					var deck = Reflection.GetPVPDungeonSeedDeck();
+					if(deck == null) {
+						return false;
+					}
+					var dbfids = deck.Cards.Select(x => HearthDb.Cards.All.TryGetValue(x.Id, out var card) ? card.DbfId : -1).ToList();
+					if(dbfids.Any(x => x == -1))
+						return false;
+					if(dbfids.Count == 15)
+					{
+						pvpDungeonInfo.UpdateDbfids(dbfids);
+						PVPDungeonInfoChanged?.Invoke(pvpDungeonInfo);
+						return true;
+					}
+				}
 				else
 				{
 					_prevCards = null;
 				}
-				
 				if(_prevLootChoice > 0 && _prevTreasureChoice > 0)
 					return true;
 			}

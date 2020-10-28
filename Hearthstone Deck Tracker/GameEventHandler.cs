@@ -58,7 +58,8 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Ranked && Config.Instance.RecordRanked
 											 || _game.CurrentGameMode == Friendly && Config.Instance.RecordFriendly
 											 || _game.CurrentGameMode == Casual && Config.Instance.RecordCasual
-											 || _game.CurrentGameMode == Spectator && Config.Instance.RecordSpectator;
+											 || _game.CurrentGameMode == Spectator && Config.Instance.RecordSpectator
+											 || _game.CurrentGameMode == Duels && Config.Instance.RecordDuels;
 
 		public bool UploadCurrentGameMode => _game.CurrentGameMode == Practice && Config.Instance.HsReplayUploadPractice
 											 || _game.CurrentGameMode == Arena && Config.Instance.HsReplayUploadArena
@@ -67,7 +68,8 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Friendly && Config.Instance.HsReplayUploadFriendly
 											 || _game.CurrentGameMode == Casual && Config.Instance.HsReplayUploadCasual
 											 || _game.CurrentGameMode == Spectator && Config.Instance.HsReplayUploadSpectator
-											 || _game.IsBattlegroundsMatch && Config.Instance.HsReplayUploadBattlegrounds;
+											 || _game.IsBattlegroundsMatch && Config.Instance.HsReplayUploadBattlegrounds
+											 || _game.CurrentGameMode == Duels && Config.Instance.HsReplayUploadDuels;
 
 		public void HandleInMenu()
 		{

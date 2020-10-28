@@ -117,6 +117,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				case GameType.GT_FSG_BRAWL_1P_VS_AI:
 				case GameType.GT_FSG_BRAWL_2P_COOP:
 					return GameMode.Brawl;
+				case GameType.GT_PVPDR:
+					return GameMode.Duels;
+				case GameType.GT_PVPDR_PAID:
+					return GameMode.Duels;
 				default:
 					return GameMode.None;
 			}
@@ -187,6 +191,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return BGT_BATTLEGROUNDS;
 				case GameType.GT_BATTLEGROUNDS_FRIENDLY:
 					return BGT_BATTLEGROUNDS_FRIENDLY;
+				case GameType.GT_PVPDR:
+					return BGT_PVPDR;
+				case GameType.GT_PVPDR_PAID:
+					return BGT_PVPDR_PAID;
 				default:
 					return BGT_UNKNOWN;
 			}

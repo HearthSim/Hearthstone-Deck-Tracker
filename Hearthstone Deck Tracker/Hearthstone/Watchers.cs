@@ -63,9 +63,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool InAdventureScreen => Core.Game.CurrentMode == Mode.ADVENTURE;
 		public bool InPVPDungeonRunScreen
 		{
-			get {
-				return Core.Game.CurrentMode == Mode.PVP_DUNGEON_RUN || (Core.Game.CurrentMode == Mode.GAMEPLAY && Core.Game.PreviousMode == Mode.PVP_DUNGEON_RUN);
-				return Core.Game.CurrentMode == Mode.PVP_DUNGEON_RUN; }
+			get
+			{
+				return Core.Game.CurrentMode == Mode.PVP_DUNGEON_RUN;
+			}
+		}
+
+		public bool InPVPDungeonRunMatch
+		{
+			get
+			{
+				return Core.Game.CurrentMode == Mode.GAMEPLAY && Core.Game.PreviousMode == Mode.PVP_DUNGEON_RUN;
+			}
 		}
 		public string OpponentHeroId => Core.Game.Opponent.Board.FirstOrDefault(x => x.IsHero)?.CardId;
 		public int OpponentHeroHealth => Core.Game.Opponent.Board.FirstOrDefault(x => x.IsHero)?.GetTag(GameTag.HEALTH) ?? 0;
