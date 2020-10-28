@@ -28,5 +28,4 @@
             <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding HealthDisplay}" Fill="{Binding HealthBrush}" Width="75" Height="75" FontSize="45" TextAlignment="Center" FontWeight="Bold" Canvas.Left="151" Canvas.Top="170" />
         </Canvas>
     </Viewbox>
-
 </UserControl>

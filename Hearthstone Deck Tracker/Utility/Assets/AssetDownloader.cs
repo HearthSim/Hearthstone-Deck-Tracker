@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hearthstone_Deck_Tracker.Utility.Assets
@@ -52,7 +51,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			DirectoryInfo directory = new DirectoryInfo(path);
 			try
 			{
-
 				foreach(FileInfo file in directory.GetFiles())
 				{
 					file.Delete();

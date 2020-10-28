@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 
 namespace Hearthstone_Deck_Tracker.Controls
@@ -67,7 +64,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
-
 
 		public BattlegroundsMinion(Entity entity)
 		{

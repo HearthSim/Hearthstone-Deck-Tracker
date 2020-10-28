@@ -1,5 +1,4 @@
-﻿using Hearthstone_Deck_Tracker.Importing;
-using Hearthstone_Deck_Tracker.Utility.Logging;
+﻿using Hearthstone_Deck_Tracker.Utility.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
