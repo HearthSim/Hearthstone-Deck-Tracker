@@ -1,3 +1,6 @@
+## **Release v1.13.10 - 2020-10-28**
+- Added support for upcoming Tier7 feature
+
 ## **Release v1.13.9 - 2020-10-22**
 **Updated for Hearthstone 18.6.0.63160**
 -Fix an issue where past known Battlegrounds boards wouldn't appear in custom lobbies.
