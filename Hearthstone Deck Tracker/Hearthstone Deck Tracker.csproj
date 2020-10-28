@@ -1511,7 +1511,6 @@
     <Resource Include="Resources\border.png" />
     <Resource Include="Resources\taunt_premium.png" />
     <Resource Include="Resources\divine-shield.png" />
-    <None Include="Resources\Image1.bmp" />
     <Resource Include="Resources\ClassIcons\Square\demonhunter.png" />
     <Resource Include="Resources\ClassIcons\Round\demonhunter.png" />
     <Resource Include="Images\icon-pogo.png" />
