@@ -196,6 +196,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlavorTextVisibility = Visibility.Collapsed;
 		}
 
+		public static bool MouseIsOverLeaderboardIcon = false;
+
 		private void UpdateBattlegroundsOverlay()
 		{
 			var cursorPos = GetCursorPos();
@@ -203,36 +205,58 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			var showMinions = false;
 			var fadeBgsMinionsList = false;
+			MouseIsOverLeaderboardIcon = false;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{
 				if(ElementContains(_leaderboardIcons[i], cursorPos))
 				{
+					MouseIsOverLeaderboardIcon = true;
 					fadeBgsMinionsList = true;
 					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
 					if(entity == null)
+					{
+						if(_game.GetTurnNumber() <= 1 && i != 0)
+						{
+							NotFoughtOpponent.Visibility = Visibility.Visible;
+							showMinions = true;
+						}
 						break;
+					}
+					showMinions = true;
 					var state = _game.GetBattlegroundsBoardStateFor(entity.CardId);
-					if(state == null)
-						break;
 					BattlegroundsBoard.Children.Clear();
+					NotFoughtOpponent.Visibility = Visibility.Collapsed;
+					HeroNoMinionsOnBoard.Visibility = Visibility.Collapsed;
+					if(state == null)
+					{
+						BattlegroundsAge.Text = "";
+						if(entity.CardId != _game.Player.Board.FirstOrDefault(x => x.IsHero).CardId)
+							NotFoughtOpponent.Visibility = Visibility.Visible;
+						else
+							showMinions = false;
+						break;
+					}
 					foreach(var e in state.Entities)
 						BattlegroundsBoard.Children.Add(new BattlegroundsMinion(e));
+					if(!state.Entities.Any())
+						HeroNoMinionsOnBoard.Visibility = Visibility.Visible;
 					var age = _game.GetTurnNumber() - state.Turn;
 					BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
-					showMinions = true;
+					
+
 					break;
 				}
 			}
 			if(showMinions)
 			{
-				Core.Overlay.BobsBuddyDisplay.HideFullPanel();
+				BobsBuddyDisplay.HideFullPanel();
 				_bgsPastOpponentBoardBehavior.Show();
 			}
 			else
 			{
 				_bgsPastOpponentBoardBehavior.Hide();
 				BattlegroundsBoard.Children.Clear();
-				Core.Overlay.BobsBuddyDisplay.ShowFullPanelAsync();
+				BobsBuddyDisplay.ShowFullPanelAsync();
 			}
 			// Only fade the minions, if we're out of mulligan
 			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)

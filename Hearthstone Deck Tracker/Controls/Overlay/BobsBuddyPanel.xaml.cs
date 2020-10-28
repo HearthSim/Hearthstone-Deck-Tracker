@@ -1,6 +1,7 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -263,7 +264,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				return;
 			//Await here so if they're mousing over a bunch of different heroes it doesn't stutter.
 			await Task.Delay(300);
-			MainPanel.Visibility = Visibility.Visible;
+			if(!OverlayWindow.MouseIsOverLeaderboardIcon)
+				MainPanel.Visibility = Visibility.Visible;
 		}
 
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)

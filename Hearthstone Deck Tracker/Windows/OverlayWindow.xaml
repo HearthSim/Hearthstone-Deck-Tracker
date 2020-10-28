@@ -198,6 +198,8 @@
                                         </Style>
                                     </StackPanel.Resources>
                                 </StackPanel>
+                                <local:HearthstoneTextBlock x:Name="NotFoughtOpponent" Text="{lex:Loc Not_Fought_Opponent}" Visibility="Collapsed" FontSize="16" Margin="50"/>
+                                <local:HearthstoneTextBlock x:Name="HeroNoMinionsOnBoard" Text="{lex:Loc Hero_No_Minions_On_Board}" Visibility="Collapsed" FontSize="16" Margin="50"/>
                             </StackPanel>
                         </Border>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
