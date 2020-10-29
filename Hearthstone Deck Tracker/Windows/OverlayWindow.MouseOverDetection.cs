@@ -13,6 +13,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Rectangle = System.Windows.Shapes.Rectangle;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Utility;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -29,6 +30,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double CardHeight => Height * 0.189;
 		private const int MaxHandSize = 10;
 		private const int MaxBoardSize = 7;
+		private bool _mouseIsOverLeaderboardIcon = false;
+
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
 
 		public Thickness MinionMargin
@@ -194,8 +197,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlavorTextVisibility = Visibility.Collapsed;
 		}
 
-		public static bool MouseIsOverLeaderboardIcon = false;
-
 		private void UpdateBattlegroundsOverlay()
 		{
 			var cursorPos = GetCursorPos();
@@ -203,12 +204,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			var showMinions = false;
 			var fadeBgsMinionsList = false;
-			MouseIsOverLeaderboardIcon = false;
+			_mouseIsOverLeaderboardIcon = false;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{
 				if(ElementContains(_leaderboardIcons[i], cursorPos))
 				{
-					MouseIsOverLeaderboardIcon = true;
+					_mouseIsOverLeaderboardIcon = true;
 					fadeBgsMinionsList = true;
 					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
 					if(entity == null)
@@ -252,7 +253,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				_bgsPastOpponentBoardBehavior.Hide();
 				BattlegroundsBoard.Children.Clear();
-				BobsBuddyDisplay.ShowFullPanelAsync();
+				Task.Run(async () =>
+				{
+					await Task.Delay(300);
+					if(!_mouseIsOverLeaderboardIcon)
+						ShowBobsBuddyPanel();
+				});
 			}
 			// Only fade the minions, if we're out of mulligan
 			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)

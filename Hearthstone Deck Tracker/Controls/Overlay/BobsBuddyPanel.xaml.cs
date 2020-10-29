@@ -256,18 +256,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public void HideFullPanel() => MainPanel.Visibility = Visibility.Hidden;
 
-		public async void ShowFullPanelAsync()
-		{
-			if(!Config.Instance.RunBobsBuddy)
-				return;
-			if(RemoteConfig.Instance.Data?.BobsBuddy?.Disabled ?? false)
-				return;
-			//Await here so if they're mousing over a bunch of different heroes it doesn't stutter.
-			await Task.Delay(300);
-			if(!OverlayWindow.MouseIsOverLeaderboardIcon)
-				MainPanel.Visibility = Visibility.Visible;
-		}
-
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{
 			ShowPercentagesHideSpinners();
