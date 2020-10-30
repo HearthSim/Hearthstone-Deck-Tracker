@@ -205,6 +205,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showMinions = false;
 			var fadeBgsMinionsList = false;
 			_mouseIsOverLeaderboardIcon = false;
+			var turn = _game.GetTurnNumber();
+			if(turn == 0)
+				return;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{
 				if(ElementContains(_leaderboardIcons[i], cursorPos))
@@ -214,9 +217,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
 					if(entity == null)
 					{
-						if(_game.GetTurnNumber() <= 1 && i != 0)
+						if(turn == 1 && i != 0)
 						{
+							BattlegroundsBoard.Children.Clear();
 							NotFoughtOpponent.Visibility = Visibility.Visible;
+							HeroNoMinionsOnBoard.Visibility = Visibility.Collapsed;
 							showMinions = true;
 						}
 						break;
@@ -246,25 +251,27 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			if(showMinions)
 			{
-				BobsBuddyDisplay.HideFullPanel();
+				_bgsBobsBuddyBehavior.Hide();
 				_bgsPastOpponentBoardBehavior.Show();
 			}
 			else
 			{
 				_bgsPastOpponentBoardBehavior.Hide();
 				BattlegroundsBoard.Children.Clear();
-				Task.Run(async () =>
-				{
-					await Task.Delay(300);
-					if(!_mouseIsOverLeaderboardIcon)
-						ShowBobsBuddyPanel();
-				});
+				ShowBobsBuddyPanelDelayed();
 			}
 			// Only fade the minions, if we're out of mulligan
 			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
 				fadeBgsMinionsList = false;
 			BgsTopBar.Opacity = fadeBgsMinionsList ? 0.3 : 1;
 			BobsBuddyDisplay.Opacity = fadeBgsMinionsList ? 0.3 : 1;
+		}
+
+		private async void ShowBobsBuddyPanelDelayed()
+		{
+			await Task.Delay(300);
+			if(!_mouseIsOverLeaderboardIcon)
+				ShowBobsBuddyPanel();
 		}
 
 		public Point GetPlayerCardPosition(int position, int count)
