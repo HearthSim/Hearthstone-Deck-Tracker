@@ -271,7 +271,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			await Task.Delay(300);
 			if(!_mouseIsOverLeaderboardIcon)
-				ShowBobsBuddyPanel();
+			{
+				if(_game.IsBattlegroundsMatch && !_game.IsInMenu)
+					ShowBobsBuddyPanel();
+			}
 		}
 
 		public Point GetPlayerCardPosition(int position, int count)
