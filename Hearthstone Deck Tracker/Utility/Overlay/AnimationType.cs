@@ -3,6 +3,7 @@
 	public enum AnimationType
 	{
 		Slide,
-		Bounce
+		Bounce,
+		Instant
 	}
 }

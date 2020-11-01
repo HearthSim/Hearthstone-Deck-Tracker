@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.BattlegroundsMinion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d"
+             d:DesignHeight="256" d:DesignWidth="256">
+    <Viewbox Width="110" Height="110">
+        <Canvas Width="256" Height="256">
+            <Image Source="{StaticResource Taunt}" Visibility="{Binding TauntVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource PremiumTaunt}" Visibility="{Binding PremiumTauntVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image HorizontalAlignment="Center" Width="256" Height="256" Source="{Binding CardImagePath}" RenderOptions.BitmapScalingMode="Fant">
+                <Image.Clip>
+                    <EllipseGeometry RadiusX="87" RadiusY="120" Center="128,128"/>
+                </Image.Clip>
+            </Image>
+            <Image Source="{StaticResource MinionBorder}" Visibility="{Binding BorderVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource PremiumMinionBorder}" Visibility="{Binding PremiumBorderVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource Deathrattle}" Visibility="{Binding DeathrattleVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource Legendary}" Visibility="{Binding LegendaryBorderVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource PremiumLegendary}" Visibility="{Binding PremiumLegendaryBorderVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource Poisonous}" Visibility="{Binding PoisonousVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
+            <Image Source="{StaticResource DivineShield}" Visibility="{Binding DivineShieldVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-36" Canvas.Top="-24" Height="311" Width="325"/>
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding AttackDisplay}" Fill="{Binding AttackBrush}" Width="75" Height="75" FontSize="45" TextAlignment="Center" FontWeight="Bold" Canvas.Left="29" Canvas.Top="170" />
+            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{Binding HealthDisplay}" Fill="{Binding HealthBrush}" Width="75" Height="75" FontSize="45" TextAlignment="Center" FontWeight="Bold" Canvas.Left="151" Canvas.Top="170" />
+        </Canvas>
+    </Viewbox>
+</UserControl>

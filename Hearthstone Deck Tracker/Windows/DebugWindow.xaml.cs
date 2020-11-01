@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				await Task.Delay(500);
 			}
-		}
+		}	
 
 		private void UpdateCards()
 		{

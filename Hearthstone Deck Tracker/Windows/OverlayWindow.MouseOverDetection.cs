@@ -13,7 +13,7 @@ using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Rectangle = System.Windows.Shapes.Rectangle;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Hearthstone;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -30,6 +30,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double CardHeight => Height * 0.189;
 		private const int MaxHandSize = 10;
 		private const int MaxBoardSize = 7;
+		private bool _mouseIsOverLeaderboardIcon = false;
+
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
 
 		public Thickness MinionMargin
@@ -202,45 +204,77 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			var showMinions = false;
 			var fadeBgsMinionsList = false;
+			_mouseIsOverLeaderboardIcon = false;
+			var turn = _game.GetTurnNumber();
+			if(turn == 0)
+				return;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{
 				if(ElementContains(_leaderboardIcons[i], cursorPos))
 				{
+					_mouseIsOverLeaderboardIcon = true;
 					fadeBgsMinionsList = true;
 					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
 					if(entity == null)
+					{
+						if(turn == 1 && i != 0)
+						{
+							BattlegroundsBoard.Children.Clear();
+							NotFoughtOpponent.Visibility = Visibility.Visible;
+							HeroNoMinionsOnBoard.Visibility = Visibility.Collapsed;
+							showMinions = true;
+						}
 						break;
+					}
+					showMinions = true;
 					var state = _game.GetBattlegroundsBoardStateFor(entity.CardId);
-					if(state == null)
-						break;
 					BattlegroundsBoard.Children.Clear();
+					NotFoughtOpponent.Visibility = Visibility.Collapsed;
+					HeroNoMinionsOnBoard.Visibility = Visibility.Collapsed;
+					if(state == null)
+					{
+						BattlegroundsAge.Text = "";
+						if(entity.CardId != _game.Player.Board.FirstOrDefault(x => x.IsHero).CardId)
+							NotFoughtOpponent.Visibility = Visibility.Visible;
+						else
+							showMinions = false;
+						break;
+					}
 					foreach(var e in state.Entities)
-						BattlegroundsBoard.Children.Add(new EntityControl(e));
+						BattlegroundsBoard.Children.Add(new BattlegroundsMinion(e));
+					if(!state.Entities.Any())
+						HeroNoMinionsOnBoard.Visibility = Visibility.Visible;
 					var age = _game.GetTurnNumber() - state.Turn;
 					BattlegroundsAge.Text = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turns"), age);
-					BattlegroundsOpponent.Text = entity.Card.LocalizedName;
-					showMinions = true;
 					break;
 				}
 			}
 			if(showMinions)
 			{
-				Canvas.SetTop(BattlegroundsLeaderboard, Height * 0.01);
-				Canvas.SetLeft(BattlegroundsLeaderboard, Helper.GetScaledXPos(0.05, (int)Width, ScreenRatio));
-				BattlegroundsLeaderboard.Visibility = Visibility.Visible;
-				var scale = Math.Min(1.5, Height / 1080);
-				BattlegroundsLeaderboard.RenderTransform = new ScaleTransform(scale, scale, 0, 0);
+				_bgsBobsBuddyBehavior.Hide();
+				_bgsPastOpponentBoardBehavior.Show();
 			}
 			else
 			{
+				_bgsPastOpponentBoardBehavior.Hide();
 				BattlegroundsBoard.Children.Clear();
-				BattlegroundsLeaderboard.Visibility = Visibility.Collapsed;
+				ShowBobsBuddyPanelDelayed();
 			}
 			// Only fade the minions, if we're out of mulligan
 			if(_game.GameEntity?.GetTag(GameTag.STEP) <= (int)Step.BEGIN_MULLIGAN)
 				fadeBgsMinionsList = false;
 			BgsTopBar.Opacity = fadeBgsMinionsList ? 0.3 : 1;
 			BobsBuddyDisplay.Opacity = fadeBgsMinionsList ? 0.3 : 1;
+		}
+
+		private async void ShowBobsBuddyPanelDelayed()
+		{
+			await Task.Delay(300);
+			if(!_mouseIsOverLeaderboardIcon)
+			{
+				if(_game.IsBattlegroundsMatch && !_game.IsInMenu)
+					ShowBobsBuddyPanel();
+			}
 		}
 
 		public Point GetPlayerCardPosition(int position, int count)

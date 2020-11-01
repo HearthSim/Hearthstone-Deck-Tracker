@@ -238,6 +238,9 @@
     <Compile Include="Controls\AnimatedCardList.xaml.cs">
       <DependentUpon>AnimatedCardList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BattlegroundsMinion.xaml.cs">
+      <DependentUpon>BattlegroundsMinion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Card.xaml.cs">
       <DependentUpon>Card.xaml</DependentUpon>
     </Compile>
@@ -332,6 +335,8 @@
     <Compile Include="HsReplay\HSReplayNetOAuth.cs" />
     <Compile Include="HsReplay\Data\OAuthData.cs" />
     <Compile Include="HsReplay\HSReplayNetHelper.cs" />
+    <Compile Include="Utility\Assets\AssetDownloader.cs" />
+    <Compile Include="Utility\Assets\AssetDownloaders.cs" />
     <Compile Include="Utility\ComboBoxHelper.cs" />
     <Compile Include="Utility\DataLoader.cs" />
     <Compile Include="Utility\DelayedMouseOver.cs" />
@@ -955,6 +960,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\BattlegroundsMinion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Card.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1492,6 +1501,16 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\faceless_manipulator.png" />
+    <Resource Include="Resources\deathrattle.png" />
+    <Resource Include="Resources\taunt.png" />
+    <Resource Include="Resources\poisonous.png" />
+    <Resource Include="Resources\legendary_premium.png" />
+    <Resource Include="Resources\legendary.png" />
+    <Resource Include="Resources\border_premium.png" />
+    <Resource Include="Resources\border.png" />
+    <Resource Include="Resources\taunt_premium.png" />
+    <Resource Include="Resources\divine-shield.png" />
     <Resource Include="Resources\ClassIcons\Square\demonhunter.png" />
     <Resource Include="Resources\ClassIcons\Round\demonhunter.png" />
     <Resource Include="Images\icon-pogo.png" />
