@@ -1,13 +1,10 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.BobsBuddy;
-using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -253,8 +250,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private static List<int> _playerDamageDealtBounds;
 		private static List<int> _opponentDamageDealtBounds;
-
-		public void HideFullPanel() => MainPanel.Visibility = Visibility.Hidden;
 
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{
