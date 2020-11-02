@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public Visibility VisibilitySearchBar => SearchBarVisibile ? Visible : Collapsed;
 
-		public ObservableCollection<DeckType> DeckTypeItems => _deckTypeItems ?? (_deckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Distinct().Take(6)));
+		public ObservableCollection<DeckType> DeckTypeItems => _deckTypeItems ?? (_deckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>().Distinct().Take(7)));
 
 		public Deck ActiveDeck => DeckList.Instance.ActiveDeck;
 
@@ -401,7 +401,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			}
 		}
 
-		private bool IsConstructedDeck(Deck deck) => !deck.IsBrawlDeck && !deck.IsDungeonDeck && !deck.IsArenaDeck;
+		private bool IsConstructedDeck(Deck deck) => !deck.IsBrawlDeck && !deck.IsDungeonDeck && !deck.IsDuelsDeck && !deck.IsArenaDeck;
 
 		private bool DeckMatchesSelectedDeckType(Deck deck)
 		{
@@ -413,6 +413,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					return deck.IsArenaDeck;
 				case DeckType.Dungeon:
 					return deck.IsDungeonDeck;
+				case DeckType.Duels:
+					return deck.IsDuelsDeck;
 				case DeckType.Brawl:
 					return deck.IsBrawlDeck;
 				case DeckType.Standard:
@@ -486,6 +488,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 					SelectDeckType(DeckType.Arena);
 				else if(deck.IsDungeonDeck)
 					SelectDeckType(DeckType.Dungeon);
+				else if(deck.IsDuelsDeck)
+					SelectDeckType(DeckType.Duels);
 				else if(deck.IsBrawlDeck)
 					SelectDeckType(DeckType.Brawl);
 				else if(IsConstructedDeck(deck))
