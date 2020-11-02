@@ -31,6 +31,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 					_animatedCards.Clear();
 					ItemsControl.Items.Clear();
 				}
+				for(int i = cards.Count - 1; i>= 0; i--)
+				{
+					if(cards[i].Id.Contains("PVPDR_TEST"))
+						cards.RemoveAt(i);
+				}
 				var newCards = new List<Hearthstone.Card>();
 				foreach(var card in cards)
 				{
