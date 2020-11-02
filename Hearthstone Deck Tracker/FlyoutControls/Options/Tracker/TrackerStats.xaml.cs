@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckboxRecordOther.IsChecked = Config.Instance.RecordOther;
 			CheckboxRecordPractice.IsChecked = Config.Instance.RecordPractice;
 			CheckboxRecordRanked.IsChecked = Config.Instance.RecordRanked;
+			CheckboxRecordDuels.IsChecked = Config.Instance.RecordDuels;
 			CheckboxDiscardGame.IsChecked = Config.Instance.DiscardGameIfIncorrectDeck;
 			CheckboxAskBeforeDiscarding.IsChecked = Config.Instance.AskBeforeDiscardingGame;
 			CheckboxAskBeforeDiscarding.IsEnabled = Config.Instance.DiscardGameIfIncorrectDeck;
@@ -217,6 +218,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if(!_initialized)
 				return;
 			Config.Instance.RecordSpectator = false;
+			Config.Save();
+		}
+
+		private void CheckboxRecordDuels_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RecordDuels = true;
+			Config.Save();
+		}
+
+		private void CheckboxRecordDuels_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.RecordDuels = false;
 			Config.Save();
 		}
 

@@ -292,6 +292,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public static bool HsReplayUploadDuels
+		{
+			get { return Config.Instance.HsReplayUploadDuels; }
+			set
+			{
+				Config.Instance.HsReplayUploadDuels = value;
+				Config.Save();
+			}
+		}
+
 		public static Visibility ShowDateOnDeckVisibility => Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 
 		public static Visibility UseButtonVisiblity => Config.Instance.AutoUseDeck ? Visibility.Collapsed : Visibility.Visible;
