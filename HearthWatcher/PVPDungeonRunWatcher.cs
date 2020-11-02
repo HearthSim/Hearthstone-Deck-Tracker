@@ -63,9 +63,10 @@ namespace HearthWatcher
 				if(shouldBreak)
 					return true;
 			}
-			else if(_dataProvider.InPVPDungeonRunMatch)
+			else if(_dataProvider.InPVPDungeonRunMatch && !string.IsNullOrEmpty(_dataProvider.OpponentHeroId))
 			{
 				PVPDungeonRunMatchStarted.Invoke(false, CardSet.DARKMOON_FAIRE);
+				return true;
 			}
 			return false;
 		}
