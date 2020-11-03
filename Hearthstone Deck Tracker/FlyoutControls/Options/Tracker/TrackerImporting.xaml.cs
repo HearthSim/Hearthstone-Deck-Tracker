@@ -21,7 +21,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private string _arenaEditButtonText = LocUtil.Get(LocEdit);
 		private bool _arenaTemplateEditable;
 		private string _dungeonEditButtonText = LocUtil.Get(LocEdit);
+		private string _pvpdrEditButtonText = LocUtil.Get(LocEdit);
 		private bool _dungeonTemplateEditable;
+		private bool _pvpdrTemplateEditable;
 		private const string LocEdit = "Options_Tracker_Importing_Button_Edit";
 		private const string LocSave = "Options_Tracker_Importing_Button_Save";
 
@@ -60,12 +62,32 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 		}
 
+		public string PVPDREditButtonText
+		{
+			get => _pvpdrEditButtonText;
+			set
+			{
+				_pvpdrEditButtonText = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public bool DungeonTemplateEditable
 		{
 			get => _dungeonTemplateEditable;
 			set
 			{
 				_dungeonTemplateEditable = value; 
+				OnPropertyChanged();
+			}
+		}
+
+		public bool PVPDRTemplateEditable
+		{
+			get => _pvpdrTemplateEditable;
+			set
+			{
+				_pvpdrTemplateEditable = value;
 				OnPropertyChanged();
 			}
 		}
@@ -85,6 +107,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			CheckBoxConstructedImportNew.IsChecked = Config.Instance.ConstructedAutoImportNew;
 			CheckBoxConstrucedUpdate.IsChecked = Config.Instance.ConstructedAutoUpdate;
 			TextBoxDungeonTemplate.Text = Config.Instance.DungeonRunDeckNameTemplate;
+			TextBoxPVPDRTemplate.Text = Config.Instance.PVPDungeonRunDeckNameTemplate;
 			CheckBoxDungeonImport.IsChecked = Config.Instance.DungeonAutoImport;
 			CheckBoxDungeonIncludePassives.IsChecked = Config.Instance.DungeonRunIncludePassiveCards;
 			_initialized = true;
@@ -133,8 +156,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			DungeonTemplateEditable = !DungeonTemplateEditable;
 		}
 
+		private void BtnEditTemplate_ClickPVPDR(object sender, RoutedEventArgs e)
+		{
+			if(PVPDRTemplateEditable)
+			{
+				Config.Instance.PVPDungeonRunDeckNameTemplate = TextBoxPVPDRTemplate.Text;
+				Config.Save();
+			}
+			PVPDREditButtonText = LocUtil.Get(PVPDRTemplateEditable ? LocEdit : LocSave);
+			PVPDRTemplateEditable = !PVPDRTemplateEditable;
+		}
+
 		private void TextBoxDungeonTemplate_OnTextChanged(object sender, TextChangedEventArgs e) 
 			=> TextBlockNamePreviewDungeon.Text = Helper.ParseDeckNameTemplate(TextBoxDungeonTemplate.Text, new Deck() {Class = "ClassName"});
+
+		private void TextBoxPVPDRTemplate_OnTextChanged(object sender, TextChangedEventArgs e)
+			=> TextBlockNamePreviewPVPDR.Text = Helper.ParseDeckNameTemplate(TextBoxPVPDRTemplate.Text, new Deck() { Class = "ClassName" });
 
 		private void BtnEditTemplate_ClickArena(object sender, RoutedEventArgs e)
 		{
