@@ -85,7 +85,7 @@ namespace HearthWatcher
 						PVPDungeonInfoChanged?.Invoke(pvpDungeonInfo);
 					}
 				}
-				else if(!string.IsNullOrEmpty(pvpDungeonInfo.LoadoutCardId))
+				else if(pvpDungeonInfo.SelectedLoadoutTreasureDbId > 0)
 				{
 					var deck = Reflection.GetPVPDungeonSeedDeck();
 					if(deck == null) {
