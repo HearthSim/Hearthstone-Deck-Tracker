@@ -85,9 +85,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 				[JsonProperty("current_sets")]
 				public List<CardSet> CurrentSets { get; set; }
 
-				[JsonProperty("exclusive_secrets")]
-				public List<string> ExclusiveSecrets { get; set; }
-
 				[JsonProperty("banned_secrets")]
 				public List<string> BannedSecrets { get; set; }
 			}

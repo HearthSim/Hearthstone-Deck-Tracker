@@ -529,7 +529,7 @@ namespace Hearthstone_Deck_Tracker
 			string playerClass = null;
 			if (cardSet == CardSet.ULDUM && loadout != null)
 				playerClass = DungeonRun.GetUldumHeroPlayerClass(loadout.PlayerClass);
-			else if(cardSet == CardSet.DARKMOON_FAIRE)
+			else if(isPVPDR)
 				playerClass = HearthDbConverter.ConvertClass((CardClass)(info.HeroClass != 0 ? info.HeroClass : info.HeroCardClass));
 			else
 			{
@@ -540,9 +540,10 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			var deck = DeckList.Instance.Decks.FirstOrDefault(x => (!isPVPDR && x.IsDungeonDeck || isPVPDR && x.IsDuelsDeck) && x.Class.ToUpperInvariant() == playerClass.ToUpperInvariant()
-																		&& !((x.IsDungeonRunCompleted ?? false) || (x.IsDuelsRunCompleted ?? false))
-																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count)));
-			var baseDbfids = cardSet == CardSet.DARKMOON_FAIRE ? info.DbfIds : info.SelectedDeck;
+																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count))
+																		&& !(x.IsDungeonRunCompleted ?? false)
+																		&& !(x.IsDuelsRunCompleted ?? false));
+			var baseDbfids = isPVPDR ? info.DbfIds : info.SelectedDeck;
 			if(deck == null && (deck = CreateDungeonDeck(playerClass, cardSet, isPVPDR, baseDbfids, loadout)) == null)
 			{
 				Log.Info($"No existing deck - can't find default deck for {playerClass}");
