@@ -13,6 +13,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		public const int KeyMasterAlabasterDbfId = 61174;
 
+		public static List<string> HiddenCardidPrefixes = new List<string>()
+		{
+			"PVPDR_TEST_"
+		};
+
 		// todo: conditional deathrattle summons: Voidcaller
 		public static readonly Dictionary<string, int> DeathrattleSummonCardIds = new Dictionary<string, int>
 		{
