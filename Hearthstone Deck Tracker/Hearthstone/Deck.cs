@@ -216,7 +216,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 												   || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 1) as bool? : null;
 
 		public bool? IsDuelsRunCompleted => IsDuelsDeck ? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 12
-															|| DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null;
+												   || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null;
 
 		public Guid DeckId
 		{

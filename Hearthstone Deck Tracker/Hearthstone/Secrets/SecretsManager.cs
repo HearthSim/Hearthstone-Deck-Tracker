@@ -137,18 +137,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				if (_arenaSettings.BannedSecrets.Count > 0)
 					cards = cards.Where(c => !_arenaSettings.BannedSecrets.Contains(c.Id));
 			}
-			else if(gameMode == GameType.GT_PVPDR || gameMode == GameType.GT_PVPDR_PAID)
-			{
-				cards = cards.Where(c => _pvpdrSettings.CurrentSets.Contains(c.CardSet ?? CardSet.BLANK));
-				if(_pvpdrSettings.BannedSecrets.Count > 0)
-					cards = cards.Where(c => !_pvpdrSettings.BannedSecrets.Contains(c.Id));
-			}
 			else
 			{
 				if(_arenaSettings.ExclusiveSecrets.Count > 0)
 					cards = cards.Where(c => !_arenaSettings.ExclusiveSecrets.Contains(c.Id));
 				if(format == Format.Standard)
 					cards = cards.Where(c => !Helper.WildOnlySets.Contains(c.Set));
+			}
+
+			if(gameMode == GameType.GT_PVPDR || gameMode == GameType.GT_PVPDR_PAID)
+			{
+				cards = cards.Where(c => _pvpdrSettings.CurrentSets.Contains(c.CardSet ?? CardSet.BLANK));
+				if(_pvpdrSettings.BannedSecrets.Count > 0)
+					cards = cards.Where(c => !_pvpdrSettings.BannedSecrets.Contains(c.Id));
 			}
 
 			return cards.ToList();

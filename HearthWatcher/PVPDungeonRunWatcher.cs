@@ -7,7 +7,6 @@ using HearthDb.Enums;
 using HearthMirror;
 using HearthMirror.Objects;
 
-
 namespace HearthWatcher
 {
 	public class PVPDungeonRunWatcher
