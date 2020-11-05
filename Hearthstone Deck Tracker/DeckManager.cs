@@ -489,23 +489,34 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(!Config.Instance.DungeonAutoImport)
 				return;
-			Log.Info($"Found dungeon run deck Set={((CardSet)info.CardSet).ToString()}");
-			var baseDeck = info.SelectedDeck ?? new List<int>();
+
+			var isNewPVPDR = isPVPDR && !info.RunActive && info.SelectedLoadoutTreasureDbId > 0;
+			Log.Info($"Found dungeon run deck Set={(CardSet)info.CardSet}, PVPDR={isPVPDR} (new={isNewPVPDR})");
+
 			var allCards = info.DbfIds?.ToList() ?? new List<int>();
-			if (baseDeck.All(x => allCards.Contains(x)))
+
+			// New PVPDR runs have all non-loadout cards in the DbfIds. We still add the picked loadout below.
+			// So we don't want to replace allCards with baseDeck, as backDeck is empty, and we don't want to add
+			// any loot or treasure, as these will be the ones from a previous run, if they exist.
+			if (!isNewPVPDR)
 			{
-				if(info.PlayerChosenLoot > 0)
+				var baseDeck = info.SelectedDeck ?? new List<int>();
+				if (baseDeck.All(x => allCards.Contains(x)))
 				{
-					var loot = new[] { info.LootA, info.LootB, info.LootC };
-					var chosen = loot[info.PlayerChosenLoot - 1];
-					for(var i = 1; i < chosen.Count; i++)
-						allCards.Add(chosen[i]);
+					if(info.PlayerChosenLoot > 0)
+					{
+						var loot = new[] { info.LootA, info.LootB, info.LootC };
+						var chosen = loot[info.PlayerChosenLoot - 1];
+						for(var i = 1; i < chosen.Count; i++)
+							allCards.Add(chosen[i]);
+					}
+					if(info.PlayerChosenTreasure > 0)
+						allCards.Add(info.Treasure[info.PlayerChosenTreasure - 1]);
 				}
-				if(info.PlayerChosenTreasure > 0)
-					allCards.Add(info.Treasure[info.PlayerChosenTreasure - 1]);
+				else
+					allCards = baseDeck;
 			}
-			else
-				allCards = baseDeck;
+
 			var cards = allCards.GroupBy(x => x).Select(x =>
 			{
 				var card = Database.GetCardFromDbfId(x.Key, false);
