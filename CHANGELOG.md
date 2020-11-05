@@ -1,3 +1,12 @@
+## **Release v1.13.11 - 2020-11-05**
+**Updated for Hearthstone 18.6.1.65000**
+
+**New**:
+- Added support for the new Duels game mode.
+
+**Changes**:
+- Improved the way past opponent boards in Battlegrounds are displayed.
+
 ## **Release v1.13.10 - 2020-10-28**
 - Added support for upcoming Tier7 feature
 
