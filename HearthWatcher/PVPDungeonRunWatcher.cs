@@ -88,9 +88,8 @@ namespace HearthWatcher
 				else if(pvpDungeonInfo.SelectedLoadoutTreasureDbId > 0)
 				{
 					var deck = Reflection.GetPVPDungeonSeedDeck();
-					if(deck == null) {
+					if(deck == null)
 						return false;
-					}
 					var dbfids = deck.Cards.Select(x => HearthDb.Cards.All.TryGetValue(x.Id, out var card) ? card.DbfId : -1).ToList();
 					if(dbfids.Any(x => x == -1))
 						return false;
@@ -98,20 +97,20 @@ namespace HearthWatcher
 					{
 						pvpDungeonInfo.UpdateDbfids(dbfids);
 						PVPDungeonInfoChanged?.Invoke(pvpDungeonInfo);
+						// This is the only scenario in which we can stop the watcher.
+						// If a new deck is created the only options are to a) play a game or b) exit the PVPDR scene
 						return true;
 					}
 				}
 				else
-				{
 					_prevCards = null;
-				}
-				if(_prevLootChoice > 0 && _prevTreasureChoice > 0)
-					return true;
+
+				// We can not exit the watcher here if loot and treasures are selected like we do in the DungeonRunWatcher
+				// because retiring the run will NOT leave the PVPDR scene and thus we would not restart the watcher through
+				// the LoadingScreenHandler.
 			}
 			else
-			{
 				_prevCards = null;
-			}
 			return false;
 		}
 	}
