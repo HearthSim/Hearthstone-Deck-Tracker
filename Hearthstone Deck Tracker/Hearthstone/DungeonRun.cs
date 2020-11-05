@@ -15,21 +15,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var cards = GetCards(playerClass, set, shrineCardId);
 			if(cards == null)
 				return null;
-			return GetDeck(playerClass, set, cards.Select(Database.GetCardFromId));
+			return GetDeck(playerClass, set, false, cards.Select(Database.GetCardFromId));
 		}
 
-		public static Deck GetDeckFromDbfIds(string playerClass, CardSet set, IEnumerable<int> dbfIds)
+		public static Deck GetDeckFromDbfIds(string playerClass, CardSet set, bool isPVPDR, IEnumerable<int> dbfIds)
 		{
-			return GetDeck(playerClass, set, dbfIds.Select(dbfId => Database.GetCardFromDbfId(dbfId)));
+			return GetDeck(playerClass, set, isPVPDR, dbfIds.Select(dbfId => Database.GetCardFromDbfId(dbfId)));
 		}
 
-		public static Deck GetDeck(string playerClass, CardSet set, IEnumerable<Card> cards)
+		public static Deck GetDeck(string playerClass, CardSet set, bool isPVPDR, IEnumerable<Card> cards)
 		{
 			var deck = new Deck
 			{
 				Cards = new ObservableCollection<Card>(cards),
-				Class = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(playerClass.ToLowerInvariant()),
-				IsDungeonDeck = true,
+				Class = playerClass.ToLower() == "demonhunter" ? "DemonHunter" : CultureInfo.InvariantCulture.TextInfo.ToTitleCase(playerClass.ToLowerInvariant()),
+				IsDuelsDeck = isPVPDR,
+				IsDungeonDeck = !isPVPDR,
 				LastEdited = DateTime.Now
 			};
 			var template = GetDeckTemplate(set);
@@ -53,6 +54,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return Config.Instance.DalaranHeistDeckNameTemplate;
 				case CardSet.ULDUM:
 					return Config.Instance.TombsOfTerrorDeckNameTemplate;
+				case CardSet.DARKMOON_FAIRE:
+					return Config.Instance.PVPDungeonRunDeckNameTemplate;
 				default:
 					return null;
 			}

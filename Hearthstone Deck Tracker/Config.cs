@@ -158,6 +158,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("Tombs of Terror {Date dd-MM HH:mm}")]
 		public string TombsOfTerrorDeckNameTemplate = "Tombs of Terror {Date dd-MM HH:mm}";
 
+		[DefaultValue("Duels Run {Date dd-MM HH:mm}")]
+		public string PVPDungeonRunDeckNameTemplate = "Duels Run {Date dd-MM HH:mm}";
+
 		[DefaultValue(HsActionType.Flash)]
 		public HsActionType TurnStartAction = HsActionType.Flash;
 
@@ -512,6 +515,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool HsReplayUploadBattlegrounds = true;
 
+		[DefaultValue(true)]
+		public bool HsReplayUploadDuels = true;
+
 		[DefaultValue(null)]
 		public bool? HsReplayUploadPacks = null;
 
@@ -698,6 +704,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool RecordSpectator = false;
+
+		[DefaultValue(true)]
+		public bool RecordDuels = true;
 
 		[DefaultValue(false)]
 		public bool RemoveCardsFromDeck = false;

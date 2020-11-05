@@ -72,6 +72,21 @@
                                  TextChanged="TextBoxDungeonTemplate_OnTextChanged" />
                     </DockPanel>
                 </GroupBox>
+                <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_PVPDRTemplates}">
+                    <DockPanel>
+                        <TextBlock Text="{lex:LocText Key=Options_Tracker_Importing_Label_TemplatesFormat, Suffix=' \{Class}, {Date FORMAT}'}" DockPanel.Dock="Bottom"
+                                   Margin="0,5,0,0" TextWrapping="Wrap"
+                                   ToolTip="{lex:Loc Options_Tracker_Importing_Label_ArenaTemplatesFormat_Tooltip}" />
+                        <DockPanel DockPanel.Dock="Bottom" Margin="0,5,0,0">
+                            <TextBlock Text="{lex:Loc Options_Tracker_Importing_Label_TemplatesPreview}" />
+                            <TextBlock Name="TextBlockNamePreviewPVPDR" Margin="5,0,0,0" />
+                        </DockPanel>
+                        <Button Name="BtnEditTemplatePVPDR" Content="{Binding PVPDREditButtonText}" DockPanel.Dock="Right"
+                                            Margin="5,0,0,0" Click="BtnEditTemplate_ClickPVPDR"/>
+                        <TextBox Name="TextBoxPVPDRTemplate" IsEnabled="{Binding PVPDRTemplateEditable}"
+                                 TextChanged="TextBoxPVPDRTemplate_OnTextChanged" />
+                    </DockPanel>
+                </GroupBox>
             </StackPanel>
         </GroupBox>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_Importing_Label_Web}">

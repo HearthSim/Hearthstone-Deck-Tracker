@@ -90,7 +90,7 @@ namespace Hearthstone_Deck_Tracker
 			_waitingForDraws--;
 			if(_waitingForDraws > 0)
 				return;
-			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived && !x.IsDungeonDeck).ToList();
+			var validDecks = DeckList.Instance.Decks.Where(x => x.Class == heroClass && !x.Archived && !x.IsDungeonDeck && !x.IsDuelsDeck).ToList();
 			if(currentDeck != null)
 				validDecks.Remove(currentDeck);
 			validDecks = validDecks.FilterByMode(mode, currentFormat);
@@ -431,7 +431,7 @@ namespace Hearthstone_Deck_Tracker
 			DeckManagerEvents.OnDeckUpdated.Execute(newVersion);
 		}
 
-		public static void DungeonRunMatchStarted(bool newRun, CardSet set, bool recursive = false)
+		public static void DungeonRunMatchStarted(bool newRun, CardSet set, bool isPVPDR, bool recursive = false)
 		{
 			if(!Config.Instance.DungeonAutoImport)
 				return;
@@ -446,8 +446,8 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			var revealed = RevealedEntites;
 			var existingDeck = DeckList.Instance.Decks
-				.Where(x => x.IsDungeonDeck && x.Class == playerClass
-							&& !(x.IsDungeonRunCompleted ?? false)
+				.Where(x => (isPVPDR && x.IsDuelsDeck || !isPVPDR && x.IsDungeonDeck) && x.Class == playerClass
+							&& !((x.IsDungeonRunCompleted ?? false) || (x.IsDuelsRunCompleted ?? false))
 							&& (!newRun || x.Cards.Count == 10 || x.Cards.Count == 11)
 							&& GetMissingCards(revealed, x).Count == 0)
 				.OrderByDescending(x => x.LastEdited).FirstOrDefault();
@@ -461,12 +461,12 @@ namespace Hearthstone_Deck_Tracker
 						Watchers.DungeonRunWatcher.UpdateDungeonInfo();
 						if(!recursive)
 						{
-							DungeonRunMatchStarted(newRun, set, true);
+							DungeonRunMatchStarted(newRun, set, isPVPDR, true);
 							return;
 						}
 					}
 					else
-						CreateDungeonDeck(playerClass, set);
+						CreateDungeonDeck(playerClass, set, isPVPDR);
 				}
 				else
 				{
@@ -485,27 +485,38 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static void UpdateDungeonRunDeck(DungeonInfo info)
+		public static void UpdateDungeonRunDeck(DungeonInfo info, bool isPVPDR)
 		{
 			if(!Config.Instance.DungeonAutoImport)
 				return;
-			Log.Info($"Found dungeon run deck Set={((CardSet)info.CardSet).ToString()}");
-			var baseDeck = info.SelectedDeck ?? new List<int>();
+
+			var isNewPVPDR = isPVPDR && !info.RunActive && info.SelectedLoadoutTreasureDbId > 0;
+			Log.Info($"Found dungeon run deck Set={(CardSet)info.CardSet}, PVPDR={isPVPDR} (new={isNewPVPDR})");
+
 			var allCards = info.DbfIds?.ToList() ?? new List<int>();
-			if (baseDeck.All(x => allCards.Contains(x)))
+
+			// New PVPDR runs have all non-loadout cards in the DbfIds. We still add the picked loadout below.
+			// So we don't want to replace allCards with baseDeck, as backDeck is empty, and we don't want to add
+			// any loot or treasure, as these will be the ones from a previous run, if they exist.
+			if (!isNewPVPDR)
 			{
-				if(info.PlayerChosenLoot > 0)
+				var baseDeck = info.SelectedDeck ?? new List<int>();
+				if (baseDeck.All(x => allCards.Contains(x)))
 				{
-					var loot = new[] { info.LootA, info.LootB, info.LootC };
-					var chosen = loot[info.PlayerChosenLoot - 1];
-					for(var i = 1; i < chosen.Count; i++)
-						allCards.Add(chosen[i]);
+					if(info.PlayerChosenLoot > 0)
+					{
+						var loot = new[] { info.LootA, info.LootB, info.LootC };
+						var chosen = loot[info.PlayerChosenLoot - 1];
+						for(var i = 1; i < chosen.Count; i++)
+							allCards.Add(chosen[i]);
+					}
+					if(info.PlayerChosenTreasure > 0)
+						allCards.Add(info.Treasure[info.PlayerChosenTreasure - 1]);
 				}
-				if(info.PlayerChosenTreasure > 0)
-					allCards.Add(info.Treasure[info.PlayerChosenTreasure - 1]);
+				else
+					allCards = baseDeck;
 			}
-			else
-				allCards = baseDeck;
+
 			var cards = allCards.GroupBy(x => x).Select(x =>
 			{
 				var card = Database.GetCardFromDbfId(x.Key, false);
@@ -529,6 +540,8 @@ namespace Hearthstone_Deck_Tracker
 			string playerClass = null;
 			if (cardSet == CardSet.ULDUM && loadout != null)
 				playerClass = DungeonRun.GetUldumHeroPlayerClass(loadout.PlayerClass);
+			else if(isPVPDR)
+				playerClass = HearthDbConverter.ConvertClass((CardClass)(info.HeroClass != 0 ? info.HeroClass : info.HeroCardClass));
 			else
 			{
 				if(allCards.Count == 10)
@@ -537,10 +550,12 @@ namespace Hearthstone_Deck_Tracker
 					playerClass = ((CardClass)info.HeroCardClass).ToString().ToUpperInvariant();
 			}
 
-			var deck = DeckList.Instance.Decks.FirstOrDefault(x => x.IsDungeonDeck && x.Class.ToUpperInvariant() == playerClass.ToUpperInvariant()
+			var deck = DeckList.Instance.Decks.FirstOrDefault(x => (!isPVPDR && x.IsDungeonDeck || isPVPDR && x.IsDuelsDeck) && x.Class.ToUpperInvariant() == playerClass.ToUpperInvariant()
+																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count))
 																		&& !(x.IsDungeonRunCompleted ?? false)
-																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count)));
-			if(deck == null && (deck = CreateDungeonDeck(playerClass, cardSet, info.SelectedDeck, loadout)) == null)
+																		&& !(x.IsDuelsRunCompleted ?? false));
+			var baseDbfids = isPVPDR ? info.DbfIds : info.SelectedDeck;
+			if(deck == null && (deck = CreateDungeonDeck(playerClass, cardSet, isPVPDR, baseDbfids, loadout)) == null)
 			{
 				Log.Info($"No existing deck - can't find default deck for {playerClass}");
 				return;
@@ -564,13 +579,13 @@ namespace Hearthstone_Deck_Tracker
 			Log.Info("Updated dungeon run deck");
 		}
 
-		private static Deck CreateDungeonDeck(string playerClass, CardSet set, List<int> selectedDeck = null, Card loadout= null)
+		private static Deck CreateDungeonDeck(string playerClass, CardSet set, bool isPVPDR, List<int> selectedDeck = null, Card loadout= null)
 		{
 			var shrine = Core.Game.Player.Board.FirstOrDefault(x => x.HasTag(GameTag.SHRINE))?.CardId;
 			Log.Info($"Creating new {playerClass} dungeon run deck (CardSet={set}, Shrine={shrine}, SelectedDeck={selectedDeck != null})");
 			var deck = selectedDeck == null
 				? DungeonRun.GetDefaultDeck(playerClass, set, shrine)
-				: DungeonRun.GetDeckFromDbfIds(playerClass, set, selectedDeck);
+				: DungeonRun.GetDeckFromDbfIds(playerClass, set, isPVPDR, selectedDeck);
 			if(deck == null)
 			{
 				Log.Info($"Could not find default deck for {playerClass} in card set {set} with Shrine={shrine}");

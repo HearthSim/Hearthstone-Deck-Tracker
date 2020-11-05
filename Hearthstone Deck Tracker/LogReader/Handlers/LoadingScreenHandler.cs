@@ -80,6 +80,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				else
 					Watchers.DungeonRunWatcher.Stop();
 
+				if(game.CurrentMode == Mode.PVP_DUNGEON_RUN || game.PreviousMode == Mode.PVP_DUNGEON_RUN && game.CurrentMode == Mode.GAMEPLAY)
+					Watchers.PVPDungeonRunWatcher.Run();
+				else
+					Watchers.PVPDungeonRunWatcher.Stop();
+
 				if(game.PlayerChallengeable && Config.Instance.ChallengeAction != Enums.HsActionType.None)
 					Watchers.FriendlyChallengeWatcher.Run();
 				else

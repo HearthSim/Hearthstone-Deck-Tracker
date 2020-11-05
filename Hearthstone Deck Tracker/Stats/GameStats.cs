@@ -480,6 +480,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string NoReplayDataTooltip => LocUtil.Get("DeckCharts_Tooltip_NoReplayData");
 
 		public bool IsDungeonMatch => GameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(OpponentHeroCardId);
+		public bool IsPVPDungeonMatch => GameType == GameType.GT_PVPDR || GameType == GameType.GT_PVPDR_PAID;
 
 		public void SetPlayerCards(Deck deck, List<Card> revealedCards) => SetPlayerCards(deck?.Cards, revealedCards);
 

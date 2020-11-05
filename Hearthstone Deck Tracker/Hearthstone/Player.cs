@@ -172,6 +172,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 											|| ((!x.Info.Created || (Config.Instance.OpponentIncludeCreated && (x.Info.CreatedInDeck || x.Info.CreatedInHand)))
 												&& x.Info.OriginalController == Id)
 											|| x.IsInHand || x.IsInDeck)
+										&& !CardIds.HiddenCardidPrefixes.Any(y => x.CardId.StartsWith(y))
+										&& !EntityIsRemovedFromGamePassive(x)
 										&& !(x.Info.Created && x.IsInSetAside && x.Info.GuessedCardState != GuessedCardState.Guessed))
 								.GroupBy(e => new { CardId = e.Info.WasTransformed ? e.Info.OriginalCardId : e.CardId, 
 													Hidden = (e.IsInHand || e.IsInDeck || (e.IsInSetAside && e.Info.GuessedCardState == GuessedCardState.Guessed)) && e.IsControlledBy(Id),
@@ -191,6 +193,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									card.Jousted = true;
 									return card;
 								})).ToSortedCardList();
+
+		private bool EntityIsRemovedFromGamePassive(Entity entity) => entity.HasTag(GameTag.DUNGEON_PASSIVE_BUFF) && entity.GetTag(GameTag.ZONE) == (int)Zone.REMOVEDFROMGAME;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

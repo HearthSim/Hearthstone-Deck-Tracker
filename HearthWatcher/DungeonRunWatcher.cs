@@ -9,13 +9,6 @@ using HearthMirror.Objects;
 
 namespace HearthWatcher
 {
-	public interface IGameDataProvider
-	{
-		bool InAiMatch { get; }
-		bool InAdventureScreen { get; }
-		string OpponentHeroId { get; }
-		int OpponentHeroHealth { get; }
-	}
 
 	public class DungeonRunWatcher
 	{

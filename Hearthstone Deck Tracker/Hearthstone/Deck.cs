@@ -55,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Guid _deckId;
 		private bool? _isArenaDeck;
 		private bool? _isDungeonDeck;
+		private bool? _isDuelsDeck;
 		private bool _isSelectedInGui;
 		private DateTime _lastCacheUpdate = DateTime.MinValue;
 		private string _name;
@@ -188,6 +189,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			set { _isDungeonDeck = value; }
 		}
 
+		public bool IsDuelsDeck
+		{
+			get { return _isDuelsDeck ?? (_isDuelsDeck = CheckIfDuelsDeck()) ?? false; }
+			set { _isDuelsDeck = value; }
+		}
+
 		public bool IsBrawlDeck => Tags.Any(x => x.ToUpper().Contains("BRAWL"));
 
 		public ArenaReward ArenaReward
@@ -207,6 +214,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool? IsDungeonRunCompleted => IsDungeonDeck
 												? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 8
 												   || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 1) as bool? : null;
+
+		public bool? IsDuelsRunCompleted => IsDuelsDeck ? (DeckStats.Games.Count(g => g.Result == GameResult.Win) == 12
+												   || DeckStats.Games.Count(g => g.Result == GameResult.Loss) == 3) as bool? : null;
 
 		public Guid DeckId
 		{
@@ -448,6 +458,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool? CheckIfArenaDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.GameMode == GameMode.Arena);
 
 		public bool? CheckIfDungeonDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.IsDungeonMatch);
+
+		public bool? CheckIfDuelsDeck() => !DeckStats.Games.Any() ? (bool?)null : DeckStats.Games.All(g => g.IsPVPDungeonMatch);
 
 		public Deck GetVersion(int major, int minor) => GetVersion(new SerializableVersion(major, minor));
 

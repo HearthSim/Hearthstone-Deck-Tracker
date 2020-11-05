@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArenaWatcher.cs" />
+    <Compile Include="IGameDataProvider.cs" />
+    <Compile Include="PVPDungeonRunWatcher.cs" />
     <Compile Include="DungeonRunWatcher.cs" />
     <Compile Include="EventArgs\CardPickedEventArgs.cs" />
     <Compile Include="EventArgs\ChoicesChangedEventArgs.cs" />

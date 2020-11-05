@@ -15,6 +15,7 @@
         <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Brawl}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadBrawl, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
         <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Friendly}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadFriendly, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
         <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_AdventurePractice}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadPractice, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
+        <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Duels}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadDuels, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
         <CheckBox Content="{lex:Loc Options_Tracker_Replays_CheckBox_Spectator}" Margin="20,5,0,0" IsChecked="{Binding HsReplayUploadSpectator, Source={StaticResource ConfigWrapper}}" IsEnabled="{Binding IsChecked, ElementName=CheckBoxAutoUpload}"/>
         <CheckBox Name="CheckBoxShowToast" Content="{lex:Loc Options_Tracker_Replays_CheckBox_ShareNotification}" Margin="0,5,0,0" IsChecked="{Binding HsReplayShareToast, Source={StaticResource ConfigWrapper}}"/>
     </StackPanel>

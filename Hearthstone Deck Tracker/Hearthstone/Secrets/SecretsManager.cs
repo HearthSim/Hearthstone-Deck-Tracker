@@ -10,13 +10,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 {
 	public class SecretsManager : SecretsEventHandler
 	{
-		public SecretsManager(IGame game, ArenaSettingsProvider settings)
+		public SecretsManager(IGame game, ArenaSettingsProvider settings, PVPDRSettingsProvider pvpdrSettings)
 		{
 			Game = game;
-			_settings = settings;
+			_arenaSettings = settings;
+			_pvpdrSettings = pvpdrSettings;
 		}
 
-		private readonly ArenaSettingsProvider _settings;
+		private readonly ArenaSettingsProvider _arenaSettings;
+		private readonly PVPDRSettingsProvider _pvpdrSettings;
 		protected override IGame Game { get; }
 		protected override bool HasActiveSecrets => Secrets.Count > 0;
 
@@ -131,16 +133,23 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(gameMode == GameType.GT_ARENA)
 			{
-				cards = cards.Where(c => _settings.CurrentSets.Contains(c.CardSet ?? CardSet.BLANK));
-				if (_settings.BannedSecrets.Count > 0)
-					cards = cards.Where(c => !_settings.BannedSecrets.Contains(c.Id));
+				cards = cards.Where(c => _arenaSettings.CurrentSets.Contains(c.CardSet ?? CardSet.BLANK));
+				if (_arenaSettings.BannedSecrets.Count > 0)
+					cards = cards.Where(c => !_arenaSettings.BannedSecrets.Contains(c.Id));
 			}
 			else
 			{
-				if(_settings.ExclusiveSecrets.Count > 0)
-					cards = cards.Where(c => !_settings.ExclusiveSecrets.Contains(c.Id));
+				if(_arenaSettings.ExclusiveSecrets.Count > 0)
+					cards = cards.Where(c => !_arenaSettings.ExclusiveSecrets.Contains(c.Id));
 				if(format == Format.Standard)
 					cards = cards.Where(c => !Helper.WildOnlySets.Contains(c.Set));
+			}
+
+			if(gameMode == GameType.GT_PVPDR || gameMode == GameType.GT_PVPDR_PAID)
+			{
+				cards = cards.Where(c => _pvpdrSettings.CurrentSets.Contains(c.CardSet ?? CardSet.BLANK));
+				if(_pvpdrSettings.BannedSecrets.Count > 0)
+					cards = cards.Where(c => !_pvpdrSettings.BannedSecrets.Contains(c.Id));
 			}
 
 			return cards.ToList();

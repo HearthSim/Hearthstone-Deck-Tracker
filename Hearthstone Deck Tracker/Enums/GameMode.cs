@@ -20,6 +20,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 		Practice,
 		[LocDescription("Enum_GameMode_Spectator")]
 		Spectator,
+		[LocDescription("Enum_GameMode_Duels")]
+		Duels,
 		[LocDescription("Enum_GameMode_None")]
 		None
 	}

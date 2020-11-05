@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				GameMode.Brawl,
 				GameMode.Friendly,
 				GameMode.Practice,
+				GameMode.Duels,
 				GameMode.Spectator
 			};
 			ComboBoxMode.SelectedItem = Config.Instance.ConstructedStatsModeFilter;
