@@ -70,26 +70,28 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		{
 			if(_inProcessDownloads.TryGetValue(fileKey, out var inProgressDownload))
 				return inProgressDownload;
-			var storagePath = StoragePathFor(fileKey);
-			var inProgressPath = InProgressPathFor(fileKey);
 			Log.Info($"Starting download for {fileKey}.");
-			_inProcessDownloads[fileKey] = Task.Run(async () => {
-				try
-				{
-					using(WebClient client = new WebClient())
-					{
-						var downloadTask = client.DownloadFileTaskAsync($"{_url}/{_keyConverter(fileKey)}", inProgressPath);
-						Log.Info($"Waiting to cleanup {fileKey}.");
-						return await CleanupDownload(fileKey, downloadTask, inProgressPath, storagePath);
-					}
-				}
-				catch(Exception e)
-				{
-					Log.Error($"Unable to download {fileKey}: {e.Message}");
-					return false;
-				}
-			});
+			_inProcessDownloads[fileKey] = DownloadFileAsync(fileKey);
 			return _inProcessDownloads[fileKey];
+		}
+
+		private async Task<bool> DownloadFileAsync(string fileKey)
+		{
+			var inProgressPath = InProgressPathFor(fileKey);
+			try
+			{
+				using(WebClient client = new WebClient())
+				{
+					var downloadTask = client.DownloadFileTaskAsync($"{_url}/{_keyConverter(fileKey)}", inProgressPath);
+					Log.Info($"Waiting to cleanup {fileKey}.");
+					return await CleanupDownload(fileKey, downloadTask, inProgressPath, StoragePathFor(fileKey));
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error($"Unable to download {fileKey}: {e.Message}");
+				return false;
+			}
 		}
 
 		private async Task<bool> CleanupDownload(string fileKey, Task toAwait, string inProgressPath, string finalPath)
