@@ -1,3 +1,7 @@
+## **Release v1.13.12 - 2020-11-08**
+**Fixes**:
+- Fixed an issue where viewing opponent boards would ocassionally cause HDT to crash.
+
 ## **Release v1.13.11 - 2020-11-05**
 **Updated for Hearthstone 18.6.1.65000**
 
