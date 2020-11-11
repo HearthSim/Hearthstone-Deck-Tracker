@@ -28,9 +28,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double MinionWidth => Width * 0.63 / 7 * ScreenRatio;
 		public double CardWidth => Height * 0.125;
 		public double CardHeight => Height * 0.189;
+		private double LeaderboardTop => Height * 0.15;
 		private const int MaxHandSize = 10;
 		private const int MaxBoardSize = 7;
 		private bool _mouseIsOverLeaderboardIcon = false;
+		public int? nextOpponentLeaderboardPosition = null;
 
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
 
@@ -85,14 +87,34 @@ namespace Hearthstone_Deck_Tracker.Windows
 					AddCardDebugOverlay(_playerHand[i], GetPlayerCardPosition(i, playerHandCount));
 			}
 
-			var leaderboardTop = Height * 0.15;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
 			{
 				_leaderboardIcons[i].Visibility = isGameOver || !_game.IsBattlegroundsMatch
 					? Visibility.Collapsed
 					: Visibility.Visible;
-				Canvas.SetTop(_leaderboardIcons[i], leaderboardTop + BattlegroundsTileHeight * i);
+				Canvas.SetTop(_leaderboardIcons[i], LeaderboardTop + BattlegroundsTileHeight * i);
 				Canvas.SetLeft(_leaderboardIcons[i], Helper.GetScaledXPos(0.001 * (_leaderboardIcons.Count - i - 1), (int)Width, ScreenRatio));
+			}
+
+			PositionDeadForText();
+		}
+
+		internal void PositionDeadForText()
+		{
+			var leftAdjust = .00075;
+			
+			for(int i = 0; i < _leaderboardDeadForText.Count; i++)
+			{
+				if(_leaderboardDeadForText.Count > i)
+				{
+					Canvas.SetTop(_leaderboardDeadForText[i], LeaderboardTop + BattlegroundsTileHeight * i);
+					Canvas.SetLeft(_leaderboardDeadForText[i], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForText.Count - i - 1), (int)Width, ScreenRatio));
+				}
+			}
+
+			if(nextOpponentLeaderboardPosition != null)
+			{
+				Canvas.SetLeft(_leaderboardDeadForText[(nextOpponentLeaderboardPosition ?? 0)-1], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForText.Count - (nextOpponentLeaderboardPosition ?? 0) - 1 - 1) + .025, (int)Width, ScreenRatio));
 			}
 		}
 
@@ -206,6 +228,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var fadeBgsMinionsList = false;
 			_mouseIsOverLeaderboardIcon = false;
 			var turn = _game.GetTurnNumber();
+			_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Collapsed);
 			if(turn == 0)
 				return;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
@@ -214,6 +237,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					_mouseIsOverLeaderboardIcon = true;
 					fadeBgsMinionsList = true;
+					_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Visible);
 					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
 					if(entity == null)
 					{
