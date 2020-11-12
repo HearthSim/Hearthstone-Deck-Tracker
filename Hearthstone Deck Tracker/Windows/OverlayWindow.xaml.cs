@@ -374,6 +374,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void UpdateOpponentDeadForTurns(List<int> turns)
 		{
 			var index = _leaderboardDeadForText.Count - 1;
+			foreach(var text in _leaderboardDeadForText)
+				text.Text = "";
 			foreach(var turn in turns)
 			{
 				_leaderboardDeadForText[index].Text = $"{turn}\nturns";
