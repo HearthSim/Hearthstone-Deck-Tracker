@@ -1144,7 +1144,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentGet(Entity entity, int turn, int id)
 		{
 			if(!_game.IsMulliganDone && entity.GetTag(ZONE_POSITION) == 5)
-				entity.CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoin;
+				entity.CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoinBasic;
 			_game.Opponent.CreateInHand(entity, turn);
 			Core.UpdateOpponentCards();
 			GameEvents.OnOpponentGet.Execute();
