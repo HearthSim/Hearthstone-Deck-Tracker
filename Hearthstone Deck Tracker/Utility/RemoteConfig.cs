@@ -143,6 +143,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				[JsonProperty("can_remove_lich_king")]
 				public bool CanRemoveLichKing { get; set; }
+
+				[JsonProperty("log_lines_kept")]
+				public int LogLinesKept { get; set; }
 			}
 		}
 	}
