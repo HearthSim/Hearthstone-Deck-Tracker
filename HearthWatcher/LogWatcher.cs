@@ -68,7 +68,7 @@ namespace HearthWatcher
 
 		private DateTime GetStartingPoint(string logDirectory)
 		{
-			var powerEntry = PowerLogWatcher.FindEntryPoint(logDirectory, new[] { "tag=GOLD_REWARD_STATE", "End Spectator" });
+			var powerEntry = PowerLogWatcher.FindEntryPoint(logDirectory, new[] { "tag=STATE value=COMPLETE", "End Spectator" });
 			var lsEntry = LoadingScreenLogWatcher.FindEntryPoint(logDirectory, "Gameplay.Start");
 			return lsEntry > powerEntry ? lsEntry : powerEntry;
 		}

@@ -169,9 +169,9 @@ namespace Hearthstone_Deck_Tracker
 
 		private async Task<bool> LogIsComplete()
 		{
-			if(LogContainsGoldRewardState || _game.CurrentGameMode == Practice && LogContainsStateComplete)
+			if(LogContainsStateComplete)
 				return true;
-			Log.Info("GOLD_REWARD_STATE not found");
+			Log.Info("Waiting for STATE COMPLETE...");
 			await Task.Delay(500);
 			if(LogContainsStateComplete || _game.IsInMenu)
 				return LogContainsStateComplete;
@@ -181,7 +181,7 @@ namespace Hearthstone_Deck_Tracker
 				await Task.Delay(1000);
 				if(LogContainsStateComplete || _game.IsInMenu)
 					break;
-				Log.Info($"Waiting for STATE COMPLETE... ({i})");
+				Log.Info($"Waiting for STATE COMPLETE some more... ({i})");
 			}
 			return LogContainsStateComplete;
 		}
@@ -210,9 +210,6 @@ namespace Hearthstone_Deck_Tracker
 			}
 			gs.BattlegroundsRatingAfter = data.NewRating;
 		}
-
-		private bool LogContainsGoldRewardState
-			=> _game?.PowerLog?.Count(x => x.Contains("tag=GOLD_REWARD_STATE value=1")) == 2;
 
 		private bool LogContainsStateComplete
 			=> _game?.PowerLog?.Any(x => x.Contains("tag=STATE value=COMPLETE")) ?? false;
