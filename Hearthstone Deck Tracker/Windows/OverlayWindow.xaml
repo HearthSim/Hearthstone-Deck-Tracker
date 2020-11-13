@@ -19,7 +19,7 @@
     <Window.Resources>
         <themes:ThemeManager x:Key="ThemeManager"/>
     </Window.Resources>
-    <Grid Name="GridMain">
+    <Grid Name="GridMain" ClipToBounds="True">
         <Border BorderThickness="1" BorderBrush="Transparent">
             <Canvas Name="CanvasInfo" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="832">
                 <StackPanel Orientation="Horizontal" Canvas.Right="0" Visibility="{Binding Path=BatteryStatusVisualVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">

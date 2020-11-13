@@ -1,3 +1,7 @@
+## **Release vNext**
+**Fixes**:
+- Fixed an issue where the Capturable Overlay (for streamers) could move around when e.g. hovering opponents in Battlegrounds. 
+
 ## **Release v1.13.13 - 2020-11-12**
 **Updated for Hearthstone 19.0.0.65614**
 
