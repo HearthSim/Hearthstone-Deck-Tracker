@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private Entity _defendingHero;
 		private TestInput _input;
 		private int _turn;
-		const int LogLinesKept = 100;
+		static int LogLinesKept = RemoteConfig.Instance.Data?.BobsBuddy?.LogLinesKept ?? 100;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static Dictionary<int, Minion> _currentOpponentMinions = new Dictionary<int, Minion>();
 
