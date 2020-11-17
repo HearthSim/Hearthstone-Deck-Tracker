@@ -174,6 +174,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string HiddenWisdom => Collectible.Paladin.HiddenWisdom;
 				public static string NeverSurrender => Collectible.Paladin.NeverSurrender;
 				public static string NobleSacrifice => Collectible.Paladin.NobleSacrifice;
+				public static string OhMyYogg => Collectible.Paladin.OhMyYogg;
 				public static string Redemption => Collectible.Paladin.Redemption;
 				public static string Repentance => Collectible.Paladin.Repentance;
 				public static string SacredTrial => Collectible.Paladin.SacredTrial;
