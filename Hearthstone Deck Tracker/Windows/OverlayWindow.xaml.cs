@@ -45,6 +45,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly List<Rectangle> _playerHand = new List<Rectangle>();
 		private readonly List<Rectangle> _leaderboardIcons = new List<Rectangle>();
 		private readonly List<HearthstoneTextBlock> _leaderboardDeadForText = new List<HearthstoneTextBlock>();
+		private readonly List<HearthstoneTextBlock> _leaderboardDeadForTurnText = new List<HearthstoneTextBlock>();
 		private bool? _isFriendsListOpen;
 		private string _lastToolTipCardId;
 		private bool _lmbDown;
@@ -375,10 +376,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var index = _leaderboardDeadForText.Count - 1;
 			foreach(var text in _leaderboardDeadForText)
-				text.Text = "";
+				text.Text = "5";
+			foreach(var text in _leaderboardDeadForTurnText)
+				text.Text = "Rundenanfaenge";
 			foreach(var turn in turns)
 			{
 				_leaderboardDeadForText[index].Text = $"{turn}\nturns";
+				_leaderboardDeadForTurnText[index].Text = "Rundenanfaenge";
 				index--;
 			}
 		}

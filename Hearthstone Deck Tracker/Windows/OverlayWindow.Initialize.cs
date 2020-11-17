@@ -67,6 +67,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				BattlegroundsTileText6,
 				BattlegroundsTileText7
 			});
+			_leaderboardDeadForTurnText.AddRange(new[]
+			{
+				BattlegroundsTurnText0,
+				BattlegroundsTurnText1,
+				BattlegroundsTurnText2,
+				BattlegroundsTurnText3,
+				BattlegroundsTurnText4,
+				BattlegroundsTurnText5,
+				BattlegroundsTurnText6,
+				BattlegroundsTurnText7
+			});
 
 			const double tWidth = 1024.0;
 			const double tHeight = 768.0;

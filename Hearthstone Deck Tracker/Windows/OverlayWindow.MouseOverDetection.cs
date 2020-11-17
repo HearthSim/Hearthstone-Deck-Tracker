@@ -105,16 +105,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 			
 			for(int i = 0; i < _leaderboardDeadForText.Count; i++)
 			{
-				if(_leaderboardDeadForText.Count > i)
-				{
-					Canvas.SetTop(_leaderboardDeadForText[i], LeaderboardTop + BattlegroundsTileHeight * i);
-					Canvas.SetLeft(_leaderboardDeadForText[i], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForText.Count - i - 1), (int)Width, ScreenRatio));
-				}
+				Canvas.SetTop(_leaderboardDeadForText[i], LeaderboardTop + BattlegroundsTileHeight * i);
+				Canvas.SetLeft(_leaderboardDeadForText[i], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForText.Count - i - 1), (int)Width, ScreenRatio));
+				Canvas.SetTop(_leaderboardDeadForTurnText[i], LeaderboardTop + BattlegroundsTileHeight * i);
+				Canvas.SetLeft(_leaderboardDeadForTurnText[i], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForTurnText.Count - i - 1), (int)Width, ScreenRatio));
 			}
 
 			if(nextOpponentLeaderboardPosition != null)
 			{
 				Canvas.SetLeft(_leaderboardDeadForText[(nextOpponentLeaderboardPosition ?? 0)-1], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForText.Count - (nextOpponentLeaderboardPosition ?? 0) - 1 - 1) + .025, (int)Width, ScreenRatio));
+				Canvas.SetLeft(_leaderboardDeadForTurnText[(nextOpponentLeaderboardPosition ?? 0)-1], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForTurnText.Count - (nextOpponentLeaderboardPosition ?? 0) - 1 - 1) + .025, (int)Width, ScreenRatio));
 			}
 		}
 
@@ -229,6 +229,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_mouseIsOverLeaderboardIcon = false;
 			var turn = _game.GetTurnNumber();
 			_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Collapsed);
+			_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Collapsed);
 			if(turn == 0)
 				return;
 			for(var i = 0; i < _leaderboardIcons.Count; i++)
@@ -238,6 +239,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_mouseIsOverLeaderboardIcon = true;
 					fadeBgsMinionsList = true;
 					_leaderboardDeadForText.ForEach(x => x.Visibility = Visibility.Visible);
+					_leaderboardDeadForTurnText.ForEach(x => x.Visibility = Visibility.Visible);
 					var entity = _game.Entities.Values.Where(x => x.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE) == i + 1).FirstOrDefault();
 					if(entity == null)
 					{
