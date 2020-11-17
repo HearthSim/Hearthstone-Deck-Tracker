@@ -131,6 +131,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string FreezingTrap => Collectible.Hunter.FreezingTrap;
 				public static string HiddenCache => Collectible.Hunter.HiddenCache;
 				public static string Misdirection => Collectible.Hunter.Misdirection;
+				public static string OpenTheCages => Collectible.Hunter.OpenTheCages;
 				public static string PackTactics => Collectible.Hunter.PackTactics;
 				public static string PressurePlate => Collectible.Hunter.PressurePlate;
 				public static string RatTrap => Collectible.Hunter.RatTrap;

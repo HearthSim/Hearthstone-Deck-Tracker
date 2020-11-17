@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private int _avengeDeathRattleCount;
 		private bool _awaitingAvenge;
 		private int _lastCompetitiveSpiritCheck;
+		private int _lastOpenTheCagesCheck;
 		private HashSet<Entity> EntititesInHandOnMinionsPlayed = new HashSet<Entity>();
 
 		private int _lastPlayedMinionId;
@@ -268,11 +269,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			if(!HandleAction)
 				return;
-			if(turn <= _lastCompetitiveSpiritCheck || !entity.IsMinion
-				|| !entity.IsControlledBy(Game.Opponent.Id) || !Game.OpponentEntity.IsCurrentPlayer)
-				return;
-			_lastCompetitiveSpiritCheck = turn;
-			Exclude(Paladin.CompetitiveSpirit);
+			if(entity.IsMinion
+				&& entity.IsControlledBy(Game.Opponent.Id) && Game.OpponentEntity.IsCurrentPlayer)
+			{
+				if(turn > _lastCompetitiveSpiritCheck)
+				{
+					_lastCompetitiveSpiritCheck = turn;
+					Exclude(Paladin.CompetitiveSpirit);
+				}
+				if(turn > _lastOpenTheCagesCheck)
+				{
+					_lastOpenTheCagesCheck = turn;
+					if(Game.OpponentMinionCount >= 2 && Game.OpponentMinionCount < 7)
+						Exclude(Hunter.OpenTheCages);
+				}
+			}
 		}
 
 		public void SecretTriggered(Entity secret) => _triggeredSecrets.Add(secret);
