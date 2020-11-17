@@ -156,6 +156,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string MirrorEntity => Collectible.Mage.MirrorEntity;
 				public static string NetherwindPortal => Collectible.Mage.NetherwindPortal;
 				public static string PotionOfPolymorph => Collectible.Mage.PotionOfPolymorph;
+				public static string RiggedFaireGame => Collectible.Mage.RiggedFaireGame;
 				public static string Spellbender => Collectible.Mage.Spellbender;
 				public static string SplittingImage => Collectible.Mage.SplittingImage;
 				public static string Vaporize => Collectible.Mage.Vaporize;

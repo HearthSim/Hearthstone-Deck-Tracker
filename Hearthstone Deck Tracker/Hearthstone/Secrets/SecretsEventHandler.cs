@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private bool _awaitingAvenge;
 		private int _lastCompetitiveSpiritCheck;
 		private int _lastOpenTheCagesCheck;
+		private int _lastRiggedFaireGameCheck;
 		private HashSet<Entity> EntititesInHandOnMinionsPlayed = new HashSet<Entity>();
 
 		private int _lastPlayedMinionId;
@@ -25,6 +26,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private bool IsAnyMinionInOpponentsHand => EntititesInHandOnMinionsPlayed.Any(entity => entity.IsMinion);
 
 		public List<Secret> Secrets { get; } = new List<Secret>();
+
+		public List<int> OpponentTookDamageDuringTurns = new List<int>();
 
 		private List<Entity> _triggeredSecrets = new List<Entity>();
 
@@ -39,6 +42,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			_avengeDeathRattleCount = 0;
 			_awaitingAvenge = false;
 			_lastCompetitiveSpiritCheck = 0;
+			_lastOpenTheCagesCheck = 0;
+			_lastRiggedFaireGameCheck = 0;
+			OpponentTookDamageDuringTurns.Clear();
 			EntititesInHandOnMinionsPlayed.Clear();
 		}
 
@@ -262,6 +268,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			{
 				Exclude(Paladin.EyeForAnEye);
 				Exclude(Rogue.Evasion);
+				if(!entity.HasTag(GameTag.IMMUNE))
+					OpponentTookDamageDuringTurns.Add(Game.GetTurnNumber());
 			}
 		}
 
@@ -269,19 +277,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			if(!HandleAction)
 				return;
-			if(entity.IsMinion
-				&& entity.IsControlledBy(Game.Opponent.Id) && Game.OpponentEntity.IsCurrentPlayer)
+			if(Game.OpponentEntity.IsCurrentPlayer)
 			{
-				if(turn > _lastCompetitiveSpiritCheck)
+				if(entity.IsMinion
+					&& entity.IsControlledBy(Game.Opponent.Id))
 				{
-					_lastCompetitiveSpiritCheck = turn;
-					Exclude(Paladin.CompetitiveSpirit);
+					if(turn > _lastCompetitiveSpiritCheck)
+					{
+						_lastCompetitiveSpiritCheck = turn;
+						Exclude(Paladin.CompetitiveSpirit);
+					}
+					if(turn > _lastOpenTheCagesCheck)
+					{
+						_lastOpenTheCagesCheck = turn;
+						if(Game.OpponentMinionCount >= 2 && Game.OpponentMinionCount < 7)
+							Exclude(Hunter.OpenTheCages);
+					}
 				}
-				if(turn > _lastOpenTheCagesCheck)
+				if(turn > _lastRiggedFaireGameCheck)
 				{
-					_lastOpenTheCagesCheck = turn;
-					if(Game.OpponentMinionCount >= 2 && Game.OpponentMinionCount < 7)
-						Exclude(Hunter.OpenTheCages);
+					_lastRiggedFaireGameCheck = turn;
+					if(!OpponentTookDamageDuringTurns.Contains(turn - 1))
+						Exclude(Mage.RiggedFaireGame);
 				}
 			}
 		}
