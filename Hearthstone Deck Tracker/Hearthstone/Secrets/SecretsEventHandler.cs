@@ -12,9 +12,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private const int MultiSecretResolveDelay = 750;
 		private int _avengeDeathRattleCount;
 		private bool _awaitingAvenge;
-		private int _lastCompetitiveSpiritCheck;
-		private int _lastOpenTheCagesCheck;
-		private int _lastRiggedFaireGameCheck;
+		private int _lastStartOfTurnSecretCheck;
 		private HashSet<Entity> EntititesInHandOnMinionsPlayed = new HashSet<Entity>();
 
 		private int _lastPlayedMinionId;
@@ -41,9 +39,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			_avengeDeathRattleCount = 0;
 			_awaitingAvenge = false;
-			_lastCompetitiveSpiritCheck = 0;
-			_lastOpenTheCagesCheck = 0;
-			_lastRiggedFaireGameCheck = 0;
+			_lastStartOfTurnSecretCheck = 0;
 			OpponentTookDamageDuringTurns.Clear();
 			EntititesInHandOnMinionsPlayed.Clear();
 		}
@@ -277,29 +273,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			if(!HandleAction)
 				return;
-			if(Game.OpponentEntity.IsCurrentPlayer)
+			if(Game.OpponentEntity.IsCurrentPlayer && turn > _lastStartOfTurnSecretCheck)
 			{
+				_lastStartOfTurnSecretCheck = turn;
 				if(entity.IsMinion
 					&& entity.IsControlledBy(Game.Opponent.Id))
 				{
-					if(turn > _lastCompetitiveSpiritCheck)
-					{
-						_lastCompetitiveSpiritCheck = turn;
-						Exclude(Paladin.CompetitiveSpirit);
-					}
-					if(turn > _lastOpenTheCagesCheck)
-					{
-						_lastOpenTheCagesCheck = turn;
-						if(Game.OpponentMinionCount >= 2 && FreeSpaceOnBoard)
-							Exclude(Hunter.OpenTheCages);
-					}
+					Exclude(Paladin.CompetitiveSpirit);
+					if(Game.OpponentMinionCount >= 2 && FreeSpaceOnBoard)
+						Exclude(Hunter.OpenTheCages);
 				}
-				if(turn > _lastRiggedFaireGameCheck)
-				{
-					_lastRiggedFaireGameCheck = turn;
-					if(!OpponentTookDamageDuringTurns.Contains(turn - 1))
-						Exclude(Mage.RiggedFaireGame);
-				}
+				if(!OpponentTookDamageDuringTurns.Contains(turn - 1))
+					Exclude(Mage.RiggedFaireGame);
 			}
 		}
 
