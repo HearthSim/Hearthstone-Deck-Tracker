@@ -290,7 +290,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					if(turn > _lastOpenTheCagesCheck)
 					{
 						_lastOpenTheCagesCheck = turn;
-						if(Game.OpponentMinionCount >= 2 && Game.OpponentMinionCount < 7)
+						if(Game.OpponentMinionCount >= 2 && FreeSpaceOnBoard)
 							Exclude(Hunter.OpenTheCages);
 					}
 				}
@@ -351,7 +351,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Mage.ManaBind);
 				}
 
-				if(Game.OpponentMinionCount < 7)
+				if(FreeSpaceOnBoard)
 				{
 					//CARD_TARGET is set after ZONE, wait for 50ms gametime before checking
 					await Game.GameTime.WaitForDuration(50);
