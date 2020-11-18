@@ -468,7 +468,7 @@ namespace HDTTests.Hearthstone.Secrets
 			var mockegame = new MockGame();
 			mockegame.GameTime = new GameTime();
 			mockegame.OpponentSecretCount = 2;
-			mockegame.SecretsManager = new SecretsManager(mockegame, null, null);
+			mockegame.SecretsManager = new SecretsManager(mockegame, null);
 			mockegame.SecretsManager.Secrets.Add(new Secret(_secretHunter1));
 			mockegame.SecretsManager.Secrets.Add(new Secret(_secretMage1));
 			mockegame.SecretsManager.HandleCardPlayed(_playerSpell2);
