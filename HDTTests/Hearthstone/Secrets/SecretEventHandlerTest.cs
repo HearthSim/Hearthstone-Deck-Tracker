@@ -190,7 +190,7 @@ namespace HDTTests.Hearthstone.Secrets
 				HunterSecrets.FreezingTrap, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
-			VerifySecrets(3, RogueSecrets.All);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.ShadowClone);
 
 			_playerMinion2.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
@@ -198,7 +198,7 @@ namespace HDTTests.Hearthstone.Secrets
 				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
-			VerifySecrets(3, RogueSecrets.All, RogueSecrets.SuddenBetrayal);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.SuddenBetrayal, RogueSecrets.ShadowClone);
 		}
 
 		[TestMethod]
@@ -294,7 +294,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
-			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
 		}
 
@@ -305,7 +305,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
-			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
 		}
 
@@ -317,7 +317,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
-			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
 		}
 
@@ -423,6 +423,17 @@ namespace HDTTests.Hearthstone.Secrets
 			_game.SecretsManager.HandleOpponentTurnStart();
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void SingleSecret_OpponentTurnStart_OpponentTookNoDamage_RiggedFaireGameTriggered()
+		{
+			_game.Opponent.OnTurnStart();
+			_game.SecretsManager.HandleOpponentTurnStart();
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All, MageSecrets.RiggedFaireGame);
 			VerifySecrets(2, PaladinSecrets.All);
 			VerifySecrets(3, RogueSecrets.All);
 		}

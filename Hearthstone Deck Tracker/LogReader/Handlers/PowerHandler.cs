@@ -535,6 +535,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Hunter.HalazziTheLynx:
 								AddKnownCardId(gameState, NonCollectible.Hunter.Springpaw_LynxToken, 10);
 								break;
+							case Collectible.Neutral.BananaVendor:
+								AddKnownCardId(gameState, NonCollectible.Neutral.BananaBuffoon_BananasToken, 4);
+								break;
 							case Collectible.Neutral.BananaBuffoon:
 								AddKnownCardId(gameState, NonCollectible.Neutral.BananaBuffoon_BananasToken, 2);
 								break;
@@ -577,6 +580,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warlock.SpiritJailer:
 							case Collectible.Demonhunter.Marrowslicer:
 								AddKnownCardId(gameState, NonCollectible.Warlock.SchoolSpirits_SoulFragmentToken, 2);
+								break;
+							case Collectible.Mage.ConfectionCyclone:
+								AddKnownCardId(gameState, NonCollectible.Mage.ConfectionCyclone_SugarElementalToken, 2);
+								break;
+							case Collectible.Druid.KiriChosenOfElune:
+								AddKnownCardId(gameState, Collectible.Druid.LunarEclipse);
+								AddKnownCardId(gameState, Collectible.Druid.SolarEclipse);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1

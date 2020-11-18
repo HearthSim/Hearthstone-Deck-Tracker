@@ -49,6 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1439, "Wild Event"},
 			{1463, "Demon Hunter Initiate"},
 			{1443, "Scholomance Academy"},
+			{1466, "Darkmoon Faire"},
 		};
 
 		public static string ConvertClass(CardClass cardClass)

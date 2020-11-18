@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private const int MultiSecretResolveDelay = 750;
 		private int _avengeDeathRattleCount;
 		private bool _awaitingAvenge;
-		private int _lastCompetitiveSpiritCheck;
+		private int _lastStartOfTurnSecretCheck;
 		private HashSet<Entity> EntititesInHandOnMinionsPlayed = new HashSet<Entity>();
 
 		private int _lastPlayedMinionId;
@@ -24,6 +24,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private bool IsAnyMinionInOpponentsHand => EntititesInHandOnMinionsPlayed.Any(entity => entity.IsMinion);
 
 		public List<Secret> Secrets { get; } = new List<Secret>();
+
+		public List<int> OpponentTookDamageDuringTurns = new List<int>();
 
 		private List<Entity> _triggeredSecrets = new List<Entity>();
 
@@ -37,7 +39,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			_avengeDeathRattleCount = 0;
 			_awaitingAvenge = false;
-			_lastCompetitiveSpiritCheck = 0;
+			_lastStartOfTurnSecretCheck = 0;
+			OpponentTookDamageDuringTurns.Clear();
 			EntititesInHandOnMinionsPlayed.Clear();
 		}
 
@@ -78,6 +81,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 						exclude.Add(Mage.FlameWard);
 						exclude.Add(Hunter.FreezingTrap);
 						exclude.Add(Mage.Vaporize);
+						if(FreeSpaceOnBoard)
+							exclude.Add(Rogue.ShadowClone);
 					}
 				}
 
@@ -259,8 +264,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				return;
 			if(entity.IsHero && entity.IsControlledBy(Game.Opponent.Id))
 			{
-				Exclude(Paladin.EyeForAnEye);
-				Exclude(Rogue.Evasion);
+				if(!entity.HasTag(GameTag.IMMUNE))
+				{
+					Exclude(Paladin.EyeForAnEye);
+					Exclude(Rogue.Evasion);
+					OpponentTookDamageDuringTurns.Add(Game.GetTurnNumber());
+				}
 			}
 		}
 
@@ -268,11 +277,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			if(!HandleAction)
 				return;
-			if(turn <= _lastCompetitiveSpiritCheck || !entity.IsMinion
-				|| !entity.IsControlledBy(Game.Opponent.Id) || !Game.OpponentEntity.IsCurrentPlayer)
-				return;
-			_lastCompetitiveSpiritCheck = turn;
-			Exclude(Paladin.CompetitiveSpirit);
+			if(Game.OpponentEntity.IsCurrentPlayer && turn > _lastStartOfTurnSecretCheck)
+			{
+				_lastStartOfTurnSecretCheck = turn;
+				if(entity.IsMinion
+					&& entity.IsControlledBy(Game.Opponent.Id))
+				{
+					Exclude(Paladin.CompetitiveSpirit);
+					if(Game.OpponentMinionCount >= 2 && FreeSpaceOnBoard)
+						Exclude(Hunter.OpenTheCages);
+				}
+				if(!OpponentTookDamageDuringTurns.Contains(turn - 1))
+					Exclude(Mage.RiggedFaireGame);
+			}
 		}
 
 		public void SecretTriggered(Entity secret) => _triggeredSecrets.Add(secret);
@@ -312,6 +329,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					return;
 				}
 
+				exclude.Add(Paladin.OhMyYogg);
+
 				if(Game.OpponentMinionCount > 0)
 					exclude.Add(Paladin.NeverSurrender);
 
@@ -321,7 +340,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Mage.ManaBind);
 				}
 
-				if(Game.OpponentMinionCount < 7)
+				if(FreeSpaceOnBoard)
 				{
 					//CARD_TARGET is set after ZONE, wait for 50ms gametime before checking
 					await Game.GameTime.WaitForDuration(50);

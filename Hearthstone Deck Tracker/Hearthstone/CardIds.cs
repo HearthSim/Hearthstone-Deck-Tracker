@@ -131,6 +131,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string FreezingTrap => Collectible.Hunter.FreezingTrap;
 				public static string HiddenCache => Collectible.Hunter.HiddenCache;
 				public static string Misdirection => Collectible.Hunter.Misdirection;
+				public static string OpenTheCages => Collectible.Hunter.OpenTheCages;
 				public static string PackTactics => Collectible.Hunter.PackTactics;
 				public static string PressurePlate => Collectible.Hunter.PressurePlate;
 				public static string RatTrap => Collectible.Hunter.RatTrap;
@@ -155,6 +156,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string MirrorEntity => Collectible.Mage.MirrorEntity;
 				public static string NetherwindPortal => Collectible.Mage.NetherwindPortal;
 				public static string PotionOfPolymorph => Collectible.Mage.PotionOfPolymorph;
+				public static string RiggedFaireGame => Collectible.Mage.RiggedFaireGame;
 				public static string Spellbender => Collectible.Mage.Spellbender;
 				public static string SplittingImage => Collectible.Mage.SplittingImage;
 				public static string Vaporize => Collectible.Mage.Vaporize;
@@ -172,6 +174,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string HiddenWisdom => Collectible.Paladin.HiddenWisdom;
 				public static string NeverSurrender => Collectible.Paladin.NeverSurrender;
 				public static string NobleSacrifice => Collectible.Paladin.NobleSacrifice;
+				public static string OhMyYogg => Collectible.Paladin.OhMyYogg;
 				public static string Redemption => Collectible.Paladin.Redemption;
 				public static string Repentance => Collectible.Paladin.Repentance;
 				public static string SacredTrial => Collectible.Paladin.SacredTrial;
@@ -186,6 +189,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string DirtyTricks => Collectible.Rogue.DirtyTricks;
 				public static string Evasion => Collectible.Rogue.Evasion;
 				public static string Plagiarize => Collectible.Rogue.Plagiarize;
+				public static string ShadowClone => Collectible.Rogue.ShadowClone;
 				public static string SuddenBetrayal => Collectible.Rogue.SuddenBetrayal;
 			}
 		}
