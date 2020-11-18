@@ -330,9 +330,7 @@
     <Compile Include="Hearthstone\DungeonRun.cs" />
     <Compile Include="Hearthstone\Entities\GuessedCardState.cs" />
     <Compile Include="Hearthstone\RankTranslator.cs" />
-    <Compile Include="Hearthstone\Secrets\PVPDRSettingsProvider.cs" />
     <Compile Include="Hearthstone\Secrets\ArenaSettingsProvider.cs" />
-    <Compile Include="Hearthstone\Secrets\RemotePVPDRSettings.cs" />
     <Compile Include="Hearthstone\Secrets\RemoteArenaSettings.cs" />
     <Compile Include="HsReplay\HSReplayNetOAuth.cs" />
     <Compile Include="HsReplay\Data\OAuthData.cs" />

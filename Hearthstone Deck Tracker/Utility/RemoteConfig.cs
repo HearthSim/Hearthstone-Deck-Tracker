@@ -32,9 +32,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 			[JsonProperty("arena")]
 			public ArenaData Arena { get; set; }
 
-			[JsonProperty("pvpdr")]
-			public PVPDRData PVPDR { get; set; }
-
 			[JsonProperty("whizbang_decks")]
 			public List<WhizbangDeck> WhizbangDecks { get; set; }
 
@@ -75,15 +72,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				[JsonProperty("exclusive_secrets")]
 				public List<string> ExclusiveSecrets { get; set; }
-
-				[JsonProperty("banned_secrets")]
-				public List<string> BannedSecrets { get; set; }
-			}
-
-			internal class PVPDRData
-			{
-				[JsonProperty("current_sets")]
-				public List<CardSet> CurrentSets { get; set; }
 
 				[JsonProperty("banned_secrets")]
 				public List<string> BannedSecrets { get; set; }
