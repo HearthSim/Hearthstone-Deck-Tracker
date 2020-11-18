@@ -190,7 +190,7 @@ namespace HDTTests.Hearthstone.Secrets
 				HunterSecrets.FreezingTrap, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
-			VerifySecrets(3, RogueSecrets.All);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.ShadowClone);
 
 			_playerMinion2.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _heroOpponent);
@@ -198,7 +198,7 @@ namespace HDTTests.Hearthstone.Secrets
 				HunterSecrets.FreezingTrap, HunterSecrets.Misdirection, HunterSecrets.WanderingMonster);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.IceBarrier, MageSecrets.Vaporize, MageSecrets.FlameWard);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NobleSacrifice);
-			VerifySecrets(3, RogueSecrets.All, RogueSecrets.SuddenBetrayal);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.SuddenBetrayal, RogueSecrets.ShadowClone);
 		}
 
 		[TestMethod]

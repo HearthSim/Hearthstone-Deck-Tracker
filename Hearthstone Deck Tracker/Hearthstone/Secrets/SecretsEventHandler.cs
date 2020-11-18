@@ -81,6 +81,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 						exclude.Add(Mage.FlameWard);
 						exclude.Add(Hunter.FreezingTrap);
 						exclude.Add(Mage.Vaporize);
+						if(FreeSpaceOnBoard)
+							exclude.Add(Rogue.ShadowClone);
 					}
 				}
 
