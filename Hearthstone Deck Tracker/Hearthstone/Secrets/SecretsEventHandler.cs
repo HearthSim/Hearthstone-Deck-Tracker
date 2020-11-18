@@ -264,10 +264,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				return;
 			if(entity.IsHero && entity.IsControlledBy(Game.Opponent.Id))
 			{
-				Exclude(Paladin.EyeForAnEye);
-				Exclude(Rogue.Evasion);
 				if(!entity.HasTag(GameTag.IMMUNE))
+				{
+					Exclude(Paladin.EyeForAnEye);
+					Exclude(Rogue.Evasion);
 					OpponentTookDamageDuringTurns.Add(Game.GetTurnNumber());
+				}
 			}
 		}
 
