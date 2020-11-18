@@ -1,3 +1,7 @@
+## **Release v1.13.15 - 2020-11-18**
+**New**:
+- Added card and secret tracking for Darkmoon Faire.
+
 ## **Release v1.13.14 - 2020-11-13**
 **Fixes**:
 - Fixed an issue where the Capturable Overlay (for streamers) could move around when e.g. hovering opponents in Battlegrounds.
