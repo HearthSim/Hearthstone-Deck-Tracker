@@ -427,16 +427,16 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(3, RogueSecrets.All);
 		}
 
-		[TestMethod]
-		public void SingleSecret_OpponentTurnStart_OpponentTookNoDamage_RiggedFaireGameTriggered()
-		{
-			_game.Opponent.OnTurnStart();
-			_game.SecretsManager.HandleOpponentTurnStart();
-			VerifySecrets(0, HunterSecrets.All);
-			VerifySecrets(1, MageSecrets.All, MageSecrets.RiggedFaireGame);
-			VerifySecrets(2, PaladinSecrets.All);
-			VerifySecrets(3, RogueSecrets.All);
-		}
+		//[TestMethod]
+		//public void SingleSecret_OpponentTurnStart_OpponentTookNoDamage_RiggedFaireGameTriggered()
+		//{
+		//	_game.Opponent.OnTurnStart();
+		//	_game.SecretsManager.HandleOpponentTurnStart();
+		//	VerifySecrets(0, HunterSecrets.All);
+		//	VerifySecrets(1, MageSecrets.All, MageSecrets.RiggedFaireGame);
+		//	VerifySecrets(2, PaladinSecrets.All);
+		//	VerifySecrets(3, RogueSecrets.All);
+		//}
 
 		[TestMethod]
 		public void MultipleSecrets_MinionToHero_ExplosiveTrapTriggered_MinionDied_PlayerAttackTest()
