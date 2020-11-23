@@ -96,21 +96,6 @@
                   Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxKeepDecksVisible_Checked"
                   Unchecked="CheckboxKeepDecksVisible_Unchecked" />
-        <CheckBox x:Name="CheckboxAlwaysShowGoldProgress"
-                  Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
-                  Content="{lex:Loc Options_Overlay_General_CheckBox_GoldProgress}" HorizontalAlignment="Left"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckboxAlwaysShowGoldProgress_Checked"
-                  Unchecked="CheckboxAlwaysShowGoldProgress_Unchecked" />
-        <CheckBox Name="CheckBoxFlavorText"
-                  HorizontalAlignment="Left"
-                  ToolTip="{lex:Loc Options_Overlay_General_CheckBox_FlavorText_Tooltip}"
-                  Margin="10,5,0,0" VerticalAlignment="Top"
-                  Checked="CheckBoxFlavorText_Checked"
-                  Unchecked="CheckBoxFlavorText_Unchecked">
-                        <TextBlock Text="{lex:Loc Options_Overlay_General_CheckBox_FlavorText}" TextWrapping="Wrap" />
-                    </CheckBox>
         <CheckBox Name="CheckBoxBatteryStatus" Content="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus}" HorizontalAlignment="Left"
                   ToolTip="{lex:Loc Options_Overlay_General_CheckBox_BatteryStatus_Tooltip}"
                   Margin="10,5,0,0" VerticalAlignment="Top"

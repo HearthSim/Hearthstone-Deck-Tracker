@@ -140,21 +140,6 @@
                 <controls:CardToolTipControl x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203" Panel.ZIndex="100"
                                Visibility="Hidden" />
                 <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>
-                <Rectangle Name="RectGoldDisplay" Width="150" Height="25" Visibility="Hidden"/>
-                <Grid Name="GoldProgressGrid" Height="33" Visibility="Hidden">
-                    <Grid SnapsToDevicePixels="True">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Name="GPLeftCol" Width="33" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Name="GPRightCol" Width="33" />
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="/HearthstoneDeckTracker;component/Images/gold_progress_frame_left.png" />
-                        <Image Grid.Column="1" Stretch="Fill" Source="/HearthstoneDeckTracker;component/Images/gold_progress_frame_center.png"/>
-                        <Image Grid.Column="2" Source="/HearthstoneDeckTracker;component/Images/gold_progress_frame_right.png" />
-                    </Grid>
-                    <local:HearthstoneTextBlock x:Name="LblGoldProgress" Text="Wins: 0/3 (0/100G)" FontSize="16"
-                                            TextAlignment="Left" VerticalAlignment="Center" Visibility="Visible"/>
-                </Grid>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Name="StackPanelWarning" Visibility="Collapsed">
                         <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Label_Warning}" Margin="3" FontSize="16" Fill="Red"/>

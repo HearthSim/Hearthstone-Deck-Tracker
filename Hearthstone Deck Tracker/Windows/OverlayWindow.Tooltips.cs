@@ -257,19 +257,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				else if(_mouseInput != null)
 					UnHookMouse();
 			}
-
-			if(!Config.Instance.AlwaysShowGoldProgress)
-			{
-				if(_game.IsInMenu
-				   && PointInsideControl(RectGoldDisplay.PointFromScreen(new Point(pos.X, pos.Y)), RectGoldDisplay.ActualWidth,
-										 RectGoldDisplay.ActualHeight))
-				{
-					UpdateGoldProgress();
-					GoldProgressGrid.Visibility = Visible;
-				}
-				else
-					GoldProgressGrid.Visibility = Hidden;
-			}
 		}
 
 		private double GetListViewOffset(Panel stackPanel)

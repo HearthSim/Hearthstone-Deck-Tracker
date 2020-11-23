@@ -71,9 +71,6 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ArenaRewardDialog = true;
 
-		[DefaultValue(false)]
-		public bool AlwaysShowGoldProgress = false;
-
 		[DefaultValue(true)]
 		public bool ArenaSummaryChartsExpanded = true;
 
@@ -349,30 +346,6 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(false)]
 		public bool ForceMouseHook = false;
-
-		[DefaultValue(0.075)]
-		public double GoldProgessX = 0.76;
-
-		[DefaultValue(0.075)]
-		public double GoldProgessY = 0.93;
-
-		[DefaultValue(new[] {0, 0, 0, 0, 0})]
-		//move this to some data file
-		public int[] GoldProgress = {0, 0, 0, 0, 0};
-
-		//move this to some data file
-		public DateTime[] GoldProgressLastReset =
-		{
-			DateTime.MinValue,
-			DateTime.MinValue,
-			DateTime.MinValue,
-			DateTime.MinValue,
-			DateTime.MinValue
-		};
-
-		[DefaultValue(new[] {0, 0, 0, 0, 0})]
-		//move this to some data file
-		public int[] GoldProgressTotal = {0, 0, 0, 0, 0};
 
 		[DefaultValue(true)]
 		public bool GoogleAnalytics = true;
