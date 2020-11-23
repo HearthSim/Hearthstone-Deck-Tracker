@@ -736,7 +736,6 @@
     <Compile Include="LogReader\Handlers\PowerHandler.cs" />
     <Compile Include="LogReader\HsGameState.cs" />
     <Compile Include="LogReader\LogConstants.cs" />
-    <Compile Include="LogReader\Handlers\GameplayHandler.cs" />
     <Compile Include="LogReader\Handlers\TagChangeHandler.cs" />
     <Compile Include="LogReader\Interfaces\IHsGameState.cs" />
     <Compile Include="LogReader\Interfaces\IHSLogReader.cs" />

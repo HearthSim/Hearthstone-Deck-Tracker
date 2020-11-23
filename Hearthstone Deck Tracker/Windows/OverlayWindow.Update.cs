@@ -155,17 +155,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 					LblWarningCards.Text += ", ...";
 			}
 
-			if (_game.IsInMenu)
-			{
-				if (Config.Instance.AlwaysShowGoldProgress)
-				{
-					UpdateGoldProgress();
-					GoldProgressGrid.Visibility = Visible;
-				}
-			}
-			else
-				GoldProgressGrid.Visibility = Collapsed;
-
 			if(_game.IsInMenu || !inBattlegrounds)
 			{
 				HideBgsTopBar();
@@ -249,19 +238,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			WotogIconsOpponent.PogoHopperCounterStyle = showOpponentPogoHopperCounter ? Full : None;
 			WotogIconsOpponent.GalakrondCounterStyle = showOpponentGalakrondCounter ? Full : None;
 		}
-
-		private void UpdateGoldProgress()
-		{
-			var regionEnum = _game.CurrentRegion;
-			var region = (int)regionEnum- 1;
-			if (region < 0)
-				return;
-			GameplayHandler.ResetGoldProgress(regionEnum, true);
-			var wins = Config.Instance.GoldProgress[region];
-			if (wins >= 0)
-				LblGoldProgress.Text = $"Wins: {wins}/3 ({Config.Instance.GoldProgressTotal[region]}/100G)";
-		}
-
 
 		public void UpdatePosition()
 		{
@@ -356,10 +332,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ScreenRatio));
-			Canvas.SetTop(RectGoldDisplay, Height - RectGoldDisplay.ActualHeight);
-			Canvas.SetLeft(RectGoldDisplay, Width - RectGoldDisplay.ActualWidth - GoldFrameOffset);
-			Canvas.SetTop(GoldProgressGrid, Height - RectGoldDisplay.ActualHeight + (GoldFrameHeight - GoldProgressGrid.ActualHeight) / 2);
-			Canvas.SetLeft(GoldProgressGrid, Width - RectGoldDisplay.ActualWidth - GoldFrameOffset - GoldProgressGrid.ActualWidth - 10);
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
 
@@ -391,13 +363,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(OpponentListHeight));
 			OnPropertyChanged(nameof(BattlegroundsTileHeight));
 			OnPropertyChanged(nameof(BattlegroundsTileWidth));
-			//Gold progress
-			RectGoldDisplay.Height = GoldFrameHeight;
-			RectGoldDisplay.Width = GoldFrameWidth;
-			GoldProgressGrid.Height = GoldFrameHeight;
-			GPLeftCol.Width = new GridLength(GoldFrameHeight);
-			GPRightCol.Width = new GridLength(GoldFrameHeight);
-			LblGoldProgress.Margin = new Thickness(GoldFrameHeight * 1.2, 0, GoldFrameHeight * 0.8, 0);
 			
 			//Scale attack icons, with height
 			var atkWidth = (int)Math.Round(Height * 0.0695, 0);
@@ -414,8 +379,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			TextBlockPlayerAttack.Margin = new Thickness(0, atkFontMarginTop, 0, 0);
 			TextBlockOpponentAttack.Margin = new Thickness(0, atkFontMarginTop, 0, 0);
 
-			if(Height > 0)
-				LblGoldProgress.FontSize = Height * 0.017;
 			if(atkFont > 0)
 			{
 				TextBlockPlayerAttack.FontSize = atkFont;
@@ -461,10 +424,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			CanvasPlayerChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 			CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 		}
-
-		public double GoldFrameHeight => Height * 25 / 768;
-		public double GoldFrameWidth => 6 * GoldFrameHeight;
-		public double GoldFrameOffset => 85 / 25 * GoldFrameHeight;
 
 		private void OverlayWindow_OnDeactivated(object sender, EventArgs e) => SetTopmost();
 	}

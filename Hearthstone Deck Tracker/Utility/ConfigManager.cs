@@ -137,31 +137,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 						converted = true;
 					}
 				}
-				if(configVersion <= new Version(0, 11, 1, 0))
-				{
-					if(Config.Instance.GoldProgressLastReset.Length < 5)
-					{
-						Config.Instance.GoldProgressLastReset = new[]
-						{
-							DateTime.MinValue,
-							DateTime.MinValue,
-							DateTime.MinValue,
-							DateTime.MinValue,
-							DateTime.MinValue
-						};
-						converted = true;
-					}
-					if(Config.Instance.GoldProgress.Length < 5)
-					{
-						Config.Instance.Reset(nameof(Config.GoldProgress));
-						converted = true;
-					}
-					if(Config.Instance.GoldProgressTotal.Length < 5)
-					{
-						Config.Instance.Reset(nameof(Config.GoldProgressTotal));
-						converted = true;
-					}
-				}
 				if(configVersion <= new Version(0, 13, 16, 0))
 				{
 					if(Enum.TryParse(Config.Instance.ThemeName, out MetroTheme theme))

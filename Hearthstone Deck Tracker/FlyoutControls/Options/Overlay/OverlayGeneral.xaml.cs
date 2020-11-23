@@ -41,10 +41,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxOverlaySetToolTips.IsChecked = Config.Instance.OverlaySetToolTips;
 			CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
 			CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
-			CheckboxAlwaysShowGoldProgress.IsChecked = Config.Instance.AlwaysShowGoldProgress;
 			CheckBoxBatteryStatus.IsChecked = Config.Instance.ShowBatteryLife;
 			CheckBoxBatteryStatusText.IsChecked = Config.Instance.ShowBatteryLifePercent;
-			CheckBoxFlavorText.IsChecked = Config.Instance.ShowFlavorText;
 			CheckBoxOverlayUseAnimations.IsChecked = Config.Instance.OverlayCardAnimations;
 			CheckBoxRemoveSecrets.IsChecked = Config.Instance.RemoveSecretsFromList;
 			_initialized = true;
@@ -335,22 +333,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.KeepDecksVisible = false;
-			SaveConfig(true);
-		}
-
-		private void CheckboxAlwaysShowGoldProgress_Checked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AlwaysShowGoldProgress = true;
-			SaveConfig(true);
-		}
-
-		private void CheckboxAlwaysShowGoldProgress_Unchecked(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-			Config.Instance.AlwaysShowGoldProgress = false;
 			SaveConfig(true);
 		}
 
