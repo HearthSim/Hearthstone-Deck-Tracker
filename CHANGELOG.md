@@ -1,3 +1,7 @@
+## **Release v1.13.16 - 2020-11-24**
+**Fixes**:
+- Fixed an issue where Darkmoon Faire secrets might not appear as possible opponent secrets.
+
 ## **Release v1.13.15 - 2020-11-18**
 **New**:
 - Added card and secret tracking for Darkmoon Faire.
