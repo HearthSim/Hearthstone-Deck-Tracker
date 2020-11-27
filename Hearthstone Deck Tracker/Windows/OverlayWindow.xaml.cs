@@ -17,6 +17,7 @@ using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -60,6 +61,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _bgsTopBarBehavior;
 		private OverlayElementBehavior _bgsBobsBuddyBehavior;
 		private OverlayElementBehavior _bgsPastOpponentBoardBehavior;
+		private OverlayElementBehavior _experienceCounterBehavior;
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -107,6 +109,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 				AnchorSide = Side.Top,
 				EntranceAnimation = AnimationType.Instant,
 				ExitAnimation = AnimationType.Instant,
+			};
+
+			_experienceCounterBehavior = new OverlayElementBehavior(ExperienceCounter)
+			{
+				GetRight = () => PastOpponentBoardDisplay.ActualWidth * AutoScaling / 2,
+				GetTop = () => Height - PastOpponentBoardDisplay.ActualHeight * 2,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Top,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide
 			};
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
@@ -311,6 +323,30 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			_bgsBobsBuddyBehavior.Hide();
 			BobsBuddyDisplay.ResetDisplays();
+		}
+
+		internal void ShowExperienceCounter()
+		{
+			_experienceCounterBehavior.Show();
+		}
+
+		internal void HideExperienceCounter()
+		{
+			_experienceCounterBehavior.Hide();
+		}
+
+		internal async Task ExperienceChangedAsync(int experience, int experienceNeeded, int level)
+		{
+			ExperienceCounter.XPDisplay = string.Format($"{experience}/{experienceNeeded}");
+			ExperienceCounter.LevelDisplay = level.ToString();
+			ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded);
+			//maybe below should be owned by the element?
+			if(_game.CurrentMode != Enums.Hearthstone.Mode.HUB)
+			{
+				ShowExperienceCounter();
+				await Task.Delay(3000);
+				HideExperienceCounter();
+			}
 		}
 	}
 }

@@ -9,8 +9,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public partial class ExperienceCounter : UserControl, INotifyPropertyChanged
 	{
-		private HearthMirror.Objects.RewardTrackData rewardTrackData = null;
-
 		private string _levelDisplay;
 		public string LevelDisplay
 		{
@@ -44,6 +42,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public System.TimeSpan AnimationDuration { get; set; } = new System.TimeSpan(0, 0, 5);
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
@@ -55,27 +55,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public ExperienceCounter()
 		{
 			InitializeComponent();
-			ChangeRectangleFill(0);
 		}
 
-		internal void UpdateCurrentRewards(HearthMirror.Objects.RewardTrackData newRewards)
-		{
-			if(newRewards != null)
-			{
-				if(rewardTrackData == null ||
-				rewardTrackData.Xp != newRewards.Xp ||
-				rewardTrackData.Level != newRewards.Level ||
-				rewardTrackData.XpNeeded != newRewards.XpNeeded)
-				{
-					XPDisplay = string.Format($"{newRewards.Xp}/{newRewards.XpNeeded}");
-					LevelDisplay = string.Format($"{newRewards.Level}");
-					ChangeRectangleFill(480 * ((double)newRewards.Xp / (double)newRewards.XpNeeded));
-				}
-			}
-			rewardTrackData = newRewards;
-		}
-
-		private void ChangeRectangleFill(double newPercentageFull)
+		public void ChangeRectangleFill(double newPercentageFull)
 		{
 			XPBarRect = new Rect(0, 0, newPercentageFull * FullXPBar.ActualWidth, 10000);
 			(FindResource("StoryBoardLevelUp") as Storyboard)?.Begin();

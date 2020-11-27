@@ -141,18 +141,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void Hide()
 		{
-			if(Element.Visibility == Collapsed)
-				return;
-
-			var sb = CreateStoryboard(ExitAnimation, GetHiddenOffset());
-			sb.Completed += (obj, args) =>
+			try
 			{
-				_animating = false;
-				Element.Visibility = Collapsed;
-				HideCallback?.Invoke();
-			};
-			_animating = true;
-			sb.Begin();
+				if(Element.Visibility == Collapsed)
+					return;
+
+				var sb = CreateStoryboard(ExitAnimation, GetHiddenOffset());
+				sb.Completed += (obj, args) =>
+				{
+					_animating = false;
+					Element.Visibility = Collapsed;
+					HideCallback?.Invoke();
+				};
+				_animating = true;
+				sb.Begin();
+			}
+			catch(Exception e)
+			{
+				int x = 4;
+			}
 		}
 	}
 }
