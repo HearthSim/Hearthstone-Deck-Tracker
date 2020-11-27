@@ -52,6 +52,11 @@
                     <ImageSource x:Key="Taunt">Resources/taunt.png</ImageSource>
                     <ImageSource x:Key="PremiumTaunt">Resources/taunt_premium.png</ImageSource>
                     <ImageSource x:Key="FacelessManipulator">Resources/faceless_manipulator.png</ImageSource>
+                    <ImageSource x:Key="XPScrollIcon">Resources/xp_scroll_item.png</ImageSource>
+                    <ImageSource x:Key="XPFullBar">Resources/xp_filled_bar.png</ImageSource>
+                    <ImageSource x:Key="XPEmptyBar">Resources/xp_empty_bar.png</ImageSource>
+                    <ImageSource x:Key="XPGem">Resources/xp_gem.png</ImageSource>
+                    
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

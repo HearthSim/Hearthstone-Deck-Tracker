@@ -286,6 +286,9 @@
     </Compile>
     <Compile Include="BobsBuddy\BobsBuddyState.cs" />
     <Compile Include="BobsBuddy\StatusMessageConverter.cs" />
+    <Compile Include="Controls\Overlay\ExperienceCounter.xaml.cs">
+      <DependentUpon>ExperienceCounter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\TurnCounter.xaml.cs">
       <DependentUpon>TurnCounter.xaml</DependentUpon>
     </Compile>
@@ -335,6 +338,11 @@
     <Compile Include="HsReplay\HSReplayNetOAuth.cs" />
     <Compile Include="HsReplay\Data\OAuthData.cs" />
     <Compile Include="HsReplay\HSReplayNetHelper.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Assets\AssetDownloader.cs" />
     <Compile Include="Utility\Assets\AssetDownloaders.cs" />
     <Compile Include="Utility\ComboBoxHelper.cs" />
@@ -1039,6 +1047,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Overlay\ExperienceCounter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Overlay\TurnCounter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1500,6 +1512,10 @@
     </Compile>
     <Compile Include="Utility\Updating\Updater.Squirrel.cs" />
     <Compile Include="Utility\Updating\Updater.Default.cs" />
+    <Resource Include="Resources\xp_empty_bar.png" />
+    <Resource Include="Resources\xp_scroll_item.png" />
+    <Resource Include="Resources\xp_gem.png" />
+    <Resource Include="Resources\xp_filled_bar.png" />
     <Resource Include="Resources\faceless_manipulator.png" />
     <Resource Include="Resources\deathrattle.png" />
     <Resource Include="Resources\taunt.png" />

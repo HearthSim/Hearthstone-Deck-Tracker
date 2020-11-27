@@ -15,6 +15,7 @@ using static System.Windows.Visibility;
 using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
 using HearthDb.Enums;
+using HearthMirror;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -167,6 +168,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			UpdateElementSizes();
 			UpdateElementPositions();
+
+			ExperienceCounter.UpdateCurrentRewards(Reflection.GetRewardTrackData());
 
 			if (Core.Windows.PlayerWindow.Visibility == Visible)
 				Core.Windows.PlayerWindow.Update();

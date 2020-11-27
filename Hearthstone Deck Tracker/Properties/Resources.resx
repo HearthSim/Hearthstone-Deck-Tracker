@@ -160,4 +160,16 @@
   <data name="faceless_manipulator" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\faceless_manipulator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="xp_empty_bar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xp_empty_bar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xp_filled_bar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xp_filled_bar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xp_gem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xp_gem.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="xp_scroll_item" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xp_scroll_item.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

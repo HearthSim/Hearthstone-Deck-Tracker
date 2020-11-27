@@ -171,6 +171,7 @@
                     <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel"/>
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
+                <overlay:ExperienceCounter x:Name="ExperienceCounter" Visibility="Visible"/>
                 <StackPanel Width="1000" Name="PastOpponentBoardDisplay" Canvas.Top="0" Canvas.Right="0">
                     <StackPanel HorizontalAlignment="Center">
                         <Border Background="#23272A" BorderBrush="#404345" CornerRadius="0 0 3 3" BorderThickness="1 0 1 1" Opacity=".9">

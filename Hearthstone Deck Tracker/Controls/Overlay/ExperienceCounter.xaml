@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.ExperienceCounter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Storyboard x:Key="StoryBoardLevelUp">
+            <RectAnimation To="{Binding XPBarRect}" Duration="0:0:15" Storyboard.TargetName="FullXPBarClipRectangle" Storyboard.TargetProperty="Rect" />
+        </Storyboard>
+    </UserControl.Resources>
+    <Canvas>
+        <Grid>
+            <Image Source="{StaticResource XPEmptyBar}" Visibility="{Binding BorderVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="342" Canvas.Top="194"/>
+            <Image Source="{StaticResource XPFullBar}" Visibility="{Binding BorderVisibility}" x:Name="FullXPBar" RenderOptions.BitmapScalingMode="Fant">
+                <Image.Clip>
+                    <RectangleGeometry x:Name="FullXPBarClipRectangle" Rect="0 0 0 10000"/>
+                </Image.Clip>
+            </Image>
+            <local:HearthstoneTextBlock x:Name="XPText" Text= "{Binding XPDisplay}" Width="200" TextAlignment="Center"/>
+        </Grid>
+        <Grid  Canvas.Left="400" Canvas.Top="-7">
+            <Image Source="{StaticResource XPGem}" Visibility="{Binding BorderVisibility}" RenderOptions.BitmapScalingMode="Fant"/>
+            <local:HearthstoneTextBlock x:Name="LevelText" Text="{Binding LevelDisplay}" HorizontalAlignment="Center"/>
+        </Grid>
+        <Image Source="{StaticResource XPScrollIcon}" Visibility="{Binding BorderVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-58" Canvas.Top="-42"/>
+    </Canvas>
+</UserControl>
