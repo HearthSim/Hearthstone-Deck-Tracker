@@ -21,7 +21,7 @@
             </Image>
             <local:HearthstoneTextBlock x:Name="XPText" Text= "{Binding XPDisplay}" Width="200" TextAlignment="Center"/>
         </Grid>
-        <Grid  Canvas.Left="400" Canvas.Top="-7">
+        <Grid Canvas.Left="400" Canvas.Top="-7">
             <Image Source="{StaticResource XPGem}" Visibility="{Binding BorderVisibility}" RenderOptions.BitmapScalingMode="Fant"/>
             <local:HearthstoneTextBlock x:Name="LevelText" Text="{Binding LevelDisplay}" HorizontalAlignment="Center"/>
         </Grid>

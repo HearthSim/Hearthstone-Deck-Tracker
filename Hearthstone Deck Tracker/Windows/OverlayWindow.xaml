@@ -140,6 +140,7 @@
                 <controls:CardToolTipControl x:Name="ToolTipCard" Height="auto" Canvas.Left="323" Canvas.Top="203" Panel.ZIndex="100"
                                Visibility="Hidden" />
                 <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>
+                <overlay:ExperienceCounter x:Name="ExperienceCounter" Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Name="StackPanelWarning" Visibility="Collapsed">
                         <local:HearthstoneTextBlock Text="{lex:Loc Overlay_Label_Warning}" Margin="3" FontSize="16" Fill="Red"/>
@@ -171,7 +172,6 @@
                     <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel"/>
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
-                <overlay:ExperienceCounter x:Name="ExperienceCounter" Visibility="Visible"/>
                 <StackPanel Width="1000" Name="PastOpponentBoardDisplay" Canvas.Top="0" Canvas.Right="0">
                     <StackPanel HorizontalAlignment="Center">
                         <Border Background="#23272A" BorderBrush="#404345" CornerRadius="0 0 3 3" BorderThickness="1 0 1 1" Opacity=".9">

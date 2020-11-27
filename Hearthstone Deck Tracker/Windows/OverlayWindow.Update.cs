@@ -335,6 +335,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ScreenRatio));
+			Canvas.SetTop(ExperienceCounter, Height - ExperienceCounter.ActualHeight - XPFrameVerticalOffset);
+			Canvas.SetLeft(ExperienceCounter, Width - ExperienceCounter.ActualWidth - XPFrameHorizontalOffset);
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
 
@@ -367,6 +369,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(BattlegroundsTileHeight));
 			OnPropertyChanged(nameof(BattlegroundsTileWidth));
 			
+			//XP progress
+			ExperienceCounter.Height = XPFrameHeight;
+			ExperienceCounter.Width = XPFrameWidth;
+
 			//Scale attack icons, with height
 			var atkWidth = (int)Math.Round(Height * 0.0695, 0);
 			var atkFont = (int)Math.Round(Height * 0.0204, 0);
@@ -427,6 +433,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			CanvasPlayerChance.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 			CanvasPlayerCount.GetBindingExpression(Panel.BackgroundProperty)?.UpdateTarget();
 		}
+
+		public double XPFrameHeight => Height * 25 / 768;
+		public double XPFrameWidth => 6 * XPFrameHeight;
+		public double XPFrameHorizontalOffset => 275 / 25 * XPFrameHeight;
+
+		public double XPFrameVerticalOffset =>  80 / 25 * XPFrameHeight;
 
 		private void OverlayWindow_OnDeactivated(object sender, EventArgs e) => SetTopmost();
 	}
