@@ -113,10 +113,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			_experienceCounterBehavior = new OverlayElementBehavior(ExperienceCounter)
 			{
-				GetRight = () => PastOpponentBoardDisplay.ActualWidth * AutoScaling / 2,
-				GetTop = () => Height - PastOpponentBoardDisplay.ActualHeight * 2,
+				GetRight = () => ExperienceCounter.ActualWidth * AutoScaling * 1.25,
+				GetTop = () => Height - ExperienceCounter.ActualHeight * .8,
 				GetScaling = () => AutoScaling,
-				AnchorSide = Side.Top,
+				AnchorSide = Side.Bottom,
 				EntranceAnimation = AnimationType.Slide,
 				ExitAnimation = AnimationType.Slide
 			};

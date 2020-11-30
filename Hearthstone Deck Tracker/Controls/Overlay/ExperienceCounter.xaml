@@ -11,10 +11,11 @@
             <RectAnimation To="{Binding XPBarRect}" Duration="0:0:15" Storyboard.TargetName="FullXPBarClipRectangle" Storyboard.TargetProperty="Rect" />
         </Storyboard>
     </UserControl.Resources>
+    <Viewbox Width="130" Height="130">
     <Canvas x:Name="ExperienceCounterCanvas" Width="256" Height="256">
         <Grid>
             <Image Source="{StaticResource XPEmptyBar}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="342" Canvas.Top="194"/>
-            <Image Source="{StaticResource XPFullBar}" x:Name="FullXPBar" RenderOptions.BitmapScalingMode="Fant">
+            <Image Source="{StaticResource XPFullBar}" x:Name="FullXPBar" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Left" Width="380" Margin="32 0 0 0">
                 <Image.Clip>
                     <RectangleGeometry x:Name="FullXPBarClipRectangle" Rect="0 0 0 10000"/>
                 </Image.Clip>
@@ -27,4 +28,5 @@
         </Grid>
         <Image Source="{StaticResource XPScrollIcon}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-70" Canvas.Top="-42"/>
     </Canvas>
+    </Viewbox>
 </UserControl>

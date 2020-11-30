@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public System.TimeSpan AnimationDuration { get; set; } = new System.TimeSpan(0, 0, 5);
+		public System.TimeSpan AnimationDuration { get; set; } = new System.TimeSpan(0, 0, 3);
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public void ChangeRectangleFill(double newPercentageFull)
 		{
-			XPBarRect = new Rect(0, 0, newPercentageFull * FullXPBar.ActualWidth, 10000);
+			XPBarRect = new Rect(0, 0, newPercentageFull * (FullXPBar.ActualWidth != 0 ? FullXPBar.ActualWidth : 380), 10000);
 			(FindResource("StoryBoardLevelUp") as Storyboard)?.Begin();
 		}
 	}
