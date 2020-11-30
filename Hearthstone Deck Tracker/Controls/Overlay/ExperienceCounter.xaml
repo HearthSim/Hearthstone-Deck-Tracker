@@ -8,7 +8,10 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <Storyboard x:Key="StoryBoardLevelUp">
-            <RectAnimation To="{Binding XPBarRect}" Duration="0:0:15" Storyboard.TargetName="FullXPBarClipRectangle" Storyboard.TargetProperty="Rect" />
+            <RectAnimation To="{Binding XPBarRect}" Duration="0:0:3" Storyboard.TargetName="FullXPBarClipRectangle" Storyboard.TargetProperty="Rect" />
+        </Storyboard>
+        <Storyboard x:Key="StoryBoardReset">
+            <RectAnimation To="{Binding XPBarRect}" Duration="0:0:0" Storyboard.TargetName="FullXPBarClipRectangle" Storyboard.TargetProperty="Rect" />
         </Storyboard>
     </UserControl.Resources>
     <Viewbox Width="130" Height="130">

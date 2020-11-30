@@ -332,21 +332,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void HideExperienceCounter()
 		{
-			_experienceCounterBehavior.Hide();
+			if(!AnimatingXPBar) //also need config check
+				_experienceCounterBehavior.Hide();
 		}
 
-		internal async Task ExperienceChangedAsync(int experience, int experienceNeeded, int level)
+		public static bool AnimatingXPBar = false;
+
+		internal async Task ExperienceChangedAsync(int experience, int experienceNeeded, int level, int levelChange)
 		{
 			ExperienceCounter.XPDisplay = string.Format($"{experience}/{experienceNeeded}");
 			ExperienceCounter.LevelDisplay = level.ToString();
-			ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded);
-			//maybe below should be owned by the element?
-			if(_game.CurrentMode != Enums.Hearthstone.Mode.HUB)
+			AnimatingXPBar = true;
+			ShowExperienceCounter();
+			for(int i = 0; i < levelChange; i++)
 			{
-				ShowExperienceCounter();
-				await Task.Delay(3000);
-				HideExperienceCounter();
+				ExperienceCounter.ChangeRectangleFill(1);
+				await Task.Delay(4000);
+				ExperienceCounter.ResetRectangleFill();
+				await Task.Delay(500);
 			}
+			ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded);
+			await Task.Delay(4000);
+			AnimatingXPBar = false;
+			if(_game.CurrentMode != Enums.Hearthstone.Mode.HUB)
+				HideExperienceCounter();
+
 		}
 	}
 }

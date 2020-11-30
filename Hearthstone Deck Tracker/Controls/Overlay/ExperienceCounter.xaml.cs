@@ -62,5 +62,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			XPBarRect = new Rect(0, 0, newPercentageFull * (FullXPBar.ActualWidth != 0 ? FullXPBar.ActualWidth : 380), 10000);
 			(FindResource("StoryBoardLevelUp") as Storyboard)?.Begin();
 		}
+
+		public void ResetRectangleFill()
+		{
+			XPBarRect = new Rect(0, 0, 0, 10000);
+			(FindResource("StoryBoardReset") as Storyboard)?.Begin();
+		}
 	}
 }
