@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string Id
 		{
-			get { return _id; }
+			get { return _id ?? Database.UnknownCardId; }
 			set
 			{
 				_id = value;
@@ -473,7 +473,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool EqualsWithCount(Card card) => card.Id == Id && card.Count == Count;
 
-		public override int GetHashCode() => Name.GetHashCode();
+		public override int GetHashCode() => (Name ?? "").GetHashCode();
 
 		public void Load()
 		{
