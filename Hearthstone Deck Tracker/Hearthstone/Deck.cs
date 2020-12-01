@@ -64,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private List<string> _tags;
 
 		[XmlArray(ElementName = "Cards")]
-		[XmlArrayItem(ElementName = "Card")]
+		[XmlArrayItem(ElementName = "Card", IsNullable = false)]
 		public ObservableCollection<Card> Cards;
 
 		public string Class;
