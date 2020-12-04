@@ -1,3 +1,7 @@
+## **Release v1.13.17 - 2020-12-04**
+**Fixes**:
+- Restore option to not show flavor text on card hover.
+
 ## **Release v1.13.16 - 2020-11-24**
 **Fixes**:
 - Fixed an issue where Darkmoon Faire secrets might not appear as possible opponent secrets.
