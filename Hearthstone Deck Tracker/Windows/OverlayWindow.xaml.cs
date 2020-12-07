@@ -113,12 +113,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			_experienceCounterBehavior = new OverlayElementBehavior(ExperienceCounter)
 			{
-				GetRight = () => ExperienceCounter.ActualWidth * AutoScaling * 1.25,
-				GetTop = () => Height - ExperienceCounter.ActualHeight * .8,
+				GetRight = () => Width * .09,
+				GetTop = () => Height * .05,
 				GetScaling = () => AutoScaling,
-				AnchorSide = Side.Bottom,
-				EntranceAnimation = AnimationType.Slide,
-				ExitAnimation = AnimationType.Slide
 			};
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
@@ -327,33 +324,42 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void ShowExperienceCounter()
 		{
-			_experienceCounterBehavior.Show();
+			//_experienceCounterBehavior.Show();
+			ExperienceCounter.Visibility = Visibility.Visible;
 		}
 
 		internal void HideExperienceCounter()
 		{
 			if(!AnimatingXPBar) //also need config check
-				_experienceCounterBehavior.Hide();
+								//_experienceCounterBehavior.Hide();
+				ExperienceCounter.Visibility = Visibility.Collapsed;
 		}
 
 		public static bool AnimatingXPBar = false;
 
-		internal async Task ExperienceChangedAsync(int experience, int experienceNeeded, int level, int levelChange)
+		internal async Task ExperienceChangedAsync(int experience, int experienceNeeded, int level, int levelChange, bool animate)
 		{
 			ExperienceCounter.XPDisplay = string.Format($"{experience}/{experienceNeeded}");
-			ExperienceCounter.LevelDisplay = level.ToString();
-			AnimatingXPBar = true;
-			ShowExperienceCounter();
-			for(int i = 0; i < levelChange; i++)
+			ExperienceCounter.LevelDisplay = (level+1).ToString();
+			if(animate)
 			{
-				ExperienceCounter.ChangeRectangleFill(1);
+				AnimatingXPBar = true;
+				ShowExperienceCounter();
+				for(int i = 0; i < levelChange; i++)
+				{
+					ExperienceCounter.ChangeRectangleFill(1);
+					await Task.Delay(4000);
+					ExperienceCounter.ResetRectangleFill();
+					await Task.Delay(500);
+				}
+				ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded);
 				await Task.Delay(4000);
-				ExperienceCounter.ResetRectangleFill();
-				await Task.Delay(500);
+				AnimatingXPBar = false;
 			}
-			ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded);
-			await Task.Delay(4000);
-			AnimatingXPBar = false;
+			else
+			{
+				//quick animate bar
+			}
 			if(_game.CurrentMode != Enums.Hearthstone.Mode.HUB)
 				HideExperienceCounter();
 

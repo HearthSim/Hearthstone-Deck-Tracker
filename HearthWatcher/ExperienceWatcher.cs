@@ -50,7 +50,7 @@ namespace HearthWatcher
 					_rewardTrackData.Level != newRewards.Level ||
 					_rewardTrackData.XpNeeded != newRewards.XpNeeded)
 					{
-						NewExperienceHandler?.Invoke(this, new ExperienceEventArgs(newRewards.Xp, newRewards.XpNeeded, newRewards.Level, _rewardTrackData != null ? newRewards.Level - _rewardTrackData.Level : 0));
+						NewExperienceHandler?.Invoke(this, new ExperienceEventArgs(newRewards.Xp, newRewards.XpNeeded, newRewards.Level, _rewardTrackData != null ? newRewards.Level - _rewardTrackData.Level : 0, _rewardTrackData != null));
 					}
 					_rewardTrackData = newRewards;
 				}
