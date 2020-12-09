@@ -51,19 +51,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(game.PreviousMode == Mode.COLLECTIONMANAGER || game.CurrentMode == Mode.COLLECTIONMANAGER
 						|| game.PreviousMode == Mode.PACKOPENING)
 						CollectionHelper.UpdateCollection().Forget();
-
-					if(game.PreviousMode == Mode.HUB)
-						Core.Overlay.HideExperienceCounter();
-
 					if(game.CurrentMode == Mode.HUB)
-					{
-						Core.Overlay.ShowExperienceCounter();
 						if(!_checkedMirrorStatus)
 							CheckMirrorStatus();
-					}
 				}
 
-				if(game.PreviousMode == Mode.GAMEPLAY && game.CurrentMode != Mode.GAMEPLAY)
+				if(game.PreviousMode == Mode.HUB)
+					Core.Overlay.HideExperienceCounter();
+
+				if(game.CurrentMode == Mode.HUB)
+					Core.Overlay.ShowExperienceCounter();
+
+					if(game.PreviousMode == Mode.GAMEPLAY && game.CurrentMode != Mode.GAMEPLAY)
 					gameState.GameHandler.HandleInMenu();
 
 				if(game.CurrentMode == Mode.DRAFT)
