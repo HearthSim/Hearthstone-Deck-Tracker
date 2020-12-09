@@ -113,8 +113,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			_experienceCounterBehavior = new OverlayElementBehavior(ExperienceCounter)
 			{
-				GetRight = () => Width * .09,
-				GetTop = () => Height * .05,
+				GetRight = () => Width * .19,
+				GetTop = () => Height * .957,
 				GetScaling = () => AutoScaling,
 			};
 
@@ -347,18 +347,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ShowExperienceCounter();
 				for(int i = 0; i < levelChange; i++)
 				{
-					ExperienceCounter.ChangeRectangleFill(1);
+					ExperienceCounter.ChangeRectangleFill(1, false);
 					await Task.Delay(4000);
 					ExperienceCounter.ResetRectangleFill();
 					await Task.Delay(500);
 				}
-				ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded);
+				ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded, false);
 				await Task.Delay(4000);
 				AnimatingXPBar = false;
 			}
 			else
 			{
-				//quick animate bar
+				ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded, true);
 			}
 			if(_game.CurrentMode != Enums.Hearthstone.Mode.HUB)
 				HideExperienceCounter();
