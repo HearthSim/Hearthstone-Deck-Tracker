@@ -1,3 +1,6 @@
+## **Release v1.13.18 - 2020-12-15**
+**Updated for Hearthstone 19.2.0.68600**
+
 ## **Release v1.13.17 - 2020-12-04**
 **Fixes**:
 - Restore option to not show flavor text on card hover.
