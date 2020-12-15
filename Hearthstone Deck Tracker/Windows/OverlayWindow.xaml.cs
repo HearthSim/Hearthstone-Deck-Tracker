@@ -343,6 +343,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal async Task ExperienceChangedAsync(int experience, int experienceNeeded, int level, int levelChange, bool animate)
 		{
+			while(_game.CurrentMode == Enums.Hearthstone.Mode.GAMEPLAY && _game.PreviousMode == Enums.Hearthstone.Mode.BACON)
+			{
+				await Task.Delay(500);
+			}
 			ExperienceCounter.XPDisplay = string.Format($"{experience}/{experienceNeeded}");
 			ExperienceCounter.LevelDisplay = (level+1).ToString();
 			if(animate)
