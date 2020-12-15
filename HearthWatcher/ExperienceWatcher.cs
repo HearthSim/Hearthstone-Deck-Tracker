@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using HearthMirror.Objects;
 using HearthWatcher.EventArgs;
@@ -12,7 +9,7 @@ namespace HearthWatcher
 	{
 		public delegate void ExperienceEventHandler(object sender, ExperienceEventArgs args);
 
-		private HearthMirror.Objects.RewardTrackData _rewardTrackData = null;
+		private RewardTrackData _rewardTrackData = null;
 		private readonly int _delay;
 		private bool _running;
 		private bool _watch;
@@ -23,6 +20,7 @@ namespace HearthWatcher
 			_delay = delay;
 			_experienceProvider = experienceProvider;
 		}
+
 		public event ExperienceEventHandler NewExperienceHandler;
 
 		public void Run()

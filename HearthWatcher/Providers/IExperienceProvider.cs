@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using HearthMirror.Objects;
 
 namespace HearthWatcher.Providers

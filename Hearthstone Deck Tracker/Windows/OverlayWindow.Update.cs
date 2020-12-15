@@ -15,7 +15,6 @@ using static System.Windows.Visibility;
 using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
 using HearthDb.Enums;
-using HearthMirror;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {

@@ -42,8 +42,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public System.TimeSpan AnimationDuration { get; set; } = new System.TimeSpan(0, 0, 3);
-
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
