@@ -35,6 +35,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			ComboboxChallengeAction.ItemsSource = Enum.GetValues(typeof(HsActionType)).Cast<HsActionType>();
 			ComboboxChallengeAction.SelectedIndex = (int)Config.Instance.ChallengeAction;
 			CheckboxBattlegrounds.IsChecked = Config.Instance.ShowBattlegroundsToast;
+			CheckboxExperienceCounter.IsChecked = Config.Instance.ShowExperienceCounter;
 
 			CheckboxTimerAlert2.IsChecked = Config.Instance.TimerAlert;
 			TextboxTimerAlert2.Text = Config.Instance.TimerAlertSeconds.ToString();
@@ -215,6 +216,25 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 				return;
 			Config.Instance.ShowBattlegroundsToast = false;
 			Config.Save();
+		}
+
+		private void CheckboxExperienceCounter_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowExperienceCounter = true;
+			Config.Save();
+			if(Core.Game.CurrentMode == Enums.Hearthstone.Mode.HUB)
+				Core.Overlay.ShowExperienceCounter();
+		}
+
+		private void CheckboxExperienceCounter_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowExperienceCounter = false;
+			Config.Save();
+			Core.Overlay.HideExperienceCounter();
 		}
 	}
 }
