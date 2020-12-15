@@ -63,6 +63,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _bgsPastOpponentBoardBehavior;
 		private OverlayElementBehavior _experienceCounterBehavior;
 
+		private const int LevelResetDelay = 500;
+		private const int ExperienceFadeDelay = 6000;
+
 		public OverlayWindow(GameV2 game)
 		{
 			_game = game;
@@ -113,8 +116,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			_experienceCounterBehavior = new OverlayElementBehavior(ExperienceCounter)
 			{
-				GetRight = () => Width * .19,
-				GetTop = () => Height * .957,
+				GetRight = () => Height * .35,
+				GetTop = () => Height * .9652,
+				AnchorSide = Side.Bottom,
 				GetScaling = () => AutoScaling,
 			};
 
@@ -325,14 +329,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void ShowExperienceCounter()
 		{
 			//_experienceCounterBehavior.Show();
-			ExperienceCounter.Visibility = Visibility.Visible;
+			if(Config.Instance.ShowExperienceCounter)
+				ExperienceCounter.Visibility = Visible;
 		}
 
 		internal void HideExperienceCounter()
 		{
-			if(!AnimatingXPBar) //also need config check
-								//_experienceCounterBehavior.Hide();
-				ExperienceCounter.Visibility = Visibility.Collapsed;
+			if(!AnimatingXPBar)
+				ExperienceCounter.Visibility = Collapsed;
 		}
 
 		public static bool AnimatingXPBar = false;
@@ -348,12 +352,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				for(int i = 0; i < levelChange; i++)
 				{
 					ExperienceCounter.ChangeRectangleFill(1, false);
-					await Task.Delay(4000);
+					await Task.Delay(ExperienceFadeDelay);
 					ExperienceCounter.ResetRectangleFill();
-					await Task.Delay(500);
+					await Task.Delay(LevelResetDelay);
 				}
 				ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded, false);
-				await Task.Delay(4000);
+				await Task.Delay(ExperienceFadeDelay);
 				AnimatingXPBar = false;
 			}
 			else

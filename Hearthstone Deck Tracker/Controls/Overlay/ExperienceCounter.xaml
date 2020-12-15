@@ -17,7 +17,7 @@
             <RectAnimation To="{Binding XPBarRect}" Duration="0:0:0" Storyboard.TargetName="FullXPBarClipRectangle" Storyboard.TargetProperty="Rect" />
         </Storyboard>
     </UserControl.Resources>
-    <Viewbox Width="100" Height="111">
+    <Viewbox Width="85">
         <Canvas x:Name="ExperienceCounterCanvas" Width="256" Height="256">
             <Grid>
                 <Image Source="{StaticResource XPEmptyBar}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="342" Canvas.Top="194"/>
@@ -26,11 +26,11 @@
                         <RectangleGeometry x:Name="FullXPBarClipRectangle" Rect="0 0 1000 10000"/>
                     </Image.Clip>
                 </Image>
-                <local:HearthstoneTextBlock x:Name="XPText" Text= "{Binding XPDisplay}" Width="200" TextAlignment="Center" FontSize="36"/>
+                <local:HearthstoneTextBlock x:Name="XPText" Text= "{Binding XPDisplay}" Width="400" Margin="0 -3 0 0" TextAlignment="Center" FontSize="50"/>
             </Grid>
             <Grid Canvas.Left="400" Canvas.Top="-9">
                 <Image Source="{StaticResource XPGem}" RenderOptions.BitmapScalingMode="Fant"/>
-                <local:HearthstoneTextBlock x:Name="LevelText" Text="{Binding LevelDisplay}" HorizontalAlignment="Center" FontSize="36"/>
+                <local:HearthstoneTextBlock x:Name="LevelText" Text="{Binding LevelDisplay}" HorizontalAlignment="Center" Margin="-5 0 0 0" FontSize="50"/>
             </Grid>
             <Image Source="{StaticResource XPScrollIcon}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-59" Canvas.Top="-20" Height="120"/>
         </Canvas>
