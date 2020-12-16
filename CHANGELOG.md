@@ -1,3 +1,7 @@
+## **Release v1.13.19 - 2020-12-15**
+**Fixes**:
+- Fixed an issue where playing against or with Fish of N'Zoth could cause Bob's Buddy to not run that turn.
+
 ## **Release v1.13.18 - 2020-12-15**
 **Updated for Hearthstone 19.2.0.68600**
 
