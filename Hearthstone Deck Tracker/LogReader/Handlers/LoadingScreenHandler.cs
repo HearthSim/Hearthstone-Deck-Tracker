@@ -26,6 +26,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		private DateTime _lastAutoImport;
 		private bool _checkedMirrorStatus;
 		public event Action OnHearthMirrorCheckFailed;
+		private System.Collections.Generic.List<Mode> ShowExperienceDuringMode = new System.Collections.Generic.List<Mode>() { Mode.HUB, Mode.GAME_MODE, Mode.TOURNAMENT, Mode.BACON, Mode.DRAFT, Mode.PVP_DUNGEON_RUN };
 
 		public void Handle(LogLine logLine, IHsGameState gameState, IGame game)
 		{
@@ -56,13 +57,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							CheckMirrorStatus();
 				}
 
-				if(game.PreviousMode == Mode.HUB)
-					Core.Overlay.HideExperienceCounter();
-
-				if(game.CurrentMode == Mode.HUB)
+				if(ShowExperienceDuringMode.Contains(game.CurrentMode))
 					Core.Overlay.ShowExperienceCounter();
+				else
+				{
+					if(ShowExperienceDuringMode.Contains(game.PreviousMode))
+						Core.Overlay.HideExperienceCounter();
+				}
 
-					if(game.PreviousMode == Mode.GAMEPLAY && game.CurrentMode != Mode.GAMEPLAY)
+				if(game.PreviousMode == Mode.GAMEPLAY && game.CurrentMode != Mode.GAMEPLAY)
 					gameState.GameHandler.HandleInMenu();
 
 				if(game.CurrentMode == Mode.DRAFT)
