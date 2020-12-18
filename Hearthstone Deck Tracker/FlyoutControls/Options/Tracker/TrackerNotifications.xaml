@@ -86,6 +86,11 @@
                   HorizontalAlignment="Left" Margin="30,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxNoteDialogDelay_Checked"
                   Unchecked="CheckboxNoteDialogDelay_Unchecked" />
+        <CheckBox x:Name="CheckboxExperienceCounter"
+                  Content="{lex:Loc Options_Tracker_Notifications_Label_Experience_Counter}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxExperienceCounter_Checked"
+                  Unchecked="CheckboxExperienceCounter_Unchecked" />
         <CheckBox x:Name="CheckboxBattlegrounds"
                   Content="{lex:Loc Options_Tracker_Notifications_Label_Battlegrounds_Hero}"
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"

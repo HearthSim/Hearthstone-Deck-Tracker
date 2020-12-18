@@ -332,6 +332,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool EnterToSaveNote = true;
 
+		[DefaultValue(true)]
+		public bool ShowExperienceCounter = true;
+
 		[DefaultValue(false)]
 		public bool ExportIncludeVersion = false;
 

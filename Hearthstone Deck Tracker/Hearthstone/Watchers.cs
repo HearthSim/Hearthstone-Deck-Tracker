@@ -23,6 +23,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PVPDungeonRunWatcher.PVPDungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, true);
 			PVPDungeonRunWatcher.PVPDungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo, true);
 			FriendlyChallengeWatcher.OnFriendlyChallenge += OnFriendlyChallenge;
+			ExperienceWatcher.NewExperienceHandler += (sender, args) => Core.Overlay.ExperienceChangedAsync(args.Experience, args.ExperienceNeeded, args.Level, args.LevelChange, args.Animate);
 		}
 
 		internal static void Stop()
@@ -32,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DungeonRunWatcher.Stop();
 			PVPDungeonRunWatcher.Stop();
 			FriendlyChallengeWatcher.Stop();
+			ExperienceWatcher.Stop();
 		}
 
 		internal static void OnFriendlyChallenge(object sender, HearthWatcher.EventArgs.FriendlyChallengeEventArgs args)
@@ -55,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static DungeonRunWatcher DungeonRunWatcher { get; } = new DungeonRunWatcher(new GameDataProvider());
 		public static PVPDungeonRunWatcher PVPDungeonRunWatcher { get; } = new PVPDungeonRunWatcher(new GameDataProvider());
 		public static FriendlyChallengeWatcher FriendlyChallengeWatcher { get; } = new FriendlyChallengeWatcher(new HearthMirrorFriendlyChallengeProvider());
+		public static ExperienceWatcher ExperienceWatcher { get; } = new ExperienceWatcher(new HearthMirrorRewardTrackProvider());
 	}
 
 	public class GameDataProvider : IGameDataProvider
@@ -95,5 +98,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class HearthMirrorFriendlyChallengeProvider : IFriendlyChallengeProvider
 	{
 		public bool DialogVisible => Reflection.IsFriendlyChallengeDialogVisible();
+	}
+
+	public class HearthMirrorRewardTrackProvider : IExperienceProvider
+	{
+		public RewardTrackData GetRewardTrackData() => Reflection.GetRewardTrackData();
 	}
 }

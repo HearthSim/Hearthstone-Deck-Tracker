@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.ExperienceCounter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Storyboard x:Key="StoryBoardLevelUp">
+            <RectAnimation To="{Binding XPBarRect}" Duration="0:0:3" Storyboard.TargetName="FullXPBarClipRectangle" Storyboard.TargetProperty="Rect" />
+        </Storyboard>
+        <Storyboard x:Key="StoryBoardInstantAnimate">
+            <RectAnimation To="{Binding XPBarRect}" Duration="0:0:0" Storyboard.TargetName="FullXPBarClipRectangle" Storyboard.TargetProperty="Rect" />
+        </Storyboard>
+        <Storyboard x:Key="StoryBoardReset">
+            <RectAnimation To="{Binding XPBarRect}" Duration="0:0:0" Storyboard.TargetName="FullXPBarClipRectangle" Storyboard.TargetProperty="Rect" />
+        </Storyboard>
+    </UserControl.Resources>
+    <Viewbox Width="85">
+        <Canvas x:Name="ExperienceCounterCanvas" Width="256" Height="256">
+            <Grid>
+                <Image Source="{StaticResource XPEmptyBar}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="342" Canvas.Top="194"/>
+                <Image Source="{StaticResource XPFullBar}" x:Name="FullXPBar" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Left" Width="412" Margin="0 0 0 0" Stretch="Fill">
+                    <Image.Clip>
+                        <RectangleGeometry x:Name="FullXPBarClipRectangle" Rect="0 0 1000 10000"/>
+                    </Image.Clip>
+                </Image>
+                <local:HearthstoneTextBlock x:Name="XPText" Text= "{Binding XPDisplay}" Width="400" Margin="0 -3 0 0" TextAlignment="Center" FontSize="50"/>
+            </Grid>
+            <Grid Canvas.Left="400" Canvas.Top="-9">
+                <Image Source="{StaticResource XPGem}" RenderOptions.BitmapScalingMode="Fant"/>
+                <local:HearthstoneTextBlock x:Name="LevelText" Text="{Binding LevelDisplay}" HorizontalAlignment="Center" Margin="-5 0 0 0" FontSize="50"/>
+            </Grid>
+            <Image Source="{StaticResource XPScrollIcon}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-59" Canvas.Top="-20" Height="120"/>
+        </Canvas>
+    </Viewbox>
+</UserControl>

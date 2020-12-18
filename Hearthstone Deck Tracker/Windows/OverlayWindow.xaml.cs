@@ -17,6 +17,7 @@ using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -60,6 +61,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _bgsTopBarBehavior;
 		private OverlayElementBehavior _bgsBobsBuddyBehavior;
 		private OverlayElementBehavior _bgsPastOpponentBoardBehavior;
+		private OverlayElementBehavior _experienceCounterBehavior;
+
+		private const int LevelResetDelay = 500;
+		private const int ExperienceFadeDelay = 6000;
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -107,6 +112,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				AnchorSide = Side.Top,
 				EntranceAnimation = AnimationType.Instant,
 				ExitAnimation = AnimationType.Instant,
+			};
+
+			_experienceCounterBehavior = new OverlayElementBehavior(ExperienceCounter)
+			{
+				GetRight = () => Height * .35,
+				GetTop = () => Height * .9652,
+				AnchorSide = Side.Bottom,
+				GetScaling = () => AutoScaling,
 			};
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
@@ -311,6 +324,53 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			_bgsBobsBuddyBehavior.Hide();
 			BobsBuddyDisplay.ResetDisplays();
+		}
+
+		internal void ShowExperienceCounter()
+		{
+			//_experienceCounterBehavior.Show();
+			if(Config.Instance.ShowExperienceCounter)
+				ExperienceCounter.Visibility = Visible;
+		}
+
+		internal void HideExperienceCounter()
+		{
+			if(!AnimatingXPBar)
+				ExperienceCounter.Visibility = Collapsed;
+		}
+
+		public static bool AnimatingXPBar = false;
+
+		internal async Task ExperienceChangedAsync(int experience, int experienceNeeded, int level, int levelChange, bool animate)
+		{
+			while(_game.CurrentMode == Enums.Hearthstone.Mode.GAMEPLAY && _game.PreviousMode == Enums.Hearthstone.Mode.BACON)
+			{
+				await Task.Delay(500);
+			}
+			ExperienceCounter.XPDisplay = string.Format($"{experience}/{experienceNeeded}");
+			ExperienceCounter.LevelDisplay = (level+1).ToString();
+			if(animate)
+			{
+				AnimatingXPBar = true;
+				ShowExperienceCounter();
+				for(int i = 0; i < levelChange; i++)
+				{
+					ExperienceCounter.ChangeRectangleFill(1, false);
+					await Task.Delay(ExperienceFadeDelay);
+					ExperienceCounter.ResetRectangleFill();
+					await Task.Delay(LevelResetDelay);
+				}
+				ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded, false);
+				await Task.Delay(ExperienceFadeDelay);
+				AnimatingXPBar = false;
+			}
+			else
+			{
+				ExperienceCounter.ChangeRectangleFill((double)experience / (double)experienceNeeded, true);
+			}
+			if(_game.CurrentMode != Enums.Hearthstone.Mode.HUB)
+				HideExperienceCounter();
+
 		}
 	}
 }

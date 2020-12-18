@@ -409,6 +409,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			_bgsPastOpponentBoardBehavior.UpdatePosition();
 			_bgsPastOpponentBoardBehavior.UpdateScaling();
+
+			_experienceCounterBehavior.UpdatePosition();
+			_experienceCounterBehavior.UpdateScaling();
 		}
 
 		public void UpdateStackPanelAlignment()
