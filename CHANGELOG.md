@@ -1,3 +1,9 @@
+## **Release v1.13.20 - 2020-12-18**
+**New**:
+- Added experience bar. 
+**Fixes**:
+- Improved Bob's Buddy for most recent patch.
+
 ## **Release v1.13.19 - 2020-12-15**
 **Fixes**:
 - Fixed an issue where playing against or with Fish of N'Zoth could cause Bob's Buddy to not run that turn.
