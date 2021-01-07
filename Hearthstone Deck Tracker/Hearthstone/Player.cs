@@ -53,7 +53,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public List<PredictedCard> InDeckPrecitions { get; } = new List<PredictedCard>();
 
-		const string CthunPrefix = "DMF_254";
 		private DeckState GetDeckState()
 		{
 			var createdCardsInDeck =
@@ -225,14 +224,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(_game.OpponentEntity?.GetTag(GameTag.MULLIGAN_STATE) == (int)HearthDb.Enums.Mulligan.DEALING)
 					entity.Info.Mulliganed = true;
 				else
-				{
-					//This looks hacky but I think this works generically (ie w/o the CthunPrefix check).
-					//Still, I haven't tested it in all the use cases so I'm narrowing it down until Alex can take a look
-					if((RevealedEntities.Any(x => x.Id == entity.Id) && entity.CardId.StartsWith(CthunPrefix)))
-						Log("Already had card matching the ID of drawn card " + entity.CardId);
-					else
-						entity.Info.Hidden = true;
-				}
+					entity.Info.Hidden = true;
 			}
 			entity.Info.Turn = turn;
 			LastDrawnCardId = entity.CardId;
