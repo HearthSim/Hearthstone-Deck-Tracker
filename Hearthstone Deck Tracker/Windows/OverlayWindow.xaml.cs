@@ -376,13 +376,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var index = _leaderboardDeadForText.Count - 1;
 			foreach(var text in _leaderboardDeadForText)
-				text.Text = "5";
+				text.Text = "";
 			foreach(var text in _leaderboardDeadForTurnText)
-				text.Text = "Rundenanfaenge";
+				text.Text = "";
 			foreach(var turn in turns)
 			{
-				_leaderboardDeadForText[index].Text = $"{turn}\nturns";
-				_leaderboardDeadForTurnText[index].Text = "Rundenanfaenge";
+				_leaderboardDeadForText[index].Text = $"{turn}";
+				_leaderboardDeadForTurnText[index].Text = "turns";
 				index--;
 			}
 		}
