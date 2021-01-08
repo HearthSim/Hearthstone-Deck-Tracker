@@ -469,6 +469,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?
 						.StartShopping(!_game.CurrentGameStats.WasConceded);
+					OpponentDeadForTracker.ResetOpponentDeadForTracker();
 				}
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
@@ -857,6 +858,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 				Core.Overlay.ShowBgsTopBar();
+			OpponentDeadForTracker.ResetOpponentDeadForTracker();
+
 		}
 
 		#region Player

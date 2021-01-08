@@ -13,21 +13,24 @@ namespace Hearthstone_Deck_Tracker
 		const string KelThuzadCardId = "KelThuzad";
 		const int NextOpponentCheckDelay = 500;
 
+		public static void ResetOpponentDeadForTracker()
+		{
+			_uniqueDeadHeroes.Clear();
+			_deadTracker.Clear();
+			Core.Overlay.ResetNextOpponentLeaderboardPosition();
+		}
+
 		public static async void ShoppingStarted(GameV2 game)
 		{
 			if(game.GetTurnNumber() <= 1)
-			{
-				_uniqueDeadHeroes.Clear();
-				_deadTracker.Clear();
-				Core.Overlay.ResetNextOpponentLeaderboardPosition();
-			}
+				ResetOpponentDeadForTracker();
 			for(int i = 0; i < _deadTracker.Count; i++)
 				_deadTracker[i]++;
 			var deadHeroes = game.Entities.Values.Where(x => x.IsHero && x.Health <= 0);
 			foreach(var hero in deadHeroes)
 			{
 				var id = BattlegroundsBoardState.GetCorrectBoardstateHeroId(hero.CardId);
-				if(!id.Equals(KelThuzadCardId) && !_uniqueDeadHeroes.Contains(id))
+				if(!id.Contains(KelThuzadCardId) && !_uniqueDeadHeroes.Contains(id))
 				{
 					_deadTracker.Add(0);
 					_uniqueDeadHeroes.Add(id);
