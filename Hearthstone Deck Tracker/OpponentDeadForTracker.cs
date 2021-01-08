@@ -2,6 +2,7 @@
 using Hearthstone_Deck_Tracker.Hearthstone;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Hearthstone_Deck_Tracker
 {
@@ -11,7 +12,7 @@ namespace Hearthstone_Deck_Tracker
 		private static List<int> _deadTracker = new List<int>();
 		const string KelThuzadCardId = "KelThuzad";
 
-		public static void ShoppingStarted(GameV2 game)
+		public static async void ShoppingStarted(GameV2 game)
 		{
 			if(game.GetTurnNumber() <= 1)
 			{
@@ -35,20 +36,24 @@ namespace Hearthstone_Deck_Tracker
 			}
 			_deadTracker.Sort((x, y) => y.CompareTo(x));
 			Core.Overlay.UpdateOpponentDeadForTurns(_deadTracker);
-			var gameEntites = game.Entities.Select(x => x.Value).ToList();
+			var gameEntites = game.Entities.Values;
 			var currentPlayer = gameEntites.FirstOrDefault(x => x.IsCurrentPlayer);
-			if(currentPlayer != null && currentPlayer.HasTag(GameTag.NEXT_OPPONENT_PLAYER_ID))
+			for(int i = 0; i < 5; i++)
 			{
-				var nextOpponent = gameEntites.FirstOrDefault(x => x.GetTag(GameTag.PLAYER_ID) == currentPlayer.GetTag(GameTag.NEXT_OPPONENT_PLAYER_ID));
-				if(nextOpponent != null)
+				if(currentPlayer != null && currentPlayer.HasTag(GameTag.NEXT_OPPONENT_PLAYER_ID))
 				{
-					var leaderboardPlace = nextOpponent.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE);
-					if(leaderboardPlace >= 0 && leaderboardPlace < 8)
+					var nextOpponent = gameEntites.FirstOrDefault(x => x.GetTag(GameTag.PLAYER_ID) == currentPlayer.GetTag(GameTag.NEXT_OPPONENT_PLAYER_ID));
+					if(nextOpponent != null)
 					{
-						Core.Overlay.nextOpponentLeaderboardPosition = leaderboardPlace;
-						Core.Overlay.PositionDeadForText();
+						var leaderboardPlace = nextOpponent.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE);
+						if(leaderboardPlace >= 0 && leaderboardPlace < 8)
+						{
+							Core.Overlay.nextOpponentLeaderboardPosition = leaderboardPlace;
+							Core.Overlay.PositionDeadForText();
+						}
 					}
 				}
+				await Task.Delay(500);
 			}
 		}
 	}
