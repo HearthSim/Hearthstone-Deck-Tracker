@@ -11,6 +11,7 @@ namespace Hearthstone_Deck_Tracker
 		private static List<string> _uniqueDeadHeroes = new List<string>();
 		private static List<int> _deadTracker = new List<int>();
 		const string KelThuzadCardId = "KelThuzad";
+		const int NextOpponentCheckDelay = 500;
 
 		public static async void ShoppingStarted(GameV2 game)
 		{
@@ -21,14 +22,12 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.nextOpponentLeaderboardPosition = null;
 			}
 			for(int i =0; i < _deadTracker.Count; i++)
-			{
 				_deadTracker[i]++;
-			}
 			var deadHeroes = game.Entities.Select(x=>x.Value).Where(x => x.IsHero && x.Health <= 0);
 			foreach(var hero in deadHeroes)
 			{
 				var id = BattlegroundsBoardState.GetCorrectBoardstateHeroId(hero.CardId);
-				if(!id.Contains(KelThuzadCardId) && !_uniqueDeadHeroes.Contains(id))
+				if(!id.Equals(KelThuzadCardId) && !_uniqueDeadHeroes.Contains(id))
 				{
 					_deadTracker.Add(0);
 					_uniqueDeadHeroes.Add(id);
@@ -53,7 +52,7 @@ namespace Hearthstone_Deck_Tracker
 						}
 					}
 				}
-				await Task.Delay(500);
+				await Task.Delay(NextOpponentCheckDelay);
 			}
 		}
 	}
