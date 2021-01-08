@@ -372,6 +372,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(_game.CurrentMode != Enums.Hearthstone.Mode.HUB)
 				HideExperienceCounter();
 		}
+
 		internal void UpdateOpponentDeadForTurns(List<int> turns)
 		{
 			var index = _leaderboardDeadForText.Count - 1;
@@ -381,8 +382,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 				text.Text = "";
 			foreach(var turn in turns)
 			{
-				_leaderboardDeadForText[index].Text = $"{turn}";
-				_leaderboardDeadForTurnText[index].Text = "turns";
+				if(index < _leaderboardDeadForText.Count && index < _leaderboardDeadForTurnText.Count && index >= 0)
+				{
+					_leaderboardDeadForText[index].Text = $"{turn}";
+					_leaderboardDeadForTurnText[index].Text = turn == 1 ? LocUtil.Get("Overlay_Battlegrounds_Dead_For_Turn") : LocUtil.Get("Overlay_Battlegrounds_Dead_For_Turns");
+				}
 				index--;
 			}
 		}

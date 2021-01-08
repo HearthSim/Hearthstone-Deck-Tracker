@@ -19,11 +19,11 @@ namespace Hearthstone_Deck_Tracker
 			{
 				_uniqueDeadHeroes.Clear();
 				_deadTracker.Clear();
-				Core.Overlay.nextOpponentLeaderboardPosition = null;
+				Core.Overlay.ResetNextOpponentLeaderboardPosition();
 			}
-			for(int i =0; i < _deadTracker.Count; i++)
+			for(int i = 0; i < _deadTracker.Count; i++)
 				_deadTracker[i]++;
-			var deadHeroes = game.Entities.Select(x=>x.Value).Where(x => x.IsHero && x.Health <= 0);
+			var deadHeroes = game.Entities.Values.Where(x => x.IsHero && x.Health <= 0);
 			foreach(var hero in deadHeroes)
 			{
 				var id = BattlegroundsBoardState.GetCorrectBoardstateHeroId(hero.CardId);
@@ -37,6 +37,7 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.UpdateOpponentDeadForTurns(_deadTracker);
 			var gameEntites = game.Entities.Values;
 			var currentPlayer = gameEntites.FirstOrDefault(x => x.IsCurrentPlayer);
+			//We loop because the next opponent tag is set slightly after the start of shopping (when this function is called).
 			for(int i = 0; i < 5; i++)
 			{
 				if(currentPlayer != null && currentPlayer.HasTag(GameTag.NEXT_OPPONENT_PLAYER_ID))
@@ -47,8 +48,7 @@ namespace Hearthstone_Deck_Tracker
 						var leaderboardPlace = nextOpponent.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE);
 						if(leaderboardPlace >= 0 && leaderboardPlace < 8)
 						{
-							Core.Overlay.nextOpponentLeaderboardPosition = leaderboardPlace;
-							Core.Overlay.PositionDeadForText();
+							Core.Overlay.PositionDeadForText(leaderboardPlace);
 						}
 					}
 				}

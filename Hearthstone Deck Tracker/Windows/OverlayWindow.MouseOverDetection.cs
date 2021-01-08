@@ -28,11 +28,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double MinionWidth => Width * 0.63 / 7 * ScreenRatio;
 		public double CardWidth => Height * 0.125;
 		public double CardHeight => Height * 0.189;
+		//Adjusts OpponentDeadFor textblocks left by this amount depending on what position they represent on the leaderboard.
+		const double LeftAdjust = .00075;
+		//Adjusts the OpponentDeadFor textblock of the next oponent by this to the right so it aligns correctly with the hero portrait.
+		const double NextOpponentRightAdjust = .025;
 		private double LeaderboardTop => Height * 0.15;
 		private const int MaxHandSize = 10;
 		private const int MaxBoardSize = 7;
 		private bool _mouseIsOverLeaderboardIcon = false;
-		public int? nextOpponentLeaderboardPosition = null;
+		private int _nextOpponentLeaderboardPosition = -1;
 
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
 
@@ -99,22 +103,25 @@ namespace Hearthstone_Deck_Tracker.Windows
 			PositionDeadForText();
 		}
 
-		internal void PositionDeadForText()
+		internal void ResetNextOpponentLeaderboardPosition() => _nextOpponentLeaderboardPosition = -1;
+
+		internal void PositionDeadForText(int nextOpponentLeaderboardPosition = 0)
 		{
-			var leftAdjust = .00075;
-			
+			if(nextOpponentLeaderboardPosition > 0)
+				_nextOpponentLeaderboardPosition = nextOpponentLeaderboardPosition;
+
 			for(int i = 0; i < _leaderboardDeadForText.Count; i++)
 			{
 				Canvas.SetTop(_leaderboardDeadForText[i], LeaderboardTop + BattlegroundsTileHeight * i);
-				Canvas.SetLeft(_leaderboardDeadForText[i], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForText.Count - i - 1), (int)Width, ScreenRatio));
+				Canvas.SetLeft(_leaderboardDeadForText[i], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForText.Count - i - 1), (int)Width, ScreenRatio));
 				Canvas.SetTop(_leaderboardDeadForTurnText[i], LeaderboardTop + BattlegroundsTileHeight * i);
-				Canvas.SetLeft(_leaderboardDeadForTurnText[i], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForTurnText.Count - i - 1), (int)Width, ScreenRatio));
+				Canvas.SetLeft(_leaderboardDeadForTurnText[i], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForTurnText.Count - i - 1), (int)Width, ScreenRatio));
 			}
 
-			if(nextOpponentLeaderboardPosition != null)
+			if(_nextOpponentLeaderboardPosition > 0)
 			{
-				Canvas.SetLeft(_leaderboardDeadForText[(nextOpponentLeaderboardPosition ?? 0)-1], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForText.Count - (nextOpponentLeaderboardPosition ?? 0) - 1 - 1) + .025, (int)Width, ScreenRatio));
-				Canvas.SetLeft(_leaderboardDeadForTurnText[(nextOpponentLeaderboardPosition ?? 0)-1], Helper.GetScaledXPos(leftAdjust * (_leaderboardDeadForTurnText.Count - (nextOpponentLeaderboardPosition ?? 0) - 1 - 1) + .025, (int)Width, ScreenRatio));
+				Canvas.SetLeft(_leaderboardDeadForText[_nextOpponentLeaderboardPosition - 1], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForText.Count - (_nextOpponentLeaderboardPosition - 2)) + NextOpponentRightAdjust, (int)Width, ScreenRatio));
+				Canvas.SetLeft(_leaderboardDeadForTurnText[_nextOpponentLeaderboardPosition - 1], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForTurnText.Count - _nextOpponentLeaderboardPosition - 2) + NextOpponentRightAdjust, (int)Width, ScreenRatio));
 			}
 		}
 
