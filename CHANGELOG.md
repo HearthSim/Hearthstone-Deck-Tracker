@@ -1,3 +1,8 @@
+## **Release v1.13.21 - 2021-01-08**
+**Updated for Hearthstone 19.2.1.70828**
+**Fixes**
+- Fixed an issue where player's could see cards created by C'thun The Shattered in their opponents' hands.
+
 ## **Release v1.13.20 - 2020-12-18**
 **New**:
 - Added experience bar. 
