@@ -17,6 +17,8 @@ using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using Hearthstone_Deck_Tracker.Utility;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 #endregion
 
@@ -66,6 +68,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
+
+		Regex BattlegroundsHeroRegex = new Regex(@"TB_BaconShop_HERO_\d\d");
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -375,7 +379,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void UpdateOpponentDeadForTurns(List<int> turns)
 		{
-			var index = _leaderboardDeadForText.Count - 1;
+			var index = _game.Entities.Values.Where(x => x.IsHero && x.Info.Turn == 0 && BattlegroundsHeroRegex.IsMatch(x.CardId)).Count() - 1;
 			foreach(var text in _leaderboardDeadForText)
 				text.Text = "";
 			foreach(var text in _leaderboardDeadForTurnText)

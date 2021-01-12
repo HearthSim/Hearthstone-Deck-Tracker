@@ -120,7 +120,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if(_nextOpponentLeaderboardPosition > 0)
 			{
-				Canvas.SetLeft(_leaderboardDeadForText[_nextOpponentLeaderboardPosition - 1], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForText.Count - (_nextOpponentLeaderboardPosition - 2)) + NextOpponentRightAdjust, (int)Width, ScreenRatio));
+				Canvas.SetLeft(_leaderboardDeadForText[_nextOpponentLeaderboardPosition - 1], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForText.Count - _nextOpponentLeaderboardPosition - 2) + NextOpponentRightAdjust, (int)Width, ScreenRatio));
 				Canvas.SetLeft(_leaderboardDeadForTurnText[_nextOpponentLeaderboardPosition - 1], Helper.GetScaledXPos(LeftAdjust * (_leaderboardDeadForTurnText.Count - _nextOpponentLeaderboardPosition - 2) + NextOpponentRightAdjust, (int)Width, ScreenRatio));
 			}
 		}
