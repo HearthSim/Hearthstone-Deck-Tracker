@@ -343,6 +343,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="OpponentDeadForTracker.cs" />
     <Compile Include="Utility\Assets\AssetDownloader.cs" />
     <Compile Include="Utility\Assets\AssetDownloaders.cs" />
     <Compile Include="Utility\ComboBoxHelper.cs" />

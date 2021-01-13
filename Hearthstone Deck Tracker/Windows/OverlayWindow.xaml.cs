@@ -15,9 +15,10 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 #endregion
 
@@ -45,6 +46,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly List<Ellipse> _playerBoard = new List<Ellipse>();
 		private readonly List<Rectangle> _playerHand = new List<Rectangle>();
 		private readonly List<Rectangle> _leaderboardIcons = new List<Rectangle>();
+		private readonly List<HearthstoneTextBlock> _leaderboardDeadForText = new List<HearthstoneTextBlock>();
+		private readonly List<HearthstoneTextBlock> _leaderboardDeadForTurnText = new List<HearthstoneTextBlock>();
 		private bool? _isFriendsListOpen;
 		private string _lastToolTipCardId;
 		private bool _lmbDown;
@@ -65,6 +68,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
+
+		Regex BattlegroundsHeroRegex = new Regex(@"TB_BaconShop_HERO_\d\d");
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -348,7 +353,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				await Task.Delay(500);
 			}
 			ExperienceCounter.XPDisplay = string.Format($"{experience}/{experienceNeeded}");
-			ExperienceCounter.LevelDisplay = (level+1).ToString();
+			ExperienceCounter.LevelDisplay = (level + 1).ToString();
 			if(animate)
 			{
 				AnimatingXPBar = true;
@@ -370,7 +375,24 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			if(_game.CurrentMode != Enums.Hearthstone.Mode.HUB)
 				HideExperienceCounter();
+		}
 
+		internal void UpdateOpponentDeadForTurns(List<int> turns)
+		{
+			var index = _game.Entities.Values.Where(x => x.IsHero && x.Info.Turn == 0 && BattlegroundsHeroRegex.IsMatch(x.CardId)).Count() - 2;
+			foreach(var text in _leaderboardDeadForText)
+				text.Text = "";
+			foreach(var text in _leaderboardDeadForTurnText)
+				text.Text = "";
+			foreach(var turn in turns)
+			{
+				if(index < _leaderboardDeadForText.Count && index < _leaderboardDeadForTurnText.Count && index >= 0)
+				{
+					_leaderboardDeadForText[index].Text = $"{turn}";
+					_leaderboardDeadForTurnText[index].Text = turn == 1 ? LocUtil.Get("Overlay_Battlegrounds_Dead_For_Turn") : LocUtil.Get("Overlay_Battlegrounds_Dead_For_Turns");
+				}
+				index--;
+			}
 		}
 	}
 }

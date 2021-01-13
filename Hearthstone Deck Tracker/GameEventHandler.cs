@@ -359,8 +359,12 @@ namespace Hearthstone_Deck_Tracker
 			TurnTimer.Instance.SetPlayer(player);
 			if(player == ActivePlayer.Player && !_game.IsInMenu)
 			{
-				if(_game.IsBattlegroundsMatch && _game.CurrentGameStats != null && turn.Item2 > 1)
-					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShopping(true);
+				if(_game.IsBattlegroundsMatch)
+				{
+					OpponentDeadForTracker.ShoppingStarted(_game);
+					if(_game.CurrentGameStats != null && turn.Item2 > 1)
+						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShopping(true);
+				}
 				switch(Config.Instance.TurnStartAction)
 				{
 						case HsActionType.Flash:
@@ -465,6 +469,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?
 						.StartShopping(!_game.CurrentGameStats.WasConceded);
+					OpponentDeadForTracker.ResetOpponentDeadForTracker();
 				}
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
@@ -853,6 +858,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			else
 				Core.Overlay.ShowBgsTopBar();
+			OpponentDeadForTracker.ResetOpponentDeadForTracker();
+
 		}
 
 		#region Player

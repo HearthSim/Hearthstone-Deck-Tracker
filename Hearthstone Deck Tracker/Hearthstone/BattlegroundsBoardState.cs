@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		const string UntransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseekerTavernBrawl1;
 		const string TransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseeker_ArannaUnleashedTokenTavernBrawl;
 
-		private static readonly Dictionary<string, string> _lastKnownBoardStateLookup = new Dictionary<string, string>()
+		private static readonly Dictionary<string, string> TransformableHeroCardidTable = new Dictionary<string, string>()
 		{
 			{ TransformedArannaCardid, UntransformedArannaCardid}
 		};
@@ -46,7 +46,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			LastKnownBoardState.Clear();
 		}
 
-		private string GetCorrectBoardstateHeroId(string heroId) => _lastKnownBoardStateLookup.TryGetValue(heroId, out var mapped) ? mapped : heroId;
-
+		public static string GetCorrectBoardstateHeroId(string heroId) => TransformableHeroCardidTable.TryGetValue(heroId, out var mapped) ? mapped : heroId;
 	}
 }
