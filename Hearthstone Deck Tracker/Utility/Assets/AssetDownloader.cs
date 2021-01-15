@@ -15,8 +15,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		private string _inProgressDestination;
 		private string _url;
 		private Func<string, string> _keyConverter;
-		private static List<string> _succesfullyDownloadedImages = new List<string>();
-		private static Dictionary<string, Task<bool>> _inProcessDownloads = new Dictionary<string, Task<bool>>();
+		private List<string> _succesfullyDownloadedImages = new List<string>();
+		private Dictionary<string, Task<bool>> _inProcessDownloads = new Dictionary<string, Task<bool>>();
 
 		/// <exception cref="ArgumentException">Thrown when directory cannot be accessed or created.</exception>
 		/// <param name="storageDestination">Destination for assets to be stored.</param>
@@ -148,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 		}
 
-		public static bool FileIsSuccessfullyDownloaded(string fileName) => _succesfullyDownloadedImages.Contains(fileName);
+		public bool FileIsSuccessfullyDownloaded(string fileName) => _succesfullyDownloadedImages.Contains(fileName);
 
 	}
 }
