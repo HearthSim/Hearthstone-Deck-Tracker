@@ -45,8 +45,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 			InitializeComponent();
 		}
 
-		async void SetCardImage()
+		public async void SetCardId(string cardId)
 		{
+			CardId = cardId;
 			if(!AssetDownloaders.cardImageDownloader.HasAsset(CardId))
 			{
 				await AssetDownloaders.cardImageDownloader.DownloadAsset(CardId);

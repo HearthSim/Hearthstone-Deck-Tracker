@@ -9,6 +9,7 @@ using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static System.Windows.Visibility;
 using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
@@ -104,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 
 				var card = ListViewPlayer.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card;
-
+				ToolTipCardBlock.SetCardId(card.Id);
 				var centeredListOffset = Config.Instance.OverlayCenterPlayerStackPanel ? (BorderStackPanelPlayer.ActualHeight - StackPanelPlayer.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(BorderStackPanelPlayer) + centeredListOffset
