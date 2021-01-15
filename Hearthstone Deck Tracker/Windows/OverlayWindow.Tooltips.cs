@@ -22,45 +22,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 	{
 		#region CardTooltips
 
-		public void ShowAdditionalToolTips()
-		{
-			//if(!Config.Instance.AdditionalOverlayTooltips)
-			//	return;
-			//var card = ToolTipCardBlock.DataContext as Card;
-			//if(card == null)
-			//	return;
-			//if(card.EntourageCardIds.Length == 0)
-			//{
-			//	HideAdditionalToolTips();
-			//	return;
-			//}
-
-			//StackPanelAdditionalTooltips.Children.Clear();
-			//foreach(var id in card.EntourageCardIds)
-			//{
-			//	var tooltip = new CardToolTipControl();
-			//	tooltip.SetValue(DataContextProperty, Database.GetCardFromId(id));
-			//	tooltip.CardSetToolTip.Visibility = Config.Instance.OverlaySetToolTips ? Visible : Collapsed;
-			//	StackPanelAdditionalTooltips.Children.Add(tooltip);
-			//}
-
-			//StackPanelAdditionalTooltips.UpdateLayout();
-
-			////set position
-			//var tooltipLeft = Canvas.GetLeft(ToolTipCardBlock);
-			//var left = tooltipLeft < Width / 2 ? tooltipLeft + ToolTipCardBlock.ActualWidth : tooltipLeft - StackPanelAdditionalTooltips.ActualWidth;
-
-			//Canvas.SetLeft(StackPanelAdditionalTooltips, left);
-			//var top = Canvas.GetTop(ToolTipCardBlock) - (StackPanelAdditionalTooltips.ActualHeight / 2 - ToolTipCardBlock.ActualHeight / 2);
-			//if(top < 0)
-			//	top = 0;
-			//else if(top + StackPanelAdditionalTooltips.ActualHeight > Height)
-			//	top = Height - StackPanelAdditionalTooltips.ActualHeight;
-			//Canvas.SetTop(StackPanelAdditionalTooltips, top);
-
-			//StackPanelAdditionalTooltips.Visibility = Visible;
-		}
-
 		private void UpdateCardTooltip()
 		{
 			var pos = User32.GetMousePos();
@@ -109,11 +70,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var centeredListOffset = Config.Instance.OverlayCenterPlayerStackPanel ? (BorderStackPanelPlayer.ActualHeight - StackPanelPlayer.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(BorderStackPanelPlayer) + centeredListOffset
-								+ GetListViewOffset(StackPanelPlayer) + cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100;
+								+ GetListViewOffset(StackPanelPlayer) + cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100 - ToolTipCardBlock.ActualHeight/2;
 
 				//prevent tooltip from going outside of the overlay
 				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
 					topOffset = Height - ToolTipCardBlock.ActualHeight;
+				topOffset = Math.Max(0, topOffset);
 
 				SetTooltipPosition(topOffset, BorderStackPanelPlayer);
 

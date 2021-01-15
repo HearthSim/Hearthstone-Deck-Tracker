@@ -137,7 +137,7 @@
                 <Rectangle Name="RectPlayerHand7" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <Rectangle Name="RectPlayerHand8" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <Rectangle Name="RectPlayerHand9" Width="{Binding CardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding CardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                <controls:CardImage x:Name="ToolTipCardBlock" Width="400"
+                <controls:CardImage x:Name="ToolTipCardBlock"
                                Visibility="Hidden" />
                 <WrapPanel Name="StackPanelAdditionalTooltips" Width="auto" Height="auto" Visibility="Collapsed" Orientation="Vertical"/>
                 <overlay:ExperienceCounter x:Name="ExperienceCounter" Visibility="Hidden"/>

@@ -8,10 +8,8 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
              d:DesignHeight="256" d:DesignWidth="256">
-    <Viewbox Width="110" Height="110">
-        <Canvas Width="256" Height="256">
-            <Image HorizontalAlignment="Center" Width="256" Height="256" Source="{Binding CardImagePath}" RenderOptions.BitmapScalingMode="Fant">
+        <Grid>
+            <Image HorizontalAlignment="Center" Margin="0 12 0 0" Width="256" Height="388" Source="{Binding CardImagePath, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant">
             </Image>
-        </Canvas>
-    </Viewbox>
+        </Grid>
 </UserControl>
