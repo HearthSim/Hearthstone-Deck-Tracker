@@ -78,11 +78,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		async void SetCardImage()
 		{
-			if(!AssetDownloaders.cardImageDownloader.HasAsset(_entity.CardId))
+			if(!AssetDownloaders.cardPortraitDownloader.HasAsset(_entity.CardId))
 			{
-				await AssetDownloaders.cardImageDownloader.DownloadAsset(_entity.CardId);
+				await AssetDownloaders.cardPortraitDownloader.DownloadAsset(_entity.CardId);
 			}
-			CardImagePath = AssetDownloaders.cardImageDownloader.StoragePathFor(_entity.CardId);
+			CardImagePath = AssetDownloaders.cardPortraitDownloader.StoragePathFor(_entity.CardId);
 		}
 
 		private void SetDisplayValues()

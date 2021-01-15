@@ -6,17 +6,16 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 {
 	public static class AssetDownloaders
 	{
-		public static AssetDownloader cardImageDownloader;
-
+		public static AssetDownloader cardPortraitDownloader;
 		static AssetDownloaders()
 		{
 			try
 			{
-				cardImageDownloader = new AssetDownloader(Path.Combine(Config.AppDataPath, "Images", "CardPortraits"), "https://art.hearthstonejson.com/v1/256x", (string cardId) => $"{cardId}.jpg");
+				cardPortraitDownloader = new AssetDownloader(Path.Combine(Config.AppDataPath, "Images", "CardPortraits"), "https://art.hearthstonejson.com/v1/256x", (string cardId) => $"{cardId}.jpg");
 			}
 			catch(ArgumentException e)
 			{
-				Log.Error($"Could not create asset downloader to download cardimages: {e.Message}");
+				Log.Error($"Could not create asset downloader to download card portraits: {e.Message}");
 			}
 		}
 	}
