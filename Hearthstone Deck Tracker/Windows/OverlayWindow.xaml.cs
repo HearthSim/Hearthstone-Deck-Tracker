@@ -379,7 +379,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void UpdateOpponentDeadForTurns(List<int> turns)
 		{
-			var index = _game.Entities.Values.Where(x => x.IsHero && x.Info.Turn == 0 && BattlegroundsHeroRegex.IsMatch(x.CardId)).Count() - 2;
+			var index = _game.Entities.Values.Where(x => x.IsHero && x.Info.Turn == 0 && BattlegroundsHeroRegex.IsMatch(x.CardId) && !x.Info.Discarded).Count() - 1;
 			foreach(var text in _leaderboardDeadForText)
 				text.Text = "";
 			foreach(var text in _leaderboardDeadForTurnText)
