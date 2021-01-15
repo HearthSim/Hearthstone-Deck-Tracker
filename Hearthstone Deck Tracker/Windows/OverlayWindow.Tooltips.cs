@@ -23,41 +23,41 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void ShowAdditionalToolTips()
 		{
-			if(!Config.Instance.AdditionalOverlayTooltips)
-				return;
-			var card = ToolTipCard.DataContext as Card;
-			if(card == null)
-				return;
-			if(card.EntourageCardIds.Length == 0)
-			{
-				HideAdditionalToolTips();
-				return;
-			}
+			//if(!Config.Instance.AdditionalOverlayTooltips)
+			//	return;
+			//var card = ToolTipCard.DataContext as Card;
+			//if(card == null)
+			//	return;
+			//if(card.EntourageCardIds.Length == 0)
+			//{
+			//	HideAdditionalToolTips();
+			//	return;
+			//}
 
-			StackPanelAdditionalTooltips.Children.Clear();
-			foreach(var id in card.EntourageCardIds)
-			{
-				var tooltip = new CardToolTipControl();
-				tooltip.SetValue(DataContextProperty, Database.GetCardFromId(id));
-				tooltip.CardSetToolTip.Visibility = Config.Instance.OverlaySetToolTips ? Visible : Collapsed;
-				StackPanelAdditionalTooltips.Children.Add(tooltip);
-			}
+			//StackPanelAdditionalTooltips.Children.Clear();
+			//foreach(var id in card.EntourageCardIds)
+			//{
+			//	var tooltip = new CardToolTipControl();
+			//	tooltip.SetValue(DataContextProperty, Database.GetCardFromId(id));
+			//	tooltip.CardSetToolTip.Visibility = Config.Instance.OverlaySetToolTips ? Visible : Collapsed;
+			//	StackPanelAdditionalTooltips.Children.Add(tooltip);
+			//}
 
-			StackPanelAdditionalTooltips.UpdateLayout();
+			//StackPanelAdditionalTooltips.UpdateLayout();
 
-			//set position
-			var tooltipLeft = Canvas.GetLeft(ToolTipCard);
-			var left = tooltipLeft < Width / 2 ? tooltipLeft + ToolTipCard.ActualWidth : tooltipLeft - StackPanelAdditionalTooltips.ActualWidth;
+			////set position
+			//var tooltipLeft = Canvas.GetLeft(ToolTipCard);
+			//var left = tooltipLeft < Width / 2 ? tooltipLeft + ToolTipCard.ActualWidth : tooltipLeft - StackPanelAdditionalTooltips.ActualWidth;
 
-			Canvas.SetLeft(StackPanelAdditionalTooltips, left);
-			var top = Canvas.GetTop(ToolTipCard) - (StackPanelAdditionalTooltips.ActualHeight / 2 - ToolTipCard.ActualHeight / 2);
-			if(top < 0)
-				top = 0;
-			else if(top + StackPanelAdditionalTooltips.ActualHeight > Height)
-				top = Height - StackPanelAdditionalTooltips.ActualHeight;
-			Canvas.SetTop(StackPanelAdditionalTooltips, top);
+			//Canvas.SetLeft(StackPanelAdditionalTooltips, left);
+			//var top = Canvas.GetTop(ToolTipCard) - (StackPanelAdditionalTooltips.ActualHeight / 2 - ToolTipCard.ActualHeight / 2);
+			//if(top < 0)
+			//	top = 0;
+			//else if(top + StackPanelAdditionalTooltips.ActualHeight > Height)
+			//	top = Height - StackPanelAdditionalTooltips.ActualHeight;
+			//Canvas.SetTop(StackPanelAdditionalTooltips, top);
 
-			StackPanelAdditionalTooltips.Visibility = Visible;
+			//StackPanelAdditionalTooltips.Visibility = Visible;
 		}
 
 		private void UpdateCardTooltip()
@@ -69,8 +69,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var relativeCardMark = _cardMarks.Select(x => new { Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y)) });
 			var visibility = (Config.Instance.OverlayCardToolTips && !Config.Instance.OverlaySecretToolTipsOnly)
 								 ? Visible : Hidden;
-			ToolTipCard.CardSetToolTip.Visibility = Config.Instance.OverlaySetToolTips ? Visible : Collapsed;
-			ToolTipCard.CreatedByVisibility = Collapsed;
+			//Replace tooltip card with the some card image image canvas
+			//ToolTipCard.CardSetToolTip.Visibility = Config.Instance.OverlaySetToolTips ? Visible : Collapsed;
+			//ToolTipCard.CreatedByVisibility = Collapsed;
 
 			var cardMark =
 				relativeCardMark.FirstOrDefault(
@@ -83,19 +84,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var creatorCard = _cardMarks[index].SourceCard;
 				if(card != null || creatorCard != null)
 				{
-					ToolTipCard.SetValue(DataContextProperty, card ?? creatorCard);
+					//ToolTipCard.SetValue(DataContextProperty, card ?? creatorCard);
 					var offset = _cardMarks[index].ActualHeight * 1.25;
 					var topOffset = Canvas.GetTop(_cardMarks[index]) + offset;
 					var leftOffset = Canvas.GetLeft(_cardMarks[index]) + offset;
-					Canvas.SetTop(ToolTipCard, topOffset);
-					Canvas.SetLeft(ToolTipCard, leftOffset);
-					ToolTipCard.Visibility = Config.Instance.OverlayCardMarkToolTips ? Visible : Hidden;
-					ToolTipCard.CreatedByVisibility = card != null ? Collapsed : Visible;
+					//Canvas.SetTop(ToolTipCard, topOffset);
+					//Canvas.SetLeft(ToolTipCard, leftOffset);
+					//ToolTipCard.Visibility = Config.Instance.OverlayCardMarkToolTips ? Visible : Hidden;
+					//ToolTipCard.CreatedByVisibility = card != null ? Collapsed : Visible;
 				}
 				else
 				{
-					ToolTipCard.Visibility = Hidden;
-					ToolTipCard.CreatedByVisibility = Collapsed;
+					//ToolTipCard.Visibility = Hidden;
+					//ToolTipCard.CreatedByVisibility = Collapsed;
 				}
 			}
 			//player card tooltips
@@ -108,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(cardIndex < 0 || cardIndex >= ListViewPlayer.Items.Count)
 					return;
 
-				ToolTipCard.SetValue(DataContextProperty, ListViewPlayer.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card);
+				//ToolTipCard.SetValue(DataContextProperty, ListViewPlayer.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card);
 
 				var centeredListOffset = Config.Instance.OverlayCenterPlayerStackPanel ? (BorderStackPanelPlayer.ActualHeight - StackPanelPlayer.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
@@ -116,12 +117,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 								+ GetListViewOffset(StackPanelPlayer) + cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100;
 
 				//prevent tooltip from going outside of the overlay
-				if(topOffset + ToolTipCard.ActualHeight > Height)
-					topOffset = Height - ToolTipCard.ActualHeight;
+				//if(topOffset + ToolTipCard.ActualHeight > Height)
+				//	topOffset = Height - ToolTipCard.ActualHeight;
 
 				SetTooltipPosition(topOffset, BorderStackPanelPlayer);
 
-				ToolTipCard.Visibility = visibility;
+				//ToolTipCard.Visibility = visibility;
 			}
 			//opponent card tooltips
 			else if(ListViewOpponent.Visibility == Visible && StackPanelOpponent.Visibility == Visible
@@ -133,7 +134,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(cardIndex < 0 || cardIndex >= ListViewOpponent.Items.Count)
 					return;
 
-				ToolTipCard.SetValue(DataContextProperty, ListViewOpponent.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card);
+				//ToolTipCard.SetValue(DataContextProperty, ListViewOpponent.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card);
 
 				var centeredListOffset = Config.Instance.OverlayCenterOpponentStackPanel ? (BorderStackPanelOpponent.ActualHeight - StackPanelOpponent.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
@@ -141,12 +142,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 								+ GetListViewOffset(StackPanelOpponent) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100;
 
 				//prevent tooltip from going outside of the overlay
-				if(topOffset + ToolTipCard.ActualHeight > Height)
-					topOffset = Height - ToolTipCard.ActualHeight;
+				//if(topOffset + ToolTipCard.ActualHeight > Height)
+				//	topOffset = Height - ToolTipCard.ActualHeight;
 
 				SetTooltipPosition(topOffset, BorderStackPanelOpponent);
 
-				ToolTipCard.Visibility = visibility;
+				//ToolTipCard.Visibility = visibility;
 			}
 			else if(StackPanelSecrets.Visibility == Visible
 					&& PointInsideControl(relativeSecretsPos, StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
@@ -157,18 +158,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(cardIndex < 0 || cardIndex >= StackPanelSecrets.Children.Count)
 					return;
 
-				ToolTipCard.SetValue(DataContextProperty, StackPanelSecrets.Children[cardIndex].GetValue(DataContextProperty));
+				//ToolTipCard.SetValue(DataContextProperty, StackPanelSecrets.Children[cardIndex].GetValue(DataContextProperty));
 
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(StackPanelSecrets) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100;
 
 				//prevent tooltip from going outside of the overlay
-				if(topOffset + ToolTipCard.ActualHeight > Height)
-					topOffset = Height - ToolTipCard.ActualHeight;
+			//	if(topOffset + ToolTipCard.ActualHeight > Height)
+				//	topOffset = Height - ToolTipCard.ActualHeight;
 
 				SetTooltipPosition(topOffset, StackPanelSecrets);
 
-				ToolTipCard.Visibility = Config.Instance.OverlaySecretToolTipsOnly ? Visible : visibility;
+				//ToolTipCard.Visibility = Config.Instance.OverlaySecretToolTipsOnly ? Visible : visibility;
 			}
 			else if(BgsTopBar.Visibility == Visible && BattlegroundsMinionsPanel.Visibility == Visible && BattlegroundsMinionsPanel.ActiveTier > 0)
 			{
@@ -179,7 +180,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(!group.IsVisible || !cardList.IsVisible)
 						continue;
 					var relativePos = cardList.PointFromScreen(new Point(pos.X, pos.Y));
-					if (PointInsideControl(relativePos, cardList.ActualWidth, cardList.ActualHeight))
+					if(PointInsideControl(relativePos, cardList.ActualWidth, cardList.ActualHeight))
 					{
 						var cards = cardList.ItemsControl.Items;
 						var cardSize = cardList.ActualHeight / cards.Count;
@@ -189,54 +190,54 @@ namespace Hearthstone_Deck_Tracker.Windows
 						var card = cards.GetItemAt(cardIndex) as AnimatedCard;
 						if(card == null)
 							return;
-						ToolTipCard.SetValue(DataContextProperty, card.GetValue(DataContextProperty));
+					//	ToolTipCard.SetValue(DataContextProperty, card.GetValue(DataContextProperty));
 
 						//offset is affected by scaling
 						var cardListPos = cardList.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
 						var topOffset = cardListPos.Y + cardIndex * cardSize * AutoScaling;
 
 						//prevent tooltip from going outside of the overlay
-						if(topOffset + ToolTipCard.ActualHeight > Height)
-							topOffset = Height - ToolTipCard.ActualHeight;
+					//	if(topOffset + ToolTipCard.ActualHeight > Height)
+					//		topOffset = Height - ToolTipCard.ActualHeight;
 
-						Canvas.SetTop(ToolTipCard, topOffset);
-						Canvas.SetLeft(ToolTipCard, cardListPos.X - ToolTipCard.ActualWidth + 22);
+					//	Canvas.SetTop(ToolTipCard, topOffset);
+					//	Canvas.SetLeft(ToolTipCard, cardListPos.X - ToolTipCard.ActualWidth + 22);
 
-						ToolTipCard.Visibility = visibility;
+					//	ToolTipCard.Visibility = visibility;
 						found = true;
 					}
 				}
 
 				if(!found)
 				{
-					ToolTipCard.Visibility = Hidden;
+					//ToolTipCard.Visibility = Hidden;
 					HideAdditionalToolTips();
 				}
 			}
 			else
 			{
-				ToolTipCard.Visibility = Hidden;
+				//ToolTipCard.Visibility = Hidden;
 				HideAdditionalToolTips();
 			}
 
-			if(ToolTipCard.Visibility == Visible)
-			{
-				if(ToolTipCard.GetValue(DataContextProperty) is Card card)
-				{
-					if(_lastToolTipCardId != card.Id)
-					{
-						_lastToolTipCardId = card.Id;
-						ShowAdditionalToolTips();
-					}
-				}
-				else
-					HideAdditionalToolTips();
-			}
-			else
-			{
-				HideAdditionalToolTips();
-				_lastToolTipCardId = string.Empty;
-			}
+			//if(ToolTipCard.Visibility == Visible)
+			//{
+			//	if(ToolTipCard.GetValue(DataContextProperty) is Card card)
+			//	{
+			//		if(_lastToolTipCardId != card.Id)
+			//		{
+			//			_lastToolTipCardId = card.Id;
+			//			ShowAdditionalToolTips();
+			//		}
+			//	}
+			//	else
+			//		HideAdditionalToolTips();
+			//}
+			//else
+			//{
+			//	HideAdditionalToolTips();
+			//	_lastToolTipCardId = string.Empty;
+			//}
 
 
 			if(!Config.Instance.ForceMouseHook)
@@ -281,12 +282,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void SetTooltipPosition(double yOffset, FrameworkElement stackpanel)
 		{
-			Canvas.SetTop(ToolTipCard, yOffset);
+			//Canvas.SetTop(ToolTipCard, yOffset);
 
-			if(Canvas.GetLeft(stackpanel) < Width / 2)
-				Canvas.SetLeft(ToolTipCard, Canvas.GetLeft(stackpanel) + stackpanel.ActualWidth * Config.Instance.OverlayOpponentScaling / 100);
-			else
-				Canvas.SetLeft(ToolTipCard, Canvas.GetLeft(stackpanel) - ToolTipCard.ActualWidth);
+			//if(Canvas.GetLeft(stackpanel) < Width / 2)
+			//	Canvas.SetLeft(ToolTipCard, Canvas.GetLeft(stackpanel) + stackpanel.ActualWidth * Config.Instance.OverlayOpponentScaling / 100);
+			//else
+			//	Canvas.SetLeft(ToolTipCard, Canvas.GetLeft(stackpanel) - ToolTipCard.ActualWidth);
 		}
 
 		public bool PointInsideControl(Point pos, double actualWidth, double actualHeight)

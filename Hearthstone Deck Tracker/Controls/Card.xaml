@@ -8,14 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Rectangle Fill="{Binding Background}" Height="34" Width="217" ToolTipService.ShowOnDisabled="True" ToolTipService.ShowDuration="60000"
             ToolTipService.IsEnabled="{Binding HasTooltip, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        <Rectangle.ToolTip>
-            <controls:CardToolTipControl/>
-        </Rectangle.ToolTip>
         <Rectangle.Resources>
-            <Style TargetType="ToolTip">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-            </Style>
         </Rectangle.Resources>
     </Rectangle>
 </UserControl>
