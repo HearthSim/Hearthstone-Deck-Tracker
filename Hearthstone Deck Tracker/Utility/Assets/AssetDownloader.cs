@@ -14,6 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		private string _storageDestiniation;
 		private string _inProgressDestination;
 		private string _url;
+		private string _fileExtension;
 		private Func<string, string> _keyConverter;
 		private List<string> _succesfullyDownloadedImages = new List<string>();
 		private Dictionary<string, Task<bool>> _inProcessDownloads = new Dictionary<string, Task<bool>>();
@@ -21,16 +22,24 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		/// <exception cref="ArgumentException">Thrown when directory cannot be accessed or created.</exception>
 		/// <param name="storageDestination">Destination for assets to be stored.</param>
 
-		public AssetDownloader(string storageDestination, string url, Func<string, string> keyConverter)
+		public AssetDownloader(string storageDestination, string url, string fileExtension, Func<string, string> keyConverter)
 		{
 			_storageDestiniation = storageDestination;
 			_inProgressDestination = Path.Combine(storageDestination, "_inProgress");
 			_url = url;
+			_fileExtension = fileExtension;
 			_keyConverter = keyConverter;
 			TryCreateDirectory(_storageDestiniation);
 			TryCreateDirectory(_inProgressDestination);
-			TryCleanDirectory(_inProgressDestination);
+			TryCleanDirectory(_inProgressDestination, true);
 			_succesfullyDownloadedImages.AddRange(GetCurrentlyStoredFileNames());
+		}
+
+		public void ClearStorage()
+		{
+			TryCleanDirectory(_inProgressDestination, true);
+			TryCleanDirectory(_storageDestiniation, false);
+			_succesfullyDownloadedImages.Clear();
 		}
 
 		void TryCreateDirectory(string path)
@@ -46,23 +55,34 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 		}
 
-		void TryCleanDirectory(string path)
+		void TryCleanDirectory(string path, bool deleteDirs)
 		{
 			DirectoryInfo directory = new DirectoryInfo(path);
-			try
+
+			foreach(FileInfo file in directory.GetFiles())
 			{
-				foreach(FileInfo file in directory.GetFiles())
+				try
 				{
 					file.Delete();
 				}
-				foreach(DirectoryInfo dir in directory.GetDirectories())
+				catch(Exception e)
 				{
-					dir.Delete(true);
+					Log.Error($"Could not delete file {file.Name}: {e.Message}");
 				}
 			}
-			catch(Exception e)
+			if(deleteDirs)
 			{
-				Log.Error($"Could not clean directory {path}: {e.Message}");
+				foreach(DirectoryInfo dir in directory.GetDirectories())
+				{
+					try
+					{
+						dir.Delete(true);
+					}
+					catch(Exception e)
+					{
+						Log.Error($"Could not delete directory {dir.Name}: {e.Message}");
+					}
+				}
 			}
 		}
 
@@ -82,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			{
 				using(WebClient client = new WebClient())
 				{
-					var downloadTask = client.DownloadFileTaskAsync($"{_url}/{_keyConverter(fileKey)}", inProgressPath);
+					var downloadTask = client.DownloadFileTaskAsync($"{_url}/{_keyConverter(fileKey)}.{_fileExtension}", inProgressPath);
 					Log.Info($"Waiting to cleanup {fileKey}.");
 					return await CleanupDownload(fileKey, downloadTask, inProgressPath, StoragePathFor(fileKey));
 				}
@@ -129,9 +149,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 
 		private bool AssetDownloadStartedOrFinished(string fileName) => _succesfullyDownloadedImages.Contains(fileName) || _inProcessDownloads.ContainsKey(fileName);
 
-		public string StoragePathFor(string fileKey) => Path.Combine(_storageDestiniation, _keyConverter(fileKey));
+		public string StoragePathFor(string fileKey) => Path.Combine(_storageDestiniation, $"{fileKey}.{_fileExtension}");
 
-		private string InProgressPathFor(string fileKey) => Path.Combine(_inProgressDestination, _keyConverter(fileKey));
+		private string InProgressPathFor(string fileKey) => Path.Combine(_inProgressDestination, $"{fileKey}.{_fileExtension}");
 
 		public IEnumerable<string> GetCurrentlyStoredFileNames() => GetStoredImagesContent().Select(Path.GetFileNameWithoutExtension);
 
