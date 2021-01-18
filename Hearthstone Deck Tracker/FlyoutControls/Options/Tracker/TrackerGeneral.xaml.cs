@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -211,6 +212,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 			if(!_initialized)
 				return;
+
+			AssetDownloaders.cardImageDownloader.ClearStorage();
 
 			var selectedLanguage = Helper.LanguageDict[language];
 

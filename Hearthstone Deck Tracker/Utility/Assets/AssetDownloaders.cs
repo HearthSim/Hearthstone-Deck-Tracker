@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		{
 			try
 			{
-				cardPortraitDownloader = new AssetDownloader(Path.Combine(Config.AppDataPath, "Images", "CardPortraits"), "https://art.hearthstonejson.com/v1/256x", (string cardId) => $"{cardId}.jpg");
+				cardPortraitDownloader = new AssetDownloader(Path.Combine(Config.AppDataPath, "Images", "CardPortraits"), "https://art.hearthstonejson.com/v1/256x", "jpg", (string cardId) => $"{ cardId}");
 			}
 			catch(ArgumentException e)
 			{
@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 			try
 			{
-				cardImageDownloader = new AssetDownloader(Path.Combine(Config.AppDataPath, "Images", "CardImages"), "https://art.hearthstonejson.com/v1/render/latest/enUS/256x", (string cardId) => $"{cardId}.png");
+				cardImageDownloader = new AssetDownloader(Path.Combine(Config.AppDataPath, "Images", "CardImages"), "https://art.hearthstonejson.com/v1/render/latest", "png", (string cardId) => Path.Combine(Config.Instance.SelectedLanguage, "256x", $"{cardId}"));
 			}
 			catch(ArgumentException e)
 			{
