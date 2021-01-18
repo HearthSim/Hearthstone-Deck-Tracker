@@ -115,12 +115,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 
 				//offset is affected by scaling
-				var topOffset = Canvas.GetTop(StackPanelSecrets) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100;
-
+				var topOffset = Canvas.GetTop(StackPanelSecrets) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100 - ToolTipCardBlock.ActualHeight / 2;
+				var card = StackPanelSecrets.Children.Cast<Controls.Card>().ElementAt(cardIndex);
+				ToolTipCardBlock.SetCardId(card.CardId());
 				//prevent tooltip from going outside of the overlay
 				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
 					topOffset = Height - ToolTipCardBlock.ActualHeight;
-
+				topOffset = Math.Max(0, topOffset);
 				SetTooltipPosition(topOffset, StackPanelSecrets);
 
 				ToolTipCardBlock.Visibility = Config.Instance.OverlaySecretToolTipsOnly ? Visible : visibility;
