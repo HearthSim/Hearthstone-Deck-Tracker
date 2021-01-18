@@ -145,12 +145,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						var card = cards.GetItemAt(cardIndex) as AnimatedCard;
 						if(card == null)
 							return;
-						Console.WriteLine("mouse over " + card.Name);
-
+						ToolTipCardBlock.SetCardId(card.Card.Id);
 						//offset is affected by scaling
 						var cardListPos = cardList.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-						var topOffset = cardListPos.Y + cardIndex * cardSize * AutoScaling;
-
+						var topOffset = cardListPos.Y + cardIndex * cardSize * AutoScaling - ToolTipCardBlock.ActualHeight / 2;
+						topOffset = Math.Max(0, topOffset);
 						//prevent tooltip from going outside of the overlay
 						if(topOffset + ToolTipCardBlock.ActualHeight > Height)
 							topOffset = Height - ToolTipCardBlock.ActualHeight;
