@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		private string _cardImagePath = "Resources/faceless_manipulator.png";
+		private string _cardImagePath = null;
 		public string CardImagePath
 		{
 			get => _cardImagePath;
@@ -48,6 +48,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public async void SetCardId(string cardId)
 		{
 			CardId = cardId;
+			if(string.IsNullOrEmpty(cardId))
+			{
+				CardImagePath = null;
+				return;
+			}
 			if(!AssetDownloaders.cardImageDownloader.HasAsset(CardId))
 			{
 				await AssetDownloaders.cardImageDownloader.DownloadAsset(CardId);
