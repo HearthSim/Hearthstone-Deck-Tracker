@@ -23,14 +23,6 @@
                               VerticalAlignment="Top" Width="170"
                               SelectionChanged="ComboboxLanguages_SelectionChanged" />
                 </DockPanel>
-                <DockPanel Margin="0,5,0,0">
-                    <StackPanel>
-                        <Label Content="{lex:Loc Options_Tracker_General_Label_Secondary}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <Label Content="{lex:Loc Options_Tracker_General_Label_Tooltips}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                    </StackPanel>
-                    <ListBox x:Name="ListBoxAlternativeLanguages" Height="120" Width="170"
-                             HorizontalAlignment="Right" />
-                </DockPanel>
                 <CheckBox Name="CheckBoxDefaultFont" Content="{lex:Loc Options_Tracker_General_CheckBox_Font}"
                           Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                           Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
