@@ -35,7 +35,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			{
 				Log.Error($"Could not create asset downloader to download card images: {e.Message}");
 			}
-
 		}
 	}
 }

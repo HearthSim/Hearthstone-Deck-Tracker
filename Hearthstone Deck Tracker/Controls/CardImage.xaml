@@ -26,6 +26,5 @@
               Width="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
               Height="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
               Source="{Binding CardImagePath, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant"/>
-
     </Grid>
 </UserControl>

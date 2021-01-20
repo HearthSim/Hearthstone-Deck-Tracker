@@ -2,9 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Animation;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 
 namespace Hearthstone_Deck_Tracker.Controls

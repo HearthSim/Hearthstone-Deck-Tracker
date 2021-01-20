@@ -4,7 +4,6 @@ using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
-using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 #endregion
