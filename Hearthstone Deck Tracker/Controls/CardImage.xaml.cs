@@ -47,6 +47,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public async void SetCardId(string cardId)
 		{
+			if(cardId == CardId)
+				return;
 			CardId = cardId;
 			if(string.IsNullOrEmpty(cardId))
 			{
@@ -58,6 +60,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				await AssetDownloaders.cardImageDownloader.DownloadAsset(CardId);
 			}
 			CardImagePath = AssetDownloaders.cardImageDownloader.StoragePathFor(CardId);
+			(FindResource("StoryboardExpand") as Storyboard)?.Begin();
 		}
 	}
 }

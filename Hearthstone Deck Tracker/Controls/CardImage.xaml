@@ -8,8 +8,23 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
              d:DesignHeight="256" d:DesignWidth="256">
-        <Grid>
-            <Image HorizontalAlignment="Center" Margin="0 12 0 0" Width="256" Height="388" Source="{Binding CardImagePath, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant">
-            </Image>
-        </Grid>
+    <UserControl.Resources>
+        <Storyboard x:Key="StoryboardExpand">
+            <DoubleAnimation Storyboard.TargetName="CardImageGrid" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1" From="0" />
+            <DoubleAnimation Storyboard.TargetName="CardImageGrid" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1" From="0" />
+        </Storyboard>
+        <controls:CardImageSizeConverter x:Key="CardImageSizeConverter"/>
+    </UserControl.Resources>
+    <Grid x:Name="CardImageGrid" RenderTransformOrigin="0.5,0.5"
+         Width="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
+         Height="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}">
+        <Grid.RenderTransform>
+            <ScaleTransform/>
+        </Grid.RenderTransform>
+        <Image x:Name="CardImageDisplay" HorizontalAlignment="Center" Margin="0 12 0 0"
+              Width="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
+              Height="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
+              Source="{Binding CardImagePath, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant"/>
+
+    </Grid>
 </UserControl>

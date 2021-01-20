@@ -4,12 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
-             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com" xmlns:converters="clr-namespace:Hearthstone_Deck_Tracker.Controls.Stats.Converters"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </UserControl.Resources>
     <StackPanel>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_CardLanguage}">
             <StackPanel>
@@ -57,6 +60,13 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxTrackerCardToolTips_Checked"
                   Unchecked="CheckboxTrackerCardToolTips_Unchecked" />
+        <CheckBox x:Name="CheckboxShowLargeCardImages" Content="Show Large Card Images"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  IsChecked="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}}"/>
+        <CheckBox x:Name="CheckboxDownloadHiResolutionCardImages" Content="Use High Resolution Card Images"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  IsChecked="{Binding Path=CardImageConfigs.UseHighResolutionCardImages, Source={StaticResource ConfigWrapper}}"
+                  IsEnabled="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}, Converter={StaticResource InverseBooleanConverter}}"/>
         <CheckBox x:Name="CheckboxShowMyGamesPanel"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"

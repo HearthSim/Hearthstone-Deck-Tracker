@@ -735,6 +735,11 @@ namespace Hearthstone_Deck_Tracker
 		[XmlArray(ElementName = "AlternativeLanguages")]
 		[XmlArrayItem(ElementName = "Language")]
 		public List<string> AlternativeLanguages = new List<string>();
+		[DefaultValue(false)]
+		public bool LargeCardImages = false;
+
+		[DefaultValue(false)]
+		public bool HighResolutionCardImages = false;
 
 		[DefaultValue(GameMode.All)]
 		public GameMode SelectedStatsFilterGameMode = GameMode.All;

@@ -265,6 +265,7 @@
     <Compile Include="Controls\Information\TwitchExtensionInfo.xaml.cs">
       <DependentUpon>TwitchExtensionInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CardImageSizeConverter.cs" />
     <Compile Include="Controls\OAuthLogin.xaml.cs">
       <DependentUpon>OAuthLogin.xaml</DependentUpon>
     </Compile>
