@@ -30,5 +30,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 			var card = DataContext as Hearthstone.Card;
 			return card?.Id;
 		}
+
+		private void Rectangle_ToolTipClosing(object sender, System.Windows.Controls.ToolTipEventArgs e)
+		{
+			TooltipCardImage.SetCardId(null);
+		}
 	}
 }
