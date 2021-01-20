@@ -1,6 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Media.Animation;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 
 namespace Hearthstone_Deck_Tracker.Controls
@@ -28,6 +32,28 @@ namespace Hearthstone_Deck_Tracker.Controls
 			set
 			{
 				_cardImagePath = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private string _createdByText = "";
+		public string CreatedByText
+		{
+			get => _createdByText;
+			set
+			{
+				_createdByText = value;
+				OnPropertyChanged();
+			}
+		}
+
+		private Visibility _createdByVisibility = Visibility.Visible;
+		public Visibility CreatedByVisibility
+		{
+			get => _createdByVisibility;
+			set
+			{
+				_createdByVisibility = value;
 				OnPropertyChanged();
 			}
 		}

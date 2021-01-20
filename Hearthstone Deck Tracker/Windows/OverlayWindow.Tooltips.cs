@@ -36,13 +36,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 				relativeCardMark.FirstOrDefault(
 												x =>
 												x.Label.IsVisible && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight, new Thickness(3, 1, 7, 1)));
+			
+			ToolTipCardBlock.CreatedByVisibility = Collapsed;
 			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
 			{
 				var index = _cardMarks.IndexOf(cardMark.Label);
 				var card = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == index + 1 && x.HasCardId && !x.Info.Hidden)?.Card;
 				var creatorCard = _cardMarks[index].SourceCard;
-				if(card != null || creatorCard != null)
+				if(card == null && creatorCard != null)
 				{
+					ToolTipCardBlock.CreatedByVisibility = Visible;
+					ToolTipCardBlock.CreatedByText = $"Created By {creatorCard.Name}";
+					ToolTipCardBlock.SetCardId(creatorCard.Id);
 					var offset = _cardMarks[index].ActualHeight * 1.25;
 					var topOffset = Canvas.GetTop(_cardMarks[index]) + offset;
 					var leftOffset = Canvas.GetLeft(_cardMarks[index]) + offset;
@@ -170,6 +175,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			else
 			{
+				ToolTipCardBlock.SetCardId("");
 				ToolTipCardBlock.Visibility = Hidden;
 				HideAdditionalToolTips();
 			}
