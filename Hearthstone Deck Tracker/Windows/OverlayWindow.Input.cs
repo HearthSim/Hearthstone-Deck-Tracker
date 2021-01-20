@@ -339,11 +339,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (!PointInsideControl(StackPanelSecrets.PointFromScreen(mousePos), StackPanelSecrets.ActualWidth, StackPanelSecrets.ActualHeight))
 				return;
 
-			//var card = ToolTipCard.DataContext as Card;
-			//if (card == null)
-			//	return;
+			if (string.IsNullOrEmpty(ToolTipCardBlock.CardId))
+				return;
 
-			//_game.SecretsManager.Toggle(card.Id);
+			_game.SecretsManager.Toggle(ToolTipCardBlock.CardId);
 		}
 
 		private async void HideCardsWhenFriendsListOpen(Point clickPos)
