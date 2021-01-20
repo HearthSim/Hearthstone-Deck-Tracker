@@ -20,21 +20,21 @@ namespace HDTTests.ImageDownloading
 		[ExpectedException(typeof(ArgumentException))]
 		public void AssetDownloader_FailsWhenInitializedToInvalidPath()
 		{
-			AssetDownloader assetDownloader = new AssetDownloader("", null, null);
+			AssetDownloader assetDownloader = new AssetDownloader("", "", null, null);
 			Assert.Fail();
 		}
 
 		[TestMethod]
 		public void AssetDownloader_GeneratesCorrectFileLocation()
 		{
-			AssetDownloader assetDownloader = new AssetDownloader(Path.GetTempPath(), null, (string cardId) => $"{cardId}.jpg");
+			AssetDownloader assetDownloader = new AssetDownloader(Path.GetTempPath(), "jpg", null, (string cardId) => $"{cardId}");
 			Assert.AreEqual(Path.Combine(Path.GetTempPath(), "testFile.jpg"), assetDownloader.StoragePathFor("testFile"));
 		}
 
 		[TestMethod]
 		public void AssetDownloader_ReturnsTrueIfImageExists()
 		{
-			var assetDownloader = new AssetDownloader(Path.GetTempPath(), "https://art.hearthstonejson.com/v1/256x", (string cardId) => $"{cardId}.jpg");
+			var assetDownloader = new AssetDownloader(Path.GetTempPath(), "jpg", "https://art.hearthstonejson.com/v1/256x", (string cardId) => $"{cardId}");
 			var awaiting = assetDownloader.DownloadAsset(WispCardId);
 			Task.WaitAny(awaiting, Task.Delay(10000));
 			Assert.IsTrue(awaiting.Result);
@@ -43,7 +43,7 @@ namespace HDTTests.ImageDownloading
 		[TestMethod]
 		public void AssetDownloader_ReturnsTrueIfImageDoesNotExist()
 		{
-			var assetDownloader = new AssetDownloader(Path.GetTempPath(), "https://art.hearthstonejson.com/v1/256x", (string cardId) => $"{cardId}.jpg");
+			var assetDownloader = new AssetDownloader(Path.GetTempPath(), "jpg", "https://art.hearthstonejson.com/v1/256x", (string cardId) => $"{cardId}");
 			var awaiting = assetDownloader.DownloadAsset("");
 			Task.WaitAny(awaiting, Task.Delay(10000));
 			Assert.IsFalse(awaiting.Result);

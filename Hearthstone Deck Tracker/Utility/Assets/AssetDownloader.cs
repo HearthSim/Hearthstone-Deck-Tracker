@@ -18,17 +18,28 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		private Func<string, string> _keyConverter;
 		private List<string> _succesfullyDownloadedImages = new List<string>();
 		private Dictionary<string, Task<bool>> _inProcessDownloads = new Dictionary<string, Task<bool>>();
+		private long? _maxSize = null;
+		private bool UseLRUCache => _maxSize != null;
+		private string LRUCacheXMLPath => Path.Combine(_storageDestiniation, "Cache.xml");
+		private List<string> _lRUCache = new List<string>();
+
 
 		/// <exception cref="ArgumentException">Thrown when directory cannot be accessed or created.</exception>
 		/// <param name="storageDestination">Destination for assets to be stored.</param>
 
-		public AssetDownloader(string storageDestination, string url, string fileExtension, Func<string, string> keyConverter)
+		public AssetDownloader(string storageDestination, string url, string fileExtension, Func<string, string> keyConverter, long? maxSize = null)
 		{
 			_storageDestiniation = storageDestination;
 			_inProgressDestination = Path.Combine(storageDestination, "_inProgress");
 			_url = url;
 			_fileExtension = fileExtension;
 			_keyConverter = keyConverter;
+			_maxSize = maxSize;
+			if(UseLRUCache)
+			{
+				if(File.Exists(LRUCacheXMLPath))
+					_lRUCache = XmlManager<List<string>>.Load(LRUCacheXMLPath);
+			}
 			TryCreateDirectory(_storageDestiniation);
 			TryCreateDirectory(_inProgressDestination);
 			TryCleanDirectory(_inProgressDestination, true);
@@ -40,6 +51,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			TryCleanDirectory(_inProgressDestination, true);
 			TryCleanDirectory(_storageDestiniation, false);
 			_succesfullyDownloadedImages.Clear();
+			_lRUCache.Clear();
+			SerializeLRUCache();
 		}
 
 		void TryCreateDirectory(string path)
@@ -86,8 +99,51 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 		}
 
+		private void TryDeleteFile(string fileKey)
+		{
+			var directory = new DirectoryInfo(_storageDestiniation);
+			var file = directory.GetFiles().FirstOrDefault(x => x.Name == $"{fileKey}.{_fileExtension}");
+			if(file != null)
+			{
+				try
+				{
+					file.Delete();
+					_lRUCache.Remove(fileKey);
+					_succesfullyDownloadedImages.Remove(fileKey);
+				}
+				catch(IOException)
+				{
+					
+				}
+				catch(Exception e)
+				{
+					Log.Error($"Could not delete file {file.Name}: {e.Message}");
+				}
+			}
+		}
+
+		private void ManageLRUCache()
+		{
+			if(UseLRUCache)
+			{
+				try
+				{
+					if(_lRUCache.Count > _maxSize)
+					{
+						_lRUCache.GetRange((int)_maxSize.Value, _lRUCache.Count - (int)_maxSize.Value).ForEach(TryDeleteFile);
+					}
+					SerializeLRUCache();
+				}
+				catch(Exception ex)
+				{
+
+				}
+			}
+		}
+
 		public Task<bool> DownloadAsset(string fileKey)
 		{
+			ManageLRUCache();
 			if(_inProcessDownloads.TryGetValue(fileKey, out var inProgressDownload))
 				return inProgressDownload;
 			Log.Info($"Starting download for {fileKey}.");
@@ -149,7 +205,25 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 
 		private bool AssetDownloadStartedOrFinished(string fileName) => _succesfullyDownloadedImages.Contains(fileName) || _inProcessDownloads.ContainsKey(fileName);
 
-		public string StoragePathFor(string fileKey) => Path.Combine(_storageDestiniation, $"{fileKey}.{_fileExtension}");
+		public string StoragePathFor(string fileKey)
+		{
+			_lRUCache.Remove(fileKey);
+			_lRUCache.Insert(0, fileKey);
+			return Path.Combine(_storageDestiniation, $"{fileKey}.{_fileExtension}");
+		}
+
+		private int _serializeLRUTracker = 0;
+		private async void SerializeLRUCache()
+		{
+			
+			var initialValue = ++_serializeLRUTracker;
+			await Task.Delay(500);
+			if(initialValue == _serializeLRUTracker)
+			{
+				_serializeLRUTracker = 0;
+				XmlManager<List<string>>.Save(LRUCacheXMLPath, _lRUCache);
+			}
+		}
 
 		private string InProgressPathFor(string fileKey) => Path.Combine(_inProgressDestination, $"{fileKey}.{_fileExtension}");
 
