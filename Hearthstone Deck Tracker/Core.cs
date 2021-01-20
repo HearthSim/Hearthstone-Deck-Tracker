@@ -114,7 +114,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.CheckForDevUpdates && !Config.Instance.AllowDevUpdates.HasValue)
 					MainWindow.ShowDevUpdatesMessage();
 #endif
-				CheckHearthdbVersion();
+				CheckForHearthstoneUpdate();
 			}
 			DataIssueResolver.Run();
 
@@ -173,7 +173,7 @@ namespace Hearthstone_Deck_Tracker
 			);
 		}
 
-		private static void CheckHearthdbVersion()
+		private static void CheckForHearthstoneUpdate()
 		{
 			try
 			{
@@ -188,6 +188,20 @@ namespace Hearthstone_Deck_Tracker
 			catch(Exception ex)
 			{
 				Log.Error($"Could not check for updated HearthDB version: {ex}");
+			}
+			try
+			{
+				var hearthDbVersion = HearthDb.Info.HearthDbVersion.ToString();
+				if(RemoteConfig.Instance?.Data?.UpdateInfo?.Version != Config.Instance.RemoteHearthstoneVersion)
+				{
+					AssetDownloaders.cardImageDownloader.ClearStorage();
+					Config.Instance.RemoteHearthstoneVersion = RemoteConfig.Instance?.Data?.UpdateInfo?.Version;
+					Config.Save();
+				}
+			}
+			catch(Exception ex)
+			{
+				Log.Error($"Could not check for updated remote Hearthstone version: {ex}");
 			}
 		}
 

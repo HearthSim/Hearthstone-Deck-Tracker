@@ -284,6 +284,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string HearthdbVersion = "";
 
+		[DefaultValue("")]
+		public string RemoteHearthstoneVersion = "";
+
 		[DefaultValue(null)]
 		public DateTime? CustomDisplayedTimeFrame = null;
 
