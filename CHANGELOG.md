@@ -1,3 +1,8 @@
+## **Release v1.13.22 - 2021-01-21**
+**Updated for Hearthstone 19.4.0.71003**
+**New**
+- Added an indicator for how long Battlegrounds Opponents have been dead.
+
 ## **Release v1.13.21 - 2021-01-08**
 **Updated for Hearthstone 19.2.1.70828**
 **Fixes**
