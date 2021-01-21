@@ -34,14 +34,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				relativeCardMark.FirstOrDefault(
 												x =>
 												x.Label.IsVisible && PointInsideControl(x.Pos, x.Label.ActualWidth, x.Label.ActualHeight, new Thickness(3, 1, 7, 1)));
-			
+
 			ToolTipCardBlock.CreatedByVisibility = Collapsed;
 			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
 			{
 				var index = _cardMarks.IndexOf(cardMark.Label);
 				var card = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == index + 1 && x.HasCardId && !x.Info.Hidden)?.Card;
 				var creatorCard = _cardMarks[index].SourceCard;
-				if(card == null && creatorCard != null)
+				if(card != null || creatorCard != null)
 				{
 					ToolTipCardBlock.CreatedByVisibility = Visible;
 					ToolTipCardBlock.CreatedByText = $"Created By {creatorCard.Name}";
@@ -120,7 +120,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(StackPanelSecrets) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100 - ToolTipCardBlock.ActualHeight / 2;
 				var card = StackPanelSecrets.Children.Cast<Controls.Card>().ElementAt(cardIndex);
-				ToolTipCardBlock.SetCardId(card.CardId());
+				ToolTipCardBlock.SetCardId(card.CardId);
 				//prevent tooltip from going outside of the overlay
 				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
 					topOffset = Height - ToolTipCardBlock.ActualHeight;

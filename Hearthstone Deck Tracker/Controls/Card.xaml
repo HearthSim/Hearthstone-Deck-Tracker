@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
-             xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Rectangle Fill="{Binding Background}" Height="34" Width="217" ToolTipService.ShowOnDisabled="True" ToolTipService.ShowDuration="60000"

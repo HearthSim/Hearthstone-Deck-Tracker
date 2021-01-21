@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			internal class UpdateData
 			{
 				[JsonProperty("image_update_hearthstone_version")]
-				public string Version { get; set; }
+				public int Version { get; set; }
 			}
 		}
 	}

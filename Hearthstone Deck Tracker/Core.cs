@@ -26,6 +26,7 @@ using Hearthstone_Deck_Tracker.Utility.Themes;
 using Hearthstone_Deck_Tracker.Utility.Updating;
 using WPFLocalizeExtension.Engine;
 using Hearthstone_Deck_Tracker.Utility.Assets;
+using static Hearthstone_Deck_Tracker.Utility.RemoteConfig;
 
 #endregion
 
@@ -151,6 +152,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			LogWatcherManger.Start(Game).Forget();
 
+			RemoteConfig.Instance.Loaded += (ConfigData data) => CheckForCardImageUpdate();
 			RemoteConfig.Instance.Load();
 			HotKeyManager.Load();
 
@@ -189,13 +191,17 @@ namespace Hearthstone_Deck_Tracker
 			{
 				Log.Error($"Could not check for updated HearthDB version: {ex}");
 			}
+		}
+
+		private static void CheckForCardImageUpdate()
+		{
 			try
 			{
 				var hearthDbVersion = HearthDb.Info.HearthDbVersion.ToString();
 				if(RemoteConfig.Instance?.Data?.UpdateInfo?.Version != Config.Instance.RemoteHearthstoneVersion)
 				{
 					AssetDownloaders.cardImageDownloader.ClearStorage();
-					Config.Instance.RemoteHearthstoneVersion = RemoteConfig.Instance?.Data?.UpdateInfo?.Version;
+					Config.Instance.RemoteHearthstoneVersion = RemoteConfig.Instance?.Data?.UpdateInfo?.Version ?? 0;
 					Config.Save();
 				}
 			}

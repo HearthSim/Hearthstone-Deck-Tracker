@@ -69,20 +69,23 @@ namespace Hearthstone_Deck_Tracker.Controls
 			InitializeComponent();
 		}
 
-		public async void SetCardId(string cardId)
+		public async void SetCardId(string newCardId)
 		{
-			if(cardId == CardId)
+			if(newCardId == CardId)
 				return;
-			CardId = cardId;
-			if(string.IsNullOrEmpty(cardId))
+			CardId = newCardId;
+			if(string.IsNullOrEmpty(newCardId))
 			{
 				CardImagePath = null;
 				return;
 			}
 			if(!AssetDownloaders.cardImageDownloader.HasAsset(CardId))
 			{
+				CardImagePath = null;
 				await AssetDownloaders.cardImageDownloader.DownloadAsset(CardId);
 			}
+			if(newCardId != CardId)
+				return;
 			CardImagePath = AssetDownloaders.cardImageDownloader.StoragePathFor(CardId);
 			(FindResource("StoryboardExpand") as Storyboard)?.Begin();
 		}
