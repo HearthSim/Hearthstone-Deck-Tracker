@@ -315,6 +315,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Paladin.HiddenWisdom);
 			}
 
+			if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN) >= 2)
+				exclude.Add(Rogue.Shenanigans);
+
+
 			if(entity.IsSpell)
 			{
 				_triggeredSecrets.Clear();

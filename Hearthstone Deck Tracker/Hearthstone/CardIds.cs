@@ -190,6 +190,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static string Evasion => Collectible.Rogue.Evasion;
 				public static string Plagiarize => Collectible.Rogue.Plagiarize;
 				public static string ShadowClone => Collectible.Rogue.ShadowClone;
+				public static string Shenanigans => Collectible.Rogue.Shenanigans;
 				public static string SuddenBetrayal => Collectible.Rogue.SuddenBetrayal;
 			}
 		}

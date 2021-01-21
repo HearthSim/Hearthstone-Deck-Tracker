@@ -427,6 +427,26 @@ namespace HDTTests.Hearthstone.Secrets
 			VerifySecrets(3, RogueSecrets.All);
 		}
 
+		[TestMethod]
+		public void SingleSecret_OpponentDrawsTwoCards_ShenanigansTriggered()
+		{
+			_heroOpponent.SetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN, 2);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All, RogueSecrets.Shenanigans);
+		}
+
+		[TestMethod]
+		public void SingleSecret_OpponentDrawsOneCard_ShenanigansNotTriggered()
+		{
+			_heroOpponent.SetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN, 1);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
 		//[TestMethod]
 		//public void SingleSecret_OpponentTurnStart_OpponentTookNoDamage_RiggedFaireGameTriggered()
 		//{
