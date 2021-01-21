@@ -53,9 +53,25 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxTrackerCardToolTips_Checked"
                   Unchecked="CheckboxTrackerCardToolTips_Unchecked" />
-        <Slider x:Name="SliderCardImageSize"
-                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
-                  IsChecked="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}}"/>
+        <DockPanel Margin="5,5,5,0" Height="26">
+            <Slider x:Name="SliderCardImageSize" Margin="0,5,5,0" VerticalAlignment="Center" Value="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}}"
+                    Width="170"
+                    DockPanel.Dock="Right"
+                    Maximum="2"
+                    Minimum=".75"
+                    Ticks=".75, 1, 1.25, 1.5, 1.75, 2"
+                    SmallChange=".25"
+                    LargeChange=".25"
+                    TickPlacement="BottomRight"
+                    IsSnapToTickEnabled="True"/>
+            <Label Content="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}}"
+                   HorizontalAlignment="Right" Margin="5,2,0,0"
+                   VerticalAlignment="Center" DockPanel.Dock="Right"
+                   Width="40"/>
+            <Label Content="{lex:Loc Options_Overlay_General_Label_Opacity}"
+                   HorizontalAlignment="Left" Margin="0,2,0,0"
+                   VerticalAlignment="Center" DockPanel.Dock="Left" />
+        </DockPanel>
         <CheckBox x:Name="CheckboxDownloadHiResolutionCardImages" Content="Use High Resolution Card Images"
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   IsChecked="{Binding Path=CardImageConfigs.UseHighResolutionCardImages, Source={StaticResource ConfigWrapper}}"

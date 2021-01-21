@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			if(!(parameter is CardImageSizeType))
 				return null;
 			var size = (CardImageSizeType)parameter == CardImageSizeType.Width ? 256 : 388;
-			return ((bool)value ? 2 : 1) * size;
+			return (double)value * size;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

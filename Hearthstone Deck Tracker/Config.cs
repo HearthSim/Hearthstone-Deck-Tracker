@@ -739,7 +739,7 @@ namespace Hearthstone_Deck_Tracker
 		public string SelectedLanguage = "enUS";
 
 		[DefaultValue(1)]
-		public double LargeCardImages = 1;
+		public double CardImageSize = 1;
 
 		[DefaultValue(false)]
 		public bool HighResolutionCardImages = false;

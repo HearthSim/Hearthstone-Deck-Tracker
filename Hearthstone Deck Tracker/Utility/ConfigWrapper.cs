@@ -461,13 +461,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 	public class CardImageConfigs : ViewModel
 	{
 		public event Action CardResolutionChanged;
-		public bool UseLargeCardImages
+		public double CardImageSize
 		{
-			get => Config.Instance.LargeCardImages;
+			get => Config.Instance.CardImageSize;
 			set
 			{
-				Config.Instance.LargeCardImages = value;
-				if(value)
+				Config.Instance.CardImageSize = value;
+				if(value > 1)
 					UseHighResolutionCardImages = true;
 				Config.Save();
 				OnPropertyChanged();
