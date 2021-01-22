@@ -169,6 +169,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					ToolTipCardBlock.Visibility = Hidden;
 					HideAdditionalToolTips();
+					ToolTipCardBlock.SetCardIdFromCard(null);
 				}
 			}
 			else
