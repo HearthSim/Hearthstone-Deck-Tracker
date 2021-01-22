@@ -22,9 +22,15 @@
             <ScaleTransform/>
         </Grid.RenderTransform>
         <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="CreatedByInfo" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding CreatedByVisibility}" Text="{Binding CreatedByText}" FontSize="16"/>
+        <Image HorizontalAlignment="Center" Margin="0 12 0 0"
+              Width="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
+              Height="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
+              Source="{Binding LoadingImageSource, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant">
+        </Image>
         <Image x:Name="CardImageDisplay" HorizontalAlignment="Center" Margin="0 12 0 0"
               Width="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
               Height="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
-              Source="{Binding CardImagePath, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant"/>
+              Source="{Binding CardImagePath, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant">
+        </Image>
     </Grid>
 </UserControl>

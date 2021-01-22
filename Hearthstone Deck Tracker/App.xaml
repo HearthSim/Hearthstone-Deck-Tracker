@@ -56,7 +56,10 @@
                     <ImageSource x:Key="XPFullBar">Resources/xp_filled_bar.png</ImageSource>
                     <ImageSource x:Key="XPEmptyBar">Resources/xp_empty_bar.png</ImageSource>
                     <ImageSource x:Key="XPGem">Resources/xp_gem.png</ImageSource>
-                    
+                    <ImageSource x:Key="LoadingHero">Resources/Loading/loading_hero.png</ImageSource>
+                    <ImageSource x:Key="LoadingMinion">Resources/Loading/loading_minion.png</ImageSource>
+                    <ImageSource x:Key="LoadingSpell">Resources/Loading/loading_spell.png</ImageSource>
+                    <ImageSource x:Key="LoadingWeapon">Resources/Loading/loading_weapon.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

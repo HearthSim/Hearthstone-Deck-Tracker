@@ -1681,6 +1681,10 @@
     <Resource Include="Resources\tier-glow.png" />
     <Resource Include="Resources\tier-x.png" />
     <Resource Include="Resources\bgs-toast-background.jpg" />
+    <Resource Include="Resources\Loading\loading_hero.png" />
+    <Resource Include="Resources\Loading\loading_minion.png" />
+    <Resource Include="Resources\Loading\loading_spell.png" />
+    <Resource Include="Resources\Loading\loading_weapon.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
