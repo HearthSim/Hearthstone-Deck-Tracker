@@ -299,6 +299,7 @@
     <Compile Include="Controls\StartHearthstoneButton.xaml.cs">
       <DependentUpon>StartHearthstoneButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Converters\CardImageSizeBooleanConverter.cs" />
     <Compile Include="Controls\StatusIndicator.xaml.cs">
       <DependentUpon>StatusIndicator.xaml</DependentUpon>
     </Compile>

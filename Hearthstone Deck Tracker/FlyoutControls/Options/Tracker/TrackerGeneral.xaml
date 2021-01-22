@@ -13,6 +13,7 @@
              d:DesignHeight="500" d:DesignWidth="300">
     <UserControl.Resources>
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <converters:CardImageSizeBooleanConverter x:Key="CardImageSizeBooleanConverter" />
     </UserControl.Resources>
     <StackPanel>
         <GroupBox Header="{lex:LocTextUpper Options_Tracker_General_Label_CardLanguage}">
@@ -75,7 +76,8 @@
         <CheckBox x:Name="CheckboxDownloadHiResolutionCardImages" Content="Use High Resolution Card Images"
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   IsChecked="{Binding Path=CardImageConfigs.UseHighResolutionCardImages, Source={StaticResource ConfigWrapper}}"
-                  IsEnabled="{Binding Path=CardImageConfigs.UseLargeCardImages, Source={StaticResource ConfigWrapper}, Converter={StaticResource InverseBooleanConverter}}"/>
+                  IsEnabled="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeBooleanConverter}}"/>
+        
         <CheckBox x:Name="CheckboxShowMyGamesPanel"
                   Foreground="{Binding Color, Source={x:Static options:AdvancedOptions.Instance}}"
                   Visibility="{Binding Visibility, Source={x:Static options:AdvancedOptions.Instance}}"
