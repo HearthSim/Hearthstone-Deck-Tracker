@@ -7,8 +7,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 {
 	public static class AssetDownloaders
 	{
-		public static AssetDownloader cardPortraitDownloader;
-		public static AssetDownloader cardImageDownloader;
+		public static AssetDownloader<string> cardPortraitDownloader;
+		public static AssetDownloader<Hearthstone.Card> cardImageDownloader;
 		private static bool _initialized = false;
 		public static void SetupAssetDownloaders()
 		{
@@ -17,7 +17,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			_initialized = true;
 			try
 			{
-				cardPortraitDownloader = new AssetDownloader(Path.Combine(Config.AppDataPath, "Images", "CardPortraits"), new List<string>() { "https://art.hearthstonejson.com/v1/256x" }, "jpg", (string cardId) => $"{ cardId}");
+				cardPortraitDownloader = new AssetDownloader<string>(
+					Path.Combine(Config.AppDataPath, "Images", "CardPortraits"),
+					(string cardId) => $"https://art.hearthstonejson.com/v1/256x/{cardId}.jpg",
+					(string cardId) => $"{cardId}.jpg"
+				);
 			}
 			catch(ArgumentException e)
 			{
@@ -25,14 +29,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 			try
 			{
-				cardImageDownloader = new AssetDownloader(
+				cardImageDownloader = new AssetDownloader<Hearthstone.Card>(
 					Path.Combine(Config.AppDataPath, "Images", "CardImages"),
-					new List<string>() {
-						"https://art.hearthstonejson.com/v1/render/latest",
-						"https://art.hearthstonejson.com/v1/bgs/latest"
-					},
-					"png",
-					(string cardId) => $"{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}/{cardId}", 200);
+					(Hearthstone.Card card) => $"https://art.hearthstonejson.com/v1/{(card.BaconCard ? "bgs" : "render")}/latest" +
+					$"/{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}" +
+					$"/{card.Id}.png",
+					(Hearthstone.Card card) => $"{card.Id}.png",
+					200
+				);
 				ConfigWrapper.CardImageConfigs.CardResolutionChanged += () => cardImageDownloader.ClearStorage();
 			}
 			catch(ArgumentException e)

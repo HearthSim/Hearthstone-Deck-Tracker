@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media.Animation;
@@ -86,15 +87,28 @@ namespace Hearthstone_Deck_Tracker.Controls
 				CardImagePath = null;
 				return;
 			}
-			if(!AssetDownloaders.cardImageDownloader.HasAsset(CardId))
+			if(!AssetDownloaders.cardImageDownloader.HasAsset(card))
 			{
 				CardImagePath = null;
-				await AssetDownloaders.cardImageDownloader.DownloadAsset(CardId, card.BaconCard ? 1 : 0);
+				try
+				{
+					await AssetDownloaders.cardImageDownloader.DownloadAsset(card);
+				}
+				catch(ArgumentNullException)
+				{
+					return;
+				}
 			}
 			if(newCardId != CardId)
 				return;
-			CardImagePath = AssetDownloaders.cardImageDownloader.StoragePathFor(CardId);
-			(FindResource("StoryboardExpand") as Storyboard)?.Begin();
+			try
+			{
+				CardImagePath = AssetDownloaders.cardImageDownloader.StoragePathFor(card);
+				(FindResource("StoryboardExpand") as Storyboard)?.Begin();
+			}
+			catch(ArgumentNullException)
+			{
+			}
 		}
 	}
 }
