@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 						"https://art.hearthstonejson.com/v1/bgs/latest"
 					},
 					"png",
-					(string cardId) => $"{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}/{cardId}", 5);
+					(string cardId) => $"{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}/{cardId}", 200);
 				ConfigWrapper.CardImageConfigs.CardResolutionChanged += () => cardImageDownloader.ClearStorage();
 			}
 			catch(ArgumentException e)
