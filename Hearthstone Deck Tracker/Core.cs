@@ -152,7 +152,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			LogWatcherManger.Start(Game).Forget();
 
-			RemoteConfig.Instance.Loaded += (ConfigData data) => CheckForCardImageUpdate();
+			RemoteConfig.Instance.Loaded += CheckForCardImageUpdate;
 			RemoteConfig.Instance.Load();
 			HotKeyManager.Load();
 
@@ -193,15 +193,16 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private static void CheckForCardImageUpdate()
+		private static void CheckForCardImageUpdate(ConfigData rConfig)
 		{
 			try
 			{
 				var hearthDbVersion = HearthDb.Info.HearthDbVersion.ToString();
-				if(RemoteConfig.Instance?.Data?.UpdateInfo?.Version != Config.Instance.RemoteHearthstoneVersion)
+				var remoteVersion = rConfig?.UpdateInfo?.Version;
+				if(remoteVersion.HasValue && remoteVersion > Config.Instance.RemoteHearthstoneVersion)
 				{
 					AssetDownloaders.cardImageDownloader.ClearStorage();
-					Config.Instance.RemoteHearthstoneVersion = RemoteConfig.Instance?.Data?.UpdateInfo?.Version ?? 0;
+					Config.Instance.RemoteHearthstoneVersion = remoteVersion.Value;
 					Config.Save();
 				}
 			}
