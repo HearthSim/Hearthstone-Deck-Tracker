@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					ToolTipCardBlock.CreatedByVisibility = Visible;
 					ToolTipCardBlock.CreatedByText = $"Created By {creatorCard.Name}";
-					ToolTipCardBlock.SetCardId(creatorCard.Id);
+					ToolTipCardBlock.SetCardIdFromCard(creatorCard);
 					var offset = _cardMarks[index].ActualHeight * 1.25;
 					var topOffset = Canvas.GetTop(_cardMarks[index]) + offset;
 					var leftOffset = Canvas.GetLeft(_cardMarks[index]) + offset;
@@ -69,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					return;
 
 				var card = ListViewPlayer.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card;
-				ToolTipCardBlock.SetCardId(card.Id);
+				ToolTipCardBlock.SetCardIdFromCard(card);
 				var centeredListOffset = Config.Instance.OverlayCenterPlayerStackPanel ? (BorderStackPanelPlayer.ActualHeight - StackPanelPlayer.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(BorderStackPanelPlayer) + centeredListOffset
@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var topOffset = Canvas.GetTop(BorderStackPanelOpponent) + centeredListOffset
 								+ GetListViewOffset(StackPanelOpponent) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100 - ToolTipCardBlock.ActualHeight / 2;
 				var card = ListViewOpponent.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card;
-				ToolTipCardBlock.SetCardId(card.Id);
+				ToolTipCardBlock.SetCardIdFromCard(card);
 				//prevent tooltip from going outside of the overlay
 				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
 					topOffset = Height - ToolTipCardBlock.ActualHeight;
@@ -120,7 +120,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(StackPanelSecrets) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100 - ToolTipCardBlock.ActualHeight / 2;
 				var card = StackPanelSecrets.Children.Cast<Controls.Card>().ElementAt(cardIndex);
-				ToolTipCardBlock.SetCardId(card.CardId);
+				ToolTipCardBlock.SetCardIdFromCard(new Hearthstone.Card() { Id = card.CardId, BaconCard = false });
 				//prevent tooltip from going outside of the overlay
 				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
 					topOffset = Height - ToolTipCardBlock.ActualHeight;
@@ -148,7 +148,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						var card = cards.GetItemAt(cardIndex) as AnimatedCard;
 						if(card == null)
 							return;
-						ToolTipCardBlock.SetCardId(card.Card.Id);
+						ToolTipCardBlock.SetCardIdFromCard(card.Card);
 						//offset is affected by scaling
 						var cardListPos = cardList.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
 						var topOffset = cardListPos.Y + cardIndex * cardSize * AutoScaling - ToolTipCardBlock.ActualHeight / 2;
@@ -173,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			else
 			{
-				ToolTipCardBlock.SetCardId("");
+				ToolTipCardBlock.SetCardIdFromCard(null);
 				ToolTipCardBlock.Visibility = Hidden;
 				HideAdditionalToolTips();
 			}

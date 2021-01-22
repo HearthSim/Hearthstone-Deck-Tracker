@@ -69,8 +69,15 @@ namespace Hearthstone_Deck_Tracker.Controls
 			InitializeComponent();
 		}
 
-		public async void SetCardId(string newCardId)
+		public async void SetCardIdFromCard(Hearthstone.Card card)
 		{
+			if(card == null)
+			{
+				CardImagePath = null;
+				CardId = "";
+				return;
+			}
+			var newCardId = card.Id;
 			if(newCardId == CardId)
 				return;
 			CardId = newCardId;
@@ -82,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			if(!AssetDownloaders.cardImageDownloader.HasAsset(CardId))
 			{
 				CardImagePath = null;
-				await AssetDownloaders.cardImageDownloader.DownloadAsset(CardId);
+				await AssetDownloaders.cardImageDownloader.DownloadAsset(CardId, card.BaconCard ? 1 : 0);
 			}
 			if(newCardId != CardId)
 				return;

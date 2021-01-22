@@ -1,5 +1,6 @@
 ﻿using Hearthstone_Deck_Tracker.Utility.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Hearthstone_Deck_Tracker.Utility.Assets
@@ -16,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			_initialized = true;
 			try
 			{
-				cardPortraitDownloader = new AssetDownloader(Path.Combine(Config.AppDataPath, "Images", "CardPortraits"), "https://art.hearthstonejson.com/v1/256x", "jpg", (string cardId) => $"{ cardId}");
+				cardPortraitDownloader = new AssetDownloader(Path.Combine(Config.AppDataPath, "Images", "CardPortraits"), new List<string>() { "https://art.hearthstonejson.com/v1/256x" }, "jpg", (string cardId) => $"{ cardId}");
 			}
 			catch(ArgumentException e)
 			{
@@ -26,7 +27,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			{
 				cardImageDownloader = new AssetDownloader(
 					Path.Combine(Config.AppDataPath, "Images", "CardImages"),
-					"https://art.hearthstonejson.com/v1/render/latest",
+					new List<string>() {
+						"https://art.hearthstonejson.com/v1/render/latest",
+						"https://art.hearthstonejson.com/v1/bgs/latest"
+					},
 					"png",
 					(string cardId) => $"{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}/{cardId}", 5);
 				ConfigWrapper.CardImageConfigs.CardResolutionChanged += () => cardImageDownloader.ClearStorage();

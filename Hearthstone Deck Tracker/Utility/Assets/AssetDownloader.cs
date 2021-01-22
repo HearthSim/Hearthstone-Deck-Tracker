@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 	{
 		private string _storageDestiniation;
 		private string _inProgressDestination;
-		private string _url;
+		private List<string> _urls;
 		private string _fileExtension;
 		private Func<string, string> _keyConverter;
 		private List<string> _succesfullyDownloadedImages = new List<string>();
@@ -27,11 +27,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 		/// <exception cref="ArgumentException">Thrown when directory cannot be accessed or created.</exception>
 		/// <param name="storageDestination">Destination for assets to be stored.</param>
 
-		public AssetDownloader(string storageDestination, string url, string fileExtension, Func<string, string> keyConverter, long? maxSize = null)
+		public AssetDownloader(string storageDestination, List<string> urls, string fileExtension, Func<string, string> keyConverter, long? maxSize = null)
 		{
 			_storageDestiniation = storageDestination;
 			_inProgressDestination = Path.Combine(storageDestination, "_inProgress");
-			_url = url;
+			_urls = urls;
 			_fileExtension = fileExtension;
 			_keyConverter = keyConverter;
 			_maxSize = maxSize;
@@ -141,24 +141,24 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 		}
 
-		public Task<bool> DownloadAsset(string fileKey)
+		public Task<bool> DownloadAsset(string fileKey, int urlIndex = 0)
 		{
 			ManageLRUCache();
 			if(_inProcessDownloads.TryGetValue(fileKey, out var inProgressDownload))
 				return inProgressDownload;
 			Log.Info($"Starting download for {fileKey}.");
-			_inProcessDownloads[fileKey] = DownloadFileAsync(fileKey);
+			_inProcessDownloads[fileKey] = DownloadFileAsync(fileKey, urlIndex);
 			return _inProcessDownloads[fileKey];
 		}
 
-		private async Task<bool> DownloadFileAsync(string fileKey)
+		private async Task<bool> DownloadFileAsync(string fileKey, int urlIndex)
 		{
 			var inProgressPath = InProgressPathFor(fileKey);
 			try
 			{
 				using(WebClient client = new WebClient())
 				{
-					var downloadTask = client.DownloadFileTaskAsync($"{_url}/{_keyConverter(fileKey)}.{_fileExtension}", inProgressPath);
+					var downloadTask = client.DownloadFileTaskAsync($"{_urls[urlIndex]}/{_keyConverter(fileKey)}.{_fileExtension}", inProgressPath);
 					Log.Info($"Waiting to cleanup {fileKey}.");
 					return await CleanupDownload(fileKey, downloadTask, inProgressPath, StoragePathFor(fileKey));
 				}
