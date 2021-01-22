@@ -43,10 +43,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var creatorCard = _cardMarks[index].SourceCard;
 				if(card != null || creatorCard != null)
 				{
-					ToolTipCardBlock.CreatedByVisibility = Visible;
-					ToolTipCardBlock.CreatedByText = $"Created By {creatorCard.Name}";
-					ToolTipCardBlock.SetCardIdFromCard(creatorCard);
-					var offset = _cardMarks[index].ActualHeight * 1.25;
+					if(creatorCard != null)
+					{
+						ToolTipCardBlock.CreatedByText = $"Created By {creatorCard.Name}";
+						ToolTipCardBlock.CreatedByVisibility = Visible;
+					}
+					ToolTipCardBlock.SetCardIdFromCard(card ?? creatorCard);
+					var offset = _cardMarks[index].ActualHeight * 1.1;
 					var topOffset = Canvas.GetTop(_cardMarks[index]) + offset;
 					var leftOffset = Canvas.GetLeft(_cardMarks[index]) + offset;
 					Canvas.SetTop(ToolTipCardBlock, topOffset);
