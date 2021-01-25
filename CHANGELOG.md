@@ -1,3 +1,9 @@
+## **Release v1.13.23 - 2021-01-25**
+**New**
+- Upgraded cards in decklist to show full card images on hover
+**Fixes**
+- Fixed an issue where Shenanigans might be removed from possible secrets late
+
 ## **Release v1.13.22 - 2021-01-21**
 **Updated for Hearthstone 19.4.0.71003**
 **New**
