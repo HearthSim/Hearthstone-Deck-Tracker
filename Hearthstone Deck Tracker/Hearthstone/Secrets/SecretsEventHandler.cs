@@ -315,10 +315,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Paladin.HiddenWisdom);
 			}
 
-			if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN) >= 2)
-				exclude.Add(Rogue.Shenanigans);
-
-
 			if(entity.IsSpell)
 			{
 				_triggeredSecrets.Clear();
@@ -360,6 +356,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			}
 			else if(entity.IsMinion && Game.PlayerMinionCount > 3)
 				exclude.Add(Paladin.SacredTrial);
+
+			Exclude(exclude);
+		}
+
+		public void HandleCardDrawn(Entity entity)
+		{
+			if(!HandleAction)
+				return;
+
+			var exclude = new List<string>();
+
+			//Check against 1 because the tag hasn't been incremented by hs by the time this is getting called
+			if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN) >= 1)
+				exclude.Add(Rogue.Shenanigans);
 
 			Exclude(exclude);
 		}
