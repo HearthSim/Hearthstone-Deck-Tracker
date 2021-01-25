@@ -238,6 +238,9 @@
     <Compile Include="Controls\AnimatedCardList.xaml.cs">
       <DependentUpon>AnimatedCardList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CardImage.xaml.cs">
+      <DependentUpon>CardImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BattlegroundsMinion.xaml.cs">
       <DependentUpon>BattlegroundsMinion.xaml</DependentUpon>
     </Compile>
@@ -249,9 +252,6 @@
     </Compile>
     <Compile Include="Controls\EntityControl.xaml.cs">
       <DependentUpon>EntityControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\CardToolTipControl.xaml.cs">
-      <DependentUpon>CardToolTipControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeckImportingControl.xaml.cs">
       <DependentUpon>DeckImportingControl.xaml</DependentUpon>
@@ -265,6 +265,7 @@
     <Compile Include="Controls\Information\TwitchExtensionInfo.xaml.cs">
       <DependentUpon>TwitchExtensionInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CardImageSizeConverter.cs" />
     <Compile Include="Controls\OAuthLogin.xaml.cs">
       <DependentUpon>OAuthLogin.xaml</DependentUpon>
     </Compile>
@@ -298,6 +299,7 @@
     <Compile Include="Controls\StartHearthstoneButton.xaml.cs">
       <DependentUpon>StartHearthstoneButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Stats\Converters\CardImageSizeBooleanConverter.cs" />
     <Compile Include="Controls\StatusIndicator.xaml.cs">
       <DependentUpon>StatusIndicator.xaml</DependentUpon>
     </Compile>
@@ -968,6 +970,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\CardImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\BattlegroundsMinion.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -983,10 +989,6 @@
     <Page Include="Controls\EntityControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\CardToolTipControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeckImportingControl.xaml">
       <SubType>Designer</SubType>
@@ -1679,6 +1681,10 @@
     <Resource Include="Resources\tier-glow.png" />
     <Resource Include="Resources\tier-x.png" />
     <Resource Include="Resources\bgs-toast-background.jpg" />
+    <Resource Include="Resources\Loading\loading_hero.png" />
+    <Resource Include="Resources\Loading\loading_minion.png" />
+    <Resource Include="Resources\Loading\loading_spell.png" />
+    <Resource Include="Resources\Loading\loading_weapon.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

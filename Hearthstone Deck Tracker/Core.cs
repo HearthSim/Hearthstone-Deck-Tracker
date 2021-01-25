@@ -25,6 +25,8 @@ using MahApps.Metro.Controls.Dialogs;
 using Hearthstone_Deck_Tracker.Utility.Themes;
 using Hearthstone_Deck_Tracker.Utility.Updating;
 using WPFLocalizeExtension.Engine;
+using Hearthstone_Deck_Tracker.Utility.Assets;
+using static Hearthstone_Deck_Tracker.Utility.RemoteConfig;
 
 #endregion
 
@@ -113,6 +115,7 @@ namespace Hearthstone_Deck_Tracker
 				if(Config.Instance.CheckForDevUpdates && !Config.Instance.AllowDevUpdates.HasValue)
 					MainWindow.ShowDevUpdatesMessage();
 #endif
+				CheckForHearthstoneUpdate();
 			}
 			DataIssueResolver.Run();
 
@@ -149,6 +152,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			LogWatcherManger.Start(Game).Forget();
 
+			RemoteConfig.Instance.Loaded += CheckForCardImageUpdate;
 			RemoteConfig.Instance.Load();
 			HotKeyManager.Load();
 
@@ -156,6 +160,8 @@ namespace Hearthstone_Deck_Tracker
 				HearthstoneRunner.StartHearthstone().Forget();
 
 			HSReplayNetHelper.UpdateAccount().Forget();
+
+			AssetDownloaders.SetupAssetDownloaders();
 
 			Initialized = true;
 
@@ -167,6 +173,43 @@ namespace Hearthstone_Deck_Tracker
 				(int)(DateTime.UtcNow - _startUpTime).TotalSeconds,
 				PluginManager.Instance.Plugins.Count
 			);
+		}
+
+		private static void CheckForHearthstoneUpdate()
+		{
+			try
+			{
+				var hearthDbVersion = HearthDb.Info.HearthDbVersion.ToString();
+				if(hearthDbVersion != Config.Instance.HearthdbVersion)
+				{
+					AssetDownloaders.cardImageDownloader.ClearStorage();
+					Config.Instance.HearthdbVersion = hearthDbVersion;
+					Config.Save();
+				}
+			}
+			catch(Exception ex)
+			{
+				Log.Error($"Could not check for updated HearthDB version: {ex}");
+			}
+		}
+
+		private static void CheckForCardImageUpdate(ConfigData rConfig)
+		{
+			try
+			{
+				var hearthDbVersion = HearthDb.Info.HearthDbVersion.ToString();
+				var remoteVersion = rConfig?.UpdateInfo?.Version;
+				if(remoteVersion.HasValue && remoteVersion > Config.Instance.RemoteHearthstoneVersion)
+				{
+					AssetDownloaders.cardImageDownloader.ClearStorage();
+					Config.Instance.RemoteHearthstoneVersion = remoteVersion.Value;
+					Config.Save();
+				}
+			}
+			catch(Exception ex)
+			{
+				Log.Error($"Could not check for updated remote Hearthstone version: {ex}");
+			}
 		}
 
 		private static async Task ShowRestartRequiredMessageAsync()

@@ -145,14 +145,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Artist = dbCard.ArtistName;
 			Set = HearthDbConverter.SetConverter(dbCard.Set);
 			BaconCard = baconCard;
-			foreach(var altLangStr in Config.Instance.AlternativeLanguages)
-			{
-				if(Enum.TryParse(altLangStr, out Locale altLang))
-				{
-					AlternativeNames.Add(dbCard.GetLocName(altLang));
-					AlternativeTexts.Add(dbCard.GetLocText(altLang));
-				}
-			}
 			_loaded = true;
 		}
 

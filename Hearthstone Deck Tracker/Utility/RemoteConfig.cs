@@ -41,6 +41,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			[JsonProperty("bobs_buddy")]
 			public BobsBuddyData BobsBuddy { get; set; }
 
+			[JsonProperty("update_info")]
+			public UpdateData UpdateInfo { get; set; }
+
 			internal class NewsData
 			{
 				[JsonProperty("id")]
@@ -134,6 +137,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				[JsonProperty("log_lines_kept")]
 				public int LogLinesKept { get; set; }
+			}
+
+			internal class UpdateData
+			{
+				[JsonProperty("image_update_hearthstone_version")]
+				public int Version { get; set; }
 			}
 		}
 	}

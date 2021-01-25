@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -207,50 +208,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void ComboboxLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			var language = ComboboxLanguages.SelectedValue.ToString();
-			UpdateAlternativeLanguageList(language);
 
 			if(!_initialized)
 				return;
+
+			AssetDownloaders.cardImageDownloader.ClearStorage();
 
 			var selectedLanguage = Helper.LanguageDict[language];
 
 			Config.Instance.SelectedLanguage = selectedLanguage;
-			Config.Save();
-			RestartLabelVisibility = Visibility.Visible;
-		}
-
-		private void UpdateAlternativeLanguageList(string primaryLanguage)
-		{
-			ListBoxAlternativeLanguages.Items.Clear();
-			foreach(var pair in Helper.LanguageDict.Where(x => x.Key != "English (Great Britain)"))
-			{
-				var box = new CheckBox();
-				box.Content = pair.Key;
-				if(pair.Key == primaryLanguage)
-					box.IsEnabled = false;
-				else
-				{
-					box.IsChecked = Config.Instance.AlternativeLanguages.Contains(pair.Value);
-					box.Unchecked += CheckboxAlternativeLanguageToggled;
-					box.Checked += CheckboxAlternativeLanguageToggled;
-				}
-				ListBoxAlternativeLanguages.Items.Add(box);
-			}
-		}
-
-		private void CheckboxAlternativeLanguageToggled(object sender, RoutedEventArgs e)
-		{
-			if(!_initialized)
-				return;
-
-			var languages = new List<string>();
-			foreach(CheckBox box in ListBoxAlternativeLanguages.Items)
-			{
-				var language = (string)box.Content;
-				if(box.IsChecked == true)
-					languages.Add(Helper.LanguageDict[language]);
-			}
-			Config.Instance.AlternativeLanguages = languages;
 			Config.Save();
 			RestartLabelVisibility = Visibility.Visible;
 		}

@@ -38,15 +38,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static Card GetCardFromName(string name, bool localized = false, bool showErrorMessage = true, bool collectible = true)
 		{
 			var langs = new List<Locale> {Locale.enUS};
-			if(localized)
-			{
-				var selectedLangs = Config.Instance.AlternativeLanguages.Concat(new[] {Config.Instance.SelectedLanguage});
-				foreach(var selectedLang in selectedLangs)
-				{
-					if(Enum.TryParse(selectedLang, out Locale lang) && !langs.Contains(lang))
-						langs.Add(lang);
-				}
-			}
 			foreach(var lang in langs)
 			{
 				try

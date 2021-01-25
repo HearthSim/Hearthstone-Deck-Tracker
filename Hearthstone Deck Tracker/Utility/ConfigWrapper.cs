@@ -4,6 +4,7 @@ using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
 
 #endregion
 
@@ -418,6 +419,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public static CardImageConfigs CardImageConfigs	{get;} = new CardImageConfigs();
+
 		public bool WindowCardToolTips => Config.Instance.WindowCardToolTips;
 
 		private static int? ValidateSeason(string value, bool allowEmpty)
@@ -452,6 +455,35 @@ namespace Hearthstone_Deck_Tracker.Utility
 			else
 				throw new ApplicationException("Invalid rank");
 			return (legend ? "L" : "") + rank;
+		}
+	}
+
+	public class CardImageConfigs : ViewModel
+	{
+		public event Action CardResolutionChanged;
+		public double CardImageSize
+		{
+			get => Config.Instance.CardImageSize;
+			set
+			{
+				Config.Instance.CardImageSize = value;
+				if(value > 1)
+					UseHighResolutionCardImages = true;
+				Config.Save();
+				OnPropertyChanged();
+			}
+		}
+
+		public bool UseHighResolutionCardImages
+		{
+			get => Config.Instance.HighResolutionCardImages;
+			set
+			{
+				Config.Instance.HighResolutionCardImages = value;
+				CardResolutionChanged?.Invoke();
+				Config.Save();
+				OnPropertyChanged();
+			}
 		}
 	}
 }

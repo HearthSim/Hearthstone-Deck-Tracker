@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
@@ -14,6 +15,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 	/// </summary>
 	public partial class BattlegroundsMinion : INotifyPropertyChanged
 	{
+		const string PlaceholderImagePath = "Resources/faceless_manipulator.png";
 		public Visibility PoisonousVisibility { get; set; }
 
 		public Visibility DivineShieldVisibility { get; set; }
@@ -32,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public Visibility BorderVisibility { get; set; }
 
-		private string _cardImagePath = "Resources/faceless_manipulator.png";
+		private string _cardImagePath = PlaceholderImagePath;
 		public string CardImagePath
 		{
 			get => _cardImagePath;
@@ -78,11 +80,18 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		async void SetCardImage()
 		{
-			if(!AssetDownloaders.cardImageDownloader.HasAsset(_entity.CardId))
+			try
 			{
-				await AssetDownloaders.cardImageDownloader.DownloadAsset(_entity.CardId);
+				if(!AssetDownloaders.cardPortraitDownloader.HasAsset(_entity.CardId))
+				{
+					await AssetDownloaders.cardPortraitDownloader.DownloadAsset(_entity.CardId);
+				}
+				CardImagePath = AssetDownloaders.cardPortraitDownloader.StoragePathFor(_entity.CardId);
 			}
-			CardImagePath = AssetDownloaders.cardImageDownloader.StoragePathFor(_entity.CardId);
+			catch(ArgumentNullException)
+			{
+				CardImagePath = PlaceholderImagePath;
+			}
 		}
 
 		private void SetDisplayValues()

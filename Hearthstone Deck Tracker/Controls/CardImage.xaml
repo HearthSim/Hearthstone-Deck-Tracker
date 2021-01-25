@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.CardImage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             mc:Ignorable="d"
+             d:DesignHeight="256" d:DesignWidth="256">
+    <UserControl.Resources>
+        <Storyboard x:Key="StoryboardExpand">
+            <DoubleAnimation Storyboard.TargetName="CardImageGrid" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1" From="0" />
+            <DoubleAnimation Storyboard.TargetName="CardImageGrid" Duration="0:0:0.2" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1" From="0" />
+        </Storyboard>
+        <controls:CardImageSizeConverter x:Key="CardImageSizeConverter"/>
+    </UserControl.Resources>
+    <Grid x:Name="CardImageGrid" RenderTransformOrigin="0.5,0.5"
+         Width="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
+         Height="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}">
+        <Grid.RenderTransform>
+            <ScaleTransform/>
+        </Grid.RenderTransform>
+        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="CreatedByInfo" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding CreatedByVisibility}" Text="{Binding CreatedByText}" FontSize="16"/>
+        <Image HorizontalAlignment="Center" Margin="0 12 0 0"
+              Width="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
+              Height="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
+              Source="{Binding LoadingImageSource, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant">
+        </Image>
+        <Image x:Name="CardImageDisplay" HorizontalAlignment="Center" Margin="0 12 0 0"
+              Width="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Width}}"
+              Height="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
+              Source="{Binding CardImagePath, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant">
+        </Image>
+    </Grid>
+</UserControl>

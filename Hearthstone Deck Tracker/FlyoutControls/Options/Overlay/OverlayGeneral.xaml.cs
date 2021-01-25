@@ -35,10 +35,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SliderOverlayOpacity.Value = Config.Instance.OverlayOpacity;
 			CheckboxHideTimers.IsChecked = Config.Instance.HideTimers;
 			CheckboxOverlayCardToolTips.IsChecked = Config.Instance.OverlayCardToolTips;
-			CheckboxOverlayAdditionalCardToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
-			CheckboxOverlayAdditionalCardToolTips.IsChecked = Config.Instance.AdditionalOverlayTooltips;
-			CheckboxOverlaySetToolTips.IsEnabled = Config.Instance.OverlayCardToolTips;
-			CheckboxOverlaySetToolTips.IsChecked = Config.Instance.OverlaySetToolTips;
 			CheckboxAutoGrayoutSecrets.IsChecked = Config.Instance.AutoGrayoutSecrets;
 			CheckboxKeepDecksVisible.IsChecked = Config.Instance.KeepDecksVisible;
 			CheckBoxBatteryStatus.IsChecked = Config.Instance.ShowBatteryLife;
@@ -149,9 +145,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.OverlayCardToolTips = true;
-			CheckboxOverlayAdditionalCardToolTips.IsEnabled = true;
 			CheckboxOverlaySecretToolTipsOnly.IsEnabled = true;
-			CheckboxOverlaySetToolTips.IsEnabled = true;
 			SaveConfig(true);
 		}
 
@@ -160,12 +154,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.OverlayCardToolTips = false;
-			CheckboxOverlayAdditionalCardToolTips.IsChecked = false;
-			CheckboxOverlayAdditionalCardToolTips.IsEnabled = false;
 			CheckboxOverlaySecretToolTipsOnly.IsEnabled = false;
 			CheckboxOverlaySecretToolTipsOnly.IsChecked = false;
-			CheckboxOverlaySetToolTips.IsEnabled = false;
-			CheckboxOverlaySetToolTips.IsChecked = false;
 			SaveConfig(true);
 		}
 

@@ -9,28 +9,49 @@ using System.Threading.Tasks;
 
 namespace Hearthstone_Deck_Tracker.Utility.Assets
 {
-	public class AssetDownloader
+	public class AssetDownloader<T>
 	{
-		private string _storageDestiniation;
-		private string _inProgressDestination;
-		private string _url;
-		private Func<string, string> _keyConverter;
-		private static List<string> _succesfullyDownloadedImages = new List<string>();
-		private static Dictionary<string, Task<bool>> _inProcessDownloads = new Dictionary<string, Task<bool>>();
+		private readonly string _storageDestiniation;
+		private readonly string _inProgressDestination;
+		private readonly Func<T, string> _getUrl;
+		private readonly Func<T, string> _getFilename;
+		private readonly List<string> _succesfullyDownloadedImages = new List<string>();
+		private readonly Dictionary<string, Task<bool>> _inProcessDownloads = new Dictionary<string, Task<bool>>();
+		private readonly long? _maxSize = null;
+		private readonly List<string> _lRUCache = new List<string>();
+
+		private bool UseLRUCache => _maxSize != null;
+		private string LRUCacheXMLPath => Path.Combine(_storageDestiniation, "Cache.xml");
+
 
 		/// <exception cref="ArgumentException">Thrown when directory cannot be accessed or created.</exception>
 		/// <param name="storageDestination">Destination for assets to be stored.</param>
 
-		public AssetDownloader(string storageDestination, string url, Func<string, string> keyConverter)
+		public AssetDownloader(string storageDestination, Func<T, string> urlConverter, Func<T, string> fileNameConverter, long? maxSize = null)
 		{
 			_storageDestiniation = storageDestination;
 			_inProgressDestination = Path.Combine(storageDestination, "_inProgress");
-			_url = url;
-			_keyConverter = keyConverter;
+			_getFilename = fileNameConverter;
+			_getUrl = urlConverter;
+			_maxSize = maxSize;
+			if(UseLRUCache)
+			{
+				if(File.Exists(LRUCacheXMLPath))
+					_lRUCache = XmlManager<List<string>>.Load(LRUCacheXMLPath);
+			}
 			TryCreateDirectory(_storageDestiniation);
 			TryCreateDirectory(_inProgressDestination);
-			TryCleanDirectory(_inProgressDestination);
+			TryCleanDirectory(_inProgressDestination, true);
 			_succesfullyDownloadedImages.AddRange(GetCurrentlyStoredFileNames());
+		}
+
+		public void ClearStorage()
+		{
+			TryCleanDirectory(_inProgressDestination, true);
+			TryCleanDirectory(_storageDestiniation, false);
+			_succesfullyDownloadedImages.Clear();
+			_lRUCache.Clear();
+			SerializeLRUCache();
 		}
 
 		void TryCreateDirectory(string path)
@@ -46,63 +67,128 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 		}
 
-		void TryCleanDirectory(string path)
+		void TryCleanDirectory(string path, bool deleteDirs)
 		{
 			DirectoryInfo directory = new DirectoryInfo(path);
-			try
+
+			foreach(FileInfo file in directory.GetFiles())
 			{
-				foreach(FileInfo file in directory.GetFiles())
+				try
 				{
 					file.Delete();
 				}
+				catch(Exception e)
+				{
+					Log.Error($"Could not delete file {file.Name}: {e.Message}");
+				}
+			}
+			if(deleteDirs)
+			{
 				foreach(DirectoryInfo dir in directory.GetDirectories())
 				{
-					dir.Delete(true);
+					try
+					{
+						dir.Delete(true);
+					}
+					catch(Exception e)
+					{
+						Log.Error($"Could not delete directory {dir.Name}: {e.Message}");
+					}
 				}
 			}
-			catch(Exception e)
+		}
+
+		private void TryDeleteFile(string filename)
+		{
+			var directory = new DirectoryInfo(_storageDestiniation);
+			var file = directory.GetFiles().FirstOrDefault(x => x.Name == filename);
+			if(file != null)
 			{
-				Log.Error($"Could not clean directory {path}: {e.Message}");
+				try
+				{
+					file.Delete();
+					_lRUCache.Remove(filename);
+					_succesfullyDownloadedImages.Remove(filename);
+				}
+				catch(IOException)
+				{
+					
+				}
+				catch(Exception e)
+				{
+					Log.Error($"Could not delete file {file.Name}: {e.Message}");
+				}
 			}
 		}
 
-		public Task<bool> DownloadAsset(string fileKey)
+		private void ManageLRUCache()
 		{
-			if(_inProcessDownloads.TryGetValue(fileKey, out var inProgressDownload))
-				return inProgressDownload;
-			Log.Info($"Starting download for {fileKey}.");
-			_inProcessDownloads[fileKey] = DownloadFileAsync(fileKey);
-			return _inProcessDownloads[fileKey];
+			if(UseLRUCache)
+			{
+				try
+				{
+					if(_lRUCache.Count > _maxSize)
+					{
+						_lRUCache.GetRange((int)_maxSize.Value, _lRUCache.Count - (int)_maxSize.Value).ForEach(TryDeleteFile);
+					}
+					SerializeLRUCache();
+				}
+				catch(Exception ex)
+				{
+
+				}
+			}
 		}
 
-		private async Task<bool> DownloadFileAsync(string fileKey)
+		/// <exception cref="ArgumentNullException">Thrown if obj is null</exception>
+		public Task<bool> DownloadAsset(T obj)
 		{
-			var inProgressPath = InProgressPathFor(fileKey);
+			if(obj == null)
+				throw new ArgumentNullException();
+			ManageLRUCache();
+			var filename = _getFilename(obj);
+			if(_inProcessDownloads.TryGetValue(filename, out var inProgressDownload))
+				return inProgressDownload;
+			Log.Info($"Starting download for {filename}.");
+			_inProcessDownloads[filename] = DownloadFileAsync(obj);
+			return _inProcessDownloads[filename];
+		}
+
+		/// <exception cref="ArgumentNullException">Thrown if obj is null</exception>
+		private async Task<bool> DownloadFileAsync(T obj)
+		{
+			if(obj == null)
+				throw new ArgumentNullException();
+			var filename = _getFilename(obj);
+			var inProgressPath = InProgressPathFor(filename);
 			try
 			{
-				using(WebClient client = new WebClient())
+				using(var client = new WebClient())
 				{
-					var downloadTask = client.DownloadFileTaskAsync($"{_url}/{_keyConverter(fileKey)}", inProgressPath);
-					Log.Info($"Waiting to cleanup {fileKey}.");
-					return await CleanupDownload(fileKey, downloadTask, inProgressPath, StoragePathFor(fileKey));
+					var url = _getUrl(obj);
+					var downloadTask = client.DownloadFileTaskAsync(url, inProgressPath);
+					Log.Info($"Waiting to cleanup {filename}.");
+					return await CleanupDownload(filename, downloadTask, inProgressPath, StoragePathFor(obj));
 				}
 			}
 			catch(Exception e)
 			{
-				Log.Error($"Unable to download {fileKey}: {e.Message}");
+				Log.Error($"Unable to download {filename}: {e.Message}");
 				return false;
 			}
 		}
 
-		private async Task<bool> CleanupDownload(string fileKey, Task toAwait, string inProgressPath, string finalPath)
+		private async Task<bool> CleanupDownload(string filename, Task toAwait, string inProgressPath, string finalPath)
 		{
 			await toAwait;
-			_inProcessDownloads.Remove(fileKey);
+			_inProcessDownloads.Remove(filename);
 			if(toAwait.IsCompletedSuccessfully())
 			{
-				_succesfullyDownloadedImages.Add(fileKey);
+				_succesfullyDownloadedImages.Add(filename);
 				try
 				{
+					if(File.Exists(finalPath))
+						File.Delete(finalPath);
 					File.Move(inProgressPath, finalPath);
 					return true;
 				}
@@ -119,19 +205,45 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 				}
 				catch(Exception e)
 				{
-					Log.Error($"Couldn't delete {fileKey} at path {inProgressPath}: {e.Message}");
+					Log.Error($"Couldn't delete {filename} at path {inProgressPath}: {e.Message}");
 				}
 			}
 			return false;
 		}
 
-		public bool HasAsset(string fileName) => _succesfullyDownloadedImages.Contains(fileName);
+		public bool HasAsset(T obj)
+		{
+			if(obj == null)
+				return false;
+			var filename = _getFilename(obj);
+			return _succesfullyDownloadedImages.Contains(filename);
+		}
 
-		private bool AssetDownloadStartedOrFinished(string fileName) => _succesfullyDownloadedImages.Contains(fileName) || _inProcessDownloads.ContainsKey(fileName);
+		/// <exception cref="ArgumentNullException">Thrown if obj is null</exception>
+		public string StoragePathFor(T obj)
+		{
+			if(obj == null)
+				throw new ArgumentNullException();
+			var filename = _getFilename(obj);
+			_lRUCache.Remove(filename);
+			_lRUCache.Insert(0, filename);
+			return Path.Combine(_storageDestiniation, filename);
+		}
 
-		public string StoragePathFor(string fileKey) => Path.Combine(_storageDestiniation, _keyConverter(fileKey));
+		private int _serializeLRUTracker = 0;
+		private async void SerializeLRUCache()
+		{
+			
+			var initialValue = ++_serializeLRUTracker;
+			await Task.Delay(500);
+			if(initialValue == _serializeLRUTracker)
+			{
+				_serializeLRUTracker = 0;
+				XmlManager<List<string>>.Save(LRUCacheXMLPath, _lRUCache);
+			}
+		}
 
-		private string InProgressPathFor(string fileKey) => Path.Combine(_inProgressDestination, _keyConverter(fileKey));
+		private string InProgressPathFor(string filename) => Path.Combine(_inProgressDestination, filename);
 
 		public IEnumerable<string> GetCurrentlyStoredFileNames() => GetStoredImagesContent().Select(Path.GetFileNameWithoutExtension);
 
@@ -148,7 +260,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			}
 		}
 
-		public static bool FileIsSuccessfullyDownloaded(string fileName) => _succesfullyDownloadedImages.Contains(fileName);
+		public bool FileIsSuccessfullyDownloaded(string fileName) => _succesfullyDownloadedImages.Contains(fileName);
 
 	}
 }

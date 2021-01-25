@@ -281,6 +281,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("")]
 		public string CreatedByVersion = "";
 
+		[DefaultValue("")]
+		public string HearthdbVersion = "";
+
+		[DefaultValue(0)]
+		public int RemoteHearthstoneVersion = 0;
+
 		[DefaultValue(null)]
 		public DateTime? CustomDisplayedTimeFrame = null;
 
@@ -732,9 +738,11 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue("enUS")]
 		public string SelectedLanguage = "enUS";
 
-		[XmlArray(ElementName = "AlternativeLanguages")]
-		[XmlArrayItem(ElementName = "Language")]
-		public List<string> AlternativeLanguages = new List<string>();
+		[DefaultValue(1)]
+		public double CardImageSize = 1;
+
+		[DefaultValue(false)]
+		public bool HighResolutionCardImages = false;
 
 		[DefaultValue(GameMode.All)]
 		public GameMode SelectedStatsFilterGameMode = GameMode.All;
