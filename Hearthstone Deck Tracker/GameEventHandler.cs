@@ -901,6 +901,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.UpdatePlayerCards();
 				DeckManager.DetectCurrentDeck().Forget();
 			}
+			_game.SecretsManager.HandleCardDrawn(entity);
 			GameEvents.OnPlayerDraw.Execute(Database.GetCardFromId(cardId));
 		}
 

@@ -41,7 +41,9 @@ namespace HDTTests.Hearthstone.Secrets
 			_secretRogue1,
 			_secretRogue2,
 			_opponentEntity,
-			_opponentCardInHand1;
+			_opponentCardInHand1,
+			_playerCardInHand1,
+			_playerCardInHand2;
 
 		private Entity CreateNewEntity(string cardId)
 		{
@@ -430,7 +432,11 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_OpponentDrawsTwoCards_ShenanigansTriggered()
 		{
-			_heroOpponent.SetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN, 2);
+			_game.SecretsManager.HandleOpponentTurnStart();
+			_game.Player.OnTurnStart();
+			//Set to 1 because the tag hasn't been incremented by the time the check is being made in normal course
+			_heroPlayer.SetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN, 1);
+			_game.SecretsManager.HandleCardDrawn(_playerCardInHand2);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
@@ -438,9 +444,12 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void SingleSecret_OpponentDrawsOneCard_ShenanigansNotTriggered()
+		public void SingleSecret_OpponentDrawsNoCards_ShenanigansNotTriggered()
 		{
-			_heroOpponent.SetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN, 1);
+			_game.SecretsManager.HandleOpponentTurnStart();
+			_game.Player.OnTurnStart();
+			_heroPlayer.SetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN, 0);
+			_game.SecretsManager.HandleCardDrawn(_playerCardInHand1);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
