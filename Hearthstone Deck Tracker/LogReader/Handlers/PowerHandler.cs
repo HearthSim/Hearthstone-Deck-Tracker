@@ -22,7 +22,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		private readonly TagChangeHandler _tagChangeHandler = new TagChangeHandler();
 		private readonly List<Entity> _tmpEntities = new List<Entity>();
 		const string TransferStudentToken = Collectible.Neutral.TransferStudent + "t";
-		const string CthunTheShattteredToken = Collectible.Neutral.CthunTheShattered + "t";
 
 		public void Handle(string logLine, IHsGameState gameState, IGame game)
 		{
@@ -185,8 +184,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
-						if(entity.CardId.Contains(CthunTheShattteredToken))
-							entity.Info.GuessedCardState = GuessedCardState.Guessed;
 					}
 					if(type == "CHANGE_ENTITY")
 					{
