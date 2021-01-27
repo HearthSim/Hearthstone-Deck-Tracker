@@ -182,6 +182,7 @@ namespace Hearthstone_Deck_Tracker
 				var hearthDbVersion = HearthDb.Info.HearthDbVersion.ToString();
 				if(hearthDbVersion != Config.Instance.HearthdbVersion)
 				{
+					AssetDownloaders.SetupAssetDownloaders();
 					AssetDownloaders.cardImageDownloader.ClearStorage();
 					Config.Instance.HearthdbVersion = hearthDbVersion;
 					Config.Save();
@@ -197,10 +198,10 @@ namespace Hearthstone_Deck_Tracker
 		{
 			try
 			{
-				var hearthDbVersion = HearthDb.Info.HearthDbVersion.ToString();
 				var remoteVersion = rConfig?.UpdateInfo?.Version;
 				if(remoteVersion.HasValue && remoteVersion > Config.Instance.RemoteHearthstoneVersion)
 				{
+					AssetDownloaders.SetupAssetDownloaders();
 					AssetDownloaders.cardImageDownloader.ClearStorage();
 					Config.Instance.RemoteHearthstoneVersion = remoteVersion.Value;
 					Config.Save();
