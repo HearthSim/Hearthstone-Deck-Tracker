@@ -99,10 +99,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}));
 		}
 
-		public IEnumerable<Card> PredictedCardsInDeck => InDeckPrecitions.Select(x =>
+		public IEnumerable<Card> GetPredictedCardsInDeck(bool hidden) => InDeckPrecitions.Select(x =>
 		{
 			var card = Database.GetCardFromId(x.CardId);
-			card.Jousted = true;
+			if (hidden)
+				card.Jousted = true;
+			if (x.IsCreated)
+			{
+				card.IsCreated = true;
+				card.Count = 1;
+			}
 			return card;
 		});
 
@@ -154,15 +160,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var createdInHand = includeCreatedInHand ? CreatedCardsInHand : new List<Card>();
 			if(DeckList.Instance.ActiveDeck == null)
-				return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(PredictedCardsInDeck).ToSortedCardList();
+				return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(GetPredictedCardsInDeck(true)).ToSortedCardList();
 			var deckState = GetDeckState();
 			var inDeck = deckState.RemainingInDeck.ToList();
 			var notInDeck = deckState.RemovedFromDeck.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
+			var predictedInDeck = GetPredictedCardsInDeck(false).Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
 			if(!removeNotInDeck)
-				return inDeck.Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
+				return inDeck.Concat(predictedInDeck).Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
 			if(highlightCardsInHand)
-				return inDeck.Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand).ToSortedCardList();
-			return inDeck.Concat(createdInHand).ToSortedCardList();
+				return inDeck.Concat(predictedInDeck).Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand).ToSortedCardList();
+			return inDeck.Concat(predictedInDeck).Concat(createdInHand).ToSortedCardList();
 		}
 
 		public List<Card> OpponentCardList
@@ -187,12 +194,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 									card.IsCreated = g.Key.Created;
 									card.WasDiscarded = g.Key.Discarded;
 									return card;
-								}).Concat(InDeckPrecitions.Select(x =>
-								{
-									var card = Database.GetCardFromId(x.CardId);
-									card.Jousted = true;
-									return card;
-								})).ToSortedCardList();
+								}).Concat(GetPredictedCardsInDeck(true)).ToSortedCardList();
 
 		private bool EntityIsRemovedFromGamePassive(Entity entity) => entity.HasTag(GameTag.DUNGEON_PASSIVE_BUFF) && entity.GetTag(GameTag.ZONE) == (int)Zone.REMOVEDFROMGAME;
 
@@ -352,10 +354,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(entity);
 		}
 
-		public void ChameleosReveal(string cardId)
+		public void PredictUniqueCardInDeck(string cardId, bool isCreated)
 		{
 			if(InDeckPrecitions.All(x => x.CardId != cardId))
-				InDeckPrecitions.Add(new PredictedCard(cardId, 0));
+				InDeckPrecitions.Add(new PredictedCard(cardId, 0, isCreated));
 		}
 
 		public void JoustReveal(Entity entity, int turn)

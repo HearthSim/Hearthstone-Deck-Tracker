@@ -417,6 +417,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								if(game.Entities.TryGetValue(gameState.LastCardPlayed, out var lastPlayedEntity1) && lastPlayedEntity1.CardId != null)
 									AddKnownCardId(gameState, lastPlayedEntity1.CardId);
 								break;
+							case Collectible.Neutral.CthunTheShattered:
+								// The pieces are created in random order. So we can not assign predicted ids to entities the way we usually do.
+								if (actionStartingEntity != null)
+								{
+									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Opponent : game.Player;
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.CThuntheShattered_EyeOfCthunToken, true);
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.CThuntheShattered_BodyOfCthunToken, true);
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.CThuntheShattered_MawOfCthunToken, true);
+									player.PredictUniqueCardInDeck(NonCollectible.Neutral.CThuntheShattered_HeartOfCthunToken, true);
+								}
+								break;
 						}
 					}
 					else //POWER
@@ -587,6 +598,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Druid.KiriChosenOfElune:
 								AddKnownCardId(gameState, Collectible.Druid.LunarEclipse);
 								AddKnownCardId(gameState, Collectible.Druid.SolarEclipse);
+								break;
+							case NonCollectible.Neutral.CThuntheShattered_EyeOfCthunToken:
+							case NonCollectible.Neutral.CThuntheShattered_HeartOfCthunToken:
+							case NonCollectible.Neutral.CThuntheShattered_BodyOfCthunToken:
+							case NonCollectible.Neutral.CThuntheShattered_MawOfCthunToken:
+								// A new copy of C'Thun is created in the last of these POWER blocks.
+								// This currently leads to a duplicate copy of C'Thun showing up in the
+								// opponents deck list, but it will have to do for now.
+								AddKnownCardId(gameState, Collectible.Neutral.CthunTheShattered);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
