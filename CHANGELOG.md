@@ -1,3 +1,8 @@
+## **Release v1.13.24 - 2021-01-28**
+**Updated for Hearthstone 19.4.1.72661**
+**Fixes**
+- Fixed an issue where Bob's Buddy would sometimes miss-use Greybough's hero power with reborn
+
 ## **Release v1.13.23 - 2021-01-25**
 **New**
 - Upgraded cards in decklist to show full card images on hover
