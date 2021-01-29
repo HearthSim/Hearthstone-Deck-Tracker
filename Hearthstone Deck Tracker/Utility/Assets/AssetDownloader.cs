@@ -35,14 +35,25 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			_getUrl = urlConverter;
 			_maxSize = maxSize;
 			if(UseLRUCache)
-			{
-				if(File.Exists(LRUCacheXMLPath))
-					_lRUCache = XmlManager<List<string>>.Load(LRUCacheXMLPath);
-			}
+				_lRUCache = TryLoadCache();
 			TryCreateDirectory(_storageDestiniation);
 			TryCreateDirectory(_inProgressDestination);
 			TryCleanDirectory(_inProgressDestination, true);
 			_succesfullyDownloadedImages.AddRange(GetCurrentlyStoredFileNames());
+		}
+
+		private List<string> TryLoadCache()
+		{
+			try
+			{
+				if(File.Exists(LRUCacheXMLPath))
+					return XmlManager<List<string>>.Load(LRUCacheXMLPath);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+			}
+			return new List<string>();
 		}
 
 		public void ClearStorage()
