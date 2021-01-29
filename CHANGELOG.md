@@ -1,3 +1,7 @@
+## **Release v1.13.25 - 2021-01-29**
+**Fixes**:
+- Fixed an issue C'Thun The Shattered pieces were added to the wrong deck.
+
 ## **Release v1.13.24 - 2021-01-28**
 **Updated for Hearthstone 19.4.1.72661**
 **Fixes**
