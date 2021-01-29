@@ -421,7 +421,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								// The pieces are created in random order. So we can not assign predicted ids to entities the way we usually do.
 								if (actionStartingEntity != null)
 								{
-									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Opponent : game.Player;
+									var player = actionStartingEntity.IsControlledBy(game.Player.Id) ? game.Player : game.Opponent;
 									player.PredictUniqueCardInDeck(NonCollectible.Neutral.CThuntheShattered_EyeOfCthunToken, true);
 									player.PredictUniqueCardInDeck(NonCollectible.Neutral.CThuntheShattered_BodyOfCthunToken, true);
 									player.PredictUniqueCardInDeck(NonCollectible.Neutral.CThuntheShattered_MawOfCthunToken, true);
