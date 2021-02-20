@@ -17,7 +17,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HearthSim")]
 [assembly: AssemblyProduct("Hearthstone Deck Tracker")]
-[assembly: AssemblyCopyright("Copyright © HearthSim 2020")]
+[assembly: AssemblyCopyright("Copyright © HearthSim 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -57,8 +57,8 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.13.25")]
-[assembly: AssemblyFileVersion("1.13.25")]
+[assembly: AssemblyVersion("1.13.26")]
+[assembly: AssemblyFileVersion("1.13.26")]
 [assembly: NeutralResourcesLanguage("en")]
 
 [assembly: AssemblyMetadata("SquirrelAwareVersion", "1")]
