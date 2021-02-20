@@ -256,7 +256,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 
 		private string InProgressPathFor(string filename) => Path.Combine(_inProgressDestination, filename);
 
-		public IEnumerable<string> GetCurrentlyStoredFileNames() => GetStoredImagesContent().Select(Path.GetFileNameWithoutExtension);
+		public IEnumerable<string> GetCurrentlyStoredFileNames() => GetStoredImagesContent().Select(Path.GetFileName);
 
 		private List<string> GetStoredImagesContent()
 		{
