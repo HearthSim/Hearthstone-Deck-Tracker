@@ -244,6 +244,10 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
 			{
+				if(_attackingEntity != null && _attackingEntity.IsHero && _attackingEntity != null && _attackingEntity.IsHero)
+				{
+					Log.Debug($"Passing attacking hero {_attackingEntity?.Name ?? "null"} defender {_defendingEntity?.Name ?? "null"} to bbinvoker gameId {_game.CurrentGameStats.GameId} turn number {_game.GetTurnNumber()} ");
+				}
 				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?
 					.UpdateAttackingEntities(_attackingEntity, _defendingEntity);
 			}
