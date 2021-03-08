@@ -1,3 +1,10 @@
+## **Release v1.13.27 - 2021-03-08**
+**Fixes**:
+- Fixed an issue where the xp bar could fill up over and over again on startup.
+- Improved Bob's Buddy.
+- Fix issue where card images could download again even when the image already existed.
+
+
 ## **Release v1.13.26 - 2021-02-19**
 **Updated for Hearthstone 19.6.0.74257 **
 
