@@ -100,6 +100,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			RectIconArena.Visibility = Collapsed;
 			RectIconBrawl.Visibility = Collapsed;
 			RectIconAdventure.Visibility = Collapsed;
+			RectIconDuels.Visibility = Collapsed;
+			RectIconClassic.Visibility = Collapsed;
 
 			if(deck.IsArenaDeck)
 				RectIconArena.Visibility = Visible;
@@ -111,6 +113,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 				RectIconDuels.Visibility = Visible;
 			else if(deck.StandardViable)
 				RectIconStandard.Visibility = Visible;
+			else if (deck.IsClassicDeck)
+				RectIconClassic.Visibility = Visible;
 			else
 				RectIconWild.Visibility = Visible;
 		}
