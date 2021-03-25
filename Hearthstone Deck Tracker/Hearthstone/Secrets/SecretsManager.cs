@@ -141,6 +141,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					cards = cards.Where(c => !_settings.ExclusiveSecrets.Contains(c.Id));
 				if(format == Format.Standard)
 					cards = cards.Where(c => !Helper.WildOnlySets.Contains(c.Set));
+				if(format == Format.Classic)
+					cards = new List<Card>(); // temporary
 			}
 
 			return cards.ToList();

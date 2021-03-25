@@ -401,6 +401,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		public FormatType GuessFormatType()
+		{
+			if (IsClassicDeck)
+				return FormatType.FT_CLASSIC;
+			if (IsWildDeck) 
+				return FormatType.FT_WILD;
+			return FormatType.FT_STANDARD;
+		}
+
 		public List<GameStats> GetRelevantGames()
 		{
 			if(CacheIsValid)

@@ -121,6 +121,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
+		// Todo: Add classic support
 		internal static async Task<DeckWinrateData> GetDeckWinrates(string deckId, bool wild)
 		{
 			Log.Info("Fetching winrates for deck " + deckId);

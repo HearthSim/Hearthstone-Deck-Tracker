@@ -143,6 +143,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 
 		public ICommand RemoveCardCommand => new Command<Card>(RemoveCardFromDeck);
 
+		// Todo: replace this with format dropdown
 		public bool IncludeWild
 		{
 			get => _includeWild;

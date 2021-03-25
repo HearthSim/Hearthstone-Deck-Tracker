@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HearthDb.Enums;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WinrateData = System.Collections.Generic.Dictionary<string, Hearthstone_Deck_Tracker.HsReplay.Data.DeckWinrateData>;
@@ -15,14 +16,16 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Data
 		{
 		}
 
-		public async Task<DeckWinrateData> Get(string shortId, bool wild)
+		public async Task<DeckWinrateData> Get(string shortId, FormatType format)
 		{
+			if(format == FormatType.FT_CLASSIC)
+				return NoDataFallback;
 			var data = await GetData();
 			if(data.TryGetValue(shortId, out var deck) && !deck.IsStale)
 				return deck;
 			if(!_cleaned)
 				Cleanup();
-			deck = await ApiWrapper.GetDeckWinrates(shortId, wild) ?? NoDataFallback;
+			deck = await ApiWrapper.GetDeckWinrates(shortId, format == FormatType.FT_WILD) ?? NoDataFallback;
 			_data[shortId] = deck;
 			await WriteToDisk(data);
 			return deck;

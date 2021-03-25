@@ -90,6 +90,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 				return "Duels";
 			if(deck.StandardViable)
 				return "Standard";
+			if(deck.IsClassicDeck)
+				return "Classic";
 			return "Wild";
 		}
 

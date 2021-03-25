@@ -50,6 +50,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1463, "Demon Hunter Initiate"},
 			{1443, "Scholomance Academy"},
 			{1466, "Darkmoon Faire"},
+			{1525, "The Barrens"},
+			{1559, "Wailing Caverns"},
+			{1635, "Legacy"},
+			{1637, "Core"},
+			{1646, "Classic"},
 		};
 
 		public static string ConvertClass(CardClass cardClass)
@@ -213,7 +218,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return new HearthDb.Deckstrings.Deck
 				{
 					Name = deck.Name,
-					Format = deck.IsWildDeck ? FormatType.FT_WILD : FormatType.FT_STANDARD,
+					Format = deck.GuessFormatType(),
 					ZodiacYear = (ZodiacYear)Enum.GetValues(typeof(ZodiacYear)).Cast<int>().OrderByDescending(x => x).First(),
 					HeroDbfId = card.DbfIf,
 					CardDbfIds = deck.Cards.ToDictionary(c => c.DbfIf, c => c.Count)

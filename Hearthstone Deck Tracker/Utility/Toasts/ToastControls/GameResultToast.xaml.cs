@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 			DeckName = deckName;
 			_game = game;
 			Results = new[] { GameResult.Win, GameResult.Loss };
-			Formats = new[] { Enums.Format.Standard, Enums.Format.Wild };
+			Formats = new[] { Enums.Format.Standard, Enums.Format.Wild, Enums.Format.Classic };
 			Modes = new[]
 			{
 				GameMode.Arena,
