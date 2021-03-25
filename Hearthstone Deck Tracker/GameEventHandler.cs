@@ -242,16 +242,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void OnAttackEvent()
 		{
-			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
-			{
-				if(_attackingEntity != null && _attackingEntity.IsHero && _attackingEntity != null && _attackingEntity.IsHero)
-				{
-					Log.Debug($"Passing attacking hero {_attackingEntity?.Name ?? "null"} defender {_defendingEntity?.Name ?? "null"} to bbinvoker gameId {_game.CurrentGameStats.GameId} turn number {_game.GetTurnNumber()} ");
-				}
-				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?
-					.UpdateAttackingEntities(_attackingEntity, _defendingEntity);
-			}
-
 			var attackInfo = new AttackInfo((Card)_attackingEntity.Card.Clone(), (Card)_defendingEntity.Card.Clone());
 			if(_attackingEntity.IsControlledBy(_game.Player.Id))
 				GameEvents.OnPlayerMinionAttack.Execute(attackInfo);
@@ -279,6 +269,14 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
 				HandleOpponentDamage(entity);
 			GameEvents.OnEntityWillTakeDamage.Execute(new PredamageInfo(entity, value));
+		}
+
+		public void HandleProposedAttackerChange(Entity entity)
+		{
+			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
+			{
+				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?.HandleNewAttackingEntity(entity);
+			}
 		}
 
 		public void HandleOpponentDamage(Entity entity)

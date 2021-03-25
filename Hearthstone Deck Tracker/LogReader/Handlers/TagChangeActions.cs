@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case PROPOSED_DEFENDER:
 					return () => ProposedDefenderChange(game, value);
 				case PROPOSED_ATTACKER:
-					return () => ProposedAttackerChange(game, value);
+					return () => ProposedAttackerChange(gameState, id, game, value);
 				case PREDAMAGE:
 					return () => PredamageChange(gameState, id, game, value);
 				case NUM_TURNS_IN_PLAY:
@@ -259,8 +259,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		}
 
 		private void ProposedDefenderChange(IGame game, int value) => game.ProposedDefender = value;
+	
+		private void ProposedAttackerChange(IHsGameState gameState, int id, IGame game, int value) {
+			game.ProposedAttacker = value;
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(value, out var entity))
+				return;
+			gameState.GameHandler.HandleProposedAttackerChange(entity);
+		}
 
-		private void ProposedAttackerChange(IGame game, int value) => game.ProposedAttacker = value;
 
 		private void PredamageChange(IHsGameState gameState, int id, IGame game, int value)
 		{
