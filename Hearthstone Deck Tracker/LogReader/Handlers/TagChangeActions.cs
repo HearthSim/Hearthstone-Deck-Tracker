@@ -264,7 +264,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			game.ProposedAttacker = value;
 			if(value <= 0)
 				return;
-			if(!game.Entities.TryGetValue(id, out var entity))
+			if(!game.Entities.TryGetValue(value, out var entity))
 				return;
 			gameState.GameHandler.HandleProposedAttackerChange(entity);
 		}

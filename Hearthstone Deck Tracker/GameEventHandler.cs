@@ -1034,7 +1034,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleChameleosReveal(string cardId)
 		{
-			_game.Opponent.ChameleosReveal(cardId);
+			_game.Opponent.PredictUniqueCardInDeck(cardId, false);
 			Core.UpdateOpponentCards();
 		}
 

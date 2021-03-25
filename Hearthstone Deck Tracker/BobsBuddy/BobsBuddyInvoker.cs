@@ -42,6 +42,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private TestInput _input;
 		private int _turn;
 		static int LogLinesKept = RemoteConfig.Instance.Data?.BobsBuddy?.LogLinesKept ?? 100;
+		public string OpponentCardId = "";
+		public static string PlayerCardId = "";
+		public int OpponentStartOfCombatHealth = -1;
+		public int PlayerStartOfCombatHealth = -1;
+		public static Entity LastAttackingHero = null;
+		public static int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static Dictionary<int, Minion> _currentOpponentMinions = new Dictionary<int, Minion>();
 
@@ -53,8 +59,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const string LichKingHeroPowerEnchantmentId = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
 		private static bool _removedLichKingHeroPowerFromMinion = false;
 		public static bool CanRemoveLichKing => RemoteConfig.Instance.Data?.BobsBuddy?.CanRemoveLichKing ?? false;
-
-		private static int _lastRecordedDamageDealt = 0;
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
@@ -295,21 +299,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return true;
 		}
 
-		internal void UpdateAttackingEntities(Entity attacker, Entity defender)
-		{
-			if(attacker == null || !attacker.IsHero || defender == null || !defender.IsHero)
-				return;
-			DebugLog($"Updating entities with attacker={attacker.Card.Name}, defender={defender.Card.Name}");
-			_defendingHero = defender;
-			_attackingHero = attacker;
-			_lastRecordedDamageDealt = attacker.Attack;
-		}
-
 		private bool IsUnknownCard(Entity e) => e?.Card.Id == Database.UnknownCardId;
 
 		private void SnapshotBoardState(int turn)
 		{
 			DebugLog("Snapshotting board state...");
+			LastAttackingHero = null;
 			var simulator = new Simulator();
 			var input = new TestInput(simulator);
 
@@ -328,21 +323,28 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			input.availableRaces = BattlegroundsUtils.GetAvailableRaces(_currentGameId).ToList();
 
-			var oppHero = _game.Opponent.Board.FirstOrDefault(x => x.IsHero);
+			var opponentHero = _game.Opponent.Board.FirstOrDefault(x => x.IsHero);
 			var playerHero = _game.Player.Board.FirstOrDefault(x => x.IsHero);
-			if(oppHero == null || playerHero == null)
+			if(opponentHero == null || playerHero == null)
 			{
 				DebugLog("Hero(es) could not be found. Exiting.");
 				return;
 			}
 		
-			input.SetHealths(playerHero.Health, oppHero.Health);
+
+			//We set OpponentCardId and PlayerCardId here so that later we can do lookups for these entites without using _game.Opponent/Player, which might be innacurate or null depending on when they're accessed.
+			PlayerStartOfCombatHealth = playerHero.Health;
+			OpponentStartOfCombatHealth = opponentHero.Health;
+			OpponentCardId = opponentHero.CardId;
+			PlayerCardId = playerHero.CardId;
+
+			input.SetHealths(playerHero.Health, opponentHero.Health);
 			if(input.opponentHealth <= 0)
 			{
 				input.opponentHealth = 1000;
 			}
 			var playerTechLevel = playerHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
-			var opponentTechLevel = oppHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
+			var opponentTechLevel = opponentHero.GetTag(GameTag.PLAYER_TECH_LEVEL);
 			input.SetTiers(playerTechLevel, opponentTechLevel);
 
 			var playerHeroPower = _game.Player.Board.FirstOrDefault(x => x.IsHeroPower);
@@ -435,39 +437,47 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 		}
 
+		public static void HandleNewAttackingEntity(Entity newAttacker)
+		{
+			if(newAttacker.IsHero)
+			{
+				LastAttackingHero = newAttacker;
+				LastAttackingHeroAttack = newAttacker.Attack;
+			}
+		}
+
 		private int GetLastCombatDamageDealt()
 		{
-			switch(GetLastCombatResult())
-			{
-				case CombatResult.Win:
-					return _lastRecordedDamageDealt;
-				case CombatResult.Loss:
-					return _lastRecordedDamageDealt * -1;
-				default:
-					return 0;
-			}
+			if(LastAttackingHero != null)
+				return LastAttackingHeroAttack;
+			return 0;	
 		}
 
 		private CombatResult GetLastCombatResult()
 		{
-			if(_attackingHero == null)
+			if(LastAttackingHero == null)
 				return CombatResult.Tie;
-			if(_attackingHero.IsControlledBy(_game.Player.Id))
-				return CombatResult.Win;
-			if(_attackingHero.IsControlledBy(_game.Opponent.Id))
-				return CombatResult.Loss;
+			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
+			var opponnentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
+			if(playerHero != null && opponnentHero != null)
+			{
+				if(LastAttackingHero.CardId == playerHero.CardId)
+					return CombatResult.Win;
+				if(LastAttackingHero.CardId == opponnentHero.CardId)
+					return CombatResult.Loss;
+			}
 			return CombatResult.Invalid;
 		}
 
 		private LethalResult GetLastLethalResult()
 		{
-			if(_defendingHero == null || _attackingHero == null)
-				return LethalResult.NoOneDied;
-			if(_attackingHero.Attack >= _defendingHero.Health)
+			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
+			var opponnentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
+			if(playerHero != null && opponnentHero != null)
 			{
-				if(_attackingHero.IsControlledBy(_game.Player.Id))
+				if(opponnentHero.Health <= 0)
 					return LethalResult.OpponentDied;
-				else
+				if(playerHero.Health <= 0)
 					return LethalResult.FriendlyDied;
 			}
 			return LethalResult.NoOneDied;
@@ -511,6 +521,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			DebugLog($"result={result}, lethalResult={lethalResult}");
 
 			var terminalCase = false;
+
 			if (IsIncorrectCombatResult(result))
 			{
 				terminalCase = true;
@@ -546,6 +557,5 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(_input != null)
 				Sentry.QueueBobsBuddyTerminalCase(_input, Output, result, _turn, _recentHDTLog, _game.CurrentRegion);
 		}
-
 	}
 }
