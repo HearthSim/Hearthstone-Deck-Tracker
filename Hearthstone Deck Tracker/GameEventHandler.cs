@@ -273,7 +273,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleProposedAttackerChange(Entity entity)
 		{
-			BobsBuddyInvoker.HandleNewAttackingEntity(entity);
+			BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber()).HandleNewAttackingEntity(entity);
 		}
 
 		public void HandleOpponentDamage(Entity entity)
@@ -905,6 +905,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.UpdatePlayerCards();
 				DeckManager.DetectCurrentDeck().Forget();
 			}
+			_game.SecretsManager.HandleCardDrawn(entity);
 			GameEvents.OnPlayerDraw.Execute(Database.GetCardFromId(cardId));
 		}
 

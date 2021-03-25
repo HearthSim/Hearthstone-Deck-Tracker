@@ -43,11 +43,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private int _turn;
 		static int LogLinesKept = RemoteConfig.Instance.Data?.BobsBuddy?.LogLinesKept ?? 100;
 		public string OpponentCardId = "";
-		public static string PlayerCardId = "";
+		public string PlayerCardId = "";
 		public int OpponentStartOfCombatHealth = -1;
 		public int PlayerStartOfCombatHealth = -1;
-		public static Entity LastAttackingHero = null;
-		public static int LastAttackingHeroAttack;
+		public Entity LastAttackingHero = null;
+		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static Dictionary<int, Minion> _currentOpponentMinions = new Dictionary<int, Minion>();
 
@@ -437,7 +437,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 		}
 
-		public static void HandleNewAttackingEntity(Entity newAttacker)
+		public void HandleNewAttackingEntity(Entity newAttacker)
 		{
 			if(newAttacker.IsHero)
 			{
