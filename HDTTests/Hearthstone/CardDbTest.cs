@@ -44,7 +44,7 @@ namespace HDTTests.Hearthstone
 		public void GetFromName_CollectibleByDefault()
 		{
 			var card = Database.GetCardFromName("Baron Geddon");
-			Assert.AreEqual("EX1_249", card.Id);
+			Assert.AreEqual("CORE_EX1_249", card.Id);
 		}
 
 		[TestMethod]
