@@ -310,10 +310,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, target);
 								break;
 							case Collectible.Neutral.HoardingDragon:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBasic, 2);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBASIC, 2);
 								break;
 							case Collectible.Priest.GildedGargoyle:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBasic);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBASIC);
 								break;
 							case Collectible.Druid.AstralTiger:
 								AddKnownCardId(gameState, Collectible.Druid.AstralTiger);
@@ -553,7 +553,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.BananaBuffoon_BananasToken, 2);
 								break;
 							case Collectible.Neutral.BootyBayBookie:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBasic);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBASIC);
 								break;
 							case Collectible.Neutral.PortalKeeper:
 							case Collectible.Neutral.PortalOverfiend:
@@ -578,7 +578,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Rogue.BloodsailFlybooter_SkyPirateToken, 2);
 								break;
 							case Collectible.Rogue.UmbralSkulker:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBasic, 3);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBASIC, 3);
 								break;
 							case Collectible.Neutral.Sathrovarr:
 								AddKnownCardId(gameState, target, 3);

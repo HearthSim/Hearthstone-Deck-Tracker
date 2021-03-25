@@ -50,16 +50,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static readonly Dictionary<string, string> HeroIdDict = new Dictionary<string, string>
 		{
-			{Collectible.Demonhunter.IllidanStormrageHero, "DemonHunter"},
-			{Collectible.Warrior.GarroshHellscreamHero, "Warrior"},
-			{Collectible.Shaman.ThrallHero, "Shaman"},
-			{Collectible.Rogue.ValeeraSanguinarHero, "Rogue"},
-			{Collectible.Paladin.UtherLightbringerHero, "Paladin"},
-			{Collectible.Hunter.RexxarHero, "Hunter"},
-			{Collectible.Druid.MalfurionStormrageHero, "Druid"},
-			{Collectible.Warlock.GuldanHero, "Warlock"},
-			{Collectible.Mage.JainaProudmooreHero, "Mage"},
-			{Collectible.Priest.AnduinWrynnHero, "Priest"},
+			{Collectible.Demonhunter.IllidanStormrageHeroHeroSkins, "DemonHunter"},
+			{Collectible.Warrior.GarroshHellscreamHeroHeroSkins, "Warrior"},
+			{Collectible.Shaman.ThrallHeroHeroSkins, "Shaman"},
+			{Collectible.Rogue.ValeeraSanguinarHeroHeroSkins, "Rogue"},
+			{Collectible.Paladin.UtherLightbringerHeroHeroSkins, "Paladin"},
+			{Collectible.Hunter.RexxarHeroHeroSkins, "Hunter"},
+			{Collectible.Druid.MalfurionStormrageHeroHeroSkins, "Druid"},
+			{Collectible.Warlock.GuldanHeroHeroSkins, "Warlock"},
+			{Collectible.Mage.JainaProudmooreHeroHeroSkins, "Mage"},
+			{Collectible.Priest.AnduinWrynnHeroHeroSkins, "Priest"},
 			{Collectible.Warlock.LordJaraxxus, "Jaraxxus"},
 			{Collectible.Neutral.MajordomoExecutus, "Ragnaros the Firelord"},
 			{"GILA_600", "Warrior"},
@@ -70,30 +70,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static readonly Dictionary<string, string> HeroNameDict = new Dictionary<string, string>
 		{
-			{"Warrior", Collectible.Warrior.GarroshHellscreamHero},
-			{"Shaman", Collectible.Shaman.ThrallHero},
-			{"Rogue", Collectible.Rogue.ValeeraSanguinarHero},
-			{"Paladin", Collectible.Paladin.UtherLightbringerHero},
-			{"Hunter", Collectible.Hunter.RexxarHero},
-			{"Druid", Collectible.Druid.MalfurionStormrageHero},
-			{"Warlock", Collectible.Warlock.GuldanHero},
-			{"Mage", Collectible.Mage.JainaProudmooreHero},
-			{"Priest", Collectible.Priest.AnduinWrynnHero},
-			{"DemonHunter", Collectible.Demonhunter.IllidanStormrageHero},
+			{"Warrior", Collectible.Warrior.GarroshHellscreamHeroHeroSkins},
+			{"Shaman", Collectible.Shaman.ThrallHeroHeroSkins},
+			{"Rogue", Collectible.Rogue.ValeeraSanguinarHeroHeroSkins},
+			{"Paladin", Collectible.Paladin.UtherLightbringerHeroHeroSkins},
+			{"Hunter", Collectible.Hunter.RexxarHeroHeroSkins},
+			{"Druid", Collectible.Druid.MalfurionStormrageHeroHeroSkins},
+			{"Warlock", Collectible.Warlock.GuldanHeroHeroSkins},
+			{"Mage", Collectible.Mage.JainaProudmooreHeroHeroSkins},
+			{"Priest", Collectible.Priest.AnduinWrynnHeroHeroSkins},
+			{"DemonHunter", Collectible.Demonhunter.IllidanStormrageHeroHeroSkins},
 		};
 
 		public static readonly Dictionary<CardClass, string> CardClassHero = new Dictionary<CardClass, string>
 		{
-			{CardClass.WARRIOR, Collectible.Warrior.GarroshHellscreamHero},
-			{CardClass.SHAMAN, Collectible.Shaman.ThrallHero},
-			{CardClass.ROGUE, Collectible.Rogue.ValeeraSanguinarHero},
-			{CardClass.PALADIN, Collectible.Paladin.UtherLightbringerHero},
-			{CardClass.HUNTER, Collectible.Hunter.RexxarHero},
-			{CardClass.DRUID, Collectible.Druid.MalfurionStormrageHero},
-			{CardClass.WARLOCK, Collectible.Warlock.GuldanHero},
-			{CardClass.MAGE, Collectible.Mage.JainaProudmooreHero},
-			{CardClass.PRIEST, Collectible.Priest.AnduinWrynnHero},
-			{CardClass.DEMONHUNTER, Collectible.Demonhunter.IllidanStormrageHero}
+			{CardClass.WARRIOR, Collectible.Warrior.GarroshHellscreamHeroHeroSkins},
+			{CardClass.SHAMAN, Collectible.Shaman.ThrallHeroHeroSkins},
+			{CardClass.ROGUE, Collectible.Rogue.ValeeraSanguinarHeroHeroSkins},
+			{CardClass.PALADIN, Collectible.Paladin.UtherLightbringerHeroHeroSkins},
+			{CardClass.HUNTER, Collectible.Hunter.RexxarHeroHeroSkins},
+			{CardClass.DRUID, Collectible.Druid.MalfurionStormrageHeroHeroSkins},
+			{CardClass.WARLOCK, Collectible.Warlock.GuldanHeroHeroSkins},
+			{CardClass.MAGE, Collectible.Mage.JainaProudmooreHeroHeroSkins},
+			{CardClass.PRIEST, Collectible.Priest.AnduinWrynnHeroHeroSkins},
+			{CardClass.DEMONHUNTER, Collectible.Demonhunter.IllidanStormrageHeroHeroSkins}
 		};
 
 		// cards that should have an entourage list but don't in the game data

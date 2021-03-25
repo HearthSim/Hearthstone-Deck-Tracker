@@ -385,8 +385,7 @@ namespace Hearthstone_Deck_Tracker
 		private void HandleThaurissanCostReduction()
 		{
 			var thaurissans = _game.Opponent.Board.Where(x =>
-				(x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan
-					|| x.CardId == HearthDb.CardIds.NonCollectible.Neutral.EmperorThaurissanWILD_EVENT)
+				x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan
 				&& !x.HasTag(SILENCED)).ToList();
 			if(!thaurissans.Any())
 				return;
@@ -1159,7 +1158,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentGet(Entity entity, int turn, int id)
 		{
 			if(!_game.IsMulliganDone && entity.GetTag(ZONE_POSITION) == 5)
-				entity.CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoinBasic;
+				entity.CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoinBASIC;
 			_game.Opponent.CreateInHand(entity, turn);
 			Core.UpdateOpponentCards();
 			GameEvents.OnOpponentGet.Execute();
