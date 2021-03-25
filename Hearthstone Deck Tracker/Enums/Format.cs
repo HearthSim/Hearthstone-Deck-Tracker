@@ -7,6 +7,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[LocDescription("Enum_Format_Standard")]
 		Standard,
 		[LocDescription("Enum_Format_Wild")]
-		Wild
+		Wild,
+		[LocDescription("Enum_Format_Classic")]
+		Classic
 	}
 }

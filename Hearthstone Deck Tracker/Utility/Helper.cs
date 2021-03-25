@@ -83,6 +83,11 @@ namespace Hearthstone_Deck_Tracker
 			CardSet.GILNEAS, CardSet.BOOMSDAY, CardSet.TROLL,
 		}.Select(HearthDbConverter.SetConverter).ToArray();
 
+		public static string[] ClassicOnlySets = new[]
+		{
+			CardSet.VANILLA,
+		}.Select(HearthDbConverter.SetConverter).ToArray();
+
 		private static bool? _hearthstoneDirExists;
 
 		public static Dictionary<string, MediaColor> ClassicClassColors = new Dictionary<string, MediaColor>
