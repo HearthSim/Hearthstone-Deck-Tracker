@@ -12,14 +12,13 @@ namespace Hearthstone_Deck_Tracker.Enums
 		Standard,
 		[LocDescription("Enum_DeckType_Wild", true)]
 		Wild,
+		[LocDescription("Enum_DeckType_Classic", true)]
+		Classic,
 		[LocDescription("Enum_DeckType_Dungeon", true)]
 		Dungeon,
 		[LocDescription("Enum_DeckType_Duels", true)]
 		Duels,
 		[LocDescription("Enum_DeckType_Brawl", true)]
 		Brawl,
-
-		//obsolete - to avoid breaking things when loading this from config
-		Constructed = Wild
 	}
 }
