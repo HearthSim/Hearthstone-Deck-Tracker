@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using BobsBuddy;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility;
@@ -37,15 +36,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static BobsBuddyPanel BobsBuddyDisplay => Core.Overlay.BobsBuddyDisplay;
 		private static bool ReportErrors => RemoteConfig.Instance.Data?.BobsBuddy?.SentryReporting ?? false;
 
-		private Entity _attackingHero;
-		private Entity _defendingHero;
 		private TestInput _input;
 		private int _turn;
 		static int LogLinesKept = RemoteConfig.Instance.Data?.BobsBuddy?.LogLinesKept ?? 100;
 		public string OpponentCardId = "";
 		public string PlayerCardId = "";
-		public int OpponentStartOfCombatHealth = -1;
-		public int PlayerStartOfCombatHealth = -1;
 		public Entity LastAttackingHero = null;
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
@@ -333,8 +328,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		
 
 			//We set OpponentCardId and PlayerCardId here so that later we can do lookups for these entites without using _game.Opponent/Player, which might be innacurate or null depending on when they're accessed.
-			PlayerStartOfCombatHealth = playerHero.Health;
-			OpponentStartOfCombatHealth = opponentHero.Health;
 			OpponentCardId = opponentHero.CardId;
 			PlayerCardId = playerHero.CardId;
 

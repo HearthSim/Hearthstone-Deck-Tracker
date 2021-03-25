@@ -273,7 +273,11 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleProposedAttackerChange(Entity entity)
 		{
-			BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber()).HandleNewAttackingEntity(entity);
+			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
+			{
+					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?.HandleNewAttackingEntity(entity);
+			}
+			
 		}
 
 		public void HandleOpponentDamage(Entity entity)
