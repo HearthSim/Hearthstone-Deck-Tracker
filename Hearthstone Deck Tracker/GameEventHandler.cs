@@ -194,7 +194,7 @@ namespace Hearthstone_Deck_Tracker
 				Log.Warn("Could not get MedalInfo");
 				return;
 			}
-			var data = gs.Format == Format.Wild ? medalInfo.Wild : medalInfo.Standard;
+			var data = gs.Format == Format.Wild ? medalInfo.Wild : gs.Format == Format.Classic ? medalInfo.Classic : medalInfo.Standard;
 			gs.StarsAfter = data.Stars;
 			gs.StarLevelAfter = data.StarLevel;
 			gs.LegendRankAfter = data.LegendRank;
