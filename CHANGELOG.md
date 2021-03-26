@@ -1,3 +1,8 @@
+## **Release v1.14.0 - 2021-03-25**
+**Updated for Hearthstone 20.0.0**
+**Fixes**:
+- Fixed various Hearthstone patch related issues to restore general functionality. More fixes and updates for the patch will follow soon.
+
 ## **Release v1.13.27 - 2021-03-08**
 **Fixes**:
 - Fixed an issue where the xp bar could fill up over and over again on startup.
