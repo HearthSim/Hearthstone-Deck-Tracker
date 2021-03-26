@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using static Hearthstone_Deck_Tracker.Hearthstone.CardIds;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
@@ -16,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private HashSet<Entity> EntititesInHandOnMinionsPlayed = new HashSet<Entity>();
 
 		private int _lastPlayedMinionId;
-		protected List<string> SavedSecrets = new List<string>();
+		protected List<MultiIdCard> SavedSecrets = new List<MultiIdCard>();
 
 		private bool FreeSpaceOnBoard => Game.OpponentMinionCount < 7;
 		private bool FreeSpaceInHand => Game.OpponentHandCount < 10;
@@ -31,8 +32,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		protected abstract IGame Game { get; }
 		protected abstract bool HasActiveSecrets { get; }
-		public abstract bool Exclude(string cardId, bool invokeCallback = true);
-		public abstract void Exclude(List<string> cardIds);
+		public abstract bool Exclude(MultiIdCard cardId, bool invokeCallback = true);
+		public abstract void Exclude(List<MultiIdCard> cardIds);
 		public abstract void Refresh();
 
 		public virtual void Reset()
@@ -52,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(attacker.GetTag(GameTag.CONTROLLER) == defender.GetTag(GameTag.CONTROLLER))
 				return;
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			var freeSpaceOnBoard = FreeSpaceOnBoard;
 			if(freeSpaceOnBoard)
@@ -140,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			_lastPlayedMinionId = entity.Id;
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			if(!entity.HasTag(GameTag.DORMANT))
 			{
@@ -182,7 +183,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(!HandleAction)
 				return;
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			if(FreeSpaceInHand)
 			{
@@ -301,7 +302,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			SavedSecrets.Clear();
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			if(FreeSpaceOnBoard)
 			{
@@ -323,7 +324,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 				exclude.Add(Mage.Counterspell);
 
-				if(_triggeredSecrets.FirstOrDefault(x => x.CardId == Mage.Counterspell) != null)
+				if(_triggeredSecrets.FirstOrDefault(x => Mage.Counterspell == x.CardId) != null)
 				{
 					Exclude(exclude);
 					return;
@@ -365,7 +366,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(!HandleAction)
 				return;
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			//Check against 1 because the tag hasn't been incremented by hs by the time this is getting called
 			if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN) >= 1)
@@ -393,7 +394,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				EntititesInHandOnMinionsPlayed.Clear();
 		}
 
-		public void SaveSecret(string secret)
+		public void SaveSecret(MultiIdCard secret)
 		{
 			if(!Secrets.Any(s => s.IsExcluded(secret)))
 				SavedSecrets.Add(secret);

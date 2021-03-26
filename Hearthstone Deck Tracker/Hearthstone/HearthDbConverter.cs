@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1559, "Wailing Caverns"},
 			{1635, "Legacy"},
 			{1637, "Core"},
-			{1646, "Classic"},
+			{1646, "Vanilla"},
 		};
 
 		public static string ConvertClass(CardClass cardClass)

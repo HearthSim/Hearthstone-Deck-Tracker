@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using static Hearthstone_Deck_Tracker.Hearthstone.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 {
@@ -21,15 +22,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			Excluded = GetAllSecrets().ToDictionary(x => x, x => false);
 		}
 
-		public Dictionary<string, bool> Excluded { get; set; }
+		public Dictionary<MultiIdCard, bool> Excluded { get; set; }
 
-		public void Exclude(string cardId)
+		public void Exclude(MultiIdCard cardId)
 		{
 			if(Excluded.ContainsKey(cardId))
 				Excluded[cardId] = true;
 		}
 
-		private IEnumerable<string> GetAllSecrets()
+		private IEnumerable<MultiIdCard> GetAllSecrets()
 		{
 			switch(Entity.GetTag(GameTag.CLASS))
 			{
@@ -42,13 +43,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				case (int)CardClass.ROGUE:
 					return CardIds.Secrets.Rogue.All;
 				default:
-					return new List<string>();
+					return new List<MultiIdCard>();
 			}
 		}
 
-		public bool IsExcluded(string cardId) => Excluded.TryGetValue(cardId, out var excluded) && excluded;
+		public bool IsExcluded(MultiIdCard cardId) => Excluded.TryGetValue(cardId, out var excluded) && excluded;
 
-		public void Include(string cardId)
+		public void Include(MultiIdCard cardId)
 		{
 			if(Excluded.ContainsKey(cardId))
 				Excluded[cardId] = false;

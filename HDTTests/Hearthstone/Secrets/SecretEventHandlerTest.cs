@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Hearthstone_Deck_Tracker.Hearthstone.CardIds;
 using HunterSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Hunter;
 using MageSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Mage;
 using PaladinSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Paladin;
@@ -45,9 +46,9 @@ namespace HDTTests.Hearthstone.Secrets
 			_playerCardInHand1,
 			_playerCardInHand2;
 
-		private Entity CreateNewEntity(string cardId)
+		private Entity CreateNewEntity(MultiIdCard card)
 		{
-			return new Entity(_entityId++) { CardId = cardId };
+			return new Entity(_entityId++) { CardId = card?.Ids[0] };
 		}
 
 		[TestInitialize]
@@ -600,11 +601,11 @@ namespace HDTTests.Hearthstone.Secrets
 		//	VerifySecrets(3, RogueSecrets.All, RogueSecrets.Bamboozle);
 		//}
 
-		private void VerifySecrets(int index, List<string> allSecrets, params string[] triggered)
+		private void VerifySecrets(int index, IEnumerable<MultiIdCard> allSecrets, params MultiIdCard[] triggered)
 		{
 			var secrets = _game.SecretsManager.Secrets[index];
 			foreach(var secret in allSecrets)
-				Assert.AreEqual(triggered.Contains(secret), secrets.IsExcluded(secret), Database.GetCardFromId(secret).Name);
+				Assert.AreEqual(triggered.Contains(secret), secrets.IsExcluded(secret), Database.GetCardFromId(secret.Ids[0]).Name);
 		}
 	}
 }

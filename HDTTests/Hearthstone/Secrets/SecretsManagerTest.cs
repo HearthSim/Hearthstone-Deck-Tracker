@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using static Hearthstone_Deck_Tracker.Hearthstone.CardIds;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
 
 namespace HDTTests.Hearthstone.Secrets
@@ -183,15 +184,15 @@ namespace HDTTests.Hearthstone.Secrets
 			Assert.AreEqual(1, secretsManager.Secrets.Count);
 
 			var cards = secretsManager.GetSecretList();
-			Assert.AreEqual(1, cards.Single(x => x.Id == Paladin.Avenge).Count);
+			Assert.AreEqual(1, cards.Single(x => Paladin.Avenge == x.Id).Count);
 
 			secretsManager.Toggle(Paladin.Avenge);
 			cards = secretsManager.GetSecretList();
-			Assert.AreEqual(0, cards.Single(x => x.Id == Paladin.Avenge).Count);
+			Assert.AreEqual(0, cards.Single(x => Paladin.Avenge == x.Id).Count);
 
 			secretsManager.Toggle(Paladin.Avenge);
 			cards = secretsManager.GetSecretList();
-			Assert.AreEqual(1, cards.Single(x => x.Id == Paladin.Avenge).Count);
+			Assert.AreEqual(1, cards.Single(x => Paladin.Avenge == x.Id).Count);
 
 			foreach(var id in Paladin.All)
 				secretsManager.Toggle(id);
@@ -301,7 +302,7 @@ namespace HDTTests.Hearthstone.Secrets
 			secretsManager.Toggle(Paladin.Avenge);
 			Assert.AreEqual(2, callbackCount);
 
-			secretsManager.Exclude(new List<string> { Paladin.CompetitiveSpirit, Paladin.GetawayKodo });
+			secretsManager.Exclude(new List<MultiIdCard> { Paladin.CompetitiveSpirit, Paladin.GetawayKodo });
 			Assert.AreEqual(3, callbackCount);
 
 			secretsManager.Toggle(Paladin.Avenge);
@@ -344,31 +345,30 @@ namespace HDTTests.Hearthstone.Secrets
 			secretsManager.NewSecret(hunterEntity);
 			Assert.AreEqual(3, secretsManager.Secrets.Count);
 
-			var wildSecrets = Paladin.All.Where(x => x != Paladin.HandOfSalvation)
+			var allSecrets = Paladin.All.Where(x => x != Paladin.HandOfSalvation)
 				.Concat(Mage.All).Concat(Hunter.All).ToList();
 			var cards = secretsManager.GetSecretList();
-			Assert.AreEqual(wildSecrets.Count, cards.Count);
-			foreach(var secret in wildSecrets)
-				Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == secret));
+			Assert.AreEqual(allSecrets.Count, cards.Count);
+			foreach(var secret in allSecrets)
+				Assert.IsNotNull(cards.SingleOrDefault(c => secret == c.Id));
 
 			game.CurrentFormat = Format.Standard;
 			cards = secretsManager.GetSecretList();
-			var wildSets = Helper.WildOnlySets;
-			var standardSecrets = wildSecrets.Where(x => !wildSets.Contains(Database.GetCardFromId(x).Set)).ToList();
-			Assert.AreEqual(standardSecrets.Count, cards.Count);
+			var standardSecrets = allSecrets.Where(x => x.IsStandard).ToList();
+			Assert.AreEqual(standardSecrets.Count(), cards.Count);
 			foreach(var secret in standardSecrets)
-				Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == secret));
+				Assert.IsNotNull(cards.SingleOrDefault(c => secret == c.Id));
 
 			game.CurrentGameType = GameType.GT_ARENA;
 			game.CurrentFormat = Format.Wild; // Arena format is Wild
 			cards = secretsManager.GetSecretList();
-			var arenaSecrets = wildSecrets.Concat(settings.ExclusiveSecrets).Where(x =>
-					settings.CurrentSets.Contains(Database.GetCardFromId(x).CardSet ?? CardSet.BLANK)
-					&& !settings.BannedSecrets.Contains(x)
+			var bannedSecrets = settings.BannedSecrets.Select(x => new MultiIdCard(x));
+			var arenaSecrets = allSecrets.Concat(settings.ExclusiveSecrets.Select(x => new MultiIdCard(x))).Where(x =>
+					settings.CurrentSets.Any(x.HasSet) && !bannedSecrets.Contains(x)
 				).ToList();
 			Assert.AreEqual(arenaSecrets.Count, cards.Count);
 			foreach(var secret in arenaSecrets)
-				Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == secret));
+				Assert.IsNotNull(cards.SingleOrDefault(c => secret == c.Id));
 		}
 
 		[TestMethod]
@@ -386,7 +386,7 @@ namespace HDTTests.Hearthstone.Secrets
 				entity.SetTag(GameTag.SECRET, 1);
 				entity.SetTag(GameTag.CLASS, (int)CardClass.PALADIN);
 				entity.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
-				entity.CardId = Paladin.Repentance;
+				entity.CardId = Paladin.Repentance.Ids[0];
 				return entity;
 			}
 			
@@ -404,33 +404,33 @@ namespace HDTTests.Hearthstone.Secrets
 			Assert.AreEqual(1, secretsManager.Secrets.Count);
 
 			var cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == Paladin.Repentance && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
 
 			game.Entities.Add(3, RevealedSecret(3));
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == Paladin.Repentance && c.Count == 0));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 0));
 
 			game.CurrentFormat = Format.Standard;
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == Paladin.Repentance && c.Count == 0));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 0));
 
 			game.CurrentGameType = GameType.GT_ARENA;
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == Paladin.Repentance && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
 
 			paladinEntity.Info.Created = true;
 
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == Paladin.Repentance && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
 
 			game.CurrentGameType = GameType.GT_RANKED;
 
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == Paladin.Repentance && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
 
 			game.CurrentFormat = Format.Wild;
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => c.Id == Paladin.Repentance && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
 		}
 	}
 }
