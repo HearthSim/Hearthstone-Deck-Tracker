@@ -1,3 +1,11 @@
+## **Release v1.14.1 - 2021-03-30**
+**Fixes**
+- Add support for secrets in Classic.
+- Prevent a duplicate murloc tidecaller from appearing in the Battlegrounds minion tiers.
+- Stop a data leak where cards discarded by opponent trackings would be visible in their decklist.
+- Fix an issue where Bob's Buddy could occasionally crash.
+- Fix an issue with tracking Competitive Spirit and Open the Cages.
+
 ## **Release v1.14.0 - 2021-03-25**
 **Updated for Hearthstone 20.0.0**
 **Fixes**:
