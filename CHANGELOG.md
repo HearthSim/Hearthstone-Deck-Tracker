@@ -1,3 +1,7 @@
+## **Release v1.14.2 - 2021-03-30**
+**Fixes**
+- Add support for Forged in the Barrens.
+
 ## **Release v1.14.1 - 2021-03-30**
 **Fixes**
 - Add support for secrets in Classic.
