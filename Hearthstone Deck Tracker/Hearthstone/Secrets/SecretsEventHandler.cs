@@ -276,6 +276,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			}
 		}
 
+		public void HandleMinionDealtDamage(Entity entity, int damageDealt)
+		{
+			if(!HandleAction)
+				return;
+			if(entity.IsMinion && entity.IsControlledBy(Game.Opponent.Id))
+					if(damageDealt >= 3)
+				Exclude(Paladin.Reckoning);
+		}
+
 		public void HandleTurnsInPlayChange(Entity entity, int turn)
 		{
 			if(!HandleAction)

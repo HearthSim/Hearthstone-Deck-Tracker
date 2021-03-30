@@ -267,7 +267,10 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleEntityPredamage(Entity entity, int value)
 		{
 			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
+			{
 				HandleOpponentDamage(entity);
+				HandlepEntityDealtDamage(entity, value);
+			}
 			GameEvents.OnEntityWillTakeDamage.Execute(new PredamageInfo(entity, value));
 		}
 
@@ -282,6 +285,11 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentDamage(Entity entity)
 		{
 			_game.SecretsManager.HandleOpponentDamage(entity);
+		}
+
+		public void HandlepEntityDealtDamage(Entity entity, int damage)
+		{
+			_game.SecretsManager.HandleMinionDealtDamage(entity, damage);
 		}
 
 		private readonly int[] _lastTurnStart = new int[2];

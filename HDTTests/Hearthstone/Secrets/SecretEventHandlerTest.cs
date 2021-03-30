@@ -291,6 +291,16 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
+		public void SingleSecret_OpponentMinionDamage()
+		{
+			_gameEventHandler.HandlepEntityDealtDamage(_opponentMinion1, 3);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Reckoning);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
 		public void SingleSecret_MinionTarget_SpellPlayed()
 		{
 			_game.SecretsManager.HandleCardPlayed(_playerSpell1);

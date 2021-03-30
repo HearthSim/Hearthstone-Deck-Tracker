@@ -175,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard NeverSurrender = new MultiIdCard(Collectible.Paladin.NeverSurrender);
 				public static readonly MultiIdCard NobleSacrifice = new MultiIdCard(Collectible.Paladin.NobleSacrifice, Collectible.Paladin.NobleSacrificeCore, Collectible.Paladin.NobleSacrificeVanilla);
 				public static readonly MultiIdCard OhMyYogg = new MultiIdCard(Collectible.Paladin.OhMyYogg);
-				// public static readonly MultiIdCard Reckoning = new MultiIdCard(Collectible.Paladin.ReckoningCore);
+				public static readonly MultiIdCard Reckoning = new MultiIdCard(Collectible.Paladin.ReckoningCore);
 				public static readonly MultiIdCard Redemption = new MultiIdCard(Collectible.Paladin.Redemption, Collectible.Paladin.RedemptionVanilla);
 				public static readonly MultiIdCard Repentance = new MultiIdCard(Collectible.Paladin.Repentance, Collectible.Paladin.RepentanceVanilla);
 				public static readonly MultiIdCard SacredTrial = new MultiIdCard(Collectible.Paladin.SacredTrial);
