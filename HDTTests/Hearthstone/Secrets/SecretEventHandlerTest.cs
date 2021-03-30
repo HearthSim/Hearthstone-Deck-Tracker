@@ -283,7 +283,8 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_OpponentDamage()
 		{
-			_gameEventHandler.HandleOpponentDamage(_heroOpponent);
+			SetPlayerAsCurrentPlayer();
+			_gameEventHandler.HandleEntityDamage(null, _heroOpponent, 1);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.EyeForAnEye);
@@ -291,12 +292,24 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void SingleSecret_OpponentMinionDamage()
+		public void SingleSecret_OpponentMinionDealtThreeDamage_TriggersReckoning()
 		{
-			_gameEventHandler.HandlepEntityDealtDamage(_opponentMinion1, 3);
+			SetPlayerAsCurrentPlayer();
+			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 3);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Reckoning);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void SingleSecret_OpponentMinionDealtTwoDamage_DoesNotTriggerReckoning()
+		{
+			SetPlayerAsCurrentPlayer();
+			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 2);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
 			VerifySecrets(3, RogueSecrets.All);
 		}
 
@@ -617,5 +630,7 @@ namespace HDTTests.Hearthstone.Secrets
 			foreach(var secret in allSecrets)
 				Assert.AreEqual(triggered.Contains(secret), secrets.IsExcluded(secret), Database.GetCardFromId(secret.Ids[0]).Name);
 		}
+
+		private void SetPlayerAsCurrentPlayer() => _heroPlayer.SetTag(GameTag.CURRENT_PLAYER, 1);
 	}
 }

@@ -70,6 +70,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => OnTagScriptDataNum1(id, value, game, gameState);
 				case REBORN:
 					return () => OnRebornChange(id, value, game);
+				case DAMAGE:
+					return () => DamageChange(gameState, id, game, value);
 			}
 			return null;
 		}
@@ -280,6 +282,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 			gameState.GameHandler.HandleEntityPredamage(entity, value);
+		}
+
+		private void DamageChange(IHsGameState gameState, int id, IGame game, int value)
+		{
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			game.Entities.TryGetValue(entity.GetTag(GameTag.LAST_AFFECTED_BY), out var dealer);
+			gameState.GameHandler.HandleEntityDamage(dealer, entity, value);
 		}
 
 		private void NumTurnsInPlayChange(IHsGameState gameState, int id, IGame game, int value)
