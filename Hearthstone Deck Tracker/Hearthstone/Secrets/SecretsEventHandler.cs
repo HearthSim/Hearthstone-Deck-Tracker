@@ -106,6 +106,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Hunter.PackTactics);
 					exclude.Add(Hunter.SnakeTrap);
 					exclude.Add(Hunter.VenomstrikeTrap);
+					exclude.Add(Mage.OasisAlly);
 				}
 
 				if(attacker.IsMinion)
@@ -311,7 +312,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(FreeSpaceOnBoard)
 			{
 				if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN) >= 3)
+				{
 					exclude.Add(Hunter.RatTrap);
+					exclude.Add(Paladin.GallopingSavior);
+				}
 			}
 
 			if(FreeSpaceInHand)
