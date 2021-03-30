@@ -28,6 +28,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		public List<int> OpponentTookDamageDuringTurns = new List<int>();
 
+		public Dictionary<int, Dictionary<int, int>> EntityDamageDealtHistory = new Dictionary<int, Dictionary<int, int>>();
+
 		private List<Entity> _triggeredSecrets = new List<Entity>();
 
 		protected abstract IGame Game { get; }
@@ -106,6 +108,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Hunter.PackTactics);
 					exclude.Add(Hunter.SnakeTrap);
 					exclude.Add(Hunter.VenomstrikeTrap);
+					exclude.Add(Mage.OasisAlly);
 				}
 
 				if(attacker.IsMinion)
@@ -260,17 +263,40 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			_avengeDeathRattleCount = 0;
 		}
 
-		public void HandleOpponentDamage(Entity entity)
+		public void OnNewBlock()
 		{
-			if(!HandleAction)
-				return;
-			if(entity.IsHero && entity.IsControlledBy(Game.Opponent.Id))
+			EntityDamageDealtHistory.Clear();
+		}
+
+		public void HandleEntityDamage(Entity dealer, Entity target, int damage)
+		{
+			if(target != null)
 			{
-				if(!entity.HasTag(GameTag.IMMUNE))
+				if(target.IsHero && target.IsControlledBy(Game.Opponent.Id))
 				{
-					Exclude(Paladin.EyeForAnEye);
-					Exclude(Rogue.Evasion);
-					OpponentTookDamageDuringTurns.Add(Game.GetTurnNumber());
+					if(!target.HasTag(GameTag.IMMUNE))
+					{
+						Exclude(Paladin.EyeForAnEye);
+						Exclude(Rogue.Evasion);
+						OpponentTookDamageDuringTurns.Add(Game.GetTurnNumber());
+					}
+				}
+				if(dealer != null)
+				{
+					if(dealer.IsMinion && dealer.IsControlledBy(Game.Player.Id))
+					{
+						if(!EntityDamageDealtHistory.TryGetValue(dealer.Id, out var history))
+						{
+							EntityDamageDealtHistory[dealer.Id] = new Dictionary<int, int>();
+						}
+						if(!EntityDamageDealtHistory[dealer.Id].TryGetValue(target.Id, out var targetHistory))
+						{
+							EntityDamageDealtHistory[dealer.Id][target.Id] = 0;
+						}
+						EntityDamageDealtHistory[dealer.Id][target.Id] += damage;
+						if(EntityDamageDealtHistory[dealer.Id][target.Id] >= 3)
+							Exclude(Paladin.Reckoning);
+					}
 				}
 			}
 		}
@@ -311,7 +337,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(FreeSpaceOnBoard)
 			{
 				if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN) >= 3)
+				{
 					exclude.Add(Hunter.RatTrap);
+					exclude.Add(Paladin.GallopingSavior);
+				}
 			}
 
 			if(FreeSpaceInHand)

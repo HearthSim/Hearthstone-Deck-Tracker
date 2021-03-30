@@ -456,6 +456,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Priest.Seance:
 								AddKnownCardId(gameState, target);
 								break;
+							case Collectible.Druid.MarkOfTheSpikeshell:
+								AddKnownCardId(gameState, target);
+								break;
 							case Collectible.Mage.ForgottenTorch:
 								AddKnownCardId(gameState, NonCollectible.Mage.ForgottenTorch_RoaringTorchToken);
 								break;
@@ -488,6 +491,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Mage.GhastlyConjurer:
 								AddKnownCardId(gameState, Collectible.Mage.MirrorImage);
+								break;
+							case Collectible.Druid.ThorngrowthSentries:
+								AddKnownCardId(gameState, NonCollectible.Druid.ThorngrowthSentries_ThornguardTurtleToken, 2);
 								break;
 							case Collectible.Mage.DeckOfWonders:
 								AddKnownCardId(gameState, NonCollectible.Mage.DeckofWonders_ScrollOfWonderToken, 5);
@@ -607,6 +613,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								// This currently leads to a duplicate copy of C'Thun showing up in the
 								// opponents deck list, but it will have to do for now.
 								AddKnownCardId(gameState, Collectible.Neutral.CthunTheShattered);
+								break;
+							case Collectible.Hunter.SunscaleRaptor:
+								AddKnownCardId(gameState, Collectible.Hunter.SunscaleRaptor);
+								break;
+							case Collectible.Neutral.Mankrik:
+								AddKnownCardId(gameState, NonCollectible.Neutral.Mankrik_OlgraMankriksWifeToken);
+								break;
+							case Collectible.Neutral.ShadowHunterVoljin:
+								AddKnownCardId(gameState, target);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1

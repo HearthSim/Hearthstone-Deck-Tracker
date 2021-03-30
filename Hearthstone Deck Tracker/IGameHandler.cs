@@ -57,7 +57,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerMinionPlayed(Entity entity);
 		void HandlePlayerMinionDeath(Entity entity);
 		void HandleOpponentMinionDeath(Entity entity, int turn);
-		void HandleOpponentDamage(Entity entity);
 		void HandleTurnsInPlayChange(Entity entity, int turn);
 
 		#endregion
@@ -82,6 +81,7 @@ namespace Hearthstone_Deck_Tracker
 		#endregion OpponentHandlers
 
 		void HandleEntityPredamage(Entity entity, int value);
+		void HandleEntityDamage(Entity dealer, Entity target, int value);
 		void HandleChameleosReveal(string cardId);
 		void HandleBeginMulligan();
 		void HandlePlayerMulliganDone();

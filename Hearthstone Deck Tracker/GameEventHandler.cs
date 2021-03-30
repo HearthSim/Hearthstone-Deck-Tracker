@@ -266,9 +266,15 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleEntityPredamage(Entity entity, int value)
 		{
-			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
-				HandleOpponentDamage(entity);
 			GameEvents.OnEntityWillTakeDamage.Execute(new PredamageInfo(entity, value));
+		}
+
+		public void HandleEntityDamage(Entity dealer, Entity target, int value)
+		{
+			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
+			{
+				_game.SecretsManager.HandleEntityDamage(dealer, target, value);
+			}
 		}
 
 		public void HandleProposedAttackerChange(Entity entity)
@@ -277,11 +283,6 @@ namespace Hearthstone_Deck_Tracker
 			{
 				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?.HandleNewAttackingEntity(entity);
 			}
-		}
-
-		public void HandleOpponentDamage(Entity entity)
-		{
-			_game.SecretsManager.HandleOpponentDamage(entity);
 		}
 
 		private readonly int[] _lastTurnStart = new int[2];
