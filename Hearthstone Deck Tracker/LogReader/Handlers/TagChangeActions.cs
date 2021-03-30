@@ -18,6 +18,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	internal class TagChangeActions
 	{
+		//We have to remove cards moved from deck -> graveyard when this is the parent block due to a data leak introduced by blizzard to the classic format.
+		const string ClassicTrackingCardId = HearthDb.CardIds.Collectible.Hunter.TrackingVanilla;
+
 		public Action FindAction(GameTag tag, IGame game, IHsGameState gameState, int id, int value, int prevValue)
 		{
 			switch(tag)
@@ -648,6 +651,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					break;
 				case GRAVEYARD:
+					var parentId = gameState?.CurrentBlock?.CardId;
+
+					if(parentId != null)
+					{
+						if(parentId == ClassicTrackingCardId)
+						{
+							entity.Info.Hidden = true;
+							entity.SetTag(GameTag.ZONE, (int)Zone.DECK);
+						}
+					}
+					
 					if(controller == game.Player.Id)
 						gameState.GameHandler.HandlePlayerDeckDiscard(entity, cardId, gameState.GetTurnNumber());
 					else if(controller == game.Opponent.Id)
