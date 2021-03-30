@@ -56,5 +56,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		SCHOLOMANCE = 1443,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_DarkmoonFaire")]
 		DARKMOON_FAIRE = 1466,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_TheBarrens")]
+		THE_BARRENS = 1525,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_WailingCaverns")]
+		WAILING_CAVERNS = 1559,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Legacy")]
+		LEGACY = 1635,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Classic")]
+		CLASSIC = 1646,
 	}
 }

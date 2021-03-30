@@ -57,5 +57,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_DarkmoonFaire")]
 		DarkmoonFaire = CardSet.DARKMOON_FAIRE,
+
+		[LocDescription("Enum_ArenaRewardPacks_TheBarrens")]
+		TheBarrens = CardSet.THE_BARRENS,
 	}
 }
