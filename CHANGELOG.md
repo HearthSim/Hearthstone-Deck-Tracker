@@ -1,3 +1,8 @@
+## **Release v1.14.3 - 2021-03-31**
+**Fixes**
+- Fix issue where Ashes of Outland was mistakenly moved to wild.
+- Fix Bob's Buddy issue with Barrens Blacksmith.
+
 ## **Release v1.14.2 - 2021-03-30**
 **Fixes**
 - Add support for Forged in the Barrens.
