@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker
 			CardSet.KARA, CardSet.OG, CardSet.GANGS,
 			CardSet.UNGORO, CardSet.ICECROWN, CardSet.LOOTAPALOOZA,
 			CardSet.GILNEAS, CardSet.BOOMSDAY, CardSet.TROLL,
-			CardSet.DALARAN, CardSet.BLACK_TEMPLE, CardSet.ULDUM, CardSet.DRAGONS, CardSet.YEAR_OF_THE_DRAGON
+			CardSet.DALARAN, CardSet.ULDUM, CardSet.DRAGONS, CardSet.YEAR_OF_THE_DRAGON
 		}.Select(HearthDbConverter.SetConverter).ToArray();
 
 		public static string[] ClassicOnlySets = new[]
