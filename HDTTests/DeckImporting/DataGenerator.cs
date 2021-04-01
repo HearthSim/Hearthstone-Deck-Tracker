@@ -12,7 +12,7 @@ namespace HDTTests.DeckImporting
 	{
 		public static Card GetCard(string cardId, int count = 2) => new Card(HearthDb.Cards.Collectible[cardId]) { Count = count };
 
-		public static HmCard GetHmCard(string cardId, int count = 2) => new HmCard(cardId, count, false);
+		public static HmCard GetHmCard(string cardId, int count = 2) => new HmCard(cardId, count, 0);
 
 		public static IEnumerable<T> GetCards<T>(string[] cardIds, Func<string, int, T> func) => GetCards(cardIds, new string[0], func);
 

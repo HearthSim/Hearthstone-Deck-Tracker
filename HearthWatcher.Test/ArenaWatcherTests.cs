@@ -324,7 +324,7 @@ namespace HearthWatcher.Test
 
 		public static Card NewCard(string id, int count = 1)
 		{
-			return new Card(id, count, false);
+			return new Card(id, count, 0);
 		}
 
 		public class TestArenaProvider : IArenaProvider

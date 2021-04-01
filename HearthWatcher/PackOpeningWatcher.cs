@@ -48,7 +48,7 @@ namespace HearthWatcher
 				var cards = _packProvider.GetCards();
 				if(cards?.Count == 5)
 				{
-					if(cards.All(x => _previousPack.Any(c => c.Id == x.Id & c.Premium == x.Premium)))
+					if(cards.All(x => _previousPack.Any(c => c.Id == x.Id & c.PremiumType == x.PremiumType)))
 						continue;
 					if(_previousPack.Any())
 						_invokeEvent = true;
