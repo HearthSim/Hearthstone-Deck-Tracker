@@ -65,9 +65,9 @@ namespace Hearthstone_Deck_Tracker.Live
 			var rank = format == Format.Standard ? player?.StandardRank
 				: format == Format.Classic ? player?.ClassicRank
 				: player?.WildRank;
-			var legendRank = format == Format.Standard ? player?.Standard.LegendRank
-				: format == Format.Classic ? player?.Classic.LegendRank
-				: player?.Wild.LegendRank;
+			var legendRank = format == Format.Standard ? player?.Standard?.LegendRank
+				: format == Format.Classic ? player?.Classic?.LegendRank
+				: player?.Wild?.LegendRank;
 			return new GameStart
 			{
 				Deck = boardState.Player.Deck,

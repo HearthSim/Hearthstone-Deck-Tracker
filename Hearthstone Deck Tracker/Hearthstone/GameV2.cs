@@ -183,7 +183,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var name = playerInfo?.Name ?? playerInfo?.BattleTag?.Name;
 			var valid = name != null;
-			Log.Debug($"valid={valid}, gameMode={CurrentGameMode}, player={name}, starLevel={playerInfo?.Standard.StarLevel}");
+			Log.Debug($"valid={valid}, gameMode={CurrentGameMode}, player={name}, starLevel={playerInfo?.Standard?.StarLevel}");
 			return valid;
 		}
 
