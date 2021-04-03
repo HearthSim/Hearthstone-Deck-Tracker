@@ -282,14 +282,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			if(Config.Instance.SeenBobsBuddyAverageDamage)
 				return false;
-			if(_lastCombatResult < 0 && _opponentDamageDealtBounds != null && _opponentDamageDealtBounds.Any())
+			if(_lastCombatResult < 0 && _opponentDamageDealtBounds != null && _opponentDamageDealtBounds.Count > 1)
 			{
 				if(_lastCombatResult < _opponentDamageDealtBounds[0] || _lastCombatResult > _opponentDamageDealtBounds[1])
 				{
 					return true;
 				}
 			}
-			else if(_lastCombatResult > 0 && _playerDamageDealtBounds != null)
+			else if(_lastCombatResult > 0 && _playerDamageDealtBounds != null && _playerDamageDealtBounds.Count > 1)
 			{
 				if(_lastCombatResult < _playerDamageDealtBounds[0] || _lastCombatResult > _playerDamageDealtBounds[1])
 				{
