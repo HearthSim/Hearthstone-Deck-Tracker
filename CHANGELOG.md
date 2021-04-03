@@ -1,3 +1,9 @@
+## **Release v1.14.4 - 2021-04-03**
+**Fixes**
+- Add Demon Hunter Initiate to wild.
+- Add support for diamond cards
+- Fix playing against opponents with hidden names
+
 ## **Release v1.14.3 - 2021-03-31**
 **Fixes**
 - Fix issue where Ashes of Outland was mistakenly moved to wild.
