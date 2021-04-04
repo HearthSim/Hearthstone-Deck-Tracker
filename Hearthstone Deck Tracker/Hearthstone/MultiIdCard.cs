@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker;
@@ -11,6 +12,7 @@ public class MultiIdCard
 
 	public MultiIdCard(params string[] ids)
 	{
+		Debug.Assert(ids.Distinct().Count() == ids.Length, "ids param contains duplicate values");
 		Ids = ids;
 	}
 
