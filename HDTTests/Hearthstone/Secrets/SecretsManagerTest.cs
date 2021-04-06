@@ -386,7 +386,7 @@ namespace HDTTests.Hearthstone.Secrets
 				entity.SetTag(GameTag.SECRET, 1);
 				entity.SetTag(GameTag.CLASS, (int)CardClass.PALADIN);
 				entity.SetTag(GameTag.CONTROLLER, game.Opponent.Id);
-				entity.CardId = Paladin.Repentance.Ids[0];
+				entity.CardId = Paladin.Reckoning.Ids[0];
 				return entity;
 			}
 			
@@ -404,33 +404,33 @@ namespace HDTTests.Hearthstone.Secrets
 			Assert.AreEqual(1, secretsManager.Secrets.Count);
 
 			var cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
 
 			game.Entities.Add(3, RevealedSecret(3));
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 0));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 0));
 
 			game.CurrentFormat = Format.Standard;
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 0));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 0));
 
 			game.CurrentGameType = GameType.GT_ARENA;
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
 
 			paladinEntity.Info.Created = true;
 
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
 
 			game.CurrentGameType = GameType.GT_RANKED;
 
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
 
 			game.CurrentFormat = Format.Wild;
 			cards = secretsManager.GetSecretList();
-			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Repentance == c.Id && c.Count == 1));
+			Assert.IsNotNull(cards.SingleOrDefault(c => Paladin.Reckoning == c.Id && c.Count == 1));
 		}
 	}
 }
