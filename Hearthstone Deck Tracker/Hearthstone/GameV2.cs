@@ -108,6 +108,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			: CurrentGameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(CurrentGameStats.OpponentHeroCardId);
 
 		public bool IsBattlegroundsMatch => CurrentGameType == GameType.GT_BATTLEGROUNDS || CurrentGameType == GameType.GT_BATTLEGROUNDS_FRIENDLY;
+		public bool IsConstructedMatch => CurrentGameType == GameType.GT_RANKED
+										|| CurrentGameType == GameType.GT_CASUAL
+										|| CurrentGameType == GameType.GT_VS_FRIEND;
 
 		public Mode CurrentMode
 		{

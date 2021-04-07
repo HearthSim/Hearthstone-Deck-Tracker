@@ -280,6 +280,23 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(new InfluxPointBuilder("hdt_bb_enabled_changed").Tag("new_state", newState).Build());
 		}
 
+		public static void OnMulliganToastClose(bool wasClicked, bool hasData) 
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_mulligan_toast_closed")
+				.Tag("was_clicked", wasClicked)
+				.Tag("has_data", hasData)
+				.Build());
+		}
+
+		public static void OnMulliganToastEnabledChanged(bool newState)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			WritePoint(new InfluxPointBuilder("hdt_mulligan_toast_enabled_changed").Tag("new_state", newState).Build());
+		}
+
 		private static List<InfluxPoint> _queue = new List<InfluxPoint>();
 		public static void SendQueuedMetrics()
 		{

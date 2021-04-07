@@ -474,6 +474,8 @@ namespace Hearthstone_Deck_Tracker
 						.StartShopping(!_game.CurrentGameStats.WasConceded);
 					OpponentDeadForTracker.ResetOpponentDeadForTracker();
 				}
+				if(_game.IsConstructedMatch)
+					Core.Overlay.HideMulliganPanel(false);
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
 				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
@@ -825,12 +827,46 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.CurrentGameStats != null)
 					_game.CurrentGameStats.BattlegroundsRaces = BattlegroundsUtils.GetAvailableRaces(_game.CurrentGameStats.GameId);
 			}
+			else if(_game.IsConstructedMatch)
+				HandleConstructedStart();
 		}
 
 		public void HandlePlayerMulliganDone()
 		{
 			if(_game.IsBattlegroundsMatch)
 				Core.Overlay.HideBattlegroundsHeroPanel();
+			else if(_game.IsConstructedMatch)
+				Core.Overlay.HideMulliganPanel(false);
+		}
+
+		private async void HandleConstructedStart()
+		{
+			if(Config.Instance.ShowMulliganToast)
+			{
+				for(var i = 0; i < 10; i++)
+				{
+					await Task.Delay(500);
+					var step = _game.GameEntity?.GetTag(STEP) ?? 0;
+					if(step == 0)
+						continue;
+					if(step > (int)Step.BEGIN_MULLIGAN)
+						break;
+
+					// Wait for the game to fade in
+					await Task.Delay(3000);
+
+
+					var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
+					if(!string.IsNullOrEmpty(shortId))
+					{
+						var cards = Core.Game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).Select(x => x.Card.DbfIf);
+						var opponentClass = Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+						Core.Overlay.ShowMulliganPanel(shortId, cards.ToArray(), opponentClass);
+					}
+
+					break;
+				}
+			}
 		}
 
 		private async void HandleBattlegroundsStart()

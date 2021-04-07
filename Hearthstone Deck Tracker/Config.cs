@@ -801,6 +801,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool SeenBobsBuddyAverageDamage = false;
 
 		[DefaultValue(false)]
+		public bool SeenMulliganToast = false;
+
+		[DefaultValue(false)]
 		public bool BobsBuddyAverageDamageInfoClosed = false;
 
 		[DefaultValue(false)]
@@ -850,6 +853,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ShowBattlegroundsToast = true;
+
+		[DefaultValue(true)]
+		public bool ShowMulliganToast = true;
 
 		[DefaultValue(true)]
 		public bool ShowLeagueFilterHint = true;

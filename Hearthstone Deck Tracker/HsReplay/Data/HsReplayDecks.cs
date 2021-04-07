@@ -13,10 +13,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Data
 		{
 			get
 			{
-				if(!(_data?.IsStale ?? true) || _loading)
-					return _data?.Decks ?? new string[0];
-				Load();
-				return new string[0];
+				if(_data == null)
+				{
+					if(!_loading)
+						Load();
+					return new string[0];
+				}
+				if(_data.IsStale && !_loading)
+					Load();
+				return _data.Decks;
 			}
 		}
 

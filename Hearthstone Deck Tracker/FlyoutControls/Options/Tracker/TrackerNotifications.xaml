@@ -96,5 +96,10 @@
                   HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxBattlegrounds_Checked"
                   Unchecked="CheckboxBattlegrounds_Unchecked" />
+        <CheckBox x:Name="CheckboxMulligan"
+                  Content="{lex:Loc Options_Tracker_Notifications_Label_Mulligan}"
+                  HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top"
+                  Checked="CheckboxMulligan_Checked"
+                  Unchecked="CheckboxMulligan_Unchecked" />
     </StackPanel>
 </UserControl>

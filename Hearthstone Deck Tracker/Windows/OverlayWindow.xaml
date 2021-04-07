@@ -210,6 +210,7 @@
                     </StackPanel>
                 </StackPanel>
                 <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
+                <overlay:MulliganPanel x:Name="MulliganNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
             </Canvas>
         </Border>
     </Grid>

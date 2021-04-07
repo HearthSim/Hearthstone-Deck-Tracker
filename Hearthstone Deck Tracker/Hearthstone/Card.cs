@@ -225,6 +225,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public CardSet? CardSet => _dbCard?.Set;
 
+		public CardClass CardClass => _dbCard?.Class ?? CardClass.INVALID;
+
 		public int TechLevel => _dbCard?.Entity.GetTag(GameTag.TECH_LEVEL) ?? 0;
 
 		public Race? RaceEnum => _dbCard?.Race;
