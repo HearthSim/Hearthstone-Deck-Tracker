@@ -108,6 +108,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Hunter.PackTactics);
 					exclude.Add(Hunter.SnakeTrap);
 					exclude.Add(Hunter.VenomstrikeTrap);
+					//I think most of the secrets here could (and maybe should) check for this, but this one definitley does because of Hysteria.
 					if(Game.PlayerEntity.IsCurrentPlayer)
 						exclude.Add(Mage.OasisAlly);
 				}
