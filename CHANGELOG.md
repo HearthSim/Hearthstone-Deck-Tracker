@@ -1,4 +1,4 @@
-## **Release v1.14.5 - 2021-04-10**
+## **Release v1.14.6 - 2021-04-10**
 **Fixes**
 - Fix issue where old secrets would incorrectly appear as available in Standard.
 - Fix issue where a secret transformed by Oh My Yogg would still cause the secret list to appear.
