@@ -319,7 +319,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(Game.OpponentEntity.IsCurrentPlayer && turn > _lastStartOfTurnDamageCheck)
 			{
 				_lastStartOfTurnDamageCheck = turn;
-				if(!OpponentTookDamageDuringTurns.Contains(turn - 1))
+				var turnToCheck = turn - (Game.PlayerEntity?.HasTag(GameTag.FIRST_PLAYER) ?? false ? 0 : 1);
+				if(!OpponentTookDamageDuringTurns.Contains(turnToCheck))
 					Exclude(Mage.RiggedFaireGame);
 			}
 		}
