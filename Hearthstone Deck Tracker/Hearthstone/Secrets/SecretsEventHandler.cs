@@ -108,7 +108,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Hunter.PackTactics);
 					exclude.Add(Hunter.SnakeTrap);
 					exclude.Add(Hunter.VenomstrikeTrap);
-					exclude.Add(Mage.OasisAlly);
+					if(Game.PlayerEntity.IsCurrentPlayer)
+						exclude.Add(Mage.OasisAlly);
 				}
 
 				if(attacker.IsMinion)
