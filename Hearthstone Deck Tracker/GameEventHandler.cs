@@ -868,7 +868,6 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Core.Overlay.ShowBgsTopBar();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
-
 		}
 
 		#region Player
@@ -1022,6 +1021,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			_game.Opponent.PlayToGraveyard(entity, cardId, turn);
 			GameEvents.OnOpponentPlayToGraveyard.Execute((Card)entity.Card.Clone());
+
 			if(playersTurn && entity.IsMinion)
 				HandleOpponentMinionDeath(entity, turn);
 
