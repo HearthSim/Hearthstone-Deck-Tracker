@@ -1,3 +1,10 @@
+## **Release v1.14.5 - 2021-04-10**
+**Fixes**
+- Fix issue where old secrets would incorrectly appear as available in Standard.
+- Fix issue where a secret transformed by Oh My Yogg would still cause the secret list to appear.
+- Fix issue where Rigged Faire Game would occasionally incorrectly be ruled out a possible secret.
+- Fix issue where Oasis Ally could appear as having been ruled out as a possible secret during their turn if they played Hysteria.
+
 ## **Release v1.14.4 - 2021-04-03**
 **Fixes**
 - Add Demon Hunter Initiate to wild.
