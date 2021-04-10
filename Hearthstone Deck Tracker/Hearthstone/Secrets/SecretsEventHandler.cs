@@ -108,7 +108,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Hunter.PackTactics);
 					exclude.Add(Hunter.SnakeTrap);
 					exclude.Add(Hunter.VenomstrikeTrap);
-					exclude.Add(Mage.OasisAlly);
+					//I think most of the secrets here could (and maybe should) check for this, but this one definitley does because of Hysteria.
+					if(Game.PlayerEntity.IsCurrentPlayer)
+						exclude.Add(Mage.OasisAlly);
 				}
 
 				if(attacker.IsMinion)
@@ -318,7 +320,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(Game.OpponentEntity.IsCurrentPlayer && turn > _lastStartOfTurnDamageCheck)
 			{
 				_lastStartOfTurnDamageCheck = turn;
-				if(!OpponentTookDamageDuringTurns.Contains(turn - 1))
+				var turnToCheck = turn - (Game.PlayerEntity?.HasTag(GameTag.FIRST_PLAYER) ?? false ? 0 : 1);
+				if(!OpponentTookDamageDuringTurns.Contains(turnToCheck))
 					Exclude(Mage.RiggedFaireGame);
 			}
 		}

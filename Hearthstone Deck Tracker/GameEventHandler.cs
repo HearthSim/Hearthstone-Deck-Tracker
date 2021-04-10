@@ -26,6 +26,7 @@ using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 #endregion
 
@@ -867,7 +868,6 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Core.Overlay.ShowBgsTopBar();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
-
 		}
 
 		#region Player
@@ -1017,12 +1017,24 @@ namespace Hearthstone_Deck_Tracker
 				HandlePlayerMinionDeath(entity);
 		}
 
-		public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)
+		public async void HandleOpponentPlayToGraveyard(IHsGameState gameState, Entity entity, string cardId, int turn, bool playersTurn)
 		{
 			_game.Opponent.PlayToGraveyard(entity, cardId, turn);
 			GameEvents.OnOpponentPlayToGraveyard.Execute((Card)entity.Card.Clone());
+
 			if(playersTurn && entity.IsMinion)
 				HandleOpponentMinionDeath(entity, turn);
+
+			if(!playersTurn && entity.Info.WasTransformed)
+			{
+				await Task.Delay(3000);
+				var transformedSecert = _game.SecretsManager.Secrets.Where(x => x.Entity.Id == entity.Id).FirstOrDefault();
+				if(transformedSecert != null)
+				{
+					_game.SecretsManager.Secrets.Remove(transformedSecert);
+					_game.SecretsManager.Refresh();
+				}
+			}
 		}
 
 		public void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn)

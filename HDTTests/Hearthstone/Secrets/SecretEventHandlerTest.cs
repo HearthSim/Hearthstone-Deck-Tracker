@@ -207,6 +207,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_HeroToMinion_PlayerAttackTest()
 		{
+			_game.PlayerEntity.SetTag(GameTag.CURRENT_PLAYER, 1);
 			_game.SecretsManager.HandleAttack(_heroPlayer, _opponentMinion1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.SnakeTrap, HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.SplittingImage, MageSecrets.OasisAlly);
@@ -217,6 +218,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_MinionToMinion_PlayerAttackTest()
 		{
+			_game.PlayerEntity.SetTag(GameTag.CURRENT_PLAYER, 1);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _opponentMinion1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap,
 				HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics);
@@ -228,6 +230,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_MinionToDivineShieldMinion_PlayerAttackTest()
 		{
+			_game.PlayerEntity.SetTag(GameTag.CURRENT_PLAYER, 1);
 			_game.SecretsManager.HandleAttack(_playerMinion1, _opponentDivineShieldMinion);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.FreezingTrap, HunterSecrets.SnakeTrap,
 				HunterSecrets.VenomstrikeTrap, HunterSecrets.PackTactics);
