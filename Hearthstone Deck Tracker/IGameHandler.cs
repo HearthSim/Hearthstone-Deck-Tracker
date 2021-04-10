@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
 
 		void HandleOpponentJoust(Entity entity, string cardId, int turn);
 		void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn);
-		void HandleOpponentPlayToGraveyard(IHsGameState gameState, Entity entity, string cardId, int turn, bool playersTurn);
+		void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn);
 		void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn);
 		void HandleOpponentCreateInPlay(Entity entity, string cardId, int turn);
 		void HandlePlayerJoust(Entity entity, string cardId, int turn);
