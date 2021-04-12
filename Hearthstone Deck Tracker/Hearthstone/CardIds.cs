@@ -19,6 +19,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			"PVPDR_TEST_"
 		};
 
+		public static Dictionary<string, string> UpgradeOverrides = new Dictionary<string, string>
+		{
+			[NonCollectible.Druid.LivingSeedRank1_LivingSeedRank2Token] = Collectible.Druid.LivingSeedRank1,
+			[NonCollectible.Druid.LivingSeedRank1_LivingSeedRank3Token] = Collectible.Druid.LivingSeedRank1,
+			[NonCollectible.Hunter.TameBeastRank1_TameBeastRank2Token] = Collectible.Hunter.TameBeastRank1,
+			[NonCollectible.Hunter.TameBeastRank1_TameBeastRank3Token] = Collectible.Hunter.TameBeastRank1,
+			[NonCollectible.Shaman.ChainLightningRank1_ChainLightningRank2Token] = Collectible.Shaman.ChainLightningRank1,
+			[NonCollectible.Shaman.ChainLightningRank1_ChainLightningRank3Token] = Collectible.Shaman.ChainLightningRank1,
+			[NonCollectible.Rogue.WickedStabRank1_WickedStabRank2Token] = Collectible.Rogue.WickedStabRank1,
+			[NonCollectible.Rogue.WickedStabRank1_WickedStabRank3Token] = Collectible.Rogue.WickedStabRank1,
+			[NonCollectible.Demonhunter.FuryRank1_FuryRank2Token] = Collectible.Demonhunter.FuryRank1,
+			[NonCollectible.Demonhunter.FuryRank1_FuryRank3Token] = Collectible.Demonhunter.FuryRank1,
+			[NonCollectible.Mage.FlurryRank1_FlurryRank2Token] = Collectible.Mage.FlurryRank1,
+			[NonCollectible.Mage.FlurryRank1_FlurryRank3Token] = Collectible.Mage.FlurryRank1,
+			[NonCollectible.Paladin.ConvictionRank1_ConvictionRank2Token] = Collectible.Paladin.ConvictionRank1,
+			[NonCollectible.Paladin.ConvictionRank1_ConvictionRank3Token] = Collectible.Paladin.ConvictionRank1,
+			[NonCollectible.Priest.CondemnRank1_CondemnRank2Token] = Collectible.Priest.CondemnRank1,
+			[NonCollectible.Priest.CondemnRank1_CondemnRank3Token] = Collectible.Priest.CondemnRank1,
+			[NonCollectible.Warlock.ImpSwarmRank1_ImpSwarmRank2Token] = Collectible.Warlock.ImpSwarmRank1,
+			[NonCollectible.Warlock.ImpSwarmRank1_ImpSwarmRank3Token] = Collectible.Warlock.ImpSwarmRank1,
+			[NonCollectible.Warrior.ConditioningRank1_ConditioningRank2Token] = Collectible.Warrior.ConditioningRank1,
+			[NonCollectible.Warrior.ConditioningRank1_ConditioningRank3Token] = Collectible.Warrior.ConditioningRank1,
+		};
+
 		// todo: conditional deathrattle summons: Voidcaller
 		public static readonly Dictionary<string, int> DeathrattleSummonCardIds = new Dictionary<string, int>
 		{

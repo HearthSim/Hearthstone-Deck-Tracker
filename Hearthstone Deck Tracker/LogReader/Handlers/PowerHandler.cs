@@ -710,8 +710,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private static string EnsureValidCardID(string cardId)
 		{
-			if(!string.IsNullOrEmpty(cardId) && cardId.StartsWith(TransferStudentToken) && !cardId.EndsWith("e"))
+			if(string.IsNullOrEmpty(cardId))
+				return cardId;
+			if(cardId.StartsWith(TransferStudentToken) && !cardId.EndsWith("e"))
 				return Collectible.Neutral.TransferStudent;
+			if(CardIds.UpgradeOverrides.TryGetValue(cardId, out var overrideId))
+				return overrideId;
 			return cardId;
 		}
 
