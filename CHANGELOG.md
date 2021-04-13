@@ -1,3 +1,10 @@
+## **Release v1.14.7 - 2021-04-13**
+**Updated for Hearthstone 20.0.2**
+**New**
+- Added mulligan toast for constructed games.
+**Fixes**
+- Fixed an issue where "Rank 1" spells were not tracked correctly.
+
 ## **Release v1.14.6 - 2021-04-10**
 **Fixes**
 - Fix issue where old secrets would incorrectly appear as available in Standard.
