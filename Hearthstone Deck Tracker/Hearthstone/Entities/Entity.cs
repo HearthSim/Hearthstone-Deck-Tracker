@@ -204,7 +204,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			{
 				if(Hidden)
 					return CardMark.None;
-				if(_entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinBASIC
+				if(_entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore
 					   || _entity.CardId == HearthDb.CardIds.NonCollectible.Neutral.TradePrinceGallywix_GallywixsCoinToken)
 					return CardMark.Coin;
 				if(Returned)

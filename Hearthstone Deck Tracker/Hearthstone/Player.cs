@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string LastDiedMinionCardId { get; set; }
 		public string LastDrawnCardId { get; set; }
 
-		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinBASIC);
+		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore);
 		public int HandCount => Hand.Count();
 		public int DeckCount => Deck.Count();
 

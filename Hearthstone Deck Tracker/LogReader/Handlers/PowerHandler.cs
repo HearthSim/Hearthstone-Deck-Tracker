@@ -310,10 +310,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, target);
 								break;
 							case Collectible.Neutral.HoardingDragon:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBASIC, 2);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore, 2);
 								break;
 							case Collectible.Priest.GildedGargoyle:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBASIC);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
 							case Collectible.Druid.AstralTiger:
 								AddKnownCardId(gameState, Collectible.Druid.AstralTiger);
@@ -344,7 +344,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									AddKnownCardId(gameState, game.Opponent.LastDiedMinionCardId);
 								break;
 							case Collectible.Druid.SecureTheDeck:
-								AddKnownCardId(gameState, Collectible.Druid.Claw, 3);
+								AddKnownCardId(gameState, Collectible.Druid.ClawLegacy, 3);
 								break;
 							case Collectible.Rogue.Waxadred:
 								AddKnownCardId(gameState, NonCollectible.Rogue.Waxadred_WaxadredsCandleToken);
@@ -490,7 +490,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.ElisetheTrailblazer_UngoroPackToken);
 								break;
 							case Collectible.Mage.GhastlyConjurer:
-								AddKnownCardId(gameState, Collectible.Mage.MirrorImage);
+								AddKnownCardId(gameState, Collectible.Mage.MirrorImageLegacy);
 								break;
 							case Collectible.Druid.ThorngrowthSentries:
 								AddKnownCardId(gameState, NonCollectible.Druid.ThorngrowthSentries_ThornguardTurtleToken, 2);
@@ -559,7 +559,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.BananaBuffoon_BananasToken, 2);
 								break;
 							case Collectible.Neutral.BootyBayBookie:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBASIC);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
 							case Collectible.Neutral.PortalKeeper:
 							case Collectible.Neutral.PortalOverfiend:
@@ -584,7 +584,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Rogue.BloodsailFlybooter_SkyPirateToken, 2);
 								break;
 							case Collectible.Rogue.UmbralSkulker:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBASIC, 3);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore, 3);
 								break;
 							case Collectible.Neutral.Sathrovarr:
 								AddKnownCardId(gameState, target, 3);
