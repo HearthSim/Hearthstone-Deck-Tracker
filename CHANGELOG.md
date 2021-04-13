@@ -1,4 +1,4 @@
-## **Release v1.14.7 - 2021-04-13**
+## **Release v1.14.8 - 2021-04-13**
 **Updated for Hearthstone 20.0.2**
 **New**
 - Added mulligan toast for constructed games.
