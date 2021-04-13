@@ -18,7 +18,7 @@ namespace HDTTests.DeckImporting
 			Druid.Bite,
 			Druid.CelestialDreamer,
 			Druid.Cenarius,
-			Druid.Claw,
+			Druid.ClawLegacy,
 			Druid.DarkArakkoa,
 			Druid.DarkWispers,
 			Druid.DarnassusAspirant,
@@ -30,8 +30,8 @@ namespace HDTTests.DeckImporting
 		{
 			Hunter.Acidmaw,
 			Hunter.Alleycat,
-			Hunter.AnimalCompanion,
-			Hunter.ArcaneShot,
+			Hunter.AnimalCompanionLegacy,
+			Hunter.ArcaneShotLegacy,
 			Hunter.BallOfSpiders,
 			Hunter.BearTrap,
 			Hunter.BestialWrath,
@@ -59,9 +59,9 @@ namespace HDTTests.DeckImporting
 			Druid.ForceOfNature,
 			Druid.GiantAnaconda,
 			Druid.GroveTender,
-			Druid.HealingTouch,
-			Druid.Innervate,
-			Druid.IronbarkProtector,
+			Druid.HealingTouchLegacy,
+			Druid.InnervateLegacy,
+			Druid.IronbarkProtectorLegacy,
 		};
 
 		public static readonly string[] Deck1Cards_MinorChanges = Deck1Cards.Take(14).Concat(new[] { Druid.VerdantLongneck }).ToArray();
