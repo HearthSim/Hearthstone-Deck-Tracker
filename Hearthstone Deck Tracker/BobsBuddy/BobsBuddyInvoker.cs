@@ -451,12 +451,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(LastAttackingHero == null)
 				return CombatResult.Tie;
 			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
-			var opponnentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
-			if(playerHero != null && opponnentHero != null)
+			var opponentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
+			if(playerHero != null && opponentHero != null)
 			{
 				if(LastAttackingHero.CardId == playerHero.CardId)
 					return CombatResult.Win;
-				if(LastAttackingHero.CardId == opponnentHero.CardId)
+				if(LastAttackingHero.CardId == opponentHero.CardId)
 					return CombatResult.Loss;
 			}
 			return CombatResult.Invalid;
@@ -465,12 +465,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private LethalResult GetLastLethalResult()
 		{
 			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
-			var opponnentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
-			if(playerHero != null && opponnentHero != null)
+			var opponentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
+			if(playerHero != null && opponentHero != null)
 			{
-				if(opponnentHero.Health <= 0)
+				//We also check the health tag here to make sure players that disconnect are not improperly registered as dead.
+				if(opponentHero.Health <= 0 && opponentHero.GetTag(GameTag.HEALTH) > 0)
 					return LethalResult.OpponentDied;
-				if(playerHero.Health <= 0)
+				if(playerHero.Health <= 0 && playerHero.GetTag(GameTag.HEALTH) > 0)
 					return LethalResult.FriendlyDied;
 			}
 			return LethalResult.NoOneDied;
