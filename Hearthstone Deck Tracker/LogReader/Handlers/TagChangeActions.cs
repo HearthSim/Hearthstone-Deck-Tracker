@@ -167,7 +167,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.Entities.TryGetValue(displayedCreatorId, out var displayedCreator))
 				{
 					// For some reason Far Sight sets DISPLAYED_CREATOR on the entity
-					if(displayedCreator.CardId == CardIds.Collectible.Shaman.FarSight)
+					if(displayedCreator.CardId == Collectible.Shaman.FarSight || displayedCreator.CardId == Collectible.Shaman.FarSightVanilla)
 						return;
 				}
 
