@@ -8,8 +8,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class StringImporter
 	{
-		private static readonly Regex CardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!\-,]+)");
-		private static readonly Regex CardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!\-,]+?)(\s+(x\s*)?(?<count>\d))(\s*)$");
+		private static readonly Regex CardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!\-(),]+)");
+		private static readonly Regex CardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!\-(),]+?)(\s+(x\s*)?(?<count>\d))(\s*)$");
 		public static char[] Separators = { '\n', '|' };
 
 		public static bool IsValidImportString(string importString)
