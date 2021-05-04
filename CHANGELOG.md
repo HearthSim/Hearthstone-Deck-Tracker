@@ -1,3 +1,7 @@
+## **Release v1.14.9 - 2021-05-04**
+**Fixes**
+- Fixed an issue related to the Hearthstone 20.2 patch that would cause the app to freeze. Another update for the Battlegrounds changes will follow shortly
+
 ## **Release v1.14.8 - 2021-04-13**
 **Updated for Hearthstone 20.0.2**
 **New**
