@@ -15,7 +15,7 @@ namespace HearthWatcher
 		private bool _watch;
 		private readonly IExperienceProvider _experienceProvider;
 
-		public ExperienceWatcher(IExperienceProvider experienceProvider, int delay = 500)
+		public ExperienceWatcher(IExperienceProvider experienceProvider, int delay = 1000)
 		{
 			_delay = delay;
 			_experienceProvider = experienceProvider;
