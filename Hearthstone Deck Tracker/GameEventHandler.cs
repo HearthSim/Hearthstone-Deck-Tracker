@@ -286,6 +286,12 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public void HandleCostReduction(int amount)
+		{
+			foreach(var card in _game.Opponent.Hand)
+				card.Info.CostReduction += amount;
+		}
+
 		private readonly int[] _lastTurnStart = new int[2];
 		public void HandleTurnsInPlayChange(Entity entity, int turn)
 		{
