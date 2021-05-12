@@ -1,3 +1,6 @@
+## **Release v1.14.12- 2021-05-12**
+**Updated for Hearthstone 20.2.2**
+
 ## **Release v1.14.11- 2021-05-05**
 **Fixes**
 - Added card tiles for new Battlegrounds cards.
