@@ -271,6 +271,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(!game.Entities.TryGetValue(value, out var entity))
 				return;
+			if(entity.IsHero)
+			{
+				Log.Debug($"Saw hero attack from {entity.CardId}");
+			}
 			gameState.GameHandler.HandleProposedAttackerChange(entity);
 		}
 

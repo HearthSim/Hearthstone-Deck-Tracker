@@ -273,7 +273,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
 
 				if(validateResults)
-					ValidateSimulationResult();
+					ValidateSimulationResultAsync();
 			}
 			catch(Exception e)
 			{
@@ -446,8 +446,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return 0;	
 		}
 
-		private CombatResult GetLastCombatResult()
+		private async Task<CombatResult> GetLastCombatResultAsync()
 		{
+			await Task.Delay(1000);
 			if(LastAttackingHero == null)
 				return CombatResult.Tie;
 			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
@@ -462,8 +463,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return CombatResult.Invalid;
 		}
 
-		private LethalResult GetLastLethalResult()
+		private async Task<LethalResult> GetLastLethalResultAsync()
 		{
+			await Task.Delay(1000);
 			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
 			var opponentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
 			if(playerHero != null && opponentHero != null)
@@ -477,7 +479,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return LethalResult.NoOneDied;
 		}
 
-		private void ValidateSimulationResult()
+		private async Task ValidateSimulationResultAsync()
 		{
 			DebugLog("Validating results...");
 			if(Output == null)
@@ -509,20 +511,23 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 
-			var result = GetLastCombatResult();
-			var lethalResult = GetLastLethalResult();
+			var result = GetLastCombatResultAsync();
+			var lethalResult = GetLastLethalResultAsync();
+
+			await result;
+			await lethalResult;
 
 			DebugLog($"result={result}, lethalResult={lethalResult}");
 
 			var terminalCase = false;
 
-			if (IsIncorrectCombatResult(result))
+			if (IsIncorrectCombatResult(result.Result))
 			{
 				terminalCase = true;
 				if (ReportErrors)
 					AlertWithLastInputOutput(result.ToString());
 			}
-			if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
+			if(IsIncorrectLethalResult(lethalResult.Result) && !OpposingKelThuzadDied(lethalResult.Result))
 			{
 				terminalCase = true;
 				if (ReportErrors)
@@ -530,7 +535,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, terminalCase, _removedLichKingHeroPowerFromMinion);
+				Influx.OnBobsBuddySimulationCompleted(result.Result, Output, _turn, terminalCase, _removedLichKingHeroPowerFromMinion);
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)
