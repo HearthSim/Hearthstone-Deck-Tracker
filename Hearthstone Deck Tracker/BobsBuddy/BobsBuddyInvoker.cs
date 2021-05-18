@@ -446,9 +446,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return 0;	
 		}
 
-		private async Task<CombatResult> GetLastCombatResultAsync()
+		private CombatResult GetLastCombatResult()
 		{
-			await Task.Delay(1000);
 			if(LastAttackingHero == null)
 				return CombatResult.Tie;
 			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
@@ -463,9 +462,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return CombatResult.Invalid;
 		}
 
-		private async Task<LethalResult> GetLastLethalResultAsync()
+		private LethalResult GetLastLethalResult()
 		{
-			await Task.Delay(1000);
 			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
 			var opponentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
 			if(playerHero != null && opponentHero != null)
@@ -511,23 +509,25 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 
-			var result = GetLastCombatResultAsync();
-			var lethalResult = GetLastLethalResultAsync();
+			
+			//We delay checking the combat results because the tag changes can sometimes be read by the parser with a bit of delay after they're printed in the log.
+			//Without this delay they can occasionally be missed.
 
-			await result;
-			await lethalResult;
+			await Task.Delay(1000);
+			var result = GetLastCombatResult();
+			var lethalResult = GetLastLethalResult();
 
 			DebugLog($"result={result}, lethalResult={lethalResult}");
 
 			var terminalCase = false;
 
-			if (IsIncorrectCombatResult(result.Result))
+			if (IsIncorrectCombatResult(result))
 			{
 				terminalCase = true;
 				if (ReportErrors)
 					AlertWithLastInputOutput(result.ToString());
 			}
-			if(IsIncorrectLethalResult(lethalResult.Result) && !OpposingKelThuzadDied(lethalResult.Result))
+			if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
 			{
 				terminalCase = true;
 				if (ReportErrors)
@@ -535,7 +535,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(result.Result, Output, _turn, terminalCase, _removedLichKingHeroPowerFromMinion);
+				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, terminalCase, _removedLichKingHeroPowerFromMinion);
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)
