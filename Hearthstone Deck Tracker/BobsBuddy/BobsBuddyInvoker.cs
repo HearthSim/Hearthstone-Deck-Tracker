@@ -273,7 +273,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
 
 				if(validateResults)
-					ValidateSimulationResult();
+					ValidateSimulationResultAsync();
 			}
 			catch(Exception e)
 			{
@@ -477,7 +477,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return LethalResult.NoOneDied;
 		}
 
-		private void ValidateSimulationResult()
+		private async Task ValidateSimulationResultAsync()
 		{
 			DebugLog("Validating results...");
 			if(Output == null)
@@ -509,6 +509,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 
+			
+			//We delay checking the combat results because the tag changes can sometimes be read by the parser with a bit of delay after they're printed in the log.
+			//Without this delay they can occasionally be missed.
+
+			await Task.Delay(1000);
 			var result = GetLastCombatResult();
 			var lethalResult = GetLastLethalResult();
 
