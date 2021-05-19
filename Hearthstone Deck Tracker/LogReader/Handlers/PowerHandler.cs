@@ -623,6 +623,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.ShadowHunterVoljin:
 								AddKnownCardId(gameState, target);
 								break;
+							case Collectible.Paladin.AldorAttendant:
+								if(actionStartingEntity.IsControlledBy(game.Player.Id))
+									gameState.GameHandler.HandlePlayerLibramReduction(1);
+								else
+									gameState.GameHandler.HandleOpponentLibramReduction(1);
+								break;
+							case Collectible.Paladin.AldorTruthseeker:
+								if(actionStartingEntity.IsControlledBy(game.Player.Id))
+									gameState.GameHandler.HandlePlayerLibramReduction(2);
+								else
+									gameState.GameHandler.HandleOpponentLibramReduction(2);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower

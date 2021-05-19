@@ -195,6 +195,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showPlayerJadeCounter = WotogCounterHelper.ShowPlayerJadeCounter;
 			var showPlayerPogoHopperCounter = WotogCounterHelper.ShowPlayerPogoHopperCounter;
 			var showPlayerGalakrondCounter = WotogCounterHelper.ShowPlayerGalakrondCounter;
+			var showPlayerLibramCounter = WotogCounterHelper.ShowPlayerLibramCounter;
 			if(showPlayerCthunCounter)
 			{
 				var proxy = WotogCounterHelper.PlayerCthunProxy;
@@ -209,16 +210,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsPlayer.PogoHopper = ((_game.Player.PogoHopperPlayedCount + 1 ) * 2 - 1).ToString();
 			if(showPlayerGalakrondCounter)
 				WotogIconsPlayer.Galakrond = WotogCounterHelper.PlayerGalakrondInvokeCounter.ToString();
+			if(showPlayerLibramCounter)
+				WotogIconsPlayer.Libram = WotogCounterHelper.PlayerLibramCounter.ToString();
 			WotogIconsPlayer.WotogCounterStyle = showPlayerCthunCounter && showPlayerSpellsCounter ? Full : (showPlayerCthunCounter ? Cthun : (showPlayerSpellsCounter ? Spells : None));
 			WotogIconsPlayer.JadeCounterStyle = showPlayerJadeCounter ? Full : None;
 			WotogIconsPlayer.PogoHopperCounterStyle = showPlayerPogoHopperCounter ? Full : None;
 			WotogIconsPlayer.GalakrondCounterStyle = showPlayerGalakrondCounter ? Full : None;
+			WotogIconsPlayer.LibramCounterStyle = showPlayerLibramCounter ? Full : None;
 
 			var showOpponentCthunCounter = WotogCounterHelper.ShowOpponentCthunCounter;
 			var showOpponentSpellsCounter = WotogCounterHelper.ShowOpponentSpellsCounter;
 			var showOpponentJadeCounter = WotogCounterHelper.ShowOpponentJadeCounter;
 			var showOpponentPogoHopperCounter = WotogCounterHelper.ShowOpponentPogoHopperCounter;
 			var showOpponentGalakrondCounter = WotogCounterHelper.ShowOpponentGalakrondCounter;
+			var showOpponentLibramCounter = WotogCounterHelper.ShowOpponentLibramCounter;
 			if(showOpponentCthunCounter)
 			{
 				var proxy = WotogCounterHelper.OpponentCthunProxy;
@@ -233,10 +238,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsOpponent.PogoHopper = ((_game.Opponent.PogoHopperPlayedCount + 1) * 2 - 1).ToString();
 			if(showOpponentGalakrondCounter)
 				WotogIconsOpponent.Galakrond = WotogCounterHelper.OpponentGalakrondInvokeCounter.ToString();
+			if(showOpponentLibramCounter)
+				WotogIconsOpponent.Libram = WotogCounterHelper.OpponentLibramCounter.ToString();
 			WotogIconsOpponent.WotogCounterStyle = showOpponentCthunCounter && showOpponentSpellsCounter ? Full : (showOpponentCthunCounter ? Cthun : (showOpponentSpellsCounter ? Spells : None));
 			WotogIconsOpponent.JadeCounterStyle = showOpponentJadeCounter ? Full : None;
 			WotogIconsOpponent.PogoHopperCounterStyle = showOpponentPogoHopperCounter ? Full : None;
 			WotogIconsOpponent.GalakrondCounterStyle = showOpponentGalakrondCounter ? Full : None;
+			WotogIconsOpponent.LibramCounterStyle = showOpponentLibramCounter ? Full : None;
 		}
 
 		public void UpdatePosition()

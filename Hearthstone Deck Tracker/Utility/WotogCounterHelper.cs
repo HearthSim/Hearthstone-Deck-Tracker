@@ -35,6 +35,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static int PlayerGalakrondInvokeCounter => Core.Game.PlayerEntity?.GetTag(INVOKE_COUNTER) ?? 0;
 		public static int OpponentGalakrondInvokeCounter => Core.Game.OpponentEntity?.GetTag(INVOKE_COUNTER) ?? 0;
 
+		public static int PlayerLibramCounter => Core.Game.Player.LibramReductionCount;
+		public static int OpponentLibramCounter => Core.Game.Opponent.LibramReductionCount;
+
 		public static bool ShowPlayerCthunCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
 					|| Config.Instance.PlayerCthunCounter == DisplayMode.Auto && PlayerSeenCthun);
 
@@ -48,6 +51,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static bool ShowOpponentGalakrondCounter => !Core.Game.IsInMenu && (
 			Config.Instance.OpponentGalakrondCounter == DisplayMode.Always
 				|| (Config.Instance.OpponentGalakrondCounter == DisplayMode.Auto && (Core.Game.OpponentEntity?.HasTag(INVOKE_COUNTER) ?? false)));
+
+		public static bool ShowPlayerLibramCounter => !Core.Game.IsInMenu && (
+			Config.Instance.PlayerLibramCounter == DisplayMode.Always
+				|| (Config.Instance.PlayerLibramCounter == DisplayMode.Auto && Core.Game.Player.LibramReductionCount > 0));
+		public static bool ShowOpponentLibramCounter => !Core.Game.IsInMenu && (
+			Config.Instance.OpponentLibramCounter == DisplayMode.Always
+				|| (Config.Instance.OpponentLibramCounter == DisplayMode.Auto && Core.Game.Opponent.LibramReductionCount > 0));
+
 
 		public static bool ShowPlayerSpellsCounter => !Core.Game.IsInMenu && (
 			Config.Instance.PlayerSpellsCounter == DisplayMode.Always

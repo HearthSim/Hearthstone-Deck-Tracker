@@ -404,6 +404,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentGalakrondCounter = DisplayMode.Auto;
 
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode OpponentLibramCounter = DisplayMode.Auto;
+
 		[DefaultValue(false)]
 		public bool HideOpponentCardAge = false;
 
@@ -448,6 +451,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode PlayerGalakrondCounter = DisplayMode.Auto;
+
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode PlayerLibramCounter = DisplayMode.Auto;
 
 		[DefaultValue(false)]
 		public bool HidePlayerCards = false;
