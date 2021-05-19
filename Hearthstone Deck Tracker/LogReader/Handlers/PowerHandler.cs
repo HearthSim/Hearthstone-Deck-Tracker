@@ -396,6 +396,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 										AddKnownCardId(gameState, card);
 								}
 								break;
+							case Collectible.Rogue.EfficientOctoBot:
+								if(actionStartingEntity != null)
+									if(actionStartingEntity.IsControlledBy(game.Opponent.Id))
+										gameState.GameHandler.HandleOpponentHandCostReduction(1);
+								break;
 							case Collectible.Neutral.KeymasterAlabaster:
 								// The player controlled side of this is handled by TagChangeActions.OnCardCopy
 								if(actionStartingEntity != null && actionStartingEntity.IsControlledBy(game.Opponent.Id) && game.Player.LastDrawnCardId != null)
