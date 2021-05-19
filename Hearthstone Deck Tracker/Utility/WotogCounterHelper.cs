@@ -35,6 +35,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static int PlayerGalakrondInvokeCounter => Core.Game.PlayerEntity?.GetTag(INVOKE_COUNTER) ?? 0;
 		public static int OpponentGalakrondInvokeCounter => Core.Game.OpponentEntity?.GetTag(INVOKE_COUNTER) ?? 0;
 
+		public static int PlayerLibramInvokeCounter => Core.Game.Player.LibramReductionCount;
+		public static int OpponentLibramInvokeCounter => Core.Game.Opponent.LibramReductionCount;
+
 		public static bool ShowPlayerCthunCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
 					|| Config.Instance.PlayerCthunCounter == DisplayMode.Auto && PlayerSeenCthun);
 

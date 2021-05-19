@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int PogoHopperPlayedCount {get; private set;}
 		public string LastDiedMinionCardId { get; set; }
 		public string LastDrawnCardId { get; set; }
+		public int LibramReductionCount { get; private set; }
 
 		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore);
 		public int HandCount => Hand.Count();
@@ -254,6 +255,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					{
 						PogoHopperPlayedCount++;	
 					}
+					if(entity.CardId == HearthDb.CardIds.Collectible.Paladin.AldorAttendant)
+						LibramReductionCount++;
+					if(entity.CardId == HearthDb.CardIds.Collectible.Paladin.AldorTruthseeker)
+						LibramReductionCount += 2;
 					break;
 				case (int)CardType.SPELL:
 					SpellsPlayedCount++;
