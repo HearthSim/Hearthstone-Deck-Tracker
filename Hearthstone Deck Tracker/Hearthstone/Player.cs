@@ -256,10 +256,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					{
 						PogoHopperPlayedCount++;	
 					}
-					if(entity.CardId == HearthDb.CardIds.Collectible.Paladin.AldorAttendant)
-						LibramReductionCount++;
-					if(entity.CardId == HearthDb.CardIds.Collectible.Paladin.AldorTruthseeker)
-						LibramReductionCount += 2;
 					break;
 				case (int)CardType.SPELL:
 					SpellsPlayedCount++;
@@ -449,5 +445,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Turn = turn;
 			Log(entity);
 		}
+
+		public void UpdateLibramReduction(int change) => LibramReductionCount += change;
 	}
 }

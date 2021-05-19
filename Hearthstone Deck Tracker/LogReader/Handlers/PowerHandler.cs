@@ -623,6 +623,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Neutral.ShadowHunterVoljin:
 								AddKnownCardId(gameState, target);
 								break;
+							case Collectible.Paladin.AldorAttendant:
+								if(actionStartingEntity.IsControlledBy(game.Player.Id))
+									UpdatePlayerLibramReduction(game, 1);
+								else
+									UpdateOpponentLibramReduction(game, 1);
+								break;
+							case Collectible.Paladin.AldorTruthseeker:
+								if(actionStartingEntity.IsControlledBy(game.Player.Id))
+									UpdatePlayerLibramReduction(game, 2);
+								else
+									UpdateOpponentLibramReduction(game, 2);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
@@ -738,6 +750,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.KnownCardIds[blockId].Add(cardId);
 			}
 		}
+
+		private static void UpdatePlayerLibramReduction(IGame game, int count) => game.Player.UpdateLibramReduction(count);
+
+		private static void UpdateOpponentLibramReduction(IGame game, int count) => game.Opponent.UpdateLibramReduction(count);
 
 		internal void Reset() => _tagChangeHandler.ClearQueuedActions();
 	}
