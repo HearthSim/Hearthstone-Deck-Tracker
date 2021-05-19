@@ -1,3 +1,11 @@
+## **Release v1.14.13- 2021-05-19**
+**New**
+- Added tracker for cost reductions to librams.
+- Added tracking for cost reductions from Efficient Octo-bot.
+**Fixes**
+- Fixed Rigged Faire Game not being removed from possible secrets when the opponent only lost armor.
+- Bob's Buddy improvements.
+
 ## **Release v1.14.12- 2021-05-12**
 **Updated for Hearthstone 20.2.2**
 
