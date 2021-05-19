@@ -213,6 +213,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PogoHopperPlayedCount = 0;
 			CardsPlayedThisTurn.Clear();
 			LastDrawnCardId = null;
+			LibramReductionCount = 0;
 		}
 
 		public void Draw(Entity entity, int turn)
