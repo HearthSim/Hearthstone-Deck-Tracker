@@ -390,8 +390,7 @@ namespace Hearthstone_Deck_Tracker
 			if(!thaurissans.Any())
 				return;
 
-			foreach(var card in _game.Opponent.Hand)
-				card.Info.CostReduction += thaurissans.Count;
+			HandleOpponentHandCostReduction(thaurissans.Count);
 		}
 
 		private DateTime _lastGameStartTimestamp = DateTime.MinValue;
@@ -1288,6 +1287,18 @@ namespace Hearthstone_Deck_Tracker
 
 		void HandleOpponentLibramReduction(int value) => _game.Opponent.UpdateLibramReduction(value);
 
+		void HandlePlayerHandCostReduction(int value)
+		{
+			foreach(var card in _game.Player.Hand)
+				card.Info.CostReduction += value;
+		}
+
+		void HandleOpponentHandCostReduction(int value)
+		{
+			foreach(var card in _game.Opponent.Hand)
+				card.Info.CostReduction += value;
+		}
+
 		#endregion
 
 		#region IGameHandlerImplementation
@@ -1323,10 +1334,10 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentPlayToDeck(Entity entity, string cardId, int turn) => HandleOpponentPlayToDeck(entity, cardId, turn);
 		void IGameHandler.HandlePlayerFatigue(int currentDamage) => HandlePlayerFatigue(currentDamage);
 		void IGameHandler.HandleOpponentFatigue(int currentDamage) => HandleOpponentFatigue(currentDamage);
-
 		void IGameHandler.HandlePlayerLibramReduction(int value) => HandlePlayerLibramReduction(value);
-
 		void IGameHandler.HandleOpponentLibramReduction(int value) => HandleOpponentLibramReduction(value);
+		void IGameHandler.HandlePlayerHandCostReduction(int value) => HandlePlayerHandCostReduction(value);
+		void IGameHandler.HandleOpponentHandCostReduction(int value) => HandleOpponentHandCostReduction(value);
 
 		#endregion IGameHandlerImplementation
 	}
