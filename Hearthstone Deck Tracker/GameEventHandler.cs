@@ -278,6 +278,14 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		public void HandleEntityLostArmor(Entity target, int value)
+		{
+			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
+			{
+				_game.SecretsManager.HandleEntityLostArmor(target, value);
+			}
+		}
+
 		public void HandleProposedAttackerChange(Entity entity)
 		{
 			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)

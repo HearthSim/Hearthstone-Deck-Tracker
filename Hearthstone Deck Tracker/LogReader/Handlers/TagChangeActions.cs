@@ -72,6 +72,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => OnRebornChange(id, value, game);
 				case DAMAGE:
 					return () => DamageChange(gameState, id, game, value, prevValue);
+				case ARMOR:
+					return () => ArmorChange(gameState, id, game, value, prevValue);
 			}
 			return null;
 		}
@@ -286,6 +288,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 			gameState.GameHandler.HandleEntityPredamage(entity, value);
+		}
+
+		private void ArmorChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			//We do prevValue - value because armor gets smaller as you lose it and damage gets bigger as you lose life.
+			gameState.GameHandler.HandleEntityLostArmor(entity, prevValue - value);
 		}
 
 		private void DamageChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
