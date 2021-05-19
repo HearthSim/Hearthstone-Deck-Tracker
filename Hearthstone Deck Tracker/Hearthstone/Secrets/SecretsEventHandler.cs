@@ -303,6 +303,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			}
 		}
 
+		public void HandleEntityLostArmor(Entity entity, int value)
+		{
+			if(value <= 0)
+				return;
+			if(entity != null)
+			{
+				if(entity.IsHero && entity.IsControlledBy(Game.Opponent.Id))
+				{
+					if(!entity.HasTag(GameTag.IMMUNE))
+					{
+						OpponentTookDamageDuringTurns.Add(Game.GetTurnNumber());
+					}
+				}
+			}
+		}
+
 		public void HandleTurnsInPlayChange(Entity entity, int turn)
 		{
 			if(!HandleAction)
