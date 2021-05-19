@@ -88,5 +88,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerMulliganDone();
 		void HandleCardCopy();
 		void HandleProposedAttackerChange(Entity entity);
+		void HandlePlayerLibramReduction(int value);
+		void HandleOpponentLibramReduction(int value);
 	}
 }

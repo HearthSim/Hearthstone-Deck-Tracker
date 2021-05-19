@@ -1284,6 +1284,10 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentDeckDiscard.Execute(Database.GetCardFromId(cardId));
 		}
 
+		void HandlePlayerLibramReduction(int value) => _game.Player.UpdateLibramReduction(value);
+
+		void HandleOpponentLibramReduction(int value) => _game.Opponent.UpdateLibramReduction(value);
+
 		#endregion
 
 		#region IGameHandlerImplementation
@@ -1319,6 +1323,10 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentPlayToDeck(Entity entity, string cardId, int turn) => HandleOpponentPlayToDeck(entity, cardId, turn);
 		void IGameHandler.HandlePlayerFatigue(int currentDamage) => HandlePlayerFatigue(currentDamage);
 		void IGameHandler.HandleOpponentFatigue(int currentDamage) => HandleOpponentFatigue(currentDamage);
+
+		void IGameHandler.HandlePlayerLibramReduction(int value) => HandlePlayerLibramReduction(value);
+
+		void IGameHandler.HandleOpponentLibramReduction(int value) => HandleOpponentLibramReduction(value);
 
 		#endregion IGameHandlerImplementation
 	}

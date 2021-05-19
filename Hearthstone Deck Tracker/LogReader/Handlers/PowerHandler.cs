@@ -625,15 +625,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Paladin.AldorAttendant:
 								if(actionStartingEntity.IsControlledBy(game.Player.Id))
-									game.Player.UpdateLibramReduction(1);
+									gameState.GameHandler.HandlePlayerLibramReduction(1);
 								else
-									game.Opponent.UpdateLibramReduction(1);
+									gameState.GameHandler.HandleOpponentLibramReduction(1);
 								break;
 							case Collectible.Paladin.AldorTruthseeker:
 								if(actionStartingEntity.IsControlledBy(game.Player.Id))
-									game.Player.UpdateLibramReduction(2);
+									gameState.GameHandler.HandlePlayerLibramReduction(2);
 								else
-									game.Opponent.UpdateLibramReduction(2);
+									gameState.GameHandler.HandleOpponentLibramReduction(2);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
