@@ -1678,6 +1678,7 @@
     <Resource Include="Images\icon-jade.png" />
     <Resource Include="Images\icon-spells.png" />
     <Resource Include="Images\icon-galakrond.png" />
+    <Resource Include="Images\icon-libram.png" />
     <Resource Include="Resources\embroidery.png" />
     <Resource Include="Resources\tactile_noise.png" />
     <Resource Include="Resources\tier-1.png" />
