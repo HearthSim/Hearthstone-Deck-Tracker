@@ -625,15 +625,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Paladin.AldorAttendant:
 								if(actionStartingEntity.IsControlledBy(game.Player.Id))
-									UpdatePlayerLibramReduction(game, 1);
+									game.Player.UpdateLibramReduction(1);
 								else
-									UpdateOpponentLibramReduction(game, 1);
+									game.Opponent.UpdateLibramReduction(1);
 								break;
 							case Collectible.Paladin.AldorTruthseeker:
 								if(actionStartingEntity.IsControlledBy(game.Player.Id))
-									UpdatePlayerLibramReduction(game, 2);
+									game.Player.UpdateLibramReduction(2);
 								else
-									UpdateOpponentLibramReduction(game, 2);
+									game.Opponent.UpdateLibramReduction(2);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
@@ -750,10 +750,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				gameState.KnownCardIds[blockId].Add(cardId);
 			}
 		}
-
-		private static void UpdatePlayerLibramReduction(IGame game, int count) => game.Player.UpdateLibramReduction(count);
-
-		private static void UpdateOpponentLibramReduction(IGame game, int count) => game.Opponent.UpdateLibramReduction(count);
 
 		internal void Reset() => _tagChangeHandler.ClearQueuedActions();
 	}
