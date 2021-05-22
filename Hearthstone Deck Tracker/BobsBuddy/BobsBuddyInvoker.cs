@@ -513,7 +513,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			//We delay checking the combat results because the tag changes can sometimes be read by the parser with a bit of delay after they're printed in the log.
 			//Without this delay they can occasionally be missed.
 
-			await Task.Delay(1000);
+			await Task.Delay(50);
 			var result = GetLastCombatResult();
 			var lethalResult = GetLastLethalResult();
 
