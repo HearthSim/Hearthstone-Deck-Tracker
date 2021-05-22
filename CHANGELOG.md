@@ -1,3 +1,7 @@
+## **Release v1.14.14- 2021-05-22**
+**Fixes**
+- Bob's Buddy improvements.
+
 ## **Release v1.14.13- 2021-05-19**
 **New**
 - Added tracker for cost reductions to librams.
