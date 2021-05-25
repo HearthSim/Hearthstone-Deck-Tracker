@@ -868,7 +868,16 @@ namespace Hearthstone_Deck_Tracker
 					{
 						var cards = Core.Game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).Select(x => x.Card.DbfIf);
 						var opponentClass = Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
-						Core.Overlay.ShowMulliganPanel(shortId, cards.ToArray(), opponentClass);
+						var goingFirst = Core.Game.Player.GoingFirst;
+
+						var isWild = _game.CurrentFormat == Format.Wild;
+						var isClassic = _game.CurrentFormat == Format.Classic;
+
+						var localPlayer = _game.MatchInfo.LocalPlayer;
+						var playerInfo = isClassic ? localPlayer.Classic : isWild ? localPlayer.Wild : localPlayer.Standard;
+						var playerStarLevel = playerInfo?.LeagueId >= 5 ? playerInfo?.StarLevel ?? 0 : 0;
+
+						Core.Overlay.ShowMulliganPanel(shortId, cards.ToArray(), opponentClass, goingFirst, playerStarLevel);
 					}
 
 					break;

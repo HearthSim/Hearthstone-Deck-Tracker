@@ -1,6 +1,7 @@
 ﻿using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private string _shortId;
 		private int[] _dbfIds;
 		private CardClass _opponent;
+		private bool _goingFirst;
+		private int _playerStarLevel;
 
 		public MulliganPanel()
 		{
@@ -50,7 +53,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				var ids = $"mulliganIds={HttpUtility.UrlEncode(string.Join(",", _dbfIds))}";
 				var opponent = $"mulliganOpponent={_opponent}";
-				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, new[] { ids, opponent } );
+				var playerInitiative = $"playerInitiative={(_goingFirst ? "FIRST" : "COIN")}";
+				var isPremiumAccount = HSReplayNetOAuth.AccountData?.IsPremium?.Equals("true", StringComparison.InvariantCultureIgnoreCase) ?? false;
+
+				var fragmentParams = new List<string>() { ids, opponent, playerInitiative };
+				if (isPremiumAccount && _playerStarLevel >= 31) // Platinum or above
+				{
+					fragmentParams.Add("rankRange=DIAMOND_THROUGH_LEGEND");
+				}
+
+				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, fragmentParams );
 				Helper.TryOpenUrl(url);
 			}
 		}
@@ -72,11 +84,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public void Update(string shortId, int[] dbfIds, CardClass opponent)
+		public void Update(string shortId, int[] dbfIds, CardClass opponent, bool goingFirst, int playerStarLevel)
 		{
 			_shortId = shortId;
 			_dbfIds = dbfIds;
 			_opponent = opponent;
+			_goingFirst = goingFirst;
+			_playerStarLevel = playerStarLevel;
 			HasData = !string.IsNullOrEmpty(shortId) && HsReplayDataManager.Decks.AvailableDecks.Contains(_shortId);
 		}
 
