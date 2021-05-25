@@ -1,3 +1,7 @@
+## **Release v1.14.15- 2021-05-25**
+**Fixes**
+- Fix text of libram option.
+
 ## **Release v1.14.14- 2021-05-22**
 **Fixes**
 - Bob's Buddy improvements.
