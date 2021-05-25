@@ -53,16 +53,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				var ids = $"mulliganIds={HttpUtility.UrlEncode(string.Join(",", _dbfIds))}";
 				var opponent = $"mulliganOpponent={_opponent}";
-				var playerInitiative = $"playerInitiative={(_goingFirst ? "FIRST" : "COIN")}";
-				var isPremiumAccount = HSReplayNetOAuth.AccountData?.IsPremium?.Equals("true", StringComparison.InvariantCultureIgnoreCase) ?? false;
+				var playerInitiative = $"mulliganPlayerInitiative={(_goingFirst ? "FIRST" : "COIN")}";
+				var playerStarLevel = $"mulliganPlayerStarLevel={_playerStarLevel}";
 
-				var fragmentParams = new List<string>() { ids, opponent, playerInitiative };
-				if (isPremiumAccount && _playerStarLevel >= 31) // Platinum or above
-				{
-					fragmentParams.Add("rankRange=DIAMOND_THROUGH_LEGEND");
-				}
-
-				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, fragmentParams );
+				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, new[] { ids, opponent, playerInitiative, playerStarLevel });
 				Helper.TryOpenUrl(url);
 			}
 		}
