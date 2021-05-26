@@ -17,6 +17,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private string _shortId;
 		private int[] _dbfIds;
 		private CardClass _opponent;
+		private bool _goingFirst;
+		private int _playerStarLevel;
 
 		public MulliganPanel()
 		{
@@ -50,7 +52,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				var ids = $"mulliganIds={HttpUtility.UrlEncode(string.Join(",", _dbfIds))}";
 				var opponent = $"mulliganOpponent={_opponent}";
-				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, new[] { ids, opponent } );
+				var playerInitiative = $"mulliganPlayerInitiative={(_goingFirst ? "FIRST" : "COIN")}";
+				var playerStarLevel = $"mulliganPlayerStarLevel={_playerStarLevel}";
+
+				var url = Helper.BuildHsReplayNetUrl($"/decks/{_shortId}", "mulligan_toast", null, new[] { ids, opponent, playerInitiative, playerStarLevel });
 				Helper.TryOpenUrl(url);
 			}
 		}
@@ -72,11 +77,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public void Update(string shortId, int[] dbfIds, CardClass opponent)
+		public void Update(string shortId, int[] dbfIds, CardClass opponent, bool goingFirst, int playerStarLevel)
 		{
 			_shortId = shortId;
 			_dbfIds = dbfIds;
 			_opponent = opponent;
+			_goingFirst = goingFirst;
+			_playerStarLevel = playerStarLevel;
 			HasData = !string.IsNullOrEmpty(shortId) && HsReplayDataManager.Decks.AvailableDecks.Contains(_shortId);
 		}
 
