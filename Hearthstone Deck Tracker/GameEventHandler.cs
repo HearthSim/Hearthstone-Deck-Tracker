@@ -878,7 +878,7 @@ namespace Hearthstone_Deck_Tracker
 						{
 							var localPlayer = _game.MatchInfo.LocalPlayer;
 							var playerInfo = isClassic ? localPlayer.Classic : isWild ? localPlayer.Wild : localPlayer.Standard;
-							playerStarLevel = playerInfo?.LeagueId >= 5 ? playerInfo?.StarLevel ?? 0 : 0;
+							playerStarLevel = playerInfo?.StarLevel ?? 0;
 						}
 
 						Core.Overlay.ShowMulliganPanel(shortId, cards.ToArray(), opponentClass, goingFirst, playerStarLevel);

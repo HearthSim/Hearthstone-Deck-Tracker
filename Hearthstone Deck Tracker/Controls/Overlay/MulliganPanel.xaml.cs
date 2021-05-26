@@ -1,7 +1,6 @@
 ﻿using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.HsReplay;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
