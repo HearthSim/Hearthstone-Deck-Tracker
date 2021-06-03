@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using BobsBuddy;
 using BobsBuddy.Simulation;
 using Hearthstone_Deck_Tracker.BobsBuddy;
@@ -10,6 +12,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Plugins;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 using SharpRaven;
 using SharpRaven.Data;
 
@@ -24,6 +27,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			Client.Release = Helper.GetCurrentVersion().ToVersionString(true);
 		}
+
+		private static bool HasCheckedCertificate = false;
+
+		private static bool IsSignedByHearthSim = false;
 
 		private static readonly RavenClient Client = new RavenClient("https://0a6c07cee8d141f0bee6916104a02af4:883b339db7b040158cdfc42287e6a791@app.getsentry.com/80405");
 
@@ -52,6 +59,24 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
 				return;
+			if(!HasCheckedCertificate)
+			{
+				HasCheckedCertificate = true;
+				try
+				{
+					X509Certificate basicSigner = X509Certificate.CreateFromSignedFile(Path.Combine(Config.AppDataPath, "HearthstoneDeckTracker.exe"));
+					if(basicSigner.Subject.Contains("HearthSim, LLC"))
+						IsSignedByHearthSim = true;
+				}
+				catch(Exception ex)
+				{
+					Log.Error("Error reading executable certificate: " + ex);
+				}
+			}
+
+			if(!IsSignedByHearthSim)
+				return;
+
 			// Clean up data
 			testInput.RemoveSelfReferencesFromMinions();
 			output.ClearListsForReporting(); //ignoring for some temporary debugging
