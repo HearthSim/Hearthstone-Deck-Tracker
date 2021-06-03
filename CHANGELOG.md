@@ -1,3 +1,6 @@
+## **Release v1.14.16- 2021-06-03**
+**Updated for Hearthstone 20.4.0**
+
 ## **Release v1.14.15- 2021-05-25**
 **Fixes**
 - Fix text of libram option.
