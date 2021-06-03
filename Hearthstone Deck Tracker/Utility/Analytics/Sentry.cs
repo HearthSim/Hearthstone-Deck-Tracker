@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using BobsBuddy;
 using BobsBuddy.Simulation;
@@ -28,11 +29,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			Client.Release = Helper.GetCurrentVersion().ToVersionString(true);
 		}
 
-		private static bool HasCheckedCertificate = false;
-
-		private static bool IsSignedByHearthSim = false;
-
 		private static readonly RavenClient Client = new RavenClient("https://0a6c07cee8d141f0bee6916104a02af4:883b339db7b040158cdfc42287e6a791@app.getsentry.com/80405");
+		private static bool? _isSigned = null;
+		private static bool IsSigned => _isSigned ?? (_isSigned = CheckIfSigned()).Value;
 
 		public static string CaptureException(Exception ex)
 		{
@@ -55,26 +54,27 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static int BobsBuddyExceptionsSent;
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 
+		private static bool CheckIfSigned()
+		{
+			try
+			{
+				X509Certificate basicSigner = X509Certificate.CreateFromSignedFile(Assembly.GetExecutingAssembly().Location);
+				if(basicSigner.Subject.Contains("HearthSim, LLC"))
+					return true;
+			}
+			catch(Exception ex)
+			{
+				Log.Error("Error reading executable certificate: " + ex);
+			}
+			return false;
+		}
+
 		public static void QueueBobsBuddyTerminalCase(TestInput testInput, TestOutput output, string result, int turn, List<string> debugLog, Region region)
 		{
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
 				return;
-			if(!HasCheckedCertificate)
-			{
-				HasCheckedCertificate = true;
-				try
-				{
-					X509Certificate basicSigner = X509Certificate.CreateFromSignedFile(Path.Combine(Config.AppDataPath, "HearthstoneDeckTracker.exe"));
-					if(basicSigner.Subject.Contains("HearthSim, LLC"))
-						IsSignedByHearthSim = true;
-				}
-				catch(Exception ex)
-				{
-					Log.Error("Error reading executable certificate: " + ex);
-				}
-			}
 
-			if(!IsSignedByHearthSim)
+			if(!IsSigned)
 				return;
 
 			// Clean up data
