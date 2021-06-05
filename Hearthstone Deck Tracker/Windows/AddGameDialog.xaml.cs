@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ComboBoxResult.ItemsSource = new[] { GameResult.Win, GameResult.Loss, GameResult.Draw};
 			ComboBoxOpponent.ItemsSource = Enum.GetValues(typeof(HeroClass));
 			ComboBoxMode.ItemsSource = new[] {Ranked, Casual, Arena, Brawl, Friendly, Practice};
-			ComboBoxFormat.ItemsSource = new[] {Format.Standard, Format.Wild};
+			ComboBoxFormat.ItemsSource = new[] { Format.Standard, Format.Wild, Format.Classic };
 			ComboBoxRegion.ItemsSource = new[] { Region.US, Region.EU, Region.ASIA, Region.CHINA};
 			ComboBoxCoin.ItemsSource = Enum.GetValues(typeof(YesNo));
 			ComboBoxConceded.ItemsSource = Enum.GetValues(typeof(YesNo));

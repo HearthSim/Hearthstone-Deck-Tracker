@@ -4,6 +4,7 @@ using System;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 #endregion
 
@@ -57,7 +58,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerMinionPlayed(Entity entity);
 		void HandlePlayerMinionDeath(Entity entity);
 		void HandleOpponentMinionDeath(Entity entity, int turn);
-		void HandleOpponentDamage(Entity entity);
 		void HandleTurnsInPlayChange(Entity entity, int turn);
 
 		#endregion
@@ -82,9 +82,16 @@ namespace Hearthstone_Deck_Tracker
 		#endregion OpponentHandlers
 
 		void HandleEntityPredamage(Entity entity, int value);
+		void HandleEntityDamage(Entity dealer, Entity target, int value);
+		void HandleEntityLostArmor(Entity target, int value);
 		void HandleChameleosReveal(string cardId);
 		void HandleBeginMulligan();
 		void HandlePlayerMulliganDone();
 		void HandleCardCopy();
+		void HandleProposedAttackerChange(Entity entity);
+		void HandlePlayerLibramReduction(int value);
+		void HandleOpponentLibramReduction(int value);
+		void HandlePlayerHandCostReduction(int value);
+		void HandleOpponentHandCostReduction(int value);
 	}
 }

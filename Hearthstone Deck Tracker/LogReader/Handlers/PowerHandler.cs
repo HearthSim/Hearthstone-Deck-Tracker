@@ -310,10 +310,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, target);
 								break;
 							case Collectible.Neutral.HoardingDragon:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBasic, 2);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore, 2);
 								break;
 							case Collectible.Priest.GildedGargoyle:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBasic);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
 							case Collectible.Druid.AstralTiger:
 								AddKnownCardId(gameState, Collectible.Druid.AstralTiger);
@@ -344,7 +344,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									AddKnownCardId(gameState, game.Opponent.LastDiedMinionCardId);
 								break;
 							case Collectible.Druid.SecureTheDeck:
-								AddKnownCardId(gameState, Collectible.Druid.Claw, 3);
+								AddKnownCardId(gameState, Collectible.Druid.ClawLegacy, 3);
 								break;
 							case Collectible.Rogue.Waxadred:
 								AddKnownCardId(gameState, NonCollectible.Rogue.Waxadred_WaxadredsCandleToken);
@@ -395,6 +395,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									foreach(var card in player.CardsPlayedThisTurn)
 										AddKnownCardId(gameState, card);
 								}
+								break;
+							case Collectible.Rogue.EfficientOctoBot:
+								if(actionStartingEntity != null)
+									if(actionStartingEntity.IsControlledBy(game.Opponent.Id))
+										gameState.GameHandler.HandleOpponentHandCostReduction(1);
 								break;
 							case Collectible.Neutral.KeymasterAlabaster:
 								// The player controlled side of this is handled by TagChangeActions.OnCardCopy
@@ -456,6 +461,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Priest.Seance:
 								AddKnownCardId(gameState, target);
 								break;
+							case Collectible.Druid.MarkOfTheSpikeshell:
+								AddKnownCardId(gameState, target);
+								break;
 							case Collectible.Mage.ForgottenTorch:
 								AddKnownCardId(gameState, NonCollectible.Mage.ForgottenTorch_RoaringTorchToken);
 								break;
@@ -487,7 +495,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.ElisetheTrailblazer_UngoroPackToken);
 								break;
 							case Collectible.Mage.GhastlyConjurer:
-								AddKnownCardId(gameState, Collectible.Mage.MirrorImage);
+								AddKnownCardId(gameState, Collectible.Mage.MirrorImageLegacy);
+								break;
+							case Collectible.Druid.ThorngrowthSentries:
+								AddKnownCardId(gameState, NonCollectible.Druid.ThorngrowthSentries_ThornguardTurtleToken, 2);
 								break;
 							case Collectible.Mage.DeckOfWonders:
 								AddKnownCardId(gameState, NonCollectible.Mage.DeckofWonders_ScrollOfWonderToken, 5);
@@ -553,7 +564,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.BananaBuffoon_BananasToken, 2);
 								break;
 							case Collectible.Neutral.BootyBayBookie:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBasic);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
 							case Collectible.Neutral.PortalKeeper:
 							case Collectible.Neutral.PortalOverfiend:
@@ -578,7 +589,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Rogue.BloodsailFlybooter_SkyPirateToken, 2);
 								break;
 							case Collectible.Rogue.UmbralSkulker:
-								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinBasic, 3);
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore, 3);
 								break;
 							case Collectible.Neutral.Sathrovarr:
 								AddKnownCardId(gameState, target, 3);
@@ -607,6 +618,27 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								// This currently leads to a duplicate copy of C'Thun showing up in the
 								// opponents deck list, but it will have to do for now.
 								AddKnownCardId(gameState, Collectible.Neutral.CthunTheShattered);
+								break;
+							case Collectible.Hunter.SunscaleRaptor:
+								AddKnownCardId(gameState, Collectible.Hunter.SunscaleRaptor);
+								break;
+							case Collectible.Neutral.Mankrik:
+								AddKnownCardId(gameState, NonCollectible.Neutral.Mankrik_OlgraMankriksWifeToken);
+								break;
+							case Collectible.Neutral.ShadowHunterVoljin:
+								AddKnownCardId(gameState, target);
+								break;
+							case Collectible.Paladin.AldorAttendant:
+								if(actionStartingEntity.IsControlledBy(game.Player.Id))
+									gameState.GameHandler.HandlePlayerLibramReduction(1);
+								else
+									gameState.GameHandler.HandleOpponentLibramReduction(1);
+								break;
+							case Collectible.Paladin.AldorTruthseeker:
+								if(actionStartingEntity.IsControlledBy(game.Player.Id))
+									gameState.GameHandler.HandlePlayerLibramReduction(2);
+								else
+									gameState.GameHandler.HandleOpponentLibramReduction(2);
 								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
@@ -695,8 +727,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 		private static string EnsureValidCardID(string cardId)
 		{
-			if(!string.IsNullOrEmpty(cardId) && cardId.StartsWith(TransferStudentToken) && !cardId.EndsWith("e"))
+			if(string.IsNullOrEmpty(cardId))
+				return cardId;
+			if(cardId.StartsWith(TransferStudentToken) && !cardId.EndsWith("e"))
 				return Collectible.Neutral.TransferStudent;
+			if(CardIds.UpgradeOverrides.TryGetValue(cardId, out var overrideId))
+				return overrideId;
 			return cardId;
 		}
 

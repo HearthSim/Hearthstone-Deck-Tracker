@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using HearthDb.Enums;
 using static HearthDb.CardIds;
 
@@ -16,6 +17,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static List<string> HiddenCardidPrefixes = new List<string>()
 		{
 			"PVPDR_TEST_"
+		};
+
+		public static Dictionary<string, string> UpgradeOverrides = new Dictionary<string, string>
+		{
+			[NonCollectible.Druid.LivingSeedRank1_LivingSeedRank2Token] = Collectible.Druid.LivingSeedRank1,
+			[NonCollectible.Druid.LivingSeedRank1_LivingSeedRank3Token] = Collectible.Druid.LivingSeedRank1,
+			[NonCollectible.Hunter.TameBeastRank1_TameBeastRank2Token] = Collectible.Hunter.TameBeastRank1,
+			[NonCollectible.Hunter.TameBeastRank1_TameBeastRank3Token] = Collectible.Hunter.TameBeastRank1,
+			[NonCollectible.Shaman.ChainLightningRank1_ChainLightningRank2Token] = Collectible.Shaman.ChainLightningRank1,
+			[NonCollectible.Shaman.ChainLightningRank1_ChainLightningRank3Token] = Collectible.Shaman.ChainLightningRank1,
+			[NonCollectible.Rogue.WickedStabRank1_WickedStabRank2Token] = Collectible.Rogue.WickedStabRank1,
+			[NonCollectible.Rogue.WickedStabRank1_WickedStabRank3Token] = Collectible.Rogue.WickedStabRank1,
+			[NonCollectible.Demonhunter.FuryRank1_FuryRank2Token] = Collectible.Demonhunter.FuryRank1,
+			[NonCollectible.Demonhunter.FuryRank1_FuryRank3Token] = Collectible.Demonhunter.FuryRank1,
+			[NonCollectible.Mage.FlurryRank1_FlurryRank2Token] = Collectible.Mage.FlurryRank1,
+			[NonCollectible.Mage.FlurryRank1_FlurryRank3Token] = Collectible.Mage.FlurryRank1,
+			[NonCollectible.Paladin.ConvictionRank1_ConvictionRank2Token] = Collectible.Paladin.ConvictionRank1,
+			[NonCollectible.Paladin.ConvictionRank1_ConvictionRank3Token] = Collectible.Paladin.ConvictionRank1,
+			[NonCollectible.Priest.CondemnRank1_CondemnRank2Token] = Collectible.Priest.CondemnRank1,
+			[NonCollectible.Priest.CondemnRank1_CondemnRank3Token] = Collectible.Priest.CondemnRank1,
+			[NonCollectible.Warlock.ImpSwarmRank1_ImpSwarmRank2Token] = Collectible.Warlock.ImpSwarmRank1,
+			[NonCollectible.Warlock.ImpSwarmRank1_ImpSwarmRank3Token] = Collectible.Warlock.ImpSwarmRank1,
+			[NonCollectible.Warrior.ConditioningRank1_ConditioningRank2Token] = Collectible.Warrior.ConditioningRank1,
+			[NonCollectible.Warrior.ConditioningRank1_ConditioningRank3Token] = Collectible.Warrior.ConditioningRank1,
 		};
 
 		// todo: conditional deathrattle summons: Voidcaller
@@ -50,16 +75,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static readonly Dictionary<string, string> HeroIdDict = new Dictionary<string, string>
 		{
-			{Collectible.Demonhunter.IllidanStormrageHero, "DemonHunter"},
-			{Collectible.Warrior.GarroshHellscreamHero, "Warrior"},
-			{Collectible.Shaman.ThrallHero, "Shaman"},
-			{Collectible.Rogue.ValeeraSanguinarHero, "Rogue"},
-			{Collectible.Paladin.UtherLightbringerHero, "Paladin"},
-			{Collectible.Hunter.RexxarHero, "Hunter"},
-			{Collectible.Druid.MalfurionStormrageHero, "Druid"},
-			{Collectible.Warlock.GuldanHero, "Warlock"},
-			{Collectible.Mage.JainaProudmooreHero, "Mage"},
-			{Collectible.Priest.AnduinWrynnHero, "Priest"},
+			{Collectible.Demonhunter.IllidanStormrageHeroHeroSkins, "DemonHunter"},
+			{Collectible.Warrior.GarroshHellscreamHeroHeroSkins, "Warrior"},
+			{Collectible.Shaman.ThrallHeroHeroSkins, "Shaman"},
+			{Collectible.Rogue.ValeeraSanguinarHeroHeroSkins, "Rogue"},
+			{Collectible.Paladin.UtherLightbringerHeroHeroSkins, "Paladin"},
+			{Collectible.Hunter.RexxarHeroHeroSkins, "Hunter"},
+			{Collectible.Druid.MalfurionStormrageHeroHeroSkins, "Druid"},
+			{Collectible.Warlock.GuldanHeroHeroSkins, "Warlock"},
+			{Collectible.Mage.JainaProudmooreHeroHeroSkins, "Mage"},
+			{Collectible.Priest.AnduinWrynnHeroHeroSkins, "Priest"},
 			{Collectible.Warlock.LordJaraxxus, "Jaraxxus"},
 			{Collectible.Neutral.MajordomoExecutus, "Ragnaros the Firelord"},
 			{"GILA_600", "Warrior"},
@@ -70,30 +95,30 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static readonly Dictionary<string, string> HeroNameDict = new Dictionary<string, string>
 		{
-			{"Warrior", Collectible.Warrior.GarroshHellscreamHero},
-			{"Shaman", Collectible.Shaman.ThrallHero},
-			{"Rogue", Collectible.Rogue.ValeeraSanguinarHero},
-			{"Paladin", Collectible.Paladin.UtherLightbringerHero},
-			{"Hunter", Collectible.Hunter.RexxarHero},
-			{"Druid", Collectible.Druid.MalfurionStormrageHero},
-			{"Warlock", Collectible.Warlock.GuldanHero},
-			{"Mage", Collectible.Mage.JainaProudmooreHero},
-			{"Priest", Collectible.Priest.AnduinWrynnHero},
-			{"DemonHunter", Collectible.Demonhunter.IllidanStormrageHero},
+			{"Warrior", Collectible.Warrior.GarroshHellscreamHeroHeroSkins},
+			{"Shaman", Collectible.Shaman.ThrallHeroHeroSkins},
+			{"Rogue", Collectible.Rogue.ValeeraSanguinarHeroHeroSkins},
+			{"Paladin", Collectible.Paladin.UtherLightbringerHeroHeroSkins},
+			{"Hunter", Collectible.Hunter.RexxarHeroHeroSkins},
+			{"Druid", Collectible.Druid.MalfurionStormrageHeroHeroSkins},
+			{"Warlock", Collectible.Warlock.GuldanHeroHeroSkins},
+			{"Mage", Collectible.Mage.JainaProudmooreHeroHeroSkins},
+			{"Priest", Collectible.Priest.AnduinWrynnHeroHeroSkins},
+			{"DemonHunter", Collectible.Demonhunter.IllidanStormrageHeroHeroSkins},
 		};
 
 		public static readonly Dictionary<CardClass, string> CardClassHero = new Dictionary<CardClass, string>
 		{
-			{CardClass.WARRIOR, Collectible.Warrior.GarroshHellscreamHero},
-			{CardClass.SHAMAN, Collectible.Shaman.ThrallHero},
-			{CardClass.ROGUE, Collectible.Rogue.ValeeraSanguinarHero},
-			{CardClass.PALADIN, Collectible.Paladin.UtherLightbringerHero},
-			{CardClass.HUNTER, Collectible.Hunter.RexxarHero},
-			{CardClass.DRUID, Collectible.Druid.MalfurionStormrageHero},
-			{CardClass.WARLOCK, Collectible.Warlock.GuldanHero},
-			{CardClass.MAGE, Collectible.Mage.JainaProudmooreHero},
-			{CardClass.PRIEST, Collectible.Priest.AnduinWrynnHero},
-			{CardClass.DEMONHUNTER, Collectible.Demonhunter.IllidanStormrageHero}
+			{CardClass.WARRIOR, Collectible.Warrior.GarroshHellscreamHeroHeroSkins},
+			{CardClass.SHAMAN, Collectible.Shaman.ThrallHeroHeroSkins},
+			{CardClass.ROGUE, Collectible.Rogue.ValeeraSanguinarHeroHeroSkins},
+			{CardClass.PALADIN, Collectible.Paladin.UtherLightbringerHeroHeroSkins},
+			{CardClass.HUNTER, Collectible.Hunter.RexxarHeroHeroSkins},
+			{CardClass.DRUID, Collectible.Druid.MalfurionStormrageHeroHeroSkins},
+			{CardClass.WARLOCK, Collectible.Warlock.GuldanHeroHeroSkins},
+			{CardClass.MAGE, Collectible.Mage.JainaProudmooreHeroHeroSkins},
+			{CardClass.PRIEST, Collectible.Priest.AnduinWrynnHeroHeroSkins},
+			{CardClass.DEMONHUNTER, Collectible.Demonhunter.IllidanStormrageHeroHeroSkins}
 		};
 
 		// cards that should have an entourage list but don't in the game data
@@ -112,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static class Secrets
 		{
-			public static List<string> FastCombat = new List<string>
+			public static readonly IReadOnlyList<MultiIdCard> FastCombat = new List<MultiIdCard>
 			{
 				Hunter.FreezingTrap,
 				Hunter.ExplosiveTrap,
@@ -121,78 +146,98 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Mage.Vaporize
 			};
 
-			public static class Hunter
+			public class Hunter : EnumerateMultiId<Hunter>
 			{
-				public static List<string> All => new List<string> {BearTrap, CatTrick, DartTrap, ExplosiveTrap, FreezingTrap, HiddenCache, Misdirection, OpenTheCages, PackTactics, PressurePlate, RatTrap, Snipe, SnakeTrap, VenomstrikeTrap, WanderingMonster};
-				public static string BearTrap => Collectible.Hunter.BearTrap;
-				public static string CatTrick => Collectible.Hunter.CatTrick;
-				public static string DartTrap => Collectible.Hunter.DartTrap;
-				public static string ExplosiveTrap => Collectible.Hunter.ExplosiveTrap;
-				public static string FreezingTrap => Collectible.Hunter.FreezingTrap;
-				public static string HiddenCache => Collectible.Hunter.HiddenCache;
-				public static string Misdirection => Collectible.Hunter.Misdirection;
-				public static string OpenTheCages => Collectible.Hunter.OpenTheCages;
-				public static string PackTactics => Collectible.Hunter.PackTactics;
-				public static string PressurePlate => Collectible.Hunter.PressurePlate;
-				public static string RatTrap => Collectible.Hunter.RatTrap;
-				public static string Snipe => Collectible.Hunter.Snipe;
-				public static string SnakeTrap => Collectible.Hunter.SnakeTrap;
-				public static string VenomstrikeTrap => Collectible.Hunter.VenomstrikeTrap;
-				public static string WanderingMonster => Collectible.Hunter.WanderingMonster;
+				public static readonly MultiIdCard BearTrap = new MultiIdCard(Collectible.Hunter.BearTrap);
+				public static readonly MultiIdCard CatTrick = new MultiIdCard(Collectible.Hunter.CatTrick);
+				public static readonly MultiIdCard DartTrap = new MultiIdCard(Collectible.Hunter.DartTrap);
+				public static readonly MultiIdCard ExplosiveTrap = new MultiIdCard(Collectible.Hunter.ExplosiveTrap, Collectible.Hunter.ExplosiveTrapCore, Collectible.Hunter.ExplosiveTrapVanilla);
+				public static readonly MultiIdCard FreezingTrap = new MultiIdCard(Collectible.Hunter.FreezingTrap, Collectible.Hunter.FreezingTrapCore, Collectible.Hunter.FreezingTrapVanilla);
+				public static readonly MultiIdCard HiddenCache = new MultiIdCard(Collectible.Hunter.HiddenCache);
+				public static readonly MultiIdCard Misdirection = new MultiIdCard(Collectible.Hunter.Misdirection, Collectible.Hunter.MisdirectionVanilla);
+				public static readonly MultiIdCard OpenTheCages = new MultiIdCard(Collectible.Hunter.OpenTheCages);
+				public static readonly MultiIdCard PackTactics = new MultiIdCard(Collectible.Hunter.PackTactics);
+				public static readonly MultiIdCard PressurePlate = new MultiIdCard(Collectible.Hunter.PressurePlate);
+				public static readonly MultiIdCard RatTrap = new MultiIdCard(Collectible.Hunter.RatTrap);
+				public static readonly MultiIdCard Snipe = new MultiIdCard(Collectible.Hunter.Snipe, Collectible.Hunter.SnipeVanilla);
+				public static readonly MultiIdCard SnakeTrap = new MultiIdCard(Collectible.Hunter.SnakeTrap, Collectible.Hunter.SnakeTrapCore, Collectible.Hunter.SnakeTrapVanilla);
+				public static readonly MultiIdCard VenomstrikeTrap = new MultiIdCard(Collectible.Hunter.VenomstrikeTrap);
+				public static readonly MultiIdCard WanderingMonster = new MultiIdCard(Collectible.Hunter.WanderingMonster);
 			}
 
-			public static class Mage
+			public class Mage : EnumerateMultiId<Mage>
 			{
-				public static List<string> All => new List<string> {Counterspell, Duplicate, Effigy, ExplosiveRunes, FlameWard, FrozenClone, IceBarrier, IceBlock, ManaBind, MirrorEntity, NetherwindPortal, PotionOfPolymorph, RiggedFaireGame, Spellbender, SplittingImage, Vaporize};
-				public static string Counterspell => Collectible.Mage.Counterspell;
-				public static string Duplicate => Collectible.Mage.Duplicate;
-				public static string Effigy => Collectible.Mage.Effigy;
-				public static string ExplosiveRunes => Collectible.Mage.ExplosiveRunes;
-				public static string FlameWard => Collectible.Mage.FlameWard;
-				public static string FrozenClone => Collectible.Mage.FrozenClone;
-				public static string IceBarrier => Collectible.Mage.IceBarrier;
-				public static string IceBlock => Collectible.Mage.IceBlock;
-				public static string ManaBind => Collectible.Mage.ManaBind;
-				public static string MirrorEntity => Collectible.Mage.MirrorEntity;
-				public static string NetherwindPortal => Collectible.Mage.NetherwindPortal;
-				public static string PotionOfPolymorph => Collectible.Mage.PotionOfPolymorph;
-				public static string RiggedFaireGame => Collectible.Mage.RiggedFaireGame;
-				public static string Spellbender => Collectible.Mage.Spellbender;
-				public static string SplittingImage => Collectible.Mage.SplittingImage;
-				public static string Vaporize => Collectible.Mage.Vaporize;
+				public static readonly MultiIdCard Counterspell = new MultiIdCard(Collectible.Mage.Counterspell, Collectible.Mage.CounterspellCore, Collectible.Mage.CounterspellVanilla);
+				public static readonly MultiIdCard Duplicate = new MultiIdCard(Collectible.Mage.Duplicate);
+				public static readonly MultiIdCard Effigy = new MultiIdCard(Collectible.Mage.Effigy);
+				public static readonly MultiIdCard ExplosiveRunes = new MultiIdCard(Collectible.Mage.ExplosiveRunes);
+				public static readonly MultiIdCard FlameWard = new MultiIdCard(Collectible.Mage.FlameWard);
+				public static readonly MultiIdCard FrozenClone = new MultiIdCard(Collectible.Mage.FrozenClone);
+				public static readonly MultiIdCard IceBarrier = new MultiIdCard(Collectible.Mage.IceBarrier, Collectible.Mage.IceBarrierCore, Collectible.Mage.IceBarrierVanilla);
+				public static readonly MultiIdCard IceBlock = new MultiIdCard(Collectible.Mage.IceBlock, Collectible.Mage.IceBlockVanilla);
+				public static readonly MultiIdCard ManaBind = new MultiIdCard(Collectible.Mage.ManaBind);
+				public static readonly MultiIdCard MirrorEntity = new MultiIdCard(Collectible.Mage.MirrorEntity, Collectible.Mage.MirrorEntityCore, Collectible.Mage.MirrorEntityVanilla);
+				public static readonly MultiIdCard NetherwindPortal = new MultiIdCard(Collectible.Mage.NetherwindPortal);
+				public static readonly MultiIdCard OasisAlly = new MultiIdCard(Collectible.Mage.OasisAlly);
+				public static readonly MultiIdCard PotionOfPolymorph = new MultiIdCard(Collectible.Mage.PotionOfPolymorph);
+				public static readonly MultiIdCard RiggedFaireGame = new MultiIdCard(Collectible.Mage.RiggedFaireGame);
+				public static readonly MultiIdCard Spellbender = new MultiIdCard(Collectible.Mage.Spellbender, Collectible.Mage.SpellbenderVanilla);
+				public static readonly MultiIdCard SplittingImage = new MultiIdCard(Collectible.Mage.SplittingImage);
+				public static readonly MultiIdCard Vaporize = new MultiIdCard(Collectible.Mage.Vaporize, Collectible.Mage.VaporizeVanilla);
 			}
 
-			public static class Paladin
+			public class Paladin : EnumerateMultiId<Paladin>
 			{
-				public static List<string> All => new List<string> {AutodefenseMatrix, Avenge, CompetitiveSpirit, EyeForAnEye, GetawayKodo, HiddenWisdom, HandOfSalvation, NeverSurrender, NobleSacrifice, OhMyYogg, Redemption, Repentance, SacredTrial};
-				public static string AutodefenseMatrix => Collectible.Paladin.AutodefenseMatrix;
-				public static string Avenge => Collectible.Paladin.Avenge;
-				public static string CompetitiveSpirit => Collectible.Paladin.CompetitiveSpirit;
-				public static string EyeForAnEye => Collectible.Paladin.EyeForAnEye;
-				public static string GetawayKodo => Collectible.Paladin.GetawayKodo;
-				public static string HandOfSalvation => NonCollectible.Paladin.HandOfSalvation;
-				public static string HiddenWisdom => Collectible.Paladin.HiddenWisdom;
-				public static string NeverSurrender => Collectible.Paladin.NeverSurrender;
-				public static string NobleSacrifice => Collectible.Paladin.NobleSacrifice;
-				public static string OhMyYogg => Collectible.Paladin.OhMyYogg;
-				public static string Redemption => Collectible.Paladin.Redemption;
-				public static string Repentance => Collectible.Paladin.Repentance;
-				public static string SacredTrial => Collectible.Paladin.SacredTrial;
+				public static readonly MultiIdCard AutodefenseMatrix = new MultiIdCard(Collectible.Paladin.AutodefenseMatrix);
+				public static readonly MultiIdCard Avenge = new MultiIdCard(Collectible.Paladin.Avenge, Collectible.Paladin.AvengeCore);
+				public static readonly MultiIdCard CompetitiveSpirit = new MultiIdCard(Collectible.Paladin.CompetitiveSpirit);
+				public static readonly MultiIdCard EyeForAnEye = new MultiIdCard(Collectible.Paladin.EyeForAnEye, Collectible.Paladin.EyeForAnEyeVanilla);
+				public static readonly MultiIdCard GetawayKodo = new MultiIdCard(Collectible.Paladin.GetawayKodo);
+				public static readonly MultiIdCard GallopingSavior = new MultiIdCard(Collectible.Paladin.GallopingSavior);
+				public static readonly MultiIdCard HandOfSalvation = new MultiIdCard(NonCollectible.Paladin.HandOfSalvationLegacy);
+				public static readonly MultiIdCard HiddenWisdom = new MultiIdCard(Collectible.Paladin.HiddenWisdom);
+				public static readonly MultiIdCard NeverSurrender = new MultiIdCard(Collectible.Paladin.NeverSurrender);
+				public static readonly MultiIdCard NobleSacrifice = new MultiIdCard(Collectible.Paladin.NobleSacrifice, Collectible.Paladin.NobleSacrificeCore, Collectible.Paladin.NobleSacrificeVanilla);
+				public static readonly MultiIdCard OhMyYogg = new MultiIdCard(Collectible.Paladin.OhMyYogg);
+				public static readonly MultiIdCard Reckoning = new MultiIdCard(Collectible.Paladin.ReckoningCore);
+				public static readonly MultiIdCard Redemption = new MultiIdCard(Collectible.Paladin.Redemption, Collectible.Paladin.RedemptionVanilla);
+				public static readonly MultiIdCard Repentance = new MultiIdCard(Collectible.Paladin.Repentance, Collectible.Paladin.RepentanceVanilla);
+				public static readonly MultiIdCard SacredTrial = new MultiIdCard(Collectible.Paladin.SacredTrial);
 			}
 
-			public static class Rogue
+			public class Rogue : EnumerateMultiId<Rogue>
 			{
-				public static List<string> All => new List<string> {Ambush, Bamboozle, CheatDeath, DirtyTricks, Evasion, Plagiarize, ShadowClone, Shenanigans, SuddenBetrayal };
-				public static string Ambush => Collectible.Rogue.Ambush;
-				public static string Bamboozle => Collectible.Rogue.Bamboozle;
-				public static string CheatDeath => Collectible.Rogue.CheatDeath;
-				public static string DirtyTricks => Collectible.Rogue.DirtyTricks;
-				public static string Evasion => Collectible.Rogue.Evasion;
-				public static string Plagiarize => Collectible.Rogue.Plagiarize;
-				public static string ShadowClone => Collectible.Rogue.ShadowClone;
-				public static string Shenanigans => Collectible.Rogue.Shenanigans;
-				public static string SuddenBetrayal => Collectible.Rogue.SuddenBetrayal;
+				public static readonly MultiIdCard Ambush = new MultiIdCard(Collectible.Rogue.Ambush);
+				public static readonly MultiIdCard Bamboozle = new MultiIdCard(Collectible.Rogue.Bamboozle);
+				public static readonly MultiIdCard CheatDeath = new MultiIdCard(Collectible.Rogue.CheatDeath);
+				public static readonly MultiIdCard DirtyTricks = new MultiIdCard(Collectible.Rogue.DirtyTricks);
+				public static readonly MultiIdCard Evasion = new MultiIdCard(Collectible.Rogue.Evasion);
+				public static readonly MultiIdCard Plagiarize = new MultiIdCard(Collectible.Rogue.Plagiarize);
+				public static readonly MultiIdCard ShadowClone = new MultiIdCard(Collectible.Rogue.ShadowClone);
+				public static readonly MultiIdCard Shenanigans = new MultiIdCard(Collectible.Rogue.Shenanigans);
+				public static readonly MultiIdCard SuddenBetrayal = new MultiIdCard(Collectible.Rogue.SuddenBetrayal);
 			}
+		}
+	}
+}
+
+public class EnumerateMultiId<T> where T: EnumerateMultiId<T>
+{
+	private static IReadOnlyList<MultiIdCard> _all = null;
+	public static IReadOnlyList<MultiIdCard> All
+	{
+		get
+		{
+			if (_all == null)
+			{
+				_all = typeof(T)
+					.GetFields(BindingFlags.Public | BindingFlags.Static)
+					.Where(x => x.FieldType == typeof(MultiIdCard))
+					.Select(x => x.GetValue(null))
+					.Cast<MultiIdCard>()
+					.ToList();
+			}
+			return _all;
 		}
 	}
 }

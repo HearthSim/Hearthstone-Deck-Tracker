@@ -12,11 +12,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		private const int MultiSecretResolveDelay = 750;
 		private int _avengeDeathRattleCount;
 		private bool _awaitingAvenge;
-		private int _lastStartOfTurnSecretCheck;
+		private int _lastStartOfTurnDamageCheck;
+		private int _lastStartOfTurnMinionCheck;
 		private HashSet<Entity> EntititesInHandOnMinionsPlayed = new HashSet<Entity>();
 
 		private int _lastPlayedMinionId;
-		protected List<string> SavedSecrets = new List<string>();
+		protected List<MultiIdCard> SavedSecrets = new List<MultiIdCard>();
 
 		private bool FreeSpaceOnBoard => Game.OpponentMinionCount < 7;
 		private bool FreeSpaceInHand => Game.OpponentHandCount < 10;
@@ -27,19 +28,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		public List<int> OpponentTookDamageDuringTurns = new List<int>();
 
+		public Dictionary<int, Dictionary<int, int>> EntityDamageDealtHistory = new Dictionary<int, Dictionary<int, int>>();
+
 		private List<Entity> _triggeredSecrets = new List<Entity>();
 
 		protected abstract IGame Game { get; }
 		protected abstract bool HasActiveSecrets { get; }
-		public abstract bool Exclude(string cardId, bool invokeCallback = true);
-		public abstract void Exclude(List<string> cardIds);
+		public abstract bool Exclude(MultiIdCard cardId, bool invokeCallback = true);
+		public abstract void Exclude(List<MultiIdCard> cardIds);
 		public abstract void Refresh();
 
 		public virtual void Reset()
 		{
 			_avengeDeathRattleCount = 0;
 			_awaitingAvenge = false;
-			_lastStartOfTurnSecretCheck = 0;
+			_lastStartOfTurnDamageCheck = 0;
+			_lastStartOfTurnMinionCheck = 0;
 			OpponentTookDamageDuringTurns.Clear();
 			EntititesInHandOnMinionsPlayed.Clear();
 		}
@@ -52,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(attacker.GetTag(GameTag.CONTROLLER) == defender.GetTag(GameTag.CONTROLLER))
 				return;
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			var freeSpaceOnBoard = FreeSpaceOnBoard;
 			if(freeSpaceOnBoard)
@@ -104,6 +108,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 					exclude.Add(Hunter.PackTactics);
 					exclude.Add(Hunter.SnakeTrap);
 					exclude.Add(Hunter.VenomstrikeTrap);
+					//I think most of the secrets here could (and maybe should) check for this, but this one definitley does because of Hysteria.
+					if(Game.PlayerEntity.IsCurrentPlayer)
+						exclude.Add(Mage.OasisAlly);
 				}
 
 				if(attacker.IsMinion)
@@ -140,7 +147,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			_lastPlayedMinionId = entity.Id;
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			if(!entity.HasTag(GameTag.DORMANT))
 			{
@@ -182,7 +189,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(!HandleAction)
 				return;
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			if(FreeSpaceInHand)
 			{
@@ -258,17 +265,56 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			_avengeDeathRattleCount = 0;
 		}
 
-		public void HandleOpponentDamage(Entity entity)
+		public void OnNewBlock()
 		{
-			if(!HandleAction)
-				return;
-			if(entity.IsHero && entity.IsControlledBy(Game.Opponent.Id))
+			EntityDamageDealtHistory.Clear();
+		}
+
+		public void HandleEntityDamage(Entity dealer, Entity target, int damage)
+		{
+			if(target != null)
 			{
-				if(!entity.HasTag(GameTag.IMMUNE))
+				if(target.IsHero && target.IsControlledBy(Game.Opponent.Id))
 				{
-					Exclude(Paladin.EyeForAnEye);
-					Exclude(Rogue.Evasion);
-					OpponentTookDamageDuringTurns.Add(Game.GetTurnNumber());
+					if(!target.HasTag(GameTag.IMMUNE))
+					{
+						Exclude(Paladin.EyeForAnEye);
+						Exclude(Rogue.Evasion);
+						OpponentTookDamageDuringTurns.Add(Game.GetTurnNumber());
+					}
+				}
+				if(dealer != null)
+				{
+					if(dealer.IsMinion && dealer.IsControlledBy(Game.Player.Id))
+					{
+						if(!EntityDamageDealtHistory.TryGetValue(dealer.Id, out var history))
+						{
+							EntityDamageDealtHistory[dealer.Id] = new Dictionary<int, int>();
+						}
+						if(!EntityDamageDealtHistory[dealer.Id].TryGetValue(target.Id, out var targetHistory))
+						{
+							EntityDamageDealtHistory[dealer.Id][target.Id] = 0;
+						}
+						EntityDamageDealtHistory[dealer.Id][target.Id] += damage;
+						if(EntityDamageDealtHistory[dealer.Id][target.Id] >= 3)
+							Exclude(Paladin.Reckoning);
+					}
+				}
+			}
+		}
+
+		public void HandleEntityLostArmor(Entity entity, int value)
+		{
+			if(value <= 0)
+				return;
+			if(entity != null)
+			{
+				if(entity.IsHero && entity.IsControlledBy(Game.Opponent.Id))
+				{
+					if(!entity.HasTag(GameTag.IMMUNE))
+					{
+						OpponentTookDamageDuringTurns.Add(Game.GetTurnNumber());
+					}
 				}
 			}
 		}
@@ -277,17 +323,21 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		{
 			if(!HandleAction)
 				return;
-			if(Game.OpponentEntity.IsCurrentPlayer && turn > _lastStartOfTurnSecretCheck)
+			if(Game.OpponentEntity.IsCurrentPlayer && turn > _lastStartOfTurnMinionCheck)
 			{
-				_lastStartOfTurnSecretCheck = turn;
-				if(entity.IsMinion
-					&& entity.IsControlledBy(Game.Opponent.Id))
+				if(entity.IsMinion && entity.IsControlledBy(Game.Opponent.Id))
 				{
+					_lastStartOfTurnMinionCheck = turn;
 					Exclude(Paladin.CompetitiveSpirit);
 					if(Game.OpponentMinionCount >= 2 && FreeSpaceOnBoard)
 						Exclude(Hunter.OpenTheCages);
 				}
-				if(!OpponentTookDamageDuringTurns.Contains(turn - 1))
+			}
+			if(Game.OpponentEntity.IsCurrentPlayer && turn > _lastStartOfTurnDamageCheck)
+			{
+				_lastStartOfTurnDamageCheck = turn;
+				var turnToCheck = turn - (Game.PlayerEntity?.HasTag(GameTag.FIRST_PLAYER) ?? false ? 0 : 1);
+				if(!OpponentTookDamageDuringTurns.Contains(turnToCheck))
 					Exclude(Mage.RiggedFaireGame);
 			}
 		}
@@ -301,12 +351,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			SavedSecrets.Clear();
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			if(FreeSpaceOnBoard)
 			{
 				if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_PLAYED_THIS_TURN) >= 3)
+				{
 					exclude.Add(Hunter.RatTrap);
+					exclude.Add(Paladin.GallopingSavior);
+				}
 			}
 
 			if(FreeSpaceInHand)
@@ -323,7 +376,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 				exclude.Add(Mage.Counterspell);
 
-				if(_triggeredSecrets.FirstOrDefault(x => x.CardId == Mage.Counterspell) != null)
+				if(_triggeredSecrets.FirstOrDefault(x => Mage.Counterspell == x.CardId) != null)
 				{
 					Exclude(exclude);
 					return;
@@ -365,7 +418,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(!HandleAction)
 				return;
 
-			var exclude = new List<string>();
+			var exclude = new List<MultiIdCard>();
 
 			//Check against 1 because the tag hasn't been incremented by hs by the time this is getting called
 			if(Game.PlayerEntity?.GetTag(GameTag.NUM_CARDS_DRAWN_THIS_TURN) >= 1)
@@ -393,7 +446,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				EntititesInHandOnMinionsPlayed.Clear();
 		}
 
-		public void SaveSecret(string secret)
+		public void SaveSecret(MultiIdCard secret)
 		{
 			if(!Secrets.Any(s => s.IsExcluded(secret)))
 				SavedSecrets.Add(secret);

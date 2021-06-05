@@ -165,7 +165,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 							{
 								Id = x.DeckId,
 								Name = x.Title,
-								Cards = x.Cards.Select(c => new HearthMirror.Objects.Card(Database.GetCardFromDbfId(c.DbfId).Id, c.Count, false)).ToList(),
+								Cards = x.Cards.Select(c => new HearthMirror.Objects.Card(Database.GetCardFromDbfId(c.DbfId).Id, c.Count, 0)).ToList(),
 								Hero = hero,
 							};
 						}).Where(x => x != null);

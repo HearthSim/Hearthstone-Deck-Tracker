@@ -1,3 +1,78 @@
+## **Release v1.14.16- 2021-06-03**
+**Updated for Hearthstone 20.4.0**
+
+## **Release v1.14.15- 2021-05-25**
+**Fixes**
+- Fix text of libram option.
+
+## **Release v1.14.14- 2021-05-22**
+**Fixes**
+- Bob's Buddy improvements.
+
+## **Release v1.14.13- 2021-05-19**
+**New**
+- Added tracker for cost reductions to librams.
+- Added tracking for cost reductions from Efficient Octo-bot.
+**Fixes**
+- Fixed Rigged Faire Game not being removed from possible secrets when the opponent only lost armor.
+- Bob's Buddy improvements.
+
+## **Release v1.14.12- 2021-05-12**
+**Updated for Hearthstone 20.2.2**
+
+## **Release v1.14.11- 2021-05-05**
+**Fixes**
+- Added card tiles for new Battlegrounds cards.
+
+## **Release v1.14.10 - 2021-05-04**
+**Updated for Hearthstone 20.2.0**
+
+## **Release v1.14.9 - 2021-05-04**
+**Fixes**
+- Fixed an issue related to the Hearthstone 20.2 patch that would cause the app to freeze. Another update for the Battlegrounds changes will follow shortly
+
+## **Release v1.14.8 - 2021-04-13**
+**Updated for Hearthstone 20.0.2**
+**New**
+- Added mulligan toast for constructed games.
+**Fixes**
+- Fixed an issue where "Rank 1" spells were not tracked correctly.
+
+## **Release v1.14.6 - 2021-04-10**
+**Fixes**
+- Fix issue where old secrets would incorrectly appear as available in Standard.
+- Fix issue where a secret transformed by Oh My Yogg would still cause the secret list to appear.
+- Fix issue where Rigged Faire Game would occasionally incorrectly be ruled out a possible secret.
+- Fix issue where Oasis Ally could appear as having been ruled out as a possible secret during their turn if they played Hysteria.
+
+## **Release v1.14.4 - 2021-04-03**
+**Fixes**
+- Add Demon Hunter Initiate to wild.
+- Add support for diamond cards
+- Fix playing against opponents with hidden names
+
+## **Release v1.14.3 - 2021-03-31**
+**Fixes**
+- Fix issue where Ashes of Outland was mistakenly moved to wild.
+- Fix Bob's Buddy issue with Barrens Blacksmith.
+
+## **Release v1.14.2 - 2021-03-30**
+**Fixes**
+- Add support for Forged in the Barrens.
+
+## **Release v1.14.1 - 2021-03-30**
+**Fixes**
+- Add support for secrets in Classic.
+- Prevent a duplicate murloc tidecaller from appearing in the Battlegrounds minion tiers.
+- Stop a data leak where cards discarded by opponent trackings would be visible in their decklist.
+- Fix an issue where Bob's Buddy could occasionally crash.
+- Fix an issue with tracking Competitive Spirit and Open the Cages.
+
+## **Release v1.14.0 - 2021-03-25**
+**Updated for Hearthstone 20.0.0**
+**Fixes**:
+- Fixed various Hearthstone patch related issues to restore general functionality. More fixes and updates for the patch will follow soon.
+
 ## **Release v1.13.27 - 2021-03-08**
 **Fixes**:
 - Fixed an issue where the xp bar could fill up over and over again on startup.

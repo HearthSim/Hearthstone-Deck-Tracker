@@ -5,6 +5,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using static Hearthstone_Deck_Tracker.Hearthstone.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 {
@@ -69,16 +70,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			return false;
 		}
 
-		public override void Exclude(List<string> cardIds)
+		public override void Exclude(List<MultiIdCard> cardIds)
 		{
 			for(var i = 0; i < cardIds.Count; i++)
 				Exclude(cardIds[i], i == cardIds.Count - 1);
 		}
 
-		public override bool Exclude(string cardId, bool invokeCallback = true)
+		public override bool Exclude(MultiIdCard cardId, bool invokeCallback = true)
 		{
-			if(string.IsNullOrEmpty(cardId))
-				return false;
 			foreach(var secret in Secrets)
 				secret.Exclude(cardId);
 			Log.Info("Excluded Secret " + cardId);
@@ -87,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			return true;
 		}
 
-		public void Toggle(string cardId)
+		public void Toggle(MultiIdCard cardId)
 		{
 			var excluded = Secrets.Any(s => s.IsExcluded(cardId));
 			if(excluded)
@@ -117,33 +116,42 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				.Select(x => x.Key)
 				.Distinct().ToList();
 
-			bool HasPlayedTwoOf(string cardId) => opponentEntities.Count(e => e.CardId == cardId && !e.Info.Created) >= 2;
+			bool HasPlayedTwoOf(MultiIdCard card) => opponentEntities.Count(e => card == e.CardId && !e.Info.Created) >= 2;
 
-			int AdjustCount(string cardId, int count) => gameModeHasCardLimit && HasPlayedTwoOf(cardId)
-														&& !createdSecrets.Contains(cardId) ? 0 : count;
+			int AdjustCount(MultiIdCard card, int count)
+				=> gameModeHasCardLimit && HasPlayedTwoOf(card) && !createdSecrets.Contains(card) ? 0 : count;
 
-			var cards = Secrets.SelectMany(secret => secret.Excluded).GroupBy(id => id.Key).Select(group =>
-			{
-				var card = Database.GetCardFromId(group.Key);
-				card.Count = AdjustCount(group.Key, group.Count(x => !x.Value));
-				return card;
-			});
+			var cards = Secrets
+				.SelectMany(secret => secret.Excluded)
+				.GroupBy(id => id.Key)
+				.Select(group => new QuantifiedMultiIdCard(group.Key, AdjustCount(group.Key.Ids[0], group.Count(x => !x.Value))));
+			var foo = cards.ToList();
 
 			if(gameMode == GameType.GT_ARENA)
 			{
-				cards = cards.Where(c => _settings.CurrentSets.Contains(c.CardSet ?? CardSet.BLANK));
+				cards = cards.Where(c => _settings.CurrentSets.Any(c.HasSet));
 				if (_settings.BannedSecrets.Count > 0)
-					cards = cards.Where(c => !_settings.BannedSecrets.Contains(c.Id));
+					cards = cards.Where(c => _settings.BannedSecrets.All(s => c != s));
 			}
 			else
 			{
 				if(_settings.ExclusiveSecrets.Count > 0)
-					cards = cards.Where(c => !_settings.ExclusiveSecrets.Contains(c.Id));
+					cards = cards.Where(c => _settings.ExclusiveSecrets.All(s => c != s));
 				if(format == Format.Standard)
-					cards = cards.Where(c => !Helper.WildOnlySets.Contains(c.Set));
+					cards = cards.Where(c => c.IsStandard);
+				else if(format == Format.Classic)
+					cards = cards.Where(c => c.IsClassic);
+				else if(format == Format.Wild)
+					cards = cards.Where(c => c.IsWild);
 			}
 
-			return cards.ToList();
+			return cards.Select(x =>
+			{
+				var card = x.GetCardForFormat(format);
+				if (card != null)
+					card.Count = x.Count;
+				return card;
+			}).ToList();
 		}
 	}
 }

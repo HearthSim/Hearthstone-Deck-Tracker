@@ -19,6 +19,8 @@ using Hearthstone_Deck_Tracker.Utility;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Text.RegularExpressions;
+using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Utility.Analytics;
 
 #endregion
 
@@ -60,6 +62,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private UIElement _selectedUiElement;
 		private bool _uiMovable;
 
+		private OverlayElementBehavior _mulliganNotificationBehavior;
 		private OverlayElementBehavior _heroNotificationBehavior;
 		private OverlayElementBehavior _bgsTopBarBehavior;
 		private OverlayElementBehavior _bgsBobsBuddyBehavior;
@@ -75,6 +78,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			_game = game;
 			InitializeComponent();
+
+			_mulliganNotificationBehavior = new OverlayElementBehavior(MulliganNotificationPanel)
+			{
+				GetRight = () => 0,
+				GetBottom = () => Height * 0.04,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Bottom,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+			};
 
 			_heroNotificationBehavior = new OverlayElementBehavior(HeroNotificationPanel)
 			{
@@ -287,6 +300,27 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void ShowRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Visible;
 
 		public void HideRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Collapsed;
+
+		private bool _mulliganToastVisible = false;
+		internal void ShowMulliganPanel(string shortId, int[] dbfIds, CardClass opponent, bool goingFirst, int playerStarLevel)
+		{
+			MulliganNotificationPanel.Update(shortId, dbfIds, opponent, goingFirst, playerStarLevel);
+			if(MulliganNotificationPanel.ShouldShow())
+			{
+				_mulliganNotificationBehavior.Show();
+				_mulliganToastVisible = true;
+			}
+		}
+
+		internal void HideMulliganPanel(bool wasClicked)
+		{
+			if(_mulliganToastVisible)
+			{
+				_mulliganToastVisible = false;
+				Influx.OnMulliganToastClose(wasClicked, MulliganNotificationPanel.HasData);
+			}
+			_mulliganNotificationBehavior.Hide();
+		}
 
 		internal void ShowBattlegroundsHeroPanel(int[] heroIds)
 		{

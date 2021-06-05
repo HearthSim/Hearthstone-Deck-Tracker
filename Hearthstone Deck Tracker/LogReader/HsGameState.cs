@@ -74,6 +74,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		{
 			var blockId = _maxBlockId++;
 			CurrentBlock = CurrentBlock?.CreateChild(blockId, type, cardId, target) ?? new Block(null, blockId, type, cardId, target);
+			_game.SecretsManager.OnNewBlock();
 		}
 
 		public void BlockEnd()

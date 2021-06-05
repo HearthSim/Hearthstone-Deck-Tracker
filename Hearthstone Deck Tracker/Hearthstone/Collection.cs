@@ -15,7 +15,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Cards = new SortedDictionary<int, int[]>(
 				collection.Cards.Select(x => new {Key=GetDbfId(x.Id), Card=x}).GroupBy(x => x.Key)
 					.ToDictionary(x => x.Key,
-						x => new[] { x.FirstOrDefault(c => !c.Card.Premium)?.Card.Count ?? 0, x.FirstOrDefault(c => c.Card.Premium)?.Card.Count ?? 0 }));
+						x => new[]
+						{
+							x.FirstOrDefault(c => c.Card.PremiumType == 0)?.Card.Count ?? 0,
+							x.FirstOrDefault(c => c.Card.PremiumType == 1)?.Card.Count ?? 0,
+							x.FirstOrDefault(c => c.Card.PremiumType == 2)?.Card.Count ?? 0,
+						}));
 			FavoriteHeroes = new SortedDictionary<int, int>(collection.FavoriteHeroes.ToDictionary(x => x.Key, x => GetDbfId(x.Value.Id)));
 			CardBacks = collection.CardBacks.OrderBy(x => x).ToList();
 			FavoriteCardBack = collection.FavoriteCardBack;

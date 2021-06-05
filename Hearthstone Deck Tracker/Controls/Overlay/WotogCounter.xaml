@@ -38,6 +38,10 @@
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-galakrond.png" RenderOptions.BitmapScalingMode="Fant"/>
             <TextBlock Text="{Binding Galakrond, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="64,34,0,21"/>
         </Grid>
+        <Grid Visibility="{Binding LibramVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="2,0,2,0">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-libram.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding Libram, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="64,34,0,21"/>
+        </Grid>
         <Grid Visibility="{Binding FullVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="2,0,2,0">
             <Image Source="/HearthstoneDeckTracker;component/Images/icon-cthun-spells.png" RenderOptions.BitmapScalingMode="Fant"/>
             <TextBlock Text="{Binding Attack, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,15,104,40" />

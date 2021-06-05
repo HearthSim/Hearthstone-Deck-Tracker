@@ -11,12 +11,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 	{
 		internal static async void UploadPack(int packId, List<Card> cards)
 		{
-			Log.Info($"New Pack! Id={packId}, Cards=[{string.Join(", ", cards.Select(x => x.Id + (x.Premium ? " (g)" : "")))}]");
+			Log.Info($"New Pack! Id={packId}, Cards=[{string.Join(", ", cards.Select(x => x.Id + (x.PremiumType > 0 ? " (g)" : "")))}]");
 			if(Config.Instance.HsReplayUploadPacks == true)
 			{
 				try
 				{
-					var packData = PackDataGenerator.Generate(packId, cards.Select(x => new CardData { CardId = x.Id, Premium = x.Premium }));
+					var packData = PackDataGenerator.Generate(packId, cards.Select(x => new CardData { CardId = x.Id, Premium = x.PremiumType > 0 }));
 					await ApiWrapper.UploadPack(packData);
 					Log.Info("Successfully uploaded pack");
 				}

@@ -26,6 +26,7 @@ using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
 
 #endregion
 
@@ -194,7 +195,7 @@ namespace Hearthstone_Deck_Tracker
 				Log.Warn("Could not get MedalInfo");
 				return;
 			}
-			var data = gs.Format == Format.Wild ? medalInfo.Wild : medalInfo.Standard;
+			var data = gs.Format == Format.Wild ? medalInfo.Wild : gs.Format == Format.Classic ? medalInfo.Classic : medalInfo.Standard;
 			gs.StarsAfter = data.Stars;
 			gs.StarLevelAfter = data.StarLevel;
 			gs.LegendRankAfter = data.LegendRank;
@@ -242,16 +243,6 @@ namespace Hearthstone_Deck_Tracker
 
 		private void OnAttackEvent()
 		{
-			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
-			{
-				if(_attackingEntity != null && _attackingEntity.IsHero && _attackingEntity != null && _attackingEntity.IsHero)
-				{
-					Log.Debug($"Passing attacking hero {_attackingEntity?.Name ?? "null"} defender {_defendingEntity?.Name ?? "null"} to bbinvoker gameId {_game.CurrentGameStats.GameId} turn number {_game.GetTurnNumber()} ");
-				}
-				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?
-					.UpdateAttackingEntities(_attackingEntity, _defendingEntity);
-			}
-
 			var attackInfo = new AttackInfo((Card)_attackingEntity.Card.Clone(), (Card)_defendingEntity.Card.Clone());
 			if(_attackingEntity.IsControlledBy(_game.Player.Id))
 				GameEvents.OnPlayerMinionAttack.Execute(attackInfo);
@@ -276,14 +267,31 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleEntityPredamage(Entity entity, int value)
 		{
-			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
-				HandleOpponentDamage(entity);
 			GameEvents.OnEntityWillTakeDamage.Execute(new PredamageInfo(entity, value));
 		}
 
-		public void HandleOpponentDamage(Entity entity)
+		public void HandleEntityDamage(Entity dealer, Entity target, int value)
 		{
-			_game.SecretsManager.HandleOpponentDamage(entity);
+			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
+			{
+				_game.SecretsManager.HandleEntityDamage(dealer, target, value);
+			}
+		}
+
+		public void HandleEntityLostArmor(Entity target, int value)
+		{
+			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
+			{
+				_game.SecretsManager.HandleEntityLostArmor(target, value);
+			}
+		}
+
+		public void HandleProposedAttackerChange(Entity entity)
+		{
+			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
+			{
+				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?.HandleNewAttackingEntity(entity);
+			}
 		}
 
 		private readonly int[] _lastTurnStart = new int[2];
@@ -385,14 +393,12 @@ namespace Hearthstone_Deck_Tracker
 		private void HandleThaurissanCostReduction()
 		{
 			var thaurissans = _game.Opponent.Board.Where(x =>
-				(x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan
-					|| x.CardId == HearthDb.CardIds.NonCollectible.Neutral.EmperorThaurissanWILD_EVENT)
+				x.CardId == HearthDb.CardIds.Collectible.Neutral.EmperorThaurissan
 				&& !x.HasTag(SILENCED)).ToList();
 			if(!thaurissans.Any())
 				return;
 
-			foreach(var card in _game.Opponent.Hand)
-				card.Info.CostReduction += thaurissans.Count;
+			HandleOpponentHandCostReduction(thaurissans.Count);
 		}
 
 		private DateTime _lastGameStartTimestamp = DateTime.MinValue;
@@ -475,6 +481,8 @@ namespace Hearthstone_Deck_Tracker
 						.StartShopping(!_game.CurrentGameStats.WasConceded);
 					OpponentDeadForTracker.ResetOpponentDeadForTracker();
 				}
+				if(_game.IsConstructedMatch)
+					Core.Overlay.HideMulliganPanel(false);
 				Log.Info("Game ended...");
 				_game.InvalidateMatchInfoCache();
 				if(_game.CurrentGameMode == Spectator && _game.CurrentGameStats.Result == GameResult.None)
@@ -508,21 +516,27 @@ namespace Hearthstone_Deck_Tracker
 				Log.Info("Format: " + _game.CurrentGameStats.Format);
 				if(_game.CurrentGameMode == Ranked && _game.MatchInfo != null)
 				{
-					var wild = _game.CurrentFormat == Format.Wild;
-					var playerInfo = wild ? _game.MatchInfo.LocalPlayer.Wild : _game.MatchInfo.LocalPlayer.Standard;
-					var opponentInfo = wild ? _game.MatchInfo.OpposingPlayer.Wild : _game.MatchInfo.OpposingPlayer.Standard;
-					_game.CurrentGameStats.LeagueId = playerInfo.LeagueId ?? 0;
-					if (playerInfo.LeagueId < 5)
+					var isWild = _game.CurrentFormat == Format.Wild;
+					var isClassic = _game.CurrentFormat == Format.Classic;
+
+					var localPlayer = _game.MatchInfo.LocalPlayer;
+					var opposingPlayer = _game.MatchInfo.OpposingPlayer;
+
+					var playerInfo =  isClassic ? localPlayer.Classic : isWild ? localPlayer.Wild : localPlayer.Standard;
+					var opponentInfo = isClassic ? opposingPlayer.Classic : isWild ? opposingPlayer.Wild : opposingPlayer.Standard;
+
+					_game.CurrentGameStats.LeagueId = playerInfo?.LeagueId ?? 0;
+					if (playerInfo?.LeagueId < 5)
 					{
-						_game.CurrentGameStats.Rank = wild ? _game.MatchInfo.LocalPlayer.WildRank : _game.MatchInfo.LocalPlayer.StandardRank;
-						_game.CurrentGameStats.OpponentRank = wild ? _game.MatchInfo.OpposingPlayer.WildRank : _game.MatchInfo.OpposingPlayer.StandardRank;
+						_game.CurrentGameStats.Rank = isClassic ? localPlayer.ClassicRank : isWild ? localPlayer.WildRank : localPlayer.StandardRank;
+						_game.CurrentGameStats.OpponentRank = isClassic ? opposingPlayer.ClassicRank : isWild ? opposingPlayer.WildRank : opposingPlayer.StandardRank;
 					}
-					_game.CurrentGameStats.StarLevel = playerInfo.StarLevel ?? 0;
-					_game.CurrentGameStats.StarMultiplier = playerInfo.StarMultipier ?? 0;
-					_game.CurrentGameStats.Stars = playerInfo.Stars ?? 0;
-					_game.CurrentGameStats.OpponentStarLevel = opponentInfo.StarLevel ?? 0;
-					_game.CurrentGameStats.LegendRank = playerInfo.LegendRank ?? 0;
-					_game.CurrentGameStats.OpponentLegendRank = opponentInfo.LegendRank ?? 0;
+					_game.CurrentGameStats.StarLevel = playerInfo?.StarLevel ?? 0;
+					_game.CurrentGameStats.StarMultiplier = playerInfo?.StarMultipier ?? 0;
+					_game.CurrentGameStats.Stars = playerInfo?.Stars ?? 0;
+					_game.CurrentGameStats.OpponentStarLevel = opponentInfo?.StarLevel ?? 0;
+					_game.CurrentGameStats.LegendRank = playerInfo?.LegendRank ?? 0;
+					_game.CurrentGameStats.OpponentLegendRank = opponentInfo?.LegendRank ?? 0;
 				}
 				else if(_game.CurrentGameMode == Arena)
 				{
@@ -820,12 +834,59 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.CurrentGameStats != null)
 					_game.CurrentGameStats.BattlegroundsRaces = BattlegroundsUtils.GetAvailableRaces(_game.CurrentGameStats.GameId);
 			}
+			else if(_game.IsConstructedMatch)
+				HandleConstructedStart();
 		}
 
 		public void HandlePlayerMulliganDone()
 		{
 			if(_game.IsBattlegroundsMatch)
 				Core.Overlay.HideBattlegroundsHeroPanel();
+			else if(_game.IsConstructedMatch)
+				Core.Overlay.HideMulliganPanel(false);
+		}
+
+		private async void HandleConstructedStart()
+		{
+			if(Config.Instance.ShowMulliganToast)
+			{
+				for(var i = 0; i < 10; i++)
+				{
+					await Task.Delay(500);
+					var step = _game.GameEntity?.GetTag(STEP) ?? 0;
+					if(step == 0)
+						continue;
+					if(step > (int)Step.BEGIN_MULLIGAN)
+						break;
+
+					// Wait for the game to fade in
+					await Task.Delay(3000);
+
+
+					var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
+					if(!string.IsNullOrEmpty(shortId))
+					{
+						var cards = Core.Game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).Select(x => x.Card.DbfIf);
+						var opponentClass = Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
+						var goingFirst = Core.Game.Player.GoingFirst;
+
+						var isWild = _game.CurrentFormat == Format.Wild;
+						var isClassic = _game.CurrentFormat == Format.Classic;
+
+						var playerStarLevel = 0;
+						if (_game.MatchInfo != null)
+						{
+							var localPlayer = _game.MatchInfo.LocalPlayer;
+							var playerInfo = isClassic ? localPlayer.Classic : isWild ? localPlayer.Wild : localPlayer.Standard;
+							playerStarLevel = playerInfo?.StarLevel ?? 0;
+						}
+
+						Core.Overlay.ShowMulliganPanel(shortId, cards.ToArray(), opponentClass, goingFirst, playerStarLevel);
+					}
+
+					break;
+				}
+			}
 		}
 
 		private async void HandleBattlegroundsStart()
@@ -863,7 +924,6 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Core.Overlay.ShowBgsTopBar();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
-
 		}
 
 		#region Player
@@ -1013,12 +1073,23 @@ namespace Hearthstone_Deck_Tracker
 				HandlePlayerMinionDeath(entity);
 		}
 
-		public void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)
+		public async void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn)
 		{
 			_game.Opponent.PlayToGraveyard(entity, cardId, turn);
 			GameEvents.OnOpponentPlayToGraveyard.Execute(Database.GetCardFromId(entity.Info.LatestCardId));
 			if(playersTurn && entity.IsMinion)
 				HandleOpponentMinionDeath(entity, turn);
+
+			if(!playersTurn && entity.Info.WasTransformed)
+			{
+				await Task.Delay(3000);
+				var transformedSecert = _game.SecretsManager.Secrets.Where(x => x.Entity.Id == entity.Id).FirstOrDefault();
+				if(transformedSecert != null)
+				{
+					_game.SecretsManager.Secrets.Remove(transformedSecert);
+					_game.SecretsManager.Refresh();
+				}
+			}
 		}
 
 		public void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn)
@@ -1153,7 +1224,7 @@ namespace Hearthstone_Deck_Tracker
 		public void HandleOpponentGet(Entity entity, int turn, int id)
 		{
 			if(!_game.IsMulliganDone && entity.GetTag(ZONE_POSITION) == 5)
-				entity.CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoinBasic;
+				entity.CardId = HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore;
 			_game.Opponent.CreateInHand(entity, turn);
 			Core.UpdateOpponentCards();
 			GameEvents.OnOpponentGet.Execute();
@@ -1232,6 +1303,22 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentDeckDiscard.Execute(Database.GetCardFromId(cardId));
 		}
 
+		void HandlePlayerLibramReduction(int value) => _game.Player.UpdateLibramReduction(value);
+
+		void HandleOpponentLibramReduction(int value) => _game.Opponent.UpdateLibramReduction(value);
+
+		void HandlePlayerHandCostReduction(int value)
+		{
+			foreach(var card in _game.Player.Hand)
+				card.Info.CostReduction += value;
+		}
+
+		void HandleOpponentHandCostReduction(int value)
+		{
+			foreach(var card in _game.Opponent.Hand)
+				card.Info.CostReduction += value;
+		}
+
 		#endregion
 
 		#region IGameHandlerImplementation
@@ -1267,6 +1354,10 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentPlayToDeck(Entity entity, string cardId, int turn) => HandleOpponentPlayToDeck(entity, cardId, turn);
 		void IGameHandler.HandlePlayerFatigue(int currentDamage) => HandlePlayerFatigue(currentDamage);
 		void IGameHandler.HandleOpponentFatigue(int currentDamage) => HandleOpponentFatigue(currentDamage);
+		void IGameHandler.HandlePlayerLibramReduction(int value) => HandlePlayerLibramReduction(value);
+		void IGameHandler.HandleOpponentLibramReduction(int value) => HandleOpponentLibramReduction(value);
+		void IGameHandler.HandlePlayerHandCostReduction(int value) => HandlePlayerHandCostReduction(value);
+		void IGameHandler.HandleOpponentHandCostReduction(int value) => HandleOpponentHandCostReduction(value);
 
 		#endregion IGameHandlerImplementation
 	}

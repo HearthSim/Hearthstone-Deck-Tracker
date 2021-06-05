@@ -108,6 +108,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			: CurrentGameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(CurrentGameStats.OpponentHeroCardId);
 
 		public bool IsBattlegroundsMatch => CurrentGameType == GameType.GT_BATTLEGROUNDS || CurrentGameType == GameType.GT_BATTLEGROUNDS_FRIENDLY;
+		public bool IsConstructedMatch => CurrentGameType == GameType.GT_RANKED
+										|| CurrentGameType == GameType.GT_CASUAL
+										|| CurrentGameType == GameType.GT_VS_FRIEND;
 
 		public Mode CurrentMode
 		{
@@ -183,7 +186,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			var name = playerInfo?.Name ?? playerInfo?.BattleTag?.Name;
 			var valid = name != null;
-			Log.Debug($"valid={valid}, gameMode={CurrentGameMode}, player={name}, starLevel={playerInfo?.Standard.StarLevel}");
+			Log.Debug($"valid={valid}, gameMode={CurrentGameMode}, player={name}, starLevel={playerInfo?.Standard?.StarLevel}");
 			return valid;
 		}
 

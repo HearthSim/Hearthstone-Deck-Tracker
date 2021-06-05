@@ -404,6 +404,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode OpponentGalakrondCounter = DisplayMode.Auto;
 
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode OpponentLibramCounter = DisplayMode.Auto;
+
 		[DefaultValue(false)]
 		public bool HideOpponentCardAge = false;
 
@@ -448,6 +451,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(DisplayMode.Auto)]
 		public DisplayMode PlayerGalakrondCounter = DisplayMode.Auto;
+
+		[DefaultValue(DisplayMode.Auto)]
+		public DisplayMode PlayerLibramCounter = DisplayMode.Auto;
 
 		[DefaultValue(false)]
 		public bool HidePlayerCards = false;
@@ -801,6 +807,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool SeenBobsBuddyAverageDamage = false;
 
 		[DefaultValue(false)]
+		public bool SeenMulliganToast = false;
+
+		[DefaultValue(false)]
 		public bool BobsBuddyAverageDamageInfoClosed = false;
 
 		[DefaultValue(false)]
@@ -850,6 +859,9 @@ namespace Hearthstone_Deck_Tracker
 
 		[DefaultValue(true)]
 		public bool ShowBattlegroundsToast = true;
+
+		[DefaultValue(true)]
+		public bool ShowMulliganToast = true;
 
 		[DefaultValue(true)]
 		public bool ShowLeagueFilterHint = true;

@@ -2,5 +2,5 @@
 
 call update_card_tiles.bat
 
-msbuild /t:ResourceGenerator /p:Configuration=Debug /p:Platform="x86"
+msbuild ResourceGenerator\ResourceGenerator.csproj /p:Configuration=Debug /p:Platform="x86"
 .\ResourceGenerator\bin\x86\Debug\ResourceGenerator.exe tiles .\Resources Tiles

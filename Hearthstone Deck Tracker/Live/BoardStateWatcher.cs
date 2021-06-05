@@ -62,8 +62,12 @@ namespace Hearthstone_Deck_Tracker.Live
 			var format = Core.Game.CurrentFormat ?? Format.Wild;
 			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
 			var player = Core.Game.MatchInfo?.LocalPlayer;
-			var rank = format == Format.Standard ? player?.StandardRank : player?.WildRank;
-			var legendRank = format == Format.Standard ? player?.Standard.LegendRank : player?.Wild.LegendRank;
+			var rank = format == Format.Standard ? player?.StandardRank
+				: format == Format.Classic ? player?.ClassicRank
+				: player?.WildRank;
+			var legendRank = format == Format.Standard ? player?.Standard?.LegendRank
+				: format == Format.Classic ? player?.Classic?.LegendRank
+				: player?.Wild?.LegendRank;
 			return new GameStart
 			{
 				Deck = boardState.Player.Deck,
@@ -147,7 +151,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					{
 						Cards = playerCardsDict,
 						Name = deck?.Name,
-						Format = (deck?.IsWildDeck ?? false) ? FormatType.FT_WILD : FormatType.FT_STANDARD,
+						Format = deck?.GuessFormatType() ?? FormatType.FT_UNKNOWN,
 						Hero = Database.GetHeroCardFromClass(deck?.Class)?.DbfIf ?? 0,
 						Wins = games?.Count(g => g.Result == GameResult.Win) ?? 0,
 						Losses = games?.Count(g => g.Result == GameResult.Loss) ?? 0,

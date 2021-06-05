@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
@@ -8,8 +9,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class StringImporter
 	{
-		private static readonly Regex CardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!\-,]+)");
-		private static readonly Regex CardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!\-,]+?)(\s+(x\s*)?(?<count>\d))(\s*)$");
+		private static readonly Regex CardLineRegexCountFirst = new Regex(@"(^(\s*)(?<count>\d)(\s*x)?\s+)(?<cardname>[\w\s'\.:!\-(),]+)");
+		private static readonly Regex CardLineRegexCountLast = new Regex(@"(?<cardname>[\w\s'\.:!\-(),]+?)(\s+(x\s*)?(?<count>\d))(\s*)$");
 		public static char[] Separators = { '\n', '|' };
 
 		public static bool IsValidImportString(string importString)
@@ -20,6 +21,41 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 		public static Deck Import(string cards, bool localizedNames = false)
 		{
+			CardClass[] AvailableClasses(Card x)
+			{
+				var card = HearthDb.Cards.GetFromDbfId(x.DbfIf);
+				switch((MultiClassGroup)card.Entity.GetTag(GameTag.MULTI_CLASS_GROUP))
+				{
+					case MultiClassGroup.GRIMY_GOONS:
+						return new[] { CardClass.WARRIOR, CardClass.HUNTER, CardClass.PALADIN };
+					case MultiClassGroup.JADE_LOTUS:
+						return new[] { CardClass.ROGUE, CardClass.DRUID, CardClass.SHAMAN };
+					case MultiClassGroup.KABAL:
+						return new[] { CardClass.MAGE, CardClass.PRIEST, CardClass.WARLOCK };
+					case MultiClassGroup.PALADIN_PRIEST:
+						return new[] { CardClass.PALADIN, CardClass.PRIEST };
+					case MultiClassGroup.PRIEST_WARLOCK:
+						return new[] { CardClass.PRIEST, CardClass.WARLOCK };
+					case MultiClassGroup.WARLOCK_DEMONHUNTER:
+						return new[] { CardClass.WARLOCK, CardClass.DEMONHUNTER };
+					case MultiClassGroup.HUNTER_DEMONHUNTER:
+						return new[] { CardClass.HUNTER, CardClass.DEMONHUNTER };
+					case MultiClassGroup.DRUID_HUNTER:
+						return new[] { CardClass.DRUID, CardClass.HUNTER };
+					case MultiClassGroup.DRUID_SHAMAN:
+						return new[] { CardClass.DRUID, CardClass.SHAMAN };
+					case MultiClassGroup.MAGE_SHAMAN:
+						return new[] { CardClass.MAGE, CardClass.SHAMAN };
+					case MultiClassGroup.MAGE_ROGUE:
+						return new[] { CardClass.MAGE, CardClass.ROGUE };
+					case MultiClassGroup.ROGUE_WARRIOR:
+						return new[] { CardClass.ROGUE, CardClass.WARRIOR };
+					case MultiClassGroup.PALADIN_WARRIOR:
+						return new[] { CardClass.PALADIN, CardClass.WARRIOR };
+					default:
+						return new[] { card.Class };
+				}
+			}
 			try
 			{
 				var deck = new Deck();
@@ -56,14 +92,26 @@ namespace Hearthstone_Deck_Tracker.Importing
 					else
 						deck.Cards.Add(card);
 				}
-				var classes = deck.Cards.Where(x => x.PlayerClass != null).GroupBy(x => x.PlayerClass).ToList();
-				if(classes.Count != 1)
+				var deckClass = deck.Cards
+					.Where(x => x.DbfIf != 0)
+					.Select(AvailableClasses)
+					.Where(x => x.Length > 1 || x[0] != CardClass.NEUTRAL)
+					.Aggregate((a, b) => a.Concat(b).GroupBy(x => x).Where(x => x.Count() > 1).Select(x => x.Key).ToArray());
+				if(deckClass.Length > 1)
 				{
-					Log.Warn($"Could not identify a class for this deck. Found class cards for {classes.Count} classes.");
+					Log.Warn("Could not identify a class for this deck. Found multiple potential classes: " + string.Join(", ", deckClass.Select(HearthDbConverter.ConvertClass)));
 					return null;
 				}
-				deck.Class = classes.Single().Key;
-				return deck;
+				else if(deckClass.Length == 0)
+				{
+					Log.Warn("Could not identify a class for this deck. Found conflicting classes.");
+					return null;
+				}
+				else
+				{
+					deck.Class = HearthDbConverter.ConvertClass(deckClass[0]);
+					return deck;
+				}
 			}
 			catch(Exception ex)
 			{

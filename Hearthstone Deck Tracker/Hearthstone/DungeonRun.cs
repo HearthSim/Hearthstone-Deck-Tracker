@@ -165,14 +165,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			public static List<string> Rogue => new List<string>
 			{
-				Collectible.Neutral.ElvenArcher,
-				Collectible.Rogue.SinisterStrike,
+				Collectible.Neutral.ElvenArcherLegacy,
+				Collectible.Rogue.SinisterStrikeLegacy,
 				Collectible.Neutral.WorgenInfiltrator,
 				Collectible.Neutral.BloodsailRaider,
 				Collectible.Hunter.Glaivezooka,
 				Collectible.Hunter.SnakeTrap,
 				Collectible.Rogue.BlinkFox,
-				Collectible.Rogue.FanOfKnives,
+				Collectible.Rogue.FanOfKnivesLegacy,
 				Collectible.Neutral.HiredGun,
 				Collectible.Rogue.Si7Agent
 			};
@@ -199,9 +199,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collectible.Hunter.CracklingRazormaw,
 				Collectible.Hunter.Toxmonger_HuntingMastiffToken,
 				Collectible.Hunter.ForlornStalker,
-				Collectible.Hunter.KillCommand,
+				Collectible.Hunter.KillCommandLegacy,
 				Collectible.Hunter.UnleashTheHounds,
-				Collectible.Hunter.Houndmaster,
+				Collectible.Hunter.HoundmasterLegacy,
 				Collectible.Neutral.SwiftMessenger
 			};
 
@@ -215,7 +215,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collectible.Mage.Flamewaker,
 				Collectible.Mage.Spellslinger,
 				Collectible.Neutral.TinkmasterOverspark,
-				Collectible.Mage.WaterElemental,
+				Collectible.Mage.WaterElementalLegacy,
 				Collectible.Neutral.Blingtron3000
 			};
 		}
@@ -224,16 +224,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			public static List<string> Rogue => new List<string>
 			{
-				Collectible.Rogue.Backstab,
-				Collectible.Rogue.DeadlyPoison,
+				Collectible.Rogue.BackstabLegacy,
+				Collectible.Rogue.DeadlyPoisonLegacy,
 				Collectible.Rogue.PitSnake,
-				Collectible.Rogue.SinisterStrike,
+				Collectible.Rogue.SinisterStrikeLegacy,
 				Collectible.Neutral.GilblinStalker,
 				Collectible.Rogue.UndercityHuckster,
 				Collectible.Rogue.Si7Agent,
 				Collectible.Rogue.UnearthedRaptor,
-				Collectible.Rogue.Assassinate,
-				Collectible.Rogue.Vanish,
+				Collectible.Rogue.AssassinateLegacy,
+				Collectible.Rogue.VanishLegacy,
 			};
 
 			public static List<string> Warrior = new List<string>
@@ -241,9 +241,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collectible.Warrior.Warbot,
 				Collectible.Neutral.AmaniBerserker,
 				Collectible.Warrior.CruelTaskmaster,
-				Collectible.Warrior.HeroicStrike,
+				Collectible.Warrior.HeroicStrikeLegacy,
 				Collectible.Warrior.Bash,
-				Collectible.Warrior.FieryWarAxe,
+				Collectible.Warrior.FieryWarAxeLegacy,
 				Collectible.Neutral.HiredGun,
 				Collectible.Neutral.RagingWorgen,
 				Collectible.Neutral.DreadCorsair,
@@ -254,42 +254,42 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				Collectible.Shaman.AirElemental,
 				Collectible.Shaman.LightningBolt,
-				Collectible.Shaman.FlametongueTotem,
-				Collectible.Neutral.MurlocTidehunter,
+				Collectible.Shaman.FlametongueTotemLegacy,
+				Collectible.Neutral.MurlocTidehunterLegacy,
 				Collectible.Shaman.StormforgedAxe,
 				Collectible.Shaman.LightningStorm,
 				Collectible.Shaman.UnboundElemental,
 				Collectible.Neutral.DefenderOfArgus,
-				Collectible.Shaman.Hex,
-				Collectible.Shaman.FireElemental,
+				Collectible.Shaman.HexLegacy,
+				Collectible.Shaman.FireElementalLegacy,
 			};
 
 			public static List<string> Paladin = new List<string>
 			{
-				Collectible.Paladin.BlessingOfMight,
-				Collectible.Neutral.GoldshireFootman,
+				Collectible.Paladin.BlessingOfMightLegacy,
+				Collectible.Neutral.GoldshireFootmanLegacy,
 				Collectible.Paladin.NobleSacrifice,
 				Collectible.Paladin.ArgentProtector,
 				Collectible.Paladin.Equality,
-				Collectible.Paladin.HolyLight,
+				Collectible.Paladin.HolyLightLegacy,
 				Collectible.Neutral.EarthenRingFarseer,
-				Collectible.Paladin.Consecration,
-				Collectible.Neutral.StormwindKnight,
-				Collectible.Paladin.TruesilverChampion,
+				Collectible.Paladin.ConsecrationLegacy,
+				Collectible.Neutral.StormwindKnightLegacy,
+				Collectible.Paladin.TruesilverChampionLegacy,
 			};
 
 			public static List<string> Hunter = new List<string>
 			{
-				Collectible.Hunter.HuntersMark,
-				Collectible.Neutral.StonetuskBoar,
+				Collectible.Hunter.HuntersMarkLegacy,
+				Collectible.Neutral.StonetuskBoarLegacy,
 				Collectible.Neutral.DireWolfAlpha,
 				Collectible.Hunter.ExplosiveTrap,
-				Collectible.Hunter.AnimalCompanion,
+				Collectible.Hunter.AnimalCompanionLegacy,
 				Collectible.Hunter.DeadlyShot,
 				Collectible.Hunter.EaglehornBow,
 				Collectible.Neutral.JunglePanther,
 				Collectible.Hunter.UnleashTheHounds,
-				Collectible.Neutral.OasisSnapjaw,
+				Collectible.Neutral.OasisSnapjawLegacy,
 			};
 
 			public static List<string> Druid = new List<string>
@@ -302,50 +302,50 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				Collectible.Neutral.ShadeOfNaxxramas,
 				Collectible.Druid.KeeperOfTheGrove,
 				Collectible.Druid.SavageCombatant,
-				Collectible.Druid.Swipe,
+				Collectible.Druid.SwipeLegacy,
 				Collectible.Druid.DruidOfTheClaw,
 			};
 
 			public static List<string> Warlock = new List<string>
 			{
-				Collectible.Warlock.Corruption,
-				Collectible.Warlock.MortalCoil,
-				Collectible.Warlock.Voidwalker,
+				Collectible.Warlock.CorruptionLegacy,
+				Collectible.Warlock.MortalCoilLegacy,
+				Collectible.Warlock.VoidwalkerLegacy,
 				Collectible.Neutral.KnifeJuggler,
 				Collectible.Neutral.SunfuryProtector,
-				Collectible.Warlock.DrainLife,
+				Collectible.Warlock.DrainLifeLegacy,
 				Collectible.Neutral.ImpMaster,
 				Collectible.Neutral.DarkIronDwarf,
-				Collectible.Warlock.Hellfire,
+				Collectible.Warlock.HellfireLegacy,
 				Collectible.Warlock.Doomguard,
 			};
 
 			public static List<string> Mage = new List<string>
 			{
 				Collectible.Neutral.ArcaneAnomaly,
-				Collectible.Mage.ArcaneMissiles,
+				Collectible.Mage.ArcaneMissilesLegacy,
 				Collectible.Neutral.Doomsayer,
-				Collectible.Mage.Frostbolt,
+				Collectible.Mage.FrostboltLegacy,
 				Collectible.Mage.SorcerersApprentice,
 				Collectible.Neutral.EarthenRingFarseer,
 				Collectible.Mage.IceBarrier,
-				Collectible.Neutral.ChillwindYeti,
-				Collectible.Mage.Fireball,
+				Collectible.Neutral.ChillwindYetiLegacy,
+				Collectible.Mage.FireballLegacy,
 				Collectible.Mage.Blizzard,
 			};
 
 			public static List<string> Priest = new List<string>
 			{
-				Collectible.Priest.HolySmite,
+				Collectible.Priest.HolySmiteLegacy,
 				Collectible.Priest.NorthshireCleric,
 				Collectible.Priest.PotionOfMadness,
 				Collectible.Neutral.FaerieDragon,
-				Collectible.Priest.MindBlast,
-				Collectible.Priest.ShadowWordPain,
+				Collectible.Priest.MindBlastLegacy,
+				Collectible.Priest.ShadowWordPainLegacy,
 				Collectible.Priest.DarkCultist,
 				Collectible.Priest.AuchenaiSoulpriest,
 				Collectible.Priest.Lightspawn,
-				Collectible.Priest.HolyNova,
+				Collectible.Priest.HolyNovaLegacy,
 			};
 		}
 
@@ -362,7 +362,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Rogue.ShadowSensei,
 					Collectible.Neutral.AbusiveSergeant,
 					Collectible.Neutral.SouthseaDeckhand,
-					Collectible.Neutral.CaptainsParrot,
+					Collectible.Neutral.CaptainsParrotLegacy,
 					Collectible.Neutral.SharkfinFan,
 					Collectible.Neutral.ShipsCannon,
 					Collectible.Neutral.HenchClanThug,
@@ -372,7 +372,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					NonCollectible.Rogue.TreasureFromBelow,
 					Collectible.Rogue.Preparation,
 					Collectible.Rogue.CounterfeitCoin,
-					Collectible.Rogue.Backstab,
+					Collectible.Rogue.BackstabLegacy,
 					Collectible.Rogue.Conceal,
 					Collectible.Rogue.UndercityValiant,
 					Collectible.Rogue.Betrayal,
@@ -384,14 +384,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				new List<string>
 				{
 					NonCollectible.Rogue.PiratesMark,
-					Collectible.Rogue.Backstab,
+					Collectible.Rogue.BackstabLegacy,
 					Collectible.Rogue.CounterfeitCoin,
 					Collectible.Neutral.ArcaneAnomaly,
-					Collectible.Rogue.SinisterStrike,
+					Collectible.Rogue.SinisterStrikeLegacy,
 					Collectible.Rogue.Betrayal,
-					Collectible.Neutral.KoboldGeomancer,
+					Collectible.Neutral.KoboldGeomancerLegacy,
 					Collectible.Neutral.Spellzerker,
-					Collectible.Rogue.FanOfKnives,
+					Collectible.Rogue.FanOfKnivesLegacy,
 					Collectible.Rogue.AcademicEspionage,
 					Collectible.Rogue.TombPillager,
 				}
@@ -406,7 +406,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Warrior.EterniumRover,
 					Collectible.Warrior.Armorsmith,
 					Collectible.Warrior.DrywhiskerArmorer,
-					Collectible.Warrior.FieryWarAxe,
+					Collectible.Warrior.FieryWarAxeLegacy,
 					Collectible.Warrior.MountainfireArmor,
 					Collectible.Warrior.EmberscaleDrake,
 					Collectible.Neutral.Waterboy,
@@ -421,7 +421,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Neutral.FaerieDragon,
 					Collectible.Neutral.FiretreeWitchdoctor,
 					Collectible.Neutral.NetherspiteHistorian,
-					Collectible.Warrior.FieryWarAxe,
+					Collectible.Warrior.FieryWarAxeLegacy,
 					Collectible.Neutral.NightmareAmalgam,
 					Collectible.Neutral.EbonDragonsmith,
 					Collectible.Neutral.TwilightGuardian,
@@ -434,7 +434,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Warrior.InnerRage,
 					Collectible.Warrior.NzothsFirstMate,
 					Collectible.Warrior.Warbot,
-					Collectible.Warrior.Execute,
+					Collectible.Warrior.ExecuteLegacy,
 					Collectible.Warrior.Rampage,
 					Collectible.Warrior.CruelTaskmaster,
 					Collectible.Warrior.BloodhoofBrave,
@@ -455,7 +455,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Shaman.LightningStorm,
 					Collectible.Shaman.JinyuWaterspeaker,
 					Collectible.Shaman.FireguardDestroyer,
-					Collectible.Neutral.MurlocRaider,
+					Collectible.Neutral.MurlocRaiderLegacy,
 					Collectible.Neutral.DeadscaleKnight,
 					Collectible.Neutral.HugeToad,
 					Collectible.Neutral.TarCreeper,
@@ -467,7 +467,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Shaman.TotemicSmash,
 					Collectible.Shaman.HotSpringGuardian,
 					Collectible.Shaman.LightningStorm,
-					Collectible.Shaman.FireElemental,
+					Collectible.Shaman.FireElementalLegacy,
 					Collectible.Neutral.EmeraldReaver,
 					Collectible.Neutral.FireFly,
 					Collectible.Neutral.BilefinTidehunter,
@@ -500,11 +500,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Paladin.GrimestreetOutfitter,
 					Collectible.Paladin.ParagonOfLight,
 					Collectible.Paladin.FarrakiBattleaxe,
-					Collectible.Neutral.ElvenArcher,
+					Collectible.Neutral.ElvenArcherLegacy,
 					Collectible.Neutral.InjuredKvaldir,
 					Collectible.Neutral.BelligerentGnome,
 					Collectible.Neutral.ArenaFanatic,
-					Collectible.Neutral.StormwindKnight,
+					Collectible.Neutral.StormwindKnightLegacy,
 				},
 				new List<string>
 				{
@@ -513,7 +513,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Paladin.FlashOfLight,
 					Collectible.Paladin.SealOfLight,
 					Collectible.Paladin.BenevolentDjinn,
-					Collectible.Paladin.TruesilverChampion,
+					Collectible.Paladin.TruesilverChampionLegacy,
 					Collectible.Paladin.ChillbladeChampion,
 					Collectible.Neutral.Crystallizer,
 					Collectible.Neutral.MadBomber,
@@ -525,14 +525,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					NonCollectible.Paladin.ShirvallahsGrace,
 					Collectible.Neutral.ArgentSquire,
 					Collectible.Paladin.DivineStrength,
-					Collectible.Paladin.HandOfProtection,
+					Collectible.Paladin.HandOfProtectionLegacy,
 					Collectible.Paladin.FlashOfLight,
 					Collectible.Paladin.PotionOfHeroism,
 					Collectible.Paladin.PrimalfinChampion,
 					Collectible.Neutral.BananaBuffoon,
 					Collectible.Paladin.SealOfChampions,
-					Collectible.Paladin.BlessingOfKings,
-					Collectible.Paladin.TruesilverChampion
+					Collectible.Paladin.BlessingOfKingsLegacy,
+					Collectible.Paladin.TruesilverChampionLegacy
 				},
 			};
 
@@ -542,12 +542,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					NonCollectible.Hunter.HalazzisTrap,
 					Collectible.Hunter.Candleshot,
-					Collectible.Hunter.ArcaneShot,
-					Collectible.Hunter.HuntersMark,
+					Collectible.Hunter.ArcaneShotLegacy,
+					Collectible.Hunter.HuntersMarkLegacy,
 					Collectible.Hunter.SecretPlan,
 					Collectible.Hunter.ExplosiveTrap,
 					Collectible.Hunter.QuickShot,
-					Collectible.Hunter.AnimalCompanion,
+					Collectible.Hunter.AnimalCompanionLegacy,
 					Collectible.Hunter.BloodscalpStrategist,
 					Collectible.Hunter.BaitedArrow,
 					Collectible.Neutral.BurglyBully,
@@ -555,14 +555,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				new List<string>
 				{
 					NonCollectible.Hunter.HalazzisHunt,
-					Collectible.Hunter.HuntersMark,
+					Collectible.Hunter.HuntersMarkLegacy,
 					Collectible.Hunter.Alleycat,
 					Collectible.Hunter.Springpaw,
 					Collectible.Hunter.Glaivezooka,
 					Collectible.Hunter.ScavengingHyena,
-					Collectible.Hunter.AnimalCompanion,
+					Collectible.Hunter.AnimalCompanionLegacy,
 					Collectible.Hunter.CaveHydra,
-					Collectible.Hunter.Houndmaster,
+					Collectible.Hunter.HoundmasterLegacy,
 					Collectible.Hunter.SavannahHighmane,
 					Collectible.Neutral.DireWolfAlpha,
 				},
@@ -572,13 +572,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Hunter.JeweledMacaw,
 					Collectible.Hunter.Springpaw,
 					Collectible.Hunter.Webspinner,
-					Collectible.Hunter.KillCommand,
+					Collectible.Hunter.KillCommandLegacy,
 					Collectible.Hunter.RatPack,
 					Collectible.Hunter.BaitedArrow,
 					Collectible.Neutral.DireWolfAlpha,
-					Collectible.Neutral.SilverbackPatriarch,
+					Collectible.Neutral.SilverbackPatriarchLegacy,
 					Collectible.Neutral.UntamedBeastmaster,
-					Collectible.Neutral.OasisSnapjaw,
+					Collectible.Neutral.OasisSnapjawLegacy,
 				},
 			};
 
@@ -605,18 +605,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Druid.PowerOfTheWild,
 					Collectible.Druid.WitchwoodApple,
 					Collectible.Druid.MountedRaptor,
-					Collectible.Druid.Swipe,
+					Collectible.Druid.SwipeLegacy,
 					Collectible.Neutral.WaxElemental,
-					Collectible.Neutral.BloodfenRaptor,
+					Collectible.Neutral.BloodfenRaptorLegacy,
 					Collectible.Neutral.InfestedTauren,
-					Collectible.Neutral.StormwindKnight,
+					Collectible.Neutral.StormwindKnightLegacy,
 					Collectible.Neutral.ArenaPatron,
 				},
 				new List<string>
 				{
 					NonCollectible.Druid.BondsOfBalance,
 					Collectible.Druid.Pounce,
-					Collectible.Druid.Claw,
+					Collectible.Druid.ClawLegacy,
 					Collectible.Druid.EnchantedRaven,
 					Collectible.Druid.PowerOfTheWild,
 					Collectible.Druid.SavageStriker,
@@ -633,7 +633,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				new List<string>
 				{
 					NonCollectible.Warlock.BloodPact,
-					Collectible.Warlock.Voidwalker,
+					Collectible.Warlock.VoidwalkerLegacy,
 					Collectible.Warlock.QueenOfPain,
 					Collectible.Warlock.Demonfire,
 					Collectible.Warlock.Duskbat,
@@ -648,9 +648,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					NonCollectible.Warlock.DarkReliquary,
 					Collectible.Warlock.Shriek,
-					Collectible.Warlock.Soulfire,
-					Collectible.Warlock.Voidwalker,
-					Collectible.Warlock.Felstalker,
+					Collectible.Warlock.SoulfireLegacy,
+					Collectible.Warlock.VoidwalkerLegacy,
+					Collectible.Warlock.FelstalkerLegacy,
 					Collectible.Warlock.DarkshireLibrarian,
 					Collectible.Warlock.RecklessDiretroll,
 					Collectible.Warlock.LakkariFelhound,
@@ -662,11 +662,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					NonCollectible.Warlock.HireeksHunger,
 					Collectible.Warlock.FlameImp,
-					Collectible.Warlock.CallOfTheVoid,
+					Collectible.Warlock.CallOfTheVoidLegacy,
 					Collectible.Warlock.SpiritBomb,
 					Collectible.Warlock.UnlicensedApothecary,
 					Collectible.Warlock.BloodWitch,
-					Collectible.Warlock.Hellfire,
+					Collectible.Warlock.HellfireLegacy,
 					Collectible.Neutral.KnifeJuggler,
 					Collectible.Neutral.Waterboy,
 					Collectible.Neutral.ImpMaster,
@@ -680,7 +680,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					NonCollectible.Mage.JanalaisMantle,
 					Collectible.Mage.BabblingBook,
-					Collectible.Mage.ArcaneExplosion,
+					Collectible.Mage.ArcaneExplosionLegacy,
 					Collectible.Mage.ShimmeringTempest,
 					Collectible.Mage.ExplosiveRunes,
 					Collectible.Mage.Spellslinger,
@@ -697,7 +697,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Mage.FallenHero,
 					Collectible.Mage.Cinderstorm,
 					Collectible.Mage.DalaranAspirant,
-					Collectible.Mage.Fireball,
+					Collectible.Mage.FireballLegacy,
 					Collectible.Neutral.AcherusVeteran,
 					Collectible.Neutral.FlameJuggler,
 					Collectible.Neutral.BlackwaldPixie,
@@ -709,13 +709,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					NonCollectible.Mage.JanalaisProgeny,
 					Collectible.Mage.FreezingPotion,
 					Collectible.Neutral.ArcaneAnomaly,
-					Collectible.Mage.Frostbolt,
+					Collectible.Mage.FrostboltLegacy,
 					Collectible.Mage.Snowchugger,
 					Collectible.Neutral.VolatileElemental,
 					Collectible.Neutral.HyldnirFrostrider,
 					Collectible.Mage.ConeOfCold,
 					Collectible.Neutral.IceCreamPeddler,
-					Collectible.Mage.WaterElemental,
+					Collectible.Mage.WaterElementalLegacy,
 					Collectible.Neutral.FrostElemental
 				},
 			};
@@ -740,7 +740,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				{
 					NonCollectible.Priest.BwonsamdisTome,
 					Collectible.Priest.PsionicProbe,
-					Collectible.Priest.PowerWordShield,
+					Collectible.Priest.PowerWordShieldLegacy,
 					Collectible.Priest.SpiritLash,
 					Collectible.Priest.SandDrudge,
 					Collectible.Priest.GildedGargoyle,
@@ -758,7 +758,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					Collectible.Priest.FlashHeal,
 					Collectible.Neutral.InjuredKvaldir,
 					Collectible.Priest.LightOfTheNaaru,
-					Collectible.Neutral.VoodooDoctor,
+					Collectible.Neutral.VoodooDoctorLegacy,
 					Collectible.Neutral.GadgetzanSocialite,
 					Collectible.Neutral.Waterboy,
 					Collectible.Neutral.EarthenRingFarseer,

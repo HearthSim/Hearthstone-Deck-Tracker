@@ -36,8 +36,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int PogoHopperPlayedCount {get; private set;}
 		public string LastDiedMinionCardId { get; set; }
 		public string LastDrawnCardId { get; set; }
+		public int LibramReductionCount { get; private set; }
 
-		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinBasic);
+		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore);
 		public int HandCount => Hand.Count();
 		public int DeckCount => Deck.Count();
 
@@ -212,6 +213,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PogoHopperPlayedCount = 0;
 			CardsPlayedThisTurn.Clear();
 			LastDrawnCardId = null;
+			LibramReductionCount = 0;
 		}
 
 		public void Draw(Entity entity, int turn)
@@ -443,5 +445,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			entity.Info.Turn = turn;
 			Log(entity);
 		}
+
+		public void UpdateLibramReduction(int change) => LibramReductionCount += change;
 	}
 }

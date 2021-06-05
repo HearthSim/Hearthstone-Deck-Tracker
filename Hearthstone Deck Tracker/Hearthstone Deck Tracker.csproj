@@ -272,6 +272,9 @@
     <Compile Include="Controls\Overlay\BattlegroundsCardsGroup.xaml.cs">
       <DependentUpon>BattlegroundsCardsGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\MulliganPanel.xaml.cs">
+      <DependentUpon>MulliganPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\BattlegroundsHeroPanel.xaml.cs">
       <DependentUpon>BattlegroundsHeroPanel.xaml</DependentUpon>
     </Compile>
@@ -334,6 +337,7 @@
     <Compile Include="Hearthstone\Collection.cs" />
     <Compile Include="Hearthstone\DungeonRun.cs" />
     <Compile Include="Hearthstone\Entities\GuessedCardState.cs" />
+    <Compile Include="Hearthstone\MultiIdCard.cs" />
     <Compile Include="Hearthstone\RankTranslator.cs" />
     <Compile Include="Hearthstone\Secrets\ArenaSettingsProvider.cs" />
     <Compile Include="Hearthstone\Secrets\RemoteArenaSettings.cs" />
@@ -1034,6 +1038,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Overlay\MulliganPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Overlay\BattlegroundsHeroPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1670,6 +1678,7 @@
     <Resource Include="Images\icon-jade.png" />
     <Resource Include="Images\icon-spells.png" />
     <Resource Include="Images\icon-galakrond.png" />
+    <Resource Include="Images\icon-libram.png" />
     <Resource Include="Resources\embroidery.png" />
     <Resource Include="Resources\tactile_noise.png" />
     <Resource Include="Resources\tier-1.png" />
@@ -1681,6 +1690,8 @@
     <Resource Include="Resources\tier-glow.png" />
     <Resource Include="Resources\tier-x.png" />
     <Resource Include="Resources\bgs-toast-background.jpg" />
+    <Resource Include="Resources\mulligan-toast-bg.jpg" />
+    <Resource Include="Resources\mulligan-toast-bg-grey.jpg" />
     <Resource Include="Resources\Loading\loading_hero.png" />
     <Resource Include="Resources\Loading\loading_minion.png" />
     <Resource Include="Resources\Loading\loading_spell.png" />

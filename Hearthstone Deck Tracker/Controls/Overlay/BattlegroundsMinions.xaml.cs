@@ -12,6 +12,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 	{
 		private Lazy<BattlegroundsDb> _db = new Lazy<BattlegroundsDb>();
 		private readonly List<BattlegroundsTier> _tierIcons = new List<BattlegroundsTier>();
+		//We remove the below cardid from the bg tier list, it appears to have been incorrectly classified as a bg minion by blizzard in patch 20.0.0.
+		//Hopefully it will be fixed soon and can be removed.
+		private const string NonBgMurlocTidehunterCardId = HearthDb.CardIds.Collectible.Neutral.MurlocTidecallerVanilla;
 
 		public int ActiveTier { get; set; }
 		public ObservableCollection<BattlegroundsCardsGroup> Groups { get; set; } = new ObservableCollection<BattlegroundsCardsGroup>();
@@ -90,6 +93,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 				var cards = _db.Value.GetCards(tier, race).ToList();
 
+				if(race == Race.MURLOC)
+				{
+					cards = cards.Where(x => x.Id != NonBgMurlocTidehunterCardId).ToList();
+				}
 				if(race == Race.INVALID)
 					cards.AddRange(GetUnavailableRaceCards(availableRaces).Where(x => x.TechLevel == tier));
 				if(cards.Count == 0)

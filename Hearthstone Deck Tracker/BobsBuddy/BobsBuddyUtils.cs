@@ -49,8 +49,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			minion.game_id = entity.Id;
 
-			Log.Info($"Added {entity.Name}, ({minion.baseAttack}, {minion.baseHealth}, controller {entity.GetTag(GameTag.CONTROLLER)}, creator {entity.Info.GetCreatorId()}.");
-
 			return minion;
 		}
 

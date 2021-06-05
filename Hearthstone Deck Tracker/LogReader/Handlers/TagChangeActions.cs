@@ -18,6 +18,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	internal class TagChangeActions
 	{
+		//We have to remove cards moved from deck -> graveyard when this is the parent block due to a data leak introduced by blizzard to the classic format.
+		const string ClassicTrackingCardId = HearthDb.CardIds.Collectible.Hunter.TrackingVanilla;
+
 		public Action FindAction(GameTag tag, IGame game, IHsGameState gameState, int id, int value, int prevValue)
 		{
 			switch(tag)
@@ -37,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case PROPOSED_DEFENDER:
 					return () => ProposedDefenderChange(game, value);
 				case PROPOSED_ATTACKER:
-					return () => ProposedAttackerChange(game, value);
+					return () => ProposedAttackerChange(gameState, id, game, value);
 				case PREDAMAGE:
 					return () => PredamageChange(gameState, id, game, value);
 				case NUM_TURNS_IN_PLAY:
@@ -67,6 +70,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => OnTagScriptDataNum1(id, value, game, gameState);
 				case REBORN:
 					return () => OnRebornChange(id, value, game);
+				case DAMAGE:
+					return () => DamageChange(gameState, id, game, value, prevValue);
+				case ARMOR:
+					return () => ArmorChange(gameState, id, game, value, prevValue);
 			}
 			return null;
 		}
@@ -163,7 +170,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.Entities.TryGetValue(displayedCreatorId, out var displayedCreator))
 				{
 					// For some reason Far Sight sets DISPLAYED_CREATOR on the entity
-					if(displayedCreator.CardId == CardIds.Collectible.Shaman.FarSight)
+					if(displayedCreator.CardId == Collectible.Shaman.FarSight || displayedCreator.CardId == Collectible.Shaman.FarSightVanilla)
 						return;
 				}
 
@@ -260,8 +267,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		}
 
 		private void ProposedDefenderChange(IGame game, int value) => game.ProposedDefender = value;
+	
+		private void ProposedAttackerChange(IHsGameState gameState, int id, IGame game, int value) {
+			game.ProposedAttacker = value;
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(value, out var entity))
+				return;
+			if(entity.IsHero)
+			{
+				Log.Debug($"Saw hero attack from {entity.CardId}");
+			}
+			gameState.GameHandler.HandleProposedAttackerChange(entity);
+		}
 
-		private void ProposedAttackerChange(IGame game, int value) => game.ProposedAttacker = value;
 
 		private void PredamageChange(IHsGameState gameState, int id, IGame game, int value)
 		{
@@ -270,6 +289,26 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
 			gameState.GameHandler.HandleEntityPredamage(entity, value);
+		}
+
+		private void ArmorChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			//We do prevValue - value because armor gets smaller as you lose it and damage gets bigger as you lose life.
+			gameState.GameHandler.HandleEntityLostArmor(entity, prevValue - value);
+		}
+
+		private void DamageChange(IHsGameState gameState, int id, IGame game, int value, int prevValue)
+		{
+			if(value <= 0)
+				return;
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			game.Entities.TryGetValue(entity.GetTag(GameTag.LAST_AFFECTED_BY), out var dealer);
+			gameState.GameHandler.HandleEntityDamage(dealer, entity, value - prevValue);
 		}
 
 		private void NumTurnsInPlayChange(IHsGameState gameState, int id, IGame game, int value)
@@ -641,6 +680,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					}
 					break;
 				case GRAVEYARD:
+					var parentId = gameState?.CurrentBlock?.CardId;
+
+					if(parentId != null)
+					{
+						if(parentId == ClassicTrackingCardId)
+						{
+							entity.Info.Hidden = true;
+							entity.SetTag(GameTag.ZONE, (int)Zone.DECK);
+						}
+					}
+					
 					if(controller == game.Player.Id)
 						gameState.GameHandler.HandlePlayerDeckDiscard(entity, cardId, gameState.GetTurnNumber());
 					else if(controller == game.Opponent.Id)

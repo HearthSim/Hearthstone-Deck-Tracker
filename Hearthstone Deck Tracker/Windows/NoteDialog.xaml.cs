@@ -107,7 +107,7 @@ namespace Hearthstone_Deck_Tracker
 				Card card = null;
 				if(tracked == null || !Cards.All.ContainsKey(tracked.Id))
 				{
-					card = Cards.All[NonCollectible.Neutral.Noooooooooooo];
+					card = Cards.All[NonCollectible.Neutral.NooooooooooooLegacy];
 					CountText = "x0";
 					TextColor = Brushes.Red;
 				}					
