@@ -640,6 +640,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								else
 									gameState.GameHandler.HandleOpponentLibramReduction(2);
 								break;
+							case Collectible.Neutral.YseraTheDreamerCore:
+								AddKnownCardId(gameState, NonCollectible.DreamCards.NightmareExpert1);
+								AddKnownCardId(gameState, NonCollectible.DreamCards.Dream);
+								AddKnownCardId(gameState, NonCollectible.DreamCards.LaughingSister);
+								AddKnownCardId(gameState, NonCollectible.DreamCards.YseraAwakens);
+								AddKnownCardId(gameState, NonCollectible.DreamCards.EmeraldDrake);
+								break;
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
