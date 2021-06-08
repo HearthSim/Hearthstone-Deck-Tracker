@@ -302,9 +302,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void HideRestartRequiredWarning() => TextBlockRestartWarning.Visibility = Collapsed;
 
 		private bool _mulliganToastVisible = false;
-		internal void ShowMulliganPanel(string shortId, int[] dbfIds, CardClass opponent, bool goingFirst, int playerStarLevel)
+		internal void ShowMulliganPanel(string shortId, int[] dbfIds, CardClass opponent, bool hasCoin, int playerStarLevel)
 		{
-			MulliganNotificationPanel.Update(shortId, dbfIds, opponent, goingFirst, playerStarLevel);
+			MulliganNotificationPanel.Update(shortId, dbfIds, opponent, hasCoin, playerStarLevel);
 			if(MulliganNotificationPanel.ShouldShow())
 			{
 				_mulliganNotificationBehavior.Show();
