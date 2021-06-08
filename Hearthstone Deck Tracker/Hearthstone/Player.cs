@@ -27,7 +27,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string Name { get; set; }
 		public string Class { get; set; }
 		public int Id { get; set; }
-		public bool GoingFirst { get; set; }
 		public int Fatigue { get; set; }
 		public bool IsLocalPlayer { get; }
 		public int SpellsPlayedCount { get; private set; }
@@ -206,7 +205,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Name = "";
 			Class = "";
 			Id = -1;
-			GoingFirst = false;
 			Fatigue = 0;
 			InDeckPrecitions.Clear();
 			SpellsPlayedCount = 0;
