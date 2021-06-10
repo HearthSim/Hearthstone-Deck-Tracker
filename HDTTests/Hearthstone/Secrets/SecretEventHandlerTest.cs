@@ -298,6 +298,8 @@ namespace HDTTests.Hearthstone.Secrets
 		public void SingleSecret_OpponentMinionDealtThreeDamage_TriggersReckoning()
 		{
 			SetPlayerAsCurrentPlayer();
+			// Prevent attacker from dying
+			_playerMinion1.SetTag(GameTag.HEALTH, 5);
 			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 3);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
@@ -310,6 +312,17 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			SetPlayerAsCurrentPlayer();
 			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 2);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public void SingleSecret_OpponentMinionDealtThreeDamageAndDied_DoesNotTriggerReckoning()
+		{
+			SetPlayerAsCurrentPlayer();
+			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 3);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
