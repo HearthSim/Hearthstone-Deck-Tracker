@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		private static readonly RavenClient Client = new RavenClient("https://0a6c07cee8d141f0bee6916104a02af4:883b339db7b040158cdfc42287e6a791@app.getsentry.com/80405");
 		private static bool? _isSigned = null;
-		private static bool IsSigned => _isSigned ?? (_isSigned = CheckIfSigned()).Value;
+		public static bool IsSigned => _isSigned ?? (_isSigned = CheckIfSigned()).Value;
 
 		public static string CaptureException(Exception ex)
 		{
@@ -45,6 +45,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			exception.Tags.Add("squirrel", "false");
 #endif
 			exception.Tags.Add("hearthstone", Helper.GetHearthstoneBuild()?.ToString());
+			if(!IsSigned)
+				return "Executable was not properly signed.";
 			return Client.Capture(exception);
 		}
 
@@ -73,10 +75,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
 				return;
-
-			if(!IsSigned)
-				return;
-
 			// Clean up data
 			testInput.RemoveSelfReferencesFromMinions();
 			output.ClearListsForReporting(); //ignoring for some temporary debugging
