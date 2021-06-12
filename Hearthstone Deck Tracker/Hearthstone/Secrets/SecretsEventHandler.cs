@@ -344,7 +344,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		public void SecretTriggered(Entity secret) => _triggeredSecrets.Add(secret);
 
-		public async void HandleCardPlayed(Entity entity)
+		public async void HandleCardPlayed(Entity entity, string parentBlockCardId)
 		{
 			if(!HandleAction)
 				return;
@@ -370,6 +370,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(entity.IsSpell)
 			{
+				if(parentBlockCardId == HearthDb.CardIds.Collectible.Rogue.SparkjoyCheat)
+					return;
+
 				_triggeredSecrets.Clear();
 				if(Game.OpponentSecretCount > 1)
 					await Game.GameTime.WaitForDuration(MultiSecretResolveDelay);

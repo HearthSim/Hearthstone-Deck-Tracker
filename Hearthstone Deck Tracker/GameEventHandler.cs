@@ -979,7 +979,7 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnPlayerMulligan.Execute(Database.GetCardFromId(cardId));
 		}
 
-		public void HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone)
+		public void HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone, string parentBlockCardId)
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
@@ -1001,7 +1001,7 @@ namespace Hearthstone_Deck_Tracker
 					break;
 				case Zone.HAND:
 					_game.Player.SecretPlayedFromHand(entity, turn);
-					_game.SecretsManager.HandleCardPlayed(entity);
+					_game.SecretsManager.HandleCardPlayed(entity, parentBlockCardId);
 					break;
 				default:
 					_game.Player.CreateInSecret(entity, turn);
@@ -1020,14 +1020,14 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnPlayerHandDiscard.Execute(Database.GetCardFromId(cardId));
 		}
 
-		public void HandlePlayerPlay(Entity entity, string cardId, int turn)
+		public void HandlePlayerPlay(Entity entity, string cardId, int turn, string parentBlockCardId)
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return;
 			_game.Player.Play(entity, turn);
 			Core.UpdatePlayerCards();
 			GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
-			_game.SecretsManager.HandleCardPlayed(entity);
+			_game.SecretsManager.HandleCardPlayed(entity, parentBlockCardId);
 		}
 
 		public void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn)
@@ -1327,9 +1327,9 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerBackToHand(Entity entity, string cardId, int turn) => HandlePlayerBackToHand(entity, cardId, turn);
 		void IGameHandler.HandlePlayerDraw(Entity entity, string cardId, int turn) => HandlePlayerDraw(entity, cardId, turn);
 		void IGameHandler.HandlePlayerMulligan(Entity entity, string cardId) => HandlePlayerMulligan(entity, cardId);
-		void IGameHandler.HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone) => HandlePlayerSecretPlayed(entity, cardId, turn, fromZone);
+		void IGameHandler.HandlePlayerSecretPlayed(Entity entity, string cardId, int turn, Zone fromZone, string parentBlockCardId) => HandlePlayerSecretPlayed(entity, cardId, turn, fromZone, parentBlockCardId);
 		void IGameHandler.HandlePlayerHandDiscard(Entity entity, string cardId, int turn) => HandlePlayerHandDiscard(entity, cardId, turn);
-		void IGameHandler.HandlePlayerPlay(Entity entity, string cardId, int turn) => HandlePlayerPlay(entity, cardId, turn);
+		void IGameHandler.HandlePlayerPlay(Entity entity, string cardId, int turn, string parentBlockCardId) => HandlePlayerPlay(entity, cardId, turn, parentBlockCardId);
 		void IGameHandler.HandlePlayerDeckDiscard(Entity entity, string cardId, int turn) => HandlePlayerDeckDiscard(entity, cardId, turn);
 		void IGameHandler.HandlePlayerHeroPower(string cardId, int turn) => HandlePlayerHeroPower(cardId, turn);
 		void IGameHandler.HandleOpponentPlay(Entity entity, string cardId, int @from, int turn) => HandleOpponentPlay(entity, cardId, @from, turn);

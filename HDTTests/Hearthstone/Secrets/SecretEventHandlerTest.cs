@@ -319,7 +319,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_MinionTarget_SpellPlayed()
 		{
-			_game.SecretsManager.HandleCardPlayed(_playerSpell1);
+			_game.SecretsManager.HandleCardPlayed(_playerSpell1, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
@@ -330,7 +330,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_NoMinionTarget_SpellPlayed()
 		{
-			_game.SecretsManager.HandleCardPlayed(_playerSpell2);
+			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
@@ -342,12 +342,23 @@ namespace HDTTests.Hearthstone.Secrets
 		public void SingleSecret_MinionOnBoard_NoMinionTarget_SpellPlayed()
 		{
 			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
-			_game.SecretsManager.HandleCardPlayed(_playerSpell2);
+			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
+		}
+
+		[TestMethod]
+		public void SingleSecret_NoMinionTarget_SecretCastBySparkjoyCheat()
+		{
+			_game.SecretsManager.HandleCardPlayed(_playerSpell2, HearthDb.CardIds.Collectible.Rogue.SparkjoyCheat);
+			_game.GameTime.Time += TimeSpan.FromSeconds(1);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		//[TestMethod]
@@ -527,7 +538,7 @@ namespace HDTTests.Hearthstone.Secrets
 			mockegame.SecretsManager = new SecretsManager(mockegame, null);
 			mockegame.SecretsManager.Secrets.Add(new Secret(_secretHunter1));
 			mockegame.SecretsManager.Secrets.Add(new Secret(_secretMage1));
-			mockegame.SecretsManager.HandleCardPlayed(_playerSpell2);
+			mockegame.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			mockegame.SecretsManager.SecretTriggered(CreateNewEntity(MageSecrets.Counterspell));
 			mockegame.GameTime.Time += TimeSpan.FromSeconds(1);
 			Assert.IsTrue(mockegame.SecretsManager.Secrets[1].IsExcluded(MageSecrets.Counterspell));
