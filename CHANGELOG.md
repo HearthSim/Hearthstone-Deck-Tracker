@@ -1,3 +1,8 @@
+## **Release v1.14.17- 2021-06-13
+**Fixes**
+- Fix issue with Reckoning being removed as a possible secret when the damage dealer dies.
+- Fix issue with secrets triggered by spells being removed by spells cast by Sparkjoy Cheat.
+
 ## **Release v1.14.16- 2021-06-03**
 **Updated for Hearthstone 20.4.0**
 
