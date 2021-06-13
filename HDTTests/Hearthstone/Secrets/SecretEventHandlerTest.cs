@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -295,10 +296,12 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void SingleSecret_OpponentMinionDealtThreeDamage_TriggersReckoning()
+		public async System.Threading.Tasks.Task SingleSecret_OpponentMinionDealtThreeDamage_TriggersReckoningAsync()
 		{
 			SetPlayerAsCurrentPlayer();
+			_playerMinion1.SetTag(GameTag.HEALTH, 1);
 			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 3);
+			await Task.Delay(100);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Reckoning);
@@ -306,10 +309,11 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void SingleSecret_OpponentMinionDealtTwoDamage_DoesNotTriggerReckoning()
+		public async Task SingleSecret_OpponentMinionDealtTwoDamage_DoesNotTriggerReckoningAsync()
 		{
 			SetPlayerAsCurrentPlayer();
 			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 2);
+			await Task.Delay(100);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
@@ -317,11 +321,12 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void SingleSecret_OpponentMinionDealtThreeDamageAndKillsPlayerMinion_DoesNotTriggerReckoning()
+		public async Task SingleSecret_OpponentMinionDealtThreeDamageAndKillsPlayerMinion_DoesNotTriggerReckoningAsync()
 		{
 			SetPlayerAsCurrentPlayer();
 			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 3);
 			_gameEventHandler.HandleEntityDamage(_opponentMinion1, _playerMinion1, 1000);
+			await Task.Delay(100);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
