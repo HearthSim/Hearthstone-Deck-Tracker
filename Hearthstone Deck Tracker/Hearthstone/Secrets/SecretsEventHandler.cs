@@ -297,9 +297,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 							EntityDamageDealtHistory[dealer.Id][target.Id] = 0;
 						}
 						EntityDamageDealtHistory[dealer.Id][target.Id] += damage;
+						var damageDealt = EntityDamageDealtHistory[dealer.Id][target.Id];
+
 						await Task.Delay(100);
 
-						if(EntityDamageDealtHistory[dealer.Id][target.Id] >= 3 && dealer.Health > 0)
+						if(damageDealt >= 3 && dealer.Health > 0)
 							Exclude(Paladin.Reckoning);
 					}
 				}
