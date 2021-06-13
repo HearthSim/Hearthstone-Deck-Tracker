@@ -1,3 +1,7 @@
+## **Release v1.14.18- 2021-06-13
+**Fixes**
+- Fixed crashes related to previous secret tracker update.
+
 ## **Release v1.14.17- 2021-06-13
 **Fixes**
 - Fix issue with Reckoning being removed as a possible secret when the damage dealer dies.
