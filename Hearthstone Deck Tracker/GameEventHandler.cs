@@ -274,7 +274,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			if(_game.PlayerEntity?.IsCurrentPlayer ?? false)
 			{
-				_game.SecretsManager.HandleEntityDamage(dealer, target, value);
+				_game.SecretsManager.HandleEntityDamageAsync(dealer, target, value);
 			}
 		}
 

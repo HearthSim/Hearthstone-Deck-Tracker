@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
@@ -270,7 +271,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			EntityDamageDealtHistory.Clear();
 		}
 
-		public void HandleEntityDamage(Entity dealer, Entity target, int damage)
+		public async void HandleEntityDamageAsync(Entity dealer, Entity target, int damage)
 		{
 			if(target != null)
 			{
@@ -296,6 +297,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 							EntityDamageDealtHistory[dealer.Id][target.Id] = 0;
 						}
 						EntityDamageDealtHistory[dealer.Id][target.Id] += damage;
+						await Task.Delay(100);
+
 						if(EntityDamageDealtHistory[dealer.Id][target.Id] >= 3 && dealer.Health > 0)
 							Exclude(Paladin.Reckoning);
 					}

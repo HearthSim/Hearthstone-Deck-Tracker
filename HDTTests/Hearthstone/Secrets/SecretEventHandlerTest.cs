@@ -317,6 +317,18 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
+		public void SingleSecret_OpponentMinionDealtThreeDamageAndKillsPlayerMinion_DoesNotTriggerReckoning()
+		{
+			SetPlayerAsCurrentPlayer();
+			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 3);
+			_gameEventHandler.HandleEntityDamage(_opponentMinion1, _playerMinion1, 1000);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
 		public void SingleSecret_MinionTarget_SpellPlayed()
 		{
 			_game.SecretsManager.HandleCardPlayed(_playerSpell1, "");
