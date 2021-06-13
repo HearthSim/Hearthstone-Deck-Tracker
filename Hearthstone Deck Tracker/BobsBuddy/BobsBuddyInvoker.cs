@@ -529,9 +529,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 			if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
 			{
-				terminalCase = true;
-				if (ReportErrors)
-					AlertWithLastInputOutput(lethalResult.ToString());
+				if(_turn > 5)
+				{
+					terminalCase = true;
+					if(ReportErrors)
+						AlertWithLastInputOutput(lethalResult.ToString());
+				}
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
