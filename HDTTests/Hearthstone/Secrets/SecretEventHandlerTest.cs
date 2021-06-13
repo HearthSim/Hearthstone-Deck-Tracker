@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Hearthstone;
@@ -295,10 +296,12 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void SingleSecret_OpponentMinionDealtThreeDamage_TriggersReckoning()
+		public async System.Threading.Tasks.Task SingleSecret_OpponentMinionDealtThreeDamage_TriggersReckoningAsync()
 		{
 			SetPlayerAsCurrentPlayer();
+			_playerMinion1.SetTag(GameTag.HEALTH, 1);
 			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 3);
+			await Task.Delay(100);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Reckoning);
@@ -306,10 +309,24 @@ namespace HDTTests.Hearthstone.Secrets
 		}
 
 		[TestMethod]
-		public void SingleSecret_OpponentMinionDealtTwoDamage_DoesNotTriggerReckoning()
+		public async Task SingleSecret_OpponentMinionDealtTwoDamage_DoesNotTriggerReckoningAsync()
 		{
 			SetPlayerAsCurrentPlayer();
 			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 2);
+			await Task.Delay(100);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
+		}
+
+		[TestMethod]
+		public async Task SingleSecret_OpponentMinionDealtThreeDamageAndKillsPlayerMinion_DoesNotTriggerReckoningAsync()
+		{
+			SetPlayerAsCurrentPlayer();
+			_gameEventHandler.HandleEntityDamage(_playerMinion1, _opponentMinion1, 3);
+			_gameEventHandler.HandleEntityDamage(_opponentMinion1, _playerMinion1, 1000);
+			await Task.Delay(100);
 			VerifySecrets(0, HunterSecrets.All);
 			VerifySecrets(1, MageSecrets.All);
 			VerifySecrets(2, PaladinSecrets.All);
@@ -319,7 +336,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_MinionTarget_SpellPlayed()
 		{
-			_game.SecretsManager.HandleCardPlayed(_playerSpell1);
+			_game.SecretsManager.HandleCardPlayed(_playerSpell1, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
@@ -330,7 +347,7 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestMethod]
 		public void SingleSecret_NoMinionTarget_SpellPlayed()
 		{
-			_game.SecretsManager.HandleCardPlayed(_playerSpell2);
+			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
@@ -342,12 +359,23 @@ namespace HDTTests.Hearthstone.Secrets
 		public void SingleSecret_MinionOnBoard_NoMinionTarget_SpellPlayed()
 		{
 			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
-			_game.SecretsManager.HandleCardPlayed(_playerSpell2);
+			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
 			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
+		}
+
+		[TestMethod]
+		public void SingleSecret_NoMinionTarget_SecretCastBySparkjoyCheat()
+		{
+			_game.SecretsManager.HandleCardPlayed(_playerSpell2, HearthDb.CardIds.Collectible.Rogue.SparkjoyCheat);
+			_game.GameTime.Time += TimeSpan.FromSeconds(1);
+			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(1, MageSecrets.All);
+			VerifySecrets(2, PaladinSecrets.All);
+			VerifySecrets(3, RogueSecrets.All);
 		}
 
 		//[TestMethod]
@@ -527,7 +555,7 @@ namespace HDTTests.Hearthstone.Secrets
 			mockegame.SecretsManager = new SecretsManager(mockegame, null);
 			mockegame.SecretsManager.Secrets.Add(new Secret(_secretHunter1));
 			mockegame.SecretsManager.Secrets.Add(new Secret(_secretMage1));
-			mockegame.SecretsManager.HandleCardPlayed(_playerSpell2);
+			mockegame.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			mockegame.SecretsManager.SecretTriggered(CreateNewEntity(MageSecrets.Counterspell));
 			mockegame.GameTime.Time += TimeSpan.FromSeconds(1);
 			Assert.IsTrue(mockegame.SecretsManager.Secrets[1].IsExcluded(MageSecrets.Counterspell));

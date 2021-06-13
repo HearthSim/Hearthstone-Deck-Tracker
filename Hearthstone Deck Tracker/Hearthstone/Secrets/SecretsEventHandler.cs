@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets;
@@ -270,7 +271,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			EntityDamageDealtHistory.Clear();
 		}
 
-		public void HandleEntityDamage(Entity dealer, Entity target, int damage)
+		public async void HandleEntityDamageAsync(Entity dealer, Entity target, int damage)
 		{
 			if(target != null)
 			{
@@ -296,7 +297,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 							EntityDamageDealtHistory[dealer.Id][target.Id] = 0;
 						}
 						EntityDamageDealtHistory[dealer.Id][target.Id] += damage;
-						if(EntityDamageDealtHistory[dealer.Id][target.Id] >= 3)
+						await Task.Delay(100);
+
+						if(EntityDamageDealtHistory[dealer.Id][target.Id] >= 3 && dealer.Health > 0)
 							Exclude(Paladin.Reckoning);
 					}
 				}
@@ -344,7 +347,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 		public void SecretTriggered(Entity secret) => _triggeredSecrets.Add(secret);
 
-		public async void HandleCardPlayed(Entity entity)
+		public async void HandleCardPlayed(Entity entity, string parentBlockCardId)
 		{
 			if(!HandleAction)
 				return;
@@ -370,6 +373,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			if(entity.IsSpell)
 			{
+				if(parentBlockCardId == HearthDb.CardIds.Collectible.Rogue.SparkjoyCheat)
+					return;
+
 				_triggeredSecrets.Clear();
 				if(Game.OpponentSecretCount > 1)
 					await Game.GameTime.WaitForDuration(MultiSecretResolveDelay);
