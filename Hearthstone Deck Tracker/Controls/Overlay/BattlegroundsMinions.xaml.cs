@@ -96,18 +96,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				var cards = _db.Value.GetCards(tier, race).ToList();
 
 				if(race == Race.MURLOC)
-				{
 					cards = cards.Where(x => x.Id != NonBgMurlocTidehunterCardId).ToList();
-				}
 
-				foreach(var otherRaceCardsToInclude in DifferentTribeClassifiedCards.Where(x => x.Key != race))
-				{
-					cards = cards.Where(x => !otherRaceCardsToInclude.Value.Contains(x.Id)).ToList();
-				}
+				foreach(var otherTribeCardsToInclude in DifferentTribeClassifiedCards.Where(x => x.Key != race))
+					cards = cards.Where(x => !otherTribeCardsToInclude.Value.Contains(x.Id)).ToList();
 
-				foreach(var otherRaceCardsToInclude in DifferentTribeClassifiedCards.Where(x => x.Key == race))
+				foreach(var otherTribeCardsToInclude in DifferentTribeClassifiedCards.Where(x => x.Key == race))
 				{
-					foreach(var cardId in otherRaceCardsToInclude.Value)
+					foreach(var cardId in otherTribeCardsToInclude.Value)
 					{
 						if(HearthDb.Cards.All.TryGetValue(cardId, out var card))
 						{
