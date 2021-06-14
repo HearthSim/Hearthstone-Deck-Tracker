@@ -1,3 +1,7 @@
+## **Release v1.14.20- 2021-06-14
+**Fixes**
+- Fixed crashe related to previous secret tracker update.
+
 ## **Release v1.14.19- 2021-06-13
 **Fixes**
 - Fixed crashes related to previous secret tracker update.
