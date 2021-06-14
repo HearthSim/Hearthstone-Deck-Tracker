@@ -702,8 +702,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler.HandleOpponentDeckToPlay(entity, cardId, gameState.GetTurnNumber());
 					break;
 				case Zone.SECRET:
-					if(controller == game.Player.Id)
-						gameState.GameHandler.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, "");
+					if(controller == game.Player.Id && gameState.CurrentBlock.Parent != null)
+						gameState.GameHandler.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, gameState.CurrentBlock.Parent.CardId);
 					else if(controller == game.Opponent.Id)
 						gameState.GameHandler.HandleOpponentSecretPlayed(entity, cardId, -1, gameState.GetTurnNumber(), (Zone)prevValue, id);
 					break;
