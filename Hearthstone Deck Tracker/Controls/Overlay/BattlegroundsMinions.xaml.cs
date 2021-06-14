@@ -63,6 +63,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			return NeutralClassifiedRaceCards.Where(x => x.RaceEnum != null && !availableRaces.Contains(x.RaceEnum.Value)).ToList();
 		}
 
+		private Dictionary<Race, List<string>> DifferentTribeClassifiedCards = new Dictionary<Race, List<string>>() { { Race.QUILBOAR, new List<string>() { HearthDb.CardIds.NonCollectible.Neutral.AgamagganTheGreatBoar } } };
+
 		private void Update(int tier, IEnumerable<Race> availableRaces)
 		{
 			if (ActiveTier == tier)
@@ -94,9 +96,23 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				var cards = _db.Value.GetCards(tier, race).ToList();
 
 				if(race == Race.MURLOC)
-				{
 					cards = cards.Where(x => x.Id != NonBgMurlocTidehunterCardId).ToList();
+
+				foreach(var otherTribeCardsToInclude in DifferentTribeClassifiedCards.Where(x => x.Key != race))
+					cards = cards.Where(x => !otherTribeCardsToInclude.Value.Contains(x.Id)).ToList();
+
+				foreach(var otherTribeCardsToInclude in DifferentTribeClassifiedCards.Where(x => x.Key == race))
+				{
+					foreach(var cardId in otherTribeCardsToInclude.Value)
+					{
+						if(HearthDb.Cards.All.TryGetValue(cardId, out var card))
+						{
+							if(card.Entity.GetTag(GameTag.TECH_LEVEL) == tier)
+								cards.Add(new Hearthstone.Card(card, true));
+						}
+					}
 				}
+
 				if(race == Race.INVALID)
 					cards.AddRange(GetUnavailableRaceCards(availableRaces).Where(x => x.TechLevel == tier));
 				if(cards.Count == 0)
