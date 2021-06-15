@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using BobsBuddy;
 using BobsBuddy.Simulation;
 using Hearthstone_Deck_Tracker.BobsBuddy;
@@ -30,8 +28,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		}
 
 		private static readonly RavenClient Client = new RavenClient("https://0a6c07cee8d141f0bee6916104a02af4:883b339db7b040158cdfc42287e6a791@app.getsentry.com/80405");
-		private static bool? _isSigned = null;
-		public static bool IsSigned => _isSigned ?? (_isSigned = CheckIfSigned()).Value;
 
 		public static string CaptureException(Exception ex)
 		{
@@ -45,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			exception.Tags.Add("squirrel", "false");
 #endif
 			exception.Tags.Add("hearthstone", Helper.GetHearthstoneBuild()?.ToString());
-			if(!IsSigned)
+			if(!Helper.IsSigned)
 				return "Executable was not properly signed.";
 			return Client.Capture(exception);
 		}
@@ -56,25 +52,14 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static int BobsBuddyExceptionsSent;
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 
-		private static bool CheckIfSigned()
-		{
-			try
-			{
-				X509Certificate basicSigner = X509Certificate.CreateFromSignedFile(Assembly.GetExecutingAssembly().Location);
-				if(basicSigner.Subject.Contains("HearthSim, LLC"))
-					return true;
-			}
-			catch(Exception ex)
-			{
-				Log.Error("Error reading executable certificate: " + ex);
-			}
-			return false;
-		}
-
 		public static void QueueBobsBuddyTerminalCase(TestInput testInput, TestOutput output, string result, int turn, List<string> debugLog, Region region)
 		{
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
 				return;
+
+			if(!Helper.IsSigned)
+				return;
+
 			// Clean up data
 			testInput.RemoveSelfReferencesFromMinions();
 			output.ClearListsForReporting(); //ignoring for some temporary debugging

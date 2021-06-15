@@ -16,6 +16,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			_name = name;
 			if(defaultField)
 				_fields.Add("count", 1);
+
+			_tags.Add("signed", Helper.IsSigned);
 			_fields.Add("user", Config.Instance.Id);
 		}
 
