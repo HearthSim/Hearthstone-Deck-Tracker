@@ -1,12 +1,12 @@
-## **Release v1.14.20- 2021-06-14
+## **Release v1.14.20- 2021-06-14**
 **Fixes**
-- Fixed crashe related to previous secret tracker update.
+- Fixed crash related to previous secret tracker update.
 
-## **Release v1.14.19- 2021-06-13
+## **Release v1.14.19- 2021-06-13**
 **Fixes**
 - Fixed crashes related to previous secret tracker update.
 
-## **Release v1.14.17- 2021-06-13
+## **Release v1.14.17- 2021-06-13**
 **Fixes**
 - Fix issue with Reckoning being removed as a possible secret when the damage dealer dies.
 - Fix issue with secrets triggered by spells being removed by spells cast by Sparkjoy Cheat.
