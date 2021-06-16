@@ -1,3 +1,8 @@
+## **Release v1.14.21- 2021-06-16**
+**Updated for Hearthstone 20.4.2**
+**Fixes**
+- Fixed bug where Agamaggan the Great Boar was classified as a beast in the battlegrounds minion menu.
+
 ## **Release v1.14.20- 2021-06-14**
 **Fixes**
 - Fixed crash related to previous secret tracker update.
