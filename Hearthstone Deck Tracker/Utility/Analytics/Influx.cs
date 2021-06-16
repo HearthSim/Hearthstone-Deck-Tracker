@@ -312,6 +312,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		{
 			if(!points.Any())
 				return;
+			if(!Helper.IsSigned)
+				return;
 			try
 			{
 				using(var client = new UdpClient())

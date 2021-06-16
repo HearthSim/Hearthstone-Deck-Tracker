@@ -34,6 +34,7 @@ using MediaColor = System.Windows.Media.Color;
 using Region = Hearthstone_Deck_Tracker.Enums.Region;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
 using System.Web;
+using System.Security.Cryptography.X509Certificates;
 
 #endregion
 
@@ -42,6 +43,24 @@ namespace Hearthstone_Deck_Tracker
 	public static class Helper
 	{
 		public static double DpiScalingX = 1.0, DpiScalingY = 1.0;
+
+		private static bool? _isSigned = null;
+		public static bool IsSigned => _isSigned ?? (_isSigned = CheckIfSigned()).Value;
+
+		private static bool CheckIfSigned()
+		{
+			try
+			{
+				X509Certificate basicSigner = X509Certificate.CreateFromSignedFile(Assembly.GetExecutingAssembly().Location);
+				if(basicSigner.Subject.Contains("HearthSim, LLC"))
+					return true;
+			}
+			catch(Exception ex)
+			{
+				Log.Error("Error reading executable certificate: " + ex);
+			}
+			return false;
+		}
 
 		public static readonly Dictionary<string, string> LanguageDict = new Dictionary<string, string>
 		{
@@ -721,6 +740,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 			TryOpenUrl(url);
 		}
+
 		public static async Task<T> RetryWhileNull<T>(Func<T> func, int tries = 5, int delay = 150) where T : class
 		{
 			for(var i = 0; i < tries; i++)
