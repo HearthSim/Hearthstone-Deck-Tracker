@@ -103,6 +103,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(!entity.IsHeroPower || entity.IsControlledBy(game.Player.Id))
 				return;
 
+			if(entity.CardId != entity.Info.LatestCardId) Log.Warn($"CardId Mismatch {entity.CardId} vs {entity.Info.LatestCardId}");
 			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?
 				.HeroPowerTriggered(entity.CardId);
 		}
@@ -118,7 +119,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 			if(string.IsNullOrEmpty(targetEntity.CardId))
 			{
-				targetEntity.CardId = entity.CardId;
+				targetEntity.CardId = entity.Info.LatestCardId;
 				targetEntity.Info.GuessedCardState = GuessedCardState.Guessed;
 
 				if(entity.GetTag(CREATOR_DBID) == Hearthstone.CardIds.KeyMasterAlabasterDbfId)
@@ -344,16 +345,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			if(value == game.Player.Id)
 			{
 				if(entity.IsInZone(Zone.SECRET))
-					gameState.GameHandler.HandleOpponentStolen(entity, entity.CardId, gameState.GetTurnNumber());
+					gameState.GameHandler.HandleOpponentStolen(entity, entity.Info.LatestCardId, gameState.GetTurnNumber());
 				else if(entity.IsInZone(PLAY))
-					gameState.GameHandler.HandleOpponentStolen(entity, entity.CardId, gameState.GetTurnNumber());
+					gameState.GameHandler.HandleOpponentStolen(entity, entity.Info.LatestCardId, gameState.GetTurnNumber());
 			}
 			else if(value == game.Opponent.Id)
 			{
 				if(entity.IsInZone(Zone.SECRET))
-					gameState.GameHandler.HandlePlayerStolen(entity, entity.CardId, gameState.GetTurnNumber());
+					gameState.GameHandler.HandlePlayerStolen(entity, entity.Info.LatestCardId, gameState.GetTurnNumber());
 				else if(entity.IsInZone(PLAY))
-					gameState.GameHandler.HandlePlayerStolen(entity, entity.CardId, gameState.GetTurnNumber());
+					gameState.GameHandler.HandlePlayerStolen(entity, entity.Info.LatestCardId, gameState.GetTurnNumber());
 			}
 		}
 
@@ -409,31 +410,31 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			switch((Zone)prevValue)
 			{
 				case DECK:
-					ZoneChangeFromDeck(gameState, id, game, value, prevValue, controller, entity.CardId);
+					ZoneChangeFromDeck(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
 				case HAND:
-					ZoneChangeFromHand(gameState, id, game, value, prevValue, controller, entity.CardId);
+					ZoneChangeFromHand(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
 				case PLAY:
-					ZoneChangeFromPlay(gameState, id, game, value, prevValue, controller, entity.CardId);
+					ZoneChangeFromPlay(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
 				case Zone.SECRET:
-					ZoneChangeFromSecret(gameState, id, game, value, prevValue, controller, entity.CardId);
+					ZoneChangeFromSecret(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
 				case Zone.INVALID:
 					var maxId = GetMaxHeroPowerId(game);
 					if(!game.SetupDone && (id <= maxId || game.GameEntity?.GetTag(STEP) == (int)Step.INVALID && entity.GetTag(ZONE_POSITION) < 5))
 					{
 						entity.Info.OriginalZone = DECK;
-						SimulateZoneChangesFromDeck(gameState, id, game, value, entity.CardId, maxId);
+						SimulateZoneChangesFromDeck(gameState, id, game, value, entity.Info.LatestCardId, maxId);
 					}
 					else
-						ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.CardId);
+						ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
 				case GRAVEYARD:
 				case SETASIDE:
 				case REMOVEDFROMGAME:
-					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.CardId);
+					ZoneChangeFromOther(gameState, id, game, value, prevValue, controller, entity.Info.LatestCardId);
 					break;
 				default:
 					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
@@ -522,7 +523,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler.HandleOpponentCreateInSetAside(entity, gameState.GetTurnNumber());
 						if(gameState.CurrentBlock?.CardId == Collectible.Neutral.GrandArchivist
 							&& gameState.CurrentBlock.EntityDiscardedByArchivist != null)
-							gameState.CurrentBlock.EntityDiscardedByArchivist.CardId = entity.CardId;
+							gameState.CurrentBlock.EntityDiscardedByArchivist.CardId = entity.Info.LatestCardId;
 					}
 					break;
 				default:
@@ -727,6 +728,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				if(!game.Entities.TryGetValue(id, out var entity))
 					return;
+				if(entity.CardId != entity.Info.LatestCardId) Log.Warn($"CardId Mismatch {entity.CardId} vs {entity.Info.LatestCardId}");
 				gameState.GameHandler.SetPlayerHero(entity.CardId);
 				return;
 			}
@@ -741,6 +743,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				if(!game.Entities.TryGetValue(id, out var entity))
 					return;
+				if(entity.CardId != entity.Info.LatestCardId) Log.Warn($"CardId Mismatch {entity.CardId} vs {entity.Info.LatestCardId}");
 				gameState.GameHandler.SetOpponentHero(entity.CardId);
 			}
 		}
