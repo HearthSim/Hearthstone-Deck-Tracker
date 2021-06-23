@@ -243,6 +243,12 @@ namespace Hearthstone_Deck_Tracker
 
 		private void OnAttackEvent()
 		{
+			if(_game.IsBattlegroundsMatch && Config.Instance.RunBobsBuddy && _game.CurrentGameStats != null)
+			{
+				BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?
+					.UpdateAttackingEntities(_attackingEntity, _defendingEntity);
+			}
+
 			var attackInfo = new AttackInfo((Card)_attackingEntity.Card.Clone(), (Card)_defendingEntity.Card.Clone());
 			if(_attackingEntity.IsControlledBy(_game.Player.Id))
 				GameEvents.OnPlayerMinionAttack.Execute(attackInfo);

@@ -41,6 +41,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		static int LogLinesKept = RemoteConfig.Instance.Data?.BobsBuddy?.LogLinesKept ?? 100;
 		public string OpponentCardId = "";
 		public string PlayerCardId = "";
+		private Entity _attackingHero;
+		private Entity _defendingHero;
 		public Entity LastAttackingHero = null;
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
@@ -296,6 +298,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private bool IsUnknownCard(Entity e) => e?.Card.Id == Database.UnknownCardId;
 
+
+		internal void UpdateAttackingEntities(Entity attacker, Entity defender)
+		{
+			if(attacker == null || !attacker.IsHero || defender == null || !defender.IsHero)
+				return;
+			DebugLog($"Updating entities with attacker={attacker.Card.Name}, defender={defender.Card.Name}");
+			_defendingHero = defender;
+			_attackingHero = attacker;
+		}
+
 		private void SnapshotBoardState(int turn)
 		{
 			DebugLog("Snapshotting board state...");
@@ -464,14 +476,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private LethalResult GetLastLethalResult()
 		{
-			var playerHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == PlayerCardId);
-			var opponentHero = _game.Entities.Values.FirstOrDefault(x => x.CardId == OpponentCardId);
-			if(playerHero != null && opponentHero != null)
+			if(_defendingHero == null || _attackingHero == null)
+				return LethalResult.NoOneDied;
+			if(_attackingHero.Attack >= _defendingHero.Health)
 			{
-				//We also check the health tag here to make sure players that disconnect are not improperly registered as dead.
-				if(opponentHero.Health <= 0 && opponentHero.GetTag(GameTag.HEALTH) > 0)
+				if(_attackingHero.IsControlledBy(_game.Player.Id))
 					return LethalResult.OpponentDied;
-				if(playerHero.Health <= 0 && playerHero.GetTag(GameTag.HEALTH) > 0)
+				else
 					return LethalResult.FriendlyDied;
 			}
 			return LethalResult.NoOneDied;
