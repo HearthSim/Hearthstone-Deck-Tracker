@@ -1,3 +1,7 @@
+## **Release v1.14.22 - 2021-06-23**
+**Fixes**
+- Bob's Buddy improvements.
+
 ## **Release v1.14.21- 2021-06-16**
 **Updated for Hearthstone 20.4.2**
 **Fixes**
