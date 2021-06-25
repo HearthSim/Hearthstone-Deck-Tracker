@@ -225,7 +225,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				if(_game.OpponentEntity?.GetTag(GameTag.MULLIGAN_STATE) == (int)HearthDb.Enums.Mulligan.DEALING)
 					entity.Info.Mulliganed = true;
-				else
+				else if(entity.Info.GetDrawerId() <= 0)
 					entity.Info.Hidden = true;
 			}
 			entity.Info.Turn = turn;
