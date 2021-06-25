@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static Dictionary<int, Minion> _currentOpponentMinions = new Dictionary<int, Minion>();
+		private static List<int> _currentOpponentSecretIds = new List<int>();
 
 		private MinionHeroPowerTrigger _minionHeroPowerTrigger;
 		private static Guid _currentGameId;
@@ -215,32 +216,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				if(_game.Opponent.Board.Any(x => x.CardId == LichKingHeroPowerId || x.CardId == LichKingHeroPowerEnchantmentId))
 					await Task.Delay(LichKingDelay);
-				_currentOpponentMinions.Clear();
-				DebugLog("Running simulation...");
-				var result = await RunSimulation();
-				if(result == null)
-				{
-					DebugLog("Simulation returned no result. Exiting.");
-					return;
-				}
 
-				if(result.simulationCount <= 500 && result.myExitCondition == Simulator.ExitConditions.Time)
-				{
-					DebugLog("Could not perform enough simulations. Displaying error state and exiting.");
-					ErrorState = BobsBuddyErrorState.NotEnoughData;
-					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.NotEnoughData);
-				}
+				if(!_currentOpponentSecretIds.Any())
+					RunAndDisplaySimulationAsync();
 				else
 				{
-					DebugLog("Displaying simulation results");
-					BobsBuddyDisplay.ShowCompletedSimulation(
-						result.winRate,
-						result.tieRate,
-						result.lossRate,
-						result.theirDeathRate,
-						result.myDeathRate,
-						result.result.Select(x=> x.damage).ToList()
-					);
+					State = BobsBuddyState.AwaitingShopping;
+					BobsBuddyDisplay.SetState(BobsBuddyState.AwaitingShopping);
 				}
 			}
 			catch(Exception e)
@@ -253,7 +235,38 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 		}
 
-		public void StartShopping(bool validateResults)
+		private async Task RunAndDisplaySimulationAsync()
+		{
+			_currentOpponentMinions.Clear();
+			DebugLog("Running simulation...");
+			var result = await RunSimulation();
+			if(result == null)
+			{
+				DebugLog("Simulation returned no result. Exiting.");
+				return;
+			}
+
+			if(result.simulationCount <= 500 && result.myExitCondition == Simulator.ExitConditions.Time)
+			{
+				DebugLog("Could not perform enough simulations. Displaying error state and exiting.");
+				ErrorState = BobsBuddyErrorState.NotEnoughData;
+				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.NotEnoughData);
+			}
+			else
+			{
+				DebugLog("Displaying simulation results");
+				BobsBuddyDisplay.ShowCompletedSimulation(
+					result.winRate,
+					result.tieRate,
+					result.lossRate,
+					result.theirDeathRate,
+					result.myDeathRate,
+					result.result.Select(x => x.damage).ToList()
+				);
+			}
+		}
+
+		public async Task StartShoppingAsync(bool validateResults)
 		{
 			try
 			{
@@ -271,8 +284,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 
 				BobsBuddyDisplay.SetLastOutcome(GetLastCombatDamageDealt());
-				DebugLog("Setting UI state to shopping");
-				BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
+				if(!_currentOpponentSecretIds.Any())
+				{
+					DebugLog("Setting UI state to shopping");
+					BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
+				}
+				else
+				{
+					await RunAndDisplaySimulationAsync();
+				}
 
 				if(validateResults)
 					ValidateSimulationResultAsync();
@@ -321,12 +341,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Board has unknown cards. Exiting.");
 				return;
 			}
-			if(_game.Opponent.Secrets.Any())
-			{
-				ErrorState = BobsBuddyErrorState.SecretsNotSupported;
-				DebugLog("Opponent has secrets in play. Exiting.");
-				return;
-			}
 
 			input.availableRaces = BattlegroundsUtils.GetAvailableRaces(_currentGameId).ToList();
 
@@ -360,6 +374,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			input.SetHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
 
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
+
+			foreach(var opponentSecret in _game.Opponent.Secrets)
+			{
+				_currentOpponentSecretIds.Add(opponentSecret.Id);
+			}
 
 			foreach(var m in GetOrderedMinions(_game.Player.Board).Where(e => e.IsControlledBy(_game.Player.Id)).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
 				m.AddToBackOfList(input.playerSide, simulator);
@@ -395,6 +414,18 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			try
 			{
+				if(_currentOpponentSecretIds.Any())
+				{
+					var _currentOpponentSecretCardIds = new List<Entity>();
+					foreach(var id in _currentOpponentSecretIds)
+					{
+						if(_game.Entities.TryGetValue(id, out var secret))
+							_currentOpponentSecretCardIds.Add(secret);
+					}
+					_input.SetupSecretsFromDbfidList(_currentOpponentSecretCardIds.Select(x => x.Card.DbfIf).ToList());
+					_input.playerIsAkazamarak = false;
+				}
+
 				DebugLog("----- Simulation Input -----");
 				DebugLog($"Player: heroPower={_input.playerPowerID}, used={_input.heroPowerInfo?.PlayerActivatedPower}");
 				foreach(var minion in _input.playerSide)

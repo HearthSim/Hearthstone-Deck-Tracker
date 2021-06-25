@@ -244,6 +244,8 @@ namespace Hearthstone_Deck_Tracker.Live
 				case BobsBuddy.BobsBuddyState.Initial:
 					simulationState = TwitchSimulationState.WaitingForCombat;
 					break;
+				case BobsBuddy.BobsBuddyState.AwaitingShopping:
+					break;
 				case null:	
 					simulationState = TwitchSimulationState.WaitingForCombat;
 					break;
