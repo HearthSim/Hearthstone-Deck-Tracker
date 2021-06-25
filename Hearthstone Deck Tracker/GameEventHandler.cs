@@ -1215,8 +1215,9 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentHandDiscard.Execute(Database.GetCardFromId(cardId));
 		}
 
-		public void HandlOpponentDraw(Entity entity, int turn)
+		public void HandlOpponentDraw(Entity entity, int turn, int blockId)
 		{
+			entity.Info.DrawerId = blockId;
 			_game.Opponent.Draw(entity, turn);
 			GameEvents.OnOpponentDraw.Execute();
 		}
@@ -1339,7 +1340,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerHeroPower(string cardId, int turn) => HandlePlayerHeroPower(cardId, turn);
 		void IGameHandler.HandleOpponentPlay(Entity entity, string cardId, int @from, int turn) => HandleOpponentPlay(entity, cardId, @from, turn);
 		void IGameHandler.HandleOpponentHandDiscard(Entity entity, string cardId, int @from, int turn) => HandleOpponentHandDiscard(entity, cardId, @from, turn);
-		void IGameHandler.HandleOpponentDraw(Entity entity, int turn) => HandlOpponentDraw(entity, turn);
+		void IGameHandler.HandleOpponentDraw(Entity entity, int turn, int blockId) => HandlOpponentDraw(entity, turn, blockId);
 		void IGameHandler.HandleOpponentMulligan(Entity entity, int @from) => HandleOpponentMulligan(entity, @from);
 		void IGameHandler.HandleOpponentGet(Entity entity, int turn, int id) => HandleOpponentGet(entity, turn, id);
 		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string cardId, int @from, int turn, Zone fromZone, int otherId) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromZone, otherId);

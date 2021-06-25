@@ -66,7 +66,7 @@ namespace Hearthstone_Deck_Tracker
 
 		void HandleOpponentPlay(Entity entity, string cardId, int from, int turn);
 		void HandleOpponentHandDiscard(Entity entity, string cardId, int from, int turn);
-		void HandleOpponentDraw(Entity entity, int turn);
+		void HandleOpponentDraw(Entity entity, int turn, int blockId);
 		void HandleOpponentMulligan(Entity entity, int from);
 		void HandleOpponentGet(Entity entity, int turn, int id);
 		void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, Zone fromZone, int otherId);

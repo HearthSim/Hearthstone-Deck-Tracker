@@ -39,13 +39,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(!Config.Instance.HideOpponentCardMarks && cardMark != null)
 			{
 				var index = _cardMarks.IndexOf(cardMark.Label);
-				var card = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == index + 1 && x.HasCardId && !x.Info.Hidden)?.Card;
+				var entity = _game.Opponent.Hand.FirstOrDefault(x => x.GetTag(GameTag.ZONE_POSITION) == index + 1 && x.HasCardId && !x.Info.Hidden);
+				var card = entity?.Card;
 				var creatorCard = _cardMarks[index].SourceCard;
 				if(card != null || creatorCard != null)
 				{
 					if(creatorCard != null)
 					{
-						ToolTipCardBlock.CreatedByText = $"Created By {creatorCard.Name}";
+						var creatorDescription = "Created By ";
+						if(card != null && entity.Info.GetDrawerId() > 0)
+							creatorDescription = "Drawn By ";
+						ToolTipCardBlock.CreatedByText =  $"{creatorDescription}{creatorCard.Name}";
 						ToolTipCardBlock.CreatedByVisibility = Visible;
 					}
 					ToolTipCardBlock.SetCardIdFromCard(card ?? creatorCard);

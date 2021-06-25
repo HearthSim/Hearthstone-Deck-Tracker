@@ -647,7 +647,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(controller == game.Player.Id)
 						gameState.GameHandler.HandlePlayerDraw(entity, cardId, gameState.GetTurnNumber());
 					else if(controller == game.Opponent.Id)
-						gameState.GameHandler.HandleOpponentDraw(entity, gameState.GetTurnNumber());
+					{
+						var drawerCardId = gameState.CurrentBlock?.CardId ?? "";
+						var drawerId = -1;
+						if(drawerCardId != "")
+						{
+							drawerId = game.Entities.FirstOrDefault(x => x.Value.CardId == drawerCardId).Value?.Id ?? -1;
+						}
+						gameState.GameHandler.HandleOpponentDraw(entity, gameState.GetTurnNumber(), drawerId);
+					}
 					break;
 				case SETASIDE:
 				case REMOVEDFROMGAME:
