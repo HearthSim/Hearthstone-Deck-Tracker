@@ -649,10 +649,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					else if(controller == game.Opponent.Id)
 					{
 						var drawerCardId = gameState.CurrentBlock?.CardId ?? "";
-						var drawerId = -1;
+						int? drawerId = null;
 						if(drawerCardId != "")
 						{
-							drawerId = game.Entities.FirstOrDefault(x => x.Value.CardId == drawerCardId).Value?.Id ?? -1;
+							drawerId = game.Entities.FirstOrDefault(x => x.Value.CardId == drawerCardId).Value?.Id;
 						}
 						gameState.GameHandler.HandleOpponentDraw(entity, gameState.GetTurnNumber(), drawerId);
 					}

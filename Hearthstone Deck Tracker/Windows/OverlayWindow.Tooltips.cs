@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(creatorCard != null)
 					{
 						var creatorDescription = "Created By ";
-						if(card != null && entity.Info.GetDrawerId() > 0)
+						if(card != null && entity.Info.GetDrawerId() != null)
 							creatorDescription = "Drawn By ";
 						ToolTipCardBlock.CreatedByText =  $"{creatorDescription}{creatorCard.Name}";
 						ToolTipCardBlock.CreatedByVisibility = Visible;

@@ -237,19 +237,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			return creatorId;
 		}
 
-		public int GetDrawerId()
+		public int? GetDrawerId()
 		{
-			if(Hidden)
-				return 0;
 			return DrawerId;
 		}
 
-		public int DrawerId { get; set; }
+		public int? DrawerId { get; set; } = null;
 		public bool Discarded { get; set; }
 		public bool Returned { get; set; }
 		public bool Mulliganed { get; set; }
 		public bool Stolen => OriginalController > 0 && OriginalController != _entity.GetTag(GameTag.CONTROLLER);
-		public bool DrawnByEntity => DrawerId > 0;
+		public bool DrawnByEntity => DrawerId != null;
 		public bool Created { get; set; }
 		public bool HasOutstandingTagChanges { get; set; }
 		public int OriginalController { get; set; }
