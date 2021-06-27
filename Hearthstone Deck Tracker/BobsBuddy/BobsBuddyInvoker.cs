@@ -191,9 +191,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 
 				DebugLog("Setting UI state to combat...");
-				BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
+				if(RunSimulationAfterCombat)
+				{
+					State = BobsBuddyState.CombatWithoutSimulation;
+					BobsBuddyDisplay.SetState(BobsBuddyState.CombatWithoutSimulation);
+				}
+				else
+					BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
 				BobsBuddyDisplay.ResetText();
-				BobsBuddyDisplay.HidePercentagesShowSpinners();
 
 				_removedLichKingHeroPowerFromMinion = false;
 				if(_minionHeroPowerTrigger != null && CanRemoveLichKing)
@@ -220,11 +225,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				if(!RunSimulationAfterCombat)
 					RunAndDisplaySimulationAsync();
-				else
-				{
-					State = BobsBuddyState.CombatWithoutSimulation;
-					BobsBuddyDisplay.SetState(BobsBuddyState.CombatWithoutSimulation);
-				}
 			}
 			catch(Exception e)
 			{
@@ -240,6 +240,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			_currentOpponentMinions.Clear();
 			DebugLog("Running simulation...");
+			BobsBuddyDisplay.HidePercentagesShowSpinners();
 			var result = await RunSimulation();
 			if(result == null)
 			{
@@ -285,10 +286,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 
 				BobsBuddyDisplay.SetLastOutcome(GetLastCombatDamageDealt());
+				BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
 				if(!RunSimulationAfterCombat)
 				{
 					DebugLog("Setting UI state to shopping");
-					BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
 				}
 				else
 				{

@@ -423,6 +423,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 			else if(state == BobsBuddyState.Shopping)
 				ShowResults(Config.Instance.ShowBobsBuddyDuringShopping);
+			else if(state == BobsBuddyState.CombatWithoutSimulation)
+				ShowResults(false);
 		}
 
 		/// <summary>
