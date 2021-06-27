@@ -5,7 +5,7 @@
 		Initial,
 		Combat,
 		Shopping,
-		AwaitingShopping
+		CombatWithoutSimulation
 	};
 
 	/// <summary>

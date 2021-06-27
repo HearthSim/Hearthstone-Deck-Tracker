@@ -47,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static Dictionary<int, Minion> _currentOpponentMinions = new Dictionary<int, Minion>();
-		private static List<int> _currentOpponentSecretIds = new List<int>();
+		private static List<Entity> _currentOpponentSecrets = new List<Entity>();
 
 		private MinionHeroPowerTrigger _minionHeroPowerTrigger;
 		private static Guid _currentGameId;
@@ -57,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const string LichKingHeroPowerEnchantmentId = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
 		private static bool _removedLichKingHeroPowerFromMinion = false;
 		public static bool CanRemoveLichKing => RemoteConfig.Instance.Data?.BobsBuddy?.CanRemoveLichKing ?? false;
+		private bool RunSimulationAfterCombat => _currentOpponentSecrets.Any();
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
@@ -217,12 +218,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(_game.Opponent.Board.Any(x => x.CardId == LichKingHeroPowerId || x.CardId == LichKingHeroPowerEnchantmentId))
 					await Task.Delay(LichKingDelay);
 
-				if(!_currentOpponentSecretIds.Any())
+				if(!RunSimulationAfterCombat)
 					RunAndDisplaySimulationAsync();
 				else
 				{
-					State = BobsBuddyState.AwaitingShopping;
-					BobsBuddyDisplay.SetState(BobsBuddyState.AwaitingShopping);
+					State = BobsBuddyState.CombatWithoutSimulation;
+					BobsBuddyDisplay.SetState(BobsBuddyState.CombatWithoutSimulation);
 				}
 			}
 			catch(Exception e)
@@ -284,7 +285,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 
 				BobsBuddyDisplay.SetLastOutcome(GetLastCombatDamageDealt());
-				if(!_currentOpponentSecretIds.Any())
+				if(!RunSimulationAfterCombat)
 				{
 					DebugLog("Setting UI state to shopping");
 					BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
@@ -375,10 +376,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
 
-			foreach(var opponentSecret in _game.Opponent.Secrets)
-			{
-				_currentOpponentSecretIds.Add(opponentSecret.Id);
-			}
+			_currentOpponentSecrets = _game.Opponent.Secrets.ToList();
 
 			foreach(var m in GetOrderedMinions(_game.Player.Board).Where(e => e.IsControlledBy(_game.Player.Id)).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
 				m.AddToBackOfList(input.playerSide, simulator);
@@ -414,15 +412,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			try
 			{
-				if(_currentOpponentSecretIds.Any())
+				if(RunSimulationAfterCombat)
 				{
-					var _currentOpponentSecretCardIds = new List<Entity>();
-					foreach(var id in _currentOpponentSecretIds)
-					{
-						if(_game.Entities.TryGetValue(id, out var secret))
-							_currentOpponentSecretCardIds.Add(secret);
-					}
-					_input.SetupSecretsFromDbfidList(_currentOpponentSecretCardIds.Select(x => x.Card.DbfIf).ToList());
+					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !String.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfIf).ToList());
 					_input.playerIsAkazamarak = false;
 				}
 

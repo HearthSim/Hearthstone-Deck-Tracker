@@ -456,7 +456,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Core.MainWindow.ActivateWindow();
 		}
 
-		private bool InCombatPhase => State == BobsBuddyState.Combat || State == BobsBuddyState.AwaitingShopping;
+		private bool InCombatPhase => State == BobsBuddyState.Combat || State == BobsBuddyState.CombatWithoutSimulation;
 		private bool InShoppingPhase => State == BobsBuddyState.Shopping;
 		private bool CanMinimize
 			=> InCombatPhase && !Config.Instance.ShowBobsBuddyDuringCombat
