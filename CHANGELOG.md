@@ -1,4 +1,4 @@
-## **Release v1.14.23 - 2021-06-28**
+## **Release v1.14.24 - 2021-06-28**
 **New**:
 - Added ability to handle opponent secrets for Bob's Buddy.
 - Added tracking for what effect drew cards in the opponent's hand.
