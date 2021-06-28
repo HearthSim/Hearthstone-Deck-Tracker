@@ -417,6 +417,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				{
 					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !String.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfIf).ToList());
 					_input.playerIsAkazamarak = false;
+					DebugLog($"Set opponent to Akazamarak with {_input.secretsAndPriorities.Count} secrets.");
 				}
 
 				DebugLog("----- Simulation Input -----");
@@ -521,13 +522,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 
-			// Akazamzarak hero power - secrets are currently not supported
-			if(_input.opponentPowerID == NonCollectible.Neutral.PrestidigitationTavernBrawl)
-			{
-				DebugLog("Opponent was Akazamarak. Currently not reporting. Exiting.");
-				return;
-			}
-
 			if(Output.simulationCount < MinimumSimulationsToReportSentry)
 			{
 				DebugLog("Did not complete enough simulations to report terminal cases. Exiting.");
@@ -543,7 +537,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Nothing to report. Exiting.");
 				return;
 			}
-
 			
 			//We delay checking the combat results because the tag changes can sometimes be read by the parser with a bit of delay after they're printed in the log.
 			//Without this delay they can occasionally be missed.
@@ -562,8 +555,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if (ReportErrors)
 					AlertWithLastInputOutput(result.ToString());
 			}
+
 			if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
 			{
+				// Akazamzarak hero power - secrets are supported but not for lethal.
+				if(_input.opponentPowerID == NonCollectible.Neutral.PrestidigitationTavernBrawl)
+				{
+					DebugLog("Opponent was Akazamarak. Currently not reporting lethal results. Exiting.");
+					return;
+				}
+
 				if(_turn > 5)
 				{
 					terminalCase = true;
