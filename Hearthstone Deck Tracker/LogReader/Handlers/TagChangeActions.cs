@@ -473,6 +473,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
+			var currentBlockCardId = gameState.CurrentBlock?.CardId ?? "";
 			if(entity.Info.OriginalZone == DECK && value != (int)DECK)
 			{
 				//This entity was moved from DECK to SETASIDE to HAND, e.g. by Tracking
@@ -510,8 +511,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler.HandleOpponentGet(entity, gameState.GetTurnNumber(), id);
 					break;
 				case Zone.SECRET:
-					if(controller == game.Player.Id && gameState.CurrentBlock?.Parent != null)
-						gameState.GameHandler.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, gameState.CurrentBlock.Parent.CardId);
+					if(controller == game.Player.Id)
+						gameState.GameHandler.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, currentBlockCardId);
 					else if(controller == game.Opponent.Id)
 						gameState.GameHandler.HandleOpponentSecretPlayed(entity, cardId, -1, gameState.GetTurnNumber(), (Zone)prevValue, id);
 					break;
@@ -594,11 +595,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
+			var currentBlockCardId = gameState.CurrentBlock?.CardId ?? "";
 			switch((Zone)value)
 			{
 				case PLAY:
-					if(controller == game.Player.Id && gameState.CurrentBlock?.Parent != null)
-						gameState.GameHandler.HandlePlayerPlay(entity, cardId, gameState.GetTurnNumber(), gameState.CurrentBlock.Parent.CardId);
+					if(controller == game.Player.Id)
+						gameState.GameHandler.HandlePlayerPlay(entity, cardId, gameState.GetTurnNumber(), currentBlockCardId);
 					else if(controller == game.Opponent.Id)
 					{
 						gameState.GameHandler.HandleOpponentPlay(entity, cardId, entity.GetTag(ZONE_POSITION),
@@ -618,7 +620,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					break;
 				case Zone.SECRET:
 					if(controller == game.Player.Id && gameState.CurrentBlock?.Parent != null)
-							gameState.GameHandler.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, gameState.CurrentBlock.Parent.CardId);
+							gameState.GameHandler.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, currentBlockCardId);
 					else if(controller == game.Opponent.Id)
 					{
 						gameState.GameHandler.HandleOpponentSecretPlayed(entity, cardId, entity.GetTag(ZONE_POSITION),
@@ -641,6 +643,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
+			var currentBlockCardId = gameState.CurrentBlock?.CardId ?? "";
 			switch((Zone)value)
 			{
 				case HAND:
@@ -711,8 +714,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler.HandleOpponentDeckToPlay(entity, cardId, gameState.GetTurnNumber());
 					break;
 				case Zone.SECRET:
-					if(controller == game.Player.Id && gameState.CurrentBlock?.Parent != null)
-						gameState.GameHandler.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, gameState.CurrentBlock.Parent.CardId);
+					if(controller == game.Player.Id)
+						gameState.GameHandler.HandlePlayerSecretPlayed(entity, cardId, gameState.GetTurnNumber(), (Zone)prevValue, currentBlockCardId);
 					else if(controller == game.Opponent.Id)
 						gameState.GameHandler.HandleOpponentSecretPlayed(entity, cardId, -1, gameState.GetTurnNumber(), (Zone)prevValue, id);
 					break;
