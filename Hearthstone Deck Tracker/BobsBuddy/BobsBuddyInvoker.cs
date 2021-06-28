@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static Dictionary<int, Minion> _currentOpponentMinions = new Dictionary<int, Minion>();
+		private static List<Entity> _currentOpponentSecrets = new List<Entity>();
 
 		private MinionHeroPowerTrigger _minionHeroPowerTrigger;
 		private static Guid _currentGameId;
@@ -56,6 +57,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const string LichKingHeroPowerEnchantmentId = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
 		private static bool _removedLichKingHeroPowerFromMinion = false;
 		public static bool CanRemoveLichKing => RemoteConfig.Instance.Data?.BobsBuddy?.CanRemoveLichKing ?? false;
+		private bool RunSimulationAfterCombat => _currentOpponentSecrets.Any();
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
 		{
@@ -189,9 +191,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 
 				DebugLog("Setting UI state to combat...");
-				BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
+				if(RunSimulationAfterCombat)
+				{
+					State = BobsBuddyState.CombatWithoutSimulation;
+					BobsBuddyDisplay.SetState(BobsBuddyState.CombatWithoutSimulation);
+				}
+				else
+					BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
 				BobsBuddyDisplay.ResetText();
-				BobsBuddyDisplay.HidePercentagesShowSpinners();
 
 				_removedLichKingHeroPowerFromMinion = false;
 				if(_minionHeroPowerTrigger != null && CanRemoveLichKing)
@@ -215,33 +222,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 				if(_game.Opponent.Board.Any(x => x.CardId == LichKingHeroPowerId || x.CardId == LichKingHeroPowerEnchantmentId))
 					await Task.Delay(LichKingDelay);
-				_currentOpponentMinions.Clear();
-				DebugLog("Running simulation...");
-				var result = await RunSimulation();
-				if(result == null)
-				{
-					DebugLog("Simulation returned no result. Exiting.");
-					return;
-				}
 
-				if(result.simulationCount <= 500 && result.myExitCondition == Simulator.ExitConditions.Time)
-				{
-					DebugLog("Could not perform enough simulations. Displaying error state and exiting.");
-					ErrorState = BobsBuddyErrorState.NotEnoughData;
-					BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.NotEnoughData);
-				}
-				else
-				{
-					DebugLog("Displaying simulation results");
-					BobsBuddyDisplay.ShowCompletedSimulation(
-						result.winRate,
-						result.tieRate,
-						result.lossRate,
-						result.theirDeathRate,
-						result.myDeathRate,
-						result.result.Select(x=> x.damage).ToList()
-					);
-				}
+				if(!RunSimulationAfterCombat)
+					RunAndDisplaySimulationAsync();
 			}
 			catch(Exception e)
 			{
@@ -253,7 +236,39 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 		}
 
-		public void StartShopping(bool validateResults)
+		private async Task RunAndDisplaySimulationAsync()
+		{
+			_currentOpponentMinions.Clear();
+			DebugLog("Running simulation...");
+			BobsBuddyDisplay.HidePercentagesShowSpinners();
+			var result = await RunSimulation();
+			if(result == null)
+			{
+				DebugLog("Simulation returned no result. Exiting.");
+				return;
+			}
+
+			if(result.simulationCount <= 500 && result.myExitCondition == Simulator.ExitConditions.Time)
+			{
+				DebugLog("Could not perform enough simulations. Displaying error state and exiting.");
+				ErrorState = BobsBuddyErrorState.NotEnoughData;
+				BobsBuddyDisplay.SetErrorState(BobsBuddyErrorState.NotEnoughData);
+			}
+			else
+			{
+				DebugLog("Displaying simulation results");
+				BobsBuddyDisplay.ShowCompletedSimulation(
+					result.winRate,
+					result.tieRate,
+					result.lossRate,
+					result.theirDeathRate,
+					result.myDeathRate,
+					result.result.Select(x => x.damage).ToList()
+				);
+			}
+		}
+
+		public async Task StartShoppingAsync(bool validateResults)
 		{
 			try
 			{
@@ -271,8 +286,15 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 
 				BobsBuddyDisplay.SetLastOutcome(GetLastCombatDamageDealt());
-				DebugLog("Setting UI state to shopping");
 				BobsBuddyDisplay.SetState(BobsBuddyState.Shopping);
+				if(!RunSimulationAfterCombat)
+				{
+					DebugLog("Setting UI state to shopping");
+				}
+				else
+				{
+					await RunAndDisplaySimulationAsync();
+				}
 
 				if(validateResults)
 					ValidateSimulationResultAsync();
@@ -321,12 +343,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Board has unknown cards. Exiting.");
 				return;
 			}
-			if(_game.Opponent.Secrets.Any())
-			{
-				ErrorState = BobsBuddyErrorState.SecretsNotSupported;
-				DebugLog("Opponent has secrets in play. Exiting.");
-				return;
-			}
 
 			input.availableRaces = BattlegroundsUtils.GetAvailableRaces(_currentGameId).ToList();
 
@@ -360,6 +376,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			input.SetHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
 
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
+
+			_currentOpponentSecrets = _game.Opponent.Secrets.ToList();
 
 			foreach(var m in GetOrderedMinions(_game.Player.Board).Where(e => e.IsControlledBy(_game.Player.Id)).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
 				m.AddToBackOfList(input.playerSide, simulator);
@@ -395,6 +413,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			try
 			{
+				if(RunSimulationAfterCombat)
+				{
+					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !String.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfIf).ToList());
+					_input.playerIsAkazamarak = false;
+					DebugLog($"Set opponent to Akazamarak with {_input.secretsAndPriorities.Count} secrets.");
+				}
+
 				DebugLog("----- Simulation Input -----");
 				DebugLog($"Player: heroPower={_input.playerPowerID}, used={_input.heroPowerInfo?.PlayerActivatedPower}");
 				foreach(var minion in _input.playerSide)
@@ -497,13 +522,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 
-			// Akazamzarak hero power - secrets are currently not supported
-			if(_input.opponentPowerID == NonCollectible.Neutral.PrestidigitationTavernBrawl)
-			{
-				DebugLog("Opponent was Akazamarak. Currently not reporting. Exiting.");
-				return;
-			}
-
 			if(Output.simulationCount < MinimumSimulationsToReportSentry)
 			{
 				DebugLog("Did not complete enough simulations to report terminal cases. Exiting.");
@@ -519,7 +537,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				DebugLog("Nothing to report. Exiting.");
 				return;
 			}
-
 			
 			//We delay checking the combat results because the tag changes can sometimes be read by the parser with a bit of delay after they're printed in the log.
 			//Without this delay they can occasionally be missed.
@@ -538,8 +555,16 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if (ReportErrors)
 					AlertWithLastInputOutput(result.ToString());
 			}
+
 			if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
 			{
+				// Akazamzarak hero power - secrets are supported but not for lethal.
+				if(_input.opponentPowerID == NonCollectible.Neutral.PrestidigitationTavernBrawl)
+				{
+					DebugLog("Opponent was Akazamarak. Currently not reporting lethal results. Exiting.");
+					return;
+				}
+
 				if(_turn > 5)
 				{
 					terminalCase = true;

@@ -423,6 +423,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 			else if(state == BobsBuddyState.Shopping)
 				ShowResults(Config.Instance.ShowBobsBuddyDuringShopping);
+			else if(state == BobsBuddyState.CombatWithoutSimulation)
+				ShowResults(false);
 		}
 
 		/// <summary>
@@ -456,8 +458,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			Core.MainWindow.ActivateWindow();
 		}
 
-		private bool InCombatPhase => State == BobsBuddyState.Combat;
-		private bool InShoppingPhase => State == BobsBuddyState.Shopping; 
+		private bool InCombatPhase => State == BobsBuddyState.Combat || State == BobsBuddyState.CombatWithoutSimulation;
+		private bool InShoppingPhase => State == BobsBuddyState.Shopping;
 		private bool CanMinimize
 			=> InCombatPhase && !Config.Instance.ShowBobsBuddyDuringCombat
 			|| InShoppingPhase && !Config.Instance.ShowBobsBuddyDuringShopping;

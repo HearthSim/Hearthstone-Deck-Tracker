@@ -4,7 +4,8 @@
 	{
 		Initial,
 		Combat,
-		Shopping
+		Shopping,
+		CombatWithoutSimulation
 	};
 
 	/// <summary>

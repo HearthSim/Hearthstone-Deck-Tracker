@@ -381,7 +381,7 @@ namespace Hearthstone_Deck_Tracker
 				{
 					OpponentDeadForTracker.ShoppingStarted(_game);
 					if(_game.CurrentGameStats != null && turn.Item2 > 1)
-						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShopping(true);
+						BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, turn.Item2 - 1)?.StartShoppingAsync(true);
 				}
 				switch(Config.Instance.TurnStartAction)
 				{
@@ -484,7 +484,7 @@ namespace Hearthstone_Deck_Tracker
 				if(_game.IsBattlegroundsMatch && stateComplete)
 				{
 					BobsBuddyInvoker.GetInstance(_game.CurrentGameStats.GameId, _game.GetTurnNumber())?
-						.StartShopping(!_game.CurrentGameStats.WasConceded);
+						.StartShoppingAsync(!_game.CurrentGameStats.WasConceded);
 					OpponentDeadForTracker.ResetOpponentDeadForTracker();
 				}
 				if(_game.IsConstructedMatch)
