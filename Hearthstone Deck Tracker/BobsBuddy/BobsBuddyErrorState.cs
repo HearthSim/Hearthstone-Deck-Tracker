@@ -5,7 +5,6 @@
 		None,
 		UpdateRequired,
 		NotEnoughData,
-		SecretsNotSupported,
 		UnkownCards,
 	}
 }
