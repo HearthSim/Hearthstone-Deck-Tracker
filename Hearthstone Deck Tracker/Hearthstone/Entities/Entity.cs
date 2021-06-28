@@ -179,6 +179,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			return new EntityInfo(entity)
 			{
 				Turn = Turn,
+				DrawerId = DrawerId,
 				Discarded = Discarded,
 				Returned = Returned,
 				Mulliganed = Mulliganed,
@@ -211,6 +212,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 					return CardMark.Returned;
 				if(Created || Stolen)
 					return CardMark.Created;
+				if(DrawnByEntity)
+					return CardMark.DrawnByEntity;
 				if(Mulliganed)
 					return CardMark.Mulliganed;
 				return CardMark.None;
@@ -234,10 +237,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			return creatorId;
 		}
 
+		public int? GetDrawerId()
+		{
+			return DrawerId;
+		}
+
+		public int? DrawerId { get; set; } = null;
 		public bool Discarded { get; set; }
 		public bool Returned { get; set; }
 		public bool Mulliganed { get; set; }
 		public bool Stolen => OriginalController > 0 && OriginalController != _entity.GetTag(GameTag.CONTROLLER);
+		public bool DrawnByEntity => DrawerId != null;
 		public bool Created { get; set; }
 		public bool HasOutstandingTagChanges { get; set; }
 		public int OriginalController { get; set; }
