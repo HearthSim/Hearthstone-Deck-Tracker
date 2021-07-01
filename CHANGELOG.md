@@ -1,3 +1,6 @@
+## **Release v1.14.25- 2021-07-01**
+**Updated for Hearthstone 20.8.0**
+
 ## **Release v1.14.24 - 2021-06-28**
 **New**:
 - Added ability to handle opponent secrets for Bob's Buddy.
