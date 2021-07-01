@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		internal async void ImportFromIdString()
+		public static Deck ImportFromIdString(string idd = "")
 		{
 			try
 			{
@@ -105,16 +105,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if(clipboard.Count(c => c == ':') > 0 && clipboard.Count(c => c == ';') > 0)
 					settings.DefaultText = clipboard;
 
-				//import dialog
-				var idString =
-					await
-					this.ShowInputAsync("Import deck",
-					                    "id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD",
-					                    settings);
+				////import dialog
+				//var idString =
+				//	await
+				//	this.ShowInputAsync("Import deck",
+				//	                    "id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD",
+				//	                    settings);
+				var idString = idd;
 				if(string.IsNullOrEmpty(idString))
-					return;
+					return null;
 				var deck = new Deck();
-				foreach(var entry in idString.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries))
+				foreach(var entry in idString.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
 				{
 					var splitEntry = entry.Split(':');
 					if(splitEntry.Length != 2)
@@ -132,13 +133,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				if(Config.Instance.AutoSaveOnImport)
 					DeckManager.SaveDeck(deck);
-				else
-					ShowDeckEditorFlyout(deck, true);
+				return deck;
+				//else
+				//	ShowDeckEditorFlyout(deck, true);
 			}
 			catch(Exception ex)
 			{
 				Log.Info("Error importing deck from clipboard(id string): " + ex);
+				return null;
 			}
+			return null;
 		}
 
 		internal void ImportFromFile()

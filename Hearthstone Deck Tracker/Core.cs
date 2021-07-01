@@ -27,6 +27,7 @@ using Hearthstone_Deck_Tracker.Utility.Updating;
 using WPFLocalizeExtension.Engine;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using static Hearthstone_Deck_Tracker.Utility.RemoteConfig;
+using Hearthstone_Deck_Tracker.Importing;
 
 #endregion
 
@@ -100,6 +101,7 @@ namespace Hearthstone_Deck_Tracker
 			MainWindow.LoadConfigSettings();
 			MainWindow.Show();
 			splashScreenWindow.Close();
+			Player.oppDecck = ClipboardImporter.Import().Result; 
 
 			if(Config.Instance.DisplayHsReplayNoteLive && ConfigManager.PreviousVersion != null && ConfigManager.PreviousVersion < new Version(1, 1, 0))
 				MainWindow.FlyoutHsReplayNote.IsOpen = true;
