@@ -6,10 +6,10 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d">
-    <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="Visible" MaxWidth="352">
-        <Grid MouseDown="OpponentUpload_MouseDown">
+    <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding UploadVisibility, Mode=OneWay}" MaxWidth="352" MouseDown="OpponentUpload_MouseDownAsync">
+        <Grid>
                 <TextBlock Foreground="White" FontSize="14" TextWrapping="Wrap" Margin="10 10 30 10">
-                        <Run Text="{Binding Message}"/>
+                        <Run Text="{Binding Message, Mode=OneWay}"/>
                 </TextBlock>
             <Rectangle Width="14" Height="14" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8" MouseDown="CloseOpponentUpload_MouseDown" Visibility="{Binding CloseAverageDamageInfoVisibility}">
                 <Rectangle.Fill>
