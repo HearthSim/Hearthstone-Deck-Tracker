@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using HearthDb.Deckstrings;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
@@ -107,8 +108,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private DeckState GetOpponentDeckState()
 		{
 			//var opponentDeckState = MainWindow.ImportFromIdString("AAEBAZ8FAA9GnQH6AbQC0wL/Ap0D7gSIBZ4F1wWaB5mfBKGfBKifBAA=");
+
+			var hearthDbDeck = DeckSerializer.Deserialize("AAEBAZ8FAA9GnQH6AbQC0wL/Ap0D7gSIBZ4F1wWaB5mfBKGfBKifBAA=");
+			var deck = HearthDbConverter.FromHearthDbDeck(hearthDbDeck);
+			if(deck != null)
+				oppDecck = deck;
+
 			var createdCardsInDeck =
-				Deck.Where(x => x.HasCardId && (x.Info.Created || x.Info.Stolen) && !x.Info.Hidden)
+				RevealedEntities.Where(x => x.Info.OriginalController == Id && x.IsInDeck && x.HasCardId && (x.Info.Created || x.Info.Stolen) && !x.Info.Hidden)
 					.GroupBy(ce => new { ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded })
 					.Select(g =>
 					{
@@ -225,12 +232,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public List<Card> OpponentCardList
-			=> GetOpponentCardList();
+			=> GetOpponentCardList(Config.Instance.RemoveCardsFromDeck, Config.Instance.HighlightCardsInHand, Config.Instance.ShowPlayerGet);
 
-		public List<Card> GetOpponentCardList()
+		public List<Card> GetOpponentCardList(bool removeNotInDeck, bool highlightCardsInHand, bool includeCreatedInHand)
 		{
+			var createdInHand = includeCreatedInHand ? CreatedCardsInHand : new List<Card>();
+			if(DeckList.Instance.ActiveDeck == null)
+				return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(GetPredictedCardsInDeck(true)).ToSortedCardList();
 			var deckState = GetOpponentDeckState();
-			return deckState.RemainingInDeck.ToList();
+			var inDeck = deckState.RemainingInDeck.ToList();
+			var notInDeck = deckState.RemovedFromDeck.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
+			var predictedInDeck = GetPredictedCardsInDeck(false).Where(x => inDeck.All(c => x.Id != c.Id)).ToList();
+			if(!removeNotInDeck)
+				return inDeck.Concat(predictedInDeck).Concat(notInDeck).Concat(createdInHand).ToSortedCardList();
+			if(highlightCardsInHand)
+				return inDeck.Concat(predictedInDeck).Concat(GetHighlightedCardsInHand(inDeck)).Concat(createdInHand).ToSortedCardList();
+			return inDeck.Concat(predictedInDeck).Concat(createdInHand).ToSortedCardList();
 			return RevealedEntities.Where(x => !(x.Info.GuessedCardState == GuessedCardState.None && x.Info.Hidden && (x.IsInDeck || x.IsInHand))
 										&& (x.IsPlayableCard || !x.HasTag(GameTag.CARDTYPE))
 										&& (x.GetTag(GameTag.CREATOR) == 1

@@ -101,7 +101,6 @@ namespace Hearthstone_Deck_Tracker
 			MainWindow.LoadConfigSettings();
 			MainWindow.Show();
 			splashScreenWindow.Close();
-			Player.oppDecck = ClipboardImporter.Import().Result; 
 
 			if(Config.Instance.DisplayHsReplayNoteLive && ConfigManager.PreviousVersion != null && ConfigManager.PreviousVersion < new Version(1, 1, 0))
 				MainWindow.FlyoutHsReplayNote.IsOpen = true;
