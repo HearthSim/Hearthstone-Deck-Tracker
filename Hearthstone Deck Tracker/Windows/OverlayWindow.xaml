@@ -63,7 +63,7 @@
                     </StackPanel>
                 </Border>
                 <Border Name="BorderStackPanelOpponent" Canvas.Top="203" Canvas.Left="10" Height="{Binding OpponentStackHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
-                    <StackPanel Name="StackPanelOpponent" Width="218" VerticalAlignment="{Binding OpponentStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                    <StackPanel Name="StackPanelOpponent" Width="218" VerticalAlignment="{Binding OpponentStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" MouseEnter="StackPanelOpponent_MouseEnter" MouseLeave="StackPanelOpponent_MouseLeave">
                         <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
                         <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding OpponentListHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                             <controls:AnimatedCardList x:Name="ListViewOpponent" Background="Transparent" BorderThickness="0"
@@ -82,9 +82,8 @@
                             <local:HearthstoneTextBlock x:Name="LblOpponentHandChance1" FontSize="16" Text="0%" Canvas.Left="71" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25" />
                             <local:HearthstoneTextBlock x:Name="LblOpponentHandChance2" FontSize="16" Text="0%" Canvas.Left="149" Canvas.Top="39" TextAlignment="Right" Width="53" Height="25" />
                         </Canvas>
-                        <Canvas>
-                            <overlay:OpponentUpload></overlay:OpponentUpload>
-                        </Canvas>
+                        <overlay:OpponentUpload x:Name="OpponentUpload"/>
+
                         <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
                     </StackPanel>
                 </Border>

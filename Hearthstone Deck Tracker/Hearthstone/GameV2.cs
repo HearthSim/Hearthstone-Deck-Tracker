@@ -111,6 +111,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public bool IsConstructedMatch => CurrentGameType == GameType.GT_RANKED
 										|| CurrentGameType == GameType.GT_CASUAL
 										|| CurrentGameType == GameType.GT_VS_FRIEND;
+		public bool IsFriendlyMatch => CurrentGameType == GameType.GT_VS_FRIEND;
 
 		public Mode CurrentMode
 		{

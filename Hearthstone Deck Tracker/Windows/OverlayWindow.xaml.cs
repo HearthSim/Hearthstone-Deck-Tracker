@@ -350,6 +350,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBobsBuddyPanel();
 		}
 
+		internal void ShowOpponentUpload()
+		{
+			OpponentUpload.WasClosed = false;
+			OpponentUpload.UploadVisibility = Visibility.Visible;
+		}
+
 		internal void ShowBobsBuddyPanel()
 		{
 			if(!Config.Instance.RunBobsBuddy)
@@ -427,6 +433,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				index--;
 			}
+		}
+
+		private void StackPanelOpponent_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			if(!OpponentUpload.WasClosed)
+				OpponentUpload.Visibility = Visibility.Visible;
+		}
+
+		private void StackPanelOpponent_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			OpponentUpload.Visibility = Visibility.Collapsed;
 		}
 	}
 }
