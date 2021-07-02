@@ -61,6 +61,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 		private DeckState GetDeckState()
 		{
+			//This figures out the deckstate which has a list of cards remaining in deck (original cards- cards shown elsewhere + cards created in deck) and removed cards (same as the list in earlier ())
 			var createdCardsInDeck =
 				Deck.Where(x => x.HasCardId && (x.Info.Created || x.Info.Stolen) && !x.Info.Hidden)
 					.GroupBy(ce => new {ce.CardId, Created = (ce.Info.Created || ce.Info.Stolen), ce.Info.Discarded})
@@ -109,7 +110,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			//var opponentDeckState = MainWindow.ImportFromIdString("AAEBAZ8FAA9GnQH6AbQC0wL/Ap0D7gSIBZ4F1wWaB5mfBKGfBKifBAA=");
 
-			var hearthDbDeck = DeckSerializer.Deserialize("AAEBAZ8FAA9GnQH6AbQC0wL/Ap0D7gSIBZ4F1wWaB5mfBKGfBKifBAA=");
+			var hearthDbDeck = DeckSerializer.Deserialize("AAEBAf0GCjDOBsII8fcCj4IDy7kD1rkDuM4Di9UDk94DCs4HvLYC8tACrMsDlc0Dm80D184D/84DzNID0OEDAA==");
 			var deck = HearthDbConverter.FromHearthDbDeck(hearthDbDeck);
 			if(deck != null)
 				oppDecck = deck;

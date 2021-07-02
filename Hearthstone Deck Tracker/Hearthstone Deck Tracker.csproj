@@ -272,6 +272,9 @@
     <Compile Include="Controls\Overlay\BattlegroundsCardsGroup.xaml.cs">
       <DependentUpon>BattlegroundsCardsGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\OpponentUpload.xaml.cs">
+      <DependentUpon>OpponentUpload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Overlay\MulliganPanel.xaml.cs">
       <DependentUpon>MulliganPanel.xaml</DependentUpon>
     </Compile>
@@ -352,6 +355,7 @@
     <Compile Include="OpponentDeadForTracker.cs" />
     <Compile Include="Utility\Assets\AssetDownloader.cs" />
     <Compile Include="Utility\Assets\AssetDownloaders.cs" />
+    <Compile Include="Utility\OpponentUploadState.cs" />
     <Compile Include="Utility\ComboBoxHelper.cs" />
     <Compile Include="Utility\DataLoader.cs" />
     <Compile Include="Utility\DelayedMouseOver.cs" />
@@ -402,6 +406,7 @@
     <Compile Include="Utility\Shell32.cs" />
     <Compile Include="Utility\Singleton.cs" />
     <Compile Include="Utility\ScheduledTaskRunner.cs" />
+    <Compile Include="Utility\OpponentUploadStateConverter.cs" />
     <Compile Include="Utility\Toasts\ToastControls\BattlegroundsToast.xaml.cs">
       <DependentUpon>BattlegroundsToast.xaml</DependentUpon>
     </Compile>
@@ -1037,6 +1042,10 @@
     <Page Include="Controls\Overlay\BattlegroundsCardsGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\OpponentUpload.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Overlay\MulliganPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
