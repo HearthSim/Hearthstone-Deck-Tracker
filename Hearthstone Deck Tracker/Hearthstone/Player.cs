@@ -55,10 +55,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public IEnumerable<Entity> SetAside => PlayerEntities.Where(x => x.IsInSetAside);
 		public static Deck KnownOpponentDeck = null;
 		public List<PredictedCard> InDeckPrecitions { get; } = new List<PredictedCard>();
-		public Player()
-		{
-			
-		}
+	
 		private DeckState GetDeckState()
 		{
 			var createdCardsInDeck =

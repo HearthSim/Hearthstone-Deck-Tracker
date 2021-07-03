@@ -9,7 +9,7 @@ namespace Hearthstone_Deck_Tracker
 			switch(state)
 			{
 				case OpponentUploadState.Initial:
-					return "Upload your Opponent's Deck Id";
+					return "Upload Your Opponent's Deck Id";
 				case OpponentUploadState.UploadSucceeded:
 					return "Upload Successful";
 				case OpponentUploadState.InKnownDeckMode:

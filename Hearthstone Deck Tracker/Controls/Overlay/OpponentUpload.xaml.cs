@@ -56,7 +56,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private async void OpponentUpload_MouseDownAsync(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			Console.WriteLine("Upload mousedown clicked on");
 			if(WasClosed)
 				return;
 			if(_uploadState == OpponentUploadState.Initial || _uploadState == OpponentUploadState.Error)
@@ -91,7 +90,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			Hide(true);
 			WasClosed = true;
-			Console.WriteLine("wants to close thing");
 		}
 
 		public void Hide(bool force = false)
