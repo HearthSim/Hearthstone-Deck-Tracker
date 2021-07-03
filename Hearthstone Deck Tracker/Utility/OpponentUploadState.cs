@@ -4,6 +4,7 @@
 	{
 		Initial,
 		UploadSucceeded,
-		Error
+		Error,
+		InKnownDeckMode
 	};
 }

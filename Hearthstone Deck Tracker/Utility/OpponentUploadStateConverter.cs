@@ -9,11 +9,13 @@ namespace Hearthstone_Deck_Tracker
 			switch(state)
 			{
 				case OpponentUploadState.Initial:
-					return "Init";
+					return "Upload your Opponent's Deck Id";
 				case OpponentUploadState.UploadSucceeded:
-					return "UploadSucceed";
+					return "Upload Successful";
+				case OpponentUploadState.InKnownDeckMode:
+					return "Return to No Opponent Deck Mode";
 				case OpponentUploadState.Error:
-					return "Err";
+					return "Deck Id parsing unsucessful.";
 			}
 			return "";
 		}
