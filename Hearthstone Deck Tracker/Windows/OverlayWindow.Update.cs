@@ -328,9 +328,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateElementPositions()
 		{
+			var BorderStackPanelOpponentTop = Height * Config.Instance.OpponentDeckTop / 100;
+
 			Canvas.SetTop(BorderStackPanelPlayer, Height * Config.Instance.PlayerDeckTop / 100);
 			Canvas.SetLeft(BorderStackPanelPlayer, Width * Config.Instance.PlayerDeckLeft / 100 - StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
-			Canvas.SetTop(BorderStackPanelOpponent, Height * Config.Instance.OpponentDeckTop / 100);
+			Canvas.SetTop(BorderStackPanelOpponent, BorderStackPanelOpponentTop);
 			Canvas.SetLeft(BorderStackPanelOpponent, Width * Config.Instance.OpponentDeckLeft / 100);
 			Canvas.SetTop(StackPanelSecrets, Height * Config.Instance.SecretsTop / 100);
 			Canvas.SetLeft(StackPanelSecrets, Width * Config.Instance.SecretsLeft / 100);
@@ -350,6 +352,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
+
+
+			var OpponentStackVisibleHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + ViewBoxOpponent.ActualHeight;
+
+			if(BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 20 + OpponentUpload.ActualHeight < Height)
+			{
+				Canvas.SetTop(OpponentUpload, BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 20);
+			}
+			else
+			{
+				Canvas.SetTop(OpponentUpload, BorderStackPanelOpponentTop - OpponentUpload.ActualHeight - 20);
+			}
 
 			if (Config.Instance.ShowFlavorText)
 			{
