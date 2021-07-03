@@ -353,6 +353,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
 
+			Canvas.SetLeft(OpponentUpload, Width * Config.Instance.OpponentDeckLeft / 100);
 
 			var OpponentStackVisibleHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + ViewBoxOpponent.ActualHeight;
 
