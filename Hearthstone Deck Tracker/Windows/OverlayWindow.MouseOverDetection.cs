@@ -14,6 +14,7 @@ using Rectangle = System.Windows.Shapes.Rectangle;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Utility;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 #endregion
 
@@ -342,13 +343,29 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return cardWidth;
 		}
 
-		private void UpdateClickableElements()
+		private int _currentlyHoveredIndex = -1;
+
+		private void UpdateInteractiveElements()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
 				return;
-			var hoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos, AutoScaling));
-			SetClickthrough(hoveredIndex < 0);
+			var clickableHoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos, AutoScaling));
+			SetClickthrough(clickableHoveredIndex < 0);
+			var hoverableHoveredIndex = _hoverableElements.FindIndex(e => ElementContains(e, cursorPos, AutoScaling));
+			if(hoverableHoveredIndex != _currentlyHoveredIndex)
+			{
+				if(_currentlyHoveredIndex != -1)
+				{
+					_hoverableElements[_currentlyHoveredIndex].RaiseEvent(new MouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
+					_currentlyHoveredIndex = -1;
+				}
+				if(hoverableHoveredIndex != -1)
+				{
+					_hoverableElements[hoverableHoveredIndex].RaiseEvent(new MouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseEnterEvent });
+					_currentlyHoveredIndex = hoverableHoveredIndex;
+				}
+			}
 		}
 
 		public bool EllipseContains(Ellipse ellipse, Point location)

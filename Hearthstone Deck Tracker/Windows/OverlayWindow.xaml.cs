@@ -42,6 +42,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly GameV2 _game;
 		private readonly Dictionary<UIElement, ResizeGrip> _movableElements = new Dictionary<UIElement, ResizeGrip>();
 		private readonly List<FrameworkElement> _clickableElements = new List<FrameworkElement>();
+		private readonly List<FrameworkElement> _hoverableElements = new List<FrameworkElement>();
 		private readonly int _offsetX;
 		private readonly int _offsetY;
 		private readonly List<Ellipse> _oppBoard = new List<Ellipse>();
