@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int MaxBoardSize = 7;
 		private bool _mouseIsOverLeaderboardIcon = false;
 		private int _nextOpponentLeaderboardPosition = -1;
+		private const int MouseLeaveEventDelay = 200;
 
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
 
@@ -345,7 +346,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private int _currentlyHoveredIndex = -1;
 
-		private void UpdateInteractiveElements()
+		private async void UpdateInteractiveElements()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
@@ -357,8 +358,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				if(_currentlyHoveredIndex != -1)
 				{
-					_hoverableElements[_currentlyHoveredIndex].RaiseEvent(new MouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
-					_currentlyHoveredIndex = -1;
+					await Task.Delay(MouseLeaveEventDelay);
+					if(hoverableHoveredIndex != _currentlyHoveredIndex)
+					{
+						_hoverableElements[_currentlyHoveredIndex].RaiseEvent(new MouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
+						_currentlyHoveredIndex = -1;
+					}
 				}
 				if(hoverableHoveredIndex != -1)
 				{

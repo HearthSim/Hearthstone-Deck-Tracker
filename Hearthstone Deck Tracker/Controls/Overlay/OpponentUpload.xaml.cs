@@ -4,6 +4,7 @@ using Hearthstone_Deck_Tracker.Importing;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
@@ -25,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private Visibility _uploadVisibility;
+		private Visibility _uploadVisibility = Visibility.Hidden;
 		public Visibility UploadVisibility
 		{
 			get => _uploadVisibility;
@@ -35,6 +36,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				OnPropertyChanged();
 			}
 		}
+
+		private bool _mouseIsOver = false;
 
 		public bool WasClosed = false;
 
@@ -54,30 +57,68 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private async void OpponentUpload_MouseDownAsync(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			Console.WriteLine("Upload mousedown clicked on");
-			if(UploadState == OpponentUploadState.Initial || UploadState == OpponentUploadState.Error)
+			if(WasClosed)
+				return;
+			if(_uploadState == OpponentUploadState.Initial || _uploadState == OpponentUploadState.Error)
 			{
 				var deck = await ClipboardImporter.Import();
 				if(deck != null)
 				{
 					Player.KnownOpponentDeck = deck;
-					Console.WriteLine("successfully uploaded deck");
 					e.Handled = true;
-					UploadState = OpponentUploadState.UploadSucceeded;
+					_uploadState = OpponentUploadState.UploadSucceeded;
+					OnPropertyChanged(nameof(Message));
+					Core.UpdateOpponentCards();
+					await Task.Delay(2000);
+					_uploadState = OpponentUploadState.InKnownDeckMode;
 				}
 				else
-					UploadState = OpponentUploadState.Error;
+					_uploadState = OpponentUploadState.Error;
 			}
-			else if(UploadState == OpponentUploadState.UploadSucceeded) { }
+			else if(_uploadState == OpponentUploadState.InKnownDeckMode)
+			{
+				Player.KnownOpponentDeck = null;
+				Core.UpdateOpponentCards();
+
+				await Task.Delay(2000);
+				_uploadState = OpponentUploadState.Initial;
+			}
 
 			OnPropertyChanged(nameof(Message));
-
 		}
 
 		private void CloseOpponentUpload_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			UploadVisibility = Visibility.Collapsed;
+			Hide(true);
 			WasClosed = true;
 			Console.WriteLine("wants to close thing");
+		}
+
+		public void Hide(bool force = false)
+		{
+			if(force || !_mouseIsOver)
+			{
+				UploadVisibility = Visibility.Hidden;
+			}
+		}
+
+		public void Show(bool force = false)
+		{
+			if(force || !WasClosed)
+			{
+				UploadVisibility = Visibility.Visible;
+			}
+		}
+
+		private void Border_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			_mouseIsOver = true;
+		}
+
+		private void Border_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			_mouseIsOver = false;
+			Hide();
 		}
 	}
 }
