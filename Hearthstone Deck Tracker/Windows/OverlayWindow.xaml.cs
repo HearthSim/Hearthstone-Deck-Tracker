@@ -353,7 +353,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void ShowOpponentUpload()
 		{
-			OpponentUpload.WasClosed = false;
 			OpponentUpload.Show();
 		}
 

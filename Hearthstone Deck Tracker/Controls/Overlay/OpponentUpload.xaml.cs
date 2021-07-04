@@ -48,13 +48,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private string _errorMessage;
+		public string ErrorMessage
+		{
+			get => _errorMessage;
+			set
+			{
+				_errorMessage = value;
+				OnPropertyChanged();
+			}
+		}
+
 		private bool _mouseIsOver = false;
 
 		public string LinkMessage => OpponentUploadStateConverter.GetLinkMessage(_uploadState);
 
 		public Visibility LinkMessageVisibility => !Config.Instance.SeenLinkOpponentDeck ? Visibility.Visible : Visibility.Collapsed;
-
-		public string ErrorMessage => ClipboardImporter.ErrorMessage;
 
 		public Visibility ErrorMessageVisibility => !string.IsNullOrEmpty(ErrorMessage) ? Visibility.Visible : Visibility.Collapsed;
 
@@ -71,17 +80,25 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private async void LinkOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
-			var deck = await ClipboardImporter.Import();
-			if(deck != null)
+			Config.Instance.SeenLinkOpponentDeck = true;
+			Config.Save();
+			try
 			{
-				Player.KnownOpponentDeck = deck;
-				e.Handled = true;
-				Core.UpdateOpponentCards();
-				_uploadState = OpponentUploadState.InKnownDeckMode;
+				var deck = await ClipboardImporter.Import(true);
+				if(deck != null)
+				{
+					Player.KnownOpponentDeck = deck;
+					e.Handled = true;
+					Core.UpdateOpponentCards();
+					_uploadState = OpponentUploadState.InKnownDeckMode;
+				}
+				else
+					_uploadState = OpponentUploadState.Error;
 			}
-			else
+			catch(Exception ex)
 			{
 				_uploadState = OpponentUploadState.Error;
+				_errorMessage = ex.Message;
 				OnPropertyChanged(ErrorMessage);
 			}
 

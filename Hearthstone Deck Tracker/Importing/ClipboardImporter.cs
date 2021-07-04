@@ -10,10 +10,9 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class ClipboardImporter
 	{
-		public static string ErrorMessage;
-
-		public static async Task<Deck> Import()
+		public static async Task<Deck> Import(bool rethrow = false)
 		{
+			Exception error = null;
 			try
 			{
 				var clipboard = Clipboard.GetText();
@@ -31,6 +30,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 				}
 				catch(Exception e)
 				{
+					error = e;
 					Log.Error(e);
 				}
 
@@ -41,7 +41,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 			catch(Exception ex)
 			{
 				Log.Error(ex);
-				ErrorMessage = ex.Message;
+				if(rethrow)
+					throw error ?? ex;
 				return null;
 			}
 		}
