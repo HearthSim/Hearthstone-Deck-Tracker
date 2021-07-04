@@ -50,15 +50,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private bool _mouseIsOver = false;
 
-		public bool WasClosed = false;
+		public string LinkMessage => OpponentUploadStateConverter.GetLinkMessage(_uploadState);
 
-		public string Message => OpponentUploadStateConverter.GetStatusMessage(_uploadState);
+		public Visibility LinkMessageVisibility => !Config.Instance.SeenLinkOpponentDeck ? Visibility.Visible : Visibility.Collapsed;
 
-		public string LinkMessage => "Dismiss/Clear";
-
-		public Visibility LinkMessageVisibility => !string.IsNullOrEmpty(LinkMessage) ? Visibility.Visible : Visibility.Collapsed;
-
-		public string ErrorMessage => "";
+		public string ErrorMessage => ClipboardImporter.ErrorMessage;
 
 		public Visibility ErrorMessageVisibility => !string.IsNullOrEmpty(ErrorMessage) ? Visibility.Visible : Visibility.Collapsed;
 
@@ -73,42 +69,23 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			InitializeComponent();
 		}
 
-		private async void OpponentUpload_MouseDownAsync(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		private async void LinkOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
-			if(WasClosed)
-				return;
-			if(_uploadState == OpponentUploadState.Initial || _uploadState == OpponentUploadState.Error)
+			var deck = await ClipboardImporter.Import();
+			if(deck != null)
 			{
-				var deck = await ClipboardImporter.Import();
-				if(deck != null)
-				{
-					Player.KnownOpponentDeck = deck;
-					e.Handled = true;
-					_uploadState = OpponentUploadState.UploadSucceeded;
-					OnPropertyChanged(nameof(Message));
-					Core.UpdateOpponentCards();
-					await Task.Delay(2000);
-					_uploadState = OpponentUploadState.InKnownDeckMode;
-				}
-				else
-					_uploadState = OpponentUploadState.Error;
-			}
-			else if(_uploadState == OpponentUploadState.InKnownDeckMode)
-			{
-				Player.KnownOpponentDeck = null;
+				Player.KnownOpponentDeck = deck;
+				e.Handled = true;
 				Core.UpdateOpponentCards();
-
-				await Task.Delay(2000);
-				_uploadState = OpponentUploadState.Initial;
+				_uploadState = OpponentUploadState.InKnownDeckMode;
+			}
+			else
+			{
+				_uploadState = OpponentUploadState.Error;
+				OnPropertyChanged(ErrorMessage);
 			}
 
-			OnPropertyChanged(nameof(Message));
-		}
-
-		private void CloseOpponentUpload_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			Hide(true);
-			WasClosed = true;
+			OnPropertyChanged(nameof(LinkMessage));
 		}
 
 		public void Hide(bool force = false)
@@ -119,12 +96,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public void Show(bool force = false)
+		public void Show()
 		{
-			if(force || !WasClosed)
-			{
-				UploadVisibility = Visibility.Visible;
-			}
+			UploadVisibility = Visibility.Visible;
 		}
 
 		private void Border_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -136,6 +110,23 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			_mouseIsOver = false;
 			Hide();
+		}
+
+		private void Hyperlink_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			if(!Config.Instance.SeenLinkOpponentDeck)
+			{
+				Config.Instance.SeenLinkOpponentDeck = true;
+				Config.Save();
+				Hide(true);
+			}
+			else
+			{
+				Player.KnownOpponentDeck = null;
+				Core.UpdateOpponentCards();
+				_uploadState = OpponentUploadState.Initial;
+				OnPropertyChanged(nameof(LinkMessage));
+			}
 		}
 	}
 }

@@ -3,7 +3,6 @@
 	public enum OpponentUploadState
 	{
 		Initial,
-		UploadSucceeded,
 		Error,
 		InKnownDeckMode
 	};
