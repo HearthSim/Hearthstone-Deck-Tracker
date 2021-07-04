@@ -37,11 +37,30 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private Visibility _descriptorVisibility = Visibility.Visible;
+		public Visibility DescriptorVisibility
+		{
+			get => _descriptorVisibility;
+			set
+			{
+				_descriptorVisibility = value;
+				OnPropertyChanged();
+			}
+		}
+
 		private bool _mouseIsOver = false;
 
 		public bool WasClosed = false;
 
 		public string Message => OpponentUploadStateConverter.GetStatusMessage(_uploadState);
+
+		public string LinkMessage => "Dismiss/Clear";
+
+		public Visibility LinkMessageVisibility => !string.IsNullOrEmpty(LinkMessage) ? Visibility.Visible : Visibility.Collapsed;
+
+		public string ErrorMessage => "";
+
+		public Visibility ErrorMessageVisibility => !string.IsNullOrEmpty(ErrorMessage) ? Visibility.Visible : Visibility.Collapsed;
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
