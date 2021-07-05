@@ -437,12 +437,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void StackPanelOpponent_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			LinkOpponentDeckDisplay.Show();
+			ShowLinkOpponentDeckDisplay();
 		}
 
-		private void StackPanelOpponent_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		private async void StackPanelOpponent_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			LinkOpponentDeckDisplay.Hide();
+			if(recentlyMouseLeftElements.Contains(StackPanelOpponent))
+				LinkOpponentDeckDisplay.Hide();
 		}
 	}
 }
