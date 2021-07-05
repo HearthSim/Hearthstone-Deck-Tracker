@@ -353,17 +353,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
 
-			Canvas.SetLeft(OpponentUpload, Width * Config.Instance.OpponentDeckLeft / 100);
+			Canvas.SetLeft(LinkOpponentDeckDisplay, Width * Config.Instance.OpponentDeckLeft / 100);
 
 			var OpponentStackVisibleHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + ViewBoxOpponent.ActualHeight;
 
-			if(BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 20 + OpponentUpload.ActualHeight < Height)
+			if(BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 20 + LinkOpponentDeckDisplay.ActualHeight < Height)
 			{
-				Canvas.SetTop(OpponentUpload, BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 20);
+				Canvas.SetTop(LinkOpponentDeckDisplay, BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 20);
 			}
 			else
 			{
-				Canvas.SetTop(OpponentUpload, BorderStackPanelOpponentTop - OpponentUpload.ActualHeight - 20);
+				Canvas.SetTop(LinkOpponentDeckDisplay, BorderStackPanelOpponentTop - LinkOpponentDeckDisplay.ActualHeight - 20);
 			}
 
 			if (Config.Instance.ShowFlavorText)

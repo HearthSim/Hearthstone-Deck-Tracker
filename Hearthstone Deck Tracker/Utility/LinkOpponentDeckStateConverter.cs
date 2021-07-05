@@ -2,15 +2,15 @@
 
 namespace Hearthstone_Deck_Tracker
 {
-	internal static class OpponentUploadStateConverter
+	internal static class LinkOpponentDeckStateConverter
 	{
-		public static string GetLinkMessage(OpponentUploadState state)
+		public static string GetLinkMessage(LinkOpponentDeckState state)
 		{
 			if(!Config.Instance.SeenLinkOpponentDeck)
 				return "Dismiss";
 			switch(state)
 			{
-				case OpponentUploadState.InKnownDeckMode:
+				case LinkOpponentDeckState.InKnownDeckMode:
 					return "Clear Linked Deck";
 			}
 			return "";

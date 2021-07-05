@@ -1,6 +1,6 @@
 ﻿namespace Hearthstone_Deck_Tracker
 {
-	public enum OpponentUploadState
+	public enum LinkOpponentDeckState
 	{
 		Initial,
 		Error,

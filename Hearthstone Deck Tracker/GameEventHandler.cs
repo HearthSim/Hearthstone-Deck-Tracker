@@ -456,7 +456,7 @@ namespace Hearthstone_Deck_Tracker
 				Core.Overlay.ShowBgsTopBar();
 			if(_game.IsFriendlyMatch)
 				if(!Config.Instance.SeenLinkOpponentDeck)
-					Core.Overlay.ShowOpponentUpload();
+					Core.Overlay.ShowLinkOpponentDeckDisplay();
 		}
 
 		private void HandleAdventureRestart()

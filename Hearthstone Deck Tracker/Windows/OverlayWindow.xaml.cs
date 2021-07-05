@@ -351,9 +351,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBobsBuddyPanel();
 		}
 
-		internal void ShowOpponentUpload()
+		internal void ShowLinkOpponentDeckDisplay()
 		{
-			OpponentUpload.Show();
+			LinkOpponentDeckDisplay.Show();
 		}
 
 		internal void ShowBobsBuddyPanel()
@@ -437,12 +437,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void StackPanelOpponent_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			OpponentUpload.Show();
+			LinkOpponentDeckDisplay.Show();
 		}
 
 		private void StackPanelOpponent_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			OpponentUpload.Hide();
+			LinkOpponentDeckDisplay.Hide();
 		}
 	}
 }

@@ -11,28 +11,28 @@ using System.Windows.Media.Animation;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
-	public partial class OpponentUpload : UserControl, INotifyPropertyChanged
+	public partial class LinkOpponentDeckPanel : UserControl, INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private OpponentUploadState _uploadState;
-		public OpponentUploadState UploadState
+		private LinkOpponentDeckState _linkOpponentDeckState;
+		public LinkOpponentDeckState LinkOpponentDeckState
 		{
-			get => _uploadState;
+			get => _linkOpponentDeckState;
 			set
 			{
-				_uploadState = value;
+				_linkOpponentDeckState = value;
 				OnPropertyChanged();
 			}
 		}
 
-		private Visibility _uploadVisibility = Visibility.Hidden;
-		public Visibility UploadVisibility
+		private Visibility _linkOpponentDeckVisibility = Visibility.Hidden;
+		public Visibility LinkOpponentDeckVisibilty
 		{
-			get => _uploadVisibility;
+			get => _linkOpponentDeckVisibility;
 			set
 			{
-				_uploadVisibility = value;
+				_linkOpponentDeckVisibility = value;
 				OnPropertyChanged();
 			}
 		}
@@ -61,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private bool _mouseIsOver = false;
 
-		public string LinkMessage => OpponentUploadStateConverter.GetLinkMessage(_uploadState);
+		public string LinkMessage => LinkOpponentDeckStateConverter.GetLinkMessage(_linkOpponentDeckState);
 
 		public Visibility LinkMessageVisibility => !Config.Instance.SeenLinkOpponentDeck ? Visibility.Visible : Visibility.Collapsed;
 
@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public OpponentUpload()
+		public LinkOpponentDeckPanel()
 		{
 			InitializeComponent();
 		}
@@ -90,14 +90,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					Player.KnownOpponentDeck = deck;
 					e.Handled = true;
 					Core.UpdateOpponentCards();
-					_uploadState = OpponentUploadState.InKnownDeckMode;
+					_linkOpponentDeckState = LinkOpponentDeckState.InKnownDeckMode;
 				}
 				else
-					_uploadState = OpponentUploadState.Error;
+					_linkOpponentDeckState = LinkOpponentDeckState.Error;
 			}
 			catch(Exception ex)
 			{
-				_uploadState = OpponentUploadState.Error;
+				_linkOpponentDeckState = LinkOpponentDeckState.Error;
 				_errorMessage = ex.Message;
 				OnPropertyChanged(ErrorMessage);
 			}
@@ -109,13 +109,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			if(force || !_mouseIsOver)
 			{
-				UploadVisibility = Visibility.Hidden;
+				_linkOpponentDeckVisibility = Visibility.Hidden;
 			}
 		}
 
 		public void Show()
 		{
-			UploadVisibility = Visibility.Visible;
+			_linkOpponentDeckVisibility = Visibility.Visible;
 		}
 
 		private void Border_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -141,7 +141,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				Player.KnownOpponentDeck = null;
 				Core.UpdateOpponentCards();
-				_uploadState = OpponentUploadState.Initial;
+				_linkOpponentDeckState = LinkOpponentDeckState.Initial;
 				OnPropertyChanged(nameof(LinkMessage));
 			}
 		}

@@ -27,7 +27,6 @@ using Hearthstone_Deck_Tracker.Utility.Updating;
 using WPFLocalizeExtension.Engine;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using static Hearthstone_Deck_Tracker.Utility.RemoteConfig;
-using Hearthstone_Deck_Tracker.Importing;
 
 #endregion
 

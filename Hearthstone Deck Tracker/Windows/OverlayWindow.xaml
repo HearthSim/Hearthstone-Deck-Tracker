@@ -85,7 +85,7 @@
                         <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
                     </StackPanel>
                 </Border>
-                <overlay:OpponentUpload x:Name="OpponentUpload" Width="218"/>
+                <overlay:LinkOpponentDeckPanel x:Name="LinkOpponentDeckDisplay" Width="218"/>
 
                 <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
 
