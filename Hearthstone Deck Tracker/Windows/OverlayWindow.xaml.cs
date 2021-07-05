@@ -442,7 +442,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private async void StackPanelOpponent_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			if(recentlyMouseLeftElements.Contains(StackPanelOpponent))
+			if(_recentlyMouseLeftElements.Contains(StackPanelOpponent))
 				LinkOpponentDeckDisplay.Hide();
 		}
 	}

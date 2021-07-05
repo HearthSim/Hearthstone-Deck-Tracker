@@ -7,11 +7,11 @@ namespace Hearthstone_Deck_Tracker
 		public static string GetLinkMessage(LinkOpponentDeckState state)
 		{
 			if(!Config.Instance.SeenLinkOpponentDeck)
-				return "Dismiss";
+				return LocUtil.Get("LinkOpponentDeck_Dismiss");
 			switch(state)
 			{
 				case LinkOpponentDeckState.InKnownDeckMode:
-					return "Clear Linked Deck";
+					return LocUtil.Get("LinkOpponentDeck_Clear");
 			}
 			return "";
 		}
