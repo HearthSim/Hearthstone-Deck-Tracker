@@ -52,9 +52,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private bool _mouseIsOver = false;
 
+		private bool _hasLinkedDeck = false;
+
 		public string LinkMessage => LinkOpponentDeckStateConverter.GetLinkMessage(_linkOpponentDeckState);
 
-		public Visibility LinkMessageVisibility => !Config.Instance.SeenLinkOpponentDeck ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility LinkMessageVisibility => (!Config.Instance.SeenLinkOpponentDeck || _linkOpponentDeckState == LinkOpponentDeckState.InKnownDeckMode || (_linkOpponentDeckState == LinkOpponentDeckState.Error && _hasLinkedDeck)) ? Visibility.Visible : Visibility.Collapsed;
 
 		public Visibility ErrorMessageVisibility => !string.IsNullOrEmpty(ErrorMessage) ? Visibility.Visible : Visibility.Collapsed;
 
@@ -67,6 +69,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public LinkOpponentDeckPanel()
 		{
 			InitializeComponent();
+			Config.Instance.SeenLinkOpponentDeck = false;
+			Config.Save();
 		}
 
 		private async void LinkOpponentDeck_Click(object sender, RoutedEventArgs e)
@@ -82,6 +86,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					e.Handled = true;
 					Core.UpdateOpponentCards();
 					_linkOpponentDeckState = LinkOpponentDeckState.InKnownDeckMode;
+					ErrorMessage = "";
 				}
 				else
 					_linkOpponentDeckState = LinkOpponentDeckState.Error;
@@ -89,11 +94,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			catch(Exception ex)
 			{
 				_linkOpponentDeckState = LinkOpponentDeckState.Error;
-				ErrorMessage = ex.Message;
-				OnPropertyChanged(ErrorMessage);
+				ErrorMessage = $"Error: {ex.Message}";
 			}
 
+			OnPropertyChanged(nameof(ErrorMessage));
+			OnPropertyChanged(nameof(ErrorMessageVisibility));
 			OnPropertyChanged(nameof(LinkMessage));
+			OnPropertyChanged(nameof(LinkMessageVisibility));
 		}
 
 		public void Hide(bool force = false)
