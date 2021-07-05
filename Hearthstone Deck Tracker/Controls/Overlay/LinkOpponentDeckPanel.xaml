@@ -22,8 +22,8 @@
                     Click="LinkOpponentDeck_Click"  DockPanel.Dock="Right" />
 
                 <TextBlock FontSize="14" TextWrapping="Wrap" Margin="0 10 0 0" Visibility="{Binding LinkMessageVisibility}" Opacity=".7" HorizontalAlignment="Center">
-                    <Hyperlink MouseDown="Hyperlink_MouseDown" CommandParameter="https://articles.hsreplay.net/2020/04/24/introducing-bobs-buddy/" Foreground="White">
-                       <Run Text="Dismiss"/>
+                    <Hyperlink Foreground="White">
+                       <Run Text="{Binding LinkMessage, Mode=OneWay}" MouseDown="Hyperlink_MouseDown"/>
                     </Hyperlink>
                 </TextBlock>
 

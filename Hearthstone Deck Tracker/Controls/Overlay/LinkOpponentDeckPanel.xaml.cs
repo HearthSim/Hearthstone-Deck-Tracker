@@ -125,6 +125,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			if(!Config.Instance.SeenLinkOpponentDeck)
 			{
 				Config.Instance.SeenLinkOpponentDeck = true;
+				OnPropertyChanged(nameof(LinkMessageVisibility));
 				Config.Save();
 				Hide(true);
 			}
@@ -134,6 +135,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				Core.UpdateOpponentCards();
 				_linkOpponentDeckState = LinkOpponentDeckState.Initial;
 				OnPropertyChanged(nameof(LinkMessage));
+				OnPropertyChanged(nameof(LinkMessageVisibility));
 			}
 		}
 	}
