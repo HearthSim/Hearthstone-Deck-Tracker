@@ -41,6 +41,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private bool _shownByOpponentStack = false;
+
 		private bool _mouseIsOver = false;
 
 		private bool _hasLinkedDeck = false;
@@ -93,12 +95,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OnPropertyChanged(nameof(LinkMessageVisibility));
 		}
 
+		public void HideByOpponentStack()
+		{
+			_shownByOpponentStack = false;
+			Hide(false);
+		}
+
 		public void Hide(bool force = false)
 		{
 			if(force || !_mouseIsOver)
 			{
 				LinkOpponentDeckVisibility = Visibility.Hidden;
 			}
+		}
+
+		public void ShowByOpponentStack()
+		{
+			_shownByOpponentStack = true;
+			Show();
 		}
 
 		public void Show()
@@ -114,7 +128,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private void Border_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			_mouseIsOver = false;
-			Hide();
+			if(!_shownByOpponentStack)
+				Hide();
 		}
 
 		private void Hyperlink_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

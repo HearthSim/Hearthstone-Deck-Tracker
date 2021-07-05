@@ -175,7 +175,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_clickableElements.Add(MulliganNotificationPanel);
 			_clickableElements.Add(BobsBuddyDisplay);
 
-			_hoverableElements.Add(new HoverableElement(StackPanelOpponent, () => LinkOpponentDeckDisplay.Show(), () => LinkOpponentDeckDisplay.Hide()));
+			_hoverableElements.Add(new HoverableElement(StackPanelOpponent, () => LinkOpponentDeckDisplay.ShowByOpponentStack(), () => LinkOpponentDeckDisplay.HideByOpponentStack()));
 		}
 	}
 
