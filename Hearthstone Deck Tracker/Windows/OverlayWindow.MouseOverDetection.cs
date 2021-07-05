@@ -38,6 +38,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int MaxBoardSize = 7;
 		private bool _mouseIsOverLeaderboardIcon = false;
 		private int _nextOpponentLeaderboardPosition = -1;
+		private int _currentlyHoveredIndex = -1;
 		private const int MouseLeaveEventDelay = 200;
 		private static List<FrameworkElement> _recentlyMouseLeftElements = new List<FrameworkElement>();
 
@@ -344,8 +345,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return maxHandWidth / count;
 			return cardWidth;
 		}
-
-		private int _currentlyHoveredIndex = -1;
 
 		private async void UpdateInteractiveElements()
 		{
