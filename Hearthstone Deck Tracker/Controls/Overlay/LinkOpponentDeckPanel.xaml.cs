@@ -28,17 +28,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private Visibility _descriptorVisibility = Visibility.Visible;
-		public Visibility DescriptorVisibility
-		{
-			get => _descriptorVisibility;
-			set
-			{
-				_descriptorVisibility = value;
-				OnPropertyChanged();
-			}
-		}
-
+		public Visibility DescriptorVisibility => !Config.Instance.SeenLinkOpponentDeck ? Visibility.Visible : Visibility.Collapsed;
+		
 		private string _errorMessage;
 		public string ErrorMessage
 		{
@@ -77,6 +68,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			Config.Instance.SeenLinkOpponentDeck = true;
 			Config.Save();
+			OnPropertyChanged(nameof(DescriptorVisibility));
 			try
 			{
 				var deck = await ClipboardImporter.Import(true);
@@ -132,8 +124,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			if(!Config.Instance.SeenLinkOpponentDeck)
 			{
 				Config.Instance.SeenLinkOpponentDeck = true;
-				OnPropertyChanged(nameof(LinkMessageVisibility));
 				Config.Save();
+				OnPropertyChanged(nameof(LinkMessageVisibility));
+				OnPropertyChanged(nameof(DescriptorVisibility));
 				Hide(true);
 			}
 			else
