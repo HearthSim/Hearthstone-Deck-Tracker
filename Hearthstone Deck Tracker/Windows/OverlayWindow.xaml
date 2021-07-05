@@ -63,7 +63,7 @@
                     </StackPanel>
                 </Border>
                 <Border Name="BorderStackPanelOpponent" Canvas.Top="203" Canvas.Left="10" Height="{Binding OpponentStackHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
-                    <StackPanel Name="StackPanelOpponent" Width="218" VerticalAlignment="{Binding OpponentStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" MouseEnter="StackPanelOpponent_MouseEnter" MouseLeave="StackPanelOpponent_MouseLeave">
+                    <StackPanel Name="StackPanelOpponent" Width="218" VerticalAlignment="{Binding OpponentStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                         <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
                         <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding OpponentListHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                             <controls:AnimatedCardList x:Name="ListViewOpponent" Background="Transparent" BorderThickness="0"

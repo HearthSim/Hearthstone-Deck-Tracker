@@ -60,8 +60,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public LinkOpponentDeckPanel()
 		{
 			InitializeComponent();
-			Config.Instance.SeenLinkOpponentDeck = false;
-			Config.Save();
 		}
 
 		private async void LinkOpponentDeck_Click(object sender, RoutedEventArgs e)
