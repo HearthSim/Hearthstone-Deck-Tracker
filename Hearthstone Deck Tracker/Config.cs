@@ -813,7 +813,7 @@ namespace Hearthstone_Deck_Tracker
 		public bool BobsBuddyAverageDamageInfoClosed = false;
 
 		[DefaultValue(false)]
-		public bool SeenLinkOpponentDeck = false;
+		public bool InteractedWithLinkOpponentDeck = false;
 
 		[DefaultValue(false)]
 		public bool ShowCapturableOverlay = false;

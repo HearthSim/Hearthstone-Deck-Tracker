@@ -251,8 +251,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 								}).Concat(GetPredictedCardsInDeck(true)).ToSortedCardList();
 			}
 			var createdInHand = includeCreatedInHand ? CreatedCardsInHand : new List<Card>();
-			if(DeckList.Instance.ActiveDeck == null)
-				return RevealedCards.Concat(createdInHand).Concat(KnownCardsInDeck).Concat(GetPredictedCardsInDeck(true)).ToSortedCardList();
 			var deckState = GetOpponentDeckState();
 			var inDeck = deckState.RemainingInDeck.ToList();
 			var notInDeck = deckState.RemovedFromDeck.Where(x => inDeck.All(c => x.Id != c.Id)).ToList();

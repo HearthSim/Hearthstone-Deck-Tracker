@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public Visibility DescriptorVisibility => !Config.Instance.SeenLinkOpponentDeck ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility DescriptorVisibility => !Config.Instance.InteractedWithLinkOpponentDeck ? Visibility.Visible : Visibility.Collapsed;
 		
 		private string _errorMessage;
 		public string ErrorMessage
@@ -41,6 +41,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public bool AutoShown = false;
+
 		private bool _shownByOpponentStack = false;
 
 		private bool _mouseIsOver = false;
@@ -49,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public string LinkMessage => LinkOpponentDeckStateConverter.GetLinkMessage(_linkOpponentDeckState);
 
-		public Visibility LinkMessageVisibility => (!Config.Instance.SeenLinkOpponentDeck || _linkOpponentDeckState == LinkOpponentDeckState.InKnownDeckMode || (_linkOpponentDeckState == LinkOpponentDeckState.Error && _hasLinkedDeck)) ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility LinkMessageVisibility => (AutoShown && !Config.Instance.InteractedWithLinkOpponentDeck) || _hasLinkedDeck ? Visibility.Visible : Visibility.Collapsed;
 
 		public Visibility ErrorMessageVisibility => !string.IsNullOrEmpty(ErrorMessage) ? Visibility.Visible : Visibility.Collapsed;
 
@@ -66,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private async void LinkOpponentDeck_Click(object sender, RoutedEventArgs e)
 		{
-			Config.Instance.SeenLinkOpponentDeck = true;
+			Config.Instance.InteractedWithLinkOpponentDeck = true;
 			Config.Save();
 			OnPropertyChanged(nameof(DescriptorVisibility));
 			try
@@ -78,6 +80,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					e.Handled = true;
 					Core.UpdateOpponentCards();
 					_linkOpponentDeckState = LinkOpponentDeckState.InKnownDeckMode;
+					_hasLinkedDeck = true;
 					ErrorMessage = "";
 				}
 				else
@@ -86,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			catch(Exception ex)
 			{
 				_linkOpponentDeckState = LinkOpponentDeckState.Error;
-				ErrorMessage = $"Error: {ex.Message}";
+				ErrorMessage = $"No valid deck code found on clipboard";
 			}
 
 			OnPropertyChanged(nameof(ErrorMessage));
@@ -107,6 +110,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				LinkOpponentDeckVisibility = Visibility.Hidden;
 			}
+			AutoShown = false;
 		}
 
 		public void ShowByOpponentStack()
@@ -118,6 +122,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public void Show()
 		{
 			LinkOpponentDeckVisibility = Visibility.Visible;
+			OnPropertyChanged(nameof(LinkMessageVisibility));
 		}
 
 		private void Border_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -134,9 +139,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void Hyperlink_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			if(!Config.Instance.SeenLinkOpponentDeck)
+			if(!Config.Instance.InteractedWithLinkOpponentDeck)
 			{
-				Config.Instance.SeenLinkOpponentDeck = true;
+				Config.Instance.InteractedWithLinkOpponentDeck = true;
 				Config.Save();
 				OnPropertyChanged(nameof(LinkMessageVisibility));
 				OnPropertyChanged(nameof(DescriptorVisibility));
@@ -147,6 +152,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				Player.KnownOpponentDeck = null;
 				Core.UpdateOpponentCards();
 				_linkOpponentDeckState = LinkOpponentDeckState.Initial;
+				_hasLinkedDeck = false;
 				OnPropertyChanged(nameof(LinkMessage));
 				OnPropertyChanged(nameof(LinkMessageVisibility));
 			}

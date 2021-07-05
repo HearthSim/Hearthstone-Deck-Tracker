@@ -353,6 +353,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void ShowLinkOpponentDeckDisplay()
 		{
+			LinkOpponentDeckDisplay.AutoShown = true;
 			LinkOpponentDeckDisplay.Show();
 		}
 

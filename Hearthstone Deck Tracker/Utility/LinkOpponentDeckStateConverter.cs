@@ -6,7 +6,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		public static string GetLinkMessage(LinkOpponentDeckState state)
 		{
-			if(!Config.Instance.SeenLinkOpponentDeck)
+			if(!Config.Instance.InteractedWithLinkOpponentDeck)
 				return LocUtil.Get("LinkOpponentDeck_Dismiss");
 			switch(state)
 			{

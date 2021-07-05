@@ -455,7 +455,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
 				Core.Overlay.ShowBgsTopBar();
 			if(_game.IsFriendlyMatch)
-				if(!Config.Instance.SeenLinkOpponentDeck)
+				if(!Config.Instance.InteractedWithLinkOpponentDeck)
 					Core.Overlay.ShowLinkOpponentDeckDisplay();
 		}
 
