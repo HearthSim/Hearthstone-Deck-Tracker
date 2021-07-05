@@ -9,7 +9,7 @@
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d">
-    <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding LinkOpponentDeckVisibility, Mode=OneWay}" MaxWidth="352" MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave">
+    <Border Background="#23272A" BorderBrush="#141617" BorderThickness="1" CornerRadius="3" Margin="0,5,0,0" Visibility="{Binding LinkOpponentDeckVisibility}" MaxWidth="352" MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave">
         <Grid>
             <StackPanel Margin="10">
                 <TextBlock Text="{lex:Loc LinkOpponentDeck_Panel_Title}" Foreground="White" FontSize="14" FontWeight="Bold"/>

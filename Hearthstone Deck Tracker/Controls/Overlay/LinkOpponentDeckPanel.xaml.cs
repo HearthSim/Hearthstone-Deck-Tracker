@@ -16,18 +16,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		private LinkOpponentDeckState _linkOpponentDeckState;
-		public LinkOpponentDeckState LinkOpponentDeckState
-		{
-			get => _linkOpponentDeckState;
-			set
-			{
-				_linkOpponentDeckState = value;
-				OnPropertyChanged();
-			}
-		}
 
 		private Visibility _linkOpponentDeckVisibility = Visibility.Hidden;
-		public Visibility LinkOpponentDeckVisibilty
+		public Visibility LinkOpponentDeckVisibility
 		{
 			get => _linkOpponentDeckVisibility;
 			set
@@ -98,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			catch(Exception ex)
 			{
 				_linkOpponentDeckState = LinkOpponentDeckState.Error;
-				_errorMessage = ex.Message;
+				ErrorMessage = ex.Message;
 				OnPropertyChanged(ErrorMessage);
 			}
 
@@ -109,13 +100,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			if(force || !_mouseIsOver)
 			{
-				_linkOpponentDeckVisibility = Visibility.Hidden;
+				LinkOpponentDeckVisibility = Visibility.Hidden;
 			}
 		}
 
 		public void Show()
 		{
-			_linkOpponentDeckVisibility = Visibility.Visible;
+			LinkOpponentDeckVisibility = Visibility.Visible;
 		}
 
 		private void Border_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
