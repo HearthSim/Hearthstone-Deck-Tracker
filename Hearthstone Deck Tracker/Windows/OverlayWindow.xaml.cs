@@ -440,10 +440,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			ShowLinkOpponentDeckDisplay();
 		}
 
-		private async void StackPanelOpponent_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		private void StackPanelOpponent_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			if(_recentlyMouseLeftElements.Contains(StackPanelOpponent))
-				LinkOpponentDeckDisplay.Hide();
+			LinkOpponentDeckDisplay.Hide();
 		}
 	}
 }
