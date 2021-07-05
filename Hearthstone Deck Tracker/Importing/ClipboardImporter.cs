@@ -32,6 +32,8 @@ namespace Hearthstone_Deck_Tracker.Importing
 				{
 					error = e;
 					Log.Error(e);
+					if(rethrow)
+						throw error;
 				}
 
 				if(StringImporter.IsValidImportString(clipboard))
