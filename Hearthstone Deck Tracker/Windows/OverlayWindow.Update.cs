@@ -322,6 +322,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
 																	Config.Instance.OverlayOpponentScaling / 100);
 			StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
+			LinkOpponentDeckDisplay.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
+																	Config.Instance.OverlayOpponentScaling / 100);
 		}
 
 		public double AutoScaling { get; set; } = 1;
@@ -355,15 +357,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			Canvas.SetLeft(LinkOpponentDeckDisplay, Width * Config.Instance.OpponentDeckLeft / 100);
 
-			var OpponentStackVisibleHeight = CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + ViewBoxOpponent.ActualHeight;
+			var OpponentStackVisibleHeight = (CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + ViewBoxOpponent.ActualHeight)* Config.Instance.OverlayOpponentScaling / 100;
 
-			if(BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 20 + LinkOpponentDeckDisplay.ActualHeight < Height)
+			if(BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 10 + LinkOpponentDeckDisplay.ActualHeight < Height)
 			{
-				Canvas.SetTop(LinkOpponentDeckDisplay, BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 20);
+				Canvas.SetTop(LinkOpponentDeckDisplay, BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 10);
 			}
 			else
 			{
-				Canvas.SetTop(LinkOpponentDeckDisplay, BorderStackPanelOpponentTop - LinkOpponentDeckDisplay.ActualHeight - 20);
+				Canvas.SetTop(LinkOpponentDeckDisplay, BorderStackPanelOpponentTop - (LinkOpponentDeckDisplay.ActualHeight* Config.Instance.OverlayOpponentScaling / 100) - 10);
 			}
 
 			if (Config.Instance.ShowFlavorText)
