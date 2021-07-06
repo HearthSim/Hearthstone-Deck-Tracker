@@ -111,6 +111,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				LinkOpponentDeckVisibility = Visibility.Hidden;
 			}
 			AutoShown = false;
+			ErrorMessage = "";
+			OnPropertyChanged(nameof(ErrorMessage));
+			OnPropertyChanged(nameof(ErrorMessageVisibility));
 		}
 
 		public void ShowByOpponentStack()
