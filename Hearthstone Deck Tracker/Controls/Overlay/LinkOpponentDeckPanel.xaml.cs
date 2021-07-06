@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public Visibility DescriptorVisibility => !Config.Instance.InteractedWithLinkOpponentDeck ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility DescriptorVisibility => !Config.Instance.InteractedWithLinkOpponentDeck || !_sessionStartHasInteracted ? Visibility.Visible : Visibility.Collapsed;
 		
 		private string _errorMessage;
 		public string ErrorMessage
@@ -50,6 +50,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private bool _hasLinkedDeck = false;
 
+		private bool _sessionStartHasInteracted = false;
+
 		public string LinkMessage => LinkOpponentDeckStateConverter.GetLinkMessage(_linkOpponentDeckState);
 
 		public Visibility LinkMessageVisibility => (AutoShown && !Config.Instance.InteractedWithLinkOpponentDeck) || _hasLinkedDeck ? Visibility.Visible : Visibility.Collapsed;
@@ -64,6 +66,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public LinkOpponentDeckPanel()
 		{
+			_sessionStartHasInteracted = Config.Instance.InteractedWithLinkOpponentDeck;
 			InitializeComponent();
 		}
 
