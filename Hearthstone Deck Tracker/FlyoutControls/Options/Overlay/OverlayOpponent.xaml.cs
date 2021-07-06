@@ -158,6 +158,22 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 		}
 
+		private void CheckboxEnableLinkOpponentDeckInNonFriendly_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.EnableLinkOpponentDeckInNonFriendly = true;
+			SaveConfig(true);
+		}
+
+		private void CheckboxEnableLinkOpponentDeckInNonFriendly_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.EnableLinkOpponentDeckInNonFriendly = false;
+			SaveConfig(true);
+		}
+
 		private void SliderOpponentOpacity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
 			if(!_initialized)

@@ -44,6 +44,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public bool AutoShown = false;
 
+		public bool IsFriendlyMatch = false;
+
 		private bool _shownByOpponentStack = false;
 
 		private bool _mouseIsOver = false;
@@ -128,8 +130,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public void Show()
 		{
-			LinkOpponentDeckVisibility = Visibility.Visible;
-			OnPropertyChanged(nameof(LinkMessageVisibility));
+			if(IsFriendlyMatch || Config.Instance.EnableLinkOpponentDeckInNonFriendly)
+			{
+				LinkOpponentDeckVisibility = Visibility.Visible;
+				OnPropertyChanged(nameof(LinkMessageVisibility));
+			}
 		}
 
 		private void Border_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)

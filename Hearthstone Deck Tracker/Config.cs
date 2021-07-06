@@ -473,6 +473,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool HighlightDiscarded = false;
 
+		[DefaultValue(false)]
+		public bool EnableLinkOpponentDeckInNonFriendly = false;
+
 		[DefaultValue(true)]
 		public bool HighlightLastDrawn = true;
 
