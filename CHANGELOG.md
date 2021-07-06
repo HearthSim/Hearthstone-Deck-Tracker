@@ -1,3 +1,8 @@
+## **Release v1.14.26 - 2021-07-06**
+**New**:
+- The opponent deck list can now be set in friendly games. This can be enabled for all game modes under `options > overlay > opponent`.
+- Added support for Spanish as a language for the overlay.
+
 ## **Release v1.14.25- 2021-07-01**
 **Updated for Hearthstone 20.8.0**
 
