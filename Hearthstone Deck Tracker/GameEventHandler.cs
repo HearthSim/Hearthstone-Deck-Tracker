@@ -452,8 +452,13 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnGameStart.Execute();
 			LiveDataManager.WatchBoardState();
 
+			Core.Overlay.LinkOpponentDeckDisplay.IsFriendlyMatch = _game.IsFriendlyMatch;
+
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
 				Core.Overlay.ShowBgsTopBar();
+			if(_game.IsFriendlyMatch)
+				if(!Config.Instance.InteractedWithLinkOpponentDeck)
+					Core.Overlay.ShowLinkOpponentDeckDisplay();
 		}
 
 		private void HandleAdventureRestart()

@@ -32,9 +32,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public async void ImportDeck(string url = null)
 		{
 			var result = await ImportDeckFromUrl(url);
-			if (result.WasCancelled)
+			if(result.WasCancelled)
 				return;
-			if (result.Deck != null)
+			if(result.Deck != null)
 				await ShowImportingChoice(result.Deck);
 			else
 				await this.ShowMessageAsync("No deck found", "Could not find a deck on" + Environment.NewLine + result.Url);
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					url = await InputDeckUrl();
 			}
 			if(url == null)
-				return new ImportingResult {WasCancelled = true};
+				return new ImportingResult { WasCancelled = true };
 			var controller = await this.ShowProgressAsync("Loading Deck", "Please wait...");
 			var deck = await DeckImporter.Import(url);
 			if(deck != null && string.IsNullOrEmpty(deck.Url))
@@ -80,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			await controller.CloseAsync();
 			if(deck == null && fromClipboard)
 				return await ImportDeckFromUrl(checkClipboard: false);
-			return new ImportingResult {Deck = deck, Url = url};
+			return new ImportingResult { Deck = deck, Url = url };
 		}
 
 		private async Task<string> InputDeckUrl()
@@ -109,12 +109,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var idString =
 					await
 					this.ShowInputAsync("Import deck",
-					                    "id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD",
-					                    settings);
+										"id:count;id2:count2;... (e.g. EX1_050:2;EX1_556:1;)\nObtained from: \nEXPORT > COPY IDS TO CLIPBOARD",
+										settings);
 				if(string.IsNullOrEmpty(idString))
 					return;
 				var deck = new Deck();
-				foreach(var entry in idString.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries))
+				foreach(var entry in idString.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
 				{
 					var splitEntry = entry.Split(':');
 					if(splitEntry.Length != 2)
@@ -143,7 +143,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void ImportFromFile()
 		{
-			var dialog = new OpenFileDialog {Title = "Select Deck File", DefaultExt = "*.xml;*.txt", Filter = "Deck Files|*.txt;*.xml"};
+			var dialog = new OpenFileDialog { Title = "Select Deck File", DefaultExt = "*.xml;*.txt", Filter = "Deck Files|*.txt;*.xml" };
 			dialog.Multiselect = true;
 			var dialogResult = dialog.ShowDialog();
 			if(dialogResult == true)
@@ -207,7 +207,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Log.Info("Waiting for game...");
 				var result = await this.ShowMessageAsync("Importing arena deck", "Start Hearthstone and enter the 'Arena' screen.",
 					MessageDialogStyle.AffirmativeAndNegative,
-					new MessageDialogs.Settings() {AffirmativeButtonText = "Start Hearthstone", NegativeButtonText = "Cancel"});
+					new MessageDialogs.Settings() { AffirmativeButtonText = "Start Hearthstone", NegativeButtonText = "Cancel" });
 				if(result == MessageDialogResult.Negative)
 					return;
 				HearthstoneRunner.StartHearthstone().Forget();
@@ -272,7 +272,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void ImportArenaDeck(HearthMirror.Objects.Deck deck)
 		{
-			var arenaDeck = new Deck {
+			var arenaDeck = new Deck
+			{
 				Class = Database.GetCardFromId(deck.Hero).PlayerClass,
 				HsId = deck.Id,
 				Cards = new ObservableCollection<Card>(deck.Cards.Select(x =>

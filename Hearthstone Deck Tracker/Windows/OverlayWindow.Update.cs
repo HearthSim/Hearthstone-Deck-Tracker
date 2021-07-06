@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			else
 				FlavorTextVisibility = Collapsed;
 
-			UpdateClickableElements();
+			UpdateInteractiveElements();
 
 			StackPanelPlayer.Opacity = Config.Instance.PlayerOpacity / 100;
 			StackPanelOpponent.Opacity = Config.Instance.OpponentOpacity / 100;
@@ -322,15 +322,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelOpponent.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
 																	Config.Instance.OverlayOpponentScaling / 100);
 			StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
+			LinkOpponentDeckDisplay.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
+																	Config.Instance.OverlayOpponentScaling / 100);
 		}
 
 		public double AutoScaling { get; set; } = 1;
 
 		private void UpdateElementPositions()
 		{
+			var BorderStackPanelOpponentTop = Height * Config.Instance.OpponentDeckTop / 100;
+
 			Canvas.SetTop(BorderStackPanelPlayer, Height * Config.Instance.PlayerDeckTop / 100);
 			Canvas.SetLeft(BorderStackPanelPlayer, Width * Config.Instance.PlayerDeckLeft / 100 - StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
-			Canvas.SetTop(BorderStackPanelOpponent, Height * Config.Instance.OpponentDeckTop / 100);
+			Canvas.SetTop(BorderStackPanelOpponent, BorderStackPanelOpponentTop);
 			Canvas.SetLeft(BorderStackPanelOpponent, Width * Config.Instance.OpponentDeckLeft / 100);
 			Canvas.SetTop(StackPanelSecrets, Height * Config.Instance.SecretsTop / 100);
 			Canvas.SetLeft(StackPanelSecrets, Width * Config.Instance.SecretsLeft / 100);
@@ -350,6 +354,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
+
+			Canvas.SetLeft(LinkOpponentDeckDisplay, Width * Config.Instance.OpponentDeckLeft / 100);
+
+			var OpponentStackVisibleHeight = (CanvasOpponentCount.ActualHeight + CanvasOpponentChance.ActualHeight + ViewBoxOpponent.ActualHeight)* Config.Instance.OverlayOpponentScaling / 100;
+
+			if(BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 10 + LinkOpponentDeckDisplay.ActualHeight < Height)
+			{
+				Canvas.SetTop(LinkOpponentDeckDisplay, BorderStackPanelOpponentTop + OpponentStackVisibleHeight + 10);
+			}
+			else
+			{
+				Canvas.SetTop(LinkOpponentDeckDisplay, BorderStackPanelOpponentTop - (LinkOpponentDeckDisplay.ActualHeight* Config.Instance.OverlayOpponentScaling / 100) - 10);
+			}
 
 			if (Config.Instance.ShowFlavorText)
 			{

@@ -163,9 +163,14 @@
                   Unchecked="CheckboxIncludeCreated_Unchecked" />
         <CheckBox x:Name="CheckboxHighlightDiscarded"
                   Content="{lex:LocText Options_Overlay_Opponent_CheckBox_DiscardedCards}" HorizontalAlignment="Left"
-                  Margin="10,5,0,10" VerticalAlignment="Top"
+                  Margin="10,5,0,0" VerticalAlignment="Top"
                   Checked="CheckboxHighlightDiscarded_Checked"
                   Unchecked="CheckboxHighlightDiscarded_Unchecked" />
+        <CheckBox x:Name="CheckboxEnableLinkOpponentDeckInNonFriendly"
+                  Content="{lex:LocText Options_Overlay_Opponent_CheckBox_LinkOpponentDeck}" HorizontalAlignment="Left"
+                  Margin="10,5,0,10" VerticalAlignment="Top"
+                  Checked="CheckboxEnableLinkOpponentDeckInNonFriendly_Checked"
+                  Unchecked="CheckboxEnableLinkOpponentDeckInNonFriendly_Unchecked" />
         <hearthstoneDeckTracker:ElementSorter x:Name="ElementSorterOpponent" Margin="10,5,10,10"
                                               Height="auto" />
     </StackPanel>

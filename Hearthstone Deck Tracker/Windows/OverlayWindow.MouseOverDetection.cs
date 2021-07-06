@@ -14,6 +14,7 @@ using Rectangle = System.Windows.Shapes.Rectangle;
 using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Utility;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 #endregion
 
@@ -37,6 +38,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int MaxBoardSize = 7;
 		private bool _mouseIsOverLeaderboardIcon = false;
 		private int _nextOpponentLeaderboardPosition = -1;
+		private int _currentlyHoveredIndex = -1;
+		private const int MouseLeaveEventDelay = 200;
 
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
 
@@ -342,13 +345,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return cardWidth;
 		}
 
-		private void UpdateClickableElements()
+		private async void UpdateInteractiveElements()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
 				return;
-			var hoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos, AutoScaling));
-			SetClickthrough(hoveredIndex < 0);
+			var clickableHoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos, AutoScaling));
+			SetClickthrough(clickableHoveredIndex < 0);
+			var hoverableHoveredIndex = _hoverableElements.FindIndex(e => ElementContains(e.element, cursorPos, AutoScaling));
+			if(hoverableHoveredIndex != _currentlyHoveredIndex)
+			{
+				if(_currentlyHoveredIndex != -1)
+				{
+					await Task.Delay(MouseLeaveEventDelay);
+					if(hoverableHoveredIndex != _currentlyHoveredIndex)
+					{
+						_hoverableElements[_currentlyHoveredIndex].OnMouseLeave();
+						_currentlyHoveredIndex = -1;
+					}
+				}
+				if(hoverableHoveredIndex != -1)
+				{
+					_hoverableElements[hoverableHoveredIndex].OnMouseEnter();
+					_currentlyHoveredIndex = hoverableHoveredIndex;
+				}
+			}
 		}
 
 		public bool EllipseContains(Ellipse ellipse, Point location)
