@@ -1,6 +1,7 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
+using Hearthstone_Deck_Tracker.Utility;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -86,10 +87,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				else
 					_linkOpponentDeckState = LinkOpponentDeckState.Error;
 			}
-			catch(Exception ex)
+			catch
 			{
 				_linkOpponentDeckState = LinkOpponentDeckState.Error;
-				ErrorMessage = $"No valid deck code found on clipboard";
+				ErrorMessage = LocUtil.Get("LinkOpponentDeck_NoValidDeckOnClipboardMessage");
 			}
 
 			OnPropertyChanged(nameof(ErrorMessage));
