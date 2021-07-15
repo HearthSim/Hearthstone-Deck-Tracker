@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				{
 					Player.KnownOpponentDeck = deck;
 					e.Handled = true;
-					Core.UpdateOpponentCards();
+					Core.UpdateOpponentCards(true);
 					_linkOpponentDeckState = LinkOpponentDeckState.InKnownDeckMode;
 					_hasLinkedDeck = true;
 					ErrorMessage = "";
