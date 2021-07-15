@@ -203,6 +203,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard Redemption = new MultiIdCard(Collectible.Paladin.Redemption, Collectible.Paladin.RedemptionVanilla);
 				public static readonly MultiIdCard Repentance = new MultiIdCard(Collectible.Paladin.Repentance, Collectible.Paladin.RepentanceVanilla);
 				public static readonly MultiIdCard SacredTrial = new MultiIdCard(Collectible.Paladin.SacredTrial);
+				public static readonly MultiIdCard JudgmentOfJustice = new MultiIdCard(Collectible.Paladin.JudgmentOfJustice);
 			}
 
 			public class Rogue : EnumerateMultiId<Rogue>

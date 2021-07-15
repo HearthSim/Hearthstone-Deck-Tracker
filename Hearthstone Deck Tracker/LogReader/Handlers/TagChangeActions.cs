@@ -86,7 +86,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			if(value != 1)
 				return;
-			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?.SetMinionReborn(id);
 		}
 
 		private void OnTagScriptDataNum1(int id, int value, IGame game, IHsGameState gameState)
@@ -104,8 +103,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 
 			if(entity.CardId != entity.Info.LatestCardId) Log.Warn($"CardId Mismatch {entity.CardId} vs {entity.Info.LatestCardId}");
-			BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, game.GetTurnNumber())?
-				.HeroPowerTriggered(entity.CardId);
 		}
 
 		private void OnCardCopy(int id, int value, IGame game, IHsGameState gameState)
