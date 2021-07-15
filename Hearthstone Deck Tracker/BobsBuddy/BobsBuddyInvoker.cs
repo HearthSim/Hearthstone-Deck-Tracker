@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const string LichKingHeroPowerId = NonCollectible.Neutral.RebornRitesTavernBrawl;
 		private const string LichKingHeroPowerEnchantmentId = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
 		private static bool _removedLichKingHeroPowerFromMinion = false;
-		public static bool CanRemoveLichKing => RemoteConfig.Instance.Data?.BobsBuddy?.CanRemoveLichKing ?? false;
+		public static bool CanRemoveLichKing => true;
 		private bool RunSimulationAfterCombat => _currentOpponentSecrets.Any();
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
