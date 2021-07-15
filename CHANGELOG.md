@@ -1,3 +1,10 @@
+## **Release v1.14.27 - 2021-07-15**
+**Updated for Hearthstone 20.8.2**
+**Fixes**:
+- Fixed issue where the secret Judgement of Justice wouldn't be tracked.
+- Fixed issue where Bob's Buddy would have problems detecting the Lich King hero power.
+- Fixed issue where linking the opponent's deck would occasionally be duplicated.
+
 ## **Release v1.14.26 - 2021-07-06**
 **New**:
 - The opponent deck list can now be set in friendly games. This can be enabled for all game modes under `options > overlay > opponent`.
