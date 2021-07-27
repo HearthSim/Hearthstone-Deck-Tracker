@@ -60,5 +60,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_TheBarrens")]
 		TheBarrens = CardSet.THE_BARRENS,
+
+		[LocDescription("Enum_ArenaRewardPacks_Stormwind")]
+		Stormwind = CardSet.STORMWIND,
 	}
 }

@@ -60,6 +60,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int PacksCountTheBarrens => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.TheBarrens));
 
+		public int PacksCountStormwind => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.Stormwind));
+
 		public int PacksCountTotal => GetFilteredRuns().Sum(x => x.PackCount);
 
 		public double PacksCountAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.PackCount).DefaultIfEmpty(0).Average(), 2);

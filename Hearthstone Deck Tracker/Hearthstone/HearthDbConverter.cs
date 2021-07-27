@@ -55,6 +55,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1635, "Legacy"},
 			{1637, "Core"},
 			{1646, "Vanilla"},
+			{1578, "United in Stormwind"},
 		};
 
 		public static string ConvertClass(CardClass cardClass)

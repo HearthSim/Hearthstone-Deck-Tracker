@@ -64,5 +64,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		LEGACY = 1635,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Classic")]
 		CLASSIC = 1646,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Stormwind")]
+		STROMWIND = 1578,
 	}
 }
