@@ -37,13 +37,19 @@ namespace ResourceGenerator
 			Console.WriteLine("Reading decks from memory...");
 			Console.WriteLine("(this make take a while)");
 			var templateDecks = Reflection.GetTemplateDecks();
-			var whizbangDecks = templateDecks.Where(d => d.SortOrder < 2)
-				.Select(d => new WhizbangDeck
-				{
-					Title = d.Title,
-					Class = (CardClass)d.Class,
-					DeckId = d.DeckId,
-					Cards = d.Cards.GroupBy(c => c).Select(x => new RemoteConfigCard{ DbfId = x.Key, Count = x.Count() }).ToList(),
+			Console.WriteLine("...");
+			var validDecks = templateDecks.Where(d => d.SortOrder < 3).ToList();
+			Console.WriteLine($"Found {validDecks.Count} decks");
+			var whizbangDecks = validDecks
+				.Select(d => {
+					Console.WriteLine($"{d.Class}: {d.Title}, {d.Cards.Count}");
+					return new WhizbangDeck
+					{
+						Title = d.Title,
+						Class = (CardClass)d.Class,
+						DeckId = d.DeckId,
+						Cards = d.Cards.GroupBy(c => c).Select(x => new RemoteConfigCard { DbfId = x.Key, Count = x.Count() }).ToList(),
+					};
 				});
 			using(var sw = new StreamWriter(file))
 				sw.WriteLine(JsonConvert.SerializeObject(whizbangDecks, Formatting.Indented));
