@@ -907,7 +907,7 @@ namespace Hearthstone_Deck_Tracker
 				for(var i = 0; i < 10; i++)
 				{
 					await Task.Delay(500);
-					var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && x.HasTag(BACON_HERO_CAN_BE_DRAFTED));
+					var heroes = Core.Game.Player.PlayerEntities.Where(x => x.IsHero && (x.HasTag(BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(BACON_SKIN)));
 					if(heroes.Count() < 2)
 						continue;
 					await Task.Delay(500);
