@@ -1,3 +1,9 @@
+## **Release v1.15.1 - 2021-08-03**
+**Fixes**:
+- Fixed an issue where HDT did not count games played against an opponent with Maestra as games against a Rogue.
+- Fixed an issue where the battlegrounds overlay would not work with hero skins in some cases.
+- Fixed an issue where questlines were not considered quests.
+
 ## **Release v1.15.0 - 2021-07-27**
 **Updated for Hearthstone 21.0.0**
 
