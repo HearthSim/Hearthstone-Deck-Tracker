@@ -1103,6 +1103,18 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private int GetMaestraDbfid() => HearthDb.Cards.All.TryGetValue(HearthDb.CardIds.NonCollectible.Neutral.MaestraoftheMasquerade_DisguiseEnchantment, out var maestra) ? maestra.DbfId : -1;
+
+		private bool IsMaestraHero(Entity entity) => entity.IsHero && entity.GetTag(GameTag.CREATOR_DBID) == GetMaestraDbfid();
+
+		private void OpponentIsDisguisedRogue()
+		{
+			SetOpponentHero(HearthDb.CardIds.Collectible.Rogue.ValeeraSanguinarHeroHeroSkins);
+			Core.Overlay.SetWinRates();
+			_game.Opponent.PredictUniqueCardInDeck(HearthDb.CardIds.Collectible.Rogue.MaestraOfTheMasquerade, false);
+			Core.UpdateOpponentCards();
+		}
+
 		public void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn)
 		{
 			_game.Player.CreateInPlay(entity, turn);
@@ -1111,6 +1123,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentCreateInPlay(Entity entity, string cardId, int turn)
 		{
+			if(IsMaestraHero(entity))
+				OpponentIsDisguisedRogue();
 			_game.Opponent.CreateInPlay(entity, turn);
 			GameEvents.OnOpponentCreateInPlay.Execute(Database.GetCardFromId(cardId));
 		}
