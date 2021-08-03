@@ -64,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void SetWinRates()
+		public void SetWinRates()
 		{
 			var selectedDeck = DeckList.Instance.ActiveDeck;
 			if (selectedDeck == null)
