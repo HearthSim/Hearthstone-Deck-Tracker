@@ -640,6 +640,25 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								else
 									gameState.GameHandler.HandleOpponentLibramReduction(2);
 								break;
+							case Collectible.Druid.VibrantSquirrel:
+								AddKnownCardId(gameState, NonCollectible.Druid.VibrantSquirrel_AcornToken, 4);
+								break;
+							case Collectible.Mage.FirstFlame:
+								AddKnownCardId(gameState, NonCollectible.Mage.FirstFlame_SecondFlameToken);
+								break;
+							case Collectible.Rogue.Garrote:
+								AddKnownCardId(gameState, NonCollectible.Rogue.Garrote_BleedToken, 3);
+								break;
+							case Collectible.Neutral.MailboxDancer:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+							case Collectible.Neutral.NorthshireFarmer:
+								AddKnownCardId(gameState, target, 3);
+								break;
+							case Collectible.Rogue.LoanShark:
+								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
+								break;
+
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
 									&& !gameState.PlayerUsedHeroPower
