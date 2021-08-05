@@ -21,6 +21,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -77,6 +78,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public OverlayWindow(GameV2 game)
 		{
+			// These need to be set before InitializeComponent is called
+			OverlayExtensions.OnRegisterHitTestVisible += (e, clickable) =>
+			{
+				if(clickable)
+					_clickableElements.Add(e);
+				else
+					_clickableElements.Remove(e);
+			};
+
 			_game = game;
 			InitializeComponent();
 

@@ -355,6 +355,7 @@
     <Compile Include="OpponentDeadForTracker.cs" />
     <Compile Include="Utility\Assets\AssetDownloader.cs" />
     <Compile Include="Utility\Assets\AssetDownloaders.cs" />
+    <Compile Include="Utility\Extensions\OverlayExtensions.cs" />
     <Compile Include="Utility\LinkOpponentDeckState.cs" />
     <Compile Include="Utility\ComboBoxHelper.cs" />
     <Compile Include="Utility\DataLoader.cs" />
