@@ -577,15 +577,22 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			{
 				case PLAY:
 					gameState.LastCardPlayed = id;
-					if(entity.HasTag(MODULAR))
-					{
-						var pos = entity.GetTag(ZONE_POSITION);
-						var neighbour = game.Player?.Board.FirstOrDefault(x => x.GetTag(ZONE_POSITION) == pos + 1);
-						if(neighbour?.Card?.RaceEnum == Race.MECHANICAL)
-							break;
-					}
 					if(controller == game.Player.Id)
+					{
 						gameState.GameHandler.HandlePlayerPlay(entity, cardId, gameState.GetTurnNumber(), currentBlockCardId);
+						var magnetic = false;
+						if(entity.IsMinion)
+						{
+							if(entity.HasTag(MODULAR) && (game.PlayerEntity?.IsCurrentPlayer ?? false))
+							{
+								var pos = entity.GetTag(ZONE_POSITION);
+								var neighbour = game.Player?.Board.FirstOrDefault(x => x.GetTag(ZONE_POSITION) == pos + 1);
+								magnetic = neighbour?.Card?.RaceEnum == Race.MECHANICAL;
+							}
+							if(!magnetic)
+								gameState.GameHandler.HandlePlayerMinionPlayed(entity);
+						}
+					}
 					else if(controller == game.Opponent.Id)
 					{
 						gameState.GameHandler.HandleOpponentPlay(entity, cardId, entity.GetTag(ZONE_POSITION),
