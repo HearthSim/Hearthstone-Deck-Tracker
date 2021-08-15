@@ -630,10 +630,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					else if(controller == game.Opponent.Id)
 					{
 						if(!string.IsNullOrEmpty(entity.CardId))
-						{
-							game.Opponent.InDeckPrecitions.Add(new PredictedCard(entity.CardId, gameState.GetTurnNumber()));
-							Core.UpdateOpponentCards();
-						}
+							gameState.GameHandler.HandleOpponentHandToDeck(entity, cardId, gameState.GetTurnNumber());
 						if(game.OpponentEntity.GetTag(GameTag.MULLIGAN_STATE) == (int)Mulligan.DEALING)
 							gameState.GameHandler.HandleOpponentMulligan(entity, entity.GetTag(ZONE_POSITION));
 					}

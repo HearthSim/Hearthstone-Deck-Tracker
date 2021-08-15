@@ -406,6 +406,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Log(entity);
 		}
 
+		public void HandToDeck(Entity entity, int turn)
+		{
+			entity.Info.Turn = turn;
+			entity.Info.Returned = true;
+			Log(entity);
+		}
+
 		public void BoardToDeck(Entity entity, int turn)
 		{
 			entity.Info.Turn = turn;
