@@ -31,8 +31,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => PlaystateChange(gameState, id, game, value);
 				case CARDTYPE:
 					return () => CardTypeChange(gameState, id, game, value);
-				case LAST_CARD_PLAYED:
-					return () => LastCardPlayedChange(gameState, game, value);
 				case DEFENDING:
 					return () => DefendingChange(gameState, id, game, value);
 				case ATTACKING:
@@ -229,24 +227,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 			Log.Info("Game was already in progress.");
 			gameState.WasInProgress = true;
-		}
-
-		private void LastCardPlayedChange(IHsGameState gameState, IGame game, int value)
-		{
-			gameState.LastCardPlayed = value;
-			if(!(game.PlayerEntity?.IsCurrentPlayer ?? false))
-				return;
-			if(!game.Entities.TryGetValue(value, out var entity) || entity == null || !entity.IsMinion)
-				return;
-			if(entity.HasTag(MODULAR))
-			{
-				var pos = entity.GetTag(ZONE_POSITION);
-				var neighbour = game.Player?.Board.FirstOrDefault(x => x.GetTag(ZONE_POSITION) == pos + 1);
-				if(neighbour?.Card?.Race?.Equals(Race.MECHANICAL.ToString(),
-						StringComparison.CurrentCultureIgnoreCase) ?? false)
-					return;
-			}
-			gameState.GameHandler.HandlePlayerMinionPlayed(entity);
 		}
 
 		private void DefendingChange(IHsGameState gameState, int id, IGame game, int value)
@@ -596,6 +576,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			switch((Zone)value)
 			{
 				case PLAY:
+					gameState.LastCardPlayed = id;
+					if(entity.HasTag(MODULAR))
+					{
+						var pos = entity.GetTag(ZONE_POSITION);
+						var neighbour = game.Player?.Board.FirstOrDefault(x => x.GetTag(ZONE_POSITION) == pos + 1);
+						if(neighbour?.Card?.RaceEnum == Race.MECHANICAL)
+							break;
+					}
 					if(controller == game.Player.Id)
 						gameState.GameHandler.HandlePlayerPlay(entity, cardId, gameState.GetTurnNumber(), currentBlockCardId);
 					else if(controller == game.Opponent.Id)

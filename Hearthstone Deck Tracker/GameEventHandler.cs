@@ -1040,7 +1040,7 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnPlayerPlay.Execute(Database.GetCardFromId(cardId));
 			_game.SecretsManager.HandleCardPlayed(entity, parentBlockCardId);
 			if(entity.IsMinion && entity.IsControlledBy(_game.Player.Id))
-				_game.SecretsManager.HandleMinionPlayed(entity);
+				HandlePlayerMinionPlayed(entity); 
 		}
 
 		public void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn)
