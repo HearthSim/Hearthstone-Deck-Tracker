@@ -628,7 +628,15 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					if(controller == game.Player.Id)
 						gameState.GameHandler.HandlePlayerMulligan(entity, cardId);
 					else if(controller == game.Opponent.Id)
-						gameState.GameHandler.HandleOpponentMulligan(entity, entity.GetTag(ZONE_POSITION));
+					{
+						if(!string.IsNullOrEmpty(entity.CardId))
+						{
+							game.Opponent.InDeckPrecitions.Add(new PredictedCard(entity.CardId, gameState.GetTurnNumber()));
+							Core.UpdateOpponentCards();
+						}
+						if(game.OpponentEntity.GetTag(GameTag.MULLIGAN_STATE) == (int)Mulligan.DEALING)
+							gameState.GameHandler.HandleOpponentMulligan(entity, entity.GetTag(ZONE_POSITION));
+					}
 					break;
 				default:
 					Log.Warn($"unhandled zone change (id={id}): {prevValue} -> {value}");
