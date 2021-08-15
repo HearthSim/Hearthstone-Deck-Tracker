@@ -301,7 +301,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 						var damageDealt = EntityDamageDealtHistory[dealer.Id][target.Id];
 						await Game.GameTime.WaitForDuration(100);
 
-						if(damageDealt >= 3 && dealer.Health > 0)
+						if(damageDealt >= 3 && dealer.Health > 0 && (Zone)dealer.GetTag(GameTag.ZONE) != Zone.GRAVEYARD)
 							Exclude(Paladin.Reckoning);
 					}
 				}
