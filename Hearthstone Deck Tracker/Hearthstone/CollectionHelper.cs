@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		{
 			if(DateTime.Now - _lastUpdate < TimeSpan.FromSeconds(2) || key == null)
 				return false;
-			Log.Debug("Updating collection...");
+			Log.Info("Updating collection...");
 			_lastUpdate = DateTime.Now;
 			var data = await Task.Run(() => new
 			{
@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				Collections[key] = new Collection(key.Item1, key.Item2, data.BattleTag, data.Collection);
 				OnCollectionChanged?.Invoke();
-				Log.Debug("Updated collection!");
+				Log.Info("Updated collection!");
 				return true;
 			}
 			if(retry)
@@ -76,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				if(_lastUsedKey == null && retry)
 				{
-					Log.Debug("User not found, retrying...");
+					Log.Info("User not found, retrying...");
 					await Task.Delay(3000);
 					return await GetCurrentKey(false);
 				}
