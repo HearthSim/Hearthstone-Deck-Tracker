@@ -43,6 +43,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public static readonly ActionList OnOpponentMulligan = new ActionList();
 		public static readonly ActionList<Card> OnOpponentDeckDiscard = new ActionList<Card>();
 		public static readonly ActionList<Card> OnOpponentPlayToDeck = new ActionList<Card>();
+		public static readonly ActionList<Card> OnOpponentHandToDeck = new ActionList<Card>();
 		public static readonly ActionList<Card> OnOpponentPlayToHand = new ActionList<Card>();
 		public static readonly ActionList<Card> OnOpponentPlayToGraveyard = new ActionList<Card>();
 		public static readonly ActionList<Card> OnOpponentSecretTriggered = new ActionList<Card>();
