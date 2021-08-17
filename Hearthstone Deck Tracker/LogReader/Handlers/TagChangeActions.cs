@@ -624,9 +624,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						gameState.GameHandler.HandlePlayerMulligan(entity, cardId);
 					else if(controller == game.Opponent.Id)
 					{
-						if(!string.IsNullOrEmpty(entity.CardId))
+						if(!string.IsNullOrEmpty(cardId))
 							gameState.GameHandler.HandleOpponentHandToDeck(entity, cardId, gameState.GetTurnNumber());
-						if(game.OpponentEntity.GetTag(GameTag.MULLIGAN_STATE) == (int)Mulligan.DEALING)
+						if(game.OpponentEntity != null && game.OpponentEntity.GetTag(MULLIGAN_STATE) == (int)Mulligan.DEALING)
 							gameState.GameHandler.HandleOpponentMulligan(entity, entity.GetTag(ZONE_POSITION));
 					}
 					break;
