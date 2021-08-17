@@ -1,3 +1,10 @@
+## **Release v1.15.2 - 2021-08-17**
+**Updated for Hearthstone 21.0.3**
+
+**Fixes**:
+- Fixed various issues related to tracking secrets.
+- Fixed an issue where tradable cards were not tracked correctly.
+
 ## **Release v1.15.1 - 2021-08-03**
 **Fixes**:
 - Fixed an issue where HDT did not count games played against an opponent with Maestra as games against a Rogue.
