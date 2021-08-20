@@ -169,7 +169,7 @@ namespace Hearthstone_Deck_Tracker
 				Helper.GetCurrentVersion(),
 				newUser,
 				HSReplayNetOAuth.IsFullyAuthenticated,
-				HSReplayNetOAuth.AccountData?.IsPremium?.Equals("true", StringComparison.InvariantCultureIgnoreCase) ?? false,
+				HSReplayNetOAuth.AccountData?.IsPremium ?? false,
 				(int)(DateTime.UtcNow - _startUpTime).TotalSeconds,
 				PluginManager.Instance.Plugins.Count
 			);
