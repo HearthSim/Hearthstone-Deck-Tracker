@@ -38,7 +38,7 @@ namespace ResourceGenerator
 			Console.WriteLine("(this make take a while)");
 			var templateDecks = Reflection.GetTemplateDecks();
 			Console.WriteLine("...");
-			var validDecks = templateDecks.Where(d => d.SortOrder < 3).ToList();
+			var validDecks = templateDecks.Where(d => d.SortOrder > 1).ToList();
 			Console.WriteLine($"Found {validDecks.Count} decks");
 			var whizbangDecks = validDecks
 				.Select(d => {
