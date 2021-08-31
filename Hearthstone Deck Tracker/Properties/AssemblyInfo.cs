@@ -57,8 +57,8 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.15.2")]
-[assembly: AssemblyFileVersion("1.15.2")]
+[assembly: AssemblyVersion("1.15.3")]
+[assembly: AssemblyFileVersion("1.15.3")]
 [assembly: NeutralResourcesLanguage("en")]
 
 [assembly: AssemblyMetadata("SquirrelAwareVersion", "1")]
