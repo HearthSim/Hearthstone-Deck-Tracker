@@ -137,6 +137,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 				[JsonProperty("log_lines_kept")]
 				public int LogLinesKept { get; set; }
+
+				[JsonProperty("data_quality_warning")]
+				public bool DataQualityWarning { get; set; }
 			}
 
 			internal class UpdateData

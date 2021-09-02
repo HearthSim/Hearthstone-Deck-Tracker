@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -160,10 +161,17 @@
                         <Grid Margin="5">
                             <TextBlock MinHeight="20" HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Background="Transparent" Foreground="White" FontSize="14" Margin="25,0" TextWrapping="Wrap">
-                                    <Rectangle Width="16" Height="16" Style="{StaticResource StatusBarIconStyle}" Visibility="{Binding WarningIconVisibility}" MouseDown="Settings_MouseDown" Margin="0,0,0,-2">
+                                    <Rectangle Width="16" Height="16" Style="{StaticResource StatusBarIconStyle}" Visibility="{Binding WarningIconVisibility}" Margin="0,0,0,-2"
+                                               ToolTipService.IsEnabled="{Binding WarningIconTooltipEnabled}"
+                                               ToolTipService.InitialShowDelay="0">
                                         <Rectangle.Fill>
                                             <VisualBrush Visual="{StaticResource appbar_warning}" />
                                         </Rectangle.Fill>
+                                        <Rectangle.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Text="{Binding WarningIconTextTooltip}"/>
+                                            </ToolTip>
+                                        </Rectangle.ToolTip>
                                     </Rectangle>
                                    <Run Text="{Binding StatusMessage, Mode=OneWay}"/>
                             </TextBlock>

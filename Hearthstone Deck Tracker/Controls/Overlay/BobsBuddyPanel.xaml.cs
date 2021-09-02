@@ -1,5 +1,6 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			InitializeComponent();
 			ResetDisplays();
+
+			WarningState = RemoteConfig.Instance.Data?.BobsBuddy.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
+			RemoteConfig.Instance.Loaded += cfg => WarningState = cfg?.BobsBuddy.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
 		}
 
 		private string _winRateDisplay;
@@ -125,6 +129,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		private BobsBuddyWarningState _warningState = BobsBuddyWarningState.None;
+		public BobsBuddyWarningState WarningState
+		{
+			get => _warningState;
+			private set
+			{
+				if(_warningState == value)
+					return;
+				_warningState = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(WarningIconVisibility));
+				OnPropertyChanged(nameof(WarningIconTextTooltip));
+				OnPropertyChanged(nameof(WarningIconTooltipEnabled));
+			}
+		}
+
 		private List<int> _lastCombatPossibilities;
 
 		private int _lastCombatResult = 0;
@@ -133,7 +153,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public string StatusMessage => StatusMessageConverter.GetStatusMessage(State, ErrorState, _showingResults);
 
-		public Visibility WarningIconVisibility => ErrorState == BobsBuddyErrorState.None ? Visibility.Collapsed : Visibility.Visible;
+		public Visibility WarningIconVisibility => ErrorState == BobsBuddyErrorState.None && WarningState == BobsBuddyWarningState.None ? Visibility.Collapsed : Visibility.Visible;
+
+		public string WarningIconTextTooltip => WarningState == BobsBuddyWarningState.DataQuality ? LocUtil.Get("BobsBuddyWarningTooltip_DataQuality") : null;
+		public bool WarningIconTooltipEnabled => WarningIconTextTooltip != null;
+
 
 		private Visibility _spinnerVisibility;
 		public Visibility SpinnerVisibility

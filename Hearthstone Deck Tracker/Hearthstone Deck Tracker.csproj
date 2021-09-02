@@ -229,6 +229,7 @@
     <Compile Include="API\PredamageInfo.cs" />
     <Compile Include="BobsBuddy\BobsBuddyInvoker.cs" />
     <Compile Include="BobsBuddy\BobsBuddyUtils.cs" />
+    <Compile Include="BobsBuddy\BobsBuddyWarningState.cs" />
     <Compile Include="BobsBuddy\CombatResult.cs" />
     <Compile Include="BobsBuddy\LethalResult.cs" />
     <Compile Include="BobsBuddy\MinionHeroPowerTrigger.cs" />
