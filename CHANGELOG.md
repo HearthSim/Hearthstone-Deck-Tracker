@@ -1,3 +1,7 @@
+## **Release v1.15.4 - 2021-09-02**
+**Bob's Buddy**
+- Added a data quality warning about simulation results. We are actively working on improvements.
+
 ## **Release v1.15.3 - 2021-08-31**
 **Updated for Hearthstone 21.2.0**
 
