@@ -187,9 +187,6 @@
                     <StackPanel Margin="10">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{lex:Loc BobsBuddyPanel_Info_Title}" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                            <Border Background="{DynamicResource AccentBaseColorBrush}" VerticalAlignment="Center" Margin="5,0,0,0" CornerRadius="3">
-                                <TextBlock Text="{lex:LocTextUpper Label_Beta}" Foreground="White" FontSize="12" FontWeight="Bold" Margin="4,1,4,2"/>
-                            </Border>
                         </StackPanel>
                         <TextBlock Foreground="White" FontSize="14" TextWrapping="Wrap">
                         <Run Text="{lex:Loc BobsBuddyPanel_Info_Description}"/>
