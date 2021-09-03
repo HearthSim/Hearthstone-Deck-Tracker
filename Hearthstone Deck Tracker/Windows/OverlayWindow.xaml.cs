@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
 
-		Regex BattlegroundsHeroRegex = new Regex(@"TB_BaconShop_HERO_\d\d");
+		Regex BattlegroundsHeroRegex = new Regex(@"(TB_BaconShop_HERO_\d\d)|(BG20_HERO_\d\d)");
 
 		public OverlayWindow(GameV2 game)
 		{
@@ -427,10 +427,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(_game.CurrentMode != Enums.Hearthstone.Mode.HUB)
 				HideExperienceCounter();
 		}
-
+	
 		internal void UpdateOpponentDeadForTurns(List<int> turns)
 		{
-			var index = _game.Entities.Values.Where(x => x.IsHero && x.Info.Turn == 0 && BattlegroundsHeroRegex.IsMatch(x.CardId) && !x.Info.Discarded).Count() - 1;
+			var presentHeroes = _game.Entities.Values.Where(x => x.IsHero && BattlegroundsHeroRegex.IsMatch(x.CardId) && (x.IsInPlay || x.IsInSetAside)).ToList();
+			var index = presentHeroes.Count() - 1;
 			foreach(var text in _leaderboardDeadForText)
 				text.Text = "";
 			foreach(var text in _leaderboardDeadForTurnText)
