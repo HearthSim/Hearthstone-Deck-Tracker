@@ -345,8 +345,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			input.availableRaces = BattlegroundsUtils.GetAvailableRaces(_currentGameId).ToList();
 
-			var numHeroesAlive = _game.Entities.Values.Count(x => x.IsHero && x.Health > 0 && x.IsInPlay);
-			input.HeroHasDied = numHeroesAlive < 8;
+			var livingHeroes = _game.Entities.Values.Where(x => x.IsHero && x.Health > 0 && !x.IsInZone(Zone.REMOVEDFROMGAME) && x.HasTag(GameTag.PLAYER_TECH_LEVEL) && (x.IsControlledBy(_game.Player.Id) || !x.IsInPlay));
+			input.HeroHasDied = livingHeroes.Count() < 8;
 
 			var opponentHero = _game.Opponent.Board.FirstOrDefault(x => x.IsHero);
 			var playerHero = _game.Player.Board.FirstOrDefault(x => x.IsHero);
