@@ -1,3 +1,7 @@
+## **Release v1.15.7 - 2021-09-07**
+**Fixes**
+- Improve Bob's Buddy preformance.
+
 ## **Release v1.15.6 - 2021-09-03**
 **Fixes**
 - Fix other accuracy issues with Bob's Buddy.
