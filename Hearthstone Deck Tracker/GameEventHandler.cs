@@ -1234,7 +1234,7 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnOpponentHandDiscard.Execute(Database.GetCardFromId(cardId));
 		}
 
-		public void HandleOpponentDraw(Entity entity, int turn, int? drawerId)
+		public void HandleOpponentDraw(Entity entity, int turn, string cardId, int? drawerId)
 		{
 			entity.Info.DrawerId = drawerId;
 			_game.Opponent.Draw(entity, turn);
@@ -1303,7 +1303,8 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentHandToDeck(Entity entity, string cardId, int turn)
 		{
-			_game.Opponent.PredictUniqueCardInDeck(cardId, false);
+			if(!string.IsNullOrEmpty(cardId) && entity.HasTag(GameTag.TRADEABLE)) 
+				_game.Opponent.PredictUniqueCardInDeck(cardId, false);
 			_game.Opponent.HandToDeck(entity, turn);
 			Core.UpdateOpponentCards();
 			GameEvents.OnOpponentHandToDeck.Execute(Database.GetCardFromId(cardId));
@@ -1366,7 +1367,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerHeroPower(string cardId, int turn) => HandlePlayerHeroPower(cardId, turn);
 		void IGameHandler.HandleOpponentPlay(Entity entity, string cardId, int @from, int turn) => HandleOpponentPlay(entity, cardId, @from, turn);
 		void IGameHandler.HandleOpponentHandDiscard(Entity entity, string cardId, int @from, int turn) => HandleOpponentHandDiscard(entity, cardId, @from, turn);
-		void IGameHandler.HandleOpponentDraw(Entity entity, int turn, int? drawerId) => HandleOpponentDraw(entity, turn, drawerId);
+		void IGameHandler.HandleOpponentDraw(Entity entity, int turn, string cardId, int? drawerId) => HandleOpponentDraw(entity, turn, cardId, drawerId);
 		void IGameHandler.HandleOpponentMulligan(Entity entity, int @from) => HandleOpponentMulligan(entity, @from);
 		void IGameHandler.HandleOpponentGet(Entity entity, int turn, int id) => HandleOpponentGet(entity, turn, id);
 		void IGameHandler.HandleOpponentSecretPlayed(Entity entity, string cardId, int @from, int turn, Zone fromZone, int otherId) => HandleOpponentSecretPlayed(entity, cardId, @from, turn, fromZone, otherId);
