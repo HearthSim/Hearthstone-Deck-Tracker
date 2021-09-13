@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HearthDb.Enums;
 using HearthMirror.Objects;
@@ -32,6 +33,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BrawlInfo _brawlInfo;
 		private BattlegroundRatingInfo _battlegroundsRatingInfo;
 		private BattlegroundsBoardState _battlegroundsBoardState;
+		Regex BattlegroundsHeroRegex = new Regex(@"(TB_BaconShop_HERO_\d\d)|(BG20_HERO_\d\d)");
 
 		public GameV2()
 		{
@@ -294,6 +296,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return 0;
 			return (GameEntity?.GetTag(GameTag.TURN) + 1) / 2 ?? 0;
 		}
+
+		//We do count+1 because if you're playing against an opponent it will count their hero in play and the hero in the hero list, so instead we only count the heroes in the hero list and add 1 for the player hero.
+		public int BattlegroundsHeroCount() => Entities.Values.Where(x => x.IsHero && BattlegroundsHeroRegex.IsMatch(x.CardId) && x.IsInSetAside).Count()+1;
+
 
 		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState.SnapshotCurrentBoard();
 
