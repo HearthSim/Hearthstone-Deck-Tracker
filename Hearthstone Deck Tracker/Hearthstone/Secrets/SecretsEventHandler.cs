@@ -58,11 +58,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			var exclude = new List<MultiIdCard>();
 
-			exclude.Add(Paladin.JudgmentOfJustice);
-
 			var freeSpaceOnBoard = FreeSpaceOnBoard;
 			if(freeSpaceOnBoard)
 				exclude.Add(Paladin.NobleSacrifice);
+
+			if(attacker.IsHero)
+			{
+
+			}
+			else
+			{
+				exclude.Add(Paladin.JudgmentOfJustice);
+			}
 
 			if(defender.IsHero)
 			{
