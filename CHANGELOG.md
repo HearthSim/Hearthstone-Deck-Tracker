@@ -1,3 +1,9 @@
+## **Release v1.15.8 - 2021-09-14**
+**Fixes**
+- Improve Bob's Buddy preformance.
+- Fix issue where Judgement of Justice would be removed from the secret list after the player's hero attacked.
+- Fix issue where HDT would display when an opponent drew Pack Mule in their mulligan.
+
 ## **Release v1.15.7 - 2021-09-07**
 **Fixes**
 - Improve Bob's Buddy preformance.
