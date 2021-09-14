@@ -654,7 +654,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							drawerId = game.Entities.FirstOrDefault(x => x.Value.CardId == drawerCardId).Value?.Id;
 						}
-						gameState.GameHandler.HandleOpponentDraw(entity, gameState.GetTurnNumber(), drawerId);
+						gameState.GameHandler.HandleOpponentDraw(entity, gameState.GetTurnNumber(), cardId, drawerId);
 					}
 					break;
 				case SETASIDE:
