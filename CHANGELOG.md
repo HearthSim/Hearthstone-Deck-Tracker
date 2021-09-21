@@ -1,3 +1,8 @@
+## **Release v1.15.9 - 2021-09-21**
+**Updated for Hearthstone 21.3.0**
+**Fixes**
+- Improve Bob's Buddy preformance.
+
 ## **Release v1.15.8 - 2021-09-14**
 **Fixes**
 - Improve Bob's Buddy preformance.
