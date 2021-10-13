@@ -235,6 +235,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public string MercenariesBountyRunId { get; set; }
 
+		public int MercenariesBountyRunTurnsTaken { get; set; }
+
+		public int MercenariesBountyRunCompletedNodes { get; set; }
+
 		public HashSet<Race> BattlegroundsRaces { get; set; }
 
 		public int OpponentLegendRank
@@ -579,6 +583,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeMercenariesRating() => MercenariesRating > 0;
 		public bool ShouldSerializeMercenariesRatingAfter() => MercenariesRatingAfter > 0;
 		public bool ShouldSerializeMercenariesBountyRunId() => !string.IsNullOrEmpty(MercenariesBountyRunId);
+		public bool ShouldSerializeMercenariesBountyRunTurnsTaken() => MercenariesBountyRunTurnsTaken > 0;
+		public bool ShouldSerializeMercenariesBountyRunCompletedNodes() => MercenariesBountyRunCompletedNodes > 0;
 		public bool ShouldSerializeStarLevel() => StarLevel > 0;
 		public bool ShouldSerializeStarLevelAfter() => StarLevelAfter > 0;
 		public bool ShouldSerializeOpponentStarLevel() => OpponentStarLevel > 0;

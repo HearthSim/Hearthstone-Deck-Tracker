@@ -149,7 +149,8 @@ namespace Hearthstone_Deck_Tracker
 						await UpdatePostGameBattlegroundsRating(gs);
 						break;
 					case Mercenaries:
-						await UpdatePostGameMercenariesRating(gs);
+						if(gs.MercenariesRating != 0)
+							await UpdatePostGameMercenariesRating(gs);
 						break;
 				}
 			}
@@ -590,7 +591,11 @@ namespace Hearthstone_Deck_Tracker
 					if(_game.IsMercenariesPvpMatch && _game.MercenariesRatingInfo != null)
 						_game.CurrentGameStats.MercenariesRating = _game.MercenariesRatingInfo.Rating;
 					if(_game.IsMercenariesPveMatch)
+					{
 						_game.CurrentGameStats.MercenariesBountyRunId = _game.MercenariesMapInfo?.Seed.ToString();
+						_game.CurrentGameStats.MercenariesBountyRunTurnsTaken = (int)(_game.MercenariesMapInfo?.TurnsTaken ?? 0);
+						_game.CurrentGameStats.MercenariesBountyRunCompletedNodes = _game.MercenariesMapInfo?.CompletedNodes ?? 0;
+					}
 				}
 				_game.CurrentGameStats.GameType = _game.CurrentGameType;
 				_game.CurrentGameStats.ServerInfo = _game.MetaData.ServerInfo;

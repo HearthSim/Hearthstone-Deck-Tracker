@@ -70,6 +70,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				metaData.LeagueId = game.LeagueId;
 			if(game?.GameMode == GameMode.Battlegrounds)
 				metaData.BattlegroundsRaces = game.BattlegroundsRaces?.Cast<int>().OrderBy(x => x).ToArray();
+			if(game?.GameMode == GameMode.Mercenaries && !string.IsNullOrEmpty(game?.MercenariesBountyRunId))
+			{
+				metaData.MercenariesBountyRunId = game.MercenariesBountyRunId;
+				metaData.MercenariesBountyRunTurnsTaken = game.MercenariesBountyRunTurnsTaken;
+				metaData.MercenariesBountyRunCompletedNodes = game.MercenariesBountyRunCompletedNodes;
+			}
 			return metaData;
 		}
 
@@ -128,8 +134,6 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					friendly.MercenariesRating = game.MercenariesRating;
 				if(game.MercenariesRatingAfter > 0)
 					friendly.MercenariesRatingAfter = game.MercenariesRatingAfter;
-				if(!string.IsNullOrEmpty(game.MercenariesBountyRunId))
-					friendly.MercenariesBountyRunId = game.MercenariesBountyRunId;
 			}
 			else if(game.PlayerCards.Sum(x => x.Count) == 30 || game.IsPVPDungeonMatch || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
 			{
