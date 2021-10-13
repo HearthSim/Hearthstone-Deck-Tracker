@@ -203,7 +203,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				FlavorTextVisibility = Visibility.Collapsed;
 				return;
 			}
-			if(_game.IsMercenariesMatch && _entityMouseOver.HasCurrent && _game.GameEntity.GetTag(GameTag.STEP) == (int)Step.MAIN_COMBAT)
+			if(_game.IsMercenariesMatch && _entityMouseOver.HasCurrent && _game.GameEntity?.GetTag(GameTag.STEP) == (int)Step.MAIN_COMBAT)
 			{
 				_entityMouseOver.Clear();
 				ShowMercHover(null);
@@ -224,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					{
 						if(_game.IsMercenariesMatch)
 						{
-							if(_game.GameEntity.GetTag(GameTag.STEP) != (int)Step.MAIN_COMBAT)
+							if(_game.GameEntity?.GetTag(GameTag.STEP) != (int)Step.MAIN_COMBAT)
 								ShowMercHover(entity);
 						}
 						else
