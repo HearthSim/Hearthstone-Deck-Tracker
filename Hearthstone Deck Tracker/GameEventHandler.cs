@@ -138,11 +138,21 @@ namespace Hearthstone_Deck_Tracker
 
 			var complete = await LogIsComplete();
 
-			if(complete && gs.GameMode == Ranked)
-				await UpdatePostGameRanks(gs);
-
-			if(complete && gs.GameMode == Battlegrounds)
-				await UpdatePostGameRating(gs);
+			if(complete)
+			{
+				switch(gs.GameMode)
+				{
+					case Ranked:
+						await UpdatePostGameRanks(gs);
+						break;
+					case Battlegrounds:
+						await UpdatePostGameBattlegroundsRating(gs);
+						break;
+					case Mercenaries:
+						await UpdatePostGameMercenariesRating(gs);
+						break;
+				}
+			}
 
 			var powerLog = new List<string>();
 			foreach(var stored in _game.StoredPowerLogs.Where(x => x.Item1 == _game.MetaData.ServerInfo.GameHandle))
@@ -202,7 +212,7 @@ namespace Hearthstone_Deck_Tracker
 			gs.LegendRankAfter = data.LegendRank;
 		}
 
-		private async Task UpdatePostGameRating(GameStats gs)
+		private async Task UpdatePostGameBattlegroundsRating(GameStats gs)
 		{
 			var data = await Helper.RetryWhileNull(Reflection.GetBaconRatingChangeData);
 			if(data == null)
@@ -211,6 +221,17 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			gs.BattlegroundsRatingAfter = data.NewRating;
+		}
+
+		private async Task UpdatePostGameMercenariesRating(GameStats gs)
+		{
+			var data = await Helper.RetryWhileNull(Reflection.GetMercenariesRatingChangeData);
+			if(data == null)
+			{
+				Log.Warn("Could not get mercenaries rating");
+				return;
+			}
+			gs.MercenariesRatingAfter = data.NewRating;
 		}
 
 		private bool LogContainsStateComplete
