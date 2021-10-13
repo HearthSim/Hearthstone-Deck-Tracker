@@ -47,6 +47,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		private int _rank;
 		private int _starLevel;
 		private int _battlegroundsRating;
+		private int _mercenariesRating;
 		private int _stars;
 		private int _legendRank;
 		private Region _region;
@@ -136,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			get { return _note; }
 			set
 			{
-				_note = value; 
+				_note = value;
 				OnPropertyChanged();
 			}
 		}
@@ -220,6 +221,20 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int BattlegroundsRatingAfter { get; set; }
 
+		public int MercenariesRating
+		{
+			get { return _mercenariesRating; }
+			set
+			{
+				_mercenariesRating = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public int MercenariesRatingAfter { get; set; }
+
+		public string MercenariesBountyRunId { get; set; }
+
 		public HashSet<Race> BattlegroundsRaces { get; set; }
 
 		public int OpponentLegendRank
@@ -242,7 +257,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public int StarMultiplier { get; set; }
 
 		public int? HearthstoneBuild { get; set; }
-		
+
 		public int PlayerCardbackId { get; set; }
 
 		public int OpponentCardbackId { get; set; }
@@ -329,7 +344,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			get
 			{
-				if (!string.IsNullOrEmpty(_deckNameAndVersion))
+				if(!string.IsNullOrEmpty(_deckNameAndVersion))
 					return _deckNameAndVersion;
 				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == DeckId)?.GetVersion(PlayerDeckVersion);
 				_deckNameAndVersion = deck?.NameAndVersion ?? "none";
@@ -380,7 +395,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public string PlayerDeckVersionString => PlayerDeckVersion != null ? PlayerDeckVersion.ToString("v{M}.{m}") : SerializableVersion.Default.ToString("v{M}.{m}");
 
 		[XmlIgnore]
-		public ToolTip ResultToolTip => new ToolTip {Content = "conceded", Visibility = (WasConceded ? Visibility.Visible : Visibility.Hidden)};
+		public ToolTip ResultToolTip => new ToolTip { Content = "conceded", Visibility = (WasConceded ? Visibility.Visible : Visibility.Hidden) };
 
 		[XmlIgnore]
 		public bool HasReplayFile => ReplayFile != null && File.Exists(Path.Combine(Config.Instance.ReplayDir, ReplayFile));
@@ -486,7 +501,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public void SetPlayerCards(HearthMirror.Objects.Deck deck, List<Card> revealedCards)
 		{
-			var cards = deck?.Cards.Select(c => new Card {Id = c.Id, Count = c.Count});
+			var cards = deck?.Cards.Select(c => new Card { Id = c.Id, Count = c.Count });
 			SetPlayerCards(cards, revealedCards);
 		}
 
@@ -561,6 +576,9 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeBrawlLosses() => BrawlLosses > 0;
 		public bool ShouldSerializeBattlegroundsRating() => BattlegroundsRating > 0;
 		public bool ShouldSerializeBattlegroundsRatingAfter() => BattlegroundsRatingAfter > 0;
+		public bool ShouldSerializeMercenariesRating() => MercenariesRating > 0;
+		public bool ShouldSerializeMercenariesRatingAfter() => MercenariesRatingAfter > 0;
+		public bool ShouldSerializeMercenariesBountyRunId() => !string.IsNullOrEmpty(MercenariesBountyRunId);
 		public bool ShouldSerializeStarLevel() => StarLevel > 0;
 		public bool ShouldSerializeStarLevelAfter() => StarLevelAfter > 0;
 		public bool ShouldSerializeOpponentStarLevel() => OpponentStarLevel > 0;

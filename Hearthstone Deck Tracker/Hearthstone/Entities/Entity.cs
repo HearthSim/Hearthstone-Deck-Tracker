@@ -135,7 +135,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool IsInZone(Zone zone) => HasTag(GameTag.ZONE) && GetTag(GameTag.ZONE) == (int)zone;
 
-		public bool IsControlledBy(int controllerId) => HasTag(GameTag.CONTROLLER) && GetTag(GameTag.CONTROLLER) == controllerId;
+		public bool IsControlledBy(int controllerId)
+		{
+			var lettuceController = GetTag(GameTag.LETTUCE_CONTROLLER);
+			if(lettuceController > 0)
+				return lettuceController == controllerId;
+			return HasTag(GameTag.CONTROLLER) && GetTag(GameTag.CONTROLLER) == controllerId;
+		}
 
 		public bool IsAttachedTo(int entityId) => GetTag(GameTag.ATTACHED) == entityId;
 

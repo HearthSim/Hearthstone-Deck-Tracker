@@ -68,7 +68,7 @@ namespace ResourceGenerator
 
 			foreach(var card in Cards.All)
 			{
-				if(card.Value.Set == CardSet.CHEAT || card.Value.Set == CardSet.SLUSH)
+				if(card.Value.Set == CardSet.CHEAT || card.Value.Set == CardSet.SLUSH || card.Value.Set == CardSet.LETTUCE || card.Value.Set == CardSet.MERCENARIES_DEV)
 					continue;
 				var key = card.Value.Set + (card.Value.Collectible ? "" : "_NC");
 				if(!dict.ContainsKey(key))

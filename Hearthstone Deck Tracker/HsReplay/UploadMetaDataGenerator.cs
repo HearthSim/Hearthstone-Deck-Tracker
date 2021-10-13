@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			var players = GetPlayerInfo(game);
 			if (players != null)
 			{
-				if (game.GameMode == GameMode.Battlegrounds)
+				if (game.GameMode == GameMode.Battlegrounds || game.GameMode == GameMode.Mercenaries)
 					metaData.Players = players;
 				else
 				{
@@ -121,6 +121,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					friendly.BattlegroundsRating = game.BattlegroundsRating;
 				if(game.BattlegroundsRatingAfter > 0)
 					friendly.BattlegroundsRatingAfter = game.BattlegroundsRatingAfter;
+			}
+			else if(game.GameMode == GameMode.Mercenaries)
+			{
+				if(game.MercenariesRating > 0)
+					friendly.MercenariesRating = game.MercenariesRating;
+				if(game.MercenariesRatingAfter > 0)
+					friendly.MercenariesRatingAfter = game.MercenariesRatingAfter;
+				if(!string.IsNullOrEmpty(game.MercenariesBountyRunId))
+					friendly.MercenariesBountyRunId = game.MercenariesBountyRunId;
 			}
 			else if(game.PlayerCards.Sum(x => x.Count) == 30 || game.IsPVPDungeonMatch || game.IsDungeonMatch == true && game.DeckId != Guid.Empty)
 			{

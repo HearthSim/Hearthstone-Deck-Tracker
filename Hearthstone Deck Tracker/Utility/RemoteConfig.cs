@@ -44,6 +44,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			[JsonProperty("update_info")]
 			public UpdateData UpdateInfo { get; set; }
 
+			[JsonProperty("mercenary_abilities")]
+			public List<Mercenary> MercenaryAbilities { get; set; }
+
 			internal class NewsData
 			{
 				[JsonProperty("id")]
@@ -146,6 +149,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 			{
 				[JsonProperty("image_update_hearthstone_version")]
 				public int Version { get; set; }
+			}
+
+			internal class Mercenary
+			{
+				[JsonProperty("card_id")]
+				public string CardId { get; set; }
+
+				[JsonProperty("skins")]
+				public List<string> Skins { get; set; }
+
+				[JsonProperty("abilities")]
+				public List<string> Abilities { get; set; }
 			}
 		}
 	}

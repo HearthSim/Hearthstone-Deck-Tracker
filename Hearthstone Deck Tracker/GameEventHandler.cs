@@ -70,7 +70,8 @@ namespace Hearthstone_Deck_Tracker
 											 || _game.CurrentGameMode == Casual && Config.Instance.HsReplayUploadCasual
 											 || _game.CurrentGameMode == Spectator && Config.Instance.HsReplayUploadSpectator
 											 || _game.IsBattlegroundsMatch && Config.Instance.HsReplayUploadBattlegrounds
-											 || _game.CurrentGameMode == Duels && Config.Instance.HsReplayUploadDuels;
+											 || _game.CurrentGameMode == Duels && Config.Instance.HsReplayUploadDuels
+											 || _game.IsMercenariesMatch && Config.Instance.HsReplayUploadMercenaries;
 
 		public void HandleInMenu()
 		{
@@ -563,6 +564,13 @@ namespace Hearthstone_Deck_Tracker
 				{
 					_game.CurrentGameStats.BattlegroundsRating = _game.BattlegroundsRatingInfo.Rating;
 				}
+				else if (_game.IsMercenariesMatch)
+				{
+					if(_game.IsMercenariesPvpMatch && _game.MercenariesRatingInfo != null)
+						_game.CurrentGameStats.MercenariesRating = _game.MercenariesRatingInfo.Rating;
+					if(_game.IsMercenariesPveMatch)
+						_game.CurrentGameStats.MercenariesBountyRunId = _game.MercenariesMapInfo?.Seed.ToString();
+				}
 				_game.CurrentGameStats.GameType = _game.CurrentGameType;
 				_game.CurrentGameStats.ServerInfo = _game.MetaData.ServerInfo;
 				_game.CurrentGameStats.PlayerCardbackId = _game.MatchInfo?.LocalPlayer.CardBackId ?? 0;
@@ -669,8 +677,13 @@ namespace Hearthstone_Deck_Tracker
 				{
 					try
 					{
-						DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class).AddGameResult(_game.CurrentGameStats);
-						Log.Info($"Assigned current deck to default {_game.Player.Class} deck.");
+						if(!string.IsNullOrEmpty(_game.Player.Class))
+						{
+							DefaultDeckStats.Instance.GetDeckStats(_game.Player.Class).AddGameResult(_game.CurrentGameStats);
+							Log.Info($"Assigned current deck to default {_game.Player.Class} deck.");
+						}
+						else
+							Log.Debug("Not assigning a deck, no player class found.");
 					}
 					catch(Exception ex)
 					{

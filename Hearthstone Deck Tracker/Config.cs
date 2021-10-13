@@ -509,6 +509,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool HsReplayUploadDuels = true;
 
+		[DefaultValue(true)]
+		public bool HsReplayUploadMercenaries = true;
+
 		[DefaultValue(null)]
 		public bool? HsReplayUploadPacks = null;
 

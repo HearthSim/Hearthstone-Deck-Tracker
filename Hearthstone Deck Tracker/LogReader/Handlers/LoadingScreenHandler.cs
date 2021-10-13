@@ -84,6 +84,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.CurrentMode == Mode.BACON)
 					Core.Game.CacheBattlegroundRatingInfo();
 
+				if(game.CurrentMode == Mode.LETTUCE_PLAY)
+					Core.Game.CacheMercenariesRatingInfo();
+
 				if(game.CurrentMode == Mode.ADVENTURE || game.PreviousMode == Mode.ADVENTURE && game.CurrentMode == Mode.GAMEPLAY)
 					Watchers.DungeonRunWatcher.Run();
 				else

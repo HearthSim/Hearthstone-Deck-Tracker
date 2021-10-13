@@ -128,6 +128,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return GameMode.Duels;
 				case GameType.GT_PVPDR_PAID:
 					return GameMode.Duels;
+				case GameType.GT_MERCENARIES_AI_VS_AI:
+				case GameType.GT_MERCENARIES_FRIENDLY:
+				case GameType.GT_MERCENARIES_PVE:
+				case GameType.GT_MERCENARIES_PVP:
+				case GameType.GT_MERCENARIES_PVE_COOP:
+					return GameMode.Mercenaries;
 				default:
 					return GameMode.None;
 			}
@@ -206,6 +212,16 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					return BGT_PVPDR;
 				case GameType.GT_PVPDR_PAID:
 					return BGT_PVPDR_PAID;
+				case GameType.GT_MERCENARIES_AI_VS_AI:
+					return BGT_UNKNOWN; // Does not exist in BGT
+				case GameType.GT_MERCENARIES_FRIENDLY:
+					return BGT_MERCENARIES_FRIENDLY;
+				case GameType.GT_MERCENARIES_PVE:
+					return BGT_MERCENARIES_PVE;
+				case GameType.GT_MERCENARIES_PVP:
+					return BGT_MERCENARIES_PVP;
+				case GameType.GT_MERCENARIES_PVE_COOP:
+					return BGT_MERCENARIES_PVE_COOP;
 				default:
 					return BGT_UNKNOWN;
 			}

@@ -99,6 +99,11 @@
                 <controls:CardMarker x:Name="Marks7" Width="36" Height="34" />
                 <controls:CardMarker x:Name="Marks8" Width="36" Height="34" />
                 <controls:CardMarker x:Name="Marks9" Width="36" Height="34" />
+                <StackPanel Canvas.Top="0" Canvas.Right="0">
+                    <controls:CardImage x:Name="MercAbility1" Height="{Binding MercAbilityHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                    <controls:CardImage x:Name="MercAbility2" Height="{Binding MercAbilityHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                    <controls:CardImage x:Name="MercAbility3" Height="{Binding MercAbilityHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                </StackPanel>
                 <Grid Name="GridOpponentBoard" Width="{Binding BoardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Ellipse Name="EllipseBoardOpp0" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>

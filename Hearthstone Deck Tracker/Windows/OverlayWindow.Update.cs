@@ -101,10 +101,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_cardMarks[i].Visibility = Collapsed;
 			}
 
+			var foo = Core.Game.Entities;
 			var oppBoard = Core.Game.Opponent.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			var playerBoard = Core.Game.Player.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
-			if(!_game.IsInMenu && (_game.IsMulliganDone || _game.IsBattlegroundsMatch) && User32.IsHearthstoneInForeground() && IsVisible)
+			if(!_game.IsInMenu && (_game.IsMulliganDone || _game.IsBattlegroundsMatch || _game.IsMercenariesMatch) && User32.IsHearthstoneInForeground() && IsVisible)
 				DetectMouseOver(playerBoard, oppBoard);
 			else
 				FlavorTextVisibility = Collapsed;
@@ -117,7 +118,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Opacity = Config.Instance.OverlayOpacity / 100;
 
 			var inBattlegrounds = _game.IsBattlegroundsMatch;
-			var hideDeck = Config.Instance.HideDecksInOverlay || inBattlegrounds || (Config.Instance.HideInMenu && _game.IsInMenu);
+			var inMercenaries = _game.IsMercenariesMatch;
+			var hideDeck = Config.Instance.HideDecksInOverlay || inBattlegrounds || inMercenaries || (Config.Instance.HideInMenu && _game.IsInMenu);
 
 			if (!_playerCardsHidden)
 			{
@@ -279,11 +281,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (Height != prevHeight)
 			{
 				OnPropertyChanged(nameof(BoardHeight));
-				OnPropertyChanged(nameof(MinionMargin));
 				OnPropertyChanged(nameof(MinionWidth));
 				OnPropertyChanged(nameof(CardWidth));
 				OnPropertyChanged(nameof(CardHeight));
+				OnPropertyChanged(nameof(MercAbilityHeight));
 			}
+
+			OnPropertyChanged(nameof(MinionMargin));
 
 			UpdateElementSizes();
 			ApplyAutoScaling();
@@ -352,7 +356,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ScreenRatio));
-			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - Height * 0.045);
+			var opponentBoardOffset = _game.IsMercenariesMatch && !(_game.GameEntity?.HasTag(LETTUCE_SHOW_OPPOSING_FAKE_HAND) ?? false) ? Height * 0.142 : Height * 0.045;
+			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - opponentBoardOffset);
 			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
 
 			Canvas.SetLeft(LinkOpponentDeckDisplay, Width * Config.Instance.OpponentDeckLeft / 100);

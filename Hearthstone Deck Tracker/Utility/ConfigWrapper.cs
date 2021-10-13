@@ -303,6 +303,16 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
+		public static bool HsReplayUploadMercenaries
+		{
+			get { return Config.Instance.HsReplayUploadMercenaries; }
+			set
+			{
+				Config.Instance.HsReplayUploadMercenaries = value;
+				Config.Save();
+			}
+		}
+
 		public static Visibility ShowDateOnDeckVisibility => Config.Instance.ShowDateOnDeck ? Visibility.Visible : Visibility.Collapsed;
 
 		public static Visibility UseButtonVisiblity => Config.Instance.AutoUseDeck ? Visibility.Collapsed : Visibility.Visible;

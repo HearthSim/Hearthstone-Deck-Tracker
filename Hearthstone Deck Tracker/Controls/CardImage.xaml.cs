@@ -131,6 +131,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			try
 			{
 				CardImagePath = AssetDownloaders.cardImageDownloader.StoragePathFor(card);
+				LoadingImageSource = null;
 				if (hasAsset)
 					ExpandAnimation?.Begin();
 			}

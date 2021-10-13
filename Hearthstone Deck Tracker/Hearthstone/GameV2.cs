@@ -32,6 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private Mode _currentMode;
 		private BrawlInfo _brawlInfo;
 		private BattlegroundRatingInfo _battlegroundsRatingInfo;
+		private MercenariesRatingInfo _mercenariesRatingInfo;
 		private BattlegroundsBoardState _battlegroundsBoardState;
 		Regex BattlegroundsHeroRegex = new Regex(@"(TB_BaconShop_HERO_\d\d)|(BG20_HERO_\d\d)");
 
@@ -110,6 +111,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			: CurrentGameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(CurrentGameStats.OpponentHeroCardId);
 
 		public bool IsBattlegroundsMatch => CurrentGameType == GameType.GT_BATTLEGROUNDS || CurrentGameType == GameType.GT_BATTLEGROUNDS_FRIENDLY;
+		public bool IsMercenariesMatch => CurrentGameType == GameType.GT_MERCENARIES_AI_VS_AI || CurrentGameType == GameType.GT_MERCENARIES_FRIENDLY
+					|| CurrentGameType == GameType.GT_MERCENARIES_PVE || CurrentGameType == GameType.GT_MERCENARIES_PVP
+					|| CurrentGameType == GameType.GT_MERCENARIES_PVE_COOP;
+		public bool IsMercenariesPvpMatch => CurrentGameType == GameType.GT_MERCENARIES_PVP;
+		public bool IsMercenariesPveMatch => CurrentGameType == GameType.GT_MERCENARIES_PVE || CurrentGameType == GameType.GT_MERCENARIES_PVE_COOP;
 		public bool IsConstructedMatch => CurrentGameType == GameType.GT_RANKED
 										|| CurrentGameType == GameType.GT_CASUAL
 										|| CurrentGameType == GameType.GT_VS_FRIEND;
@@ -185,10 +191,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public BattlegroundRatingInfo BattlegroundsRatingInfo => _battlegroundsRatingInfo ?? (_battlegroundsRatingInfo = HearthMirror.Reflection.GetBattlegroundRatingInfo());
 
-		private bool IsValidPlayerInfo(MatchInfo.Player playerInfo)
+		public MercenariesRatingInfo MercenariesRatingInfo => _mercenariesRatingInfo ?? (_mercenariesRatingInfo = HearthMirror.Reflection.GetMercenariesRatingInfo());
+
+		public MercenariesMapInfo MercenariesMapInfo => HearthMirror.Reflection.GetMercenariesMapInfo();
+
+		private bool IsValidPlayerInfo(MatchInfo.Player playerInfo, bool allowMissing = true)
 		{
 			var name = playerInfo?.Name ?? playerInfo?.BattleTag?.Name;
-			var valid = name != null;
+			var valid = allowMissing || name != null;
 			Log.Debug($"valid={valid}, gameMode={CurrentGameMode}, player={name}, starLevel={playerInfo?.Standard?.StarLevel}");
 			return valid;
 		}
@@ -198,7 +208,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(!_matchInfoCacheInvalid)
 				return;
 			MatchInfo matchInfo;
-			while((matchInfo = HearthMirror.Reflection.GetMatchInfo()) == null || !IsValidPlayerInfo(matchInfo.LocalPlayer) || !IsValidPlayerInfo(matchInfo.OpposingPlayer))
+			while((matchInfo = HearthMirror.Reflection.GetMatchInfo()) == null || !IsValidPlayerInfo(matchInfo.LocalPlayer) || !IsValidPlayerInfo(matchInfo.OpposingPlayer, IsMercenariesMatch))
 			{
 				Log.Info($"Waiting for matchInfo... (matchInfo={matchInfo}, localPlayer={matchInfo?.LocalPlayer?.Name}, opposingPlayer={matchInfo?.OpposingPlayer?.Name})");
 				await Task.Delay(1000);
@@ -234,6 +244,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		internal void CacheBrawlInfo() => _brawlInfo = HearthMirror.Reflection.GetBrawlInfo();
 
 		internal void CacheBattlegroundRatingInfo() => _battlegroundsRatingInfo = HearthMirror.Reflection.GetBattlegroundRatingInfo();
+
+		internal void CacheMercenariesRatingInfo() => _mercenariesRatingInfo = HearthMirror.Reflection.GetMercenariesRatingInfo();
 
 		internal void InvalidateMatchInfoCache() => _matchInfoCacheInvalid = true;
 
