@@ -1,4 +1,8 @@
-## **Release v1.16.0 - 2021-10_12**
+## **Release v1.16.1 - 2021-10-13**
+**Fixes**
+- Fixed a few issues related to Mercenaries.
+
+## **Release v1.16.0 - 2021-10-12**
 **Updated for Hearthstone 21.4.0**
 
 **Mercenaries**:
@@ -8,6 +12,7 @@
 
 ## **Release v1.15.9 - 2021-09-21**
 **Updated for Hearthstone 21.3.0**
+
 **Fixes**
 - Improve Bob's Buddy preformance.
 
