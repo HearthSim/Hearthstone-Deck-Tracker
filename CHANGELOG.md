@@ -1,3 +1,11 @@
+## **Release v1.16.0 - 2021-10_12**
+**Updated for Hearthstone 21.4.0**
+
+**Mercenaries**:
+- Added initial support for Mercenaries.
+- Hovering the opposing Mercenaries in PVP will display their 3 Abilities on the side of the screen.
+- More will follow in the coming days and weeks!
+
 ## **Release v1.15.9 - 2021-09-21**
 **Updated for Hearthstone 21.3.0**
 **Fixes**
