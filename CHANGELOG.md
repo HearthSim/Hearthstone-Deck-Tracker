@@ -1,4 +1,4 @@
-## **Release v1.16.1 - 2021-10-13**
+## **Release v1.16.2 - 2021-10-14**
 **Fixes**
 - Fixed a few issues related to Mercenaries.
 
