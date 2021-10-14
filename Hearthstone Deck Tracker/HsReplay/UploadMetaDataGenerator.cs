@@ -70,11 +70,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				metaData.LeagueId = game.LeagueId;
 			if(game?.GameMode == GameMode.Battlegrounds)
 				metaData.BattlegroundsRaces = game.BattlegroundsRaces?.Cast<int>().OrderBy(x => x).ToArray();
-			if(game?.GameMode == GameMode.Mercenaries && !string.IsNullOrEmpty(game?.MercenariesBountyRunId))
+			if(game?.GameMode == GameMode.Mercenaries)
 			{
-				metaData.MercenariesBountyRunId = game.MercenariesBountyRunId;
-				metaData.MercenariesBountyRunTurnsTaken = game.MercenariesBountyRunTurnsTaken;
-				metaData.MercenariesBountyRunCompletedNodes = game.MercenariesBountyRunCompletedNodes;
+				if(game?.MercenariesBountyRunRewards?.Count > 0)
+				{
+					metaData.MercenariesRewards = game.MercenariesBountyRunRewards
+						.Select(x => new UploadMetaData.MercenaryReward() { Id = x.Id, Coins = x.Coins})
+						.ToList();
+				}
+				if(!string.IsNullOrEmpty(game?.MercenariesBountyRunId))
+				{
+					metaData.MercenariesBountyRunId = game.MercenariesBountyRunId;
+					metaData.MercenariesBountyRunTurnsTaken = game.MercenariesBountyRunTurnsTaken;
+					metaData.MercenariesBountyRunCompletedNodes = game.MercenariesBountyRunCompletedNodes;
+				}
 			}
 			return metaData;
 		}

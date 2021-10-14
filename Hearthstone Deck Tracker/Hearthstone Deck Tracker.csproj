@@ -341,6 +341,7 @@
     <Compile Include="Hearthstone\Collection.cs" />
     <Compile Include="Hearthstone\DungeonRun.cs" />
     <Compile Include="Hearthstone\Entities\GuessedCardState.cs" />
+    <Compile Include="Hearthstone\MercenariesCollection.cs" />
     <Compile Include="Hearthstone\MultiIdCard.cs" />
     <Compile Include="Hearthstone\RankTranslator.cs" />
     <Compile Include="Hearthstone\Secrets\ArenaSettingsProvider.cs" />

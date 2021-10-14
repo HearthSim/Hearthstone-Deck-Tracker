@@ -27,6 +27,7 @@ using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 
 #endregion
 
@@ -151,6 +152,7 @@ namespace Hearthstone_Deck_Tracker
 					case Mercenaries:
 						if(gs.MercenariesRating != 0)
 							await UpdatePostGameMercenariesRating(gs);
+						await UpdatePostGameMercenariesRewards(gs);
 						break;
 				}
 			}
@@ -233,6 +235,20 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 			gs.MercenariesRatingAfter = data.NewRating;
+		}
+
+		private async Task UpdatePostGameMercenariesRewards(GameStats gs)
+		{
+			for(var i = 0; i < 5; i++)
+			{
+				var delta = MercenariesCollection.Update();
+				if(delta.Count > 0)
+				{
+					gs.MercenariesBountyRunRewards = delta;
+					break;
+				}
+				await Task.Delay(250);
+			}
 		}
 
 		private bool LogContainsStateComplete
@@ -436,7 +452,7 @@ namespace Hearthstone_Deck_Tracker
 			_game.InvalidateMatchInfoCache();
 			Reflection.Reinitialize();
 			if(_game.CurrentGameMode == Practice && !_game.IsInMenu && !_handledGameEnd
-				&& _lastGameStartTimestamp  > DateTime.MinValue && timestamp > _lastGameStartTimestamp)
+				&& _lastGameStartTimestamp > DateTime.MinValue && timestamp > _lastGameStartTimestamp)
 				HandleAdventureRestart();
 			_lastGameStartTimestamp = timestamp;
 			if(DateTime.Now - _lastGameStart < new TimeSpan(0, 0, 0, 5)) //game already started
@@ -482,6 +498,12 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsFriendlyMatch)
 				if(!Config.Instance.InteractedWithLinkOpponentDeck)
 					Core.Overlay.ShowLinkOpponentDeckDisplay();
+
+			if(_game.IsMercenariesPveMatch)
+			{
+				// Called here so that UpdatePostGameMercenariesRewards can generate an accurate delta.
+				MercenariesCollection.Update();
+			}
 		}
 
 		private void HandleAdventureRestart()
