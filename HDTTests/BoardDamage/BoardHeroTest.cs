@@ -12,7 +12,7 @@ namespace HDTTests.BoardDamage
 		[TestInitialize]
 		public void Setup()
 		{
-			_hero = new EntityBuilder("HERO_01", 0, 30);
+			_hero = new EntityBuilder("HERO_01", 0, 30).Hero();
 			_weapon = new EntityBuilder("DS1_188", 5, 0);
 			_weapon.Weapon().Durability(2);
 		}
@@ -49,6 +49,13 @@ namespace HDTTests.BoardDamage
 		public void Include_IfActive()
 		{
 			var hero = new BoardHero(_hero.ToEntity(), null, true);
+			Assert.IsTrue(hero.Include);
+		}
+
+		[TestMethod]
+		public void Include_IfActive_AndZeroTurnsInPlay()
+		{
+			var hero = new BoardHero(_hero.ZeroTurnsInPlay().ToEntity(), null, true);
 			Assert.IsTrue(hero.Include);
 		}
 

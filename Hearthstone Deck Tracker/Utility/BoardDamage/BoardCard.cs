@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			_armor = e.GetTag(ARMOR);
 			_durability = e.GetTag(DURABILITY);
 			_damageTaken = e.GetTag(DAMAGE);
-			Exhausted = e.GetTag(EXHAUSTED) == 1 || e.GetTag(NUM_TURNS_IN_PLAY) == 0;
+			Exhausted = e.GetTag(EXHAUSTED) == 1 || (e.GetTag(NUM_TURNS_IN_PLAY) == 0 && !e.IsHero);
 			_cantAttack = e.GetTag(CANT_ATTACK) == 1;
 			_frozen = e.GetTag(FROZEN) == 1;
 			Charge = e.GetTag(CHARGE) == 1;
