@@ -44,6 +44,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			{
 				_cardImagePath = value;
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(QuestionmarkVisibility));
 			}
 		}
 
@@ -55,6 +56,22 @@ namespace Hearthstone_Deck_Tracker.Controls
 			{
 				_createdByText = value;
 				OnPropertyChanged();
+			}
+		}
+
+		public double IconScaling => Math.Min(1, ActualHeight / 500);
+
+		public Visibility QuestionmarkVisibility => CardImagePath == null || !ShowQuestionmark ? Visibility.Collapsed : Visibility.Visible;
+
+		private bool _showQuestionmark = false;
+		public bool ShowQuestionmark
+		{
+			get => _showQuestionmark;
+			set
+			{
+				_showQuestionmark = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(QuestionmarkVisibility));
 			}
 		}
 
@@ -138,6 +155,11 @@ namespace Hearthstone_Deck_Tracker.Controls
 			catch(ArgumentNullException)
 			{
 			}
+		}
+
+		private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			OnPropertyChanged(nameof(IconScaling));
 		}
 	}
 }

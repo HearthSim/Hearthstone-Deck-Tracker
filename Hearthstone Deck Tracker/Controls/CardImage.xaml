@@ -7,6 +7,7 @@
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              mc:Ignorable="d"
+             SizeChanged="UserControl_SizeChanged"
              d:DesignHeight="256" d:DesignWidth="256">
     <UserControl.Resources>
         <Storyboard x:Key="StoryboardExpand">
@@ -32,5 +33,27 @@
               MaxHeight="{Binding Path=CardImageConfigs.CardImageSize, Source={StaticResource ConfigWrapper}, Converter={StaticResource CardImageSizeConverter}, ConverterParameter={x:Static controls:CardImageSizeType.Height}}"
               Source="{Binding CardImagePath, TargetNullValue={x:Null}}" RenderOptions.BitmapScalingMode="Fant">
         </Image>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="6.6*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Canvas Grid.Column="1" Grid.Row="1">
+                <Canvas.RenderTransform>
+                    <ScaleTransform ScaleX="{Binding IconScaling}" ScaleY="{Binding IconScaling}"/>
+                </Canvas.RenderTransform>
+                <Grid ClipToBounds="False" Canvas.Top="-20" Canvas.Left="-20" Visibility="{Binding QuestionmarkVisibility}">
+                    <Ellipse Width="40" Height="40" Fill="#141617" />
+                    <Ellipse Width="36" Height="36" Fill="#23272A" />
+                    <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="UnknownIndicator" HorizontalAlignment="Center" VerticalAlignment="Center" Text="?" FontSize="28" />
+                </Grid> 
+            </Canvas>
+        </Grid>
     </Grid>
 </UserControl>

@@ -186,12 +186,30 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			else
 			{
-				var abilities = RemoteConfig.Instance.Data?.MercenaryAbilities?.FirstOrDefault(x => x.CardId == id || x.Skins.Contains(id))?.Abilities ?? new List<string>();
-				if(abilities.Count == 3)
+				var abilityCards = new List<(Hearthstone.Card, bool)>();
+				var actualAbilities = _game.Opponent.PlayerEntities
+					.Where(x => x.GetTag(GameTag.LETTUCE_ABILITY_OWNER) == entity.Id && !x.HasTag(GameTag.LETTUCE_IS_EQUPIMENT) && x.HasCardId && !x.HasTag(GameTag.DONT_SHOW_IN_HISTORY) && x.Card != null)
+					.ToList();
+				abilityCards.AddRange(actualAbilities.Select(x => (x.Card, false)));
+				var staticAbilityIds = RemoteConfig.Instance.Data?.MercenaryAbilities?.FirstOrDefault(x => x.CardId == id || x.Skins.Contains(id))?.Abilities ?? new List<string>();
+				foreach(var cardId in staticAbilityIds)
 				{
-					MercAbility1.SetCardIdFromCard(Database.GetCardFromId(abilities.ElementAt(0)));
-					MercAbility2.SetCardIdFromCard(Database.GetCardFromId(abilities.ElementAt(1)));
-					MercAbility3.SetCardIdFromCard(Database.GetCardFromId(abilities.ElementAt(2)));
+					var card = Database.GetCardFromId(cardId);
+					if(string.IsNullOrEmpty(card?.Name))
+						continue;
+					var trimmedName = card.Name.Remove(card.Name.Length - 1, 1);
+
+					if(abilityCards.All(x => x.Item1.Name.Remove(x.Item1.Name.Length - 1, 1) != trimmedName))
+						abilityCards.Add((card, true));
+				}
+
+				var elements = new[] { MercAbility1, MercAbility2, MercAbility3 };
+				var max = Math.Min(elements.Length, abilityCards.Count);
+				for(int i = 0; i < max; i++)
+				{
+					var e = abilityCards.ElementAt(i);
+					elements[i].SetCardIdFromCard(e.Item1);
+					elements[i].ShowQuestionmark = e.Item2;
 				}
 			}
 		}
