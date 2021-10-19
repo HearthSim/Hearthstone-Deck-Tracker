@@ -22,12 +22,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 
 		private bool UseLRUCache => _maxSize != null;
 		private string LRUCacheXMLPath => Path.Combine(_storageDestiniation, "Cache.xml");
-
+		public string PlaceholderAssetPath { get; }
 
 		/// <exception cref="ArgumentException">Thrown when directory cannot be accessed or created.</exception>
 		/// <param name="storageDestination">Destination for assets to be stored.</param>
 
-		public AssetDownloader(string storageDestination, Func<T, string> urlConverter, Func<T, string> fileNameConverter, long? maxSize = null)
+		public AssetDownloader(string storageDestination, Func<T, string> urlConverter, Func<T, string> fileNameConverter, long? maxSize = null, string placeholderAsset = null)
 		{
 			_storageDestiniation = storageDestination;
 			_inProgressDestination = Path.Combine(storageDestination, "_inProgress");
@@ -40,6 +40,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			TryCreateDirectory(_inProgressDestination);
 			TryCleanDirectory(_inProgressDestination, true);
 			_succesfullyDownloadedImages.AddRange(GetCurrentlyStoredFileNames());
+			PlaceholderAssetPath = placeholderAsset ?? "pack://application:,,,/Resources/faceless_manipulator.png";
 		}
 
 		private List<string> TryLoadCache()

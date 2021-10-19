@@ -12,7 +12,7 @@
         <Canvas Width="256" Height="256">
             <Image Source="{StaticResource Taunt}" Visibility="{Binding TauntVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
             <Image Source="{StaticResource PremiumTaunt}" Visibility="{Binding PremiumTauntVisibility}" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="-24" Canvas.Top="-36"/>
-            <Image HorizontalAlignment="Center" Width="256" Height="256" Source="{Binding CardImagePath}" RenderOptions.BitmapScalingMode="Fant">
+            <Image HorizontalAlignment="Center" Width="256" Height="256" Source="{Binding CardPortrait.AssetPath}" RenderOptions.BitmapScalingMode="Fant">
                 <Image.Clip>
                     <EllipseGeometry RadiusX="87" RadiusY="120" Center="128,128"/>
                 </Image.Clip>

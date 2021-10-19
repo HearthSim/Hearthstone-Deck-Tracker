@@ -5,9 +5,17 @@ using System.IO;
 
 namespace Hearthstone_Deck_Tracker.Utility.Assets
 {
+	public enum CardAssetType
+	{
+		FullImage,
+		Portrait,
+		Tile,
+	}
+
 	public static class AssetDownloaders
 	{
-		public static AssetDownloader<string> cardPortraitDownloader;
+		public static AssetDownloader<Hearthstone.Card> cardPortraitDownloader;
+		public static AssetDownloader<Hearthstone.Card> cardTileDownloader;
 		public static AssetDownloader<Hearthstone.Card> cardImageDownloader;
 		private static bool _initialized = false;
 		public static void SetupAssetDownloaders()
@@ -17,16 +25,34 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 			_initialized = true;
 			try
 			{
-				cardPortraitDownloader = new AssetDownloader<string>(
+				cardPortraitDownloader = new AssetDownloader<Hearthstone.Card>(
 					Path.Combine(Config.AppDataPath, "Images", "CardPortraits"),
-					(string cardId) => $"https://art.hearthstonejson.com/v1/256x/{cardId}.jpg",
-					(string cardId) => $"{cardId}.jpg"
+					(Hearthstone.Card card) => $"https://art.hearthstonejson.com/v1/256x/{card.Id}.jpg",
+					(Hearthstone.Card card) => $"{card.Id}.jpg",
+					maxSize: 500,
+					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
 				);
 			}
 			catch(ArgumentException e)
 			{
 				Log.Error($"Could not create asset downloader to download card portraits: {e.Message}");
 			}
+
+			try
+			{
+				cardTileDownloader = new AssetDownloader<Hearthstone.Card>(
+					Path.Combine(Config.AppDataPath, "Images", "CardTiles"),
+					(Hearthstone.Card card) => $"https://art.hearthstonejson.com/v1/tiles/{card.Id}.png",
+					(Hearthstone.Card card) => $"{card.Id}.png",
+					maxSize: 500,
+					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
+				);
+			}
+			catch(ArgumentException e)
+			{
+				Log.Error($"Could not create asset downloader to download card tiles: {e.Message}");
+			}
+
 			try
 			{
 				cardImageDownloader = new AssetDownloader<Hearthstone.Card>(
@@ -35,13 +61,30 @@ namespace Hearthstone_Deck_Tracker.Utility.Assets
 					$"/{Config.Instance.SelectedLanguage}/{(Config.Instance.HighResolutionCardImages ? "512x" : "256x")}" +
 					$"/{card.Id}.png",
 					(Hearthstone.Card card) => $"{card.Id}.png",
-					200
+					maxSize: 200,
+					placeholderAsset: "pack://application:,,,/Resources/faceless_manipulator.png"
 				);
 				ConfigWrapper.CardImageConfigs.CardResolutionChanged += () => cardImageDownloader.ClearStorage();
 			}
 			catch(ArgumentException e)
 			{
 				Log.Error($"Could not create asset downloader to download card images: {e.Message}");
+			}
+		}
+
+		
+		public static AssetDownloader<Hearthstone.Card> GetCardAssetDownloader(CardAssetType type)
+		{
+			switch(type)
+			{
+				case CardAssetType.FullImage:
+					return cardImageDownloader;
+				case CardAssetType.Portrait:
+					return cardPortraitDownloader;
+				case CardAssetType.Tile:
+					return cardTileDownloader;
+				default:
+					throw new NotImplementedException($"CardAssetType {type} is not implemented");
 			}
 		}
 	}

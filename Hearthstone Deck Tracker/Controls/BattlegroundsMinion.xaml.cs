@@ -1,21 +1,26 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
-	/// <summary>
-	/// Interaction logic for BattlegroundsMinion.xaml
-	/// </summary>
 	public partial class BattlegroundsMinion : INotifyPropertyChanged
 	{
-		const string PlaceholderImagePath = "Resources/faceless_manipulator.png";
+	
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
 		public Visibility PoisonousVisibility { get; set; }
 
 		public Visibility DivineShieldVisibility { get; set; }
@@ -34,17 +39,6 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public Visibility BorderVisibility { get; set; }
 
-		private string _cardImagePath = PlaceholderImagePath;
-		public string CardImagePath
-		{
-			get => _cardImagePath;
-			set
-			{
-				_cardImagePath = value;
-				OnPropertyChanged();
-			}
-		}
-
 		public string AttackDisplay { get; set; }
 
 		public string HealthDisplay { get; set; }
@@ -59,40 +53,17 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		private Color green = Color.FromScRgb(1, .109f, .89f, .109f);
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-
 		public BattlegroundsMinion(Entity entity)
 		{
 			_entity = entity;
 			SetEffectVisibilites();
 			SetDisplayValues();
 			SetAttackHealthBrush();
-			//Subscribe to event on cardimageimporter if download not done (not specific to cardimage importer, functionality comes from AssetDownloader) and update binding once download is finished.
-			SetCardImage();
+			CardPortrait = new CardAssetViewModel(entity.Card, CardAssetType.Portrait);
 			InitializeComponent();
 		}
 
-		async void SetCardImage()
-		{
-			try
-			{
-				if(!AssetDownloaders.cardPortraitDownloader.HasAsset(_entity.CardId))
-				{
-					await AssetDownloaders.cardPortraitDownloader.DownloadAsset(_entity.CardId);
-				}
-				CardImagePath = AssetDownloaders.cardPortraitDownloader.StoragePathFor(_entity.CardId);
-			}
-			catch(ArgumentNullException)
-			{
-				CardImagePath = PlaceholderImagePath;
-			}
-		}
+		public CardAssetViewModel CardPortrait { get; }
 
 		private void SetDisplayValues()
 		{
