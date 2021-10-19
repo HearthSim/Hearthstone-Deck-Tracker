@@ -190,26 +190,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var actualAbilities = _game.Opponent.PlayerEntities
 					.Where(x => x.GetTag(GameTag.LETTUCE_ABILITY_OWNER) == entity.Id && !x.HasTag(GameTag.LETTUCE_IS_EQUPIMENT) && x.HasCardId && !x.HasTag(GameTag.DONT_SHOW_IN_HISTORY) && x.Card != null)
 					.ToList();
-				abilityCards.AddRange(actualAbilities.Select(x => (x.Card, false)));
-				var staticAbilityIds = RemoteConfig.Instance.Data?.MercenaryAbilities?.FirstOrDefault(x => x.CardId == id || x.Skins.Contains(id))?.Abilities ?? new List<string>();
-				foreach(var cardId in staticAbilityIds)
-				{
-					var card = Database.GetCardFromId(cardId);
-					if(string.IsNullOrEmpty(card?.Name))
-						continue;
-					var trimmedName = card.Name.Remove(card.Name.Length - 1, 1);
-
-					if(abilityCards.All(x => x.Item1.Name.Remove(x.Item1.Name.Length - 1, 1) != trimmedName))
-						abilityCards.Add((card, true));
-				}
+				var staticAbilities = RemoteConfig.Instance.Data?.Mercenaries?.FirstOrDefault(x => x.ArtVariationIds.Contains(id))?.Abilities ?? new List<RemoteConfig.ConfigData.MercAbility>();
 
 				var elements = new[] { MercAbility1, MercAbility2, MercAbility3 };
-				var max = Math.Min(elements.Length, abilityCards.Count);
-				for(int i = 0; i < max; i++)
+				var max = Math.Min(elements.Length, staticAbilities.Count);
+				for(var i = 0; i < max; i++)
 				{
-					var e = abilityCards.ElementAt(i);
-					elements[i].SetCardIdFromCard(e.Item1);
-					elements[i].ShowQuestionmark = e.Item2;
+					var ability = staticAbilities.ElementAt(i);
+					var actual = actualAbilities.FirstOrDefault(x => ability.TierDbfIds.Contains(x.CardId));
+					var card = actual?.Card ?? Database.GetCardFromId(ability.TierDbfIds.LastOrDefault());
+					if(card != null)
+					{
+						elements[i].SetCardIdFromCard(card);
+						elements[i].ShowQuestionmark = actual == null && ability.TierDbfIds.Count > 1;
+					}
 				}
 			}
 		}
