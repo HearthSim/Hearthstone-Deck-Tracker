@@ -15,6 +15,7 @@ using Hearthstone_Deck_Tracker.Controls;
 using Hearthstone_Deck_Tracker.Utility;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Controls.Overlay;
 
 #endregion
 
@@ -64,14 +65,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var isGameOver = IsGameOver;
 			for(var i = 0; i < MaxBoardSize; i++)
 			{
-				_oppBoard[i].Visibility = oppBoard.Count > i && !isGameOver ? Visibility.Visible : Visibility.Collapsed;
-				_playerBoard[i].Visibility = playerBoard.Count > i && !isGameOver ? Visibility.Visible : Visibility.Collapsed;
+				OppBoard[i].Visibility = oppBoard.Count > i && !isGameOver ? Visibility.Visible : Visibility.Collapsed;
+				PlayerBoard[i].Visibility = playerBoard.Count > i && !isGameOver ? Visibility.Visible : Visibility.Collapsed;
 				if(Config.Instance.Debug && !_game.IsInMenu)
 				{
-					if(i < oppBoard.Count)
-						AddMinionDebugOverlay(oppBoard[i], _oppBoard[i]);
-					if(i < playerBoard.Count)
-						AddMinionDebugOverlay(playerBoard[i], _playerBoard[i]);
+					//if(i < oppBoard.Count)
+					//AddMinionDebugOverlay(oppBoard[i], _oppBoard[i]);
+					//if(i < playerBoard.Count)
+					//AddMinionDebugOverlay(playerBoard[i], _playerBoard[i]);
 				}
 			}
 			var playerHandCount = _game.Player.HandCount;
@@ -150,17 +151,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_debugBoardObjects.Add(e);
 		}
 
+		/*
 		private void AddMinionDebugOverlay(Entity entity, Ellipse entityEllipse)
 		{
 			entityEllipse.Stroke = new SolidColorBrush(Colors.Red);
 			entityEllipse.StrokeThickness = 1;
-			var lbl = new Label {Content = entity.Card.Name, Foreground = Brushes.White};
+			var lbl = new Label { Content = entity.Card.Name, Foreground = Brushes.White };
 			_debugBoardObjects.Add(lbl);
 			CanvasInfo.Children.Add(lbl);
 			var pos = entityEllipse.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
 			Canvas.SetTop(lbl, pos.Y + 10);
 			Canvas.SetLeft(lbl, pos.X + 10);
 		}
+		*/
 
 		private Point GetCursorPos()
 		{
@@ -175,39 +178,72 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private void ShowMercHover(Entity entity)
+		private void ShowMercHover(Entity entity, Player player)
 		{
 			var id = entity?.Card?.Id;
-			if(string.IsNullOrEmpty(id))
+			if(!string.IsNullOrEmpty(id))
 			{
-				MercAbility1.SetCardIdFromCard(null);
-				MercAbility2.SetCardIdFromCard(null);
-				MercAbility3.SetCardIdFromCard(null);
-			}
-			else
-			{
-				var abilityCards = new List<(Hearthstone.Card, bool)>();
-				var actualAbilities = _game.Opponent.PlayerEntities
-					.Where(x => x.GetTag(GameTag.LETTUCE_ABILITY_OWNER) == entity.Id && !x.HasTag(GameTag.LETTUCE_IS_EQUPIMENT) && x.HasCardId && !x.HasTag(GameTag.DONT_SHOW_IN_HISTORY) && x.Card != null)
-					.ToList();
-				var staticAbilities = RemoteConfig.Instance.Data?.Mercenaries?.FirstOrDefault(x => x.ArtVariationIds.Contains(id))?.Abilities ?? new List<RemoteConfig.ConfigData.MercAbility>();
+				var data = GetMercAbilities(player);
+				var abilities = data.ElementAtOrDefault(entity.ZonePosition - 1);
 
 				var elements = new[] { MercAbility1, MercAbility2, MercAbility3 };
-				var max = Math.Min(elements.Length, staticAbilities.Count);
+				var max = Math.Min(elements.Length, abilities?.Count ?? 3);
 				for(var i = 0; i < max; i++)
 				{
-					var ability = staticAbilities.ElementAt(i);
-					var actual = actualAbilities.FirstOrDefault(x => ability.TierDbfIds.Contains(x.CardId));
-					var card = actual?.Card ?? Database.GetCardFromId(ability.TierDbfIds.LastOrDefault());
+					var abilityData = abilities?.ElementAtOrDefault(i);
+					var card = abilityData?.Entity?.Card ?? abilityData?.Card;
 					if(card != null)
 					{
 						elements[i].SetCardIdFromCard(card);
-						elements[i].ShowQuestionmark = actual == null && ability.TierDbfIds.Count > 1;
+						elements[i].ShowQuestionmark = abilityData.Entity == null && abilityData.HasTiers;
 					}
 				}
 			}
+			else
+				ClearMercHover();
 		}
 
+		private void ClearMercHover()
+		{
+			MercAbility1.SetCardIdFromCard(null);
+			MercAbility2.SetCardIdFromCard(null);
+			MercAbility3.SetCardIdFromCard(null);
+		}
+
+		private void UpdateAbilitesVisibility(int hoverIndex, int boardSize, List<BoardMinionOverlayViewModel> vms, bool excludeIndex)
+		{
+			var center = 0.5 * (boardSize + 1) - 1;
+			for(var i = 0; i < MaxBoardSize; i++)
+			{
+				if(hoverIndex <= center)
+				{
+					// tooltip to right
+					if(i <= hoverIndex)
+						vms.ElementAt(i).AbilitiesVisibility = Visibility.Visible;
+					else
+						vms.ElementAt(i).AbilitiesVisibility = Visibility.Hidden;
+				}
+				else
+				{
+					// tooltip to left
+					if(i >= hoverIndex)
+						vms.ElementAt(i).AbilitiesVisibility = Visibility.Visible;
+					else
+						vms.ElementAt(i).AbilitiesVisibility = Visibility.Hidden;
+				}
+			}
+			if(excludeIndex)
+				vms.ElementAt(hoverIndex).AbilitiesVisibility = Visibility.Hidden;
+		}
+
+		private void ClearAbilitesVisibility()
+		{
+			foreach(var m in OppBoard)
+				m.AbilitiesVisibility = Visibility.Visible;
+			foreach(var m in PlayerBoard)
+				m.AbilitiesVisibility = Visibility.Visible;
+		}
+ 
 		private void DetectMouseOver(List<Entity> playerBoard, List<Entity> oppBoard)
 		{
 			if(!_game.IsMercenariesMatch && (playerBoard.Count == 0 && oppBoard.Count == 0 && _game.Player.HandCount == 0 || IsGameOver))
@@ -218,51 +254,76 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(_game.IsMercenariesMatch && _entityMouseOver.HasCurrent && _game.GameEntity?.GetTag(GameTag.STEP) == (int)Step.MAIN_COMBAT)
 			{
 				_entityMouseOver.Clear();
-				ShowMercHover(null);
+				ClearMercHover();
+				ClearAbilitesVisibility();
 				return;
 			}
 			var relativeCanvas = GetCursorPos();
 			if(relativeCanvas.X == -1 && relativeCanvas.Y == -1)
 				return;
 
-			var isOverOpponent = false;
+			var opponentHoverTargets = GetBoardHoverTargets(OppBoardItemsControl);
+			var playerHoverTargets = GetBoardHoverTargets(PlayerBoardItemsControl);
 			for(var i = 0; i < 7; i++)
 			{
-				if(oppBoard.Count > i && EllipseContains(_oppBoard[i], relativeCanvas))
+				if(oppBoard.Count > i)
 				{
-					isOverOpponent = true;
-					var entity = oppBoard[i];
-					_entityMouseOver.DelayedMouseOverDetection(oppBoard[i], () =>
+					var ellipse = opponentHoverTargets.ElementAtOrDefault(i);
+					if(ellipse != null && EllipseContains(ellipse, relativeCanvas))
 					{
-						if(_game.IsMercenariesMatch)
+						var entity = oppBoard[i];
+						var index = i;
+						_entityMouseOver.DelayedMouseOverDetection(oppBoard[i], () =>
 						{
-							if(_game.GameEntity?.GetTag(GameTag.STEP) != (int)Step.MAIN_COMBAT)
-								ShowMercHover(entity);
-						}
-						else
-							SetFlavorTextEntity(entity);
-						GameEvents.OnOpponentMinionMouseOver.Execute(entity.Card);
-					}, () => {
-						FlavorTextVisibility = Visibility.Collapsed;
-						ShowMercHover(null);
-					});
-					return;
+							if(_game.IsMercenariesMatch)
+							{
+								if(_game.GameEntity?.GetTag(GameTag.STEP) != (int)Step.MAIN_COMBAT)
+									ShowMercHover(entity, _game.Opponent);
+								UpdateAbilitesVisibility(index, oppBoard.Count, OppBoard, false);
+							}
+							else
+								SetFlavorTextEntity(entity);
+							GameEvents.OnOpponentMinionMouseOver.Execute(entity.Card);
+						}, () => {
+							FlavorTextVisibility = Visibility.Collapsed;
+							ClearMercHover();
+							ClearAbilitesVisibility();
+						}, delayOverride: _game.IsMercenariesMatch ? (int?)200 : null);
+						return;
+					}
 				}
 
-				if(playerBoard.Count > i && EllipseContains(_playerBoard[i], relativeCanvas))
+				if(playerBoard.Count > i)
 				{
-					var entity = playerBoard[i];
-					_entityMouseOver.DelayedMouseOverDetection(entity, () =>
+					var ellipse = playerHoverTargets.ElementAtOrDefault(i);
+					if(ellipse != null && EllipseContains(ellipse, relativeCanvas))
 					{
-						SetFlavorTextEntity(entity);
-						GameEvents.OnPlayerMinionMouseOver.Execute(entity.Card);
-					}, () => FlavorTextVisibility = Visibility.Collapsed);
-					return;
+						var entity = playerBoard[i];
+						var index = i;
+						_entityMouseOver.DelayedMouseOverDetection(entity, () =>
+						{
+							if(_game.IsMercenariesMatch)
+							{
+								if(_game.GameEntity?.GetTag(GameTag.STEP) != (int)Step.MAIN_COMBAT)
+									ShowMercHover(entity, _game.Player);
+								var hideOnIndex = _game.GameEntity?.HasTag(GameTag.ALLOW_MOVE_MINION) ?? false;
+								UpdateAbilitesVisibility(index, playerBoard.Count, PlayerBoard, hideOnIndex);
+							}
+							else
+								SetFlavorTextEntity(entity);
+							GameEvents.OnPlayerMinionMouseOver.Execute(entity.Card);
+						}, () => {
+							FlavorTextVisibility = Visibility.Collapsed;
+							ClearMercHover();
+							ClearAbilitesVisibility();
+						}, delayOverride: _game.IsMercenariesMatch ? (int?)200 : null);
+						return;
+					}
 				}
 			}
 
-			if(_game.IsMercenariesMatch && _entityMouseOver.HasCurrent && !isOverOpponent)
-				ShowMercHover(null);
+			ClearMercHover();
+			ClearAbilitesVisibility();
 
 			var handCount = Math.Min(_game.Player.HandCount, MaxHandSize);
 			for(var i = handCount - 1; i >= 0; i--)

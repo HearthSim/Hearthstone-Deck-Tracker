@@ -8,7 +8,7 @@
         xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
         xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
-        xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
+        xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone" xmlns:mercenaries="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -105,26 +105,32 @@
                     <controls:CardImage x:Name="MercAbility3" Height="{Binding MercAbilityHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 </StackPanel>
                 <Grid Name="GridOpponentBoard" Width="{Binding BoardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Ellipse Name="EllipseBoardOpp0" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardOpp1" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardOpp2" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardOpp3" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardOpp4" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardOpp5" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardOpp6" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                    </StackPanel>
+                    <ItemsControl Name="OppBoardItemsControl" ItemsSource="{Binding OppBoard, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <overlay:BoardMinionOverlayView/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                 </Grid>
                 <Grid Name="GridPlayerBoard" Width="{Binding BoardWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Ellipse Name="EllipseBoardPlayer0" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardPlayer1" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardPlayer2" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardPlayer3" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardPlayer4" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardPlayer5" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                        <Ellipse Name="EllipseBoardPlayer6" Margin="{Binding MinionMargin, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Width="{Binding MinionWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BoardHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
-                    </StackPanel>
+                    <ItemsControl Name="PlayerBoardItemsControl" ItemsSource="{Binding PlayerBoard, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <overlay:BoardMinionOverlayView/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                 </Grid>
                 <Grid Name="GridFlavorText" Visibility="{Binding FlavorTextVisibility, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Panel.ZIndex="5" Width="298" Height="123" Canvas.Left="-338">
                     <Image Source="../Resources/flavor_text.png"/>

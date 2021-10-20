@@ -62,6 +62,9 @@
                     <ImageSource x:Key="LoadingMinion">Resources/Loading/loading_minion.png</ImageSource>
                     <ImageSource x:Key="LoadingSpell">Resources/Loading/loading_spell.png</ImageSource>
                     <ImageSource x:Key="LoadingWeapon">Resources/Loading/loading_weapon.png</ImageSource>
+                    <ImageSource x:Key="MercsAbilityFrame">Resources/merc_ability.png</ImageSource>
+                    <ImageSource x:Key="MercsAbilityCooldown">Resources/merc_hourglass.png</ImageSource>
+                    <ImageSource x:Key="MercsCheckmark">Resources/checkmark.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />

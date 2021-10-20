@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries.MercenariesAbilityView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:hearthstone_deck_tracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
+             mc:Ignorable="d" 
+             d:DesignHeight="256" d:DesignWidth="256">
+    <Viewbox Width="{Binding Width, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+             Height="{Binding Height, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Canvas Width="256" Height="256">
+            <Canvas.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="RenderOptions.BitmapScalingMode" Value="Fant"/>
+                </Style>
+                <Style TargetType="hearthstone_deck_tracker:HearthstoneTextBlock">
+                    <Setter Property="Width" Value="75"/>
+                    <Setter Property="Height" Value="75"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Style>
+            </Canvas.Resources>
+            <Ellipse Width="270" Height="270" Fill="#00FF00" Canvas.Top="-10" Canvas.Left="-8" Visibility="{Binding ActiveIndicatorVisibility}"/>
+            <Image Width="415" Source="{Binding AssetPath, TargetNullValue={x:Null}}" Canvas.Top="-47" Canvas.Left="-81" RenderOptions.BitmapScalingMode="Fant">
+                <Image.Clip>
+                    <EllipseGeometry RadiusX="100" RadiusY="100" Center="221,178"/>
+                </Image.Clip>
+            </Image>
+            <Image Source="{StaticResource MercsAbilityFrame}" Width="256" Height="256" RenderOptions.BitmapScalingMode="Fant"/>
+            <Ellipse Width="256" Height="256" Fill="#000" Opacity="0.5" Visibility="{Binding CooldownShadingVisibility}"/>
+            <Image Source="{Binding CooldownAsset, TargetNullValue={x:Null}}" Width="120" Canvas.Top="-21" Canvas.Right="-40" RenderOptions.BitmapScalingMode="Fant">
+                <Image.RenderTransform>
+                    <RotateTransform Angle="20"/>
+                </Image.RenderTransform>
+            </Image>
+            <Image Source="{Binding CheckmarkAsset, TargetNullValue={x:Null}}" Width="190" RenderOptions.BitmapScalingMode="Fant" Canvas.Left="40" Canvas.Top="-82"/>
+            <hearthstone_deck_tracker:HearthstoneTextBlock Text="{Binding CooldownText}" Canvas.Right="30" Canvas.Top="-9" FontSize="100" Width="100" Height="130" StrokeWidth="20" />
+            <Grid Canvas.Left="40" Canvas.Top="150">
+                <hearthstone_deck_tracker:HearthstoneTextBlock Text="{Binding SpeedText}" Fill="{Binding SpeedColorBrush}" FontSize="120" Width="150" Height="150" StrokeWidth="20"/>
+                <hearthstone_deck_tracker:HearthstoneTextBlock Text="{Binding SpeedText}" Fill="#000" Opacity="0.5" Visibility="{Binding CooldownShadingVisibility}" FontSize="120" Width="150" Height="150" StrokeWidth="20"/>
+            </Grid>
+            <Grid Canvas.Left="160" Canvas.Top="160" Visibility="{Binding SpeedUncertainIndicatorVisibility}">
+                <hearthstone_deck_tracker:HearthstoneTextBlock Text="?" Fill="#FFF" FontSize="90" Width="120" Height="120" StrokeWidth="10"/>
+                <hearthstone_deck_tracker:HearthstoneTextBlock Text="?" Fill="#000" Opacity="0.5" Visibility="{Binding CooldownShadingVisibility}" FontSize="90" Width="120" Height="120" StrokeWidth="10"/>
+            </Grid>
+        </Canvas>
+    </Viewbox>
+</UserControl>

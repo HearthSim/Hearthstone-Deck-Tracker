@@ -94,5 +94,6 @@ namespace Hearthstone_Deck_Tracker
 		void HandleOpponentLibramReduction(int value);
 		void HandlePlayerHandCostReduction(int value);
 		void HandleOpponentHandCostReduction(int value);
+		void HandleMercenariesStateChange();
 	}
 }

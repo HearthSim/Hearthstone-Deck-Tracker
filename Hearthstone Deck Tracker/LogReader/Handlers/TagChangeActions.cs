@@ -72,6 +72,11 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => DamageChange(gameState, id, game, value, prevValue);
 				case ARMOR:
 					return () => ArmorChange(gameState, id, game, value, prevValue);
+				case LETTUCE_ABILITY_TILE_VISUAL_ALL_VISIBLE:
+				case LETTUCE_ABILITY_TILE_VISUAL_SELF_ONLY:
+				case FAKE_ZONE:
+				case FAKE_ZONE_POSITION:
+					return () => gameState.GameHandler.HandleMercenariesStateChange();
 			}
 			return null;
 		}
@@ -223,6 +228,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if((Step)value == Step.BEGIN_MULLIGAN)
 				gameState.GameHandler.HandleBeginMulligan();
+			gameState.GameHandler.HandleMercenariesStateChange();
 			if(game.SetupDone || game.Entities.FirstOrDefault().Value?.Name != "GameEntity")
 				return;
 			Log.Info("Game was already in progress.");

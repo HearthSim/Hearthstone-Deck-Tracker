@@ -25,6 +25,11 @@ namespace Hearthstone_Deck_Tracker
 		                                                                                       new FrameworkPropertyMetadata(Brushes.Black,
 		                                                                                                                     FrameworkPropertyMetadataOptions
 			                                                                                                                     .AffectsRender));
+		public static readonly DependencyProperty StrokeWidthProperty = DependencyProperty.Register("StrokeWidth", typeof(double),
+		                                                                                       typeof(OutlinedTextBlock),
+		                                                                                       new FrameworkPropertyMetadata(2.0,
+		                                                                                                                     FrameworkPropertyMetadataOptions
+			                                                                                                                     .AffectsRender));
 
 		public static readonly DependencyProperty FontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(typeof(OutlinedTextBlock),
 		                                                                                                       new FrameworkPropertyMetadata(
@@ -123,6 +128,12 @@ namespace Hearthstone_Deck_Tracker
 			set { SetValue(StrokeProperty, value); }
 		}
 
+		public double StrokeWidth
+		{
+			get { return (double)GetValue(StrokeWidthProperty); }
+			set { SetValue(StrokeWidthProperty, value); }
+		}
+
 		public string Text
 		{
 			get { return (string)GetValue(TextProperty); }
@@ -160,7 +171,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_formattedText == null)
 				return;
 			var y = !double.IsNaN(ActualHeight) ? (ActualHeight - _formattedText.Height) / 2 + _formattedText.Height * 0.05: 0;
-			drawingContext.DrawGeometry(Stroke, new Pen(Brushes.Black, 2.0) {LineJoin = PenLineJoin.Round}, _formattedText.BuildGeometry(new Point(0, y)));
+			drawingContext.DrawGeometry(Stroke, new Pen(Brushes.Black, StrokeWidth) {LineJoin = PenLineJoin.Round}, _formattedText.BuildGeometry(new Point(0, y)));
 			drawingContext.DrawGeometry(Fill, new Pen(Brushes.White, 0), _formattedText.BuildGeometry(new Point(0, y)));
 		}
 

@@ -1119,6 +1119,14 @@ namespace Hearthstone_Deck_Tracker
 			GameEvents.OnPlayerPlayToDeck.Execute(Database.GetCardFromId(cardId));
 		}
 
+		public void HandleMercenariesStateChange()
+		{
+			if(_game.IsMercenariesMatch)
+			{
+				Core.Overlay.UpdateMercenariesOverlay();
+			}
+		}
+
 		#endregion
 
 		#region Opponent
@@ -1454,6 +1462,7 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleOpponentLibramReduction(int value) => HandleOpponentLibramReduction(value);
 		void IGameHandler.HandlePlayerHandCostReduction(int value) => HandlePlayerHandCostReduction(value);
 		void IGameHandler.HandleOpponentHandCostReduction(int value) => HandleOpponentHandCostReduction(value);
+		void IGameHandler.HandleMercenariesStateChange() => HandleMercenariesStateChange();
 
 		#endregion IGameHandlerImplementation
 	}

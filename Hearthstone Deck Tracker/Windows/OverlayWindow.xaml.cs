@@ -21,6 +21,10 @@ using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
+using Hearthstone_Deck_Tracker.Controls.Overlay;
+using System.Windows.Controls;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 #endregion
 
@@ -45,8 +49,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly List<HoverableElement> _hoverableElements = new List<HoverableElement>();
 		private readonly int _offsetX;
 		private readonly int _offsetY;
-		private readonly List<Ellipse> _oppBoard = new List<Ellipse>();
-		private readonly List<Ellipse> _playerBoard = new List<Ellipse>();
 		private readonly List<Rectangle> _playerHand = new List<Rectangle>();
 		private readonly List<Rectangle> _leaderboardIcons = new List<Rectangle>();
 		private readonly List<HearthstoneTextBlock> _leaderboardDeadForText = new List<HearthstoneTextBlock>();
@@ -73,6 +75,31 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
 
+		public List<BoardMinionOverlayViewModel> OppBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
+		public List<BoardMinionOverlayViewModel> PlayerBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
+
+		private Dictionary<ItemsControl, List<Ellipse>> _boardHoverTargets = new Dictionary<ItemsControl, List<Ellipse>>();
+		private List<Ellipse> GetBoardHoverTargets(ItemsControl container)
+		{
+			if(_boardHoverTargets.TryGetValue(container, out var targets))
+				return targets;
+
+			targets = new List<Ellipse>();
+			for(int i = 0; i < MaxBoardSize; i++)
+			{
+				var presenter = (ContentPresenter)container.ItemContainerGenerator.ContainerFromIndex(i);
+				presenter.ApplyTemplate();
+				var ellipse = Helper.FindVisualChildren<BoardMinionOverlayView>(presenter).FirstOrDefault()?.Ellipse;
+				if(ellipse != null)
+					targets.Add(ellipse);
+			}
+
+			if(targets.Any())
+				_boardHoverTargets[container] = targets;
+
+			return targets;
+		}
+
 		public OverlayWindow(GameV2 game)
 		{
 			// These need to be set before InitializeComponent is called
@@ -85,6 +112,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			};
 
 			_game = game;
+
+			for(int i = 0; i < MaxBoardSize; i++)
+			{
+				OppBoard.Add(new BoardMinionOverlayViewModel());
+				PlayerBoard.Add(new BoardMinionOverlayViewModel(AbilityAlignment.Bottom));
+			}
+
 			InitializeComponent();
 
 			_mulliganNotificationBehavior = new OverlayElementBehavior(MulliganNotificationPanel)
@@ -442,6 +476,101 @@ namespace Hearthstone_Deck_Tracker.Windows
 				}
 				index--;
 			}
+		}
+
+		private long _update ;
+		internal async void UpdateMercenariesOverlay() 
+		{
+			// Debounce
+			var ts = DateTime.Now.Ticks;
+			_update = ts;
+			await Task.Delay(50);
+			if(_update != ts)
+				return;
+
+
+			OnPropertyChanged(nameof(MinionMargin));
+
+			var step = _game.GameEntity?.GetTag(GameTag.STEP);
+			var showAbilities = _game.IsMercenariesMatch && (step == (int)Step.MAIN_ACTION || step == (int)Step.MAIN_PRE_ACTION);
+
+			var oppAbilities = showAbilities ? GetMercAbilities(_game.Opponent) : null;
+			var playerAbilities = showAbilities ? GetMercAbilities(_game.Player) : null;
+
+			for(int i = 0; i < OppBoard.Count; i++)
+			{
+				OppBoard[i].Width = MinionWidth;
+				OppBoard[i].Height = BoardHeight;
+				OppBoard[i].Margin = MinionMargin;
+				OppBoard[i].MercenariesAbilities = oppAbilities?.ElementAtOrDefault(i)?.Select(x => new MercenariesAbilityViewModel(x)).ToList();
+			}
+
+			for(int i = 0; i < PlayerBoard.Count; i++)
+			{
+				PlayerBoard[i].Width = MinionWidth;
+				PlayerBoard[i].Height = BoardHeight;
+				PlayerBoard[i].Margin = MinionMargin;
+				PlayerBoard[i].MercenariesAbilities = playerAbilities?.ElementAtOrDefault(i)?.Select(x => new MercenariesAbilityViewModel(x)).ToList();
+			}
+
+			UpdateBoardPosition();
+		}
+
+		public List<List<MercAbilityData>> GetMercAbilities(Player player)
+		{
+			return player.Board
+				.Where(x => x.IsMinion)
+				.OrderBy(x => x.ZonePosition)
+				.Select(entity =>
+				{
+					var id = entity?.Card?.Id;
+					var abilityCards = new List<(Card, bool)>();
+					var actualAbilities = player.PlayerEntities
+						.Where(x => x.GetTag(GameTag.LETTUCE_ABILITY_OWNER) == entity.Id
+									&& !x.HasTag(GameTag.LETTUCE_IS_EQUPIMENT)
+									&& !x.HasTag(GameTag.DONT_SHOW_IN_HISTORY)
+									&& x.HasCardId
+									&& x.Card != null)
+						.ToList();
+					var staticAbilities = RemoteConfig.Instance.Data?.Mercenaries?
+						.FirstOrDefault(x => x.ArtVariationIds.Contains(id))?.Abilities ?? new List<RemoteConfig.ConfigData.MercAbility>();
+
+					var data = new List<MercAbilityData>();
+					var max = Math.Min(3, Math.Max(staticAbilities.Count, actualAbilities.Count));
+					for(var i = 0; i < max; i++)
+					{
+						var staticAbility = staticAbilities.ElementAtOrDefault(i);
+						var actual = staticAbility != null
+							? actualAbilities.FirstOrDefault(x => staticAbility.TierDbfIds.Contains(x.CardId))
+							: actualAbilities.FirstOrDefault(x => data.All(d => (d.Entity?.CardId ?? d.Card?.Id) != x.CardId));
+						if(actual != null)
+						{
+							var active = entity.GetTag(GameTag.LETTUCE_ABILITY_TILE_VISUAL_SELF_ONLY) == actual.Id
+										|| entity.GetTag(GameTag.LETTUCE_ABILITY_TILE_VISUAL_ALL_VISIBLE) == actual.Id;
+							data.Add(new MercAbilityData() { Entity = actual, Active = active });
+						}
+						else if(staticAbility != null)
+						{
+							var card = actual?.Card ?? Database.GetCardFromId(staticAbility.TierDbfIds.LastOrDefault());
+							if(card != null)
+							{
+								var gameTurn = _game.GameEntity?.GetTag(GameTag.TURN) ?? 0;
+								data.Add(new MercAbilityData() { Card = card, GameTurn = gameTurn, HasTiers = staticAbility.TierDbfIds.Count > 1 });
+							}
+						}
+					}
+					return data;
+				})
+				.ToList();
+		}
+
+		public class MercAbilityData
+		{
+			public Entity Entity { get; set; }
+			public Card Card { get; set; }
+			public bool Active { get; set; }
+			public int GameTurn { get; set; }
+			public bool HasTiers { get; set; }
 		}
 	}
 }

@@ -16,13 +16,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 			_tolerance = tolerance;
 		}
 
-		public async void DelayedMouseOverDetection(object target, Action onSuccess, Action onMoved = null)
+		public async void DelayedMouseOverDetection(object target, Action onSuccess, Action onMoved = null, int? delayOverride = null)
 		{
 			if(_current == target)
 				return;
 			_current = target;
 			var mousePos = User32.GetMousePos();
-			await Task.Delay(_delay);
+			await Task.Delay(delayOverride ?? _delay);
 			if(Distance(User32.GetMousePos(), mousePos) > _tolerance)
 			{
 				onMoved?.Invoke();

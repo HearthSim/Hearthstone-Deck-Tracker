@@ -273,9 +273,18 @@
     <Compile Include="Controls\Overlay\BattlegroundsCardsGroup.xaml.cs">
       <DependentUpon>BattlegroundsCardsGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\BoardMinionOverlayView.xaml.cs">
+      <DependentUpon>BoardMinionOverlayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Overlay\BoardMinionOverlayViewModel.cs" />
+    <Compile Include="Controls\Overlay\CardAssetViewModel.cs" />
     <Compile Include="Controls\Overlay\LinkOpponentDeckPanel.xaml.cs">
       <DependentUpon>LinkOpponentDeckPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Overlay\Mercenaries\MercenariesAbilityView.xaml.cs">
+      <DependentUpon>MercenariesAbilityView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Overlay\Mercenaries\MercenariesAbilityViewModel.cs" />
     <Compile Include="Controls\Overlay\MulliganPanel.xaml.cs">
       <DependentUpon>MulliganPanel.xaml</DependentUpon>
     </Compile>
@@ -1046,9 +1055,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Overlay\BoardMinionOverlayView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Overlay\LinkOpponentDeckPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Overlay\Mercenaries\MercenariesAbilityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Overlay\MulliganPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -1688,6 +1705,9 @@
     <Resource Include="Resources\overlay_1.png" />
     <Resource Include="Resources\overlay_2.png" />
     <Resource Include="Resources\flavor_text.png" />
+    <Resource Include="Resources\merc_ability.png" />
+    <Resource Include="Resources\merc_hourglass.png" />
+    <Resource Include="Resources\checkmark.png" />
     <Resource Include="Resources\banner.png" />
     <Resource Include="Images\icon-cthun-spells.png" />
     <Resource Include="Images\icon-cthun.png" />

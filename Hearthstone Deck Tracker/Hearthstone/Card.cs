@@ -231,6 +231,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Race? RaceEnum => _dbCard?.Race;
 
+		public int LettuceCooldown => _dbCard?.Entity.GetTag(GameTag.LETTUCE_COOLDOWN_CONFIG) ?? 0;
+
 		[XmlIgnore]
 		public string Race { get; set; }
 

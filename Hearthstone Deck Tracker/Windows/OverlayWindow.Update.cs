@@ -15,6 +15,7 @@ using static System.Windows.Visibility;
 using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -270,24 +271,36 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			//hs window has height 0 if it just launched, screwing things up if the tracker is started before hs is. 
 			//this prevents that from happening. 
-			if (hsRect.Height == 0 || (Visibility != Visible && Core.Windows.CapturableOverlay == null))
+			if(hsRect.Height == 0 || (Visibility != Visible && Core.Windows.CapturableOverlay == null))
 				return;
 
 			var prevWidth = Width;
 			var prevHeight = Height;
 			SetRect(hsRect.Top, hsRect.Left, hsRect.Width, hsRect.Height);
-			if (Width != prevWidth)
+			if(Width != prevWidth)
 				OnPropertyChanged(nameof(BoardWidth));
-			if (Height != prevHeight)
+			if(Height != prevHeight)
 			{
 				OnPropertyChanged(nameof(BoardHeight));
 				OnPropertyChanged(nameof(MinionWidth));
 				OnPropertyChanged(nameof(CardWidth));
 				OnPropertyChanged(nameof(CardHeight));
 				OnPropertyChanged(nameof(MercAbilityHeight));
-			}
+				OnPropertyChanged(nameof(MinionMargin));
+				for(int i = 0; i < OppBoard.Count; i++)
+				{
+					OppBoard[i].Width = MinionWidth;
+					OppBoard[i].Height = BoardHeight;
+					OppBoard[i].Margin = MinionMargin;
+				}
 
-			OnPropertyChanged(nameof(MinionMargin));
+				for(int i = 0; i < PlayerBoard.Count; i++)
+				{
+					PlayerBoard[i].Width = MinionWidth;
+					PlayerBoard[i].Height = BoardHeight;
+					PlayerBoard[i].Margin = MinionMargin;
+				}
+			}
 
 			UpdateElementSizes();
 			ApplyAutoScaling();
@@ -332,6 +345,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public double AutoScaling { get; set; } = 1;
 
+		private void UpdateBoardPosition()
+		{
+			var step = _game.GameEntity?.GetTag(STEP);
+			var isMainAction = step == (int)Step.MAIN_ACTION || step == (int)Step.MAIN_POST_ACTION || step == (int)Step.MAIN_PRE_ACTION;
+			var mercsToNominate = _game.GameEntity?.HasTag(ALLOW_MOVE_MINION) ?? false;
+			var opponentBoardOffset = _game.IsMercenariesMatch && isMainAction && !mercsToNominate ? Height * 0.142 : Height * 0.045;
+			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - opponentBoardOffset);
+
+			var playerBoardOffset = _game.IsMercenariesMatch ? isMainAction && !mercsToNominate ? Height * -0.09 : Height * 0.003 : Height * 0.03 ;
+			Canvas.SetTop(GridPlayerBoard, Height / 2 - playerBoardOffset);
+		}
+
 		private void UpdateElementPositions()
 		{
 			var BorderStackPanelOpponentTop = Height * Config.Instance.OpponentDeckTop / 100;
@@ -356,9 +381,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ScreenRatio));
-			var opponentBoardOffset = _game.IsMercenariesMatch && !(_game.GameEntity?.HasTag(LETTUCE_SHOW_OPPOSING_FAKE_HAND) ?? false) ? Height * 0.142 : Height * 0.045;
-			Canvas.SetTop(GridOpponentBoard, Height / 2 - GridOpponentBoard.ActualHeight - opponentBoardOffset);
-			Canvas.SetTop(GridPlayerBoard, Height / 2 - Height * 0.03);
+			UpdateBoardPosition();
 
 			Canvas.SetLeft(LinkOpponentDeckDisplay, Width * Config.Instance.OpponentDeckLeft / 100);
 

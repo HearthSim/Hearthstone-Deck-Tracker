@@ -133,7 +133,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 
 		public bool HasCardId => !string.IsNullOrEmpty(CardId);
 
-		public bool IsInZone(Zone zone) => HasTag(GameTag.ZONE) && GetTag(GameTag.ZONE) == (int)zone;
+		public int ZonePosition
+		{
+			get
+			{
+				var real = GetTag(GameTag.ZONE_POSITION);
+				if(real > 0)
+					return real;
+				return GetTag(GameTag.FAKE_ZONE_POSITION);
+			}
+		}
+
+		public bool IsInZone(Zone zone) => (int)zone > 0 && (GetTag(GameTag.ZONE) == (int)zone || GetTag(GameTag.FAKE_ZONE) == (int)zone);
 
 		public bool IsControlledBy(int controllerId)
 		{

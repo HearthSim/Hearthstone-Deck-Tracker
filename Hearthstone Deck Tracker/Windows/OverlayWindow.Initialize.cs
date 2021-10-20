@@ -12,26 +12,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			_initializedCollections = true;
 			_cardMarks.AddRange(new[] {Marks0, Marks1, Marks2, Marks3, Marks4, Marks5, Marks6, Marks7, Marks8, Marks9});
-			_oppBoard.AddRange(new[]
-			{
-				EllipseBoardOpp0,
-				EllipseBoardOpp1,
-				EllipseBoardOpp2,
-				EllipseBoardOpp3,
-				EllipseBoardOpp4,
-				EllipseBoardOpp5,
-				EllipseBoardOpp6
-			});
-			_playerBoard.AddRange(new[]
-			{
-				EllipseBoardPlayer0,
-				EllipseBoardPlayer1,
-				EllipseBoardPlayer2,
-				EllipseBoardPlayer3,
-				EllipseBoardPlayer4,
-				EllipseBoardPlayer5,
-				EllipseBoardPlayer6
-			});
 			_playerHand.AddRange(new[]
 			{
 				RectPlayerHand0,
