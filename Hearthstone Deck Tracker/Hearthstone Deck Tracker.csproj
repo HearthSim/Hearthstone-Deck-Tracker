@@ -337,6 +337,9 @@
     <Compile Include="FlyoutControls\Options\Overlay\OverlayBattlegrounds.xaml.cs">
       <DependentUpon>OverlayBattlegrounds.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FlyoutControls\Options\Overlay\OverlayMercenaries.xaml.cs">
+      <DependentUpon>OverlayMercenaries.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutControls\Options\Streaming\StreamingCapturableOverlay.xaml.cs">
       <DependentUpon>StreamingCapturableOverlay.xaml</DependentUpon>
     </Compile>
@@ -1290,6 +1293,10 @@
     <Page Include="FlyoutControls\Options\Overlay\OverlayBattlegrounds.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="FlyoutControls\Options\Overlay\OverlayMercenaries.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FlyoutControls\Options\Streaming\StreamingCapturableOverlay.xaml">
       <Generator>MSBuild:Compile</Generator>

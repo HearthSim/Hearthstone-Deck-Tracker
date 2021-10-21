@@ -180,6 +180,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void ShowMercHover(Entity entity, Player player)
 		{
+			if(player.IsLocalPlayer)
+			{
+				if(!Config.Instance.ShowMercsPlayerHover)
+					return;
+			}
+			else
+			{
+				if(!Config.Instance.ShowMercsOpponentHover)
+					return;
+			}
 			var id = entity?.Card?.Id;
 			if(!string.IsNullOrEmpty(id))
 			{

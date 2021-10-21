@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay.OverlayMercenaries"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="300">
+    <StackPanel>
+        <CheckBox x:Name="CheckboxShowMercsOpponentHoverAbilities" Content="{lex:Loc Options_Overlay_Mercenaries_CheckBox_OpponentHoverAbilities}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowMercsOpponentHoverAbilities_Checked"
+                  Unchecked="CheckboxShowMercsOpponentHoverAbilities_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowMercsPlayerHoverAbilities" Content="{lex:Loc Options_Overlay_Mercenaries_CheckBox_PlayerHoverAbilities}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowMercsPlayerHoverAbilities_Checked"
+                  Unchecked="CheckboxShowMercsPlayerHoverAbilities_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowMercsOpponentAbilityIcons" Content="{lex:Loc Options_Overlay_Mercenaries_CheckBox_OpponentAbilityIcons}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowMercsOpponentAbilityIcons_Checked"
+                  Unchecked="CheckboxShowMercsOpponentAbilityIcons_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowMercsPlayerAbilityIcons" Content="{lex:Loc Options_Overlay_Mercenaries_CheckBox_PlayerAbilityIcons}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowMercsPlayerAbilityIcons_Checked"
+                  Unchecked="CheckboxShowMercsPlayerAbilityIcons_Unchecked" Margin="10,5,0,0" />
+    </StackPanel>
+</UserControl>

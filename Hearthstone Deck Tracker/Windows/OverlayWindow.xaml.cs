@@ -494,8 +494,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var step = _game.GameEntity?.GetTag(GameTag.STEP);
 			var showAbilities = _game.IsMercenariesMatch && (step == (int)Step.MAIN_ACTION || step == (int)Step.MAIN_PRE_ACTION);
 
-			var oppAbilities = showAbilities ? GetMercAbilities(_game.Opponent) : null;
-			var playerAbilities = showAbilities ? GetMercAbilities(_game.Player) : null;
+			var oppAbilities = showAbilities && Config.Instance.ShowMercsOpponentAbilityIcons ? GetMercAbilities(_game.Opponent) : null;
+			var playerAbilities = showAbilities && Config.Instance.ShowMercsPlayerAbilityIcons ? GetMercAbilities(_game.Player) : null;
 
 			for(int i = 0; i < OppBoard.Count; i++)
 			{

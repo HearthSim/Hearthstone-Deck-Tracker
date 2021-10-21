@@ -876,6 +876,18 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowLeagueFilterHint = true;
 
 		[DefaultValue(true)]
+		public bool ShowMercsOpponentHover = true;
+
+		[DefaultValue(true)]
+		public bool ShowMercsPlayerHover = true;
+
+		[DefaultValue(true)]
+		public bool ShowMercsOpponentAbilityIcons = true;
+
+		[DefaultValue(true)]
+		public bool ShowMercsPlayerAbilityIcons = true;
+
+		[DefaultValue(true)]
 		public bool SortDecksByClass = true;
 
 		[DefaultValue(false)]
