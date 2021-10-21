@@ -1,3 +1,16 @@
+## **Release v1.16.3 - 2021-10-21**
+**Updated for Hearthstone 21.4.4**
+
+**Fixes**
+- Fixed an issue with the "damage on board" calculations when playing heroes with a weapon (e.g. Jaraxxus).
+
+**Mercenaries**:
+- Added icons above/below each Mercenary showing their Abilites with current Speed and Cooldown. Works for PvP and PvE.
+- Updated the Mercenaries hovers to show the actual level of an ability if it has been revealed.
+- Updated the Mercenaries hovers to show abilities for all PvE opponents.
+- All Mercenaries related overlay features can now individually be disabled under `options > overlay > mercenaries`.
+
+
 ## **Release v1.16.2 - 2021-10-14**
 **Fixes**
 - Fixed a few issues related to Mercenaries.
