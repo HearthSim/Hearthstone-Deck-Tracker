@@ -533,7 +533,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 									&& x.HasCardId
 									&& x.Card != null)
 						.ToList();
-					var staticAbilities = Remote.Config.Data?.Mercenaries?
+					var staticAbilities = Remote.Mercenaries.Data?
 						.FirstOrDefault(x => x.ArtVariationIds.Contains(id))?.Abilities ?? new List<RemoteData.MercenaryAbility>();
 
 					var data = new List<MercAbilityData>();

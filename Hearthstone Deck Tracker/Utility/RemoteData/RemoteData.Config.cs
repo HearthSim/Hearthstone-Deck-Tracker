@@ -28,9 +28,6 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 
 			[JsonProperty("update_info")]
 			public UpdateData UpdateInfo { get; set; }
-
-			[JsonProperty("mercenaries")]
-			public List<Mercenary> Mercenaries { get; set; }
 		}
 
 		internal class NewsData

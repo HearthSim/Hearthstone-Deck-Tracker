@@ -245,6 +245,8 @@ namespace Hearthstone_Deck_Tracker
 							Game.MetaData.HearthstoneBuild = null;
 						}
 						Watchers.ExperienceWatcher.Run();
+
+						Remote.Mercenaries.Load();
 					}
 					Overlay.UpdatePosition();
 
