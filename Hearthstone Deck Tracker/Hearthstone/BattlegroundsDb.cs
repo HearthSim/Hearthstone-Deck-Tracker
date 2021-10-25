@@ -1,6 +1,7 @@
 ﻿using HearthDb;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public BattlegroundsDb()
 		{
-			Update(RemoteConfig.Instance.Data?.BattlegroundsTagOverrides);
-			RemoteConfig.Instance.Loaded += d => Update(d?.BattlegroundsTagOverrides);
+			Update(Remote.Config.Data?.BattlegroundsTagOverrides);
+			Remote.Config.Loaded += d => Update(d?.BattlegroundsTagOverrides);
 		}
 
-		private void Update(List<RemoteConfig.ConfigData.TagOverride> tagOverrides)
+		private void Update(List<RemoteData.TagOverride> tagOverrides)
 		{
 			var overrides = new Dictionary<int, Tuple<GameTag, int>>();
 			if (tagOverrides != null)

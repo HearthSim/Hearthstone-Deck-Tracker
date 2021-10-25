@@ -16,6 +16,7 @@ using Card = Hearthstone_Deck_Tracker.Hearthstone.Card;
 using CardIds = HearthDb.CardIds;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
 #endregion
 
@@ -154,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			{
 				if(deck.Cards.Count == 1 && deck.Cards.Single().Id == CardIds.Collectible.Neutral.WhizbangTheWonderful)
 				{
-					var data = RemoteConfig.Instance.Data;
+					var data = Remote.Config.Data;
 					if (data != null)
 					{
 						var whizbangDecks = data.WhizbangDecks.Select(x =>

@@ -417,7 +417,9 @@
     <Compile Include="Live\Data\BoardState.cs" />
     <Compile Include="Live\Data\DataType.cs" />
     <Compile Include="Live\Data\Payload.cs" />
-    <Compile Include="Utility\RemoteConfig.cs" />
+    <Compile Include="Utility\RemoteData\Remote.cs" />
+    <Compile Include="Utility\RemoteData\RemoteData.Config.cs" />
+    <Compile Include="Utility\RemoteData\RemoteData.Mercenary.cs" />
     <Compile Include="Utility\Shell32.cs" />
     <Compile Include="Utility\Singleton.cs" />
     <Compile Include="Utility\ScheduledTaskRunner.cs" />

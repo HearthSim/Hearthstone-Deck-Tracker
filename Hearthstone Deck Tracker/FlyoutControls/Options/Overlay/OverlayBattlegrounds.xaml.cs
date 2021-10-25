@@ -5,6 +5,7 @@ using System.Windows;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -45,14 +46,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		internal void UpdateDisabledState()
 		{
 			var enabled = true;
-			if(RemoteConfig.Instance.Data?.BobsBuddy?.Disabled ?? false)
+			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
 			{
 				TextBobsBuddyDisabled.Text = "Temporarily Disabled";
 				enabled = false;
 			}
 			else
 			{
-				var verStr = RemoteConfig.Instance.Data?.BobsBuddy?.MinRequiredVersion;
+				var verStr = Remote.Config.Data?.BobsBuddy?.MinRequiredVersion;
 				if(Version.TryParse(verStr, out var requiredVersion) && requiredVersion > Helper.GetCurrentVersion())
 				{
 					TextBobsBuddyDisabled.Text = $"Requires HDT v{requiredVersion}";

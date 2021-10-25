@@ -15,6 +15,7 @@ using static HearthDb.CardIds;
 using static Hearthstone_Deck_Tracker.BobsBuddy.BobsBuddyUtils;
 using BobsBuddy.Simulation;
 using System.Text.RegularExpressions;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
@@ -34,11 +35,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private readonly Random _rnd = new Random();
 
 		private static BobsBuddyPanel BobsBuddyDisplay => Core.Overlay.BobsBuddyDisplay;
-		private static bool ReportErrors => RemoteConfig.Instance.Data?.BobsBuddy?.SentryReporting ?? false;
+		private static bool ReportErrors => Remote.Config.Data?.BobsBuddy?.SentryReporting ?? false;
 
 		private TestInput _input;
 		private int _turn;
-		static int LogLinesKept = RemoteConfig.Instance.Data?.BobsBuddy?.LogLinesKept ?? 100;
+		static int LogLinesKept = Remote.Config.Data?.BobsBuddy?.LogLinesKept ?? 100;
 		public string OpponentCardId = "";
 		public string PlayerCardId = "";
 		private Entity _attackingHero;
@@ -125,11 +126,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			if(!Config.Instance.RunBobsBuddy || !_game.IsBattlegroundsMatch)
 				return false;
-			if(RemoteConfig.Instance.Data?.BobsBuddy?.Disabled ?? false)
+			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
 				return false;
 			if(ErrorState == BobsBuddyErrorState.None)
 			{
-				var verStr = RemoteConfig.Instance.Data?.BobsBuddy?.MinRequiredVersion;
+				var verStr = Remote.Config.Data?.BobsBuddy?.MinRequiredVersion;
 				if(Version.TryParse(verStr, out var requiredVersion))
 				{
 					if(requiredVersion > Helper.GetCurrentVersion())
@@ -528,7 +529,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				return;
 			}
 
-			var metricSampling = RemoteConfig.Instance.Data?.BobsBuddy?.MetricSampling ?? 0;
+			var metricSampling = Remote.Config.Data?.BobsBuddy?.MetricSampling ?? 0;
 
 			DebugLog($"metricSampling={metricSampling}, reportErrors={ReportErrors}");
 

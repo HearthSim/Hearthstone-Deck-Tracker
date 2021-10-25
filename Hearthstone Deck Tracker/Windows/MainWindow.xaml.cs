@@ -27,6 +27,7 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Updating;
 #if(SQUIRREL)
 	using Squirrel;
@@ -224,7 +225,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			HSReplayNetOAuth.Authenticated += ActivateWindow;
 
-			RemoteConfig.Instance.Loaded += data =>
+			Remote.Config.Loaded += data =>
 			{
 				OnPropertyChanged(nameof(CollectionSyncingBannerVisbiility));
 				OnPropertyChanged(nameof(CollectionSyncingBannerRemovable));
@@ -695,13 +696,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			get
 			{
-				if(!(RemoteConfig.Instance.Data?.CollectionBanner?.Visible ?? true))
+				if(!(Remote.Config.Data?.CollectionBanner?.Visible ?? true))
 					return Collapsed;
 				if(Config.Instance.HideCollectionSyncingBanner >= CollectionBannerId)
 				{
 					var synced = Account.Instance.CollectionState.Any();
-					var removablePostSync = RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePostSync ?? false;
-					var removablePreSync = RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePreSync ?? false;
+					var removablePostSync = Remote.Config.Data?.CollectionBanner?.RemovablePostSync ?? false;
+					var removablePreSync = Remote.Config.Data?.CollectionBanner?.RemovablePreSync ?? false;
 					if(synced && removablePostSync || !synced && removablePreSync)
 						return Collapsed;
 				}
@@ -709,15 +710,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private int CollectionBannerId => RemoteConfig.Instance.Data?.CollectionBanner?.RemovalId ?? 0;
+		private int CollectionBannerId => Remote.Config.Data?.CollectionBanner?.RemovalId ?? 0;
 
 		public bool CollectionSyncingBannerRemovable
 		{
 			get
 			{
 				var synced = Account.Instance.CollectionState.Any();
-				return !synced && (RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePreSync ?? false)
-					|| synced && (RemoteConfig.Instance.Data?.CollectionBanner?.RemovablePostSync ?? false);
+				return !synced && (Remote.Config.Data?.CollectionBanner?.RemovablePreSync ?? false)
+					|| synced && (Remote.Config.Data?.CollectionBanner?.RemovablePostSync ?? false);
 			}
 		}
 	}

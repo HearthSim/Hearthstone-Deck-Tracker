@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Windows;
 
 #endregion
@@ -59,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				CheckboxShowNewsBar.IsChecked = ConfigWrapper.IgnoreNewsId == -1;
 			};
-			RemoteConfig.Instance.Loaded += data =>
+			Remote.Config.Loaded += data =>
 			{
 				CheckboxShowNewsBar.IsChecked = Config.Instance.IgnoreNewsId < data?.News.Id;
 			};
@@ -365,7 +366,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			if (!_initialized)
 				return;
 			ConfigWrapper.IgnoreNewsId = ConfigWrapper.IgnoreNewsId == -1
-				? RemoteConfig.Instance.Data?.News?.Id ?? 0 : -1;
+				? Remote.Config.Data?.News?.Id ?? 0 : -1;
 		}
 
 		private void CheckboxAlternativeScreenCapture_Checked(object sender, RoutedEventArgs e)

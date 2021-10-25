@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
 namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 {
@@ -16,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		private static string _currentNewsLine;
 		private static DateTime _lastNewsUpdate = DateTime.MinValue;
 		private static bool _updating;
-		private RemoteConfig.ConfigData.NewsData _data;
+		private RemoteData.NewsData _data;
 
 		private TextBlock _dataContent;
 		private string _indexContent;
@@ -24,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 
 		public NewsBarViewModel()
 		{
-			RemoteConfig.Instance.Loaded += data =>
+			Remote.Config.Loaded += data =>
 			{
 				_data = data?.News;
 				if(Config.Instance.IgnoreNewsId < _data?.Id)

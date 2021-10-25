@@ -25,6 +25,7 @@ using Hearthstone_Deck_Tracker.Controls.Overlay;
 using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
 #endregion
 
@@ -402,7 +403,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(!Config.Instance.RunBobsBuddy)
 				return;
-			if(RemoteConfig.Instance.Data?.BobsBuddy?.Disabled ?? false)
+			if(Remote.Config.Data?.BobsBuddy?.Disabled ?? false)
 				return;
 			_bgsBobsBuddyBehavior.Show();
 		}
@@ -532,8 +533,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 									&& x.HasCardId
 									&& x.Card != null)
 						.ToList();
-					var staticAbilities = RemoteConfig.Instance.Data?.Mercenaries?
-						.FirstOrDefault(x => x.ArtVariationIds.Contains(id))?.Abilities ?? new List<RemoteConfig.ConfigData.MercAbility>();
+					var staticAbilities = Remote.Config.Data?.Mercenaries?
+						.FirstOrDefault(x => x.ArtVariationIds.Contains(id))?.Abilities ?? new List<RemoteData.MercenaryAbility>();
 
 					var data = new List<MercAbilityData>();
 					var max = Math.Min(3, Math.Max(staticAbilities.Count, actualAbilities.Count));

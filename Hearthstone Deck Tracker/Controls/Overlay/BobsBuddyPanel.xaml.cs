@@ -1,6 +1,7 @@
 ﻿using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.BobsBuddy;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,8 +20,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			InitializeComponent();
 			ResetDisplays();
 
-			WarningState = RemoteConfig.Instance.Data?.BobsBuddy.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
-			RemoteConfig.Instance.Loaded += cfg => WarningState = cfg?.BobsBuddy.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
+			WarningState = Remote.Config.Data?.BobsBuddy.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
+			Remote.Config.Loaded += cfg => WarningState = cfg?.BobsBuddy.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
 		}
 
 		private string _winRateDisplay;

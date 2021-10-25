@@ -26,7 +26,7 @@ using Hearthstone_Deck_Tracker.Utility.Themes;
 using Hearthstone_Deck_Tracker.Utility.Updating;
 using WPFLocalizeExtension.Engine;
 using Hearthstone_Deck_Tracker.Utility.Assets;
-using static Hearthstone_Deck_Tracker.Utility.RemoteConfig;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
 #endregion
 
@@ -152,8 +152,8 @@ namespace Hearthstone_Deck_Tracker
 			}
 			LogWatcherManger.Start(Game).Forget();
 
-			RemoteConfig.Instance.Loaded += CheckForCardImageUpdate;
-			RemoteConfig.Instance.Load();
+			Remote.Config.Loaded += CheckForCardImageUpdate;
+			Remote.Config.Load();
 			HotKeyManager.Load();
 
 			if(Helper.HearthstoneDirExists && Config.Instance.StartHearthstoneWithHDT && !Game.IsRunning)
@@ -194,7 +194,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private static void CheckForCardImageUpdate(ConfigData rConfig)
+		private static void CheckForCardImageUpdate(RemoteData.Config rConfig)
 		{
 			try
 			{

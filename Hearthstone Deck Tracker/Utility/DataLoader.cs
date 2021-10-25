@@ -15,6 +15,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public event Action<T> Loaded;
 
+		public T Data => TryGetData(out var data) ? data : null;
+
 		public bool TryGetData(out T data)
 		{
 			if(_data == null)

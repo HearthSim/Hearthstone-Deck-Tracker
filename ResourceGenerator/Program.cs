@@ -9,7 +9,7 @@ using HearthDb.Enums;
 using HearthMirror;
 using System.Linq;
 using Newtonsoft.Json;
-using static Hearthstone_Deck_Tracker.Utility.RemoteConfig.ConfigData;
+using static Hearthstone_Deck_Tracker.Utility.RemoteData.RemoteData;
 
 namespace ResourceGenerator
 {

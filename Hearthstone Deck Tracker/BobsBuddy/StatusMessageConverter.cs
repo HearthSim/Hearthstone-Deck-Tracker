@@ -1,4 +1,5 @@
 ﻿using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
@@ -11,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				switch(errorState)
 				{
 					case BobsBuddyErrorState.UpdateRequired:
-						var version = RemoteConfig.Instance.Data?.BobsBuddy?.MinRequiredVersion ?? "";
+						var version = Remote.Config.Data?.BobsBuddy?.MinRequiredVersion ?? "";
 						return string.Format(LocUtil.Get("BobsBuddyStatusMessage_UpdateRequired"), version);
 					case BobsBuddyErrorState.NotEnoughData:
 						return LocUtil.Get("BobsBuddyStatusMessage_NotEnoughData");
