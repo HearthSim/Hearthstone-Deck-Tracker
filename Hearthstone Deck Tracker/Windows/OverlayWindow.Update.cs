@@ -473,6 +473,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			_experienceCounterBehavior.UpdatePosition();
 			_experienceCounterBehavior.UpdateScaling();
+
+			_mercenariesTaskListButtonBehavior.UpdatePosition();
+			_mercenariesTaskListButtonBehavior.UpdateScaling();
+
+			_mercenariesTaskListBehavior.UpdatePosition();
+			_mercenariesTaskListBehavior.UpdateScaling();
 		}
 
 		public void UpdateStackPanelAlignment()

@@ -285,6 +285,18 @@
       <DependentUpon>MercenariesAbilityView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Overlay\Mercenaries\MercenariesAbilityViewModel.cs" />
+    <Compile Include="Controls\Overlay\Mercenaries\MercenariesTaskListButton.xaml.cs">
+      <DependentUpon>MercenariesTaskListButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Overlay\Mercenaries\MercenariesTaskListView.xaml.cs">
+      <DependentUpon>MercenariesTaskListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Overlay\Mercenaries\MercenariesTaskListViewModel.cs" />
+    <Compile Include="Controls\Overlay\Mercenaries\MercenariesTaskView.xaml.cs">
+      <DependentUpon>MercenariesTaskView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Overlay\Mercenaries\MercenariesTaskViewModel.cs" />
+    <Compile Include="Controls\Overlay\Mercenaries\ProgressBarFillWidthConverter.cs" />
     <Compile Include="Controls\Overlay\MulliganPanel.xaml.cs">
       <DependentUpon>MulliganPanel.xaml</DependentUpon>
     </Compile>
@@ -419,6 +431,7 @@
     <Compile Include="Live\Data\Payload.cs" />
     <Compile Include="Utility\RemoteData\Remote.cs" />
     <Compile Include="Utility\RemoteData\RemoteData.Config.cs" />
+    <Compile Include="Utility\RemoteData\RemoteData.MercenariesTask.cs" />
     <Compile Include="Utility\RemoteData\RemoteData.Mercenary.cs" />
     <Compile Include="Utility\Shell32.cs" />
     <Compile Include="Utility\Singleton.cs" />
@@ -1072,6 +1085,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Overlay\Mercenaries\MercenariesTaskListButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\Mercenaries\MercenariesTaskListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Overlay\Mercenaries\MercenariesTaskView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Overlay\MulliganPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1716,6 +1741,8 @@
     <Resource Include="Resources\flavor_text.png" />
     <Resource Include="Resources\merc_ability.png" />
     <Resource Include="Resources\merc_hourglass.png" />
+    <Resource Include="Resources\merc_icon.png" />
+    <Resource Include="Resources\merc_frame.png" />
     <Resource Include="Resources\checkmark.png" />
     <Resource Include="Resources\banner.png" />
     <Resource Include="Images\icon-cthun-spells.png" />

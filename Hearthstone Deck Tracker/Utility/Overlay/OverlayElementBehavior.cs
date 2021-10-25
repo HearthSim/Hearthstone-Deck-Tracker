@@ -128,12 +128,20 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ShowCallback?.Invoke();
 			};
 
+			var opacity = Element.Opacity;
+			var hitTestVisible = Element.IsHitTestVisible;
+			Element.Opacity = 0;
+			Element.IsHitTestVisible = false;
+
 			Element.Visibility = Visible;
 			Element.UpdateLayout();
-
 			UpdateScaling();
+			UpdatePosition();
 
 			OverlayAnimationUtils.GetCanvasSetter(AnchorSide)?.Invoke(Element, GetHiddenOffset());
+
+			Element.Opacity = opacity;
+			Element.IsHitTestVisible = hitTestVisible;
 
 			_animating = true;
 			sb.Begin();

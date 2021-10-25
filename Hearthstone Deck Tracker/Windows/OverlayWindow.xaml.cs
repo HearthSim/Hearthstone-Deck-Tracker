@@ -26,6 +26,7 @@ using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using HearthMirror;
 
 #endregion
 
@@ -72,9 +73,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private OverlayElementBehavior _bgsBobsBuddyBehavior;
 		private OverlayElementBehavior _bgsPastOpponentBoardBehavior;
 		private OverlayElementBehavior _experienceCounterBehavior;
+		private OverlayElementBehavior _mercenariesTaskListBehavior;
+		private OverlayElementBehavior _mercenariesTaskListButtonBehavior;
 
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
+
+		public MercenariesTaskListViewModel MercenariesTaskListVM { get; }
 
 		public List<BoardMinionOverlayViewModel> OppBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
 		public List<BoardMinionOverlayViewModel> PlayerBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
@@ -111,6 +116,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				else
 					_clickableElements.Remove(e);
 			};
+
+			MercenariesTaskListVM = new MercenariesTaskListViewModel((show) =>
+			{
+				if(show)
+					ShowMercenariesTasks();
+				else
+					HideMercenariesTasks();
+			});
 
 			_game = game;
 
@@ -181,6 +194,26 @@ namespace Hearthstone_Deck_Tracker.Windows
 				GetTop = () => Height * .9652,
 				AnchorSide = Side.Bottom,
 				GetScaling = () => AutoScaling,
+			};
+
+			_mercenariesTaskListButtonBehavior = new OverlayElementBehavior(MercenariesTaskListButton)
+			{
+				GetRight = () => Height * 0.01,
+				GetBottom = () => Height * 0.05,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Right,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
+			};
+
+			_mercenariesTaskListBehavior = new OverlayElementBehavior(MercenariesTaskList)
+			{
+				GetRight = () => Height * 0.01,
+				GetBottom = () => MercenariesTaskListButton.ActualHeight * AutoScaling + Height * 0.05 + 8,
+				GetScaling = () => AutoScaling,
+				AnchorSide = Side.Right,
+				EntranceAnimation = AnimationType.Slide,
+				ExitAnimation = AnimationType.Slide,
 			};
 
 			if(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook)
@@ -425,6 +458,28 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(!AnimatingXPBar)
 				ExperienceCounter.Visibility = Collapsed;
+		}
+		internal void ShowMercenariesTasksButton()
+		{
+			_mercenariesTaskListButtonBehavior.Show();
+		}
+
+		internal void HideMercenariesTasksButton()
+		{
+			HideMercenariesTasks();
+			_mercenariesTaskListButtonBehavior.Hide();
+		}
+
+		internal void ShowMercenariesTasks()
+		{
+			ShowMercenariesTasksButton();
+			if(MercenariesTaskListVM.Update())
+				_mercenariesTaskListBehavior.Show();
+		}
+
+		internal void HideMercenariesTasks()
+		{
+			_mercenariesTaskListBehavior.Hide();
 		}
 
 		public static bool AnimatingXPBar = false;

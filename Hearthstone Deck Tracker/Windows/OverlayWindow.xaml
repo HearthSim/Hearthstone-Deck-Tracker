@@ -9,6 +9,7 @@
         xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
         xmlns:lex="http://wpflocalizeextension.codeplex.com"
         xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone" xmlns:mercenaries="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
+        xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -223,6 +224,11 @@
                 </StackPanel>
                 <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
                 <overlay:MulliganPanel x:Name="MulliganNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
+
+                <mercenaries:MercenariesTaskListButton x:Name="MercenariesTaskListButton" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True" Canvas.Bottom="8" Canvas.Right="8"
+                    DataContext="{Binding MercenariesTaskListVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
+                <mercenaries:MercenariesTaskListView x:Name="MercenariesTaskList" Visibility="Collapsed" Canvas.Bottom="58" Canvas.Right="8"
+                    DataContext="{Binding MercenariesTaskListVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
             </Canvas>
         </Border>
     </Grid>

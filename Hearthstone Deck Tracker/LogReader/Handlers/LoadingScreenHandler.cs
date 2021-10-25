@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +27,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		private DateTime _lastAutoImport;
 		private bool _checkedMirrorStatus;
 		public event Action OnHearthMirrorCheckFailed;
-		private System.Collections.Generic.List<Mode> ShowExperienceDuringMode = new System.Collections.Generic.List<Mode>() { Mode.HUB, Mode.GAME_MODE, Mode.TOURNAMENT, Mode.BACON, Mode.DRAFT, Mode.PVP_DUNGEON_RUN };
+		private List<Mode> ShowExperienceDuringMode = new List<Mode>() { Mode.HUB, Mode.GAME_MODE, Mode.TOURNAMENT, Mode.BACON, Mode.DRAFT, Mode.PVP_DUNGEON_RUN };
+
+		private List<Mode> LettuceModes = new List<Mode>
+		{
+			Mode.LETTUCE_VILLAGE,
+			Mode.LETTUCE_BOUNTY_BOARD,
+			Mode.LETTUCE_MAP,
+			Mode.LETTUCE_PLAY,
+			Mode.LETTUCE_COLLECTION,
+			Mode.LETTUCE_COOP,
+			Mode.LETTUCE_FRIENDLY,
+			Mode.LETTUCE_BOUNTY_TEAM_SELECT,
+			Mode.LETTUCE_PACK_OPENING
+		};
 
 		public void Handle(LogLine logLine, IHsGameState gameState, IGame game)
 		{
@@ -86,6 +100,19 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 				if(game.CurrentMode == Mode.LETTUCE_PLAY)
 					Core.Game.CacheMercenariesRatingInfo();
+
+				if(LettuceModes.Contains(game.CurrentMode) || (LettuceModes.Contains(game.PreviousMode) && game.CurrentMode == Mode.GAMEPLAY))
+				{
+					Core.Overlay.ShowMercenariesTasksButton();
+					Core.Overlay.MercenariesTaskListVM.Update();
+
+					if(game.CurrentMode == Mode.GAMEPLAY)
+						Core.Overlay.MercenariesTaskListVM.GameNoticeVisibility = Visibility.Visible;
+					else 
+						Core.Overlay.MercenariesTaskListVM.GameNoticeVisibility = Visibility.Collapsed;
+				}
+				else
+					Core.Overlay.HideMercenariesTasksButton();
 
 				if(game.CurrentMode == Mode.ADVENTURE || game.PreviousMode == Mode.ADVENTURE && game.CurrentMode == Mode.GAMEPLAY)
 					Watchers.DungeonRunWatcher.Run();
