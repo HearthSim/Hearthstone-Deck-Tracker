@@ -888,6 +888,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowMercsPlayerAbilityIcons = true;
 
 		[DefaultValue(true)]
+		public bool ShowMercsTasks = true;
+
+		[DefaultValue(true)]
 		public bool SortDecksByClass = true;
 
 		[DefaultValue(false)]

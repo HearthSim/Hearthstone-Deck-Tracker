@@ -471,14 +471,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_mercenariesTaskListButtonBehavior.Hide();
 		}
 
-		internal void ShowMercenariesTasks()
+		private void ShowMercenariesTasks()
 		{
 			ShowMercenariesTasksButton();
 			if(MercenariesTaskListVM.Update())
 				_mercenariesTaskListBehavior.Show();
 		}
 
-		internal void HideMercenariesTasks()
+		private void HideMercenariesTasks()
 		{
 			_mercenariesTaskListBehavior.Hide();
 		}

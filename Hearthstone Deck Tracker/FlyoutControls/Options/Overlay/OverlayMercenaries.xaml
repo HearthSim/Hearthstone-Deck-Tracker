@@ -26,5 +26,9 @@
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top" Checked="CheckboxShowMercsPlayerAbilityIcons_Checked"
                   Unchecked="CheckboxShowMercsPlayerAbilityIcons_Unchecked" Margin="10,5,0,0" />
+        <CheckBox x:Name="CheckboxShowMercsTasks" Content="{lex:Loc Options_Overlay_Mercenaries_CheckBox_Tasks}"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top" Checked="CheckboxShowMercsTasks_Checked"
+                  Unchecked="CheckboxShowMercsTasks_Unchecked" Margin="10,5,0,0" />
     </StackPanel>
 </UserControl>

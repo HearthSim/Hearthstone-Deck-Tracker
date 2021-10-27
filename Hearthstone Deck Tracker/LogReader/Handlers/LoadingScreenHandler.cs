@@ -101,18 +101,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				if(game.CurrentMode == Mode.LETTUCE_PLAY)
 					Core.Game.CacheMercenariesRatingInfo();
 
-				if(LettuceModes.Contains(game.CurrentMode) || (LettuceModes.Contains(game.PreviousMode) && game.CurrentMode == Mode.GAMEPLAY))
+				if(Config.Instance.ShowMercsTasks)
 				{
-					Core.Overlay.ShowMercenariesTasksButton();
-					Core.Overlay.MercenariesTaskListVM.Update();
+					if(LettuceModes.Contains(game.CurrentMode) || (LettuceModes.Contains(game.PreviousMode) && game.CurrentMode == Mode.GAMEPLAY))
+					{
+							Core.Overlay.ShowMercenariesTasksButton();
+							Core.Overlay.MercenariesTaskListVM.Update();
 
-					if(game.CurrentMode == Mode.GAMEPLAY)
-						Core.Overlay.MercenariesTaskListVM.GameNoticeVisibility = Visibility.Visible;
-					else 
-						Core.Overlay.MercenariesTaskListVM.GameNoticeVisibility = Visibility.Collapsed;
+							if(game.CurrentMode == Mode.GAMEPLAY)
+								Core.Overlay.MercenariesTaskListVM.GameNoticeVisibility = Visibility.Visible;
+							else 
+								Core.Overlay.MercenariesTaskListVM.GameNoticeVisibility = Visibility.Collapsed;
+					}
+					else
+						Core.Overlay.HideMercenariesTasksButton();
 				}
-				else
-					Core.Overlay.HideMercenariesTasksButton();
 
 				if(game.CurrentMode == Mode.ADVENTURE || game.PreviousMode == Mode.ADVENTURE && game.CurrentMode == Mode.GAMEPLAY)
 					Watchers.DungeonRunWatcher.Run();

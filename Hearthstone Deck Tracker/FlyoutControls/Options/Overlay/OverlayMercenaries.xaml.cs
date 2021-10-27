@@ -20,6 +20,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowMercsOpponentAbilityIcons.IsChecked = Config.Instance.ShowMercsOpponentAbilityIcons;
 			CheckboxShowMercsPlayerAbilityIcons.IsChecked = Config.Instance.ShowMercsPlayerAbilityIcons;
 
+			CheckboxShowMercsTasks.IsChecked = Config.Instance.ShowMercsTasks;
+
 			_initialized = true;
 		}
 
@@ -92,6 +94,24 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Config.Instance.ShowMercsPlayerAbilityIcons = false;
 			SaveConfig(true);
+		}
+
+		private void CheckboxShowMercsTasks_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowMercsTasks = true;
+			Config.Save();
+			Core.Overlay.ShowMercenariesTasksButton();
+		}
+
+		private void CheckboxShowMercsTasks_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowMercsTasks = false;
+			Config.Save();
+			Core.Overlay.HideMercenariesTasksButton();
 		}
 	}
 }
