@@ -26,7 +26,6 @@ using System.Windows.Controls;
 using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
-using HearthMirror;
 
 #endregion
 
@@ -48,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly GameV2 _game;
 		private readonly Dictionary<UIElement, ResizeGrip> _movableElements = new Dictionary<UIElement, ResizeGrip>();
 		private readonly List<FrameworkElement> _clickableElements = new List<FrameworkElement>();
-		private readonly List<HoverableElement> _hoverableElements = new List<HoverableElement>();
+		private readonly List<FrameworkElement> _hoverableElements = new List<FrameworkElement>();
 		private readonly int _offsetX;
 		private readonly int _offsetY;
 		private readonly List<Rectangle> _playerHand = new List<Rectangle>();
@@ -79,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int LevelResetDelay = 500;
 		private const int ExperienceFadeDelay = 6000;
 
-		public MercenariesTaskListViewModel MercenariesTaskListVM { get; }
+		public MercenariesTaskListViewModel MercenariesTaskListVM { get; } = new MercenariesTaskListViewModel();
 
 		public List<BoardMinionOverlayViewModel> OppBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
 		public List<BoardMinionOverlayViewModel> PlayerBoard { get; } = new List<BoardMinionOverlayViewModel>(MaxBoardSize);
@@ -117,13 +116,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_clickableElements.Remove(e);
 			};
 
-			MercenariesTaskListVM = new MercenariesTaskListViewModel((show) =>
+			OverlayExtensions.OnRegisterHoverVisible += (e, hoverable) =>
 			{
-				if(show)
-					ShowMercenariesTasks();
+				if(hoverable)
+				{
+					_hoverableElements.Add(e);
+					RunHoverUpdates();
+				}
 				else
-					HideMercenariesTasks();
-			});
+					_hoverableElements.Remove(e);
+			};
 
 			_game = game;
 
@@ -428,8 +430,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void ShowLinkOpponentDeckDisplay()
 		{
-			LinkOpponentDeckDisplay.AutoShown = true;
-			LinkOpponentDeckDisplay.Show();
+			LinkOpponentDeckDisplay.Show(true);
 		}
 
 		internal void ShowBobsBuddyPanel()
@@ -627,6 +628,54 @@ namespace Hearthstone_Deck_Tracker.Windows
 			public bool Active { get; set; }
 			public int GameTurn { get; set; }
 			public bool HasTiers { get; set; }
+		}
+
+		private void StackPanelOpponent_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			if(!(e is CustomMouseEventArgs))
+				return;
+			LinkOpponentDeckDisplay.Show(false);
+		}
+
+		private void StackPanelOpponent_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			if(!(e is CustomMouseEventArgs))
+				return;
+			LinkOpponentDeckDisplay.Hide();
+		}
+
+		private void LinkOpponentDeckDisplay_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			if(!(e is CustomMouseEventArgs))
+				return;
+			LinkOpponentDeckDisplay.Show(false);
+		}
+
+		private void LinkOpponentDeckDisplay_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			if(!(e is CustomMouseEventArgs))
+				return;
+			LinkOpponentDeckDisplay.Hide();
+		}
+
+		private bool _showMercTasks;
+		private async void MercenariesTaskListButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			if(!(e is CustomMouseEventArgs))
+				return;
+			_showMercTasks = true;
+			await Task.Delay(200);
+			if(!_showMercTasks)
+				return;
+			ShowMercenariesTasks();
+		}
+
+		private void MercenariesTaskListButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			if(!(e is CustomMouseEventArgs))
+				return;
+			_showMercTasks = false;
+			HideMercenariesTasks();
 		}
 	}
 }

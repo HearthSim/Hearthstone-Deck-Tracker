@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" >
-    <Grid MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave" MouseDown="Border_MouseDown">
+    <Grid>
         <Border CornerRadius="3" Margin="0,1,30,5" Background="#221717" BorderBrush="#110C0C" BorderThickness="2">
             <TextBlock Text="Tasks" Foreground="White" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="18" Margin="20,0,40,0"/>
         </Border>

@@ -64,7 +64,8 @@
                     </StackPanel>
                 </Border>
                 <Border Name="BorderStackPanelOpponent" Canvas.Top="203" Canvas.Left="10" Height="{Binding OpponentStackHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
-                    <StackPanel Name="StackPanelOpponent" Width="218" VerticalAlignment="{Binding OpponentStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
+                    <StackPanel Name="StackPanelOpponent" Width="218" VerticalAlignment="{Binding OpponentStackPanelAlignment, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"
+                        ext:OverlayExtensions.IsOverlayHoverVisible="True" MouseEnter="StackPanelOpponent_MouseEnter" MouseLeave="StackPanelOpponent_MouseLeave">
                         <local:HearthstoneTextBlock x:Name="LblWinRateAgainst" FontSize="15" Width="200" TextAlignment="Center" Text="VS: 0-0 (0%)"/>
                         <Viewbox Name="ViewBoxOpponent" StretchDirection="DownOnly" Stretch="Fill" MaxHeight="{Binding OpponentListHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}">
                             <controls:AnimatedCardList x:Name="ListViewOpponent" Background="Transparent" BorderThickness="0"
@@ -86,7 +87,8 @@
                         <local:HearthstoneTextBlock x:Name="LblOpponentFatigue" FontSize="14" Text="" Margin="4,0,0,0" TextAlignment="Center"/>
                     </StackPanel>
                 </Border>
-                <overlay:LinkOpponentDeckPanel x:Name="LinkOpponentDeckDisplay" Width="218"/>
+                <overlay:LinkOpponentDeckPanel x:Name="LinkOpponentDeckDisplay" Width="218" Visibility="Hidden" ext:OverlayExtensions.IsOverlayHitTestVisible="True"
+                    ext:OverlayExtensions.IsOverlayHoverVisible="True" MouseEnter="LinkOpponentDeckDisplay_MouseEnter" MouseLeave="LinkOpponentDeckDisplay_MouseLeave" />
 
                 <StackPanel Name="StackPanelSecrets" Width="auto" Height="auto" Visibility="Collapsed" />
 
@@ -225,7 +227,8 @@
                 <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
                 <overlay:MulliganPanel x:Name="MulliganNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
 
-                <mercenaries:MercenariesTaskListButton x:Name="MercenariesTaskListButton" Visibility="Collapsed" ext:OverlayExtensions.IsOverlayHitTestVisible="True" Canvas.Bottom="8" Canvas.Right="8"
+                <mercenaries:MercenariesTaskListButton x:Name="MercenariesTaskListButton" Visibility="Collapsed" Canvas.Bottom="8" Canvas.Right="8"
+                    ext:OverlayExtensions.IsOverlayHoverVisible="True" MouseEnter="MercenariesTaskListButton_MouseEnter" MouseLeave="MercenariesTaskListButton_MouseLeave"
                     DataContext="{Binding MercenariesTaskListVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>
                 <mercenaries:MercenariesTaskListView x:Name="MercenariesTaskList" Visibility="Collapsed" Canvas.Bottom="58" Canvas.Right="8"
                     DataContext="{Binding MercenariesTaskListVM, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}"/>

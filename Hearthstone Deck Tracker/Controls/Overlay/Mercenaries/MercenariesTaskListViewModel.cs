@@ -12,20 +12,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries
 {
 	public class MercenariesTaskListViewModel : ViewModel
 	{
-		public MercenariesTaskListViewModel(Action<bool> onToggle) => _onToggle = onToggle;
-
 		private string _buttonText = "Show Tasks";
 		public string ButtonText
 		{
 			get => _buttonText;
 			set { _buttonText = value; OnPropertyChanged(); }
 		}
-
-		private readonly Action<bool> _onToggle;
-
-		public void OnMouseEnter() => _onToggle(true);
-
-		public void OnMouseLeave() => _onToggle(false);
 
 		private Visibility _gameNoticeVisibility = Visibility.Collapsed;
 		public Visibility GameNoticeVisibility

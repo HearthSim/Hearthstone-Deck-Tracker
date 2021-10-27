@@ -151,24 +151,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			_clickableElements.Add(BattlegroundsMinionsPanel.BgTierIcons);
 			_clickableElements.Add(HeroNotificationPanel);
-			_clickableElements.Add(LinkOpponentDeckDisplay);
 			_clickableElements.Add(MulliganNotificationPanel);
 			_clickableElements.Add(BobsBuddyDisplay);
-
-			_hoverableElements.Add(new HoverableElement(StackPanelOpponent, () => LinkOpponentDeckDisplay.ShowByOpponentStack(), () => LinkOpponentDeckDisplay.HideByOpponentStack()));
-		}
-	}
-
-	public class HoverableElement
-	{
-		public FrameworkElement element;
-		public System.Action OnMouseEnter;
-		public System.Action OnMouseLeave;
-		public HoverableElement(FrameworkElement element, System.Action OnMouseEnter, System.Action OnMouseLeave)
-		{
-			this.element = element;
-			this.OnMouseEnter = OnMouseEnter;
-			this.OnMouseLeave = OnMouseLeave;
 		}
 	}
 }

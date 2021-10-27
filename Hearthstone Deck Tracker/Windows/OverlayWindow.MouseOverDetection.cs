@@ -16,6 +16,8 @@ using Hearthstone_Deck_Tracker.Utility;
 using System.Threading.Tasks;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
+using Hearthstone_Deck_Tracker.Utility.Logging;
+using System.Windows.Input;
 
 #endregion
 
@@ -40,7 +42,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private const int MaxBoardSize = 7;
 		private bool _mouseIsOverLeaderboardIcon = false;
 		private int _nextOpponentLeaderboardPosition = -1;
-		private int _currentlyHoveredIndex = -1;
 		private const int MouseLeaveEventDelay = 200;
 
 		private Point CenterOfHand => new Point((float)Width * 0.5 - Height * 0.035, (float)Height * 0.95);
@@ -472,30 +473,64 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return maxHandWidth / count;
 			return cardWidth;
 		}
-
-		private async void UpdateInteractiveElements()
+		
+		private FrameworkElement _currentlyHoveredElement;
+		private void UpdateInteractiveElements()
 		{
 			var cursorPos = GetCursorPos();
 			if(cursorPos.X == -1 && cursorPos.Y == -1)
 				return;
-			var clickableHoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos, AutoScaling));
+			
+			var clickableHoveredIndex = _clickableElements.FindIndex(e => ElementContains(e, cursorPos));
 			SetClickthrough(clickableHoveredIndex < 0);
-			var hoverableHoveredIndex = _hoverableElements.FindIndex(e => ElementContains(e.element, cursorPos, AutoScaling));
-			if(hoverableHoveredIndex != _currentlyHoveredIndex)
+		}
+
+		const int SixtyHz = 1000 / 60;
+		private bool _runningHoverableUpdates;
+		private async void RunHoverUpdates()
+		{
+			if(_runningHoverableUpdates)
+				return;
+			_runningHoverableUpdates = true;
+			Log.Info("Starting overlay hover updates...");
+			while(_hoverableElements.Count > 0)
 			{
-				if(_currentlyHoveredIndex != -1)
+				UpdateHoverable();
+				await Task.Delay(SixtyHz);
+			}
+			Log.Info("Stopping overlay hover updates");
+			_runningHoverableUpdates = false;
+		}
+
+
+		/// <summary>
+		/// Wrapper for MouseEventArgs, used to check whether an event was triggered by custom hover logic.
+		/// </summary>
+		public class CustomMouseEventArgs : MouseEventArgs
+		{
+			public CustomMouseEventArgs(MouseDevice mouse, int timestamp) : base(mouse, timestamp) { }
+		}
+
+		private void UpdateHoverable()
+		{
+			var cursorPos = GetCursorPos();
+			if(cursorPos.X == -1 && cursorPos.Y == -1)
+				return;
+			var hoveredElement = _hoverableElements.FirstOrDefault(x => x.IsVisible && ElementContains(x, cursorPos));
+			if(hoveredElement != _currentlyHoveredElement)
+			{
+				if(_currentlyHoveredElement != null)
 				{
-					await Task.Delay(MouseLeaveEventDelay);
-					if(hoverableHoveredIndex != _currentlyHoveredIndex)
+					if(hoveredElement != _currentlyHoveredElement)
 					{
-						_hoverableElements[_currentlyHoveredIndex].OnMouseLeave();
-						_currentlyHoveredIndex = -1;
+						_currentlyHoveredElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseLeaveEvent });
+						_currentlyHoveredElement = null;
 					}
 				}
-				if(hoverableHoveredIndex != -1)
+				if(hoveredElement != null)
 				{
-					_hoverableElements[hoverableHoveredIndex].OnMouseEnter();
-					_currentlyHoveredIndex = hoverableHoveredIndex;
+					hoveredElement?.RaiseEvent(new CustomMouseEventArgs(Mouse.PrimaryDevice, 0) { RoutedEvent = Mouse.MouseEnterEvent });
+					_currentlyHoveredElement = hoveredElement;
 				}
 			}
 		}
@@ -524,13 +559,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 				   && rotated.Y < rectCorner.Y + rect.Height;
 		}
 
-		public bool ElementContains(FrameworkElement element, Point location, double scaling = 1)
+		public bool ElementContains(FrameworkElement element, Point location)
 		{
 			if(!element.IsVisible)
 				return false;
+			var scaleTransform = element.RenderTransform as ScaleTransform;
+			var scaleX = scaleTransform?.ScaleX ?? 1;
+			var scaleY = scaleTransform?.ScaleY ?? 1;
 			var point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-			var contains= location.X > point.X && location.X < point.X + element.ActualWidth * scaling && location.Y > point.Y
-				   && location.Y < point.Y + element.ActualHeight * scaling;
+			var contains= location.X > point.X && location.X < point.X + element.ActualWidth * scaleX && location.Y > point.Y
+				   && location.Y < point.Y + element.ActualHeight * scaleY;
 			return contains;
 		}
 	}

@@ -50,5 +50,49 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 				OnRegisterHitTestVisible?.Invoke(element, false);
 			}
 		}
+
+		
+		public static readonly DependencyProperty IsOverlayHoverVisibleProperty =
+			DependencyProperty.RegisterAttached("IsOverlayHoverVisible", typeof(bool), typeof(OverlayExtensions), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsOverlayHoverVisibleChange)));
+
+		public static bool GetIsOverlayHoverVisible(DependencyObject obj)
+		{
+			return (bool)obj.GetValue(IsOverlayHoverVisibleProperty);
+		}
+
+		public static void SetIsOverlayHoverVisible(DependencyObject obj, bool value)
+		{
+			obj.SetValue(IsOverlayHoverVisibleProperty, value);
+		}
+
+		public static event Action<FrameworkElement, bool> OnRegisterHoverVisible;
+
+		private static void OnIsOverlayHoverVisibleChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if(!(d is FrameworkElement element))
+				return;
+			if((bool)e.NewValue)
+			{
+				OnRegisterHoverVisible?.Invoke(element, true);
+				UnregisterCallbacks[element] = (object sender, RoutedEventArgs args) =>
+				{
+					if(UnregisterCallbacks.TryGetValue(element, out var callback))
+					{
+						element.Unloaded -= callback;
+						OnRegisterHoverVisible?.Invoke(element, false);
+					}
+				};
+				element.Unloaded += UnregisterCallbacks[element];
+			}
+			else
+			{
+				if(UnregisterCallbacks.TryGetValue(element, out var callback))
+				{
+					element.Unloaded -= callback;
+					UnregisterCallbacks.Remove(element);
+				}
+				OnRegisterHoverVisible?.Invoke(element, false);
+			}
+		}
 	}
 }

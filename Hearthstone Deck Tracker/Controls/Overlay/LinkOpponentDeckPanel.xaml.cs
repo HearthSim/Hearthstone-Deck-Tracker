@@ -2,13 +2,11 @@
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Importing;
 using Hearthstone_Deck_Tracker.Utility;
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
@@ -17,17 +15,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		private LinkOpponentDeckState _linkOpponentDeckState;
-
-		private Visibility _linkOpponentDeckVisibility = Visibility.Hidden;
-		public Visibility LinkOpponentDeckVisibility
-		{
-			get => _linkOpponentDeckVisibility;
-			set
-			{
-				_linkOpponentDeckVisibility = value;
-				OnPropertyChanged();
-			}
-		}
 
 		public Visibility DescriptorVisibility => !Config.Instance.InteractedWithLinkOpponentDeck || !_sessionStartHasInteracted ? Visibility.Visible : Visibility.Collapsed;
 		
@@ -42,13 +29,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public bool AutoShown = false;
+		private bool _autoShown = false;
 
 		public bool IsFriendlyMatch = false;
-
-		private bool _shownByOpponentStack = false;
-
-		private bool _mouseIsOver = false;
 
 		private bool _hasLinkedDeck = false;
 
@@ -56,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public string LinkMessage => LinkOpponentDeckStateConverter.GetLinkMessage(_linkOpponentDeckState);
 
-		public Visibility LinkMessageVisibility => (AutoShown && !Config.Instance.InteractedWithLinkOpponentDeck) || _hasLinkedDeck ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility LinkMessageVisibility => (_autoShown && !Config.Instance.InteractedWithLinkOpponentDeck) || _hasLinkedDeck ? Visibility.Visible : Visibility.Collapsed;
 
 		public Visibility ErrorMessageVisibility => !string.IsNullOrEmpty(ErrorMessage) ? Visibility.Visible : Visibility.Collapsed;
 
@@ -104,49 +87,37 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OnPropertyChanged(nameof(LinkMessageVisibility));
 		}
 
-		public void HideByOpponentStack()
+		private bool _show;
+		public async void Hide(bool force = false)
 		{
-			_shownByOpponentStack = false;
-			Hide(false);
-		}
-
-		public void Hide(bool force = false)
-		{
-			if(force || !_mouseIsOver)
+			_show = false;
+			if(!force)
 			{
-				LinkOpponentDeckVisibility = Visibility.Hidden;
+				await Task.Delay(200);
+				if(_show)
+					return;
 			}
-			AutoShown = false;
+			Visibility = Visibility.Hidden;
+			_autoShown = false;
 			ErrorMessage = "";
 			OnPropertyChanged(nameof(ErrorMessage));
 			OnPropertyChanged(nameof(ErrorMessageVisibility));
 		}
 
-		public void ShowByOpponentStack()
-		{
-			_shownByOpponentStack = true;
-			Show();
-		}
-
-		public void Show()
+		public async void Show(bool auto)
 		{
 			if(IsFriendlyMatch || Config.Instance.EnableLinkOpponentDeckInNonFriendly)
 			{
-				LinkOpponentDeckVisibility = Visibility.Visible;
+				_show = true;
+				if(!auto)
+				{
+					await Task.Delay(200);
+					if(!_show)
+						return;
+				}
+				Visibility = Visibility.Visible;
 				OnPropertyChanged(nameof(LinkMessageVisibility));
 			}
-		}
-
-		private void Border_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			_mouseIsOver = true;
-		}
-
-		private void Border_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-		{
-			_mouseIsOver = false;
-			if(!_shownByOpponentStack)
-				Hide();
 		}
 
 		private void Hyperlink_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -167,6 +138,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				_hasLinkedDeck = false;
 				OnPropertyChanged(nameof(LinkMessage));
 				OnPropertyChanged(nameof(LinkMessageVisibility));
+				Hide(true);
 			}
 		}
 	}
