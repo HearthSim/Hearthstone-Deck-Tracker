@@ -664,7 +664,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(!(e is CustomMouseEventArgs))
 				return;
 			_showMercTasks = true;
-			await Task.Delay(200);
+			await Task.Delay(150);
 			if(!_showMercTasks)
 				return;
 			ShowMercenariesTasks();
