@@ -1,3 +1,12 @@
+## **Release v1.16.4 - 2021-10-28**
+
+**Fixes**
+- Fixed an issue where the "set opponent deck" panel in friendly games would be difficult to interact with in some cases.
+
+**Mercenaries**:
+- Added a "Tasks" icon to the overlay that displays the list of current tasks and their progress on hover.
+
+
 ## **Release v1.16.3 - 2021-10-21**
 **Updated for Hearthstone 21.4.4**
 
