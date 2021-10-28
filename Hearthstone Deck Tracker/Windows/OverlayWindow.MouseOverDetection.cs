@@ -537,14 +537,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public bool EllipseContains(Ellipse ellipse, Point location)
 		{
-			var pos = ellipse.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-			var center = new Point(pos.X + ellipse.Width / 2, pos.Y + ellipse.Height / 2);
-			var radiusX = ellipse.Width / 2;
-			var radiusY = ellipse.Height / 2;
-			if (radiusX <= 0.0 || radiusY <= 0.0)
+			try
+			{
+				var pos = ellipse.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+				var center = new Point(pos.X + ellipse.Width / 2, pos.Y + ellipse.Height / 2);
+				var radiusX = ellipse.Width / 2;
+				var radiusY = ellipse.Height / 2;
+				if (radiusX <= 0.0 || radiusY <= 0.0)
+					return false;
+				var normalized = new Point(location.X - center.X, location.Y - center.Y);
+				return ((normalized.X * normalized.X) / (radiusX * radiusX)) + ((normalized.Y * normalized.Y) / (radiusY * radiusY)) <= 1.0;
+			}
+			catch(InvalidOperationException)
+			{
 				return false;
-			var normalized = new Point(location.X - center.X, location.Y - center.Y);
-			return ((normalized.X * normalized.X) / (radiusX * radiusX)) + ((normalized.Y * normalized.Y) / (radiusY * radiusY)) <= 1.0;
+			}
 		}
 
 		public bool RotatedRectContains(Rectangle rect, Point location)
@@ -566,10 +573,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var scaleTransform = element.RenderTransform as ScaleTransform;
 			var scaleX = scaleTransform?.ScaleX ?? 1;
 			var scaleY = scaleTransform?.ScaleY ?? 1;
-			var point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
-			var contains= location.X > point.X && location.X < point.X + element.ActualWidth * scaleX && location.Y > point.Y
-				   && location.Y < point.Y + element.ActualHeight * scaleY;
-			return contains;
+			try
+			{
+				var point = element.TransformToAncestor(CanvasInfo).Transform(new Point(0, 0));
+				var contains= location.X > point.X && location.X < point.X + element.ActualWidth * scaleX && location.Y > point.Y
+					   && location.Y < point.Y + element.ActualHeight * scaleY;
+				return contains;
+			}
+			catch(InvalidOperationException)
+			{
+				return false;
+			}
 		}
 	}
 }
