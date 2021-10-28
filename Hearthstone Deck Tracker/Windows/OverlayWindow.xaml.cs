@@ -274,6 +274,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				try
 				{
 					Show();
+					RunHoverUpdates();
 				}
 				catch(InvalidOperationException e)
 				{

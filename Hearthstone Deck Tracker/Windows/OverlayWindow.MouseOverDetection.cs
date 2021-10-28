@@ -493,7 +493,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			_runningHoverableUpdates = true;
 			Log.Info("Starting overlay hover updates...");
-			while(_hoverableElements.Count > 0)
+			while(_hoverableElements.Count > 0 && IsVisible)
 			{
 				UpdateHoverable();
 				await Task.Delay(SixtyHz);
