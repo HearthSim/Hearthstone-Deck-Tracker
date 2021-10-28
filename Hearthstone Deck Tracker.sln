@@ -3,13 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hearthstone Deck Tracker", "Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj", "{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hearthstone Deck Tracker", "Hearthstone Deck Tracker\Hearthstone Deck Tracker.csproj", "{E63A3F1C-E662-4E62-BE43-AF27CB9E953D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7CF4E289-B871-4E52-B451-EE7BF1250359} = {7CF4E289-B871-4E52-B451-EE7BF1250359}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTTests", "HDTTests\HDTTests.csproj", "{A99438AD-6733-4FDA-928C-30C37255FF1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HDTTests", "HDTTests\HDTTests.csproj", "{A99438AD-6733-4FDA-928C-30C37255FF1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTUpdate", "HDTUpdate\HDTUpdate.csproj", "{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HDTUpdate", "HDTUpdate\HDTUpdate.csproj", "{4DA33EE8-3F32-4D91-82FA-3BC7F014263D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HDTUninstaller", "HDTUninstaller\HDTUninstaller.csproj", "{245A59F5-6E48-4B5B-B828-24A4C3EED309}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HDTUninstaller", "HDTUninstaller\HDTUninstaller.csproj", "{245A59F5-6E48-4B5B-B828-24A4C3EED309}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{239EBA5D-709C-446C-93FD-40BBF9D5CBBF}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,11 +23,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		lib\HearthDb.dll = lib\HearthDb.dll
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthWatcher", "HearthWatcher\HearthWatcher.csproj", "{02E1843D-3F5D-45E0-9B16-1F28209EED82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HearthWatcher", "HearthWatcher\HearthWatcher.csproj", "{02E1843D-3F5D-45E0-9B16-1F28209EED82}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7CF4E289-B871-4E52-B451-EE7BF1250359} = {7CF4E289-B871-4E52-B451-EE7BF1250359}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HearthWatcher.Test", "HearthWatcher.Test\HearthWatcher.Test.csproj", "{D081BCA4-14FD-4FBC-B92A-82574AB0478B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HearthWatcher.Test", "HearthWatcher.Test\HearthWatcher.Test.csproj", "{D081BCA4-14FD-4FBC-B92A-82574AB0478B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceGenerator", "ResourceGenerator\ResourceGenerator.csproj", "{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceGenerator", "ResourceGenerator\ResourceGenerator.csproj", "{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7CF4E289-B871-4E52-B451-EE7BF1250359} = {7CF4E289-B871-4E52-B451-EE7BF1250359}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap", "Bootstrap\Bootstrap.csproj", "{7CF4E289-B871-4E52-B451-EE7BF1250359}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +86,12 @@ Global
 		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Release|x86.Build.0 = Release|x86
 		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Squirrel|x86.ActiveCfg = Release|x86
 		{944AFE2A-49B4-4E63-BA1D-FC49E5029F36}.Squirrel|x86.Build.0 = Release|x86
+		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Debug|x86.ActiveCfg = Debug|x86
+		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Debug|x86.Build.0 = Debug|x86
+		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Release|x86.ActiveCfg = Release|x86
+		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Release|x86.Build.0 = Release|x86
+		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Squirrel|x86.ActiveCfg = Debug|x86
+		{7CF4E289-B871-4E52-B451-EE7BF1250359}.Squirrel|x86.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@ $PROD_LATEST = "https://api.github.com/repos/HearthSim/HDT-Releases/releases/lat
 
 $buildDir = "$baseDir\Hearthstone Deck Tracker\bin\x86"
 $hdtReleaseDir = "$buildDir\Hearthstone Deck Tracker"
-$squirrelTools = "$baseDir\packages\squirrel.windows.1.9.1\tools"
+$squirrelTools = "$baseDir\packages\squirrel.windows\1.9.1\tools"
 $signtool = "$squirrelTools\signtool.exe"
 $squirrel = "$squirrelTools\Squirrel.exe"
 $cert = "$baseDir\cert.pfx"

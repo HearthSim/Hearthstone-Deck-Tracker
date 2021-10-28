@@ -24,19 +24,5 @@ catch {
 	"Git was not found and is required to run bootstrap.bat. Download git from https://git-scm.com/download and during installation choose `"Use Git from the Windows Command Prompt`"."
 }
 
-function FetchLib($name) {
-	"Fetching $name..."
-	$url = "https://libs.hearthsim.net/hdt/$name.dll"
-	(New-Object Net.WebClient).DownloadFile($url, "$PSScriptRoot\lib\$name.dll")
-}
-
-FetchLib "HearthDb"
-FetchLib "HearthMirror"
-FetchLib "HSReplay"
-FetchLib "BobsBuddy"
-
-git clone -q "https://github.com/HearthSim/HDT-Localization" "HDT-Localization"
-
-Copy-Item "HDT-Localization\*.resx" "Hearthstone Deck Tracker\Properties\" -Force
-
+Invoke-Expression "msbuild Bootstrap/Bootstrap.csproj /p:Configuration=Debug"
 Invoke-Expression "./generate_resources.bat"

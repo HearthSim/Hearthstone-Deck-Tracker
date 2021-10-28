@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk" InitialTargets="Bootstrap">
+
+  <!-- This project does not need to be manually run. It is set as a dependency for the main projects and automatically takes care of all bootstrapping that needs to happen -->
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <PlatformTarget>x86</PlatformTarget>
+    <Platforms>x86</Platforms>
+  </PropertyGroup>
+
+  <Target Name="Bootstrap">
+      <Message Importance="normal" Text="Running Bootstrap" />
+  </Target>
+
+  <PropertyGroup>
+    <SlnDirectory>$(MSBuildProjectDirectory)/..</SlnDirectory>
+    <HDTDirectory>$(SlnDirectory)/Hearthstone Deck Tracker</HDTDirectory>
+
+    <HearthDbUrl>https://libs.hearthsim.net/hdt/HearthDb.dll</HearthDbUrl>
+    <HearthMirrorUrl>https://libs.hearthsim.net/hdt/HearthMirror.dll</HearthMirrorUrl>
+    <HSReplayUrl>https://libs.hearthsim.net/hdt/HSReplay.dll</HSReplayUrl>
+    <BobsBuddyUrl>https://libs.hearthsim.net/hdt/BobsBuddy.dll</BobsBuddyUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <LocalizationFiles Include="$(SlnDirectory)/HDT-Localization/*.resx" />
+  </ItemGroup>
+  
+
+  <Target Name="DownloadDeps" BeforeTargets="Bootstrap">
+    <DownloadFile SourceUrl="$(HearthDbUrl)" DestinationFolder="$(SlnDirectory)/lib" SkipUnchangedFiles="true">
+      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+    </DownloadFile>
+    <DownloadFile SourceUrl="$(HearthMirrorUrl)" DestinationFolder="$(SlnDirectory)/lib" SkipUnchangedFiles="true">
+      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+    </DownloadFile>
+    <DownloadFile SourceUrl="$(HSReplayUrl)" DestinationFolder="$(SlnDirectory)/lib" SkipUnchangedFiles="true">
+      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+    </DownloadFile>
+    <DownloadFile SourceUrl="$(BobsBuddyUrl)" DestinationFolder="$(SlnDirectory)/lib" SkipUnchangedFiles="true">
+      <Output TaskParameter="DownloadedFile" ItemName="Content" />
+    </DownloadFile>
+  </Target>
+
+  <Target Name="CloneHDTLocalization" Condition="!Exists('$(SlnDirectory)/HDT-Localization')" BeforeTargets="Bootstrap">
+      <Message Importance="normal" Text="Couldn't find HDT-Localization repo." />
+      <Exec WorkingDirectory="$(SlnDirectory)" Command="git clone --depth=1 https://github.com/HearthSim/HDT-Localization.git HDT-Localization" />
+      <Copy SourceFiles="@(LocalizationFiles)" DestinationFolder="$(HDTDirectory)/Properties" SkipUnchangedFiles="true"/>
+  </Target>
+
+  <Target Name="UpdateHDTLocalization" Condition="Exists('$(SlnDirectory)/HDT-Localization')" BeforeTargets="Bootstrap">
+      <Message Importance="normal" Text="Fetching latest localizations from HDT-Localization repo." />
+      <Exec WorkingDirectory="$(SlnDirectory)/HDT-Localization" Command="git fetch" />
+      <Exec WorkingDirectory="$(SlnDirectory)/HDT-Localization" Command="git reset --hard origin/master" />
+      <Copy SourceFiles="@(LocalizationFiles)" DestinationFolder="$(HDTDirectory)/Properties" SkipUnchangedFiles="true"/>
+  </Target>
+
+  <Target Name="Changelog" BeforeTargets="Bootstrap">
+    <Copy SourceFiles="$(SlnDirectory)/CHANGELOG.md" DestinationFolder="$(HDTDirectory)/Resources" SkipUnchangedFiles="true"/>
+  </Target>
+</Project>
