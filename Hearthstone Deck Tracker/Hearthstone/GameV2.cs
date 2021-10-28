@@ -182,7 +182,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		private GameType _currentGameType;
-		public GameType CurrentGameType => _currentGameType != GameType.GT_UNKNOWN ? _currentGameType : (_currentGameType = (GameType)HearthMirror.Reflection.GetGameType());
+		public GameType CurrentGameType
+		{
+			get
+			{
+				if(_currentGameType != GameType.GT_UNKNOWN)
+					return _currentGameType;
+				if(_currentMode == Mode.GAMEPLAY)
+				{
+					_currentGameType = (GameType)HearthMirror.Reflection.GetGameType();
+					return _currentGameType;
+				}
+				return GameType.GT_UNKNOWN;
+			}
+		}
 
 		public MatchInfo MatchInfo => _matchInfo ?? (_matchInfo = HearthMirror.Reflection.GetMatchInfo());
 		private bool _matchInfoCacheInvalid = true;
