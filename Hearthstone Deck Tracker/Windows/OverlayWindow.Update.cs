@@ -188,9 +188,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void UpdateIcons()
 		{
 			var inBattlegrounds = _game.IsBattlegroundsMatch;
+			var inMercenaries = _game.IsMercenariesMatch;
 
-			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu || inBattlegrounds ? Collapsed : Visible;
-			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu || inBattlegrounds ? Collapsed : Visible;
+			IconBoardAttackPlayer.Visibility = Config.Instance.HidePlayerAttackIcon || _game.IsInMenu || inBattlegrounds || inMercenaries ? Collapsed : Visible;
+			IconBoardAttackOpponent.Visibility = Config.Instance.HideOpponentAttackIcon || _game.IsInMenu || inBattlegrounds || inMercenaries ? Collapsed : Visible;
 
 			// do the calculation if at least one of the icons is visible
 			if (_game.SetupDone && (IconBoardAttackPlayer.Visibility == Visible || IconBoardAttackOpponent.Visibility == Visible))
