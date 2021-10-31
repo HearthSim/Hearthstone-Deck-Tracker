@@ -570,7 +570,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(!element.IsVisible)
 				return false;
-			var scaleTransform = element.RenderTransform as ScaleTransform;
+			var scaleTransform = GetScaleTransform(element);
 			var scaleX = scaleTransform?.ScaleX ?? 1;
 			var scaleY = scaleTransform?.ScaleY ?? 1;
 			try
@@ -584,6 +584,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 			{
 				return false;
 			}
+		}
+
+		private ScaleTransform GetScaleTransform(FrameworkElement element)
+		{
+			// Only BgTierIcons are marked as clickable but a wrapper is scaled by the OverlayElementBehavior
+			if(element == BattlegroundsMinionsPanel.BgTierIcons)
+				return BgsTopBar.RenderTransform as ScaleTransform;
+
+			return element.RenderTransform as ScaleTransform;
 		}
 	}
 }
