@@ -1,3 +1,8 @@
+## **Release v1.16.5 - 2021-10-31**
+**Fixes**
+- Fixed an issue where the Attack counter would be displayed during Mercenaries gameplay.
+- Fixed an issue where hovering the Minion Tier icons in Battlegrounds would not work correctly at resolutions above 1080p.
+
 ## **Release v1.16.4 - 2021-10-28**
 
 **Fixes**
