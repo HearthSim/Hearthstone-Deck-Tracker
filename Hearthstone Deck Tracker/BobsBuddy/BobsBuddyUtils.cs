@@ -5,7 +5,6 @@ using BobsBuddy.Simulation;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
-using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
@@ -16,6 +15,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private const string ReplicatingMenace_Golden = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantmentTavernBrawl;
 		private const string LivingSpores = NonCollectible.Neutral.LivingSporesToken2;
 		public const string RebornRiteEnchmantment = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
+		public const string SneedsEnchantment = NonCollectible.Neutral.Sneed_Replicate;
 		internal const string RebornRite = NonCollectible.Neutral.RebornRitesTavernBrawl;
 
 		internal static Minion GetMinionFromEntity(Entity entity, IEnumerable<Entity> attachedEntities) 
@@ -46,6 +46,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			// Lich King hero power
 			if(attachedEntities.Any(x => x.CardId == RebornRiteEnchmantment))
 				minion.receivesLichKingPower = true;
+
+			if(attachedEntities.Any(x => x.CardId == SneedsEnchantment))
+				minion.ReceivesSneedHeroPower = true;
 
 			minion.game_id = entity.Id;
 
