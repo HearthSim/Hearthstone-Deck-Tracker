@@ -550,6 +550,12 @@ namespace Hearthstone_Deck_Tracker
 					playerClass = ((CardClass)info.HeroCardClass).ToString().ToUpperInvariant();
 			}
 
+			if(playerClass == null)
+			{
+				Log.Warn($"Could not find playerClass");
+				return;
+			}
+
 			var deck = DeckList.Instance.Decks.FirstOrDefault(x => (!isPVPDR && x.IsDungeonDeck || isPVPDR && x.IsDuelsDeck) && x.Class.ToUpperInvariant() == playerClass.ToUpperInvariant()
 																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count))
 																		&& !(x.IsDungeonRunCompleted ?? false)
