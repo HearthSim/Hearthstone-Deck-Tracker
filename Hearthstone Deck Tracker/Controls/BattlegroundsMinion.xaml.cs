@@ -13,10 +13,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 	public partial class BattlegroundsMinion : INotifyPropertyChanged
 	{
 	
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -39,13 +39,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public Visibility BorderVisibility { get; set; }
 
-		public string AttackDisplay { get; set; }
+		public string? AttackDisplay { get; set; }
 
-		public string HealthDisplay { get; set; }
+		public string? HealthDisplay { get; set; }
 
-		public Brush AttackBrush { get; set; }
+		public Brush? AttackBrush { get; set; }
 
-		public Brush HealthBrush { get; set; }
+		public Brush? HealthBrush { get; set; }
 
 		private Entity _entity;
 

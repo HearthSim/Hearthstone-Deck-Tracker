@@ -35,30 +35,33 @@ namespace Hearthstone_Deck_Tracker
 	public static class Core
 	{
 		internal const int UpdateDelay = 16;
-		private static TrayIcon _trayIcon;
-		private static OverlayWindow _overlay;
-		private static Overview _statsOverview;
+		private static TrayIcon? _trayIcon;
+		private static OverlayWindow? _overlay;
+		private static Overview? _statsOverview;
 		private static int _updateRequestsPlayer;
 		private static int _updateRequestsOpponent;
 		private static DateTime _startUpTime;
 		private static readonly LogWatcherManager LogWatcherManger = new LogWatcherManager();
-		public static Version Version { get; set; }
-		public static GameV2 Game { get; set; }
-		public static MainWindow MainWindow { get; set; }
+		public static Version? Version { get; set; }
 
-		public static Overview StatsOverview => _statsOverview ?? (_statsOverview = new Overview());
+		internal static GameV2? _game;
+		public static GameV2 Game => _game ??= new GameV2();
+		private static MainWindow? _mainWindow;
+		public static MainWindow MainWindow => _mainWindow ??= new MainWindow();
+
+		public static Overview StatsOverview => _statsOverview ??= new Overview();
 
 		public static bool Initialized { get; private set; }
 
-		public static TrayIcon TrayIcon => _trayIcon ?? (_trayIcon = new TrayIcon());
+		public static TrayIcon TrayIcon => _trayIcon ??= new TrayIcon();
 
-		public static OverlayWindow Overlay => _overlay ?? (_overlay = new OverlayWindow(Game));
+		public static OverlayWindow Overlay => _overlay ??= new OverlayWindow(Game);
 
 		internal static bool UpdateOverlay { get; set; } = true;
 		internal static bool Update { get; set; }
 		internal static bool CanShutdown { get; set; }
 
-		internal static event Action<bool> GameIsRunningChanged;
+		internal static event Action<bool>? GameIsRunningChanged;
 
 #pragma warning disable 1998
 		public static async void Initialize()
@@ -94,9 +97,7 @@ namespace Hearthstone_Deck_Tracker
 			UITheme.InitializeTheme().Forget();
 			ThemeManager.Run();
 			ResourceMonitor.Run();
-			Game = new GameV2();
 			Game.SecretsManager.OnSecretsChanged += cards => Overlay.ShowSecrets(cards);
-			MainWindow = new MainWindow();
 			MainWindow.LoadConfigSettings();
 			MainWindow.Show();
 			splashScreenWindow.Close();
@@ -183,7 +184,7 @@ namespace Hearthstone_Deck_Tracker
 				if(hearthDbVersion != Config.Instance.HearthdbVersion)
 				{
 					AssetDownloaders.SetupAssetDownloaders();
-					AssetDownloaders.cardImageDownloader.ClearStorage();
+					AssetDownloaders.cardImageDownloader?.ClearStorage();
 					Config.Instance.HearthdbVersion = hearthDbVersion;
 					Config.Save();
 				}
@@ -194,7 +195,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		private static void CheckForCardImageUpdate(RemoteData.Config rConfig)
+		private static void CheckForCardImageUpdate(RemoteData.Config? rConfig)
 		{
 			try
 			{
@@ -202,7 +203,7 @@ namespace Hearthstone_Deck_Tracker
 				if(remoteVersion.HasValue && remoteVersion > Config.Instance.RemoteHearthstoneVersion)
 				{
 					AssetDownloaders.SetupAssetDownloaders();
-					AssetDownloaders.cardImageDownloader.ClearStorage();
+					AssetDownloaders.cardImageDownloader?.ClearStorage();
 					Config.Instance.RemoteHearthstoneVersion = remoteVersion.Value;
 					Config.Save();
 				}
@@ -376,16 +377,16 @@ namespace Hearthstone_Deck_Tracker
 
 		public static class Windows
 		{
-			private static PlayerWindow _playerWindow;
-			private static OpponentWindow _opponentWindow;
-			private static TimerWindow _timerWindow;
-			private static StatsWindow _statsWindow;
+			private static PlayerWindow? _playerWindow;
+			private static OpponentWindow? _opponentWindow;
+			private static TimerWindow? _timerWindow;
+			private static StatsWindow? _statsWindow;
 
-			public static PlayerWindow PlayerWindow => _playerWindow ?? (_playerWindow = new PlayerWindow(Game));
-			public static OpponentWindow OpponentWindow => _opponentWindow ?? (_opponentWindow = new OpponentWindow(Game));
-			public static TimerWindow TimerWindow => _timerWindow ?? (_timerWindow = new TimerWindow(Config.Instance));
-			public static StatsWindow StatsWindow => _statsWindow ?? (_statsWindow = new StatsWindow());
-			public static CapturableOverlayWindow CapturableOverlay;
+			public static PlayerWindow PlayerWindow => _playerWindow ??= new PlayerWindow(Game);
+			public static OpponentWindow OpponentWindow => _opponentWindow ??= new OpponentWindow(Game);
+			public static TimerWindow TimerWindow => _timerWindow ??= new TimerWindow(Config.Instance);
+			public static StatsWindow StatsWindow => _statsWindow ??= new StatsWindow();
+			public static CapturableOverlayWindow? CapturableOverlay;
 		}
 
 		internal static bool StatsOverviewInitialized => _statsOverview != null;

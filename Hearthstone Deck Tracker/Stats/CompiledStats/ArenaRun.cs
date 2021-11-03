@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public Deck Deck { get; }
 
-		public string Class => Deck.Class;
+		public string? Class => Deck.Class;
 
 		public BitmapImage ClassImage => Deck.ClassImage;
 
@@ -34,34 +34,34 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public int Losses => Deck.DeckStats.Games.Count(x => x.Result == GameResult.Loss);
 
-		public int Gold => Deck.ArenaReward.Gold;
+		public int Gold => Deck.ArenaReward?.Gold ?? 0;
 
-		public int Dust => Deck.ArenaReward.Dust;
+		public int Dust => Deck.ArenaReward?.Dust ?? 0;
 
-		public ArenaRewardPacks[] Packs => Deck.ArenaReward.Packs;
+		public ArenaRewardPacks[] Packs => Deck.ArenaReward?.Packs ?? new ArenaRewardPacks[0];
 
-		public int PackCount => Deck.ArenaReward.Packs.Count(x => x != ArenaRewardPacks.None);
+		public int PackCount => Deck.ArenaReward?.Packs.Count(x => x != ArenaRewardPacks.None) ?? 0;
 
 		public string PackString
 		{
 			get
 			{
-				var packs = Deck.ArenaReward.Packs.Where(x => x != ArenaRewardPacks.None).ToList();
-				return packs.Any() ? packs.Select(x => EnumDescriptionConverter.GetDescription(x)).Aggregate((c, n) => c + ", " + n) : "None";
+				var packs = Deck.ArenaReward?.Packs.Where(x => x != ArenaRewardPacks.None).ToList();
+				return packs != null && packs.Any() ? packs.Select(x => EnumDescriptionConverter.GetDescription(x)).Aggregate((c, n) => c + ", " + n) : "None";
 			}
 		}
 
-		public int CardCount => Deck.ArenaReward.Cards.Count(x => !string.IsNullOrEmpty(x?.CardId));
+		public int CardCount => Deck.ArenaReward?.Cards.Count(x => !string.IsNullOrEmpty(x?.CardId)) ?? 0;
 
-		public int CardCountGolden => Deck.ArenaReward.Cards.Count(x => !string.IsNullOrEmpty(x?.CardId) && x.Golden);
+		public int CardCountGolden => Deck.ArenaReward?.Cards.Count(x => x != null && !string.IsNullOrEmpty(x.CardId) && x.Golden) ?? 0;
 
 		public string CardString
 		{
 			get
 			{
-				var cards = Deck.ArenaReward.Cards.Where(x => !string.IsNullOrEmpty(x?.CardId)).ToList();
-				return cards.Any()
-						   ? cards.Select(x => (Database.GetCardFromId(x.CardId).LocalizedName) + (x.Golden ? " (golden)" : ""))
+				var cards = Deck.ArenaReward?.Cards.Where(x => !string.IsNullOrEmpty(x?.CardId)).ToList();
+				return cards != null && cards.Any()
+						   ? cards.Select(x => (Database.GetCardFromId(x?.CardId)?.LocalizedName) + (x?.Golden == true ? " (golden)" : ""))
 								  .Aggregate((c, n) => c + ", " + n) : "None";
 			}
 		}

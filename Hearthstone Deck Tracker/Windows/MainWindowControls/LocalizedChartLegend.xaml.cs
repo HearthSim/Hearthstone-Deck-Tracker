@@ -12,9 +12,9 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			DataContext = this;
 		}
 
-		private List<SeriesViewModel> _series;
+		private List<SeriesViewModel>? _series;
 
-		public List<SeriesViewModel> Series
+		public List<SeriesViewModel>? Series
 		{
 			get => _series;
 			set
@@ -24,9 +24,9 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		protected virtual void OnPropertyChanged(string propertyName = null)
+		protected virtual void OnPropertyChanged(string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

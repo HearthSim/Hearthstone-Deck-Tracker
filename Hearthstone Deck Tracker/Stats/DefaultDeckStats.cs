@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public static DefaultDeckStats Instance => _instance.Value;
 
-		public DeckStats GetDeckStats(string hero)
+		public DeckStats? GetDeckStats(string? hero)
 		{
 			if(string.IsNullOrEmpty(hero))
 				return null;

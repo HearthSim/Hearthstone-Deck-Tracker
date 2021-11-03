@@ -18,16 +18,16 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		{
 			InitializeComponent();
 		}
-		public void SetDeck(Deck deck) => ((HsReplayDeckInfoViewModel)DataContext).Deck = deck;
+		public void SetDeck(Deck? deck) => ((HsReplayDeckInfoViewModel)DataContext).Deck = deck;
 	}
 
 	public class HsReplayDeckInfoViewModel : ViewModel
 	{
-		private Deck _deck;
+		private Deck? _deck;
 		private double _winrate;
 		private bool _hasHsReplayData;
 		private bool _hasDeck;
-		private MatchupData _matchupData;
+		private MatchupData? _matchupData;
 		private bool _loading;
 
 		public HsReplayDeckInfoViewModel()
@@ -39,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			};
 		}
 
-		public Deck Deck
+		public Deck? Deck
 		{
 			get => _deck;
 			set
@@ -56,10 +56,10 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 
 		private async void FetchData()
 		{
-			if(!HasHsReplayData)
+			if(!HasHsReplayData || _deck == null || string.IsNullOrEmpty(ShortId))
 				return;
 			Loading = true;
-			var data = await HsReplayDataManager.Winrates.Get(ShortId, _deck.GuessFormatType());
+			var data = await HsReplayDataManager.Winrates.Get(ShortId!, _deck.GuessFormatType());
 			MatchupData = new MatchupData(data);
 			Loading = false;
 		}
@@ -74,14 +74,14 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			}
 		}
 
-		public string ShortId { get; set; }
+		public string? ShortId { get; set; }
 
 		public bool HasHsReplayData
 		{
 			get => _hasHsReplayData;
 			set
 			{
-				_hasHsReplayData = value; 
+				_hasHsReplayData = value;
 				OnPropertyChanged();
 			}
 		}
@@ -107,7 +107,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			}
 		}
 
-		public MatchupData MatchupData
+		public MatchupData? MatchupData
 		{
 			get => _matchupData;
 			set

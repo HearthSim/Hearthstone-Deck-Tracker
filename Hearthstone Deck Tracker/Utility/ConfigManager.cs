@@ -13,19 +13,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public static class ConfigManager
 	{
-		public static Version UpdatedVersion { get; private set; }
-		public static Version PreviousVersion { get; private set; }
+		public static Version? UpdatedVersion { get; private set; }
+		public static Version? PreviousVersion { get; private set; }
 
 		public static void Run()
 		{
 			PreviousVersion = string.IsNullOrEmpty(Config.Instance.CreatedByVersion) ? null : new Version(Config.Instance.CreatedByVersion);
 			var currentVersion = Helper.GetCurrentVersion();
-			if(currentVersion != null)
-			{
-				// Assign current version to the config instance so that it will be saved when the config
-				// is rewritten to disk, thereby telling us what version of the application created it
-				Config.Instance.CreatedByVersion = currentVersion.ToString();
-			}
+
+			// Assign current version to the config instance so that it will be saved when the config
+			// is rewritten to disk, thereby telling us what version of the application created it
+			Config.Instance.CreatedByVersion = currentVersion.ToString();
+
 			ConvertLegacyConfig(currentVersion, PreviousVersion);
 
 			if(Config.Instance.SelectedTags.Count == 0)
@@ -39,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		// Logic for dealing with legacy config file semantics
 		// Use difference of versions to determine what should be done
-		private static void ConvertLegacyConfig(Version currentVersion, Version configVersion)
+		private static void ConvertLegacyConfig(Version currentVersion, Version? configVersion)
 		{
 			var converted = false;
 
@@ -268,8 +267,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 						}
 						return null;
 					});
-					Config.Instance.DeckPanelOrderPlayer = Config.Instance.PanelOrderPlayer.Select(convert).Where(x => x.HasValue).Select(x => x.Value).ToArray();
-					Config.Instance.DeckPanelOrderOpponent = Config.Instance.PanelOrderOpponent.Select(convert).Where(x => x.HasValue).Select(x => x.Value).ToArray();
+					Config.Instance.DeckPanelOrderPlayer = Config.Instance.PanelOrderPlayer.Select(convert).Where(x => x.HasValue).Select(x => x!.Value).ToArray();
+					Config.Instance.DeckPanelOrderOpponent = Config.Instance.PanelOrderOpponent.Select(convert).Where(x => x.HasValue).Select(x => x!.Value).ToArray();
 					converted = true;
 				}
 			}

@@ -21,14 +21,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory
 
 	public class DeckVersionChangeViewModel : ViewModel
 	{
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		public DeckVersionChangeViewModel(Deck prev, Deck next)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		{
 			Versions = new DeckDiffData(prev, next);
 		}
 
 		private DeckDiffData _versions;
-		private string _header;
-		private IEnumerable<Card> _cards;
+		private string? _header;
+		private IEnumerable<Card>? _cards;
 
 		public DeckDiffData Versions
 		{
@@ -37,12 +39,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory
 			{
 				_versions = value; 
 				OnPropertyChanged();
-				Header = $"{Versions?.Previous.Version.ShortVersionString} -> {Versions?.Next.Version.ShortVersionString}";
+				Header = $"{value.Previous.Version.ShortVersionString} -> {value.Next.Version.ShortVersionString}";
 				Cards = value.Next - value.Previous;
 			}
 		}
 
-		public string Header
+		public string? Header
 		{
 			get => _header;
 			set
@@ -52,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory
 			}
 		}
 
-		public IEnumerable<Card> Cards
+		public IEnumerable<Card>? Cards
 		{
 			get => _cards;
 			set

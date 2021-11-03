@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static async Task<string> GetUploadToken()
 		{
 			if(!string.IsNullOrEmpty(Account.Instance.UploadToken))
-				return Account.Instance.UploadToken;
+				return Account.Instance.UploadToken!;
 			UploadTokenHistory.Write("Trying to request new token");
 			string token;
 			try
@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static async Task UploadPack(PackData data) => await Client.UploadPack(data, await GetUploadToken());
 
-		private static ClientConfig TryGetConfig()
+		private static ClientConfig? TryGetConfig()
 		{
 			var file = new FileInfo(Path.Combine(Config.AppDataPath, "hsreplaynet.xml"));
 			if(!file.Exists)
@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		internal static async Task<DecksData> GetAvailableDecks()
+		internal static async Task<DecksData?> GetAvailableDecks()
 		{
 			Log.Info("Fetching available decks...");
 			try
@@ -122,7 +122,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		}
 
 		// Todo: Add classic support
-		internal static async Task<DeckWinrateData> GetDeckWinrates(string deckId, bool wild)
+		internal static async Task<DeckWinrateData?> GetDeckWinrates(string deckId, bool wild)
 		{
 			Log.Info("Fetching winrates for deck " + deckId);
 			try
@@ -132,19 +132,19 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				if(data == null)
 					return null;
 
-				var winrates = data.Data["data"].Children().OfType<JProperty>().Where(x => x.Values().Any());
+				var winrates = data.Data["data"]?.Children().OfType<JProperty>().Where(x => x.Values().Any());
 				var dict = winrates.ToDictionary(
 					x => x.Name,
-					x => x.Value[0]["winrate"].Value<double>()
+					x => x.Value[0]?["winrate"]?.Value<double>() ?? 0.0
 				);
 
-				var totalWinrate = data.Data.SelectToken("metadata.total_winrate").Value<double>();
+				var totalWinrate = data.Data?.SelectToken("metadata.total_winrate")?.Value<double>();
 
 				return new DeckWinrateData
 				{
 					ClientTimeStamp = DateTime.Now,
 					ServerTimeStamp = data.ServerTimeStamp,
-					TotalWinrate = totalWinrate,
+					TotalWinrate = totalWinrate ?? 0.0,
 					ClassWinrates = dict
 				};
 			}

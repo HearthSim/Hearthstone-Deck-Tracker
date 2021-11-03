@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		private int _unhandledExceptions;
 		private bool _isEnabled;
 		private bool _loaded;
-		private MenuItem _menuItem;
+		private MenuItem? _menuItem;
 
 		public PluginWrapper()
 		{
@@ -35,21 +35,21 @@ namespace Hearthstone_Deck_Tracker.Plugins
 			AssemblyName = assemblyName;
 		}
 
-		public string FileName { get; set; }
-		public IPlugin Plugin { get; set; }
-		public string AssemblyName { get; set; }
+		public string? FileName { get; set; }
+		public IPlugin? Plugin { get; set; }
+		public string? AssemblyName { get; set; }
 
-		public MenuItem MenuItem
+		public MenuItem? MenuItem
 		{
 			get => _menuItem;
 			set
 			{
-				_menuItem = value; 
+				_menuItem = value;
 				OnPropertyChanged();
 			}
 		}
 
-		public string Name => Plugin != null ? Plugin.Name : FileName;
+		public string? Name => Plugin != null ? Plugin.Name : FileName;
 
 		public string NameAndVersion => Name + " " + (Plugin?.Version.ToString() ?? "");
 
@@ -168,10 +168,10 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		}
 
 		internal bool UnhandledException() => ++_unhandledExceptions > PluginManager.MaxExceptions / 10;
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

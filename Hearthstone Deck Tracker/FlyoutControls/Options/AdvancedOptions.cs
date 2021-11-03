@@ -29,10 +29,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 
 		public SolidColorBrush Color => new SolidColorBrush(Colors.YellowGreen);
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

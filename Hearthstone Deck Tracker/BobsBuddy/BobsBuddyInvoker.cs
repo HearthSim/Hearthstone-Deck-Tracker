@@ -16,6 +16,7 @@ using static Hearthstone_Deck_Tracker.BobsBuddy.BobsBuddyUtils;
 using BobsBuddy.Simulation;
 using System.Text.RegularExpressions;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
@@ -37,14 +38,14 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static BobsBuddyPanel BobsBuddyDisplay => Core.Overlay.BobsBuddyDisplay;
 		private static bool ReportErrors => Remote.Config.Data?.BobsBuddy?.SentryReporting ?? false;
 
-		private TestInput _input;
+		private TestInput? _input;
 		private int _turn;
 		static int LogLinesKept = Remote.Config.Data?.BobsBuddy?.LogLinesKept ?? 100;
 		public string OpponentCardId = "";
 		public string PlayerCardId = "";
-		private Entity _attackingHero;
-		private Entity _defendingHero;
-		public Entity LastAttackingHero = null;
+		private Entity? _attackingHero;
+		private Entity? _defendingHero;
+		public Entity? LastAttackingHero = null;
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
 		private static Dictionary<int, Minion> _currentOpponentMinions = new Dictionary<int, Minion>();
@@ -53,8 +54,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
 		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
-		private const string LichKingHeroPowerId = NonCollectible.Neutral.RebornRitesTavernBrawl;
-		private const string LichKingHeroPowerEnchantmentId = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
 		private static bool _removedLichKingHeroPowerFromMinion = false;
 		public static bool CanRemoveLichKing => true;
 		private bool RunSimulationAfterCombat => _currentOpponentSecrets.Any();
@@ -106,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		}
 
 
-		public TestOutput Output { get; private set; }
+		public TestOutput? Output { get; private set; }
 
 		public BobsBuddyErrorState ErrorState { get; private set; }
 
@@ -187,8 +186,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(CanRemoveLichKing)
 				{
 					var lichKingMinions = new List<Minion>();
-					var playerLichMinions = _input.opponentSide.Where(x => x.receivesLichKingPower).ToList();
-					var opponentLichMinions = _input.playerSide.Where(x => x.receivesLichKingPower).ToList();
+					var playerLichMinions = _input?.opponentSide.Where(x => x.receivesLichKingPower).ToList() ?? new List<Minion>();
+					var opponentLichMinions = _input?.playerSide.Where(x => x.receivesLichKingPower).ToList() ?? new List<Minion>();
 					lichKingMinions.AddRange(playerLichMinions);
 					lichKingMinions.AddRange(opponentLichMinions);
 					if(lichKingMinions.Any())
@@ -209,13 +208,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							}
 						}
 					}
-					if(playerLichMinions.Any() && _input.heroPowerInfo?.PlayerActivatedPower == HeroPower.None)
+					if(playerLichMinions.Any() && _input?.heroPowerInfo?.PlayerActivatedPower == HeroPower.None)
 					{
 						_removedLichKingHeroPowerFromMinion = true;
 						foreach(var minion in playerLichMinions)
 							minion.receivesLichKingPower = false;
 					}
-					if(opponentLichMinions.Any() && _input.heroPowerInfo?.OpponentActivatedPower == HeroPower.None)
+					if(opponentLichMinions.Any() && _input?.heroPowerInfo?.OpponentActivatedPower == HeroPower.None)
 					{
 						_removedLichKingHeroPowerFromMinion = true;
 						foreach(var minion in opponentLichMinions)
@@ -224,7 +223,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 
 				if(!RunSimulationAfterCombat)
-					RunAndDisplaySimulationAsync();
+					RunAndDisplaySimulationAsync().Forget();
 			}
 			catch(Exception e)
 			{
@@ -297,7 +296,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 
 				if(validateResults)
-					ValidateSimulationResultAsync();
+					ValidateSimulationResultAsync().Forget();
 			}
 			catch(Exception e)
 			{
@@ -323,7 +322,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		internal void UpdateAttackingEntities(Entity attacker, Entity defender)
 		{
-			if(attacker == null || !attacker.IsHero || defender == null || !defender.IsHero)
+			if(!attacker.IsHero || !defender.IsHero)
 				return;
 			DebugLog($"Updating entities with attacker={attacker.Card.Name}, defender={defender.Card.Name}");
 			_defendingHero = defender;
@@ -359,8 +358,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		
 
 			//We set OpponentCardId and PlayerCardId here so that later we can do lookups for these entites without using _game.Opponent/Player, which might be innacurate or null depending on when they're accessed.
-			OpponentCardId = opponentHero.CardId;
-			PlayerCardId = playerHero.CardId;
+			OpponentCardId = opponentHero.CardId ?? "";
+			PlayerCardId = playerHero.CardId ?? "";
 
 			input.SetHealths(playerHero.Health, opponentHero.Health);
 			if(input.opponentHealth <= 0)
@@ -403,7 +402,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				.Where(x => x.IsAttachedTo(entityId) && (x.IsInPlay || x.IsInSetAside || x.IsInGraveyard))
 				.Select(x => x.Clone());
 
-		private async Task<TestOutput> RunSimulation()
+		private async Task<TestOutput?> RunSimulation()
 		{
 			DebugLog("Running simulations...");
 			if(_input == null)
@@ -416,7 +415,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				if(RunSimulationAfterCombat)
 				{
-					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !String.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfIf).ToList());
+					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !string.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfIf).ToList());
 					_input.playerIsAkazamarak = false;
 					DebugLog($"Set opponent to Akazamarak with {_input.secretsAndPriorities.Count} secrets.");
 				}
@@ -560,7 +559,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
 			{
 				// Akazamzarak hero power - secrets are supported but not for lethal.
-				if(_input.opponentPowerID == NonCollectible.Neutral.PrestidigitationTavernBrawl)
+				if(_input?.opponentPowerID == NonCollectible.Neutral.PrestidigitationTavernBrawl)
 				{
 					DebugLog("Opponent was Akazamarak. Currently not reporting lethal results. Exiting.");
 					return;
@@ -579,21 +578,21 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)
-			=> result == CombatResult.Tie && Output.tieRate == 0
-			|| result == CombatResult.Win && Output.winRate == 0
-			|| result == CombatResult.Loss && Output.lossRate == 0;
+			=> result == CombatResult.Tie && Output?.tieRate == 0
+			|| result == CombatResult.Win && Output?.winRate == 0
+			|| result == CombatResult.Loss && Output?.lossRate == 0;
 
 		private bool IsIncorrectLethalResult(LethalResult result)
-			=> result == LethalResult.FriendlyDied && Output.myDeathRate == 0
-			|| result == LethalResult.OpponentDied && Output.theirDeathRate == 0;
+			=> result == LethalResult.FriendlyDied && Output?.myDeathRate == 0
+			|| result == LethalResult.OpponentDied && Output?.theirDeathRate == 0;
 
 		private bool OpposingKelThuzadDied(LethalResult result)
-			=> result == LethalResult.OpponentDied && _input.OpponentIsKelThuzad();
+			=> result == LethalResult.OpponentDied && _input != null && _input.OpponentIsKelThuzad();
 
 		private void AlertWithLastInputOutput(string result)
 		{
 			DebugLog($"Queueing alert... (valid input: {_input != null})");
-			if(_input != null)
+			if(_input != null && Output != null)
 				Sentry.QueueBobsBuddyTerminalCase(_input, Output, result, _turn, _recentHDTLog, _game.CurrentRegion);
 		}
 	}

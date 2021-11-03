@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class MainWindow
 	{
-		public async void ImportDeck(string url = null)
+		public async void ImportDeck(string? url = null)
 		{
 			var result = await ImportDeckFromUrl(url);
 			if(result.WasCancelled)
@@ -42,12 +42,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public class ImportingResult
 		{
-			public Deck Deck { get; set; }
-			public string Url { get; set; }
+			public Deck? Deck { get; set; }
+			public string? Url { get; set; }
 			public bool WasCancelled { get; set; }
 		}
 
-		private async Task<ImportingResult> ImportDeckFromUrl(string url = null, bool checkClipboard = true)
+		private async Task<ImportingResult> ImportDeckFromUrl(string? url = null, bool checkClipboard = true)
 		{
 			var fromClipboard = false;
 			if(url == null)
@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return new ImportingResult { Deck = deck, Url = url };
 		}
 
-		private async Task<string> InputDeckUrl()
+		private async Task<string?> InputDeckUrl()
 		{
 			try
 			{
@@ -120,7 +120,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(splitEntry.Length != 2)
 						continue;
 					var card = Database.GetCardFromId(splitEntry[0]);
-					if(card.Id == "UNKNOWN")
+					if(card == null || card.Id == "UNKNOWN")
 						continue;
 					int.TryParse(splitEntry[1], out var count);
 					card.Count = count;
@@ -152,7 +152,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					try
 					{
-						Deck deck = null;
+						Deck? deck = null;
 
 						if(file.EndsWith(".txt"))
 						{
@@ -167,6 +167,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 								card.Load();
 							TagControlEdit.SetSelectedTags(deck.Tags);
 						}
+						if(deck == null)
+							throw new Exception("No deck found");
 						if(Config.Instance.AutoSaveOnImport || dialog.FileNames.Length > 1)
 							DeckManager.SaveDeck(deck);
 						else
@@ -201,7 +203,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public async Task StartArenaImporting()
 		{
-			ProgressDialogController controller = null;
+			ProgressDialogController? controller = null;
 			if(!Core.Game.IsRunning)
 			{
 				Log.Info("Waiting for game...");
@@ -274,14 +276,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var arenaDeck = new Deck
 			{
-				Class = Database.GetCardFromId(deck.Hero).PlayerClass,
+				Class = Database.GetCardFromId(deck.Hero)?.PlayerClass,
 				HsId = deck.Id,
 				Cards = new ObservableCollection<Card>(deck.Cards.Select(x =>
 				{
 					var card = Database.GetCardFromId(x.Id);
+					if(card == null)
+						return null;
 					card.Count = x.Count;
 					return card;
-				})),
+				}).WhereNotNull()),
 				LastEdited = DateTime.Now,
 				IsArenaDeck = true
 			};

@@ -30,20 +30,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Task WaitForDuration(int milliseconds)
 		{
-			var tcs = new TaskCompletionSource<object>();
+			var tcs = new TaskCompletionSource<object?>();
 			TimedTasks.Add(new TimedTaskCompletionSource<object>(tcs, Time.AddMilliseconds(milliseconds)));
 			return tcs.Task;
 		}
 
 		public class TimedTaskCompletionSource<T>
 		{
-			public TimedTaskCompletionSource(TaskCompletionSource<T> taskCompletionSource, DateTime expirationTime)
+			public TimedTaskCompletionSource(TaskCompletionSource<T?> taskCompletionSource, DateTime expirationTime)
 			{
 				TaskCompletionSource = taskCompletionSource;
 				ExpirationTime = expirationTime;
 			}
 
-			public TaskCompletionSource<T> TaskCompletionSource { get; set; }
+			public TaskCompletionSource<T?> TaskCompletionSource { get; set; }
 			public DateTime ExpirationTime { get; set; }
 		}
 	}

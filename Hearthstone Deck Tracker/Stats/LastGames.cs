@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 	{
 		private const int MaxGamesCount = 10;
 		private const string FileName = "LastGames.xml";
-		private List<GameInfo> _gameInfos;
+		private List<GameInfo>? _gameInfos;
 		private bool _hasGames;
 
 		static LastGames()
@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		private static string FilePath => Path.Combine(Config.AppDataPath, FileName);
 
-		public List<GameInfo> GameInfos => _gameInfos ?? (_gameInfos = Load());
+		public List<GameInfo> GameInfos => _gameInfos ??= Load();
 
 		public List<GameStats> Games => GetGames();
 
@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			var games = new List<GameStats>();
 			foreach(var gi in GameInfos)
 			{
-				DeckStats stats;
+				DeckStats? stats;
 				if(gi.DeckId != Guid.Empty)
 					DeckStatsList.Instance.DeckStats.TryGetValue(gi.DeckId, out stats);
 				else if(!string.IsNullOrEmpty(gi.Hero))
@@ -74,14 +74,14 @@ namespace Hearthstone_Deck_Tracker.Stats
 				
 			}
 			foreach(var game in remove)
-				_gameInfos.Remove(game);
+				_gameInfos?.Remove(game);
 			HasGames = games.Any();
 			return games;
 		} 
 
 		public void Add(GameStats game) => Add(game.DeckId, game.GameId, game.PlayerHero);
 
-		public void Add(Guid deckId, Guid gameId, string hero)
+		public void Add(Guid deckId, Guid gameId, string? hero)
 		{
 			GameInfos.Insert(0, new GameInfo(deckId, gameId, hero));
 			if(GameInfos.Count > MaxGamesCount)
@@ -117,7 +117,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 			try
 			{
-				XmlManager<List<GameInfo>>.Save(FilePath, Instance._gameInfos);
+				if(Instance._gameInfos != null)
+					XmlManager<List<GameInfo>>.Save(FilePath, Instance._gameInfos);
 			}
 			catch(Exception e)
 			{
@@ -147,10 +148,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -162,7 +163,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 		}
 
-		public GameInfo(Guid deckId, Guid gameId, string hero = null)
+		public GameInfo(Guid deckId, Guid gameId, string? hero = null)
 		{
 			DeckId = deckId;
 			GameId = gameId;
@@ -177,6 +178,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public Guid GameId { get; set; }
 
 		[XmlAttribute("hero")]
-		public string Hero { get; set; }
+		public string? Hero { get; set; }
 	}
 }

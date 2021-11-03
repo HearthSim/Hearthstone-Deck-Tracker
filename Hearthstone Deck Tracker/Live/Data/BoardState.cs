@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 	public class GameStart
 	{
 		[JsonProperty("deck")]
-		public BoardStateDeck Deck { get; set; }
+		public BoardStateDeck? Deck { get; set; }
 
 		[JsonProperty("rank")]
 		public int Rank { get; set; }
@@ -27,24 +27,24 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 	public class BoardState
 	{
 		[JsonProperty("player")]
-		public BoardStatePlayer Player { get; set; }
+		public BoardStatePlayer? Player { get; set; }
 
 		[JsonProperty("opponent")]
-		public BoardStatePlayer Opponent { get; set; }
+		public BoardStatePlayer? Opponent { get; set; }
 
 		[JsonProperty("game_type")]
 		public BnetGameType GameType { get; set; }
 
 		[JsonProperty("bobs_buddy_state")]
-		public BobsBuddyState BobsBuddyOutput { get; set; }
+		public BobsBuddyState? BobsBuddyOutput { get; set; }
 
-		public bool Equals(BoardState boardState)
+		public bool Equals(BoardState? boardState)
 		{
 			if(!Player?.Equals(boardState?.Player) ?? false)
 				return false;
 			if(!Opponent?.Equals(boardState?.Opponent) ?? false)
 				return false;
-			if(GameType != boardState.GameType)
+			if(GameType != boardState?.GameType)
 				return false;
 			if(!BobsBuddyOutput?.Equals(boardState?.BobsBuddyOutput) ?? false)
 				return false;
@@ -55,13 +55,13 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 	public class BoardStatePlayer
 	{
 		[JsonProperty("board", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int[] Board { get; set; }
+		public int[]? Board { get; set; }
 
 		[JsonProperty("hand", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public BoardStateHand Hand { get; set; }
+		public BoardStateHand? Hand { get; set; }
 
 		[JsonProperty("deck", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public BoardStateDeck Deck { get; set; }
+		public BoardStateDeck? Deck { get; set; }
 
 		[JsonProperty("hero", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int Hero { get; set; }
@@ -76,12 +76,12 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		public int Fatigue { get; set; }
 
 		[JsonProperty("secrets", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int[] Secrets { get; set; }
+		public int[]? Secrets { get; set; }
 
 		[JsonProperty("quest", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public BoardStateQuest Quest { get; set; }
+		public BoardStateQuest? Quest { get; set; }
 
-		public bool Equals(BoardStatePlayer other)
+		public bool Equals(BoardStatePlayer? other)
 		{
 			if(Hero != other?.Hero)
 				return false;
@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("simulation_state")]
 		public TwitchSimulationState SimulationState {get; set;}
 
-		public bool Equals(BobsBuddyState other)
+		public bool Equals(BobsBuddyState? other)
 		{
 			if(other == null)
 				return false;
@@ -152,7 +152,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("total")]
 		public int Total { get; set; }
 
-		public bool Equals(BoardStateQuest other)
+		public bool Equals(BoardStateQuest? other)
 		{
 			if(DbfId != other?.DbfId)
 				return false;
@@ -167,12 +167,12 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 	public class BoardStateHand
 	{
 		[JsonProperty("cards", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public int[] Cards { get; set; }
+		public int[]? Cards { get; set; }
 
 		[JsonProperty("size")]
 		public int Size { get; set; }
 
-		public bool Equals(BoardStateHand other)
+		public bool Equals(BoardStateHand? other)
 		{
 			if(Size != other?.Size)
 				return false;
@@ -185,10 +185,10 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 	public class BoardStateDeck
 	{
 		[JsonProperty("cards", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public List<int[]> Cards { get; set; }
+		public List<int[]>? Cards { get; set; }
 
 		[JsonProperty("name", DefaultValueHandling = DefaultValueHandling.Ignore)]
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		[JsonProperty("hero", DefaultValueHandling = DefaultValueHandling.Ignore)]
 		public int Hero { get; set; }
@@ -205,7 +205,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 		[JsonProperty("size")]
 		public int Size { get; set; }
 
-		public bool Equals(BoardStateDeck other)
+		public bool Equals(BoardStateDeck? other)
 		{
 			if(Size != other?.Size)
 				return false;
@@ -223,7 +223,7 @@ namespace Hearthstone_Deck_Tracker.Live.Data
 				return false;
 			if(Cards != null)
 			{
-				if(Cards.Count != other.Cards.Count)
+				if(Cards.Count != other.Cards?.Count)
 					return false;
 				if(Cards.Any(card => !other.Cards.Any(card.SequenceEqual)))
 					return false;

@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		private readonly int _delay;
 		private readonly int _tolerance;
-		private object _current;
+		private object? _current;
 
 		public DelayedMouseOver(int delay, int tolerance = 3)
 		{
@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			_tolerance = tolerance;
 		}
 
-		public async void DelayedMouseOverDetection(object target, Action onSuccess, Action onMoved = null, int? delayOverride = null)
+		public async void DelayedMouseOverDetection(object target, Action onSuccess, Action? onMoved = null, int? delayOverride = null)
 		{
 			if(_current == target)
 				return;

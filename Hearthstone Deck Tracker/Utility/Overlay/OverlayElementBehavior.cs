@@ -19,27 +19,27 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public FrameworkElement Element { get; }
 
-		public Func<double> GetTop { get; set;  }
-		public Func<double> GetRight { get; set; }
-		public Func<double> GetBottom { get; set; }
-		public Func<double> GetLeft { get; set;  }
+		public Func<double>? GetTop { get; set;  }
+		public Func<double>? GetRight { get; set; }
+		public Func<double>? GetBottom { get; set; }
+		public Func<double>? GetLeft { get; set;  }
 
-		public Func<double> GetScaling { get; set; }
+		public Func<double>? GetScaling { get; set; }
 
 		public Side AnchorSide { get; set; }
 
 		public AnimationType EntranceAnimation { get; set; }
 		public AnimationType ExitAnimation { get; set; }
 
-		public Action HideCallback { get; set; }
-		public Action ShowCallback { get; set; }
+		public Action? HideCallback { get; set; }
+		public Action? ShowCallback { get; set; }
 
 		public OverlayElementBehavior(FrameworkElement element)
 		{
 			Element = element;
 		}
 
-		private Storyboard CreateStoryboard(AnimationType type, double to)
+		private Storyboard? CreateStoryboard(AnimationType type, double to)
 		{
 			var animation = OverlayAnimationUtils.GetAnimation(type, to);
 			if(animation == null)
@@ -153,6 +153,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 
 			var sb = CreateStoryboard(ExitAnimation, GetHiddenOffset());
+			if(sb == null)
+				return;
 			sb.Completed += (obj, args) =>
 			{
 				_animating = false;

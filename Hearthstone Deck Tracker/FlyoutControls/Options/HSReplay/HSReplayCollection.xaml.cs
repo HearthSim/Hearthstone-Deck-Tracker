@@ -87,10 +87,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 
 		public void UpdateSyncAge() => OnPropertyChanged(nameof(SyncAge));
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

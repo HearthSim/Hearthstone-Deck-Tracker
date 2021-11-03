@@ -38,15 +38,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			HSReplayNetOAuth.Authenticated += () => Influx.OnOAuthLoginComplete(AuthenticationErrorType.None);
 		}
 
-		public static event Action CollectionUploaded;
-		public static event Action CollectionUploadError;
-		public static event Action CollectionUploadThrottled;
-		public static event Action CollectionAlreadyUpToDate;
-		public static event Action<bool> Authenticating;
-		public static event Action<bool> BlizzardAccountClaimed;
-		public static event Action<AuthenticationErrorType> AuthenticationError;
+		public static event Action? CollectionUploaded;
+		public static event Action? CollectionUploadError;
+		public static event Action? CollectionUploadThrottled;
+		public static event Action? CollectionAlreadyUpToDate;
+		public static event Action<bool>? Authenticating;
+		public static event Action<bool>? BlizzardAccountClaimed;
+		public static event Action<AuthenticationErrorType>? AuthenticationError;
 
-		public static async Task TryAuthenticate(string successUrl = null, string errorUrl = null)
+		public static async Task TryAuthenticate(string? successUrl = null, string? errorUrl = null)
 		{
 			Authenticating?.Invoke(true);
 			if(await HSReplayNetOAuth.Authenticate(successUrl, errorUrl))
@@ -81,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					|| (!HSReplayNetOAuth.AccountData?.UploadTokens.Contains(Account.Instance.UploadToken) ?? false))
 					await ApiWrapper.UpdateUploadTokenStatus();
 				if(Account.Instance.TokenClaimed == false && !string.IsNullOrEmpty(Account.Instance.UploadToken))
-					await HSReplayNetOAuth.ClaimUploadToken(Account.Instance.UploadToken);
+					await HSReplayNetOAuth.ClaimUploadToken(Account.Instance.UploadToken!);
 			}
 			else
 				ApiWrapper.UpdateUploadTokenStatus().Forget();
@@ -120,7 +120,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 						ErrorManager.AddError("HSReplay.net error",
 							$"Your blizzard account ({collection.BattleTag}, {account}) is already attached to another"
 							+ " HSReplay.net Account. You are currently logged in as"
-							+ $" {HSReplayNetOAuth.AccountData.Username}. Please contact us at contact@hsreplay.net"
+							+ $" {HSReplayNetOAuth.AccountData?.Username ?? "Unknown"}. Please contact us at contact@hsreplay.net"
 							+ " if this is not correct.");
 						return;
 					}

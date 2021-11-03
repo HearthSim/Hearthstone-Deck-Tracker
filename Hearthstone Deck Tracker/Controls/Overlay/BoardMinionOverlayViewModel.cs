@@ -59,11 +59,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			set { _visibility = value; OnPropertyChanged(); }
 		}
 
-		private List<MercenariesAbilityViewModel> _mercenariesAbilities;
+		private List<MercenariesAbilityViewModel>? _mercenariesAbilities;
 
 		private readonly AbilityAlignment _abilityAlignment;
 
-		public List<MercenariesAbilityViewModel> MercenariesAbilities
+		public List<MercenariesAbilityViewModel>? MercenariesAbilities
 		{
 			get => _mercenariesAbilities;
 			set

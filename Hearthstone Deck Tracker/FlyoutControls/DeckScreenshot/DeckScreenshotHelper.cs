@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			return bmp;
 		}
 
-		public static async Task<string> Upload(BitmapSource bmpSource)
+		public static async Task<string?> Upload(BitmapSource bmpSource)
 		{
 			using(var ms = new MemoryStream())
 			{
@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			}
 		}
 
-		public static string Save(Deck deck, BitmapSource bmpSource)
+		public static string? Save(Deck deck, BitmapSource bmpSource)
 		{
 			var fileName = Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(deck.Name), "png");
 			if(fileName == null)

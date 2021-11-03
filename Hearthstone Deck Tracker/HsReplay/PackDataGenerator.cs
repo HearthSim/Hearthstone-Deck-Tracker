@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 {
 	public static class PackDataGenerator
 	{
-		public static PackData Generate(int packId, IEnumerable<CardData> cardData)
+		public static PackData? Generate(int packId, IEnumerable<CardData> cardData)
 		{
 			var cards = cardData.ToArray();
 			if(cards.Length != 5)

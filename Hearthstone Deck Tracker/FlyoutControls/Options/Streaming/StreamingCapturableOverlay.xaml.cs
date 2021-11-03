@@ -20,9 +20,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			_initialized = true;
 		}
 
-		public SolidColorBrush SelectedColor => Helper.BrushFromHex(Config.Instance.StreamingOverlayBackground);
+		public SolidColorBrush? SelectedColor => Helper.BrushFromHex(Config.Instance.StreamingOverlayBackground);
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private void TextboxBackground_TextChanged(object sender, TextChangedEventArgs e)
 		{
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

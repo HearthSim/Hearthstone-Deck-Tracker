@@ -17,6 +17,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries
 			return containerWidth * value;
 		}
 
-		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => null;
+		public object[]? ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => null;
 	}
 }

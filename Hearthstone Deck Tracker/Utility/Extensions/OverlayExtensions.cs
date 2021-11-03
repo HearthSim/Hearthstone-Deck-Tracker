@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 			obj.SetValue(IsOverlayHitTestVisibleProperty, value);
 		}
 
-		public static event Action<FrameworkElement, bool> OnRegisterHitTestVisible;
+		public static event Action<FrameworkElement, bool>? OnRegisterHitTestVisible;
 
 		private static void OnIsOverlayHitTestVisibleChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 			obj.SetValue(IsOverlayHoverVisibleProperty, value);
 		}
 
-		public static event Action<FrameworkElement, bool> OnRegisterHoverVisible;
+		public static event Action<FrameworkElement, bool>? OnRegisterHoverVisible;
 
 		private static void OnIsOverlayHoverVisibleChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{

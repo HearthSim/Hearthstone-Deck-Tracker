@@ -92,6 +92,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			foreach(var race in _db.Value.Races)
 			{
 				var title = race == Race.INVALID ? "Other" : HearthDbConverter.RaceConverter(race);
+				if(title == null)
+					continue;
 
 				var cards = _db.Value.GetCards(tier, race).ToList();
 

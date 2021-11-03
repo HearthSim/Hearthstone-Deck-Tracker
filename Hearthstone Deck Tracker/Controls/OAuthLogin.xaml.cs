@@ -108,7 +108,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			set => SetValue(ErrorUrlProperty, value);
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private void OnAuthenticating(bool authenticating)
 		{
@@ -135,7 +135,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

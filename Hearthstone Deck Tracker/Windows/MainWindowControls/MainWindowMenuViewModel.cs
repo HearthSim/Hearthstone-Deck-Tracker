@@ -22,9 +22,9 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		private const string LocLink = "DeckPicker_ContextMenu_LinkUrl";
 		private const string LocLinkNew = "DeckPicker_ContextMenu_LinkNewUrl";
 
-		private IEnumerable<Deck> _decks;
+		private IEnumerable<Deck>? _decks;
 		private bool _loginButtonEnabled = true;
-		public MainWindow MainWindow => Core.MainWindow;
+		public MainWindow MainWindow { get; }
 
 		public IEnumerable<Deck> Decks
 		{
@@ -91,7 +91,8 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 
 		public ICommand LoginCommand => new Command(async () =>
 		{
-			Helper.OptionsMain.TreeViewItemHSReplayAccount.IsSelected = true;
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.TreeViewItemHSReplayAccount.IsSelected = true;
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
 			await HSReplayNetHelper.TryAuthenticate();
 		});
@@ -104,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		public string SetDeckUrlText => LocUtil.Get(string.IsNullOrEmpty(Decks.FirstOrDefault()?.Url) ? LocLinkNew : LocLink, true);
 		public List<GameStats> LatestReplays => LastGames.Instance.Games;
 		private IEnumerable<PluginWrapper> PluginsWithMenu => PluginManager.Instance.Plugins.Where(p => p.IsEnabled && p.MenuItem != null);
-		public IEnumerable<MenuItem> PluginsMenuItems => PluginsWithMenu.Select(p => p.MenuItem);
+		public IEnumerable<MenuItem> PluginsMenuItems => PluginsWithMenu.Where(p => p.MenuItem != null).Select(p => p.MenuItem!);
 
 		public Visibility ReplaysEmptyVisibility => LatestReplays.Count == 0 ? Visible : Collapsed;
 		public Visibility MyReplaysVisibility => Account.Instance.Status == AccountStatus.Anonymous ? Collapsed : Visible;
@@ -129,13 +130,14 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			get => _loginButtonEnabled;
 			set
 			{
-				_loginButtonEnabled = value; 
+				_loginButtonEnabled = value;
 				OnPropertyChanged();
 			}
 		}
 
-		public MainWindowMenuViewModel()
+		public MainWindowMenuViewModel(MainWindow mainWindow)
 		{
+			MainWindow = mainWindow;
 			LastGames.Instance.PropertyChanged += (sender, e) =>
 			{
 				if(e.PropertyName == "Games")

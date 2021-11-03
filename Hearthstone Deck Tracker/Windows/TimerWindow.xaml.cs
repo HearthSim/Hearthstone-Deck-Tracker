@@ -29,9 +29,9 @@ namespace Hearthstone_Deck_Tracker
 			Width = _config.TimerWindowWidth;
 
 			if(_config.TimerWindowLeft.HasValue)
-				Left = config.TimerWindowLeft.Value;
+				Left = config.TimerWindowLeft!.Value;
 			if(_config.TimerWindowTop.HasValue)
-				Top = config.TimerWindowTop.Value;
+				Top = config.TimerWindowTop!.Value;
 			Topmost = _config.TimerWindowTopmost;
 
 			var titleBarCorners = new[]

@@ -23,19 +23,19 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class Card : ICloneable, INotifyPropertyChanged
 	{
 		[NonSerialized]
-		private HearthDb.Card _dbCard;
+		private HearthDb.Card? _dbCard;
 
 		private readonly Regex _overloadRegex = new Regex(@"Overload:.+?\((?<value>(\d+))\)");
 		private int _count;
-		private string _englishText;
+		private string? _englishText;
 		private int _inHandCount;
 		private bool _isCreated;
 		private bool _loaded;
-		private string _localizedName;
+		private string? _localizedName;
 		private int? _overload;
-		private string _text;
+		private string? _text;
 		private bool _wasDiscarded;
-		private string _id;
+		private string? _id;
 
 		[NonSerialized]
 		private static readonly Dictionary<string, Dictionary<int, CardImageObject>> CardImageCache =
@@ -63,10 +63,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		/// The mechanics attribute, such as windfury or taunt, comes from the cardDB json file
 		[XmlIgnore]
-		public string[] Mechanics;
+		public string[]? Mechanics;
 
 		[XmlIgnore]
-		public string PlayerClass;
+		public string? PlayerClass;
 
 		[XmlIgnore]
 		public Rarity Rarity;
@@ -79,9 +79,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Count = 1;
 		}
 
-		public Card(string id, string playerClass, Rarity rarity, string type, string name, int cost, string localizedName, int inHandCount,
-		            int count, string text, string englishText, int attack, int health, string race, string[] mechanics, int? durability,
-		            string artist, string set, bool baconCard, List<string> alternativeNames = null, List<string> alternativeTexts = null, HearthDb.Card dbCard = null)
+		public Card(string id, string? playerClass, Rarity rarity, string? type, string? name, int cost, string? localizedName, int inHandCount,
+		            int count, string? text, string? englishText, int attack, int health, string? race, string[]? mechanics, int? durability,
+		            string? artist, string? set, bool baconCard, List<string>? alternativeNames = null, List<string>? alternativeTexts = null, HearthDb.Card? dbCard = null)
 		{
 			Id = id;
 			PlayerClass = playerClass;
@@ -169,7 +169,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int Health { get; set; }
 
 		[XmlIgnore]
-		public string Text
+		public string? Text
 		{
 			get { return CleanUpText(_text); }
 			set { _text = value; }
@@ -179,7 +179,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string FormattedText => CleanUpText(_text, false) ?? "";
 
 		[XmlIgnore]
-		public string EnglishText
+		public string? EnglishText
 		{
 			get { return CleanUpText(string.IsNullOrEmpty(_englishText) ? Text : _englishText); }
 			set { _englishText =value; }
@@ -221,7 +221,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public Visibility ShowHealthValueInTooltip => HasVisibleStats || IsPlayableHeroCard ? Visibility.Visible : Visibility.Hidden;
 
 		[XmlIgnore]
-		public string Set { get; set; }
+		public string? Set { get; set; }
 
 		public CardSet? CardSet => _dbCard?.Set;
 
@@ -234,10 +234,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int LettuceCooldown => _dbCard?.Entity.GetTag(GameTag.LETTUCE_COOLDOWN_CONFIG) ?? 0;
 
 		[XmlIgnore]
-		public string Race { get; set; }
+		public string? Race { get; set; }
 
 		[XmlIgnore]
-		public string RaceOrType => Race ?? Type;
+		public string? RaceOrType => Race ?? Type;
 
 		[XmlIgnore]
 		public int? Durability { get; set; }
@@ -246,10 +246,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public int ArmorDurabilityOrHealth => (IsPlayableHeroCard ? _dbCard?.Armor : Durability) ?? Health;
 
 		[XmlIgnore]
-		public string Type { get; set; }
+		public string? Type { get; set; }
 
 		[XmlIgnore]
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		[XmlIgnore]
 		public int Cost { get; set; }
@@ -298,10 +298,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		[XmlIgnore]
-		public string Artist { get; set; }
+		public string? Artist { get; set; }
 
 		[XmlIgnore]
-		public string LocalizedName
+		public string? LocalizedName
 		{
 			get { return string.IsNullOrEmpty(_localizedName) ? Name : _localizedName; }
 			set { _localizedName = value; }
@@ -313,7 +313,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{
 				var entourageIds = _dbCard?.EntourageCardIds ?? new string[0];
 
-				return (CardIds.EntourageAdditionalCardIds.TryGetValue(_dbCard.Id, out string[] additionalIds)) ?
+				return _dbCard != null && CardIds.EntourageAdditionalCardIds.TryGetValue(_dbCard.Id, out string[] additionalIds) ?
 					entourageIds.Union(additionalIds).ToArray() :
 					entourageIds;
 			}
@@ -358,8 +358,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public string GetPlayerClass => PlayerClass ?? "Neutral";
 
-		public bool IsClass(string playerClass)
+		public bool IsClass(string? playerClass)
 		{
+			if(playerClass == null)
+				return false;
 			if(GetPlayerClass == playerClass)
 				return true;
 			var classGroup = _dbCard?.Entity.GetTag(GameTag.MULTI_CLASS_GROUP) ?? 0;
@@ -386,13 +388,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public SolidColorBrush ColorOpponent => new SolidColorBrush(Colors.White);
 
-		public string CardFileName => Name.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "").Replace(",", "");
+		public string? CardFileName => Name?.ToLowerInvariant().Replace(' ', '-').Replace(":", "").Replace("'", "-").Replace(".", "").Replace("!", "").Replace(",", "");
 
 		public static FontFamily DefaultFont => Helper.UseLatinFont() ? new FontFamily(new Uri("pack://application:,,,/"), "./Resources/#Chunkfive") : new FontFamily();
 
 		public static FontWeight DefaultFontWeight => Helper.UseLatinFont() ? FontWeights.Normal : FontWeights.Bold;
 
-		private CardBarImageBuilder GetImageBuilder()
+		private CardBarImageBuilder? GetImageBuilder()
 		{
 			if(BaconCard)
 			{
@@ -413,11 +415,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				if(CardImageCache.TryGetValue(Id, out var cache))
 				{
 					if(cache.TryGetValue(cardImageObj.GetHashCode(), out var cached))
-						return cached.Image;
+						return cached.Image ?? new DrawingBrush();
 				}
 				try
 				{
-					var image = GetImageBuilder().Build();
+					var image = GetImageBuilder()?.Build() ?? new DrawingBrush();
 					if (image.CanFreeze)
 						image.Freeze();
 					cardImageObj = new CardImageObject(image, this);
@@ -427,7 +429,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 						CardImageCache.Add(Id, cache);
 					}
 					cache.Add(cardImageObj.GetHashCode(), cardImageObj);
-					return cardImageObj.Image;
+					return cardImageObj.Image ?? new DrawingBrush();
 				}
 				catch(Exception ex)
 				{
@@ -502,17 +504,17 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			OnPropertyChanged();
 		}
 
-		private static string CleanUpText(string text, bool replaceTags = true)
+		private static string CleanUpText(string? text, bool replaceTags = true)
 		{
 			if (replaceTags)
-				text = text?.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "");
-			return text?.Replace("$", "").Replace("#", "").Replace("\\n", "\n").Replace("[x]", "");
+				text = text?.Replace("<b>", "").Replace("</b>", "").Replace("<i>", "").Replace("</i>", "") ?? string.Empty;
+			return text?.Replace("$", "").Replace("#", "").Replace("\\n", "\n").Replace("[x]", "") ?? string.Empty;
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -520,13 +522,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 	internal class CardImageObject
 	{
-		public DrawingBrush Image { get; }
+		public DrawingBrush? Image { get; }
 		public int Count { get; }
 		public bool Jousted { get; }
 		public bool ColoredFrame { get; }
 		public bool ColoredGem { get; }
 		public bool Created { get; }
-		public string Theme { get; }
+		public string? Theme { get; }
 		public int TextColorHash { get; }
 		public bool BaconCard { get; }
 

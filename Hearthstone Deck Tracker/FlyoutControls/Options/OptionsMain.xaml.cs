@@ -41,8 +41,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		public readonly OverlayBattlegrounds OptionsOverlayBattlegrounds = new OverlayBattlegrounds();
 		public readonly OverlayMercenaries OptionsOverlayMercenaries = new OverlayMercenaries();
 		public readonly OptionsSearch OptionsSearch = new OptionsSearch();
-		private string _contentHeader;
-		private object _optionsContent;
+		private string? _contentHeader;
+		private object? _optionsContent;
 		private readonly object[] _hsreplayOptions;
 
 		public OptionsMain()
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		public string ContentHeader
+		public string? ContentHeader
 		{
 			get => _contentHeader;
 			set
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		public object OptionsContent
+		public object? OptionsContent
 		{
 			get => _optionsContent;
 			set
@@ -85,10 +85,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		public void Load(GameV2 game)
 		{
-			OptionsOverlayGeneral.Load(game);
+			OptionsOverlayGeneral.Load();
 			OptionsOverlayDeckWindows.Load(game);
 			OptionsOverlayPlayer.Load(game);
-			OptionsOverlayOpponent.Load(game);
+			OptionsOverlayOpponent.Load();
 			OptionsOverlayInteractivity.Load();
 			OptionsTrackerSettings.Load();
 			OptionsTrackerImporting.Load();
@@ -191,10 +191,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			OptionsContent = OptionsTrackerSettings;
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

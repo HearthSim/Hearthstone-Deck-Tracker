@@ -19,9 +19,17 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 {
 	public class PredefinedHotKeyActionInfo
 	{
-		public string Title { get; set; }
-		public string Description { get; set; }
-		public string MethodName { get; set; }
+		public PredefinedHotKeyActionInfo(string title, string description, string methodName)
+		{
+			Title = title;
+			Description = description;
+			MethodName = methodName;
+		}
+
+		public string Title { get; }
+
+		public string Description { get; }
+		public string MethodName { get; }
 	}
 
 	public class PredefinedHotKeyActions
@@ -38,12 +46,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 						                               var attr =
 							                               ((PredefinedHotKeyActionAttribute)
 							                                x.GetCustomAttributes(typeof(PredefinedHotKeyActionAttribute), false)[0]);
-						                               return new PredefinedHotKeyActionInfo
-						                               {
-							                               MethodName = x.Name,
-							                               Title = attr.Title,
-							                               Description = attr.Description
-						                               };
+													   return new PredefinedHotKeyActionInfo(x.Name, attr.Title, attr.Description);
 					                               });
 			}
 		}
@@ -227,7 +230,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		[PredefinedHotKeyAction("Note Dialog", "Brings up the note dialog for the current (running) game.")]
 		public static void NoteDialog()
 		{
-			if(Core.Game.IsRunning && !Core.Game.IsInMenu)
+			if(Core.Game.IsRunning && !Core.Game.IsInMenu && Core.Game.CurrentGameStats != null)
 				new NoteDialog(Core.Game.CurrentGameStats).Show();
 		}
 

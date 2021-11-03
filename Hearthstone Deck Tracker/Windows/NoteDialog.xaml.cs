@@ -102,9 +102,9 @@ namespace Hearthstone_Deck_Tracker
 			{
 			}
 
-			public NoteCard(TrackedCard tracked)
+			public NoteCard(TrackedCard? tracked)
 			{
-				Card card = null;
+				Card? card = null;
 				if(tracked == null || !Cards.All.ContainsKey(tracked.Id))
 				{
 					card = Cards.All[NonCollectible.Neutral.NooooooooooooLegacy];

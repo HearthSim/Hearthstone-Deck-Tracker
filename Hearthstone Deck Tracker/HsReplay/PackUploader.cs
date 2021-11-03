@@ -17,8 +17,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				try
 				{
 					var packData = PackDataGenerator.Generate(packId, cards.Select(x => new CardData { CardId = x.Id, Premium = x.PremiumType > 0 }));
-					await ApiWrapper.UploadPack(packData);
-					Log.Info("Successfully uploaded pack");
+					if(packData != null)
+					{
+						await ApiWrapper.UploadPack(packData);
+						Log.Info("Successfully uploaded pack");
+					}
 				}
 				catch(Exception ex)
 				{

@@ -96,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			BobsBuddyEvents.Enqueue(bbEvent);
 		}
 
-		public static void SendQueuedBobsBuddyEvents(string shortId)
+		public static void SendQueuedBobsBuddyEvents(string? shortId)
 		{
 			while(BobsBuddyEvents.Count > 0)
 			{
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			}
 		}
 
-		public static void CaptureBobsBuddyException(Exception ex, TestInput input, int turn, List<string> debugLog)
+		public static void CaptureBobsBuddyException(Exception ex, TestInput? input, int turn, List<string> debugLog)
 		{
 			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptions)
 				return;
@@ -154,18 +154,18 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 		private class BobsBuddyData
 		{
-			public string ShortId { get; set; }
+			public string? ShortId { get; set; }
 			public int Turn { get; set; }
-			public string Result { get; set; }
+			public string? Result { get; set; }
 			public int ThreadCount { get; set; }
 			public int Iterations { get; set; }
-			public string ExitCondition { get; set; }
-			public TestInput Input { get; set; }
-			public TestOutput Output { get; set; }
+			public string? ExitCondition { get; set; }
+			public TestInput? Input { get; set; }
+			public TestOutput? Output { get; set; }
 
 			public Region Region { get; set; }
 
-			public List<string> Log { get; set; }
+			public List<string>? Log { get; set; }
 			public string Replay => $"https://hsreplay.net/replay/{ShortId}#turn={Turn}b";
 
 			public bool CanRemoveLichKing { get; set; }

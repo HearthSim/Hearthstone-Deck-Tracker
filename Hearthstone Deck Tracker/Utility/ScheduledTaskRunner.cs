@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	internal class ScheduledTaskRunner : Singleton<ScheduledTaskRunner>
 	{
 		private readonly Dictionary<TimeSpan, TaskList> _tasks;
-		private Tuple<Action, bool> _latest;
+		private Tuple<Action, bool>? _latest;
 
 		private ScheduledTaskRunner()
 		{
@@ -40,6 +40,8 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		private async void Run()
 		{
+			if(_latest == null)
+				return;
 			var latest = new Tuple<Action, bool>(_latest.Item1, _latest.Item2);
 			bool TasksChanged() => latest.Item1 != _latest.Item1 || latest.Item2 != _latest.Item2;
 			while(_tasks.Any())

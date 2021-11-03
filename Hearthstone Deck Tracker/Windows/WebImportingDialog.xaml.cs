@@ -7,14 +7,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class WebImportingDialog : CustomDialog
 	{
-		private readonly TaskCompletionSource<string> _tcs = new TaskCompletionSource<string>();
+		private readonly TaskCompletionSource<string?> _tcs = new TaskCompletionSource<string?>();
 
 		public WebImportingDialog()
 		{
 			InitializeComponent();
 		}
 
-		public string Url { get; set; }
+		public string? Url { get; set; }
 
 		private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_tcs.SetResult(Url);
 		}
 
-		internal Task<string> WaitForButtonPressAsync() => _tcs.Task;
+		internal Task<string?> WaitForButtonPressAsync() => _tcs.Task;
 
 		private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e) => Helper.TryOpenUrl(e.Uri.AbsoluteUri);
 	}

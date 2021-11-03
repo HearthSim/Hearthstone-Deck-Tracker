@@ -203,16 +203,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void OnItemCollapsed(object sender, RoutedEventArgs e)
 		{
 			var item = sender as TreeViewItem;
-			var header = item.Header.ToString();
-			if(_expanded.Contains(header))
+			var header = item?.Header.ToString();
+			if(header != null &&_expanded.Contains(header))
 				_expanded.Remove(header);
 		}
 
 		private void OnItemExpanded(object sender, RoutedEventArgs e)
 		{
 			var item = sender as TreeViewItem;
-			var header = item.Header.ToString();
-			if(_expanded.Contains(header) == false)
+			var header = item?.Header.ToString();
+			if(header != null && _expanded.Contains(header) == false)
 				_expanded.Add(header);
 		}
 
@@ -221,7 +221,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			foreach(var item in TreeViewCards.Items)
 			{
 				var tvi = item as TreeViewItem;
-				tvi.IsExpanded = true;
+				if(tvi != null)
+					tvi.IsExpanded = true;
 			}
 		}
 
@@ -230,7 +231,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			foreach(var item in TreeViewCards.Items)
 			{
 				var tvi = item as TreeViewItem;
-				tvi.IsExpanded = false;
+				if(tvi != null)
+					tvi.IsExpanded = false;
 			}
 		}
 

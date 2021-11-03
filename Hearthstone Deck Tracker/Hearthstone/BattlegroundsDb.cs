@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Remote.Config.Loaded += d => Update(d?.BattlegroundsTagOverrides);
 		}
 
-		private void Update(List<RemoteData.TagOverride> tagOverrides)
+		private void Update(List<RemoteData.TagOverride>? tagOverrides)
 		{
 			var overrides = new Dictionary<int, Tuple<GameTag, int>>();
 			if (tagOverrides != null)

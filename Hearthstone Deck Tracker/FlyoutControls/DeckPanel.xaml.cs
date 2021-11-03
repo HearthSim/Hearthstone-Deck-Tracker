@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 	/// </summary>
 	public partial class DeckPanel : UserControl
 	{
-		private Deck _deck;
+		private Deck? _deck;
 
 		public DeckPanel()
 		{
@@ -26,6 +26,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void ButtonImport_OnClick(object sender, RoutedEventArgs e)
 		{
+			if(_deck == null)
+				return;
 			Core.MainWindow.ShowDeckEditorFlyout(_deck, true);
 			Core.MainWindow.FlyoutStats.IsOpen = false;
 			Core.MainWindow.FlyoutDeck.IsOpen = false;
@@ -45,10 +47,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 					continue;
 				}
 				var card = Database.GetCardFromId(c.Id);
-				card.Count = c.Count;
-				deck.Cards.Add(card);
-				if(string.IsNullOrEmpty(deck.Class) && !string.IsNullOrEmpty(card.PlayerClass))
-					deck.Class = card.PlayerClass;
+				if(card != null)
+				{
+					card.Count = c.Count;
+					deck.Cards.Add(card);
+					if(string.IsNullOrEmpty(deck.Class) && !string.IsNullOrEmpty(card.PlayerClass))
+						deck.Class = card.PlayerClass;
+				}
 			}
 			SetDeck(deck, showImportButton);
 		}

@@ -143,7 +143,7 @@ namespace Hearthstone_Deck_Tracker
 			{"Warrior", MediaColor.FromArgb(0xFF, 0xB3, 0x20, 0x25)} //#B32025
 		};
 
-		public static OptionsMain OptionsMain { get; set; }
+		public static OptionsMain? OptionsMain { get; set; }
 
 		public static bool UseLatinFont() => LatinLanguages.Contains(Config.Instance.SelectedLanguage) || Config.Instance.NonLatinUseDefaultFont == false;
 
@@ -180,7 +180,7 @@ namespace Hearthstone_Deck_Tracker
 			return result;
 		}
 
-		public static string ShowSaveFileDialog(string filename, string ext)
+		public static string? ShowSaveFileDialog(string filename, string ext)
 		{
 			var defaultExt = $"*.{ext}";
 			var saveFileDialog = new SaveFileDialog
@@ -312,7 +312,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public static string ParseDeckNameTemplate(string template) => ParseDeckNameTemplate(template, null);
 
-		public static string ParseDeckNameTemplate(string template, Deck deck)
+		public static string ParseDeckNameTemplate(string template, Deck? deck)
 		{
 			try
 			{
@@ -425,33 +425,35 @@ namespace Hearthstone_Deck_Tracker
 
 		public static double GetScaledXPos(double left, int width, double ratio) => (width * ratio * left) + (width * (1 - ratio) / 2);
 
-		public static MediaColor GetClassColor(string className, bool priestAsGray)
+		public static MediaColor GetClassColor(string? className, bool priestAsGray)
 		{
 			if(string.IsNullOrEmpty(className))
 				return Colors.DimGray;
 			MediaColor color;
 			if(Config.Instance.ClassColorScheme == ClassColorScheme.HearthStats)
 			{
-				if(!HearthStatsClassColors.TryGetValue(className, out color))
+				if(!HearthStatsClassColors.TryGetValue(className!, out color))
 					color = Colors.DimGray;
 			}
 			else
 			{
 				if(className == "Priest" && priestAsGray)
 					color = MediaColor.FromArgb(0xFF, 0xD2, 0xD2, 0xD2); //#D2D2D2
-				else if(!ClassicClassColors.TryGetValue(className, out color))
+				else if(!ClassicClassColors.TryGetValue(className!, out color))
 					color = MediaColor.FromArgb(0xFF, 0x80, 0x80, 0x80); //#808080
 			}
 			return color;
 		}
 
-		public static MetroWindow GetParentWindow(DependencyObject current) => GetVisualParent<MetroWindow>(current);
+		public static MetroWindow? GetParentWindow(DependencyObject current) => GetVisualParent<MetroWindow>(current);
 
-		public static T GetVisualParent<T>(DependencyObject current)
+		public static T? GetVisualParent<T>(DependencyObject current)
 		{
 			var parent = VisualTreeHelper.GetParent(current);
 			while(parent != null && !(parent is T))
 				parent = VisualTreeHelper.GetParent(parent);
+			if(parent == null)
+				return default;
 			return (T)(object)parent;
 		}
 
@@ -497,7 +499,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static string BuildHsReplayNetUrl(string path, string campaign, IEnumerable<string> queryParams = null, IEnumerable<string> fragmentParams = null)
+		public static string BuildHsReplayNetUrl(string path, string campaign, IEnumerable<string>? queryParams = null, IEnumerable<string>? fragmentParams = null)
 		{
 			var url = "https://hsreplay.net";
 			if(!path.StartsWith("/"))
@@ -508,7 +510,7 @@ namespace Hearthstone_Deck_Tracker
 			return url + GetHsReplayNetUrlParams(campaign, queryParams, fragmentParams);
 		}
 
-		public static string GetHsReplayNetUrlParams(string campaign, IEnumerable<string> queryParams = null, IEnumerable<string> fragmentParams = null)
+		public static string GetHsReplayNetUrlParams(string campaign, IEnumerable<string>? queryParams = null, IEnumerable<string>? fragmentParams = null)
 		{
 			var query = new List<string>
 			{
@@ -538,7 +540,7 @@ namespace Hearthstone_Deck_Tracker
 
 		internal static void ClearCachedHearthstoneBuild() => _hearthstoneBuild = null;
 
-		public static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+		public static IEnumerable<T> FindVisualChildren<T>(DependencyObject? depObj) where T : DependencyObject
 		{
 			if(depObj == null)
 				yield break;
@@ -601,7 +603,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static SolidColorBrush BrushFromHex(string hex)
+		public static SolidColorBrush? BrushFromHex(string hex)
 		{
 			if(hex.StartsWith("#"))
 				hex = hex.Remove(0, 1);
@@ -700,7 +702,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public static bool TryGetAttribute<T>(object obj, out T attribute) where T : Attribute
+		public static bool TryGetAttribute<T>(object obj, out T? attribute) where T : Attribute
 		{
 			var members = obj?.GetType().GetMember(obj.ToString());
 			if(members?.Length > 0)
@@ -712,7 +714,7 @@ namespace Hearthstone_Deck_Tracker
 					return true;
 				}
 			}
-			attribute = default(T);
+			attribute = default;
 			return false;
 		}
 
@@ -741,7 +743,7 @@ namespace Hearthstone_Deck_Tracker
 			TryOpenUrl(url);
 		}
 
-		public static async Task<T> RetryWhileNull<T>(Func<T> func, int tries = 5, int delay = 150) where T : class
+		public static async Task<T?> RetryWhileNull<T>(Func<T> func, int tries = 5, int delay = 150)
 		{
 			for(var i = 0; i < tries; i++)
 			{
@@ -750,7 +752,7 @@ namespace Hearthstone_Deck_Tracker
 					return value;
 				await Task.Delay(delay);
 			}
-			return null;
+			return default;
 		}
 	}
 }

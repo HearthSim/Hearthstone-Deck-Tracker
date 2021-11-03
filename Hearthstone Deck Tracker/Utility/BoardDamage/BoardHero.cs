@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 	{
 		private readonly int _baseAttack;
 		private readonly BoardCard _hero;
-		private readonly BoardCard _weapon;
+		private readonly BoardCard? _weapon;
 
 		public BoardHero(Entity hero, Entity weapon, bool activeTurn)
 		{

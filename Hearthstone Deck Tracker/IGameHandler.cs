@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerDeckDiscard(Entity entity, string cardId, int turn);
 		void HandlePlayerPlayToDeck(Entity entity, string cardId, int turn);
 		void HandlePlayerHeroPower(string cardId, int turn);
-		void SetPlayerHero(string cardId);
+		void SetPlayerHero(string? cardId);
 		void HandlePlayerGetToDeck(Entity entity, string cardId, int turn);
 		void TurnStart(ActivePlayer player, int turnNumber);
 		void HandleGameStart(DateTime startTime);
@@ -35,26 +35,26 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerFatigue(int currentDamage);
 		void HandleOpponentFatigue(int currentDamage);
 
-		void HandleOpponentJoust(Entity entity, string cardId, int turn);
+		void HandleOpponentJoust(Entity entity, string? cardId, int turn);
 		void HandlePlayerPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn);
-		void HandleOpponentPlayToGraveyard(Entity entity, string cardId, int turn, bool playersTurn);
+		void HandleOpponentPlayToGraveyard(Entity entity, string? cardId, int turn, bool playersTurn);
 		void HandlePlayerCreateInPlay(Entity entity, string cardId, int turn);
-		void HandleOpponentCreateInPlay(Entity entity, string cardId, int turn);
+		void HandleOpponentCreateInPlay(Entity entity, string? cardId, int turn);
 		void HandlePlayerJoust(Entity entity, string cardId, int turn);
-		void HandlePlayerDeckToPlay(Entity entity, string cardId, int turn);
-		void HandleOpponentDeckToPlay(Entity entity, string cardId, int turn);
+		void HandlePlayerDeckToPlay(Entity entity, string? cardId, int turn);
+		void HandleOpponentDeckToPlay(Entity entity, string? cardId, int turn);
 		void HandlePlayerRemoveFromDeck(Entity entity, int turn);
 		void HandleOpponentRemoveFromDeck(Entity entity, int turn);
-		void HandlePlayerStolen(Entity entity, string cardId, int turn);
-		void HandleOpponentStolen(Entity entity, string cardId, int turn);
+		void HandlePlayerStolen(Entity entity, string? cardId, int turn);
+		void HandleOpponentStolen(Entity entity, string? cardId, int turn);
 		void HandlePlayerRemoveFromPlay(Entity entity, int turn);
 		void HandleOpponentRemoveFromPlay(Entity entity, int turn);
 		void HandlePlayerCreateInSetAside(Entity entity, int getTurnNumber);
 
 		#region SecretTriggers
 
-		void HandleAttackingEntity(Entity entity);
-		void HandleDefendingEntity(Entity entity);
+		void HandleAttackingEntity(Entity? entity);
+		void HandleDefendingEntity(Entity? entity);
 		void HandlePlayerMinionPlayed(Entity entity);
 		void HandlePlayerMinionDeath(Entity entity);
 		void HandleOpponentMinionDeath(Entity entity, int turn);
@@ -64,18 +64,18 @@ namespace Hearthstone_Deck_Tracker
 
 		#region OpponentHandlers
 
-		void HandleOpponentPlay(Entity entity, string cardId, int from, int turn);
-		void HandleOpponentHandDiscard(Entity entity, string cardId, int from, int turn);
-		void HandleOpponentDraw(Entity entity, int turn, string cardId, int? drawerId);
+		void HandleOpponentPlay(Entity entity, string? cardId, int from, int turn);
+		void HandleOpponentHandDiscard(Entity entity, string? cardId, int from, int turn);
+		void HandleOpponentDraw(Entity entity, int turn, string? cardId, int? drawerId);
 		void HandleOpponentMulligan(Entity entity, int from);
 		void HandleOpponentGet(Entity entity, int turn, int id);
-		void HandleOpponentSecretPlayed(Entity entity, string cardId, int from, int turn, Zone fromZone, int otherId);
-		void HandleOpponentHandToDeck(Entity entity, string cardId, int turn);
-		void HandleOpponentPlayToHand(Entity entity, string cardId, int turn, int id);
-		void HandleOpponentPlayToDeck(Entity entity, string cardId, int turn);
-		void HandleOpponentSecretTrigger(Entity entity, string cardId, int turn, int otherId);
-		void HandleOpponentDeckDiscard(Entity entity, string cardId, int turn);
-		void SetOpponentHero(string cardId);
+		void HandleOpponentSecretPlayed(Entity entity, string? cardId, int from, int turn, Zone fromZone, int otherId);
+		void HandleOpponentHandToDeck(Entity entity, string? cardId, int turn);
+		void HandleOpponentPlayToHand(Entity entity, string? cardId, int turn, int id);
+		void HandleOpponentPlayToDeck(Entity entity, string? cardId, int turn);
+		void HandleOpponentSecretTrigger(Entity entity, string? cardId, int turn, int otherId);
+		void HandleOpponentDeckDiscard(Entity entity, string? cardId, int turn);
+		void SetOpponentHero(string? cardId);
 		void HandleOpponentHeroPower(string cardId, int turn);
 		void HandleOpponentGetToDeck(Entity entity, int turn);
 		void HandleOpponentCreateInSetAside(Entity entity, int getTurnNumber);

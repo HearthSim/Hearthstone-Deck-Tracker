@@ -9,8 +9,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public partial class ExperienceCounter : UserControl, INotifyPropertyChanged
 	{
-		private string _levelDisplay;
-		public string LevelDisplay
+		private string? _levelDisplay;
+		public string? LevelDisplay
 		{
 			get => _levelDisplay;
 			set
@@ -20,8 +20,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private string _xpDisplay;
-		public string XPDisplay
+		private string? _xpDisplay;
+		public string? XPDisplay
 		{
 			get => _xpDisplay;
 			set
@@ -31,8 +31,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private Rect _xpBarRect;
-		public Rect XPBarRect
+		private Rect? _xpBarRect;
+		public Rect? XPBarRect
 		{
 			get => _xpBarRect;
 			set
@@ -42,10 +42,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

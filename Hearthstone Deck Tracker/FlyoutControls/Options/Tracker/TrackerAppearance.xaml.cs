@@ -72,7 +72,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			Config.Instance.AppTheme = (MetroTheme)ComboboxTheme.SelectedItem;
 			Config.Save();
 			UITheme.UpdateTheme().Forget();
-			Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.OptionsOverlayDeckWindows.UpdateAdditionalWindowsBackground();
 		}
 
 		private void ComboboxIconSet_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -196,7 +197,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private void UpdateUIAfterChangeLanguage()
 		{
 			// Options
-			Helper.OptionsMain.ContentHeader = LocUtil.Get("Options_Tracker_Appearance_Header");
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.ContentHeader = LocUtil.Get("Options_Tracker_Appearance_Header");
 
 			// TrayIcon
 			Core.TrayIcon.MenuItemStartHearthstone.Text = LocUtil.Get("TrayIcon_MenuItemStartHearthstone");

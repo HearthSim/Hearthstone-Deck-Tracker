@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Converters
 			return Visibility.Collapsed;
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			return null;
 		}

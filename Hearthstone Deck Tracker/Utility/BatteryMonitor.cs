@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public string BatteryStatusPercent => Math.Round(SystemInformation.PowerStatus.BatteryLifePercent * 100, 0) + "%";
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private async void CheckBatteryStatusAsync()
 		{
@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

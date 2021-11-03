@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			};
 			Remote.Config.Loaded += data =>
 			{
-				CheckboxShowNewsBar.IsChecked = Config.Instance.IgnoreNewsId < data?.News.Id;
+				CheckboxShowNewsBar.IsChecked = Config.Instance.IgnoreNewsId < data?.News?.Id;
 			};
 
 			_initialized = true;

@@ -10,10 +10,10 @@ namespace Hearthstone_Deck_Tracker.Live
 {
 	internal class LiveDataManager
 	{
-		private static BoardStateWatcher _boardStateWatcher;
-		private static BoardStateWatcher BoardStateWatcher => _boardStateWatcher ?? (_boardStateWatcher = GetBoardStateWatcher());
+		private static BoardStateWatcher? _boardStateWatcher;
+		private static BoardStateWatcher BoardStateWatcher => _boardStateWatcher ??= GetBoardStateWatcher();
 
-		public static event Action<bool> OnStreamingChecked;
+		public static event Action<bool>? OnStreamingChecked;
 
 		private static BoardStateWatcher GetBoardStateWatcher()
 		{

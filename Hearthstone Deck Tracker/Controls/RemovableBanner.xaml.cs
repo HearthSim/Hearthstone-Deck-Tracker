@@ -7,8 +7,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 	{
 		public static readonly DependencyProperty RemovableProperty =
 			DependencyProperty.Register("Removable", typeof(bool), typeof(RemovableBanner), new PropertyMetadata(true));
-		public event EventHandler Click;
-		public event EventHandler Close;
+		public event EventHandler? Click;
+		public event EventHandler? Close;
 
 		public RemovableBanner()
 		{

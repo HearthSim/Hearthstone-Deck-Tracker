@@ -7,10 +7,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class GameMetaData : ICloneable
 	{
 		private int? _hearthstoneBuild;
-		public GameServerInfo ServerInfo;
+		public GameServerInfo? ServerInfo;
 		public DateTime EnqueueTime { get; set; }
 		public bool Reconnected { get; set; }
-		public UploadMetaData.TwitchVodData TwitchVodData { get; set; }
+		public UploadMetaData.TwitchVodData? TwitchVodData { get; set; }
 
 		public int? HearthstoneBuild
 		{

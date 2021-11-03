@@ -28,10 +28,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private const string LocAddGame = "AddGameDialog_Button_AddGame";
 		private const string LocSaveGame = "AddGameDialog_Button_SaveGame";
 		private const string LocEditTitle = "AddGameDialog_Title_Edit";
-		private readonly Deck _deck;
+		private readonly Deck? _deck;
 		private readonly bool _editing;
-		private readonly GameStats _game;
-		private readonly TaskCompletionSource<GameStats> _tcs;
+		private readonly GameStats? _game;
+		private readonly TaskCompletionSource<GameStats?> _tcs;
 
 		private AddGameDialog()
 		{
@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			ComboBoxRegion.ItemsSource = new[] { Region.US, Region.EU, Region.ASIA, Region.CHINA};
 			ComboBoxCoin.ItemsSource = Enum.GetValues(typeof(YesNo));
 			ComboBoxConceded.ItemsSource = Enum.GetValues(typeof(YesNo));
-			_tcs = new TaskCompletionSource<GameStats>();
+			_tcs = new TaskCompletionSource<GameStats?>();
 		}
 
 		public AddGameDialog(Deck deck) : this()
@@ -124,6 +124,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 
 		private void BtnSave_OnClick(object sender, RoutedEventArgs e)
 		{
+			if(_game == null)
+				return;
 			BtnSave.IsEnabled = false;
 			try
 			{
@@ -138,8 +140,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 					_game.StartTime = DateTime.Now;
 					_game.GameId = Guid.NewGuid();
 					_game.EndTime = DateTime.Now.AddMinutes(duration);
-					_game.PlayerHero = _deck.Class;
-					_game.PlayerDeckVersion = _deck.SelectedVersion;
+					_game.PlayerHero = _deck?.Class;
+					_game.PlayerDeckVersion = _deck?.SelectedVersion;
 				}
 				_game.Result = (GameResult)ComboBoxResult.SelectedItem;
 				_game.GameMode = (GameMode)ComboBoxMode.SelectedItem;
@@ -167,7 +169,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		internal Task<GameStats> WaitForButtonPressAsync() => _tcs.Task;
+		internal Task<GameStats?> WaitForButtonPressAsync() => _tcs.Task;
 
 		private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{

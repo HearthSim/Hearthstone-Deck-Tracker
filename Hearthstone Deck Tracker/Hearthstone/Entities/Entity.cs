@@ -15,12 +15,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 	public class Entity
 	{
 		[NonSerialized]
-		private Card _cachedCard;
+		private Card? _cachedCard;
 
 		public Entity()
 		{
 			Tags = new Dictionary<GameTag, int>();
-			_info = new EntityInfo(this);
+			Info = new EntityInfo(this);
 		}
 
 		public Entity(int id) : this()
@@ -28,30 +28,28 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 			Id = id;
 		}
 
-		private Entity(int id, Dictionary<GameTag, int> tags)
+		private Entity(int id, Dictionary<GameTag, int> tags, EntityInfo info)
 		{
 			Id = id;
 			Tags = tags;
+			Info = info?.CloneWithNewEntity(this) ?? new EntityInfo(this);
 		}
 
 		public Entity Clone()
 		{
-			var entity = new Entity(Id, new Dictionary<GameTag, int>(Tags))
+			var entity = new Entity(Id, new Dictionary<GameTag, int>(Tags), Info)
 			{
 				Name = Name,
 				CardId = CardId,
 			};
-			entity._info = Info?.CloneWithNewEntity(entity) ?? new EntityInfo(entity);
 			return entity;
 		}
 
-		[NonSerialized]
-		private EntityInfo _info;
-		public EntityInfo Info => _info;
+		public EntityInfo Info { get; }
 		public Dictionary<GameTag, int> Tags { get; set; }
-		public string Name { get; set; }
+		public string? Name { get; set; }
 		public int Id { get; set; }
-		public string CardId { get; set; }
+		public string? CardId { get; set; }
 
 		/// <Summary>
 		/// This is player entity, NOT the player hero.
@@ -107,9 +105,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsSideQuest => HasTag(GameTag.SIDEQUEST);
 
 		[JsonIgnore]
-		public Card Card => _cachedCard ??
-			(_cachedCard = Database.GetCardFromId(CardId) ??
-				new Card(string.Empty, null, Rarity.FREE, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "", "", false));
+		public Card Card => _cachedCard ??= Database.GetCardFromId(CardId) ??
+				new Card(string.Empty, null, Rarity.FREE, "unknown", "unknown", 0, "unknown", 0, 1, "", "", 0, 0, "unknown", null, 0, "", "", false);
 
 		[JsonIgnore]
 		public int Attack => GetTag(GameTag.ATK);
@@ -121,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public int Cost => HasTag(GameTag.COST) ? GetTag(GameTag.COST) : Card.Cost;
 
 		[JsonIgnore]
-		public string LocalizedName => Card.LocalizedName;
+		public string? LocalizedName => Card.LocalizedName;
 
 		public bool IsSecret => HasTag(GameTag.SECRET);
 
@@ -184,7 +181,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 	public class EntityInfo
 	{
 		private readonly Entity _entity;
-		private string _latestCardId;
+		private string? _latestCardId;
 
 		public EntityInfo(Entity entity)
 		{
@@ -241,7 +238,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		{
 			if(dbfId <= 0)
 				return;
-			OriginalCardId = Database.GetCardFromDbfId(dbfId).Id;
+			OriginalCardId = Database.GetCardFromDbfId(dbfId)?.Id;
 		}
 
 		public int GetCreatorId()
@@ -271,7 +268,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool Hidden { get; set; }
 		public int CostReduction { get; set; }
 		public Zone? OriginalZone { get; set; }
-		public string OriginalCardId { get; private set; }
+		public string? OriginalCardId { get; private set; }
 		public bool WasTransformed => !string.IsNullOrEmpty(OriginalCardId);
 		public bool CreatedInDeck => OriginalZone == Zone.DECK;
 		public bool CreatedInHand => OriginalZone == Zone.HAND;
@@ -279,7 +276,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public GuessedCardState GuessedCardState { get; set; } = GuessedCardState.None;
 		public List<string> StoredCardIds { get; set; } = new List<string>();
 
-		public string LatestCardId
+		public string? LatestCardId
 		{
 			get => _latestCardId ?? _entity.CardId;
 			set => _latestCardId = value;

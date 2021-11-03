@@ -12,12 +12,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 			_action = action;
 		}
 
-		public bool CanExecute(object parameter) => _action != null;
+		public bool CanExecute(object parameter) => true;
 
 		public void Execute(object parameter) => _action.Invoke();
 
 #pragma warning disable 67
-		public event EventHandler CanExecuteChanged;
+		public event EventHandler? CanExecuteChanged;
 #pragma warning restore 67
 	}
 
@@ -31,10 +31,10 @@ namespace Hearthstone_Deck_Tracker.Utility
 		}
 
 #pragma warning disable 67
-		public event EventHandler CanExecuteChanged;
+		public event EventHandler? CanExecuteChanged;
 #pragma warning restore 67
 
-		public bool CanExecute(object parameter) => _action != null;
+		public bool CanExecute(object parameter) =>  true;
 
 		public void Execute(object parameter) => _action.Invoke((T)parameter);
 	}

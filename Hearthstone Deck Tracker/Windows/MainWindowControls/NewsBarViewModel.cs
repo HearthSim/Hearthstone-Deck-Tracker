@@ -14,13 +14,13 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 		private const int NewsTickerUpdateInterval = 15;
 
 		private static int _currentLine;
-		private static string _currentNewsLine;
+		private static string? _currentNewsLine;
 		private static DateTime _lastNewsUpdate = DateTime.MinValue;
 		private static bool _updating;
-		private RemoteData.NewsData _data;
+		private RemoteData.NewsData? _data;
 
-		private TextBlock _dataContent;
-		private string _indexContent;
+		private TextBlock? _dataContent;
+		private string? _indexContent;
 		private Visibility _visibility = Visibility.Collapsed;
 
 		public NewsBarViewModel()
@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 				return;
 			_currentLine--;
 			if(_currentLine < 0)
-				_currentLine = _data.Items.Count - 1;
+				_currentLine = _data!.Items.Count - 1;
 			SetCurrentLine(_currentLine);
 		});
 
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			if((_data?.Items.Count ?? 0) <= 1)
 				return;
 			_currentLine++;
-			if(_currentLine > _data.Items.Count - 1)
+			if(_currentLine > _data!.Items.Count - 1)
 				_currentLine = 0;
 			SetCurrentLine(_currentLine);
 		});
@@ -82,7 +82,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			}
 		}
 
-		public TextBlock NewsContent
+		public TextBlock? NewsContent
 		{
 			get => _dataContent;
 			set
@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			}
 		}
 
-		public string IndexContent
+		public string? IndexContent
 		{
 			get => _indexContent;
 			set

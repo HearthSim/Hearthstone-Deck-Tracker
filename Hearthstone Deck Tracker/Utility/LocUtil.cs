@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		private const string LocAgeMinute = "GameStats_Age_Minute";
 		private const string LocAgeMinutes = "GameStats_Age_Minutes";
 
-		private static readonly Dictionary<string, string> Cache = new Dictionary<string, string>();
+		private static readonly Dictionary<string, string?> Cache = new Dictionary<string, string?>();
 
 		public static void UpdateCultureInfo()
 		{
@@ -33,7 +33,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 				str = LocalizeDictionary.Instance.GetLocalizedObject("HearthstoneDeckTracker", "Strings", key, culture)?.ToString();
 				Cache[cacheKey] = str;
 			}
-			return str != null && upper ? str.ToUpper(culture) : str;
+			if(str == null)
+				return string.Empty;
+			return upper ? str.ToUpper(culture) : str;
 		}
 
 		public static string GetAge(DateTime since)

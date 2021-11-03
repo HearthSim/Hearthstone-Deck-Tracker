@@ -14,17 +14,17 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 		/// <param name="deck">HearthMirror deck object</param>
 		/// <param name="matches">Local decks with HsId OR 30 matching cards</param>
 		/// <param name="localDecks">All local decks</param>
-		public ImportedDeck(HearthMirror.Objects.Deck deck, List<Deck> matches, IList<Deck> localDecks)
+		public ImportedDeck(HearthMirror.Objects.Deck deck, List<Deck>? matches, IList<Deck> localDecks)
 		{
 			Deck = deck;
-			matches = matches ?? new List<Deck>();
+			matches ??= new List<Deck>();
 			var hero = Database.GetCardFromId(deck.Hero);
-			if(string.IsNullOrEmpty(hero?.PlayerClass) || hero.Id == Database.UnknownCardId)
+			if(string.IsNullOrEmpty(hero?.PlayerClass) || hero?.Id == Database.UnknownCardId)
 			{
 				Log.Error("No hero found for id " + deck.Hero);
 				return;
 			}
-			var lowerClass = hero.PlayerClass.ToLower();
+			var lowerClass = hero!.PlayerClass!.ToLower();
 			Class = lowerClass == "demonhunter" ? "DemonHunter" : CultureInfo.CurrentCulture.TextInfo.ToTitleCase(lowerClass);
 
 			var localOptions = localDecks.Where(d => d.Class == Class && !d.Archived && !d.IsArenaDeck)
@@ -42,9 +42,9 @@ namespace Hearthstone_Deck_Tracker.Importing.Game
 		}
 
 		public HearthMirror.Objects.Deck Deck { get; }
-		public string Class { get; }
+		public string? Class { get; }
 		public bool Import { get; set; } = true;
-		public IEnumerable<IImportOption> ImportOptions { get; }
+		public IEnumerable<IImportOption>? ImportOptions { get; }
 		public int SelectedIndex { get; set; }
 
 		public IImportOption SelectedImportOption => ImportOptions.ElementAt(SelectedIndex);

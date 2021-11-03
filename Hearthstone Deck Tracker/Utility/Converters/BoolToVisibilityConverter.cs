@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 			return ConverterHelper.BoolConverter(values, parameter) ? Visibility.Visible : Visibility.Collapsed;
 		}
 
-		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		public object[]? ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
 		{
 			return null;
 		}
@@ -44,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 			return Convert(new[] { value }, targetType, parameter, culture);
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			return null;
 		}
@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 			return ConverterHelper.BoolConverter(values, parameter) ? Visibility.Collapsed : Visibility.Visible;
 		}
 
-		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		public object[]? ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
 		{
 			return null;
 		}
@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 			return Convert(new[] { value }, targetType, parameter, culture);
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			return null;
 		}

@@ -11,8 +11,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 {
 	public class ConstructedDeckStats
 	{
-		private readonly Deck _deck;
-		private readonly IEnumerable<GameStats> _games;
+		private readonly Deck? _deck;
+		private readonly IEnumerable<GameStats>? _games;
 
 		public ConstructedDeckStats(IGrouping<Guid, GameStats> grouping)
 		{
@@ -26,11 +26,14 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			_games = games;
 		}
 
-		public string DeckName => _deck?.Name ?? _games?.FirstOrDefault(x => !string.IsNullOrEmpty(x.DeckName))?.DeckName;
+		public string? DeckName => _deck?.Name ?? _games?.FirstOrDefault(x => !string.IsNullOrEmpty(x.DeckName))?.DeckName;
 
-		public string Class => _deck?.Class ?? _games?.FirstOrDefault()?.PlayerHero;
+		public string? Class => _deck?.Class ?? _games?.FirstOrDefault()?.PlayerHero;
 
-		public IEnumerable<MatchupStats> Matchups => _games?.GroupBy(x => x.OpponentHero).Select(x => new MatchupStats(x.Key, x));
+		public IEnumerable<MatchupStats>? Matchups => _games?
+			.Where(x => !string.IsNullOrEmpty(x.OpponentHero))
+			.GroupBy(x => x.OpponentHero!)
+			.Select(x => new MatchupStats(x.Key, x));
 
 		public MatchupStats BestMatchup => Matchups.OrderByDescending(x => x.WinRate).ThenBy(x => x.Losses).ThenByDescending(x => x.Wins).FirstOrDefault();
 

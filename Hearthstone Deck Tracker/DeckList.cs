@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker
 	public class DeckList
 	{
 		private static Lazy<DeckList> _instance = new Lazy<DeckList>(Load);
-		private Deck _activeDeck;
+		private Deck? _activeDeck;
 
 		[XmlArray(ElementName = "Tags")]
 		[XmlArrayItem(ElementName = "Tag")]
@@ -37,7 +37,7 @@ namespace Hearthstone_Deck_Tracker
 		}
 
 		[XmlIgnore]
-		public Deck ActiveDeck
+		public Deck? ActiveDeck
 		{
 			get { return _activeDeck; }
 			set
@@ -58,7 +58,7 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
-		public Deck ActiveDeckVersion => ActiveDeck?.GetSelectedDeckVersion();
+		public Deck? ActiveDeckVersion => ActiveDeck?.GetSelectedDeckVersion();
 
 		public static DeckList Instance => _instance.Value;
 
@@ -163,8 +163,8 @@ namespace Hearthstone_Deck_Tracker
 
 	public class DeckInfo
 	{
-		public string Class;
+		public string? Class;
 		public Guid Id;
-		public string Name;
+		public string? Name;
 	}
 }

@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			}
 		}
 
-		public static async Task<HtmlDocument> GetHtmlDoc(string url, string header, string headerValue)
+		public static async Task<HtmlDocument> GetHtmlDoc(string url, string? header, string? headerValue)
 		{
 			using(var wc = new WebClient())
 			{
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			return await JsonRequest(url, data);
 		}
 
-		public static async Task<string> JsonRequest(string url, string data = null)
+		public static async Task<string> JsonRequest(string url, string? data = null)
 		{
 			using(var wc = new WebClient())
 			{
@@ -98,7 +98,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 		// http://stackoverflow.com/a/4567408/2762059
 		private class GzipWebClient : WebClient
 		{
-			protected override WebRequest GetWebRequest(Uri address)
+			protected override WebRequest? GetWebRequest(Uri address)
 			{
 				var request = (HttpWebRequest)base.GetWebRequest(address);
 				if(request != null)

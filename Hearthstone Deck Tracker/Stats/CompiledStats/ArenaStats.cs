@@ -22,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public IEnumerable<ArenaRun> Runs => ArenaDecks.Select(x => new ArenaRun(x)).OrderByDescending(x => x.StartTime);
 
-		public IEnumerable<ClassStats> ClassStats => GetFilteredRuns(classFilter: false).GroupBy(x => x.Class).Select(x => new ClassStats(x.Key, x)).OrderBy(x => x.Class);
+		public IEnumerable<ClassStats> ClassStats => GetFilteredRuns(classFilter: false).Where(x => x.Class != null).GroupBy(x => x.Class!).Select(x => new ClassStats(x.Key, x)).OrderBy(x => x.Class);
 
 		public int PacksCountClassic => GetFilteredRuns().Sum(x => x.Packs.Count(p => p == ArenaRewardPacks.Classic));
 
@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public double GoldAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.Gold).DefaultIfEmpty(0).Average(), 2);
 
-		public int GoldSpent => GetFilteredRuns().Count(x => x.Deck.ArenaReward.PaymentMethod == ArenaPaymentMethod.Gold) * 150;
+		public int GoldSpent => GetFilteredRuns().Count(x => x.Deck.ArenaReward?.PaymentMethod == ArenaPaymentMethod.Gold) * 150;
 
 		public int DustTotal => GetFilteredRuns().Sum(x => x.Dust);
 
@@ -84,23 +84,23 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public double CardCountGoldenAveragePerRun => Math.Round(GetFilteredRuns(requireAnyReward: true).Select(x => x.CardCountGolden).DefaultIfEmpty(0).Average(), 2);
 
-		public ClassStats ClassStatsBest => !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.WinRate).First();
-		public ClassStats ClassStatsWorst => !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.WinRate).First();
-		public ClassStats ClassStatsMostPicked => !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.Runs).First();
-		public ClassStats ClassStatsLeastPicked => !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.Runs).First();
+		public ClassStats? ClassStatsBest => !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.WinRate).First();
+		public ClassStats? ClassStatsWorst => !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.WinRate).First();
+		public ClassStats? ClassStatsMostPicked => !ClassStats.Any() ? null : ClassStats.OrderByDescending(x => x.Runs).First();
+		public ClassStats? ClassStatsLeastPicked => !ClassStats.Any() ? null : ClassStats.OrderBy(x => x.Runs).First();
 
-		public ClassStats ClassStatsDemonHunter => GetClassStats("DemonHunter");
-		public ClassStats ClassStatsDruid => GetClassStats("Druid");
-		public ClassStats ClassStatsHunter => GetClassStats("Hunter");
-		public ClassStats ClassStatsMage => GetClassStats("Mage");
-		public ClassStats ClassStatsPaladin => GetClassStats("Paladin");
-		public ClassStats ClassStatsPriest => GetClassStats("Priest");
-		public ClassStats ClassStatsRogue => GetClassStats("Rogue");
-		public ClassStats ClassStatsShaman => GetClassStats("Shaman");
-		public ClassStats ClassStatsWarlock => GetClassStats("Warlock");
-		public ClassStats ClassStatsWarrior => GetClassStats("Warrior");
+		public ClassStats? ClassStatsDemonHunter => GetClassStats("DemonHunter");
+		public ClassStats? ClassStatsDruid => GetClassStats("Druid");
+		public ClassStats? ClassStatsHunter => GetClassStats("Hunter");
+		public ClassStats? ClassStatsMage => GetClassStats("Mage");
+		public ClassStats? ClassStatsPaladin => GetClassStats("Paladin");
+		public ClassStats? ClassStatsPriest => GetClassStats("Priest");
+		public ClassStats? ClassStatsRogue => GetClassStats("Rogue");
+		public ClassStats? ClassStatsShaman => GetClassStats("Shaman");
+		public ClassStats? ClassStatsWarlock => GetClassStats("Warlock");
+		public ClassStats? ClassStatsWarrior => GetClassStats("Warrior");
 
-		public ClassStats ClassStatsAll => GetFilteredRuns(classFilter: false).GroupBy(x => true).Select(x => new ClassStats("All", x)).FirstOrDefault();
+		public ClassStats? ClassStatsAll => GetFilteredRuns(classFilter: false).GroupBy(x => true).Select(x => new ClassStats("All", x)).FirstOrDefault();
 
 		public int RunsCount => GetFilteredRuns().Count();
 		public int GamesCountTotal => GetFilteredRuns().Sum(x => x.Games.Count());
@@ -111,8 +111,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 
 		public IEnumerable<ArenaRun> FilteredRuns => GetFilteredRuns();
 
-		public IEnumerable<ChartStats> PlayedClassesPercent => GetFilteredRuns()
-			.GroupBy(x => x.Class)
+		public IEnumerable<ChartStats> PlayedClassesPercent => GetFilteredRuns().Where(x => x.Class != null)
+			.GroupBy(x => x.Class!)
 			.OrderBy(x => x.Key)
 			.Select(
 				    x =>
@@ -127,7 +127,10 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		{
 			get
 			{
-				var opponents = GetFilteredRuns().SelectMany(x => x.Deck.DeckStats.Games.Select(g => g.OpponentHero)).ToList();
+				var opponents = GetFilteredRuns()
+					.SelectMany(x => x.Deck.DeckStats.Games.Select(g => g.OpponentHero))
+					.Where(x => x != null)
+					.ToList();
 				return
 					opponents.GroupBy(x => x)
 					         .OrderBy(x => x.Key)
@@ -137,7 +140,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					                 {
 						                 Name = g.Key + " (" + Math.Round(100.0 * g.Count() / opponents.Count()) + "%)",
 						                 Value = g.Count(),
-						                 Brush = new SolidColorBrush(Helper.GetClassColor(g.Key, true))
+						                 Brush = new SolidColorBrush(Helper.GetClassColor(g.Key!, true))
 					                 });
 			}
 		}
@@ -176,7 +179,9 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					if(runs == null)
 						return new[] {new ChartStats {Name = n.ToString(), Value = 0, Brush = new SolidColorBrush()}};
 					return
-						runs.Runs.GroupBy(x => x.Class)
+						runs.Runs
+							.Where(x => x.Class != null)
+							.GroupBy(x => x.Class!)
 						    .OrderBy(x => x.Key)
 						    .Select(
 						            x =>
@@ -217,7 +222,8 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			{
 				return
 					GetFilteredRuns()
-						.GroupBy(x => x.Class)
+						.Where(x => x.Class != null)
+						.GroupBy(x => x.Class!)
 						.Select(
 						        x =>
 						        new ChartStats
@@ -230,9 +236,9 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public ClassStats GetClassStats(string @class)
+		public ClassStats? GetClassStats(string @class)
 		{
 			var runs = GetFilteredRuns(classFilter: false).Where(x => x.Class == @class).ToList();
 			return !runs.Any() ? null : new ClassStats(@class, runs);
@@ -293,7 +299,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

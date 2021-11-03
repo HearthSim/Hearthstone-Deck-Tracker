@@ -43,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		}
 
 		public string GroupBoxMatchupsHeader
-			=> Config.Instance.ConstructedStatsActiveDeckOnly ? DeckList.Instance.ActiveDeck?.Name.ToUpper() : "MATCHUPS";
+			=> Config.Instance.ConstructedStatsActiveDeckOnly ? (DeckList.Instance.ActiveDeck?.Name.ToUpper() ?? string.Empty) : "MATCHUPS";
 
 		internal void UpdateContent()
 		{
@@ -57,10 +57,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			OnPropertyChanged(nameof(GroupBoxMatchupsHeader));
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

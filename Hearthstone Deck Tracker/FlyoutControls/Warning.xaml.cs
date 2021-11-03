@@ -10,17 +10,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 {
 	public partial class Warning : INotifyPropertyChanged
 	{
-		private string _warningText;
+		private string? _warningText;
 		private ConfigWarning _warning;
 
-		public event Action OnComplete;
+		public event Action? OnComplete;
 
 		public Warning()
 		{
 			InitializeComponent();
 		}
 
-		public string WarningText
+		public string? WarningText
 		{
 			get => _warningText;
 			set
@@ -55,10 +55,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			WarningText = EnumDescriptionConverter.GetDescription(warning);
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

@@ -26,8 +26,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private Visibility _cardAgeVisibility;
 		private int _costReduction;
 		private Visibility _costReductionVisibility;
-		private BitmapImage _icon;
-		private BitmapSource _sourceCardBitmap;
+		private BitmapImage? _icon;
+		private BitmapSource? _sourceCardBitmap;
 		private ScaleTransform _scaleTransform;
 
 		public CardMarker()
@@ -56,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		public BitmapImage Icon
+		public BitmapImage? Icon
 		{
 			get => _icon;
 			set
@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		public BitmapSource SourceCardBitmap
+		public BitmapSource? SourceCardBitmap
 		{
 			get => _sourceCardBitmap;
 			set
@@ -113,13 +113,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		public Hearthstone.Card SourceCard { get; set; }
+		public Hearthstone.Card? SourceCard { get; set; }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public void UpdateIcon(CardMark mark)
 		{
-			if(Helper.TryGetAttribute<AssetNameAttribute>(mark, out var assetName) && assetName.Name != null)
+			if(Helper.TryGetAttribute<AssetNameAttribute>(mark, out var assetName) && assetName?.Name != null)
 			{
 				var path = Path.Combine("/HearthstoneDeckTracker;component", assetName.Name);
 				Icon = new BitmapImage(new Uri(path, UriKind.Relative));
@@ -145,7 +145,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			CostReductionVisibility = costReduction > 0 ? Visible : Collapsed;
 		}
 
-		public void UpdateSourceCard(Hearthstone.Card card)
+		public void UpdateSourceCard(Hearthstone.Card? card)
 		{
 			if(SourceCard == card)
 				return;
@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

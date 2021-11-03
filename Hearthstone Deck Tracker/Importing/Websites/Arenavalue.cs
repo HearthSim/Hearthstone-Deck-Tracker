@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 {
 	internal class Arenavalue
 	{
-		public static async Task<Deck> Import(string url)
+		public static async Task<Deck?> Import(string url)
 		{
 			try
 			{
@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				var newUrl = baseUrl + url.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Last();
 
 
-				HtmlNodeCollection nodes = null;
+				HtmlNodeCollection? nodes = null;
 				using(var wb = new WebBrowser())
 				{
 					var done = false;

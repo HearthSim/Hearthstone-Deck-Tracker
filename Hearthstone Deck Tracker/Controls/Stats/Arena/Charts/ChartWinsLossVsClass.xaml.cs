@@ -37,10 +37,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 					ItemsSource = ArenaStats.Instance.WinLossVsClass[index]
 				});
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			var handler = PropertyChanged;
 			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -48,8 +48,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena.Charts
 
 		public class WinChartData
 		{
-			public string Index { get; set; }
-			public IEnumerable<ChartStats> ItemsSource { get; set; }
+			public string? Index { get; set; }
+			public IEnumerable<ChartStats>? ItemsSource { get; set; }
 		}
 	}
 }

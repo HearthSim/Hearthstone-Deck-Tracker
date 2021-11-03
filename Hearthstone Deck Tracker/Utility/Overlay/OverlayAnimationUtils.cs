@@ -7,7 +7,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public static class OverlayAnimationUtils
 	{
-		public static Timeline GetAnimation(AnimationType type, double to)
+		public static Timeline? GetAnimation(AnimationType type, double to)
 		{
 			switch(type)
 			{
@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return null;
 		}
 
-		public static Action<UIElement, double> GetCanvasSetter(Side side)
+		public static Action<UIElement, double>? GetCanvasSetter(Side side)
 		{
 			switch(side)
 			{

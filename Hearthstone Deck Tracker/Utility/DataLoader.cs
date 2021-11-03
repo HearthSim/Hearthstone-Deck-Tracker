@@ -7,17 +7,17 @@ using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Utility
 {
-	public class DataLoader<T> where T : class
+	public class DataLoader<T>
 	{
 		private readonly Func<Task<T>> _load;
-		private T _data;
+		private T? _data;
 		private bool _loading;
 
-		public event Action<T> Loaded;
+		public event Action<T>? Loaded;
 
-		public T Data => TryGetData(out var data) ? data : null;
+		public T? Data => TryGetData(out var data) ? data : default;
 
-		public bool TryGetData(out T data)
+		public bool TryGetData(out T? data)
 		{
 			if(_data == null)
 				Load();
@@ -40,9 +40,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 			_load = load;
 		}
 
-		public static DataLoader<T> FromDisk(string path, Func<string, T> deserializer)
+		public static DataLoader<T?> FromDisk(string path, Func<string, T> deserializer)
 		{
-			return new DataLoader<T>(async () =>
+			return new DataLoader<T?>(async () =>
 			{
 				try
 				{
@@ -55,17 +55,17 @@ namespace Hearthstone_Deck_Tracker.Utility
 				catch(Exception e)
 				{
 					Log.Error(e);
-					return null;
+					return default;
 				}
 			});
 		}
 
-		public static DataLoader<T> JsonFromDisk(string path) 
+		public static DataLoader<T?> JsonFromDisk(string path) 
 			=> FromDisk(path, JsonConvert.DeserializeObject<T>);
 
-		public static DataLoader<T> FromWeb(string url, Func<string, T> deserializer)
+		public static DataLoader<T?> FromWeb(string url, Func<string, T> deserializer)
 		{
-			return new DataLoader<T>(async () =>
+			return new DataLoader<T?>(async () =>
 			{
 				try
 				{
@@ -78,12 +78,12 @@ namespace Hearthstone_Deck_Tracker.Utility
 				catch(Exception e)
 				{
 					Log.Error(e);
-					return null;
+					return default;
 				}
 			});
 		}
 
-		public static DataLoader<T> JsonFromWeb(string url) 
+		public static DataLoader<T?> JsonFromWeb(string url) 
 			=> FromWeb(url, JsonConvert.DeserializeObject<T>);
 	}
 }

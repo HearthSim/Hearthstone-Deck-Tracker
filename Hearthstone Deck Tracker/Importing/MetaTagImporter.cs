@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public class MetaTagImporter
 	{
-		public static async Task<Deck> TryFindDeck(string url)
+		public static async Task<Deck?> TryFindDeck(string url)
 		{
 			try
 			{
@@ -44,11 +44,13 @@ namespace Hearthstone_Deck_Tracker.Importing
 
 				var heroId = GetMetaProperty(metaNodes, "x-hearthstone:deck:hero");
 				if(!string.IsNullOrEmpty(heroId))
-					deck.Class = Database.GetCardFromId(heroId).PlayerClass;
+					deck.Class = Database.GetCardFromId(heroId)?.PlayerClass;
 				var cardList = GetMetaProperty(metaNodes, "x-hearthstone:deck:cards").Split(',');
 				foreach(var idGroup in cardList.GroupBy(x => x))
 				{
 					var card = Database.GetCardFromId(idGroup.Key);
+					if(card == null)
+						continue;
 					card.Count = idGroup.Count();
 					deck.Cards.Add(card);
 					if(deck.Class == null && card.IsClassCard)

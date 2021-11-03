@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker
 			Build = 0;
 		}
 
-		public SerializableVersion(Version v)
+		public SerializableVersion(Version? v)
 		{
 			if(v == null)
 				return;
@@ -66,24 +66,23 @@ namespace Hearthstone_Deck_Tracker
 													   .Replace("{r}", Revision.ToString())
 													   .Replace("{b}", Build.ToString());
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			// If parameter is null return false.
 			if(obj == null)
 				return false;
 
 			// If parameter cannot be cast to Point return false.
-			var p = obj as SerializableVersion;
-			if((object)p == null)
+			if(obj is not SerializableVersion p)
 				return false;
 			// Return true if the fields match:
 			return Equals(p);
 		}
 
-		public bool Equals(SerializableVersion sv)
+		public bool Equals(SerializableVersion? sv)
 		{
 			// If parameter is null return false:
-			if((object)sv == null)
+			if((object?)sv == null)
 				return false;
 
 			// Return true if the fields match:
@@ -96,21 +95,21 @@ namespace Hearthstone_Deck_Tracker
 
 		public override int GetHashCode() => base.GetHashCode();
 
-		public static bool operator ==(SerializableVersion a, SerializableVersion b)
+		public static bool operator ==(SerializableVersion? a, SerializableVersion? b)
 		{
 			// If both are null, or both are same instance, return true.
 			if(ReferenceEquals(a, b))
 				return true;
 
 			// If one is null, but not both, return false.
-			if(((object)a == null) || ((object)b == null))
+			if(((object?)a == null) || ((object?)b == null))
 				return false;
 
 			// Return true if the fields match:
 			return a.Equals(b);
 		}
 
-		public static bool operator !=(SerializableVersion a, SerializableVersion b) => !(a == b);
+		public static bool operator !=(SerializableVersion? a, SerializableVersion? b) => !(a == b);
 
 		public static SerializableVersion Parse(string verionString)
 		{

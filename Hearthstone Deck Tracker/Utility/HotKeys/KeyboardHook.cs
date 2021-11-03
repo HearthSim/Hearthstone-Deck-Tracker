@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		/// <summary>
 		/// A hot key has been pressed.
 		/// </summary>
-		public event EventHandler<KeyPressedEventArgs> KeyPressed;
+		public event EventHandler<KeyPressedEventArgs>? KeyPressed;
 
 		/// <summary>
 		/// Represents the window that is used internally to get the messages.
@@ -94,7 +94,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 				}
 			}
 
-			public event EventHandler<KeyPressedEventArgs> KeyPressed;
+			public event EventHandler<KeyPressedEventArgs>? KeyPressed;
 		}
 
 		#region IDisposable Members

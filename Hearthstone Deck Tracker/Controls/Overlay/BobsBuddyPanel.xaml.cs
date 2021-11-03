@@ -20,12 +20,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			InitializeComponent();
 			ResetDisplays();
 
-			WarningState = Remote.Config.Data?.BobsBuddy.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
-			Remote.Config.Loaded += cfg => WarningState = cfg?.BobsBuddy.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
+			WarningState = Remote.Config.Data?.BobsBuddy?.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
+			Remote.Config.Loaded += cfg => WarningState = cfg?.BobsBuddy?.DataQualityWarning == true ? BobsBuddyWarningState.DataQuality : BobsBuddyWarningState.None;
 		}
 
-		private string _winRateDisplay;
-		public string WinRateDisplay
+		private string? _winRateDisplay;
+		public string? WinRateDisplay
 		{
 			get => _winRateDisplay;
 			set
@@ -35,8 +35,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private string _tieRateDisplay;
-		public string TieRateDisplay
+		private string? _tieRateDisplay;
+		public string? TieRateDisplay
 		{
 			get => _tieRateDisplay;
 			set
@@ -46,8 +46,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private string _lossRateDisplay;
-		public string LossRateDisplay
+		private string? _lossRateDisplay;
+		public string? LossRateDisplay
 		{
 			get => _lossRateDisplay;
 			set
@@ -57,8 +57,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private string _playerLethalDisplay;
-		public string PlayerLethalDisplay
+		private string? _playerLethalDisplay;
+		public string? PlayerLethalDisplay
 		{
 			get => _playerLethalDisplay;
 			set
@@ -68,8 +68,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private string _opponentLethalDisplay;
-		public string OpponentLethalDisplay
+		private string? _opponentLethalDisplay;
+		public string? OpponentLethalDisplay
 		{
 			get => _opponentLethalDisplay;
 			set
@@ -79,8 +79,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private string _averageDamageGivenDisplay;
-		public string AverageDamageGivenDisplay
+		private string? _averageDamageGivenDisplay;
+		public string? AverageDamageGivenDisplay
 		{
 			get => _averageDamageGivenDisplay;
 			set
@@ -90,8 +90,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private string _averageDamageTakenDisplay;
-		public string AverageDamageTakenDisplay
+		private string? _averageDamageTakenDisplay;
+		public string? AverageDamageTakenDisplay
 		{
 			get => _averageDamageTakenDisplay;
 			set
@@ -146,7 +146,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		private List<int> _lastCombatPossibilities;
+		private List<int>? _lastCombatPossibilities;
 
 		private int _lastCombatResult = 0;
 
@@ -156,7 +156,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public Visibility WarningIconVisibility => ErrorState == BobsBuddyErrorState.None && WarningState == BobsBuddyWarningState.None ? Visibility.Collapsed : Visibility.Visible;
 
-		public string WarningIconTextTooltip => WarningState == BobsBuddyWarningState.DataQuality ? LocUtil.Get("BobsBuddyWarningTooltip_DataQuality") : null;
+		public string? WarningIconTextTooltip => WarningState == BobsBuddyWarningState.DataQuality ? LocUtil.Get("BobsBuddyWarningTooltip_DataQuality") : null;
 		public bool WarningIconTooltipEnabled => WarningIconTextTooltip != null;
 
 
@@ -269,12 +269,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private bool _resultsPanelExpanded = false;
 
-		private static List<int> _playerDamageDealtBounds;
-		private static List<int> _opponentDamageDealtBounds;
+		private static List<int>? _playerDamageDealtBounds;
+		private static List<int>? _opponentDamageDealtBounds;
 
 		internal void ShowCompletedSimulation(double winRate, double tieRate, double lossRate, double playerLethal, double opponentLethal, List<int> possibleResults)
 		{
@@ -333,8 +333,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			_playerDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(playerDamageDealtPossibilities);
 			_opponentDamageDealtBounds = GetTwentiethAndEightiethPercentileFor(opponentSortedDamageDealtPossibilites);
 
-			PlayerAverageDamageOpacity = _playerDamageDealtBounds == null ? SoftLabelOpacity : 1;
-			OpponentAverageDamageOpacity = _opponentDamageDealtBounds == null ? SoftLabelOpacity : 1;
+			PlayerAverageDamageOpacity = 1;
+			OpponentAverageDamageOpacity = 1;
 
 			AverageDamageGivenDisplay = FormatDamageBoundsFrom(_playerDamageDealtBounds);
 			AverageDamageTakenDisplay = FormatDamageBoundsFrom(_opponentDamageDealtBounds);
@@ -470,7 +470,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

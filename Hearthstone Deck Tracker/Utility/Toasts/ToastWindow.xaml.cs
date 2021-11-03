@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 {
 	public partial class ToastWindow
 	{
-		private readonly TaskCompletionSource<object> _tcs = new TaskCompletionSource<object>();
+		private readonly TaskCompletionSource<object?> _tcs = new TaskCompletionSource<object?>();
 
 		private readonly Action _forceClose;
 
@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 
 		public bool CloseOnClick { get; set; } = true;
 
-		public event EventHandler Clicked;
+		public event EventHandler? Clicked;
 
 		private void Window_MouseEnter(object sender, MouseEventArgs e)
 		{

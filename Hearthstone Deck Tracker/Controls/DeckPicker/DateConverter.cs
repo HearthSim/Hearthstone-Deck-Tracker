@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 {
 	public class DateConverter : IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			if(!(value is DateTime))
 				return string.Empty;
@@ -21,6 +21,6 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			return date.ToString(EnumDescriptionConverter.GetDescription(Config.Instance.SelectedDateFormat), culture);
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
+		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => null;
 	}
 }

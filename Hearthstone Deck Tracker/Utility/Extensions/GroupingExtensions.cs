@@ -7,7 +7,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Extensions
 {
 	public static class GroupingExtensions
 	{
-		public static ConstructedDeckStats ToConstructedDeckStats(this IGrouping<Guid, GameStats> grouping) 
+		public static ConstructedDeckStats? ToConstructedDeckStats(this IGrouping<Guid, GameStats> grouping) 
 			=> grouping != null ? new ConstructedDeckStats(grouping) : null;
 	}
 }

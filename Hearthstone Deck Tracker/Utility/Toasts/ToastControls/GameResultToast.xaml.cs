@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 
 		public string DeckName { get; }
 
-		public HeroClassWrapper Opponent
+		public HeroClassWrapper? Opponent
 		{
 			get => Enum.TryParse(_game.OpponentHero, out HeroClass heroClass) ? new HeroClassWrapper(heroClass) : null;
 			set
@@ -143,10 +143,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts.ToastControls
 			public override int GetHashCode() => Class?.GetHashCode() ?? 0;
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

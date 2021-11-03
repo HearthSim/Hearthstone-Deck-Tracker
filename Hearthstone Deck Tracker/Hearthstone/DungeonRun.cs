@@ -4,26 +4,27 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.CardIds;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class DungeonRun
 	{
-		public static Deck GetDefaultDeck(string playerClass, CardSet set, string shrineCardId = null)
+		public static Deck? GetDefaultDeck(string playerClass, CardSet set, string shrineCardId = "")
 		{
 			var cards = GetCards(playerClass, set, shrineCardId);
 			if(cards == null)
 				return null;
-			return GetDeck(playerClass, set, false, cards.Select(Database.GetCardFromId));
+			return GetDeck(playerClass, set, false, cards.Select(Database.GetCardFromId).WhereNotNull());
 		}
 
-		public static Deck GetDeckFromDbfIds(string playerClass, CardSet set, bool isPVPDR, IEnumerable<int> dbfIds)
+		public static Deck? GetDeckFromDbfIds(string playerClass, CardSet set, bool isPVPDR, IEnumerable<int> dbfIds)
 		{
-			return GetDeck(playerClass, set, isPVPDR, dbfIds.Select(dbfId => Database.GetCardFromDbfId(dbfId)));
+			return GetDeck(playerClass, set, isPVPDR, dbfIds.Select(dbfId => Database.GetCardFromDbfId(dbfId)).WhereNotNull());
 		}
 
-		public static Deck GetDeck(string playerClass, CardSet set, bool isPVPDR, IEnumerable<Card> cards)
+		public static Deck? GetDeck(string playerClass, CardSet set, bool isPVPDR, IEnumerable<Card> cards)
 		{
 			var deck = new Deck
 			{
@@ -40,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return deck;
 		}
 
-		private static string GetDeckTemplate(CardSet set)
+		private static string? GetDeckTemplate(CardSet set)
 		{
 			switch(set)
 			{
@@ -61,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		private static List<string> GetCards(string playerClass, CardSet set, string shrineCardId = null)
+		private static List<string>? GetCards(string playerClass, CardSet set, string shrineCardId = "")
 		{
 			switch(set)
 			{
@@ -137,7 +138,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return null;
 		}
 
-		public static string GetUldumHeroPlayerClass(string identifier)
+		public static string? GetUldumHeroPlayerClass(string? identifier)
 		{
 			switch(identifier)
 			{
@@ -159,7 +160,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static bool IsDungeonBoss(string cardId) => cardId != null && (cardId.Contains("LOOT") || cardId.Contains("GIL") || cardId.Contains("TRL")) && cardId.Contains("BOSS");
+		public static bool IsDungeonBoss(string? cardId) => cardId != null && (cardId.Contains("LOOT") || cardId.Contains("GIL") || cardId.Contains("TRL")) && cardId.Contains("BOSS");
 
 		private static class GilDefaultDecks
 		{

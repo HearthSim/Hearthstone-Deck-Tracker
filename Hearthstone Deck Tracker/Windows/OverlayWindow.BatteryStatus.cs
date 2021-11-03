@@ -11,12 +11,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 {
 	public partial class OverlayWindow
 	{
-		private BatteryMonitor _batteryMonitor;
+		private BatteryMonitor? _batteryMonitor;
 
 		public Visibility BatteryStatusVisualVisibility => _batteryMonitor?.BatteryStatusVisualVisibility ?? Visibility.Collapsed;
 		public Visibility BatteryStatusTextVisibility => Config.Instance.ShowBatteryLifePercent ? Visibility.Visible : Visibility.Collapsed;
-		public string BatteryStatusPercent => _batteryMonitor?.BatteryStatusPercent;
-		public Visual BatteryStatusVisual => _batteryMonitor?.BatteryStatusVisual;
+		public string? BatteryStatusPercent => _batteryMonitor?.BatteryStatusPercent;
+		public Visual? BatteryStatusVisual => _batteryMonitor?.BatteryStatusVisual;
 
 		public void EnableBatteryMonitor()
 		{

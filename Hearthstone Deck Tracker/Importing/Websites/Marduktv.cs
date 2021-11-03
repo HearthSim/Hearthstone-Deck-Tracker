@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 {
 	public static class Marduktv
 	{
-		public static async Task<Deck> Import(string url)
+		public static async Task<Deck?> Import(string url)
 		{
 			try
 			{
@@ -30,9 +30,11 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					var validChild = countNode?.ChildNodes.SingleOrDefault(c => c.Name == "#text");
 
 					var id = nameNode.Attributes.FirstOrDefault(a => a.Name == "data-hcfw-card-id").Value;
-					var count = validChild != null ? int.Parse(countNode.InnerText) : 1;
+					var count = validChild != null ? int.Parse(countNode!.InnerText) : 1;
 
 					var card = Database.GetCardFromId(id);
+					if(card == null)
+						continue;
 					card.Count = count;
 					deck.Cards.Add(card);
 					if (string.IsNullOrEmpty(deck.Class) && card.PlayerClass != "Neutral")

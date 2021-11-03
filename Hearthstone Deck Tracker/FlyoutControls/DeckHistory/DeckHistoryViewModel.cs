@@ -8,9 +8,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory
 {
 	public class DeckHistoryViewModel : ViewModel
 	{
-		private Deck _deck;
+		private Deck? _deck;
 
-		public Deck Deck
+		public Deck? Deck
 		{
 			get => _deck;
 			set
@@ -18,7 +18,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory
 				_deck = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(CurrentVersion));
-				UpdateVersions(value);
+				if(value != null)
+					UpdateVersions(value);
 			}
 		}
 
@@ -38,7 +39,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory
 			OnPropertyChanged(nameof(DeckVersions));
 		}
 
-		public string CurrentVersion => Deck?.Version.ShortVersionString;
+		public string? CurrentVersion => Deck?.Version.ShortVersionString;
 
 		public ObservableCollection<DeckVersionChangeViewModel> DeckVersions { get; set; } = new ObservableCollection<DeckVersionChangeViewModel>();
 	}

@@ -55,13 +55,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			return minion;
 		}
 
-		internal static bool HeroPowerUsed(Entity heroPower)
+		internal static bool HeroPowerUsed(Entity? heroPower)
 			=> heroPower != null && (heroPower.HasTag(GameTag.EXHAUSTED) || heroPower.HasTag(GameTag.BACON_HERO_POWER_ACTIVATED));
 
 		internal static IOrderedEnumerable<Entity> GetOrderedMinions(IEnumerable<Entity> board)
 			=> board.Where(x => x.IsMinion).Select(x => x.Clone()).OrderBy(x => x.GetTag(GameTag.ZONE_POSITION));
 
-		private static string _versionString;
-		internal static string VersionString => _versionString ?? (_versionString = "v" + typeof(SimulationRunner).Assembly.GetName().Version.ToVersionString());
+		private static string? _versionString;
+		internal static string VersionString => _versionString ??= "v" + typeof(SimulationRunner).Assembly.GetName().Version.ToVersionString();
 	}
 }

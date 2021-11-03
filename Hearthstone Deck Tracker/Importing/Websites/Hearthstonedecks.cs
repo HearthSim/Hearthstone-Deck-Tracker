@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 {
 	public static class Hearthstonedecks
 	{
-		public static async Task<Deck> Import(string url)
+		public static async Task<Deck?> Import(string url)
 		{
 			try
 			{
@@ -31,6 +31,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 					var count = int.Parse(cardNode.Attributes["nb_card"].Value);
 
 					var card = Database.GetCardFromId(id);
+					if(card == null)
+						continue;
 					card.Count = count;
 
 					deck.Cards.Add(card);

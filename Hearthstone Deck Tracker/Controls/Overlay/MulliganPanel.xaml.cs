@@ -14,8 +14,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public partial class MulliganPanel : UserControl, INotifyPropertyChanged
 	{
-		private string _shortId;
-		private int[] _dbfIds;
+		private string? _shortId;
+		private int[]? _dbfIds;
 		private CardClass _opponent;
 		private bool _hasCoin;
 		private int _playerStarLevel;
@@ -25,10 +25,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			InitializeComponent();
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -103,9 +103,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 			if(!Config.Instance.SeenMulliganToast)
 				return false;
-			if(_noDataShown.Contains(_shortId))
+			if(_noDataShown.Contains(_shortId!))
 				return false;
-			_noDataShown.Add(_shortId);
+			_noDataShown.Add(_shortId!);
 			return true;
 		}
 	}

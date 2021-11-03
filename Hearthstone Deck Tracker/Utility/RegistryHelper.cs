@@ -9,7 +9,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 	{
 		private const string KeyName = "Hearthstone Deck Tracker";
 		private static string _executablePath = Application.ResourceAssembly.Location;
-		private static string _args;
+		private static string? _args;
 		private static RegistryKey GetRunKey() => Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
 		public static void SetRunKey()

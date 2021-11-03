@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public bool ShowToolTip => Config.Instance.WindowCardToolTips;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public void Update()
 		{
@@ -169,7 +169,7 @@ namespace Hearthstone_Deck_Tracker
 		public void UpdateOpponentCards(List<Card> cards, bool reset) => ListViewOpponent.Update(cards, reset);
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

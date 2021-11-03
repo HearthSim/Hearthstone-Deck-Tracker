@@ -5,6 +5,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 public class MultiIdCard
 {
@@ -16,16 +17,16 @@ public class MultiIdCard
 		Ids = ids;
 	}
 
-	private Card[] _cards = null;
-	public Card[] Cards => _cards ?? (_cards = Ids.Select(Database.GetCardFromId).ToArray());
+	private Card[]? _cards = null;
+	public Card[] Cards => _cards ??= Ids.Select(Database.GetCardFromId).WhereNotNull().ToArray();
 
 	public bool IsWild => Cards.Any(x => !Helper.ClassicOnlySets.Contains(x.Set));
 	public bool IsClassic => Cards.Any(x => Helper.ClassicOnlySets.Contains(x.Set));
 	public bool IsStandard => Cards.Any(x => !Helper.WildOnlySets.Contains(x.Set) && !Helper.ClassicOnlySets.Contains(x.Set));
 	public bool HasSet(CardSet set) => Cards.Any(x => x.CardSet == set);
 
-	public Card GetCardForFormat(Format? format) => GetCardForFormat(HearthDbConverter.GetFormatType(format));
-	public Card GetCardForFormat(FormatType format)
+	public Card? GetCardForFormat(Format? format) => GetCardForFormat(HearthDbConverter.GetFormatType(format));
+	public Card? GetCardForFormat(FormatType format)
 	{
 		switch(format)
 		{
@@ -45,11 +46,11 @@ public class MultiIdCard
 	public bool Equals(string id) => Ids.Contains(id);
 	public override bool Equals(object obj)
 	{
-		if (obj is MultiIdCard card) 
+		if (obj is MultiIdCard card)
 			return Equals(card);
-		if (obj is string str) 
+		if (obj is string str)
 			return Equals(str);
-		if (obj is string[] arr) 
+		if (obj is string[] arr)
 			return Equals(arr);
 		return false;
 	}
@@ -66,7 +67,7 @@ public class MultiIdCard
 
 	public override string ToString()
 	{
-		return Cards[0].Name;
+		return Cards[0].Name ?? "";
 	}
 }
 

@@ -17,8 +17,8 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class MoveGameDialog
 	{
-		public Deck SelectedDeck;
-		public SerializableVersion SelectedVersion;
+		public Deck? SelectedDeck;
+		public SerializableVersion? SelectedVersion;
 
 		public MoveGameDialog(IEnumerable<Deck> decks)
 		{

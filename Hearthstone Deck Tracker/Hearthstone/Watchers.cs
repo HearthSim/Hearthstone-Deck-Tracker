@@ -7,6 +7,7 @@ using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Importing;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using HearthWatcher;
 using HearthWatcher.Providers;
 
@@ -23,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			PVPDungeonRunWatcher.PVPDungeonRunMatchStarted += (newRun, set) => DeckManager.DungeonRunMatchStarted(newRun, set, true);
 			PVPDungeonRunWatcher.PVPDungeonInfoChanged += dungeonInfo => DeckManager.UpdateDungeonRunDeck(dungeonInfo, true);
 			FriendlyChallengeWatcher.OnFriendlyChallenge += OnFriendlyChallenge;
-			ExperienceWatcher.NewExperienceHandler += (sender, args) => Core.Overlay.ExperienceChangedAsync(args.Experience, args.ExperienceNeeded, args.Level, args.LevelChange, args.Animate);
+			ExperienceWatcher.NewExperienceHandler += (sender, args) => Core.Overlay.ExperienceChangedAsync(args.Experience, args.ExperienceNeeded, args.Level, args.LevelChange, args.Animate).Forget();
 		}
 
 		internal static void Stop()
@@ -79,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return Core.Game.CurrentMode == Mode.GAMEPLAY && Core.Game.PreviousMode == Mode.PVP_DUNGEON_RUN;
 			}
 		}
-		public string OpponentHeroId => Core.Game.Opponent.Board.FirstOrDefault(x => x.IsHero)?.CardId;
+		public string? OpponentHeroId => Core.Game.Opponent.Board.FirstOrDefault(x => x.IsHero)?.CardId;
 		public int OpponentHeroHealth => Core.Game.Opponent.Board.FirstOrDefault(x => x.IsHero)?.GetTag(GameTag.HEALTH) ?? 0;
 	}
 
@@ -91,8 +92,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 	public class HearthMirrorArenaProvider : IArenaProvider
 	{
-		public ArenaInfo GetArenaInfo() => DeckImporter.FromArena(false);
-		public HearthMirror.Objects.Card[] GetDraftChoices() => Reflection.GetArenaDraftChoices()?.ToArray();
+		public ArenaInfo? GetArenaInfo() => DeckImporter.FromArena(false);
+		public HearthMirror.Objects.Card[]? GetDraftChoices() => Reflection.GetArenaDraftChoices()?.ToArray();
 	}
 
 	public class HearthMirrorFriendlyChallengeProvider : IFriendlyChallengeProvider

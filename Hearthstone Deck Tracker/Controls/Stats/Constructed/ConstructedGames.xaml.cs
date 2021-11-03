@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 	/// </summary>
 	public partial class ConstructedGames : INotifyPropertyChanged
 	{
-		private List<GameStats> _selectedGames;
+		private List<GameStats>? _selectedGames;
 
 		public ConstructedGames()
 		{
@@ -33,9 +33,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		}
 
 		public List<GameStats> SelectedGames
-			=> _selectedGames ?? (_selectedGames = DataGridGames.SelectedItems?.Cast<GameStats>().ToList() ?? new List<GameStats>());
+			=> _selectedGames ??= DataGridGames.SelectedItems?.Cast<GameStats>().ToList() ?? new List<GameStats>();
 
-		public GameStats SelectedGame { get; set; }
+		public GameStats? SelectedGame { get; set; }
 
 		public DataGridRowDetailsVisibilityMode RowDetailVisibility
 			=> SelectedGames.Count > 1 ? DataGridRowDetailsVisibilityMode.Collapsed : DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		public Visibility MultiSelectPanelVisibility => SelectedGames.Count > 1 ? Visibility.Visible : Visibility.Collapsed;
 		public bool ButtonMultiMoveEnabled => SelectedGames.All(g => g.PlayerHero == SelectedGames.First().PlayerHero);
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private void DataGridGames_OnTargetUpdated(object sender, DataTransferEventArgs e)
 		{
@@ -74,6 +74,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		private async void ButtonShowReplay_OnClick(object sender, RoutedEventArgs e)
 		{
 			var game = SelectedGame;
+			if(game == null)
+				return;
 			await ReplayLauncher.ShowReplay(game, true);
 			game.UpdateReplayState();
 		}
@@ -109,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -125,13 +127,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		}
 
 		private void ButtonMove_OnClick(object sender, RoutedEventArgs e)
-			=> GameStatsHelper.MoveGamesToOtherDeckWithDialog(this, SelectedGame);
+		{
+			if(SelectedGame != null)
+				GameStatsHelper.MoveGamesToOtherDeckWithDialog(this, SelectedGame);
+		}
 
 		private void ButtonMultiMove_OnClick(object sender, RoutedEventArgs e)
-			=> GameStatsHelper.MoveGamesToOtherDeckWithDialog(this, SelectedGames.ToArray());
+		{
+			if(SelectedGame != null)
+				GameStatsHelper.MoveGamesToOtherDeckWithDialog(this, SelectedGames.ToArray());
+		}
 
 		private async void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
-			=> await GameStatsHelper.DeleteGamesWithDialog(this, SelectedGame);
+		{
+			if(SelectedGame != null)
+				await GameStatsHelper.DeleteGamesWithDialog(this, SelectedGame);
+		}
 
 		private async void ButtonMultiDelete_OnClick(object sender, RoutedEventArgs e)
 			=> await GameStatsHelper.DeleteGamesWithDialog(this, SelectedGames.ToArray());
@@ -153,13 +164,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			OnPropertyChanged(nameof(ButtonAddGameIsEnabledToolTip));
 		}
 
-		public Visual ReplayIconVisual => TryFindResource("appbar_control_play_" + VisualColor) as Visual;
-		public Visual OppDeckIconVisual => TryFindResource("appbar_layer_" + VisualColor) as Visual;
-		public Visual EditIconVisual => TryFindResource("appbar_edit_" + VisualColor) as Visual;
-		public Visual NoteIconVisual => TryFindResource("appbar_edit_box_" + VisualColor) as Visual;
-		public Visual MoveIconVisual => TryFindResource("appbar_page_arrow_" + VisualColor) as Visual;
-		public Visual DeleteIconVisual => TryFindResource("appbar_delete_" + VisualColor) as Visual;
-		public Visual AddIconVisual => TryFindResource("appbar_add_" + VisualColor) as Visual;
+		public Visual? ReplayIconVisual => TryFindResource("appbar_control_play_" + VisualColor) as Visual;
+		public Visual? OppDeckIconVisual => TryFindResource("appbar_layer_" + VisualColor) as Visual;
+		public Visual? EditIconVisual => TryFindResource("appbar_edit_" + VisualColor) as Visual;
+		public Visual? NoteIconVisual => TryFindResource("appbar_edit_box_" + VisualColor) as Visual;
+		public Visual? MoveIconVisual => TryFindResource("appbar_page_arrow_" + VisualColor) as Visual;
+		public Visual? DeleteIconVisual => TryFindResource("appbar_delete_" + VisualColor) as Visual;
+		public Visual? AddIconVisual => TryFindResource("appbar_add_" + VisualColor) as Visual;
 
 		private string VisualColor => Config.Instance.StatsInWindow && Config.Instance.ThemeName != "BaseDark" ? "black" : "white";
 

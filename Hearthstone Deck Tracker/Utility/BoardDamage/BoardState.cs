@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			// if there is no hero in the list, try to find it
 			var heroFound = list.Any(EntityHelper.IsHero);
 			if(!heroFound)
-				list?.Add(EntityHelper.GetHeroEntity(isPlayer, entities, playerId));
+				list.Add(EntityHelper.GetHeroEntity(isPlayer, entities, playerId));
 
 			return new PlayerBoard(list, activeTurn);
 		}

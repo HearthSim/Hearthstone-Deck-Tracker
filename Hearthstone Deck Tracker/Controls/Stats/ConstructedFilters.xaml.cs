@@ -23,9 +23,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	public partial class ConstructedFilters : INotifyPropertyChanged
 	{
 		private readonly bool _initialized;
-		private Action _updateCallback;
+		private Action? _updateCallback;
 
-		public ConstructedFilters(Action updateCallback = null)
+		public ConstructedFilters(Action? updateCallback = null)
 		{
 			InitializeComponent();
 			ComboBoxTimeframe.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));
@@ -89,7 +89,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			=>DeckList.Instance.ActiveDeck == null
 					? "No active deck" : (DeckList.Instance.ActiveDeck.IsArenaDeck ? "Active deck is an arena deck" : "Deck: " + DeckList.Instance.ActiveDeck.Name);
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		internal void SetUpdateCallback(Action callback)
 		{
@@ -173,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

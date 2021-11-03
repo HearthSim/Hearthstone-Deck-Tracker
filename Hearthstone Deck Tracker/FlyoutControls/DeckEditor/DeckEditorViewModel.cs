@@ -14,10 +14,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 {
 	public class DeckEditorViewModel : ViewModel
 	{
-		private string _searchText;
-		private readonly List<Card> _allCards;
+		private string? _searchText;
+		private readonly List<Card>? _allCards;
 		private Deck _deck;
-		private Deck _originalDeck;
+		private Deck? _originalDeck;
 		private bool _includeWild;
 		private bool _constructedCardLimits;
 		private CostFilter _selectedCostFilter = CostFilter.All;
@@ -25,13 +25,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		private SetFilter _selectedSetFilter = SetFilter.ALL;
 		private DeckEditorErrors _errors;
 		private DeckEditorWarnings _warnings;
-		private SaveOperation _selectedSaveOperation;
-		private SaveOperation[] _saveOperations;
+		private SaveOperation? _selectedSaveOperation;
+		private SaveOperation[]? _saveOperations;
 		private Visibility _saveOperationSelectionVisibility;
 		private int _selectedDbIndex;
-		private string _selectedSearchText;
+		private string? _selectedSearchText;
 
-		public Action DbInputFocusRequest { get; set; }
+		public Action? DbInputFocusRequest { get; set; }
 
 		public DeckEditorViewModel()
 		{
@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			_constructedCardLimits = !_deck.IsArenaDeck;
 		}
 
-		public string SearchText
+		public string? SearchText
 		{
 			get => _searchText;
 			set
@@ -62,7 +62,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		{
 			Deck = deck;
 			var hasSaveOp = !isNewDeck && !deck.IsArenaDeck;
-			SelectedSaveOperation = hasSaveOp ? SaveOperations[1] : null;
+			SelectedSaveOperation = hasSaveOp ? SaveOperations?[1] : null;
 			SaveOperationSelectionVisibility = hasSaveOp ? Visibility.Visible : Visibility.Collapsed;
 		}
 
@@ -109,7 +109,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 				var cards = _allCards.Where(x => x.PlayerClass == null || x.IsClass(Deck.Class));
 				if(!string.IsNullOrEmpty(SearchText))
 				{
-					var input = CleanString(SearchText).ToLowerInvariant();
+					var input = CleanString(SearchText!).ToLowerInvariant();
 					cards = cards.Where(c => Matches(c, input) || FullTextSearch && FullMatch(c, input));
 				}
 				if(SelectedCostFilter != CostFilter.All)
@@ -126,7 +126,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 
 		private bool Matches(Card card, string searchStr)
 		{
-			var names = new[] { card.LocalizedName }.Concat(card.AlternativeNames).Where(x => !string.IsNullOrEmpty(x)).Select(x => Helper.RemoveDiacritics(x, true).ToLowerInvariant());
+			var names = new[] { card.LocalizedName }.Concat(card.AlternativeNames).Where(x => !string.IsNullOrEmpty(x)).Select(x => Helper.RemoveDiacritics(x!, true).ToLowerInvariant());
 			return names.Any(name => name.Contains(searchStr)) || (card.Race?.ToLowerInvariant().Contains(searchStr) ?? false);
 		}
 
@@ -134,7 +134,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		{
 			var words = searchStr.Split(new [] {' '}, StringSplitOptions.RemoveEmptyEntries);
 			var texts = new[] { card.Text }.Concat(card.AlternativeTexts).Where(x => !string.IsNullOrEmpty(x));
-			return texts.Any(t => words.Any(t.Contains));
+			return texts.Any(t => words.Any(t!.Contains));
 		}
 
 		private string CleanString(string str) => string.IsNullOrEmpty(str) ? string.Empty : Helper.RemoveDiacritics(str, true).ToLowerInvariant();
@@ -193,23 +193,23 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 			get => _selectedSetFilter;
 			set
 			{
-				_selectedSetFilter = value; 
+				_selectedSetFilter = value;
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(CardDatabase));
 			}
 		}
 
-		public SaveOperation SelectedSaveOperation
+		public SaveOperation? SelectedSaveOperation
 		{
 			get => _selectedSaveOperation;
 			set
 			{
-				_selectedSaveOperation = value; 
+				_selectedSaveOperation = value;
 				OnPropertyChanged();
 			}
 		}
 
-		public SaveOperation[] SaveOperations
+		public SaveOperation[]? SaveOperations
 		{
 			get => _saveOperations;
 			set
@@ -223,7 +223,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		{
 			get => _saveOperationSelectionVisibility; set
 			{
-				_saveOperationSelectionVisibility = value; 
+				_saveOperationSelectionVisibility = value;
 				OnPropertyChanged();
 			}
 		}
@@ -259,9 +259,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		{
 			if(SelectedSaveOperation != null)
 			{
-				if(!SelectedSaveOperation.IsCurrent)
+				if(!SelectedSaveOperation.IsCurrent && SelectedSaveOperation.Version != null)
 					Deck.Version = SelectedSaveOperation.Version;
-				DeckManager.SaveDeck(_originalDeck, Deck, SelectedSaveOperation.IsCurrent);
+				if(_originalDeck != null)
+					DeckManager.SaveDeck(_originalDeck, Deck, SelectedSaveOperation.IsCurrent);
 			}
 			else
 				DeckManager.SaveDeck(Deck);
@@ -358,7 +359,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 				SelectedDbIndex += numValue;
 		});
 
-		public string SelectedSearchText
+		public string? SelectedSearchText
 		{
 			get => _selectedSearchText;
 			set

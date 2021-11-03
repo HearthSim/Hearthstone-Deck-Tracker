@@ -10,8 +10,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries
 {
 	public class MercenariesAbilityViewModel : CardAssetViewModel
 	{
-		private readonly Entity _entity;
-		private readonly Hearthstone.Card _card;
+		private readonly Entity? _entity;
+		private readonly Hearthstone.Card? _card;
 		private readonly bool _active;
 		private readonly int _gameTurn;
 		private readonly SolidColorBrush _white = new SolidColorBrush(Colors.White);
@@ -35,10 +35,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries
 
 		public double Opacity => Cooldown > 0 ? 0.5 : 1;
 
-		public ImageSource CheckmarkAsset => _active ? Find("MercsCheckmark") : null;
-		public ImageSource CooldownAsset => Cooldown > 0 ? Find("MercsAbilityCooldown") : null;
+		public ImageSource? CheckmarkAsset => _active ? Find("MercsCheckmark") : null;
+		public ImageSource? CooldownAsset => Cooldown > 0 ? Find("MercsAbilityCooldown") : null;
 		public Visibility CooldownShadingVisibility => Cooldown > 0 ? Visibility.Visible: Visibility.Collapsed;
-		public string CooldownText => Cooldown > 0 ? Cooldown.ToString() : null;
+		public string? CooldownText => Cooldown > 0 ? Cooldown.ToString() : null;
 		public string SpeedText => Speed.ToString();
 		public Visibility SpeedUncertainIndicatorVisibility => _entity == null ? Visibility.Visible : Visibility.Collapsed;
 

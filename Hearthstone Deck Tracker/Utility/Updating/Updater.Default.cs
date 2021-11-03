@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 	internal static partial class Updater
 	{
 		private static bool _showingUpdateMessage;
-		private static GitHub.Release _release;
+		private static GitHub.Release? _release;
 		private static bool TempUpdateCheckDisabled { get; set; }
 
 		private static bool ShouldCheckForUpdates()
@@ -84,16 +84,22 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				Log.Error("Could not get latest version. Not updating.");
 				return;
 			}
+			var url = _release.Assets?[0]?.Url;
+			if(string.IsNullOrEmpty(url))
+			{
+				Log.Error("Could not find url for latest version. Not updating.");
+				return;
+			}
 			try
 			{
-				Process.Start("HDTUpdate.exe", $"{Process.GetCurrentProcess().Id} {_release.Assets[0].Url}");
+				Process.Start("HDTUpdate.exe", $"{Process.GetCurrentProcess().Id} {url}");
 				Core.MainWindow.Close();
 				Application.Current.Shutdown();
 			}
 			catch(Exception ex)
 			{
 				Log.Error("Error starting updater\n" + ex);
-				Helper.TryOpenUrl($"{_release.Assets[0].Url}");
+				Helper.TryOpenUrl(url!);
 			}
 		}
 
@@ -124,7 +130,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static async Task<GitHub.Release> GetLatestRelease(bool beta)
+		private static async Task<GitHub.Release?> GetLatestRelease(bool beta)
 		{
 			var currentVersion = Helper.GetCurrentVersion();
 			if(currentVersion == null)

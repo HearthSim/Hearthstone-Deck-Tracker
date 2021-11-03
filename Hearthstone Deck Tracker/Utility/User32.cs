@@ -171,7 +171,7 @@ namespace Hearthstone_Deck_Tracker
 			return _hsWindow;
 		}
 
-		public static Process GetHearthstoneProc()
+		public static Process? GetHearthstoneProc()
 		{
 			if(_hsWindow == IntPtr.Zero)
 				return null;
@@ -266,9 +266,9 @@ namespace Hearthstone_Deck_Tracker
 
 			public void Dispose() => Dispose(true);
 
-			public event EventHandler<EventArgs> LmbDown;
-			public event EventHandler<EventArgs> LmbUp;
-			public event EventHandler<EventArgs> MouseMoved;
+			public event EventHandler<EventArgs>? LmbDown;
+			public event EventHandler<EventArgs>? LmbUp;
+			public event EventHandler<EventArgs>? MouseMoved;
 
 			private IntPtr MouseHookDelegate(int code, IntPtr wParam, IntPtr lParam)
 			{

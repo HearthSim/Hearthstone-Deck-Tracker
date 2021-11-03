@@ -26,6 +26,8 @@ namespace Hearthstone_Deck_Tracker.Stats
 			var heroes = new Dictionary<string, int>();
 			foreach(var game in games)
 			{
+				if(game.PlayerHero == null)
+					continue;
 				if(!heroes.ContainsKey(game.PlayerHero))
 					heroes.Add(game.PlayerHero, 0);
 				heroes[game.PlayerHero]++;
@@ -34,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			var possibleTargets = DeckList.Instance.Decks.Where(d => d.Class == heroPlayed || heroPlayed == "Any");
 			var dialog = new MoveGameDialog(possibleTargets) {Owner = window};
 			dialog.ShowDialog();
-			if(dialog.SelectedDeck == null)
+			if(dialog.SelectedDeck == null || dialog.SelectedVersion == null)
 				return;
 			MoveGamesToOtherDeckWithoutConfirmation(dialog.SelectedDeck, dialog.SelectedVersion, games);
 		}

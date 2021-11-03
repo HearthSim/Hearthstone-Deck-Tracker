@@ -2,8 +2,8 @@
 using HearthMirror.Objects;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -33,15 +33,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries
 		}
 
 
-		private List<MercenariesTaskViewModel> _tasks;
+		private List<MercenariesTaskViewModel>? _tasks;
 
-		public List<MercenariesTaskViewModel> Tasks
+		public List<MercenariesTaskViewModel>? Tasks
 		{
 			get => _tasks;
 			set { _tasks = value; OnPropertyChanged(); }
 		}
 
-		private List<MercenariesTaskData> _taskData;
+		private List<MercenariesTaskData>? _taskData;
 		public bool Update()
 		{
 			if(_taskData == null)
@@ -63,7 +63,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries
 					return null;
 				var title = taskData.Title.Contains(":") ? taskData.Title : string.Format(LocUtil.Get("MercenariesTaskList_TaskTitle"), task.TaskChainProgress + 1, taskData.Title);
 				return new MercenariesTaskViewModel(card, title, taskData.Description, taskData.Quota, task.Progress);
-			}).Where(x => x != null).ToList();
+			}).WhereNotNull().ToList();
 			return true;
 		}
 	}

@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			set { SetValue(ImageVisiblityProperty, value); }
 		}
 
-		public string ClassName
+		public string? ClassName
 		{
 			get
 			{
@@ -58,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private void ConstructedDeckHighlights_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Constructed
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

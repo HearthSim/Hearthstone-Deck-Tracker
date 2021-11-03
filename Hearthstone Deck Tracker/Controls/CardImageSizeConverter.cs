@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 	}
 	public class CardImageSizeConverter : IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			if(targetType != typeof(double))
 				return null;
@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			return (double)value * size;
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			return null;
 		}

@@ -48,7 +48,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private readonly ObservableCollection<DeckPickerClassItem> _classItems;
 		private readonly List<DeckPickerItem> _displayedDecks;
 		private bool _clearingClasses;
-		private ObservableCollection<DeckType> _deckTypeItems;
+		private ObservableCollection<DeckType>? _deckTypeItems;
 		private bool _ignoreSelectionChange;
 		private DateTime _lastActiveDeckPanelClick = DateTime.MinValue;
 		private bool _reselectingClasses;
@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			}
 		}
 
-		public string DeckNameFilter { get; set; }
+		public string? DeckNameFilter { get; set; }
 
 		public Visibility VisibilitySearchIcon => SearchBarVisibile ? Collapsed : Visible;
 
@@ -111,14 +111,14 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public ObservableCollection<DeckType> DeckTypeItems => _deckTypeItems ?? (_deckTypeItems = new ObservableCollection<DeckType>(Enum.GetValues(typeof(DeckType)).OfType<DeckType>()));
 
-		public Deck ActiveDeck => DeckList.Instance.ActiveDeck;
+		public Deck? ActiveDeck => DeckList.Instance.ActiveDeck;
 
 		public Visibility VisibilityNoDeck => DeckList.Instance.ActiveDeck == null ? Visible : Collapsed;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		internal virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -130,8 +130,8 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			UpdateDeckModeToggleButton();
 		}
 
-		public event SelectedDeckHandler OnSelectedDeckChanged;
-		public event DoubleClickHandler OnDoubleClick;
+		public event SelectedDeckHandler? OnSelectedDeckChanged;
+		public event DoubleClickHandler? OnDoubleClick;
 
 		private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
@@ -185,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			}
 			else
 			{
-				DeckPickerClassItem removedAllClassItem = null;
+				DeckPickerClassItem? removedAllClassItem = null;
 				foreach(var dpci in removedPickerClassItems)
 				{
 					var heroClass = dpci.DataContext as HeroClassAll?;
@@ -287,7 +287,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		private static DeckPickerClassItem PickerClassItemFromEnum(ListView sender, HeroClassAll heroClass)
 		{
 			var items = sender.Items.OfType<DeckPickerClassItem>().Where(x => (x.DataContext as HeroClassAll?).HasValue);
-			return items.FirstOrDefault(x => (x.DataContext as HeroClassAll?).Value == heroClass);
+			return items.FirstOrDefault(x => (x.DataContext as HeroClassAll?) == heroClass);
 		}
 
 		public void SelectClasses(List<HeroClassAll> classes)
@@ -315,14 +315,14 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			}
 		}
 
-		public void UpdateDecks(bool reselectActiveDeck = true, IEnumerable<Deck> forceUpdate = null)
+		public void UpdateDecks(bool reselectActiveDeck = true, IEnumerable<Deck>? forceUpdate = null)
 		{
 			var selectedDeck = SelectedDecks.FirstOrDefault();
 			var decks =
 				DeckList.Instance.Decks.Where(
 				                              d =>
 				                              (string.IsNullOrEmpty(DeckNameFilter)
-				                               || d.Name.ToLowerInvariant().Contains(DeckNameFilter.ToLowerInvariant()))
+				                               || d.Name.ToLowerInvariant().Contains(DeckNameFilter!.ToLowerInvariant()))
 				                              && DeckMatchesSelectedDeckType(d) && DeckMatchesSelectedTags(d)
 				                              && (SelectedClasses.Any(
 				                                                      c =>
@@ -351,7 +351,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			selectedDeck?.StatsUpdated();
 		}
 
-		private DeckPickerItem GetDeckPickerItemFromCache(Deck deck)
+		private DeckPickerItem? GetDeckPickerItemFromCache(Deck deck)
 		{
 			if(deck == null)
 				return null;
@@ -534,7 +534,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 				ListViewDecks.ScrollIntoView(dpi);
 		}
 
-		public void SelectDeck(Deck deck)
+		public void SelectDeck(Deck? deck)
 		{
 			if(deck == null)
 				return;

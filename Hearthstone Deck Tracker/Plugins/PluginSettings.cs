@@ -2,9 +2,9 @@ namespace Hearthstone_Deck_Tracker.Plugins
 {
 	public class PluginSettings
 	{
-		public string FileName;
+		public string? FileName;
 		public bool IsEnabled;
-		public string Name;
+		public string? Name;
 
 		public PluginSettings()
 		{

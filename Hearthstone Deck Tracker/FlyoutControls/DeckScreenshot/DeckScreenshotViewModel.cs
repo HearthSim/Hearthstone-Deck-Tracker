@@ -26,10 +26,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		private bool _cardsOnly;
 		private string _copyToClipboardButtonText = LocUtil.Get(ClipboardDefault, true);
-		private Deck _deck;
-		private BitmapSource _deckImage;
-		private string _imgurUrl;
-		private FileInfo _savedFile;
+		private Deck? _deck;
+		private BitmapSource? _deckImage;
+		private string? _imgurUrl;
+		private FileInfo? _savedFile;
 		private bool _uploadButtonEnabled = true;
 		private string _uploadButtonText = LocUtil.Get(ImgurDefault, true);
 		private Visibility _uploadErrorVisibility = Visibility.Collapsed;
@@ -46,18 +46,21 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			}
 		}
 
-		public string DeckTitle
+		public string? DeckTitle
 		{
 			get { return _deck?.Name; }
 			set
 			{
-				_deck.Name = value;
-				OnPropertyChanged();
-				UpdateImage();
+				if(_deck != null && value != null)
+				{
+					_deck.Name = value;
+					OnPropertyChanged();
+					UpdateImage();
+				}
 			}
 		}
 
-		public BitmapSource DeckImage
+		public BitmapSource? DeckImage
 		{
 			get { return _deckImage; }
 			set
@@ -67,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			}
 		}
 
-		private FileInfo SavedFile
+		private FileInfo? SavedFile
 		{
 			get { return _savedFile; }
 			set
@@ -81,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			}
 		}
 
-		public Deck Deck
+		public Deck? Deck
 		{
 			get { return _deck; }
 			set
@@ -130,7 +133,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 			}
 		}
 
-		public string ImgurUrl
+		public string? ImgurUrl
 		{
 			get { return _imgurUrl; }
 			set
@@ -163,14 +166,16 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public Visibility TitleTextBoxVisibility => CardsOnly ? Visibility.Collapsed : Visibility.Visible;
 
-		public string SavedFilePath => SavedFile?.FullName;
+		public string? SavedFilePath => SavedFile?.FullName;
 
-		public string SavedFileShortName => SavedFile?.Name;
+		public string? SavedFileShortName => SavedFile?.Name;
 
-		public string SavedFolderPath => SavedFile?.Directory?.FullName;
+		public string? SavedFolderPath => SavedFile?.Directory?.FullName;
 
 		public void Save()
 		{
+			if(Deck == null || DeckImage == null)
+				return;
 			var file = DeckScreenshotHelper.Save(Deck, DeckImage);
 			if(file != null)
 				SavedFile = new FileInfo(file);
@@ -178,6 +183,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		private async void Upload()
 		{
+			if(DeckImage == null)
+				return;
 			UploadButtonEnabled = false;
 			UploadButtonText = LocUtil.Get(ImgurUploading, true);
 			var url = await DeckScreenshotHelper.Upload(DeckImage);
@@ -196,6 +203,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 
 		public async void CopyToClipboard()
 		{
+			if(Deck == null || DeckImage == null)
+				return;
 			var success = DeckScreenshotHelper.CopyToClipboard(DeckImage);
 			if(!success)
 				return;

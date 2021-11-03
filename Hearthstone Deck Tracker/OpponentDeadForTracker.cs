@@ -29,6 +29,8 @@ namespace Hearthstone_Deck_Tracker
 			var deadHeroes = game.Entities.Values.Where(x => x.IsHero && x.Health <= 0);
 			foreach(var hero in deadHeroes)
 			{
+				if(hero.CardId == null)
+					continue;
 				var id = BattlegroundsBoardState.GetCorrectBoardstateHeroId(hero.CardId);
 				if(!id.Contains(KelThuzadCardId) && !_uniqueDeadHeroes.Contains(id))
 				{

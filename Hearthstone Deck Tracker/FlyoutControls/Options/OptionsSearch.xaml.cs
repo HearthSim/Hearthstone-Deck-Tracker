@@ -16,7 +16,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 	/// </summary>
 	public partial class OptionsSearch : UserControl
 	{
-		private List<IOptionWrapper> _optionWrappers;
+		private List<IOptionWrapper>? _optionWrappers;
 
 		public OptionsSearch()
 		{
@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			((TextBox) sender).Focus();
 		}
 
-		private List<IOptionWrapper> OptionWrappers => _optionWrappers ?? (_optionWrappers = LoadWrappers());
+		private List<IOptionWrapper> OptionWrappers => _optionWrappers ??= LoadWrappers();
 
 		private void ButtonSearch_OnClick(object sender, RoutedEventArgs e) => UpdateSearchResult(TextBoxSearch.Text);
 
@@ -87,7 +87,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options
 			return WrapSimpleOption(menuItem, depObj as ContentControl);
 		}
 
-		private IOptionWrapper WrapSimpleOption(UserControlWrapper menuItem, ContentControl control)
+		private IOptionWrapper WrapSimpleOption(UserControlWrapper menuItem, ContentControl? control)
 		{
 			if(control == null)
 				throw new ArgumentNullException(nameof(control));

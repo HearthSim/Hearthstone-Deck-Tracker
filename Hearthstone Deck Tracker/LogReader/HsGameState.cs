@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public bool CurrentEntityHasCardId { get; set; }
 		public int CurrentEntityId { get; private set; }
 		public bool GameEnded { get; set; }
-		public IGameHandler GameHandler { get; set; }
+		public IGameHandler? GameHandler { get; set; }
 		public DateTime LastGameStart { get; set; }
 		public int LastId { get; set; }
 		public bool OpponentUsedHeroPower { get; set; }
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public int GameTriggerCount { get; set; }
 		public Zone CurrentEntityZone { get; set; }
 		public bool DeterminedPlayers => _game.Player.Id > 0 && _game.Opponent.Id > 0;
-		public Tuple<int, string> ChameleosReveal { get; set; }
+		public Tuple<int, string>? ChameleosReveal { get; set; }
 
 		public int GetTurnNumber()
 		{
@@ -68,9 +68,9 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		public void ResetCurrentEntity() => CurrentEntityId = 0;
 
 		private int _maxBlockId;
-		public Block CurrentBlock { get; private set; }
+		public Block? CurrentBlock { get; private set; }
 
-		public void BlockStart(string type, string cardId, string target)
+		public void BlockStart(string? type, string? cardId, string? target)
 		{
 			var blockId = _maxBlockId++;
 			CurrentBlock = CurrentBlock?.CreateChild(blockId, type, cardId, target) ?? new Block(null, blockId, type, cardId, target);
@@ -87,18 +87,18 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 	public class Block
 	{
-		public Block Parent { get; }
+		public Block? Parent { get; }
 		public IList<Block> Children { get; }
 		public int Id { get; }
-		public string Type { get; }
-		public string CardId { get; }
-		public string Target { get; }
+		public string? Type { get; }
+		public string? CardId { get; }
+		public string? Target { get; }
 
 		public bool HasFullEntityHeroPackets { get; set; }
 
-		public Entity EntityDiscardedByArchivist { get; set; }
+		public Entity? EntityDiscardedByArchivist { get; set; }
 
-		public Block(Block parent, int blockId, string type, string cardId, string target)
+		public Block(Block? parent, int blockId, string? type, string? cardId, string? target)
 		{
 			Parent = parent;
 			Children = new List<Block>();
@@ -108,6 +108,6 @@ namespace Hearthstone_Deck_Tracker.LogReader
 			Target = target;
 		}
 
-		public Block CreateChild(int blockId, string type, string cardId, string target) => new Block(this, blockId, type, cardId, target);
+		public Block CreateChild(int blockId, string? type, string? cardId, string? target) => new Block(this, blockId, type, cardId, target);
 	}
 }

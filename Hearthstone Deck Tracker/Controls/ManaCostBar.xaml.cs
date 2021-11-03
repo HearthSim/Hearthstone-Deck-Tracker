@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly double[] _previousBarHeights;
 		private bool _cancelCurrentAnimation;
 		private bool _isAnimationRunning;
-		private double[] _nextAnimation;
+		private double[]? _nextAnimation;
 
 		public ManaCostBar()
 		{

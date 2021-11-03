@@ -7,7 +7,6 @@ using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Hearthstone.Secrets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Hearthstone_Deck_Tracker.Hearthstone.CardIds;
 using HunterSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Hunter;
 using MageSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Mage;
 using PaladinSecrets = Hearthstone_Deck_Tracker.Hearthstone.CardIds.Secrets.Paladin;
@@ -54,9 +53,8 @@ namespace HDTTests.Hearthstone.Secrets
 		[TestInitialize]
 		public void Setup()
 		{
-			Core.Game = null;
-			_game = new GameV2();
-			Core.Game = _game;
+			Core._game = null;
+			_game = Core._game = new GameV2();
 			_gameEventHandler = new GameEventHandler(_game);
 
 			//Player_IDs are currently not quite representative of an actual game

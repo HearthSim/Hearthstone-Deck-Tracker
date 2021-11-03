@@ -5,7 +5,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 	public class TrackedCard
 	{
 		[XmlAttribute]
-		public string Id { get; set; }
+		public string? Id { get; set; }
 
 		[XmlAttribute]
 		public int Count { get; set; }
@@ -17,7 +17,6 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public TrackedCard()
 		{
-			
 		}
 
 		public TrackedCard(string id, int count, int unconfirmed = 0)

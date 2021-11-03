@@ -10,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckHistory
 			InitializeComponent();
 		}
 
-		public Deck Deck
+		public Deck? Deck
 		{
 			get => ((DeckHistoryViewModel)DataContext).Deck;
 			set => ((DeckHistoryViewModel)DataContext).Deck = value;

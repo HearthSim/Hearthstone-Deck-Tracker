@@ -17,11 +17,11 @@ namespace Hearthstone_Deck_Tracker.Live
 		private const int RepeatDelay = 10000;
 		private bool _update;
 		private bool _running;
-		private BoardState _currentBoardState;
+		private BoardState? _currentBoardState;
 		private DateTime _currentBoardStateTime = DateTime.MinValue;
 		private bool _invokedGameStart;
-		public event Action<BoardState> OnNewBoardState;
-		public event Action<GameStart> OnGameStart;
+		public event Action<BoardState>? OnNewBoardState;
+		public event Action<GameStart>? OnGameStart;
 
 		public void Stop()
 		{
@@ -46,9 +46,9 @@ namespace Hearthstone_Deck_Tracker.Live
 					if(!_invokedGameStart)
 					{
 						_invokedGameStart = true;
-						OnGameStart?.Invoke(GetGameStart(boardState));
+						OnGameStart?.Invoke(GetGameStart(boardState!));
 					}
-					OnNewBoardState?.Invoke(boardState);
+					OnNewBoardState?.Invoke(boardState!);
 					_currentBoardState = boardState;
 					_currentBoardStateTime = DateTime.Now;
 				}
@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			_running = false;
 		}
 
-		private GameStart GetGameStart(BoardState boardState)
+		private GameStart GetGameStart(BoardState? boardState)
 		{
 			var format = Core.Game.CurrentFormat ?? Format.Wild;
 			var gameType = HearthDbConverter.GetBnetGameType(Core.Game.CurrentGameType, format);
@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				: player?.Wild?.LegendRank;
 			return new GameStart
 			{
-				Deck = boardState.Player.Deck,
+				Deck = boardState?.Player?.Deck,
 				GameType = gameType,
 				Rank = rank ?? 0,
 				LegendRank = legendRank ?? 0
@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			var card = e.Info.LatestCardId == e.CardId
 				? e.Card
 				: Database.GetCardFromId(e.Info.LatestCardId);
-			return card.DbfIf;
+			return card?.DbfIf ?? 0;
 		}
 
 		private int ZonePosition(Entity e) => e.GetTag(GameTag.ZONE_POSITION);
@@ -99,7 +99,7 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private Entity FindHeroPower(Player p) => p.PlayerEntities.FirstOrDefault(x => x.IsHeroPower && x.IsInPlay);
 
-		private BoardStateQuest Quest(Entity questEntity)
+		private BoardStateQuest? Quest(Entity questEntity)
 		{
 			if(questEntity == null)
 				return null;
@@ -111,11 +111,10 @@ namespace Hearthstone_Deck_Tracker.Live
 			};
 		}
 
-		private BoardState GetBoardState()
+		private BoardState? GetBoardState()
 		{
 			if(Core.Game.PlayerEntity == null || Core.Game.OpponentEntity == null)
 				return null;
-
 
 			var player = Core.Game.Player;
 			var opponent = Core.Game.Opponent;
@@ -191,7 +190,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			};
 		}
 
-		private Data.BobsBuddyState GetBobsBuddyState()
+		private Data.BobsBuddyState? GetBobsBuddyState()
 		{
 			if(Core.Game.CurrentGameStats == null || Core.Game.GameEntity == null)
 				return null;

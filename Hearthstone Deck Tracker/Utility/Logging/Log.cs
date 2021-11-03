@@ -20,10 +20,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 		private const int MaxLogFileAge = 2;
 		private const int KeepOldLogs = 25;
 		private static readonly Queue<string> LogQueue = new Queue<string>();
-		private static string _prevLine;
+		private static string? _prevLine;
 		private static int _duplicateCount;
 		public static bool Initialized { get; private set; }
-		public static string CurrentLogFile { get; private set; }
+		public static string? CurrentLogFile { get; private set; }
 
 		internal static void Initialize()
 		{
@@ -95,7 +95,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Logging
 			}
 		}
 
-		public static event Action<string> OnLogLine;
+		public static event Action<string>? OnLogLine;
 
 		public static void WriteLine(string msg, LogType type, [CallerMemberName] string memberName = "",
 									 [CallerFilePath] string sourceFilePath = "")

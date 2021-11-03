@@ -11,11 +11,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	public class CollectionHelper
 	{
 		private static DateTime _lastUpdate;
-		private static Key _lastUsedKey;
+		private static Key? _lastUsedKey;
 		private static readonly Dictionary<Key, Collection> Collections = new Dictionary<Key, Collection>();
-		public static event Action OnCollectionChanged;
+		public static event Action? OnCollectionChanged;
 
-		public static async Task<Collection> GetCollection()
+		public static async Task<Collection?> GetCollection()
 		{
 			var key = await GetCurrentKey();
 			if(key == null)
@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return collection;
 		}
 
-		public static bool TryGetCollection(out Collection collection)
+		public static bool TryGetCollection(out Collection? collection)
 		{
 			collection = null;
 			var key = GetCurrentKey(false).Result;
@@ -39,8 +39,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static async Task UpdateCollection() => await UpdateCollection(await GetCurrentKey());
 
-		private static async Task<bool> UpdateCollection(Key key, bool retry = true)
+		private static async Task<bool> UpdateCollection(Key? key, bool retry = true)
 		{
+			if(key == null)
+				return false;
 			if(DateTime.Now - _lastUpdate < TimeSpan.FromSeconds(2) || key == null)
 				return false;
 			Log.Info("Updating collection...");
@@ -67,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return false;
 		}
 
-		private static async Task<Key> GetCurrentKey(bool retry = true)
+		private static async Task<Key?> GetCurrentKey(bool retry = true)
 		{
 			if(!Core.Game.IsRunning)
 				return _lastUsedKey;

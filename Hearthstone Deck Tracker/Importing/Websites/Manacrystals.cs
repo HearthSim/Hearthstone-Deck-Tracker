@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 {
 	public static class Manacrystals
 	{
-		public static async Task<Deck> Import(string url)
+		public static async Task<Deck?> Import(string url)
 		{
 			try
 			{

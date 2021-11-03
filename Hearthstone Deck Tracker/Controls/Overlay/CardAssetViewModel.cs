@@ -7,22 +7,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public class CardAssetViewModel : ViewModel
 	{
-		private Hearthstone.Card _card { get; set; }
-		private AssetDownloader<Hearthstone.Card> _assetDownloader;
+		private Hearthstone.Card? _card { get; set; }
+		private AssetDownloader<Hearthstone.Card>? _assetDownloader;
 
-		public CardAssetViewModel(Hearthstone.Card card, CardAssetType type)
+		public CardAssetViewModel(Hearthstone.Card? card, CardAssetType type)
 		{
 			_card = card;
 			_assetDownloader = AssetDownloaders.GetCardAssetDownloader(type);
-			_path = _assetDownloader.PlaceholderAssetPath;
+			_path = _assetDownloader?.PlaceholderAssetPath;
 		}
 
-		private string _path;
-		public string AssetPath
+		private string? _path;
+		public string? AssetPath
 		{
 			get
 			{
-				if(_path == _assetDownloader.PlaceholderAssetPath && !_loading)
+				if(_path == _assetDownloader?.PlaceholderAssetPath && !_loading)
 					LoadImage().Forget();
 				return _path;
 			}
@@ -39,10 +39,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private bool _loading = false;
 		private async Task LoadImage()
 		{
+			if(_assetDownloader == null)
+				return;
 			var card = _card;
 			if(card == null)
 			{
-				_path = _assetDownloader.PlaceholderAssetPath;
+				_path = _assetDownloader?.PlaceholderAssetPath;
 				return;
 			}
 			if(_loading)

@@ -10,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		private readonly int _maxCount;
 		private readonly Queue<DateTime> _lastRun;
 		private readonly TimeSpan _timeSpan;
-		private Func<Task> _nextTask;
+		private Func<Task>? _nextTask;
 		private bool _running;
 
 		public RateLimiter(int maxCount, TimeSpan timeSpan)
@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			_lastRun = new Queue<DateTime>();
 		}
 
-		public async Task Run(Func<Task> task, Action onThrottled = null)
+		public async Task Run(Func<Task> task, Action? onThrottled = null)
 		{
 			_nextTask = task;
 			if(_running)
@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			_running = false;
 		}
 
-		private async Task RateLimit(Action onThrottled)
+		private async Task RateLimit(Action? onThrottled)
 		{
 			while(_lastRun.Any())
 			{

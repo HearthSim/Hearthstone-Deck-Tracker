@@ -17,13 +17,13 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			public int MercenaryId { get; set; }
 
 			[JsonProperty("mercenary_default_card_id")]
-			public string MercenaryDefaultCardId { get; set; }
+			public string? MercenaryDefaultCardId { get; set; }
 
 			[JsonProperty("title")]
-			public string Title { get; set; }
+			public string? Title { get; set; }
 
 			[JsonProperty("description")]
-			public string Description { get; set; }
+			public string? Description { get; set; }
 
 			[JsonProperty("quota")]
 			public int Quota { get; set; }

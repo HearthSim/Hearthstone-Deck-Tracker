@@ -224,7 +224,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 public class EnumerateMultiId<T> where T: EnumerateMultiId<T>
 {
-	private static IReadOnlyList<MultiIdCard> _all = null;
+	private static IReadOnlyList<MultiIdCard>? _all = null;
 	public static IReadOnlyList<MultiIdCard> All
 	{
 		get

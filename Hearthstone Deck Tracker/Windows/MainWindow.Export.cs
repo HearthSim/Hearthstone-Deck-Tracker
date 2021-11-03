@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					               ? Helper.ShowSaveFileDialog(Helper.RemoveInvalidFileNameChars(proposedFileName), "png") : tmpFile.FullName;
 				if(fileName != null)
 				{
-					string imgurUrl = null;
+					string? imgurUrl = null;
 					using(var ms = new MemoryStream())
 					using(var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
 					{

@@ -6,7 +6,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 {
 	public class HsReplayInfo : INotifyPropertyChanged
 	{
-		private string _uploadId;
+		private string? _uploadId;
 
 		public HsReplayInfo()
 		{
@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 			UploadId = uploadId;
 		}
 
-		public string UploadId
+		public string? UploadId
 		{
 			get => _uploadId;
 			set
@@ -35,7 +35,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 
 		public bool Uploaded => !string.IsNullOrEmpty(UploadId);
 
-		public string Url
+		public string? Url
 		{
 			get
 			{
@@ -45,14 +45,14 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Utility
 			}
 		}
 
-		public string ReplayUrl { get; set; }
+		public string? ReplayUrl { get; set; }
 
 		public void UploadTry() => UploadTries++;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

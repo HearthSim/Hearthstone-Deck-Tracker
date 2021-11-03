@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,8 +8,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using HearthMirror;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
-using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Windows
@@ -213,7 +212,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 				if (StackPanelSecrets.Visibility != Visibility.Visible)
 				{
 					_secretsTempVisible = true;
-					var secrets = CardIds.Secrets.Mage.All.Select(x => Database.GetCardFromId(x.Ids[0])).ToList();
+					var secrets = CardIds.Secrets.Mage.All.Select(x => Database.GetCardFromId(x.Ids[0]))
+						.WhereNotNull().ToList();
 					ShowSecrets(secrets, true);
 					//need to wait for panel to actually show up
 					await Task.Delay(50);
@@ -342,7 +342,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if (string.IsNullOrEmpty(ToolTipCardBlock.CardId))
 				return;
 
-			_game.SecretsManager.Toggle(ToolTipCardBlock.CardId);
+			_game.SecretsManager.Toggle(ToolTipCardBlock.CardId!);
 		}
 
 		private async void HideCardsWhenFriendsListOpen(Point clickPos)

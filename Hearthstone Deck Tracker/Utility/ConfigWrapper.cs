@@ -12,9 +12,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public class ConfigWrapper
 	{
-		public static event Action ReplayAutoUploadChanged;
-		public static event Action CollectionSyncingChanged;
-		public static event Action IgnoreNewsIdChanged;
+		public static event Action? ReplayAutoUploadChanged;
+		public static event Action? CollectionSyncingChanged;
+		public static event Action? IgnoreNewsIdChanged;
 
 		public static bool CardDbIncludeWildOnlyCards
 		{
@@ -470,7 +470,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 	public class CardImageConfigs : ViewModel
 	{
-		public event Action CardResolutionChanged;
+		public event Action? CardResolutionChanged;
 		public double CardImageSize
 		{
 			get => Config.Instance.CardImageSize;

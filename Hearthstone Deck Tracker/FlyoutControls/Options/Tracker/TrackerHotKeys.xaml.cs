@@ -24,14 +24,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 	/// </summary>
 	public partial class TrackerHotKeys : INotifyPropertyChanged
 	{
-		private string _errorText;
+		private string? _errorText;
 
 		public TrackerHotKeys()
 		{
 			InitializeComponent();
 		}
 
-		public HotKey SelectedHotKey
+		public HotKey? SelectedHotKey
 		{
 			get
 			{
@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			get { return SelectedHotKey != null && !HotKeyManager.RegisteredHotKeysInfo.Any(x => Equals(x.Key, SelectedHotKey)); }
 		}
 
-		public string ErrorText
+		public string? ErrorText
 		{
 			get { return _errorText; }
 			set
@@ -61,10 +61,12 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private void ButtonAddNew_OnClick(object sender, RoutedEventArgs e)
 		{
+			if(SelectedHotKey == null)
+				return;
 			var success = HotKeyManager.AddPredefinedHotkey(SelectedHotKey,
 			                                                ((PredefinedHotKeyActionInfo)ComboBoxActions.SelectedItem).MethodName);
 			if(!success)
@@ -77,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

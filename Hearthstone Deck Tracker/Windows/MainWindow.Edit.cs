@@ -30,9 +30,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 			FlyoutNotes.IsOpen = true;
 		}
 
-		internal void ShowDeleteDeckMessage(Deck deck) => ShowDeleteDecksMessage(deck == null ? null : new[] { deck });
+		internal void ShowDeleteDeckMessage(Deck? deck) => ShowDeleteDecksMessage(deck == null ? null : new[] { deck });
 
-		internal async void ShowDeleteDecksMessage(IEnumerable<Deck> decks)
+		internal async void ShowDeleteDecksMessage(IEnumerable<Deck>? decks)
 		{
 			if(decks == null)
 				return;
@@ -258,7 +258,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(existingDeck == null || string.IsNullOrEmpty(existingDeck.Url))
 				return;
-			var deck = await DeckImporter.Import(existingDeck.Url);
+			var deck = await DeckImporter.Import(existingDeck.Url!);
 			if(deck == null)
 			{
 				await this.ShowMessageAsync("Error", "Could not load deck from specified url.");
@@ -318,7 +318,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if(string.IsNullOrEmpty(deck?.Url))
 				return;
-			Helper.TryOpenUrl(deck.Url);
+			Helper.TryOpenUrl(deck!.Url!);
 		}
 
 		internal async void ShowEditDeckNameDialog(Deck deck)

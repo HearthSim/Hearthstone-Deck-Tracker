@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 {
 	public class DeckTypeIconConverter : IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			if(value == null || !Enum.TryParse(value.ToString(), out DeckType deckType))
 				return null;
@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 			return Core.MainWindow.DeckPickerList.TryFindResource(resource) as Canvas;
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			return null;
 		}

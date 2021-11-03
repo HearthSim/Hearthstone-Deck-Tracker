@@ -114,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			ClaimTokenButtonEnabled = false;
 			if(!Account.Instance.TokenClaimed.HasValue)
 				await ApiWrapper.UpdateUploadTokenStatus();
-			if(Account.Instance.TokenClaimed == false)
+			if(Account.Instance.TokenClaimed == false && Account.Instance.UploadToken != null)
 				await HSReplayNetOAuth.ClaimUploadToken(Account.Instance.UploadToken);
 			ClaimTokenButtonEnabled = true;
 		});
@@ -135,10 +135,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.HSReplay
 			OnPropertyChanged(nameof(UploadTokenUnclaimed));
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

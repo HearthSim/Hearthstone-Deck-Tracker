@@ -31,3 +31,4 @@ using System.Windows;
 [assembly: AssemblyMetadata("SquirrelAwareVersion", "1")]
 
 [assembly: InternalsVisibleTo("ResourceGenerator")]
+[assembly: InternalsVisibleTo("HDTTests")]

@@ -26,12 +26,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			if(game == null)
 				return false;
-			Action<ReplayProgress> setToastStatus = null;
+			Action<ReplayProgress>? setToastStatus = null;
 			if(game.HasReplayFile && !game.HsReplay.Uploaded)
 			{
 				if(showToast)
 					setToastStatus = ToastManager.ShowReplayProgressToast();
-				var log = GetLogFromHdtReplay(game.ReplayFile).ToArray();
+				var log = GetLogFromHdtReplay(game.ReplayFile!).ToArray();
 				var validationResult = LogValidator.Validate(log);
 				if(validationResult.IsValid)
 					await LogUploader.Upload(log, null, game);
@@ -48,7 +48,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(game.HsReplay?.Uploaded ?? false)
 			{
 				setToastStatus?.Invoke(ReplayProgress.Complete);
-				Helper.TryOpenUrl(game.HsReplay?.Url);
+				var url = game.HsReplay?.Url;
+				if(url != null)
+					Helper.TryOpenUrl(url);
 			}
 			else
 			{
@@ -83,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static async Task ShowReplay(string fileName, bool showToast)
 		{
-			Action<ReplayProgress> setToastStatus = null;
+			Action<ReplayProgress>? setToastStatus = null;
 			var log = GetLogFromHdtReplay(fileName).ToArray();
 			var validationResult = LogValidator.Validate(log);
 			if(validationResult.IsValid)
@@ -98,7 +100,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				var success = await LogUploader.Upload(log.ToArray(), metaData, gameStats);
 				if(success)
 				{
-					Helper.TryOpenUrl(gameStats?.HsReplay?.Url);
+					var url = gameStats?.HsReplay?.Url;
+					if(url != null)
+						Helper.TryOpenUrl(url);
 					setToastStatus?.Invoke(ReplayProgress.Complete);
 				}
 				else

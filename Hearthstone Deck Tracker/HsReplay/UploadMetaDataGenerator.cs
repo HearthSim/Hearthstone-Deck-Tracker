@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.HsReplay.Utility;
@@ -12,13 +11,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 {
 	public static class UploadMetaDataGenerator
 	{
-		public static UploadMetaData Generate(GameMetaData gameMetaData, GameStats game)
+		public static UploadMetaData Generate(GameMetaData? gameMetaData, GameStats? game)
 		{
 			var metaData = new UploadMetaData();
 			var players = GetPlayerInfo(game);
 			if (players != null)
 			{
-				if (game.GameMode == GameMode.Battlegrounds || game.GameMode == GameMode.Mercenaries)
+				if (game?.GameMode == GameMode.Battlegrounds || game?.GameMode == GameMode.Mercenaries)
 					metaData.Players = players;
 				else
 				{
@@ -27,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				}
 			}
 			if(!string.IsNullOrEmpty(gameMetaData?.ServerInfo?.Address))
-				metaData.ServerIp = gameMetaData.ServerInfo.Address;
+				metaData.ServerIp = gameMetaData!.ServerInfo!.Address;
 			if(gameMetaData?.ServerInfo?.Port > 0)
 				metaData.ServerPort = gameMetaData.ServerInfo.Port.ToString();
 			if(gameMetaData?.ServerInfo?.GameHandle > 0)
@@ -35,11 +34,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(gameMetaData?.ServerInfo?.ClientHandle > 0)
 				metaData.ClientHandle = gameMetaData.ServerInfo.ClientHandle.ToString();
 			if(!string.IsNullOrEmpty(gameMetaData?.ServerInfo?.SpectatorPassword))
-				metaData.SpectatePassword = gameMetaData.ServerInfo.SpectatorPassword;
+				metaData.SpectatePassword = gameMetaData!.ServerInfo!.SpectatorPassword;
 			if(!string.IsNullOrEmpty(gameMetaData?.ServerInfo?.AuroraPassword))
-				metaData.AuroraPassword = gameMetaData.ServerInfo.AuroraPassword;
+				metaData.AuroraPassword = gameMetaData!.ServerInfo!.AuroraPassword;
 			if(!string.IsNullOrEmpty(gameMetaData?.ServerInfo?.Version))
-				metaData.ServerVersion = gameMetaData.ServerInfo.Version;
+				metaData.ServerVersion = gameMetaData!.ServerInfo!.Version;
 			if(game?.StartTime > DateTime.MinValue)
 				metaData.MatchStart = game.StartTime.ToString("o");
 			if(game != null)
@@ -80,15 +79,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				}
 				if(!string.IsNullOrEmpty(game?.MercenariesBountyRunId))
 				{
-					metaData.MercenariesBountyRunId = game.MercenariesBountyRunId;
-					metaData.MercenariesBountyRunTurnsTaken = game.MercenariesBountyRunTurnsTaken;
-					metaData.MercenariesBountyRunCompletedNodes = game.MercenariesBountyRunCompletedNodes;
+					metaData.MercenariesBountyRunId = game!.MercenariesBountyRunId;
+					metaData.MercenariesBountyRunTurnsTaken = game!.MercenariesBountyRunTurnsTaken;
+					metaData.MercenariesBountyRunCompletedNodes = game!.MercenariesBountyRunCompletedNodes;
 				}
 			}
 			return metaData;
 		}
 
-		private static List<UploadMetaData.Player> GetPlayerInfo(GameStats game)
+		private static List<UploadMetaData.Player>? GetPlayerInfo(GameStats? game)
 		{
 			if(game == null || game.FriendlyPlayerId == 0)
 				return null;

@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Converters
 			return LocUtil.Get((string) value) ?? value;
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			return null;
 		}

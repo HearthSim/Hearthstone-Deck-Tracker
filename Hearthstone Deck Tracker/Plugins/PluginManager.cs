@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 		private const string DefaultPath = "Plugins";
 		private const string NoticeFileName = "READ THIS.txt";
 		private const string TriggerTypeName = "MergedTrigger";
-		private static PluginManager _instance;
+		private static PluginManager? _instance;
 		private bool _update;
 		public static DirectoryInfo LocalPluginDirectory => new DirectoryInfo(DefaultPath);
 		public static DirectoryInfo PluginDirectory => new DirectoryInfo(Path.Combine(Config.AppDataPath, DefaultPath));
@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.Plugins
 
 		public ObservableCollection<PluginWrapper> Plugins { get; }
 
-		public static PluginManager Instance => _instance ?? (_instance = new PluginManager());
+		public static PluginManager Instance => _instance ??= new PluginManager();
 
 		private static string PluginSettingsFile => Path.Combine(Config.Instance.ConfigDir, "plugins.xml");
 

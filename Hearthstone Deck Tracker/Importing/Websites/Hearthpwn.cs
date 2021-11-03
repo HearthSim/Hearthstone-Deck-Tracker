@@ -15,14 +15,14 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 {
 	public static class Hearthpwn
 	{
-		public static async Task<Deck> Import(string url)
+		public static async Task<Deck?> Import(string url)
 		{
 			if(url.Contains("deckbuilder"))
 				return await ImportHearthPwnDeckBuilder(url);
 			return await ImportHearthPwn(url);
 		}
 
-		private static async Task<Deck> ImportHearthPwn(string url)
+		private static async Task<Deck?> ImportHearthPwn(string url)
 		{
 			try
 			{
@@ -75,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 			}
 		}
 
-		private static async Task<Deck> ImportHearthPwnDeckBuilder(string url)
+		private static async Task<Deck?> ImportHearthPwnDeckBuilder(string url)
 		{
 			try
 			{

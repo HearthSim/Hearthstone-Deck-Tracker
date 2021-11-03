@@ -15,7 +15,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		public ICommand LoginCommand => new Command(() =>
 		{
 			Core.MainWindow.FlyoutUpdateNotes.IsOpen = false;
-			Helper.OptionsMain.TreeViewItemHSReplayCollection.IsSelected = true;
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.TreeViewItemHSReplayCollection.IsSelected = true;
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
 			var successUrl = Helper.BuildHsReplayNetUrl("decks", "collection_info", new[] { "modal=collection" });
 			HSReplayNetHelper.TryAuthenticate(successUrl).Forget();

@@ -62,7 +62,10 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 		public static void Load()
 		{
 			foreach(var item in HotKeyConfig.Instance.HotKeys)
-				LoadPredefinedHotkeyAction(item.HotKey, item.Action);
+			{
+				if(item.Action != null)
+					LoadPredefinedHotkeyAction(item.HotKey, item.Action);
+			}
 		}
 
 		public static bool AddPredefinedHotkey(HotKey hotKey, string actionName)

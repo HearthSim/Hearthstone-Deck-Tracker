@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlArrayItem(ElementName = "Game")]
 		public List<GameStats> Games;
 
-		public string Name;
+		public string? Name;
 
 		public DeckStats()
 		{

@@ -24,8 +24,8 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 		public BoardCard(Entity e, bool active = true)
 		{
 			var card = Database.GetCardFromId(e.CardId);
-			var cardName = card != null ? card.Name : "";
-			var name = string.IsNullOrEmpty(e.Name) ? cardName : e.Name;
+			var cardName = card?.Name != null ? card.Name : "";
+			var name = string.IsNullOrEmpty(e.Name) ? cardName : e.Name!;
 
 			_stdAttack = e.HasTag(HIDE_STATS) ? 0 : e.GetTag(ATK);
 			_health = e.HasTag(HIDE_STATS) ? 0 : e.GetTag(HEALTH);
@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			Include = IsAbleToAttack(active, e.IsWeapon);
 		}
 
-		public string CardId { get; }
+		public string? CardId { get; }
 		public bool Taunt { get; private set; }
 		public bool Charge { get; }
 		public bool Windfury { get; }

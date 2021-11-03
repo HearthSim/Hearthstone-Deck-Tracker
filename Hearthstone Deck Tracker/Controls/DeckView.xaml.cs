@@ -42,11 +42,14 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		private ImageBrush DeckHeaderBackground(string deckClass)
+		private ImageBrush DeckHeaderBackground(string? deckClass)
 		{
 			var heroId = ClassToID(deckClass);
 			var drawingGroup = new DrawingGroup();
-			var img = ImageCache.GetCardImage(Database.GetCardFromId(heroId));
+			var card = Database.GetCardFromId(heroId);
+			if(card == null)
+				return new ImageBrush();
+			var img = ImageCache.GetCardImage(card);
 			drawingGroup.Children.Add(new ImageDrawing(img, new Rect(54, 0, 130, 34)));
 			drawingGroup.Children.Add(new ImageDrawing(new BitmapImage(new Uri(
 				"Images/Themes/Bars/dark/fade.png", UriKind.Relative)), new Rect(0, 0, 183, 34)));
@@ -73,7 +76,9 @@ namespace Hearthstone_Deck_Tracker.Controls
 					if(_allTags.Contains(tag.ToLowerInvariant()))
 						return tag;
 
-			return LocUtil.Get(deck.Class);
+			if(deck.Class == null)
+				return "Unknown";
+			return LocUtil.Get(deck.Class) ?? "Unknown";
 		}
 
 		private string GetFormatText(Deck deck)
@@ -137,13 +142,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 			};
 
 			return deck.Cards
-				.Where(c => !nonCraftableSets.Contains(c.Set) && !nonCraftableCards.Contains(c.Id))
+				.Where(c => c.Set != null && !nonCraftableSets.Contains(c.Set) && !nonCraftableCards.Contains(c.Id))
 				.Sum(c => c.DustCost * c.Count);
 		}
 
-		private string ClassToID(string klass)
+		private string ClassToID(string? klass)
 		{
-			switch(klass.ToLowerInvariant())
+			switch(klass?.ToLowerInvariant())
 			{
 				case "druid":
 					return Druid.MalfurionStormrageHeroHeroSkins;

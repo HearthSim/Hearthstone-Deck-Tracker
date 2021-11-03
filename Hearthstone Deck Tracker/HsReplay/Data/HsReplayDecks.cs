@@ -3,10 +3,9 @@ using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.HsReplay.Data
 {
-
 	public class HsReplayDecks : JsonCache<DecksData>
 	{
-		private DecksData _data;
+		private DecksData? _data;
 		private bool _loading;
 
 		public string[] AvailableDecks
@@ -25,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Data
 			}
 		}
 
-		public event Action OnLoaded;
+		public event Action? OnLoaded;
 
 		public HsReplayDecks() : base("hsreplay_decks.cache")
 		{

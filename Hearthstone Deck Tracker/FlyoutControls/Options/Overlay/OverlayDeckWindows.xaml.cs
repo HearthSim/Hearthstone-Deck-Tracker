@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayDeckWindows
 	{
-		private GameV2 _game;
+		private GameV2? _game;
 		private bool _initialized;
 
 		public OverlayDeckWindows()
@@ -203,7 +203,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Core.Windows.PlayerWindow.Show();
 			Core.Windows.PlayerWindow.Activate();
-			Core.Windows.PlayerWindow.SetCardCount(_game.Player.HandCount, _game.IsInMenu ? 30 : _game.Player.DeckCount);
+			if(_game != null)
+				Core.Windows.PlayerWindow.SetCardCount(_game.Player.HandCount, _game.IsInMenu ? 30 : _game.Player.DeckCount);
 			Config.Instance.PlayerWindowOnStart = true;
 			Config.Save();
 		}
@@ -223,7 +224,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				return;
 			Core.Windows.OpponentWindow.Show();
 			Core.Windows.OpponentWindow.Activate();
-			Core.Windows.OpponentWindow.SetOpponentCardCount(_game.Opponent.HandCount, _game.IsInMenu ? 30 : _game.Opponent.DeckCount, _game.Opponent.HasCoin);
+			if(_game != null)
+				Core.Windows.OpponentWindow.SetOpponentCardCount(_game.Opponent.HandCount, _game.IsInMenu ? 30 : _game.Opponent.DeckCount, _game.Opponent.HasCoin);
 			Config.Instance.OpponentWindowOnStart = true;
 			Config.Save();
 		}
@@ -237,7 +239,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Config.Save();
 		}
 
-		internal void UpdateAdditionalWindowsBackground(Brush brush = null)
+		internal void UpdateAdditionalWindowsBackground(Brush? brush = null)
 		{
 			var background = brush;
 

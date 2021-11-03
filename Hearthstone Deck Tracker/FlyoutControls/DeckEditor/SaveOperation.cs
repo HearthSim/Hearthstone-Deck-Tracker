@@ -8,7 +8,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		private const string CurrentVersionLoc = "MainWindow_DeckBuilder_Button_Save_Current";
 		private const string SaveAsLoc = "MainWindow_DeckBuilder_Label_SaveAs";
 
-		public SerializableVersion Version { get; set; }
+		public SerializableVersion? Version { get; set; }
 
 		public bool IsCurrent { get; set; }
 
@@ -25,6 +25,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor
 		};
 
 		public override string ToString() =>
-			$"{LocUtil.Get(SaveAsLoc)} {Version.ShortVersionString}{(IsCurrent ? " " + LocUtil.Get(CurrentVersionLoc) : "")}";
+			$"{LocUtil.Get(SaveAsLoc)} {Version?.ShortVersionString ?? "v0.0"}{(IsCurrent ? " " + LocUtil.Get(CurrentVersionLoc) : "")}";
 	}
 }

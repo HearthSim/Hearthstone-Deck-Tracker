@@ -26,13 +26,13 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private const string StartHearthstoneText = "Importing_Constructed_Button_StartHearthstone";
 		private const string StartHearthstoneWaitingText = "Importing_Constructed_Button_Waiting";
 
-		private string StartText => LocUtil.Get(_brawl ? StartTextBrawl : StartTextConstructed);
-		private string StartTextGameRunning => LocUtil.Get(_brawl ? StartTextBrawlGameRunning : StartTextConstructedGameRunning);
+		private string? StartText => LocUtil.Get(_brawl ? StartTextBrawl : StartTextConstructed);
+		private string? StartTextGameRunning => LocUtil.Get(_brawl ? StartTextBrawlGameRunning : StartTextConstructedGameRunning);
 
 
 		private bool _brawl;
 		private bool _ready;
-		private string _text;
+		private string? _text;
 
 		public DeckImportingControl()
 		{
@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public Visibility StartButtonVisibility => Core.Game.IsRunning ? Collapsed : Visible;
 		public Visibility AutoImportingVisibility => _brawl || Config.Instance.ConstructedAutoImportNew ? Collapsed : Visible;
 
-		public string Text
+		public string? Text
 		{
 			get { return _text; }
 			set
@@ -57,7 +57,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		public string ButtonStartHearthstoneText
+		public string? ButtonStartHearthstoneText
 		{
 			get { return _text; }
 			set
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public ObservableCollection<ImportedDeck> Decks { get; } = new ObservableCollection<ImportedDeck>();
 
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public void Reset(bool brawl)
 		{
@@ -139,7 +139,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

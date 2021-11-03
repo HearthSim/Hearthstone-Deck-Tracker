@@ -9,7 +9,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class JsonDeckImporter
 	{
-		public static Deck Import(string json)
+		public static Deck? Import(string json)
 		{
 			try
 			{
@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 					return null;
 				var deck = new Deck
 				{
-					Name = jsonDeck.Name,
+					Name = jsonDeck.Name ?? "Unknown Deck",
 					Class = new CultureInfo("en-US", false).TextInfo.ToTitleCase(jsonDeck.Class?.ToLower() ?? ""),
 					Url = jsonDeck.SourceUrl
 				};
@@ -59,13 +59,13 @@ namespace Hearthstone_Deck_Tracker.Importing
 		public class JsonDeckObj
 		{
 			[JsonProperty("name")]
-			public string Name { get; set; }
+			public string? Name { get; set; }
 			[JsonProperty("class")]
-			public string Class { get; set; }
+			public string? Class { get; set; }
 			[JsonProperty("card_ids")]
-			public string[] CardIds { get; set; }
+			public string[]? CardIds { get; set; }
 			[JsonProperty("source_url")]
-			public string SourceUrl { get; set; }
+			public string? SourceUrl { get; set; }
 		}
 	}
 }

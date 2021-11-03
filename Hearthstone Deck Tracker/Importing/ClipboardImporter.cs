@@ -10,9 +10,9 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class ClipboardImporter
 	{
-		public static async Task<Deck> Import(bool rethrow = false)
+		public static async Task<Deck?> Import(bool rethrow = false)
 		{
-			Exception error = null;
+			Exception? error = null;
 			try
 			{
 				var clipboard = Clipboard.GetText();

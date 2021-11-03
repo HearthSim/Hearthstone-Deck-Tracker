@@ -17,11 +17,11 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Data
 
 		protected string CacheFilePath => Path.Combine(Config.Instance.DataDir, _fileName);
 
-		protected async Task<T> LoadFromDisk()
+		protected async Task<T?> LoadFromDisk()
 		{
 			var cacheFile = new FileInfo(CacheFilePath);
 			if(!cacheFile.Exists)
-				return default(T);
+				return default;
 			try
 			{
 				using(var sr = new StreamReader(CacheFilePath))
@@ -33,7 +33,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Data
 			catch(Exception e)
 			{
 				Log.Error(e);
-				return default(T);
+				return default;
 			}
 		}
 

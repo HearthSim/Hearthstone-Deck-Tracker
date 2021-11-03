@@ -18,11 +18,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 {
 	public partial class StreamingTwitchExtension : INotifyPropertyChanged
 	{
-		private TwitchAccount _selectedTwitchUser;
+		private TwitchAccount? _selectedTwitchUser;
 		private bool _twitchAccountLinked;
 		private bool _twitchStreamLive;
 
-		public string HSReplayUserName = HSReplayNetOAuth.AccountData?.Username;
+		public string? HSReplayUserName = HSReplayNetOAuth.AccountData?.Username;
 
 		public StreamingTwitchExtension()
 		{
@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			HSReplayNetOAuth.LoggedOut += () => OnPropertyChanged(nameof(IsAuthenticated));
 		}
 
-		public SolidColorBrush SelectedColor => Helper.BrushFromHex(Config.Instance.StreamingOverlayBackground);
+		public SolidColorBrush? SelectedColor => Helper.BrushFromHex(Config.Instance.StreamingOverlayBackground);
 
 		public ICommand AuthenticateCommand => new Command(async () => await HSReplayNetHelper.TryAuthenticate());
 
@@ -83,7 +83,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			}
 		}
 
-		public TwitchAccount SelectedTwitchUser
+		public TwitchAccount? SelectedTwitchUser
 		{
 			get => _selectedTwitchUser;
 			set
@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			}
 		}
 
-		public List<TwitchAccount> AvailableTwitchAccounts => HSReplayNetOAuth.TwitchUsers;
+		public List<TwitchAccount>? AvailableTwitchAccounts => HSReplayNetOAuth.TwitchUsers;
 
 		public bool MultipleTwitchAccounts => AvailableTwitchAccounts?.Count > 1;
 
@@ -121,10 +121,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 
 		public ICommand SetupGuideCommand => new Command(() => Helper.TryOpenUrl("https://hsdecktracker.net/twitch/setup/"));
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			SelectedTwitchUser = AvailableTwitchAccounts?.FirstOrDefault(x => x.Id == selected || selected == 0);
 			TwitchAccountLinked = SelectedTwitchUser?.Id > 0;
 			if(TwitchAccountLinked)
-				TwitchStreamLive = await TwitchApi.IsStreaming(SelectedTwitchUser.Id);
+				TwitchStreamLive = SelectedTwitchUser != null && await TwitchApi.IsStreaming(SelectedTwitchUser.Id);
 		}
 
 		private void VerifySelectedTwitchUser()

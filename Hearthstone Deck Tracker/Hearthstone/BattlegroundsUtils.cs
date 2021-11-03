@@ -10,7 +10,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		private static readonly Dictionary<Guid, HashSet<Race>> _availableRacesCache = new Dictionary<Guid, HashSet<Race>>();
 
-		public static HashSet<Race> GetAvailableRaces(Guid? gameId)
+		public static HashSet<Race>? GetAvailableRaces(Guid? gameId)
 		{
 			if(!gameId.HasValue)
 				return AvailableRaces;
@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return races;
 		}
 
-		private static HashSet<Race> AvailableRaces
+		private static HashSet<Race>? AvailableRaces
 		{
 			get
 			{

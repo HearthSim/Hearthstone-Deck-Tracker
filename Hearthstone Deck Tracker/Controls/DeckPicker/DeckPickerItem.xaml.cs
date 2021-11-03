@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		public DeckPickerItem()
 		{
 			InitializeComponent();
-			Deck = DataContext as Deck;
+			Deck = (Deck)DataContext;
 			SetLayout();
 		}
 
@@ -48,29 +48,29 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 
 		public FontWeight FontWeightSelected => Equals(Deck, DeckList.Instance.ActiveDeck)
 													? FontWeights.Bold
-													: (Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
+													: (Deck != null && Core.MainWindow.DeckPickerList.SelectedDecks.Contains(Deck) ? FontWeights.SemiBold : FontWeights.Regular);
 
-		public string TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? LocUtil.Get(LocActive, true) : LocUtil.Get(LocUse, true);
+		public string? TextUseButton => Deck.Equals(DeckList.Instance.ActiveDeck) ? LocUtil.Get(LocActive, true) : LocUtil.Get(LocUse, true);
 
 		public Visibility HsReplayDataIndicatorVisibility => HsReplayDataManager.Decks.AvailableDecks.Contains(Deck.GetSelectedDeckVersion().ShortId) ? Visibility.Visible : Visibility.Collapsed;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public void SetLayout() => Content = Activator.CreateInstance(_deckPickerItem);
 
-		public string DataIndicatorTooltip => LocUtil.Get("DeckCharts_Tooltip_Uploaded");
+		public string? DataIndicatorTooltip => LocUtil.Get("DeckCharts_Tooltip_Uploaded");
 
-		public string WildIndicatorTooltip => LocUtil.Get("DeckPicker_Deck_Wild_Tooltip");
+		public string? WildIndicatorTooltip => LocUtil.Get("DeckPicker_Deck_Wild_Tooltip");
 
-		public string ArchivedTooltip => LocUtil.Get("DeckPicker_Deck_Archived_Tooltip");
+		public string? ArchivedTooltip => LocUtil.Get("DeckPicker_Deck_Archived_Tooltip");
 
-		public string LegacyNoStatsNo => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_No");
+		public string? LegacyNoStatsNo => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_No");
 
-		public string LegacyNoStatsStats => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_Stats");
+		public string? LegacyNoStatsStats => LocUtil.Get("DeckPicker_Deck_Legacy_NoStats_Stats");
 
-		public string StatsString => Deck.StatsString;
+		public string? StatsString => Deck?.StatsString;
 
-		public string DateShownOnDeckTooltip
+		public string? DateShownOnDeckTooltip
 		{
 			get
 			{
@@ -114,7 +114,7 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckPicker
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

@@ -19,9 +19,8 @@ namespace HDTTests.BoardDamage
 		[TestInitialize]
 		public void Setup()
 		{
-			Core.Game = null;
-			_game = new GameV2();
-			Core.Game = _game;
+			Core._game = null;
+			_game = Core._game = new GameV2();
 			_game.Player.Id = 0;
 
 

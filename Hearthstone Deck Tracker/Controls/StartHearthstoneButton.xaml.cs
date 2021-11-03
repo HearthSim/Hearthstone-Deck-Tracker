@@ -34,10 +34,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 		public bool HearthstoneIsRunning => Core.Game.IsRunning;
 
 		public ICommand StartHearthstone => new Command(() => HearthstoneRunner.StartHearthstone().Forget());
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

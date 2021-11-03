@@ -17,6 +17,7 @@ using CardIds = HearthDb.CardIds;
 using Deck = Hearthstone_Deck_Tracker.Hearthstone.Deck;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -24,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 {
 	public static class DeckImporter
 	{
-		internal static readonly Dictionary<string, Func<string, Task<Deck>>> Websites = new Dictionary<string, Func<string, Task<Deck>>>
+		internal static readonly Dictionary<string, Func<string, Task<Deck?>>> Websites = new Dictionary<string, Func<string, Task<Deck?>>>
 		{
 			{"hearthpwn", Hearthpwn.Import},
 			{"marduktv", Marduktv.Import},
@@ -43,29 +44,29 @@ namespace Hearthstone_Deck_Tracker.Importing
 		};
 
 		private const int BrawlDeckType = 6;
-		private static List<HearthMirror.Objects.Deck> _constructedDecksCache;
-		private static List<HearthMirror.Objects.Deck> _brawlDecksCache;
-		private static ArenaInfo _arenaInfoCache;
+		private static List<HearthMirror.Objects.Deck>? _constructedDecksCache;
+		private static List<HearthMirror.Objects.Deck>? _brawlDecksCache;
+		private static ArenaInfo? _arenaInfoCache;
 
 		public static List<HearthMirror.Objects.Deck> ConstructedDecksCache
 		{
-			get { return _constructedDecksCache ?? (_constructedDecksCache = GetConstructedDecks()); }
+			get { return _constructedDecksCache ??= GetConstructedDecks(); }
 			set { _constructedDecksCache = value; }
 		}
 
 		public static ArenaInfo ArenaInfoCache
 		{
-			get { return _arenaInfoCache ?? (_arenaInfoCache = Reflection.GetArenaDeck()); }
+			get { return _arenaInfoCache ??= Reflection.GetArenaDeck(); }
 			set { _arenaInfoCache = value; }
 		}
 
 		public static List<HearthMirror.Objects.Deck> BrawlDecksCache
 		{
-			get { return _brawlDecksCache ?? (_brawlDecksCache = GetBrawlDecks()); }
+			get { return _brawlDecksCache ??= GetBrawlDecks(); }
 			set { _brawlDecksCache = value; }
 		}
 
-		public static async Task<Deck> Import(string url)
+		public static async Task<Deck?> Import(string url)
 		{
 			Log.Info("Importing deck from " + url);
 			var website = Websites.FirstOrDefault(x => url.Contains(x.Key));
@@ -166,10 +167,15 @@ namespace Hearthstone_Deck_Tracker.Importing
 							{
 								Id = x.DeckId,
 								Name = x.Title,
-								Cards = x.Cards.Select(c => new HearthMirror.Objects.Card(Database.GetCardFromDbfId(c.DbfId).Id, c.Count, 0)).ToList(),
+								Cards = x.Cards.Select(c => {
+									var card = Database.GetCardFromDbfId(c.DbfId);
+									if(card == null)
+										return null;
+									return new HearthMirror.Objects.Card(card.Id, c.Count, 0);
+								}).Where(x => x != null).ToList(),
 								Hero = hero,
 							};
-						}).Where(x => x != null);
+						}).WhereNotNull();
 
 						importedDecks.AddRange(GetImportedDecks(whizbangDecks, localDecks));
 						continue;
@@ -201,7 +207,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			return importedDecks;
 		}
 
-		public static ArenaInfo FromArena(bool log = true)
+		public static ArenaInfo? FromArena(bool log = true)
 		{
 			try
 			{

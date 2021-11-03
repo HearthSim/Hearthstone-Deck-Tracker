@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 	{
 		private DateTime _lastAutoImport;
 		private bool _checkedMirrorStatus;
-		public event Action OnHearthMirrorCheckFailed;
+		public event Action? OnHearthMirrorCheckFailed;
 		private List<Mode> ShowExperienceDuringMode = new List<Mode>() { Mode.HUB, Mode.GAME_MODE, Mode.TOURNAMENT, Mode.BACON, Mode.DRAFT, Mode.PVP_DUNGEON_RUN };
 
 		private List<Mode> LettuceModes = new List<Mode>
@@ -80,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 
 				if(game.PreviousMode == Mode.GAMEPLAY && game.CurrentMode != Mode.GAMEPLAY)
-					gameState.GameHandler.HandleInMenu();
+					gameState.GameHandler?.HandleInMenu();
 
 				if(game.CurrentMode == Mode.DRAFT)
 					Watchers.ArenaWatcher.Run();
@@ -137,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			else if(logLine.Line.Contains("Gameplay.Start"))
 			{
 				gameState.Reset();
-				gameState.GameHandler.HandleGameStart(logLine.Time);
+				gameState.GameHandler?.HandleGameStart(logLine.Time);
 			}
 		}
 

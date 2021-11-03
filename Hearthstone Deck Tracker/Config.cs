@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker
 	{
 		#region Settings
 
-		private static Config _config;
+		private static Config? _config;
 
 		public static readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
 		                                            + @"\HearthstoneDeckTracker";
@@ -1056,11 +1056,11 @@ namespace Hearthstone_Deck_Tracker
 
 		#endregion
 
-		private GameDetailsConfig _gameDetails;
+		private GameDetailsConfig? _gameDetails;
 
 		public GameDetailsConfig GameDetails
 		{
-			get => _gameDetails ?? (_gameDetails = new GameDetailsConfig());
+			get => _gameDetails ??= new GameDetailsConfig();
 			set => _gameDetails = value;
 		}
 
@@ -1136,7 +1136,7 @@ namespace Hearthstone_Deck_Tracker
 
 		#region Misc
 
-		public event Action<ConfigWarning> OnConfigWarning;
+		public event Action<ConfigWarning>? OnConfigWarning;
 
 		private Config()
 		{
@@ -1281,12 +1281,12 @@ namespace Hearthstone_Deck_Tracker
 		private sealed class DefaultValueAttribute : Attribute
 		{
 			// This is a positional argument
-			public DefaultValueAttribute(object value)
+			public DefaultValueAttribute(object? value)
 			{
 				Value = value;
 			}
 
-			public object Value { get; }
+			public object? Value { get; }
 		}
 
 		public class GameDetailsConfig

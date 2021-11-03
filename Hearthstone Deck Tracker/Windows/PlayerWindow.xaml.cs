@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker
 		private readonly GameV2 _game;
 		private bool _appIsClosing;
 
-		public PlayerWindow(GameV2 game, List<Card> forScreenshot = null)
+		public PlayerWindow(GameV2 game, List<Card>? forScreenshot = null)
 		{
 			InitializeComponent();
 			_game = game;
@@ -73,7 +73,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public bool ShowToolTip => Config.Instance.WindowCardToolTips;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public void Update()
 		{
@@ -172,7 +172,7 @@ namespace Hearthstone_Deck_Tracker
 		public void UpdatePlayerCards(List<Card> cards, bool reset) => ListViewPlayer.Update(cards, reset);
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

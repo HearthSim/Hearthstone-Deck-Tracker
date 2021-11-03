@@ -9,15 +9,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 		private const string FieldLiveChina = "live-china";
 
 		[JsonProperty(FieldDev)]
-		public string Dev { get; set; }
+		public string? Dev { get; set; }
 
 		[JsonProperty(FieldLive)]
-		public string Live { get; set; }
+		public string? Live { get; set; }
 
 		[JsonProperty(FieldLiveChina)]
-		public string LiveChina { get; set; }
+		public string? LiveChina { get; set; }
 
-		public string GetReleaseUrl(string release)
+		public string? GetReleaseUrl(string release)
 		{
 			switch(release)
 			{

@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker
 {
 	public static class Imgur
 	{
-		public static async Task<string> Upload(string clientId, MemoryStream image, string name = null)
+		public static async Task<string?> Upload(string clientId, MemoryStream image, string? name = null)
 		{
 			const string url = @"https://api.imgur.com/3/upload";
 
@@ -35,6 +35,8 @@ namespace Hearthstone_Deck_Tracker
 				var reader = new StreamReader(new MemoryStream(responseArray), Encoding.Default);
 				var json = reader.ReadToEnd();
 				var resp = JsonConvert.DeserializeObject<ImgurResponse>(json);
+				if(resp.data?.link == null)
+					throw new Exception("no link found");
 
 				Log.Info("Response (" + resp.status + ") " + resp.data.link);
 				if(resp.success && resp.status == 200)
@@ -50,17 +52,17 @@ namespace Hearthstone_Deck_Tracker
 
 		private class ImgurResponse
 		{
-			public ImgurDataImage data { get; set; }
+			public ImgurDataImage? data { get; set; }
 			public bool success { get; set; }
 			public int status { get; set; }
 
 			public class ImgurDataImage
 			{
-				public string id { get; set; }
-				public string title { get; set; }
-				public string name { get; set; }
-				public string deletehash { get; set; }
-				public string link { get; set; }
+				public string? id { get; set; }
+				public string? title { get; set; }
+				public string? name { get; set; }
+				public string? deletehash { get; set; }
+				public string? link { get; set; }
 			}
 		}
 	}

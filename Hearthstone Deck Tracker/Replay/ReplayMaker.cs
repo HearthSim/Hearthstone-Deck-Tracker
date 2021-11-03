@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Replay
 {
 	public static class ReplayMaker
 	{
-		public static string SaveToDisk(GameStats gameStats, List<string> powerLog)
+		public static string? SaveToDisk(GameStats gameStats, List<string> powerLog)
 		{
 			try
 			{

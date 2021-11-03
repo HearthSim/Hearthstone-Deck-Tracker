@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public void Add(Action<T> action)
 		{
 			var caller = new StackTrace().GetFrame(1).GetMethod().ReflectedType;
-			var plugin = PluginManager.Instance.Plugins.FirstOrDefault(p => p.Plugin.GetType() == caller);
+			var plugin = PluginManager.Instance.Plugins.FirstOrDefault(p => p.Plugin?.GetType() == caller);
 			_actions.Add(new Tuple<object, Action<T>>(plugin, action));
 		}
 
@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.API
 			{
 				var sw = Stopwatch.StartNew();
 				var plugin = action.Item1 as PluginWrapper;
-				if(plugin != null && !plugin.IsEnabled)
+				if(plugin == null || !plugin.IsEnabled)
 				{
 					remove.Add(action);
 					continue;
@@ -74,7 +74,7 @@ namespace Hearthstone_Deck_Tracker.API
 		public void Add(Action action)
 		{
 			var caller = new StackTrace().GetFrame(1).GetMethod().ReflectedType;
-			var plugin = PluginManager.Instance.Plugins.FirstOrDefault(p => p.Plugin.GetType() == caller);
+			var plugin = PluginManager.Instance.Plugins.FirstOrDefault(p => p.Plugin?.GetType() == caller);
 			_actions.Add(new Tuple<object, Action>(plugin, action));
 		}
 
@@ -85,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.API
 			{
 				var sw = Stopwatch.StartNew();
 				var plugin = action.Item1 as PluginWrapper;
-				if(plugin != null && !plugin.IsEnabled)
+				if(plugin == null || !plugin.IsEnabled)
 				{
 					remove.Add(action);
 					continue;

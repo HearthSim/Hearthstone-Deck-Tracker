@@ -22,11 +22,11 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlArrayItem(ElementName = "Deck")]
 		public List<DeckStats> SerializableDeckStats = new List<DeckStats>();
 
-		private ConcurrentDictionary<Guid, DeckStats> _deckStats;
+		private ConcurrentDictionary<Guid, DeckStats>? _deckStats;
 		[XmlIgnore]
-		public ConcurrentDictionary<Guid, DeckStats> DeckStats => _deckStats ?? (_deckStats =
+		public ConcurrentDictionary<Guid, DeckStats> DeckStats => _deckStats ??=
 																	new ConcurrentDictionary<Guid, DeckStats>(
-																		SerializableDeckStats.Where(x => x != null).GroupBy(x => x.DeckId).Select(x => new KeyValuePair<Guid, DeckStats>(x.First().DeckId, x.First()))));
+																		SerializableDeckStats.Where(x => x != null).GroupBy(x => x.DeckId).Select(x => new KeyValuePair<Guid, DeckStats>(x.First().DeckId, x.First())));
 
 		public static DeckStatsList Instance => _instance.Value;
 
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			var file = Path.Combine(Config.Instance.DataDir, "DeckStats.xml");
 			if(!File.Exists(file))
 				return new DeckStatsList();
-			DeckStatsList instance = null;
+			DeckStatsList? instance = null;
 			try
 			{
 				instance = XmlManager<DeckStatsList>.Load(file);

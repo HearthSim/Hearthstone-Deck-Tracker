@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class Database
 	{
-		public static Card GetCardFromId(string cardId)
+		public static Card? GetCardFromId(string? cardId)
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return null;
@@ -24,7 +24,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return UnknownCard;
 		}
 
-		public static Card GetCardFromDbfId(int dbfId, bool collectible = true)
+		public static Card? GetCardFromDbfId(int dbfId, bool collectible = true)
 		{
 			if(dbfId == 0)
 				return null;
@@ -58,34 +58,36 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public static List<Card> GetActualCards() => Cards.Collectible.Values.Select(x => new Card(x)).ToList();
 
-		public static string GetHeroNameFromId(string id, bool returnIdIfNotFound = true)
+		public static string? GetHeroNameFromId(string? id, bool returnIdIfNotFound = true)
 		{
 			if(string.IsNullOrEmpty(id))
 				return returnIdIfNotFound ? id : null;
 			var baseId = GetBaseId(id);
-			if(CardIds.HeroIdDict.TryGetValue(baseId, out var name))
+			if(string.IsNullOrEmpty(baseId))
+				return returnIdIfNotFound ? id : null;
+			if(CardIds.HeroIdDict.TryGetValue(baseId!, out var name))
 				return name;
 			var card = GetCardFromId(baseId);
-			bool IsValidHeroCard(Card c) => !string.IsNullOrEmpty(c?.Name) && c.Name != "UNKNOWN" && c.Type == "Hero";
+			bool IsValidHeroCard(Card? c) => !string.IsNullOrEmpty(c?.Name) && c!.Name != "UNKNOWN" && c!.Type == "Hero";
 			if(!IsValidHeroCard(card))
 			{
 				card = GetCardFromId(id);
 				if(!IsValidHeroCard(card))
 					return returnIdIfNotFound ? baseId : null;
 			}
-			return card.Name;
+			return card?.Name;
 		}
 
-		public static Card GetHeroCardFromClass(string className)
+		public static Card? GetHeroCardFromClass(string? className)
 		{
 			if(string.IsNullOrEmpty(className))
 				return null;
-			if(!CardIds.HeroNameDict.TryGetValue(className, out var heroId) || string.IsNullOrEmpty(heroId))
+			if(!CardIds.HeroNameDict.TryGetValue(className!, out var heroId) || string.IsNullOrEmpty(heroId))
 				return null;
 			return GetCardFromId(heroId);
 		}
 
-		private static string GetBaseId(string cardId)
+		private static string? GetBaseId(string? cardId)
 		{
 			if(string.IsNullOrEmpty(cardId))
 				return cardId;

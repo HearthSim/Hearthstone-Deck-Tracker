@@ -55,15 +55,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private readonly List<HearthstoneTextBlock> _leaderboardDeadForText = new List<HearthstoneTextBlock>();
 		private readonly List<HearthstoneTextBlock> _leaderboardDeadForTurnText = new List<HearthstoneTextBlock>();
 		private bool? _isFriendsListOpen;
-		private string _lastToolTipCardId;
 		private bool _lmbDown;
-		private User32.MouseInput _mouseInput;
+		private User32.MouseInput? _mouseInput;
 		private Point _mousePos;
 		private bool _opponentCardsHidden;
 		private bool _playerCardsHidden;
 		private bool _resizeElement;
 		private bool _secretsTempVisible;
-		private UIElement _selectedUiElement;
+		private UIElement? _selectedUiElement;
 		private bool _uiMovable;
 
 		private OverlayElementBehavior _mulliganNotificationBehavior;
@@ -245,7 +244,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public Visibility WarningVisibility { get; set; }
 		public List<Card> PlayerDeck => _game.Player.PlayerCardList;
 		public List<Card> OpponentDeck => _game.Opponent.OpponentCardList;
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public double PlayerStackHeight => (Config.Instance.PlayerDeckHeight / 100 * Height) / (Config.Instance.OverlayPlayerScaling / 100);
 		public double PlayerListHeight => PlayerStackHeight - PlayerLabelsHeight;
@@ -371,7 +370,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -581,7 +580,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				.OrderBy(x => x.ZonePosition)
 				.Select(entity =>
 				{
-					var id = entity?.Card?.Id;
+					var id = entity.Card?.Id;
 					var abilityCards = new List<(Card, bool)>();
 					var actualAbilities = player.PlayerEntities
 						.Where(x => x.GetTag(GameTag.LETTUCE_ABILITY_OWNER) == entity.Id
@@ -590,8 +589,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 									&& x.HasCardId
 									&& x.Card != null)
 						.ToList();
-					var staticAbilities = Remote.Mercenaries.Data?
-						.FirstOrDefault(x => x.ArtVariationIds.Contains(id))?.Abilities ?? new List<RemoteData.MercenaryAbility>();
+					var staticAbilities = id != null ? Remote.Mercenaries.Data?
+						.FirstOrDefault(x => x.ArtVariationIds.Contains(id))?.Abilities ?? new List<RemoteData.MercenaryAbility>() : new List<RemoteData.MercenaryAbility>();
 
 					var data = new List<MercAbilityData>();
 					var max = Math.Min(3, Math.Max(staticAbilities.Count, actualAbilities.Count));
@@ -624,8 +623,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public class MercAbilityData
 		{
-			public Entity Entity { get; set; }
-			public Card Card { get; set; }
+			public Entity? Entity { get; set; }
+			public Card? Card { get; set; }
 			public bool Active { get; set; }
 			public int GameTurn { get; set; }
 			public bool HasTiers { get; set; }

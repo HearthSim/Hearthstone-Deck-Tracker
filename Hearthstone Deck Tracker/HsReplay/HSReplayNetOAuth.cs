@@ -30,12 +30,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private const string SuccessUrl = "https://hsdecktracker.net/hsreplaynet/oauth_success/";
 		private const string ErrorUrl = "https://hsdecktracker.net/hsreplaynet/oauth_error/";
 
-		public static event Action Authenticated;
-		public static event Action LoggedOut;
-		public static event Action TwitchUsersUpdated;
-		public static event Action AccountDataUpdated;
-		public static event Action CollectionUpdated;
-		public static event Action UploadTokenClaimed;
+		public static event Action? Authenticated;
+		public static event Action? LoggedOut;
+		public static event Action? TwitchUsersUpdated;
+		public static event Action? AccountDataUpdated;
+		public static event Action? CollectionUpdated;
+		public static event Action? UploadTokenClaimed;
 
 		static HSReplayNetOAuth()
 		{
@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static void Save() => Serializer.Save(Data.Value);
 
-		public static async Task<bool> Authenticate(string successUrl = null, string errorUrl = null)
+		public static async Task<bool> Authenticate(string? successUrl = null, string? errorUrl = null)
 		{
 			Log.Info("Authenticating with HSReplay.net...");
 			string url;
@@ -95,7 +95,14 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			if(!Account.Instance.TokenClaimed.HasValue)
 				await ApiWrapper.UpdateUploadTokenStatus();
 			if(Account.Instance.TokenClaimed == false)
+			{
+				if(Account.Instance.UploadToken == null)
+				{
+					Log.Error("Authentication failed, no upload token found");
+					return false;
+				}
 				await ClaimUploadToken(Account.Instance.UploadToken);
+			}
 			Authenticated?.Invoke();
 			return true;
 		}
@@ -118,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static async Task<bool> UpdateToken()
 		{
 			var data = Data.Value;
-			if(data.TokenData != null && (DateTime.Now - data.TokenDataCreatedAt).TotalSeconds < data.TokenData.ExpiresIn)
+			if(data.TokenData != null && data.TokenDataCreatedAt != null && (DateTime.Now - data.TokenDataCreatedAt.Value).TotalSeconds < data.TokenData.ExpiresIn)
 				return true;
 			if(string.IsNullOrEmpty(data.Code) || string.IsNullOrEmpty(data.RedirectUrl))
 			{
@@ -215,7 +222,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			if(string.IsNullOrEmpty(Data.Value.TokenData?.Scope))
 				return false;
-			var currentScopes = Data.Value.TokenData.Scope.Split(' ');
+			var currentScopes = Data.Value.TokenData!.Scope.Split(' ');
 			if(currentScopes.Contains(Scope.FullAccess.Name))
 				return true;
 			return scopes.All(s => currentScopes.Contains(s.Name));
@@ -224,9 +231,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static bool IsAuthenticatedForAnything()
 			=> !string.IsNullOrEmpty(Data.Value.TokenData?.Scope);
 
-		public static List<TwitchAccount> TwitchUsers => Data.Value.TwitchUsers;
+		public static List<TwitchAccount>? TwitchUsers => Data.Value.TwitchUsers;
 
-		public static User AccountData => Data.Value.Account;
+		public static User? AccountData => Data.Value.Account;
 
 		public static void SaveTokenData(TokenData data)
 		{

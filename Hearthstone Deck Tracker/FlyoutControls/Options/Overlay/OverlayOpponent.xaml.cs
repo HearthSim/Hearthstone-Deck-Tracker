@@ -20,7 +20,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayOpponent : INotifyPropertyChanged
 	{
-		private GameV2 _game;
 		private bool _initialized;
 
 		public OverlayOpponent()
@@ -44,7 +43,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				Config.Instance.OverlayOpponentScaling = value;
 				Config.Save();
 				Core.Overlay.UpdateScaling();
-				if(Config.Instance.UseSameScaling && Config.Instance.OverlayPlayerScaling != value)
+				if(Config.Instance.UseSameScaling && Config.Instance.OverlayPlayerScaling != value && Helper.OptionsMain != null)
 					Helper.OptionsMain.OptionsOverlayPlayer.PlayerScaling = value;
 				OnPropertyChanged();
 			}
@@ -69,11 +68,10 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public void Load(GameV2 game)
+		public void Load()
 		{
-			_game = game;
 			CheckboxHighlightDiscarded.IsChecked = Config.Instance.HighlightDiscarded;
 			SliderOpponentOpacity.Value = Config.Instance.OpponentOpacity;
 			SliderOverlayOpponentScaling.Value = Config.Instance.OverlayOpponentScaling;
@@ -202,7 +200,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.OptionsMain.OptionsOverlayPlayer.CheckboxSameScaling.IsChecked = true;
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.OptionsOverlayPlayer.CheckboxSameScaling.IsChecked = true;
 			Config.Instance.UseSameScaling = true;
 			Config.Save();
 		}
@@ -211,13 +210,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.OptionsMain.OptionsOverlayPlayer.CheckboxSameScaling.IsChecked = false;
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.OptionsOverlayPlayer.CheckboxSameScaling.IsChecked = false;
 			Config.Instance.UseSameScaling = false;
 			Config.Save();
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			var handler = PropertyChanged;
 			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));

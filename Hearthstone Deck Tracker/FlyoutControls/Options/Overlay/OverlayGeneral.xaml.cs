@@ -14,7 +14,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayGeneral
 	{
-		private GameV2 _game;
 		private bool _initialized;
 
 		public OverlayGeneral()
@@ -22,9 +21,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			InitializeComponent();
 		}
 
-		public void Load(GameV2 game)
+		public void Load()
 		{
-			_game = game;
 			CheckboxHideOverlayInBackground.IsChecked = Config.Instance.HideInBackground;
 			CheckboxHideOverlayInMenu.IsChecked = Config.Instance.HideInMenu;
 			CheckboxHideOverlay.IsChecked = Config.Instance.HideOverlay;

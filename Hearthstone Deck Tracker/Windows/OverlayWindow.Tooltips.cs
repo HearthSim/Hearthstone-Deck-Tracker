@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						var creatorDescription = "Created By ";
 						if(drawnEntity?.Info.GetDrawerId() != null && drawnEntity?.Info.GetDrawerId() > 0)
 							creatorDescription = "Drawn By ";
-						ToolTipCardBlock.CreatedByText =  $"{creatorDescription}{creatorCard.Name}";
+						ToolTipCardBlock.CreatedByText =  $"{creatorDescription}{creatorCard?.Name}";
 						ToolTipCardBlock.CreatedByVisibility = Visible;
 					}
 					ToolTipCardBlock.SetCardIdFromCard(card ?? creatorCard);
@@ -128,12 +128,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(StackPanelSecrets) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100 - ToolTipCardBlock.ActualHeight / 2;
 				var card = StackPanelSecrets.Children.Cast<Controls.Card>().ElementAt(cardIndex);
-				ToolTipCardBlock.SetCardIdFromCard(new Hearthstone.Card() { Id = card.CardId, BaconCard = false });
-				//prevent tooltip from going outside of the overlay
-				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
-					topOffset = Height - ToolTipCardBlock.ActualHeight;
-				topOffset = Math.Max(0, topOffset);
-				SetTooltipPosition(topOffset, StackPanelSecrets);
+				if(card.CardId != null)
+				{
+					ToolTipCardBlock.SetCardIdFromCard(new Hearthstone.Card() { Id = card.CardId, BaconCard = false });
+					//prevent tooltip from going outside of the overlay
+					if(topOffset + ToolTipCardBlock.ActualHeight > Height)
+						topOffset = Height - ToolTipCardBlock.ActualHeight;
+					topOffset = Math.Max(0, topOffset);
+					SetTooltipPosition(topOffset, StackPanelSecrets);
+				}
 
 				ToolTipCardBlock.Visibility = Config.Instance.OverlaySecretToolTipsOnly ? Visible : visibility;
 			}
@@ -249,14 +252,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 
 		private Visibility _flavorTextVisibility = Collapsed;
-		private string _flavorTextCardName;
-		private string _flavorText;
+		private string? _flavorTextCardName;
+		private string? _flavorText;
 
 		public string FlavorText
 		{
 			get
 			{
-				return string.IsNullOrEmpty(_flavorText) ? "-" : _flavorText;
+				return string.IsNullOrEmpty(_flavorText) ? "-" : _flavorText!;
 			}
 			set
 			{
@@ -268,7 +271,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		public string FlavorTextCardName
+		public string? FlavorTextCardName
 		{
 			get { return _flavorTextCardName; }
 			set
@@ -305,8 +308,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 					: Database.GetCardFromId(entity.Info.LatestCardId);
 				if(string.IsNullOrEmpty(card?.FormattedFlavorText))
 					return;
-				FlavorText = card.FormattedFlavorText;
-				FlavorTextCardName = card.LocalizedName;
+				FlavorText = card!.FormattedFlavorText;
+				FlavorTextCardName = card!.LocalizedName;
 				FlavorTextVisibility = Visible;
 			}
 			catch(Exception e)

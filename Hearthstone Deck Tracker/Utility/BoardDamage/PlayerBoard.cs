@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Utility.BoardDamage
 			}
 		}
 
-		public BoardHero Hero { get; }
+		public BoardHero? Hero { get; }
 
 		public List<IBoardEntity> Cards { get; }
 

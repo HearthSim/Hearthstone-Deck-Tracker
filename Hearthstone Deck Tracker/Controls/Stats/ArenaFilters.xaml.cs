@@ -19,9 +19,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 	public partial class ArenaFilters : UserControl
 	{
 		private readonly bool _initialized;
-		private Action _updateCallback;
+		private Action? _updateCallback;
 
-		public ArenaFilters(Action updateCallback = null)
+		public ArenaFilters(Action? updateCallback = null)
 		{
 			InitializeComponent();
 			ComboBoxTimeframe.ItemsSource = Enum.GetValues(typeof(DisplayedTimeFrame));

@@ -28,10 +28,10 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			? LocUtil.GetAge(Account.Instance.CollectionState.Values.Max(x => x.Date))
 			: string.Empty;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

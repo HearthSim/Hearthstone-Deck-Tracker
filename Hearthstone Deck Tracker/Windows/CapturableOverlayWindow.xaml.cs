@@ -28,9 +28,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public Visual Visual => Core.Overlay.GridMain;
 
-		public SolidColorBrush BackgroundColor => Helper.BrushFromHex(Config.Instance.StreamingOverlayBackground);
+		public SolidColorBrush? BackgroundColor => Helper.BrushFromHex(Config.Instance.StreamingOverlayBackground);
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public void Update()
 		{
@@ -70,7 +70,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			[GameTag.DEATHRATTLE] = LocUtil.Get("GameTag_Deathrattle")
 		};
 
-		public string Effects
+		public string? Effects
 		{ 
 			get
 			{

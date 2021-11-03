@@ -50,38 +50,38 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private bool _archived;
 
 		private ArenaReward _arenaReward = new ArenaReward();
-		private List<GameStats> _cachedGames;
-		private SerializableVersion _cachedVersion;
+		private List<GameStats>? _cachedGames;
+		private SerializableVersion? _cachedVersion;
 		private Guid _deckId;
 		private bool? _isArenaDeck;
 		private bool? _isDungeonDeck;
 		private bool? _isDuelsDeck;
 		private bool _isSelectedInGui;
 		private DateTime _lastCacheUpdate = DateTime.MinValue;
-		private string _name;
-		private string _note;
+		private string _name = string.Empty;
+		private string? _note;
 		private SerializableVersion _selectedVersion = new SerializableVersion(1, 0);
-		private List<string> _tags;
+		private List<string> _tags = new List<string>();
 
 		[XmlArray(ElementName = "Cards")]
 		[XmlArrayItem(ElementName = "Card", IsNullable = false)]
 		public ObservableCollection<Card> Cards;
 
-		public string Class;
+		public string? Class;
 		public DateTime LastEdited;
 
 		[XmlArray(ElementName = "MissingCards")]
 		[XmlArrayItem(ElementName = "Card")]
 		public List<Card> MissingCards;
 
-		public string Url;
+		public string? Url;
 		public SerializableVersion Version = new SerializableVersion(1, 0);
 
 		[XmlArray(ElementName = "DeckHistory")]
 		[XmlArrayItem(ElementName = "Deck")]
 		public List<Deck> Versions;
 
-		public event Action OnStatsUpdated;
+		public event Action? OnStatsUpdated;
 
 		public Deck()
 		{
@@ -97,10 +97,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			DeckId = Guid.NewGuid();
 		}
 
-		public Deck(string name, string className, IEnumerable<Card> cards, IEnumerable<string> tags, string note, string url,
+		public Deck(string name, string? className, IEnumerable<Card> cards, IEnumerable<string>? tags, string? note, string? url,
 		            DateTime lastEdited, bool archived, List<Card> missingCards, SerializableVersion version, IEnumerable<Deck> versions,
-		            Guid deckId, long hsId = 0, SerializableVersion selectedVersion = null, bool? isArenaDeck = null,
-		            ArenaReward reward = null)
+		            Guid deckId, long hsId = 0, SerializableVersion? selectedVersion = null, bool? isArenaDeck = null,
+		            ArenaReward? reward = null)
 
 		{
 			Name = name;
@@ -123,7 +123,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			if(versions != null)
 			{
 				foreach(var d in versions)
-					Versions.Add(d.CloneWithNewId(true) as Deck);
+					Versions.Add((Deck)d.CloneWithNewId(true));
 			}
 			if(reward != null)
 				_arenaReward = reward;
@@ -143,7 +143,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public long HsId { get; set; }
 
-		public string Note
+		public string? Note
 		{
 			get { return _note; }
 			set
@@ -197,12 +197,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public bool IsBrawlDeck => Tags.Any(x => x.ToUpper().Contains("BRAWL"));
 
-		public ArenaReward ArenaReward
+		public ArenaReward? ArenaReward
 		{
 			get { return IsArenaDeck ? _arenaReward : null; }
 			set
 			{
-				if(IsArenaDeck)
+				if(IsArenaDeck && value != null)
 					_arenaReward = value;
 			}
 		}
@@ -239,15 +239,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<SerializableVersion> VersionsIncludingSelf => Versions.Select(x => x.Version).Concat(new[] {Version}).ToList();
 
 		[XmlIgnore]
-		public string NameAndVersion
+		public string? NameAndVersion
 		{
 			get
 			{
 				if(Config.Instance.DeckPickerCaps)
 				{
 					return Versions.Count == 0
-						       ? Name.ToUpperInvariant()
-						       : $"{Name.ToUpperInvariant()} (v{SelectedVersion.Major}.{SelectedVersion.Minor})";
+						       ? Name?.ToUpperInvariant()
+						       : $"{Name?.ToUpperInvariant()} (v{SelectedVersion.Major}.{SelectedVersion.Minor})";
 				}
 				return Versions.Count == 0 ? Name : $"{Name} (v{SelectedVersion.Major}.{SelectedVersion.Minor})";
 			}
@@ -330,7 +330,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public string TagList
 		{
-			get { return Tags.Count > 0 ? Tags.Select(x => x.ToUpperInvariant()).Aggregate((t, n) => t + " | " + n) : ""; }
+			get { return Tags?.Count > 0 ? Tags.Select(x => x.ToUpperInvariant()).Aggregate((t, n) => t + " | " + n) : ""; }
 		}
 
 		[XmlIgnore]
@@ -370,7 +370,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool HasVersions => Versions != null && Versions.Count > 0;
 
-		private string _shortId;
+		private string? _shortId;
 		public string ShortId => _shortId ?? (_shortId = ShortIdHelper.GetShortId(this));
 
 		public Visibility VisibilityStats => GetRelevantGames().Any() ? Visibility.Visible : Visibility.Collapsed;
@@ -399,7 +399,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public object Clone() => new Deck(Name, Class, Cards, Tags, Note, Url, LastEdited, Archived, MissingCards, Version, Versions,
 										  DeckId, HsId, SelectedVersion, _isArenaDeck, ArenaReward);
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public FormatType GuessFormatType()
 		{
@@ -413,7 +413,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public List<GameStats> GetRelevantGames()
 		{
 			if(CacheIsValid)
-				return _cachedGames;
+				return _cachedGames!;
 			var filtered = Config.Instance.DisplayedMode == GameMode.All
 				               ? DeckStats.Games
 				               : (IsArenaDeck
@@ -474,7 +474,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public Deck GetVersion(int major, int minor) => GetVersion(new SerializableVersion(major, minor));
 
-		public Deck GetVersion(SerializableVersion version) => version == null ? null : (Version == version ? this : Versions.FirstOrDefault(x => x.Version == version));
+		public Deck GetVersion(SerializableVersion version) => Version == version ? this : Versions.FirstOrDefault(x => x.Version == version);
 
 		public bool HasVersion(SerializableVersion version) => Version == version || Versions.Any(v => v.Version == version);
 
@@ -494,7 +494,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void SelectVersion(Deck deck) => SelectVersion(deck.Version);
 
-		public string GetDeckInfo() => $"deckname:{Name.Replace("{", "").Replace("}", "")}, class:{Class}, cards:{Cards.Sum(x => x.Count)}";
+		public string GetDeckInfo() => $"deckname:{Name?.Replace("{", "").Replace("}", "")}, class:{Class}, cards:{Cards.Sum(x => x.Count)}";
 
 		/// returns the number of cards in the deck with mechanics matching the newmechanic.
 		/// The mechanic attribute, such as windfury or taunt, comes from the cardDB json file
@@ -521,7 +521,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public override string ToString() => $"{Name} ({Class})";
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			var deck = obj as Deck;
 			if(deck == null)
@@ -533,7 +533,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public override int GetHashCode() => DeckId.GetHashCode();
 
-		public static List<Card> operator -(Deck first, Deck second)
+		public static List<Card> operator -(Deck? first, Deck? second)
 		{
 			if(first == null || second == null)
 				return new List<Card>();
@@ -568,7 +568,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public SerializableVersion GetMaxVerion() => VersionsIncludingSelf.OrderByDescending(x => x).First();
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

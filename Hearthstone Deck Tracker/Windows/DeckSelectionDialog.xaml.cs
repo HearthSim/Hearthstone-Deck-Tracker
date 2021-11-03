@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class DeckSelectionDialog
 	{
-		public Deck SelectedDeck;
+		public Deck? SelectedDeck;
 
 		public DeckSelectionDialog(IEnumerable<Deck> decks)
 		{

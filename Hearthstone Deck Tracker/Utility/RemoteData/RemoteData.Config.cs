@@ -9,25 +9,25 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		internal class Config
 		{
 			[JsonProperty("news")]
-			public NewsData News { get; set; }
+			public NewsData? News { get; set; }
 
 			[JsonProperty("collection_banner")]
-			public CollectionBannerData CollectionBanner { get; set; }
+			public CollectionBannerData? CollectionBanner { get; set; }
 
 			[JsonProperty("arena")]
-			public ArenaData Arena { get; set; }
+			public ArenaData? Arena { get; set; }
 
 			[JsonProperty("whizbang_decks")]
-			public List<WhizbangDeck> WhizbangDecks { get; set; }
+			public List<WhizbangDeck>? WhizbangDecks { get; set; }
 
 			[JsonProperty("battlegrounds_tag_overrides")]
-			public List<TagOverride> BattlegroundsTagOverrides { get; set; }
+			public List<TagOverride>? BattlegroundsTagOverrides { get; set; }
 
 			[JsonProperty("bobs_buddy")]
-			public BobsBuddyData BobsBuddy { get; set; }
+			public BobsBuddyData? BobsBuddy { get; set; }
 
 			[JsonProperty("update_info")]
-			public UpdateData UpdateInfo { get; set; }
+			public UpdateData? UpdateInfo { get; set; }
 		}
 
 		internal class NewsData
@@ -57,20 +57,20 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 		internal class ArenaData
 		{
 			[JsonProperty("current_sets")]
-			public List<CardSet> CurrentSets { get; set; }
+			public List<CardSet>? CurrentSets { get; set; }
 
 			[JsonProperty("exclusive_secrets")]
-			public List<string> ExclusiveSecrets { get; set; }
+			public List<string>? ExclusiveSecrets { get; set; }
 
 			[JsonProperty("banned_secrets")]
-			public List<string> BannedSecrets { get; set; }
+			public List<string>? BannedSecrets { get; set; }
 		}
 
 		internal class WhizbangDeck
 		{
 
 			[JsonProperty("title")]
-			public string Title { get; set; }
+			public string? Title { get; set; }
 
 			[JsonProperty("class")]
 			public CardClass Class { get; set; }
@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			public int DeckId { get; set; }
 
 			[JsonProperty("cards")]
-			public List<RemoteConfigCard> Cards { get; set; }
+			public List<RemoteConfigCard>? Cards { get; set; }
 		}
 
 		internal class RemoteConfigCard
@@ -110,7 +110,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			public bool Disabled { get; set; }
 
 			[JsonProperty("min_required_version")]
-			public string MinRequiredVersion { get; set; }
+			public string? MinRequiredVersion { get; set; }
 
 			[JsonProperty("sentry_reporting")]
 			public bool SentryReporting { get; set; }

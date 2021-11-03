@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				return;
 			if(!entity.HasCardId || Game.ProposedAttacker == 0 || Game.ProposedDefender == 0)
 				return;
-			if(!FastCombat.Contains(entity.CardId))
+			if(!FastCombat.Contains(entity.CardId!))
 				return;
 			if(Game.Entities.TryGetValue(Game.ProposedAttacker, out var attacker)
 				&& Game.Entities.TryGetValue(Game.ProposedDefender, out var defender))
@@ -392,7 +392,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 				exclude.Add(Mage.Counterspell);
 
-				if(_triggeredSecrets.FirstOrDefault(x => Mage.Counterspell == x.CardId) != null)
+				if(_triggeredSecrets.FirstOrDefault(x => x.CardId != null && Mage.Counterspell == x.CardId) != null)
 				{
 					Exclude(exclude);
 					return;

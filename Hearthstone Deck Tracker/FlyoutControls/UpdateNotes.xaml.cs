@@ -25,7 +25,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		private bool _animateTransition;
 		private bool _continueToHighlight;
 
-		private string _releaseNotes;
+		private string? _releaseNotes;
 
 		private bool _showHighlight;
 
@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			InitializeComponent();
 		}
 
-		public string ReleaseNotes => _releaseNotes ?? (_releaseNotes = GetReleaseNotes());
+		public string? ReleaseNotes => _releaseNotes ??= GetReleaseNotes();
 
 		public bool ShowHighlight
 		{
@@ -49,13 +49,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public void SetHighlight(Version previousVersion)
+		public void SetHighlight(Version? previousVersion)
 		{
 			if(previousVersion == null)
 				return;
-			UserControl infoControl = null;
+			UserControl? infoControl = null;
 			if(previousVersion < new Version(0, 13, 18))
 				infoControl = new CardThemesInfo();
 #if(!SQUIRREL)
@@ -100,7 +100,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 			}
 		}
 
-		private string GetReleaseNotes()
+		private string? GetReleaseNotes()
 		{
 			try
 			{
@@ -125,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

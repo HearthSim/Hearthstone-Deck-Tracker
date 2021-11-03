@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		bool CurrentEntityHasCardId { get; set; }
 		int CurrentEntityId { get; }
 		bool GameEnded { get; set; }
-		IGameHandler GameHandler { get; set; }
+		IGameHandler? GameHandler { get; set; }
 		DateTime LastGameStart { get; set; }
 		int LastId { get; set; }
 		bool OpponentUsedHeroPower { get; set; }
@@ -31,9 +31,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		void Reset();
 		void SetCurrentEntity(int id);
 		void ResetCurrentEntity();
-		void BlockStart(string type, string cardId, string target);
+		void BlockStart(string? type, string? cardId, string? target);
 		void BlockEnd();
-		Block CurrentBlock { get; }
-		Tuple<int, string> ChameleosReveal { get; set; }
+		Block? CurrentBlock { get; }
+		Tuple<int, string>? ChameleosReveal { get; set; }
 	}
 }

@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 			return separatorCount > 5 && separatorCount < 40;
 		}
 
-		public static Deck Import(string cards, bool localizedNames = false)
+		public static Deck? Import(string cards, bool localizedNames = false)
 		{
 			CardClass[] AvailableClasses(Card x)
 			{
@@ -64,7 +64,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 				{
 					var count = 1;
 					var cardName = line.Trim();
-					Match match = null;
+					Match? match = null;
 					if(CardLineRegexCountFirst.IsMatch(cardName))
 						match = CardLineRegexCountFirst.Match(cardName);
 					else if(CardLineRegexCountLast.IsMatch(cardName))
@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 					}
 
 					var card = Database.GetCardFromName(cardName.Replace("’", "'"), localizedNames);
-					if(string.IsNullOrEmpty(card?.Name) || card.Id == Database.UnknownCardId)
+					if(string.IsNullOrEmpty(card.Name) || card.Id == Database.UnknownCardId)
 						continue;
 					card.Count = count;
 

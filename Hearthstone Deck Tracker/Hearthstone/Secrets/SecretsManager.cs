@@ -4,6 +4,7 @@ using System.Linq;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static Hearthstone_Deck_Tracker.Hearthstone.CardIds;
 
@@ -21,7 +22,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 		protected override IGame Game { get; }
 		protected override bool HasActiveSecrets => Secrets.Count > 0;
 
-		public event Action<List<Card>> OnSecretsChanged;
+		public event Action<List<Card>>? OnSecretsChanged;
 
 		public override void Reset()
 		{
@@ -40,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 			if(entity == null || !entity.IsSecret || !entity.HasTag(GameTag.CLASS))
 				return false;
 			if(entity.HasCardId)
-				Exclude(entity.CardId, false);
+				Exclude(entity.CardId!, false);
 			var secret = new Secret(entity);
 			Secrets.Add(secret);
 			OnNewSecret(secret);
@@ -60,8 +61,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				Secrets.Remove(secret);
 				if(secret.Entity.HasCardId)
 				{ 
-					Exclude(secret.Entity.CardId, false);
-					SavedSecrets.Remove(secret.Entity.CardId);
+					Exclude(secret.Entity.CardId!, false);
+					SavedSecrets.Remove(secret.Entity.CardId!);
 				}
 				Refresh();
 				return true;
@@ -151,7 +152,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				if (card != null)
 					card.Count = x.Count;
 				return card;
-			}).ToList();
+			}).WhereNotNull().ToList();
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker
 	/// </summary>
 	public partial class DeckNotes
 	{
-		private Deck _currentDeck;
+		private Deck? _currentDeck;
 		private bool _noteChanged;
 
 		public DeckNotes()
@@ -33,6 +33,8 @@ namespace Hearthstone_Deck_Tracker
 
 		private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
 		{
+			if(_currentDeck == null)
+				return;
 			_currentDeck.Note = Textbox.Text;
 			_currentDeck.Edited();
 			_noteChanged = true;

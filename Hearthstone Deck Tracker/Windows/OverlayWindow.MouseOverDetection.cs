@@ -195,7 +195,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(!string.IsNullOrEmpty(id))
 			{
 				var data = GetMercAbilities(player);
-				var abilities = data.ElementAtOrDefault(entity.ZonePosition - 1);
+				var abilities = data.ElementAtOrDefault(entity!.ZonePosition - 1);
 
 				var elements = new[] { MercAbility1, MercAbility2, MercAbility3 };
 				var max = Math.Min(elements.Length, abilities?.Count ?? 3);
@@ -206,7 +206,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					if(card != null)
 					{
 						elements[i].SetCardIdFromCard(card);
-						elements[i].ShowQuestionmark = abilityData.Entity == null && abilityData.HasTiers;
+						elements[i].ShowQuestionmark = abilityData!.Entity == null && abilityData.HasTiers;
 					}
 				}
 			}
@@ -474,7 +474,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return cardWidth;
 		}
 		
-		private FrameworkElement _currentlyHoveredElement;
+		private FrameworkElement? _currentlyHoveredElement;
 		private void UpdateInteractiveElements()
 		{
 			var cursorPos = GetCursorPos();
@@ -586,7 +586,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private ScaleTransform GetScaleTransform(FrameworkElement element)
+		private ScaleTransform? GetScaleTransform(FrameworkElement element)
 		{
 			// Only BgTierIcons are marked as clickable but a wrapper is scaled by the OverlayElementBehavior
 			if(element == BattlegroundsMinionsPanel.BgTierIcons)

@@ -88,7 +88,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 			public ModifierKeys Mod { get; set; }
 
 			[XmlAttribute("Action")]
-			public string Action { get; set; }
+			public string? Action { get; set; }
 
 			[XmlIgnore]
 			public HotKey HotKey => new HotKey(Mod, Key);

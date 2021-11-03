@@ -138,7 +138,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 			ParameterName = parameterName;
 		}
 
-		public string ParameterName { get; private set; }
+		public string? ParameterName { get; private set; }
 	}
 
 	/// <summary>
@@ -380,10 +380,6 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	[MeansImplicitUse]
 	public sealed class PublicAPIAttribute : Attribute
 	{
-		public PublicAPIAttribute()
-		{
-		}
-
 		public PublicAPIAttribute([NotNull] string comment)
 		{
 			Comment = comment;
@@ -439,7 +435,7 @@ namespace Hearthstone_Deck_Tracker.Annotations
 		}
 
 		[NotNull]
-		public string BasePath { get; private set; }
+		public string? BasePath { get; private set; }
 	}
 
 	// ASP.NET MVC attributes
@@ -501,10 +497,6 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
 	public sealed class AspMvcActionAttribute : Attribute
 	{
-		public AspMvcActionAttribute()
-		{
-		}
-
 		public AspMvcActionAttribute([NotNull] string anonymousProperty)
 		{
 			AnonymousProperty = anonymousProperty;
@@ -522,10 +514,6 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcAreaAttribute : PathReferenceAttribute
 	{
-		public AspMvcAreaAttribute()
-		{
-		}
-
 		public AspMvcAreaAttribute([NotNull] string anonymousProperty)
 		{
 			AnonymousProperty = anonymousProperty;
@@ -545,10 +533,6 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
 	public sealed class AspMvcControllerAttribute : Attribute
 	{
-		public AspMvcControllerAttribute()
-		{
-		}
-
 		public AspMvcControllerAttribute([NotNull] string anonymousProperty)
 		{
 			AnonymousProperty = anonymousProperty;
@@ -659,10 +643,6 @@ namespace Hearthstone_Deck_Tracker.Annotations
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field)]
 	public sealed class HtmlElementAttributesAttribute : Attribute
 	{
-		public HtmlElementAttributesAttribute()
-		{
-		}
-
 		public HtmlElementAttributesAttribute([NotNull] string name)
 		{
 			Name = name;

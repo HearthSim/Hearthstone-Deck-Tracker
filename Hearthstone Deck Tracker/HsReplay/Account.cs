@@ -18,13 +18,14 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static readonly Lazy<Account> Lazy = new Lazy<Account>(Load);
 		private bool? _tokenClaimed;
 
-		public event Action TokenClaimedChanged;
+		public event Action? TokenClaimedChanged;
 
 		private Account()
 		{
 			HSReplayNetOAuth.AccountDataUpdated += () =>
 			{
-				Update(HSReplayNetOAuth.AccountData.Id, HSReplayNetOAuth.AccountData.Username);
+				if(HSReplayNetOAuth.AccountData != null)
+					Update(HSReplayNetOAuth.AccountData.Id, HSReplayNetOAuth.AccountData.Username);
 			};
 			HSReplayNetOAuth.UploadTokenClaimed += () =>
 			{
@@ -33,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			};
 		}
 
-		public void Update(int id, string username)
+		public void Update(int id, string? username)
 		{
 			Id = id;
 			Username = username;
@@ -52,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public static Account Instance => Lazy.Value;
 
-		public string UploadToken { get; set; }
+		public string? UploadToken { get; set; }
 
 		public bool? TokenClaimed
 		{
@@ -70,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		[JsonIgnore]
 		public AccountStatus Status => Id == 0 ? AccountStatus.Anonymous : AccountStatus.Registered;
 
-		public string Username { get; set; }
+		public string? Username { get; set; }
 
 		public int Id { get; set; }
 
@@ -80,7 +81,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 
 		public override string ToString()
 		{
-			return $"Id={Id}, Username={Username}, Token=****-{UploadToken.Split('-').Last()}";
+			return $"Id={Id}, Username={Username}, Token=****-{UploadToken?.Split('-').Last()}";
 		}
 
 		public static bool Save()
@@ -146,10 +147,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

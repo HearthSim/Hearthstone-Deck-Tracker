@@ -17,7 +17,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		private const int EventDelay = 2000;
 
 		private static bool _starting;
-		public static Action<bool> StartingHearthstone;
+		public static Action<bool>? StartingHearthstone;
 
 		public static async Task StartHearthstone()
 		{

@@ -9,7 +9,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 			InitializeComponent();
 		}
 
-		public Deck Deck
+		public Deck? Deck
 		{
 			get { return ((DeckExportViewModel)DataContext).Deck; }
 			set { ((DeckExportViewModel)DataContext).Deck = value; }

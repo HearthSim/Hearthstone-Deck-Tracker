@@ -25,8 +25,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private readonly ArenaHandler _arenaHandler = new ArenaHandler();
 		private readonly LoadingScreenHandler _loadingScreenHandler = new LoadingScreenHandler();
 		private readonly FullScreenFxHandler _fullScreenFxHandler = new FullScreenFxHandler();
-		private HsGameState _gameState;
-		private GameV2 _game;
+		private HsGameState? _gameState;
+		private GameV2? _game;
 		private readonly LogWatcher _logWatcher;
 		private bool _stop;
 
@@ -86,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.LogReader
 		private async Task FindHearthstone()
 		{
 			Log.Warn("Hearthstone not found, waiting for process...");
-			Process proc;
+			Process? proc;
 			while((proc = User32.GetHearthstoneProc()) == null)
 				await Task.Delay(500);
 			var dir = new FileInfo(proc.MainModule.FileName).Directory?.FullName;
@@ -117,6 +117,8 @@ namespace Hearthstone_Deck_Tracker.LogReader
 
 		private void OnNewLines(List<LogLine> lines)
 		{
+			if(_game == null || _gameState == null)
+				return;
 			foreach(var line in lines)
 			{
 				if(_stop)

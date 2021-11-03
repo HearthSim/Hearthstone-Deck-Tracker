@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public static class HearthDbConverter
 	{
-		public static readonly Dictionary<int, string> SetDict = new Dictionary<int, string>
+		public static readonly Dictionary<int, string?> SetDict = new Dictionary<int, string?>
 		{
 			{0, null},
 			{2, "Basic"},
@@ -58,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{1578, "United in Stormwind"},
 		};
 
-		public static string ConvertClass(CardClass cardClass)
+		public static string? ConvertClass(CardClass cardClass)
 		{
 			if(cardClass == CardClass.DEMONHUNTER)
 				return "DemonHunter";
@@ -80,7 +80,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 
-		public static string RaceConverter(Race race)
+		public static string? RaceConverter(Race race)
 		{
 			switch(race)
 			{
@@ -97,7 +97,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static string SetConverter(CardSet set) => SetDict.TryGetValue((int)set, out var str) ? str : string.Empty;
+		public static string SetConverter(CardSet set) => SetDict.TryGetValue((int)set, out var str) ? str ?? string.Empty : string.Empty;
 
 		public static GameMode GetGameMode(GameType gameType)
 		{
@@ -227,7 +227,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		public static HearthDb.Deckstrings.Deck ToHearthDbDeck(Deck deck)
+		public static HearthDb.Deckstrings.Deck? ToHearthDbDeck(Deck deck)
 		{
 			var card = Database.GetHeroCardFromClass(deck.Class);
 			if(card?.DbfIf > 0)
@@ -249,7 +249,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var deck = new Deck
 			{
 				Name = hDbDeck.Name,
-				Class = Database.GetCardFromDbfId(hDbDeck.HeroDbfId, false).PlayerClass
+				Class = Database.GetCardFromDbfId(hDbDeck.HeroDbfId, false)?.PlayerClass
 			};
 			foreach(var c in hDbDeck.GetCards())
 				deck.Cards.Add(new Card(c.Key) { Count = c.Value });

@@ -12,14 +12,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public partial class LinkOpponentDeckPanel : UserControl, INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private LinkOpponentDeckState _linkOpponentDeckState;
 
 		public Visibility DescriptorVisibility => !Config.Instance.InteractedWithLinkOpponentDeck || !_sessionStartHasInteracted ? Visibility.Visible : Visibility.Collapsed;
 		
-		private string _errorMessage;
-		public string ErrorMessage
+		private string? _errorMessage;
+		public string? ErrorMessage
 		{
 			get => _errorMessage;
 			set
@@ -44,7 +44,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public Visibility ErrorMessageVisibility => !string.IsNullOrEmpty(ErrorMessage) ? Visibility.Visible : Visibility.Collapsed;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

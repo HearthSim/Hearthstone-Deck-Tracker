@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 {
 	internal class LogConfigWatcher
 	{
-		private static FileSystemWatcher _fileWatcher;
+		private static FileSystemWatcher? _fileWatcher;
 
 		public static void Start()
 		{

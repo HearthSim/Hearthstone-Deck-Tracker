@@ -29,19 +29,19 @@ namespace Hearthstone_Deck_Tracker.Stats
 	public class GameStats : INotifyPropertyChanged
 	{
 		private Guid? _deckId;
-		private string _deckName;
-		private string _deckNameAndVersion;
+		private string? _deckName;
+		private string? _deckNameAndVersion;
 		public Guid GameId;
 		private Format _format = Enums.Format.Standard;
-		private string _note;
-		private string _playerHero;
-		private string _opponentHero;
+		private string? _note;
+		private string? _playerHero;
+		private string? _opponentHero;
 		private bool _coin;
 		private GameMode _gameMode;
 		private GameResult _result;
 		private int _turns;
-		private string _playerName;
-		private string _opponentName;
+		private string? _playerName;
+		private string? _opponentName;
 		private int _rank;
 		private int _starLevel;
 		private int _battlegroundsRating;
@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		{
 		}
 
-		public GameStats(GameResult result, string opponentHero, string playerHero)
+		public GameStats(GameResult result, string? opponentHero, string? playerHero)
 		{
 			Coin = false;
 			Result = result;
@@ -68,7 +68,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		}
 
 		//playerhero does not get loaded from xml for some reason
-		public string PlayerHero
+		public string? PlayerHero
 		{
 			get { return _playerHero; }
 			set
@@ -79,7 +79,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
-		public string OpponentHero
+		public string? OpponentHero
 		{
 			get { return _opponentHero; }
 			set
@@ -130,7 +130,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public DateTime StartTime { get; set; }
 		public DateTime EndTime { get; set; }
 
-		public string Note
+		public string? Note
 		{
 			get { return _note; }
 			set
@@ -142,7 +142,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public bool IsClone { get; set; }
 
-		public string PlayerName
+		public string? PlayerName
 		{
 			get { return _playerName; }
 			set { _playerName = value;
@@ -150,7 +150,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
-		public string OpponentName
+		public string? OpponentName
 		{
 			get { return _opponentName; }
 			set { _opponentName = value;
@@ -158,7 +158,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			}
 		}
 
-		public string ReplayFile { get; set; }
+		public string? ReplayFile { get; set; }
 
 		public bool WasConceded { get; set; }
 
@@ -231,15 +231,15 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int MercenariesRatingAfter { get; set; }
 
-		public string MercenariesBountyRunId { get; set; }
+		public string? MercenariesBountyRunId { get; set; }
 
 		public int MercenariesBountyRunTurnsTaken { get; set; }
 
 		public int MercenariesBountyRunCompletedNodes { get; set; }
 
-		public List<MercenaryCollectionEntry> MercenariesBountyRunRewards { get; set; }
+		public List<MercenaryCollectionEntry>? MercenariesBountyRunRewards { get; set; }
 
-		public HashSet<Race> BattlegroundsRaces { get; set; }
+		public HashSet<Race>? BattlegroundsRaces { get; set; }
 
 		public int OpponentLegendRank
 		{
@@ -272,7 +272,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int ScenarioId { get; set; }
 
-		public GameServerInfo ServerInfo { get; set; }
+		public GameServerInfo? ServerInfo { get; set; }
 
 		public GameType GameType { get; set; }
 
@@ -288,7 +288,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int BrawlLosses { get; set; }
 
-		public string OpponentHeroCardId { get; set; }
+		public string? OpponentHeroCardId { get; set; }
 
 		public Region Region
 		{
@@ -328,7 +328,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			set { _deckId = value; }
 		}
 
-		public string DeckName
+		public string? DeckName
 		{
 			get
 			{
@@ -338,23 +338,29 @@ namespace Hearthstone_Deck_Tracker.Stats
 				_deckName = deck?.Name ?? "none";
 				return _deckName;
 			}
-			set { _deckName = value;
+			set
+			{
+				_deckName = value;
 				OnPropertyChanged();
 			}
 		}
 
 		[XmlIgnore]
-		public string DeckNameAndVersion
+		public string? DeckNameAndVersion
 		{
 			get
 			{
 				if(!string.IsNullOrEmpty(_deckNameAndVersion))
 					return _deckNameAndVersion;
+				if(PlayerDeckVersion == null)
+					return "none";
 				var deck = DeckList.Instance.Decks.FirstOrDefault(d => d.DeckId == DeckId)?.GetVersion(PlayerDeckVersion);
 				_deckNameAndVersion = deck?.NameAndVersion ?? "none";
 				return _deckNameAndVersion;
 			}
-			set { _deckNameAndVersion = value;
+			set
+			{
+				_deckNameAndVersion = value;
 				OnPropertyChanged();
 			}
 		}
@@ -391,7 +397,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		[XmlIgnore]
 		public string ResultString => Result + (WasConceded ? "*" : "");
 
-		public SerializableVersion PlayerDeckVersion { get; set; }
+		public SerializableVersion? PlayerDeckVersion { get; set; }
 
 		public bool IsAssociatedWithDeckVersion => PlayerDeckVersion != null;
 
@@ -501,7 +507,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool IsDungeonMatch => GameType == GameType.GT_VS_AI && DungeonRun.IsDungeonBoss(OpponentHeroCardId);
 		public bool IsPVPDungeonMatch => GameType == GameType.GT_PVPDR || GameType == GameType.GT_PVPDR_PAID;
 
-		public void SetPlayerCards(Deck deck, List<Card> revealedCards) => SetPlayerCards(deck?.Cards, revealedCards);
+		public void SetPlayerCards(Deck? deck, List<Card> revealedCards) => SetPlayerCards(deck?.Cards, revealedCards);
 
 		public void SetPlayerCards(HearthMirror.Objects.Deck deck, List<Card> revealedCards)
 		{
@@ -509,7 +515,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 			SetPlayerCards(cards, revealedCards);
 		}
 
-		public void SetPlayerCards(IEnumerable<Card> deck, List<Card> revealedCards)
+		public void SetPlayerCards(IEnumerable<Card>? deck, List<Card> revealedCards)
 		{
 			PlayerCards.Clear();
 			foreach(var c in revealedCards)
@@ -594,10 +600,10 @@ namespace Hearthstone_Deck_Tracker.Stats
 		public bool ShouldSerializeBattlegroundsRaces() => BattlegroundsRaces?.Count > 0;
 
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

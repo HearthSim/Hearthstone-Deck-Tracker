@@ -28,7 +28,7 @@ namespace Hearthstone_Deck_Tracker
 		private const string LocMechanics = "ManaCurve_Button_Mechanics";
 		private const string LocHide = "ManaCurve_Button_Hide";
 		private readonly ManaCostBar[] _manaCostBars;
-		private Deck _deck;
+		private Deck? _deck;
 
 		public ManaCurve()
 		{
@@ -50,7 +50,7 @@ namespace Hearthstone_Deck_Tracker
 			ComboBoxStatType.SelectedIndex = (int)Config.Instance.ManaCurveFilter;
 		}
 
-		public void SetDeck(Deck deck)
+		public void SetDeck(Deck? deck)
 		{
 			if(deck == null)
 			{

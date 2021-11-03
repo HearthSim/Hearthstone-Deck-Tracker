@@ -15,13 +15,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 {
 	public class GitHub
 	{
-		public static async Task<Release> CheckForUpdate(string user, string repo, Version version, bool preRelease = false)
+		public static async Task<Release?> CheckForUpdate(string user, string repo, Version version, bool preRelease = false)
 		{
 			try
 			{
 				Log.Info($"{user}/{repo}: Checking for updates (current={version}, pre-release={preRelease})");
 				var latest = await GetLatestRelease(user, repo, preRelease);
-				if(latest.Assets.Count > 0)
+				if(latest.Assets != null && latest.Assets.Count > 0)
 				{
 					if(latest.GetVersion()?.CompareTo(version) > 0)
 					{
@@ -51,7 +51,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 						url += "/latest";
 					json = await wc.DownloadStringTaskAsync(url);
 				}
-				return preRelease ? JsonConvert.DeserializeObject<Release[]>(json).FirstOrDefault() 
+				return preRelease ? JsonConvert.DeserializeObject<Release[]>(json).FirstOrDefault()
 								  : JsonConvert.DeserializeObject<Release>(json);
 			}
 			catch(Exception ex)
@@ -60,13 +60,20 @@ namespace Hearthstone_Deck_Tracker.Utility
 			}
 		}
 
-		public static async Task<string> DownloadRelease(Release release, string downloadDirectory)
+		public static async Task<string?> DownloadRelease(Release release, string downloadDirectory)
 		{
 			try
 			{
-				var path = Path.Combine(downloadDirectory, release.Assets[0].Name);
+				if(release.Assets == null || release.Assets.Count == 0)
+					throw new Exception("No assets found");
+				var asset = release.Assets[0];
+				if(asset.Name == null)
+					throw new Exception("Asset does not have a name");
+				if(asset.Url == null)
+					throw new Exception("Asset does not have an url");
+				var path = Path.Combine(downloadDirectory, asset.Name);
 				using(var wc = new WebClient())
-					await wc.DownloadFileTaskAsync(release.Assets[0].Url, path);
+					await wc.DownloadFileTaskAsync(asset.Url, path);
 				return path;
 			}
 			catch(Exception e)
@@ -79,21 +86,21 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public class Release
 		{
 			[JsonProperty("tag_name")]
-			public string Tag { get; set; }
+			public string? Tag { get; set; }
 
 			[JsonProperty("assets")]
-			public List<Asset> Assets { get; set; }
+			public List<Asset>? Assets { get; set; }
 
 			public class Asset
 			{
 				[JsonProperty("browser_download_url")]
-				public string Url { get; set; }
+				public string? Url { get; set; }
 
 				[JsonProperty("name")]
-				public string Name { get; set; }
+				public string? Name { get; set; }
 			}
 
-			public Version GetVersion() => Version.TryParse(Tag.Replace("v", ""), out Version v) ? v : null;
+			public Version? GetVersion() => Tag != null && Version.TryParse(Tag.Replace("v", ""), out Version v) ? v : null;
 		}
 	}
 }

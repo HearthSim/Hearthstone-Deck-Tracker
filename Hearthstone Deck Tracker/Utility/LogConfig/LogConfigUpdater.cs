@@ -92,7 +92,7 @@ namespace Hearthstone_Deck_Tracker.Utility.LogConfig
 				return logConfig;
 			using(var sr = new StreamReader(LogConfigPath))
 			{
-				LogConfigItem current = null;
+				LogConfigItem? current = null;
 				string line;
 				while(!sr.EndOfStream && (line = sr.ReadLine()) != null)
 				{

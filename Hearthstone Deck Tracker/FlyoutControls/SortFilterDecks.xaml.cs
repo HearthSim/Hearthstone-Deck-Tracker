@@ -322,7 +322,7 @@ namespace Hearthstone_Deck_Tracker
 			if(originalSource == null)
 				return;
 
-			var selectedValue = (originalSource as CheckBox).Content.ToString();
+			var selectedValue = (originalSource as CheckBox)?.Content.ToString();
 			Tags.First(t => t.Name == selectedValue).Selected = true;
 			if (Tags.Any(t => t.Name == "All"))
 			{
@@ -346,7 +346,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(originalSource == null)
 				return;
-			var selectedValue = (originalSource as CheckBox).Content.ToString();
+			var selectedValue = (originalSource as CheckBox)?.Content.ToString();
 			Tags.First(t => t.Name == selectedValue).Selected = false;
 			SortFilterDecksFlyoutOnSelectedTagsChanged();
 		}

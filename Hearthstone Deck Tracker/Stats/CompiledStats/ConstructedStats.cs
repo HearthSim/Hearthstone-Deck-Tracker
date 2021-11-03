@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		public static ConstructedStats Instance { get; } = new ConstructedStats();
 		public IEnumerable<GameStats> FilteredGames => GetFilteredGames();
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public IEnumerable<GameStats> GetFilteredGames(bool archived = true, bool playerClass = true, bool region = true,
 													   bool timeFrame = true, bool mode = true, bool league = true, bool rank = true, bool format = true, 
@@ -260,7 +260,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 		}
 
-		private static string ClassSelector(string heroClass) => (Enum.GetNames(typeof(HeroClass)).Any(c => c == heroClass) ? heroClass : "Other");
+		private static string ClassSelector(string? heroClass) => (heroClass != null && Enum.GetNames(typeof(HeroClass)).Any(c => c == heroClass) ? heroClass : "Other");
 
 		public IEnumerable<ChartStats> AvgWinratePerClass
 			=> GetFilteredGames(DeckList.Instance.Decks, playerClass: false)
@@ -348,14 +348,14 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		public void UpdateGames() => OnPropertyChanged(nameof(FilteredGames));
 
-		public ConstructedDeckStats DeckStatsBest
+		public ConstructedDeckStats? DeckStatsBest
 			=> GetFilteredGames(includeNoDeck: false)
 					.GroupBy(x => x.DeckId)
 					.Select(x => new { grouping = x, DeckPerformance = DeckPerformanceIndex(x) })
@@ -363,7 +363,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					.FirstOrDefault(x => x.grouping.Any())?
 					.grouping?.ToConstructedDeckStats();
 
-		public ConstructedDeckStats DeckStatsMostPlayed
+		public ConstructedDeckStats? DeckStatsMostPlayed
 			=> GetFilteredGames(includeNoDeck: false)
 					.GroupBy(x => x.DeckId)
 					.Select(x => new { grouping = x, Count = x.Count() })
@@ -371,21 +371,21 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 					.FirstOrDefault(x => x.grouping.Any())?
 					.grouping?.ToConstructedDeckStats();
 
-		public ConstructedDeckStats DeckStatsFastest
+		public ConstructedDeckStats? DeckStatsFastest
 			=> GetFilteredGames(includeNoDeck: false)
 					.GroupBy(x => x.DeckId)
 					.Where(x => x.Count() > 1)
 					.OrderBy(x => x.Average(g => g.Turns))
 					.FirstOrDefault()?.ToConstructedDeckStats();
 
-		public ConstructedDeckStats DeckStatsSlowest
+		public ConstructedDeckStats? DeckStatsSlowest
 			=> GetFilteredGames(includeNoDeck: false)
 					.GroupBy(x => x.DeckId)
 					.Where(x => x.Count() > 1)
 					.OrderByDescending(x => x.Average(g => g.Turns))
 					.FirstOrDefault()?.ToConstructedDeckStats();
 
-		public ConstructedDeckStats DeckStatsTotal
+		public ConstructedDeckStats? DeckStatsTotal
 		{
 			get
 			{
@@ -394,7 +394,7 @@ namespace Hearthstone_Deck_Tracker.Stats.CompiledStats
 			}
 		}
 
-		public string HighestRank => GetFilteredGames().OrderBy(x => x.SortableRank).FirstOrDefault()?.RankString;
+		public string? HighestRank => GetFilteredGames().OrderBy(x => x.SortableRank).FirstOrDefault()?.RankString;
 
 		private double DeckPerformanceIndex(IEnumerable<GameStats> matches)
 		{

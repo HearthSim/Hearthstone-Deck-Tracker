@@ -14,10 +14,10 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 {
 	public class DeckChartsViewModel : ViewModel
 	{
-		private Deck _deck;
+		private Deck? _deck;
 		private double _winrateTotal;
 		private bool _hasData;
-		private List<GameStats> _games;
+		private List<GameStats> _games = new List<GameStats>();
 		private int _wins;
 		private int _losses;
 		private bool _hasDeck;
@@ -27,7 +27,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 
 		public SeriesCollection OpponentCollection { get; }
 
-		public Deck Deck
+		public Deck? Deck
 		{
 			get => _deck;
 			set
@@ -129,7 +129,7 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 
 		public void Update()
 		{
-			Games = _deck?.GetRelevantGames().OrderByDescending(x => x.StartTime).ToList();
+			Games = _deck?.GetRelevantGames().OrderByDescending(x => x.StartTime).ToList() ?? new List<GameStats>();
 			HasData = Games?.Any() ?? false;
 
 			if(!HasData)
@@ -139,8 +139,10 @@ namespace Hearthstone_Deck_Tracker.Windows.MainWindowControls
 			var losses = 0;
 			var opponents = _playerClasses.ToDictionary(x => x, x => 0);
 
-			foreach(var game in Games)
+			foreach(var game in Games!)
 			{
+				if(game.OpponentHero == null)
+					continue;
 				if(opponents.ContainsKey(game.OpponentHero))
 					opponents[game.OpponentHero]++;
 				if(game.Result == GameResult.Win)

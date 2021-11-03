@@ -10,6 +10,7 @@ using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Extensions;
 
 #endregion
 
@@ -31,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 				.Skip(1)
 				.ToArray();
 
-		private List<string> _cardNames;
+		private List<string>? _cardNames;
 		private bool _deletingSelection;
 
 		public ArenaRewards()
@@ -41,11 +42,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public ArenaReward Reward { get; set; } = new ArenaReward();
 
-		private IEnumerable<string> CardNames => _cardNames
-												 ?? (_cardNames =
+		private IEnumerable<string> CardNames => _cardNames ??=
 													 Database.GetActualCards().Where(x => _validSets.Any(set => x.CardSet == set))
 																.SelectMany(x => x.AlternativeNames.Concat(new[] {x.LocalizedName}))
-																.OrderBy(x => x.Length).ToList());
+																.WhereNotNull()
+																.OrderBy(x => x.Length).ToList();
 
 		private void AddInvalidField(object obj, string error)
 		{
@@ -124,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			if(string.IsNullOrEmpty(textBox?.Text))
 				return;
 			_deletingSelection = true;
-			textBox.SelectedText = "";
+			textBox!.SelectedText = "";
 			_deletingSelection = false;
 		}
 
@@ -137,11 +138,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 		private void UpdateCardRewardGolden(bool golden, CheckBox checkBox)
 		{
 			if(checkBox == CheckBoxGolden1 && Reward.Cards[0] != null)
-				Reward.Cards[0].Golden = golden;
+				Reward.Cards[0]!.Golden = golden;
 			else if(checkBox == CheckBoxGolden2 && Reward.Cards[1] != null)
-				Reward.Cards[1].Golden = golden;
+				Reward.Cards[1]!.Golden = golden;
 			else if(checkBox == CheckBoxGolden3 && Reward.Cards[2] != null)
-				Reward.Cards[2].Golden = golden;
+				Reward.Cards[2]!.Golden = golden;
 		}
 
 		private void TextBoxGold_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -231,17 +232,17 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 			ComboBoxPack1.SelectedItem = reward.Packs[0];
 			ComboBoxPack2.SelectedItem = reward.Packs[1];
 			if(!string.IsNullOrEmpty(reward.Cards[0]?.CardId))
-				TextBoxCard1.Text = Database.GetCardFromId(reward.Cards[0].CardId).LocalizedName;
+				TextBoxCard1.Text = Database.GetCardFromId(reward.Cards[0]?.CardId!)?.LocalizedName;
 			if(!string.IsNullOrEmpty(reward.Cards[1]?.CardId))
-				TextBoxCard2.Text = Database.GetCardFromId(reward.Cards[1].CardId).LocalizedName;
+				TextBoxCard2.Text = Database.GetCardFromId(reward.Cards[1]?.CardId!)?.LocalizedName;
 			if(!string.IsNullOrEmpty(reward.Cards[2]?.CardId))
-				TextBoxCard3.Text = Database.GetCardFromId(reward.Cards[2].CardId).LocalizedName;
+				TextBoxCard3.Text = Database.GetCardFromId(reward.Cards[2]?.CardId!)?.LocalizedName;
 			if(reward.Cards[0] != null)
-				CheckBoxGolden1.IsChecked = reward.Cards[0].Golden;
+				CheckBoxGolden1.IsChecked = reward.Cards[0]?.Golden ?? false;
 			if(reward.Cards[1] != null)
-				CheckBoxGolden2.IsChecked = reward.Cards[1].Golden;
+				CheckBoxGolden2.IsChecked = reward.Cards[1]?.Golden ?? false;
 			if(reward.Cards[2] != null)
-				CheckBoxGolden3.IsChecked = reward.Cards[2].Golden;
+				CheckBoxGolden3.IsChecked = reward.Cards[2]?.Golden ?? false;
 			if(reward.PaymentMethod == ArenaPaymentMethod.Gold)
 				RadioButtonPaymentGold.IsChecked = true;
 			else if(reward.PaymentMethod == ArenaPaymentMethod.Money)
@@ -267,12 +268,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 	public class ArenaReward
 	{
-		private CardReward[] _cards = new CardReward[3];
+		private CardReward?[] _cards = new CardReward?[3];
 		public int Gold { get; set; }
 		public int Dust { get; set; }
 		public ArenaPaymentMethod PaymentMethod { get; set; }
 
-		public CardReward[] Cards
+		public CardReward?[] Cards
 		{
 			get
 			{
@@ -292,7 +293,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats
 
 		public class CardReward
 		{
-			public string CardId { get; set; }
+			public string? CardId { get; set; }
 			public bool Golden { get; set; }
 		}
 	}

@@ -9,8 +9,8 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Data
 	public class HsReplayWinrates : JsonCache<WinrateData>
 	{
 		private bool _cleaned;
-		private WinrateData _data;
-		private async Task<WinrateData> GetData() => _data ?? (_data = await LoadFromDisk() ?? new WinrateData());
+		private WinrateData? _data;
+		private async Task<WinrateData> GetData() => _data ??= await LoadFromDisk() ?? new WinrateData();
 
 		public HsReplayWinrates() : base("hsreplay_winrates.cache")
 		{
@@ -26,13 +26,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay.Data
 			if(!_cleaned)
 				Cleanup();
 			deck = await ApiWrapper.GetDeckWinrates(shortId, format == FormatType.FT_WILD) ?? NoDataFallback;
-			_data[shortId] = deck;
+			data[shortId] = deck;
 			await WriteToDisk(data);
 			return deck;
 		}
 
 		private void Cleanup()
 		{
+			if(_data == null)
+				return;
 			var stale = _data.Where(x => x.Value.IsStale).ToList();
 			foreach(var s in stale)
 				_data.Remove(s.Key);

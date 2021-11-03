@@ -27,9 +27,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		bool IsRunning { get; set; }
 		Region CurrentRegion { get; set; }
 		GameMode CurrentGameMode { get; }
-		GameStats CurrentGameStats { get; set; }
-		HearthMirror.Objects.Deck CurrentSelectedDeck { get; set; }
-		List<Card> DrawnLastGame { get; set; }
+		GameStats? CurrentGameStats { get; set; }
+		HearthMirror.Objects.Deck? CurrentSelectedDeck { get; set; }
+		List<Card>? DrawnLastGame { get; set; }
 		Dictionary<int, Entity> Entities { get; }
 		bool SavedReplay { get; set; }
 		GameMetaData MetaData { get; }
@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		bool PlayerChallengeable { get; }
 		bool SetupDone { get; set; }
 		void SnapshotBattlegroundsBoardState();
-		BoardSnapshot GetBattlegroundsBoardStateFor(string cardId);
+		BoardSnapshot? GetBattlegroundsBoardStateFor(string cardId);
 		int GetTurnNumber();
 	}
 }

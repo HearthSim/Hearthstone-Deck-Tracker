@@ -29,6 +29,7 @@ using Hearthstone_Deck_Tracker.Utility.Extensions;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using Hearthstone_Deck_Tracker.Utility.Updating;
+using Hearthstone_Deck_Tracker.Windows.MainWindowControls;
 #if(SQUIRREL)
 	using Squirrel;
 #endif
@@ -43,9 +44,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 	/// </summary>
 	public partial class MainWindow : INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
-		public async void UseDeck(Deck selected)
+		public async void UseDeck(Deck? selected)
 		{
 			if(selected != null)
 				DeckList.Instance.ActiveDeck = selected;
@@ -55,7 +56,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			await Core.Reset();
 		}
 
-		public void UpdateDeckList(Deck selected)
+		public void UpdateDeckList(Deck? selected)
 		{
 			ListViewDeck.ItemsSource = null;
 			if(selected == null)
@@ -136,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		[NotifyPropertyChangedInvocator]
-		internal virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -193,6 +194,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public MainWindow()
 		{
 			InitializeComponent();
+			MainWindowMenu.DataContext = new MainWindowMenuViewModel(this);
 			TagControlEdit.StackPanelFilterOptions.Visibility = Collapsed;
 			TagControlEdit.GroupBoxSortingAllConstructed.Visibility = Collapsed;
 			TagControlEdit.GroupBoxSortingArena.Visibility = Collapsed;
@@ -455,10 +457,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Core.StatsOverview.UpdateStats();
 		}
 
-		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, List<Deck> decks)
+		private void DeckPickerList_OnSelectedDeckChanged(DeckPicker sender, List<Deck>? decks)
 		{
 			var active = DeckList.Instance.ActiveDeck;
-			MainWindowMenu.SelectedDecks = (!decks?.Any() ?? false) && active != null ? new List<Deck> { active } : decks;
+			MainWindowMenu.SelectedDecks = (!decks?.Any() ?? false) && active != null ? new List<Deck> { active } : decks ?? new List<Deck>();
 
 			var deck = decks?.FirstOrDefault() ?? active;
 			SelectDeck(deck, Config.Instance.AutoUseDeck);
@@ -466,7 +468,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HsReplayDeckInfo.SetDeck(deck);
 		}
 
-		public void SelectDeck(Deck deck, bool setActive)
+		public void SelectDeck(Deck? deck, bool setActive)
 		{
 			if(DeckList.Instance.ActiveDeck != null)
 				DeckPickerList.ClearFromCache(DeckList.Instance.ActiveDeck);
@@ -553,7 +555,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			SelectDeck(deck, true);
 		}
 
-		private void UpdatePanelVersionComboBox(Deck deck)
+		private void UpdatePanelVersionComboBox(Deck? deck)
 		{
 			ComboBoxDeckVersion.ItemsSource = deck?.VersionsIncludingSelf;
 			ComboBoxDeckVersion.SelectedItem = deck?.SelectedVersion;
@@ -587,8 +589,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void ShowDeckEditorFlyout(Deck deck, bool isNewDeck)
 		{
-			if(deck == null)
-				return;
 			DeckEditorFlyout.SetDeck(deck, isNewDeck);
 			FlyoutDeckEditor.IsOpen = true;
 		}

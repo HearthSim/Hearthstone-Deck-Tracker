@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker
 	internal class TurnTimer
 	{
 		private readonly Timer _timer = new Timer(1000) {AutoReset = true};
-		private GameV2 _game;
+		private GameV2? _game;
 
 		private TurnTimer()
 		{
@@ -45,14 +45,14 @@ namespace Hearthstone_Deck_Tracker
 		public int PlayerSeconds { get; private set; }
 		public int OpponentSeconds { get; private set; }
 
-		private bool IsPlayersTurn => _game.PlayerEntity?.HasTag(GameTag.CURRENT_PLAYER) ?? false;
+		private bool IsPlayersTurn => _game?.PlayerEntity?.HasTag(GameTag.CURRENT_PLAYER) ?? false;
 
 		public static TurnTimer Instance { get; } = new TurnTimer();
 
 		private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
 		{
 			Seconds--;
-			if(_game.IsMulliganDone)
+			if(_game?.IsMulliganDone ?? false)
 			{
 				if(IsPlayersTurn)
 					PlayerSeconds++;
@@ -64,11 +64,6 @@ namespace Hearthstone_Deck_Tracker
 
 		public async Task Start(GameV2 game)
 		{
-			if(game == null)
-			{
-				Log.Warn("Could not start timer, game is null");
-				return;
-			}
 			Log.Info("Starting turn timer");
 			if(_game != null)
 			{

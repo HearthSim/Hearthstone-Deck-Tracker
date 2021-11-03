@@ -5,9 +5,9 @@ namespace Hearthstone_Deck_Tracker.Controls.DeckSetIcons
 {
 	public class DeckSetIconsViewModel : ViewModel
 	{
-		private Deck _deck;
+		private Deck? _deck;
 
-		public Deck Deck
+		public Deck? Deck
 		{
 			get => _deck;
 			set

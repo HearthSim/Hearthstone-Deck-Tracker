@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				Process.Start(Path.GetDirectoryName(fileName));
 		}
 
-		public static async Task ShowSavedAndUploadedFileMessage(this MainWindow window, string fileName, string url)
+		public static async Task ShowSavedAndUploadedFileMessage(this MainWindow window, string? fileName, string url)
 		{
 			var sb = new StringBuilder();
 			if(fileName != null)
@@ -247,7 +247,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			return type;
 		}
 
-		public static async Task<string> ShowWebImportingDialog(this MetroWindow window)
+		public static async Task<string?> ShowWebImportingDialog(this MetroWindow window)
 		{
 			var dialog = new WebImportingDialog();
 			await window.ShowMetroDialogAsync(dialog);
@@ -355,7 +355,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 	public class SelectLanguageOperation
 	{
-		public string SelectedLanguage { get; set; }
+		public string? SelectedLanguage { get; set; }
 		public bool IsCanceled { get; set; }
 	}
 }

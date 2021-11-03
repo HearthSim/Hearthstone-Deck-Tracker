@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			public int Id { get; set; }
 
 			[JsonProperty("name")]
-			public string Name { get; set; }
+			public string? Name { get; set; }
 
 			[JsonProperty("collectible")]
 			public bool Collectible { get; set; }

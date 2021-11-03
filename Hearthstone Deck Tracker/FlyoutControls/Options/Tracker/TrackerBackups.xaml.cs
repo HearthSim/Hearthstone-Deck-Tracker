@@ -40,7 +40,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 		private async void ButtonRestore_Click(object sender, RoutedEventArgs e)
 		{
 			var selected = ListBoxBackups.SelectedItem as BackupFile;
-			if(selected == null)
+			if(selected == null || selected.FileInfo == null)
 				return;
 			var result =
 				await
@@ -73,6 +73,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 			{
 				foreach(var backupFile in ListBoxBackups.SelectedItems.OfType<BackupFile>())
 				{
+					if(backupFile.FileInfo == null)
+						continue;
 					try
 					{
 						File.Delete(backupFile.FileInfo.FullName);
@@ -107,9 +109,9 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Tracker
 
 		public class BackupFile
 		{
-			public FileInfo FileInfo { get; set; }
+			public FileInfo? FileInfo { get; set; }
 
-			public string DisplayName => FileInfo.CreationTime + " " + (FileInfo.Name.StartsWith("Backup_") ? "(auto)" : "(manual)");
+			public string DisplayName => FileInfo?.CreationTime + " " + ((FileInfo?.Name.StartsWith("Backup_") ?? false) ? "(auto)" : "(manual)");
 		}
 	}
 }

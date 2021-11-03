@@ -14,7 +14,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Twitch
 
 		private static readonly Dictionary<string, CacheObj> Cache = new Dictionary<string, CacheObj>();
 
-		public static async Task<string> GetVodUrl(int userId)
+		public static async Task<string?> GetVodUrl(int userId)
 		{
 			try
 			{

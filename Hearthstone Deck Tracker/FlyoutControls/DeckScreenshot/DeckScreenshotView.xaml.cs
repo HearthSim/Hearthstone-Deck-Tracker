@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckScreenshot
 		public static readonly DependencyProperty DeckProperty = DependencyProperty.Register(
 			"Deck", typeof(Deck), typeof(DeckScreenshotView), new PropertyMetadata(default(Deck)));
 
-		public Deck Deck
+		public Deck? Deck
 		{
 			set { ((DeckScreenshotViewModel)DataContext).Deck = value; }
 		}

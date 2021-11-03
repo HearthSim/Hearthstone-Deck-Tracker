@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 {
 	public static class Icyveins
 	{
-		public static async Task<Deck> Import(string url)
+		public static async Task<Deck?> Import(string url)
 		{
 			try
 			{
@@ -21,10 +21,14 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				using(var wc = new WebClient())
 					json = await wc.DownloadStringTaskAsync(url + ".json");
 				var wrapper = JsonConvert.DeserializeObject<IcyVeinsWrapper>(json);
+				if(wrapper.deck_name == null || wrapper.deck_cards == null)
+					return null;
 				var deck = new Deck {Name = wrapper.deck_name};
 				foreach(var cardObj in wrapper.deck_cards)
 				{
 					var cardName = cardObj.name;
+					if(cardName == null)
+						continue;
 					if(cardName.EndsWith(" Naxx"))
 						cardName = cardName.Replace(" Naxx", "");
 					if(cardName.EndsWith(" GvG"))
@@ -49,12 +53,12 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 		private class IcyVeinsWrapper
 		{
 #pragma warning disable 649
-			public IcyVeinsCardObj[] deck_cards;
-			public string deck_name;
+			public IcyVeinsCardObj[]? deck_cards;
+			public string? deck_name;
 
 			public class IcyVeinsCardObj
 			{
-				public string name;
+				public string? name;
 				public int quantity;
 			}
 #pragma warning restore 649

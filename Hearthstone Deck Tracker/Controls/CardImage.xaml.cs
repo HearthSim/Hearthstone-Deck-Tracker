@@ -9,13 +9,10 @@ using Hearthstone_Deck_Tracker.Utility.Assets;
 
 namespace Hearthstone_Deck_Tracker.Controls
 {
-	/// <summary>
-	/// Interaction logic for CardImage.xaml
-	/// </summary>
 	public partial class CardImage : INotifyPropertyChanged
 	{
-		private string _cardId = "";
-		public string CardId
+		private string? _cardId;
+		public string? CardId
 		{
 			get => _cardId;
 			set
@@ -25,8 +22,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		private ImageSource _loadingImageSource = null;
-		public ImageSource LoadingImageSource
+		private ImageSource? _loadingImageSource = null;
+		public ImageSource? LoadingImageSource
 		{
 			get => _loadingImageSource;
 			set
@@ -36,8 +33,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		private string _cardImagePath = null;
-		public string CardImagePath
+		private string? _cardImagePath = null;
+		public string? CardImagePath
 		{
 			get => _cardImagePath;
 			set
@@ -86,10 +83,10 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -99,7 +96,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 			InitializeComponent();
 		}
 
-		private ImageSource GetLoadingImagePath(Hearthstone.Card card)
+		private ImageSource? GetLoadingImagePath(Hearthstone.Card card)
 		{
 			switch(card?.Type)
 			{
@@ -114,21 +111,24 @@ namespace Hearthstone_Deck_Tracker.Controls
 			}
 		}
 
-		Storyboard ExpandAnimation => FindResource("StoryboardExpand") as Storyboard;
+		Storyboard? ExpandAnimation => FindResource("StoryboardExpand") as Storyboard;
 
-		public async void SetCardIdFromCard(Hearthstone.Card card)
+		public async void SetCardIdFromCard(Hearthstone.Card? card)
 		{
 			var newCardId = card?.Id;
 			if(newCardId == CardId)
 				return;
 			CardId = newCardId;
-			if(string.IsNullOrEmpty(newCardId))
+			if(card == null || string.IsNullOrEmpty(newCardId))
 			{
 				CardImagePath = null;
 				LoadingImageSource = null;
 				return;
 			}
-			var hasAsset = AssetDownloaders.cardImageDownloader.HasAsset(card);
+			var downloader = AssetDownloaders.cardImageDownloader;
+			if(downloader == null)
+				return;
+			var hasAsset = downloader.HasAsset(card);
 			if(!hasAsset)
 			{
 				CardImagePath = null;
@@ -136,7 +136,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				ExpandAnimation?.Begin();
 				try
 				{
-					await AssetDownloaders.cardImageDownloader.DownloadAsset(card);
+					await downloader.DownloadAsset(card);
 				}
 				catch(ArgumentNullException)
 				{
@@ -147,7 +147,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 				return;
 			try
 			{
-				CardImagePath = AssetDownloaders.cardImageDownloader.StoragePathFor(card);
+				CardImagePath = downloader.StoragePathFor(card);
 				LoadingImageSource = null;
 				if (hasAsset)
 					ExpandAnimation?.Begin();

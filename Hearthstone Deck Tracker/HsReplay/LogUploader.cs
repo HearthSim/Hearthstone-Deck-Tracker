@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 	{
 		private static readonly List<UploaderItem> InProgress = new List<UploaderItem>();
 
-		public static async Task<bool> Upload(string[] logLines, GameMetaData gameMetaData, GameStats game)
+		public static async Task<bool> Upload(string[] logLines, GameMetaData? gameMetaData, GameStats? game)
 		{
 			var log = string.Join(Environment.NewLine, logLines);
 			var item = new UploaderItem(log.GetHashCode());
@@ -49,7 +49,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			return success;
 		}
 
-		private static async Task<bool> TryUpload(string[] logLines, GameMetaData gameMetaData, GameStats game, bool submitFailure)
+		private static async Task<bool> TryUpload(string[] logLines, GameMetaData? gameMetaData, GameStats? game, bool submitFailure)
 		{
 			try
 			{

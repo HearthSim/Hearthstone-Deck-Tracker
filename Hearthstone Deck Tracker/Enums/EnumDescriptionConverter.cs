@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 {
 	public class EnumDescriptionConverter : IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			if(value == null)
 				return DependencyProperty.UnsetValue;
@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.Enums
 			{
 				var locAttr = memInfo[0].GetCustomAttributes(typeof(LocDescriptionAttribute), false);
 				if(locAttr.Length > 0)
-					return ((LocDescriptionAttribute)locAttr[0]).LocDescription;
+					return ((LocDescriptionAttribute)locAttr[0]).LocDescription ?? string.Empty;
 				var attrs = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
 				if(attrs.Length > 0)
 					return ((DescriptionAttribute)attrs[0]).Description;

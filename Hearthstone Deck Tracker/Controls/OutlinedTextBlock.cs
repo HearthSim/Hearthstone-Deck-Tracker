@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker
 			                                                                                             TextWrapping.Wrap,
 			                                                                                             OnFormattedTextUpdated));
 
-		private FormattedText _formattedText;
+		private FormattedText? _formattedText;
 
 		public OutlinedTextBlock()
 		{

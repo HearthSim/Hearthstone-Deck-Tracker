@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 
 		public string Icon => Success ? "✔" : "✖";
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private static void OnDependencyPropChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
@@ -61,7 +61,7 @@ namespace Hearthstone_Deck_Tracker.Controls
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

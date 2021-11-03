@@ -13,7 +13,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 {
 	public static class Powned
 	{
-		public static async Task<Deck> Import(string url)
+		public static async Task<Deck?> Import(string url)
 		{
 			try
 			{
@@ -26,6 +26,8 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 				foreach(var cardNode in cardList.Split(',').GroupBy(x => x))
 				{
 					var card = Database.GetCardFromId(cardNode.Key);
+					if(card == null)
+						continue;
 					card.Count = cardNode.Count();
 					deck.Cards.Add(card);
 

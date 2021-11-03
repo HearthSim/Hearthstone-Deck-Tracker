@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Converters
 			return (value == null);
 		}
 
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			return null;
 		}

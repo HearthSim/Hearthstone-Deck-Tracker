@@ -131,7 +131,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return latest != null && Restore(latest, reload, files);
 		}
 
-		internal static T TryRestore<T>(string file)
+		internal static T? TryRestore<T>(string file)
 		{
 			var restored = false;
 			try
@@ -149,7 +149,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					Log.Error(ex2);
 					Log.Info($"Restoring second to latest backup for {file}...");
 					if(!(restored = RestoreFromLatest(false, 1, file)))
-						return default(T);
+						return default;
 					try
 					{
 						return XmlManager<T>.Load(filePath);
@@ -157,7 +157,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 					catch(Exception ex3)
 					{
 						Log.Error(ex3);
-						return default(T);
+						return default;
 					}
 				}
 			}

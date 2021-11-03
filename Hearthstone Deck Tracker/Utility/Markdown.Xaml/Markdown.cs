@@ -65,9 +65,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Markdown.Xaml
 		private static readonly Regex _newlinesMultiple = new Regex(@"\n{2,}", RegexOptions.Compiled);
 		private static Regex _leadingWhitespace = new Regex(@"^[ ]*", RegexOptions.Compiled);
 
-		private static string _nestedBracketsPattern;
+		private static string? _nestedBracketsPattern;
 
-		private static string _nestedParensPattern;
+		private static string? _nestedParensPattern;
 
 		private static readonly Regex _anchorInline = new Regex(string.Format(@"
                 (                           # wrap whole match in $1

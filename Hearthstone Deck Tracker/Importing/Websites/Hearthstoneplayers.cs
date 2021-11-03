@@ -12,7 +12,7 @@ namespace Hearthstone_Deck_Tracker.Importing.Websites
 {
 	public static class Hearthstoneplayers
 	{
-		public static async Task<Deck> Import(string url)
+		public static async Task<Deck?> Import(string url)
 		{
 			try
 			{

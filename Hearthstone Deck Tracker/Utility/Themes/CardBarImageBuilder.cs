@@ -254,9 +254,9 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 		protected void AddCardName(Rect rect)
 			=> AddText(Card.LocalizedName, TextFontSize, rect, Card.ColorPlayer, TextTypeFace);
 
-		protected virtual void AddText(object obj, double size, Rect rect, Brush fill, Typeface typeface, double strokeThickness = 2.0, bool centered = false)
+		protected virtual void AddText(object? obj, double size, Rect rect, Brush fill, Typeface typeface, double strokeThickness = 2.0, bool centered = false)
 		{
-			foreach(var d in CardTextImageBuilder.GetOutlinedText(obj.ToString(), size, rect, fill, Brushes.Black, typeface, 2.0, centered))
+			foreach(var d in CardTextImageBuilder.GetOutlinedText(obj?.ToString() ?? "", size, rect, fill, Brushes.Black, typeface, 2.0, centered))
 				DrawingGroup.Children.Add(d);
 		}
 

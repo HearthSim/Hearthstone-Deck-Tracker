@@ -21,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// </summary>
 	public partial class OverlayPlayer : INotifyPropertyChanged
 	{
-		private GameV2 _game;
+		private GameV2? _game;
 		private bool _initialized;
 
 		public OverlayPlayer()
@@ -44,13 +44,13 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				Config.Instance.OverlayPlayerScaling = value;
 				Config.Save();
 				Core.Overlay.UpdateScaling();
-				if(Config.Instance.UseSameScaling && Config.Instance.OverlayOpponentScaling != value)
+				if(Config.Instance.UseSameScaling && Config.Instance.OverlayOpponentScaling != value && Helper.OptionsMain != null)
 					Helper.OptionsMain.OptionsOverlayOpponent.OpponentScaling = value;
 				OnPropertyChanged();
 			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		public void Load(GameV2 game)
 		{
@@ -150,22 +150,28 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private async void CheckboxRemoveCards_Checked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized || !_game.IsUsingPremade)
+			if(!_initialized)
 				return;
 			Config.Instance.RemoveCardsFromDeck = true;
 			SaveConfig(false);
-			await Core.Reset();
-			Core.Overlay.Update(true);
+			if(_game != null && _game.IsUsingPremade)
+			{
+				await Core.Reset();
+				Core.Overlay.Update(true);
+			}
 		}
 
 		private async void CheckboxRemoveCards_Unchecked(object sender, RoutedEventArgs e)
 		{
-			if(!_initialized || !_game.IsUsingPremade)
+			if(!_initialized)
 				return;
 			Config.Instance.RemoveCardsFromDeck = false;
 			SaveConfig(false);
-			await Core.Reset();
-			Core.Overlay.Update(true);
+			if(_game != null && _game.IsUsingPremade)
+			{
+				await Core.Reset();
+				Core.Overlay.Update(true);
+			}
 		}
 
 		private void CheckboxHighlightLastDrawn_Checked(object sender, RoutedEventArgs e)
@@ -213,7 +219,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.OptionsMain.OptionsOverlayOpponent.CheckboxSameScaling.IsChecked = true;
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.OptionsOverlayOpponent.CheckboxSameScaling.IsChecked = true;
 			Config.Instance.UseSameScaling = true;
 			Config.Save();
 		}
@@ -222,13 +229,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			if(!_initialized)
 				return;
-			Helper.OptionsMain.OptionsOverlayOpponent.CheckboxSameScaling.IsChecked = false;
+			if(Helper.OptionsMain != null)
+				Helper.OptionsMain.OptionsOverlayOpponent.CheckboxSameScaling.IsChecked = false;
 			Config.Instance.UseSameScaling = false;
 			Config.Save();
 		}
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			var handler = PropertyChanged;
 			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));

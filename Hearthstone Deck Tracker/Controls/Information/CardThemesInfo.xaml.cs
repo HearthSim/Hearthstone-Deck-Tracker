@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 			UpdateAnimatedCardListAsync();
 		}
 
-		public Hearthstone.Card Card => Database.GetCardFromId(CardIds.Collectible.Neutral.RagnarosTheFirelord);
+		public Hearthstone.Card? Card => Database.GetCardFromId(CardIds.Collectible.Neutral.RagnarosTheFirelord);
 		public DrawingBrush ClassicCard => GetCardImage("classic");
 		public DrawingBrush MinimalCard => GetCardImage("minimal");
 		public DrawingBrush DarkCard => GetCardImage("dark");
@@ -94,7 +94,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 			{
 				var card = _cards.FirstOrDefault(x => x.Id == cardId);
 				if(card == null)
-					_cards.Add(Database.GetCardFromId(cardId));
+				{
+					var c = Database.GetCardFromId(cardId);
+					if(c != null)
+						_cards.Add(c);
+				}
 				else
 					card.Count++;
 			}
@@ -123,7 +127,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 					await Task.Delay(2000);
 					var card = _cards.FirstOrDefault(x => x.Id == cardId);
 					if(card == null)
-						_cards.Add(Database.GetCardFromId(cardId));
+					{
+						var newCard = Database.GetCardFromId(cardId);
+						if(newCard != null)
+							_cards.Add(newCard);
+					}
 					else
 						card.Count++;
 					AnimatedCardList.Update(_cards.ToSortedCardList().Select(x => (Hearthstone.Card)x.Clone()).ToList(), false);
@@ -160,10 +168,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 			Config.Save();
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

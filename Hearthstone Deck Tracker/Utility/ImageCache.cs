@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return image;
 		}
 
-		public static BitmapImage GetClassIcon(string className)
+		public static BitmapImage GetClassIcon(string? className)
 			=> Enum.TryParse(className, out HeroClassAll heroClass) ? GetClassIcon(heroClass) : new BitmapImage();
 
 		public static BitmapImage GetClassIcon(HeroClassAll @class)
@@ -72,7 +72,7 @@ namespace Hearthstone_Deck_Tracker.Utility
 		{
 			if(CardBitmapImages.TryGetValue(card.Id, out BitmapImage bmpImg))
 				return bmpImg;
-			if(!CardBitmaps.TryGetValue(card.Id, out Bitmap bmp))
+			if(!CardBitmaps.TryGetValue(card.Id, out Bitmap? bmp))
 				LoadResource(card, out bmp);
 			if(bmp != null)
 				bmpImg = bmp.ToImageSource();
@@ -80,14 +80,14 @@ namespace Hearthstone_Deck_Tracker.Utility
 			return bmpImg;
 		}
 
-		public static Bitmap GetCardBitmap(Card card)
+		public static Bitmap? GetCardBitmap(Card card)
 		{
-			if(!CardBitmaps.TryGetValue(card.Id, out Bitmap bmp))
+			if(!CardBitmaps.TryGetValue(card.Id, out Bitmap? bmp))
 				LoadResource(card, out bmp);
 			return bmp;
 		}
 
-		private static void LoadResource(Card card, out Bitmap bitmap)
+		private static void LoadResource(Card card, out Bitmap? bitmap)
 		{
 			bitmap = null;
 			var set = card.CardSet + (card.Collectible ? "" : "_NC");

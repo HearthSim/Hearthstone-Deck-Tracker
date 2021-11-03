@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 
 		public static List<Theme> Themes = new List<Theme>();
 
-		public static Theme CurrentTheme { get; private set; }
+		public static Theme? CurrentTheme { get; private set; }
 
 		public static void Run()
 		{
@@ -33,8 +33,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			{
 				if(Regex.IsMatch(di.Name, ThemeRegex))
 				{
-					Logging.Log.Info($"Found theme: {di.Name}");
-					Themes.Add(new Theme(di.Name, di.FullName, GetBuilderType(di.Name)));
+					var type = GetBuilderType(di.Name);
+					if(type != null)
+					{
+						Logging.Log.Info($"Found theme: {di.Name}");
+						Themes.Add(new Theme(di.Name, di.FullName, type));
+					}
 				}
 				else
 				{
@@ -43,7 +47,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			}
 		}
 
-		public static Theme FindTheme(string name)
+		public static Theme? FindTheme(string name)
 			=> string.IsNullOrWhiteSpace(name) ? null : Themes.FirstOrDefault(x => x.Name.ToLowerInvariant() == name.ToLowerInvariant());
 
 		public static void SetTheme(string theme)
@@ -70,15 +74,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 			Core.Overlay.UpdateCardFrames();
 		}
 
-		public static CardBarImageBuilder GetBarImageBuilder(Card card)
+		public static CardBarImageBuilder? GetBarImageBuilder(Card card)
 		{
+			if(CurrentTheme == null)
+				return null;
 			var buildType = CurrentTheme.BuildType ?? typeof(DefaultBarImageBuilder);
 			return (CardBarImageBuilder)Activator.CreateInstance(buildType, card, CurrentTheme.Directory);
 		}
 
-		private static Type GetBuilderType(string name)
+		private static Type? GetBuilderType(string name)
 		{
-			string className = null;
+			string? className = null;
 			if(!string.IsNullOrWhiteSpace(name))
 			{
 				className = name[0].ToString().ToUpperInvariant();
@@ -87,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Themes
 				className += "BarImageBuilder";
 			}
 
-			Type buildType = null;
+			Type? buildType = null;
 			try
 			{
 				buildType = Type.GetType("Hearthstone_Deck_Tracker.Utility.Themes." + className);

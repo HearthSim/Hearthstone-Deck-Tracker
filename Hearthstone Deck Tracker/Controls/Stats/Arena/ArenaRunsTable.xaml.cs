@@ -21,14 +21,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 	/// </summary>
 	public partial class ArenaRunsTable : UserControl
 	{
-		private ArenaRun _selectedRun;
+		private ArenaRun? _selectedRun;
 
 		public ArenaRunsTable()
 		{
 			InitializeComponent();
 		}
 
-		public ArenaRun SelectedRun
+		public ArenaRun? SelectedRun
 		{
 			get { return _selectedRun ?? (DataGridArenaRuns.Items.IsEmpty ? null : (ArenaRun)DataGridArenaRuns.Items.GetItemAt(0)); }
 			set
@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			}
 		}
 
-		public GameStats SelectedGame { get; set; }
+		public GameStats? SelectedGame { get; set; }
 
 		private void ButtonEditRewards_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -82,6 +82,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Stats.Arena
 			if(run == null)
 				return;
 			var window = Helper.GetParentWindow(this);
+			if(window == null)
+				return;
 			if(await window.ShowDeleteGameStatsMessage(SelectedGame) != MessageDialogResult.Affirmative)
 				return;
 			if(run.Deck.DeckStats.Games.Contains(SelectedGame))

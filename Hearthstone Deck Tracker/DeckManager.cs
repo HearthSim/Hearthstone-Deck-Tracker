@@ -64,20 +64,20 @@ namespace Hearthstone_Deck_Tracker
 				NotFoundCards = notFound.SelectMany(x => x).Select(x => x.Card).Distinct().ToList();
 				Log.Warn("Cards not found in deck: " + string.Join(", ", NotFoundCards.Select(x => $"{x.Name} ({x.Id})")));
 				if(Config.Instance.AutoDeckDetection)
-					await AutoSelectDeck(deck, Core.Game.Player.Class, Core.Game.CurrentGameMode, Core.Game.CurrentFormat, cardEntites);
+					await AutoSelectDeck(deck, Core.Game.Player.Class!, Core.Game.CurrentGameMode, Core.Game.CurrentFormat, cardEntites);
 			}
 			else
 				NotFoundCards.Clear();
 		}
 
 		private static List<IGrouping<string, Entity>> RevealedEntites => Core.Game.Player.RevealedEntities
-			.Where(x => x.IsPlayableCard && !x.Info.Created && !x.Info.Stolen && x.Card.Collectible).GroupBy(x => x.CardId)
+			.Where(x => x.IsPlayableCard && !x.Info.Created && !x.Info.Stolen && x.Card.Collectible).GroupBy(x => x.CardId!)
 			.ToList();
 
 		private static List<IGrouping<string, Entity>> GetMissingCards(List<IGrouping<string, Entity>> revealed, Deck deck) =>
 			revealed.Where(x => !deck.GetSelectedDeckVersion().Cards.Any(c => c.Id == x.Key && c.Count >= x.Count())).ToList();
 
-		private static async Task AutoSelectDeck(Deck currentDeck, string heroClass, GameMode mode, Format? currentFormat, List<IGrouping<string, Entity>> cardEntites = null)
+		private static async Task AutoSelectDeck(Deck currentDeck, string heroClass, GameMode mode, Format? currentFormat, List<IGrouping<string, Entity>>? cardEntites = null)
 		{
 			if(mode == GameMode.Battlegrounds)
 			{
@@ -235,9 +235,11 @@ namespace Hearthstone_Deck_Tracker
 						Cards = new ObservableCollection<Card>(deck.Deck.Cards.Select(x =>
 						{
 							var card = Database.GetCardFromId(x.Id);
+							if(card == null)
+								return null;
 							card.Count = x.Count;
 							return card;
-						})),
+						}).WhereNotNull()),
 						LastEdited = DateTime.Now,
 						IsArenaDeck = false
 					};
@@ -291,9 +293,11 @@ namespace Hearthstone_Deck_Tracker
 						var cards = deck.Deck.Cards.Select(x =>
 						{
 							var card = Database.GetCardFromId(x.Id);
+							if(card == null)
+								return null;
 							card.Count = x.Count;
 							return card;
-						});
+						}).WhereNotNull();
 						foreach(var card in cards)
 							target.Cards.Add(card);
 						var clone = (Deck) target.Clone();
@@ -336,7 +340,7 @@ namespace Hearthstone_Deck_Tracker
 			return false;
 		}
 
-		public static bool AutoImportArena(ArenaImportingBehaviour behaviour, ArenaInfo info = null)
+		public static bool AutoImportArena(ArenaImportingBehaviour behaviour, ArenaInfo? info = null)
 		{
 			var deck = info ?? DeckImporter.FromArena();
 			if(deck?.Deck.Cards.Sum(x => x.Count) != 30)
@@ -524,7 +528,7 @@ namespace Hearthstone_Deck_Tracker
 					return null;
 				card.Count = x.Count();
 				return card;
-			}).Where(x => x != null).ToList();
+			}).WhereNotNull().ToList();
 
 			var loadoutCardId = info.LoadoutCardId;
 			var loadout = loadoutCardId != null ? Database.GetCardFromId(loadoutCardId) : null;
@@ -537,7 +541,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var cardSet = (CardSet)info.CardSet;
 
-			string playerClass = null;
+			string? playerClass = null;
 			if (cardSet == CardSet.ULDUM && loadout != null)
 				playerClass = DungeonRun.GetUldumHeroPlayerClass(loadout.PlayerClass);
 			else if(isPVPDR)
@@ -545,7 +549,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 			{
 				if(allCards.Count == 10)
-					playerClass = allCards.Select(x => Database.GetCardFromDbfId(x).PlayerClass).FirstOrDefault(x => x != null)?.ToUpperInvariant();
+					playerClass = allCards.Select(x => Database.GetCardFromDbfId(x)?.PlayerClass).FirstOrDefault(x => x != null)?.ToUpperInvariant();
 				if (playerClass == null)
 					playerClass = ((CardClass)info.HeroCardClass).ToString().ToUpperInvariant();
 			}
@@ -556,7 +560,7 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			}
 
-			var deck = DeckList.Instance.Decks.FirstOrDefault(x => (!isPVPDR && x.IsDungeonDeck || isPVPDR && x.IsDuelsDeck) && x.Class.ToUpperInvariant() == playerClass.ToUpperInvariant()
+			var deck = DeckList.Instance.Decks.FirstOrDefault(x => (!isPVPDR && x.IsDungeonDeck || isPVPDR && x.IsDuelsDeck) && x.Class?.ToUpperInvariant() == playerClass.ToUpperInvariant()
 																		&& x.Cards.All(e => cards.Any(c => c.Id == e.Id && c.Count >= e.Count))
 																		&& !(x.IsDungeonRunCompleted ?? false)
 																		&& !(x.IsDuelsRunCompleted ?? false));
@@ -585,9 +589,9 @@ namespace Hearthstone_Deck_Tracker
 			Log.Info("Updated dungeon run deck");
 		}
 
-		private static Deck CreateDungeonDeck(string playerClass, CardSet set, bool isPVPDR, List<int> selectedDeck = null, Card loadout= null)
+		private static Deck? CreateDungeonDeck(string playerClass, CardSet set, bool isPVPDR, List<int>? selectedDeck = null, Card? loadout = null)
 		{
-			var shrine = Core.Game.Player.Board.FirstOrDefault(x => x.HasTag(GameTag.SHRINE))?.CardId;
+			var shrine = Core.Game.Player.Board.FirstOrDefault(x => x.HasTag(GameTag.SHRINE))?.CardId ?? "";
 			Log.Info($"Creating new {playerClass} dungeon run deck (CardSet={set}, Shrine={shrine}, SelectedDeck={selectedDeck != null})");
 			var deck = selectedDeck == null
 				? DungeonRun.GetDefaultDeck(playerClass, set, shrine)
