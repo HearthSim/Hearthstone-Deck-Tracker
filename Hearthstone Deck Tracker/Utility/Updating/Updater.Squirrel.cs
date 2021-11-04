@@ -19,7 +19,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 	{
 
 		private static bool _useChinaMirror = CultureInfo.CurrentCulture.Name == "zh-CN";
-		private static ReleaseUrls _releaseUrls;
+		private static ReleaseUrls? _releaseUrls;
 		private static TimeSpan _updateCheckDelay = new TimeSpan(0, 20, 0);
 		private static bool ShouldCheckForUpdates()
 			=> Config.Instance.CheckForUpdates && DateTime.Now - _lastUpdateCheck >= _updateCheckDelay;
@@ -53,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static async Task<string> GetReleaseUrl(string release)
+		private static async Task<string?> GetReleaseUrl(string release)
 		{
 			if(_releaseUrls != null)
 				return _releaseUrls.GetReleaseUrl(release);
@@ -158,7 +158,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 				{
 					File.Move(stubPath, newStubPath);
 				}
-				catch(Exception e)
+				catch
 				{
 					Log.Error("Could not move ExecutionStub");
 				}
@@ -179,7 +179,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static async Task<bool> SquirrelUpdate(UpdateManager mgr, SplashScreenWindow splashScreenWindow, bool ignoreDelta = false)
+		private static async Task<bool> SquirrelUpdate(UpdateManager mgr, SplashScreenWindow? splashScreenWindow, bool ignoreDelta = false)
 		{
 			try
 			{
@@ -242,7 +242,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Updating
 			}
 		}
 
-		private static bool IsRevisionIncrement(Version current, Version latest)
+		private static bool IsRevisionIncrement(Version? current, Version? latest)
 		{
 			if(current == null || latest == null)
 				return false;
