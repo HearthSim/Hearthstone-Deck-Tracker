@@ -25,18 +25,10 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					metaData.Player2 = players.FirstOrDefault(x => x.Id == 2);
 				}
 			}
-			if(!string.IsNullOrEmpty(gameMetaData?.ServerInfo?.Address))
-				metaData.ServerIp = gameMetaData!.ServerInfo!.Address;
-			if(gameMetaData?.ServerInfo?.Port > 0)
-				metaData.ServerPort = gameMetaData.ServerInfo.Port.ToString();
 			if(gameMetaData?.ServerInfo?.GameHandle > 0)
 				metaData.GameHandle = gameMetaData.ServerInfo.GameHandle.ToString();
 			if(gameMetaData?.ServerInfo?.ClientHandle > 0)
 				metaData.ClientHandle = gameMetaData.ServerInfo.ClientHandle.ToString();
-			if(!string.IsNullOrEmpty(gameMetaData?.ServerInfo?.SpectatorPassword))
-				metaData.SpectatePassword = gameMetaData!.ServerInfo!.SpectatorPassword;
-			if(!string.IsNullOrEmpty(gameMetaData?.ServerInfo?.AuroraPassword))
-				metaData.AuroraPassword = gameMetaData!.ServerInfo!.AuroraPassword;
 			if(!string.IsNullOrEmpty(gameMetaData?.ServerInfo?.Version))
 				metaData.ServerVersion = gameMetaData!.ServerInfo!.Version;
 			if(game?.StartTime > DateTime.MinValue)
