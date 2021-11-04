@@ -47,8 +47,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(attachedEntities.Any(x => x.CardId == RebornRiteEnchmantment))
 				minion.receivesLichKingPower = true;
 
-			if(attachedEntities.Any(x => x.CardId == SneedsEnchantment))
-				minion.ReceivesSneedHeroPower = true;
+			minion.SneedsHeroPowerCount = attachedEntities.Count(x => x.CardId == SneedsEnchantment);
 
 			minion.game_id = entity.Id;
 
