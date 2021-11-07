@@ -200,7 +200,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_mercenariesTaskListButtonBehavior = new OverlayElementBehavior(MercenariesTaskListButton)
 			{
 				GetRight = () => Height * 0.01,
-				GetBottom = () => Height * 0.05,
+				GetBottom = () => MercenariesButtonOffset,
 				GetScaling = () => AutoScaling,
 				AnchorSide = Side.Right,
 				EntranceAnimation = AnimationType.Slide,
@@ -210,7 +210,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_mercenariesTaskListBehavior = new OverlayElementBehavior(MercenariesTaskList)
 			{
 				GetRight = () => Height * 0.01,
-				GetBottom = () => MercenariesTaskListButton.ActualHeight * AutoScaling + Height * 0.05 + 8,
+				GetBottom = () => MercenariesTaskListButton.ActualHeight * AutoScaling + MercenariesButtonOffset + 8,
 				GetScaling = () => AutoScaling,
 				AnchorSide = Side.Right,
 				EntranceAnimation = AnimationType.Slide,
@@ -265,6 +265,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public double BattlegroundsTileHeight => Height * 0.69 / 8;
 		public double BattlegroundsTileWidth => BattlegroundsTileHeight;
+
+		private double MercenariesButtonOffset
+		{
+			get
+			{
+				// Avoid covering the "Back" button on narrow resolutions
+				if(_game.IsInMenu && ScreenRatio > 0.9)
+					return Height * 0.104;
+				return Height * 0.05;
+			}
+		}
 
 		public void ShowOverlay(bool enable)
 		{
