@@ -1,3 +1,8 @@
+## **Release v1.16.7 - 2021-11-07**
+**Fixes**
+- Fixed Bob's Buddy's interaction with Diablo.
+- Fixed issue where overlay could sometimes block the "back" button when playing Mercenaries.
+
 ## **Release v1.16.6 - 2021-11-02**
 **Updated for Hearthstone 21.6.0**
 
