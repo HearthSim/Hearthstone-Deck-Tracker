@@ -14,29 +14,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Twitch
 
 		private static readonly Dictionary<string, CacheObj> Cache = new Dictionary<string, CacheObj>();
 
-		public static async Task<string?> GetVodUrl(int userId)
-		{
-			try
-			{
-				var data = await GetData(Urls.Videos(userId));
-				var dynData = JsonConvert.DeserializeObject<dynamic>(data.Data);
-				if(dynData == null)
-					return null;
-				foreach(var video in dynData.videos)
-				{
-					if(video.status != "recording")
-						continue;
-					return TwitchApiHelper.GenerateTwitchVodUrl((string)video.url, (DateTime)video.created_at, data.Date);
-				}
-				return null;
-			}
-			catch(Exception e)
-			{
-				Log.Error(e);
-				return null;
-			}
-		}
-
 		public static async Task<bool> IsStreaming(int userId)
 		{
 			try
