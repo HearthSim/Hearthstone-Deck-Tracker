@@ -10,6 +10,7 @@ using Hearthstone_Deck_Tracker.HsReplay.Data;
 using Hearthstone_Deck_Tracker.Live.Data;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Logging;
+using Hearthstone_Deck_Tracker.Utility.Twitch;
 using HSReplay.OAuth;
 using HSReplay.OAuth.Data;
 using HSReplay.Responses;
@@ -23,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		private static readonly JsonSerializer<OAuthData> Serializer;
 		private static readonly Lazy<OAuthClient> Client;
 		private static readonly Lazy<OAuthData> Data;
+		private static readonly Dictionary<string, CacheObj> Cache = new Dictionary<string, CacheObj>();
 
 		private static readonly int[] Ports = { 17781, 17782, 17783, 17784, 17785, 17786, 17787, 17788, 17789 };
 		private const string HSReplayNetClientId = "jIpNwuUWLFI6S3oeQkO3xlW6UCnfogw1IpAbFXqq";
@@ -36,6 +38,20 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public static event Action? AccountDataUpdated;
 		public static event Action? CollectionUpdated;
 		public static event Action? UploadTokenClaimed;
+
+		private class CacheObj
+		{
+			private readonly DateTime _created;
+
+			public CacheObj(string data)
+			{
+				_created = DateTime.Now;
+				Data = data;
+			}
+
+			public bool Valid => (DateTime.Now - _created).TotalSeconds < 5;
+			public string Data { get; }
+		}
 
 		static HSReplayNetOAuth()
 		{
@@ -258,6 +274,29 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			catch(Exception e)
 			{
 				Log.Error(e);
+			}
+		}
+
+		public static async Task<string?> GetVodUrl(int user_id)
+		{
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return null;
+				}
+				VodUrl video = await Client.Value.GetUserVodUrl(user_id, TwitchExtensionId);
+				if(Cache.TryGetValue(video.Url, out var cache) && cache.Valid)
+					return cache.Data;
+				var data = TwitchApiHelper.GenerateTwitchVodUrl(video.Url, video.CreatedAt, video.Date);
+				Cache[video.Url] = new CacheObj(data);
+				return data;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return null;
 			}
 		}
 
