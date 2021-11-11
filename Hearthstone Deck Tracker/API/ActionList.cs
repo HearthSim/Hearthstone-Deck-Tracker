@@ -34,7 +34,7 @@ namespace Hearthstone_Deck_Tracker.API
 			{
 				var sw = Stopwatch.StartNew();
 				var plugin = action.Item1 as PluginWrapper;
-				if(plugin == null || !plugin.IsEnabled)
+				if(plugin != null && !plugin.IsEnabled)
 				{
 					remove.Add(action);
 					continue;
@@ -59,7 +59,7 @@ namespace Hearthstone_Deck_Tracker.API
 				_actions.Remove(action);
 		}
 
-		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : "";
+		private string GetInfo(PluginWrapper? p) => p != null ? $" (Plugin: {p.Name})" : "";
 	}
 
 	public class ActionList
@@ -85,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.API
 			{
 				var sw = Stopwatch.StartNew();
 				var plugin = action.Item1 as PluginWrapper;
-				if(plugin == null || !plugin.IsEnabled)
+				if(plugin != null && !plugin.IsEnabled)
 				{
 					remove.Add(action);
 					continue;
@@ -110,6 +110,6 @@ namespace Hearthstone_Deck_Tracker.API
 				_actions.Remove(action);
 		}
 
-		private string GetInfo(PluginWrapper p) => p != null ? $" (Plugin: {p.Name})" : "";
+		private string GetInfo(PluginWrapper? p) => p != null ? $" (Plugin: {p.Name})" : "";
 	}
 }
