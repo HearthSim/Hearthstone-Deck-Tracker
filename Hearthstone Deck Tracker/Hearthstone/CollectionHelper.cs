@@ -8,14 +8,55 @@ using Key = System.Tuple<ulong, ulong>;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-	public class CollectionHelper
+	public static class CollectionHelpers
 	{
-		private static DateTime _lastUpdate;
-		private static Key? _lastUsedKey;
-		private static readonly Dictionary<Key, Collection> Collections = new Dictionary<Key, Collection>();
-		public static event Action? OnCollectionChanged;
+		public static CollectionHelper<Collection> Hearthstone { get; } = new CollectionHelper<Collection>(LoadCollection);
+		public static CollectionHelper<MercenariesCollection> Mercenaries { get; } = new CollectionHelper<MercenariesCollection>(LoadMercenariesCollection);
 
-		public static async Task<Collection?> GetCollection()
+		private static async Task<Collection?> LoadCollection(Key key)
+		{
+			var data = await Task.Run(() => new
+			{
+				Collection = Reflection.GetFullCollection(), 
+				BattleTag = Reflection.GetBattleTag()
+			});
+			if(data.Collection?.Cards.Any() ?? false)
+			{
+				return new Collection(key.Item1, key.Item2, data.BattleTag, data.Collection);
+			}
+			return null;
+		}
+
+		private static async Task<MercenariesCollection?> LoadMercenariesCollection(Key key)
+		{
+			var data = await Task.Run(() => new
+			{
+				Collection = Reflection.GetMercenariesCollection(), 
+				BattleTag = Reflection.GetBattleTag()
+			});
+			if(data.Collection?.Any() ?? false)
+			{
+				return new MercenariesCollection(key.Item1, key.Item2, data.BattleTag, data.Collection);
+			}
+			return null;
+		}
+	}
+
+	public class CollectionHelper<T> where T : CollectionBase
+	{
+		private DateTime _lastUpdate;
+		private Key? _lastUsedKey;
+		private readonly Dictionary<Key, T> Collections = new Dictionary<Key, T>();
+		private readonly Func<Key, Task<T?>> _loadCollection;
+
+		public event Action? OnCollectionChanged;
+
+		public CollectionHelper(Func<Key, Task<T?>> loadCollection)
+		{
+			_loadCollection = loadCollection;
+		}
+
+		public async Task<T?> GetCollection()
 		{
 			var key = await GetCurrentKey();
 			if(key == null)
@@ -28,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return collection;
 		}
 
-		public static bool TryGetCollection(out Collection? collection)
+		public bool TryGetCollection(out T? collection)
 		{
 			collection = null;
 			var key = GetCurrentKey(false).Result;
@@ -37,9 +78,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return Collections.TryGetValue(key, out collection);
 		}
 
-		public static async Task UpdateCollection() => await UpdateCollection(await GetCurrentKey());
+		public async Task UpdateCollection() => await UpdateCollection(await GetCurrentKey());
 
-		private static async Task<bool> UpdateCollection(Key? key, bool retry = true)
+		private async Task<bool> UpdateCollection(Key? key, bool retry = true)
 		{
 			if(key == null)
 				return false;
@@ -47,14 +88,10 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return false;
 			Log.Info("Updating collection...");
 			_lastUpdate = DateTime.Now;
-			var data = await Task.Run(() => new
+			var data = await _loadCollection(key);
+			if(data != null)
 			{
-				Collection = Reflection.GetFullCollection(), 
-				BattleTag = Reflection.GetBattleTag()
-			});
-			if(data.Collection?.Cards.Any() ?? false)
-			{
-				Collections[key] = new Collection(key.Item1, key.Item2, data.BattleTag, data.Collection);
+				Collections[key] = data;
 				OnCollectionChanged?.Invoke();
 				Log.Info("Updated collection!");
 				return true;
@@ -69,7 +106,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return false;
 		}
 
-		private static async Task<Key?> GetCurrentKey(bool retry = true)
+		private async Task<Key?> GetCurrentKey(bool retry = true)
 		{
 			if(!Core.Game.IsRunning)
 				return _lastUsedKey;

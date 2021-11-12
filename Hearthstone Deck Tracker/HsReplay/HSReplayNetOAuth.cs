@@ -309,9 +309,29 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return false;
 				}
-				var response = await Client.Value.UploadCollection(collection, collection.AccountHi, collection.AccountLo);
+				var response = await Client.Value.UploadCollection(collection, collection.AccountHi, collection.AccountLo, CollectionType.Constructed);
 				Log.Debug(response);
 				CollectionUpdated?.Invoke();
+				return true;
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return false;
+			}
+		}
+
+		public static async Task<bool> UpdateMercenariesCollection(MercenariesCollection collection)
+		{
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return false;
+				}
+				var response = await Client.Value.UploadCollection(collection, collection.AccountHi, collection.AccountLo, CollectionType.Mercenaries);
+				Log.Debug(response);
 				return true;
 			}
 			catch(Exception e)

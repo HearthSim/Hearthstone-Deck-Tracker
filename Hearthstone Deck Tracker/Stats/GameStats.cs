@@ -237,7 +237,7 @@ namespace Hearthstone_Deck_Tracker.Stats
 
 		public int MercenariesBountyRunCompletedNodes { get; set; }
 
-		public List<MercenaryCollectionEntry>? MercenariesBountyRunRewards { get; set; }
+		public List<MercenariesCoinsEntry>? MercenariesBountyRunRewards { get; set; }
 
 		public HashSet<Race>? BattlegroundsRaces { get; set; }
 

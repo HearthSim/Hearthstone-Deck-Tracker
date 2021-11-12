@@ -39,6 +39,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				.Tag("premium", premium)
 				.Tag("collection_syncing", Config.Instance.SyncCollection)
 				.Tag("collections_uploaded", Account.Instance.CollectionState.Count)
+				.Tag("mercs_collections_uploaded", Account.Instance.MercenariesCollectionState.Count)
 				.Tag("auto_upload", Config.Instance.HsReplayAutoUpload)
 				.Tag("lang_card", Config.Instance.SelectedLanguage)
 				.Tag("lang_ui", Config.Instance.Localization.ToString())

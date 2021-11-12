@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-	public class MercenariesCollection
+	public class MercenariesCoins
 	{
 		private static Dictionary<int, long> _coinsByMercenary = new Dictionary<int, long>();
 
-		public static List<MercenaryCollectionEntry> Update()
+		public static List<MercenariesCoinsEntry> Update()
 		{
-			var deltas = new List<MercenaryCollectionEntry>();
+			var deltas = new List<MercenariesCoinsEntry>();
 			var data = Reflection.GetMercenariesInCollection();
 			if(data == null)
 				return deltas;
@@ -19,14 +19,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 					? (merc.CurrencyAmount - existing)
 					: merc.CurrencyAmount;
 				if(delta > 0)
-					deltas.Add(new MercenaryCollectionEntry() { Id = merc.Id, Coins = (int)delta });
+					deltas.Add(new MercenariesCoinsEntry() { Id = merc.Id, Coins = (int)delta });
 				_coinsByMercenary[merc.Id] = merc.CurrencyAmount;
 			}
 			return deltas;
 		}
 	}
 
-	public class MercenaryCollectionEntry
+	public class MercenariesCoinsEntry
 	{
 		public int Id { get; set; }
 		public int Coins { get; set; }
