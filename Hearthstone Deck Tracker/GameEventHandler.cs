@@ -243,7 +243,7 @@ namespace Hearthstone_Deck_Tracker
 		{
 			for(var i = 0; i < 5; i++)
 			{
-				var delta = MercenariesCollection.Update();
+				var delta = MercenariesCoins.Update();
 				if(delta.Count > 0)
 				{
 					gs.MercenariesBountyRunRewards = delta;
@@ -506,7 +506,7 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsMercenariesPveMatch)
 			{
 				// Called here so that UpdatePostGameMercenariesRewards can generate an accurate delta.
-				MercenariesCollection.Update();
+				MercenariesCoins.Update();
 			}
 		}
 

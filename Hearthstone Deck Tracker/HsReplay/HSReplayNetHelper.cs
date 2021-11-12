@@ -15,12 +15,15 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 	internal static class HSReplayNetHelper
 	{
 		private static readonly RateLimiter CollectionSyncLimiter;
+		private static readonly RateLimiter MercenariesCollectionSyncLimiter;
 
 		static HSReplayNetHelper()
 		{
 			CollectionSyncLimiter = new RateLimiter(6, TimeSpan.FromMinutes(2));
+			MercenariesCollectionSyncLimiter = new RateLimiter(6, TimeSpan.FromMinutes(2));
 			ConfigWrapper.CollectionSyncingChanged += () => SyncCollection().Forget();
-			CollectionHelper.OnCollectionChanged += () => SyncCollection().Forget();
+			CollectionHelpers.Hearthstone.OnCollectionChanged += () => SyncCollection().Forget();
+			CollectionHelpers.Mercenaries.OnCollectionChanged += () => SyncMercenariesCollection().Forget();
 			CollectionUploaded += () =>
 			{
 				ToastManager.ShowCollectionUpdatedToast();
@@ -91,7 +94,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			if(!Config.Instance.SyncCollection || !HSReplayNetOAuth.IsFullyAuthenticated)
 				return;
-			var collection = await CollectionHelper.GetCollection();
+			var collection = await CollectionHelpers.Hearthstone.GetCollection();
 			if(collection == null)
 				return;
 			var hash = collection.GetHashCode();
@@ -155,10 +158,74 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			});
 		}
 
+		public static async Task SyncMercenariesCollection()
+		{
+			if(!Config.Instance.SyncCollection || !HSReplayNetOAuth.IsFullyAuthenticated)
+				return;
+			var mercsCollection = await CollectionHelpers.Mercenaries.GetCollection();
+			if(mercsCollection == null)
+				return;
+			var hash = mercsCollection.GetHashCode();
+			var hi = mercsCollection.AccountHi;
+			var lo = mercsCollection.AccountLo;
+			var account = hi + "-" + lo;
+			if(Account.Instance.MercenariesCollectionState.TryGetValue(account, out var state) && state.Hash == hash)
+			{
+				Log.Debug("Mercenaries collection ready up-to-date");
+				state.Date = DateTime.Now;
+				Account.Save();
+				return;
+			}
+			await MercenariesCollectionSyncLimiter.Run(async () =>
+			{
+				if(!HSReplayNetOAuth.AccountData?.BlizzardAccounts?.Any(x => x.AccountHi == hi && x.AccountLo == lo) ?? true)
+				{
+					var response = await HSReplayNetOAuth.ClaimBlizzardAccount(hi, lo, mercsCollection.BattleTag);
+					var success = response == HSReplayNetOAuth.ClaimBlizzardAccountResponse.Success;
+					BlizzardAccountClaimed?.Invoke(success);
+					if(success)
+						HSReplayNetOAuth.UpdateAccountData().Forget();
+					else if(response == HSReplayNetOAuth.ClaimBlizzardAccountResponse.TokenAlreadyClaimed)
+					{
+						ErrorManager.AddError("HSReplay.net error",
+							$"Your blizzard account ({mercsCollection.BattleTag}, {account}) is already attached to another"
+							+ " HSReplay.net Account. You are currently logged in as"
+							+ $" {HSReplayNetOAuth.AccountData?.Username ?? "Unknown"}. Please contact us at contact@hsreplay.net"
+							+ " if this is not correct.");
+						return;
+					}
+					else
+					{
+						ErrorManager.AddError("HSReplay.net error",
+							$"Could not attach your Blizzard account ({mercsCollection.BattleTag}, {account}) to"
+							+ $" HSReplay.net Account ({HSReplayNetOAuth.AccountData?.Username})."
+							+ " Please try again later or contact us at contact@hsreplay.net if this persists.");
+						return;
+					}
+				}
+				if(await HSReplayNetOAuth.UpdateMercenariesCollection(mercsCollection))
+				{
+					Account.Instance.MercenariesCollectionState[account] = new Account.SyncState(hash);
+					Account.Save();
+					Log.Debug("Mercenaries collection synced");
+				}
+				else
+				{
+					ErrorManager.AddError("HSReplay.net error",
+						"Could not update your Mercenaries collection. Please try again later.\n"
+						+ "If this problem persists please try logging out and back in"
+						+ " under 'options > hsreplay.net > my account'");
+				}
+			}, () =>
+			{
+				Log.Debug("Waiting for rate limit...");
+			});
+		}
+
 		public static void OpenDecksUrlWithCollection(string campaign)
 		{
 			var query = new List<string>();
-			if(CollectionHelper.TryGetCollection(out var collection) && collection != null)
+			if(CollectionHelpers.Hearthstone.TryGetCollection(out var collection) && collection != null)
 			{
 				var region = Helper.GetRegion(collection.AccountHi);
 				query.Add($"hearthstone_account={(int)region}-{collection.AccountLo}");

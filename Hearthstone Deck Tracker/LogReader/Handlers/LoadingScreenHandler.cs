@@ -65,7 +65,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 					if(game.PreviousMode == Mode.COLLECTIONMANAGER || game.CurrentMode == Mode.COLLECTIONMANAGER
 						|| game.PreviousMode == Mode.PACKOPENING)
-						CollectionHelper.UpdateCollection().Forget();
+						CollectionHelpers.Hearthstone.UpdateCollection().Forget();
+
+					if(game.PreviousMode == Mode.LETTUCE_COLLECTION || game.CurrentMode == Mode.LETTUCE_COLLECTION
+						|| game.PreviousMode == Mode.LETTUCE_PACK_OPENING)
+						CollectionHelpers.Mercenaries.UpdateCollection().Forget();
+
 					if(game.CurrentMode == Mode.HUB)
 						if(!_checkedMirrorStatus)
 							CheckMirrorStatus();

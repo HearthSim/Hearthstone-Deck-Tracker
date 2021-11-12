@@ -5,13 +5,31 @@ using Newtonsoft.Json;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
-	public class Collection
+	abstract public class CollectionBase
 	{
-		public Collection(ulong accountHi, ulong accountLo, BattleTag battleTag, HearthMirror.Objects.Collection collection)
+		public CollectionBase(ulong accountHi, ulong accountLo, BattleTag battleTag)
 		{
 			AccountHi = accountHi;
 			AccountLo = accountLo;
 			BattleTag = $"{battleTag.Name}#{battleTag.Number}";
+		}
+
+		[JsonIgnore]
+		public ulong AccountHi { get; }
+
+		[JsonIgnore]
+		public ulong AccountLo { get; }
+
+		[JsonIgnore]
+		public string BattleTag { get; }
+
+		public override int GetHashCode() => JsonConvert.SerializeObject(this).GetHashCode();
+	}
+
+	public class Collection : CollectionBase
+	{
+		public Collection(ulong accountHi, ulong accountLo, BattleTag battleTag, HearthMirror.Objects.Collection collection) : base(accountHi, accountLo, battleTag)
+		{
 			Cards = new SortedDictionary<int, int[]>(
 				collection.Cards.Select(x => new {Key=GetDbfId(x.Id), Card=x}).GroupBy(x => x.Key)
 					.ToDictionary(x => x.Key,
@@ -29,15 +47,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		private static int GetDbfId(string cardId) => Database.GetCardFromId(cardId)?.DbfIf ?? 0;
 
-		[JsonIgnore]
-		public ulong AccountHi { get; }
-
-		[JsonIgnore]
-		public ulong AccountLo { get; }
-
-		[JsonIgnore]
-		public string BattleTag { get; }
-
 		[JsonProperty("collection")]
 		public SortedDictionary<int, int[]> Cards { get; }
 
@@ -52,7 +61,55 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		[JsonProperty("dust")]
 		public int Dust { get; }
+	}
 
-		public override int GetHashCode() => JsonConvert.SerializeObject(this).GetHashCode();
+	public class MercenariesCollection : CollectionBase
+	{
+		public MercenariesCollection(ulong accountHi, ulong accountLo, BattleTag battleTag, List<CollectionMercenary> collection) : base(accountHi, accountLo, battleTag)
+		{
+			Mercenaries = collection.Select(x => new Mercenary(x)).OrderBy(x => x.Id).ToList();
+		}
+
+		[JsonProperty("mercenaries")]
+		public List<Mercenary> Mercenaries { get; }
+
+		public class Mercenary
+		{
+			public Mercenary(CollectionMercenary merc)
+			{
+				Id = merc.Id;
+				Level = merc.Level;
+				Abilities = merc.Abilities.Select(x => new Ability(x)).ToList();
+				Equipment = merc.Equipments.Select(x => new Ability(x)).ToList();
+			}
+
+			[JsonProperty("id")]
+			public int Id { get; }
+
+			[JsonProperty("level")]
+			public int Level { get; }
+
+			[JsonProperty("abilities")]
+			public List<Ability> Abilities { get; } 
+
+			[JsonProperty("equipment")]
+			public List<Ability> Equipment { get; } 
+
+			public class Ability
+			{
+				public Ability(CollectionMercenary.Ability ability)
+				{
+					Id = ability.Id;
+					Tier = ability.Tier;
+				}
+
+				[JsonProperty("id")]
+				public int Id { get; set; }
+
+				[JsonProperty("tier")]
+				public int Tier { get; set; }
+			}
+	}
+
 	}
 }

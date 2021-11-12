@@ -48,6 +48,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			UploadTokenHistory.Write("Deleting token");
 			UploadToken = string.Empty;
 			CollectionState.Clear();
+			MercenariesCollectionState.Clear();
 			Update(0, null);
 		}
 
@@ -78,6 +79,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		public DateTime LastUpdated { get; set; }
 
 		public Dictionary<string, SyncState> CollectionState { get; set; } = new Dictionary<string, SyncState>();
+		public Dictionary<string, SyncState> MercenariesCollectionState { get; set; } = new Dictionary<string, SyncState>();
 
 		public override string ToString()
 		{

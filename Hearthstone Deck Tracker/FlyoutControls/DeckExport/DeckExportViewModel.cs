@@ -38,7 +38,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 		{
 			CopyAllButtonText = LocUtil.Get(LocCopyAll, true);
 			CopyCodeButtonText = LocUtil.Get(LocCopyCode, true);
-			CollectionHelper.OnCollectionChanged += UpdateMissingCards;
+			CollectionHelpers.Hearthstone.OnCollectionChanged += UpdateMissingCards;
 		}
 
 		private async void UpdateMissingCards()
@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 			if(Deck == null || _updatingCollection)
 				return;
 			_updatingCollection = true;
-			var collection = await CollectionHelper.GetCollection();
+			var collection = await CollectionHelpers.Hearthstone.GetCollection();
 			if(!collection?.Cards.Any() ?? true)
 			{
 				_updatingCollection = false;
