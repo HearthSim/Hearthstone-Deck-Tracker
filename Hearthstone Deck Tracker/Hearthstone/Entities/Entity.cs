@@ -134,14 +134,22 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		{
 			get
 			{
-				var real = GetTag(GameTag.ZONE_POSITION);
-				if(real > 0)
-					return real;
-				return GetTag(GameTag.FAKE_ZONE_POSITION);
+				var fake = GetTag(GameTag.FAKE_ZONE_POSITION);
+				if(fake > 0)
+					return fake;
+				return GetTag(GameTag.ZONE_POSITION);
 			}
 		}
 
-		public bool IsInZone(Zone zone) => (int)zone > 0 && (GetTag(GameTag.ZONE) == (int)zone || GetTag(GameTag.FAKE_ZONE) == (int)zone);
+		public bool IsInZone(Zone zone)
+		{
+			if((int)zone <= 0)
+				return false;
+			var fake = GetTag(GameTag.FAKE_ZONE);
+			if(fake > 0)
+				return (int)zone == fake;
+			return (int)zone == GetTag(GameTag.ZONE);
+		}
 
 		public bool IsControlledBy(int controllerId)
 		{
