@@ -533,6 +533,7 @@ namespace Hearthstone_Deck_Tracker
 				_handledGameEnd = true;
 				TurnTimer.Instance.Stop();
 				Core.Overlay.HideTimers();
+				Core.Overlay.HideMercenariesGameOverlay();
 				DeckManager.ResetAutoSelectCount();
 				LiveDataManager.Stop();
 				if(_game.IsBattlegroundsMatch && stateComplete)

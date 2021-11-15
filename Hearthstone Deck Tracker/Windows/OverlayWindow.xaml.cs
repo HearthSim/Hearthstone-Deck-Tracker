@@ -584,6 +584,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateBoardPosition();
 		}
 
+		internal void HideMercenariesGameOverlay()
+		{
+			for(var i = 0; i < MaxBoardSize; i++)
+			{
+				PlayerBoard[i].MercenariesAbilities = null;
+				OppBoard[i].MercenariesAbilities = null;
+			}
+			ClearMercHover();
+		}
+
 		public List<List<MercAbilityData>> GetMercAbilities(Player player)
 		{
 			return player.Board

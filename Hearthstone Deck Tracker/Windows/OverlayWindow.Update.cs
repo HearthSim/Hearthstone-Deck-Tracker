@@ -102,7 +102,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 					_cardMarks[i].Visibility = Collapsed;
 			}
 
-			var foo = Core.Game.Entities;
 			var oppBoard = Core.Game.Opponent.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			var playerBoard = Core.Game.Player.Board.Where(x => x.IsMinion).OrderBy(x => x.GetTag(ZONE_POSITION)).ToList();
 			UpdateMouseOverDetectionRegions(oppBoard, playerBoard);
