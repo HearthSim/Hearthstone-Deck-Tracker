@@ -361,7 +361,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			OpponentCardId = opponentHero.CardId ?? "";
 			PlayerCardId = playerHero.CardId ?? "";
 
-			input.SetHealths(playerHero.Health, opponentHero.Health);
+			input.SetHealths(playerHero.Health + playerHero.GetTag(GameTag.ARMOR), opponentHero.Health + opponentHero.GetTag(GameTag.ARMOR));
+
 			if(input.opponentHealth <= 0)
 			{
 				input.opponentHealth = 1000;
