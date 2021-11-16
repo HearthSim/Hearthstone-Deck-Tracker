@@ -1,3 +1,10 @@
+## **Release v1.16.8 - 2021-11-16**
+**Updated for Hearthstone 21.8.0**
+
+**Fixes**
+- Fixed an issue where the Mercenaries game overlay would sometimes stay visible after the end of a game.
+- Fixed an issue where some Plugins would not receive game events.
+
 ## **Release v1.16.7 - 2021-11-07**
 **Fixes**
 - Fixed Bob's Buddy's interaction with Diablo.
