@@ -85,6 +85,12 @@ namespace Hearthstone_Deck_Tracker
 				Core.MainWindow.SelectDeck(null, true);
 				return;
 			}
+			if(mode == GameMode.Mercenaries)
+			{
+				Log.Info("Switching to no-deck mode for mercenaries");
+				Core.MainWindow.SelectDeck(null, true);
+				return;
+			}
 			_waitingForDraws++;
 			await Task.Delay(500);
 			_waitingForDraws--;

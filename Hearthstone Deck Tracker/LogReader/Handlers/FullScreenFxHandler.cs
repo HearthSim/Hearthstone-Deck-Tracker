@@ -1,6 +1,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HearthMirror;
@@ -18,11 +19,31 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 {
 	public class FullScreenFxHandler
 	{
+		private List<Mode> LettuceModes = new List<Mode>
+		{
+			LETTUCE_BOUNTY_BOARD,
+			LETTUCE_MAP,
+			LETTUCE_PLAY,
+			LETTUCE_COOP,
+			LETTUCE_FRIENDLY,
+			LETTUCE_BOUNTY_TEAM_SELECT,
+		};
+
+		private List<Mode> Modes = new List<Mode>
+		{
+			TAVERN_BRAWL,
+			TOURNAMENT,
+			DRAFT,
+			FRIENDLY,
+			ADVENTURE,
+			BACON
+		};
+
 		private DateTime _lastQueueTime;
 		public void Handle(LogLine logLine, IGame game)
 		{
 			var match = LogConstants.BeginBlurRegex.Match(logLine.Line);
-			if(match.Success && game.IsInMenu && new[] {TAVERN_BRAWL, TOURNAMENT, DRAFT, FRIENDLY, ADVENTURE, BACON}.Contains(game.CurrentMode))
+			if(match.Success && game.IsInMenu && (Modes.Contains(game.CurrentMode) || LettuceModes.Contains(game.CurrentMode)))
 			{
 				game.MetaData.EnqueueTime = logLine.Time;
 				Log.Info($"Now in queue ({logLine.Time})");
@@ -38,12 +59,20 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				}
 				if(!Config.Instance.AutoDeckDetection)
 					return;
-				if(new[] {TOURNAMENT, FRIENDLY, ADVENTURE, TAVERN_BRAWL}.Contains(game.CurrentMode))
+				if(new[] { TOURNAMENT, FRIENDLY, ADVENTURE, TAVERN_BRAWL }.Contains(game.CurrentMode))
 					DeckManager.AutoSelectDeckById(game, GetSelectedDeckId(game.CurrentMode));
 				else if(game.CurrentMode == DRAFT)
 					AutoSelectArenaDeck();
 				else if(game.CurrentMode == BACON)
+				{
+					Log.Info("Switching to no-deck mode for battlegrounds");
 					Core.MainWindow.SelectDeck(null, true);
+				}
+				else if(game.CurrentMode == BACON || LettuceModes.Contains(game.CurrentMode))
+				{
+					Log.Info("Switching to no-deck mode for mercenaries");
+					Core.MainWindow.SelectDeck(null, true);
+				}
 			}
 		}
 
