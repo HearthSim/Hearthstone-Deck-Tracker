@@ -495,6 +495,15 @@ namespace Hearthstone_Deck_Tracker
 			}
 		}
 
+		private static bool TryGetHeroClass(int dbfId, out string? playerClass)
+		{
+			playerClass = null;
+			var heroCard = Database.GetCardFromDbfId(dbfId, false);
+			if(heroCard != null && heroCard != Database.UnknownCard && heroCard.PlayerClass != null)
+				playerClass = heroCard.PlayerClass;
+			return playerClass != null;
+		}
+
 		public static void UpdateDungeonRunDeck(DungeonInfo info, bool isPVPDR)
 		{
 			if(!Config.Instance.DungeonAutoImport)
@@ -548,15 +557,24 @@ namespace Hearthstone_Deck_Tracker
 			var cardSet = (CardSet)info.CardSet;
 
 			string? playerClass = null;
-			if (cardSet == CardSet.ULDUM && loadout != null)
+			if(cardSet == CardSet.ULDUM && loadout != null)
 				playerClass = DungeonRun.GetUldumHeroPlayerClass(loadout.PlayerClass);
 			else if(isPVPDR)
-				playerClass = HearthDbConverter.ConvertClass((CardClass)(info.HeroClass != 0 ? info.HeroClass : info.HeroCardClass));
+			{
+				if(info.HeroClass != 0)
+					playerClass = HearthDbConverter.ConvertClass((CardClass)info.HeroClass);
+				else if(info.HeroCardDbId != 0 && TryGetHeroClass(info.HeroCardDbId, out var heroCardClass))
+					playerClass = heroCardClass;
+				else if(info.PlayerSelectedHeroCardDbId != 0 && TryGetHeroClass(info.PlayerSelectedHeroCardDbId, out var selectedHeroCardClass))
+					playerClass = selectedHeroCardClass;
+				else if(info.HeroCardClass != 0)
+					playerClass = HearthDbConverter.ConvertClass((CardClass)info.HeroCardClass);
+			}
 			else
 			{
 				if(allCards.Count == 10)
 					playerClass = allCards.Select(x => Database.GetCardFromDbfId(x)?.PlayerClass).FirstOrDefault(x => x != null)?.ToUpperInvariant();
-				if (playerClass == null)
+				if(playerClass == null)
 					playerClass = ((CardClass)info.HeroCardClass).ToString().ToUpperInvariant();
 			}
 
