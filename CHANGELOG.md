@@ -1,6 +1,9 @@
-## **Next Release**
+## **Release v1.16.9 - 2021-11-19**
 **Fixes**
 - Fixed an issue where importing Duels decks was not working correctly.
+- Improved Bob's Buddy performance for Diablo.
+- Improved Bob's Buddy speed.
+- Improved Bob's Buddy performance when two players with secrest enter combat.
 
 ## **Release v1.16.8 - 2021-11-16**
 **Updated for Hearthstone 21.8.0**
