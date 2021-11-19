@@ -378,7 +378,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			
 			input.SetHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
 
-			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList());
+			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList(), true);
 
 			input.SetTurn(turn);
 
@@ -418,9 +418,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				if(RunSimulationAfterCombat)
 				{
-					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !string.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfIf).ToList());
-					_input.playerIsAkazamarak = false;
-					DebugLog($"Set opponent to Akazamarak with {_input.secretsAndPriorities.Count} secrets.");
+					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !string.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfIf).ToList(), false);
+					DebugLog($"Set opponent to Akazamarak with {_input.OpponentSecrets.Count} secrets.");
 				}
 
 				DebugLog("----- Simulation Input -----");
@@ -432,11 +431,18 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				foreach(var minion in _input.opponentSide)
 					DebugLog(minion.ToString());
 
-				if(_input.secretsAndPriorities.Count() > 0)
+				if(_input.PlayerSecrets.Count() > 0)
 				{
-					DebugLog("Detected the following secrets");
-					foreach(var s in _input.secretsAndPriorities)
-						DebugLog(s.secret.ToString());
+					DebugLog("Detected the following player secrets");
+					foreach(var s in _input.PlayerSecrets)
+						DebugLog(s.ToString());
+				}
+
+				if(_input.OpponentSecrets.Count() > 0)
+				{
+					DebugLog("Detected the following opponent secrets");
+					foreach(var s in _input.OpponentSecrets)
+						DebugLog(s.ToString());
 				}
 				DebugLog("----- End of Input -----");
 
