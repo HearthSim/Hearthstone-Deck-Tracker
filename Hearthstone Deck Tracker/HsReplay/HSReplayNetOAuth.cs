@@ -43,14 +43,14 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		{
 			private readonly DateTime _created;
 
-			public CacheObj(string data)
+			public CacheObj(object data)
 			{
 				_created = DateTime.Now;
 				Data = data;
 			}
 
 			public bool Valid => (DateTime.Now - _created).TotalSeconds < 5;
-			public string Data { get; }
+			public object Data { get; }
 		}
 
 		static HSReplayNetOAuth()
@@ -277,7 +277,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
-		public static async Task<string?> GetVodUrl(int user_id)
+		public static async Task<UserCurrentVideo?> GetCurrentVideo(int user_id)
 		{
 			try
 			{
@@ -286,12 +286,13 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Log.Error("Could not update token data");
 					return null;
 				}
-				VodUrl video = await Client.Value.GetUserVodUrl(user_id, TwitchExtensionId);
+				CurrentVideo video = await Client.Value.GetUserCurrentVideo(user_id, TwitchExtensionId);
 				if(Cache.TryGetValue(video.Url, out var cache) && cache.Valid)
-					return cache.Data;
+					return (UserCurrentVideo) cache.Data;
 				var data = TwitchApiHelper.GenerateTwitchVodUrl(video.Url, video.CreatedAt, video.Date);
-				Cache[video.Url] = new CacheObj(data);
-				return data;
+				var userCurrentVideo = new UserCurrentVideo(data, video.Language);
+				Cache[video.Url] = new CacheObj(userCurrentVideo);
+				return userCurrentVideo;
 			}
 			catch(Exception e)
 			{

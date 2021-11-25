@@ -58,15 +58,14 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			var user = HSReplayNetOAuth.TwitchUsers?.FirstOrDefault(Selected);
 			if(user == null)
 				return null;
-			var url = await HSReplayNetOAuth.GetVodUrl(user.Id);
-			if(url == null)
+			var currentVideo = await HSReplayNetOAuth.GetCurrentVideo(user.Id);
+			if(currentVideo == null)
 				return null;
-			var streamerLanguage = await TwitchApi.GetStreamerLanguage(user.Id);
 			return new UploadMetaData.TwitchVodData
 			{
 				ChannelName = user.Username,
-				Url = url,
-				Language = streamerLanguage
+				Url = currentVideo.Url,
+				Language = currentVideo.Language
 			};
 		}
 

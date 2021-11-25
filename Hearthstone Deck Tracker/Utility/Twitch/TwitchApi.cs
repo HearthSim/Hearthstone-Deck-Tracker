@@ -29,21 +29,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Twitch
 			}
 		}
 
-		public static async Task<string> GetStreamerLanguage(int userId)
-		{
-			try
-			{
-				var data = await GetData(Urls.Stream(userId));
-				var dynData = JsonConvert.DeserializeObject<dynamic>(data.Data);
-				return dynData?.stream?.channel?.language ?? "";
-			}
-			catch(Exception e)
-			{
-				Log.Error(e);
-				return "";
-			}
-		}
-
 		private static async Task<ResponseData> GetData(string url)
 		{
 			if(Cache.TryGetValue(url, out var cache) && cache.Valid)
