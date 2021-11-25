@@ -155,7 +155,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Streaming
 			SelectedTwitchUser = AvailableTwitchAccounts?.FirstOrDefault(x => x.Id == selected || selected == 0);
 			TwitchAccountLinked = SelectedTwitchUser?.Id > 0;
 			if(TwitchAccountLinked)
-				TwitchStreamLive = SelectedTwitchUser != null && await TwitchApi.IsStreaming(SelectedTwitchUser.Id);
+				TwitchStreamLive = SelectedTwitchUser != null && await HSReplayNetOAuth.IsStreaming(SelectedTwitchUser.Id);
 		}
 
 		private void VerifySelectedTwitchUser()

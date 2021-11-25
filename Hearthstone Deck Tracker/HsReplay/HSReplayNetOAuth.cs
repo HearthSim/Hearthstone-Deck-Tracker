@@ -301,6 +301,24 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			}
 		}
 
+		public static async Task<bool> IsStreaming(int user_id)
+		{
+			try
+			{
+				if(!await UpdateToken())
+				{
+					Log.Error("Could not update token data");
+					return false;
+				}
+				return await Client.Value.IsUserStreaming(user_id, TwitchExtensionId);
+			}
+			catch(Exception e)
+			{
+				Log.Error(e);
+				return false;
+			}
+		}
+
 		public static async Task<bool> UpdateCollection(Collection collection)
 		{
 			try

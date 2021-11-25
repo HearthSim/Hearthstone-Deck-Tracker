@@ -29,7 +29,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				return;
 			if(!Config.Instance.SendTwitchExtensionData || Config.Instance.SelectedTwitchUser <= 0 || (HSReplayNetOAuth.TwitchUsers?.Count ?? 0) == 0)
 				return;
-			var streaming = await TwitchApi.IsStreaming(Config.Instance.SelectedTwitchUser);
+			var streaming = await HSReplayNetOAuth.IsStreaming(Config.Instance.SelectedTwitchUser);
 			OnStreamingChecked?.Invoke(streaming);
 			if(!streaming)
 				return;
