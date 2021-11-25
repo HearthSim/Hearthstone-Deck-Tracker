@@ -45,7 +45,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			Dust = collection.Dust;
 		}
 
-		private static int GetDbfId(string cardId) => Database.GetCardFromId(cardId)?.DbfIf ?? 0;
+		private static int GetDbfId(string cardId) => Database.GetCardFromId(cardId)?.DbfId ?? 0;
 
 		[JsonProperty("collection")]
 		public SortedDictionary<int, int[]> Cards { get; }

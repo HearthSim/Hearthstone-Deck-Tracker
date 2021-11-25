@@ -58,8 +58,12 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		[XmlIgnore]
+		// Typo - Do not remove this for Plugin Combatibility
+		[XmlIgnore, Obsolete("Use DbfId instead", true)]
 		public int DbfIf => _dbCard?.DbfId ?? 0;
+
+		[XmlIgnore]
+		public int DbfId => _dbCard?.DbfId ?? 0;
 
 		/// The mechanics attribute, such as windfury or taunt, comes from the cardDB json file
 		[XmlIgnore]

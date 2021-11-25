@@ -378,7 +378,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			
 			input.SetHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
 
-			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfIf).ToList(), true);
+			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfId).ToList(), true);
 
 			input.SetTurn(turn);
 
@@ -418,7 +418,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				if(RunSimulationAfterCombat)
 				{
-					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !string.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfIf).ToList(), false);
+					_input.SetupSecretsFromDbfidList(_currentOpponentSecrets.Where(x => x != null && !string.IsNullOrEmpty(x.CardId)).Select(x => x.Card.DbfId).ToList(), false);
 					DebugLog($"Set opponent to Akazamarak with {_input.OpponentSecrets.Count} secrets.");
 				}
 

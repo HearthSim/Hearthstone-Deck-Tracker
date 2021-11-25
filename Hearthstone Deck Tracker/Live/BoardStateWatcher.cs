@@ -84,7 +84,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			var card = e.Info.LatestCardId == e.CardId
 				? e.Card
 				: Database.GetCardFromId(e.Info.LatestCardId);
-			return card?.DbfIf ?? 0;
+			return card?.DbfId ?? 0;
 		}
 
 		private int ZonePosition(Entity e) => e.GetTag(GameTag.ZONE_POSITION);
@@ -105,7 +105,7 @@ namespace Hearthstone_Deck_Tracker.Live
 				return null;
 			return new BoardStateQuest
 			{
-				DbfId = questEntity.Card.DbfIf,
+				DbfId = questEntity.Card.DbfId,
 				Progress = questEntity.GetTag(GameTag.QUEST_PROGRESS),
 				Total = questEntity.GetTag(GameTag.QUEST_PROGRESS_TOTAL)
 			};
@@ -125,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			if(DeckList.Instance.ActiveDeckVersion != null)
 			{
 				foreach(var card in DeckList.Instance.ActiveDeckVersion.Cards)
-					fullDeckList[card.DbfIf] = card.Count;
+					fullDeckList[card.DbfId] = card.Count;
 			}
 			int FullCount(int dbfId) => fullDeckList == null ? 0 : fullDeckList.TryGetValue(dbfId, out var count) ? count : 0;
 
@@ -134,8 +134,8 @@ namespace Hearthstone_Deck_Tracker.Live
 			{
 				foreach(var card in player.GetPlayerCardList(false, false, false).Where(x => !x.Jousted))
 				{
-					var inDeck = card.IsCreated ? 0 : FullCount(card.DbfIf);
-					playerCardsDict.Add(new[] { card.DbfIf, card.Count, inDeck });
+					var inDeck = card.IsCreated ? 0 : FullCount(card.DbfId);
+					playerCardsDict.Add(new[] { card.DbfId, card.Count, inDeck });
 				}
 			}
 			var format = Core.Game.CurrentFormat ?? Format.Wild;
@@ -151,7 +151,7 @@ namespace Hearthstone_Deck_Tracker.Live
 						Cards = playerCardsDict,
 						Name = deck?.Name,
 						Format = deck?.GuessFormatType() ?? FormatType.FT_UNKNOWN,
-						Hero = Database.GetHeroCardFromClass(deck?.Class)?.DbfIf ?? 0,
+						Hero = Database.GetHeroCardFromClass(deck?.Class)?.DbfId ?? 0,
 						Wins = games?.Count(g => g.Result == GameResult.Win) ?? 0,
 						Losses = games?.Count(g => g.Result == GameResult.Loss) ?? 0,
 						Size = player.DeckCount

@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 		{
 			CardClass[] AvailableClasses(Card x)
 			{
-				var card = HearthDb.Cards.GetFromDbfId(x.DbfIf);
+				var card = HearthDb.Cards.GetFromDbfId(x.DbfId);
 				switch((MultiClassGroup)card.Entity.GetTag(GameTag.MULTI_CLASS_GROUP))
 				{
 					case MultiClassGroup.GRIMY_GOONS:
@@ -93,7 +93,7 @@ namespace Hearthstone_Deck_Tracker.Importing
 						deck.Cards.Add(card);
 				}
 				var deckClass = deck.Cards
-					.Where(x => x.DbfIf != 0)
+					.Where(x => x.DbfId != 0)
 					.Select(AvailableClasses)
 					.Where(x => x.Length > 1 || x[0] != CardClass.NEUTRAL)
 					.Aggregate((a, b) => a.Concat(b).GroupBy(x => x).Where(x => x.Count() > 1).Select(x => x.Key).ToArray());

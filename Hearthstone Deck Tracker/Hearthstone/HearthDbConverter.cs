@@ -230,15 +230,15 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public static HearthDb.Deckstrings.Deck? ToHearthDbDeck(Deck deck)
 		{
 			var card = Database.GetHeroCardFromClass(deck.Class);
-			if(card?.DbfIf > 0)
+			if(card?.DbfId > 0)
 			{
 				return new HearthDb.Deckstrings.Deck
 				{
 					Name = deck.Name,
 					Format = deck.GuessFormatType(),
 					ZodiacYear = (ZodiacYear)Enum.GetValues(typeof(ZodiacYear)).Cast<int>().OrderByDescending(x => x).First(),
-					HeroDbfId = card.DbfIf,
-					CardDbfIds = deck.Cards.ToDictionary(c => c.DbfIf, c => c.Count)
+					HeroDbfId = card.DbfId,
+					CardDbfIds = deck.Cards.ToDictionary(c => c.DbfId, c => c.Count)
 				};
 			}
 			return null;

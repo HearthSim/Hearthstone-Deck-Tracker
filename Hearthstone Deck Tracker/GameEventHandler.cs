@@ -951,7 +951,7 @@ namespace Hearthstone_Deck_Tracker
 					var shortId = DeckList.Instance.ActiveDeckVersion?.ShortId;
 					if(!string.IsNullOrEmpty(shortId))
 					{
-						var cards = Core.Game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).Select(x => x.Card.DbfIf);
+						var cards = Core.Game.Player.PlayerEntities.Where(x => x.IsInHand && !x.Info.Created).Select(x => x.Card.DbfId);
 						var opponentClass = Core.Game.Opponent.PlayerEntities.FirstOrDefault(x => x.IsHero && x.IsInPlay)?.Card.CardClass ?? CardClass.INVALID;
 						var hasCoin = Core.Game.Player.HasCoin;
 
@@ -991,7 +991,7 @@ namespace Hearthstone_Deck_Tracker
 						break;
 					}
 
-					var heroIds = heroes.Select(x => x.Card.DbfIf).ToArray();
+					var heroIds = heroes.Select(x => x.Card.DbfId).ToArray();
 
 					// Wait for the game to fade in
 					await Task.Delay(3000);

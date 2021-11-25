@@ -547,7 +547,7 @@ namespace Hearthstone_Deck_Tracker
 
 			var loadoutCardId = info.LoadoutCardId;
 			var loadout = loadoutCardId != null ? Database.GetCardFromId(loadoutCardId) : null;
-			if (loadout != null && !allCards.Contains(loadout.DbfIf)) {
+			if (loadout != null && !allCards.Contains(loadout.DbfId)) {
 				cards.Add(loadout);
 			}
 
@@ -625,7 +625,7 @@ namespace Hearthstone_Deck_Tracker
 				Log.Info($"Could not find default deck for {playerClass} in card set {set} with Shrine={shrine}");
 				return null;
 			}
-			if (loadout != null && selectedDeck != null && !selectedDeck.Contains(loadout.DbfIf))
+			if (loadout != null && selectedDeck != null && !selectedDeck.Contains(loadout.DbfId))
 				deck.Cards.Add(loadout);
 			DeckList.Instance.Decks.Add(deck);
 			DeckList.Save();

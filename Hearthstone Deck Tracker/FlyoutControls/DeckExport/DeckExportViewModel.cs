@@ -55,7 +55,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckExport
 			var missingCards = new List<DustCostViewModel>();
 			foreach(var card in Deck.Cards)
 			{
-				collection!.Cards.TryGetValue(card.DbfIf, out var counts);
+				collection!.Cards.TryGetValue(card.DbfId, out var counts);
 				var missingCount = card.Count - counts?.Sum(x => x) ?? 0;
 				if(missingCount > 0)
 				{

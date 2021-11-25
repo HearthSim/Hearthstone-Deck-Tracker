@@ -156,7 +156,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				{
 					Enum.TryParse(selectedLanguage.SelectedLanguage, out Locale myLang);
 					var names = deck.GetSelectedDeckVersion().Cards.ToSortedCardList()
-								.Select(c => (Cards.GetFromDbfId(c.DbfIf).GetLocName(myLang)) + (c.Count > 1 ? " x " + c.Count : ""))
+								.Select(c => (Cards.GetFromDbfId(c.DbfId).GetLocName(myLang)) + (c.Count > 1 ? " x " + c.Count : ""))
 								.Aggregate((c, n) => c + Environment.NewLine + n);
 
 					Clipboard.SetDataObject(names);
