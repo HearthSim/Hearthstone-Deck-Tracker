@@ -601,7 +601,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				.OrderBy(x => x.ZonePosition)
 				.Select(entity =>
 				{
-					var id = entity.Card?.Id;
+					var dbfId = entity.Card?.DbfId;
 					var abilityCards = new List<(Card, bool)>();
 					var actualAbilities = player.PlayerEntities
 						.Where(x => x.GetTag(GameTag.LETTUCE_ABILITY_OWNER) == entity.Id
@@ -610,8 +610,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 									&& x.HasCardId
 									&& x.Card != null)
 						.ToList();
-					var staticAbilities = id != null ? Remote.Mercenaries.Data?
-						.FirstOrDefault(x => x.ArtVariationIds.Contains(id))?.Abilities ?? new List<RemoteData.MercenaryAbility>() : new List<RemoteData.MercenaryAbility>();
+					var staticAbilities = dbfId != null ? Remote.Mercenaries.Data?
+						.FirstOrDefault(x => x.ArtVariationIds.Contains(dbfId.Value))?.Specializations.FirstOrDefault()?.Abilities ?? new List<RemoteData.MercenaryAbility>() : new List<RemoteData.MercenaryAbility>();
 
 					var data = new List<MercAbilityData>();
 					var max = Math.Min(3, Math.Max(staticAbilities.Count, actualAbilities.Count));
@@ -619,7 +619,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 					{
 						var staticAbility = staticAbilities.ElementAtOrDefault(i);
 						var actual = staticAbility != null
-							? actualAbilities.FirstOrDefault(x => staticAbility.TierDbfIds.Contains(x.CardId))
+							? actualAbilities.FirstOrDefault(x => staticAbility.Tiers.Any(t => t.DbfId == x.Card?.DbfId))
 							: actualAbilities.FirstOrDefault(x => data.All(d => (d.Entity?.CardId ?? d.Card?.Id) != x.CardId));
 						if(actual != null)
 						{
@@ -629,11 +629,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						}
 						else if(staticAbility != null)
 						{
-							var card = actual?.Card ?? Database.GetCardFromId(staticAbility.TierDbfIds.LastOrDefault());
+							var card = actual?.Card ?? Database.GetCardFromDbfId(staticAbility.Tiers.LastOrDefault()?.DbfId ?? 0, false);
 							if(card != null)
 							{
 								var gameTurn = _game.GameEntity?.GetTag(GameTag.TURN) ?? 0;
-								data.Add(new MercAbilityData() { Card = card, GameTurn = gameTurn, HasTiers = staticAbility.TierDbfIds.Count > 1 });
+								data.Add(new MercAbilityData() { Card = card, GameTurn = gameTurn, HasTiers = staticAbility.Tiers.Count > 1 });
 							}
 						}
 					}

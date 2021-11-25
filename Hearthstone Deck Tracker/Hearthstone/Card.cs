@@ -58,7 +58,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			}
 		}
 
-		// Typo - Do not remove this for Plugin Combatibility
+		// Typo - Do not remove this for Plugin combatibility
 		[XmlIgnore, Obsolete("Use DbfId instead", true)]
 		public int DbfIf => _dbCard?.DbfId ?? 0;
 

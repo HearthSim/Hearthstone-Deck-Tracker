@@ -16,8 +16,17 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("collectible")]
 			public bool Collectible { get; set; }
 
-			[JsonProperty("art_variation_ids")]
-			public List<string> ArtVariationIds { get; set; } = new List<string>();
+			[JsonProperty("skinDbfIds")]
+			public List<int> ArtVariationIds { get; set; } = new List<int>();
+
+			[JsonProperty("specializations")]
+			public List<MercenarySpecialization> Specializations { get; set; } = new List<MercenarySpecialization>();
+		}
+
+		public class MercenarySpecialization
+		{
+			[JsonProperty("id")]
+			public int Id { get; set; }
 
 			[JsonProperty("abilities")]
 			public List<MercenaryAbility> Abilities { get; set; } = new List<MercenaryAbility>();
@@ -28,8 +37,17 @@ namespace Hearthstone_Deck_Tracker.Utility.RemoteData
 			[JsonProperty("id")]
 			public int Id { get; set; }
 
-			[JsonProperty("tier_ids")]
-			public List<string> TierDbfIds { get; set; } = new List<string>();
+			[JsonProperty("tiers")]
+			public List<MercenaryAbilityTier> Tiers { get; set; } = new List<MercenaryAbilityTier>();
+		}
+
+		public class MercenaryAbilityTier
+		{
+			[JsonProperty("tier")]
+			public int Tier { get; set; }
+
+			[JsonProperty("dbf_id")]
+			public int DbfId { get; set; }
 		}
 	}
 }
