@@ -1,3 +1,6 @@
+## **Release v1.16.10 - 2021-11-30**
+**Updated for Hearthstone 22.0.0**
+
 ## **Release v1.16.9 - 2021-11-19**
 **Fixes**
 - Fixed an issue where importing Duels decks was not working correctly.
