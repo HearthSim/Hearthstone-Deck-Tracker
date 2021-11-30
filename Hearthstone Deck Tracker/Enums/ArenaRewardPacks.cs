@@ -63,5 +63,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_Stormwind")]
 		Stormwind = CardSet.STORMWIND,
+
+		[LocDescription("Enum_ArenaRewardPacks_Alterac")]
+		AlteracValley = CardSet.ALTERAC_VALLEY,
 	}
 }

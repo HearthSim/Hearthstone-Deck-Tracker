@@ -66,5 +66,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		CLASSIC = 1646,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Stormwind")]
 		STROMWIND = 1578,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Alterac")]
+		ALTERAD_VALLUY = 1626,
 	}
 }
