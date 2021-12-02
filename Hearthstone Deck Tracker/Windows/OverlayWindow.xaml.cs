@@ -341,7 +341,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void ShowTimers()
 			=>
 				LblPlayerTurnTime.Visibility = LblOpponentTurnTime.Visibility = LblTurnTime.Visibility
-				= (Config.Instance.HideTimers || _game.IsBattlegroundsMatch) ? Hidden : Visible;
+				= (Config.Instance.HideTimers || _game.IsBattlegroundsMatch || _game.IsMercenariesMatch) ? Hidden : Visible;
 
 		public void ShowSecrets(List<Card> secrets, bool force = false)
 		{
