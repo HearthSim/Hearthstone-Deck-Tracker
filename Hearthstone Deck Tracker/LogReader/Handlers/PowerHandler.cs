@@ -680,6 +680,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Rogue.LoanShark:
 								AddKnownCardId(gameState, NonCollectible.Neutral.TheCoinCore);
 								break;
+							case Collectible.Warlock.SeedsOfDestruction:
+								AddKnownCardId(gameState, NonCollectible.Warlock.DreadlichTamsin_FelRiftToken, 3);
+								break;
+							case Collectible.Mage.BuildASnowman:
+								AddKnownCardId(gameState, NonCollectible.Mage.BuildaSnowman_BuildASnowbruteToken);
+								break;
+							case Collectible.Warrior.Scrapsmith:
+								AddKnownCardId(gameState, NonCollectible.Warrior.Scrapsmith_ScrappyGruntToken);
+								break;
+							case Collectible.Neutral.RamCommander:
+								AddKnownCardId(gameState, NonCollectible.Neutral.RamCommander_BattleRamToken);
+								break;
 
 							default:
 								if(playerEntity.Value != null && playerEntity.Value.GetTag(GameTag.CURRENT_PLAYER) == 1
