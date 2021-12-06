@@ -390,11 +390,20 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 				if(Game.OpponentSecretCount > 1)
 					await Game.GameTime.WaitForDuration(MultiSecretResolveDelay);
 
-				exclude.Add(Mage.Counterspell);
+				// Counterspell/Ice trap order may matter in rare edge cases where both are in play.
+				// This is currently not handled.
 
+				exclude.Add(Mage.Counterspell);
 				if(_triggeredSecrets.FirstOrDefault(x => x.CardId != null && Mage.Counterspell == x.CardId) != null)
 				{
-					Exclude(exclude);
+					Exclude(new List<MultiIdCard> { Mage.Counterspell });
+					return;
+				}
+
+				exclude.Add(Hunter.IceTrap);
+				if(_triggeredSecrets.FirstOrDefault(x => x.CardId != null && Hunter.IceTrap == x.CardId) != null)
+				{
+					Exclude(new List<MultiIdCard> { Hunter.IceTrap });
 					return;
 				}
 

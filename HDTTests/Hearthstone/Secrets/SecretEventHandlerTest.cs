@@ -335,7 +335,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_game.SecretsManager.HandleCardPlayed(_playerSpell1, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.Spellbender, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
@@ -346,7 +346,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
@@ -358,7 +358,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_opponentMinion1.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_game.SecretsManager.HandleCardPlayed(_playerSpell2, "");
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
-			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.CatTrick, HunterSecrets.IceTrap);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Counterspell, MageSecrets.ManaBind, MageSecrets.NetherwindPortal);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.NeverSurrender, PaladinSecrets.OhMyYogg);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.DirtyTricks);
