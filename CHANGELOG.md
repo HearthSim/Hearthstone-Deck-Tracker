@@ -1,3 +1,10 @@
+## **Release v1.16.11 - 2021-12-06**
+**Fixes**:
+- Fixed an issue where the turn timer could be visible during Mercenaries games.
+
+**Changes**:
+- Added support for Alterac Valley cards.
+
 ## **Release v1.16.10 - 2021-11-30**
 **Updated for Hearthstone 22.0.0**
 
