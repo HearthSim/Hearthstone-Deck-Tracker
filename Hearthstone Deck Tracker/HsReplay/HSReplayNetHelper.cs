@@ -31,6 +31,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 			};
 			MercenariesCollectionUploaded += () =>
 			{
+				ToastManager.ShowMercenariesCollectionUpdatedToast();
 				Influx.OnMercenariesCollectionSynced(true);
 			};
 			CollectionUploadError += () => Influx.OnCollectionSynced(false);

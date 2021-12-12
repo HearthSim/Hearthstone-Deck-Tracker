@@ -30,6 +30,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Toasts
 			ShowToast(new ToastHelper(new CollectionUploadedToast()));
 		}
 
+		internal static void ShowMercenariesCollectionUpdatedToast()
+		{
+			ShowToast(new ToastHelper(new MercenariesCollectionUploadedToast()));
+		}
+
 		internal static void ShowGameResultToast(string deckName, GameStats game)
 		{
 			if(game == null)
