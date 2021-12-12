@@ -29,7 +29,12 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 				ToastManager.ShowCollectionUpdatedToast();
 				Influx.OnCollectionSynced(true);
 			};
+			MercenariesCollectionUploaded += () =>
+			{
+				Influx.OnMercenariesCollectionSynced(true);
+			};
 			CollectionUploadError += () => Influx.OnCollectionSynced(false);
+			MercenariesCollectionUploadError += () => Influx.OnMercenariesCollectionSynced(false);
 			BlizzardAccountClaimed += Influx.OnBlizzardAccountClaimed;
 			AuthenticationError += Influx.OnOAuthLoginComplete;
 			Authenticating += authenticating =>
@@ -42,7 +47,9 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 		}
 
 		public static event Action? CollectionUploaded;
+		public static event Action? MercenariesCollectionUploaded;
 		public static event Action? CollectionUploadError;
+		public static event Action? MercenariesCollectionUploadError;
 		public static event Action? CollectionUploadThrottled;
 		public static event Action? CollectionAlreadyUpToDate;
 		public static event Action<bool>? Authenticating;
@@ -208,6 +215,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 					Account.Instance.MercenariesCollectionState[account] = new Account.SyncState(hash);
 					Account.Save();
 					Log.Debug("Mercenaries collection synced");
+					MercenariesCollectionUploaded?.Invoke();
 				}
 				else
 				{
@@ -215,6 +223,7 @@ namespace Hearthstone_Deck_Tracker.HsReplay
 						"Could not update your Mercenaries collection. Please try again later.\n"
 						+ "If this problem persists please try logging out and back in"
 						+ " under 'options > hsreplay.net > my account'");
+					MercenariesCollectionUploadError?.Invoke();
 				}
 			}, () =>
 			{

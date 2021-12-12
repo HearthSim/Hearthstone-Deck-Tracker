@@ -178,6 +178,15 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			WritePoint(point.Build());
 		}
 
+		public static void OnMercenariesCollectionSynced(bool success)
+		{
+			if(!Config.Instance.GoogleAnalytics)
+				return;
+			var point = new InfluxPointBuilder("hdt_collection_syncing_mercenaries_uploaded")
+				.Tag("success", success);
+			WritePoint(point.Build());
+		}
+
 		public static void OnCollectionSyncingEnabled(bool enabled)
 		{
 			if(!Config.Instance.GoogleAnalytics)
