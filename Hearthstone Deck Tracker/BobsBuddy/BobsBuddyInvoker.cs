@@ -512,7 +512,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		{
 			if(_defendingHero == null || _attackingHero == null)
 				return LethalResult.NoOneDied;
-			if(_attackingHero.Attack >= _defendingHero.Health)
+			var totalDefenderHealth = _defendingHero.Health + _defendingHero.GetTag(GameTag.ARMOR);
+			if(_attackingHero.Attack >= totalDefenderHealth)
 			{
 				if(_attackingHero.IsControlledBy(_game.Player.Id))
 					return LethalResult.OpponentDied;
