@@ -575,12 +575,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					return;
 				}
 
-				if(_turn > 5)
+				// There should never be relevant lethals this early in the game.
+				// These missed lethals are likely caused by some bug.
+				if(_turn <= 5)
 				{
-					terminalCase = true;
-					if(ReportErrors)
-						AlertWithLastInputOutput(lethalResult.ToString());
+					DebugLog($"There should not be missed lethals on turn ${_turn}, this is probably a bug. This won't be reported.");
+					return;
 				}
+
+				terminalCase = true;
+				if(ReportErrors)
+					AlertWithLastInputOutput(lethalResult.ToString());
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
