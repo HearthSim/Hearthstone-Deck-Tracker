@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using HearthDb.Enums;
 using HearthMirror.Objects;
@@ -15,7 +14,6 @@ using Hearthstone_Deck_Tracker.HsReplay;
 using Hearthstone_Deck_Tracker.Live;
 using Hearthstone_Deck_Tracker.Stats;
 using Hearthstone_Deck_Tracker.Utility.Logging;
-using Hearthstone_Deck_Tracker.Utility.Twitch;
 using HSReplay;
 using HSReplay.OAuth.Data;
 
@@ -34,7 +32,6 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BattlegroundRatingInfo? _battlegroundsRatingInfo;
 		private MercenariesRatingInfo? _mercenariesRatingInfo;
 		private BattlegroundsBoardState? _battlegroundsBoardState;
-		Regex BattlegroundsHeroRegex = new Regex(@"(TB_BaconShop_HERO_\d\d)|(BG20_HERO_\d\d)");
 
 		public GameV2()
 		{
@@ -321,8 +318,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			return (GameEntity?.GetTag(GameTag.TURN) + 1) / 2 ?? 0;
 		}
 
-		//We do count+1 because if you're playing against an opponent it will count their hero in play and the hero in the hero list, so instead we only count the heroes in the hero list and add 1 for the player hero.
-		public int BattlegroundsHeroCount() => Entities.Values.Where(x => x.IsHero && BattlegroundsHeroRegex.IsMatch(x.CardId) && x.IsInSetAside).Count()+1;
+		//We do count+1 because the friendly hero is not in setaside
+		public int BattlegroundsHeroCount() => Entities.Values.Where(x => x.IsHero && x.IsInSetAside && x.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED)).Count()+1;
 
 
 		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState?.SnapshotCurrentBoard();
