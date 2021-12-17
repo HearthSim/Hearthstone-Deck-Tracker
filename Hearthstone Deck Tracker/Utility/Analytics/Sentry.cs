@@ -166,7 +166,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			public Region Region { get; set; }
 
 			public List<string>? Log { get; set; }
-			public string Replay => $"https://hsreplay.net/replay/{ShortId}#turn={Turn}b";
+			public string Replay => $"https://hsreplay.net/replay_debug/{ShortId}#turn={Turn}b";
 
 			public bool CanRemoveLichKing { get; set; }
 		}
