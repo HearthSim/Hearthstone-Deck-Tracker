@@ -1,3 +1,12 @@
+## **Release v1.16.12 - 2021-12-17**
+**Bob's Buddy**:
+- Fixed various interactions with Peggy Brittlebone.
+- Fixed an issue where various Avenge effects would trigger too often.
+- Fixed an issue where Tamsin Roame's Hero Power could target the wrong minion.
+- Fixed an issue where Impulsive Trickster would not pass on the correct amount of health when buffed.
+- Fixed an issue where Sewer Rat was not considered to have a Deathrattle effect.
+- Fixed an issue where the 15 damage cap was applied incorrectly in many cases when determining lethal rates.
+
 ## **Release v1.16.11 - 2021-12-06**
 **Fixes**:
 - Fixed an issue where the turn timer could be visible during Mercenaries games.
