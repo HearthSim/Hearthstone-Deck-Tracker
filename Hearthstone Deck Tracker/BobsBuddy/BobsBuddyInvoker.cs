@@ -378,6 +378,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			
 			input.SetHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
 
+			input.SetPlayerHandSize(_game.Player.HandCount);
+
 			input.SetupSecretsFromDbfidList(_game.Player.Secrets.Select(x => x.Card.DbfId).ToList(), true);
 
 			input.SetTurn(turn);
