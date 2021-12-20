@@ -1,3 +1,6 @@
+## **Release v1.16.13 - 2021-12-20**
+**Updated for Hearthstone 22.0.2**
+
 ## **Release v1.16.12 - 2021-12-17**
 **Bob's Buddy**:
 - Fixed various interactions with Peggy Brittlebone.
