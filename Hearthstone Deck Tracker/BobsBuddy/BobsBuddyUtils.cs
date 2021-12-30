@@ -11,7 +11,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
 	internal static class BobsBuddyUtils
 	{
-		private const string ReplicatingMenace = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantment;
+		private const string ReplicatingMenace_Normal = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantment;
 		private const string ReplicatingMenace_Golden = NonCollectible.Neutral.ReplicatingMenace_ReplicatingMenaceEnchantmentTavernBrawl;
 		private const string LivingSpores = NonCollectible.Neutral.LivingSporesToken2;
 		public const string RebornRiteEnchmantment = NonCollectible.Neutral.RebornRites_RebornRiteEnchantmentTavernBrawl;
@@ -38,16 +38,28 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(minion.golden && MinionFactory.cardIdsWithoutPremiumImplementations.Contains(entity.Info.LatestCardId))
 				minion.vanillaHealth *= 2;
 
-			// Attached Deathrattles
-			minion.mechDeathCount = attachedEntities.Count(x => x.CardId == ReplicatingMenace);
-			minion.mechDeathCountGold = attachedEntities.Count(x => x.CardId == ReplicatingMenace_Golden);
-			minion.plantDeathCount = attachedEntities.Count(x => x.CardId == LivingSpores);
+			foreach(var ent in attachedEntities)
+			{
+				switch(ent.CardId)
+				{
+					case ReplicatingMenace_Normal:
+						minion.AdditionalDeathrattles.Add(ReplicatingMenace.Deathrattle(false));
+						break;
+					case ReplicatingMenace_Golden:
+						minion.AdditionalDeathrattles.Add(ReplicatingMenace.Deathrattle(true));
+						break;
+					case LivingSpores:
+						minion.AdditionalDeathrattles.Add(GenericDeathrattles.Plants);
+						break;
+					case SneedsEnchantment:
+						minion.AdditionalDeathrattles.Add(GenericDeathrattles.SneedHeroPower);
+						break;
+				}
+			}
 
 			// Lich King hero power
 			if(attachedEntities.Any(x => x.CardId == RebornRiteEnchmantment))
 				minion.receivesLichKingPower = true;
-
-			minion.SneedsHeroPowerCount = attachedEntities.Count(x => x.CardId == SneedsEnchantment);
 
 			minion.game_id = entity.Id;
 
