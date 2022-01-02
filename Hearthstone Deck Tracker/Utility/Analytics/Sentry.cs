@@ -61,7 +61,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				return;
 
 			// Clean up data
-			testInput.RemoveSelfReferencesFromMinions();
 			output.ClearListsForReporting(); //ignoring for some temporary debugging
 
 			var msg = new SentryMessage($"BobsBuddy {BobsBuddyUtils.VersionString}: Incorrect Terminal Case: {result}");
@@ -121,7 +120,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			BobsBuddyExceptionsSent++;
 
 			// Clean up data
-			input.RemoveSelfReferencesFromMinions();
 			var data = new BobsBuddyData()
 			{
 				ShortId = "",

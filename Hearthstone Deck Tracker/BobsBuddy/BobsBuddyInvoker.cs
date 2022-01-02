@@ -262,7 +262,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					result.lossRate,
 					result.theirDeathRate,
 					result.myDeathRate,
-					result.result.Select(x => x.damage).ToList()
+					result.damageResults.ToList()
 				);
 			}
 		}
@@ -386,13 +386,18 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 			_currentOpponentSecrets = _game.Opponent.Secrets.ToList();
 
-			foreach(var m in GetOrderedMinions(_game.Player.Board).Where(e => e.IsControlledBy(_game.Player.Id)).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
-				m.AddToBackOfList(input.playerSide, simulator);
+			var playerSide = GetOrderedMinions(_game.Player.Board)
+				.Where(e => e.IsControlledBy(_game.Player.Id))
+				.Select(e => GetMinionFromEntity(simulator.MinionFactory, true, e, GetAttachedEntities(e.Id)));
+			foreach(var m in playerSide)
+				input.playerSide.Add(m);
 
-			foreach(var m in GetOrderedMinions(_game.Opponent.Board).Select(e => GetMinionFromEntity(e, GetAttachedEntities(e.Id))))
+			var opponentSide = GetOrderedMinions(_game.Opponent.Board)
+				.Where(e => e.IsControlledBy(_game.Opponent.Id))
+				.Select(e => GetMinionFromEntity(simulator.MinionFactory, false, e, GetAttachedEntities(e.Id)));
+			foreach(var m in opponentSide)
 			{
-				m.AddToBackOfList(input.opponentSide, simulator);
-
+				input.opponentSide.Add(m);
 				_currentOpponentMinions[m.game_id] = m;
 			}
 

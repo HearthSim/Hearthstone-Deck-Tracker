@@ -18,9 +18,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public const string SneedsEnchantment = NonCollectible.Neutral.Sneed_Replicate;
 		internal const string RebornRite = NonCollectible.Neutral.RebornRitesTavernBrawl;
 
-		internal static Minion GetMinionFromEntity(Entity entity, IEnumerable<Entity> attachedEntities) 
+
+		internal static Minion GetMinionFromEntity(MinionFactory minionFactory, bool player, Entity entity, IEnumerable<Entity> attachedEntities) 
 		{
-			var minion = MinionFactory.GetMinionFromCardid(entity.Info.LatestCardId);
+			var cardId = entity.Info.LatestCardId ?? "Unknown";
+			var minion = minionFactory.GetMinionFromCardid(cardId, player);
 
 			minion.baseAttack = entity.GetTag(GameTag.ATK);
 			minion.baseHealth = entity.GetTag(GameTag.HEALTH);
@@ -29,14 +31,17 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			minion.cleave = MinionFactory.cardIDsWithCleave.Contains(minion.cardID);
 			minion.poisonous = entity.HasTag(GameTag.POISONOUS);
 			minion.windfury = entity.HasTag(GameTag.WINDFURY);
-			minion.megaWindfury = entity.HasTag(GameTag.MEGA_WINDFURY) || MinionFactory.cardIdsWithMegaWindfury.Contains(entity.CardId);
+			minion.megaWindfury = entity.HasTag(GameTag.MEGA_WINDFURY) || MinionFactory.cardIdsWithMegaWindfury.Contains(cardId);
 			minion.golden = entity.HasTag(GameTag.PREMIUM);
 			minion.tier = entity.GetTag(GameTag.TECH_LEVEL);
 			minion.reborn = entity.HasTag(GameTag.REBORN);
 
 			//Vanilla health
-			if(minion.golden && MinionFactory.cardIdsWithoutPremiumImplementations.Contains(entity.Info.LatestCardId))
+			if(minion.golden && MinionFactory.cardIdsWithoutPremiumImplementations.Contains(cardId))
+			{
+				minion.vanillaAttack *= 2;
 				minion.vanillaHealth *= 2;
+			}
 
 			foreach(var ent in attachedEntities)
 			{
