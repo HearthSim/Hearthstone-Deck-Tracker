@@ -1,3 +1,16 @@
+## **Release v1.16.14 - 2022-01-04**
+**Bob's Buddy**:
+- Fixed an issue where Secrets were not working.
+- Fixed an issue where Fish of N'Zoth was not copying all types of Deathrattles correctly.
+- Fixed an issue where Cattlecarp of N'Zoth was not working.
+- Fixed an issue where extra Deathrattles from Baron Rivendare would resolve too early.
+- Fixed an issue where Avenge effects would resolve too early.
+- Fixed an issue where golden Impulsive Trickster would always target the same minion twice.
+- Fixed an issue where Grease Bot would buff the target before damage was dealt.
+- Fixed an issue with the interaction between Greybough's Hero Power and Khadgar.
+- Fixed an issue where Prestor's Pyrospawn woud trigger on non-dragon minions and itself.
+- Fixed an issue where the 15 damage cap was still applied incorrectly in many cases when determining lethal rates.
+
 ## **Release v1.16.13 - 2021-12-20**
 **Updated for Hearthstone 22.0.2**
 

@@ -4,7 +4,7 @@
     <AssemblyTitle>HearthWatcher</AssemblyTitle>
     <Company>HearthSim</Company>
     <Product>HearthWatcher</Product>
-    <Copyright>Copyright © HearthSim 2021</Copyright>
+    <Copyright>Copyright © HearthSim 2022</Copyright>
     <Platforms>x86</Platforms>
     <PlatformTarget>x86</PlatformTarget>
     <Prefer32Bit>true</Prefer32Bit>
