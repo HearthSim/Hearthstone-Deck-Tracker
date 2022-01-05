@@ -1,6 +1,5 @@
-## **Release v1.16.15 - 2022-01-04**
+## **Release v1.16.16 - 2022-01-04**
 **Bob's Buddy**:
-- Fixed an issue where Secrets were not working.
 - Fixed an issue where Fish of N'Zoth was not copying all types of Deathrattles correctly.
 - Fixed an issue where Cattlecarp of N'Zoth was not working.
 - Fixed an issue where extra Deathrattles from Baron Rivendare would resolve too early.
