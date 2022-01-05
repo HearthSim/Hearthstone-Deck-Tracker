@@ -24,7 +24,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 	{
 		private const int Iterations = 10_000;
 		private const int StateChangeDelay = 500;
-		private const int HeroPowerTriggerTimeout = 5000;
 		private const int MaxTime = 1_500;
 		private const int MaxTimeForComplexBoards = 3_000;
 		private const int MinimumSimulationsToReportSentry = 2500;
@@ -267,7 +266,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 		}
 
-		public async Task StartShoppingAsync(bool validateResults)
+		public async Task StartShoppingAsync()
 		{
 			try
 			{
@@ -295,8 +294,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					await RunAndDisplaySimulationAsync();
 				}
 
-				if(validateResults)
-					ValidateSimulationResultAsync().Forget();
+				ValidateSimulationResultAsync().Forget();
 			}
 			catch(Exception e)
 			{
@@ -561,6 +559,12 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			var lethalResult = GetLastLethalResult();
 
 			DebugLog($"result={result}, lethalResult={lethalResult}");
+
+			if(lethalResult == LethalResult.FriendlyDied && (_game.CurrentGameStats?.WasConceded ?? false))
+			{
+				DebugLog($"Game was conceded. Not reporting.");
+				return;
+			}
 
 			var terminalCase = false;
 
