@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Utility.HotKeys
 						                               var attr =
 							                               ((PredefinedHotKeyActionAttribute)
 							                                x.GetCustomAttributes(typeof(PredefinedHotKeyActionAttribute), false)[0]);
-													   return new PredefinedHotKeyActionInfo(x.Name, attr.Title, attr.Description);
+													   return new PredefinedHotKeyActionInfo(attr.Title, attr.Description, x.Name);
 					                               });
 			}
 		}
