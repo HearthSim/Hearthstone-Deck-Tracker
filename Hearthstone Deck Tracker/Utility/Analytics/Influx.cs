@@ -251,7 +251,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			_lastMainWindowActivation = null;
 		}
 
-		public static void OnBobsBuddySimulationCompleted(CombatResult result, TestOutput output, int turn, bool terminalCase, bool removedLichKingHeroPowerFromMinion)
+		public static void OnBobsBuddySimulationCompleted(CombatResult result, Output output, int turn, bool terminalCase, bool removedLichKingHeroPowerFromMinion)
 		{
 			if(!Config.Instance.GoogleAnalytics)
 				return;

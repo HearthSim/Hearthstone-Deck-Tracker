@@ -52,7 +52,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 		private static int BobsBuddyExceptionsSent;
 		private static Queue<SentryEvent> BobsBuddyEvents = new Queue<SentryEvent>();
 
-		public static void QueueBobsBuddyTerminalCase(TestInput testInput, TestOutput output, string result, int turn, List<string> debugLog, Region region)
+		public static void QueueBobsBuddyTerminalCase(Input testInput, Output output, string result, int turn, List<string> debugLog, Region region)
 		{
 			if(BobsBuddyEventsSent >= MaxBobsBuddyEvents)
 				return;
@@ -111,7 +111,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			}
 		}
 
-		public static void CaptureBobsBuddyException(Exception ex, TestInput? input, int turn, List<string> debugLog)
+		public static void CaptureBobsBuddyException(Exception ex, Input? input, int turn, List<string> debugLog)
 		{
 			if(BobsBuddyExceptionsSent >= MaxBobsBuddyExceptions)
 				return;
@@ -158,8 +158,8 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 			public int ThreadCount { get; set; }
 			public int Iterations { get; set; }
 			public string? ExitCondition { get; set; }
-			public TestInput? Input { get; set; }
-			public TestOutput? Output { get; set; }
+			public Input? Input { get; set; }
+			public Output? Output { get; set; }
 
 			public Region Region { get; set; }
 

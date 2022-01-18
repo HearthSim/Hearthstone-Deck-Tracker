@@ -36,7 +36,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static BobsBuddyPanel BobsBuddyDisplay => Core.Overlay.BobsBuddyDisplay;
 		private static bool ReportErrors => Remote.Config.Data?.BobsBuddy?.SentryReporting ?? false;
 
-		private TestInput? _input;
+		private Input? _input;
 		private int _turn;
 		static int LogLinesKept = Remote.Config.Data?.BobsBuddy?.LogLinesKept ?? 100;
 		public string OpponentCardId = "";
@@ -102,7 +102,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		}
 
 
-		public TestOutput? Output { get; private set; }
+		public Output? Output { get; private set; }
 
 		public BobsBuddyErrorState ErrorState { get; private set; }
 
@@ -329,7 +329,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			DebugLog("Snapshotting board state...");
 			LastAttackingHero = null;
 			var simulator = new Simulator();
-			var input = new TestInput(simulator);
+			var input = new Input(simulator);
 
 			if(_game.Player.Board.Any(IsUnknownCard) || _game.Opponent.Board.Any(IsUnknownCard))
 			{
@@ -404,7 +404,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				.Where(x => x.IsAttachedTo(entityId) && (x.IsInPlay || x.IsInSetAside || x.IsInGraveyard))
 				.Select(x => x.Clone());
 
-		private async Task<TestOutput?> RunSimulation()
+		private async Task<Output?> RunSimulation()
 		{
 			DebugLog("Running simulations...");
 			if(_input == null)
@@ -607,7 +607,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			|| result == LethalResult.OpponentDied && Output?.theirDeathRate == 0;
 
 		private bool OpposingKelThuzadDied(LethalResult result)
-			=> result == LethalResult.OpponentDied && _input != null && _input.OpponentIsKelThuzad();
+			=> result == LethalResult.OpponentDied && _input != null && _input.opponentPowerID == HeroPowers.KelThuzadPowerID;
 
 		private void AlertWithLastInputOutput(string result)
 		{
