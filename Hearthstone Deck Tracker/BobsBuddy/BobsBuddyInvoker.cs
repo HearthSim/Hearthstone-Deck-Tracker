@@ -183,8 +183,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				if(CanRemoveLichKing)
 				{
 					var lichKingMinions = new List<Minion>();
-					var playerLichMinions = _input?.opponentSide.Where(x => x.receivesLichKingPower).ToList() ?? new List<Minion>();
-					var opponentLichMinions = _input?.playerSide.Where(x => x.receivesLichKingPower).ToList() ?? new List<Minion>();
+					var playerLichMinions = _input?.playerSide.Where(x => x.receivesLichKingPower).ToList() ?? new List<Minion>();
+					var opponentLichMinions = _input?.opponentSide.Where(x => x.receivesLichKingPower).ToList() ?? new List<Minion>();
 					lichKingMinions.AddRange(playerLichMinions);
 					lichKingMinions.AddRange(opponentLichMinions);
 					if(lichKingMinions.Any())
