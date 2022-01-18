@@ -8,7 +8,6 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Controls.Overlay;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 using static HearthDb.CardIds;
@@ -47,7 +46,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		public Entity? LastAttackingHero = null;
 		public int LastAttackingHeroAttack;
 		private static List<string> _recentHDTLog = new List<string>();
-		private static Dictionary<int, Minion> _currentOpponentMinions = new Dictionary<int, Minion>();
 		private static List<Entity> _currentOpponentSecrets = new List<Entity>();
 
 		private static Guid _currentGameId;
@@ -236,7 +234,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 
 		private async Task RunAndDisplaySimulationAsync()
 		{
-			_currentOpponentMinions.Clear();
 			DebugLog("Running simulation...");
 			BobsBuddyDisplay.HidePercentagesShowSpinners();
 			var result = await RunSimulation();
@@ -394,7 +391,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			foreach(var m in opponentSide)
 			{
 				input.opponentSide.Add(m);
-				_currentOpponentMinions[m.game_id] = m;
 			}
 
 			_input = input;
