@@ -1,3 +1,11 @@
+## **Release v1.16.17 - 2022-01-18**
+**Fixes**:
+- Fixed an issue where hotkeys were not working correctly.
+
+**Bob's Buddy**:
+- Fixed an issue where Mechano-Tank would target the wrong minion.
+- Fixed various issues related to resolution order of effects.
+
 ## **Release v1.16.16 - 2022-01-04**
 **Bob's Buddy**:
 - Fixed an issue where Fish of N'Zoth was not copying all types of Deathrattles correctly.
