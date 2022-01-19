@@ -1,3 +1,7 @@
+## **Release v1.17.0 - 2022-01-19**
+**New**:
+- You can now view your [Mercenaries Collection on HSReplay.net](https://hsreplay.net/mercenaries/collection/mine/?utm_source=hdt&utm_medium=client&utm_campaign=update_notes)
+
 ## **Release v1.16.19 - 2022-01-18**
 **Fixes**:
 - Fixed an issue where hotkeys were not working correctly.
