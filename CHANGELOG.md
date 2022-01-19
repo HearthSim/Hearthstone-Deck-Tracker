@@ -1,4 +1,4 @@
-## **Release v1.16.18 - 2022-01-18**
+## **Release v1.16.19 - 2022-01-18**
 **Fixes**:
 - Fixed an issue where hotkeys were not working correctly.
 
