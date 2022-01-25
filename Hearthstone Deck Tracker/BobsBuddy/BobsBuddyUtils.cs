@@ -47,9 +47,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				switch(ent.CardId)
 				{
-					case RebornRiteEnchmantment:
-						minion.receivesLichKingPower = true;
-						break;
 					case ReplicatingMenace_Normal:
 						minion.AdditionalDeathrattles.Add(ReplicatingMenace.Deathrattle(false));
 						break;

@@ -77,7 +77,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 				Output = output,
 				Log = ReverseAndClone(debugLog),
 				Region = region,
-				CanRemoveLichKing = BobsBuddyInvoker.CanRemoveLichKing
 
 			};
 
@@ -165,8 +164,6 @@ namespace Hearthstone_Deck_Tracker.Utility.Analytics
 
 			public List<string>? Log { get; set; }
 			public string Replay => $"https://hsreplay.net/replay_debug/{ShortId}#turn={Turn}b";
-
-			public bool CanRemoveLichKing { get; set; }
 		}
 	}
 }

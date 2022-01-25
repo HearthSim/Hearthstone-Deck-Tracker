@@ -51,8 +51,6 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 		private static Guid _currentGameId;
 		private static readonly Dictionary<string, BobsBuddyInvoker> _instances = new Dictionary<string, BobsBuddyInvoker>();
 		private static readonly Regex _debuglineToIgnore = new Regex(@"\|(Player|Opponent|TagChangeActions)\.");
-		private static bool _removedLichKingHeroPowerFromMinion = false;
-		public static bool CanRemoveLichKing => true;
 		private bool RunSimulationAfterCombat => _currentOpponentSecrets.Any();
 
 		public static BobsBuddyInvoker GetInstance(Guid gameId, int turn, bool createInstanceIfNoneFound = true)
@@ -178,46 +176,8 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					BobsBuddyDisplay.SetState(BobsBuddyState.Combat);
 				BobsBuddyDisplay.ResetText();
 
-				_removedLichKingHeroPowerFromMinion = false;
-
-				if(CanRemoveLichKing)
-				{
-					var lichKingMinions = new List<Minion>();
-					var playerLichMinions = _input?.playerSide.Where(x => x.receivesLichKingPower).ToList() ?? new List<Minion>();
-					var opponentLichMinions = _input?.opponentSide.Where(x => x.receivesLichKingPower).ToList() ?? new List<Minion>();
-					lichKingMinions.AddRange(playerLichMinions);
-					lichKingMinions.AddRange(opponentLichMinions);
-					if(lichKingMinions.Any())
-					{
-
-						await Task.Delay(LichKingDelay);
-						foreach(var minion in lichKingMinions)
-						{
-							if(_game.Entities.TryGetValue(minion.game_id, out var entity) && entity != null)
-							{
-								var attatchedEntities = GetAttachedEntities(minion.game_id);
-								if(!attatchedEntities.Any(x => x.CardId == RebornRiteEnchmantment))
-								{
-									minion.receivesLichKingPower = false;
-									_removedLichKingHeroPowerFromMinion = true;
-								}
-
-							}
-						}
-					}
-					if(playerLichMinions.Any() && _input?.PlayerHeroPower.IsActivated == false)
-					{
-						_removedLichKingHeroPowerFromMinion = true;
-						foreach(var minion in playerLichMinions)
-							minion.receivesLichKingPower = false;
-					}
-					if(opponentLichMinions.Any() && _input?.OpponentHeroPower.IsActivated == false)
-					{
-						_removedLichKingHeroPowerFromMinion = true;
-						foreach(var minion in opponentLichMinions)
-							minion.receivesLichKingPower = false;
-					}
-				}
+				if(_input != null && ((_input.PlayerHeroPower.CardId == RebornRite && _input.PlayerHeroPower.IsActivated) || (_input.OpponentHeroPower.CardId == RebornRite && _input.OpponentHeroPower.IsActivated)))
+					await Task.Delay(LichKingDelay);
 
 				if(!RunSimulationAfterCombat)
 					RunAndDisplaySimulationAsync().Forget();
@@ -593,7 +553,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			}
 
 			if (metricSampling > 0 && _rnd.NextDouble() < metricSampling)
-				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, terminalCase, _removedLichKingHeroPowerFromMinion);
+				Influx.OnBobsBuddySimulationCompleted(result, Output, _turn, terminalCase);
 		}
 
 		private bool IsIncorrectCombatResult(CombatResult result)
