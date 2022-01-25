@@ -47,6 +47,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			{
 				switch(ent.CardId)
 				{
+					case RebornRiteEnchmantment:
+						minion.receivesLichKingPower = true;
+						break;
 					case ReplicatingMenace_Normal:
 						minion.AdditionalDeathrattles.Add(ReplicatingMenace.Deathrattle(false));
 						break;
@@ -59,19 +62,30 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					case SneedsEnchantment:
 						minion.AdditionalDeathrattles.Add(GenericDeathrattles.SneedHeroPower);
 						break;
+					case NonCollectible.Neutral.Brukan_ElementEarth:
+						minion.AdditionalDeathrattles.Add(BrukanInvocationDeathrattles.Earth);
+						break;
+					case NonCollectible.Neutral.Brukan_EarthRecollection:
+						minion.AdditionalDeathrattles.Add(BrukanInvocationDeathrattles.Earth);
+						break;
+					case NonCollectible.Neutral.Brukan_FireRecollection:
+						minion.AdditionalDeathrattles.Add(BrukanInvocationDeathrattles.Fire);
+						break;
+					case NonCollectible.Neutral.Brukan_WaterRecollection:
+						minion.AdditionalDeathrattles.Add(BrukanInvocationDeathrattles.Water);
+						break;
+					case NonCollectible.Neutral.Brukan_LightningRecollection:
+						minion.AdditionalDeathrattles.Add(BrukanInvocationDeathrattles.Lightning);
+						break;
 				}
 			}
-
-			// Lich King hero power
-			if(attachedEntities.Any(x => x.CardId == RebornRiteEnchmantment))
-				minion.receivesLichKingPower = true;
 
 			minion.game_id = entity.Id;
 
 			return minion;
 		}
 
-		internal static bool HeroPowerUsed(Entity? heroPower)
+		internal static bool WasHeroPowerActivated(Entity? heroPower)
 			=> heroPower != null && (heroPower.HasTag(GameTag.EXHAUSTED) || heroPower.HasTag(GameTag.BACON_HERO_POWER_ACTIVATED));
 
 		internal static IOrderedEnumerable<Entity> GetOrderedMinions(IEnumerable<Entity> board)

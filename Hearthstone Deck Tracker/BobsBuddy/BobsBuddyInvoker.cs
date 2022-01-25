@@ -205,13 +205,13 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 							}
 						}
 					}
-					if(playerLichMinions.Any() && _input?.heroPowerInfo?.PlayerActivatedPower == HeroPower.None)
+					if(playerLichMinions.Any() && _input?.PlayerHeroPower.IsActivated == false)
 					{
 						_removedLichKingHeroPowerFromMinion = true;
 						foreach(var minion in playerLichMinions)
 							minion.receivesLichKingPower = false;
 					}
-					if(opponentLichMinions.Any() && _input?.heroPowerInfo?.OpponentActivatedPower == HeroPower.None)
+					if(opponentLichMinions.Any() && _input?.OpponentHeroPower.IsActivated == false)
 					{
 						_removedLichKingHeroPowerFromMinion = true;
 						foreach(var minion in opponentLichMinions)
@@ -365,11 +365,10 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			input.SetTiers(playerTechLevel, opponentTechLevel);
 
 			var playerHeroPower = _game.Player.Board.FirstOrDefault(x => x.IsHeroPower);
+			input.SetPlayerHeroPower(playerHeroPower?.CardId ?? "", WasHeroPowerActivated(playerHeroPower), playerHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0);
+
 			var opponentHeroPower = _game.Opponent.Board.FirstOrDefault(x => x.IsHeroPower);
-		
-			input.SetPowerID(playerHeroPower?.CardId ?? "", opponentHeroPower?.CardId ?? "");
-			
-			input.SetHeroPower(HeroPowerUsed(playerHeroPower), HeroPowerUsed(opponentHeroPower));
+			input.SetOpponentHeroPower(opponentHeroPower?.CardId ?? "", WasHeroPowerActivated(opponentHeroPower), opponentHeroPower?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0);
 
 			input.SetPlayerHandSize(_game.Player.HandCount);
 
@@ -422,11 +421,11 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 				}
 
 				DebugLog("----- Simulation Input -----");
-				DebugLog($"Player: heroPower={_input.playerPowerID}, used={_input.heroPowerInfo?.PlayerActivatedPower}");
+				DebugLog($"Player: heroPower={_input.PlayerHeroPower.CardId}, used={_input.PlayerHeroPower.IsActivated}");
 				foreach(var minion in _input.playerSide)
 					DebugLog(minion.ToString());
 
-				DebugLog($"Opponent: heroPower={_input.opponentPowerID}, used={_input.heroPowerInfo?.OpponentActivatedPower}");
+				DebugLog($"Opponent: heroPower={_input.OpponentHeroPower.CardId}, used={_input.OpponentHeroPower.IsActivated}");
 				foreach(var minion in _input.opponentSide)
 					DebugLog(minion.ToString());
 
@@ -574,7 +573,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			if(IsIncorrectLethalResult(lethalResult) && !OpposingKelThuzadDied(lethalResult))
 			{
 				// Akazamzarak hero power - secrets are supported but not for lethal.
-				if(_input?.opponentPowerID == NonCollectible.Neutral.PrestidigitationTavernBrawl)
+				if(_input?.OpponentHeroPower.CardId == NonCollectible.Neutral.PrestidigitationTavernBrawl)
 				{
 					DebugLog("Opponent was Akazamarak. Currently not reporting lethal results. Exiting.");
 					return;
@@ -607,7 +606,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 			|| result == LethalResult.OpponentDied && Output?.theirDeathRate == 0;
 
 		private bool OpposingKelThuzadDied(LethalResult result)
-			=> result == LethalResult.OpponentDied && _input != null && _input.opponentPowerID == HeroPowers.KelThuzadPowerID;
+			=> result == LethalResult.OpponentDied && _input != null && _input.OpponentHeroPower.CardId == HeroPowerIds.KelThuzad;
 
 		private void AlertWithLastInputOutput(string result)
 		{
