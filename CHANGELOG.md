@@ -1,3 +1,10 @@
+## **Release v1.17.1 - 2022-01-25**
+**Updated for Hearthstone 22.2.0**
+
+**Bob's Buddy**:
+- Added initial support for all Buddies. Fixes for any issues related to Buddies will follow shortly.
+
+
 ## **Release v1.17.0 - 2022-01-19**
 **New**:
 - You can now view your [Mercenaries Collection on HSReplay.net](https://hsreplay.net/mercenaries/collection/mine/?utm_source=hdt&utm_medium=client&utm_campaign=update_notes)
