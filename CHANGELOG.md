@@ -1,10 +1,16 @@
+## **Release v1.17.3 - 2022-01-25**
+**Bob's Buddy**:
+- Fixed various issues related to Spirit Raptor, Sr. Tomb Diver, Elementium Squirrel Bomb, and Arfus.
+- Fixed an issue with the interaction between Rafaam's Hero Power and Peggy Brittlebone.
+- Fixed an issue where deaths of multiple Scallywags were not resolved in the correct order in specific edge cases.
+
 ## **Release v1.17.2 - 2022-01-25**
 **Bob's Buddy**:
 - Fixed various issues related to Spirit Raptor, Baby Y'Shaarj, Sr. Tomb Diver and Eclipsion Illidari.
 - Fixed an issue with the resolution order of Bru'Kan's Hero Power.
 - Fixed an issue with the interaction between golden Tarecgosa and Whelp Smuggler.
 - Fixed an issue introduced in today's update where Fragrant Phylactery would trigger without being activated.
-- Known issue: Piloted Whirl-O-Tron is not yet implementd.
+- Known issue: Piloted Whirl-O-Tron is not yet implemented.
 
 ## **Release v1.17.1 - 2022-01-25**
 **Updated for Hearthstone 22.2.0**
