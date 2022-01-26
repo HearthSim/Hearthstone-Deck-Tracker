@@ -60,7 +60,7 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 						minion.AdditionalDeathrattles.Add(GenericDeathrattles.SneedHeroPower);
 						break;
 					case NonCollectible.Neutral.Brukan_ElementEarth:
-						minion.AdditionalDeathrattles.Add(BrukanInvocationDeathrattles.Earth);
+						minion.AdditionalDeathrattles.Add(GenericDeathrattles.EarthInvocationDeathrattle);
 						break;
 					case NonCollectible.Neutral.Brukan_EarthRecollection:
 						minion.AdditionalDeathrattles.Add(BrukanInvocationDeathrattles.Earth);
