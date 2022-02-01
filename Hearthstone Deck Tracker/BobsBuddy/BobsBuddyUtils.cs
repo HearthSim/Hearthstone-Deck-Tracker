@@ -74,6 +74,9 @@ namespace Hearthstone_Deck_Tracker.BobsBuddy
 					case NonCollectible.Neutral.Brukan_LightningRecollection:
 						minion.AdditionalDeathrattles.Add(BrukanInvocationDeathrattles.Lightning);
 						break;
+					case NonCollectible.Demonhunter.Wingmen_WingmenEnchantmentTavernBrawl:
+						minion.HasWingmen = true;
+						break;
 				}
 			}
 
