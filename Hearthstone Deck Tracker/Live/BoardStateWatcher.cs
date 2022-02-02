@@ -77,7 +77,7 @@ namespace Hearthstone_Deck_Tracker.Live
 			};
 		}
 
-		private int DbfId(Entity e)
+		private int DbfId(Entity? e)
 		{
 			if(e == null)
 				return 0;
@@ -95,9 +95,9 @@ namespace Hearthstone_Deck_Tracker.Live
 
 		private int WeaponId(Entity playerEntity) => playerEntity.GetTag(GameTag.WEAPON);
 
-		private Entity Find(Player p, int entityId) => p.PlayerEntities.FirstOrDefault(x => x.Id == entityId);
+		private Entity? Find(Player p, int entityId) => p.PlayerEntities.FirstOrDefault(x => x.Id == entityId);
 
-		private Entity FindHeroPower(Player p) => p.PlayerEntities.FirstOrDefault(x => x.IsHeroPower && x.IsInPlay);
+		private Entity? FindHeroPower(Player p) => p.PlayerEntities.FirstOrDefault(x => x.IsHeroPower && x.IsInPlay);
 
 		private BoardStateQuest? Quest(Entity questEntity)
 		{
@@ -109,6 +109,15 @@ namespace Hearthstone_Deck_Tracker.Live
 				Progress = questEntity.GetTag(GameTag.QUEST_PROGRESS),
 				Total = questEntity.GetTag(GameTag.QUEST_PROGRESS_TOTAL)
 			};
+		}
+
+		private int? BuddyDbfId(Player player)
+		{
+			var hero = player.Board.FirstOrDefault(x => x.IsHero);
+			var buddyDbfId = hero?.GetTag(GameTag.BACON_COMPANION_ID);
+			if(buddyDbfId == 0)
+				return null;
+			return buddyDbfId;
 		}
 
 		private BoardState? GetBoardState()
@@ -164,7 +173,7 @@ namespace Hearthstone_Deck_Tracker.Live
 						Size = player.HandCount
 					},
 					HeroPower = DbfId(FindHeroPower(player)),
-					Weapon = DbfId(Find(player, WeaponId(Core.Game.PlayerEntity))),
+					Weapon = BuddyDbfId(player) ?? DbfId(Find(player, WeaponId(Core.Game.PlayerEntity))),
 					Quest = Quest(player.Quests.FirstOrDefault()),
 					Fatigue = Core.Game.PlayerEntity.GetTag(GameTag.FATIGUE)
 				},
@@ -181,7 +190,7 @@ namespace Hearthstone_Deck_Tracker.Live
 					},
 					Hero = DbfId(Find(opponent, HeroId(Core.Game.OpponentEntity))),
 					HeroPower = DbfId(FindHeroPower(opponent)),
-					Weapon = DbfId(Find(opponent, WeaponId(Core.Game.OpponentEntity))),
+					Weapon = BuddyDbfId(opponent) ?? DbfId(Find(opponent, WeaponId(Core.Game.OpponentEntity))),
 					Quest = Quest(opponent.Quests.FirstOrDefault()),
 					Fatigue = Core.Game.OpponentEntity.GetTag(GameTag.FATIGUE)
 				},
