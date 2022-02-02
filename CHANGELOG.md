@@ -1,3 +1,12 @@
+## **Release v1.17.4 - 2022-02-01**
+**Changes**:
+- The Twitch Extension now shows the Buddy when hovering the Buddy Meter in Battlegrounds.
+
+**Bob's Buddy**:
+- Tarecgosa now retains the 'Immune while attacking' buff, while the game has this behavior.
+- Fixed an issue where the additional reborn minions summond by Arfus had an incorrect amount of health.
+- Fixed an issue where attack and health values could overflow.
+
 ## **Release v1.17.3 - 2022-01-25**
 **Bob's Buddy**:
 - Fixed various issues related to Spirit Raptor, Sr. Tomb Diver, Elementium Squirrel Bomb, and Arfus.
