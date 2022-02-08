@@ -1,3 +1,9 @@
+## **Release v1.17.5 - 2022-02-08**
+**Updated for Hearthstone 22.2.2**
+
+**Fixes**:
+- Fixed an issue where the indicator for how long Battlegrounds opponents have been dead was misaligned when Hero Skins were present in the lobby.
+
 ## **Release v1.17.4 - 2022-02-01**
 **Changes**:
 - The Twitch Extension now shows the Buddy when hovering the Buddy Meter in Battlegrounds.
