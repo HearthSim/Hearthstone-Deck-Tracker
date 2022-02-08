@@ -319,7 +319,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		//We do count+1 because the friendly hero is not in setaside
-		public int BattlegroundsHeroCount() => Entities.Values.Where(x => x.IsHero && x.IsInSetAside && x.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED)).Count()+1;
+		public int BattlegroundsHeroCount() => Entities.Values.Where(x => x.IsHero && x.IsInSetAside && (x.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(GameTag.BACON_SKIN))).Count() + 1;
 
 
 		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState?.SnapshotCurrentBoard();

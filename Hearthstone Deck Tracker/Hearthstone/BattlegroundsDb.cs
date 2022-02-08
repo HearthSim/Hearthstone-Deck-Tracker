@@ -1,12 +1,9 @@
 ﻿using HearthDb;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hearthstone_Deck_Tracker.Hearthstone
 {
