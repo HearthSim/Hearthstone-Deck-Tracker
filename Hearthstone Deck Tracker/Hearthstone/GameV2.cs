@@ -319,8 +319,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		//We do count+1 because the friendly hero is not in setaside
-		public int BattlegroundsHeroCount() => Entities.Values.Where(x => x.IsHero && x.IsInSetAside && (x.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(GameTag.BACON_SKIN))).Count() + 1;
-
+		public int BattlegroundsHeroCount() => Entities.Values.Where(x =>
+			x.IsHero &&
+			x.IsInSetAside &&
+			// BACON_HERO_CAN_BE_DRAFTED and BACON_SKIN cover most cases including early disconnects,
+			// and PLAYER_TECH_LEVEL helps to account for the Aranna transformation.
+			(x.HasTag(GameTag.BACON_HERO_CAN_BE_DRAFTED) || x.HasTag(GameTag.BACON_SKIN) || x.HasTag(GameTag.PLAYER_TECH_LEVEL))
+		).Count() + 1;
 
 		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState?.SnapshotCurrentBoard();
 
