@@ -1105,7 +1105,20 @@ namespace Hearthstone_Deck_Tracker
 			}
 			Core.UpdatePlayerCards();
 			if(card != null)
-				GameEvents.OnPlayerPlay.Execute(card);
+			{
+				switch(fromZone)
+				{
+					case Zone.DECK:
+						GameEvents.OnPlayerDeckToPlay.Execute(card);
+						break;
+					case Zone.HAND:
+						GameEvents.OnPlayerPlay.Execute(card);
+						break;
+					default:
+						break;
+
+				}
+			}				
 		}
 
 		public void HandlePlayerHandDiscard(Entity entity, string cardId, int turn)
@@ -1419,7 +1432,17 @@ namespace Hearthstone_Deck_Tracker
 				return;
 			_game.SecretsManager.NewSecret(entity);
 			if(card != null)
-				GameEvents.OnOpponentPlay.Execute(card);
+			{
+				switch(fromZone)
+				{
+					case Zone.DECK:
+						GameEvents.OnOpponentDeckToPlay.Execute(card);
+						break;
+					case Zone.HAND:
+						GameEvents.OnOpponentPlay.Execute(card);
+						break;
+				}
+			}
 		}
 
 		public void HandleOpponentPlayToHand(Entity entity, string? cardId, int turn, int id)
