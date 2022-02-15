@@ -441,6 +441,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 									player.PredictUniqueCardInDeck(NonCollectible.Neutral.CThuntheShattered_HeartOfCthunToken, true);
 								}
 								break;
+							case Collectible.Priest.MidaPureLight:
+								AddKnownCardId(gameState, NonCollectible.Priest.MidaPureLight_FragmentOfMidaToken);
+								break;
+							case Collectible.Warlock.CurseOfAgony:
+								AddKnownCardId(gameState, NonCollectible.Warlock.CurseofAgony_AgonyToken, 3);
+								break;
 						}
 					}
 					else //POWER
