@@ -3,9 +3,9 @@ using System.Linq;
 using BobsBuddy;
 using BobsBuddy.Simulation;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Extensions;
 using static HearthDb.CardIds;
+using Entity = Hearthstone_Deck_Tracker.Hearthstone.Entities.Entity;
 
 namespace Hearthstone_Deck_Tracker.BobsBuddy
 {
