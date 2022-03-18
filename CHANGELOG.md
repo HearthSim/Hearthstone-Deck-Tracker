@@ -1,3 +1,7 @@
+## **Release v1.17.9 - 2022-03-18**
+**Fixes**:
+- Fixed an issue where uploading the Mercenaries collection was no longer working after patch 22.6.0.
+
 ## **Release v1.17.8 - 2022-03-17**
 **Updated for Hearthstone 22.6.0**
 
