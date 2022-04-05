@@ -10,7 +10,7 @@ namespace HDTTests.DeckImporting
 		public static readonly string[] Deck1Cards =
 		{
 			Druid.AddledGrizzly,
-			Druid.AncientOfLore,
+			Druid.AncientOfLoreExpert1,
 			Druid.AncientOfWar,
 			Druid.AnodizedRoboCub,
 			Druid.AstralCommunion,
@@ -40,7 +40,7 @@ namespace HDTTests.DeckImporting
 			Hunter.CallPet,
 			Hunter.CarrionGrub,
 			Hunter.CatTrick,
-			Hunter.CloakedHuntress,
+			Hunter.CloakedHuntressKARA,
 			Hunter.CobraShot,
 			Hunter.CoreRager,
 		};
@@ -49,11 +49,11 @@ namespace HDTTests.DeckImporting
 		{
 			Druid.DruidOfTheFlame,
 			Druid.DruidOfTheSaber,
-			Druid.EarthenScales,
+			Druid.EarthenScalesUNGORO,
 			Druid.ElderLongneck,
 			Druid.EnchantedRaven,
 			Druid.EvolvingSpores,
-			Druid.FandralStaghelm,
+			Druid.FandralStaghelmOG,
 			Druid.FeralRage,
 			Druid.ForbiddenAncient,
 			Druid.ForceOfNature,

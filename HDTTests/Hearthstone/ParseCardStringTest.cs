@@ -20,7 +20,7 @@ namespace HDTTests.Hearthstone
 		{
 			var deck = StringImporter.Import("Ragnaros, Lightlord");
 			var card = deck.Cards.FirstOrDefault();
-			Assert.AreEqual("OG_229", card.Id);
+			Assert.AreEqual("CORE_OG_229", card.Id);
 			Assert.AreEqual(1, card.Count);
 		}
 
@@ -29,7 +29,7 @@ namespace HDTTests.Hearthstone
 		{
 			var deck = StringImporter.Import("Ragnaros, Lightlord x1");
 			var card = deck.Cards.FirstOrDefault();
-			Assert.AreEqual("OG_229", card.Id);
+			Assert.AreEqual("CORE_OG_229", card.Id);
 			Assert.AreEqual(1, card.Count);
 		}
 
@@ -38,7 +38,7 @@ namespace HDTTests.Hearthstone
 		{
 			var deck = StringImporter.Import("Ragnaros, Lightlord x2");
 			var card = deck.Cards.FirstOrDefault();
-			Assert.AreEqual("OG_229", card.Id);
+			Assert.AreEqual("CORE_OG_229", card.Id);
 			Assert.AreEqual(2, card.Count);
 		}
 
@@ -47,7 +47,7 @@ namespace HDTTests.Hearthstone
 		{
 			var deck = StringImporter.Import("Ragnaros, Lightlord");
 			var card = deck.Cards.FirstOrDefault();
-			Assert.AreEqual("OG_229", card.Id);
+			Assert.AreEqual("CORE_OG_229", card.Id);
 			Assert.AreEqual(1, card.Count);
 		}
 
@@ -56,7 +56,7 @@ namespace HDTTests.Hearthstone
 		{
 			var deck = StringImporter.Import("Ragnaros, Lightlord x1");
 			var card = deck.Cards.FirstOrDefault();
-			Assert.AreEqual("OG_229", card.Id);
+			Assert.AreEqual("CORE_OG_229", card.Id);
 			Assert.AreEqual(1, card.Count);
 		}
 
@@ -65,7 +65,7 @@ namespace HDTTests.Hearthstone
 		{
 			var deck = StringImporter.Import("Ragnaros, Lightlord x2");
 			var card = deck.Cards.FirstOrDefault();
-			Assert.AreEqual("OG_229", card.Id);
+			Assert.AreEqual("CORE_OG_229", card.Id);
 			Assert.AreEqual(2, card.Count);
 		}
 	}
