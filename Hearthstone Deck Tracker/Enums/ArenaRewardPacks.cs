@@ -66,5 +66,8 @@ namespace Hearthstone_Deck_Tracker.Enums
 
 		[LocDescription("Enum_ArenaRewardPacks_Alterac")]
 		AlteracValley = CardSet.ALTERAC_VALLEY,
+
+		[LocDescription("Enum_ArenaRewardPacks_SunkenCity")]
+		SunkenCity = CardSet.THE_SUNKEN_CITY,
 	}
 }

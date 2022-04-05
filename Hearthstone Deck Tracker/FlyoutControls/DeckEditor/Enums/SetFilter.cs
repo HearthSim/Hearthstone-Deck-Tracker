@@ -68,5 +68,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.DeckEditor.Enums
 		STROMWIND = 1578,
 		[LocDescription("MainWindow_DeckBuilder_Filter_Set_Alterac")]
 		ALTERAD_VALLUY = 1626,
+		[LocDescription("MainWindow_DeckBuilder_Filter_Set_SunkenCity")]
+		THE_SUNKEN_CITY = 1658,
 	}
 }
