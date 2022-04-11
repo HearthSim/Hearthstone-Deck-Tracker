@@ -102,6 +102,7 @@ namespace Hearthstone_Deck_Tracker
 			CardSet.GILNEAS, CardSet.BOOMSDAY, CardSet.TROLL,
 			CardSet.DALARAN, CardSet.ULDUM, CardSet.DRAGONS, CardSet.YEAR_OF_THE_DRAGON, CardSet.DEMON_HUNTER_INITIATE,
 			CardSet.BASIC, CardSet.EXPERT1, CardSet.LEGACY,
+			CardSet.BLACK_TEMPLE, CardSet.SCHOLOMANCE, CardSet.DARKMOON_FAIRE,
 		}.Select(HearthDbConverter.SetConverter).ToArray();
 
 		public static string[] ClassicOnlySets = new[]
