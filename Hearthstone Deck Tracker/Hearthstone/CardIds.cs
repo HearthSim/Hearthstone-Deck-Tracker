@@ -152,6 +152,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard CatTrick = new MultiIdCard(Collectible.Hunter.CatTrick);
 				public static readonly MultiIdCard DartTrap = new MultiIdCard(Collectible.Hunter.DartTrap);
 				public static readonly MultiIdCard ExplosiveTrap = new MultiIdCard(Collectible.Hunter.ExplosiveTrap, Collectible.Hunter.ExplosiveTrapCore, Collectible.Hunter.ExplosiveTrapVanilla);
+				public static readonly MultiIdCard EmergencyManeuvers = new MultiIdCard(Collectible.Hunter.EmergencyManeuvers);
 				public static readonly MultiIdCard FreezingTrap = new MultiIdCard(Collectible.Hunter.FreezingTrap, Collectible.Hunter.FreezingTrapCore, Collectible.Hunter.FreezingTrapVanilla);
 				public static readonly MultiIdCard HiddenCache = new MultiIdCard(Collectible.Hunter.HiddenCache);
 				public static readonly MultiIdCard IceTrap = new MultiIdCard(Collectible.Hunter.IceTrap);

@@ -242,7 +242,7 @@ namespace HDTTests.Hearthstone.Secrets
 		{
 			_opponentMinion2.SetTag(GameTag.ZONE, (int)Zone.HAND);
 			_gameEventHandler.HandleOpponentMinionDeath(_opponentMinion1, 2);
-			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.EmergencyManeuvers);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Redemption, PaladinSecrets.GetawayKodo);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.CheatDeath);
@@ -254,7 +254,7 @@ namespace HDTTests.Hearthstone.Secrets
 			_opponentMinion2.SetTag(GameTag.ZONE, (int)Zone.PLAY);
 			_gameEventHandler.HandleOpponentMinionDeath(_opponentMinion1, 2);
 			_game.GameTime.Time += TimeSpan.FromSeconds(1);
-			VerifySecrets(0, HunterSecrets.All);
+			VerifySecrets(0, HunterSecrets.All, HunterSecrets.EmergencyManeuvers);
 			VerifySecrets(1, MageSecrets.All, MageSecrets.Duplicate, MageSecrets.Effigy);
 			VerifySecrets(2, PaladinSecrets.All, PaladinSecrets.Avenge, PaladinSecrets.Redemption, PaladinSecrets.GetawayKodo);
 			VerifySecrets(3, RogueSecrets.All, RogueSecrets.CheatDeath);

@@ -241,6 +241,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Secrets
 
 			// TODO: break ties when Effigy + Deathrattle played on the same turn
 			exclude.Add(Mage.Effigy);
+			exclude.Add(Hunter.EmergencyManeuvers);
 
 			Exclude(exclude);
 		}
