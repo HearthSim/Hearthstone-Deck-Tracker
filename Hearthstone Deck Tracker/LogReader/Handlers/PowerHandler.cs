@@ -447,6 +447,21 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Warlock.CurseOfAgony:
 								AddKnownCardId(gameState, NonCollectible.Warlock.CurseofAgony_AgonyToken, 3);
 								break;
+							case Collectible.Neutral.AzsharanSentinel:
+								AddKnownCardId(gameState, NonCollectible.Neutral.AzsharanSentinel_SunkenSentinelToken);
+								break;
+							case Collectible.Warrior.AzsharanTrident:
+								AddKnownCardId(gameState, NonCollectible.Warrior.AzsharanTrident_SunkenTridentToken);
+								break;
+							case Collectible.Hunter.AzsharanSaber:
+								AddKnownCardId(gameState, NonCollectible.Hunter.AzsharanSaber_SunkenSaberToken);
+								break;
+							case Collectible.Demonhunter.AzsharanDefector:
+								AddKnownCardId(gameState, NonCollectible.Demonhunter.AzsharanDefector_SunkenDefectorToken);
+								break;
+							case Collectible.Shaman.PiranhaPoacher:
+								AddKnownCardId(gameState, NonCollectible.Neutral.PiranhaSwarmer_PiranhaSwarmerToken1); // Is this the correct token? These are 4 different ones
+								break;
 						}
 					}
 					else //POWER
@@ -699,6 +714,41 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Neutral.RamCommander:
 								AddKnownCardId(gameState, NonCollectible.Neutral.RamCommander_BattleRamToken);
+								break;
+							case Collectible.Warlock.DraggedBelow:
+							case Collectible.Warlock.SirakessCultist:
+								AddKnownCardId(gameState, NonCollectible.Warlock.SirakessCultist_AbyssalCurseToken);
+								break;
+							case Collectible.Neutral.SchoolTeacher:
+								AddKnownCardId(gameState, NonCollectible.Neutral.SchoolTeacher_NagalingToken);
+								break;
+							case Collectible.Warlock.AzsharanScavenger:
+								AddKnownCardId(gameState, NonCollectible.Warlock.AzsharanScavenger_SunkenScavengerToken);
+								break;
+							case Collectible.Priest.AzsharanRitual:
+								AddKnownCardId(gameState, NonCollectible.Priest.AzsharanRitual_SunkenRitualToken);
+								break;
+							case Collectible.Shaman.AzsharanScroll:
+								AddKnownCardId(gameState, NonCollectible.Shaman.AzsharanScroll_SunkenScrollToken);
+								break;
+							case Collectible.Paladin.AzsharanMooncatcher:
+								AddKnownCardId(gameState, NonCollectible.Paladin.AzsharanMooncatcher_SunkenMooncatcherToken);
+								break;
+							case Collectible.Rogue.AzsharanVessel:
+								AddKnownCardId(gameState, NonCollectible.Rogue.AzsharanVessel_SunkenVesselToken);
+								break;
+							case Collectible.Shaman.Schooling:
+								AddKnownCardId(gameState, NonCollectible.Neutral.PiranhaSwarmer_PiranhaSwarmerToken1, 3); // Is this the correct token? These are 4 different ones
+								break;
+							case Collectible.Druid.AzsharanGardens:
+								AddKnownCardId(gameState, NonCollectible.Druid.AzsharanGardens_SunkenGardensToken); 
+								break;
+							case Collectible.Mage.AzsharanSweeper:
+								AddKnownCardId(gameState, NonCollectible.Mage.AzsharanSweeper_SunkenSweeperToken); 
+								break;
+							case Collectible.Rogue.BootstrapSunkeneer:
+								if(target != null)
+									AddKnownCardId(gameState, target);
 								break;
 
 							default:
