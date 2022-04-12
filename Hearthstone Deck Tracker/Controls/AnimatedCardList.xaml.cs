@@ -93,7 +93,8 @@ namespace Hearthstone_Deck_Tracker.Controls
 		private bool AreEqualForList(Hearthstone.Card c1, Hearthstone.Card c2)
 		{
 			return c1.Id == c2.Id && c1.Jousted == c2.Jousted && c1.IsCreated == c2.IsCreated
-				   && (!Config.Instance.HighlightDiscarded || c1.WasDiscarded == c2.WasDiscarded);
+				   && (!Config.Instance.HighlightDiscarded || c1.WasDiscarded == c2.WasDiscarded)
+				   && c1.DeckListIndex == c2.DeckListIndex;
 		}
 	}
 }

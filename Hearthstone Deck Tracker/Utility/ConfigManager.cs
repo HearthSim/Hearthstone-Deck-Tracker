@@ -271,6 +271,18 @@ namespace Hearthstone_Deck_Tracker.Utility
 					Config.Instance.DeckPanelOrderOpponent = Config.Instance.PanelOrderOpponent.Select(convert).Where(x => x.HasValue).Select(x => x!.Value).ToArray();
 					converted = true;
 				}
+				if(configVersion <= new Version(1, 17, 12, 0))
+				{
+					if(Config.Instance.DeckPanelOrderPlayer.Contains(DeckPanel.CardsTop) || Config.Instance.DeckPanelOrderPlayer.Contains(DeckPanel.CardsBottom))
+						return;
+					Config.Instance.DeckPanelOrderPlayer = Config.Instance.DeckPanelOrderPlayer.SelectMany(x =>
+					{
+						if(x == DeckPanel.Cards)
+							return new DeckPanel[] { DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom };
+						return new DeckPanel[] { x };
+					}).ToArray();
+					converted = true;
+				}
 			}
 
 			if(converted)

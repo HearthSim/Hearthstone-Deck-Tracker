@@ -50,6 +50,8 @@ namespace Hearthstone_Deck_Tracker
 		void HandlePlayerRemoveFromPlay(Entity entity, int turn);
 		void HandleOpponentRemoveFromPlay(Entity entity, int turn);
 		void HandlePlayerCreateInSetAside(Entity entity, int getTurnNumber);
+		void HandlePlayerDredge();
+		void HandlePlayerUnknownCardAddedToDeck();
 
 		#region SecretTriggers
 

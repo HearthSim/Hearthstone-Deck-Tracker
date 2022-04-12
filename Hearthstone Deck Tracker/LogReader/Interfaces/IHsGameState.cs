@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.LogReader.Handlers;
 
 #endregion
 
@@ -20,7 +21,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		bool PlayerUsedHeroPower { get; set; }
 		bool FoundSpectatorStart { get; set; }
 		int JoustReveals { get; set; }
-		Dictionary<int, IList<string>> KnownCardIds { get; set; }
+		Dictionary<int, IList<(string, DeckLocation)>> KnownCardIds { get; set; }
 		int LastCardPlayed { get; set; }
 		bool WasInProgress { get; set; }
 		int GameTriggerCount { get; set; }
@@ -35,5 +36,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Interfaces
 		void BlockEnd();
 		Block? CurrentBlock { get; }
 		Tuple<int, string>? ChameleosReveal { get; set; }
+		int DredgeCounter { get; set; }
 	}
 }

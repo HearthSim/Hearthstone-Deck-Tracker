@@ -24,6 +24,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var pos = User32.GetMousePos();
 			var relativePlayerDeckPos = ViewBoxPlayer.PointFromScreen(new Point(pos.X, pos.Y));
+			var relativePlayerTopDeckPos = PlayerTopDeckLens.CardList.Items.Count > 0 ? PlayerTopDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
+			var relativePlayerBottomDeckPos = PlayerBottomDeckLens.CardList.Items.Count > 0 ? PlayerBottomDeckLens.CardList.PointFromScreen(new Point(pos.X, pos.Y)) : new Point(-1, -1);
 			var relativeOpponentDeckPos = ViewBoxOpponent.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeSecretsPos = StackPanelSecrets.PointFromScreen(new Point(pos.X, pos.Y));
 			var relativeCardMark = _cardMarks.Select(x => new { Label = x, Pos = x.PointFromScreen(new Point(pos.X, pos.Y)) });
@@ -81,7 +83,61 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var centeredListOffset = Config.Instance.OverlayCenterPlayerStackPanel ? (BorderStackPanelPlayer.ActualHeight - StackPanelPlayer.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(BorderStackPanelPlayer) + centeredListOffset
-								+ GetListViewOffset(StackPanelPlayer) + cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100 - ToolTipCardBlock.ActualHeight/2;
+								+ GetListViewOffset(StackPanelPlayer, ViewBoxPlayer) + cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100 - ToolTipCardBlock.ActualHeight/2;
+
+				//prevent tooltip from going outside of the overlay
+				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
+					topOffset = Height - ToolTipCardBlock.ActualHeight;
+				topOffset = Math.Max(0, topOffset);
+
+				SetTooltipPosition(topOffset, BorderStackPanelPlayer);
+
+				ToolTipCardBlock.Visibility = visibility;
+			}
+			//player top card tooltips
+			else if(PlayerTopDeckLens.Visibility == Visible
+					&& PointInsideControl(relativePlayerTopDeckPos, PlayerTopDeckLens.CardList.ActualWidth, PlayerTopDeckLens.CardList.ActualHeight))
+			{
+				//card size = card list height / amount of cards
+				var cardSize = PlayerTopDeckLens.CardList.ActualHeight / PlayerTopDeckLens.CardList.Items.Count;
+				var cardIndex = (int)(relativePlayerTopDeckPos.Y / cardSize);
+				if(cardIndex < 0 || cardIndex >= PlayerTopDeckLens.CardList.Items.Count)
+					return;
+
+				var card = PlayerTopDeckLens.CardList.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card;
+				ToolTipCardBlock.SetCardIdFromCard(card);
+				//offset is affected by scaling
+				var topOffset = Canvas.GetTop(BorderStackPanelPlayer)
+								+ GetListViewOffset(StackPanelPlayer, PlayerTopDeckLens)
+								+ PlayerTopDeckLens.Container.ActualHeight
+								+ cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100 - ToolTipCardBlock.ActualHeight/2;
+
+				//prevent tooltip from going outside of the overlay
+				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
+					topOffset = Height - ToolTipCardBlock.ActualHeight;
+				topOffset = Math.Max(0, topOffset);
+
+				SetTooltipPosition(topOffset, BorderStackPanelPlayer);
+
+				ToolTipCardBlock.Visibility = visibility;
+			}
+			//player bottom card tooltips
+			else if(PlayerBottomDeckLens.Visibility == Visible
+					&& PointInsideControl(relativePlayerBottomDeckPos, PlayerBottomDeckLens.CardList.ActualWidth, PlayerBottomDeckLens.CardList.ActualHeight))
+			{
+				//card size = card list height / amount of cards
+				var cardSize = PlayerBottomDeckLens.CardList.ActualHeight / PlayerBottomDeckLens.CardList.Items.Count;
+				var cardIndex = (int)(relativePlayerBottomDeckPos.Y / cardSize);
+				if(cardIndex < 0 || cardIndex >= PlayerBottomDeckLens.CardList.Items.Count)
+					return;
+
+				var card = PlayerBottomDeckLens.CardList.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card;
+				ToolTipCardBlock.SetCardIdFromCard(card);
+				//offset is affected by scaling
+				var topOffset = Canvas.GetTop(BorderStackPanelPlayer)
+								+ GetListViewOffset(StackPanelPlayer, PlayerBottomDeckLens)
+								+ PlayerBottomDeckLens.Container.ActualHeight
+								+ cardIndex * cardSize * Config.Instance.OverlayPlayerScaling / 100 - ToolTipCardBlock.ActualHeight/2;
 
 				//prevent tooltip from going outside of the overlay
 				if(topOffset + ToolTipCardBlock.ActualHeight > Height)
@@ -105,7 +161,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				var centeredListOffset = Config.Instance.OverlayCenterOpponentStackPanel ? (BorderStackPanelOpponent.ActualHeight - StackPanelOpponent.ActualHeight) / 2 : 0;
 				//offset is affected by scaling
 				var topOffset = Canvas.GetTop(BorderStackPanelOpponent) + centeredListOffset
-								+ GetListViewOffset(StackPanelOpponent) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100 - ToolTipCardBlock.ActualHeight / 2;
+								+ GetListViewOffset(StackPanelOpponent, ListViewOpponent) + cardIndex * cardSize * Config.Instance.OverlayOpponentScaling / 100 - ToolTipCardBlock.ActualHeight / 2;
 				var card = ListViewOpponent.Items.Cast<AnimatedCard>().ElementAt(cardIndex).Card;
 				ToolTipCardBlock.SetCardIdFromCard(card);
 				//prevent tooltip from going outside of the overlay
@@ -210,7 +266,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 		}
 
-		private double GetListViewOffset(Panel stackPanel)
+		private double GetListViewOffset(Panel stackPanel, FrameworkElement target)
 		{
 			var offset = 0.0;
 			foreach(var child in stackPanel.Children)
@@ -219,10 +275,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 					offset += text.ActualHeight;
 				else
 				{
-					if(child is ListView)
+					if(child == target)
 						break;
-					if(child is StackPanel sp)
-						offset += sp.ActualHeight;
+					if(child is FrameworkElement element)
+						offset += element.ActualHeight;
 				}
 			}
 			return offset;

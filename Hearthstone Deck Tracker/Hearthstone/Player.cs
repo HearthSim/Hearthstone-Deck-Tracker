@@ -553,5 +553,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public void UpdateLibramReduction(int change) => LibramReductionCount += change;
+
+		internal void ShuffleDeck()
+		{
+			foreach(var card in Deck)
+				card.Info.DeckIndex = 0;
+		}
 	}
 }

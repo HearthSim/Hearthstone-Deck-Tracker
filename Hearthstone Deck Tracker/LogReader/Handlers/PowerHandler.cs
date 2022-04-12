@@ -127,6 +127,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				var cardId = EnsureValidCardID(match.Groups["cardId"].Value);
 				var zone = GameTagHelper.ParseEnum<Zone>(match.Groups["zone"].Value);
 				var guessedCardId = false;
+				var guessedLocation = DeckLocation.Unknown;
 				if(!game.Entities.ContainsKey(id))
 				{
 					if(string.IsNullOrEmpty(cardId) && zone != Zone.SETASIDE)
@@ -134,11 +135,13 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						var blockId = gameState.CurrentBlock?.Id;
 						if(blockId.HasValue && gameState.KnownCardIds.ContainsKey(blockId.Value))
 						{
-							cardId = gameState.KnownCardIds[blockId.Value].FirstOrDefault();
+							var known = gameState.KnownCardIds[blockId.Value].FirstOrDefault();
+							cardId = known.Item1;
 							if(!string.IsNullOrEmpty(cardId))
 							{
-								Log.Info($"Found known cardId for entity {id}: {cardId}");
-								gameState.KnownCardIds[blockId.Value].Remove(cardId);
+								guessedLocation = known.Item2;
+								Log.Info($"Found data for entity={id}: CardId={cardId}, Location={guessedLocation}");
+								gameState.KnownCardIds[blockId.Value].Remove(known);
 								guessedCardId = true;
 							}
 						}
@@ -146,6 +149,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					var entity = new Entity(id) { CardId = cardId };
 					if(guessedCardId)
 						entity.Info.GuessedCardState = GuessedCardState.Guessed;
+					if(guessedLocation != DeckLocation.Unknown)
+					{
+						var newIndex = ++gameState.DredgeCounter;
+						var sign = guessedLocation == DeckLocation.Top ? 1 : -1;
+						entity.Info.DeckIndex = sign * newIndex;
+					}
 					game.Entities.Add(id, entity);
 
 					if(gameState.CurrentBlock != null && (entity.CardId?.ToUpper().Contains("HERO") ?? false))
@@ -184,6 +193,16 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						if(entity.Info.GuessedCardState != GuessedCardState.None)
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
+						if(entity.Info.DeckIndex < 0 && gameState.CurrentBlock != null && gameState.CurrentBlock.SourceEntityId != 0)
+						{
+							if(game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var source) && source.HasTag(GameTag.DREDGE))
+							{
+								var newIndex = ++gameState.DredgeCounter;
+								entity.Info.DeckIndex = newIndex;
+								Log.Info($"Dredge Top: {entity}");
+								gameState.GameHandler?.HandlePlayerDredge();
+							}
+						}
 					}
 					if(type == "CHANGE_ENTITY")
 					{
@@ -229,9 +248,33 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						{
 							entity.Info.Hidden = true;
 						}
-					 }
+
+						var blockId = gameState.CurrentBlock?.Id;
+						if(blockId.HasValue && gameState.KnownCardIds.ContainsKey(blockId.Value))
+						{
+							var known = gameState.KnownCardIds[blockId.Value].FirstOrDefault();
+							if(entity.CardId == known.Item1 && known.Item2 != DeckLocation.Unknown)
+							{
+								Log.Info($"Setting DeckLocation={known.Item1} for {entity}");
+								var newIndex = ++gameState.DredgeCounter;
+								var sign = known.Item2 == DeckLocation.Top ? 1 : -1;
+								entity.Info.DeckIndex = sign * newIndex;
+							}
+						}
+					}
 				}
 			}
+			else if(ShuffleRegex.IsMatch(logLine))
+			{
+				var match = ShuffleRegex.Match(logLine);
+				var playerId = int.Parse(match.Groups["id"].Value);
+				if(playerId == game.Player.Id)
+				{
+					game.Player.ShuffleDeck();
+					gameState.GameHandler?.HandlePlayerDredge();
+				}
+			}
+
 			if(logLine.Contains("End Spectator") && !game.IsInMenu)
 				gameState.GameHandler?.HandleGameEnd(false);
 			else if(logLine.Contains("BLOCK_START"))
@@ -254,6 +297,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 					var actionStartingCardId = match.Groups["cardId"].Value.Trim();
 					var actionStartingEntityId = int.Parse(match.Groups["id"].Value);
+					if(gameState.CurrentBlock != null)
+						gameState.CurrentBlock.SourceEntityId = actionStartingEntityId;
+
 					Entity? actionStartingEntity = null;
 
 					if(string.IsNullOrEmpty(actionStartingCardId))
@@ -286,7 +332,14 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						switch(actionStartingCardId)
 						{
-							// Todo: Add Demon Hunter
+							case Collectible.Neutral.SphereOfSapience:
+								// These are tricky to implement correctly, so
+								// until the are, we will just reset the state
+								// known about the top/bottom of the deck
+								if(actionStartingEntity?.IsControlledBy(game.Player.Id) ?? false)
+									gameState.GameHandler?.HandlePlayerUnknownCardAddedToDeck();
+								break;
+
 							case Collectible.Rogue.TradePrinceGallywix:
 								if(!game.Entities.TryGetValue(gameState.LastCardPlayed, out var lastPlayed) || lastPlayed.CardId == null)
 									break;
@@ -448,19 +501,22 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Warlock.CurseofAgony_AgonyToken, 3);
 								break;
 							case Collectible.Neutral.AzsharanSentinel:
-								AddKnownCardId(gameState, NonCollectible.Neutral.AzsharanSentinel_SunkenSentinelToken);
+								AddKnownCardId(gameState, NonCollectible.Neutral.AzsharanSentinel_SunkenSentinelToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Warrior.AzsharanTrident:
-								AddKnownCardId(gameState, NonCollectible.Warrior.AzsharanTrident_SunkenTridentToken);
+								AddKnownCardId(gameState, NonCollectible.Warrior.AzsharanTrident_SunkenTridentToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Hunter.AzsharanSaber:
-								AddKnownCardId(gameState, NonCollectible.Hunter.AzsharanSaber_SunkenSaberToken);
+								AddKnownCardId(gameState, NonCollectible.Hunter.AzsharanSaber_SunkenSaberToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Demonhunter.AzsharanDefector:
-								AddKnownCardId(gameState, NonCollectible.Demonhunter.AzsharanDefector_SunkenDefectorToken);
+								AddKnownCardId(gameState, NonCollectible.Demonhunter.AzsharanDefector_SunkenDefectorToken, 1, DeckLocation.Bottom);
+								break;
+							case Collectible.Druid.Bottomfeeder:
+								AddKnownCardId(gameState, Collectible.Druid.Bottomfeeder, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Shaman.PiranhaPoacher:
-								AddKnownCardId(gameState, NonCollectible.Neutral.PiranhaSwarmer_PiranhaSwarmerToken1); // Is this the correct token? These are 4 different ones
+								AddKnownCardId(gameState, Collectible.Neutral.PiranhaSwarmer); // Is this the correct token? These are 4 different ones
 								break;
 						}
 					}
@@ -468,7 +524,17 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					{
 						switch(actionStartingCardId)
 						{
-							// Todo: Add Demon Hunter
+							case Collectible.Demonhunter.SightlessWatcherCore:
+							case Collectible.Demonhunter.SightlessWatcherLegacy:
+							case Collectible.Neutral.SirFinleySeaGuide:
+							case Collectible.Neutral.AmbassadorFaelin:
+								// These are tricky to implement correctly, so
+								// until the are, we will just reset the state
+								// known about the top/bottom of the deck
+								if(actionStartingEntity?.IsControlledBy(game.Player.Id) ?? false)
+									gameState.GameHandler?.HandlePlayerUnknownCardAddedToDeck();
+								break;
+
 							case Collectible.Rogue.GangUp:
 							case Collectible.Hunter.DireFrenzy:
 							case Collectible.Rogue.LabRecruiter:
@@ -723,32 +789,32 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								AddKnownCardId(gameState, NonCollectible.Neutral.SchoolTeacher_NagalingToken);
 								break;
 							case Collectible.Warlock.AzsharanScavenger:
-								AddKnownCardId(gameState, NonCollectible.Warlock.AzsharanScavenger_SunkenScavengerToken);
+								AddKnownCardId(gameState, NonCollectible.Warlock.AzsharanScavenger_SunkenScavengerToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Priest.AzsharanRitual:
-								AddKnownCardId(gameState, NonCollectible.Priest.AzsharanRitual_SunkenRitualToken);
+								AddKnownCardId(gameState, NonCollectible.Priest.AzsharanRitual_SunkenRitualToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Shaman.AzsharanScroll:
-								AddKnownCardId(gameState, NonCollectible.Shaman.AzsharanScroll_SunkenScrollToken);
+								AddKnownCardId(gameState, NonCollectible.Shaman.AzsharanScroll_SunkenScrollToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Paladin.AzsharanMooncatcher:
-								AddKnownCardId(gameState, NonCollectible.Paladin.AzsharanMooncatcher_SunkenMooncatcherToken);
+								AddKnownCardId(gameState, NonCollectible.Paladin.AzsharanMooncatcher_SunkenMooncatcherToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Rogue.AzsharanVessel:
-								AddKnownCardId(gameState, NonCollectible.Rogue.AzsharanVessel_SunkenVesselToken);
+								AddKnownCardId(gameState, NonCollectible.Rogue.AzsharanVessel_SunkenVesselToken, 1, DeckLocation.Bottom);
 								break;
 							case Collectible.Shaman.Schooling:
-								AddKnownCardId(gameState, NonCollectible.Neutral.PiranhaSwarmer_PiranhaSwarmerToken1, 3); // Is this the correct token? These are 4 different ones
+								AddKnownCardId(gameState, Collectible.Neutral.PiranhaSwarmer, 3); // Is this the correct token? These are 4 different ones
 								break;
 							case Collectible.Druid.AzsharanGardens:
-								AddKnownCardId(gameState, NonCollectible.Druid.AzsharanGardens_SunkenGardensToken); 
+								AddKnownCardId(gameState, NonCollectible.Druid.AzsharanGardens_SunkenGardensToken, 1, DeckLocation.Bottom); 
 								break;
 							case Collectible.Mage.AzsharanSweeper:
-								AddKnownCardId(gameState, NonCollectible.Mage.AzsharanSweeper_SunkenSweeperToken); 
+								AddKnownCardId(gameState, NonCollectible.Mage.AzsharanSweeper_SunkenSweeperToken, 1, DeckLocation.Bottom); 
 								break;
 							case Collectible.Rogue.BootstrapSunkeneer:
 								if(target != null)
-									AddKnownCardId(gameState, target);
+									AddKnownCardId(gameState, target, 1, DeckLocation.Bottom);
 								break;
 
 							default:
@@ -856,7 +922,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			return !cardIdMatch.Success ? null : cardIdMatch.Groups["cardId"].Value.Trim();
 		}
 
-		private static void AddKnownCardId(IHsGameState gameState, string cardId, int count = 1)
+		private static void AddKnownCardId(IHsGameState gameState, string cardId, int count = 1, DeckLocation location = DeckLocation.Unknown)
 		{
 			if(gameState.CurrentBlock == null)
 				return;
@@ -864,11 +930,18 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 			for(var i = 0; i < count; i++)
 			{
 				if(!gameState.KnownCardIds.ContainsKey(blockId))
-					gameState.KnownCardIds[blockId] = new List<string>();
-				gameState.KnownCardIds[blockId].Add(cardId);
+					gameState.KnownCardIds[blockId] = new List<(string, DeckLocation)>();
+				gameState.KnownCardIds[blockId].Add((cardId, location));
 			}
 		}
 
 		internal void Reset() => _tagChangeHandler.ClearQueuedActions();
+	}
+
+	public enum DeckLocation
+	{
+		Unknown,
+		Top,
+		Bottom
 	}
 }

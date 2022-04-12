@@ -249,7 +249,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public double PlayerStackHeight => (Config.Instance.PlayerDeckHeight / 100 * Height) / (Config.Instance.OverlayPlayerScaling / 100);
 		public double PlayerListHeight => PlayerStackHeight - PlayerLabelsHeight;
 		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
-			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + ChancePanelsMargins;
+			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + ChancePanelsMargins + PlayerTopDeckLens.ActualHeight + PlayerBottomDeckLens.ActualHeight;
 
 		public VerticalAlignment PlayerStackPanelAlignment
 			=> Config.Instance.OverlayCenterPlayerStackPanel ? VerticalAlignment.Center : VerticalAlignment.Top;

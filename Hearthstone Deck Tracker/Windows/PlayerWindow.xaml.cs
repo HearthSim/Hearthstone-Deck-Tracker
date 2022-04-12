@@ -67,7 +67,7 @@ namespace Hearthstone_Deck_Tracker
 		public double PlayerDeckMaxHeight => ActualHeight - PlayerLabelsHeight;
 
 		public double PlayerLabelsHeight => CanvasPlayerChance.ActualHeight + CanvasPlayerCount.ActualHeight
-			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + 42;
+			+ LblPlayerFatigue.ActualHeight + LblDeckTitle.ActualHeight + LblWins.ActualHeight + 42 + PlayerTopDeckLens.ActualHeight + PlayerBottomDeckLens.ActualHeight;
 
 		public List<Card> PlayerDeck => _game.Player.PlayerCardList;
 
@@ -80,6 +80,9 @@ namespace Hearthstone_Deck_Tracker
 			CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Visibility.Collapsed : Visibility.Visible;
 			CanvasPlayerCount.Visibility = Config.Instance.HidePlayerCardCount ? Visibility.Collapsed : Visibility.Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Visibility.Collapsed : Visibility.Visible;
+			PlayerTopDeckLens.Visibility = Config.Instance.HidePlayerCardsTop ? Visibility.Collapsed : Visibility.Visible;
+			PlayerBottomDeckLens.Visibility = Config.Instance.HidePlayerCardsBottom ? Visibility.Collapsed : Visibility.Visible;
+
 			LblWins.Visibility = Config.Instance.ShowDeckWins && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 			LblDeckTitle.Visibility = Config.Instance.ShowDeckTitle && _game.IsUsingPremade ? Visibility.Visible : Visibility.Collapsed;
 
@@ -106,6 +109,12 @@ namespace Hearthstone_Deck_Tracker
 				{
 					case DeckPanel.Cards:
 						StackPanelMain.Children.Add(ViewBoxPlayer);
+						break;
+					case DeckPanel.CardsTop:
+						StackPanelMain.Children.Add(PlayerTopDeckLens);
+						break;
+					case DeckPanel.CardsBottom:
+						StackPanelMain.Children.Add(PlayerBottomDeckLens);
 						break;
 					case DeckPanel.CardCounter:
 						StackPanelMain.Children.Add(CanvasPlayerCount);
@@ -169,7 +178,12 @@ namespace Hearthstone_Deck_Tracker
 				Topmost = false;
 		}
 
-		public void UpdatePlayerCards(List<Card> cards, bool reset) => ListViewPlayer.Update(cards, reset);
+		public void UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom)
+		{
+			ListViewPlayer.Update(cards, reset);
+			PlayerTopDeckLens.Update(top, reset);
+			PlayerBottomDeckLens.Update(bottom, reset);
+		}
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

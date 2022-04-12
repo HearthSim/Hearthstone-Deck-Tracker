@@ -27,6 +27,8 @@ using Hearthstone_Deck_Tracker.Utility.Updating;
 using WPFLocalizeExtension.Engine;
 using Hearthstone_Deck_Tracker.Utility.Assets;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using System.Linq;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 
 #endregion
 
@@ -356,9 +358,18 @@ namespace Hearthstone_Deck_Tracker
 			_updateRequestsPlayer--;
 			if(_updateRequestsPlayer > 0)
 				return;
-			Overlay.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset);
+			var dredged = Game.Player.Deck.Where(x => x.Info.DeckIndex != 0).OrderByDescending(x => x.Info.DeckIndex);
+			Card toCard (Entity entity)
+			{
+				var card = (Card)entity.Card.Clone();
+				card.DeckListIndex = entity.Info.DeckIndex;
+				return card;
+			}
+			var top = dredged.Where(x => x.Info.DeckIndex > 0).Select(toCard).ToList();
+			var bottom = dredged.Where(x => x.Info.DeckIndex < 0).Select(toCard).ToList();
+			Overlay.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset, top, bottom);
 			if(Windows.PlayerWindow.IsVisible)
-				Windows.PlayerWindow.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset);
+				Windows.PlayerWindow.UpdatePlayerCards(new List<Card>(Game.Player.PlayerCardList), reset, top, bottom);
 		}
 
 		internal static async void UpdateOpponentCards(bool reset = false)

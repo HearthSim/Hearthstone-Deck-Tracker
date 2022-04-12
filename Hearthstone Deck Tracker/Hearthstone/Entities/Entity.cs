@@ -215,7 +215,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				OriginalEntityWasCreated = OriginalEntityWasCreated,
 				GuessedCardState = GuessedCardState,
 				LatestCardId = LatestCardId,
-				StoredCardIds = StoredCardIds
+				StoredCardIds = StoredCardIds,
+				DeckIndex = DeckIndex
 			};
 		}
 
@@ -283,6 +284,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool? OriginalEntityWasCreated { get; internal set; }
 		public GuessedCardState GuessedCardState { get; set; } = GuessedCardState.None;
 		public List<string> StoredCardIds { get; set; } = new List<string>();
+		public int DeckIndex { get; set; }
 
 		public string? LatestCardId
 		{
@@ -322,6 +324,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 				sb.Append(", latestCardId=" + LatestCardId);
 			if(StoredCardIds.Count > 0)
 				sb.Append(", storedCardIds=[" + string.Join(", ", StoredCardIds) + "]");
+			if(DeckIndex != 0)
+				sb.Append(", deckIndex=" + DeckIndex);
 			return sb.ToString();
 		}
 	}

@@ -63,6 +63,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					return () => MulliganStateChange(id, value, game, gameState);
 				case COPIED_FROM_ENTITY_ID:
 					return () => OnCardCopy(id, value, game, gameState);
+				case LINKED_ENTITY:
+					return () => OnLinkedEntity(id, value, game, gameState);
 				case TAG_SCRIPT_DATA_NUM_1:
 					return () => OnTagScriptDataNum1(id, value, game, gameState);
 				case REBORN:
@@ -111,9 +113,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
-			if(entity.IsControlledBy(game.Opponent.Id))
-				return;
 			if(!game.Entities.TryGetValue(value, out var targetEntity))
+				return;
+
+			OnDredge(entity, targetEntity, game, gameState);
+
+			if(entity.IsControlledBy(game.Opponent.Id))
 				return;
 
 			if(string.IsNullOrEmpty(targetEntity.CardId))
@@ -126,6 +131,46 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 
 				gameState.GameHandler?.HandleCardCopy();
 			}
+		}
+
+		private void OnLinkedEntity(int id, int value, IGame game, IHsGameState gameState)
+		{
+			if(!game.Entities.TryGetValue(id, out var entity))
+				return;
+			if(!game.Entities.TryGetValue(value, out var targetEntity))
+				return;
+			OnDredge(entity, targetEntity, game, gameState);
+		}
+
+		private void OnDredge(Entity entity, Entity target, IGame game, IHsGameState gameState)
+		{
+			if(entity.GetTag(LINKED_ENTITY) != target.Id)
+				return;
+			if(entity.GetTag(COPIED_FROM_ENTITY_ID) != target.Id)
+				return;
+			if(!entity.IsControlledBy(game.Player.Id))
+				return;
+			if(!entity.IsInZone(SETASIDE) || !target.IsInZone(DECK))
+				return;
+
+			var source = entity.GetTag(CREATOR);
+			if(source == 0 || !game.Entities.TryGetValue(source, out var sourceEntity) || !sourceEntity.HasTag(DREDGE))
+				return;
+
+			if(gameState.CurrentBlock == null)
+				return;
+
+			if (gameState.CurrentBlock.DredgeCounter == 0)
+			{
+				gameState.DredgeCounter += 3;
+			}
+
+			var index = gameState.DredgeCounter - (gameState.CurrentBlock.DredgeCounter++);
+			target.Info.DeckIndex = -index;
+
+			Log.Info($"Dredge Bottom: {target}");
+
+			gameState.GameHandler?.HandlePlayerDredge();
 		}
 
 		private void MulliganStateChange(int id, int value, IGame game, IHsGameState gameState)
@@ -646,6 +691,9 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		{
 			if(!game.Entities.TryGetValue(id, out var entity))
 				return;
+
+			entity.Info.DeckIndex = 0;
+
 			var currentBlockCardId = gameState.CurrentBlock?.CardId ?? "";
 			switch((Zone)value)
 			{

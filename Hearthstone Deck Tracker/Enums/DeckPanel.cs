@@ -15,6 +15,10 @@ namespace Hearthstone_Deck_Tracker.Enums
 		[LocDescription("Enum_DeckPanel_DeckTitle")]
 		DeckTitle,
 		[LocDescription("Enum_DeckPanel_Wins")]
-		Wins
+		Wins,
+		[LocDescription("Enum_DeckPanel_CardsTop")]
+		CardsTop,
+		[LocDescription("Enum_DeckPanel_CardsBottom")]
+		CardsBottom
 	}
 }

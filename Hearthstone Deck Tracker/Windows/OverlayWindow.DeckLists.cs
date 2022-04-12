@@ -34,6 +34,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 					case DeckPanel.Cards:
 						StackPanelPlayer.Children.Add(ViewBoxPlayer);
 						break;
+					case DeckPanel.CardsTop:
+						StackPanelPlayer.Children.Add(PlayerTopDeckLens);
+						break;
+					case DeckPanel.CardsBottom:
+						StackPanelPlayer.Children.Add(PlayerBottomDeckLens);
+						break;
 				}
 			}
 		}
@@ -41,9 +47,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void UpdateOpponentLayout()
 		{
 			StackPanelOpponent.Children.Clear();
-			foreach (var item in Config.Instance.DeckPanelOrderOpponent)
+			foreach(var item in Config.Instance.DeckPanelOrderOpponent)
 			{
-				switch (item)
+				switch(item)
 				{
 					case DeckPanel.DrawChances:
 						StackPanelOpponent.Children.Add(CanvasOpponentChance);
@@ -67,12 +73,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public void SetWinRates()
 		{
 			var selectedDeck = DeckList.Instance.ActiveDeck;
-			if (selectedDeck == null)
+			if(selectedDeck == null)
 				return;
 
 			LblWins.Text = $"{selectedDeck.WinLossString} ({selectedDeck.WinPercentString})";
 
-			if (!string.IsNullOrEmpty(_game.Opponent.Class))
+			if(!string.IsNullOrEmpty(_game.Opponent.Class))
 			{
 				var winsVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Win && g.OpponentHero == _game.Opponent.Class);
 				var lossesVs = selectedDeck.GetRelevantGames().Count(g => g.Result == GameResult.Loss && g.OpponentHero == _game.Opponent.Class);
@@ -88,7 +94,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LblOpponentCardCount.Text = cardCount.ToString();
 			LblOpponentDeckCount.Text = cardsLeftInDeck.ToString();
 
-			if (cardsLeftInDeck <= 0)
+			if(cardsLeftInDeck <= 0)
 			{
 				LblOpponentFatigue.Text = LocUtil.Get(LocFatigue) + " " + (_game.Opponent.Fatigue + 1);
 
@@ -119,7 +125,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LblCardCount.Text = cardCount.ToString();
 			LblDeckCount.Text = cardsLeftInDeck.ToString();
 
-			if (cardsLeftInDeck <= 0)
+			if(cardsLeftInDeck <= 0)
 			{
 				LblPlayerFatigue.Text = LocUtil.Get(LocFatigue) + " " + (_game.Player.Fatigue + 1);
 
@@ -134,7 +140,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			LblDrawChance1.Text = Math.Round(100.0f / cardsLeftInDeck, 1) + "%";
 		}
 
-		public void UpdatePlayerCards(List<Card> cards, bool reset) => ListViewPlayer.Update(cards, reset);
+		public void UpdatePlayerCards(List<Card> cards, bool reset, List<Card> top, List<Card> bottom)
+		{
+			ListViewPlayer.Update(cards, reset);
+			PlayerTopDeckLens.Update(top, reset);
+			PlayerBottomDeckLens.Update(bottom, reset);
+		}
 
 		public void UpdateOpponentCards(List<Card> cards, bool reset) => ListViewOpponent.Update(cards, reset);
 	}

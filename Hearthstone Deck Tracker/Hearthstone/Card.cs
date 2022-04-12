@@ -78,6 +78,9 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		[XmlIgnore]
 		public bool BaconCard;
 
+		[XmlIgnore]
+		public int DeckListIndex;
+
 		public Card()
 		{
 			Count = 1;

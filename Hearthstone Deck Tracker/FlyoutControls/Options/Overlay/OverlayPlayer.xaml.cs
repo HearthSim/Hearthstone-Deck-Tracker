@@ -94,6 +94,14 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCards,
 																		  value => Config.Instance.HidePlayerCards = !value, true));
 						break;
+					case Enums.DeckPanel.CardsTop:
+						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCardsTop,
+																		  value => Config.Instance.HidePlayerCardsTop = !value, true));
+						break;
+					case Enums.DeckPanel.CardsBottom:
+						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCardsBottom,
+																		  value => Config.Instance.HidePlayerCardsBottom = !value, true));
+						break;
 					case Enums.DeckPanel.CardCounter:
 						ElementSorterPlayer.AddItem(new ElementSorterItem(panel, !Config.Instance.HidePlayerCardCount,
 																		  value => Config.Instance.HidePlayerCardCount = !value, true));

@@ -144,6 +144,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			ListViewOpponent.Visibility = Config.Instance.HideOpponentCards ? Collapsed : Visible;
 			ListViewPlayer.Visibility = Config.Instance.HidePlayerCards ? Collapsed : Visible;
+			PlayerTopDeckLens.Visibility = Config.Instance.HidePlayerCardsTop ? Collapsed : Visible;
+			PlayerBottomDeckLens.Visibility = Config.Instance.HidePlayerCardsBottom ? Collapsed : Visible;
 
 			var gameStarted = !_game.IsInMenu && _game.SetupDone && _game.Player.PlayerEntities.Any();
 			SetCardCount(_game.Player.HandCount, !gameStarted ? 30 : _game.Player.DeckCount);

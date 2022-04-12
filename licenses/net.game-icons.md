@@ -7,3 +7,4 @@ The following icons from game-icons.net were used:
 - "[Spiked dragon head icon](https://game-icons.net/1x1/delapouite/spiked-dragon-head.html)" by Delapouite, licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 - "[Swords emblem icon](https://game-icons.net/1x1/lorc/swords-emblem.html)" by Lorc, licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)
 - "[Bookmarklet icon](https://game-icons.net/1x1/lorc/bookmarklet.html)" by Lorc, licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+- "[Magnifying glass icon](https://game-icons.net/1x1/lorc/magnifying-glass.html)" by Lorc, licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)

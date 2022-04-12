@@ -1165,6 +1165,17 @@ namespace Hearthstone_Deck_Tracker
 				GameEvents.OnPlayerPlayToDeck.Execute(card);
 		}
 
+		public void HandlePlayerDredge()
+		{
+			Core.UpdatePlayerCards();
+		}
+
+		public void HandlePlayerUnknownCardAddedToDeck()
+		{
+			foreach(var card in _game.Player.Deck)
+				card.Info.DeckIndex = 0;
+		}
+
 		public void HandleMercenariesStateChange()
 		{
 			if(_game.IsMercenariesMatch)
@@ -1555,6 +1566,8 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandlePlayerHandCostReduction(int value) => HandlePlayerHandCostReduction(value);
 		void IGameHandler.HandleOpponentHandCostReduction(int value) => HandleOpponentHandCostReduction(value);
 		void IGameHandler.HandleMercenariesStateChange() => HandleMercenariesStateChange();
+		void IGameHandler.HandlePlayerDredge() => HandlePlayerDredge();
+		void IGameHandler.HandlePlayerUnknownCardAddedToDeck() => HandlePlayerUnknownCardAddedToDeck();
 
 		#endregion IGameHandlerImplementation
 	}
