@@ -1,3 +1,12 @@
+## **Release v1.17.11 - 2022-04-12**
+**Updated for Year of the Hydra**
+
+**Changes**:
+- Added support for the majority of new cards.
+
+Dredge support coming soon!
+
+
 ## **Release v1.17.10 - 2022-04-05**
 **Updated for Hearthstone 23.0.0**
 
