@@ -1,3 +1,9 @@
+## **Release v1.17.12 - 2022-04-14**
+**New**
+- Cards added to the top or bottom of the deck, e.g. by Dredge or Azsharan cards, are now displayed next to the deck list.
+  - These additonal panels can be moved or disabled under "options > overlay > player".
+  - The following cards are currently not supported and will clear these panels to avoid displaying inaccurate information: Sir Finley Sea Guide, Ambassador Faelin, Sphere of Sapience, and Sightless Watcher.
+
 ## **Release v1.17.11 - 2022-04-12**
 **Updated for Year of the Hydra**
 
