@@ -549,8 +549,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Druid.Recycle:
 							case Collectible.Mage.ManicSoulcaster:
-							case Collectible.Neutral.ZolaTheGorgonLOOTAPALOOZA:
-							case Collectible.Neutral.ZolaTheGorgon1810:
+							case Collectible.Neutral.ZolaTheGorgon:
+							case Collectible.Neutral.ZolaTheGorgonCore:
 							case Collectible.Druid.Splintergraft:
 							//case Collectible.Priest.HolyWater: -- TODO
 							case Collectible.Neutral.BalefulBanker:
@@ -575,8 +575,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Priest.ExcavatedEvil:
 								AddKnownCardId(gameState, Collectible.Priest.ExcavatedEvil);
 								break;
-							case Collectible.Neutral.EliseStarseeker1810:
-							case Collectible.Neutral.EliseStarseekerLOE:
+							case Collectible.Neutral.EliseStarseeker:
+							case Collectible.Neutral.EliseStarseekerCore:
 								AddKnownCardId(gameState, NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken);
 								break;
 							case NonCollectible.Neutral.EliseStarseeker_MapToTheGoldenMonkeyToken:

@@ -46,7 +46,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		// todo: conditional deathrattle summons: Voidcaller
 		public static readonly Dictionary<string, int> DeathrattleSummonCardIds = new Dictionary<string, int>
 		{
-			{Collectible.Druid.MountedRaptorLOE, 1},
+			{Collectible.Druid.MountedRaptor, 1},
 			{Collectible.Hunter.InfestedWolf, 2},
 			{Collectible.Hunter.KindlyGrandmother, 1},
 			{Collectible.Hunter.RatPack, 2},
@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			{Collectible.Rogue.Anubarak, 1},
 			{Collectible.Rogue.JadeSwarmer, 1},
 			{Collectible.Warlock.Dreadsteed, 1},
-			{Collectible.Warlock.PossessedVillager, 1},
+			{Collectible.Warlock.PossessedVillagerOG, 1},
 			{Collectible.Warlock.Voidcaller, 1}, //false negative better than false positive
 			{Collectible.Neutral.AyaBlackpaw, 1},
 			{Collectible.Neutral.CairneBloodhoof, 1},
@@ -172,13 +172,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				public static readonly MultiIdCard Counterspell = new MultiIdCard(Collectible.Mage.Counterspell, Collectible.Mage.CounterspellCore, Collectible.Mage.CounterspellVanilla);
 				public static readonly MultiIdCard Duplicate = new MultiIdCard(Collectible.Mage.Duplicate);
 				public static readonly MultiIdCard Effigy = new MultiIdCard(Collectible.Mage.Effigy);
-				public static readonly MultiIdCard ExplosiveRunes = new MultiIdCard(Collectible.Mage.ExplosiveRunesLOOTAPALOOZA, Collectible.Mage.ExplosiveRunes1810);
+				public static readonly MultiIdCard ExplosiveRunes = new MultiIdCard(Collectible.Mage.ExplosiveRunes, Collectible.Mage.ExplosiveRunesCore);
 				public static readonly MultiIdCard FlameWard = new MultiIdCard(Collectible.Mage.FlameWard);
 				public static readonly MultiIdCard FrozenClone = new MultiIdCard(Collectible.Mage.FrozenClone);
 				public static readonly MultiIdCard IceBarrier = new MultiIdCard(Collectible.Mage.IceBarrier, Collectible.Mage.IceBarrierCore, Collectible.Mage.IceBarrierVanilla);
 				public static readonly MultiIdCard IceBlock = new MultiIdCard(Collectible.Mage.IceBlock, Collectible.Mage.IceBlockVanilla);
 				public static readonly MultiIdCard ManaBind = new MultiIdCard(Collectible.Mage.ManaBind);
-				public static readonly MultiIdCard MirrorEntity = new MultiIdCard(Collectible.Mage.MirrorEntity, Collectible.Mage.MirrorEntityCore, Collectible.Mage.MirrorEntityVanilla);
+				public static readonly MultiIdCard MirrorEntity = new MultiIdCard(Collectible.Mage.MirrorEntity1810, Collectible.Mage.MirrorEntityExpert1, Collectible.Mage.MirrorEntityVanilla);
 				public static readonly MultiIdCard NetherwindPortal = new MultiIdCard(Collectible.Mage.NetherwindPortal);
 				public static readonly MultiIdCard OasisAlly = new MultiIdCard(Collectible.Mage.OasisAlly);
 				public static readonly MultiIdCard PotionOfPolymorph = new MultiIdCard(Collectible.Mage.PotionOfPolymorph);

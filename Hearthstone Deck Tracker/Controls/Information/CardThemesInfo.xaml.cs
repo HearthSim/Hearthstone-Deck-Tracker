@@ -30,13 +30,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Information
 		private readonly string[] _demoCards =
 		{
 			CardIds.Collectible.Neutral.GilblinStalker,
-			CardIds.Collectible.Priest.NorthshireClericHOF,
+			CardIds.Collectible.Priest.NorthshireCleric,
 			CardIds.Collectible.Neutral.GilblinStalker,
 			CardIds.Collectible.Priest.UpgradedRepairBot,
 			CardIds.Collectible.Neutral.GarrisonCommander,
 			CardIds.Collectible.Neutral.YouthfulBrewmaster,
 			CardIds.Collectible.Priest.UpgradedRepairBot,
-			CardIds.Collectible.Priest.NorthshireClericHOF
+			CardIds.Collectible.Priest.NorthshireCleric
 		};
 
 		public CardThemesInfo()
