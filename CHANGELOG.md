@@ -1,3 +1,6 @@
+## **Release v1.17.13 - 2022-04-26**
+**Updated for Hearthstone 23.0.3**
+
 ## **Release v1.17.12 - 2022-04-14**
 **New**
 - Cards added to the top or bottom of the deck, e.g. by Dredge or Azsharan cards, are now displayed next to the deck list.
