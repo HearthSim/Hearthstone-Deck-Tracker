@@ -1,3 +1,7 @@
+## **Release v1.17.14 - 2022-05-03**
+**Fixes**:
+- Fixed an issue where the dredge card panels were missing in some cases.
+
 ## **Release v1.17.13 - 2022-04-26**
 **Updated for Hearthstone 23.0.3**
 
