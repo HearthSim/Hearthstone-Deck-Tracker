@@ -86,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 		private void SetPanel()
 		{
-			foreach(var panel in Config.Instance.DeckPanelOrderPlayer)
+			foreach(var panel in Config.Instance.DeckPanelOrderLocalPlayer)
 			{
 				switch(panel)
 				{

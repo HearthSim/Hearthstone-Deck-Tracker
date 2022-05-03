@@ -123,42 +123,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 					converted = true;
 				}
 #endif
-				if(configVersion <= new Version(0, 9, 6, 0))
-				{
-					if(!Config.Instance.PanelOrderPlayer.Contains("Fatigue Counter"))
-					{
-						Config.Instance.Reset(nameof(Config.PanelOrderPlayer));
-						converted = true;
-					}
-					if(!Config.Instance.PanelOrderOpponent.Contains("Fatigue Counter"))
-					{
-						Config.Instance.Reset(nameof(Config.PanelOrderOpponent));
-						converted = true;
-					}
-				}
-				if(configVersion <= new Version(0, 13, 16, 0))
-				{
-					if(Enum.TryParse(Config.Instance.ThemeName, out MetroTheme theme))
-					{
-						Config.Instance.AppTheme = theme;
-						converted = true;
-					}
-				}
-				if(configVersion <= new Version(0, 13, 17, 0))
-				{
-					if(Math.Abs(Config.Instance.OpponentDeckHeight - 65) < 1 && Math.Abs(Config.Instance.OpponentDeckTop - 17) < 1)
-					{
-						Config.Instance.Reset(nameof(Config.OpponentDeckHeight));
-						Config.Instance.Reset(nameof(Config.OpponentDeckTop));
-						converted = true;
-					}
-					if(Math.Abs(Config.Instance.PlayerDeckHeight - 65) < 1 && Math.Abs(Config.Instance.PlayerDeckTop - 17) < 1)
-					{
-						Config.Instance.Reset(nameof(Config.PlayerDeckHeight));
-						Config.Instance.Reset(nameof(Config.PlayerDeckTop));
-						converted = true;
-					}
-				}
 				if(configVersion <= new Version(0, 14, 7, 0))
 				{
 					if(File.Exists("Version.xml"))
@@ -244,45 +208,6 @@ namespace Hearthstone_Deck_Tracker.Utility
 				}
 				if(configVersion == new Version(0, 15, 9, 0))
 					DataIssueResolver.RunDeckStatsFix = true;
-				if(configVersion <= new Version(1, 0, 5, 29))
-				{
-					var convert = new Func<string, DeckPanel?>(panel =>
-					{
-						switch(panel)
-						{
-							case "Win Rate":
-								return DeckPanel.Winrate;
-							case "Cards":
-								return DeckPanel.Cards;
-							case "Card Counter":
-								return DeckPanel.CardCounter;
-							case "Draw Chances":
-								return DeckPanel.DrawChances;
-							case "Fatigue Counter":
-								return DeckPanel.Fatigue;
-							case "Deck Title":
-								return DeckPanel.DeckTitle;
-							case "Wins":
-								return DeckPanel.Wins;
-						}
-						return null;
-					});
-					Config.Instance.DeckPanelOrderPlayer = Config.Instance.PanelOrderPlayer.Select(convert).Where(x => x.HasValue).Select(x => x!.Value).ToArray();
-					Config.Instance.DeckPanelOrderOpponent = Config.Instance.PanelOrderOpponent.Select(convert).Where(x => x.HasValue).Select(x => x!.Value).ToArray();
-					converted = true;
-				}
-				if(configVersion <= new Version(1, 17, 12, 0))
-				{
-					if(Config.Instance.DeckPanelOrderPlayer.Contains(DeckPanel.CardsTop) || Config.Instance.DeckPanelOrderPlayer.Contains(DeckPanel.CardsBottom))
-						return;
-					Config.Instance.DeckPanelOrderPlayer = Config.Instance.DeckPanelOrderPlayer.SelectMany(x =>
-					{
-						if(x == DeckPanel.Cards)
-							return new DeckPanel[] { DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom };
-						return new DeckPanel[] { x };
-					}).ToArray();
-					converted = true;
-				}
 			}
 
 			if(converted)

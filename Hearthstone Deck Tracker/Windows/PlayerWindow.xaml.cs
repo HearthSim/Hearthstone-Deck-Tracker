@@ -103,7 +103,7 @@ namespace Hearthstone_Deck_Tracker
 		public void UpdatePlayerLayout()
 		{
 			StackPanelMain.Children.Clear();
-			foreach(var item in Config.Instance.DeckPanelOrderPlayer)
+			foreach(var item in Config.Instance.DeckPanelOrderLocalPlayer)
 			{
 				switch(item)
 				{

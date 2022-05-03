@@ -637,13 +637,7 @@ namespace Hearthstone_Deck_Tracker
 		public DeckPanel[] DeckPanelOrderOpponent = { DeckPanel.Winrate, DeckPanel.Cards, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue };
 
 		[DefaultValue(new[] { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue })]
-		public DeckPanel[] DeckPanelOrderPlayer = { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue };
-
-		[Obsolete, DefaultValue(new[] { "Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" })]
-		public string[] PanelOrderOpponent = { "Win Rate", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" };
-
-		[Obsolete, DefaultValue(new[] { "Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" })]
-		public string[] PanelOrderPlayer = { "Deck Title", "Wins", "Cards", "Card Counter", "Draw Chances", "Fatigue Counter" };
+		public DeckPanel[] DeckPanelOrderLocalPlayer = { DeckPanel.DeckTitle, DeckPanel.Wins, DeckPanel.CardsTop, DeckPanel.Cards, DeckPanel.CardsBottom, DeckPanel.CardCounter, DeckPanel.DrawChances, DeckPanel.Fatigue };
 
 		[DefaultValue(88)]
 		public double PlayerDeckHeight = 88;
