@@ -1080,7 +1080,7 @@ namespace Hearthstone_Deck_Tracker
 			var card = Database.GetCardFromId(cardId);
 			if(!entity.IsSecret)
 			{
-				if(entity.IsQuest || entity.IsSideQuest)
+				if(entity.IsQuest && !entity.IsQuestlinePart || entity.IsSideQuest)
 				{
 					_game.Player.QuestPlayedFromHand(entity, turn);
 					if(card != null)
@@ -1410,7 +1410,7 @@ namespace Hearthstone_Deck_Tracker
 			var card = Database.GetCardFromId(cardId);
 			if(!entity.IsSecret)
 			{
-				if(entity.IsQuest || entity.IsSideQuest)
+				if(entity.IsQuest && !entity.IsQuestlinePart || entity.IsSideQuest)
 				{
 					_game.Opponent.QuestPlayedFromHand(entity, turn);
 					if(card != null)

@@ -99,7 +99,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsInSecret => IsInZone(Zone.SECRET);
 
 		[JsonIgnore]
-		public bool IsQuest => HasTag(GameTag.QUEST) || HasTag(GameTag.QUESTLINE);
+		public bool IsQuest => HasTag(GameTag.QUEST) || IsQuestline;
+
+		[JsonIgnore]
+		public bool IsQuestline => HasTag(GameTag.QUESTLINE);
+
+		[JsonIgnore]
+		public bool IsQuestlinePart => IsQuestline && GetTag(GameTag.QUESTLINE_PART) > 1;
 
 		[JsonIgnore]
 		public bool IsSideQuest => HasTag(GameTag.SIDEQUEST);
