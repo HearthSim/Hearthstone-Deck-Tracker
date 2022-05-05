@@ -1006,6 +1006,7 @@ namespace Hearthstone_Deck_Tracker
 			else
 				Core.Overlay.ShowBgsTopBar();
 			OpponentDeadForTracker.ResetOpponentDeadForTracker();
+			Core.Overlay.ShowBattlegroundsSession();
 		}
 
 		#region Player

@@ -170,6 +170,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			if(_game.IsInMenu || !inBattlegrounds)
 			{
 				HideBgsTopBar();
+				HideBattlegroundsSession();
 			}
 
 			UpdateIcons();

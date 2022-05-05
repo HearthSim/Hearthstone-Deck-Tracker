@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.BattlegroundsSession"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
+             mc:Ignorable="d"
+             Width="220">
+    <Border
+        BorderBrush="#2E3635"
+        BorderThickness="1"
+        Background="#2E3635"
+        Canvas.Right="0"
+        Canvas.Top="0"
+        Margin="0, 160"
+    >
+        <StackPanel Name="BattlegroundsTierlistPanel">
+            <Border BorderBrush="#4A5256" BorderThickness="1" Background="#1C2022">
+                <local:HearthstoneTextBlock Text="Minions Banned" FontSize="12" HorizontalAlignment="Center" Margin="0,3"/>
+            </Border>
+            <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8" HorizontalAlignment="Center">
+                <overlay:BattlegroundsTribe x:Name="BgTribe1" Tribe="PET"/>
+                <overlay:BattlegroundsTribe x:Name="BgTribe2" Tribe="PET" Margin="8,0,0,0"/>
+                <overlay:BattlegroundsTribe x:Name="BgTribe3" Tribe="PET" Margin="8,0,0,0"/>
+                <overlay:BattlegroundsTribe x:Name="BgTribe4" Tribe="PET" Margin="8,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

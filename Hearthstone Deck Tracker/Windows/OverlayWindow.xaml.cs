@@ -439,6 +439,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 			HideBobsBuddyPanel();
 		}
 
+		internal void ShowBattlegroundsSession()
+		{
+			BattlegroundsSession.Show();
+		}
+
+		internal void HideBattlegroundsSession()
+		{
+			BattlegroundsSession.Hide();
+		}
+
 		internal void ShowLinkOpponentDeckDisplay()
 		{
 			LinkOpponentDeckDisplay.Show(true);
