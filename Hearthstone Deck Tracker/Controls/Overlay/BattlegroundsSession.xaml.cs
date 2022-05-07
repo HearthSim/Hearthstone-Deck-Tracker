@@ -37,6 +37,10 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					BgTribe3.Margin = new Thickness(15, 0, 0, 0);
 				}
 			}
+
+			var rating = Core.Game.BattlegroundsRatingInfo?.Rating;
+			BgRatingStart.Text = $"{rating:N0}";
+			BgRatingCurrent.Text = $"{rating:N0}";
 		}
 
 		public void Show()

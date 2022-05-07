@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.BattlegroundsGame"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ColumnDefinition Width="1.7*"/>
+        <ColumnDefinition Width="1*"/>
+        <ColumnDefinition Width="1*"/>
+        <Canvas Grid.Column="0">
+            <local:HearthstoneTextBlock Text="Binding HeroName" FontSize="13" HorizontalAlignment="Center"/>
+        </Canvas>
+        <Canvas Grid.Column="1">
+            <local:HearthstoneTextBlock Text="Binding Placement" FontSize="13" HorizontalAlignment="Center"/>
+        </Canvas>
+        <local:HearthstoneTextBlock Grid.Column="2" Text="Binding Mmr" FontSize="13" HorizontalAlignment="Center"/>
+    </Grid>
+</UserControl>

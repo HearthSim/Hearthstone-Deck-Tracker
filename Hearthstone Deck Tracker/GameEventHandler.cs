@@ -26,6 +26,10 @@ using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
+using Hearthstone_Deck_Tracker.LogReader.Interfaces;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
+using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
 #endregion
 
@@ -763,6 +767,7 @@ namespace Hearthstone_Deck_Tracker
 						Sentry.SendQueuedBobsBuddyEvents(_game.CurrentGameStats.HsReplay.UploadId);
 					else
 						Sentry.ClearBobsBuddyEvents();
+					RecordBattlegroundsGame();
 				}
 
 				Influx.SendQueuedMetrics();
@@ -780,6 +785,31 @@ namespace Hearthstone_Deck_Tracker
 			var timeout = TimeSpan.FromSeconds(timeoutInSeconds);
 			while(_lastGame != null && _lastGame.GameMode == None && (DateTime.Now - startTime) < timeout)
 				await Task.Delay(100);
+		}
+
+		private void RecordBattlegroundsGame()
+		{
+			var hero = _game.CurrentGameStats?.PlayerHero;
+			var time = _game.CurrentGameStats?.StartTime.ToString("o");
+			var rating = _game.CurrentGameStats?.BattlegroundsRating;
+			var ratingAfter = _game.BattlegroundsRatingInfo?.Rating;
+			var placement = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero)
+				?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE);
+
+			if(time != null && hero != null && rating != null && ratingAfter != null && placement != null)
+			{
+				BattlegroundsLastGames.Instance.AddGame(
+					time,
+					hero,
+					(int)rating,
+					(int)ratingAfter,
+					(int)placement
+				);
+			}
+			else
+			{
+				Log.Error("Missing data while trying to record battleground game");
+			}
 		}
 
 		private void LogEvent(string type, string id = "", int turn = 0, int from = -1, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "")
