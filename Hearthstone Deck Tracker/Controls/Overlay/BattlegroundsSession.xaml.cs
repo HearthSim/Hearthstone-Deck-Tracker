@@ -4,12 +4,19 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
+using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Hearthstone_Deck_Tracker.Annotations;
+using System.Runtime.CompilerServices;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public partial class BattlegroundsSession : UserControl
 	{
 		private Lazy<BattlegroundsDb> _db = new Lazy<BattlegroundsDb>();
+		public ObservableCollection<BattlegroundsGame> Games { get; set; } = new ObservableCollection<BattlegroundsGame>();
 
 		public BattlegroundsSession()
 		{
@@ -38,9 +45,32 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				}
 			}
 
+			var sortedGames = BattlegroundsLastGames.Instance.Games
+				.OrderBy(g => g.Time)
+				.ToList();
 			var rating = Core.Game.BattlegroundsRatingInfo?.Rating;
-			BgRatingStart.Text = $"{rating:N0}";
+			var ratingStart = sortedGames.FirstOrDefault()?.RatingAfter ?? rating;
+			BgRatingStart.Text = $"{ratingStart:N0}";
 			BgRatingCurrent.Text = $"{rating:N0}";
+
+			sortedGames.ForEach(AddOrUpdateGame);
+
+			BattlegroundsTierlistPanel.Children.Remove(
+				sortedGames.Count == 0 ? GridHeader : GamesEmptyState
+			);
+		}
+
+		private void AddOrUpdateGame(GameItem game)
+		{
+			var existingGame = Games.FirstOrDefault(x => x?.Game?.Time == game.Time);
+			if (existingGame == null)
+			{
+				Games.Add(new BattlegroundsGame() { Game = game });
+			}
+			else
+			{
+				existingGame.Game = game;
+			}
 		}
 
 		public void Show()

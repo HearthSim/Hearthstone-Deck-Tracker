@@ -3,19 +3,67 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ColumnDefinition Width="1.7*"/>
-        <ColumnDefinition Width="1*"/>
-        <ColumnDefinition Width="1*"/>
-        <Canvas Grid.Column="0">
-            <local:HearthstoneTextBlock Text="Binding HeroName" FontSize="13" HorizontalAlignment="Center"/>
+    <Border BorderBrush="#1C2022" BorderThickness="0,1,0,0">
+        <Canvas Height="34" Width="217" ClipToBounds="True">
+            <Image
+                Canvas.Left="-35"
+                Canvas.Top="5"
+                Source="{Binding CardImage.AssetPath, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGame}}"
+                Height="34"
+                Width="145"
+                Margin="-5,-5,0,0"
+                RenderOptions.BitmapScalingMode="Fant"
+            >
+                <Image.OpacityMask>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#AA000000" Offset="0"/>
+                        <GradientStop Color="Transparent" Offset="1"/>
+                    </LinearGradientBrush>
+                </Image.OpacityMask>
+            </Image>
+            <Grid Height="34" Width="217">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.7*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <local:HearthstoneTextBlock
+                    Grid.Column="0"
+                    Text="{Binding HeroName, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGame}}"
+                    FontSize="13"
+                    HorizontalAlignment="Center"
+                />
+                <Canvas Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="18" Width="22">
+                    <TextBlock
+                        Text="{Binding Placement, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGame}}"
+                        FontSize="13"
+                        FontWeight="Bold"
+                        Foreground="{Binding PlacementTextBrush, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGame}}"
+                        TextAlignment="Center"
+                        Width="23"
+                    />
+                    <Image
+                        Canvas.Left="-8"
+                        Canvas.Top="-7"
+                        Height="16"
+                        Width="16"
+                        Source="/HearthstoneDeckTracker;component/Resources/bgs_crown.png"
+                        Visibility="{Binding CrownVisibility, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGame}}"
+                    />
+                </Canvas>
+                <TextBlock
+                    Grid.Column="2"
+                    Text="{Binding MMRDelta, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGame}}"
+                    FontSize="13"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{Binding MMRDeltaTextBrush, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGame}}"
+                />
+            </Grid>
         </Canvas>
-        <Canvas Grid.Column="1">
-            <local:HearthstoneTextBlock Text="Binding Placement" FontSize="13" HorizontalAlignment="Center"/>
-        </Canvas>
-        <local:HearthstoneTextBlock Grid.Column="2" Text="Binding Mmr" FontSize="13" HorizontalAlignment="Center"/>
-    </Grid>
+    </Border>
 </UserControl>

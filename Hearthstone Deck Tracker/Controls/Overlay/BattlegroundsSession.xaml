@@ -59,6 +59,56 @@
                     </StackPanel>
                 </Border>
             </Grid>
+            <Border BorderBrush="#4A5256" BorderThickness="0,1" Background="#1C2022">
+                <local:HearthstoneTextBlock Text="Latest Games" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
+            </Border>
+            <Grid Name="GridHeader">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.7*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Column="0"
+                    Content="Hero"
+                    Foreground="#FFFFFF"
+                    Opacity=".55"
+                    FontSize="11"
+                    FontWeight="Light"
+                    HorizontalAlignment="Center"
+                />
+                <Label
+                    Grid.Column="1"
+                    Content="Final"
+                    Foreground="#FFFFFF"
+                    Opacity=".55"
+                    FontSize="11"
+                    FontWeight="Light"
+                    HorizontalAlignment="Center"
+                />
+                <Label
+                    Grid.Column="2"
+                    Content="MMR"
+                    Foreground="#FFFFFF"
+                    Opacity=".55"
+                    FontSize="11"
+                    FontWeight="Light"
+                    HorizontalAlignment="Center"
+                />
+            </Grid>
+            <ItemsControl
+                ItemsSource="{Binding Games, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsSession}}"
+            />
+            <TextBlock
+                Name="GamesEmptyState"
+                Text="No games played this session.&#10;New games will appear here."
+                Foreground="#FFFFFF"
+                Opacity=".5"
+                TextAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="0,8"
+                Visibility="{Binding PlaceholderVisibility, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsSession}}"
+            />
         </StackPanel>
     </Border>
 </UserControl>
