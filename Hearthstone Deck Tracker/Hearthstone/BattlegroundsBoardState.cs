@@ -11,9 +11,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		const string UntransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseekerTavernBrawl1;
 		const string TransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseeker_ArannaUnleashedTokenTavernBrawl;
 
+		const string UntransformedQueenAzshara = HearthDb.CardIds.NonCollectible.Neutral.QueenAzsharaBATTLEGROUNDS;
+		const string TransformedQueenAzshara = HearthDb.CardIds.NonCollectible.Neutral.QueenAzshara_NagaQueenAzsharaToken;
+
 		private static readonly Dictionary<string, string> TransformableHeroCardidTable = new Dictionary<string, string>()
 		{
-			{ TransformedArannaCardid, UntransformedArannaCardid}
+			{ TransformedArannaCardid, UntransformedArannaCardid },
+			{ TransformedQueenAzshara, UntransformedQueenAzshara }
 		};
 
 		private GameV2 _game;
