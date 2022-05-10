@@ -1,3 +1,9 @@
+## **Release v1.18.0 - 2022-05-10**
+**Updated for Hearthstone 23.2.0**
+
+**Fixes**:
+- Fixed an issue where Questline parts were counting towards the spell counter.
+
 ## **Release v1.17.14 - 2022-05-03**
 **Fixes**:
 - Fixed an issue where the dredge card panels were missing in some cases.
