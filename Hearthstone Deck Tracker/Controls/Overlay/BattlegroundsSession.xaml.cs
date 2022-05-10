@@ -9,12 +9,15 @@ using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGam
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Collections.Generic;
+using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
 	public partial class BattlegroundsSession : UserControl
 	{
 		private Lazy<BattlegroundsDb> _db = new Lazy<BattlegroundsDb>();
+		private Lazy<BrushConverter> _bc = new Lazy<BrushConverter>();
+
 		public ObservableCollection<BattlegroundsGame> Games { get; set; } = new ObservableCollection<BattlegroundsGame>();
 
 		public BattlegroundsSession()
@@ -53,20 +56,22 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			BgRatingCurrent.Text = $"{rating:N0}";
 		}
 
-		private void BtnOptions_MouseUp(object sender, RoutedEventArgs e)
+		private void BtnOptions_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)
 		{
+			Log.Debug("up");
 			Core.MainWindow.ActivateWindow();
+			Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
 			Core.MainWindow.FlyoutOptions.IsOpen = true;
 		}
 
 		private void BtnOptions_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			BtnOptions.Background = new SolidColorBrush(Color.FromArgb(34, 255, 255, 255));
+			BtnOptions.Background = (Brush)_bc.Value.ConvertFromString("#22FFFFFF");
 		}
 
 		private void BtnOptions_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			BtnOptions.Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+			BtnOptions.Background = (Brush)_bc.Value.ConvertFromString("#00FFFFFF");
 		}
 
 		public void Show()

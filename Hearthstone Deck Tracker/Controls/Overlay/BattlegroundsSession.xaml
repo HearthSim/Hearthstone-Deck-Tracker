@@ -119,23 +119,29 @@
                 </StackPanel>
             </StackPanel>
         </Border>
-        <Button
+        <Border
             Name="BtnOptions"
-            Canvas.Top="3"
-            Canvas.Right="3"
+            Canvas.Top="4"
+            Canvas.Right="4"
+            Height="23"
+            Width="24"
+            CornerRadius="3"
             Background="Transparent"
-            BorderThickness="0"
-            Padding="5,0"
             Cursor="Hand"
             MouseEnter="BtnOptions_MouseEnter"
             MouseLeave="BtnOptions_MouseLeave"
             MouseUp="BtnOptions_MouseUp"
         >
-            <Rectangle Width="14" Height="14">
+            <Rectangle
+                Height="14"
+                Width="14"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+            >
                 <Rectangle.Fill>
                     <VisualBrush Visual="{StaticResource appbar_settings}" />
                 </Rectangle.Fill>
             </Rectangle>
-        </Button>
+        </Border>
     </Canvas>
 </UserControl>
