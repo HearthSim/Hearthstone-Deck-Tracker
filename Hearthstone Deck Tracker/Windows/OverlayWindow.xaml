@@ -206,7 +206,7 @@
                     <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel"/>
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
-                <overlay:BattlegroundsSession x:Name="BattlegroundsSession" Visibility="Hidden"/>
+                <overlay:BattlegroundsSession x:Name="BattlegroundsSession" Visibility="Collapsed"/>
                 <StackPanel Width="1000" Name="BgsOpponentInfoContainer" Canvas.Top="0" Canvas.Right="0">
                     <battlegrounds:BattlegroundsOpponentInfo x:Name="BgsOpponentInfo" Visibility="Collapsed"/>
                 </StackPanel>

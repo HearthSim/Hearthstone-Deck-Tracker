@@ -1,6 +1,7 @@
 ﻿using HearthDb;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -73,7 +74,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				SetValue(CardImageProperty, new CardAssetViewModel(heroCard, Utility.Assets.CardAssetType.Tile));
 				OnPropertyChanged(nameof(CardImageProperty));
 
-				SetValue(HeroNameProperty, heroCard?.Name);
+				var heroName = Remote.Config.Data?.BattlegroundsShortNames
+					?.Find(sn => sn.DbfId == heroCard?.DbfId)?.ShortName ?? heroCard?.Name;
+				SetValue(HeroNameProperty, heroName);
 				OnPropertyChanged(nameof(HeroNameProperty));
 
 				// This is fine here since we do not have 11, 12, 13 as placement option

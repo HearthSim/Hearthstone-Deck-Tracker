@@ -35,7 +35,8 @@
                     Grid.Column="0"
                     Text="{Binding HeroName, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGame}}"
                     FontSize="13"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Margin="8,0,0,0"
                 />
                 <Canvas Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="18" Width="22">
                     <TextBlock
