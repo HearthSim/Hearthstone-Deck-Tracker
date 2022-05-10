@@ -91,6 +91,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var sortedGames = BattlegroundsLastGames.Instance.Games
 				.OrderBy(g => g.StartTime)
 				.ToList();
+			deleteOldGames(sortedGames);
 
 			var sessionGames = getSessionGames(sortedGames);
 
@@ -128,6 +129,16 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				previousGameEndTime = DateTime.Parse(g.EndTime);
 			};
 			return sortedGames.Where(g => DateTime.Parse(g.StartTime) >= sessionStartTime).ToList();
+		}
+
+		private void deleteOldGames(List<GameItem> sortedGames)
+		{
+			sortedGames.ForEach(g =>
+			{
+				TimeSpan ts = DateTime.Now - DateTime.Parse(g.StartTime);
+				if(g.StartTime != null && ts.TotalDays >= 7)
+					BattlegroundsLastGames.Instance.RemoveGame(g.StartTime);
+			});
 		}
 
 		private void AddOrUpdateGame(GameItem game)
