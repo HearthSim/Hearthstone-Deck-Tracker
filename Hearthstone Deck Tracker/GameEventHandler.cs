@@ -790,16 +790,18 @@ namespace Hearthstone_Deck_Tracker
 		private void RecordBattlegroundsGame()
 		{
 			var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
-			var time = _game.CurrentGameStats?.StartTime.ToString("o");
+			var startTime = _game.CurrentGameStats?.StartTime.ToString("o");
+			var endTime = _game.CurrentGameStats?.EndTime.ToString("o");
 			var heroCardId = hero?.CardId;
 			var rating = _game.CurrentGameStats?.BattlegroundsRating;
 			var ratingAfter = _game.CurrentGameStats?.BattlegroundsRatingAfter;
 			var placement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE);
 
-			if(time != null && heroCardId != null && rating != null && ratingAfter != null && placement != null)
+			if(startTime != null && endTime != null && heroCardId != null && rating != null && ratingAfter != null && placement != null)
 			{
 				BattlegroundsLastGames.Instance.AddGame(
-					time,
+					startTime,
+					endTime,
 					heroCardId,
 					(int)rating,
 					(int)ratingAfter,

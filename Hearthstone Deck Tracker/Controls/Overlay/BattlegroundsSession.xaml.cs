@@ -8,6 +8,7 @@ using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
+using System.Collections.Generic;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
@@ -88,25 +89,50 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			Games.Clear();
 			var sortedGames = BattlegroundsLastGames.Instance.Games
-				.OrderBy(g => g.Time)
+				.OrderBy(g => g.StartTime)
 				.ToList();
 
-			sortedGames.ForEach(AddOrUpdateGame);
+			var sessionGames = getSessionGames(sortedGames);
 
-			GridHeader.Visibility = sortedGames.Count > 0
+			// Limit list to latest 10 items
+			if(sessionGames.Count > 10)
+				sessionGames.RemoveRange(0, sessionGames.Count - 10);
+
+			sessionGames.ForEach(AddOrUpdateGame);
+
+			GridHeader.Visibility = sessionGames.Count > 0
 				? Visibility.Visible
 				: Visibility.Collapsed;
 
-			GamesEmptyState.Visibility = sortedGames.Count == 0
+			GamesEmptyState.Visibility = sessionGames.Count == 0
 				? Visibility.Visible
 				: Visibility.Collapsed;
 
-			return sortedGames.FirstOrDefault();
+			return sessionGames.FirstOrDefault();
+		}
+
+		private List<GameItem> getSessionGames(List<GameItem> sortedGames)
+		{
+			DateTime? sessionStartTime = null;
+			DateTime? previousGameEndTime = null;
+			foreach (var g in sortedGames)
+			{
+				if(previousGameEndTime != null)
+				{
+					var gStartTime = DateTime.Parse(g.StartTime);
+					TimeSpan ts = gStartTime - (DateTime)previousGameEndTime;
+					if(ts.TotalHours >= 2)
+						sessionStartTime = gStartTime;
+
+				}
+				previousGameEndTime = DateTime.Parse(g.EndTime);
+			};
+			return sortedGames.Where(g => DateTime.Parse(g.StartTime) >= sessionStartTime).ToList();
 		}
 
 		private void AddOrUpdateGame(GameItem game)
 		{
-			var existingGame = Games.FirstOrDefault(x => x?.Game?.Time == game.Time);
+			var existingGame = Games.FirstOrDefault(x => x?.Game?.StartTime == game.StartTime);
 			if (existingGame == null)
 			{
 				Games.Add(new BattlegroundsGame() { Game = game });

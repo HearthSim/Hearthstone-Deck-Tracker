@@ -34,17 +34,17 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			return new BattlegroundsLastGames();
 		}
 
-		public void AddGame(string time, string hero, int rating, int ratingAfter, int placemenent, bool save = true)
+		public void AddGame(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, bool save = true)
 		{
-			RemoveGame(time, false);
-			Games.Add(new GameItem(time, hero, rating, ratingAfter, placemenent));
+			RemoveGame(startTime, false);
+			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent));
 			if(save)
 				Save();
 		}
 
-		public void RemoveGame(string time, bool save = true)
+		public void RemoveGame(string startTime, bool save = true)
 		{
-			var existing = Games.FirstOrDefault(x => x.Time != null && x.Time.Equals(time));
+			var existing = Games.FirstOrDefault(x => x.StartTime != null && x.StartTime.Equals(startTime));
 			if(existing != null)
 				Games.Remove(existing);
 			if(save)
@@ -71,9 +71,10 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 		public class GameItem
 		{
-			public GameItem(string time, string hero, int rating, int ratingAfter, int placemenent)
+			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent)
 			{
-				Time = time;
+				StartTime = startTime;
+				EndTime = endTime;
 				Hero = hero;
 				Rating = rating;
 				RatingAfter = ratingAfter;
@@ -84,8 +85,11 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			{
 			}
 
-			[XmlAttribute("Time")]
-			public string? Time { get; set; }
+			[XmlAttribute("StartTime")]
+			public string? StartTime { get; set; }
+
+			[XmlAttribute("EndTime")]
+			public string? EndTime { get; set; }
 
 			[XmlAttribute("Hero")]
 			public string? Hero { get; set; }
