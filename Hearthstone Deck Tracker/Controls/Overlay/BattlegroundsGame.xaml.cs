@@ -85,7 +85,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				OnPropertyChanged(nameof(PlacementProperty));
 
 				var mmrDelta = _game.RatingAfter - _game.Rating;
-				var signal = mmrDelta == 0 ? "" : mmrDelta > 0 ? "+" : "-";
+				var signal = mmrDelta > 0 ? "+" : "";
 				SetValue(MMRDeltaProperty, $"{signal}{mmrDelta}");
 				OnPropertyChanged(nameof(MMRDeltaProperty));
 

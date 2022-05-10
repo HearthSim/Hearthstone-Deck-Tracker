@@ -344,6 +344,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelSecrets.RenderTransform = new ScaleTransform(Config.Instance.SecretsPanelScaling, Config.Instance.SecretsPanelScaling);
 			LinkOpponentDeckDisplay.RenderTransform = new ScaleTransform(Config.Instance.OverlayOpponentScaling / 100,
 																	Config.Instance.OverlayOpponentScaling / 100);
+			BattlegroundsSession.RenderTransform = new ScaleTransform(Config.Instance.OverlaySessionRecapScaling / 100,
+																	Config.Instance.OverlaySessionRecapScaling / 100);
 		}
 
 		public double AutoScaling { get; set; } = 1;

@@ -449,6 +449,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsSession.Hide();
 		}
 
+		internal void UpdateBattlegroundsSession()
+		{
+			BattlegroundsSession.UpdateSectionsVisibilities();
+			BattlegroundsSession.UpdateLatestGames();
+		}
+
 		internal void ShowLinkOpponentDeckDisplay()
 		{
 			LinkOpponentDeckDisplay.Show(true);

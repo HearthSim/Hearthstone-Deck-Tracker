@@ -1,10 +1,15 @@
 #region
 
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
+using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using MahApps.Metro.Controls.Dialogs;
 
@@ -15,13 +20,41 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 	/// <summary>
 	/// Interaction logic for Overlay.xaml
 	/// </summary>
-	public partial class OverlayBattlegrounds
+	public partial class OverlayBattlegrounds : INotifyPropertyChanged
 	{
 		private bool _initialized;
 
 		public OverlayBattlegrounds()
 		{
 			InitializeComponent();
+		}
+
+		public event PropertyChangedEventHandler? PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+		{
+			var handler = PropertyChanged;
+			handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public double SessionRecapScaling
+		{
+			get { return Config.Instance.OverlaySessionRecapScaling; }
+			set
+			{
+				if(!_initialized)
+					return;
+				value = Math.Round(value);
+				if(value < SliderSessionRecapScaling.Minimum)
+					value = SliderSessionRecapScaling.Minimum;
+				else if(value > SliderSessionRecapScaling.Maximum)
+					value = SliderSessionRecapScaling.Maximum;
+				Config.Instance.OverlaySessionRecapScaling = value;
+				Config.Save();
+				Core.Overlay.UpdateScaling();
+				OnPropertyChanged();
+			}
 		}
 
 		public void Load()
@@ -39,6 +72,11 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 			CheckboxAlwaysShowAverageDamage.IsChecked = Config.Instance.AlwaysShowAverageDamage;
 			CheckboxAlwaysShowAverageDamage.IsEnabled = Config.Instance.RunBobsBuddy;
+
+			CheckboxShowSessionRecap.IsChecked = Config.Instance.ShowSessionRecap;
+			CheckboxShowMinionsBanned.IsChecked = Config.Instance.ShowSessionRecapMinionsBanned;
+			CheckboxShowStartCurrentMMR.IsChecked = Config.Instance.ShowSessionRecapStartCurrentMMR;
+			CheckboxShowLatestGames.IsChecked = Config.Instance.ShowSessionRecapLatestGames;
 
 			_initialized = true;
 		}
@@ -194,5 +232,105 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			e.Handled = true;
 			Core.MainWindow.Options.TreeViewItemStreamingCapturableOverlay.IsSelected = true;
 		}
+
+		private void CheckboxShowSessionRecap_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecap = true;
+			CheckboxShowMinionsBanned.IsEnabled = true;
+			CheckboxShowStartCurrentMMR.IsEnabled = true;
+			CheckboxShowLatestGames.IsEnabled = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.ShowBattlegroundsSession();
+			Influx.OnSessionRecapEnabledChanged(true);
+		}
+
+		private void CheckboxShowSessionRecap_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecap = false;
+			CheckboxShowMinionsBanned.IsEnabled = false;
+			CheckboxShowStartCurrentMMR.IsEnabled = false;
+			CheckboxShowLatestGames.IsEnabled = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.HideBattlegroundsSession();
+			Influx.OnSessionRecapEnabledChanged(false);
+		}
+
+		private void CheckboxShowMinionsBanned_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapMinionsBanned = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.UpdateBattlegroundsSession();
+		}
+
+		private void CheckboxShowMinionsBanned_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapMinionsBanned = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.UpdateBattlegroundsSession();
+		}
+
+		private void CheckboxShowStartCurrentMMR_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapStartCurrentMMR = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.UpdateBattlegroundsSession();
+		}
+
+		private void CheckboxShowStartCurrentMMR_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapStartCurrentMMR = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.UpdateBattlegroundsSession();
+		}
+
+		private void CheckboxShowLatestGames_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapLatestGames = true;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.UpdateBattlegroundsSession();
+		}
+
+		private void CheckboxShowLatestGames_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapLatestGames = false;
+			SaveConfig(true);
+			if(Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.UpdateBattlegroundsSession();
+		}
+
+		private void TextBoxSessionRecapScaling_OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			if(!char.IsDigit(e.Text, e.Text.Length - 1))
+				e.Handled = true;
+		}
+
+		public ICommand ResetSessionCommand => new Command(() =>
+		{
+			BattlegroundsLastGames.Instance.Reset();
+			Core.Overlay.UpdateBattlegroundsSession();
+		});
 	}
 }

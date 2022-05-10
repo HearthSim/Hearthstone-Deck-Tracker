@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:options="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -38,6 +39,68 @@
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top" Checked="CheckboxAlwaysShowAverageDamage_Checked"
                           Unchecked="CheckboxAlwaysShowAverageDamage_Unchecked" Margin="0,5,0,0" />
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Current Session Recap" Margin="5,10,5,5">
+            <StackPanel>
+                <CheckBox
+                    x:Name="CheckboxShowSessionRecap"
+                    Content="Show Session Recap"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowSessionRecap_Checked"
+                    Unchecked="CheckboxShowSessionRecap_Unchecked"
+                    Margin="0"
+                />
+                <CheckBox
+                    x:Name="CheckboxShowMinionsBanned"
+                    Content="Show Minions Banned"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowMinionsBanned_Checked"
+                    Unchecked="CheckboxShowMinionsBanned_Unchecked"
+                    Margin="10,5,0,0"
+                />
+                <CheckBox
+                    x:Name="CheckboxShowStartCurrentMMR"
+                    Content="Show Start and Current MMR"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowStartCurrentMMR_Checked"
+                    Unchecked="CheckboxShowStartCurrentMMR_Unchecked"
+                    Margin="10,5,0,0"
+                />
+                <CheckBox
+                    x:Name="CheckboxShowLatestGames"
+                    Content="Show Latest Games"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowLatestGames_Checked"
+                    Unchecked="CheckboxShowLatestGames_Unchecked"
+                    Margin="10,5,0,0"
+                />
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Scaling" />
+                    <Slider
+                        x:Name="SliderSessionRecapScaling"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center" Width="150"
+                        Value="{Binding SessionRecapScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayBattlegrounds}, Delay=100}"
+                        Minimum="1" SmallChange="1" LargeChange="10" Maximum="200"
+                    />
+                    <TextBox
+                        PreviewTextInput="TextBoxSessionRecapScaling_OnPreviewTextInput"
+                        Text="{Binding SessionRecapScaling, RelativeSource={RelativeSource AncestorType=overlay:OverlayBattlegrounds}}"
+                        Margin="5,0,0,0" Width="50"
+                    />
+                </StackPanel>
+                <Button
+                    HorizontalAlignment="Center"
+                    Width="150"
+                    Content="Reset Session"
+                    Margin="0,15,0,0"
+                    Command="{Binding ResetSessionCommand, RelativeSource={RelativeSource AncestorType=overlay:OverlayBattlegrounds}}"
+                />
             </StackPanel>
         </GroupBox>
         <Button x:Name="OverlayHelpButton"

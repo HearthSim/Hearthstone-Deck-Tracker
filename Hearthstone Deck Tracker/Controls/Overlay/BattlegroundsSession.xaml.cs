@@ -7,9 +7,7 @@ using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using Hearthstone_Deck_Tracker.Annotations;
-using System.Runtime.CompilerServices;
+using System.Windows.Media;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
@@ -37,7 +35,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				if(unavailableRaces.Count() == 4)
 				{
 					BgTribe4.Tribe = unavailableRaces[3];
-				} else
+				}
+				else
 				{
 					BgBannedTribes.Children.Remove(BgTribe4);
 					BgTribe2.Margin = new Thickness(15, 0, 0, 0);
@@ -45,19 +44,64 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				}
 			}
 
+			var firstGame = UpdateLatestGames();
+
+			var rating = Core.Game.BattlegroundsRatingInfo?.Rating;
+			var ratingStart = firstGame?.RatingAfter ?? rating;
+			BgRatingStart.Text = $"{ratingStart:N0}";
+			BgRatingCurrent.Text = $"{rating:N0}";
+		}
+
+		private void BtnOptions_MouseUp(object sender, RoutedEventArgs e)
+		{
+			Core.MainWindow.ActivateWindow();
+			Core.MainWindow.FlyoutOptions.IsOpen = true;
+		}
+
+		private void BtnOptions_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			BtnOptions.Background = new SolidColorBrush(Color.FromArgb(34, 255, 255, 255));
+		}
+
+		private void BtnOptions_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		{
+			BtnOptions.Background = new SolidColorBrush(Color.FromArgb(0, 255, 255, 255));
+		}
+
+		public void Show()
+		{
+			if (Visibility == Visibility.Visible)
+			{
+				return;
+			}
+			Update();
+			UpdateSectionsVisibilities();
+			Visibility = Visibility.Visible;
+		}
+
+		public void Hide()
+		{
+			Visibility = Visibility.Hidden;
+		}
+
+		public GameItem? UpdateLatestGames()
+		{
+			Games.Clear();
 			var sortedGames = BattlegroundsLastGames.Instance.Games
 				.OrderBy(g => g.Time)
 				.ToList();
-			var rating = Core.Game.BattlegroundsRatingInfo?.Rating;
-			var ratingStart = sortedGames.FirstOrDefault()?.RatingAfter ?? rating;
-			BgRatingStart.Text = $"{ratingStart:N0}";
-			BgRatingCurrent.Text = $"{rating:N0}";
 
 			sortedGames.ForEach(AddOrUpdateGame);
 
-			BattlegroundsTierlistPanel.Children.Remove(
-				sortedGames.Count == 0 ? GridHeader : GamesEmptyState
-			);
+			GridHeader.Visibility = sortedGames.Count > 0
+				? Visibility.Visible
+				: Visibility.Collapsed;
+
+			GamesEmptyState.Visibility = sortedGames.Count == 0
+				? Visibility.Visible
+				: Visibility.Collapsed;
+
+			return sortedGames.FirstOrDefault();
 		}
 
 		private void AddOrUpdateGame(GameItem game)
@@ -73,19 +117,19 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
-		public void Show()
+		public void UpdateSectionsVisibilities()
 		{
-			if (Visibility == Visibility.Visible)
-			{
-				return;
-			}
-			Update();
-			Visibility = Visibility.Visible;
-		}
+			BgBannedTribesSection.Visibility = Config.Instance.ShowSessionRecapMinionsBanned
+				? Visibility.Visible
+				: Visibility.Collapsed;
 
-		public void Hide()
-		{
-			Visibility = Visibility.Hidden;
+			BgStartCurrentMMRSection.Visibility = Config.Instance.ShowSessionRecapStartCurrentMMR
+				? Visibility.Visible
+				: Visibility.Collapsed;
+
+			BgLastestGamesSection.Visibility = Config.Instance.ShowSessionRecapLatestGames
+				? Visibility.Visible
+				: Visibility.Collapsed;
 		}
 	}
 }

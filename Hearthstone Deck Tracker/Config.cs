@@ -812,6 +812,21 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool SeenBobsBuddyAverageDamage = false;
 
+		[DefaultValue(true)]
+		public bool ShowSessionRecap = true;
+
+		[DefaultValue(true)]
+		public bool ShowSessionRecapMinionsBanned = true;
+
+		[DefaultValue(true)]
+		public bool ShowSessionRecapStartCurrentMMR = true;
+
+		[DefaultValue(true)]
+		public bool ShowSessionRecapLatestGames = true;
+
+		[DefaultValue(100)]
+		public double OverlaySessionRecapScaling = 100;
+
 		[DefaultValue(false)]
 		public bool SeenMulliganToast = false;
 

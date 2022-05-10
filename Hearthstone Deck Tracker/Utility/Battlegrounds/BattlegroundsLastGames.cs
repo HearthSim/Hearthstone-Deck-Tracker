@@ -63,6 +63,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			}
 		}
 
+		public void Reset()
+		{
+			Games.Clear();
+			Save();
+		}
+
 		public class GameItem
 		{
 			public GameItem(string time, string hero, int rating, int ratingAfter, int placemenent)
