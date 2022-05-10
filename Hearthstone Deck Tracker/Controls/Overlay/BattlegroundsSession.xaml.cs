@@ -121,19 +121,43 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			DateTime? sessionStartTime = null;
 			DateTime? previousGameEndTime = null;
+			int previousGameRatingAfter = 0;
+
 			foreach (var g in sortedGames)
 			{
 				if(previousGameEndTime != null)
 				{
 					var gStartTime = DateTime.Parse(g.StartTime);
 					TimeSpan ts = gStartTime - (DateTime)previousGameEndTime;
-					if(ts.TotalHours >= 2)
-						sessionStartTime = gStartTime;
 
+					var diffMMR = g.Rating - previousGameRatingAfter;
+					// Check for MMR reset
+					var ratingReseted = g.Rating < 500 && diffMMR < -500;
+
+					if(ts.TotalHours >= 2 || ratingReseted)
+						sessionStartTime = gStartTime;
 				}
 				previousGameEndTime = DateTime.Parse(g.EndTime);
+				previousGameRatingAfter = g.RatingAfter;
 			};
-			return sortedGames.Where(g => DateTime.Parse(g.StartTime) >= sessionStartTime).ToList();
+
+			var sessionGames = sortedGames.Where(g => DateTime.Parse(g.StartTime) >= sessionStartTime).ToList();
+			if (sessionGames.Count > 0)
+			{
+				var lastGame = (GameItem)sessionGames.LastOrDefault();
+
+				// Check for MMR reset on last game
+				var currentMMR = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
+				var sessionLastMMR = lastGame.RatingAfter;
+				var ratingResetedAfterLastGame = currentMMR < 500 && currentMMR - sessionLastMMR < -500;
+
+				TimeSpan ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
+
+				if(ts.TotalHours >= 2 || ratingResetedAfterLastGame)
+					return new List<GameItem>();
+			}
+
+			return sessionGames;
 		}
 
 		private void deleteOldGames(List<GameItem> sortedGames)
