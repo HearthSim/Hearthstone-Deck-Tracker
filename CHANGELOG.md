@@ -1,3 +1,7 @@
+## **Release v1.18.1 - 2022-05-10**
+**Fixes**:
+- Fixed a remaing issue from the 23.2.0 where players were not correctly detected, leading e.g. to missing game results.
+
 ## **Release v1.18.0 - 2022-05-10**
 **Updated for Hearthstone 23.2.0**
 
