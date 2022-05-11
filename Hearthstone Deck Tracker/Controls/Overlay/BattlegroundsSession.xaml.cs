@@ -161,6 +161,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				previousGameRatingAfter = g.RatingAfter;
 			};
 
+			if (sessionStartTime == null)
+			{
+				return sortedGames;
+			}
+
 			var sessionGames = sortedGames.Where(g => DateTime.Parse(g.StartTime) >= sessionStartTime).ToList();
 			if (sessionGames.Count > 0)
 			{
