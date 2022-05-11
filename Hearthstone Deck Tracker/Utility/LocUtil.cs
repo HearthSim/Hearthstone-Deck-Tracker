@@ -14,6 +14,15 @@ namespace Hearthstone_Deck_Tracker.Utility
 		private const string LocAgeMinute = "GameStats_Age_Minute";
 		private const string LocAgeMinutes = "GameStats_Age_Minutes";
 
+		private const string LocOrdinalOne = "Battlegrounds_Game_Ordinal_1";
+		private const string LocOrdinalTwo = "Battlegrounds_Game_Ordinal_2";
+		private const string LocOrdinalThree = "Battlegrounds_Game_Ordinal_3";
+		private const string LocOrdinalFour = "Battlegrounds_Game_Ordinal_4";
+		private const string LocOrdinalFive = "Battlegrounds_Game_Ordinal_5";
+		private const string LocOrdinalSix = "Battlegrounds_Game_Ordinal_6";
+		private const string LocOrdinalSeven = "Battlegrounds_Game_Ordinal_7";
+		private const string LocOrdinalEight = "Battlegrounds_Game_Ordinal_8";
+
 		private static readonly Dictionary<string, string?> Cache = new Dictionary<string, string?>();
 
 		public static void UpdateCultureInfo()
@@ -74,6 +83,26 @@ namespace Hearthstone_Deck_Tracker.Utility
 				time = (int)duration.TotalMinutes;
 			}
 			return string.Format(Get(str), time);
+		}
+
+		public static string GetPlacement(int place)
+		{
+			if (place == 1)
+				return string.Format(Get(LocOrdinalOne), place);
+			if (place == 2)
+				return string.Format(Get(LocOrdinalTwo), place);
+			if (place == 3)
+				return string.Format(Get(LocOrdinalThree), place);
+			if (place == 4)
+				return string.Format(Get(LocOrdinalFour), place);
+			if (place == 5)
+				return string.Format(Get(LocOrdinalFive), place);
+			if (place == 6)
+				return string.Format(Get(LocOrdinalSix), place);
+			if (place == 7)
+				return string.Format(Get(LocOrdinalSeven), place);
+
+			return string.Format(Get(LocOrdinalEight), place);
 		}
 	}
 }

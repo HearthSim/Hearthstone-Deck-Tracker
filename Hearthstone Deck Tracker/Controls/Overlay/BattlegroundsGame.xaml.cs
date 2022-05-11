@@ -1,6 +1,7 @@
 ﻿using HearthDb;
 using Hearthstone_Deck_Tracker.Annotations;
 using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -82,11 +83,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				SetValue(HeroNameProperty, heroName);
 				OnPropertyChanged(nameof(HeroNameProperty));
 
-				// This is fine here since we do not have 11, 12, 13 as placement option
-				var placement = (_game.Placement + "th")
-					.Replace("1th", "1st")
-					.Replace("2th", "2nd")
-					.Replace("3th", "3rd");
+				var placement = LocUtil.GetPlacement(_game.Placement);
 				SetValue(PlacementProperty, placement);
 				OnPropertyChanged(nameof(PlacementProperty));
 

@@ -45,7 +45,7 @@
             <StackPanel>
                 <CheckBox
                     x:Name="CheckboxShowSessionRecap"
-                    Content="Show Session Recap"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowSessionRecap}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Checked="CheckboxShowSessionRecap_Checked"
@@ -54,7 +54,7 @@
                 />
                 <CheckBox
                     x:Name="CheckboxShowMinionsBanned"
-                    Content="Show Minions Banned"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMinionsBanned}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Checked="CheckboxShowMinionsBanned_Checked"
@@ -63,7 +63,7 @@
                 />
                 <CheckBox
                     x:Name="CheckboxShowStartCurrentMMR"
-                    Content="Show Start and Current MMR"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMMR}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Checked="CheckboxShowStartCurrentMMR_Checked"
@@ -72,7 +72,7 @@
                 />
                 <CheckBox
                     x:Name="CheckboxShowLatestGames"
-                    Content="Show Latest Games"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowLatestGames}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Checked="CheckboxShowLatestGames_Checked"
@@ -81,7 +81,7 @@
                 />
                 <CheckBox
                     x:Name="CheckboxShowExternalWindow"
-                    Content="Show External Window"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowExternalWindow}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Checked="CheckboxShowExternalWindow_Checked"
@@ -106,7 +106,7 @@
                 <Button
                     HorizontalAlignment="Center"
                     Width="170"
-                    Content="Reset Session"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_Button_ResetSession}"
                     Margin="0,10,0,0"
                     Command="{Binding ResetSessionCommand, RelativeSource={RelativeSource AncestorType=overlay:OverlayBattlegrounds}}"
                 />
