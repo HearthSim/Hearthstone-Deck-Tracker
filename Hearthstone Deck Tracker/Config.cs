@@ -824,6 +824,9 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(true)]
 		public bool ShowSessionRecapLatestGames = true;
 
+		[DefaultValue(false)]
+		public bool BattlegroundsSessionRecapWindowOnStart = false;
+
 		[DefaultValue(100)]
 		public double OverlaySessionRecapScaling = 100;
 

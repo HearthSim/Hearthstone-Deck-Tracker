@@ -9,23 +9,44 @@ using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGam
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Collections.Generic;
-using Hearthstone_Deck_Tracker.Utility.Logging;
+using System.ComponentModel;
+using Hearthstone_Deck_Tracker.Annotations;
+using System.Runtime.CompilerServices;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
-	public partial class BattlegroundsSession : UserControl
+	public partial class BattlegroundsSession : UserControl, INotifyPropertyChanged
 	{
 		private Lazy<BattlegroundsDb> _db = new Lazy<BattlegroundsDb>();
 		private Lazy<BrushConverter> _bc = new Lazy<BrushConverter>();
 
 		public ObservableCollection<BattlegroundsGame> Games { get; set; } = new ObservableCollection<BattlegroundsGame>();
 
+		public event PropertyChangedEventHandler? PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(int), typeof(BattlegroundsGame));
+
 		public BattlegroundsSession()
 		{
 			InitializeComponent();
 		}
 
-		private void Update()
+		public int CornerRadius
+		{
+			get { return (int)GetValue(CornerRadiusProperty); }
+			set
+			{
+				SetValue(CornerRadiusProperty, value);
+			}
+		}
+
+		public void Update()
 		{
 			var allRaces = _db.Value.Races;
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? allRaces;
@@ -50,7 +71,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 			var firstGame = UpdateLatestGames();
 
-			var rating = Core.Game.BattlegroundsRatingInfo?.Rating;
+			var rating = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
 			var ratingStart = firstGame?.RatingAfter ?? rating;
 			BgRatingStart.Text = $"{ratingStart:N0}";
 			BgRatingCurrent.Text = $"{rating:N0}";
@@ -58,7 +79,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void BtnOptions_MouseUp(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			Log.Debug("up");
 			Core.MainWindow.ActivateWindow();
 			Core.MainWindow.Options.TreeViewItemOverlayBattlegrounds.IsSelected = true;
 			Core.MainWindow.FlyoutOptions.IsOpen = true;

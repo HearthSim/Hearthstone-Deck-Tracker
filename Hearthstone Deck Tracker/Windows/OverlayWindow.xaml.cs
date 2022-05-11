@@ -442,6 +442,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		internal void ShowBattlegroundsSession()
 		{
 			BattlegroundsSession.Show();
+			Core.Windows.BattlegroundsSessionWindow.OnGameStart();
 		}
 
 		internal void HideBattlegroundsSession()

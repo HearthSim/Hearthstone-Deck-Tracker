@@ -77,6 +77,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowMinionsBanned.IsChecked = Config.Instance.ShowSessionRecapMinionsBanned;
 			CheckboxShowStartCurrentMMR.IsChecked = Config.Instance.ShowSessionRecapStartCurrentMMR;
 			CheckboxShowLatestGames.IsChecked = Config.Instance.ShowSessionRecapLatestGames;
+			CheckboxShowExternalWindow.IsChecked = Config.Instance.BattlegroundsSessionRecapWindowOnStart;
 
 			_initialized = true;
 		}
@@ -269,6 +270,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
+			Core.Windows.BattlegroundsSessionWindow.UpdateSectionsVisibilities();
 		}
 
 		private void CheckboxShowMinionsBanned_Unchecked(object sender, RoutedEventArgs e)
@@ -279,6 +281,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
+			Core.Windows.BattlegroundsSessionWindow.UpdateSectionsVisibilities();
 		}
 
 		private void CheckboxShowStartCurrentMMR_Checked(object sender, RoutedEventArgs e)
@@ -289,6 +292,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
+			Core.Windows.BattlegroundsSessionWindow.UpdateSectionsVisibilities();
 		}
 
 		private void CheckboxShowStartCurrentMMR_Unchecked(object sender, RoutedEventArgs e)
@@ -299,6 +303,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
+			Core.Windows.BattlegroundsSessionWindow.UpdateSectionsVisibilities();
 		}
 
 		private void CheckboxShowLatestGames_Checked(object sender, RoutedEventArgs e)
@@ -309,6 +314,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
+			Core.Windows.BattlegroundsSessionWindow.UpdateSectionsVisibilities();
 		}
 
 		private void CheckboxShowLatestGames_Unchecked(object sender, RoutedEventArgs e)
@@ -319,6 +325,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
+			Core.Windows.BattlegroundsSessionWindow.UpdateSectionsVisibilities();
+		}
+
+		private void CheckboxShowExternalWindow_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Core.Windows.BattlegroundsSessionWindow.Show();
+			Core.Windows.BattlegroundsSessionWindow.Activate();
+			Config.Instance.BattlegroundsSessionRecapWindowOnStart = true;
+			Config.Save();
+		}
+
+		private void CheckboxShowExternalWindow_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Core.Windows.BattlegroundsSessionWindow.Hide();
+			Config.Instance.BattlegroundsSessionRecapWindowOnStart = false;
+			Config.Save();
 		}
 
 		private void TextBoxSessionRecapScaling_OnPreviewTextInput(object sender, TextCompositionEventArgs e)

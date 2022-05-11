@@ -7,7 +7,7 @@
              xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              mc:Ignorable="d"
              Width="220"
-             Margin="0, 160">
+    >
     <Canvas>
         <Border
             BorderBrush="#4A5256"
@@ -15,7 +15,7 @@
             Background="#2E3235"
             Canvas.Right="0"
             Canvas.Top="0"
-            CornerRadius="5"
+            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsSession}}"
             Width="220"
         >
             <StackPanel Name="BattlegroundsTierlistPanel">
@@ -104,6 +104,7 @@
                         />
                     </Grid>
                     <ItemsControl
+                        Name="ItemsControlGames"
                         ItemsSource="{Binding Games, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsSession}}"
                     />
                     <TextBlock
@@ -114,7 +115,6 @@
                         TextAlignment="Center"
                         HorizontalAlignment="Center"
                         Margin="0,8"
-                        Visibility="{Binding PlaceholderVisibility, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsSession}}"
                     />
                 </StackPanel>
             </StackPanel>
