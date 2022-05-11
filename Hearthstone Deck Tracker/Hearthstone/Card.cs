@@ -236,6 +236,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public int TechLevel => _dbCard?.Entity.GetTag(GameTag.TECH_LEVEL) ?? 0;
 
+		public int BattlegroundsSkinParentId => _dbCard?.Entity.GetTag(GameTag.BACON_SKIN_PARENT_ID) ?? 0;
+
 		public Race? RaceEnum => _dbCard?.Race;
 
 		public int LettuceCooldown => _dbCard?.Entity.GetTag(GameTag.LETTUCE_COOLDOWN_CONFIG) ?? 0;

@@ -71,6 +71,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{
 				var heroCardId = _game.Hero ?? "";
 				var heroCard = Database.GetCardFromId(heroCardId);
+				if (heroCard?.BattlegroundsSkinParentId > 0)
+					heroCard = Database.GetCardFromDbfId(heroCard.BattlegroundsSkinParentId, false);
+
 				SetValue(CardImageProperty, new CardAssetViewModel(heroCard, Utility.Assets.CardAssetType.Tile));
 				OnPropertyChanged(nameof(CardImageProperty));
 
