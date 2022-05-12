@@ -15,7 +15,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			InitializeComponent();
 		}
 
-		private Dictionary<Race, string> TribeImage = new Dictionary<Race, string>() {
+		private Dictionary<Race, string> TribeImages = new Dictionary<Race, string>() {
 			{Race.PET , "pet"},
 			{Race.MECHANICAL , "mech"},
 			{Race.MURLOC , "murloc"},
@@ -26,7 +26,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{Race.QUILBOAR , "quilboar"},
 		};
 
-		public string ImageSrc => $"/HearthstoneDeckTracker;component/Resources/TribeIcons/{TribeImage[Tribe]}.jpg";
+		private Dictionary<Race, string> TribeNames = new Dictionary<Race, string>() {
+			{Race.PET , "Beast"},
+			{Race.MECHANICAL , "Mech"},
+			{Race.MURLOC , "Murloc"},
+			{Race.DEMON , "Demon"},
+			{Race.DRAGON , "Dragon"},
+			{Race.PIRATE , "Pirate"},
+			{Race.ELEMENTAL , "Elemental"},
+			{Race.QUILBOAR , "Quilboar"},
+		};
+
+		public string ImageSrc => $"/HearthstoneDeckTracker;component/Resources/TribeIcons/{TribeImages[Tribe]}.jpg";
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -42,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		{
 			get {
 				var tribe = (Race)GetValue(TribeProperty);
-				if(TribeImage.TryGetValue(tribe, out _))
+				if(TribeImages.TryGetValue(tribe, out _))
 					return tribe;
 				return Race.PET;
 			}
@@ -51,6 +62,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				SetValue(TribeProperty, value);
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(ImageSrc));
+			}
+		}
+
+		public string TribeName
+		{
+			get
+			{
+				string name;
+				return TribeNames.TryGetValue(Tribe, out name) ? name : TribeNames[Race.PET];
 			}
 		}
 	}

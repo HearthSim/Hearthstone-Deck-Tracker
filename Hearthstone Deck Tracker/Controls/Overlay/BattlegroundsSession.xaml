@@ -27,7 +27,7 @@
                     <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022" CornerRadius="5,5,0,0">
                         <local:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                     </Border>
-                    <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8" HorizontalAlignment="Center">
+                    <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center">
                         <overlay:BattlegroundsTribe x:Name="BgTribe1" Tribe="PET"/>
                         <overlay:BattlegroundsTribe x:Name="BgTribe2" Tribe="PET" Margin="8,0,0,0"/>
                         <overlay:BattlegroundsTribe x:Name="BgTribe3" Tribe="PET" Margin="8,0,0,0"/>
