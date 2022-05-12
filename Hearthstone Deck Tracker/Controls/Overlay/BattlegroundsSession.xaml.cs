@@ -172,9 +172,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				var lastGame = (GameItem)sessionGames.LastOrDefault();
 
 				// Check for MMR reset on last game
-				var currentMMR = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
-				var sessionLastMMR = lastGame.RatingAfter;
-				var ratingResetedAfterLastGame = currentMMR < 500 && currentMMR - sessionLastMMR < -500;
+				var ratingResetedAfterLastGame = false;
+				if (Core.Game.BattlegroundsRatingInfo?.Rating != null)
+				{
+					var currentMMR = Core.Game.BattlegroundsRatingInfo?.Rating;
+					var sessionLastMMR = lastGame.RatingAfter;
+					ratingResetedAfterLastGame = currentMMR < 500 && currentMMR - sessionLastMMR < -500;
+				}
 
 				TimeSpan ts = DateTime.Now - DateTime.Parse(lastGame.EndTime);
 
