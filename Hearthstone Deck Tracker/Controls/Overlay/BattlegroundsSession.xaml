@@ -24,7 +24,12 @@
         >
             <StackPanel Name="BattlegroundsTierlistPanel">
                 <StackPanel Name="BgBannedTribesSection">
-                    <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022" CornerRadius="5,5,0,0">
+                    <Border
+                        Name="BattlegroundsSessionMinionsBannedHeader"
+                        BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022" CornerRadius="5,5,0,0"
+                        MouseEnter="Header_MouseEnter"
+                        MouseLeave="Header_MouseLeave"
+                    >
                         <local:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                     </Border>
                     <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center">
@@ -35,7 +40,12 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Name="BgStartCurrentMMRSection">
-                    <Border BorderBrush="#4A5256" BorderThickness="0,1" Background="#1C2022">
+                    <Border
+                        Name="BattlegroundsSessionMMRHeader"
+                        BorderBrush="#4A5256" BorderThickness="0,1" Background="#1C2022"
+                        MouseEnter="Header_MouseEnter"
+                        MouseLeave="Header_MouseLeave"
+                    >
                         <local:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_MMR}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                     </Border>
                     <Grid>
@@ -68,7 +78,12 @@
                     </Grid>
                 </StackPanel>
                 <StackPanel Name="BgLastestGamesSection">
-                    <Border BorderBrush="#4A5256" BorderThickness="0,1" Background="#1C2022">
+                    <Border
+                        Name="BattlegroundsSessionLatestGamesHeader"
+                        BorderBrush="#4A5256" BorderThickness="0,1" Background="#1C2022"
+                        MouseEnter="Header_MouseEnter"
+                        MouseLeave="Header_MouseLeave"
+                    >
                         <local:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Latest_Games}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                     </Border>
                     <Grid Name="GridHeader">
@@ -134,7 +149,7 @@
                             TextWrapping="WrapWithOverflow"
                             TextAlignment="Center"
                             HorizontalAlignment="Center"
-                            Margin="4,0,4,8"
+                            Margin="4,0,0,8"
                         />
                     </StackPanel>
                 </StackPanel>
@@ -152,6 +167,7 @@
             MouseEnter="BtnOptions_MouseEnter"
             MouseLeave="BtnOptions_MouseLeave"
             MouseUp="BtnOptions_MouseUp"
+            Visibility="{Binding CogBtnVisibility, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsSession}}"
         >
             <Rectangle
                 Height="14"
