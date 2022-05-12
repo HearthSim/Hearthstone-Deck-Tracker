@@ -116,7 +116,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var sortedGames = BattlegroundsLastGames.Instance.Games
 				.OrderBy(g => g.StartTime)
 				.ToList();
-			deleteOldGames(sortedGames);
+			DeleteOldGames(sortedGames);
 
 			var sessionGames = getSessionGames(sortedGames);
 
@@ -185,7 +185,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			return sessionGames;
 		}
 
-		private void deleteOldGames(List<GameItem> sortedGames)
+		private void DeleteOldGames(List<GameItem> sortedGames)
 		{
 			sortedGames.ForEach(g =>
 			{
