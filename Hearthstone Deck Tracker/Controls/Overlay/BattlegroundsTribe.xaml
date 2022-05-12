@@ -25,12 +25,15 @@
             Source="/HearthstoneDeckTracker;component/Resources/tribes-x.png"
         />
         </Canvas>
-        <local:HearthstoneTextBlock
-            Text="{Binding TribeName, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsTribe}}"
-            HorizontalAlignment="Center"
-            FontSize="10"
-            MaxWidth="44"
-            Margin="0,4,0,0"
-        />
+        <StackPanel Height="16" Margin="0,4,0,0" Orientation="Vertical">
+            <local:HearthstoneTextBlock
+                Text="{Binding TribeName, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsTribe}}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="10"
+                MaxWidth="44"
+                Height="16"
+            />
+        </StackPanel>
     </StackPanel>
 </UserControl>
