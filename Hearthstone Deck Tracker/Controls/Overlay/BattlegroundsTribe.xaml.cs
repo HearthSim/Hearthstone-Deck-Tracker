@@ -40,7 +40,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public Race Tribe
 		{
-			get { return (Race)GetValue(TribeProperty); }
+			get {
+				var tribe = (Race)GetValue(TribeProperty);
+				if(TribeImage.TryGetValue(tribe, out _))
+					return tribe;
+				return Race.PET;
+			}
 			set
 			{
 				SetValue(TribeProperty, value);
