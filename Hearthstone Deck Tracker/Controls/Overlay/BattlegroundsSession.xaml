@@ -46,7 +46,8 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Name="BgStartCurrentMMRSection">
-                        <Border BorderBrush="#4A5256" BorderThickness="0,1" Background="#1C2022">
+                        <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgBannedTribesSection, Path=Visibility}"/>
+                        <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
                             <local:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_MMR}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                         </Border>
                         <Grid>
@@ -67,7 +68,7 @@
                             <Border Grid.Column="1" BorderBrush="#4A5256" BorderThickness="1,0,0,0">
                                 <StackPanel Orientation="Vertical">
                                     <Label
-                                    Content="{lex:Loc Battlegrounds_Session_MMR_Label_Current}"
+                                        Content="{lex:Loc Battlegrounds_Session_MMR_Label_Current}"
                                         Foreground="#FFFFFF"
                                         Opacity=".55"
                                         FontSize="11"
@@ -79,7 +80,8 @@
                         </Grid>
                     </StackPanel>
                     <StackPanel Name="BgLastestGamesSection">
-                        <Border BorderBrush="#4A5256" BorderThickness="0,1" Background="#1C2022">
+                        <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgStartCurrentMMRSection, Path=Visibility}"/>
+                        <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
                             <local:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Latest_Games}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                         </Border>
                         <Grid Name="GridHeader">
