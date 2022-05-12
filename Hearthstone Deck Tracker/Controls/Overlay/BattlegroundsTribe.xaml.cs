@@ -24,6 +24,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{Race.PIRATE , "pirate"},
 			{Race.ELEMENTAL , "elemental"},
 			{Race.QUILBOAR , "quilboar"},
+			{Race.NAGA , "naga"},
 		};
 
 		private Dictionary<Race, string> TribeNames = new Dictionary<Race, string>() {
@@ -35,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			{Race.PIRATE , "Pirate"},
 			{Race.ELEMENTAL , "Elemental"},
 			{Race.QUILBOAR , "Quilboar"},
+			{Race.NAGA , "Naga"},
 		};
 
 		public string ImageSrc => $"/HearthstoneDeckTracker;component/Resources/TribeIcons/{TribeImages[Tribe]}.jpg";
