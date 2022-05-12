@@ -119,12 +119,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			DeleteOldGames(sortedGames);
 
 			var sessionGames = GetSessionGames(sortedGames);
+			var firstGame = sessionGames.FirstOrDefault();
 
 			// Limit list to latest 10 items
 			if(sessionGames.Count > 10)
 				sessionGames.RemoveRange(0, sessionGames.Count - 10);
 
-			sessionGames.ForEach(AddOrUpdateGame);
+			sessionGames.OrderByDescending(g => g.StartTime)
+				.ToList()
+				.ForEach(AddOrUpdateGame);
 
 			GridHeader.Visibility = sessionGames.Count > 0
 				? Visibility.Visible
@@ -134,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				? Visibility.Visible
 				: Visibility.Collapsed;
 
-			return sessionGames.FirstOrDefault();
+			return firstGame;
 		}
 
 		private List<GameItem> GetSessionGames(List<GameItem> sortedGames)
