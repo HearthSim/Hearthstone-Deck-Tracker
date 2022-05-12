@@ -78,7 +78,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var firstGame = UpdateLatestGames();
 
 			var rating = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
-			var ratingStart = firstGame?.RatingAfter ?? rating;
+			var ratingStart = firstGame?.Rating ?? rating;
 			BgRatingStart.Text = $"{ratingStart:N0}";
 			BgRatingCurrent.Text = $"{rating:N0}";
 		}
