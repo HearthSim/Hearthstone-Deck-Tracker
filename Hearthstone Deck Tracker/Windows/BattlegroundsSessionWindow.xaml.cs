@@ -86,7 +86,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private void UpdateBattlegroundsSessionLayoutHeight()
 		{
 			BattlegroundsSession.UpdateLayout();
-			BattlegroundsSession.Height = BattlegroundsSession.BattlegroundsTierlistPanel.ActualHeight;
+			BattlegroundsSession.Height = BattlegroundsSession.BattlegroundsSessionPanel.ActualHeight;
 			UpdateLayout();
 		}
 	}

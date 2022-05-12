@@ -83,32 +83,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			BgRatingCurrent.Text = $"{rating:N0}";
 		}
 
-		private void Header_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+		private void Panel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			var senderBorder = (Border)sender;
-			if (
-				BgBannedTribesSection.Visibility == Visibility.Visible &&
-				senderBorder.Name != "BattlegroundsSessionMinionsBannedHeader"
-			)
-				return;
-			if (
-				BgBannedTribesSection.Visibility == Visibility.Collapsed &&
-				BgStartCurrentMMRSection.Visibility == Visibility.Visible &&
-				senderBorder.Name != "BattlegroundsSessionMMRHeader"
-			)
-				return;
-			if (
-				BgBannedTribesSection.Visibility == Visibility.Collapsed &&
-				BgStartCurrentMMRSection.Visibility == Visibility.Collapsed &&
-				BgLastestGamesSection.Visibility == Visibility.Visible &&
-				senderBorder.Name != "BattlegroundsSessionLatestGamesHeader"
-			)
-				return;
 			CogBtnVisibility = Visibility.Visible;
 			OnPropertyChanged(nameof(CogBtnVisibility));
 		}
 
-		private void Header_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+		private void Panel_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			CogBtnVisibility = Visibility.Hidden;
 			OnPropertyChanged(nameof(CogBtnVisibility));
