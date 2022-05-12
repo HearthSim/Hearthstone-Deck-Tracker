@@ -242,6 +242,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowMinionsBanned.IsEnabled = true;
 			CheckboxShowStartCurrentMMR.IsEnabled = true;
 			CheckboxShowLatestGames.IsEnabled = true;
+			if(
+				!Config.Instance.ShowSessionRecapMinionsBanned &&
+				!Config.Instance.ShowSessionRecapStartCurrentMMR &&
+				!Config.Instance.ShowSessionRecapLatestGames
+			)
+			{
+				CheckboxShowMinionsBanned.IsChecked = true;
+				CheckboxShowStartCurrentMMR.IsChecked = true;
+				CheckboxShowLatestGames.IsChecked = true;
+			}
+
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.ShowBattlegroundsSession();
@@ -278,6 +289,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ShowSessionRecapMinionsBanned = false;
+			if(
+				!Config.Instance.ShowSessionRecapStartCurrentMMR &&
+				!Config.Instance.ShowSessionRecapLatestGames
+			)
+			{
+				CheckboxShowSessionRecap.IsChecked = false;
+				CheckboxShowExternalWindow.IsChecked = false;
+			}
+
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
@@ -300,6 +320,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ShowSessionRecapStartCurrentMMR = false;
+			if(
+				!Config.Instance.ShowSessionRecapMinionsBanned &&
+				!Config.Instance.ShowSessionRecapLatestGames
+			)
+			{
+				CheckboxShowSessionRecap.IsChecked = false;
+				CheckboxShowExternalWindow.IsChecked = false;
+			}
+
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
@@ -322,6 +351,15 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ShowSessionRecapLatestGames = false;
+			if(
+				!Config.Instance.ShowSessionRecapMinionsBanned &&
+				!Config.Instance.ShowSessionRecapStartCurrentMMR
+			)
+			{
+				CheckboxShowSessionRecap.IsChecked = false;
+				CheckboxShowExternalWindow.IsChecked = false;
+			}
+
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
@@ -335,6 +373,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			Core.Windows.BattlegroundsSessionWindow.Show();
 			Core.Windows.BattlegroundsSessionWindow.Activate();
 			Config.Instance.BattlegroundsSessionRecapWindowOnStart = true;
+			if(
+				!Config.Instance.ShowSessionRecapMinionsBanned &&
+				!Config.Instance.ShowSessionRecapStartCurrentMMR &&
+				!Config.Instance.ShowSessionRecapLatestGames
+			)
+			{
+				CheckboxShowMinionsBanned.IsChecked = true;
+				CheckboxShowStartCurrentMMR.IsChecked = true;
+				CheckboxShowLatestGames.IsChecked = true;
+			}
+
 			Config.Save();
 		}
 
