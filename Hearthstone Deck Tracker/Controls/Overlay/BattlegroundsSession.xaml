@@ -117,15 +117,26 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
-                    <TextBlock
-                        Name="GamesEmptyState"
-                        Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState}"
-                        Foreground="#FFFFFF"
-                        Opacity=".5"
-                        TextAlignment="Center"
-                        HorizontalAlignment="Center"
-                        Margin="0,8"
-                    />
+                    <StackPanel Name="GamesEmptyState">
+                        <TextBlock
+                            Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState1}"
+                            Foreground="#FFFFFF"
+                            Opacity=".5"
+                            TextWrapping="WrapWithOverflow"
+                            TextAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="4,8,4,0"
+                        />
+                        <TextBlock
+                            Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState2}"
+                            Foreground="#FFFFFF"
+                            Opacity=".5"
+                            TextWrapping="WrapWithOverflow"
+                            TextAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="4,0,4,8"
+                        />
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </Border>
