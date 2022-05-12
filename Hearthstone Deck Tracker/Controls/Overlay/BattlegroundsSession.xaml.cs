@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(int), typeof(BattlegroundsGameView));
+		public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(BattlegroundsGameView));
 
 		public BattlegroundsSession()
 		{
@@ -43,9 +43,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			get; set;
 		}
 
-		public int CornerRadius
+		public CornerRadius CornerRadius
 		{
-			get { return (int)GetValue(CornerRadiusProperty); }
+			get { return (CornerRadius)GetValue(CornerRadiusProperty); }
 			set
 			{
 				SetValue(CornerRadiusProperty, value);
