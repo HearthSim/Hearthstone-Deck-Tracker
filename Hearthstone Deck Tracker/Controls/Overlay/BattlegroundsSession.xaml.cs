@@ -20,7 +20,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private Lazy<BattlegroundsDb> _db = new Lazy<BattlegroundsDb>();
 		private BrushConverter _bc = new BrushConverter();
 
-		public ObservableCollection<BattlegroundsGame> Games { get; set; } = new ObservableCollection<BattlegroundsGame>();
+		public ObservableCollection<BattlegroundsGameViewModel> SessionGames { get; set; } = new ObservableCollection<BattlegroundsGameViewModel>();
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -30,7 +30,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(int), typeof(BattlegroundsGame));
+		public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(int), typeof(BattlegroundsGameView));
 
 		public BattlegroundsSession()
 		{
@@ -112,7 +112,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		public GameItem? UpdateLatestGames()
 		{
-			Games.Clear();
+			SessionGames.Clear();
 			var sortedGames = BattlegroundsLastGames.Instance.Games
 				.OrderBy(g => g.StartTime)
 				.ToList();
@@ -201,14 +201,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void AddOrUpdateGame(GameItem game)
 		{
-			var existingGame = Games.FirstOrDefault(x => x?.Game?.StartTime == game.StartTime);
+			var existingGame = SessionGames.FirstOrDefault(x => x?.StartTime == game.StartTime);
 			if (existingGame == null)
 			{
-				Games.Add(new BattlegroundsGame() { Game = game });
+				SessionGames.Add(new BattlegroundsGameViewModel(game));
 			}
 			else
 			{
-				existingGame.Game = game;
+				existingGame = new BattlegroundsGameViewModel(game);
 			}
 		}
 

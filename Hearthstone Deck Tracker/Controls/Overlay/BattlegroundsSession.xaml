@@ -107,10 +107,21 @@
                             HorizontalAlignment="Center"
                         />
                     </Grid>
-                    <ItemsControl
+                    <ItemsControl                        
                         Name="ItemsControlGames"
-                        ItemsSource="{Binding Games, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsSession}}"
-                    />
+                        ItemsSource="{Binding SessionGames, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsSession}}"
+                    >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <overlay:BattlegroundsGameView />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                     <TextBlock
                         Name="GamesEmptyState"
                         Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState}"
