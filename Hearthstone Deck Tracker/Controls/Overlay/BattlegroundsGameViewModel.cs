@@ -3,6 +3,7 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using System.Windows;
+using System.Windows.Media;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
@@ -32,6 +33,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			MMRDeltaText = $"{signal}{MMRDelta}";
 
 			CrownVisibility = gameItem.Placement == 1 ? Visibility.Visible : Visibility.Hidden;
+		}
+
+		public SolidColorBrush PlacementTextBrush
+		{
+			get
+			{
+				return new SolidColorBrush(Placement <= 4 ? Color.FromRgb(109, 235, 108) : Color.FromRgb(236, 105, 105));
+			}
+		}
+
+		public SolidColorBrush MMRDeltaTextBrush
+		{
+			get
+			{
+				if(MMRDelta == 0)
+					return new SolidColorBrush(Colors.White);
+				return new SolidColorBrush(MMRDelta > 0 ? Color.FromRgb(139, 210, 134) : Color.FromRgb(236, 105, 105));
+			}
 		}
 
 		public string? StartTime { get; }

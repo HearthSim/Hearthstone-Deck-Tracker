@@ -43,7 +43,7 @@
                         Text="{Binding PlacementText}"
                         FontSize="13"
                         FontWeight="Bold"
-                        Foreground="{Binding PlacementTextBrush, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGameView}}"
+                        Foreground="{Binding PlacementTextBrush}"
                         TextAlignment="Center"
                         Width="23"
                     />
@@ -62,7 +62,7 @@
                     FontSize="13"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Foreground="{Binding MMRDeltaTextBrush, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsGameView}}"
+                    Foreground="{Binding MMRDeltaTextBrush}"
                 />
             </Grid>
         </Canvas>
