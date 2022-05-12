@@ -49,7 +49,6 @@
                                 Foreground="#FFFFFF"
                                 Opacity=".55"
                                 FontSize="11"
-                                FontWeight="Normal"
                                 HorizontalAlignment="Center"
                             />
                             <local:HearthstoneTextBlock x:Name="BgRatingStart" Text="0" FontSize="18" HorizontalAlignment="Center" Margin="0,-5,0,8"/>
@@ -61,7 +60,6 @@
                                     Foreground="#FFFFFF"
                                     Opacity=".55"
                                     FontSize="11"
-                                    FontWeight="Light"
                                     HorizontalAlignment="Center"
                                 />
                                 <local:HearthstoneTextBlock x:Name="BgRatingCurrent" Text="0" FontSize="18" HorizontalAlignment="Center" Margin="0,-5,0,8"/>
@@ -85,7 +83,6 @@
                             Foreground="#FFFFFF"
                             Opacity=".55"
                             FontSize="11"
-                            FontWeight="Light"
                             HorizontalAlignment="Center"
                         />
                         <Label
@@ -94,7 +91,6 @@
                             Foreground="#FFFFFF"
                             Opacity=".55"
                             FontSize="11"
-                            FontWeight="Light"
                             HorizontalAlignment="Center"
                         />
                         <Label
@@ -103,7 +99,6 @@
                             Foreground="#FFFFFF"
                             Opacity=".55"
                             FontSize="11"
-                            FontWeight="Light"
                             HorizontalAlignment="Center"
                         />
                     </Grid>
