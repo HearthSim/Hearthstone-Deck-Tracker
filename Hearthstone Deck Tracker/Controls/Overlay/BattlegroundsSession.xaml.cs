@@ -118,7 +118,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				.ToList();
 			DeleteOldGames(sortedGames);
 
-			var sessionGames = getSessionGames(sortedGames);
+			var sessionGames = GetSessionGames(sortedGames);
 
 			// Limit list to latest 10 items
 			if(sessionGames.Count > 10)
@@ -137,7 +137,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			return sessionGames.FirstOrDefault();
 		}
 
-		private List<GameItem> getSessionGames(List<GameItem> sortedGames)
+		private List<GameItem> GetSessionGames(List<GameItem> sortedGames)
 		{
 			DateTime? sessionStartTime = null;
 			DateTime? previousGameEndTime = null;
