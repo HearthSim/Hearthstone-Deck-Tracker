@@ -18,7 +18,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 	public partial class BattlegroundsSession : UserControl, INotifyPropertyChanged
 	{
 		private Lazy<BattlegroundsDb> _db = new Lazy<BattlegroundsDb>();
-		private Lazy<BrushConverter> _bc = new Lazy<BrushConverter>();
+		private BrushConverter _bc = new BrushConverter();
 
 		public ObservableCollection<BattlegroundsGame> Games { get; set; } = new ObservableCollection<BattlegroundsGame>();
 
@@ -86,12 +86,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 
 		private void BtnOptions_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			BtnOptions.Background = (Brush)_bc.Value.ConvertFromString("#22FFFFFF");
+			BtnOptions.Background = (Brush)_bc.ConvertFromString("#22FFFFFF");
 		}
 
 		private void BtnOptions_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
 		{
-			BtnOptions.Background = (Brush)_bc.Value.ConvertFromString("#00FFFFFF");
+			BtnOptions.Background = (Brush)_bc.ConvertFromString("#00FFFFFF");
 		}
 
 		public void Show()
