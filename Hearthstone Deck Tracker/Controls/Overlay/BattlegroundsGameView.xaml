@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
-             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Border BorderBrush="#1C2022" BorderThickness="0,1,0,0">

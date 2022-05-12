@@ -64,6 +64,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				SetValue(TribeProperty, value);
 				OnPropertyChanged();
 				OnPropertyChanged(nameof(ImageSrc));
+				OnPropertyChanged(nameof(TribeName));
 			}
 		}
 

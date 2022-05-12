@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
+             xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              mc:Ignorable="d" >
     <StackPanel Orientation="Vertical">
         <Canvas Width="44" Height="44">
@@ -11,9 +12,9 @@
                 <Ellipse Height="40" Width="40">
                     <Ellipse.Fill>
                         <ImageBrush
-                        x:Name="ImgBrush"
-                        ImageSource="{Binding ImageSrc, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
-                    />
+                            x:Name="ImgBrush"
+                            ImageSource="{Binding ImageSrc, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsTribe}}"
+                        />
                     </Ellipse.Fill>
                 </Ellipse>
             </Border>
@@ -24,10 +25,12 @@
             Source="/HearthstoneDeckTracker;component/Resources/tribes-x.png"
         />
         </Canvas>
-        <Label
-            Foreground="White"
-            Content="{Binding TribeName, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
+        <local:HearthstoneTextBlock
+            Text="{Binding TribeName, RelativeSource={RelativeSource AncestorType=overlay:BattlegroundsTribe}}"
             HorizontalAlignment="Center"
+            FontSize="10"
+            MaxWidth="44"
+            Margin="0,4,0,0"
         />
     </StackPanel>
 </UserControl>
