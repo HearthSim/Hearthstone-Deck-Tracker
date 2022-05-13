@@ -14,7 +14,7 @@
                 Source="{Binding CardImage.AssetPath}"
                 Height="34"
                 Width="145"
-                Margin="-5,-5,0,0"
+                Margin="-10,-5,0,0"
                 RenderOptions.BitmapScalingMode="Fant"
             >
                 <Image.OpacityMask>
