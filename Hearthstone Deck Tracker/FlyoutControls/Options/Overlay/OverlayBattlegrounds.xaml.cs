@@ -53,6 +53,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				Config.Instance.OverlaySessionRecapScaling = value;
 				Config.Save();
 				Core.Overlay.UpdateScaling();
+				Core.Windows.BattlegroundsSessionWindow.UpdateScaling();
 				OnPropertyChanged();
 			}
 		}

@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -41,6 +42,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			BattlegroundsSession.Update();
 			UpdateSectionsVisibilities();
+			BattlegroundsSession.RenderTransformOrigin = new Point(1, 0);
+			UpdateScaling();
 		}
 
 		public void OnGameStart()
@@ -58,6 +61,13 @@ namespace Hearthstone_Deck_Tracker.Windows
 			BattlegroundsSession.BgRatingCurrent.Text = $"{rating:N0}";
 
 			BattlegroundsSession.UpdateLatestGames();
+			UpdateBattlegroundsSessionLayoutHeight();
+		}
+
+		public void UpdateScaling()
+		{
+			var scale = Config.Instance.OverlaySessionRecapScaling / 100;
+			BattlegroundsSession.RenderTransform = new ScaleTransform(scale, scale);
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
 
@@ -83,10 +93,15 @@ namespace Hearthstone_Deck_Tracker.Windows
 				   ? Visibility.Visible
 				   : Visibility.Collapsed;
 		}
+
 		private void UpdateBattlegroundsSessionLayoutHeight()
 		{
+			var scale = Config.Instance.OverlaySessionRecapScaling / 100;
 			BattlegroundsSession.UpdateLayout();
-			BattlegroundsSession.Height = BattlegroundsSession.BattlegroundsSessionPanel.ActualHeight;
+			BattlegroundsSession.Height =
+				BattlegroundsSession.BattlegroundsSessionPanel.ActualHeight * scale;
+			BattlegroundsSession.Width =
+				BattlegroundsSession.BattlegroundsSessionPanel.ActualWidth * scale;
 			UpdateLayout();
 		}
 	}
