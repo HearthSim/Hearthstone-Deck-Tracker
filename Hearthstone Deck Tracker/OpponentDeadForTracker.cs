@@ -31,7 +31,7 @@ namespace Hearthstone_Deck_Tracker
 			{
 				if(hero.CardId == null)
 					continue;
-				var id = BattlegroundsBoardState.GetCorrectBoardstateHeroId(hero.CardId);
+				var id = BattlegroundsUtils.GetOriginalHeroId(hero.CardId);
 				if(!id.Contains(KelThuzadCardId) && !_uniqueDeadHeroes.Contains(id))
 				{
 					_deadTracker.Add(0);

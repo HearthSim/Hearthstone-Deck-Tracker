@@ -793,7 +793,7 @@ namespace Hearthstone_Deck_Tracker
 			var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
 			var startTime = _game.CurrentGameStats?.StartTime.ToString("o");
 			var endTime = _game.CurrentGameStats?.EndTime.ToString("o");
-			var heroCardId = hero?.CardId;
+			var heroCardId = hero?.CardId != null ? BattlegroundsUtils.GetOriginalHeroId(hero.CardId) : null;
 			var rating = _game.CurrentGameStats?.BattlegroundsRating;
 			var ratingAfter = _game.CurrentGameStats?.BattlegroundsRatingAfter;
 			var placement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE);

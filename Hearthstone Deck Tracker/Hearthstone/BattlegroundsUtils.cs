@@ -10,6 +10,18 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 	{
 		private static readonly Dictionary<Guid, HashSet<Race>> _availableRacesCache = new Dictionary<Guid, HashSet<Race>>();
 
+		const string UntransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseekerTavernBrawl1;
+		const string TransformedArannaCardid = HearthDb.CardIds.NonCollectible.Neutral.ArannaStarseeker_ArannaUnleashedTokenTavernBrawl;
+
+		const string UntransformedQueenAzshara = HearthDb.CardIds.NonCollectible.Neutral.QueenAzsharaBATTLEGROUNDS;
+		const string TransformedQueenAzshara = HearthDb.CardIds.NonCollectible.Neutral.QueenAzshara_NagaQueenAzsharaToken;
+
+		private static readonly Dictionary<string, string> TransformableHeroCardidTable = new Dictionary<string, string>()
+		{
+			{ TransformedArannaCardid, UntransformedArannaCardid },
+			{ TransformedQueenAzshara, UntransformedQueenAzshara }
+		};
+
 		public static HashSet<Race>? GetAvailableRaces(Guid? gameId)
 		{
 			if(!gameId.HasValue)
@@ -34,5 +46,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				return new HashSet<Race>(races.Cast<Race>());
 			}
 		}
+
+		public static string GetOriginalHeroId(string heroId) => TransformableHeroCardidTable.TryGetValue(heroId, out var mapped) ? mapped : heroId;
 	}
 }
