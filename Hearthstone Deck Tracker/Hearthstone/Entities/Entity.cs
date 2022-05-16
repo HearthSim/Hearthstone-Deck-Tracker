@@ -6,6 +6,8 @@ using System.Text;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Enums;
 using Newtonsoft.Json;
+using static HearthDb.CardIds.Collectible;
+using static HearthDb.Enums.GameTag;
 
 #endregion
 
@@ -170,6 +172,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone.Entities
 		public bool IsClass(CardClass cardClass) => GetTag(GameTag.CLASS) == (int)cardClass;
 
 		public bool HasTag(GameTag tag) => GetTag(tag) > 0;
+
+		public bool HasDredge()
+		{
+			return HasTag(DREDGE) || CardId == Warrior.FromTheDepths;
+		}
 
 		public int GetTag(GameTag tag) => Tags.TryGetValue(tag, out var value) ? value : 0;
 

@@ -195,7 +195,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							entity.Info.GuessedCardState = GuessedCardState.Revealed;
 						if(entity.Info.DeckIndex < 0 && gameState.CurrentBlock != null && gameState.CurrentBlock.SourceEntityId != 0)
 						{
-							if(game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var source) && source.HasTag(GameTag.DREDGE))
+							if(game.Entities.TryGetValue(gameState.CurrentBlock.SourceEntityId, out var source) && source.HasDredge())
 							{
 								var newIndex = ++gameState.DredgeCounter;
 								entity.Info.DeckIndex = newIndex;

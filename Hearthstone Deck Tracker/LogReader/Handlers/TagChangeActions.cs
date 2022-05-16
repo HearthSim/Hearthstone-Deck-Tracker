@@ -154,7 +154,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				return;
 
 			var source = entity.GetTag(CREATOR);
-			if(source == 0 || !game.Entities.TryGetValue(source, out var sourceEntity) || !sourceEntity.HasTag(DREDGE))
+			if(source == 0 || !game.Entities.TryGetValue(source, out var sourceEntity) || !sourceEntity.HasDredge())
 				return;
 
 			if(gameState.CurrentBlock == null)
