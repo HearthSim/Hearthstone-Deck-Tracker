@@ -11,6 +11,7 @@ using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using Hearthstone_Deck_Tracker.Windows;
 using MahApps.Metro.Controls.Dialogs;
 
 #endregion
@@ -403,8 +404,17 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 				e.Handled = true;
 		}
 
-		public ICommand ResetSessionCommand => new Command(() =>
+		public ICommand ResetSessionCommand => new Command(async () =>
 		{
+			var result = await Core.MainWindow.ShowMessageAsync(
+				"Resetting current session",
+				"By clicking 'Reset' you will clear your list of Latest Games and make your Start MMR the same as your current MMR.",
+				MessageDialogStyle.AffirmativeAndNegative,
+				new MessageDialogs.Settings { AffirmativeButtonText = LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_Confirmation_Reset") }
+			);
+			if(result != MessageDialogResult.Affirmative)
+				return;
+
 			BattlegroundsLastGames.Instance.Reset();
 			Core.Overlay.UpdateBattlegroundsSession();
 		});
