@@ -413,6 +413,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 				fadeBgsMinionsList = false;
 			BgsTopBar.Opacity = fadeBgsMinionsList ? 0.3 : 1;
 			BobsBuddyDisplay.Opacity = fadeBgsMinionsList ? 0.3 : 1;
+			BattlegroundsSession.Opacity = fadeBgsMinionsList ? 0.3 : 1;
 		}
 
 		private async void ShowBobsBuddyPanelDelayed()
