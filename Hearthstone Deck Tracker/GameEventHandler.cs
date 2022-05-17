@@ -797,6 +797,10 @@ namespace Hearthstone_Deck_Tracker
 			var rating = _game.CurrentGameStats?.BattlegroundsRating;
 			var ratingAfter = _game.CurrentGameStats?.BattlegroundsRatingAfter;
 			var placement = hero?.GetTag(GameTag.PLAYER_LEADERBOARD_PLACE);
+			var finalBoard = _game.Entities.Values
+				.Where(x => x.IsMinion && x.IsInZone(HearthDb.Enums.Zone.PLAY) && x.IsControlledBy(_game.Player.Id))
+				.Select(x => x.Clone())
+				.ToArray();
 
 			if(startTime != null && endTime != null && heroCardId != null && rating != null && ratingAfter != null && placement != null)
 			{
@@ -806,7 +810,8 @@ namespace Hearthstone_Deck_Tracker
 					heroCardId,
 					(int)rating,
 					(int)ratingAfter,
-					(int)placement
+					(int)placement,
+					finalBoard
 				);
 			}
 			else

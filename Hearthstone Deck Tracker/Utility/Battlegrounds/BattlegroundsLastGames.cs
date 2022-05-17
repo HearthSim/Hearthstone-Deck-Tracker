@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility.Logging;
 
 namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
@@ -34,10 +37,12 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 			return new BattlegroundsLastGames();
 		}
 
-		public void AddGame(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, bool save = true)
+		public void AddGame(
+			string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard, bool save = true
+		)
 		{
 			RemoveGame(startTime, false);
-			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent));
+			Games.Add(new GameItem(startTime, endTime, hero, rating, ratingAfter, placemenent, finalBoard));
 			if(save)
 				Save();
 		}
@@ -71,7 +76,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 		public class GameItem
 		{
-			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent)
+			public GameItem(string startTime, string endTime, string hero, int rating, int ratingAfter, int placemenent, Entity[] finalBoard)
 			{
 				StartTime = startTime;
 				EndTime = endTime;
@@ -79,6 +84,7 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 				Rating = rating;
 				RatingAfter = ratingAfter;
 				Placement = placemenent;
+				FinalBoard = new FinalBoardItem(finalBoard);
 			}
 
 			public GameItem()
@@ -102,6 +108,65 @@ namespace Hearthstone_Deck_Tracker.Utility.Battlegrounds
 
 			[XmlAttribute("Placemenent")]
 			public int Placement { get; set; }
+
+			[XmlElement("FinalBoard")]
+			public FinalBoardItem? FinalBoard { get; set; }
+
+		}
+
+		public class FinalBoardItem
+		{
+			public FinalBoardItem(Entity[] finalBoard)
+			{
+				FinalBoard = finalBoard.Select(e => new MinionItem(e)).ToList();
+			}
+
+			public FinalBoardItem()
+			{
+			}
+
+			[XmlElement("Minion")]
+			public List<MinionItem>? FinalBoard { get; set; }
+
+		}
+
+		public class MinionItem
+		{
+			public MinionItem(Entity entity)
+			{
+				CardId = entity.CardId;
+				Tags = entity.Tags.Select(t => new TagItem(t)).ToList();
+			}
+
+			public MinionItem()
+			{
+			}
+
+			public string? CardId { get; set; }
+
+			[XmlElement("Tags")]
+			public List<TagItem>? Tags { get; set; }
+
+		}
+
+		public class TagItem
+		{
+			public TagItem(KeyValuePair<GameTag, int> pair)
+			{
+				Tag = (int)pair.Key;
+				Value = pair.Value;
+			}
+
+			public TagItem()
+			{
+			}
+
+			[XmlAttribute("Tag")]
+			public int Tag { get; set; }
+
+
+			[XmlAttribute("Value")]
+			public int Value { get; set; }
 
 		}
 	}
