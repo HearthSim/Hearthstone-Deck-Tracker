@@ -418,5 +418,33 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			BattlegroundsLastGames.Instance.Reset();
 			Core.Overlay.UpdateBattlegroundsSession();
 		});
+
+		private async void BtnUnlockOverlay_Click(object sender, RoutedEventArgs e)
+		{
+			if(User32.GetHearthstoneWindow() == IntPtr.Zero)
+				return;
+			BtnUnlockOverlay.Content = await Core.Overlay.UnlockUi(true) ? "Lock" : "Unlock";
+		}
+
+		private async void BtnResetOverlay_Click(object sender, RoutedEventArgs e)
+		{
+			var result =
+				await
+				Core.MainWindow.ShowMessageAsync("Resetting overlay to default",
+												 "Position of Battlegrounds Session will be reset to default. Are you sure?",
+												 MessageDialogStyle.AffirmativeAndNegative);
+			if(result != MessageDialogResult.Affirmative)
+				return;
+
+			if((string)BtnUnlockOverlay.Content == "Lock")
+			{
+				await Core.Overlay.UnlockUi(true);
+				BtnUnlockOverlay.Content = "Unlock";
+			}
+
+			Config.Instance.Reset(nameof(Config.SessionRecapTop));
+			Config.Instance.Reset(nameof(Config.SessionRecapLeft));
+			SaveConfig(true);
+		}
 	}
 }

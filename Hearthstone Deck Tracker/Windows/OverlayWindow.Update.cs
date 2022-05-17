@@ -7,7 +7,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using Hearthstone_Deck_Tracker.Enums;
 using Hearthstone_Deck_Tracker.Enums.Hearthstone;
-using Hearthstone_Deck_Tracker.LogReader.Handlers;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.BoardDamage;
 using Hearthstone_Deck_Tracker.Utility.Logging;
@@ -15,7 +14,6 @@ using static System.Windows.Visibility;
 using static HearthDb.Enums.GameTag;
 using static Hearthstone_Deck_Tracker.Controls.Overlay.WotogCounterStyle;
 using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries;
 
 namespace Hearthstone_Deck_Tracker.Windows
 {
@@ -123,7 +121,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if (!_playerCardsHidden)
 			{
-				StackPanelPlayer.Visibility =  hideDeck && !_uiMovable ? Collapsed : Visible;
+				StackPanelPlayer.Visibility = hideDeck && !_uiMovable ? Collapsed : Visible;
 			}
 
 			if (!_opponentCardsHidden)
@@ -386,6 +384,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 			Canvas.SetLeft(IconBoardAttackPlayer, Helper.GetScaledXPos(Config.Instance.AttackIconPlayerHorizontalPosition / 100, (int)Width, ScreenRatio));
 			Canvas.SetTop(IconBoardAttackOpponent, Height * Config.Instance.AttackIconOpponentVerticalPosition / 100);
 			Canvas.SetLeft(IconBoardAttackOpponent, Helper.GetScaledXPos(Config.Instance.AttackIconOpponentHorizontalPosition / 100, (int)Width, ScreenRatio));
+			Canvas.SetTop(BattlegroundsSessionStackPanel, Height * Config.Instance.SessionRecapTop / 100);
+			Canvas.SetLeft(BattlegroundsSessionStackPanel, Width * Config.Instance.SessionRecapLeft / 100);
 			UpdateBoardPosition();
 
 			Canvas.SetLeft(LinkOpponentDeckDisplay, Width * Config.Instance.OpponentDeckLeft / 100);

@@ -119,6 +119,16 @@
                     HorizontalAlignment="Center"
                     TextAlignment="Center"
                 />
+                <DockPanel Margin="5,5,0,0">
+                    <Button Name="BtnUnlockOverlay" Content="{lex:Loc Options_Overlay_General_Button_UnlockOverlay}" Width="150"
+                    Click="BtnUnlockOverlay_Click" DockPanel.Dock="Right" />
+                    <Label Content="{lex:Loc Options_Overlay_General_Label_MoveResize}" DockPanel.Dock="Left" />
+                </DockPanel>
+                <DockPanel Margin="5,5,0,0">
+                    <Button x:Name="BtnResetOverlay" Content="{lex:Loc Options_Overlay_General_Button_Reset}" Width="150" Click="BtnResetOverlay_Click"
+                    DockPanel.Dock="Right" />
+                    <Label Content="{lex:Loc Options_Overlay_General_Label_Reset}" DockPanel.Dock="Left" />
+                </DockPanel>
             </StackPanel>
         </GroupBox>
         <Button x:Name="OverlayHelpButton"

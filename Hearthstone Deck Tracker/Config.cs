@@ -812,6 +812,12 @@ namespace Hearthstone_Deck_Tracker
 		[DefaultValue(false)]
 		public bool SeenBobsBuddyAverageDamage = false;
 
+		[DefaultValue(15)]
+		public double SessionRecapTop = 15;
+
+		[DefaultValue(0)]
+		public double SessionRecapLeft = 0;
+
 		[DefaultValue(true)]
 		public bool ShowSessionRecap = true;
 

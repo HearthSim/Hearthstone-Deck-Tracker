@@ -72,11 +72,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 						Config.Instance.OpponentDeckTop += delta.Y / Height;
 						Config.Instance.OpponentDeckLeft += delta.X / Width;
 						Canvas.SetTop(_movableElements[border], Height * Config.Instance.OpponentDeckTop / 100);
-						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.OpponentDeckLeft / 100);
+			}						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.OpponentDeckLeft / 100);
 					}
 					return;
 				}
-			}
+
 
 			if(_selectedUiElement is Panel panel)
 			{
@@ -88,6 +88,18 @@ namespace Hearthstone_Deck_Tracker.Windows
 						Config.Instance.SecretsLeft += delta.X / Width * Config.Instance.SecretsPanelScaling;
 						Canvas.SetTop(_movableElements[panel], Height * Config.Instance.SecretsTop / 100);
 						Canvas.SetLeft(_movableElements[panel], Width * Config.Instance.SecretsLeft / 100);
+					}
+				}
+
+				if(panel.Equals(BattlegroundsSessionStackPanel))
+				{
+					if(!_resizeElement)
+					{
+						Config.Instance.SessionRecapTop += delta.Y / Height;
+						Config.Instance.SessionRecapLeft += delta.X / Width;
+						Canvas.SetTop(_movableElements[panel], Height * Config.Instance.SessionRecapTop / 100);
+						Canvas.SetLeft(_movableElements[panel], Width * Config.Instance.SessionRecapLeft / 100);
+						return;
 					}
 				}
 
@@ -201,14 +213,19 @@ namespace Hearthstone_Deck_Tracker.Windows
 			GrayOutSecrets(_mousePos);
 		}
 
-
-		public async Task<bool> UnlockUi()
+		public async Task<bool> UnlockUi(bool battlegroundsMode = false)
 		{
 			_uiMovable = !_uiMovable;
 			Update(false);
 			if (_uiMovable)
 			{
 				HookMouse();
+				if (battlegroundsMode)
+				{
+					Config.Instance.HideDecksInOverlay = true;
+					Config.Instance.HidePlayerFatigueCount = true;
+					Config.Instance.HideOpponentFatigueCount = true;
+				}
 				if (StackPanelSecrets.Visibility != Visibility.Visible)
 				{
 					_secretsTempVisible = true;
@@ -218,10 +235,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 					//need to wait for panel to actually show up
 					await Task.Delay(50);
 				}
-				if (LblTurnTime.Visibility != Visibility.Visible)
-					ShowTimers();
-				WotogIconsPlayer.ForceShow(true);
-				WotogIconsOpponent.ForceShow(true);
+				if (!battlegroundsMode)
+				{
+					if(LblTurnTime.Visibility != Visibility.Visible)
+						ShowTimers();
+					WotogIconsPlayer.ForceShow(true);
+					WotogIconsOpponent.ForceShow(true);
+				}
+
 				foreach (var movableElement in _movableElements)
 				{
 					try
@@ -258,14 +279,33 @@ namespace Hearthstone_Deck_Tracker.Windows
 							movableElement.Value.Height = StackPanelSecrets.ActualHeight > 0 ? StackPanelSecrets.ActualHeight : 0;
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width : 0;
 						}
+						else if(movableElement.Key == BattlegroundsSessionStackPanel)
+						{
+							movableElement.Value.Height = BattlegroundsSessionStackPanel.ActualHeight > 0 ? BattlegroundsSessionStackPanel.ActualHeight : 0;
+							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width : 0;
+						}
 						else
 						{
 							movableElement.Value.Height = elementSize.Height > 0 ? elementSize.Height : 0;
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width : 0;
 						}
 
+						UIElement[] constructedOnlyMoveableElements = {
+							BorderStackPanelPlayer,
+							BorderStackPanelOpponent,
+							LblTurnTime,
+							IconBoardAttackPlayer,
+							IconBoardAttackOpponent,
+							WotogIconsPlayer,
+							WotogIconsOpponent,
+							LblPlayerTurnTime
+						};
+						UIElement[] battlegroundsOnlyMoveableElements = { BattlegroundsSessionStackPanel };
+						var shouldBeVisible = battlegroundsMode
+							? !constructedOnlyMoveableElements.Contains(movableElement.Key)
+							: !battlegroundsOnlyMoveableElements.Contains(movableElement.Key);
 
-						movableElement.Value.Visibility = Visibility.Visible;
+						movableElement.Value.Visibility = shouldBeVisible ? Visibility.Visible : Visibility.Collapsed;
 					}
 					catch (Exception ex)
 					{
@@ -275,6 +315,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 			}
 			else
 			{
+				if(battlegroundsMode)
+				{
+					Config.Instance.HideDecksInOverlay = false;
+					Config.Instance.HidePlayerFatigueCount = false;
+					Config.Instance.HideOpponentFatigueCount = false;
+				}
 				if (!(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook))
 					UnHookMouse();
 				if (_secretsTempVisible)
