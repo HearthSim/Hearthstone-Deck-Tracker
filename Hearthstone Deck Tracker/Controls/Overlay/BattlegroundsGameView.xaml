@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Canvas Height="34" Width="217">
@@ -100,7 +104,7 @@
                     >
                         <Label
                             Grid.Column="0"
-                            Content="Final Board"
+                            Content="{lex:Loc Battlegrounds_Session_Game_Tooltip_Final_Board}"
                             Foreground="#FFFFFF"
                             Opacity=".55"
                             FontSize="16"
