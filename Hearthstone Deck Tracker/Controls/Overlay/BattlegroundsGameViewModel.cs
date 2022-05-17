@@ -1,17 +1,37 @@
-﻿using Hearthstone_Deck_Tracker.Hearthstone;
+﻿using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.MVVM;
 using Hearthstone_Deck_Tracker.Utility.RemoteData;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
-	public class BattlegroundsGameViewModel : ViewModel
+	public class BattlegroundsGameViewModel : ViewModel, INotifyPropertyChanged
 	{
-		public BattlegroundsGameViewModel(GameItem gameItem)
+		public event PropertyChangedEventHandler? PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		public List<Entity> FinalBoardMinions { get; set; } = new List<Entity>();
+		public bool FinalBoardTooltips = false;
+
+		public BattlegroundsGameViewModel(GameItem gameItem, bool finalBoardTooltip)
+		{
+			FinalBoardTooltips = finalBoardTooltip;
 			StartTime = gameItem.StartTime;
 			Placement = gameItem.Placement;
 
@@ -33,6 +53,35 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			MMRDeltaText = $"{signal}{MMRDelta}";
 
 			CrownVisibility = gameItem.Placement == 1 ? Visibility.Visible : Visibility.Hidden;
+
+			if(gameItem.FinalBoard != null && gameItem.FinalBoard.FinalBoard != null)
+				foreach(var fb in gameItem.FinalBoard.FinalBoard)
+				{
+					TagItem[] tags = fb.Tags?.ToArray() ?? Array.Empty<TagItem>();
+					FinalBoardMinions.Add(new Entity()
+					{
+						CardId = fb.CardId,
+						Tags = tags.ToDictionary(p => (GameTag)p.Tag, p => p.Value),
+					});
+				}
+		}
+
+		public void OnMouseEnter()
+		{
+			if(!FinalBoardTooltips)
+				return;
+			FinalBoardCanvasLeft = 226;
+			FinalBoardVisibility = Visibility.Visible;
+			OnPropertyChanged(nameof(FinalBoardCanvasLeft));
+			OnPropertyChanged(nameof(FinalBoardVisibility));
+		}
+
+		public void OnMouseLeave()
+		{
+			if(!FinalBoardTooltips)
+				return;
+			FinalBoardVisibility = Visibility.Hidden;
+			OnPropertyChanged(nameof(FinalBoardVisibility));
 		}
 
 		public SolidColorBrush PlacementTextBrush
@@ -60,6 +109,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public int MMRDelta { get; }
 		public string MMRDeltaText { get; }
 		public CardAssetViewModel CardImage { get; }
-		public Visibility CrownVisibility { get;  }
+		public Visibility CrownVisibility { get; }
+		public Visibility FinalBoardVisibility { get; set; }
+		public int FinalBoardCanvasLeft { get; set; }
 	}
 }

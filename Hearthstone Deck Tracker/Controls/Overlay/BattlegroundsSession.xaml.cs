@@ -5,13 +5,13 @@ using System.Windows;
 using System.Windows.Controls;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
-using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Hearthstone_Deck_Tracker.Annotations;
 using System.Runtime.CompilerServices;
+using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
@@ -30,7 +30,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(BattlegroundsGameView));
+		public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(BattlegroundsSession));
+		public static readonly DependencyProperty FinalBoardTooltipProperty = DependencyProperty.Register("FinalBoardTooltip", typeof(bool), typeof(BattlegroundsSession));
 
 		public BattlegroundsSession()
 		{
@@ -49,6 +50,15 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			set
 			{
 				SetValue(CornerRadiusProperty, value);
+			}
+		}
+
+		public bool FinalBoardTooltip
+		{
+			get { return (bool)GetValue(FinalBoardTooltipProperty); }
+			set
+			{
+				SetValue(FinalBoardTooltipProperty, value);
 			}
 		}
 
@@ -229,11 +239,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			var existingGame = SessionGames.FirstOrDefault(x => x?.StartTime == game.StartTime);
 			if (existingGame == null)
 			{
-				SessionGames.Add(new BattlegroundsGameViewModel(game));
+				SessionGames.Add(new BattlegroundsGameViewModel(game, FinalBoardTooltip));
 			}
 			else
 			{
-				existingGame = new BattlegroundsGameViewModel(game);
+				existingGame = new BattlegroundsGameViewModel(game, FinalBoardTooltip);
 			}
 		}
 

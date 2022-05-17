@@ -4,66 +4,136 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Border BorderBrush="#1C2022" BorderThickness="0,1,0,0">
-        <Canvas Height="34" Width="217" ClipToBounds="True">
-            <Image
-                Canvas.Left="-35"
-                Canvas.Top="5"
-                Source="{Binding CardImage.AssetPath}"
-                Height="34"
-                Width="145"
-                Margin="-10,-5,0,0"
-                RenderOptions.BitmapScalingMode="Fant"
-            >
-                <Image.OpacityMask>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                        <GradientStop Color="#AA000000" Offset="0"/>
-                        <GradientStop Color="Transparent" Offset="1"/>
-                    </LinearGradientBrush>
-                </Image.OpacityMask>
-            </Image>
-            <Grid Height="34" Width="217">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.7*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <local:HearthstoneTextBlock
-                    Grid.Column="0"
-                    Text="{Binding HeroName}"
-                    FontSize="13"
-                    HorizontalAlignment="Left"
-                    Margin="8,0,0,0"
-                />
-                <Canvas Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="18" Width="22">
-                    <TextBlock
-                        Text="{Binding PlacementText}"
+    <Canvas Height="34" Width="217">
+        <Border
+            BorderBrush="#1C2022"
+            BorderThickness="0,1,0,0"
+            MouseEnter="Game_MouseEnter"
+            MouseLeave="Game_MouseLeave"
+            ext:OverlayExtensions.IsOverlayHoverVisible="True"
+        >
+            <Canvas Height="34" Width="217" ClipToBounds="True">
+                <Image
+                    Canvas.Left="-35"
+                    Canvas.Top="5"
+                    Source="{Binding CardImage.AssetPath}"
+                    Height="34"
+                    Width="145"
+                    Margin="-10,-5,0,0"
+                    RenderOptions.BitmapScalingMode="Fant"
+                >
+                    <Image.OpacityMask>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#AA000000" Offset="0"/>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Image.OpacityMask>
+                </Image>
+                <Grid Height="34" Width="217">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.7*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <local:HearthstoneTextBlock
+                        Grid.Column="0"
+                        Text="{Binding HeroName}"
                         FontSize="13"
-                        FontWeight="Bold"
-                        Foreground="{Binding PlacementTextBrush}"
-                        TextAlignment="Center"
-                        Width="23"
+                        HorizontalAlignment="Left"
+                        Margin="8,0,0,0"
                     />
-                    <Image
-                        Canvas.Left="-8"
-                        Canvas.Top="-7"
-                        Height="16"
-                        Width="16"
-                        Source="/HearthstoneDeckTracker;component/Resources/bgs_crown.png"
-                        Visibility="{Binding CrownVisibility}"
+                    <Canvas Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="18" Width="22">
+                        <TextBlock
+                            Text="{Binding PlacementText}"
+                            FontSize="13"
+                            FontWeight="Bold"
+                            Foreground="{Binding PlacementTextBrush}"
+                            TextAlignment="Center"
+                            Width="23"
+                        />
+                        <Image
+                            Canvas.Left="-8"
+                            Canvas.Top="-7"
+                            Height="16"
+                            Width="16"
+                            Source="/HearthstoneDeckTracker;component/Resources/bgs_crown.png"
+                            Visibility="{Binding CrownVisibility}"
+                        />
+                    </Canvas>
+                    <TextBlock
+                        Grid.Column="2"
+                        Text="{Binding MMRDeltaText}"
+                        FontSize="13"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{Binding MMRDeltaTextBrush}"
                     />
-                </Canvas>
-                <TextBlock
-                    Grid.Column="2"
-                    Text="{Binding MMRDeltaText}"
-                    FontSize="13"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Foreground="{Binding MMRDeltaTextBrush}"
-                />
-            </Grid>
+                </Grid>
+            </Canvas>
+        </Border>
+        <Canvas
+            Opacity=".95"
+            Canvas.Top="-69"
+            Canvas.Left="{Binding FinalBoardCanvasLeft}"
+            Visibility="{Binding FinalBoardVisibility}"
+        >
+            <Canvas.RenderTransform>
+                <ScaleTransform ScaleX=".6" ScaleY=".6"/>
+            </Canvas.RenderTransform>
+            <Border
+                Background="#23272A"
+                BorderBrush="#404345"
+                BorderThickness="1 0 1 1"
+                CornerRadius="3"
+            >
+                <StackPanel Name="FinalBoardContainer" Orientation="Vertical">
+                    <Border
+                        BorderBrush="#4A5256"
+                        BorderThickness="0,0,0,1"
+                        Background="#1C2022"
+                        HorizontalAlignment="Center"
+                        Width="{Binding ElementName=FinalBoardContainer, Path=ActualWidth}"
+                    >
+                        <Label
+                            Grid.Column="0"
+                            Content="Final Board"
+                            Foreground="#FFFFFF"
+                            Opacity=".55"
+                            FontSize="16"
+                            HorizontalAlignment="Center"
+                        />
+                    </Border>
+                    <StackPanel
+                        Name="FinalBoard"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,0,10,0"
+                    >
+                        <StackPanel.Resources>
+                            <Style TargetType="controls:BattlegroundsMinion">
+                                <Setter Property="Margin" Value="0,15,-10,15"/>
+                            </Style>
+                        </StackPanel.Resources>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border
+                Background="#23272A"
+                BorderBrush="#404345"
+                BorderThickness="1 0 0 1"
+                Height="14"
+                Width="14"
+                Canvas.Left="0"
+                Canvas.Top="135"
+            >
+                <Border.RenderTransform>
+                    <RotateTransform Angle="45" />
+                </Border.RenderTransform>
+            </Border>
         </Canvas>
-    </Border>
+    </Canvas>
 </UserControl>

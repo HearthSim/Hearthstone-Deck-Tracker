@@ -154,7 +154,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_clickableElements.Add(MulliganNotificationPanel);
 			_clickableElements.Add(BobsBuddyDisplay);
 			_clickableElements.Add(BattlegroundsSession.BtnOptions);
-			_hoverableElements.Add(BattlegroundsSession.BattlegroundsSessionPanel);
 		}
 	}
 }

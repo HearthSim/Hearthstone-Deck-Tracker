@@ -575,7 +575,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			// Only BgTierIcons are marked as clickable but a wrapper is scaled by the OverlayElementBehavior
 			if(element == BattlegroundsMinionsPanel.BgTierIcons)
 				return BgsTopBar.RenderTransform as ScaleTransform;
-			if(element == BattlegroundsSession.BattlegroundsSessionPanel)
+			if(element == BattlegroundsSession.BattlegroundsSessionPanelTopGroup)
 				return BattlegroundsSession.RenderTransform as ScaleTransform;
 
 			return element.RenderTransform as ScaleTransform;
