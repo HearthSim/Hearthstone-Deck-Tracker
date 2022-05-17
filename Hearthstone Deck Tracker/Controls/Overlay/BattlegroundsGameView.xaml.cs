@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
@@ -20,8 +21,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 					FinalBoard.Children.Add(new BattlegroundsMinion(m));
 
 				minionsRendered = true;
+				UpdateLayout();
 			}
-			((BattlegroundsGameViewModel) DataContext).OnMouseEnter();
+
+			var finalBoardContainerActualWidth = FinalBoardContainer.ActualWidth;
+			var scale = ((ScaleTransform)FinalBoardCanvas.RenderTransform).ScaleX;
+			((BattlegroundsGameViewModel) DataContext).OnMouseEnter(finalBoardContainerActualWidth, scale);
 		}
 
 		private void Game_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)

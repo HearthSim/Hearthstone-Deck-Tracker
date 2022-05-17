@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
@@ -64,15 +65,26 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 						Tags = tags.ToDictionary(p => (GameTag)p.Tag, p => p.Value),
 					});
 				}
+
+			FinalBoardVisibility = Visibility.Hidden;
 		}
 
-		public void OnMouseEnter()
+		public void OnMouseEnter(double finalBoardContainerActualWidth, double scale)
 		{
 			if(!FinalBoardTooltips)
 				return;
-			FinalBoardCanvasLeft = 226;
+
+			double battlegroundsSessionPanelLeft = Canvas.GetLeft(Core.Overlay.BattlegroundsSessionStackPanel);
+			bool tooltipToRight = battlegroundsSessionPanelLeft < (Core.Overlay.Width / 2);
+
+			FinalBoardCanvasLeft = tooltipToRight ? 227 : (int)(finalBoardContainerActualWidth * -scale) - 10;
+			FinalBoardArrowCanvasLeft = tooltipToRight ? 0 : (int)finalBoardContainerActualWidth + 2;
+			FinalBoardArrowBorderThickness = tooltipToRight ? new Thickness(1, 0, 0, 1) : new Thickness(0, 1, 1, 0);
 			FinalBoardVisibility = Visibility.Visible;
+
 			OnPropertyChanged(nameof(FinalBoardCanvasLeft));
+			OnPropertyChanged(nameof(FinalBoardArrowCanvasLeft));
+			OnPropertyChanged(nameof(FinalBoardArrowBorderThickness));
 			OnPropertyChanged(nameof(FinalBoardVisibility));
 		}
 
@@ -112,5 +124,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public Visibility CrownVisibility { get; }
 		public Visibility FinalBoardVisibility { get; set; }
 		public int FinalBoardCanvasLeft { get; set; }
+		public int FinalBoardArrowCanvasLeft { get; set; }
+		public Thickness FinalBoardArrowBorderThickness { get; set; }
 	}
 }

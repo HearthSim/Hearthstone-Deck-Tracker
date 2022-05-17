@@ -80,6 +80,7 @@
             </Canvas>
         </Border>
         <Canvas
+            Name="FinalBoardCanvas"
             Opacity=".95"
             Canvas.Top="-69"
             Canvas.Left="{Binding FinalBoardCanvasLeft}"
@@ -126,12 +127,13 @@
                 </StackPanel>
             </Border>
             <Border
+                Name="FinalBoardArrow"
                 Background="#23272A"
                 BorderBrush="#404345"
-                BorderThickness="1 0 0 1"
+                BorderThickness="{Binding FinalBoardArrowBorderThickness}"
                 Height="14"
                 Width="14"
-                Canvas.Left="0"
+                Canvas.Left="{Binding FinalBoardArrowCanvasLeft}"
                 Canvas.Top="135"
             >
                 <Border.RenderTransform>
