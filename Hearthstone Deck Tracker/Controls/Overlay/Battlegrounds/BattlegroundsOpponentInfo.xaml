@@ -1,0 +1,33 @@
+<UserControl x:Class="Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds.BattlegroundsOpponentInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
+             xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel HorizontalAlignment="Center">
+        <Border Background="#23272A" BorderBrush="#404345" CornerRadius="0 0 3 3" BorderThickness="1 0 1 1" Opacity=".9">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 0 20 0">
+                    <StackPanel.Resources>
+                        <Style TargetType="controls:BattlegroundsMinion">
+                            <Setter Property="Margin" Value="0,20,-10,20"/>
+                        </Style>
+                    </StackPanel.Resources>
+                </StackPanel>
+                <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="NotFoughtOpponent" Text="{lex:Loc Overlay_Battlegrounds_Not_Fought_Opponent}" Visibility="Collapsed" FontSize="16" Margin="50"/>
+                <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="HeroNoMinionsOnBoard" Text="{lex:Loc Overlay_Battlegrounds_Hero_No_Minions_On_Board}" Visibility="Collapsed" FontSize="16" Margin="50"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
+
