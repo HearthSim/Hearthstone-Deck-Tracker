@@ -430,8 +430,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		{
 			var result =
 				await
-				Core.MainWindow.ShowMessageAsync("Resetting overlay to default",
-												 "Position of Battlegrounds Session will be reset to default. Are you sure?",
+				Core.MainWindow.ShowMessageAsync(LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetPos_Title"),
+												 LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetPos_Title"),
 												 MessageDialogStyle.AffirmativeAndNegative);
 			if(result != MessageDialogResult.Affirmative)
 				return;
