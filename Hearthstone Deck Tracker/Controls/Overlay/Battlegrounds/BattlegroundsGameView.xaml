@@ -12,14 +12,16 @@
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas Height="34" Width="217">
-        <Border
-            BorderBrush="#1C2022"
-            BorderThickness="0,1,0,0"
-            MouseEnter="Game_MouseEnter"
-            MouseLeave="Game_MouseLeave"
-            ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltips}"
-        >
+    <Canvas
+        Name="BattlegroundsGameViewCanvas"
+        Height="34"
+        Width="217"
+        Background="#AA000000"
+        MouseEnter="Game_MouseEnter"
+        MouseLeave="Game_MouseLeave"
+        ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltips}"
+    >
+        <Border BorderBrush="#1C2022" BorderThickness="0,1,0,0">
             <Canvas Height="34" Width="217" ClipToBounds="True">
                 <Image
                     Canvas.Left="-35"
