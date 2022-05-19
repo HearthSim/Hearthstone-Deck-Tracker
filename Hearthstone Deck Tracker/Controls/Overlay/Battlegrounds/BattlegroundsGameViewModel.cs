@@ -28,7 +28,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		}
 
 		public List<Entity> FinalBoardMinions { get; set; } = new List<Entity>();
-		public bool FinalBoardTooltips = false;
 
 		public BattlegroundsGameViewModel(GameItem gameItem, bool finalBoardTooltip)
 		{
@@ -126,5 +125,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public int FinalBoardCanvasLeft { get; set; }
 		public int FinalBoardArrowCanvasLeft { get; set; }
 		public Thickness FinalBoardArrowBorderThickness { get; set; }
+		public bool FinalBoardTooltips { get; }
 	}
 }

@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
-             xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
@@ -37,7 +36,6 @@
                         Orientation="Vertical"
                         MouseEnter="Panel_MouseEnter"
                         MouseLeave="Panel_MouseLeave"
-                        ext:OverlayExtensions.IsOverlayHoverVisible="True"
                     >
                         <StackPanel Name="BgBannedTribesSection">
                             <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
@@ -91,7 +89,6 @@
                             Orientation="Vertical"
                             MouseEnter="Panel_MouseEnter"
                             MouseLeave="Panel_MouseLeave"
-                            ext:OverlayExtensions.IsOverlayHoverVisible="True"
                         >
                             <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgStartCurrentMMRSection, Path=Visibility}"/>
                             <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
