@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay
 {
-	public partial class BattlegroundsTier : UserControl
+	public partial class BattlegroundsTier : UserControl, INotifyPropertyChanged
 	{
 		public BattlegroundsTier()
 		{
@@ -21,7 +21,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		public static readonly DependencyProperty TierProperty = DependencyProperty.Register("Tier", typeof(int), typeof(BattlegroundsTier));
+		public static readonly DependencyProperty TierProperty = DependencyProperty.Register(
+			"Tier",
+			typeof(int),
+			typeof(BattlegroundsTier),
+			new FrameworkPropertyMetadata(1, OnTierChanged)
+		);
 		public static DependencyProperty ActiveProperty = DependencyProperty.Register("Active", typeof(bool), typeof(BattlegroundsTier));
 
 		public string ImageSrc => $"/HearthstoneDeckTracker;component/Resources/tier-{Tier}.png";
@@ -34,6 +39,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 				SetValue(TierProperty, value);
 				OnPropertyChanged(nameof(ImageSrc));
 			}
+		}
+
+		private static void OnTierChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			((BattlegroundsTier)d).OnPropertyChanged(nameof(ImageSrc));
 		}
 
 		public bool Active

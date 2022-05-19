@@ -26,7 +26,7 @@
     <ApplicationIcon>Images\HearthstoneDeckTracker.ico</ApplicationIcon>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>9</LangVersion>
+    <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <WarningsAsErrors>nullable</WarningsAsErrors>
   </PropertyGroup>

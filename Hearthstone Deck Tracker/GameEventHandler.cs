@@ -26,8 +26,6 @@ using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
-using Hearthstone_Deck_Tracker.LogReader.Interfaces;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 
 #endregion
 
@@ -117,7 +115,7 @@ namespace Hearthstone_Deck_Tracker
 
 			if(!_game.IsUsingPremade)
 				_game.DrawnLastGame =
-					new List<Card>(_game.Player.RevealedEntities.Where(x => !x.Info.Created && !x.Info.Stolen && x.Card.Collectible 
+					new List<Card>(_game.Player.RevealedEntities.Where(x => !x.Info.Created && !x.Info.Stolen && x.Card.Collectible
 									&& x.IsPlayableCard).GroupBy(x => x.CardId).Select(x =>
 					{
 						var card = Database.GetCardFromId(x.Key);
@@ -176,7 +174,7 @@ namespace Hearthstone_Deck_Tracker
 				var validationResult = LogValidator.Validate(log);
 				if(validationResult.IsValid)
 					await LogUploader.Upload(log, (GameMetaData)_game.MetaData.Clone(), gs);
-				else 
+				else
 				{
 					Log.Error("Invalid log: " + validationResult.Reason);
 					Influx.OnEndOfGameUploadError(validationResult.Reason);
@@ -766,7 +764,7 @@ namespace Hearthstone_Deck_Tracker
 					else
 						Sentry.ClearBobsBuddyEvents();
 				}
-						
+
 				Influx.SendQueuedMetrics();
 			}
 			catch(Exception ex)
@@ -1118,7 +1116,7 @@ namespace Hearthstone_Deck_Tracker
 						break;
 
 				}
-			}				
+			}
 		}
 
 		public void HandlePlayerHandDiscard(Entity entity, string cardId, int turn)
@@ -1181,6 +1179,22 @@ namespace Hearthstone_Deck_Tracker
 			if(_game.IsMercenariesMatch)
 			{
 				Core.Overlay.UpdateMercenariesOverlay();
+			}
+		}
+
+		public void HandleBattlegroundsPlayerTechLevel(int id, int value)
+		{
+			if(_game.IsBattlegroundsMatch)
+			{
+				_game.UpdateBattlegroundsPlayerTechLevel(id, value);
+			}
+		}
+
+		public void HandleBattlegroundsPlayerTriples(int id, int value)
+		{
+			if(_game.IsBattlegroundsMatch)
+			{
+				_game.UpdateBattlegroundsPlayerTriples(id, value);
 			}
 		}
 
@@ -1467,7 +1481,7 @@ namespace Hearthstone_Deck_Tracker
 
 		public void HandleOpponentHandToDeck(Entity entity, string? cardId, int turn)
 		{
-			if(!string.IsNullOrEmpty(cardId) && entity.HasTag(GameTag.TRADEABLE)) 
+			if(!string.IsNullOrEmpty(cardId) && entity.HasTag(GameTag.TRADEABLE))
 				_game.Opponent.PredictUniqueCardInDeck(cardId!, false);
 			_game.Opponent.HandToDeck(entity, turn);
 			Core.UpdateOpponentCards();

@@ -389,17 +389,21 @@ namespace Hearthstone_Deck_Tracker.Windows
 						break;
 					}
 					var state = _game.GetBattlegroundsBoardStateFor(entity.CardId);
-					shouldShowOpponentInfo = BgsOpponentInfo.Update(entity, state, turn);
+					shouldShowOpponentInfo = !(state == null && entity.CardId == Core.Game.Player.Board.FirstOrDefault(x => x.IsHero)!.CardId);
+					BgsOpponentInfo.Update(entity, state, turn);
 					break;
 				}
 			}
 			if(shouldShowOpponentInfo)
 			{
+				BgsOpponentInfo.Visibility = Visibility.Visible;
+				BgsOpponentInfo.UpdateLayout();
 				_bgsBobsBuddyBehavior.Hide();
 				_bgsPastOpponentBoardBehavior.Show();
 			}
 			else
 			{
+				BgsOpponentInfo.Visibility = Visibility.Collapsed;
 				_bgsPastOpponentBoardBehavior.Hide();
 				BgsOpponentInfo.ClearLastKnownBoard();
 				ShowBobsBuddyPanelDelayed();
