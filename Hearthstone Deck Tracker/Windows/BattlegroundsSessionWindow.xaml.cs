@@ -21,8 +21,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				return;
 			e.Cancel = true;
 			Hide();
-			Config.Instance.BattlegroundsSessionRecapWindowOnStart = false;
-			Config.Save();
 		}
 
 		internal void Shutdown()
@@ -30,6 +28,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			_appIsClosing = true;
 			Close();
 		}
+
 		private void BattlegroundsSessionWindow_OnActivated(object sender, EventArgs e) => Topmost = true;
 
 		private void BattlegroundsSessionWindow_OnDeactivated(object sender, EventArgs e)
