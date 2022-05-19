@@ -37,7 +37,7 @@
                         MouseEnter="Panel_MouseEnter"
                         MouseLeave="Panel_MouseLeave"
                     >
-                        <StackPanel Name="BgBannedTribesSection">
+                        <StackPanel Name="BgBannedTribesSection" Background="#2E3235">
                             <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
                                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                             </Border>
@@ -48,7 +48,7 @@
                                 <local:BattlegroundsTribe x:Name="BgTribe4" Tribe="PET" Margin="8,0,0,0"/>
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel Name="BgStartCurrentMMRSection">
+                        <StackPanel Name="BgStartCurrentMMRSection" Background="#2E3235">
                             <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgBannedTribesSection, Path=Visibility}"/>
                             <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
                                 <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_MMR}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
@@ -86,6 +86,7 @@
                     <StackPanel Name="BgLastestGamesSection">
                         <StackPanel
                             Name="BgLastestGamesSectionHeader"
+                            Background="#2E3235"
                             Orientation="Vertical"
                             MouseEnter="Panel_MouseEnter"
                             MouseLeave="Panel_MouseLeave"
