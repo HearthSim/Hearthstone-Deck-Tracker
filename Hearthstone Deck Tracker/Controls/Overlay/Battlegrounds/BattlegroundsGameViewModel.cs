@@ -1,11 +1,4 @@
-﻿using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Annotations;
-using Hearthstone_Deck_Tracker.Hearthstone;
-using Hearthstone_Deck_Tracker.Hearthstone.Entities;
-using Hearthstone_Deck_Tracker.Utility;
-using Hearthstone_Deck_Tracker.Utility.MVVM;
-using Hearthstone_Deck_Tracker.Utility.RemoteData;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,9 +6,16 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Hearthstone.Entities;
+using Hearthstone_Deck_Tracker.Utility;
+using Hearthstone_Deck_Tracker.Utility.MVVM;
+using Hearthstone_Deck_Tracker.Utility.RemoteData;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
-namespace Hearthstone_Deck_Tracker.Controls.Overlay
+namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
 	public class BattlegroundsGameViewModel : ViewModel, INotifyPropertyChanged
 	{

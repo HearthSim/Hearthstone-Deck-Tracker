@@ -1,14 +1,13 @@
-﻿using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Annotations;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
+using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Annotations;
 
-namespace Hearthstone_Deck_Tracker.Controls.Overlay
+namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
-	public partial class BattlegroundsTribe : UserControl, INotifyPropertyChanged
+	public partial class BattlegroundsTribe : INotifyPropertyChanged
 	{
 		public BattlegroundsTribe()
 		{

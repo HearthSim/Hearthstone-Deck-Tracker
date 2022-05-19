@@ -1,21 +1,20 @@
-﻿using Hearthstone_Deck_Tracker.Hearthstone;
-using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using HearthDb.Enums;
-using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
-using System.Collections.ObjectModel;
-using System.Windows.Media;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Hearthstone_Deck_Tracker.Annotations;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Media;
+using HearthDb.Enums;
+using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Hearthstone;
+using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
-namespace Hearthstone_Deck_Tracker.Controls.Overlay
+namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
-	public partial class BattlegroundsSession : UserControl, INotifyPropertyChanged
+	public partial class BattlegroundsSession : INotifyPropertyChanged
 	{
 		private Lazy<BattlegroundsDb> _db = new Lazy<BattlegroundsDb>();
 		private BrushConverter _bc = new BrushConverter();

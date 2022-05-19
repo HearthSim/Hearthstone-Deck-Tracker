@@ -1,11 +1,10 @@
-﻿using System.Windows.Controls;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
-namespace Hearthstone_Deck_Tracker.Controls.Overlay
+namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
-	public partial class BattlegroundsGameView : UserControl
+	public partial class BattlegroundsGameView
 	{
-		private bool minionsRendered = false;
+		private bool minionsRendered;
 
 		public BattlegroundsGameView()
 		{
