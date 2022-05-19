@@ -61,6 +61,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		private bool _opponentCardsHidden;
 		private bool _playerCardsHidden;
 		private bool _resizeElement;
+		private bool _battlegroundsSessionVisibleTemp;
 		private bool _secretsTempVisible;
 		private UIElement? _selectedUiElement;
 		private bool _uiMovable;
@@ -447,6 +448,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		internal void HideBattlegroundsSession()
 		{
+			if (_battlegroundsSessionVisibleTemp)
+				return;
 			BattlegroundsSession.Hide();
 		}
 

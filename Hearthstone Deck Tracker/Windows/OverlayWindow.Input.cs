@@ -225,6 +225,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 					Config.Instance.HideDecksInOverlay = true;
 					Config.Instance.HidePlayerFatigueCount = true;
 					Config.Instance.HideOpponentFatigueCount = true;
+
+					if(BattlegroundsSession.Visibility != Visibility.Visible)
+					{
+						_battlegroundsSessionVisibleTemp = true;
+						ShowBattlegroundsSession();
+					}
 				}
 				if (StackPanelSecrets.Visibility != Visibility.Visible)
 				{
@@ -320,6 +326,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 					Config.Instance.HideDecksInOverlay = false;
 					Config.Instance.HidePlayerFatigueCount = false;
 					Config.Instance.HideOpponentFatigueCount = false;
+
+					if(_battlegroundsSessionVisibleTemp)
+					{
+						_battlegroundsSessionVisibleTemp = false;
+						HideBattlegroundsSession();
+					}
 				}
 				if (!(Config.Instance.ExtraFeatures && Config.Instance.ForceMouseHook))
 					UnHookMouse();
