@@ -110,7 +110,7 @@
                             Content="{lex:Loc Battlegrounds_Session_Game_Tooltip_Final_Board}"
                             Foreground="#FFFFFF"
                             Opacity=".55"
-                            FontSize="16"
+                            FontSize="18"
                             HorizontalAlignment="Center"
                         />
                     </Border>
