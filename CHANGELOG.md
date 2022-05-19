@@ -1,6 +1,12 @@
+## **Release v1.18.2 - 2022-05-19**
+**Updated for Hearthstone 23.2.2**
+
+**Fixes**:
+- Fixed an issue where cards added to the top or bottom of the deck by From the Depths were not tracked correctly.
+
 ## **Release v1.18.1 - 2022-05-10**
 **Fixes**:
-- Fixed a remaing issue from the 23.2.0 where players were not correctly detected, leading e.g. to missing game results.
+- Fixed a remaining issue from the 23.2.0 patch where players were not correctly detected, leading e.g. to missing game results.
 
 ## **Release v1.18.0 - 2022-05-10**
 **Updated for Hearthstone 23.2.0**
