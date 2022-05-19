@@ -21,7 +21,7 @@
             CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
             Width="220"
         >
-            <Grid>
+            <Grid Margin="0 0 0 1">
                 <Border
                     Name="BorderMask"
                     Background="#2E3235"
