@@ -407,8 +407,8 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 		public ICommand ResetSessionCommand => new Command(async () =>
 		{
 			var result = await Core.MainWindow.ShowMessageAsync(
-				"Resetting current session",
-				"By clicking 'Reset' you will clear your list of Latest Games and make your Start MMR the same as your current MMR.",
+				LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetSession_Title"),
+				LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_ResetSession_Desc"),
 				MessageDialogStyle.AffirmativeAndNegative,
 				new MessageDialogs.Settings { AffirmativeButtonText = LocUtil.Get("Options_Overlay_Battlegrounds_Dialog_Confirmation_Reset") }
 			);
