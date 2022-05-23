@@ -7,26 +7,23 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 {
-	public partial class BattlegroundsOpponentInfo : UserControl, INotifyPropertyChanged
+	public sealed partial class BattlegroundsOpponentInfo : INotifyPropertyChanged
 	{
 		private Dictionary<int, int> _heroTriples = new();
+		private Dictionary<int, int> _heroTierTurns = new();
 
 		public BattlegroundsOpponentInfo()
 		{
 			InitializeComponent();
-			LatestTierUpTier = 1;
-			LatestTierUpTierVisibility = Visibility.Collapsed;
-			LatestTierUpTurn = LocUtil.Get("Overlay_Battlegrounds_No_Upgrades");
 		}
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
-		internal virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+		internal void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -37,6 +34,12 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public int TriplesTier4 => _heroTriples.TryGetValue(4, out var qty) ? qty : 0;
 		public int TriplesTier5 => _heroTriples.TryGetValue(5, out var qty) ? qty : 0;
 		public int TriplesTier6 => _heroTriples.TryGetValue(6, out var qty) ? qty : 0;
+
+		public int TurnTier2 => _heroTierTurns.TryGetValue(2, out var turn) ? turn : 0;
+		public int TurnTier3 => _heroTierTurns.TryGetValue(3, out var turn) ? turn : 0;
+		public int TurnTier4 => _heroTierTurns.TryGetValue(4, out var turn) ? turn : 0;
+		public int TurnTier5 => _heroTierTurns.TryGetValue(5, out var turn) ? turn : 0;
+		public int TurnTier6 => _heroTierTurns.TryGetValue(6, out var turn) ? turn : 0;
 
 		public void ShowNotFoughtOpponent()
 		{
@@ -72,7 +75,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			}
 
 			var heroTriples = Core.Game.GetBattlegroundsHeroTriplesByTier(hero.Id);
-			_heroTriples = heroTriples != null ? heroTriples : new Dictionary<int, int>();
+			_heroTriples = heroTriples ?? new Dictionary<int, int>();
 			OnPropertyChanged(nameof(TriplesTier1));
 			OnPropertyChanged(nameof(TriplesTier2));
 			OnPropertyChanged(nameof(TriplesTier3));
@@ -82,25 +85,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 
 			var heroTavernUpTurn = Core.Game.GetBattlegroundsHeroLatestTavernUpTurn(hero.Id);
-			if(heroTavernUpTurn == null)
-			{
-				LatestTierUpTierVisibility = Visibility.Collapsed;
-				LatestTierUpTurn = LocUtil.Get("Overlay_Battlegrounds_No_Upgrades");
-			}
-			else
-			{
-				LatestTierUpTier = heroTavernUpTurn.Value.Key;
-				LatestTierUpTierVisibility = Visibility.Visible;
-				LatestTierUpTurn = string.Format(LocUtil.Get("Overlay_Battlegrounds_Turn_Counter"), heroTavernUpTurn.Value.Value);
-				OnPropertyChanged(nameof(LatestTierUpTier));
-			}
-			OnPropertyChanged(nameof(LatestTierUpTierVisibility));
-			OnPropertyChanged(nameof(LatestTierUpTurn));
+			_heroTierTurns = heroTavernUpTurn ?? new Dictionary<int, int>();
+			OnPropertyChanged(nameof(TurnTier2));
+			OnPropertyChanged(nameof(TurnTier3));
+			OnPropertyChanged(nameof(TurnTier4));
+			OnPropertyChanged(nameof(TurnTier5));
+			OnPropertyChanged(nameof(TurnTier6));
 		}
-
-		public int LatestTierUpTier { get; set; }
-		public Visibility LatestTierUpTierVisibility { get; set; }
-		public string LatestTierUpTurn { get; set; }
 	}
 }
 

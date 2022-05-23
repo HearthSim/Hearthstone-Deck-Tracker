@@ -32,7 +32,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BattlegroundRatingInfo? _battlegroundsRatingInfo;
 		private MercenariesRatingInfo? _mercenariesRatingInfo;
 		private BattlegroundsBoardState? _battlegroundsBoardState;
-		private Dictionary<int, KeyValuePair<int, int>> _battlegroundsHeroLatestTavernUpTurn;
+		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
 		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 
 		public GameV2()
@@ -42,7 +42,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsInMenu = true;
 			SecretsManager = new SecretsManager(this, new RemoteArenaSettings());
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
-			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, KeyValuePair<int, int>>();
+			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
 			Reset();
 			LiveDataManager.OnStreamingChecked += async streaming =>
@@ -284,7 +284,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			PowerLog.Clear();
 			_battlegroundsBoardState?.Reset();
-			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, KeyValuePair<int, int>>();
+			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
 			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
 
 			if(Core._game != null && Core.Overlay != null)
@@ -339,11 +339,13 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void UpdateBattlegroundsPlayerTechLevel(int id, int value)
 		{
+			if(!_battlegroundsHeroLatestTavernUpTurn.ContainsKey(id))
+				_battlegroundsHeroLatestTavernUpTurn[id] = new Dictionary<int, int>();
 			if (value > 1)
-				_battlegroundsHeroLatestTavernUpTurn[id] = new(value, GetTurnNumber());
+				_battlegroundsHeroLatestTavernUpTurn[id][value] = GetTurnNumber();
 		}
 
-		public KeyValuePair<int, int>? GetBattlegroundsHeroLatestTavernUpTurn(int id)
+		public Dictionary<int, int>? GetBattlegroundsHeroLatestTavernUpTurn(int id)
 		{
 			return _battlegroundsHeroLatestTavernUpTurn.TryGetValue(id, out var data) ? data : null;
 		}

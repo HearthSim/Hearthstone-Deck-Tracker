@@ -6,117 +6,94 @@
              xmlns:hearthstoneDeckTracker="clr-namespace:Hearthstone_Deck_Tracker"
              xmlns:controls="clr-namespace:Hearthstone_Deck_Tracker.Controls"
              xmlns:local="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
-             xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
              xmlns:lex="http://wpflocalizeextension.codeplex.com"
              lex:LocalizeDictionary.DesignCulture="en"
              lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d">
-    <StackPanel HorizontalAlignment="Center">
-        <Border BorderBrush="#404345" CornerRadius="0 0 3 3" BorderThickness="1 0 1 1" Opacity=".9">
-            <Border.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#202427" Offset="0" />
-                    <GradientStop Color="#23272A" Offset="1" />
-                </LinearGradientBrush>
-            </Border.Background>
-            <StackPanel Orientation="Vertical">
-                <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16" HorizontalAlignment="Center" Margin="0, 10, 0, -5"/>
-                <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 0 20 0">
-                    <StackPanel.Resources>
-                        <Style TargetType="controls:BattlegroundsMinion">
-                            <Setter Property="Margin" Value="0,20,-10,20"/>
-                        </Style>
-                    </StackPanel.Resources>
-                </StackPanel>
-                <hearthstoneDeckTracker:HearthstoneTextBlock
-                    x:Name="NotFoughtOpponent"
-                    Text="{lex:Loc Overlay_Battlegrounds_Not_Fought_Opponent}"
-                    Visibility="Collapsed" FontSize="16" Margin="50" HorizontalAlignment="Center"
-                />
-                <hearthstoneDeckTracker:HearthstoneTextBlock
-                    x:Name="HeroNoMinionsOnBoard"
-                    Text="{lex:Loc Overlay_Battlegrounds_Hero_No_Minions_On_Board}"
-                    Visibility="Collapsed" FontSize="16" Margin="50" HorizontalAlignment="Center"
-                />
-            </StackPanel>
-        </Border>
-        <Border BorderBrush="#404345" CornerRadius="0 0 3 3" BorderThickness="1 0 1 1" Opacity=".9">
-            <Border.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#202427" Offset="0" />
-                    <GradientStop Color="#23272A" Offset="1" />
-                </LinearGradientBrush>
-            </Border.Background>
-            <Grid Name="TiersInfo">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Vertical">
+    <StackPanel Orientation="Vertical">
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <Border BorderBrush="#404345" CornerRadius="0 0 0 3" BorderThickness="1 0 1 1" Opacity=".9">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#202427" Offset="0" />
+                        <GradientStop Color="#23272A" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 0 20 0">
+                        <StackPanel.Resources>
+                            <Style TargetType="controls:BattlegroundsMinion">
+                                <Setter Property="Margin" Value="0,20,-10,20"/>
+                            </Style>
+                        </StackPanel.Resources>
+                    </StackPanel>
                     <hearthstoneDeckTracker:HearthstoneTextBlock
-                        Text="{lex:Loc Overlay_Battlegrounds_Minions_TripledAtTier}"
-                        FontSize="16"
-                        Margin="15 10 15 15"
+                        x:Name="NotFoughtOpponent"
+                        Text="{lex:Loc Overlay_Battlegrounds_Not_Fought_Opponent}"
+                        Visibility="Collapsed" FontSize="16" Margin="50" HorizontalAlignment="Center"
                     />
-                    <StackPanel Orientation="Horizontal" Margin="-5 -3  0 0 ">
-                        <local:BattlegroundsTierTriples
-                            Tier="1"
-                            Qty="{Binding TriplesTier1, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
-                            Margin="15 0 0 0"
-                        />
-                        <local:BattlegroundsTierTriples
-                            Tier="2"
-                            Qty="{Binding TriplesTier2, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
-                            Margin="6 0 0 0"
-                        />
-                        <local:BattlegroundsTierTriples
-                            Tier="3"
-                            Qty="{Binding TriplesTier3, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
-                            Margin="6 0 0 0"
-                        />
-                        <local:BattlegroundsTierTriples
-                            Tier="4"
-                            Qty="{Binding TriplesTier4, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
-                            Margin="6 0 0 0"
-                        />
-                        <local:BattlegroundsTierTriples
-                            Tier="5"
-                            Qty="{Binding TriplesTier5, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
-                            Margin="6 0 0 0"
-                        />
-                        <local:BattlegroundsTierTriples
-                            Tier="6"
-                            Qty="{Binding TriplesTier6, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
-                            Margin="6 0 0 0"
-                        />
+                    <hearthstoneDeckTracker:HearthstoneTextBlock
+                        x:Name="HeroNoMinionsOnBoard"
+                        Text="{lex:Loc Overlay_Battlegrounds_Hero_No_Minions_On_Board}"
+                        Visibility="Collapsed" FontSize="16" Margin="50" HorizontalAlignment="Center"
+                    />
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="#404345" CornerRadius="0 0 3 0" BorderThickness="1 0 1 1" Opacity=".9">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#202427" Offset="0" />
+                        <GradientStop Color="#23272A" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <StackPanel Name="TiersInfo" Orientation="Vertical" Margin="6 10 10 10">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <local:BattlegroundsTierTriples
+                                Tier="1"
+                                Qty="{Binding TriplesTier1, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Turn="1"
+                                Margin="5 0 0 0"
+                            />
+                            <local:BattlegroundsTierTriples
+                                Tier="2"
+                                Qty="{Binding TriplesTier2, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Turn="{Binding TurnTier2, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Margin="5 0 0 0"
+                            />
+                            <local:BattlegroundsTierTriples
+                                Tier="3"
+                                Qty="{Binding TriplesTier3, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Turn="{Binding TurnTier3, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Margin="5 0 0 0"
+                            />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                            <local:BattlegroundsTierTriples
+                                Tier="4"
+                                Qty="{Binding TriplesTier4, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Turn="{Binding TurnTier4, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Margin="5 0 0 0"
+                            />
+                            <local:BattlegroundsTierTriples
+                                Tier="5"
+                                Qty="{Binding TriplesTier5, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Turn="{Binding TurnTier5, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Margin="5 0 0 0"
+                            />
+                            <local:BattlegroundsTierTriples
+                                Tier="6"
+                                Qty="{Binding TriplesTier6, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Turn="{Binding TurnTier6, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
+                                Margin="5 0 0 0"
+                            />
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10 -10 -5 0">
-                    <hearthstoneDeckTracker:HearthstoneTextBlock
-                        Text="{lex:Loc Overlay_Battlegrounds_Latest_TierUp}"
-                        FontSize="16"
-                        Margin="20"
-                        Width="Auto"
-                        VerticalAlignment="Center"
-                    />
-                    <StackPanel Orientation="Horizontal" Margin="15 -15 0 5">
-                        <overlay:BattlegroundsTier
-                            Tier="{Binding LatestTierUpTier, FallbackValue=1, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
-                            Visibility="{Binding LatestTierUpTierVisibility, FallbackValue=Visible, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
-                        />
-                        <Label
-                            Content="{Binding LatestTierUpTurn, FallbackValue=Turn 5, RelativeSource={RelativeSource AncestorType=local:BattlegroundsOpponentInfo}}"
-                            Foreground="White"
-                            FontSize="16"
-                            VerticalContentAlignment="Center"
-                            MinHeight="48"
-                            Margin="0 -4 0 0"
-                        />
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-        </Border>
+            </Border>
+        </StackPanel>
+        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16" HorizontalAlignment="Center" Margin="0, 10, 0, -5"/>
     </StackPanel>
 </UserControl>
 
