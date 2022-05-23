@@ -103,29 +103,25 @@
                         Margin="5,0,0,0" Width="50"
                     />
                 </StackPanel>
-                <Grid Margin="5,10,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="150"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Grid.Column="0"
-                        Text="{lex:Loc Options_Overlay_Battlegrounds_Label_ResetSessionDesc}"
-                        Foreground="White"
-                        Opacity=".55"
-                        TextWrapping="WrapWithOverflow"
-                        TextAlignment="Left"
-                        Margin="0,0,5,0"
-                    />
+                <DockPanel Margin="0,5,0,0">
                     <Button
-                        Grid.Column="1"
                         Width="150"
-                        Content="{lex:Loc Options_Overlay_Battlegrounds_Button_ResetSession}"
+                        Content="{lex:Loc Options_Overlay_General_Button_Reset}"
                         Command="{Binding ResetSessionCommand, RelativeSource={RelativeSource AncestorType=overlay:OverlayBattlegrounds}}"
                         VerticalAlignment="Top"
                         Margin="0,3,0,0"
+                        DockPanel.Dock="Right"
                     />
-                </Grid>
+                    <Label Content="{lex:Loc Options_Overlay_Battlegrounds_Button_ResetSession}" DockPanel.Dock="Left"/>
+                </DockPanel>
+                <TextBlock
+                    Text="{lex:Loc Options_Overlay_Battlegrounds_Label_ResetSessionDesc}"
+                    Foreground="White"
+                    Opacity=".55"
+                    TextWrapping="WrapWithOverflow"
+                    TextAlignment="Left"
+                    Margin="5,0,5,0"
+                />
                 <DockPanel Margin="0,5,0,0">
                     <Button Name="BtnUnlockOverlay" Content="{lex:Loc Options_Overlay_General_Button_UnlockOverlay}" Width="150"
                     Click="BtnUnlockOverlay_Click" DockPanel.Dock="Right" />
