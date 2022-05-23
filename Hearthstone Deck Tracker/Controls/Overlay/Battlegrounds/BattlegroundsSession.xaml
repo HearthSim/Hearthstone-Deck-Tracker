@@ -12,7 +12,7 @@
              mc:Ignorable="d"
              Width="220"
     >
-    <Canvas>
+    <Grid>
         <Border
             BorderBrush="#4A5256"
             BorderThickness="1"
@@ -168,8 +168,6 @@
         </Border>
         <Border
             Name="BtnOptions"
-            Canvas.Top="4"
-            Canvas.Right="4"
             Height="23"
             Width="24"
             CornerRadius="3"
@@ -178,6 +176,9 @@
             MouseEnter="BtnOptions_MouseEnter"
             MouseLeave="BtnOptions_MouseLeave"
             MouseUp="BtnOptions_MouseUp"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Margin="4"
             Visibility="{Binding CogBtnVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
         >
             <Rectangle
@@ -191,5 +192,5 @@
                 </Rectangle.Fill>
             </Rectangle>
         </Border>
-    </Canvas>
+    </Grid>
 </UserControl>

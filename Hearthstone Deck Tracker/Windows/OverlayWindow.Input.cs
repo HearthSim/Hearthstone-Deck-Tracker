@@ -54,7 +54,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						Config.Instance.PlayerDeckTop += delta.Y / Height;
 						Config.Instance.PlayerDeckLeft += delta.X / Width;
 						Canvas.SetTop(_movableElements[border], Height * Config.Instance.PlayerDeckTop / 100);
-						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.PlayerDeckLeft / 100 
+						Canvas.SetLeft(_movableElements[border], Width * Config.Instance.PlayerDeckLeft / 100
 										- StackPanelPlayer.ActualWidth * Config.Instance.OverlayPlayerScaling / 100);
 					}
 					return;
@@ -287,7 +287,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						}
 						else if(movableElement.Key == BattlegroundsSessionStackPanel)
 						{
-							movableElement.Value.Height = BattlegroundsSessionStackPanel.ActualHeight > 0 ? BattlegroundsSessionStackPanel.ActualHeight : 0;
+							movableElement.Value.Height = elementSize.Height > 0 ? elementSize.Height : 0;
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width : 0;
 						}
 						else

@@ -19,11 +19,11 @@
                 </Ellipse>
             </Border>
             <Image
-            Width="32"
-            Canvas.Left="16"
-            Canvas.Top="15"
-            Source="/HearthstoneDeckTracker;component/Resources/tribes-x.png"
-        />
+                Width="32"
+                Canvas.Left="16"
+                Canvas.Top="15"
+                Source="/HearthstoneDeckTracker;component/Resources/tribes-x.png"
+            />
         </Canvas>
         <StackPanel Height="16" Margin="0,4,0,0" Orientation="Vertical">
             <hearthstoneDeckTracker:HearthstoneTextBlock
