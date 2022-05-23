@@ -121,12 +121,12 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			if (!_playerCardsHidden)
 			{
-				StackPanelPlayer.Visibility = hideDeck && !_uiMovable ? Collapsed : Visible;
+				StackPanelPlayer.Visibility = (hideDeck && !_uiMovable) || _battlegroundsSessionVisibleTemp ? Collapsed : Visible;
 			}
 
 			if (!_opponentCardsHidden)
 			{
-				StackPanelOpponent.Visibility = hideDeck && !_uiMovable ? Collapsed : Visible;
+				StackPanelOpponent.Visibility = (hideDeck && !_uiMovable) || _battlegroundsSessionVisibleTemp ? Collapsed : Visible;
 			}
 
 			CanvasPlayerChance.Visibility = Config.Instance.HideDrawChances ? Collapsed : Visible;
