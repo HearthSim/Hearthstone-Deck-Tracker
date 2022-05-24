@@ -41,7 +41,7 @@
                           Unchecked="CheckboxAlwaysShowAverageDamage_Unchecked" Margin="0,5,0,0" />
             </StackPanel>
         </GroupBox>
-        <GroupBox Header="Current Session Recap" Margin="5,10,5,5">
+        <GroupBox Header="{lex:Loc Options_Overlay_Battlegrounds_Group_Label}" Margin="5,10,5,5">
             <StackPanel>
                 <CheckBox
                     x:Name="CheckboxShowSessionRecap"
@@ -53,13 +53,22 @@
                     Margin="0"
                 />
                 <CheckBox
+                    x:Name="CheckboxShowExternalWindow"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowExternalWindow}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowExternalWindow_Checked"
+                    Unchecked="CheckboxShowExternalWindow_Unchecked"
+                    Margin="0,5,0,0"
+                />
+                <CheckBox
                     x:Name="CheckboxShowMinionsBanned"
                     Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowMinionsBanned}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Checked="CheckboxShowMinionsBanned_Checked"
                     Unchecked="CheckboxShowMinionsBanned_Unchecked"
-                    Margin="10,5,0,0"
+                    Margin="0,5,0,0"
                 />
                 <CheckBox
                     x:Name="CheckboxShowStartCurrentMMR"
@@ -68,7 +77,7 @@
                     VerticalAlignment="Top"
                     Checked="CheckboxShowStartCurrentMMR_Checked"
                     Unchecked="CheckboxShowStartCurrentMMR_Unchecked"
-                    Margin="10,5,0,0"
+                    Margin="0,5,0,0"
                 />
                 <CheckBox
                     x:Name="CheckboxShowLatestGames"
@@ -77,15 +86,6 @@
                     VerticalAlignment="Top"
                     Checked="CheckboxShowLatestGames_Checked"
                     Unchecked="CheckboxShowLatestGames_Unchecked"
-                    Margin="10,5,0,0"
-                />
-                <CheckBox
-                    x:Name="CheckboxShowExternalWindow"
-                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowExternalWindow}"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Checked="CheckboxShowExternalWindow_Checked"
-                    Unchecked="CheckboxShowExternalWindow_Unchecked"
                     Margin="0,5,0,0"
                 />
                 <StackPanel Orientation="Horizontal">
