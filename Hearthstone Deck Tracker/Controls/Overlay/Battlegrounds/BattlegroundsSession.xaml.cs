@@ -127,7 +127,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 		public void Show()
 		{
-			if (Visibility == Visibility.Visible)
+			if (Visibility == Visibility.Visible || !Config.Instance.ShowSessionRecap)
 			{
 				return;
 			}
