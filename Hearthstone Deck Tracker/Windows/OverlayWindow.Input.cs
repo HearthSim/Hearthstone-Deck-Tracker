@@ -232,17 +232,17 @@ namespace Hearthstone_Deck_Tracker.Windows
 						ShowBattlegroundsSession();
 					}
 				}
-				if (StackPanelSecrets.Visibility != Visibility.Visible)
+				else
 				{
-					_secretsTempVisible = true;
-					var secrets = CardIds.Secrets.Mage.All.Select(x => Database.GetCardFromId(x.Ids[0]))
-						.WhereNotNull().ToList();
-					ShowSecrets(secrets, true);
-					//need to wait for panel to actually show up
-					await Task.Delay(50);
-				}
-				if (!battlegroundsMode)
-				{
+					if (StackPanelSecrets.Visibility != Visibility.Visible)
+					{
+						_secretsTempVisible = true;
+						var secrets = CardIds.Secrets.Mage.All.Select(x => Database.GetCardFromId(x.Ids[0]))
+							.WhereNotNull().ToList();
+						ShowSecrets(secrets, true);
+						//need to wait for panel to actually show up
+						await Task.Delay(50);
+					}
 					if(LblTurnTime.Visibility != Visibility.Visible)
 						ShowTimers();
 					WotogIconsPlayer.ForceShow(true);
@@ -296,21 +296,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width : 0;
 						}
 
-						UIElement[] constructedOnlyMoveableElements = {
-							BorderStackPanelPlayer,
-							BorderStackPanelOpponent,
-							LblTurnTime,
-							IconBoardAttackPlayer,
-							IconBoardAttackOpponent,
-							WotogIconsPlayer,
-							WotogIconsOpponent,
-							LblPlayerTurnTime
-						};
-						UIElement[] battlegroundsOnlyMoveableElements = { BattlegroundsSessionStackPanel };
 						var shouldBeVisible = battlegroundsMode
-							? !constructedOnlyMoveableElements.Contains(movableElement.Key)
-							: !battlegroundsOnlyMoveableElements.Contains(movableElement.Key);
-
+							? movableElement.Key == BattlegroundsSessionStackPanel
+							: movableElement.Key != BattlegroundsSessionStackPanel;
 						movableElement.Value.Visibility = shouldBeVisible ? Visibility.Visible : Visibility.Collapsed;
 					}
 					catch (Exception ex)
