@@ -65,7 +65,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		{
 			var allRaces = _db.Value.Races;
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? allRaces;
-			var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL).ToList();
+			var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL)
+				.OrderBy(t => BattlegroundsTribe.GetTribeName(t))
+				.ToList();
 
 			if(unavailableRaces.Count() >= 3)
 			{

@@ -26,7 +26,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			{Race.NAGA , "naga"},
 		};
 
-		private Dictionary<Race, string> TribeNames = new Dictionary<Race, string>() {
+		private static Dictionary<Race, string> TribeNames = new Dictionary<Race, string>() {
 			{Race.PET , "Beast"},
 			{Race.MECHANICAL , "Mech"},
 			{Race.MURLOC , "Murloc"},
@@ -37,6 +37,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			{Race.QUILBOAR , "Quilboar"},
 			{Race.NAGA , "Naga"},
 		};
+
+		public static string GetTribeName(Race tribe) => TribeNames.TryGetValue(tribe, out var name) ? name : TribeNames[Race.PET];
 
 		public string ImageSrc => $"/HearthstoneDeckTracker;component/Resources/TribeIcons/{TribeImages[Tribe]}.jpg";
 
@@ -71,8 +73,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		{
 			get
 			{
-				string name;
-				return TribeNames.TryGetValue(Tribe, out name) ? name : TribeNames[Race.PET];
+				return GetTribeName(Tribe);
 			}
 		}
 	}
