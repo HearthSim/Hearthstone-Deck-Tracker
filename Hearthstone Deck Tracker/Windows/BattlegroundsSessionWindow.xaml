@@ -8,7 +8,7 @@
         Height="Auto"
         Width="Auto"
         SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize"
+        ResizeMode="CanMinimize"
         Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
         Icon="{StaticResource AppIcon}"
         Loaded="BattlegroundsSessionWindow_OnLoaded"
