@@ -13,34 +13,39 @@
              mc:Ignorable="d">
     <StackPanel Orientation="Vertical">
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <Border BorderBrush="#404345" CornerRadius="0 0 0 3" BorderThickness="1 0 1 1" Opacity=".9">
-                <Border.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#202427" Offset="0" />
-                        <GradientStop Color="#23272A" Offset="1" />
-                    </LinearGradientBrush>
-                </Border.Background>
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 0 20 0">
-                        <StackPanel.Resources>
-                            <Style TargetType="controls:BattlegroundsMinion">
-                                <Setter Property="Margin" Value="0,20,-10,20"/>
-                            </Style>
-                        </StackPanel.Resources>
+            <StackPanel Orientation="Vertical">
+                <Border BorderBrush="#404345" CornerRadius="0 0 0 3" BorderThickness="1 0 1 1" Opacity=".9" Height="150">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#202427" Offset="0" />
+                            <GradientStop Color="#23272A" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 0 20 0">
+                            <StackPanel.Resources>
+                                <Style TargetType="controls:BattlegroundsMinion">
+                                    <Setter Property="Margin" Value="0,20,-10,20"/>
+                                </Style>
+                            </StackPanel.Resources>
+                        </StackPanel>
+                        <hearthstoneDeckTracker:HearthstoneTextBlock
+                            x:Name="NotFoughtOpponent"
+                            Text="{lex:Loc Overlay_Battlegrounds_Not_Fought_Opponent}"
+                            Visibility="Collapsed" FontSize="16" Margin="50 63"
+                            HorizontalAlignment="Center"
+                        />
+                        <hearthstoneDeckTracker:HearthstoneTextBlock
+                            x:Name="HeroNoMinionsOnBoard"
+                            Text="{lex:Loc Overlay_Battlegrounds_Hero_No_Minions_On_Board}"
+                            Visibility="Collapsed" FontSize="16" Margin="50 63"
+                            HorizontalAlignment="Center"
+                        />
                     </StackPanel>
-                    <hearthstoneDeckTracker:HearthstoneTextBlock
-                        x:Name="NotFoughtOpponent"
-                        Text="{lex:Loc Overlay_Battlegrounds_Not_Fought_Opponent}"
-                        Visibility="Collapsed" FontSize="16" Margin="50" HorizontalAlignment="Center"
-                    />
-                    <hearthstoneDeckTracker:HearthstoneTextBlock
-                        x:Name="HeroNoMinionsOnBoard"
-                        Text="{lex:Loc Overlay_Battlegrounds_Hero_No_Minions_On_Board}"
-                        Visibility="Collapsed" FontSize="16" Margin="50" HorizontalAlignment="Center"
-                    />
-                </StackPanel>
-            </Border>
-            <Border BorderBrush="#404345" CornerRadius="0 0 3 0" BorderThickness="1 0 1 1" Opacity=".9">
+                </Border>
+                <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16" Margin="0, 5, 0, -5"/>
+            </StackPanel>
+            <Border BorderBrush="#404345" CornerRadius="0 0 3 0" BorderThickness="1 0 1 1" Opacity=".9" Height="150" VerticalAlignment="Top">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#202427" Offset="0" />
@@ -93,7 +98,6 @@
                 </StackPanel>
             </Border>
         </StackPanel>
-        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16" HorizontalAlignment="Center" Margin="0, 10, 0, -5"/>
     </StackPanel>
 </UserControl>
 
