@@ -27,7 +27,7 @@
                     Background="#2E3235"
                     CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
                 />
-                <StackPanel Name="BattlegroundsSessionPanel">
+                <StackPanel Name="BattlegroundsSessionPanel" VerticalAlignment="Top">
                     <StackPanel.OpacityMask>
                         <VisualBrush Visual="{Binding ElementName=BorderMask}" />
                     </StackPanel.OpacityMask>

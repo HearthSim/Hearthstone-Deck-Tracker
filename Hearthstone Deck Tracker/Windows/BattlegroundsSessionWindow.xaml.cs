@@ -54,12 +54,16 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void OnGameEnd()
 		{
-			BattlegroundsSession.BgBannedTribesSection.Visibility = Visibility.Collapsed;
-
 			var currentRating = Core.Game.CurrentGameStats?.BattlegroundsRatingAfter;
 			BattlegroundsSession.BgRatingCurrent.Text = $"{currentRating:N0}";
 
 			BattlegroundsSession.UpdateLatestGames();
+			UpdateBattlegroundsSessionLayoutHeight();
+		}
+
+		public void HideBannedTribes()
+		{
+			BattlegroundsSession.BgBannedTribesSection.Visibility = Visibility.Collapsed;
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
 

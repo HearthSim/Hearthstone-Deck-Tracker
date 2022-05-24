@@ -5,8 +5,6 @@
         xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
         xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
         Title="Session Recap"
-        Height="Auto"
-        Width="Auto"
         SizeToContent="WidthAndHeight"
         ResizeMode="CanMinimize"
         Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
@@ -26,5 +24,5 @@
             </Rectangle>
         </DataTemplate>
     </controls:MetroWindow.IconTemplate>
-    <battlegrounds:BattlegroundsSession x:Name="BattlegroundsSession"/>
+    <battlegrounds:BattlegroundsSession x:Name="BattlegroundsSession" Margin="0 0 0 -2"/>
 </controls:MetroWindow>

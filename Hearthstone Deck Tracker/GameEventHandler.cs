@@ -117,6 +117,9 @@ namespace Hearthstone_Deck_Tracker
 				ArenaStats.Instance.UpdateArenaStatsHighlights();
 			}
 
+			if(_game.CurrentGameStats != null && _game.CurrentGameStats.GameMode == Battlegrounds)
+				Core.Windows.BattlegroundsSessionWindow.HideBannedTribes();
+
 			if(!_game.IsUsingPremade)
 				_game.DrawnLastGame =
 					new List<Card>(_game.Player.RevealedEntities.Where(x => !x.Info.Created && !x.Info.Stolen && x.Card.Collectible
