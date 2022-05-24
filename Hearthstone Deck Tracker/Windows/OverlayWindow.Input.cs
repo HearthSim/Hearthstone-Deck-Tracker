@@ -287,8 +287,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 						}
 						else if(movableElement.Key == BattlegroundsSessionStackPanel)
 						{
-							movableElement.Value.Height = elementSize.Height > 0 ? elementSize.Height : 0;
-							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width : 0;
+							movableElement.Value.Height = elementSize.Height > 0 ? elementSize.Height * Config.Instance.OverlaySessionRecapScaling / 100 : 0;
+							movableElement.Value.Width = elementSize.Width > 0 ? elementSize.Width * Config.Instance.OverlaySessionRecapScaling / 100 : 0;
 						}
 						else
 						{
@@ -362,7 +362,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			if (element == null)
 				return new Size();
-			if(element is Border border)
+			if (element is Border border)
 				return new Size(border.ActualWidth, border.ActualHeight);
 			if(element is Panel panel)
 				return new Size(panel.ActualWidth, panel.ActualHeight);
