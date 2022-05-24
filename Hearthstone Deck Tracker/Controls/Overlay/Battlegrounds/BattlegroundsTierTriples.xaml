@@ -32,10 +32,10 @@
                     Visibility="{Binding TripleVisibility, FallbackValue=Visible, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
                 />
                 <Image
-                    Canvas.Left="26"
+                    Canvas.Left="28"
                     Canvas.Top="2"
                     Source="/HearthstoneDeckTracker;component/Resources/triple-black.png"
-                    Width="30" Height="30"
+                    Width="34" Height="34"
                     Opacity="{Binding TripleOpacity, FallbackValue=0, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
                     Visibility="{Binding TripleVisibility, FallbackValue=Visible, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
                 />
