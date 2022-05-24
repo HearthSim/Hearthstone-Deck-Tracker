@@ -768,6 +768,7 @@ namespace Hearthstone_Deck_Tracker
 					else
 						Sentry.ClearBobsBuddyEvents();
 					RecordBattlegroundsGame();
+					Core.Overlay.BattlegroundsSession.Update();
 					Core.Windows.BattlegroundsSessionWindow.OnGameEnd();
 				}
 
