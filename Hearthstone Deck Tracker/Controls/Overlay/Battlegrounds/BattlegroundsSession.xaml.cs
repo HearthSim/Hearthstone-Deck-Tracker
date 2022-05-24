@@ -197,15 +197,13 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				previousGameRatingAfter = g.RatingAfter;
 			};
 
-			if (sessionStartTime == null)
-			{
-				return sortedGames;
-			}
+			var sessionGames = sessionStartTime == null
+				? sortedGames
+				: sortedGames.Where(g => DateTime.Parse(g.StartTime) >= sessionStartTime).ToList();
 
-			var sessionGames = sortedGames.Where(g => DateTime.Parse(g.StartTime) >= sessionStartTime).ToList();
 			if (sessionGames.Count > 0)
 			{
-				var lastGame = (GameItem)sessionGames.LastOrDefault();
+				var lastGame = sessionGames.LastOrDefault();
 
 				// Check for MMR reset on last game
 				var ratingResetedAfterLastGame = false;
