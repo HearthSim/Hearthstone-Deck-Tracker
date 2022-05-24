@@ -26,7 +26,7 @@
                 </overlay:BattlegroundsTier>
                 <Image
                     Canvas.Left="28"
-                    Canvas.Top="0"
+                    Canvas.Top="2"
                     Source="/HearthstoneDeckTracker;component/Resources/triple.png"
                     Width="34" Height="34"
                     Visibility="{Binding TripleVisibility, FallbackValue=Visible, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTierTriples}}"
