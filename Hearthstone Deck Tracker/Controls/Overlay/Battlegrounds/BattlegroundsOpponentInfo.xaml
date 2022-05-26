@@ -21,7 +21,7 @@
                             <GradientStop Color="#23272A" Offset="1" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" MinWidth="740">
                         <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 0 20 0">
                             <StackPanel.Resources>
                                 <Style TargetType="controls:BattlegroundsMinion">
