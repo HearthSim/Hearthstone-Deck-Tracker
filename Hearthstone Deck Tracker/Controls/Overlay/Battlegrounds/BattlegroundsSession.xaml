@@ -12,185 +12,181 @@
              mc:Ignorable="d"
              Width="220"
     >
-    <Grid>
-        <Border
-            BorderBrush="#4A5256"
-            BorderThickness="1"
-            Canvas.Right="0"
-            Canvas.Top="0"
-            CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
-            Width="220"
-        >
-            <Grid Margin="0 0 0 1">
-                <Border
-                    Name="BorderMask"
-                    Background="#2E3235"
-                    CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
-                />
-                <StackPanel Name="BattlegroundsSessionPanel" VerticalAlignment="Top">
-                    <StackPanel.OpacityMask>
-                        <VisualBrush Visual="{Binding ElementName=BorderMask}" />
-                    </StackPanel.OpacityMask>
-                    <StackPanel
-                        Name="BattlegroundsSessionPanelTopGroup"
-                        Orientation="Vertical"
-                        MouseEnter="Panel_MouseEnter"
-                        MouseLeave="Panel_MouseLeave"
-                    >
-                        <StackPanel Name="BgBannedTribesSection" Background="#2E3235">
-                            <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
-                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
-                            </Border>
-                            <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center">
-                                <local:BattlegroundsTribe x:Name="BgTribe1" Tribe="PET"/>
-                                <local:BattlegroundsTribe x:Name="BgTribe2" Tribe="PET" Margin="8,0,0,0"/>
-                                <local:BattlegroundsTribe x:Name="BgTribe3" Tribe="PET" Margin="8,0,0,0"/>
-                                <local:BattlegroundsTribe x:Name="BgTribe4" Tribe="PET" Margin="8,0,0,0"/>
-                            </StackPanel>
+    <Border
+        BorderBrush="#4A5256"
+        BorderThickness="1"
+        CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
+        Width="220"
+    >
+        <Grid>
+            <Border
+                Name="BorderMask"
+                Background="#2E3235"
+                CornerRadius="{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
+            />
+            <StackPanel Name="BattlegroundsSessionPanel" VerticalAlignment="Top">
+                <StackPanel.OpacityMask>
+                    <VisualBrush Visual="{Binding ElementName=BorderMask}" />
+                </StackPanel.OpacityMask>
+                <StackPanel
+                    Name="BattlegroundsSessionPanelTopGroup"
+                    Orientation="Vertical"
+                    MouseEnter="Panel_MouseEnter"
+                    MouseLeave="Panel_MouseLeave"
+                >
+                    <StackPanel Name="BgBannedTribesSection" Background="#2E3235">
+                        <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
+                        </Border>
+                        <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center">
+                            <local:BattlegroundsTribe x:Name="BgTribe1" Tribe="PET"/>
+                            <local:BattlegroundsTribe x:Name="BgTribe2" Tribe="PET" Margin="8,0,0,0"/>
+                            <local:BattlegroundsTribe x:Name="BgTribe3" Tribe="PET" Margin="8,0,0,0"/>
+                            <local:BattlegroundsTribe x:Name="BgTribe4" Tribe="PET" Margin="8,0,0,0"/>
                         </StackPanel>
-                        <StackPanel Name="BgStartCurrentMMRSection" Background="#2E3235">
-                            <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgBannedTribesSection, Path=Visibility}"/>
-                            <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
-                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_MMR}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
-                            </Border>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="0.5*"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Orientation="Vertical">
+                    </StackPanel>
+                    <StackPanel Name="BgStartCurrentMMRSection" Background="#2E3235">
+                        <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgBannedTribesSection, Path=Visibility}"/>
+                        <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_MMR}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
+                        </Border>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Vertical">
+                                <Label
+                                    Content="{lex:Loc Battlegrounds_Session_MMR_Label_Start}"
+                                    Foreground="#FFFFFF"
+                                    Opacity=".55"
+                                    FontSize="11"
+                                    HorizontalAlignment="Center"
+                                />
+                                <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BgRatingStart" Text="0" FontSize="18" HorizontalAlignment="Center" Margin="0,-5,0,8"/>
+                            </StackPanel>
+                            <Border Grid.Column="1" BorderBrush="#4A5256" BorderThickness="1,0,0,0">
+                                <StackPanel Orientation="Vertical">
                                     <Label
-                                        Content="{lex:Loc Battlegrounds_Session_MMR_Label_Start}"
+                                        Content="{lex:Loc Battlegrounds_Session_MMR_Label_Current}"
                                         Foreground="#FFFFFF"
                                         Opacity=".55"
                                         FontSize="11"
                                         HorizontalAlignment="Center"
                                     />
-                                    <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BgRatingStart" Text="0" FontSize="18" HorizontalAlignment="Center" Margin="0,-5,0,8"/>
+                                    <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BgRatingCurrent" Text="0" FontSize="18" HorizontalAlignment="Center" Margin="0,-5,0,8"/>
                                 </StackPanel>
-                                <Border Grid.Column="1" BorderBrush="#4A5256" BorderThickness="1,0,0,0">
-                                    <StackPanel Orientation="Vertical">
-                                        <Label
-                                            Content="{lex:Loc Battlegrounds_Session_MMR_Label_Current}"
-                                            Foreground="#FFFFFF"
-                                            Opacity=".55"
-                                            FontSize="11"
-                                            HorizontalAlignment="Center"
-                                        />
-                                        <hearthstoneDeckTracker:HearthstoneTextBlock x:Name="BgRatingCurrent" Text="0" FontSize="18" HorizontalAlignment="Center" Margin="0,-5,0,8"/>
-                                    </StackPanel>
-                                </Border>
-                            </Grid>
-                        </StackPanel>
-                    </StackPanel>
-                    <StackPanel Name="BgLastestGamesSection">
-                        <StackPanel
-                            Name="BgLastestGamesSectionHeader"
-                            Background="#2E3235"
-                            Orientation="Vertical"
-                            MouseEnter="Panel_MouseEnter"
-                            MouseLeave="Panel_MouseLeave"
-                        >
-                            <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgStartCurrentMMRSection, Path=Visibility}"/>
-                            <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
-                                <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Latest_Games}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                             </Border>
-                            <Grid Name="GridHeader">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.7*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label
-                                    Grid.Column="0"
-                                    Content="{lex:Loc Battlegrounds_Session_Games_Label_Hero}"
-                                    Foreground="#FFFFFF"
-                                    Opacity=".55"
-                                    FontSize="11"
-                                    HorizontalAlignment="Center"
-                                />
-                                <Label
-                                    Grid.Column="1"
-                                    Content="{lex:Loc Battlegrounds_Session_Games_Label_Final}"
-                                    Foreground="#FFFFFF"
-                                    Opacity=".55"
-                                    FontSize="11"
-                                    HorizontalAlignment="Center"
-                                />
-                                <Label
-                                    Grid.Column="2"
-                                    Content="{lex:Loc Battlegrounds_Session_Games_Label_MMR}"
-                                    Foreground="#FFFFFF"
-                                    Opacity=".55"
-                                    FontSize="11"
-                                    HorizontalAlignment="Center"
-                                />
-                            </Grid>
-                            <StackPanel Name="GamesEmptyState">
-                                <TextBlock
-                                Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState1}"
-                                Foreground="#FFFFFF"
-                                Opacity=".5"
-                                TextWrapping="WrapWithOverflow"
-                                TextAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="4,8,4,0"
-                            />
-                                <TextBlock
-                                Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState2}"
-                                Foreground="#FFFFFF"
-                                Opacity=".5"
-                                TextWrapping="WrapWithOverflow"
-                                TextAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Margin="4,0,0,8"
-                            />
-                            </StackPanel>
-                        </StackPanel>
-                        <ItemsControl
-                            Name="ItemsControlGames"
-                            ItemsSource="{Binding SessionGames, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
-                        >
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <local:BattlegroundsGameView />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                        </Grid>
                     </StackPanel>
                 </StackPanel>
-            </Grid>
-        </Border>
-        <Border
-            Name="BtnOptions"
-            Height="23"
-            Width="24"
-            CornerRadius="3"
-            Background="Transparent"
-            Cursor="Hand"
-            MouseEnter="BtnOptions_MouseEnter"
-            MouseLeave="BtnOptions_MouseLeave"
-            MouseUp="BtnOptions_MouseUp"
-            VerticalAlignment="Top"
-            HorizontalAlignment="Right"
-            Margin="4"
-            Visibility="{Binding CogBtnVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
-        >
-            <Rectangle
-                Height="14"
-                Width="14"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
+                <StackPanel Name="BgLastestGamesSection">
+                    <StackPanel
+                        Name="BgLastestGamesSectionHeader"
+                        Background="#2E3235"
+                        Orientation="Vertical"
+                        MouseEnter="Panel_MouseEnter"
+                        MouseLeave="Panel_MouseLeave"
+                    >
+                        <Border BorderBrush="#4A5256" BorderThickness="0,1,0,0" Visibility="{Binding ElementName=BgStartCurrentMMRSection, Path=Visibility}"/>
+                        <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
+                            <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Latest_Games}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
+                        </Border>
+                        <Grid Name="GridHeader">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1.7*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Grid.Column="0"
+                                Content="{lex:Loc Battlegrounds_Session_Games_Label_Hero}"
+                                Foreground="#FFFFFF"
+                                Opacity=".55"
+                                FontSize="11"
+                                HorizontalAlignment="Center"
+                            />
+                            <Label
+                                Grid.Column="1"
+                                Content="{lex:Loc Battlegrounds_Session_Games_Label_Final}"
+                                Foreground="#FFFFFF"
+                                Opacity=".55"
+                                FontSize="11"
+                                HorizontalAlignment="Center"
+                            />
+                            <Label
+                                Grid.Column="2"
+                                Content="{lex:Loc Battlegrounds_Session_Games_Label_MMR}"
+                                Foreground="#FFFFFF"
+                                Opacity=".55"
+                                FontSize="11"
+                                HorizontalAlignment="Center"
+                            />
+                        </Grid>
+                        <StackPanel Name="GamesEmptyState">
+                            <TextBlock
+                            Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState1}"
+                            Foreground="#FFFFFF"
+                            Opacity=".5"
+                            TextWrapping="WrapWithOverflow"
+                            TextAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="4,8,4,0"
+                        />
+                            <TextBlock
+                            Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState2}"
+                            Foreground="#FFFFFF"
+                            Opacity=".5"
+                            TextWrapping="WrapWithOverflow"
+                            TextAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="4,0,0,8"
+                        />
+                        </StackPanel>
+                    </StackPanel>
+                    <ItemsControl
+                        Name="ItemsControlGames"
+                        ItemsSource="{Binding SessionGames, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
+                    >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:BattlegroundsGameView />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+            </StackPanel>
+            <Border
+                Name="BtnOptions"
+                Height="23"
+                Width="24"
+                CornerRadius="3"
+                Background="Transparent"
+                Cursor="Hand"
+                MouseEnter="BtnOptions_MouseEnter"
+                MouseLeave="BtnOptions_MouseLeave"
+                MouseUp="BtnOptions_MouseUp"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                Margin="4"
+                Visibility="{Binding CogBtnVisibility, RelativeSource={RelativeSource AncestorType=local:BattlegroundsSession}}"
             >
-                <Rectangle.Fill>
-                    <VisualBrush Visual="{StaticResource appbar_settings}" />
-                </Rectangle.Fill>
-            </Rectangle>
-        </Border>
-    </Grid>
+                <Rectangle
+                    Height="14"
+                    Width="14"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                >
+                    <Rectangle.Fill>
+                        <VisualBrush Visual="{StaticResource appbar_settings}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Border>
+        </Grid>
+    </Border>
 </UserControl>
