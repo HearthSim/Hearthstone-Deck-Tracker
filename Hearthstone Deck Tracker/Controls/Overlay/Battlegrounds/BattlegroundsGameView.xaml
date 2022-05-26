@@ -103,6 +103,7 @@
                         BorderThickness="0,0,0,1"
                         Background="#1C2022"
                         HorizontalAlignment="Center"
+                        CornerRadius="3 3 0 0"
                         Width="{Binding ElementName=FinalBoardContainer, Path=ActualWidth}"
                     >
                         <Label
