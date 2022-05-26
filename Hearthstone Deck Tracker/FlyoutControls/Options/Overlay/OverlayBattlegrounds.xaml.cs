@@ -412,6 +412,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 
 			BattlegroundsLastGames.Instance.Reset();
 			Core.Overlay.UpdateBattlegroundsSession();
+			Core.Windows.BattlegroundsSessionWindow.Update();
 		});
 
 		private async void BtnUnlockOverlay_Click(object sender, RoutedEventArgs e)
