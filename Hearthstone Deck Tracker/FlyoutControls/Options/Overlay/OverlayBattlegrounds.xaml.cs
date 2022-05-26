@@ -241,9 +241,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ShowSessionRecap = true;
-			CheckboxShowMinionsBanned.IsEnabled = true;
-			CheckboxShowStartCurrentMMR.IsEnabled = true;
-			CheckboxShowLatestGames.IsEnabled = true;
+
 			if(
 				!Config.Instance.ShowSessionRecapMinionsBanned &&
 				!Config.Instance.ShowSessionRecapStartCurrentMMR &&
@@ -266,9 +264,6 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(!_initialized)
 				return;
 			Config.Instance.ShowSessionRecap = false;
-			CheckboxShowMinionsBanned.IsEnabled = false;
-			CheckboxShowStartCurrentMMR.IsEnabled = false;
-			CheckboxShowLatestGames.IsEnabled = false;
 			SaveConfig(true);
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.HideBattlegroundsSession();
