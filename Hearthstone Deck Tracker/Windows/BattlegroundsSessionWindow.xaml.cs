@@ -41,7 +41,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			BattlegroundsSession.Update();
 			UpdateSectionsVisibilities();
-			BattlegroundsSession.RenderTransformOrigin = new Point(1, 0);
+			BattlegroundsSession.RenderTransformOrigin = new Point(0.5, 0);
 			UpdateScaling();
 		}
 
