@@ -14,7 +14,11 @@
                         <ImageBrush
                             x:Name="ImgBrush"
                             ImageSource="{Binding ImageSrc, RelativeSource={RelativeSource AncestorType=local:BattlegroundsTribe}}"
-                        />
+                        >
+                            <ImageBrush.Transform>
+                                <ScaleTransform ScaleX="1.1" ScaleY="1.1" CenterX="20" CenterY="35" />
+                            </ImageBrush.Transform>
+                        </ImageBrush>
                     </Ellipse.Fill>
                 </Ellipse>
             </Border>
