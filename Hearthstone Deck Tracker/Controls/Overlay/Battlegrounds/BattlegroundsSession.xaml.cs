@@ -94,6 +94,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			BgRatingCurrent.Text = $"{rating:N0}";
 		}
 
+		public void OnGameEnd()
+		{
+			var currentRating = Core.Game.CurrentGameStats?.BattlegroundsRatingAfter;
+			BgRatingCurrent.Text = $"{currentRating:N0}";
+
+			UpdateLatestGames();
+		}
+
 		private void Panel_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
 		{
 			CogBtnVisibility = Visibility.Visible;

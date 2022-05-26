@@ -47,6 +47,11 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void OnGameStart()
 		{
+			Update();
+		}
+
+		public void Update()
+		{
 			UpdateBannedMinionsVisibility();
 			BattlegroundsSession.Update();
 			UpdateBattlegroundsSessionLayoutHeight();
