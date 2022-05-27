@@ -36,6 +36,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public string? LastDiedMinionCardId { get; set; }
 		public string? LastDrawnCardId { get; set; }
 		public int LibramReductionCount { get; private set; }
+		public int AbyssalCurseCount { get; private set; }
 
 		public bool HasCoin => Hand.Any(e => e.CardId == HearthDb.CardIds.NonCollectible.Neutral.TheCoinCore);
 		public int HandCount => Hand.Count();
@@ -309,6 +310,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			CardsPlayedThisTurn.Clear();
 			LastDrawnCardId = null;
 			LibramReductionCount = 0;
+			AbyssalCurseCount = 0;
 		}
 
 		public void Draw(Entity entity, int turn)
@@ -553,6 +555,11 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		}
 
 		public void UpdateLibramReduction(int change) => LibramReductionCount += change;
+
+		public void UpdateAbyssalCurse(int value)
+		{
+			AbyssalCurseCount += value;
+		}
 
 		internal void ShuffleDeck()
 		{

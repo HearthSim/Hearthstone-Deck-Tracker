@@ -38,6 +38,9 @@ namespace Hearthstone_Deck_Tracker.Utility
 		public static int PlayerLibramCounter => Core.Game.Player.LibramReductionCount;
 		public static int OpponentLibramCounter => Core.Game.Opponent.LibramReductionCount;
 
+		public static int PlayerAbyssalCurseCounter => Core.Game.Player.AbyssalCurseCount;
+		public static int OpponentAbyssalCurseCounter => Core.Game.Opponent.AbyssalCurseCount;
+
 		public static bool ShowPlayerCthunCounter => !Core.Game.IsInMenu && (Config.Instance.PlayerCthunCounter == DisplayMode.Always
 					|| Config.Instance.PlayerCthunCounter == DisplayMode.Auto && PlayerSeenCthun);
 
@@ -80,6 +83,13 @@ namespace Hearthstone_Deck_Tracker.Utility
 
 		public static bool ShowOpponentJadeCounter => !Core.Game.IsInMenu && (Config.Instance.OpponentJadeCounter == DisplayMode.Always
 					|| Config.Instance.OpponentJadeCounter == DisplayMode.Auto && OpponentSeenJade);
+
+		public static bool ShowPlayerAbyssalCurseCounter => !Core.Game.IsInMenu && (
+			Config.Instance.PlayerAbyssalCurseCounter == DisplayMode.Always
+				|| (Config.Instance.PlayerAbyssalCurseCounter == DisplayMode.Auto && Core.Game.Player.AbyssalCurseCount > 0));
+		public static bool ShowOpponentAbyssalCurseCounter => !Core.Game.IsInMenu && (
+			Config.Instance.OpponentAbyssalCurseCounter == DisplayMode.Always
+				|| (Config.Instance.OpponentAbyssalCurseCounter == DisplayMode.Auto && Core.Game.Opponent.AbyssalCurseCount > 0));
 
 		private static bool? DeckContains(string cardId) => DeckList.Instance.ActiveDeck?.Cards.Any(x => x.Id == cardId);
 

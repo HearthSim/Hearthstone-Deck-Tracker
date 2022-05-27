@@ -48,5 +48,9 @@
             <TextBlock Text="{Binding Health, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="72,53,104,2" />
             <TextBlock Text="{Binding Spells, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="158,34,18,21" />
         </Grid>
+        <Grid Visibility="{Binding AbyssalVisibility, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="2,0,2,0">
+            <Image Source="/HearthstoneDeckTracker;component/Images/icon-abyssal.png" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="{Binding AbyssalCurse, RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="64,34,0,21"/>
+        </Grid>
     </StackPanel>
 </UserControl>
