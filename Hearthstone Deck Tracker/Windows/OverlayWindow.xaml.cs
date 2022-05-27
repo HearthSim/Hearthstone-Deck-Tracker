@@ -179,9 +179,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 				ExitAnimation = AnimationType.Slide,
 			};
 
-			_bgsPastOpponentBoardBehavior = new OverlayElementBehavior(PastOpponentBoardDisplay)
+			_bgsPastOpponentBoardBehavior = new OverlayElementBehavior(BgsOpponentInfoContainer)
 			{
-				GetLeft = () => Width / 2 - PastOpponentBoardDisplay.ActualWidth * AutoScaling / 2,
+				GetLeft = () => Width / 2 - BgsOpponentInfoContainer.ActualWidth * AutoScaling / 2,
 				GetTop = () => 0,
 				GetScaling = () => AutoScaling,
 				AnchorSide = Side.Top,
@@ -547,7 +547,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		}
 
 		private long _update ;
-		internal async void UpdateMercenariesOverlay() 
+		internal async void UpdateMercenariesOverlay()
 		{
 			// Debounce
 			var ts = DateTime.Now.Ticks;

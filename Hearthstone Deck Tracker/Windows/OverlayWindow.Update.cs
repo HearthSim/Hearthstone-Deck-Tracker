@@ -65,7 +65,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 						continue;
 					if(!Config.Instance.HideOpponentCardAge)
 						_cardMarks[i].UpdateCardAge(entity.Info.Turn);
-					else 
+					else
 						_cardMarks[i].UpdateCardAge(null);
 					if(!Config.Instance.HideOpponentCardMarks)
 					{
@@ -262,7 +262,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UpdatePosition()
 		{
-			//hide the overlay depenting on options
+			//hide the overlay depending on options
 			ShowOverlay(
 						!((Config.Instance.HideInBackground && !User32.IsHearthstoneInForeground())
 						  || (Config.Instance.HideOverlayInSpectator && _game.CurrentGameMode == GameMode.Spectator) || Config.Instance.HideOverlay
@@ -271,8 +271,8 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			var hsRect = User32.GetHearthstoneRect(true);
 
-			//hs window has height 0 if it just launched, screwing things up if the tracker is started before hs is. 
-			//this prevents that from happening. 
+			//hs window has height 0 if it just launched, screwing things up if the tracker is started before hs is.
+			//this prevents that from happening.
 			if(hsRect.Height == 0 || (Visibility != Visible && Core.Windows.CapturableOverlay == null))
 				return;
 
@@ -426,7 +426,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			OnPropertyChanged(nameof(OpponentListHeight));
 			OnPropertyChanged(nameof(BattlegroundsTileHeight));
 			OnPropertyChanged(nameof(BattlegroundsTileWidth));
-			
+
 			//Scale attack icons, with height
 			var atkWidth = (int)Math.Round(Height * 0.0695, 0);
 			var atkFont = (int)Math.Round(Height * 0.0204, 0);

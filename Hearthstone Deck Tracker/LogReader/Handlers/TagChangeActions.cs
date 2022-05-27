@@ -78,6 +78,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				case FAKE_ZONE:
 				case FAKE_ZONE_POSITION:
 					return () => gameState.GameHandler?.HandleMercenariesStateChange();
+				case PLAYER_TECH_LEVEL:
+					return () => gameState.GameHandler?.HandleBattlegroundsPlayerTechLevel(id, value);
+				case PLAYER_TRIPLES:
+					return () => gameState.GameHandler?.HandleBattlegroundsPlayerTriples(id, value);
 			}
 			return null;
 		}
@@ -294,7 +298,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		}
 
 		private void ProposedDefenderChange(IGame game, int value) => game.ProposedDefender = value;
-	
+
 		private void ProposedAttackerChange(IHsGameState gameState, int id, IGame game, int value) {
 			game.ProposedAttacker = value;
 			if(value <= 0)
@@ -470,7 +474,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 		}
 
 		// The last heropower is created after the last hero, therefore +1
-		private int GetMaxHeroPowerId(IGame game) => 
+		private int GetMaxHeroPowerId(IGame game) =>
 			Math.Max(game.PlayerEntity?.GetTag(HERO_ENTITY) ?? 66, game.OpponentEntity?.GetTag(HERO_ENTITY) ?? 66) + 1;
 
 		private void SimulateZoneChangesFromDeck(IHsGameState gameState, int id, IGame game, int value, string? cardId, int maxId)
@@ -752,7 +756,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							entity.SetTag(GameTag.ZONE, (int)Zone.DECK);
 						}
 					}
-					
+
 					if(controller == game.Player.Id && cardId != null)
 						gameState.GameHandler?.HandlePlayerDeckDiscard(entity, cardId, gameState.GetTurnNumber());
 					else if(controller == game.Opponent.Id)

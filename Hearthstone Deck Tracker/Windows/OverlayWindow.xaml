@@ -7,9 +7,11 @@
         xmlns:utility="clr-namespace:Hearthstone_Deck_Tracker.Utility"
         xmlns:themes="clr-namespace:Hearthstone_Deck_Tracker.Utility.Themes"
         xmlns:overlay="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay"
-        xmlns:lex="http://wpflocalizeextension.codeplex.com"
-        xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone" xmlns:mercenaries="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
+        xmlns:hearthstone="clr-namespace:Hearthstone_Deck_Tracker.Hearthstone"
+        xmlns:battlegrounds="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds"
+        xmlns:mercenaries="clr-namespace:Hearthstone_Deck_Tracker.Controls.Overlay.Mercenaries"
         xmlns:ext="clr-namespace:Hearthstone_Deck_Tracker.Utility.Extensions"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
         lex:LocalizeDictionary.DesignCulture="en"
         lex:ResxLocalizationProvider.DefaultAssembly="HearthstoneDeckTracker"
         lex:ResxLocalizationProvider.DefaultDictionary="Strings"
@@ -198,31 +200,14 @@
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTurnText6" Margin="-1 -1 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" FontStretch="UltraCondensed" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTileText7" Margin="-2.5 -11 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" TextAlignment="Center"/>
                 <local:HearthstoneTextBlock x:Name="BattlegroundsTurnText7" Margin="-2 1 0 0" Width="{Binding BattlegroundsTileWidth, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" Height="{Binding BattlegroundsTileHeight, RelativeSource={RelativeSource AncestorType=windows:OverlayWindow}}" FontSize="15" FontStretch="UltraCondensed" TextAlignment="Center" TextTrimming="CharacterEllipsis"/>
-                
+
                 <StackPanel Name="BgsTopBar" Visibility="Collapsed" Orientation="Horizontal" Canvas.Top="0" Canvas.Right="0">
                     <overlay:TurnCounter x:Name="TurnCounter" Margin="0,0,2,0"  Height="55" VerticalAlignment="Top" />
                     <overlay:BattlegroundsMinions x:Name="BattlegroundsMinionsPanel"/>
                 </StackPanel>
                 <overlay:BobsBuddyPanel x:Name="BobsBuddyDisplay" Visibility="Collapsed"/>
-                <StackPanel Width="1000" Name="PastOpponentBoardDisplay" Canvas.Top="0" Canvas.Right="0">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Border Background="#23272A" BorderBrush="#404345" CornerRadius="0 0 3 3" BorderThickness="1 0 1 1" Opacity=".9">
-                            <StackPanel Orientation="Vertical">
-                                <StackPanel Name="BattlegroundsBoard" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10 0 20 0">
-                                    <StackPanel.Resources>
-                                        <Style TargetType="controls:BattlegroundsMinion">
-                                            <Setter Property="Margin" Value="0,20,-10,20"/>
-                                        </Style>
-                                    </StackPanel.Resources>
-                                </StackPanel>
-                                <local:HearthstoneTextBlock x:Name="NotFoughtOpponent" Text="{lex:Loc Overlay_Battlegrounds_Not_Fought_Opponent}" Visibility="Collapsed" FontSize="16" Margin="50"/>
-                                <local:HearthstoneTextBlock x:Name="HeroNoMinionsOnBoard" Text="{lex:Loc Overlay_Battlegrounds_Hero_No_Minions_On_Board}" Visibility="Collapsed" FontSize="16" Margin="50"/>
-                            </StackPanel>
-                        </Border>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                            <local:HearthstoneTextBlock x:Name="BattlegroundsAge" FontSize="16"/>
-                        </StackPanel>
-                    </StackPanel>
+                <StackPanel Width="1000" Name="BgsOpponentInfoContainer" Canvas.Top="0" Canvas.Right="0">
+                    <battlegrounds:BattlegroundsOpponentInfo x:Name="BgsOpponentInfo" Visibility="Collapsed"/>
                 </StackPanel>
                 <overlay:BattlegroundsHeroPanel x:Name="HeroNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>
                 <overlay:MulliganPanel x:Name="MulliganNotificationPanel" Visibility="Collapsed" Canvas.Right="0"/>

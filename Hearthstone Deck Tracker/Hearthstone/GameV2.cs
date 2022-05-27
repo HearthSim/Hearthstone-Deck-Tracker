@@ -23,7 +23,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 {
 	public class GameV2 : IGame
 	{
-		public readonly List<long> IgnoredArenaDecks = new List<long>();
+		public readonly List<long> IgnoredArenaDecks = new();
 		private GameMode _currentGameMode = GameMode.None;
 		private bool? _spectator;
 		private MatchInfo? _matchInfo;
@@ -32,6 +32,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		private BattlegroundRatingInfo? _battlegroundsRatingInfo;
 		private MercenariesRatingInfo? _mercenariesRatingInfo;
 		private BattlegroundsBoardState? _battlegroundsBoardState;
+		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroLatestTavernUpTurn;
+		private Dictionary<int, Dictionary<int, int>> _battlegroundsHeroTriplesByTier;
 
 		public GameV2()
 		{
@@ -40,6 +42,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 			IsInMenu = true;
 			SecretsManager = new SecretsManager(this, new RemoteArenaSettings());
 			_battlegroundsBoardState = new BattlegroundsBoardState(this);
+			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
+			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
 			Reset();
 			LiveDataManager.OnStreamingChecked += async streaming =>
 			{
@@ -280,6 +284,8 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 				CurrentGameStats = new GameStats(GameResult.None, "", "") {PlayerName = "", OpponentName = "", Region = CurrentRegion};
 			PowerLog.Clear();
 			_battlegroundsBoardState?.Reset();
+			_battlegroundsHeroLatestTavernUpTurn = new Dictionary<int, Dictionary<int, int>>();
+			_battlegroundsHeroTriplesByTier = new Dictionary<int, Dictionary<int, int>>();
 
 			if(Core._game != null && Core.Overlay != null)
 			{
@@ -330,5 +336,35 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 		public void SnapshotBattlegroundsBoardState() => _battlegroundsBoardState?.SnapshotCurrentBoard();
 
 		public BoardSnapshot? GetBattlegroundsBoardStateFor(string? cardId) => _battlegroundsBoardState?.GetSnapshot(cardId);
-	}	
+
+		public void UpdateBattlegroundsPlayerTechLevel(int id, int value)
+		{
+			if(!_battlegroundsHeroLatestTavernUpTurn.ContainsKey(id))
+				_battlegroundsHeroLatestTavernUpTurn[id] = new Dictionary<int, int>();
+			if (value > 1)
+				_battlegroundsHeroLatestTavernUpTurn[id][value] = GetTurnNumber();
+		}
+
+		public Dictionary<int, int>? GetBattlegroundsHeroLatestTavernUpTurn(int id)
+		{
+			return _battlegroundsHeroLatestTavernUpTurn.TryGetValue(id, out var data) ? data : null;
+		}
+
+		public void UpdateBattlegroundsPlayerTriples(int id, int value)
+		{
+			var heroCurrentTier = Entities[id].GetTag(GameTag.PLAYER_TECH_LEVEL);
+			if(!_battlegroundsHeroTriplesByTier.ContainsKey(id))
+				_battlegroundsHeroTriplesByTier[id] = new Dictionary<int, int>();
+
+			var previousTiersTriples = _battlegroundsHeroTriplesByTier[id].Where(s => s.Key < heroCurrentTier)
+				.Select(s => s.Value)
+				.Sum();
+			_battlegroundsHeroTriplesByTier[id][heroCurrentTier] = value - previousTiersTriples;
+		}
+
+		public Dictionary<int, int>? GetBattlegroundsHeroTriplesByTier(int id)
+		{
+			return _battlegroundsHeroTriplesByTier.TryGetValue(id, out var data) ? data : null;
+		}
+	}
 }
