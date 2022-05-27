@@ -13,6 +13,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsSessionWindow()
 		{
 			InitializeComponent();
+			HideBannedTribes();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -52,7 +53,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void Update()
 		{
-			UpdateBannedMinionsVisibility();
+			ShowBannedTribes();
 			BattlegroundsSession.Update();
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
@@ -66,10 +67,22 @@ namespace Hearthstone_Deck_Tracker.Windows
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
 
+		public void ShowBannedTribes()
+		{
+			BattlegroundsSession.BgTribe1.Visibility = Visibility.Visible;
+			BattlegroundsSession.BgTribe2.Visibility = Visibility.Visible;
+			BattlegroundsSession.BgTribe3.Visibility = Visibility.Visible;
+			BattlegroundsSession.BgTribe4.Visibility = Visibility.Visible;
+			BattlegroundsSession.BgTribeWaiting.Visibility = Visibility.Collapsed;
+		}
+
 		public void HideBannedTribes()
 		{
-			BattlegroundsSession.BgBannedTribesSection.Visibility = Visibility.Collapsed;
-			UpdateBattlegroundsSessionLayoutHeight();
+			BattlegroundsSession.BgTribe1.Visibility = Visibility.Collapsed;
+			BattlegroundsSession.BgTribe2.Visibility = Visibility.Collapsed;
+			BattlegroundsSession.BgTribe3.Visibility = Visibility.Collapsed;
+			BattlegroundsSession.BgTribe4.Visibility = Visibility.Collapsed;
+			BattlegroundsSession.BgTribeWaiting.Visibility = Visibility.Visible;
 		}
 
 		public void UpdateScaling()
@@ -81,7 +94,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void UpdateSectionsVisibilities()
 		{
-			UpdateBannedMinionsVisibility();
+			BattlegroundsSession.BgBannedTribesSection.Visibility = Config.Instance.ShowSessionRecapMinionsBanned
+				   ? Visibility.Visible
+				   : Visibility.Collapsed;
 
 			BattlegroundsSession.BgStartCurrentMMRSection.Visibility = Config.Instance.ShowSessionRecapStartCurrentMMR
 				? Visibility.Visible
@@ -92,14 +107,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 				: Visibility.Collapsed;
 
 			UpdateBattlegroundsSessionLayoutHeight();
-		}
-
-		private void UpdateBannedMinionsVisibility()
-		{
-			var shouldShow = Config.Instance.ShowSessionRecapMinionsBanned && Core.Game.IsBattlegroundsMatch;
-			BattlegroundsSession.BgBannedTribesSection.Visibility = shouldShow
-				   ? Visibility.Visible
-				   : Visibility.Collapsed;
 		}
 
 		private void UpdateBattlegroundsSessionLayoutHeight()

@@ -38,11 +38,24 @@
                         <Border BorderBrush="#4A5256" BorderThickness="0,0,0,1" Background="#1C2022">
                             <hearthstoneDeckTracker:HearthstoneTextBlock Text="{lex:Loc Battlegrounds_Session_Header_Label_Minions_Banned}" FontSize="13" HorizontalAlignment="Center" Margin="0,6"/>
                         </Border>
-                        <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center">
+                        <StackPanel Name="BgBannedTribes" Orientation="Horizontal" Margin="8,8,8,4" HorizontalAlignment="Center" Height="64">
                             <local:BattlegroundsTribe x:Name="BgTribe1" Tribe="PET"/>
                             <local:BattlegroundsTribe x:Name="BgTribe2" Tribe="PET" Margin="8,0,0,0"/>
                             <local:BattlegroundsTribe x:Name="BgTribe3" Tribe="PET" Margin="8,0,0,0"/>
                             <local:BattlegroundsTribe x:Name="BgTribe4" Tribe="PET" Margin="8,0,0,0"/>
+                            <TextBlock
+                                x:Name="BgTribeWaiting"
+                                Text="{lex:Loc Battlegrounds_Session_Text_WaitingNextGame}"
+                                Foreground="#FFFFFF"
+                                FontSize="14"
+                                Opacity=".5"
+                                TextWrapping="WrapWithOverflow"
+                                TextAlignment="Center"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Visibility="Collapsed"
+                                Margin="0 0 0 5"
+                            />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Name="BgStartCurrentMMRSection" Background="#2E3235">
@@ -125,23 +138,23 @@
                         </Grid>
                         <StackPanel Name="GamesEmptyState">
                             <TextBlock
-                            Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState1}"
-                            Foreground="#FFFFFF"
-                            Opacity=".5"
-                            TextWrapping="WrapWithOverflow"
-                            TextAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Margin="4,8,4,0"
-                        />
+                                Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState1}"
+                                Foreground="#FFFFFF"
+                                Opacity=".5"
+                                TextWrapping="WrapWithOverflow"
+                                TextAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="4,8,4,0"
+                            />
                             <TextBlock
-                            Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState2}"
-                            Foreground="#FFFFFF"
-                            Opacity=".5"
-                            TextWrapping="WrapWithOverflow"
-                            TextAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Margin="4,0,0,8"
-                        />
+                                Text="{lex:Loc Battlegrounds_Session_Games_Text_EmptyState2}"
+                                Foreground="#FFFFFF"
+                                Opacity=".5"
+                                TextWrapping="WrapWithOverflow"
+                                TextAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="4,0,0,8"
+                            />
                         </StackPanel>
                     </StackPanel>
                     <ItemsControl
