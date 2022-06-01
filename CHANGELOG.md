@@ -1,3 +1,9 @@
+## **Release v1.18.3 - 2022-06-01**
+**Updated for Hearthstone 23.4.0**
+
+**New**:
+- Hovering an opponent in Battlegrounds will now display their Tavern-Up and Triple history.
+
 ## **Release v1.18.2 - 2022-05-19**
 **Updated for Hearthstone 23.2.2**
 
