@@ -1,3 +1,7 @@
+## **Release v1.18.4 - 2022-06-01**
+**Fixes**:
+- Fixed an issue where the Ozumat Hero Power was not working correctly.
+
 ## **Release v1.18.3 - 2022-06-01**
 **Updated for Hearthstone 23.4.0**
 
