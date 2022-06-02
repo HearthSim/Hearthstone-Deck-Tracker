@@ -60,6 +60,9 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void OnGameEnd()
 		{
+			if (Core.Game.Spectator)
+				return;
+
 			var currentRating = Core.Game.CurrentGameStats?.BattlegroundsRatingAfter;
 			BattlegroundsSession.BgRatingCurrent.Text = $"{currentRating:N0}";
 

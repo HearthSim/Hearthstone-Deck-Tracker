@@ -96,6 +96,9 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 
 		public void OnGameEnd()
 		{
+			if (Core.Game.Spectator)
+				return;
+
 			var currentRating = Core.Game.CurrentGameStats?.BattlegroundsRatingAfter;
 			BgRatingCurrent.Text = $"{currentRating:N0}";
 
@@ -138,9 +141,8 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 		public void Show()
 		{
 			if (Visibility == Visibility.Visible || !Config.Instance.ShowSessionRecap)
-			{
 				return;
-			}
+
 			Update();
 			UpdateSectionsVisibilities();
 			Visibility = Visibility.Visible;

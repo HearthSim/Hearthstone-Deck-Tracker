@@ -794,6 +794,9 @@ namespace Hearthstone_Deck_Tracker
 
 		private void RecordBattlegroundsGame()
 		{
+			if(Core.Game.Spectator)
+				return;
+
 			var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
 			var startTime = _game.CurrentGameStats?.StartTime.ToString("o");
 			var endTime = _game.CurrentGameStats?.EndTime.ToString("o");
