@@ -61,8 +61,11 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			}
 		}
 
-		public void Update()
+		public async void Update()
 		{
+			if (Core.Game.Spectator)
+				await Task.Delay(1500);
+
 			var allRaces = _db.Value.Races;
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? allRaces;
 			var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL)
