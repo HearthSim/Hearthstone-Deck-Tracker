@@ -4,10 +4,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using HearthDb.Enums;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Enums;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
 using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
@@ -66,6 +69,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			if (Core.Game.Spectator)
 				await Task.Delay(1500);
 
+			if (Core.Game.CurrentMode == Mode.BACON || Core.Game.CurrentMode == Mode.INVALID)
+				HideBannedTribes();
+			else
+			{
+				UpdateBannedTribes();
+				ShowBannedTribes();
+			}
+
+			var firstGame = UpdateLatestGames();
+
+			var rating = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
+			var ratingStart = firstGame?.Rating ?? rating;
+			BgRatingStart.Text = $"{ratingStart:N0}";
+			BgRatingCurrent.Text = $"{rating:N0}";
+		}
+
+		public void UpdateBannedTribes()
+		{
 			var allRaces = _db.Value.Races;
 			var availableRaces = BattlegroundsUtils.GetAvailableRaces(Core.Game.CurrentGameStats?.GameId) ?? allRaces;
 			var unavailableRaces = allRaces.Where(x => !availableRaces.Contains(x) && x != Race.INVALID && x != Race.ALL)
@@ -88,13 +109,6 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 					BgTribe3.Margin = new Thickness(15, 0, 0, 0);
 				}
 			}
-
-			var firstGame = UpdateLatestGames();
-
-			var rating = Core.Game.BattlegroundsRatingInfo?.Rating ?? 0;
-			var ratingStart = firstGame?.Rating ?? rating;
-			BgRatingStart.Text = $"{ratingStart:N0}";
-			BgRatingCurrent.Text = $"{rating:N0}";
 		}
 
 		public void OnGameEnd()
@@ -272,6 +286,24 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 			BgLastestGamesSection.Visibility = Config.Instance.ShowSessionRecapLatestGames
 				? Visibility.Visible
 				: Visibility.Collapsed;
+		}
+
+		public void ShowBannedTribes()
+		{
+			BgTribe1.Visibility = Visibility.Visible;
+			BgTribe2.Visibility = Visibility.Visible;
+			BgTribe3.Visibility = Visibility.Visible;
+			BgTribe4.Visibility = Visibility.Visible;
+			BgTribeWaiting.Visibility = Visibility.Collapsed;
+		}
+
+		public void HideBannedTribes()
+		{
+			BgTribe1.Visibility = Visibility.Collapsed;
+			BgTribe2.Visibility = Visibility.Collapsed;
+			BgTribe3.Visibility = Visibility.Collapsed;
+			BgTribe4.Visibility = Visibility.Collapsed;
+			BgTribeWaiting.Visibility = Visibility.Visible;
 		}
 	}
 }

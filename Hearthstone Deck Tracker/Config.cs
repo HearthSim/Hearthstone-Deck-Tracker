@@ -822,6 +822,9 @@ namespace Hearthstone_Deck_Tracker
 		public bool ShowSessionRecap = true;
 
 		[DefaultValue(true)]
+		public bool ShowSessionRecapBetweenGames = true;
+
+		[DefaultValue(true)]
 		public bool ShowSessionRecapMinionsBanned = true;
 
 		[DefaultValue(true)]

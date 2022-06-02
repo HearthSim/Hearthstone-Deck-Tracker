@@ -53,6 +53,15 @@
                     Margin="0"
                 />
                 <CheckBox
+                    x:Name="CheckboxShowSessionRecapBetweenGames"
+                    Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowSessionRecapBetweenGames}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Checked="CheckboxShowSessionRecapBetweenGames_Checked"
+                    Unchecked="CheckboxShowSessionRecapBetweenGames_Unchecked"
+                    Margin="0,5,0,0"
+                />
+                <CheckBox
                     x:Name="CheckboxShowExternalWindow"
                     Content="{lex:Loc Options_Overlay_Battlegrounds_CheckBox_ShowExternalWindow}"
                     HorizontalAlignment="Left"

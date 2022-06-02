@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Hearthstone_Deck_Tracker.Annotations;
+using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility;
 using Hearthstone_Deck_Tracker.Utility.Analytics;
@@ -79,6 +80,7 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			CheckboxShowMinionsBanned.IsChecked = Config.Instance.ShowSessionRecapMinionsBanned;
 			CheckboxShowStartCurrentMMR.IsChecked = Config.Instance.ShowSessionRecapStartCurrentMMR;
 			CheckboxShowLatestGames.IsChecked = Config.Instance.ShowSessionRecapLatestGames;
+			CheckboxShowSessionRecapBetweenGames.IsChecked = Config.Instance.ShowSessionRecapBetweenGames;
 			CheckboxShowExternalWindow.IsChecked = Config.Instance.BattlegroundsSessionRecapWindowOnStart;
 
 			_initialized = true;
@@ -361,6 +363,26 @@ namespace Hearthstone_Deck_Tracker.FlyoutControls.Options.Overlay
 			if(Core.Game.IsBattlegroundsMatch)
 				Core.Overlay.UpdateBattlegroundsSession();
 			Core.Windows.BattlegroundsSessionWindow.UpdateSectionsVisibilities();
+		}
+
+		private void CheckboxShowSessionRecapBetweenGames_Checked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapBetweenGames = true;
+			SaveConfig(true);
+			if (Core.Game.CurrentMode == Mode.BACON)
+				Core.Overlay.ShowBattlegroundsSession();
+		}
+
+		private void CheckboxShowSessionRecapBetweenGames_Unchecked(object sender, RoutedEventArgs e)
+		{
+			if(!_initialized)
+				return;
+			Config.Instance.ShowSessionRecapBetweenGames = false;
+			SaveConfig(true);
+			if (!Core.Game.IsBattlegroundsMatch)
+				Core.Overlay.HideBattlegroundsSession();
 		}
 
 		private void CheckboxShowExternalWindow_Checked(object sender, RoutedEventArgs e)

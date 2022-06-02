@@ -1,5 +1,4 @@
-﻿using Hearthstone_Deck_Tracker.Utility.Logging;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
@@ -13,7 +12,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		public BattlegroundsSessionWindow()
 		{
 			InitializeComponent();
-			HideBannedTribes();
 		}
 
 		protected override void OnClosing(CancelEventArgs e)
@@ -53,7 +51,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		public void Update()
 		{
-			ShowBannedTribes();
 			BattlegroundsSession.Update();
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
@@ -68,24 +65,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 			BattlegroundsSession.UpdateLatestGames();
 			UpdateBattlegroundsSessionLayoutHeight();
-		}
-
-		public void ShowBannedTribes()
-		{
-			BattlegroundsSession.BgTribe1.Visibility = Visibility.Visible;
-			BattlegroundsSession.BgTribe2.Visibility = Visibility.Visible;
-			BattlegroundsSession.BgTribe3.Visibility = Visibility.Visible;
-			BattlegroundsSession.BgTribe4.Visibility = Visibility.Visible;
-			BattlegroundsSession.BgTribeWaiting.Visibility = Visibility.Collapsed;
-		}
-
-		public void HideBannedTribes()
-		{
-			BattlegroundsSession.BgTribe1.Visibility = Visibility.Collapsed;
-			BattlegroundsSession.BgTribe2.Visibility = Visibility.Collapsed;
-			BattlegroundsSession.BgTribe3.Visibility = Visibility.Collapsed;
-			BattlegroundsSession.BgTribe4.Visibility = Visibility.Collapsed;
-			BattlegroundsSession.BgTribeWaiting.Visibility = Visibility.Visible;
 		}
 
 		public void UpdateScaling()

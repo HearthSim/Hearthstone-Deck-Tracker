@@ -26,10 +26,7 @@ using HSReplay.LogValidation;
 using static Hearthstone_Deck_Tracker.Enums.GameMode;
 using static HearthDb.Enums.GameTag;
 using Hearthstone_Deck_Tracker.BobsBuddy;
-using Hearthstone_Deck_Tracker.LogReader.Interfaces;
-using Hearthstone_Deck_Tracker.Enums.Hearthstone;
 using Hearthstone_Deck_Tracker.Utility.Battlegrounds;
-using static Hearthstone_Deck_Tracker.Utility.Battlegrounds.BattlegroundsLastGames;
 
 #endregion
 
@@ -118,7 +115,10 @@ namespace Hearthstone_Deck_Tracker
 			}
 
 			if(_game.CurrentGameStats != null && _game.CurrentGameStats.GameMode == Battlegrounds)
-				Core.Windows.BattlegroundsSessionWindow.HideBannedTribes();
+			{
+				Core.Overlay.BattlegroundsSession.Update();
+				Core.Windows.BattlegroundsSessionWindow.Update();
+			}
 
 			if(!_game.IsUsingPremade)
 				_game.DrawnLastGame =
