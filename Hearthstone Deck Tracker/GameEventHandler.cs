@@ -503,7 +503,10 @@ namespace Hearthstone_Deck_Tracker
 			Core.Overlay.LinkOpponentDeckDisplay.IsFriendlyMatch = _game.IsFriendlyMatch;
 
 			if(_game.IsBattlegroundsMatch && _game.CurrentGameMode == GameMode.Spectator)
+			{
 				Core.Overlay.ShowBgsTopBar();
+				Core.Overlay.ShowBattlegroundsSession();
+			}
 			if(_game.IsFriendlyMatch)
 				if(!Config.Instance.InteractedWithLinkOpponentDeck)
 					Core.Overlay.ShowLinkOpponentDeckDisplay();
@@ -794,7 +797,7 @@ namespace Hearthstone_Deck_Tracker
 
 		private void RecordBattlegroundsGame()
 		{
-			if(Core.Game.Spectator)
+			if (Core.Game.Spectator)
 				return;
 
 			var hero = _game.Entities.Values.FirstOrDefault(x => x.IsPlayer && x.IsHero);
