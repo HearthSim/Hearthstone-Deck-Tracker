@@ -104,7 +104,10 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 				{
 					Core.Game.CacheBattlegroundRatingInfo();
 					if (Config.Instance.ShowSessionRecapBetweenGames)
+					{
 						Core.Overlay.BattlegroundsSession.Show();
+						Core.Windows.BattlegroundsSessionWindow.Update();
+					}
 				}
 				else
 					Core.Overlay.BattlegroundsSession.Hide();
