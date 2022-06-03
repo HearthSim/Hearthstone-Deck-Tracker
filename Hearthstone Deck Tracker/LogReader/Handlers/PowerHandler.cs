@@ -518,23 +518,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Shaman.PiranhaPoacher:
 								AddKnownCardId(gameState, Collectible.Neutral.PiranhaSwarmer); // Is this the correct token? These are 4 different ones
 								break;
-							case NonCollectible.Warlock.SirakessCultist_AbyssalCurseToken:
-								if(actionStartingEntity != null)
-								{
-									var damage = actionStartingEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-									var remainingTurns = actionStartingEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_2);
-									if(actionStartingEntity.IsControlledBy(game.Player.Id))
-										gameState.GameHandler?.HandlePlayerAbyssalCurse(-damage);
-									else
-										gameState.GameHandler?.HandleOpponentAbyssalCurse(-damage);
-
-									if(remainingTurns > 1)
-										if(actionStartingEntity.IsControlledBy(game.Player.Id))
-											gameState.GameHandler?.HandlePlayerAbyssalCurse(damage);
-										else
-											gameState.GameHandler?.HandleOpponentAbyssalCurse(damage);
-								}
-								break;
 						}
 					}
 					else //POWER
@@ -834,16 +817,6 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 							case Collectible.Rogue.BootstrapSunkeneer:
 								if(target != null)
 									AddKnownCardId(gameState, target, 1, DeckLocation.Bottom);
-								break;
-							case NonCollectible.Warlock.SirakessCultist_AbyssalCurseToken:
-								if(actionStartingEntity != null)
-								{
-									var nextDamage = actionStartingEntity.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1);
-									if(actionStartingEntity.IsControlledBy(game.Player.Id))
-										gameState.GameHandler?.HandlePlayerAbyssalCurse(-nextDamage);
-									else
-										gameState.GameHandler?.HandleOpponentAbyssalCurse(-nextDamage);
-								}
 								break;
 
 							default:
