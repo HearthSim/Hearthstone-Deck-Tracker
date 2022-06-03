@@ -13,6 +13,8 @@
         ResizeMode="CanMinimize"
         Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
         Icon="{StaticResource AppIcon}"
+        MaxHeight="269"
+        MaxWidth="218"
         Loaded="BattlegroundsSessionWindow_OnLoaded"
         Activated="BattlegroundsSessionWindow_OnActivated"
         Deactivated="BattlegroundsSessionWindow_OnDeactivated">
@@ -28,5 +30,7 @@
             </Rectangle>
         </DataTemplate>
     </controls:MetroWindow.IconTemplate>
-    <battlegrounds:BattlegroundsSession x:Name="BattlegroundsSession"/>
+    <Canvas Height="1080" Width="1920">
+        <battlegrounds:BattlegroundsSession x:Name="BattlegroundsSession"/>
+    </Canvas>
 </controls:MetroWindow>

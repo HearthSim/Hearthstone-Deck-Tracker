@@ -40,7 +40,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			BattlegroundsSession.Update();
 			UpdateSectionsVisibilities();
-			BattlegroundsSession.RenderTransformOrigin = new Point(0.5, 0);
 			UpdateScaling();
 		}
 
@@ -71,6 +70,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var scale = Config.Instance.OverlaySessionRecapScaling / 100;
 			BattlegroundsSession.RenderTransform = new ScaleTransform(scale, scale);
+			BattlegroundsSession.UpdateLayout();
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
 
@@ -93,12 +93,10 @@ namespace Hearthstone_Deck_Tracker.Windows
 
 		private void UpdateBattlegroundsSessionLayoutHeight()
 		{
+			var toolbarHeight = 34;
 			var scale = Config.Instance.OverlaySessionRecapScaling / 100;
-			BattlegroundsSession.UpdateLayout();
-			BattlegroundsSession.Height =
-				BattlegroundsSession.BattlegroundsSessionPanel.ActualHeight * scale;
-			BattlegroundsSession.Width =
-				BattlegroundsSession.BattlegroundsSessionPanel.ActualWidth * scale;
+			MaxHeight = toolbarHeight + BattlegroundsSession.BattlegroundsSessionPanel.ActualHeight * scale;
+			MaxWidth = BattlegroundsSession.BattlegroundsSessionPanel.ActualWidth * scale;
 			UpdateLayout();
 		}
 	}
