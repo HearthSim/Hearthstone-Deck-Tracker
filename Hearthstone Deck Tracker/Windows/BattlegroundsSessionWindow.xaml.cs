@@ -70,7 +70,6 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var scale = Config.Instance.OverlaySessionRecapScaling / 100;
 			BattlegroundsSession.RenderTransform = new ScaleTransform(scale, scale);
-			BattlegroundsSession.UpdateLayout();
 			UpdateBattlegroundsSessionLayoutHeight();
 		}
 
@@ -95,6 +94,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 		{
 			var toolbarHeight = 34;
 			var scale = Config.Instance.OverlaySessionRecapScaling / 100;
+			BattlegroundsSession.UpdateLayout();
 			MaxHeight = toolbarHeight + BattlegroundsSession.BattlegroundsSessionPanel.ActualHeight * scale;
 			MaxWidth = BattlegroundsSession.BattlegroundsSessionPanel.ActualWidth * scale;
 			UpdateLayout();
