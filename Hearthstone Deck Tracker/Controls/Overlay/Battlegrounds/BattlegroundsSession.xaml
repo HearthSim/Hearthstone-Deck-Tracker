@@ -47,7 +47,6 @@
                                 x:Name="BgTribeWaiting"
                                 Text="{lex:Loc Battlegrounds_Session_Text_WaitingNextGame}"
                                 Foreground="#FFFFFF"
-                                FontSize="14"
                                 Opacity=".5"
                                 TextWrapping="WrapWithOverflow"
                                 TextAlignment="Center"
