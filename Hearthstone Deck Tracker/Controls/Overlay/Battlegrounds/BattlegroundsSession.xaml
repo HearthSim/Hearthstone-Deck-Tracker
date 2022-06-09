@@ -162,7 +162,7 @@
                     >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:BattlegroundsGameView />
+                                <local:BattlegroundsGameView DataContext="{Binding}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemsPanel>
