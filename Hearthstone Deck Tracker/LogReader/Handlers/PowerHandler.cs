@@ -783,6 +783,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 								break;
 							case Collectible.Warlock.DraggedBelow:
 							case Collectible.Warlock.SirakessCultist:
+							case Collectible.Warlock.AbyssalWave:
+							case Collectible.Warlock.Zaqul:
 								AddKnownCardId(gameState, NonCollectible.Warlock.SirakessCultist_AbyssalCurseToken);
 								break;
 							case Collectible.Neutral.SchoolTeacher:
@@ -888,6 +890,25 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 						BobsBuddyInvoker.GetInstance(game.CurrentGameStats.GameId, gameState.GetTurnNumber())?
 							.StartCombat();
 					}
+				}
+
+				var abyssalCurseCreators = new string[] {
+					Collectible.Warlock.DraggedBelow,
+					Collectible.Warlock.SirakessCultist,
+					Collectible.Warlock.AbyssalWave,
+					Collectible.Warlock.Zaqul
+				};
+				if(gameState.CurrentBlock?.Type == "POWER"
+					&& abyssalCurseCreators.Contains(gameState.CurrentBlock?.CardId))
+				{
+					var sourceEntity = game.Entities.FirstOrDefault(e => e.Key == gameState.CurrentBlock!.SourceEntityId).Value;
+					var abyssalCurse = game.Entities.LastOrDefault(k => k.Value.GetTag(GameTag.CREATOR) == sourceEntity.Id).Value;
+					var nextDamage = abyssalCurse?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
+
+					if(sourceEntity.IsControlledBy(game.Player.Id))
+						gameState.GameHandler?.HandleOpponentAbyssalCurse(nextDamage);
+					else
+						gameState.GameHandler?.HandlePlayerAbyssalCurse(nextDamage);
 				}
 
 				gameState.BlockEnd();

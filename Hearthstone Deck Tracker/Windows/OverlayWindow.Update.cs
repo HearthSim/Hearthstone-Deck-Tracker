@@ -209,6 +209,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showPlayerPogoHopperCounter = WotogCounterHelper.ShowPlayerPogoHopperCounter;
 			var showPlayerGalakrondCounter = WotogCounterHelper.ShowPlayerGalakrondCounter;
 			var showPlayerLibramCounter = WotogCounterHelper.ShowPlayerLibramCounter;
+			var showPlayerAbyssalCurseCounter = WotogCounterHelper.ShowPlayerAbyssalCurseCounter;
 			if(showPlayerCthunCounter)
 			{
 				var proxy = WotogCounterHelper.PlayerCthunProxy;
@@ -225,11 +226,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsPlayer.Galakrond = WotogCounterHelper.PlayerGalakrondInvokeCounter.ToString();
 			if(showPlayerLibramCounter)
 				WotogIconsPlayer.Libram = WotogCounterHelper.PlayerLibramCounter.ToString();
+			if(showPlayerAbyssalCurseCounter)
+				WotogIconsPlayer.AbyssalCurse = WotogCounterHelper.PlayerAbyssalCurseCounter.ToString();
 			WotogIconsPlayer.WotogCounterStyle = showPlayerCthunCounter && showPlayerSpellsCounter ? Full : (showPlayerCthunCounter ? Cthun : (showPlayerSpellsCounter ? Spells : None));
 			WotogIconsPlayer.JadeCounterStyle = showPlayerJadeCounter ? Full : None;
 			WotogIconsPlayer.PogoHopperCounterStyle = showPlayerPogoHopperCounter ? Full : None;
 			WotogIconsPlayer.GalakrondCounterStyle = showPlayerGalakrondCounter ? Full : None;
 			WotogIconsPlayer.LibramCounterStyle = showPlayerLibramCounter ? Full : None;
+			WotogIconsPlayer.AbyssalCounterStyle = showPlayerAbyssalCurseCounter ? Full : None;
 
 			var showOpponentCthunCounter = WotogCounterHelper.ShowOpponentCthunCounter;
 			var showOpponentSpellsCounter = WotogCounterHelper.ShowOpponentSpellsCounter;
@@ -237,6 +241,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			var showOpponentPogoHopperCounter = WotogCounterHelper.ShowOpponentPogoHopperCounter;
 			var showOpponentGalakrondCounter = WotogCounterHelper.ShowOpponentGalakrondCounter;
 			var showOpponentLibramCounter = WotogCounterHelper.ShowOpponentLibramCounter;
+			var showOpponentAbyssalCurseCounter = WotogCounterHelper.ShowOpponentAbyssalCurseCounter;
 			if(showOpponentCthunCounter)
 			{
 				var proxy = WotogCounterHelper.OpponentCthunProxy;
@@ -253,11 +258,14 @@ namespace Hearthstone_Deck_Tracker.Windows
 				WotogIconsOpponent.Galakrond = WotogCounterHelper.OpponentGalakrondInvokeCounter.ToString();
 			if(showOpponentLibramCounter)
 				WotogIconsOpponent.Libram = WotogCounterHelper.OpponentLibramCounter.ToString();
+			if(showOpponentAbyssalCurseCounter)
+				WotogIconsOpponent.AbyssalCurse = WotogCounterHelper.OpponentAbyssalCurseCounter.ToString();
 			WotogIconsOpponent.WotogCounterStyle = showOpponentCthunCounter && showOpponentSpellsCounter ? Full : (showOpponentCthunCounter ? Cthun : (showOpponentSpellsCounter ? Spells : None));
 			WotogIconsOpponent.JadeCounterStyle = showOpponentJadeCounter ? Full : None;
 			WotogIconsOpponent.PogoHopperCounterStyle = showOpponentPogoHopperCounter ? Full : None;
 			WotogIconsOpponent.GalakrondCounterStyle = showOpponentGalakrondCounter ? Full : None;
 			WotogIconsOpponent.LibramCounterStyle = showOpponentLibramCounter ? Full : None;
+			WotogIconsOpponent.AbyssalCounterStyle = showOpponentAbyssalCurseCounter ? Full : None;
 		}
 
 		public void UpdatePosition()

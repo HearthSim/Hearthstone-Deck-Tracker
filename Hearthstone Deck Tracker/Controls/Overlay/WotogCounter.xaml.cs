@@ -19,12 +19,14 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		private string _pogoHopper = "1";
 		private string _galakrond = "0";
 		private string _libram = "0";
+		private string _abyssalCurse = "0";
 
 		private WotogCounterStyle _wotogCounterStyle;
 		private WotogCounterStyle _jadeCounterStyle;
 		private WotogCounterStyle _pogoHopperCounterStyle;
 		private WotogCounterStyle _galakrondCounterStyle;
 		private WotogCounterStyle _libramCounterStyle;
+		private WotogCounterStyle _abyssalCounterStyle;
 
 		public WotogCounter()
 		{
@@ -114,6 +116,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public string AbyssalCurse
+		{
+			get { return _abyssalCurse; }
+			set
+			{
+				if(value == _abyssalCurse)
+					return;
+				_abyssalCurse = value;
+				OnPropertyChanged();
+			}
+		}
+
 		public WotogCounterStyle WotogCounterStyle
 		{
 			get { return _wotogCounterStyle; }
@@ -176,6 +190,18 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			}
 		}
 
+		public WotogCounterStyle AbyssalCounterStyle
+		{
+			get { return _abyssalCounterStyle; }
+			set
+			{
+				if(value == _abyssalCounterStyle)
+					return;
+				_abyssalCounterStyle = value;
+				OnPropertyChanged(nameof(AbyssalVisibility));
+			}
+		}
+
 		public int IconWidth => WotogCounterStyle == WotogCounterStyle.Full ? 226 : 145;
 		public Visibility CthunVisibility => _forceShow || WotogCounterStyle == WotogCounterStyle.Cthun ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility SpellsVisibility => !_forceShow && WotogCounterStyle == WotogCounterStyle.Spells ? Visibility.Visible : Visibility.Collapsed;
@@ -184,6 +210,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 		public Visibility PogoHopperVisibility => !_forceShow && PogoHopperCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility GalakrondVisibility => !_forceShow && GalakrondCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 		public Visibility LibramVisibility => !_forceShow && LibramCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
+		public Visibility AbyssalVisibility => !_forceShow && AbyssalCounterStyle == WotogCounterStyle.Full ? Visibility.Visible : Visibility.Collapsed;
 
 		public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -203,6 +230,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay
 			OnPropertyChanged(nameof(PogoHopperVisibility));
 			OnPropertyChanged(nameof(GalakrondVisibility));
 			OnPropertyChanged(nameof(LibramVisibility));
+			OnPropertyChanged(nameof(AbyssalVisibility));
 		}
 	}
 

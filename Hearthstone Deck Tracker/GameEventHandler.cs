@@ -1539,6 +1539,9 @@ namespace Hearthstone_Deck_Tracker
 				card.Info.CostReduction += value;
 		}
 
+		void HandlePlayerAbyssalCurse(int value) => _game.Player.UpdateAbyssalCurse(value);
+		void HandleOpponentAbyssalCurse(int value) => _game.Opponent.UpdateAbyssalCurse(value);
+
 		#endregion
 
 		#region IGameHandlerImplementation
@@ -1582,6 +1585,8 @@ namespace Hearthstone_Deck_Tracker
 		void IGameHandler.HandleMercenariesStateChange() => HandleMercenariesStateChange();
 		void IGameHandler.HandlePlayerDredge() => HandlePlayerDredge();
 		void IGameHandler.HandlePlayerUnknownCardAddedToDeck() => HandlePlayerUnknownCardAddedToDeck();
+		void IGameHandler.HandlePlayerAbyssalCurse(int value) => HandlePlayerAbyssalCurse(value);
+		void IGameHandler.HandleOpponentAbyssalCurse(int value) => HandleOpponentAbyssalCurse(value);
 
 		#endregion IGameHandlerImplementation
 	}
