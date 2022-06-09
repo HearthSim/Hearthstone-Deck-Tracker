@@ -558,7 +558,7 @@ namespace Hearthstone_Deck_Tracker.Hearthstone
 
 		public void UpdateAbyssalCurse(int value)
 		{
-			AbyssalCurseCount = value;
+			AbyssalCurseCount = value > 0 ? value : AbyssalCurseCount + 1;
 		}
 
 		internal void ShuffleDeck()

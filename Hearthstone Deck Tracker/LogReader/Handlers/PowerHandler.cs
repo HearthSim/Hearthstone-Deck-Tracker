@@ -898,13 +898,12 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					Collectible.Warlock.AbyssalWave,
 					Collectible.Warlock.Zaqul
 				};
-				if(gameState.CurrentBlock != null
-					&& gameState.CurrentBlock.Type == "POWER"
+				if(gameState.CurrentBlock?.Type == "POWER"
 					&& abyssalCurseCreators.Contains(gameState.CurrentBlock?.CardId))
 				{
 					var sourceEntity = game.Entities.FirstOrDefault(e => e.Key == gameState.CurrentBlock!.SourceEntityId).Value;
 					var abyssalCurse = game.Entities.FirstOrDefault(k => k.Value.GetTag(GameTag.CREATOR) == sourceEntity.Id).Value;
-					var nextDamage = abyssalCurse?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 1;
+					var nextDamage = abyssalCurse?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
 
 					if(sourceEntity.IsControlledBy(game.Player.Id))
 						gameState.GameHandler?.HandleOpponentAbyssalCurse(nextDamage);
