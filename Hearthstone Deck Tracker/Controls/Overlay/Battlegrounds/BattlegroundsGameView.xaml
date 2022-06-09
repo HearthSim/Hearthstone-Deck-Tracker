@@ -17,12 +17,16 @@
         Height="34"
         Width="217"
         Background="#AA000000"
-        MouseEnter="Game_MouseEnter"
-        MouseLeave="Game_MouseLeave"
-        ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltips}"
     >
         <Border BorderBrush="#1C2022" BorderThickness="0,1,0,0">
-            <Canvas Height="34" Width="217" ClipToBounds="True">
+            <Canvas
+                Height="34"
+                Width="217"
+                ClipToBounds="True"
+                MouseEnter="Game_MouseEnter"
+                MouseLeave="Game_MouseLeave"
+                ext:OverlayExtensions.IsOverlayHoverVisible="{Binding FinalBoardTooltips}"
+            >
                 <Image
                     Canvas.Left="-35"
                     Canvas.Top="5"
