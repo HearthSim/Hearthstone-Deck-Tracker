@@ -902,7 +902,7 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					&& abyssalCurseCreators.Contains(gameState.CurrentBlock?.CardId))
 				{
 					var sourceEntity = game.Entities.FirstOrDefault(e => e.Key == gameState.CurrentBlock!.SourceEntityId).Value;
-					var abyssalCurse = game.Entities.FirstOrDefault(k => k.Value.GetTag(GameTag.CREATOR) == sourceEntity.Id).Value;
+					var abyssalCurse = game.Entities.LastOrDefault(k => k.Value.GetTag(GameTag.CREATOR) == sourceEntity.Id).Value;
 					var nextDamage = abyssalCurse?.GetTag(GameTag.TAG_SCRIPT_DATA_NUM_1) ?? 0;
 
 					if(sourceEntity.IsControlledBy(game.Player.Id))
