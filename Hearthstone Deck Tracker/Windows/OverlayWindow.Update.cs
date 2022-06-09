@@ -115,7 +115,7 @@ namespace Hearthstone_Deck_Tracker.Windows
 			StackPanelSecrets.Opacity = Config.Instance.SecretsOpacity / 100;
 			Opacity = Config.Instance.OverlayOpacity / 100;
 
-			var inBattlegrounds = _game.IsBattlegroundsMatch;
+			var inBattlegrounds = _game.IsBattlegroundsMatch || Core.Game.CurrentMode == Mode.BACON;
 			var inMercenaries = _game.IsMercenariesMatch;
 			var hideDeck = Config.Instance.HideDecksInOverlay || inBattlegrounds || inMercenaries || (Config.Instance.HideInMenu && _game.IsInMenu);
 
