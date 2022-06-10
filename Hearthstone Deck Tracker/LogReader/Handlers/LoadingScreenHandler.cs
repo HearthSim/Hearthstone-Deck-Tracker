@@ -105,10 +105,8 @@ namespace Hearthstone_Deck_Tracker.LogReader.Handlers
 					Core.Game.CacheBattlegroundRatingInfo();
 					if (Config.Instance.ShowSessionRecapBetweenGames)
 					{
-						Core.Overlay.BattlegroundsSession.HideBannedTribes();
 						Core.Overlay.BattlegroundsSession.Show();
 						Core.Windows.BattlegroundsSessionWindow.Update();
-						Core.Windows.BattlegroundsSessionWindow.BattlegroundsSession.HideBannedTribes();
 					}
 				}
 				else if (game.CurrentMode != Mode.GAMEPLAY)

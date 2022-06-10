@@ -69,7 +69,7 @@ namespace Hearthstone_Deck_Tracker.Controls.Overlay.Battlegrounds
 				await Task.Delay(1500);
 
 			var bannedTribesUpdated = UpdateBannedTribes();
-			if(bannedTribesUpdated)
+			if(Core.Game.CurrentMode == Mode.GAMEPLAY && bannedTribesUpdated)
 				ShowBannedTribes();
 			else
 				HideBannedTribes();
